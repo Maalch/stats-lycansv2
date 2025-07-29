@@ -1,8 +1,7 @@
-import { FC } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList } from 'recharts';
 import { useGameDurationAnalysis } from '../hooks/useGameDurationAnalysis';
 
-export const GameDurationInsights: FC = () => {
+export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysis();
 
   if (telechargementActif) {
@@ -95,7 +94,7 @@ export const GameDurationInsights: FC = () => {
                   label={{ value: 'Durée Moyenne (jours)', angle: -90, position: 'insideLeft' }}
                 />
                 <Tooltip 
-                  formatter={(valeur, nom, props) => {
+                  formatter={(valeur, nom) => {
                     if (nom === "moyenne") return [`${valeur} jours`, 'Durée Moyenne'];
                     if (nom === "parties") return [`${valeur} parties`, 'Nombre de Parties'];
                     return [valeur, nom];
@@ -141,15 +140,38 @@ export const GameDurationInsights: FC = () => {
                   label={{ value: 'Durée Moyenne (jours)', angle: -90, position: 'insideLeft' }}
                 />
                 <Tooltip 
-                  formatter={(valeur, nom) => {
-                    if (nom === "moyenne") return [`${valeur} jours`, 'Durée Moyenne'];
-                    if (nom === "parties") return [`${valeur}`, 'Nombre de Parties'];
+                  formatter={(valeur, nom, { payload }) => {
+                    if (nom === "moyenne") {
+                      return [
+                        <>
+                          <div><strong>{valeur} jours</strong></div>
+                          <div>({payload.parties} parties)</div>
+                        </>,
+                        'Durée Moyenne'
+                      ];
+                    }
                     return [valeur, nom];
                   }}
                 />
-                <Legend />
-                <Bar dataKey="moyenne" name="Durée Moyenne" fill="#8884d8" />
-                <Bar dataKey="parties" name="Nombre de Parties" fill="#82ca9d" />
+                <Legend 
+                  formatter={(value) => value === "moyenne" ? "Durée Moyenne" : value}
+                />
+                <Bar 
+                  dataKey="moyenne" 
+                  name="moyenne" 
+                  fill="var(--chart-color-5)"
+                >
+                  <LabelList
+                    dataKey="moyenne"
+                    position="top"
+                    formatter={(label) => {
+                      const val = typeof label === 'number' ? label : Number(label);
+                      return !isNaN(val) ? `${val.toFixed(1)}j` : '';
+                    }}
+                    fill="var(--text-primary)"
+                    fontSize={12}
+                  />
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>

@@ -1,8 +1,7 @@
-import { FC } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts';
 import { useRoleSurvivalStats } from '../hooks/useSurvivalStats';
 
-export const RoleSurvivalRateChart: FC = () => {
+export function RoleSurvivalRateChart() {
   const { roleSurvivalStats: donneesSurvie, dataLoading: chargementStats, fetchError: erreurStats } = useRoleSurvivalStats();
 
   if (chargementStats) {

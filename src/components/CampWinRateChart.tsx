@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useCampWinStats } from '../hooks/useCampWinStats';
 
 // Custom color palette for camps
@@ -18,7 +17,7 @@ const lycansColorScheme: Record<string, string> = {
 // Fallback color for camps not in the scheme
 const lycansDefaultColor = '#607D8B';
 
-export const CampWinRateChart: FC = () => {
+export function CampWinRateChart() {
   const { campWinStats: victoriesDonnees, isLoading: chargementEnCours, errorInfo: messageErreur } = useCampWinStats();
 
   if (chargementEnCours) {
@@ -69,12 +68,6 @@ export const CampWinRateChart: FC = () => {
               if (name === "winRate") return [`${value}%`, "Taux de victoire"];
               return [value, name];
             }} />
-            <Legend 
-              payload={[
-                { value: 'Victoires', type: 'square', color: '#8884d8' },
-                { value: 'Taux de victoire (%)', type: 'square', color: '#82ca9d' }
-              ]}
-            />
             <Bar 
               yAxisId="left"
               dataKey="wins" 
