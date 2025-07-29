@@ -46,6 +46,9 @@ export interface RoleStats {
 
 export interface RoleSurvivalStatsResponse {
   roleStats: RoleStats[];
+  campStats: RoleStats[];
+  secondaryRoleStats: RoleStats[];
+  thirdRoleStats: RoleStats[];
   error?: string;
 }
 

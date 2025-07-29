@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts';
 import { useRoleSurvivalStats } from '../hooks/useSurvivalStats';
 
 export function RoleSurvivalRateChart() {
   const { roleSurvivalStats: donneesSurvie, dataLoading: chargementStats, fetchError: erreurStats } = useRoleSurvivalStats();
+  const [categorieAffichee, setCategorieAffichee] = useState<'roles' | 'camps' | 'secondaryRoles' | 'thirdRoles'>('roles');
 
   if (chargementStats) {
     return <div className="donnees-attente">Récupération des statistiques de survie des rôles...</div>;
@@ -12,39 +14,106 @@ export function RoleSurvivalRateChart() {
     return <div className="donnees-probleme">Erreur: {erreurStats}</div>;
   }
 
-  if (!donneesSurvie || !donneesSurvie.roleStats || donneesSurvie.roleStats.length === 0) {
+  if (!donneesSurvie) {
     return <div className="donnees-manquantes">Aucune donnée de survie disponible</div>;
   }
 
-  // Filtrer pour n'afficher que les rôles avec un nombre minimum d'apparitions
-  const rolesFiltres = donneesSurvie.roleStats.filter(role => role.appearances >= 3);
+  // Determine which data to display based on selected category
+  const getDataAndLabel = () => {
+    switch (categorieAffichee) {
+      case 'roles':
+        return {
+          data: donneesSurvie.roleStats || [],
+          keyField: 'role',
+          label: 'Rôle',
+          minAppearances: 3
+        };
+      case 'camps':
+        return {
+          data: donneesSurvie.campStats || [],
+          keyField: 'camp',
+          label: 'Camp',
+          minAppearances: 1
+        };
+      case 'secondaryRoles':
+        return {
+          data: donneesSurvie.secondaryRoleStats || [],
+          keyField: 'secondaryRole',
+          label: 'Rôle Secondaire',
+          minAppearances: 3
+        };
+      case 'thirdRoles':
+        return {
+          data: donneesSurvie.thirdRoleStats || [],
+          keyField: 'thirdRole',
+          label: 'Rôle Spécifique',
+          minAppearances: 3
+        };
+    }
+  };
 
-  // Données pour le graphique de corrélation
-  const correlationDonnees = rolesFiltres.map(role => ({
-    nom: role.role,
-    tauxSurvie: parseFloat(role.survivalRate),
-    dureeVie: parseFloat(role.avgLifespan),
-    apparitions: role.appearances
+  const { data, keyField, label, minAppearances } = getDataAndLabel();
+
+  // Filter data for minimum appearances
+  const donneesFiltrees = data.filter(item => item.appearances >= minAppearances);
+
+  // Prepare data for correlation chart
+  const correlationDonnees = donneesFiltrees.map(item => ({
+    nom: item[keyField as keyof typeof item],
+    tauxSurvie: parseFloat(item.survivalRate),
+    dureeVie: parseFloat(item.avgLifespan),
+    apparitions: item.appearances
   }));
+
+  if (donneesFiltrees.length === 0) {
+    return <div className="donnees-manquantes">Aucune donnée disponible pour cette catégorie</div>;
+  }
 
   return (
     <div className="lycans-roles-survie">
       <h2>Statistiques de Survie des Rôles</h2>
       
+      <div className="lycans-categories-selection">
+        <button 
+          className={`lycans-categorie-btn ${categorieAffichee === 'roles' ? 'active' : ''}`} 
+          onClick={() => setCategorieAffichee('roles')}
+        >
+          Rôles principaux
+        </button>
+        <button 
+          className={`lycans-categorie-btn ${categorieAffichee === 'camps' ? 'active' : ''}`} 
+          onClick={() => setCategorieAffichee('camps')}
+        >
+          Camps
+        </button>
+        <button 
+          className={`lycans-categorie-btn ${categorieAffichee === 'secondaryRoles' ? 'active' : ''}`} 
+          onClick={() => setCategorieAffichee('secondaryRoles')}
+        >
+          Rôles secondaires
+        </button>
+        <button 
+          className={`lycans-categorie-btn ${categorieAffichee === 'thirdRoles' ? 'active' : ''}`} 
+          onClick={() => setCategorieAffichee('thirdRoles')}
+        >
+          Rôles spécifiques
+        </button>
+      </div>
+      
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
-          <h3>Taux de Survie par Rôle</h3>
+          <h3>Taux de Survie par {label}</h3>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
-                data={rolesFiltres}
+                data={donneesFiltrees}
                 margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
                 layout="vertical"
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" domain={[0, 100]} />
                 <YAxis 
-                  dataKey="role" 
+                  dataKey={keyField}
                   type="category" 
                   width={150}
                 />
@@ -53,14 +122,14 @@ export function RoleSurvivalRateChart() {
                     if (nom === "survivalRate") return [`${valeur}%`, "Taux de Survie"];
                     return [valeur, nom];
                   }}
-                  labelFormatter={(etiquette) => `Rôle: ${etiquette}`}
+                  labelFormatter={(etiquette) => `${label}: ${etiquette}`}
                 />
-                <Legend />
+                <Legend formatter={(value) => value === "survivalRate" ? "Taux de Survie" : value} />
                 <Bar 
                   dataKey="survivalRate" 
-                  name="Taux de Survie" 
-                  fill="#82ca9d" 
-                  background={{ fill: '#eee' }}
+                  name="survivalRate" 
+                  fill="var(--chart-color-2)" 
+                  background={{ fill: 'var(--bg-tertiary)' }}
                 />
               </BarChart>
             </ResponsiveContainer>
@@ -93,21 +162,29 @@ export function RoleSurvivalRateChart() {
                   range={[50, 400]} 
                   name="Nombre d'Apparitions" 
                 />
-                <Tooltip 
+                <Tooltip
                   cursor={{ strokeDasharray: '3 3' }}
-                  formatter={(valeur, nom) => {
-                    if (nom === "dureeVie") return [`${valeur} jours`, "Durée de Vie Moyenne"];
-                    if (nom === "tauxSurvie") return [`${valeur}%`, "Taux de Survie"];
-                    if (nom === "apparitions") return [`${valeur} fois`, "Nombre d'Apparitions"];
-                    return [valeur, nom];
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload;
+                      return (
+                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                            {label}: {d.nom}
+                          </div>
+                          <div>Durée de Vie Moyenne : {d.dureeVie} jours</div>
+                          <div>Taux de Survie : {d.tauxSurvie}%</div>
+                          <div>Apparitions : {d.apparitions}</div>
+                        </div>
+                      );
+                    }
+                    return null;
                   }}
-                  labelFormatter={(indice) => correlationDonnees[indice].nom}
                 />
-                <Legend />
                 <Scatter 
-                  name="Rôles" 
+                  name={label} 
                   data={correlationDonnees} 
-                  fill="#8884d8" 
+                  fill="var(--chart-color-5)" 
                 />
               </ScatterChart>
             </ResponsiveContainer>
@@ -116,4 +193,4 @@ export function RoleSurvivalRateChart() {
       </div>
     </div>
   );
-};
+}
