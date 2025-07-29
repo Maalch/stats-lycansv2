@@ -1,5 +1,5 @@
 
-# Copilot Instructions for `stats-lycans`
+# Copilot Instructions for `stats-lycansv2`
 
 This project is a Vite-based React + TypeScript app for visualizing KPIs and statistics from a Google Sheet, deployed to GitHub Pages (output in `docs`).
 
@@ -8,7 +8,7 @@ This project is a Vite-based React + TypeScript app for visualizing KPIs and sta
 - **Data Source:** Google Sheets, accessed via a published Google Apps Script web API (`src/ExternalData/GoogleScript.gs`).
 - **API Usage:** All data fetching is done via HTTP requests to the Apps Script endpoint, with actions like `?action=participationRate`, `?action=playersWithColors`, `?action=gameStats`.
 - **Environment:** The API base URL is set in `.env` as `VITE_LYCANS_API_BASE`.
-- **Build Output:** Production build is output to `docs/` for GitHub Pages hosting. The Vite `base` is set to `/stats-lycans/`.
+- **Build Output:** Production build is output to `docs/` for GitHub Pages hosting. The Vite `base` is set to `/stats-lycansv2/`.
 
 ## Key Files & Directories
 - `src/components/GeneralKPI.tsx`: Main KPI/statistics dashboard, merges data from multiple hooks.

@@ -8,5 +8,5 @@ export default defineConfig({
     outDir: 'docs',
     emptyOutDir: true,
   },
-  base: '/stats-lycans/',
+  base: '/stats-lycansv2/',
 })
