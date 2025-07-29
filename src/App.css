@@ -1,0 +1,178 @@
+:root {
+  /* Dark Theme (Default) */
+  --bg-primary: #23233a;          /* Main background */
+  --bg-secondary: #2c2c44;        /* Card/box background */
+  --bg-tertiary: #343552;         /* Button/header background */
+  --text-primary: #fff;           /* Main text */
+  --text-secondary: #bbb;         /* Secondary/small text */
+  --accent-primary: #4853a8;      /* Primary accent/highlight */
+  --accent-secondary: #e74c3c;    /* Secondary accent */
+  --accent-tertiary: #82ca9d;     /* Tertiary accent (success) */
+  
+  /* Chart Colors */
+  --chart-color-1: #0088FE;
+  --chart-color-2: #00C49F;
+  --chart-color-3: #FFBB28;
+  --chart-color-4: #FF8042;
+  --chart-color-5: #8884d8;
+  --chart-color-6: #82ca9d;
+  
+  /* Timing-specific colors */
+  --timing-day: #FFD700;
+  --timing-night: #0088FE;
+  --timing-council: #FF8042;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #f2f2f2;
+    --bg-tertiary: #e9e9f0;
+    --text-primary: #23233a;
+    --text-secondary: #666;
+    --accent-primary: #4853a8;
+    --accent-secondary: #e74c3c;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.lycans-dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.lycans-dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.lycans-dashboard-header h1 {
+  color: var(--text-primary);
+  margin-bottom: 5px;
+}
+
+.lycans-dashboard-header p {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.lycans-dashboard-section {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  padding: 20px;
+}
+
+.lycans-dashboard-section h2 {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--bg-tertiary);
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+.lycans-resume-conteneur,
+.lycans-recolte-sommaire {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.lycans-stat-carte {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 15px;
+  text-align: center;
+  width: 30%;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.lycans-stat-carte h3 {
+  margin-top: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.lycans-valeur-principale,
+.lycans-nombre-grand {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: var(--accent-primary);
+}
+
+.lycans-graphiques-conteneur,
+.lycans-graphiques-groupe,
+.lycans-graphiques-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.lycans-graphique-moitie,
+.lycans-graphique-section,
+.lycans-graphique-element {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 300px;
+}
+
+.lycans-graphique-element h3,
+.lycans-graphique-moitie h3,
+.lycans-graphique-section h3 {
+  text-align: center;
+  color: var(--text-primary);
+  margin-top: 0;
+}
+
+.donnees-chargement,
+.donnees-erreur,
+.donnees-absentes,
+.donnees-attente,
+.donnees-probleme,
+.donnees-manquantes,
+.statistiques-attente,
+.statistiques-echec,
+.statistiques-indisponibles,
+.statistiques-chargement,
+.statistiques-erreur,
+.statistiques-vide {
+  text-align: center;
+  padding: 40px;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  color: var(--text-secondary);
+}
+
+.donnees-erreur,
+.donnees-probleme,
+.statistiques-erreur,
+.statistiques-echec {
+  color: var(--accent-secondary);
+  border: 1px solid var(--accent-secondary);
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.lycans-dashboard-footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
