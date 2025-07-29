@@ -20,8 +20,8 @@ function doGet(e) {
 // Fonction de test pour les statistiques par session
 function test_doGet() {
   var cache = CacheService.getScriptCache();
-  cache.remove('gameDurationAnalysis');
-  var e = { parameter: { action: 'gameDurationAnalysis' } };
+  cache.remove('harvestStats');
+  var e = { parameter: { action: 'harvestStats' } };
   var result = doGet(e);
   Logger.log(result.getContent());
   return result;
@@ -140,7 +140,7 @@ function getHarvestStatsRaw() {
     
     // Get column indexes
     var harvestIdx = findColumnIndex(headers, LYCAN_SCHEMA.GAMES.COLS.HARVEST);
-    var totalHarvestIdx = findColumnIndex(headers, LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST);
+    var maxHarvestIdx = findColumnIndex(headers, LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST);
     var harvestPercentIdx = findColumnIndex(headers, LYCAN_SCHEMA.GAMES.COLS.HARVESTPERCENT);
     var winnerCampIdx = findColumnIndex(headers, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
     
@@ -161,22 +161,32 @@ function getHarvestStatsRaw() {
       harvestByWinner: {}
     };
     
-    var totalHarvestPercent = 0;
+    var totalHarvest = 0;
+    var totalMaxHarvest = 0;
     
     dataRows.forEach(function(row) {
-      var harvestPercent = row[harvestPercentIdx];
-      var winnerCamp = row[winnerCampIdx];
       
+      var winnerCamp = row[winnerCampIdx];
+      var harvest = row[harvestIdx];
+      if (harvest !== "" && !isNaN(harvest)) {
+        totalHarvest += parseFloat(harvest);
+      }
+
+      var maxHarvest = row[maxHarvestIdx];
+      if (maxHarvest !== "" && !isNaN(maxHarvest)) {
+        totalMaxHarvest += parseFloat(maxHarvest);
+      }
+
+      var harvestPercent = row[harvestPercentIdx];
       if (harvestPercent !== "" && !isNaN(harvestPercent)) {
         harvestStats.gamesWithHarvest++;
-        totalHarvestPercent += parseFloat(harvestPercent);
         
         // Categorize by percentage
-        if (harvestPercent <= 25) {
+        if (harvestPercent <= 0.25) {
           harvestStats.harvestDistribution["0-25%"]++;
-        } else if (harvestPercent <= 50) {
+        } else if (harvestPercent <= 0.50) {
           harvestStats.harvestDistribution["26-50%"]++;
-        } else if (harvestPercent <= 75) {
+        } else if (harvestPercent <= 0.75) {
           harvestStats.harvestDistribution["51-75%"]++;
         } else {
           harvestStats.harvestDistribution["76-100%"]++;
@@ -200,8 +210,8 @@ function getHarvestStatsRaw() {
     
     // Calculate averages
     if (harvestStats.gamesWithHarvest > 0) {
-      harvestStats.averageHarvestPercent = (totalHarvestPercent / harvestStats.gamesWithHarvest).toFixed(2);
-      
+      harvestStats.averageHarvestPercent = (totalHarvest / totalMaxHarvest * 100).toFixed(2);
+      harvestStats.averageHarvest = (totalHarvest / harvestStats.gamesWithHarvest).toFixed(2);
       // Calculate averages for each winner camp
       Object.keys(harvestStats.harvestByWinner).forEach(function(camp) {
         var campData = harvestStats.harvestByWinner[camp];

@@ -1,11 +1,10 @@
-import { FC } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { useHarvestStats } from '../hooks/useHarvestStats';
 
 // Couleurs pour les différentes tranches de récolte
 const lycansRecolteCouleurs = ['#d32f2f', '#f57c00', '#fbc02d', '#388e3c'];
 
-export const HarvestProgressChart: FC = () => {
+export function HarvestProgressChart() {
   const { harvestStats: recolteInfos, isLoading: recuperationDonnees, errorMessage: problemeChargement } = useHarvestStats();
 
   if (recuperationDonnees) {
@@ -60,12 +59,13 @@ export const HarvestProgressChart: FC = () => {
                   cx="50%"
                   cy="50%"
                   labelLine={true}
-                  label={({ nom, percent }) => `${nom}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ nom, percent }) => `${nom}: ${((percent ?? 0) * 100).toFixed(0)}%`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="valeur"
+                  nameKey="nom"
                 >
-                  {distributionDonnees.map((entree, indice) => (
+                  {distributionDonnees.map((_, indice) => (
                     <Cell key={`cellule-${indice}`} fill={lycansRecolteCouleurs[indice % lycansRecolteCouleurs.length]} />
                   ))}
                 </Pie>
@@ -80,7 +80,7 @@ export const HarvestProgressChart: FC = () => {
         </div>
 
         <div className="lycans-graphique-moitie">
-          <h3>Moyenne de Récolte par Camp Victorieux</h3>
+          <h3>Moyenne de Récolte au Moment de la Victoire</h3>
           <div style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart

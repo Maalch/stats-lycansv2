@@ -49,6 +49,59 @@ body {
   min-height: 100vh;
 }
 
+.app-container {
+  max-width: 2100px;
+  margin: 0 auto; /* Center horizontally */
+  padding: 0; /* Remove any padding */
+  min-width: 1200px;
+}
+
+/* Banner styling */
+.lycans-banner {
+  width: 50%;
+  max-width: 400px;
+  min-width: 400px;
+  margin: 20px auto 1rem auto; /* Center horizontally, reduce bottom margin */
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+
+/* Main container */
+.main-container {
+  max-width: 2800px;
+  width:auto;
+  margin: 0 auto; /* Center horizontally */
+  padding: 1rem; /* Reduced padding */
+  background: var(--bg-primary);
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.lycans-menu {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.lycans-menu-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 6px 6px 0 0;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lycans-menu-btn.active,
+.lycans-menu-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
 .lycans-dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
