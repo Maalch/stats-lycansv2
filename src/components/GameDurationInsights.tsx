@@ -1,6 +1,9 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList } from 'recharts';
 import { useGameDurationAnalysis } from '../hooks/useGameDurationAnalysis';
 
+// Optionally import your color scheme if you want to use the same as other charts
+// import { lycansColorScheme } from '../types/api';
+
 export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysis();
 
@@ -18,7 +21,7 @@ export function GameDurationInsights() {
 
   // Préparation des données pour le graphique de ratio loups/joueurs
   const ratioLoupsJoueurs = Object.entries(jeuDonnees.daysByWolfRatio).map(([ratio, donnees]) => ({
-    ratio,
+    ratio: `${(parseFloat(ratio)).toFixed(0)}%`,
     moyenne: parseFloat(donnees.average),
     parties: donnees.count
   })).sort((a, b) => parseFloat(a.ratio) - parseFloat(b.ratio));
@@ -66,12 +69,25 @@ export function GameDurationInsights() {
                 <YAxis 
                   label={{ value: 'Nombre de Parties', angle: -90, position: 'insideLeft' }}
                 />
-                <Tooltip 
-                  formatter={(valeur) => [`${valeur} parties`, 'Fréquence']}
-                  labelFormatter={(etiquette) => `${etiquette} jours`}
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload;
+                      return (
+                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                          <div><strong>{d.days} jours</strong></div>
+                          <div>{d.count} parties</div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
                 />
-                <Legend />
-                <Bar dataKey="count" name="Nombre de Parties" fill="#8884d8" />
+                <Bar 
+                  dataKey="count" 
+                  name="Nombre de Parties" 
+                  fill="var(--chart-color-2)" // Use a CSS variable color
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -88,32 +104,33 @@ export function GameDurationInsights() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="ratio" 
-                  label={{ value: 'Ratio Loups/Joueurs', position: 'insideBottom', offset: -5 }}
+                  label={{ value: 'Ratio Loups/Joueurs (%)', position: 'insideBottom', offset: -5 }}
                 />
                 <YAxis 
                   label={{ value: 'Durée Moyenne (jours)', angle: -90, position: 'insideLeft' }}
                 />
-                <Tooltip 
-                  formatter={(valeur, nom) => {
-                    if (nom === "moyenne") return [`${valeur} jours`, 'Durée Moyenne'];
-                    if (nom === "parties") return [`${valeur} parties`, 'Nombre de Parties'];
-                    return [valeur, nom];
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload;
+                      return (
+                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                          <div><strong>Pourcentage de loups : {d.ratio}</strong></div>
+                          <div>Durée moyenne : {d.moyenne} jours</div>
+                          <div>Nombre de parties : {d.parties}</div>
+                        </div>
+                      );
+                    }
+                    return null;
                   }}
-                  labelFormatter={(etiquette) => `Ratio: ${etiquette}`}
                 />
                 <Legend />
                 <Line 
                   type="monotone" 
                   dataKey="moyenne" 
                   name="Durée Moyenne" 
-                  stroke="#8884d8" 
+                  stroke="var(--chart-color-5)" // Use a CSS variable color
                   activeDot={{ r: 8 }} 
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="parties" 
-                  name="Nombre de Parties" 
-                  stroke="#82ca9d" 
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -140,17 +157,18 @@ export function GameDurationInsights() {
                   label={{ value: 'Durée Moyenne (jours)', angle: -90, position: 'insideLeft' }}
                 />
                 <Tooltip 
-                  formatter={(valeur, nom, { payload }) => {
-                    if (nom === "moyenne") {
-                      return [
-                        <>
-                          <div><strong>{valeur} jours</strong></div>
-                          <div>({payload.parties} parties)</div>
-                        </>,
-                        'Durée Moyenne'
-                      ];
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload;
+                      return (
+                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                          <div><strong>{d.camp}</strong></div>
+                          <div>Durée moyenne : {d.moyenne} jours</div>
+                          <div>Nombre de parties : {d.parties}</div>
+                        </div>
+                      );
                     }
-                    return [valeur, nom];
+                    return null;
                   }}
                 />
                 <Legend 
@@ -159,7 +177,7 @@ export function GameDurationInsights() {
                 <Bar 
                   dataKey="moyenne" 
                   name="moyenne" 
-                  fill="var(--chart-color-5)"
+                  fill="var(--chart-color-4)" // Use a CSS variable color
                 >
                   <LabelList
                     dataKey="moyenne"
@@ -179,4 +197,4 @@ export function GameDurationInsights() {
       </div>
     </div>
   );
-};
+}

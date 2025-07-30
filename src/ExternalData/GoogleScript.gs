@@ -20,8 +20,8 @@ function doGet(e) {
 // Fonction de test pour les statistiques par session
 function test_doGet() {
   var cache = CacheService.getScriptCache();
-  cache.remove('roleSurvivalStats');
-  var e = { parameter: { action: 'roleSurvivalStats' } };
+  cache.remove('gameDurationAnalysis');
+  var e = { parameter: { action: 'gameDurationAnalysis' } };
   var result = doGet(e);
   Logger.log(result.getContent());
   return result;
@@ -545,11 +545,13 @@ function getGameDurationAnalysisRaw() {
           durationStats.daysByPlayerCount[nbPlayers].count++;
         }
         
-        // Calculate wolf ratio and update stats
         if (nbPlayers && nbWolves && !isNaN(nbPlayers) && !isNaN(nbWolves)) {
-          var wolfRatio = Math.round((parseInt(nbWolves) / parseInt(nbPlayers)) * 10) / 10; // Round to nearest 0.1
-          var wolfRatioKey = wolfRatio.toFixed(1);
-          
+          // Calculate ratio as a percentage
+          var wolfRatioPercent = Math.round((parseInt(nbWolves) / parseInt(nbPlayers)) * 100);
+          // Round to nearest 5%
+          var roundedWolfRatio = Math.round(wolfRatioPercent / 1) * 1;
+          var wolfRatioKey = roundedWolfRatio.toString(); // e.g., "35" for 35%
+
           if (!durationStats.daysByWolfRatio[wolfRatioKey]) {
             durationStats.daysByWolfRatio[wolfRatioKey] = {
               totalDays: 0,
@@ -585,7 +587,7 @@ function getGameDurationAnalysisRaw() {
       Object.keys(durationStats.daysByWolfRatio).forEach(function(ratio) {
         var ratioData = durationStats.daysByWolfRatio[ratio];
         if (ratioData.count > 0) {
-          ratioData.average = (ratioData.totalDays / ratioData.count).toFixed(1);
+          ratioData.average = (ratioData.totalDays / ratioData.count ).toFixed(1);
         }
       });
     }

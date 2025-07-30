@@ -10,7 +10,7 @@ const GameDurationInsights = lazy(() => import('./components/GameDurationInsight
 const MENU = [
   { key: 'camp', label: 'Victoires par Camp', component: CampWinRateChart },
   { key: 'harvest', label: 'Statistiques Récolte', component: HarvestProgressChart },
-  { key: 'roles', label: 'Survie des Rôles', component: RoleSurvivalRateChart },
+  { key: 'roles', label: 'Survie par Rôle (Ponce)', component: RoleSurvivalRateChart },
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
 ];
 

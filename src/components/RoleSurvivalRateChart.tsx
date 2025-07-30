@@ -1,13 +1,62 @@
-import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts';
+import { useState, useMemo } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis, Cell } from 'recharts';
 import { useRoleSurvivalStats } from '../hooks/useSurvivalStats';
+import { lycansColorScheme } from '../types/api';
+import { getRandomColor } from '../types/api';
 
 export function RoleSurvivalRateChart() {
   const { roleSurvivalStats: donneesSurvie, dataLoading: chargementStats, fetchError: erreurStats } = useRoleSurvivalStats();
   const [categorieAffichee, setCategorieAffichee] = useState<'roles' | 'camps' | 'secondaryRoles' | 'thirdRoles'>('roles');
 
+  // Déclarer le colorMap comme null par défaut
+  const colorMap = useMemo(() => {
+    // Si les données ne sont pas encore disponibles, retourner un objet vide
+    if (!donneesSurvie) return {};
+
+    // Déterminer les valeurs en fonction de la catégorie
+    let data: any[] = [];
+    let keyField = '';
+    
+    switch (categorieAffichee) {
+      case 'roles':
+        data = donneesSurvie.roleStats || [];
+        keyField = 'role';
+        break;
+      case 'camps':
+        data = donneesSurvie.campStats || [];
+        keyField = 'camp';
+        break;
+      case 'secondaryRoles':
+        data = donneesSurvie.secondaryRoleStats || [];
+        keyField = 'secondaryRole';
+        break;
+      case 'thirdRoles':
+        data = donneesSurvie.thirdRoleStats || [];
+        keyField = 'thirdRole';
+        break;
+    }
+
+    // Appliquer le filtre d'apparitions minimales
+    const minAppearances = categorieAffichee === 'camps' ? 1 : 3;
+    const donneesFiltrees = data.filter(item => item.appearances >= minAppearances);
+
+    // Créer la map de couleurs
+    const map: Record<string, string> = {};
+    donneesFiltrees.forEach(item => {
+      const key = item[keyField] as string;
+      if (categorieAffichee === 'roles' || categorieAffichee === 'camps') {
+        map[key] = lycansColorScheme[key] || 'var(--chart-color-2)';
+      } else {
+        map[key] = getRandomColor(key);
+      }
+    });
+    
+    return map;
+  }, [donneesSurvie, categorieAffichee]);
+
+  // Rendu conditionnel en fonction de l'état du chargement
   if (chargementStats) {
-    return <div className="donnees-attente">Récupération des statistiques de survie des rôles...</div>;
+    return <div className="donnees-attente">Récupération des statistiques de survie par rôles...</div>;
   }
 
   if (erreurStats) {
@@ -18,46 +67,48 @@ export function RoleSurvivalRateChart() {
     return <div className="donnees-manquantes">Aucune donnée de survie disponible</div>;
   }
 
-  // Determine which data to display based on selected category
-  const getDataAndLabel = () => {
-    switch (categorieAffichee) {
-      case 'roles':
-        return {
-          data: donneesSurvie.roleStats || [],
-          keyField: 'role',
-          label: 'Rôle',
-          minAppearances: 3
-        };
-      case 'camps':
-        return {
-          data: donneesSurvie.campStats || [],
-          keyField: 'camp',
-          label: 'Camp',
-          minAppearances: 1
-        };
-      case 'secondaryRoles':
-        return {
-          data: donneesSurvie.secondaryRoleStats || [],
-          keyField: 'secondaryRole',
-          label: 'Rôle Secondaire',
-          minAppearances: 3
-        };
-      case 'thirdRoles':
-        return {
-          data: donneesSurvie.thirdRoleStats || [],
-          keyField: 'thirdRole',
-          label: 'Rôle Spécifique',
-          minAppearances: 3
-        };
-    }
-  };
+  // Déterminer quelles données afficher en fonction de la catégorie
+  let data: any[] = [];
+  let keyField = '';
+  let label = '';
+  let minAppearances = 1;
 
-  const { data, keyField, label, minAppearances } = getDataAndLabel();
+  switch (categorieAffichee) {
+    case 'roles':
+      data = donneesSurvie.roleStats || [];
+      keyField = 'role';
+      label = 'Rôle';
+      minAppearances = 3;
+      break;
+    case 'camps':
+      data = donneesSurvie.campStats || [];
+      keyField = 'camp';
+      label = 'Camp';
+      minAppearances = 1;
+      break;
+    case 'secondaryRoles':
+      data = donneesSurvie.secondaryRoleStats || [];
+      keyField = 'secondaryRole';
+      label = 'Rôle Secondaire';
+      minAppearances = 3;
+      break;
+    case 'thirdRoles':
+      data = donneesSurvie.thirdRoleStats || [];
+      keyField = 'thirdRole';
+      label = 'Rôle Spécifique';
+      minAppearances = 3;
+      break;
+  }
 
-  // Filter data for minimum appearances
+  // Filtrer les données
   const donneesFiltrees = data.filter(item => item.appearances >= minAppearances);
 
-  // Prepare data for correlation chart
+  // Vérifier si des données sont disponibles
+  if (donneesFiltrees.length === 0) {
+    return <div className="donnees-manquantes">Aucune donnée disponible pour cette catégorie</div>;
+  }
+
+  // Préparer les données pour le graphique de corrélation
   const correlationDonnees = donneesFiltrees.map(item => ({
     nom: item[keyField as keyof typeof item],
     tauxSurvie: parseFloat(item.survivalRate),
@@ -65,13 +116,9 @@ export function RoleSurvivalRateChart() {
     apparitions: item.appearances
   }));
 
-  if (donneesFiltrees.length === 0) {
-    return <div className="donnees-manquantes">Aucune donnée disponible pour cette catégorie</div>;
-  }
-
   return (
     <div className="lycans-roles-survie">
-      <h2>Statistiques de Survie des Rôles</h2>
+      <h2>Statistiques de Survie par Rôles de Ponce</h2>
       
       <div className="lycans-categories-selection">
         <button 
@@ -102,7 +149,7 @@ export function RoleSurvivalRateChart() {
       
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
-          <h3>Taux de Survie par {label}</h3>
+          <h3>Taux de Survie par {label} (classés par fréquences)</h3>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="120%">
               <BarChart
@@ -112,10 +159,11 @@ export function RoleSurvivalRateChart() {
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" domain={[0, 100]} />
-                <YAxis 
+                <YAxis
                   dataKey={keyField}
-                  type="category" 
-                  width={150}
+                  type="category"
+                  width={categorieAffichee === 'thirdRoles' ? 0 : 150} // Hide labels for "Rôle Spécifique"
+                  tick={categorieAffichee === 'thirdRoles' ? false : true}
                 />
                 <Tooltip
                   content={({ active, payload }) => {
@@ -147,7 +195,14 @@ export function RoleSurvivalRateChart() {
                   name="survivalRate" 
                   fill="var(--chart-color-2)" 
                   background={{ fill: 'var(--bg-tertiary)' }}
-                />
+                >
+                  {donneesFiltrees.map((item, idx) => (
+                    <Cell
+                      key={item[keyField as keyof typeof item] as string || idx}
+                      fill={colorMap[item[keyField as keyof typeof item] as string]}
+                    />
+                  ))}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -201,8 +256,15 @@ export function RoleSurvivalRateChart() {
                 <Scatter 
                   name={label} 
                   data={correlationDonnees} 
-                  fill="var(--chart-color-5)" 
-                />
+                  fill="var(--chart-color-5)"
+                >
+                  {correlationDonnees.map((item, idx) => (
+                    <Cell
+                      key={item.nom || idx}
+                      fill={colorMap[item.nom]}
+                    />
+                  ))}
+                </Scatter>
               </ScatterChart>
             </ResponsiveContainer>
           </div>
