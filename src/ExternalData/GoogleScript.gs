@@ -83,16 +83,37 @@ function getCampWinStatsRaw() {
     
     // Get column indexes
     var winnerCampIdx = findColumnIndex(headers, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
+    var soloRolesIdx = findColumnIndex(headers, LYCAN_SCHEMA.GAMES.COLS.SOLO);
     
     // Skip header row
     var dataRows = values.slice(1);
     
     // Count wins by camp
+    var soloCamps = {};
     var campWins = {};
     var totalGames = 0;
     
     dataRows.forEach(function(row) {
+      var soloRoles = row[soloRolesIdx];
       var winnerCamp = row[winnerCampIdx];
+      
+      // Process solo roles if they exist
+      if (soloRoles && soloRoles.toString().trim() !== "") {
+        // Split by comma and process each solo role
+        var soloRolesList = soloRoles.toString().split(',');
+        soloRolesList.forEach(function(soloRole) {
+          var trimmedRole = soloRole.trim();
+          if (trimmedRole !== "") {
+            // Track solo camps
+            if (!soloCamps[trimmedRole]) {
+              soloCamps[trimmedRole] = 0;
+            }
+            soloCamps[trimmedRole]++;
+          }
+        });
+      }
+
+      // Process regular winner camp
       if (winnerCamp) {
         totalGames++;
         if (!campWins[winnerCamp]) {
@@ -117,9 +138,24 @@ function getCampWinStatsRaw() {
       return b.wins - a.wins;
     });
     
+    // Convert soloCamps to array for easier frontend processing
+    var soloCampStats = [];
+    Object.keys(soloCamps).forEach(function(soloRole) {
+      soloCampStats.push({
+        soloRole: soloRole,
+        appearances: soloCamps[soloRole]
+      });
+    });
+    
+    // Sort solo camps by appearances (descending)
+    soloCampStats.sort(function(a, b) {
+      return b.appearances - a.appearances;
+    });
+    
     return JSON.stringify({
       totalGames: totalGames,
-      campStats: campStats
+      campStats: campStats,
+      soloCamps: soloCampStats
     });
   } catch (error) {
     Logger.log('Error in getCampWinStatsRaw: ' + error.message);
@@ -156,7 +192,8 @@ function getHarvestStatsRaw() {
         "0-25%": 0,
         "26-50%": 0,
         "51-75%": 0,
-        "76-100%": 0
+        "76-99%": 0,
+        "100%": 0
       },
       harvestByWinner: {}
     };
@@ -188,8 +225,10 @@ function getHarvestStatsRaw() {
           harvestStats.harvestDistribution["26-50%"]++;
         } else if (harvestPercent <= 0.75) {
           harvestStats.harvestDistribution["51-75%"]++;
+        } else if (harvestPercent <= 0.99) {
+          harvestStats.harvestDistribution["76-99%"]++;
         } else {
-          harvestStats.harvestDistribution["76-100%"]++;
+          harvestStats.harvestDistribution["100%"]++;
         }
         
         // Track by winner camp
@@ -216,7 +255,7 @@ function getHarvestStatsRaw() {
       Object.keys(harvestStats.harvestByWinner).forEach(function(camp) {
         var campData = harvestStats.harvestByWinner[camp];
         if (campData.count > 0) {
-          campData.average = (campData.totalPercent / campData.count).toFixed(2);
+          campData.average = (campData.totalPercent / campData.count * 100).toFixed(2);
         }
       });
     }

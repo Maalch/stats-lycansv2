@@ -99,9 +99,26 @@ export function HarvestProgressChart() {
                 <YAxis 
                   label={{ value: 'Moyenne de Récolte (%)', angle: -90, position: 'insideLeft' }}
                 />
-                <Tooltip formatter={(valeur) => [`${valeur}%`, 'Moyenne de Récolte']} />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload;
+                      return (
+                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                            Camp : {d.camp}
+                          </div>
+                          <div>
+                            Moyenne de Récolte : {d.moyenne}%
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
                 <Legend />
-                <Bar dataKey="moyenne" name="Moyenne de Récolte" fill="#82ca9d" />
+                <Bar dataKey="moyenne" name="Moyenne de Récolte" fill="#388e3c" />
               </BarChart>
             </ResponsiveContainer>
           </div>
