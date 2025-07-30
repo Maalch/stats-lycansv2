@@ -104,7 +104,7 @@ export function RoleSurvivalRateChart() {
         <div className="lycans-graphique-section">
           <h3>Taux de Survie par {label}</h3>
           <div style={{ height: 400 }}>
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="120%">
               <BarChart
                 data={donneesFiltrees}
                 margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
@@ -117,12 +117,29 @@ export function RoleSurvivalRateChart() {
                   type="category" 
                   width={150}
                 />
-                <Tooltip 
-                  formatter={(valeur, nom) => {
-                    if (nom === "survivalRate") return [`${valeur}%`, "Taux de Survie"];
-                    return [valeur, nom];
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload;
+                      return (
+                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                            {label}: {d[keyField]}
+                          </div>
+                          <div>
+                            Taux de Survie : {d.survivalRate}%
+                          </div>
+                          <div>
+                            Apparitions : {d.appearances}
+                          </div>
+                          <div>
+                            Durée de Vie Moyenne : {d.avgLifespan} jours
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
                   }}
-                  labelFormatter={(etiquette) => `${label}: ${etiquette}`}
                 />
                 <Legend formatter={(value) => value === "survivalRate" ? "Taux de Survie" : value} />
                 <Bar 

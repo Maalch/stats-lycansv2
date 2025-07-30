@@ -16,7 +16,8 @@ export interface HarvestDistribution {
   "0-25%": number;
   "26-50%": number;
   "51-75%": number;
-  "76-100%": number;
+  "76-99%": number;
+  "100%": number;
 }
 
 export interface CampHarvestData {
