@@ -52,7 +52,7 @@ export default function App() {
           </div>
 
           <footer className="lycans-dashboard-footer">
-            <p>Données mises à jour automatiquement depuis Google Sheets</p>
+            <p>Données mises à jour automatiquement depuis le Google Sheets de Soldat Flippy</p>
           </footer>
         </div>
       </div>

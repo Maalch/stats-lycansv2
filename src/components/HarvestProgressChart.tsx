@@ -2,7 +2,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Ba
 import { useHarvestStats } from '../hooks/useHarvestStats';
 
 // Couleurs pour les différentes tranches de récolte
-const lycansRecolteCouleurs = ['#d32f2f', '#f57c00', '#fbc02d', '#388e3c'];
+const lycansRecolteCouleurs = ['#d32f2f', '#f57c00', '#fbc02d', '#388e3c', '#1976d2'];
 
 export function HarvestProgressChart() {
   const { harvestStats: recolteInfos, isLoading: recuperationDonnees, errorMessage: problemeChargement } = useHarvestStats();
@@ -24,7 +24,8 @@ export function HarvestProgressChart() {
     { nom: "0-25%", valeur: recolteInfos.harvestDistribution["0-25%"] },
     { nom: "26-50%", valeur: recolteInfos.harvestDistribution["26-50%"] },
     { nom: "51-75%", valeur: recolteInfos.harvestDistribution["51-75%"] },
-    { nom: "76-100%", valeur: recolteInfos.harvestDistribution["76-100%"] }
+    { nom: "76-99%", valeur: recolteInfos.harvestDistribution["76-99%"] },
+    { nom: "100%", valeur: recolteInfos.harvestDistribution["100%"] }
   ];
 
   // Préparation des données pour le graphique en barres
