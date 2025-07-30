@@ -1,3 +1,16 @@
+// Custom color palette for camps
+export const lycansColorScheme: Record<string, string> = {
+  'Villageois': '#4CAF50',
+  'Loups': '#ff1100ff',
+  'Amoureux': '#E91E63',
+  'Idiot du Village': '#fbff00ff',
+  'Cannibale': '#795548',
+  'La Bête': '#a00000ff',
+  'Espion': '#2196F3',
+  'Vaudou': '#673AB7',
+  'Chasseur de primes': '#FFC107'
+};
+
 // Camp Win Statistics Types
 export interface CampStat {
   camp: string;

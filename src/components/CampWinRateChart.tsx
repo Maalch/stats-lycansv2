@@ -1,18 +1,6 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } from 'recharts';
 import { useCampWinStats } from '../hooks/useCampWinStats';
-
-// Custom color palette for camps
-const lycansColorScheme: Record<string, string> = {
-  'Villageois': '#4CAF50',
-  'Loups': '#F44336',
-  'Amoureux': '#E91E63',
-  'Idiot du village': '#9C27B0',
-  'Cannibale': '#795548',
-  'La Bête': '#FF9800',
-  'Espion': '#2196F3',
-  'Vaudou': '#673AB7',
-  'Chasseur de primes': '#FFC107'
-};
+import { lycansColorScheme } from '../types/api';
 
 // Fallback color for camps not in the scheme
 const lycansDefaultColor = '#607D8B';
@@ -52,27 +40,37 @@ export function CampWinRateChart() {
               interval={0}
             />
             <YAxis 
-              yAxisId="left"
-              orientation="left"
-              stroke="#8884d8"
-              label={{ value: 'Nombre de victoires', angle: -90, position: 'insideLeft' }}
+              label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+              domain={[0, 100]}
             />
-            <YAxis 
-              yAxisId="right"
-              orientation="right"
-              stroke="#82ca9d"
-              label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideRight' }}
+            <Tooltip
+              content={({ active, payload }) => {
+                if (active && payload && payload.length > 0) {
+                  const d = payload[0].payload;
+                  return (
+                    <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                      <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                        Camp : {d.camp}
+                      </div>
+                      <div>
+                        Victoires : {d.wins}
+                      </div>
+                      <div>
+                        Taux de victoire : {d.winRate}%
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              }}
             />
-            <Tooltip formatter={(value, name) => {
-              if (name === "wins") return [`${value} victoires`, "Victoires"];
-              if (name === "winRate") return [`${value}%`, "Taux de victoire"];
-              return [value, name];
-            }} />
+            <Legend 
+              formatter={(value) => value === "winRate" ? "Taux de victoire" : value}
+            />
             <Bar 
-              yAxisId="left"
-              dataKey="wins" 
-              name="wins" 
-              fill="#8884d8"
+              dataKey="winRate" 
+              name="winRate" 
+              fill="#82ca9d"
             >
               {victoriesDonnees.campStats.map((entree, indice) => (
                 <Cell 
@@ -81,15 +79,9 @@ export function CampWinRateChart() {
                 />
               ))}
             </Bar>
-            <Bar 
-              yAxisId="right"
-              dataKey="winRate" 
-              name="winRate" 
-              fill="#82ca9d" 
-            />
           </BarChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
-};
+}
