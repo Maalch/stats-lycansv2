@@ -20,6 +20,12 @@ export function CampWinRateChart() {
     return <div className="statistiques-vide">Aucune donnée de victoire disponible</div>;
   }
 
+  // Calculate percentages for solo roles
+  const soloRolesAvecPourcentage = victoriesDonnees?.soloCamps?.map(solo => ({
+    ...solo,
+    pourcentage: (solo.appearances / victoriesDonnees.totalGames * 100).toFixed(2)
+  })) || [];
+
   return (
     <div className="lycans-stats-container">
       <h2>Statistiques de Victoire par Camp</h2>
@@ -50,7 +56,7 @@ export function CampWinRateChart() {
                   return (
                     <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                       <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
-                        Camp : {d.camp}
+                        {d.camp}
                       </div>
                       <div>
                         Victoires : {d.wins}
@@ -82,6 +88,69 @@ export function CampWinRateChart() {
           </BarChart>
         </ResponsiveContainer>
       </div>
+      {/* New solo roles frequency chart */}
+      {soloRolesAvecPourcentage.length > 0 && (
+        <>
+          <h2>Statistiques de Fréquence des rôles solo</h2>
+          <div className="lycans-chart-wrapper" style={{ height: 400 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={soloRolesAvecPourcentage}
+                margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="soloRole" 
+                  angle={-45} 
+                  textAnchor="end" 
+                  height={80} 
+                  interval={0}
+                />
+                <YAxis 
+                  label={{ value: 'Fréquence (%)', angle: -90, position: 'insideLeft' }}
+                  domain={[0, Math.max(...soloRolesAvecPourcentage.map(sr => parseFloat(sr.pourcentage))) + 5]}
+                />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload;
+                      return (
+                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                            {d.soloRole}
+                          </div>
+                          <div>
+                            Apparitions : {d.appearances}
+                          </div>
+                          <div>
+                            Fréquence : {d.pourcentage}%
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Legend 
+                  formatter={(value) => value === "pourcentage" ? "Fréquence d'apparition" : value}
+                />
+                <Bar 
+                  dataKey="pourcentage" 
+                  name="pourcentage" 
+                  fill="#8884d8"
+                >
+                  {soloRolesAvecPourcentage.map((entree, indice) => (
+                    <Cell 
+                      key={`cellule-solo-${indice}`} 
+                      fill={lycansColorScheme[entree.soloRole] || lycansDefaultColor} 
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </>
+      )}
     </div>
   );
 }

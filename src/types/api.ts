@@ -8,7 +8,10 @@ export const lycansColorScheme: Record<string, string> = {
   'La Bête': '#a00000ff',
   'Espion': '#2196F3',
   'Vaudou': '#673AB7',
-  'Chasseur de primes': '#FFC107'
+  'Chasseur de primes': '#FFC107',
+  'Chasseur': '#187e04ff',
+  'Alchimiste': '#ff00d4ff',
+  'Traître': '#aa5f0aff',
 };
 
 // Camp Win Statistics Types
@@ -18,9 +21,15 @@ export interface CampStat {
   winRate: string;
 }
 
+export interface SoloCamp {
+  soloRole: string;
+  appearances: number;
+}
+
 export interface CampWinStatsResponse {
   totalGames: number;
   campStats: CampStat[];
+  soloCamps: SoloCamp[];
   error?: string;
 }
 
@@ -87,4 +96,14 @@ export interface GameDurationAnalysisResponse {
   daysByPlayerCount: Record<string, CampDaysData>;
   daysByWolfRatio: Record<string, CampDaysData>;
   error?: string;
+}
+
+  // Helper to generate a pastel random color
+export function getRandomColor(seed: string) {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const h = hash % 360;
+  return `hsl(${h}, 60%, 70%)`;
 }

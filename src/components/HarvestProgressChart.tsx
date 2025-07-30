@@ -44,7 +44,7 @@ export function HarvestProgressChart() {
           <p className="lycans-nombre-grand">{recolteInfos.averageHarvestPercent}%</p>
         </div>
         <div className="lycans-stat-carte">
-          <h3>Parties avec Récolte</h3>
+          <h3>Nombre total de parties</h3>
           <p className="lycans-nombre-grand">{recolteInfos.gamesWithHarvest}</p>
         </div>
       </div>
@@ -70,9 +70,19 @@ export function HarvestProgressChart() {
                     <Cell key={`cellule-${indice}`} fill={lycansRecolteCouleurs[indice % lycansRecolteCouleurs.length]} />
                   ))}
                 </Pie>
-                <Tooltip 
-                  formatter={(valeur) => [`${valeur} parties`, 'Nombre de parties']}
-                  labelFormatter={(label) => `Récolte: ${label}`}
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload;
+                      return (
+                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                          <div><strong>{d.nom}</strong></div>
+                          <div>Nombre de parties : {d.valeur}</div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
                 />
                 <Legend />
               </PieChart>
@@ -106,7 +116,7 @@ export function HarvestProgressChart() {
                       return (
                         <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                           <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
-                            Camp : {d.camp}
+                            {d.camp}
                           </div>
                           <div>
                             Moyenne de Récolte : {d.moyenne}%
