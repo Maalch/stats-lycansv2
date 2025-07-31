@@ -5,7 +5,8 @@ function doGet(e) {
     'harvestStats': { key: 'harvestStats', fn: getHarvestStatsRaw },
     'roleSurvivalStats': { key: 'roleSurvivalStats', fn: getRoleSurvivalStatsRaw },
     'gameDurationAnalysis': { key: 'gameDurationAnalysis', fn: getGameDurationAnalysisRaw },
-    'playerStats': { key: 'playerStats', fn: getPlayerStatsRaw }
+    'playerStats': { key: 'playerStats', fn: getPlayerStatsRaw },
+    'playerGameHistory': { key: 'playerGameHistory', fn: getPlayerGameHistoryRaw }
   };
   
   var action = e.parameter.action;
@@ -31,21 +32,20 @@ function test_doGet() {
 function test_doGet_WithParameters() {
   var cache = CacheService.getScriptCache();
   // Clear the cache for this endpoint
-  cache.remove('playerStatsBySession');
+  cache.remove('playerGameHistory');
   
-  // You need to provide a valid date that exists in your data
-  // Format should match your data (e.g., "DD/MM/YYYY")
-  var sessionDate = "18/07/2025"; // Replace with a real session date from your data
+  // You need to provide a valid player here
+  var playerName = "Ponce";
   
   var e = { 
     parameter: { 
-      action: 'playerStatsBySession',
-      sessionDate: sessionDate
+      action: 'playerGameHistory',
+      playerName: playerName
     } 
   };
   
   var result = doGet(e);
-  Logger.log("Test playerStatsBySession for date: " + sessionDate);
+  Logger.log("Test playerGameHistory for date: " + playerName);
   Logger.log(result.getContent());
   return result;
 }
@@ -989,6 +989,190 @@ function getPlayerPairingStatsRaw() {
     
   } catch (error) {
     Logger.log('Error in getPlayerPairingStatsRaw: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
+
+/**
+ * Returns detailed game history for a specific player
+ * @param {Object} e - Request parameters containing playerName
+ * @return {string} JSON string with player's game history
+ */
+function getPlayerGameHistoryRaw(e) {
+  try {
+    // Get player name from parameters
+    var playerName = e.parameter.playerName;
+    if (!playerName) {
+      return JSON.stringify({ error: 'Player name is required' });
+    }
+    
+    // Get game and role data
+    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
+    var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
+    
+    var gameValues = gameData.values;
+    var roleValues = roleData.values;
+    
+    var gameHeaders = gameValues[0];
+    var roleHeaders = roleValues[1]; // Based on existing pattern in other functions
+    
+    // Get game column indexes
+    var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
+    var dateIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.DATE);
+    var playerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
+    var winnerCampIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
+    
+    // Get role column indexes
+    var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
+    var wolfsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS);
+    var traitorIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.TRAITOR);
+    var idiotIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.IDIOT);
+    var cannibalIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.CANNIBAL);
+    var agentsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.AGENTS);
+    var spyIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SPY);
+    var scientistIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SCIENTIST);
+    var loversIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS);
+    var beastIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.THEBEAST);
+    var bountyHunterIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER);
+    var voodooIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO);
+    
+    // Skip header rows
+    var gameRows = gameValues.slice(1);
+    var roleRows = roleValues.slice(2); // Based on existing pattern
+    
+    // Create map of game ID to player camps
+    var gamePlayerCampMap = {};
+    roleRows.forEach(function(row) {
+      var gameId = row[roleGameIdIdx];
+      if (!gameId) return;
+      
+      if (!gamePlayerCampMap[gameId]) {
+        gamePlayerCampMap[gameId] = {};
+      }
+      
+      // Helper function to add player to camp
+      function addPlayerToCamp(playerStr, campName) {
+        if (playerStr) {
+          var players = playerStr.split(',');
+          players.forEach(function(player) {
+            var trimmedPlayer = player.trim();
+            if (trimmedPlayer) {
+              gamePlayerCampMap[gameId][trimmedPlayer] = campName;
+            }
+          });
+        }
+      }
+      
+      // Add players by camp
+      addPlayerToCamp(row[wolfsIdx], "Loups");
+      addPlayerToCamp(row[traitorIdx], "Traître");
+      addPlayerToCamp(row[idiotIdx], "Idiot du Village");
+      addPlayerToCamp(row[cannibalIdx], "Cannibale");
+      addPlayerToCamp(row[agentsIdx], "Agent");
+      addPlayerToCamp(row[spyIdx], "Espion");
+      addPlayerToCamp(row[scientistIdx], "Scientifique");
+      addPlayerToCamp(row[loversIdx], "Amoureux");
+      addPlayerToCamp(row[beastIdx], "La Bête");
+      addPlayerToCamp(row[bountyHunterIdx], "Chasseur de primes");
+      addPlayerToCamp(row[voodooIdx], "Vaudou");
+    });
+    
+    // Find games where the player participated
+    var playerGames = [];
+    
+    gameRows.forEach(function(row) {
+      var gameId = row[gameIdIdx];
+      var date = row[dateIdx];
+      var playerList = row[playerListIdx];
+      var winnerCamp = row[winnerCampIdx];
+      
+      if (gameId && playerList && date) {
+        // Check if player is in the game
+        var players = playerList.split(',').map(function(p) { return p.trim(); });
+        var playerInGame = players.some(function(p) { 
+          return p.toLowerCase() === playerName.toLowerCase(); 
+        });
+        
+        if (playerInGame) {
+          // Determine player's camp (default to Villageois if not found in roles)
+          var playerCamp = "Villageois";
+          if (gamePlayerCampMap[gameId] && gamePlayerCampMap[gameId][playerName]) {
+            playerCamp = gamePlayerCampMap[gameId][playerName];
+          }
+          
+          // Determine win/loss status
+          var playerWon = false;
+          if (winnerCamp && playerCamp === winnerCamp) {
+            playerWon = true;
+          }
+          
+          // Format date consistently
+          var formattedDate = formatLycanDate(date);
+          
+          playerGames.push({
+            gameId: gameId,
+            date: formattedDate,
+            camp: playerCamp,
+            won: playerWon,
+            winnerCamp: winnerCamp,
+            playersInGame: players.length
+          });
+        }
+      }
+    });
+    
+    // Sort games by date (most recent first)
+    playerGames.sort(function(a, b) {
+      // Convert DD/MM/YYYY to comparable format
+      function parseDate(dateStr) {
+        var parts = dateStr.split('/');
+        if (parts.length === 3) {
+          return new Date(parts[2], parts[1] - 1, parts[0]);
+        }
+        return new Date(dateStr);
+      }
+      
+      return parseDate(b.date) - parseDate(a.date);
+    });
+    
+    // Calculate summary statistics
+    var totalGames = playerGames.length;
+    var totalWins = playerGames.filter(function(game) { return game.won; }).length;
+    var winRate = totalGames > 0 ? (totalWins / totalGames * 100).toFixed(2) : "0.00";
+    
+    // Calculate camp distribution
+    var campStats = {};
+    playerGames.forEach(function(game) {
+      if (!campStats[game.camp]) {
+        campStats[game.camp] = {
+          appearances: 0,
+          wins: 0,
+          winRate: 0
+        };
+      }
+      campStats[game.camp].appearances++;
+      if (game.won) {
+        campStats[game.camp].wins++;
+      }
+    });
+    
+    // Calculate win rates for each camp
+    Object.keys(campStats).forEach(function(camp) {
+      var stats = campStats[camp];
+      stats.winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
+    });
+    
+    return JSON.stringify({
+      playerName: playerName,
+      totalGames: totalGames,
+      totalWins: totalWins,
+      winRate: winRate,
+      games: playerGames,
+      campStats: campStats
+    });
+    
+  } catch (error) {
+    Logger.log('Error in getPlayerGameHistoryRaw: ' + error.message);
     return JSON.stringify({ error: error.message });
   }
 }
