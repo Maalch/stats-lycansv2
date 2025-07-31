@@ -6,8 +6,9 @@ const CampsAndRolesRateChart = lazy(() => import('./components/generalstats/Camp
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
-const PlayerStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
+const PlayerGeneralStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
 const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
+const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
 
 const MAIN_TABS = [
   { key: 'general', label: 'Statistiques Générales' },
@@ -19,7 +20,7 @@ const GENERAL_STATS_MENU = [
   { key: 'camp', label: 'Camps et Roles', component: CampsAndRolesRateChart },
   { key: 'harvest', label: 'Récolte', component: HarvestProgressChart },
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
-  { key: 'playersGeneral', label: 'Joueurs', component: PlayerStatisticsChart },
+  { key: 'playersGeneral', label: 'Joueurs', component: PlayerGeneralStatisticsChart },
 ];
 
 const PONCE_STATS_MENU = [
@@ -28,6 +29,7 @@ const PONCE_STATS_MENU = [
 
 const PLAYER_STATS_MENU = [
   { key: 'pairing', label: 'Paires de Joueurs', component: PlayerPairingStatsChart },
+  { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
 ];
 
 export default function App() {
