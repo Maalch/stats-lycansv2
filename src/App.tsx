@@ -6,12 +6,14 @@ const CampWinRateChart = lazy(() => import('./components/CampWinRateChart').then
 const HarvestProgressChart = lazy(() => import('./components/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const RoleSurvivalRateChart = lazy(() => import('./components/RoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 const GameDurationInsights = lazy(() => import('./components/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
+const PlayerStatisticsChart = lazy(() => import('./components/PlayerStatisticsChart').then(m => ({ default: m.PlayerStatisticsChart })));
 
 const MENU = [
   { key: 'camp', label: 'Victoires par Camp', component: CampWinRateChart },
   { key: 'harvest', label: 'Statistiques Récolte', component: HarvestProgressChart },
   { key: 'roles', label: 'Survie par Rôle (Ponce)', component: RoleSurvivalRateChart },
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
+  { key: 'players', label: 'Statistiques Joueurs', component: PlayerStatisticsChart },
 ];
 
 export default function App() {

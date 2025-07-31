@@ -1,10 +1,11 @@
 function doGet(e) {
   var actionMap = {
-    // Add new statistics endpoints
+    // Existing endpoints
     'campWinStats': { key: 'campWinStats', fn: getCampWinStatsRaw },
     'harvestStats': { key: 'harvestStats', fn: getHarvestStatsRaw },
     'roleSurvivalStats': { key: 'roleSurvivalStats', fn: getRoleSurvivalStatsRaw },
-    'gameDurationAnalysis': { key: 'gameDurationAnalysis', fn: getGameDurationAnalysisRaw }
+    'gameDurationAnalysis': { key: 'gameDurationAnalysis', fn: getGameDurationAnalysisRaw },
+    'playerStats': { key: 'playerStats', fn: getPlayerStatsRaw }
   };
   
   var action = e.parameter.action;
@@ -16,12 +17,11 @@ function doGet(e) {
       .setMimeType(ContentService.MimeType.TEXT);
   }
 }
-
 // Fonction de test pour les statistiques par session
 function test_doGet() {
   var cache = CacheService.getScriptCache();
-  cache.remove('gameDurationAnalysis');
-  var e = { parameter: { action: 'gameDurationAnalysis' } };
+  cache.remove('playerStats');
+  var e = { parameter: { action: 'playerStats' } };
   var result = doGet(e);
   Logger.log(result.getContent());
   return result;
@@ -610,6 +610,214 @@ function getGameDurationAnalysisRaw() {
     return JSON.stringify(durationStats);
   } catch (error) {
     Logger.log('Error in getGameDurationAnalysisRaw: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
+
+/**
+ * Returns detailed statistics for each player
+ * @return {string} JSON string with player statistics
+ */
+function getPlayerStatsRaw(e) {
+  try {
+    // Get game and role data
+    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
+    var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
+    
+    var gameValues = gameData.values;
+    var roleValues = roleData.values;
+    
+    var gameHeaders = gameValues[0];
+    var roleHeaders = roleValues[1];
+    
+    // Get column indexes from game sheet
+    var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
+    var playerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
+    var winnerCampIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
+    
+    // Get column indexes from role sheet
+    var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
+    var wolfsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS);
+    var traitorIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.TRAITOR);
+    var idiotIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.IDIOT);
+    var cannibalIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.CANNIBAL);
+    var agentsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.AGENTS);
+    var spyIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SPY);
+    var scientistIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SCIENTIST);
+    var loversIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS);
+    var beastIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.THEBEAST);
+    var bountyHunterIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER);
+    var voodooIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO);
+    
+    // Skip header rows
+    var gameRows = gameValues.slice(1);
+    var roleRows = roleValues.slice(2);
+    
+    // Create map of game ID to winner camp
+    var gameWinnerMap = {};
+    gameRows.forEach(function(row) {
+      var gameId = row[gameIdIdx];
+      var winnerCamp = row[winnerCampIdx];
+      if (gameId && winnerCamp) {
+        gameWinnerMap[gameId] = winnerCamp;
+      }
+    });
+    
+    // Create map of game ID to player camps
+    var gamePlayerCampMap = {};
+    roleRows.forEach(function(row) {
+      var gameId = row[roleGameIdIdx];
+      if (!gameId) return;
+      
+      if (!gamePlayerCampMap[gameId]) {
+        gamePlayerCampMap[gameId] = {};
+      }
+      
+      // Add wolves
+      var wolves = row[wolfsIdx];
+      if (wolves) {
+        wolves.split(',').forEach(function(wolf) {
+          var player = wolf.trim();
+          if (player) {
+            gamePlayerCampMap[gameId][player] = "Loups";
+          }
+        });
+      }
+      
+      // Add all other roles
+      function addRolePlayer(player, roleName) {
+        if (player && player.trim()) {
+          gamePlayerCampMap[gameId][player.trim()] = roleName;
+        }
+      }
+      
+      addRolePlayer(row[traitorIdx], "Traître");
+      addRolePlayer(row[idiotIdx], "Idiot du Village");
+      addRolePlayer(row[cannibalIdx], "Cannibale");
+      addRolePlayer(row[spyIdx], "Espion");
+      addRolePlayer(row[beastIdx], "La Bête");
+      addRolePlayer(row[bountyHunterIdx], "Chasseur de primes");
+      addRolePlayer(row[voodooIdx], "Vaudou");
+      
+      // Handle agents (could be multiple)
+      var agents = row[agentsIdx];
+      if (agents) {
+        agents.split(',').forEach(function(agent) {
+          var player = agent.trim();
+          if (player) {
+            gamePlayerCampMap[gameId][player] = "Agent";
+          }
+        });
+      }
+      
+      // Handle scientist (could be multiple)
+      var scientists = row[scientistIdx];
+      if (scientists) {
+        scientists.split(',').forEach(function(scientist) {
+          var player = scientist.trim();
+          if (player) {
+            gamePlayerCampMap[gameId][player] = "Scientifique";
+          }
+        });
+      }
+      
+      // Handle lovers (could be multiple)
+      var lovers = row[loversIdx];
+      if (lovers) {
+        lovers.split(',').forEach(function(lover) {
+          var player = lover.trim();
+          if (player) {
+            gamePlayerCampMap[gameId][player] = "Amoureux";
+          }
+        });
+      }
+    });
+    
+    // Collect all players and initialize stats
+    var allPlayers = {};
+    var totalGames = 0;
+    
+    gameRows.forEach(function(row) {
+      var gameId = row[gameIdIdx];
+      var playerList = row[playerListIdx];
+      
+      if (gameId && playerList) {
+        totalGames++;
+        var players = playerList.split(',');
+        
+        players.forEach(function(playerName) {
+          var player = playerName.trim();
+          if (player) {
+            if (!allPlayers[player]) {
+              allPlayers[player] = {
+                gamesPlayed: 0,
+                gamesPlayedPercent: 0,
+                wins: 0,
+                winPercent: 0,
+                camps: {
+                  "Villageois": 0,
+                  "Loups": 0,
+                  "Traître": 0,
+                  "Idiot du Village": 0,
+                  "Cannibale": 0,
+                  "Agent": 0,
+                  "Espion": 0,
+                  "Scientifique": 0,
+                  "Amoureux": 0,
+                  "La Bête": 0,
+                  "Chasseur de primes": 0,
+                  "Vaudou": 0
+                }
+              };
+            }
+            
+            allPlayers[player].gamesPlayed++;
+            
+            // Determine player's camp in this game
+            var playerCamp = "Villageois"; // Default camp
+            if (gamePlayerCampMap[gameId] && gamePlayerCampMap[gameId][player]) {
+              playerCamp = gamePlayerCampMap[gameId][player];
+            }
+            
+            // Increment camp count
+            allPlayers[player].camps[playerCamp]++;
+            
+            // Check if player won
+            var winnerCamp = gameWinnerMap[gameId];
+            if (winnerCamp && playerCamp === winnerCamp) {
+              allPlayers[player].wins++;
+            }
+          }
+        });
+      }
+    });
+    
+    // Calculate percentages
+    Object.keys(allPlayers).forEach(function(player) {
+      var stats = allPlayers[player];
+      stats.gamesPlayedPercent = (stats.gamesPlayed / totalGames * 100).toFixed(2);
+      stats.winPercent = (stats.wins / stats.gamesPlayed * 100).toFixed(2);
+    });
+    
+    // Convert to array for easier frontend processing
+    var playerStatsArray = Object.keys(allPlayers).map(function(player) {
+      return {
+        player: player,
+        ...allPlayers[player]
+      };
+    });
+    
+    // Sort by games played (descending)
+    playerStatsArray.sort(function(a, b) {
+      return b.gamesPlayed - a.gamesPlayed;
+    });
+    
+    return JSON.stringify({
+      totalGames: totalGames,
+      playerStats: playerStatsArray
+    });
+  } catch (error) {
+    Logger.log('Error in getPlayerStatsRaw: ' + error.message);
     return JSON.stringify({ error: error.message });
   }
 }
