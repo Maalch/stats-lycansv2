@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerPairingStats } from '../../hooks/usePlayerPairingStats';
+import { playersColor } from '../../types/api';
 
 export function PlayerPairingStatsChart() {
   const { data, isLoading, error } = usePlayerPairingStats();
@@ -18,17 +19,46 @@ export function PlayerPairingStatsChart() {
     return <div className="donnees-manquantes">Aucune donnée de paires disponible</div>;
   }
 
-  // Prepare data for charts
-  const wolfPairsData = data.wolfPairs.pairs
-    .filter(pair => pair.appearances >= 2) // Only show pairs with multiple appearances
-    .map(pair => ({
+  // Helper function to get player color with fallback
+  const getPlayerColor = (playerName: string): string => {
+    return playersColor[playerName] || '#8884d8';
+  };
+
+  // Helper function to create gradient ID for a pair
+  const createGradientId = (pair: string): string => {
+    return `gradient-${pair.replace(/[^a-zA-Z0-9]/g, '')}`;
+  };
+
+  // Helper function to generate gradient definitions for all pairs
+  const generateGradientDefs = (pairsData: any[]) => {
+    return pairsData.map(pairData => {
+      const [player1, player2] = pairData.players;
+      const color1 = getPlayerColor(player1);
+      const color2 = getPlayerColor(player2);
+      const gradientId = createGradientId(pairData.pair);
+
+      return (
+        <linearGradient key={gradientId} id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={color1} />
+          <stop offset="50%" stopColor={color1} />
+          <stop offset="50%" stopColor={color2} />
+          <stop offset="100%" stopColor={color2} />
+        </linearGradient>
+      );
+    });
+  };
+
+  // Show all pairs, even those with only 1 appearance
+  const wolfPairsData = data.wolfPairs.pairs.map(pair => ({
     ...pair,
-    winRateNum: parseFloat(pair.winRate)
+    winRateNum: parseFloat(pair.winRate),
+    gradientId: createGradientId(pair.pair)
   }));
 
   const loverPairsData = data.loverPairs.pairs.map(pair => ({
     ...pair,
-    winRateNum: parseFloat(pair.winRate)
+    winRateNum: parseFloat(pair.winRate),
+    gradientId: createGradientId(pair.pair)
   }));
 
   // Calculate recurring pairs (2+ appearances) for display
@@ -83,6 +113,9 @@ export function PlayerPairingStatsChart() {
                   data={topWolfPairsByAppearances}
                   margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
                 >
+                  <defs>
+                    {generateGradientDefs(topWolfPairsByAppearances)}
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
                     dataKey="pair" 
@@ -99,6 +132,7 @@ export function PlayerPairingStatsChart() {
                     content={({ active, payload }) => {
                       if (active && payload && payload.length > 0) {
                         const data = payload[0].payload;
+                        const [player1, player2] = data.players;
                         return (
                           <div style={{ 
                             background: 'var(--bg-secondary)', 
@@ -108,6 +142,13 @@ export function PlayerPairingStatsChart() {
                             border: '1px solid var(--border-color)'
                           }}>
                             <div><strong>{data.pair}</strong></div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player1), borderRadius: '2px' }}></span>
+                              <span>{player1}</span>
+                              <span>+</span>
+                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player2), borderRadius: '2px' }}></span>
+                              <span>{player2}</span>
+                            </div>
                             <div>Apparitions: {data.appearances}</div>
                             <div>Victoires: {data.wins}</div>
                             <div>Taux de victoire: {data.winRate}%</div>
@@ -117,11 +158,11 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar 
-                    dataKey="appearances" 
-                    name="Apparitions" 
-                    fill="var(--chart-color-1)"
-                  />
+                  <Bar dataKey="appearances" name="Apparitions">
+                    {topWolfPairsByAppearances.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -145,6 +186,9 @@ export function PlayerPairingStatsChart() {
                   data={topWolfPairsByWinRate}
                   margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
                 >
+                  <defs>
+                    {generateGradientDefs(topWolfPairsByWinRate)}
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
                     dataKey="pair" 
@@ -162,6 +206,7 @@ export function PlayerPairingStatsChart() {
                     content={({ active, payload }) => {
                       if (active && payload && payload.length > 0) {
                         const data = payload[0].payload;
+                        const [player1, player2] = data.players;
                         return (
                           <div style={{ 
                             background: 'var(--bg-secondary)', 
@@ -171,6 +216,13 @@ export function PlayerPairingStatsChart() {
                             border: '1px solid var(--border-color)'
                           }}>
                             <div><strong>{data.pair}</strong></div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player1), borderRadius: '2px' }}></span>
+                              <span>{player1}</span>
+                              <span>+</span>
+                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player2), borderRadius: '2px' }}></span>
+                              <span>{player2}</span>
+                            </div>
                             <div>Taux de victoire: {data.winRate}%</div>
                             <div>Victoires: {data.wins} / {data.appearances}</div>
                           </div>
@@ -179,11 +231,11 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar 
-                    dataKey="winRateNum" 
-                    name="Taux de victoire (%)" 
-                    fill="var(--chart-color-4)"
-                  />
+                  <Bar dataKey="winRateNum" name="Taux de victoire (%)">
+                    {topWolfPairsByWinRate.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -228,6 +280,9 @@ export function PlayerPairingStatsChart() {
                   data={topLoverPairsByAppearances}
                   margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
                 >
+                  <defs>
+                    {generateGradientDefs(topLoverPairsByAppearances)}
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
                     dataKey="pair" 
@@ -244,6 +299,7 @@ export function PlayerPairingStatsChart() {
                     content={({ active, payload }) => {
                       if (active && payload && payload.length > 0) {
                         const data = payload[0].payload;
+                        const [player1, player2] = data.players;
                         return (
                           <div style={{ 
                             background: 'var(--bg-secondary)', 
@@ -253,6 +309,13 @@ export function PlayerPairingStatsChart() {
                             border: '1px solid var(--border-color)'
                           }}>
                             <div><strong>{data.pair}</strong></div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player1), borderRadius: '2px' }}></span>
+                              <span>{player1}</span>
+                              <span>+</span>
+                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player2), borderRadius: '2px' }}></span>
+                              <span>{player2}</span>
+                            </div>
                             <div>Apparitions: {data.appearances}</div>
                             <div>Victoires: {data.wins}</div>
                             <div>Taux de victoire: {data.winRate}%</div>
@@ -262,11 +325,11 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar 
-                    dataKey="appearances" 
-                    name="Apparitions" 
-                    fill="var(--chart-color-5)"
-                  />
+                  <Bar dataKey="appearances" name="Apparitions">
+                    {topLoverPairsByAppearances.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -287,6 +350,9 @@ export function PlayerPairingStatsChart() {
                   data={topLoverPairsByWinRate}
                   margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
                 >
+                  <defs>
+                    {generateGradientDefs(topLoverPairsByWinRate)}
+                  </defs>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
                     dataKey="pair" 
@@ -304,6 +370,7 @@ export function PlayerPairingStatsChart() {
                     content={({ active, payload }) => {
                       if (active && payload && payload.length > 0) {
                         const data = payload[0].payload;
+                        const [player1, player2] = data.players;
                         return (
                           <div style={{ 
                             background: 'var(--bg-secondary)', 
@@ -313,6 +380,13 @@ export function PlayerPairingStatsChart() {
                             border: '1px solid var(--border-color)'
                           }}>
                             <div><strong>{data.pair}</strong></div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player1), borderRadius: '2px' }}></span>
+                              <span>{player1}</span>
+                              <span>+</span>
+                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player2), borderRadius: '2px' }}></span>
+                              <span>{player2}</span>
+                            </div>
                             <div>Taux de victoire: {data.winRate}%</div>
                             <div>Victoires: {data.wins} / {data.appearances}</div>
                           </div>
@@ -321,11 +395,11 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar 
-                    dataKey="winRateNum" 
-                    name="Taux de victoire (%)" 
-                    fill="var(--chart-color-6)"
-                  />
+                  <Bar dataKey="winRateNum" name="Taux de victoire (%)">
+                    {topLoverPairsByWinRate.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
