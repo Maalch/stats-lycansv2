@@ -55,7 +55,7 @@ const LYCAN_SCHEMA = {
       SCIENTIST: 'Scientifique', //name of the scientist in the game, if any
       LOVERS: 'Amoureux', //name of the lovers in the game, if any
       THEBEAST: 'La Bête', //name of the beast in the game, if any
-      BOUNTYHUNDER: 'Chasseur de primes', //name of the bounty hunter in the game, if any
+      BOUNTYHUNTER: 'Chasseur de primes', //name of the bounty hunter in the game, if any
       VOODOO: 'Vaudou'	//name of the voodoo in the game, if any																				
     }
   }
