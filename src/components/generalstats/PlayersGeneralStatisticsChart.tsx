@@ -186,7 +186,7 @@ export function PlayersGeneralStatisticsChart() {
             </ResponsiveContainer>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            {winRateData.length} joueur(s) avec au moins {minGamesForWinRate} partie(s)
+            Top {winRateData.length} des joueurs avec au moins {minGamesForWinRate} partie(s)
           </p>
         </div>
       </div>
