@@ -7,6 +7,7 @@ const HarvestProgressChart = lazy(() => import('./components/generalstats/Harves
 const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 const PlayerStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
+const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 
 const MAIN_TABS = [
   { key: 'general', label: 'Statistiques Générales' },
@@ -25,10 +26,15 @@ const PONCE_STATS_MENU = [
   { key: 'roles', label: 'Survie par Rôle', component: RoleSurvivalRateChart },
 ];
 
+const PLAYER_STATS_MENU = [
+  { key: 'pairing', label: 'Paires de Joueurs', component: PlayerPairingStatsChart },
+];
+
 export default function App() {
   const [selectedMainTab, setSelectedMainTab] = useState('general');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camp');
   const [selectedPonceStat, setSelectedPonceStat] = useState('roles');
+  const [selectedPlayerStat, setSelectedPlayerStat] = useState('pairing');
 
   const renderContent = () => {
     switch (selectedMainTab) {
@@ -81,11 +87,25 @@ export default function App() {
         );
 
       case 'players':
+        const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayerPairingStatsChart;
         return (
-          <div className="lycans-dashboard-content">
-            <div className="lycans-empty-section">
-              <h2>Statistiques par Joueur</h2>
-              <p>Cette section sera développée prochainement...</p>
+          <div>
+            <nav className="lycans-submenu">
+              {PLAYER_STATS_MENU.map(item => (
+                <button
+                  key={item.key}
+                  className={`lycans-submenu-btn${selectedPlayerStat === item.key ? ' active' : ''}`}
+                  onClick={() => setSelectedPlayerStat(item.key)}
+                  type="button"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="lycans-dashboard-content">
+              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                <SelectedPlayerComponent />
+              </Suspense>
             </div>
           </div>
         );

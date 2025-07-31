@@ -821,3 +821,174 @@ function getPlayerStatsRaw(e) {
     return JSON.stringify({ error: error.message });
   }
 }
+
+/**
+ * Returns statistics about player pairings (wolves and lovers)
+ * @return {string} JSON string with player pairing statistics
+ */
+function getPlayerPairingStatsRaw() {
+  try {
+    // Get game and role data
+    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
+    var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
+    
+    var gameValues = gameData.values;
+    var roleValues = roleData.values;
+    
+    var gameHeaders = gameValues[0];
+    var roleHeaders = roleValues[1];  // Note: using index 1 based on existing code
+    
+    // Get game column indexes
+    var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
+    var winnerCampIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
+    
+    // Get role column indexes
+    var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
+    var wolfsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS);
+    var loversIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS);
+    
+    // Skip header rows
+    var gameRows = gameValues.slice(1);
+    var roleRows = roleValues.slice(2);  // Note: using slice(2) based on existing code
+    
+    // Create map of game ID to winner camp
+    var gameWinnerMap = {};
+    gameRows.forEach(function(row) {
+      var gameId = row[gameIdIdx];
+      var winnerCamp = row[winnerCampIdx];
+      if (gameId && winnerCamp) {
+        gameWinnerMap[gameId] = winnerCamp;
+      }
+    });
+    
+    // Initialize statistics
+    var wolfPairStats = {};
+    var loverPairStats = {};
+    var totalGamesWithMultipleWolves = 0;
+    var totalGamesWithLovers = 0;
+    
+    // Process role data
+    roleRows.forEach(function(row) {
+      var gameId = row[roleGameIdIdx];
+      if (!gameId) return;
+      
+      var wolves = row[wolfsIdx];
+      var lovers = row[loversIdx];
+      var winnerCamp = gameWinnerMap[gameId];
+      
+      // Process wolf pairs
+      if (wolves) {
+        var wolfArray = wolves.split(',').map(function(wolf) { return wolf.trim(); }).filter(Boolean);
+        
+        // Only process if there are multiple wolves
+        if (wolfArray.length >= 2) {
+          totalGamesWithMultipleWolves++;
+          
+          // Generate all possible wolf pairs
+          for (var i = 0; i < wolfArray.length; i++) {
+            for (var j = i + 1; j < wolfArray.length; j++) {
+              var wolf1 = wolfArray[i];
+              var wolf2 = wolfArray[j];
+              
+              // Create a consistent key for the pair (alphabetical order)
+              var pairKey = [wolf1, wolf2].sort().join(" & ");
+              
+              if (!wolfPairStats[pairKey]) {
+                wolfPairStats[pairKey] = {
+                  appearances: 0,
+                  wins: 0,
+                  winRate: 0,
+                  players: [wolf1, wolf2]
+                };
+              }
+              
+              wolfPairStats[pairKey].appearances++;
+              if (winnerCamp === "Loups") {
+                wolfPairStats[pairKey].wins++;
+              }
+            }
+          }
+        }
+      }
+      
+      // Process lover pairs
+      if (lovers) {
+        var loverArray = lovers.split(',').map(function(lover) { return lover.trim(); }).filter(Boolean);
+        
+        // Only process if there are lovers (should be pairs)
+        if (loverArray.length >= 2) {
+          totalGamesWithLovers++;
+          
+          // Generate lover pairs (should usually be just one pair per game)
+          for (var i = 0; i < loverArray.length; i += 2) {
+            // Make sure we have both lovers of the pair
+            if (i + 1 < loverArray.length) {
+              var lover1 = loverArray[i];
+              var lover2 = loverArray[i + 1];
+              
+              // Create a consistent key for the pair (alphabetical order)
+              var pairKey = [lover1, lover2].sort().join(" & ");
+              
+              if (!loverPairStats[pairKey]) {
+                loverPairStats[pairKey] = {
+                  appearances: 0,
+                  wins: 0,
+                  winRate: 0,
+                  players: [lover1, lover2]
+                };
+              }
+              
+              loverPairStats[pairKey].appearances++;
+              if (winnerCamp === "Amoureux") {
+                loverPairStats[pairKey].wins++;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    // Calculate win rates and convert to arrays
+    var wolfPairArray = Object.keys(wolfPairStats).map(function(key) {
+      var stats = wolfPairStats[key];
+      stats.winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
+      return {
+        pair: key,
+        ...stats
+      };
+    });
+    
+    var loverPairArray = Object.keys(loverPairStats).map(function(key) {
+      var stats = loverPairStats[key];
+      stats.winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
+      return {
+        pair: key,
+        ...stats
+      };
+    });
+    
+    // Sort by number of appearances (descending)
+    wolfPairArray.sort(function(a, b) {
+      return b.appearances - a.appearances;
+    });
+    
+    loverPairArray.sort(function(a, b) {
+      return b.appearances - a.appearances;
+    });
+    
+    return JSON.stringify({
+      wolfPairs: {
+        totalGames: totalGamesWithMultipleWolves,
+        pairs: wolfPairArray
+      },
+      loverPairs: {
+        totalGames: totalGamesWithLovers,
+        pairs: loverPairArray
+      }
+    });
+    
+  } catch (error) {
+    Logger.log('Error in getPlayerPairingStatsRaw: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
