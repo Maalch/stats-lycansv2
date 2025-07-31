@@ -1,11 +1,11 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } from 'recharts';
-import { useCampWinStats } from '../hooks/useCampWinStats';
-import { lycansColorScheme } from '../types/api';
+import { useCampWinStats } from '../../hooks/useCampWinStats';
+import { lycansColorScheme } from '../../types/api';
 
 // Fallback color for camps not in the scheme
 const lycansDefaultColor = '#607D8B';
 
-export function CampWinRateChart() {
+export function CampsAndRolesRateChart() {
   const { campWinStats: victoriesDonnees, isLoading: chargementEnCours, errorInfo: messageErreur } = useCampWinStats();
 
   if (chargementEnCours) {

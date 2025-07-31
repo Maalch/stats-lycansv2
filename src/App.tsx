@@ -2,23 +2,98 @@ import { Suspense, lazy, useState } from 'react';
 import './App.css';
 
 // Lazy load each dashboard section
-const CampWinRateChart = lazy(() => import('./components/CampWinRateChart').then(m => ({ default: m.CampWinRateChart })));
-const HarvestProgressChart = lazy(() => import('./components/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
-const RoleSurvivalRateChart = lazy(() => import('./components/RoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
-const GameDurationInsights = lazy(() => import('./components/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
-const PlayerStatisticsChart = lazy(() => import('./components/PlayerStatisticsChart').then(m => ({ default: m.PlayerStatisticsChart })));
+const CampsAndRolesRateChart = lazy(() => import('./components/generalstats/CampsAndRolesRateChart').then(m => ({ default: m.CampsAndRolesRateChart })));
+const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
+const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
+const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
+const PlayerStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
 
-const MENU = [
-  { key: 'camp', label: 'Victoires par Camp', component: CampWinRateChart },
-  { key: 'harvest', label: 'Statistiques Récolte', component: HarvestProgressChart },
-  { key: 'roles', label: 'Survie par Rôle (Ponce)', component: RoleSurvivalRateChart },
+const MAIN_TABS = [
+  { key: 'general', label: 'Statistiques Générales' },
+  { key: 'ponce', label: 'Statistiques Ponce' },
+  { key: 'players', label: 'Statistiques par joueur' },
+];
+
+const GENERAL_STATS_MENU = [
+  { key: 'camp', label: 'Camps et Roles', component: CampsAndRolesRateChart },
+  { key: 'harvest', label: 'Récolte', component: HarvestProgressChart },
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
-  { key: 'players', label: 'Statistiques Joueurs', component: PlayerStatisticsChart },
+  { key: 'playersGeneral', label: 'Joueurs', component: PlayerStatisticsChart },
+];
+
+const PONCE_STATS_MENU = [
+  { key: 'roles', label: 'Survie par Rôle', component: RoleSurvivalRateChart },
 ];
 
 export default function App() {
-  const [selected, setSelected] = useState('camp');
-  const SelectedComponent = MENU.find(m => m.key === selected)?.component ?? CampWinRateChart;
+  const [selectedMainTab, setSelectedMainTab] = useState('general');
+  const [selectedGeneralStat, setSelectedGeneralStat] = useState('camp');
+  const [selectedPonceStat, setSelectedPonceStat] = useState('roles');
+
+  const renderContent = () => {
+    switch (selectedMainTab) {
+      case 'general':
+        const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? CampsAndRolesRateChart;
+        return (
+          <div>
+            <nav className="lycans-submenu">
+              {GENERAL_STATS_MENU.map(item => (
+                <button
+                  key={item.key}
+                  className={`lycans-submenu-btn${selectedGeneralStat === item.key ? ' active' : ''}`}
+                  onClick={() => setSelectedGeneralStat(item.key)}
+                  type="button"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="lycans-dashboard-content">
+              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                <SelectedGeneralComponent />
+              </Suspense>
+            </div>
+          </div>
+        );
+
+      case 'ponce':
+        const SelectedPonceComponent = PONCE_STATS_MENU.find(m => m.key === selectedPonceStat)?.component ?? RoleSurvivalRateChart;
+        return (
+          <div>
+            <nav className="lycans-submenu">
+              {PONCE_STATS_MENU.map(item => (
+                <button
+                  key={item.key}
+                  className={`lycans-submenu-btn${selectedPonceStat === item.key ? ' active' : ''}`}
+                  onClick={() => setSelectedPonceStat(item.key)}
+                  type="button"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="lycans-dashboard-content">
+              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                <SelectedPonceComponent />
+              </Suspense>
+            </div>
+          </div>
+        );
+
+      case 'players':
+        return (
+          <div className="lycans-dashboard-content">
+            <div className="lycans-empty-section">
+              <h2>Statistiques par Joueur</h2>
+              <p>Cette section sera développée prochainement...</p>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="app-container">
@@ -34,23 +109,21 @@ export default function App() {
             <p>Analyse des parties, rôles et performances</p>
           </header>
 
-          <nav className="lycans-menu">
-            {MENU.map(item => (
+          <nav className="lycans-main-menu">
+            {MAIN_TABS.map(tab => (
               <button
-                key={item.key}
-                className={`lycans-menu-btn${selected === item.key ? ' active' : ''}`}
-                onClick={() => setSelected(item.key)}
+                key={tab.key}
+                className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
+                onClick={() => setSelectedMainTab(tab.key)}
                 type="button"
               >
-                {item.label}
+                {tab.label}
               </button>
             ))}
           </nav>
 
           <div className="lycans-dashboard-section">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <SelectedComponent />
-            </Suspense>
+            {renderContent()}
           </div>
 
           <footer className="lycans-dashboard-footer">
