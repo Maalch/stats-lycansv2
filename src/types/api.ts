@@ -10,9 +10,12 @@ export const lycansColorScheme: Record<string, string> = {
   'Vaudou': '#673AB7',
   'Chasseur de primes': '#FFC107',
   'Chasseur': '#187e04ff',
+  'Scientifique': '#00BCD4',
+  'Agent': '#2196F3',
   'Alchimiste': '#ff00d4ff',
   'Traître': '#aa5f0aff',
 };
+
 
 export const playersColor: Record<string, string> = {
   "Ponce": "#2e2eff",
