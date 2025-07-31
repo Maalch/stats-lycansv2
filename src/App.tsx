@@ -4,10 +4,10 @@ import './App.css';
 // Lazy load each dashboard section
 const CampsAndRolesRateChart = lazy(() => import('./components/generalstats/CampsAndRolesRateChart').then(m => ({ default: m.CampsAndRolesRateChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
-const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
-const PlayerGeneralStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
-const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
+const PlayersGeneralStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
+const PlayerPairingStatsChart = lazy(() => import('./components/generalstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
+const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
 
 const MAIN_TABS = [
@@ -17,31 +17,30 @@ const MAIN_TABS = [
 ];
 
 const GENERAL_STATS_MENU = [
+  { key: 'playersGeneral', label: 'Joueurs', component: PlayersGeneralStatisticsChart },
+  { key: 'pairing', label: 'Paires de Joueurs', component: PlayerPairingStatsChart }, 
   { key: 'camp', label: 'Camps et Roles', component: CampsAndRolesRateChart },
   { key: 'harvest', label: 'Récolte', component: HarvestProgressChart },
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
-  { key: 'playersGeneral', label: 'Joueurs', component: PlayerGeneralStatisticsChart },
 ];
+
 
 const PONCE_STATS_MENU = [
   { key: 'roles', label: 'Survie par Rôle', component: RoleSurvivalRateChart },
 ];
 
 const PLAYER_STATS_MENU = [
-  { key: 'pairing', label: 'Paires de Joueurs', component: PlayerPairingStatsChart },
   { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
 ];
 
 export default function App() {
   const [selectedMainTab, setSelectedMainTab] = useState('general');
-  const [selectedGeneralStat, setSelectedGeneralStat] = useState('camp');
-  const [selectedPonceStat, setSelectedPonceStat] = useState('roles');
-  const [selectedPlayerStat, setSelectedPlayerStat] = useState('pairing');
+  const [selectedGeneralStat, setSelectedGeneralStat] = useState('playersGeneral');
 
-  const renderContent = () => {
+ const renderContent = () => {
     switch (selectedMainTab) {
-      case 'general':
-        const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? CampsAndRolesRateChart;
+      case 'general': {
+        const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? PlayersGeneralStatisticsChart;
         return (
           <div>
             <nav className="lycans-submenu">
@@ -63,55 +62,29 @@ export default function App() {
             </div>
           </div>
         );
-
-      case 'ponce':
-        const SelectedPonceComponent = PONCE_STATS_MENU.find(m => m.key === selectedPonceStat)?.component ?? RoleSurvivalRateChart;
+      }
+      case 'ponce': {
+        // Always show the first component in PONCE_STATS_MENU
+        const SelectedPonceComponent = PONCE_STATS_MENU[0].component;
         return (
-          <div>
-            <nav className="lycans-submenu">
-              {PONCE_STATS_MENU.map(item => (
-                <button
-                  key={item.key}
-                  className={`lycans-submenu-btn${selectedPonceStat === item.key ? ' active' : ''}`}
-                  onClick={() => setSelectedPonceStat(item.key)}
-                  type="button"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-            <div className="lycans-dashboard-content">
-              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                <SelectedPonceComponent />
-              </Suspense>
-            </div>
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <SelectedPonceComponent />
+            </Suspense>
           </div>
         );
-
-      case 'players':
-        const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayerPairingStatsChart;
+      }
+      case 'players': {
+        // Always show the first component in PLAYER_STATS_MENU
+        const SelectedPlayerComponent = PLAYER_STATS_MENU[0].component;
         return (
-          <div>
-            <nav className="lycans-submenu">
-              {PLAYER_STATS_MENU.map(item => (
-                <button
-                  key={item.key}
-                  className={`lycans-submenu-btn${selectedPlayerStat === item.key ? ' active' : ''}`}
-                  onClick={() => setSelectedPlayerStat(item.key)}
-                  type="button"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-            <div className="lycans-dashboard-content">
-              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                <SelectedPlayerComponent />
-              </Suspense>
-            </div>
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <SelectedPlayerComponent />
+            </Suspense>
           </div>
         );
-
+      }
       default:
         return null;
     }

@@ -6,7 +6,7 @@ import { getRandomColor } from '../../types/api';
 
 export function RoleSurvivalRateChart() {
   const { roleSurvivalStats: donneesSurvie, dataLoading: chargementStats, fetchError: erreurStats } = useRoleSurvivalStats();
-  const [categorieAffichee, setCategorieAffichee] = useState<'roles' | 'camps' | 'secondaryRoles' | 'thirdRoles'>('roles');
+  const [categorieAffichee, setCategorieAffichee] = useState<'camps' | 'roles' | 'secondaryRoles' | 'thirdRoles'>('camps');
 
   // Déclarer le colorMap comme null par défaut
   const colorMap = useMemo(() => {
@@ -18,13 +18,13 @@ export function RoleSurvivalRateChart() {
     let keyField = '';
     
     switch (categorieAffichee) {
-      case 'roles':
-        data = donneesSurvie.roleStats || [];
-        keyField = 'role';
-        break;
       case 'camps':
         data = donneesSurvie.campStats || [];
         keyField = 'camp';
+        break;
+      case 'roles':
+        data = donneesSurvie.roleStats || [];
+        keyField = 'role';
         break;
       case 'secondaryRoles':
         data = donneesSurvie.secondaryRoleStats || [];
@@ -122,28 +122,28 @@ export function RoleSurvivalRateChart() {
       
       <div className="lycans-categories-selection">
         <button 
-          className={`lycans-categorie-btn ${categorieAffichee === 'roles' ? 'active' : ''}`} 
-          onClick={() => setCategorieAffichee('roles')}
-        >
-          Rôles principaux
-        </button>
-        <button 
           className={`lycans-categorie-btn ${categorieAffichee === 'camps' ? 'active' : ''}`} 
           onClick={() => setCategorieAffichee('camps')}
         >
           Camps
         </button>
         <button 
-          className={`lycans-categorie-btn ${categorieAffichee === 'secondaryRoles' ? 'active' : ''}`} 
-          onClick={() => setCategorieAffichee('secondaryRoles')}
+          className={`lycans-categorie-btn ${categorieAffichee === 'roles' ? 'active' : ''}`} 
+          onClick={() => setCategorieAffichee('roles')}
         >
-          Rôles secondaires
+          Rôles villageois
         </button>
         <button 
           className={`lycans-categorie-btn ${categorieAffichee === 'thirdRoles' ? 'active' : ''}`} 
           onClick={() => setCategorieAffichee('thirdRoles')}
         >
           Rôles spécifiques
+        </button>
+        <button 
+          className={`lycans-categorie-btn ${categorieAffichee === 'secondaryRoles' ? 'active' : ''}`} 
+          onClick={() => setCategorieAffichee('secondaryRoles')}
+        >
+          Rôles secondaires
         </button>
       </div>
       
