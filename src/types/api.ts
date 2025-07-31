@@ -14,6 +14,42 @@ export const lycansColorScheme: Record<string, string> = {
   'Traître': '#aa5f0aff',
 };
 
+export const playersColor: Record<string, string> = {
+  "Ponce": "#2e2eff",
+  "Khalen": "#0000ff",
+  "Monodie": "#0000ff",
+  "Fukano": "#ffb900",
+  "Tone": "#ffff00",
+  "RomainJacques": "#ffff00",
+  "Ketchopl": "#ffff00",
+  "Arkantors": "#00ff00",
+  "Flonflon": "#00ff00",
+  "Anaee": "#a000ff",
+  "Pelerine": "#969696ff",
+  "DevGirl_": "#ff00ff",
+  "Bytell": "#00ff00",
+  "Tsuna": "#a52a2ac9",
+  "Poachimpa": "#a52a2ac9",
+  "Lutti": "#00ffff",
+  "Kao": "#969696ff",
+  "CHLOE": "#00ffff",
+  "MaMaPaprika": "#ff9000",
+  "Reivil": "#ff9000",
+  "Noamouille": "#ff9000",
+  "Zarcross": "#ff9000",
+  "Craco": "#ff00ff",
+  "Mathy": "#ff00ff",
+  "ClydeCreator": "#ff0000",
+  "Kyria": "#a000ff",
+  "Tovi": "#969696ff",
+  "BoccA": "#969696ff",
+  "Cyldhur": "#969696ff",
+  "PeoBran": "#00ffff",
+  "Miraaaaaah": "#ffff00",
+  "Brybry": "#00ff00",
+  "Heimdalle": "#00ffff"
+};
+
 // Camp Win Statistics Types
 export interface CampStat {
   camp: string;
