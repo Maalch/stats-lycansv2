@@ -6,6 +6,11 @@ import { playersColor } from '../../types/api';
 export function PlayerPairingStatsChart() {
   const { data, isLoading, error } = usePlayerPairingStats();
   const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers'>('wolves');
+  const [minWolfAppearances, setMinWolfAppearances] = useState<number>(2);
+  const [minLoverAppearances, setMinLoverAppearances] = useState<number>(1);
+
+  // Options pour le nombre minimum d'apparitions
+  const minAppearancesOptions = [1, 2, 3, 4, 5];
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de paires...</div>;
@@ -71,6 +76,7 @@ export function PlayerPairingStatsChart() {
     .slice(0, 10);
 
   const topWolfPairsByWinRate = [...wolfPairsData]
+    .filter(pair => pair.appearances >= minWolfAppearances)
     .sort((a, b) => b.winRateNum - a.winRateNum)
     .slice(0, 10);
 
@@ -79,6 +85,7 @@ export function PlayerPairingStatsChart() {
     .slice(0, 10);
 
   const topLoverPairsByWinRate = [...loverPairsData]
+    .filter(pair => pair.appearances >= minLoverAppearances)
     .sort((a, b) => b.winRateNum - a.winRateNum)
     .slice(0, 10);
 
@@ -127,6 +134,7 @@ export function PlayerPairingStatsChart() {
                   />
                   <YAxis 
                     label={{ value: 'Apparitions', angle: -90, position: 'insideLeft' }}
+                    allowDecimals={false}
                   />
                   <Tooltip
                     content={({ active, payload }) => {
@@ -175,10 +183,33 @@ export function PlayerPairingStatsChart() {
 
         {/* Best Performing Wolf Pairs */}
         <div className="lycans-graphique-moitie">
-          <h3>Paires de Loups les Plus Performantes</h3>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-            (minimum 2 apparitions)
-          </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h3>Paires de Loups les Plus Performantes</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="min-wolf-appearances-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                Min. apparitions:
+              </label>
+              <select
+                id="min-wolf-appearances-select"
+                value={minWolfAppearances}
+                onChange={(e) => setMinWolfAppearances(Number(e.target.value))}
+                style={{
+                  background: 'var(--bg-tertiary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.9rem'
+                }}
+              >
+                {minAppearancesOptions.map(option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
           {topWolfPairsByWinRate.length > 0 ? (
             <div style={{ height: 320 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -244,6 +275,9 @@ export function PlayerPairingStatsChart() {
               <p>Pas assez de données pour analyser la performance</p>
             </div>
           )}
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+            Top {topWolfPairsByWinRate.length} des paires avec au moins {minWolfAppearances} apparition(s)
+          </p>
         </div>
       </div>
     </div>
@@ -294,6 +328,7 @@ export function PlayerPairingStatsChart() {
                   />
                   <YAxis 
                     label={{ value: 'Apparitions', angle: -90, position: 'insideLeft' }}
+                    allowDecimals={false}
                   />
                   <Tooltip
                     content={({ active, payload }) => {
@@ -342,7 +377,33 @@ export function PlayerPairingStatsChart() {
 
         {/* Best Performing Lover Pairs */}
         <div className="lycans-graphique-moitie">
-          <h3>Paires d'Amoureux les Plus Performantes</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h3>Paires d'Amoureux les Plus Performantes</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="min-lover-appearances-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                Min. apparitions:
+              </label>
+              <select
+                id="min-lover-appearances-select"
+                value={minLoverAppearances}
+                onChange={(e) => setMinLoverAppearances(Number(e.target.value))}
+                style={{
+                  background: 'var(--bg-tertiary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.9rem'
+                }}
+              >
+                {minAppearancesOptions.map(option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
           {topLoverPairsByWinRate.length > 0 ? (
             <div style={{ height: 320 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -408,6 +469,9 @@ export function PlayerPairingStatsChart() {
               <p>Pas assez de données pour analyser la performance</p>
             </div>
           )}
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+            Top {topLoverPairsByWinRate.length} des paires avec au moins {minLoverAppearances} apparition(s)
+          </p>
         </div>
       </div>
     </div>

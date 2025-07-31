@@ -41,9 +41,8 @@
 
 html, body {
   margin: 0;
-  padding: 0;
+  padding: 5px;
   height: 100%;
-  background-color: var(--bg-primary);
   color: var(--text-primary);
 }
 
@@ -54,7 +53,7 @@ body {
 }
 
 .app-container {
-  max-width: 2100px;
+  width: 90vw;
   margin: 0 auto; /* Center horizontally */
   padding: 0; /* Remove any padding */
   min-width: 1200px;
@@ -73,10 +72,9 @@ body {
 
 /* Main container */
 .main-container {
-  max-width: 2800px;
   width: auto;
   margin: 0 auto; /* Center horizontally only */
-  padding-bottom: 0.5rem; /* Reduce top/bottom padding */
+  padding: 0.5rem; /* Reduce top/bottom padding */
   background: var(--bg-primary);
   border-radius: 18px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.08);
@@ -195,7 +193,7 @@ body {
 }
 
 .lycans-dashboard-container {
-  max-width: 1200px;
+  max-width: 90%;
   margin: 0 auto;
   padding-bottom: 20px;
   font-family: 'Roboto', sans-serif;

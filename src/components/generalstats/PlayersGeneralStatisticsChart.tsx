@@ -2,10 +2,15 @@ import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { usePlayerStats } from '../../hooks/usePlayerStats';
 import { getRandomColor, playersColor } from '../../types/api';
+import { lycansColorScheme } from '../../types/api';
 
 export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
   const [selectedPlayer] = useState<string | null>(null);
+  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(10);
+
+  // Options pour le nombre minimum de parties
+  const minGamesOptions = [5, 8, 10, 15, 20, 25, 30, 50, 100];
 
   // Rendu conditionnel en fonction de l'état du chargement
   if (dataLoading) {
@@ -26,9 +31,9 @@ export function PlayersGeneralStatisticsChart() {
     .sort((a, b) => b.gamesPlayed - a.gamesPlayed) // Trier par nombre de parties
     .slice(0, 20); // Limiter aux 20 premiers joueurs
 
-  // Données pour le graphique de taux de victoire
+  // Données pour le graphique de taux de victoire (avec filtre dynamique)
   const winRateData = playerStatsData.playerStats
-    .filter(player => player.gamesPlayed >= 5) // Filtrer les joueurs avec peu de parties
+    .filter(player => player.gamesPlayed >= minGamesForWinRate) // Filtrer avec le minimum sélectionné
     .sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent)) // Trier par taux de victoire
     .slice(0, 20); // Limiter aux 20 premiers joueurs
 
@@ -43,22 +48,6 @@ export function PlayersGeneralStatisticsChart() {
         value: count,
         percentage: ((count / playerData.gamesPlayed) * 100).toFixed(1)
       }));
-  };
-
-  // Couleurs pour les camemberts
-  const CAMP_COLORS = {
-    'Villageois': '#4CAF50',
-    'Loups': '#F44336',
-    'Traître': '#9C27B0',
-    'Idiot du Village': '#FF9800',
-    'Cannibale': '#795548',
-    'Agent': '#2196F3',
-    'Espion': '#607D8B',
-    'Scientifique': '#00BCD4',
-    'Amoureux': '#E91E63',
-    'La Bête': '#673AB7',
-    'Chasseur de primes': '#FFC107',
-    'Vaudou': '#3F51B5'
   };
 
   const campDistributionData = selectedPlayer 
@@ -106,7 +95,6 @@ export function PlayersGeneralStatisticsChart() {
                 <Bar 
                   dataKey="gamesPlayed" 
                   name="Parties jouées" 
-                  // Color each bar by player color if found, else fallback
                   fill="#00C49F"
                 >
                   {participationData.map((entry) => (
@@ -122,7 +110,33 @@ export function PlayersGeneralStatisticsChart() {
         </div>
 
         <div className="lycans-graphique-section">
-          <h3>Meilleurs Taux de Victoire (min. 5 parties)</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h3>Meilleurs Taux de Victoire</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                Min. parties:
+              </label>
+              <select
+                id="min-games-select"
+                value={minGamesForWinRate}
+                onChange={(e) => setMinGamesForWinRate(Number(e.target.value))}
+                style={{
+                  background: 'var(--bg-tertiary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.9rem'
+                }}
+              >
+                {minGamesOptions.map(option => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -171,6 +185,9 @@ export function PlayersGeneralStatisticsChart() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+            {winRateData.length} joueur(s) avec au moins {minGamesForWinRate} partie(s)
+          </p>
         </div>
       </div>
 
@@ -194,7 +211,7 @@ export function PlayersGeneralStatisticsChart() {
                   {campDistributionData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={CAMP_COLORS[entry.name as keyof typeof CAMP_COLORS] || getRandomColor(entry.name)}
+                      fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || getRandomColor(entry.name)}
                     />
                   ))}
                 </Pie>
@@ -218,6 +235,6 @@ export function PlayersGeneralStatisticsChart() {
           </div>
         </div>
       )}    
-      </div>
+    </div>
   );
 }
