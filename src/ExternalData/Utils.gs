@@ -29,7 +29,7 @@ const LYCAN_SCHEMA = {
     }
   },
   PONCE: {
-    SHEET: 'Ponce', //Data specific to player Ponce per game
+    SHEET: 'Ponce', //Data specific to player Ponce per game - secondary role, wolf role, players killed ... are only avaialble for him
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
       CAMP: 'Camp', //Camp ("Villageois", "Loups", "Idiot du village" ...)
