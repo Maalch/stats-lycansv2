@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { usePlayerStats } from '../../hooks/usePlayerStats';
-import { getRandomColor } from '../../types/api';
+import { getRandomColor, playersColor } from '../../types/api';
 
 export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
-  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+  const [selectedPlayer] = useState<string | null>(null);
 
   // Rendu conditionnel en fonction de l'état du chargement
   if (dataLoading) {
@@ -35,9 +35,7 @@ export function PlayersGeneralStatisticsChart() {
   // Préparation des données pour le graphique circulaire des camps
   const prepareCampDistributionData = (player: string) => {
     const playerData = playerStatsData.playerStats.find(p => p.player === player);
-    
     if (!playerData) return [];
-    
     return Object.entries(playerData.camps)
       .filter(([_, count]) => count > 0)
       .map(([camp, count]) => ({
@@ -108,9 +106,16 @@ export function PlayersGeneralStatisticsChart() {
                 <Bar 
                   dataKey="gamesPlayed" 
                   name="Parties jouées" 
-                  fill="var(--chart-color-2)"
-                  onClick={(data) => setSelectedPlayer(data?.payload?.player)}
-                />
+                  // Color each bar by player color if found, else fallback
+                  fill="#00C49F"
+                >
+                  {participationData.map((entry) => (
+                    <Cell
+                      key={`cell-participation-${entry.player}`}
+                      fill={playersColor[entry.player] || "#00C49F"}
+                    />
+                  ))}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -154,9 +159,15 @@ export function PlayersGeneralStatisticsChart() {
                 <Bar 
                   dataKey="winPercent" 
                   name="Taux de Victoire" 
-                  fill="var(--chart-color-5)"
-                  onClick={(data) => setSelectedPlayer(data?.payload?.player)}
-                />
+                  fill="#8884d8"
+                >
+                  {winRateData.map((entry) => (
+                    <Cell
+                      key={`cell-winrate-${entry.player}`}
+                      fill={playersColor[entry.player] || "#8884d8"}
+                    />
+                  ))}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -206,7 +217,7 @@ export function PlayersGeneralStatisticsChart() {
             </ResponsiveContainer>
           </div>
         </div>
-      )}
-    </div>
+      )}    
+      </div>
   );
 }
