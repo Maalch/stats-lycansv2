@@ -8,6 +8,8 @@
   --accent-primary: #4853a8;      /* Primary accent/highlight */
   --accent-secondary: #e74c3c;    /* Secondary accent */
   --accent-tertiary: #82ca9d;     /* Tertiary accent (success) */
+  --accent-color: #4853a8;        /* Alias for accent-primary */
+  --border-color: #565674;        /* Border color for menus */
   
   /* Chart Colors */
   --chart-color-1: #0088FE;
@@ -32,6 +34,8 @@
     --text-secondary: #666;
     --accent-primary: #4853a8;
     --accent-secondary: #e74c3c;
+    --accent-color: #4853a8;
+    --border-color: #d0d0d0;
   }
 }
 
@@ -61,7 +65,7 @@ body {
   width: 50%;
   max-width: 400px;
   min-width: 400px;
-  margin: 20px auto 1rem auto; /* Center horizontally, reduce bottom margin */
+  margin: 20px auto 0.5rem auto; 
   display: block;
   border-radius: 12px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.18);
@@ -70,19 +74,107 @@ body {
 /* Main container */
 .main-container {
   max-width: 2800px;
-  width:auto;
-  margin: 0 auto; /* Center horizontally */
-  padding: 1rem; /* Reduced padding */
+  width: auto;
+  margin: 0 auto; /* Center horizontally only */
+  padding-bottom: 0.5rem; /* Reduce top/bottom padding */
   background: var(--bg-primary);
   border-radius: 18px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.08);
 }
+  
 
-.lycans-menu {
+/* Styles pour le menu principal (onglets principaux) */
+.lycans-main-menu {
   display: flex;
-  justify-content: center;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  justify-content: center;
+}
+
+.lycans-main-menu-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.lycans-main-menu-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.lycans-main-menu-btn.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* Styles pour le sous-menu */
+.lycans-submenu {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lycans-submenu-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.lycans-submenu-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.lycans-submenu-btn.active {
+  background: var(--chart-color-1);
+  color: white;
+  border-color: var(--chart-color-1);
+}
+
+/* Container pour le contenu du dashboard */
+.lycans-dashboard-content {
+  min-height: 400px;
+}
+
+/* Style pour la section vide */
+.lycans-empty-section {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.lycans-empty-section h2 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.lycans-empty-section p {
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* Ancien menu (maintenant obsolète, mais gardé pour compatibilité) */
+.lycans-menu {
+  display: none; /* Cache l'ancien menu */
 }
 
 .lycans-menu-btn {
@@ -105,18 +197,19 @@ body {
 .lycans-dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding-bottom: 20px;
   font-family: 'Roboto', sans-serif;
 }
 
 .lycans-dashboard-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .lycans-dashboard-header h1 {
   color: var(--text-primary);
   margin-bottom: 5px;
+  font-size: 2.2rem;
 }
 
 .lycans-dashboard-header p {
@@ -228,4 +321,81 @@ body {
   border-top: 1px solid var(--bg-tertiary);
   color: var(--text-secondary);
   font-size: 0.9rem;
+}
+
+/* Responsive design pour les menus */
+@media (max-width: 768px) {
+  .lycans-main-menu {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .lycans-main-menu-btn {
+    border-radius: 6px;
+    text-align: center;
+  }
+  
+  .lycans-submenu {
+    justify-content: center;
+  }
+  
+  .app-container {
+    min-width: auto;
+    padding: 0 10px;
+  }
+  
+  .main-container {
+    padding: 0.5rem;
+  }
+  
+  .lycans-banner {
+    width: 80%;
+    min-width: 200px;
+    max-width: 300px;
+  }
+}
+
+/* Styles supplémentaires pour les catégories de rôles */
+.lycans-categories-selection {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lycans-categorie-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.lycans-categorie-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.lycans-categorie-btn.active {
+  background: var(--chart-color-3);
+  color: white;
+  border-color: var(--chart-color-3);
+}
+
+/* Style spécifique pour les détails de joueurs */
+.lycans-joueur-details {
+  margin-top: 2rem;
+  background-color: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.lycans-joueur-details h3 {
+  color: var(--accent-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
 }

@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList } from 'recharts';
-import { useGameDurationAnalysis } from '../hooks/useGameDurationAnalysis';
+import { useGameDurationAnalysis } from '../../hooks/useGameDurationAnalysis';
 
 // Optionally import your color scheme if you want to use the same as other charts
 // import { lycansColorScheme } from '../types/api';

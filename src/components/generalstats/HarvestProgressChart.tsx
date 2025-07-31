@@ -1,5 +1,5 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { useHarvestStats } from '../hooks/useHarvestStats';
+import { useHarvestStats } from '../../hooks/useHarvestStats';
 
 // Couleurs pour les différentes tranches de récolte
 const lycansRecolteCouleurs = ['#d32f2f', '#f57c00', '#fbc02d', '#388e3c', '#1976d2'];

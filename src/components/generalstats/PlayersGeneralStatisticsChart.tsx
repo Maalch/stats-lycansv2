@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { usePlayerStats } from '../hooks/usePlayerStats';
-import { getRandomColor } from '../types/api';
+import { usePlayerStats } from '../../hooks/usePlayerStats';
+import { getRandomColor } from '../../types/api';
 
-export function PlayerStatisticsChart() {
+export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 

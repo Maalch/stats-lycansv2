@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis, Cell } from 'recharts';
-import { useRoleSurvivalStats } from '../hooks/useSurvivalStats';
-import { lycansColorScheme } from '../types/api';
-import { getRandomColor } from '../types/api';
+import { useRoleSurvivalStats } from '../../hooks/useSurvivalStats';
+import { lycansColorScheme } from '../../types/api';
+import { getRandomColor } from '../../types/api';
 
 export function RoleSurvivalRateChart() {
   const { roleSurvivalStats: donneesSurvie, dataLoading: chargementStats, fetchError: erreurStats } = useRoleSurvivalStats();
@@ -118,7 +118,7 @@ export function RoleSurvivalRateChart() {
 
   return (
     <div className="lycans-roles-survie">
-      <h2>Statistiques de Survie par Rôles de Ponce</h2>
+      <h2>Statistiques de Survie par Rôles</h2>
       
       <div className="lycans-categories-selection">
         <button 
