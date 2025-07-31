@@ -22,33 +22,33 @@ export function PlayerPairingStatsChart() {
   const wolfPairsData = data.wolfPairs.pairs
     .filter(pair => pair.appearances >= 2) // Only show pairs with multiple appearances
     .map(pair => ({
-      ...pair,
-      winRateNum: parseFloat(pair.winRate)
-    }));
+    ...pair,
+    winRateNum: parseFloat(pair.winRate)
+  }));
 
-  const loverPairsData = data.loverPairs.pairs
-    .filter(pair => pair.appearances >= 1)
-    .map(pair => ({
-      ...pair,
-      winRateNum: parseFloat(pair.winRate)
-    }));
+  const loverPairsData = data.loverPairs.pairs.map(pair => ({
+    ...pair,
+    winRateNum: parseFloat(pair.winRate)
+  }));
+
+  // Calculate recurring pairs (2+ appearances) for display
+  const recurringWolfPairs = wolfPairsData.filter(pair => pair.appearances >= 2);
+  const recurringLoverPairs = loverPairsData.filter(pair => pair.appearances >= 2);
 
   // Split data for frequency vs performance charts
-  const topWolfPairsByAppearances = wolfPairsData
+  const topWolfPairsByAppearances = [...wolfPairsData]
     .sort((a, b) => b.appearances - a.appearances)
     .slice(0, 10);
 
-  const topWolfPairsByWinRate = wolfPairsData
-    .filter(pair => pair.appearances >= 3) // Need meaningful sample size
+  const topWolfPairsByWinRate = [...wolfPairsData]
     .sort((a, b) => b.winRateNum - a.winRateNum)
     .slice(0, 10);
 
-  const topLoverPairsByAppearances = loverPairsData
+  const topLoverPairsByAppearances = [...loverPairsData]
     .sort((a, b) => b.appearances - a.appearances)
     .slice(0, 10);
 
-  const topLoverPairsByWinRate = loverPairsData
-    .filter(pair => pair.appearances >= 2) // Need meaningful sample size
+  const topLoverPairsByWinRate = [...loverPairsData]
     .sort((a, b) => b.winRateNum - a.winRateNum)
     .slice(0, 10);
 
@@ -67,7 +67,7 @@ export function PlayerPairingStatsChart() {
         </div>
         <div className="lycans-stat-carte">
           <h3>Paires Récurrentes</h3>
-          <div className="lycans-valeur-principale">{wolfPairsData.length}</div>
+          <div className="lycans-valeur-principale">{recurringWolfPairs.length}</div>
           <p>avec 2+ apparitions</p>
         </div>
       </div>
@@ -136,7 +136,7 @@ export function PlayerPairingStatsChart() {
         <div className="lycans-graphique-moitie">
           <h3>Paires de Loups les Plus Performantes</h3>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-            (minimum 3 apparitions)
+            (minimum 2 apparitions)
           </p>
           {topWolfPairsByWinRate.length > 0 ? (
             <div style={{ height: 320 }}>
@@ -212,7 +212,7 @@ export function PlayerPairingStatsChart() {
         </div>
         <div className="lycans-stat-carte">
           <h3>Paires Récurrentes</h3>
-          <div className="lycans-valeur-principale">{loverPairsData.length}</div>
+          <div className="lycans-valeur-principale">{recurringLoverPairs.length}</div>
           <p>avec 2+ apparitions</p>
         </div>
       </div>
@@ -280,9 +280,6 @@ export function PlayerPairingStatsChart() {
         {/* Best Performing Lover Pairs */}
         <div className="lycans-graphique-moitie">
           <h3>Paires d'Amoureux les Plus Performantes</h3>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-            (minimum 2 apparitions)
-          </p>
           {topLoverPairsByWinRate.length > 0 ? (
             <div style={{ height: 320 }}>
               <ResponsiveContainer width="100%" height="100%">

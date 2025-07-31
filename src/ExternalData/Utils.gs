@@ -46,7 +46,7 @@ const LYCAN_SCHEMA = {
     SHEET: 'Loups et solo', //Data specific about the roles per game
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
-      WOLFS: 'Loup(s)', //Name of the wolves in the game, separated by comma
+      WOLFS: 'Loups', //Name of the wolves in the game, separated by comma
       TRAITOR: 'Traître', //name of the traitor in the game (if any)
       IDIOT: 'Idiot du village', //name of the idiot in the game, if any
       CANNIBAL: 'Cannibale', //name of the cannibal in the game, if any
