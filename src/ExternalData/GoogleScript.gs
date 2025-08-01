@@ -1339,10 +1339,12 @@ function getPlayerCampPerformanceRaw() {
           campStats[camp].totalGames++;
         });
         
-        // Count win for the winning camp
-        if (campStats[winnerCamp]) {
-          campStats[winnerCamp].wins++;
-        }
+        // Count wins for all camps (including special cases)
+        campsInGame.forEach(function(camp) {
+          if (didCampWin(camp, winnerCamp)) {
+            campStats[camp].wins++;
+          }
+        });
       }
     });
     
