@@ -66,6 +66,11 @@ export function PlayerPairingStatsChart() {
     gradientId: createGradientId(pair.pair)
   }));
 
+  // Total wolf pairs with at least minWolfAppearances
+  const totalWolfPairsWithMinAppearances = wolfPairsData.filter(pair => pair.appearances >= minWolfAppearances).length;
+  // Total lover pairs with at least minLoverAppearances
+  const totalLoverPairsWithMinAppearances = loverPairsData.filter(pair => pair.appearances >= minLoverAppearances).length;
+
   // Calculate recurring pairs (2+ appearances) for display
   const recurringWolfPairs = wolfPairsData.filter(pair => pair.appearances >= 2);
   const recurringLoverPairs = loverPairsData.filter(pair => pair.appearances >= 2);
@@ -276,7 +281,7 @@ export function PlayerPairingStatsChart() {
             </div>
           )}
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            Top {topWolfPairsByWinRate.length} des paires avec au moins {minWolfAppearances} apparition(s)
+            Top {topWolfPairsByWinRate.length} des paires (sur {totalWolfPairsWithMinAppearances}) avec au moins {minWolfAppearances} apparition{minWolfAppearances > 1 ? 's' : ''}
           </p>
         </div>
       </div>
@@ -470,7 +475,7 @@ export function PlayerPairingStatsChart() {
             </div>
           )}
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            Top {topLoverPairsByWinRate.length} des paires avec au moins {minLoverAppearances} apparition(s)
+            Top {topLoverPairsByWinRate.length} des paires (sur {totalLoverPairsWithMinAppearances}) avec au moins {minLoverAppearances} apparition{minLoverAppearances > 1 ? 's' : ''}
           </p>
         </div>
       </div>

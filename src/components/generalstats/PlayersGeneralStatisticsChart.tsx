@@ -25,6 +25,11 @@ export function PlayersGeneralStatisticsChart() {
     return <div className="donnees-manquantes">Aucune donnée de joueur disponible</div>;
   }
 
+  // Count all eligible players (without slicing)
+  const totalEligiblePlayers = playerStatsData.playerStats
+  .filter(player => player.gamesPlayed >= minGamesForWinRate)
+  .length;
+
   // Données pour le graphique de participation
   const participationData = playerStatsData.playerStats
     .filter(player => player.gamesPlayed > 2) // Filtrer les joueurs avec peu de parties
@@ -186,7 +191,7 @@ export function PlayersGeneralStatisticsChart() {
             </ResponsiveContainer>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            Top {winRateData.length} des joueurs avec au moins {minGamesForWinRate} partie(s)
+            Top {winRateData.length} des joueurs (sur {totalEligiblePlayers} ayant au moins {minGamesForWinRate} partie{minGamesForWinRate > 1 ? 's' : ''})
           </p>
         </div>
       </div>

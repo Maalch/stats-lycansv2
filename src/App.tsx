@@ -7,13 +7,13 @@ const HarvestProgressChart = lazy(() => import('./components/generalstats/Harves
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 const PlayersGeneralStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
 const PlayerPairingStatsChart = lazy(() => import('./components/generalstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
-const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
+const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 
 const MAIN_TABS = [
   { key: 'general', label: 'Statistiques Générales' },
-  { key: 'ponce', label: 'Statistiques Ponce' },
   { key: 'players', label: 'Statistiques par joueur' },
+  { key: 'ponce', label: 'Statistiques Survie Ponce' },
 ];
 
 const GENERAL_STATS_MENU = [
@@ -24,13 +24,12 @@ const GENERAL_STATS_MENU = [
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
 ];
 
+const PLAYER_STATS_MENU = [
+  { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
+];
 
 const PONCE_STATS_MENU = [
   { key: 'roles', label: 'Survie par Rôle', component: RoleSurvivalRateChart },
-];
-
-const PLAYER_STATS_MENU = [
-  { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
 ];
 
 export default function App() {
@@ -63,17 +62,6 @@ export default function App() {
           </div>
         );
       }
-      case 'ponce': {
-        // Always show the first component in PONCE_STATS_MENU
-        const SelectedPonceComponent = PONCE_STATS_MENU[0].component;
-        return (
-          <div className="lycans-dashboard-content">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <SelectedPonceComponent />
-            </Suspense>
-          </div>
-        );
-      }
       case 'players': {
         // Always show the first component in PLAYER_STATS_MENU
         const SelectedPlayerComponent = PLAYER_STATS_MENU[0].component;
@@ -81,6 +69,17 @@ export default function App() {
           <div className="lycans-dashboard-content">
             <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
               <SelectedPlayerComponent />
+            </Suspense>
+          </div>
+        );
+      }
+      case 'ponce': {
+        // Always show the first component in PONCE_STATS_MENU
+        const SelectedPonceComponent = PONCE_STATS_MENU[0].component;
+        return (
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <SelectedPonceComponent />
             </Suspense>
           </div>
         );
