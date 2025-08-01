@@ -109,3 +109,37 @@ function getLycanSheetData(tabName) {
 function findColumnIndex(headerRow, columnName) {
   return headerRow.indexOf(columnName);
 }
+
+
+/**
+ * Retourne le camp du joueur pour une partie donnée.
+ * Si le joueur n'a pas de rôle spécifique dans la partie, retourne "Villageois".
+ * @param {Object} gamePlayerCampMap - Dictionnaire {gameId: {playerName: camp}}
+ * @param {string} gameId - Identifiant de la partie
+ * @param {string} playerName - Nom du joueur
+ * @return {string} Camp du joueur ("Villageois" par défaut)
+ */
+function getPlayerCamp(gamePlayerCampMap, gameId, playerName) {
+  return (gamePlayerCampMap[gameId] && gamePlayerCampMap[gameId][playerName]) || "Villageois";
+}
+
+/**
+ * Détermine si le joueur a gagné la partie selon son camp et le camp vainqueur.
+ * Règle spéciale : le "Traître" gagne si le camp vainqueur est "Loups".
+ * @param {string} playerCamp - Camp du joueur
+ * @param {string} winnerCamp - Camp vainqueur de la partie
+ * @return {boolean} true si le joueur a gagné, false sinon
+ */
+function didPlayerWin(playerCamp, winnerCamp) {
+  return (playerCamp === winnerCamp) || (playerCamp === "Traître" && winnerCamp === "Loups");
+}
+
+/**
+ * Sépare la chaîne d'entrée en plusieurs chaînes, en utilisant la virgule comme séparateur
+ * Retire les chaînes vides et les espaces
+ * @param {string} str - Chaîne d'entrée (ex: liste de joueurs)
+ * @return {string[]} liste des éléments non vide de la chaîne d'entrée
+ */
+function splitAndTrim(str) {
+  return str ? str.split(',').map(s => s.trim()).filter(Boolean) : [];
+}
