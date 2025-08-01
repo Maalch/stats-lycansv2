@@ -8,39 +8,41 @@ export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
   const [selectedPlayer] = useState<string | null>(null);
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(10);
+  const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best'); // NEW
 
   // Options pour le nombre minimum de parties
   const minGamesOptions = [5, 8, 10, 15, 20, 25, 30, 50, 100];
 
-  // Rendu conditionnel en fonction de l'état du chargement
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des statistiques des joueurs...</div>;
   }
-
   if (fetchError) {
     return <div className="donnees-probleme">Erreur: {fetchError}</div>;
   }
-
   if (!playerStatsData) {
     return <div className="donnees-manquantes">Aucune donnée de joueur disponible</div>;
   }
 
   // Count all eligible players (without slicing)
   const totalEligiblePlayers = playerStatsData.playerStats
-  .filter(player => player.gamesPlayed >= minGamesForWinRate)
-  .length;
+    .filter(player => player.gamesPlayed >= minGamesForWinRate)
+    .length;
 
   // Données pour le graphique de participation
   const participationData = playerStatsData.playerStats
-    .filter(player => player.gamesPlayed > 2) // Filtrer les joueurs avec peu de parties
-    .sort((a, b) => b.gamesPlayed - a.gamesPlayed) // Trier par nombre de parties
-    .slice(0, 20); // Limiter aux 20 premiers joueurs
+    .filter(player => player.gamesPlayed > 2)
+    .sort((a, b) => b.gamesPlayed - a.gamesPlayed)
+    .slice(0, 20);
 
-  // Données pour le graphique de taux de victoire (avec filtre dynamique)
+  // Données pour le graphique de taux de victoire (avec filtre dynamique et tri selon winRateOrder)
   const winRateData = playerStatsData.playerStats
-    .filter(player => player.gamesPlayed >= minGamesForWinRate) // Filtrer avec le minimum sélectionné
-    .sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent)) // Trier par taux de victoire
-    .slice(0, 20); // Limiter aux 20 premiers joueurs
+    .filter(player => player.gamesPlayed >= minGamesForWinRate)
+    .sort((a, b) =>
+      winRateOrder === 'best'
+        ? parseFloat(b.winPercent) - parseFloat(a.winPercent)
+        : parseFloat(a.winPercent) - parseFloat(b.winPercent)
+    )
+    .slice(0, 20);
 
   // Préparation des données pour le graphique circulaire des camps
   const prepareCampDistributionData = (player: string) => {
@@ -55,15 +57,17 @@ export function PlayersGeneralStatisticsChart() {
       }));
   };
 
-  const campDistributionData = selectedPlayer 
+  const campDistributionData = selectedPlayer
     ? prepareCampDistributionData(selectedPlayer)
     : [];
 
   return (
     <div className="lycans-players-stats">
       <h2>Statistiques des Joueurs</h2>
-      <p className="lycans-stats-info">Total de {playerStatsData.totalGames} parties analysées avec {playerStatsData.playerStats.length} joueurs</p>
-      
+      <p className="lycans-stats-info">
+        Total de {playerStatsData.totalGames} parties analysées avec {playerStatsData.playerStats.length} joueurs
+      </p>
+
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           <h3>Top Participations</h3>
@@ -74,11 +78,11 @@ export function PlayersGeneralStatisticsChart() {
                 margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="player" 
-                  angle={-45} 
-                  textAnchor="end" 
-                  height={80} 
+                <XAxis
+                  dataKey="player"
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
                   interval={0}
                 />
                 <YAxis label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }} />
@@ -97,9 +101,9 @@ export function PlayersGeneralStatisticsChart() {
                     return null;
                   }}
                 />
-                <Bar 
-                  dataKey="gamesPlayed" 
-                  name="Parties jouées" 
+                <Bar
+                  dataKey="gamesPlayed"
+                  name="Parties jouées"
                   fill="#00C49F"
                 >
                   {participationData.map((entry) => (
@@ -116,7 +120,11 @@ export function PlayersGeneralStatisticsChart() {
 
         <div className="lycans-graphique-section">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <h3>Meilleurs Taux de Victoire</h3>
+            <h3>
+              {winRateOrder === 'best'
+                ? 'Meilleurs Taux de Victoire'
+                : 'Moins Bon Taux de Victoire'}
+            </h3>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                 Min. parties:
@@ -140,6 +148,21 @@ export function PlayersGeneralStatisticsChart() {
                   </option>
                 ))}
               </select>
+              <select
+                value={winRateOrder}
+                onChange={e => setWinRateOrder(e.target.value as 'best' | 'worst')}
+                style={{
+                  background: 'var(--bg-tertiary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.9rem'
+                }}
+              >
+                <option value="best">Meilleurs Taux de Victoire</option>
+                <option value="worst">Moins Bon Taux de Victoire</option>
+              </select>
             </div>
           </div>
           <div style={{ height: 400 }}>
@@ -149,14 +172,14 @@ export function PlayersGeneralStatisticsChart() {
                 margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="player" 
-                  angle={-45} 
-                  textAnchor="end" 
-                  height={80} 
+                <XAxis
+                  dataKey="player"
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
                   interval={0}
                 />
-                <YAxis 
+                <YAxis
                   label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
                   domain={[0, 100]}
                 />
@@ -175,9 +198,9 @@ export function PlayersGeneralStatisticsChart() {
                     return null;
                   }}
                 />
-                <Bar 
-                  dataKey="winPercent" 
-                  name="Taux de Victoire" 
+                <Bar
+                  dataKey="winPercent"
+                  name="Taux de Victoire"
                   fill="#8884d8"
                 >
                   {winRateData.map((entry) => (
@@ -214,8 +237,8 @@ export function PlayersGeneralStatisticsChart() {
                   label={({ name, percentage }) => `${name}: ${percentage}%`}
                 >
                   {campDistributionData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
+                    <Cell
+                      key={`cell-${index}`}
                       fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || getRandomColor(entry.name)}
                     />
                   ))}
@@ -239,7 +262,7 @@ export function PlayersGeneralStatisticsChart() {
             </ResponsiveContainer>
           </div>
         </div>
-      )}    
+      )}
     </div>
   );
 }
