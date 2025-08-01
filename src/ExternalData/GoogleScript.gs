@@ -7,6 +7,7 @@ function doGet(e) {
     'gameDurationAnalysis': { baseKey: 'gameDurationAnalysis', fn: getGameDurationAnalysisRaw },
     'playerStats': { baseKey: 'playerStats', fn: getPlayerStatsRaw },
     'playerPairingStats': { baseKey: 'playerPairingStats', fn: getPlayerPairingStatsRaw },
+    'playerCampPerformance': { baseKey: 'playerCampPerformance', fn: getPlayerCampPerformanceRaw },
     // endpoint with parameters
     'playerGameHistory': { 
       baseKey: 'playerGameHistory', 
@@ -673,7 +674,15 @@ function getPlayerStatsRaw(e) {
             
             // Check if player won
             var winnerCamp = gameWinnerMap[gameId];
+            // Adaptation: Traître wins if winnerCamp is Loups
+            var playerWon = false;
             if (winnerCamp && playerCamp === winnerCamp) {
+              playerWon = true;
+            }
+            if (playerCamp === "Traître" && winnerCamp === "Loups") {
+              playerWon = true;
+            }
+            if (playerWon) {
               allPlayers[player].wins++;
             }
           }
@@ -990,8 +999,12 @@ function getPlayerGameHistoryRaw(e) {
           }
           
           // Determine win/loss status
+          // Adaptation: Traître wins if winnerCamp is Loups
           var playerWon = false;
           if (winnerCamp && playerCamp === winnerCamp) {
+            playerWon = true;
+          }
+          if (playerCamp === "Traître" && winnerCamp === "Loups") {
             playerWon = true;
           }
           
@@ -1063,26 +1076,6 @@ function getPlayerGameHistoryRaw(e) {
   } catch (error) {
     Logger.log('Error in getPlayerGameHistoryRaw: ' + error.message);
     return JSON.stringify({ error: error.message });
-  }
-}
-
-//Caching data
-function getCachedData(cacheKey, generatorFn, cacheSeconds, e) {
-  try {
-    var cache = CacheService.getScriptCache();
-    var cached = cache.get(cacheKey);
-    
-    if (cached) {
-      return ContentService.createTextOutput(cached).setMimeType(ContentService.MimeType.JSON);
-    }
-    
-    var result = generatorFn(e);
-    cache.put(cacheKey, result, cacheSeconds);
-    return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    Logger.log('Error in getCachedData: ' + error.message);
-    return ContentService.createTextOutput(JSON.stringify({ error: error.message }))
-      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -1236,6 +1229,333 @@ function getGameDurationAnalysisRaw() {
     return JSON.stringify(durationStats);
   } catch (error) {
     Logger.log('Error in getGameDurationAnalysisRaw: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
+
+/**
+ * Returns statistics on player performance by camp compared to average camp win rates
+ * @return {string} JSON string with player performance data
+ */
+function getPlayerCampPerformanceRaw() {
+  try {
+    // Get game and role data
+    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
+    var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
+    
+    var gameValues = gameData.values;
+    var roleValues = roleData.values;
+    
+    var gameHeaders = gameValues[0];
+    var roleHeaders = roleValues[1];
+    
+    // Get column indexes from game sheet
+    var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
+    var playerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
+    var winnerCampIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
+    
+    // Get column indexes from role sheet
+    var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
+    var wolfsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS);
+    var traitorIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.TRAITOR);
+    var idiotIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.IDIOT);
+    var cannibalIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.CANNIBAL);
+    var agentsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.AGENTS);
+    var spyIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SPY);
+    var scientistIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SCIENTIST);
+    var loversIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS);
+    var beastIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.THEBEAST);
+    var bountyHunterIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER);
+    var voodooIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO);
+    
+    // Skip header rows
+    var gameRows = gameValues.slice(1);
+    var roleRows = roleValues.slice(2);
+    
+    // Create map of game ID to winner camp
+    var gameWinnerMap = {};
+    gameRows.forEach(function(row) {
+      var gameId = row[gameIdIdx];
+      var winnerCamp = row[winnerCampIdx];
+      if (gameId && winnerCamp) {
+        gameWinnerMap[gameId] = winnerCamp;
+      }
+    });
+    
+    // Create map of game ID to player camps
+    var gamePlayerCampMap = {};
+    roleRows.forEach(function(row) {
+      var gameId = row[roleGameIdIdx];
+      if (!gameId) return;
+      
+      if (!gamePlayerCampMap[gameId]) {
+        gamePlayerCampMap[gameId] = {};
+      }
+      
+      // Add wolves
+      var wolves = row[wolfsIdx];
+      if (wolves) {
+        wolves.split(',').forEach(function(wolf) {
+          var player = wolf.trim();
+          if (player) {
+            gamePlayerCampMap[gameId][player] = "Loups";
+          }
+        });
+      }
+      
+      // Add all other roles
+      function addRolePlayer(player, roleName) {
+        if (player && player.trim()) {
+          gamePlayerCampMap[gameId][player.trim()] = roleName;
+        }
+      }
+      
+      addRolePlayer(row[traitorIdx], "Traître");
+      addRolePlayer(row[idiotIdx], "Idiot du Village");
+      addRolePlayer(row[cannibalIdx], "Cannibale");
+      addRolePlayer(row[spyIdx], "Espion");
+      addRolePlayer(row[beastIdx], "La Bête");
+      addRolePlayer(row[bountyHunterIdx], "Chasseur de primes");
+      addRolePlayer(row[voodooIdx], "Vaudou");
+      
+      // Handle agents (could be multiple)
+      var agents = row[agentsIdx];
+      if (agents) {
+        agents.split(',').forEach(function(agent) {
+          var player = agent.trim();
+          if (player) {
+            gamePlayerCampMap[gameId][player] = "Agent";
+          }
+        });
+      }
+      
+      // Handle scientist (could be multiple)
+      var scientists = row[scientistIdx];
+      if (scientists) {
+        scientists.split(',').forEach(function(scientist) {
+          var player = scientist.trim();
+          if (player) {
+            gamePlayerCampMap[gameId][player] = "Scientifique";
+          }
+        });
+      }
+      
+      // Handle lovers (could be multiple)
+      var lovers = row[loversIdx];
+      if (lovers) {
+        lovers.split(',').forEach(function(lover) {
+          var player = lover.trim();
+          if (player) {
+            gamePlayerCampMap[gameId][player] = "Amoureux";
+          }
+        });
+      }
+    });
+    
+    // Calculate overall camp statistics (total games, wins per camp)
+    var campStats = {};
+    var totalGames = 0;
+    
+    gameRows.forEach(function(row) {
+      var gameId = row[gameIdIdx];
+      var winnerCamp = row[winnerCampIdx];
+      
+      if (gameId && winnerCamp) {
+        totalGames++;
+        
+        // Count wins for each camp
+        if (!campStats[winnerCamp]) {
+          campStats[winnerCamp] = {
+            totalGames: 0,
+            wins: 0,
+            winRate: 0,
+            players: {}
+          };
+        }
+        campStats[winnerCamp].wins++;
+      }
+    });
+    
+    // Analyze player performance by camp
+    var playerCampPerformance = {};
+    
+    gameRows.forEach(function(row) {
+      var gameId = row[gameIdIdx];
+      var playerList = row[playerListIdx];
+      var winnerCamp = row[winnerCampIdx];
+      
+      if (gameId && playerList && winnerCamp) {
+        var players = playerList.split(',');
+        
+        players.forEach(function(playerName) {
+          var player = playerName.trim();
+          if (player) {
+            // Determine player's camp (default to Villageois if not found)
+            var playerCamp = "Villageois";
+            if (gamePlayerCampMap[gameId] && gamePlayerCampMap[gameId][player]) {
+              playerCamp = gamePlayerCampMap[gameId][player];
+            }
+            
+            // Initialize camp statistics
+            if (!campStats[playerCamp]) {
+              campStats[playerCamp] = {
+                totalGames: 0,
+                wins: 0,
+                winRate: 0,
+                players: {}
+              };
+            }
+            campStats[playerCamp].totalGames++;
+            
+            // Track player performance in this camp
+            if (!campStats[playerCamp].players[player]) {
+              campStats[playerCamp].players[player] = {
+                games: 0,
+                wins: 0,
+                winRate: 0
+              };
+            }
+            campStats[playerCamp].players[player].games++;
+            
+            // Check if player won
+            // Adaptation: Traître wins if winnerCamp is Loups
+            var playerWon = false;
+            if (winnerCamp && playerCamp === winnerCamp) {
+              playerWon = true;
+            }
+            if (playerCamp === "Traître" && winnerCamp === "Loups") {
+              playerWon = true;
+            }
+            if (playerWon) {
+              campStats[playerCamp].players[player].wins++;
+            }
+
+            // Initialize player statistics
+            if (!playerCampPerformance[player]) {
+              playerCampPerformance[player] = {
+                totalGames: 0,
+                camps: {}
+              };
+            }
+
+            // Initialize player statistics
+            if (!playerCampPerformance[player]) {
+              playerCampPerformance[player] = {
+                totalGames: 0,
+                camps: {}
+              };
+            }
+            
+            // Add camp data for this player
+            if (!playerCampPerformance[player].camps[playerCamp]) {
+              playerCampPerformance[player].camps[playerCamp] = {
+                games: 0,
+                wins: 0,
+                winRate: 0,
+                performance: 0
+              };
+            }
+            
+            playerCampPerformance[player].totalGames++;
+            playerCampPerformance[player].camps[playerCamp].games++;
+            
+            if (winnerCamp && playerCamp === winnerCamp) {
+              playerCampPerformance[player].camps[playerCamp].wins++;
+            }
+          }
+        });
+      }
+    });
+    
+    // Calculate win rates for camps and players
+    Object.keys(campStats).forEach(function(camp) {
+      if (campStats[camp].totalGames > 0) {
+        campStats[camp].winRate = (campStats[camp].wins / campStats[camp].totalGames * 100).toFixed(2);
+      }
+      
+      // Calculate each player's win rate in this camp
+      Object.keys(campStats[camp].players).forEach(function(player) {
+        var playerStat = campStats[camp].players[player];
+        if (playerStat.games > 0) {
+          playerStat.winRate = (playerStat.wins / playerStat.games * 100).toFixed(2);
+        }
+      });
+    });
+    
+    // Calculate performance differential (player win rate - camp average win rate)
+    Object.keys(playerCampPerformance).forEach(function(player) {
+      Object.keys(playerCampPerformance[player].camps).forEach(function(camp) {
+        var playerCampStat = playerCampPerformance[player].camps[camp];
+        
+        if (playerCampStat.games > 0) {
+          playerCampStat.winRate = (playerCampStat.wins / playerCampStat.games * 100).toFixed(2);
+          
+          // Calculate performance vs camp average
+          if (campStats[camp] && campStats[camp].winRate) {
+            playerCampStat.performance = (parseFloat(playerCampStat.winRate) - parseFloat(campStats[camp].winRate)).toFixed(2);
+          }
+        }
+      });
+    });
+    
+    // Convert player camp performance to array with minimum game threshold
+    var minGamesToInclude = 3; // Minimum games required in a camp to be included
+    var playerPerformanceArray = [];
+    
+    Object.keys(playerCampPerformance).forEach(function(player) {
+      var playerData = playerCampPerformance[player];
+      var campPerformanceArray = [];
+      
+      Object.keys(playerData.camps).forEach(function(camp) {
+        var campData = playerData.camps[camp];
+        
+        // Only include if player has played this camp multiple times
+        if (campData.games >= minGamesToInclude) {
+          campPerformanceArray.push({
+            camp: camp,
+            games: campData.games,
+            wins: campData.wins,
+            winRate: campData.winRate,
+            campAvgWinRate: campStats[camp].winRate,
+            performance: campData.performance
+          });
+        }
+      });
+      
+      // Sort by performance (higher first)
+      campPerformanceArray.sort(function(a, b) {
+        return parseFloat(b.performance) - parseFloat(a.performance);
+      });
+      
+      // Only include player if they have qualifying camp data
+      if (campPerformanceArray.length > 0) {
+        playerPerformanceArray.push({
+          player: player,
+          totalGames: playerData.totalGames,
+          campPerformance: campPerformanceArray
+        });
+      }
+    });
+    
+    // Sort by total games played (descending)
+    playerPerformanceArray.sort(function(a, b) {
+      return b.totalGames - a.totalGames;
+    });
+    
+    return JSON.stringify({
+      campAverages: Object.keys(campStats).map(function(camp) {
+        return {
+          camp: camp,
+          totalGames: campStats[camp].totalGames,
+          winRate: campStats[camp].winRate
+        };
+      }),
+      playerPerformance: playerPerformanceArray,
+      minGamesRequired: minGamesToInclude
+    });
+    
+  } catch (error) {
+    Logger.log('Error in getPlayerCampPerformanceRaw: ' + error.message);
     return JSON.stringify({ error: error.message });
   }
 }
