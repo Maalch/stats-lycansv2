@@ -20,7 +20,7 @@ function doGet(e) {
   var actionData = actionMap[action];
   if (actionData) {
     var cacheKey = generateCacheKey(actionData.baseKey, actionData.paramKeys, e);
-    return getCachedData(cacheKey, actionData.fn, 300, e);
+    return getCachedData(cacheKey, actionData.fn, 3600, e);
   } else {
     return ContentService.createTextOutput('Invalid action - not found')
       .setMimeType(ContentService.MimeType.TEXT);
