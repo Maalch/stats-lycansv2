@@ -144,7 +144,7 @@ function getCampWinStatsRaw() {
       // Process solo roles if they exist
       if (soloRoles && soloRoles.toString().trim() !== "") {
         // Split by comma and process each solo role
-        var soloRolesList = soloRoles.toString().split(',');
+        var soloRolesList = splitAndTrim(soloRoles.toString());
         soloRolesList.forEach(function(soloRole) {
           var trimmedRole = soloRole.trim();
           if (trimmedRole !== "") {
@@ -566,14 +566,11 @@ function getPlayerStatsRaw(e) {
       // Add wolves
       var wolves = row[wolfsIdx];
       if (wolves) {
-        wolves.split(',').forEach(function(wolf) {
-          var player = wolf.trim();
-          if (player) {
-            gamePlayerCampMap[gameId][player] = "Loups";
-          }
+        splitAndTrim(wolves).forEach(function(player) {
+          gamePlayerCampMap[gameId][player] = "Loups";
         });
       }
-      
+
       // Add all other roles
       function addRolePlayer(player, roleName) {
         if (player && player.trim()) {
@@ -592,33 +589,24 @@ function getPlayerStatsRaw(e) {
       // Handle agents (could be multiple)
       var agents = row[agentsIdx];
       if (agents) {
-        agents.split(',').forEach(function(agent) {
-          var player = agent.trim();
-          if (player) {
-            gamePlayerCampMap[gameId][player] = "Agent";
-          }
+        splitAndTrim(agents).forEach(function(player) {
+          gamePlayerCampMap[gameId][player] = "Agent";
         });
       }
-      
+
       // Handle scientist (could be multiple)
       var scientists = row[scientistIdx];
       if (scientists) {
-        scientists.split(',').forEach(function(scientist) {
-          var player = scientist.trim();
-          if (player) {
-            gamePlayerCampMap[gameId][player] = "Scientifique";
-          }
+        splitAndTrim(scientists).forEach(function(player) {
+          gamePlayerCampMap[gameId][player] = "Scientifique";
         });
       }
-      
+
       // Handle lovers (could be multiple)
       var lovers = row[loversIdx];
       if (lovers) {
-        lovers.split(',').forEach(function(lover) {
-          var player = lover.trim();
-          if (player) {
-            gamePlayerCampMap[gameId][player] = "Amoureux";
-          }
+        splitAndTrim(lovers).forEach(function(player) {
+          gamePlayerCampMap[gameId][player] = "Amoureux";
         });
       }
     });
@@ -633,7 +621,7 @@ function getPlayerStatsRaw(e) {
       
       if (gameId && playerList) {
         totalGames++;
-        var players = playerList.split(',');
+        var players = splitAndTrim(playerList);
         
         players.forEach(function(playerName) {
           var player = playerName.trim();
@@ -766,21 +754,17 @@ function getPlayerPairingStatsRaw() {
       
       // Process wolf pairs
       if (wolves) {
-        var wolfArray = wolves.split(',').map(function(wolf) { return wolf.trim(); }).filter(Boolean);
-        
+        var wolfArray = splitAndTrim(wolves);
         // Only process if there are multiple wolves
         if (wolfArray.length >= 2) {
           totalGamesWithMultipleWolves++;
-          
           // Generate all possible wolf pairs
           for (var i = 0; i < wolfArray.length; i++) {
             for (var j = i + 1; j < wolfArray.length; j++) {
               var wolf1 = wolfArray[i];
               var wolf2 = wolfArray[j];
-              
               // Create a consistent key for the pair (alphabetical order)
               var pairKey = [wolf1, wolf2].sort().join(" & ");
-              
               if (!wolfPairStats[pairKey]) {
                 wolfPairStats[pairKey] = {
                   appearances: 0,
@@ -789,7 +773,6 @@ function getPlayerPairingStatsRaw() {
                   players: [wolf1, wolf2]
                 };
               }
-              
               wolfPairStats[pairKey].appearances++;
               if (winnerCamp === "Loups") {
                 wolfPairStats[pairKey].wins++;
@@ -801,22 +784,22 @@ function getPlayerPairingStatsRaw() {
       
       // Process lover pairs
       if (lovers) {
-        var loverArray = lovers.split(',').map(function(lover) { return lover.trim(); }).filter(Boolean);
-        
+        var loverArray = splitAndTrim(lovers);
+
         // Only process if there are lovers (should be pairs)
         if (loverArray.length >= 2) {
           totalGamesWithLovers++;
-          
+
           // Generate lover pairs (should usually be just one pair per game)
           for (var i = 0; i < loverArray.length; i += 2) {
             // Make sure we have both lovers of the pair
             if (i + 1 < loverArray.length) {
               var lover1 = loverArray[i];
               var lover2 = loverArray[i + 1];
-              
+
               // Create a consistent key for the pair (alphabetical order)
               var pairKey = [lover1, lover2].sort().join(" & ");
-              
+
               if (!loverPairStats[pairKey]) {
                 loverPairStats[pairKey] = {
                   appearances: 0,
@@ -825,7 +808,7 @@ function getPlayerPairingStatsRaw() {
                   players: [lover1, lover2]
                 };
               }
-              
+
               loverPairStats[pairKey].appearances++;
               if (winnerCamp === "Amoureux") {
                 loverPairStats[pairKey].wins++;
@@ -941,7 +924,7 @@ function getPlayerGameHistoryRaw(e) {
       // Helper function to add player to camp
       function addPlayerToCamp(playerStr, campName) {
         if (playerStr) {
-          var players = playerStr.split(',');
+          var players = splitAndTrim(playerStr);
           players.forEach(function(player) {
             var trimmedPlayer = player.trim();
             if (trimmedPlayer) {
@@ -976,7 +959,7 @@ function getPlayerGameHistoryRaw(e) {
       
       if (gameId && playerList && date && winnerCamp) {
         // Check if player is in the game
-        var players = playerList.split(',').map(function(p) { return p.trim(); });
+        var players = splitAndTrim(playerList);
         var playerInGame = players.some(function(p) { 
           return p.toLowerCase() === playerName.toLowerCase(); 
         });
@@ -1275,11 +1258,8 @@ function getPlayerCampPerformanceRaw() {
       // Add wolves
       var wolves = row[wolfsIdx];
       if (wolves) {
-        wolves.split(',').forEach(function(wolf) {
-          var player = wolf.trim();
-          if (player) {
-            gamePlayerCampMap[gameId][player] = "Loups";
-          }
+        splitAndTrim(wolves).forEach(function(player) {
+          gamePlayerCampMap[gameId][player] = "Loups";
         });
       }
       
@@ -1301,33 +1281,24 @@ function getPlayerCampPerformanceRaw() {
       // Handle agents (could be multiple)
       var agents = row[agentsIdx];
       if (agents) {
-        agents.split(',').forEach(function(agent) {
-          var player = agent.trim();
-          if (player) {
-            gamePlayerCampMap[gameId][player] = "Agent";
-          }
+        splitAndTrim(agents).forEach(function(player) {
+          gamePlayerCampMap[gameId][player] = "Agent";
         });
       }
-      
+
       // Handle scientist (could be multiple)
       var scientists = row[scientistIdx];
       if (scientists) {
-        scientists.split(',').forEach(function(scientist) {
-          var player = scientist.trim();
-          if (player) {
-            gamePlayerCampMap[gameId][player] = "Scientifique";
-          }
+        splitAndTrim(scientists).forEach(function(player) {
+          gamePlayerCampMap[gameId][player] = "Scientifique";
         });
       }
-      
+
       // Handle lovers (could be multiple)
       var lovers = row[loversIdx];
       if (lovers) {
-        lovers.split(',').forEach(function(lover) {
-          var player = lover.trim();
-          if (player) {
-            gamePlayerCampMap[gameId][player] = "Amoureux";
-          }
+        splitAndTrim(lovers).forEach(function(player) {
+          gamePlayerCampMap[gameId][player] = "Amoureux";
         });
       }
     });
@@ -1365,7 +1336,7 @@ function getPlayerCampPerformanceRaw() {
       var winnerCamp = row[winnerCampIdx];
       
       if (gameId && playerList && winnerCamp) {
-        var players = playerList.split(',');
+        var players = splitAndTrim(playerList);
         
         players.forEach(function(playerName) {
           var player = playerName.trim();
