@@ -8,6 +8,7 @@ const GameDurationInsights = lazy(() => import('./components/generalstats/GameDu
 const PlayersGeneralStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
 const PlayerPairingStatsChart = lazy(() => import('./components/generalstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
+const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
 const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 
 const MAIN_TABS = [
@@ -26,6 +27,7 @@ const GENERAL_STATS_MENU = [
 
 const PLAYER_STATS_MENU = [
   { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
+  { key: 'campPerformance', label: 'Performance par Camp', component: PlayerCampPerformanceChart }, // <-- NEW
 ];
 
 const PONCE_STATS_MENU = [
@@ -35,8 +37,9 @@ const PONCE_STATS_MENU = [
 export default function App() {
   const [selectedMainTab, setSelectedMainTab] = useState('general');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('playersGeneral');
+  const [selectedPlayerStat, setSelectedPlayerStat] = useState('history'); // <-- NEW
 
- const renderContent = () => {
+  const renderContent = () => {
     switch (selectedMainTab) {
       case 'general': {
         const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? PlayersGeneralStatisticsChart;
@@ -63,18 +66,30 @@ export default function App() {
         );
       }
       case 'players': {
-        // Always show the first component in PLAYER_STATS_MENU
-        const SelectedPlayerComponent = PLAYER_STATS_MENU[0].component;
+        const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayerGameHistoryChart;
         return (
-          <div className="lycans-dashboard-content">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <SelectedPlayerComponent />
-            </Suspense>
+          <div>
+            <nav className="lycans-submenu">
+              {PLAYER_STATS_MENU.map(item => (
+                <button
+                  key={item.key}
+                  className={`lycans-submenu-btn${selectedPlayerStat === item.key ? ' active' : ''}`}
+                  onClick={() => setSelectedPlayerStat(item.key)}
+                  type="button"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="lycans-dashboard-content">
+              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                <SelectedPlayerComponent />
+              </Suspense>
+            </div>
           </div>
         );
       }
       case 'ponce': {
-        // Always show the first component in PONCE_STATS_MENU
         const SelectedPonceComponent = PONCE_STATS_MENU[0].component;
         return (
           <div className="lycans-dashboard-content">
