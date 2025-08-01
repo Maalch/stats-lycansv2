@@ -351,6 +351,12 @@ body {
     min-width: 200px;
     max-width: 300px;
   }
+
+  .lycans-winrate-controls {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+  }
 }
 
 /* Styles supplémentaires pour les catégories de rôles */

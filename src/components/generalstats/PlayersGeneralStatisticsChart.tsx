@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, ReferenceLine } from 'recharts';
 import { usePlayerStats } from '../../hooks/usePlayerStats';
 import { getRandomColor, playersColor } from '../../types/api';
 import { lycansColorScheme } from '../../types/api';
 
 export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
-  const [selectedPlayer] = useState<string | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(10);
-  const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best'); // NEW
+  const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best'); 
 
   // Options pour le nombre minimum de parties
   const minGamesOptions = [5, 8, 10, 15, 20, 25, 30, 50, 100];
@@ -43,6 +43,17 @@ export function PlayersGeneralStatisticsChart() {
         : parseFloat(a.winPercent) - parseFloat(b.winPercent)
     )
     .slice(0, 20);
+
+  // Calculate global average win rate (all players, no filter)
+  const averageWinRate =
+    playerStatsData.playerStats.length > 0
+      ? (
+          playerStatsData.playerStats.reduce(
+            (sum, player) => sum + parseFloat(player.winPercent),
+            0
+          ) / playerStatsData.playerStats.length
+        ).toFixed(1)
+      : '0';
 
   // Préparation des données pour le graphique circulaire des camps
   const prepareCampDistributionData = (player: string) => {
@@ -110,6 +121,8 @@ export function PlayersGeneralStatisticsChart() {
                     <Cell
                       key={`cell-participation-${entry.player}`}
                       fill={playersColor[entry.player] || "#00C49F"}
+                      onClick={() => setSelectedPlayer(entry.player)} 
+                      style={{ cursor: 'pointer' }}
                     />
                   ))}
                 </Bar>
@@ -125,7 +138,7 @@ export function PlayersGeneralStatisticsChart() {
                 ? 'Meilleurs Taux de Victoire'
                 : 'Moins Bon Taux de Victoire'}
             </h3>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                 Min. parties:
               </label>
@@ -207,9 +220,24 @@ export function PlayersGeneralStatisticsChart() {
                     <Cell
                       key={`cell-winrate-${entry.player}`}
                       fill={playersColor[entry.player] || "#8884d8"}
+                      onClick={() => setSelectedPlayer(entry.player)} 
+                      style={{ cursor: 'pointer' }}
                     />
                   ))}
                 </Bar>
+              {/* Add the average win rate reference line */}
+              <ReferenceLine
+                y={parseFloat(averageWinRate)}
+                stroke="red"
+                strokeDasharray="3 3"
+                label={{
+                  value: `Moyenne: ${averageWinRate}%`,
+                  position: 'insideBottomRight',
+                  fill: 'red',
+                  fontSize: 12,
+                  fontWeight: 'bold'
+                }}
+              />
               </BarChart>
             </ResponsiveContainer>
           </div>
