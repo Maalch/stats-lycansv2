@@ -134,6 +134,22 @@ function didPlayerWin(playerCamp, winnerCamp) {
   return (playerCamp === winnerCamp) || (playerCamp === "Traître" && winnerCamp === "Loups");
 }
 
+
+/**
+ * Détermine si un camp donné doit être considéré comme gagnant pour une partie.
+ * Gère les cas spéciaux (ex: "Traître" gagne si "Loups" gagnent).
+ * @param {string} camp - Camp à tester ("Villageois", "Loups", "Traître", etc.)
+ * @param {string} winnerCamp - Camp vainqueur de la partie
+ * @return {boolean} true si le camp doit être compté comme gagnant, false sinon
+ */
+function didCampWin(camp, winnerCamp) {
+  if (camp === winnerCamp) return true;
+  // Cas spécial : Traître gagne si Loups gagnent
+  if (camp === "Traître" && winnerCamp === "Loups") return true;
+  // Ajouter ici d'autres règles spéciales si besoin
+  return false;
+}
+
 /**
  * Sépare la chaîne d'entrée en plusieurs chaînes, en utilisant la virgule comme séparateur
  * Retire les chaînes vides et les espaces
