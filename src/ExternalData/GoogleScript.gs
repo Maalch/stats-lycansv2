@@ -966,7 +966,7 @@ function getPlayerGameHistoryRaw(e) {
         
         if (playerInGame) {
           // Determine player's camp 
-          var playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, player);
+          var playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, playerName);
           
           // Determine win/loss status
           var playerWon = didPlayerWin(playerCamp, winnerCamp);
@@ -1303,27 +1303,46 @@ function getPlayerCampPerformanceRaw() {
       }
     });
     
-    // Calculate overall camp statistics (total games, wins per camp)
+    // Calculate overall camp statistics (both participations and wins)
     var campStats = {};
     var totalGames = 0;
-    
+
     gameRows.forEach(function(row) {
       var gameId = row[gameIdIdx];
+      var playerList = row[playerListIdx];
       var winnerCamp = row[winnerCampIdx];
       
-      if (gameId && winnerCamp) {
+      if (gameId && playerList && winnerCamp) {
         totalGames++;
+        var players = splitAndTrim(playerList);
         
-        // Count wins for each camp
-        if (!campStats[winnerCamp]) {
-          campStats[winnerCamp] = {
-            totalGames: 0,
-            wins: 0,
-            winRate: 0,
-            players: {}
-          };
+        // Count participation for each camp in this game
+        var campsInGame = new Set();
+        players.forEach(function(playerName) {
+          var player = playerName.trim();
+          if (player) {
+            var playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, player);
+            campsInGame.add(playerCamp);
+          }
+        });
+        
+        // Initialize and count participations
+        campsInGame.forEach(function(camp) {
+          if (!campStats[camp]) {
+            campStats[camp] = {
+              totalGames: 0,
+              wins: 0,
+              winRate: 0,
+              players: {}
+            };
+          }
+          campStats[camp].totalGames++;
+        });
+        
+        // Count win for the winning camp
+        if (campStats[winnerCamp]) {
+          campStats[winnerCamp].wins++;
         }
-        campStats[winnerCamp].wins++;
       }
     });
     
@@ -1343,17 +1362,6 @@ function getPlayerCampPerformanceRaw() {
           if (player) {
             // Determine player's camp (default to Villageois if not found)
             var playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, playerName);
-            
-            // Initialize camp statistics
-            if (!campStats[playerCamp]) {
-              campStats[playerCamp] = {
-                totalGames: 0,
-                wins: 0,
-                winRate: 0,
-                players: {}
-              };
-            }
-            campStats[playerCamp].totalGames++;
             
             // Track player performance in this camp
             if (!campStats[playerCamp].players[player]) {
