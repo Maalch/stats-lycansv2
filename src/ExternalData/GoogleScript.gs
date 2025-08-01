@@ -664,26 +664,16 @@ function getPlayerStatsRaw(e) {
             allPlayers[player].gamesPlayed++;
             
             // Determine player's camp in this game
-            var playerCamp = "Villageois"; // Default camp
-            if (gamePlayerCampMap[gameId] && gamePlayerCampMap[gameId][player]) {
-              playerCamp = gamePlayerCampMap[gameId][player];
-            }
+            var playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, player);
             
             // Increment camp count
             allPlayers[player].camps[playerCamp]++;
             
             // Check if player won
             var winnerCamp = gameWinnerMap[gameId];
-            // Adaptation: Traître wins if winnerCamp is Loups
-            var playerWon = false;
-            if (winnerCamp && playerCamp === winnerCamp) {
-              playerWon = true;
-            }
-            if (playerCamp === "Traître" && winnerCamp === "Loups") {
-              playerWon = true;
-            }
-            if (playerWon) {
-              allPlayers[player].wins++;
+            var playerWon = didPlayerWin(playerCamp, winnerCamp);
+              if (playerWon) {
+                allPlayers[player].wins++;
             }
           }
         });
@@ -992,21 +982,11 @@ function getPlayerGameHistoryRaw(e) {
         });
         
         if (playerInGame) {
-          // Determine player's camp (default to Villageois if not found in roles)
-          var playerCamp = "Villageois";
-          if (gamePlayerCampMap[gameId] && gamePlayerCampMap[gameId][playerName]) {
-            playerCamp = gamePlayerCampMap[gameId][playerName];
-          }
+          // Determine player's camp 
+          var playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, player);
           
           // Determine win/loss status
-          // Adaptation: Traître wins if winnerCamp is Loups
-          var playerWon = false;
-          if (winnerCamp && playerCamp === winnerCamp) {
-            playerWon = true;
-          }
-          if (playerCamp === "Traître" && winnerCamp === "Loups") {
-            playerWon = true;
-          }
+          var playerWon = didPlayerWin(playerCamp, winnerCamp);
           
           // Format date consistently
           var formattedDate = formatLycanDate(date);
@@ -1391,10 +1371,7 @@ function getPlayerCampPerformanceRaw() {
           var player = playerName.trim();
           if (player) {
             // Determine player's camp (default to Villageois if not found)
-            var playerCamp = "Villageois";
-            if (gamePlayerCampMap[gameId] && gamePlayerCampMap[gameId][player]) {
-              playerCamp = gamePlayerCampMap[gameId][player];
-            }
+            var playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, playerName);
             
             // Initialize camp statistics
             if (!campStats[playerCamp]) {
@@ -1418,18 +1395,10 @@ function getPlayerCampPerformanceRaw() {
             campStats[playerCamp].players[player].games++;
             
             // Check if player won
-            // Adaptation: Traître wins if winnerCamp is Loups
-            var playerWon = false;
-            if (winnerCamp && playerCamp === winnerCamp) {
-              playerWon = true;
-            }
-            if (playerCamp === "Traître" && winnerCamp === "Loups") {
-              playerWon = true;
-            }
+            var playerWon = didPlayerWin(playerCamp, winnerCamp);
             if (playerWon) {
               campStats[playerCamp].players[player].wins++;
             }
-
             // Initialize player statistics
             if (!playerCampPerformance[player]) {
               playerCampPerformance[player] = {
@@ -1459,7 +1428,7 @@ function getPlayerCampPerformanceRaw() {
             playerCampPerformance[player].totalGames++;
             playerCampPerformance[player].camps[playerCamp].games++;
             
-            if (winnerCamp && playerCamp === winnerCamp) {
+            if (didPlayerWin(playerCamp, winnerCamp)) {
               playerCampPerformance[player].camps[playerCamp].wins++;
             }
           }
