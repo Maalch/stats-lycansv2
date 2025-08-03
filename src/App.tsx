@@ -9,12 +9,12 @@ const PlayersGeneralStatisticsChart = lazy(() => import('./components/generalsta
 const PlayerPairingStatsChart = lazy(() => import('./components/generalstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
-const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
+//const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 
 const MAIN_TABS = [
   { key: 'general', label: 'Statistiques Générales' },
-  { key: 'players', label: 'Statistiques par joueur' },
-  { key: 'ponce', label: 'Statistiques Survie Ponce' },
+  { key: 'players', label: 'Statistiques par Joueur' },
+  //{ key: 'ponce', label: 'Statistiques Survie Ponce' },
 ];
 
 const GENERAL_STATS_MENU = [
@@ -29,15 +29,16 @@ const PLAYER_STATS_MENU = [
   { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
   { key: 'campPerformance', label: 'Performance par Camp', component: PlayerCampPerformanceChart }, // <-- NEW
 ];
-
+{/*}
 const PONCE_STATS_MENU = [
   { key: 'roles', label: 'Survie par Rôle', component: RoleSurvivalRateChart },
 ];
+*/}
 
 export default function App() {
   const [selectedMainTab, setSelectedMainTab] = useState('general');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('playersGeneral');
-  const [selectedPlayerStat, setSelectedPlayerStat] = useState('history'); // <-- NEW
+  const [selectedPlayerStat, setSelectedPlayerStat] = useState('history');
 
   const renderContent = () => {
     switch (selectedMainTab) {
@@ -89,6 +90,7 @@ export default function App() {
           </div>
         );
       }
+      {/* Uncomment when Ponce stats are implemented}
       case 'ponce': {
         const SelectedPonceComponent = PONCE_STATS_MENU[0].component;
         return (
@@ -99,6 +101,7 @@ export default function App() {
           </div>
         );
       }
+      */}
       default:
         return null;
     }
