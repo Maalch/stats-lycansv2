@@ -137,6 +137,82 @@ export interface GameDurationAnalysisResponse {
   error?: string;
 }
 
+export interface CampAverage {
+  camp: string;
+  totalGames: number;
+  winRate: string;
+}
+
+export interface PlayerCampPerformance {
+  camp: string;
+  games: number;
+  wins: number;
+  winRate: string;
+  campAvgWinRate: string;
+  performance: string;
+}
+
+export interface PlayerPerformance {
+  player: string;
+  totalGames: number;
+  campPerformance: PlayerCampPerformance[];
+}
+
+export interface PlayerCampPerformanceResponse {
+  campAverages: CampAverage[];
+  playerPerformance: PlayerPerformance[];
+  minGamesRequired: number;
+}
+
+export interface PlayerPairStat {
+  pair: string;
+  appearances: number;
+  wins: number;
+  winRate: string;
+  players: string[];
+}
+
+export interface PlayerPairingStatsData {
+  wolfPairs: {
+    totalGames: number;
+    pairs: PlayerPairStat[];
+  };
+  loverPairs: {
+    totalGames: number;
+    pairs: PlayerPairStat[];
+  };
+}
+
+// Types pour les statistiques des joueurs
+export interface PlayerCamps {
+  Villageois: number;
+  Loups: number;
+  Traître: number;
+  "Idiot du Village": number;
+  Cannibale: number;
+  Agent: number;
+  Espion: number;
+  Scientifique: number;
+  Amoureux: number;
+  "La Bête": number;
+  "Chasseur de primes": number;
+  Vaudou: number;
+}
+
+export interface PlayerStat {
+  player: string;
+  gamesPlayed: number;
+  gamesPlayedPercent: string;
+  wins: number;
+  winPercent: string;
+  camps: PlayerCamps;
+}
+
+export interface PlayerStatsData {
+  totalGames: number;
+  playerStats: PlayerStat[];
+}
+
   // Helper to generate a pastel random color
 export function getRandomColor(seed: string) {
   let hash = 0;

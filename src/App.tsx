@@ -1,4 +1,5 @@
 import { Suspense, lazy, useState } from 'react';
+import { StatsProvider } from './context/StatsContext';
 import './App.css';
 
 // Lazy load each dashboard section
@@ -108,6 +109,7 @@ export default function App() {
   };
 
   return (
+     <StatsProvider>
     <div className="app-container">
       <img
         className="lycans-banner"
@@ -144,5 +146,6 @@ export default function App() {
         </div>
       </div>
     </div>
+    </StatsProvider>
   );
 }

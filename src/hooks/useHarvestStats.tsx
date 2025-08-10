@@ -1,41 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useStatsContext } from '../context/StatsContext';
 import type { HarvestStatsResponse } from '../types/api';
 
+/**
+ * Hook pour obtenir les statistiques de récolte.
+ * Utilise StatsContext pour éviter les appels API redondants.
+ */
 export function useHarvestStats() {
-  const [harvestData, setHarvestData] = useState<HarvestStatsResponse | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  
-  useEffect(() => {
-    const getLycansHarvestData = async () => {
-      try {
-        setIsLoading(true);
-        setErrorMessage(null);
-        
-        const baseUrl = import.meta.env.VITE_LYCANS_API_BASE || '';
-        const response = await fetch(`${baseUrl}?action=harvestStats`);
-        
-        if (!response.ok) {
-          throw new Error(`Problème serveur: ${response.statusText}`);
-        }
-        
-        const resultJson = await response.json();
-        
-        if (resultJson.error) {
-          throw new Error(resultJson.error);
-        }
-        
-        setHarvestData(resultJson);
-      } catch (error) {
-        console.error('Échec du chargement des données de récolte:', error);
-        setErrorMessage(error instanceof Error ? error.message : 'Erreur pendant le chargement');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    getLycansHarvestData();
-  }, []);
-  
-  return { harvestStats: harvestData, isLoading, errorMessage };
+  const { combinedData, isLoading, error } = useStatsContext();
+
+  // On suppose que le backend renvoie harvestStats dans combinedData
+  const harvestStats: HarvestStatsResponse | null =
+    combinedData && combinedData.harvestStats ? combinedData.harvestStats : null;
+
+  return {
+    harvestStats,
+    isLoading,
+    errorMessage: error,
+  };
 }
