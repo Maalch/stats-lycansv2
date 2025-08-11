@@ -10,7 +10,6 @@ const PlayersGeneralStatisticsChart = lazy(() => import('./components/generalsta
 const PlayerPairingStatsChart = lazy(() => import('./components/generalstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
-//const RoleSurvivalRateChart = lazy(() => import('./components/poncestats/PonceRoleSurvivalRateChart').then(m => ({ default: m.RoleSurvivalRateChart })));
 
 const MAIN_TABS = [
   { key: 'general', label: 'Statistiques Générales' },
@@ -28,11 +27,11 @@ const GENERAL_STATS_MENU = [
 
 const PLAYER_STATS_MENU = [
   { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
-  { key: 'campPerformance', label: 'Performance par Camp', component: PlayerCampPerformanceChart }, // <-- NEW
+  { key: 'campPerformance', label: 'Performance par Camp', component: PlayerCampPerformanceChart }, 
 ];
 {/*}
 const PONCE_STATS_MENU = [
-  { key: 'roles', label: 'Survie par Rôle', component: RoleSurvivalRateChart },
+  { key: '', label: '', component:  },
 ];
 */}
 

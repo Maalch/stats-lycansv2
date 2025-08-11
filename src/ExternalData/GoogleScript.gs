@@ -3,7 +3,6 @@ function doGet(e) {
     // Existing endpoints (no parameters)
     'campWinStats': { baseKey: 'campWinStats', fn: getCampWinStatsRaw },
     'harvestStats': { baseKey: 'harvestStats', fn: getHarvestStatsRaw },
-    'roleSurvivalStats': { baseKey: 'roleSurvivalStats', fn: getRoleSurvivalStatsRaw },
     'gameDurationAnalysis': { baseKey: 'gameDurationAnalysis', fn: getGameDurationAnalysisRaw },
     'playerStats': { baseKey: 'playerStats', fn: getPlayerStatsRaw },
     'playerPairingStats': { baseKey: 'playerPairingStats', fn: getPlayerPairingStatsRaw },
@@ -25,7 +24,7 @@ function doGet(e) {
   var actionData = actionMap[action];
   if (actionData) {
     var cacheKey = generateCacheKey(actionData.baseKey, actionData.paramKeys, e);
-    return getCachedData(cacheKey, actionData.fn, 21600, e);
+    return getCachedData(cacheKey, actionData.fn, 3600, e);
   } else {
     return ContentService.createTextOutput('Invalid action - not found')
       .setMimeType(ContentService.MimeType.TEXT);
@@ -83,7 +82,6 @@ function test_combinedStats() {
   var statsToTest = [
     "campWinStats",
     "harvestStats",
-    "roleSurvivalStats",
     "gameDurationAnalysis",
     "playerStats",
     "playerPairingStats",
@@ -160,10 +158,6 @@ function getCombinedStatsRaw(e) {
       result.harvestStats = JSON.parse(getHarvestStatsWithData(sheetData));
     }
     
-    if (statsToInclude.includes('roleSurvivalStats')) {
-      result.roleSurvivalStats = JSON.parse(getRoleSurvivalStatsWithData(sheetData));
-    }
-    
     if (statsToInclude.includes('gameDurationAnalysis')) {
       result.gameDurationAnalysis = JSON.parse(getGameDurationAnalysisWithData(sheetData));
     }
@@ -207,10 +201,10 @@ function getNeededSheets(statsToInclude) {
     sheets.add(LYCAN_SCHEMA.ROLES.SHEET);
   }
   
-  // Role survival stats needs Ponce data
-  if (statsToInclude.includes('roleSurvivalStats')) {
-    sheets.add(LYCAN_SCHEMA.PONCE.SHEET);
-  }
+  // Ponce data: not used for now
+  //if (statsToInclude.includes('')) {
+  //  sheets.add(LYCAN_SCHEMA.PONCE.SHEET);
+  //}
   
   return Array.from(sheets);
 }
@@ -478,222 +472,6 @@ function getHarvestStatsWithData(sheetData) {
 }
 
 /**
- * Internal: Calcule les stats de survie par rôle/camp à partir des données fournies
- * @param {Object} gameData - Données de la feuille Game (values, backgrounds)
- * @param {Object} ponceData - Données de la feuille Ponce (values, backgrounds)
- * @return {string} JSON string avec les statistiques de survie
- */
-function _computeRoleSurvivalStats(gameData, ponceData) {
-  var gameValues = gameData.values;
-  var ponceValues = ponceData.values;
-
-  var gameHeaders = gameValues[0];
-  var ponceHeaders = ponceValues[0];
-
-  // Get game column indexes
-  var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
-  var nbDaysIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS);
-
-  // Get ponce column indexes
-  var ponceGameIdIdx = findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.GAMEID);
-  var ponceCampIdIdx = findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.CAMP);
-  var ponceRoleIdx = findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.ROLE);
-  var ponceSecondaryRoleIdx = findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.SECONDARYROLE);
-  var ponceVillageRoleIdx = findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.VILLAGEROLE);
-  var ponceWolfRoleIdx = findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.WOLFROLE);
-  var ponceDayOfDeathIdx = findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.DAYOFDEATH);
-
-  // Skip header rows
-  var gameRows = gameValues.slice(1);
-  var ponceRows = ponceValues.slice(1);
-
-  // Create map of game ID to total days
-  var gameDaysMap = {};
-  gameRows.forEach(function(row) {
-    var gameId = row[gameIdIdx];
-    var nbDays = row[nbDaysIdx];
-    if (gameId && nbDays) {
-      gameDaysMap[gameId] = parseInt(nbDays);
-    }
-  });
-
-  // Analyze role survival data
-  var campStats = {};
-  var roleStats = {};
-  var secondaryRoleStats = {};
-  var thirdRoleStats = {};
-
-  ponceRows.forEach(function(row) {
-    var gameId = row[ponceGameIdIdx];
-    var camp = row[ponceCampIdIdx];
-    var role = row[ponceRoleIdx];
-    var secondaryRole = row[ponceSecondaryRoleIdx];
-    var thirdRole = row[ponceVillageRoleIdx];
-    if (camp === 'Loups')
-      thirdRole = row[ponceWolfRoleIdx];
-    var dayOfDeath = row[ponceDayOfDeathIdx];
-
-    var totalDays = gameDaysMap[gameId] || 0;
-
-    if (gameId) {
-      // Role stats
-      if (role) {
-        if (!roleStats[role]) {
-          roleStats[role] = {
-            appearances: 0,
-            survived: 0,
-            survivalRate: 0,
-            avgLifespan: 0,
-            totalLifespan: 0
-          };
-        }
-        roleStats[role].appearances++;
-        if (!dayOfDeath || dayOfDeath === "") {
-          roleStats[role].survived++;
-          roleStats[role].totalLifespan += totalDays;
-        } else {
-          var lifespan = parseInt(dayOfDeath);
-          if (!isNaN(lifespan)) {
-            roleStats[role].totalLifespan += lifespan;
-          }
-        }
-      }
-
-      // Camp stats
-      if (camp) {
-        if (!campStats[camp]) {
-          campStats[camp] = {
-            appearances: 0,
-            survived: 0,
-            survivalRate: 0,
-            avgLifespan: 0,
-            totalLifespan: 0
-          };
-        }
-        campStats[camp].appearances++;
-        if (!dayOfDeath || dayOfDeath === "") {
-          campStats[camp].survived++;
-          campStats[camp].totalLifespan += totalDays;
-        } else {
-          var lifespan = parseInt(dayOfDeath);
-          if (!isNaN(lifespan)) {
-            campStats[camp].totalLifespan += lifespan;
-          }
-        }
-      }
-
-      // Secondary role stats
-      if (secondaryRole) {
-        if (!secondaryRoleStats[secondaryRole]) {
-          secondaryRoleStats[secondaryRole] = {
-            appearances: 0,
-            survived: 0,
-            survivalRate: 0,
-            avgLifespan: 0,
-            totalLifespan: 0
-          };
-        }
-        secondaryRoleStats[secondaryRole].appearances++;
-        if (!dayOfDeath || dayOfDeath === "") {
-          secondaryRoleStats[secondaryRole].survived++;
-          secondaryRoleStats[secondaryRole].totalLifespan += totalDays;
-        } else {
-          var lifespan = parseInt(dayOfDeath);
-          if (!isNaN(lifespan)) {
-            secondaryRoleStats[secondaryRole].totalLifespan += lifespan;
-          }
-        }
-      }
-
-      // Third role stats
-      if (thirdRole) {
-        if (!thirdRoleStats[thirdRole]) {
-          thirdRoleStats[thirdRole] = {
-            appearances: 0,
-            survived: 0,
-            survivalRate: 0,
-            avgLifespan: 0,
-            totalLifespan: 0
-          };
-        }
-        thirdRoleStats[thirdRole].appearances++;
-        if (!dayOfDeath || dayOfDeath === "") {
-          thirdRoleStats[thirdRole].survived++;
-          thirdRoleStats[thirdRole].totalLifespan += totalDays;
-        } else {
-          var lifespan = parseInt(dayOfDeath);
-          if (!isNaN(lifespan)) {
-            thirdRoleStats[thirdRole].totalLifespan += lifespan;
-          }
-        }
-      }
-    }
-  });
-
-  // Calculate final statistics for each structure
-  function finalizeStats(statsObj) {
-    Object.keys(statsObj).forEach(function(key) {
-      var stats = statsObj[key];
-      if (stats.appearances > 0) {
-        stats.survivalRate = (stats.survived / stats.appearances * 100).toFixed(2);
-        stats.avgLifespan = (stats.totalLifespan / stats.appearances).toFixed(1);
-      }
-    });
-    // Convert to array for easier frontend processing
-    return Object.keys(statsObj).map(function(key) {
-      return {
-        key: key,
-        ...statsObj[key]
-      };
-    }).sort(function(a, b) {
-      return b.appearances - a.appearances;
-    });
-  }
-
-  var roleStatsArray = finalizeStats(roleStats).map(obj => ({ role: obj.key, ...obj }));
-  var campStatsArray = finalizeStats(campStats).map(obj => ({ camp: obj.key, ...obj }));
-  var secondaryRoleStatsArray = finalizeStats(secondaryRoleStats).map(obj => ({ secondaryRole: obj.key, ...obj }));
-  var thirdRoleStatsArray = finalizeStats(thirdRoleStats).map(obj => ({ thirdRole: obj.key, ...obj }));
-
-  return JSON.stringify({
-    roleStats: roleStatsArray,
-    campStats: campStatsArray,
-    secondaryRoleStats: secondaryRoleStatsArray,
-    thirdRoleStats: thirdRoleStatsArray
-  });
-}
-
-/**
- * Returns statistics about role survival rates, by role, camp, secondary role, and third role
- * @return {string} JSON string with role, camp, secondaryRole, and thirdRole survival statistics
- */
-function getRoleSurvivalStatsRaw() {
-  try {
-    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
-    var ponceData = getLycanSheetData(LYCAN_SCHEMA.PONCE.SHEET);
-    return _computeRoleSurvivalStats(gameData, ponceData);
-  } catch (error) {
-    Logger.log('Error in getRoleSurvivalStatsRaw: ' + error.message);
-    return JSON.stringify({ error: error.message });
-  }
-}
-
-/**
- * Returns statistics about role survival rates using preloaded data
- * @param {Object} sheetData - Objet contenant les données préchargées (clé = nom de feuille)
- * @return {string} JSON string avec les statistiques de survie
- */
-function getRoleSurvivalStatsWithData(sheetData) {
-  try {
-    var gameData = sheetData[LYCAN_SCHEMA.GAMES.SHEET];
-    var ponceData = sheetData[LYCAN_SCHEMA.PONCE.SHEET];
-    return _computeRoleSurvivalStats(gameData, ponceData);
-  } catch (error) {
-    Logger.log('Error in getRoleSurvivalStatsWithData: ' + error.message);
-    return JSON.stringify({ error: error.message });
-  }
-}
-/**
  * Internal: Calcule les statistiques détaillées pour chaque joueur à partir des données fournies
  * @param {Object} gameData - Données de la feuille Game (values, backgrounds)
  * @param {Object} roleData - Données de la feuille Roles (values, backgrounds)
@@ -727,7 +505,7 @@ function _computePlayerStats(gameData, roleData) {
 
   // Skip header rows
   var gameRows = gameValues.slice(1);
-  var roleRows = roleValues.slice(2);
+  var roleRows = roleValues.slice(1);
 
   // Create map of game ID to winner camp
   var gameWinnerMap = {};
@@ -936,7 +714,7 @@ function _computePlayerPairingStats(gameData, roleData) {
 
   // Skip header rows
   var gameRows = gameValues.slice(1);
-  var roleRows = roleValues.slice(2);
+  var roleRows = roleValues.slice(1);
 
   // Create map of game ID to winner camp
   var gameWinnerMap = {};
@@ -1146,7 +924,7 @@ function getPlayerGameHistoryRaw(e) {
     
     // Skip header rows
     var gameRows = gameValues.slice(1);
-    var roleRows = roleValues.slice(2); // Based on existing pattern
+    var roleRows = roleValues.slice(1); 
     
     // Create map of game ID to player camps
     var gamePlayerCampMap = {};
@@ -1490,7 +1268,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
 
   // Skip header rows
   var gameRows = gameValues.slice(1);
-  var roleRows = roleValues.slice(2);
+  var roleRows = roleValues.slice(1);
 
   // Create map of game ID to winner camp
   var gameWinnerMap = {};
