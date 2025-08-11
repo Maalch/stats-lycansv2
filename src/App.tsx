@@ -141,7 +141,7 @@ export default function App() {
           </div>
 
           <footer className="lycans-dashboard-footer">
-            <p>Données mises à jour automatiquement depuis le Google Sheets de Soldat Flippy</p>
+            <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
           </footer>
         </div>
       </div>
