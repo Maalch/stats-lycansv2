@@ -5,7 +5,7 @@
 // Constants pour les noms de feuilles
 const LYCAN_SCHEMA = {
   GAMES: {
-    SHEET: 'Game', //General game data par game
+    SHEET: 'Game v2', //General game data par game
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
       DATE: 'Date', //Date (format DD/MM/YYYY)
@@ -29,7 +29,7 @@ const LYCAN_SCHEMA = {
     }
   },
   PONCE: {
-    SHEET: 'Ponce', //Data specific to player Ponce per game - secondary role, wolf role, players killed ... are only avaialble for him
+    SHEET: 'Ponce v2', //Data specific to player Ponce per game - secondary role, wolf role, players killed ... are only avaialble for him
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
       CAMP: 'Camp', //Camp ("Villageois", "Loups", "Idiot du village" ...)
@@ -43,7 +43,7 @@ const LYCAN_SCHEMA = {
     }
   },
   ROLES: {
-    SHEET: 'Loups et solo', //Data specific about the roles per game
+    SHEET: 'Loups et solo v2', //Data specific about the roles per game
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
       WOLFS: 'Loups', //Name of the wolves in the game, separated by comma
@@ -133,7 +133,6 @@ function getPlayerCamp(gamePlayerCampMap, gameId, playerName) {
 function didPlayerWin(playerCamp, winnerCamp) {
   return (playerCamp === winnerCamp) || (playerCamp === "Traître" && winnerCamp === "Loups");
 }
-
 
 /**
  * Détermine si un camp donné doit être considéré comme gagnant pour une partie.
