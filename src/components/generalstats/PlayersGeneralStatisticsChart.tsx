@@ -7,11 +7,11 @@ import { lycansColorScheme } from '../../types/api';
 export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
-  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(10);
+  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(20);
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best'); 
 
   // Options pour le nombre minimum de parties
-  const minGamesOptions = [5, 8, 10, 15, 20, 25, 30, 50, 100];
+  const minGamesOptions = [5, 10, 20, 30, 50, 100, 150, 200];
 
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des statistiques des joueurs...</div>;

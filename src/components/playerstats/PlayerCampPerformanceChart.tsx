@@ -12,6 +12,9 @@ export function PlayerCampPerformanceChart() {
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformance();
 
+// Options pour le nombre minimum de parties
+  const minGamesOptions = [5, 10, 20, 30, 50, 100, 150, 200];
+
   // Get available camps from camp averages
   const availableCamps = useMemo(() => {
     if (!playerCampPerformance?.campAverages) return [];
@@ -159,16 +162,13 @@ export function PlayerCampPerformanceChart() {
 
         {(viewMode === 'player-performance' || viewMode === 'top-performers') && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <label htmlFor="min-games-input" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
               Min. parties:
             </label>
-            <input
-              id="min-games-input"
-              type="number"
-              min="1"
-              max="50"
+            <select
+              id="min-games-select"
               value={minGames}
-              onChange={(e) => setMinGames(parseInt(e.target.value) || 3)}
+              onChange={(e) => setMinGames(Number(e.target.value))}
               style={{
                 background: 'var(--bg-tertiary)',
                 color: 'var(--text-primary)',
@@ -176,9 +176,15 @@ export function PlayerCampPerformanceChart() {
                 borderRadius: '4px',
                 padding: '0.5rem',
                 fontSize: '0.9rem',
-                width: '70px'
+                width: '90px'
               }}
-            />
+            >
+            {minGamesOptions.map(option => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+            </select>
           </div>
         )}
       </div>
