@@ -57,17 +57,17 @@ function test_doGet() {
   var cache = CacheService.getScriptCache();
   
   // Clear the cache for this endpoint
-  var cacheKey = generateCacheKey('harvestStats', null, { parameter: {} });
+  var cacheKey = generateCacheKey('playerStats', null, { parameter: {} });
   cache.remove(cacheKey);
   
   var e = { 
     parameter: { 
-      action: 'harvestStats'
+      action: 'playerStats'
     } 
   };
   
   var result = doGet(e);
-  Logger.log("Test harvestStats");
+  Logger.log("Test playerStats");
   Logger.log("Cache key used: " + cacheKey);
   Logger.log(result.getContent());
   return result;
@@ -123,6 +123,19 @@ function test_getPlayerGameHistory() {
   Logger.log("Cache key used: " + cacheKey);
   Logger.log(result.getContent());
   return result;
+}
+
+/**
+ * Clear the cache for the combinedStats endpoint for a given stats list.
+ * @param {string} statsParam - Comma-separated list of stats (e.g. "campWinStats,harvestStats")
+ */
+function clearCombinedStatsCache(statsParam) {
+  var cache = CacheService.getScriptCache();
+  // Simulate the request parameter object as in doGet
+  var e = { parameter: { stats: statsParam } };
+  var cacheKey = generateCacheKey('combinedStats', ['stats'], e);
+  cache.remove(cacheKey);
+  Logger.log('Cleared cache for combinedStats with key: ' + cacheKey);
 }
 
 
@@ -482,7 +495,7 @@ function _computePlayerStats(gameData, roleData) {
   var roleValues = roleData.values;
 
   var gameHeaders = gameValues[0];
-  var roleHeaders = roleValues[1];
+  var roleHeaders = roleValues[0];
 
   // Get column indexes from game sheet
   var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
@@ -701,7 +714,7 @@ function _computePlayerPairingStats(gameData, roleData) {
   var roleValues = roleData.values;
 
   var gameHeaders = gameValues[0];
-  var roleHeaders = roleValues[1]; // Note: using index 1 based on existing code
+  var roleHeaders = roleValues[0]; 
 
   // Get game column indexes
   var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
@@ -900,7 +913,7 @@ function getPlayerGameHistoryRaw(e) {
     var roleValues = roleData.values;
     
     var gameHeaders = gameValues[0];
-    var roleHeaders = roleValues[1]; // Based on existing pattern in other functions
+    var roleHeaders = roleValues[0]; 
     
     // Get game column indexes
     var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
@@ -1245,7 +1258,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
   var roleValues = roleData.values;
 
   var gameHeaders = gameValues[0];
-  var roleHeaders = roleValues[1];
+  var roleHeaders = roleValues[0];
 
   // Get column indexes from game sheet
   var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
