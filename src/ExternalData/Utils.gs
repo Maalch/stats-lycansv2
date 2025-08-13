@@ -9,6 +9,7 @@ const LYCAN_SCHEMA = {
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
       DATE: 'Date', //Date (format DD/MM/YYYY)
+      MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
       VOD: 'VOD', //Link to the youtube VOD 
       NBPLAYERS: 'Nombre de joueurs', //Number of players in that game
       NBWOLVES: 'Nombre de loups', //Number of wolves in that game
@@ -16,12 +17,13 @@ const LYCAN_SCHEMA = {
       LOVERS: 'Rôle Amoureux', //Checkbox: true / false if the lovers are in the game
       SOLO: 'Rôles solo',  //name of the solo roles. If several, separated with comma
       WINNERCAMP: 'Camp victorieux', //name of the winner camp ("Loups", "Villageois"...)
-      AVATARKILLED: 'Avatar tué', //Checkbox: true / false if an avatar is in the game
+      VICTORYTYPE: 'Type de victoire', //Type of victory for the winning camp ("Vote", "Récolte", "Domination"...)
       NBDAYS: 'Nombre de journées', //number of days in the game
       SURVIVINGVILLAGERS: 'Survivants villageois', //number of villagers that survived at the end
       SURVIVINGWOLVES: 'Survivants loups (traître inclus)', //number of wolves (+ traitor) that survived in the end
       SURVIVINGLOVERS: 'Survivants amoureux', //number of lovers that survived in the end
       SURVIVINGSOLO: 'Survivants solo', //number of solo roles that survived in the game
+      WINNERLIST: 'Liste des gagnants', //list of players that won this game, separated with comma if several winners
       HARVEST: 'Récolte', //haverst at the end of the game
       TOTALHARVEST: 'Total récolte', //total haverst needed in that game to win as villagers
       HARVESTPERCENT: 'Pourcentage de récolte', //percentage of haverst at the end of the game
@@ -32,20 +34,23 @@ const LYCAN_SCHEMA = {
     SHEET: 'Ponce v2', //Data specific to player Ponce per game - secondary role, wolf role, players killed ... are only avaialble for him
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
-      CAMP: 'Camp', //Camp ("Villageois", "Loups", "Idiot du village" ...)
-      ROLE: 'Rôle principal', //Name of the main role
-      SECONDARYROLE: 'Rôle secondaire', //Name of the secondary role
-      WOLFROLE: 'Pouvoir de loup', //Name of the wolf role
-      VILLAGEROLE: 'Métier villageois', //Name of the villager role
-      PLAYERSKILLED: 'Joueurs tués', //Number of player killed
+      MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
+      CAMP: 'Camp', //Camp of Ponce ("Villageois", "Loups", "Idiot du village" ...)
+      TRAITOR: 'Traître', //Checkbox: true / false if Ponce was the traitor in that game
+      SECONDARYROLE: 'Rôle secondaire', //Name of the secondary role of Ponce
+      WOLFROLE: 'Pouvoir de loup', //Name of the wolf role (if Ponce was wolf)
+      VILLAGEROLE: 'Métier villageois', //Name of the villager role (if Ponce was Villager)
+      PLAYERSKILLED: 'Joueurs tués', //List of players killed by Ponce, separated with comma
       DAYOFDEATH: 'Jour de mort', //Day of death (1, 2, 3, etc...) 
-      TYPEOFDEATH: 'Type de mort'	//Type of death ("Tué par loup", "Mort de faim", "Mort aux votes"...)
+      TYPEOFDEATH: 'Type de mort',	//Type of death ("Tué par loup", "Mort de faim", "Mort aux votes"...)
+      KILLERPLAYERS: 'Joueurs tueurs' //list of players involved in Ponce death (usually one, but several for "Vote" for example)
     }
   },
   ROLES: {
     SHEET: 'Loups et solo v2', //Data specific about the roles per game
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
+      MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
       WOLFS: 'Loups', //Name of the wolves in the game, separated by comma
       TRAITOR: 'Traître', //name of the traitor in the game (if any)
       IDIOT: 'Idiot du village', //name of the idiot in the game, if any
