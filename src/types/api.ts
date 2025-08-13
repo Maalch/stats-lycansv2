@@ -3,7 +3,7 @@ export const lycansColorScheme: Record<string, string> = {
   'Villageois': '#4CAF50',
   'Loups': '#ff1100ff',
   'Amoureux': '#E91E63',
-  'Idiot du Village': '#fbff00ff',
+  'Idiot du Village': '#fbff009a',
   'Cannibale': '#795548',
   'La Bête': '#a00000ff',
   'Espion': '#2196F3',
