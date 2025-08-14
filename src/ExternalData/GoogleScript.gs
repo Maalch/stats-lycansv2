@@ -57,17 +57,17 @@ function test_doGet() {
   var cache = CacheService.getScriptCache();
   
   // Clear the cache for this endpoint
-  var cacheKey = generateCacheKey('playerStats', null, { parameter: {} });
+  var cacheKey = generateCacheKey('playerCampPerformance', null, { parameter: {} });
   cache.remove(cacheKey);
   
   var e = { 
     parameter: { 
-      action: 'playerStats'
+      action: 'playerCampPerformance'
     } 
   };
   
   var result = doGet(e);
-  Logger.log("Test playerStats");
+  Logger.log("Test playerCampPerformance");
   Logger.log("Cache key used: " + cacheKey);
   Logger.log(result.getContent());
   return result;
@@ -103,7 +103,7 @@ function test_combinedStats() {
 // Updated test function
 function test_getPlayerGameHistory() {
   var cache = CacheService.getScriptCache();
-  var playerName = "aayley";
+  var playerName = "Ponce";
   
   // Clear the specific cache for this player
   var cacheKey = generateCacheKey('playerGameHistory', ['playerName'], { 
@@ -500,7 +500,7 @@ function _computePlayerStats(gameData, roleData) {
   // Get column indexes from game sheet
   var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
   var playerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
-  var winnerCampIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
+  var winnerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST);
 
   // Get column indexes from role sheet
   var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
@@ -519,16 +519,6 @@ function _computePlayerStats(gameData, roleData) {
   // Skip header rows
   var gameRows = gameValues.slice(1);
   var roleRows = roleValues.slice(1);
-
-  // Create map of game ID to winner camp
-  var gameWinnerMap = {};
-  gameRows.forEach(function(row) {
-    var gameId = row[gameIdIdx];
-    var winnerCamp = row[winnerCampIdx];
-    if (gameId && winnerCamp) {
-      gameWinnerMap[gameId] = winnerCamp;
-    }
-  });
 
   // Create map of game ID to player camps
   var gamePlayerCampMap = {};
@@ -595,6 +585,7 @@ function _computePlayerStats(gameData, roleData) {
   gameRows.forEach(function(row) {
     var gameId = row[gameIdIdx];
     var playerList = row[playerListIdx];
+    var winnerList = row[winnerListIdx];
 
     if (gameId && playerList) {
       totalGames++;
@@ -635,8 +626,7 @@ function _computePlayerStats(gameData, roleData) {
           allPlayers[player].camps[playerCamp]++;
 
           // Check if player won
-          var winnerCamp = gameWinnerMap[gameId];
-          var playerWon = didPlayerWin(playerCamp, winnerCamp);
+          var playerWon = didPlayerWin(player, winnerList);
           if (playerWon) {
             allPlayers[player].wins++;
           }
@@ -920,6 +910,7 @@ function getPlayerGameHistoryRaw(e) {
     var dateIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.DATE);
     var playerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
     var winnerCampIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
+    var winnerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST);
     
     // Get role column indexes
     var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
@@ -984,8 +975,9 @@ function getPlayerGameHistoryRaw(e) {
       var date = row[dateIdx];
       var playerList = row[playerListIdx];
       var winnerCamp = row[winnerCampIdx];
+      var winnerList = row[winnerListIdx];
       
-      if (gameId && playerList && date && winnerCamp) {
+      if (gameId && playerList && date && winnerList) {
         // Check if player is in the game
         var players = splitAndTrim(playerList);
         var playerInGame = players.some(function(p) { 
@@ -997,7 +989,7 @@ function getPlayerGameHistoryRaw(e) {
           var playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, playerName);
           
           // Determine win/loss status
-          var playerWon = didPlayerWin(playerCamp, winnerCamp);
+          var playerWon = didPlayerWin(playerName, winnerList);
           
           // Format date consistently
           var formattedDate = formatLycanDate(date);
@@ -1264,6 +1256,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
   var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
   var playerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
   var winnerCampIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
+  var winnerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST);
 
   // Get column indexes from role sheet
   var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
@@ -1282,16 +1275,6 @@ function _computePlayerCampPerformance(gameData, roleData) {
   // Skip header rows
   var gameRows = gameValues.slice(1);
   var roleRows = roleValues.slice(1);
-
-  // Create map of game ID to winner camp
-  var gameWinnerMap = {};
-  gameRows.forEach(function(row) {
-    var gameId = row[gameIdIdx];
-    var winnerCamp = row[winnerCampIdx];
-    if (gameId && winnerCamp) {
-      gameWinnerMap[gameId] = winnerCamp;
-    }
-  });
 
   // Create map of game ID to player camps
   var gamePlayerCampMap = {};
@@ -1402,9 +1385,9 @@ function _computePlayerCampPerformance(gameData, roleData) {
   gameRows.forEach(function(row) {
     var gameId = row[gameIdIdx];
     var playerList = row[playerListIdx];
-    var winnerCamp = row[winnerCampIdx];
+    var winnerList = row[winnerListIdx];
 
-    if (gameId && playerList && winnerCamp) {
+    if (gameId && playerList && winnerList) {
       var players = splitAndTrim(playerList);
 
       players.forEach(function(playerName) {
@@ -1424,7 +1407,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
           campStats[playerCamp].players[player].games++;
 
           // Check if player won
-          var playerWon = didPlayerWin(playerCamp, winnerCamp);
+          var playerWon = didPlayerWin(player, winnerList);
           if (playerWon) {
             campStats[playerCamp].players[player].wins++;
           }
@@ -1449,7 +1432,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
           playerCampPerformance[player].totalGames++;
           playerCampPerformance[player].camps[playerCamp].games++;
 
-          if (didPlayerWin(playerCamp, winnerCamp)) {
+          if (didPlayerWin(player, winnerList)) {
             playerCampPerformance[player].camps[playerCamp].wins++;
           }
         }

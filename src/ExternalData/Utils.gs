@@ -129,14 +129,22 @@ function getPlayerCamp(gamePlayerCampMap, gameId, playerName) {
 }
 
 /**
- * Détermine si le joueur a gagné la partie selon son camp et le camp vainqueur.
- * Règle spéciale : le "Traître" gagne si le camp vainqueur est "Loups".
- * @param {string} playerCamp - Camp du joueur
- * @param {string} winnerCamp - Camp vainqueur de la partie
+ * Détermine si le joueur a gagné la partie en vérifiant d'abord la liste des gagnants
+ * @param {string} playerName - Nom du joueur
+ * @param {string} winnerList - Liste des gagnants (séparés par des virgules)
  * @return {boolean} true si le joueur a gagné, false sinon
  */
-function didPlayerWin(playerCamp, winnerCamp) {
-  return (playerCamp === winnerCamp) || (playerCamp === "Traître" && winnerCamp === "Loups");
+function didPlayerWin(playerName, winnerList) {
+  // First check winner list if available
+  if (winnerList && winnerList.trim() !== "") {
+    var winners = splitAndTrim(winnerList);
+    return winners.some(function(winner) {
+      return winner.toLowerCase() === playerName.toLowerCase();
+    });
+  }
+  
+  // Fall back to false
+  return false;
 }
 
 /**
