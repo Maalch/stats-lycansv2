@@ -1,12 +1,12 @@
 import { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, ScatterChart, Scatter } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter } from 'recharts';
 import { usePlayerCampPerformance } from '../../hooks/usePlayerCampPerformance';
 import { lycansColorScheme, playersColor } from '../../types/api';
 
-type ViewMode = 'camp-averages' | 'player-performance' | 'top-performers';
+type ViewMode =  'player-performance' | 'top-performers';
 
 export function PlayerCampPerformanceChart() {
-  const [viewMode, setViewMode] = useState<ViewMode>('camp-averages');
+  const [viewMode, setViewMode] = useState<ViewMode>('player-performance');
   const [selectedCamp, setSelectedCamp] = useState<string>('Villageois');
   const [minGames, setMinGames] = useState<number>(5);
   
@@ -21,18 +21,6 @@ export function PlayerCampPerformanceChart() {
     return playerCampPerformance.campAverages
       .map(camp => camp.camp)
       .sort();
-  }, [playerCampPerformance]);
-
-  // Prepare camp averages data for visualization
-  const campAveragesData = useMemo(() => {
-    if (!playerCampPerformance?.campAverages) return [];
-    
-    return playerCampPerformance.campAverages
-      .map(camp => ({
-        ...camp,
-        winRateNum: parseFloat(camp.winRate)
-      }))
-      .sort((a, b) => b.winRateNum - a.winRateNum);
   }, [playerCampPerformance]);
 
   // Prepare player performance data for selected camp
@@ -98,7 +86,7 @@ export function PlayerCampPerformanceChart() {
 
   return (
     <div className="lycans-player-camp-performance">
-      <h2>Performance des Joueurs par Camp</h2>
+      <h2>Meilleurs Performances par Camp</h2>
       
       {/* Controls */}
       <div className="lycans-controls-section" style={{ 
@@ -126,9 +114,8 @@ export function PlayerCampPerformanceChart() {
               minWidth: '150px'
             }}
           >
-            <option value="camp-averages">Moyennes par Camp</option>
-            <option value="player-performance">Performance par Camp</option>
-            <option value="top-performers">Top Performers</option>
+            <option value="player-performance">Meilleurs Performeurs par Camp</option>
+            <option value="top-performers">Hall of Fame</option>
           </select>
         </div>
 
@@ -209,117 +196,6 @@ export function PlayerCampPerformanceChart() {
       </div>
 
       <div className="lycans-graphiques-groupe">
-        {/* Camp Averages View */}
-        {viewMode === 'camp-averages' && (
-          <>
-            <div className="lycans-graphique-section">
-              <h3>Taux de Victoire Moyen par Camp</h3>
-              <div style={{ height: 400 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={campAveragesData}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="camp"
-                      angle={-45}
-                      textAnchor="end"
-                      height={90}
-                      interval={0}
-                      fontSize={11}
-                    />
-                    <YAxis 
-                      label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
-                      domain={[0, 100]}
-                    />
-                    <Tooltip
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length > 0) {
-                          const dataPoint = payload[0].payload;
-                          return (
-                            <div style={{ 
-                              background: 'var(--bg-secondary)', 
-                              color: 'var(--text-primary)', 
-                              padding: 12, 
-                              borderRadius: 8,
-                              border: '1px solid var(--border-color)'
-                            }}>
-                              <div><strong>{dataPoint.camp}</strong></div>
-                              <div>Parties totales: {dataPoint.totalGames}</div>
-                              <div>Taux de victoire: {dataPoint.winRate}%</div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Bar dataKey="winRateNum">
-                      {campAveragesData.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            <div className="lycans-graphique-section">
-              <h3>Distribution des Parties par Camp</h3>
-              <div style={{ height: 400 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={campAveragesData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      outerRadius={120}
-                      fill="#8884d8"
-                      dataKey="totalGames"
-                      label={({ camp, totalGames, percent }) => {
-                        const pct = percent !== undefined ? percent : 0;
-                        return `${camp}: ${totalGames} (${(pct * 100).toFixed(1)}%)`;
-                      }}
-                    >
-                      {campAveragesData.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
-                        />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length > 0) {
-                          const dataPoint = payload[0].payload;
-                          return (
-                            <div style={{ 
-                              background: 'var(--bg-secondary)', 
-                              color: 'var(--text-primary)', 
-                              padding: 12, 
-                              borderRadius: 8,
-                              border: '1px solid var(--border-color)'
-                            }}>
-                              <div><strong>{dataPoint.camp}</strong></div>
-                              <div>Parties: {dataPoint.totalGames}</div>
-                              <div>Taux victoire: {dataPoint.winRate}%</div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </>
-        )}
-
         {/* Player Performance by Camp View */}
         {viewMode === 'player-performance' && (
           <>

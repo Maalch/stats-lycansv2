@@ -3,32 +3,38 @@ import { StatsProvider } from './context/StatsContext';
 import './App.css';
 
 // Lazy load each dashboard section
-const CampsAndRolesRateChart = lazy(() => import('./components/generalstats/CampsAndRolesRateChart').then(m => ({ default: m.CampsAndRolesRateChart })));
-const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
-const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
-const PlayersGeneralStatisticsChart = lazy(() => import('./components/generalstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
-const PlayerPairingStatsChart = lazy(() => import('./components/generalstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
+const PlayersGeneralStatisticsChart = lazy(() => import('./components/playerstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
 const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
+const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
 
+const VictoryPerCampChart = lazy(() => import('./components/generalstats/VictoryPerCampChart').then(m => ({ default: m.VictoryPerCampChart })));
+const CampsAverageChart = lazy(() => import('./components/generalstats/CampsAverageChart').then(m => ({ default: m.CampsAverageChart })));
+const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
+const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
+
 const MAIN_TABS = [
+  { key: 'players', label: 'Statistiques Joueurs' },
   { key: 'general', label: 'Statistiques Générales' },
-  { key: 'players', label: 'Statistiques par Joueur' },
+
   //{ key: 'ponce', label: 'Statistiques Survie Ponce' },
 ];
 
-const GENERAL_STATS_MENU = [
+const PLAYER_STATS_MENU = [
   { key: 'playersGeneral', label: 'Joueurs', component: PlayersGeneralStatisticsChart },
+  { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
   { key: 'pairing', label: 'Paires de Joueurs', component: PlayerPairingStatsChart }, 
-  { key: 'camp', label: 'Camps et Roles', component: CampsAndRolesRateChart },
+  { key: 'campPerformance', label: 'Meilleurs Performeurs', component: PlayerCampPerformanceChart }, 
+];
+
+const GENERAL_STATS_MENU = [
+  { key: 'camp', label: 'Victoire par Camp', component: VictoryPerCampChart },
+  { key: 'campsAverage', label: 'Moyenne par Camp', component: CampsAverageChart },
   { key: 'harvest', label: 'Récolte', component: HarvestProgressChart },
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
 ];
 
-const PLAYER_STATS_MENU = [
-  { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
-  { key: 'campPerformance', label: 'Performance par Camp', component: PlayerCampPerformanceChart }, 
-];
+
 {/*}
 const PONCE_STATS_MENU = [
   { key: '', label: '', component:  },
@@ -36,36 +42,13 @@ const PONCE_STATS_MENU = [
 */}
 
 export default function App() {
-  const [selectedMainTab, setSelectedMainTab] = useState('general');
-  const [selectedGeneralStat, setSelectedGeneralStat] = useState('playersGeneral');
-  const [selectedPlayerStat, setSelectedPlayerStat] = useState('history');
+  const [selectedMainTab, setSelectedMainTab] = useState('players');
+  const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
+  const [selectedGeneralStat, setSelectedGeneralStat] = useState('camp');
 
   const renderContent = () => {
     switch (selectedMainTab) {
-      case 'general': {
-        const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? PlayersGeneralStatisticsChart;
-        return (
-          <div>
-            <nav className="lycans-submenu">
-              {GENERAL_STATS_MENU.map(item => (
-                <button
-                  key={item.key}
-                  className={`lycans-submenu-btn${selectedGeneralStat === item.key ? ' active' : ''}`}
-                  onClick={() => setSelectedGeneralStat(item.key)}
-                  type="button"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-            <div className="lycans-dashboard-content">
-              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                <SelectedGeneralComponent />
-              </Suspense>
-            </div>
-          </div>
-        );
-      }
+    
       case 'players': {
         const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayerGameHistoryChart;
         return (
@@ -85,6 +68,30 @@ export default function App() {
             <div className="lycans-dashboard-content">
               <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
                 <SelectedPlayerComponent />
+              </Suspense>
+            </div>
+          </div>
+        );
+      }
+      case 'general': {
+        const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? VictoryPerCampChart;
+        return (
+          <div>
+            <nav className="lycans-submenu">
+              {GENERAL_STATS_MENU.map(item => (
+                <button
+                  key={item.key}
+                  className={`lycans-submenu-btn${selectedGeneralStat === item.key ? ' active' : ''}`}
+                  onClick={() => setSelectedGeneralStat(item.key)}
+                  type="button"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="lycans-dashboard-content">
+              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                <SelectedGeneralComponent />
               </Suspense>
             </div>
           </div>
