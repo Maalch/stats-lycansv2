@@ -5,7 +5,7 @@ import { lycansColorScheme } from '../../types/api';
 // Fallback color for camps not in the scheme
 const lycansDefaultColor = '#607D8B';
 
-export function CampsAndRolesRateChart() {
+export function VictoryPerCampChart() {
   const { campWinStats: victoriesDonnees, isLoading: chargementEnCours, errorInfo: messageErreur } = useCampWinStats();
 
   if (chargementEnCours) {
@@ -25,13 +25,6 @@ export function CampsAndRolesRateChart() {
     winRateNum: typeof camp.winRate === 'string' ? parseFloat(camp.winRate) : camp.winRate
   })) || [];
 
-  {/*
-  // Calculate percentages for solo roles
-  const soloRolesAvecPourcentage = victoriesDonnees?.soloCamps?.map(solo => ({
-    ...solo,
-    pourcentage: parseFloat((solo.appearances / victoriesDonnees.totalGames * 100).toFixed(2))
-  })) || [];
-  */}
   return (
     <div className="lycans-stats-container">
       <h2>Statistiques de Victoire par Camp</h2>
