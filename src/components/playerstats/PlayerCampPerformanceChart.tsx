@@ -441,7 +441,7 @@ export function PlayerCampPerformanceChart() {
         {/* Top Performers View */}
         {viewMode === 'top-performers' && (
           <div className="lycans-graphique-section">
-            <h3>Top 20 Performances Toutes Camps Confondues</h3>
+            <h3>Top 20 Performances Tous Camps Confondus</h3>
             <div style={{ height: 600 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
