@@ -8,8 +8,7 @@ const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/Playe
 const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
 
-const VictoryPerCampChart = lazy(() => import('./components/generalstats/VictoryPerCampChart').then(m => ({ default: m.VictoryPerCampChart })));
-const CampsAverageChart = lazy(() => import('./components/generalstats/CampsAverageChart').then(m => ({ default: m.CampsAverageChart })));
+const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 
@@ -28,8 +27,7 @@ const PLAYER_STATS_MENU = [
 ];
 
 const GENERAL_STATS_MENU = [
-  { key: 'camp', label: 'Victoire par Camp', component: VictoryPerCampChart },
-  { key: 'campsAverage', label: 'Moyenne par Camp', component: CampsAverageChart },
+  { key: 'camps', label: 'Camps', component: CampsChart },
   { key: 'harvest', label: 'Récolte', component: HarvestProgressChart },
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
 ];
@@ -44,7 +42,7 @@ const PONCE_STATS_MENU = [
 export default function App() {
   const [selectedMainTab, setSelectedMainTab] = useState('players');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
-  const [selectedGeneralStat, setSelectedGeneralStat] = useState('camp');
+  const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
 
   const renderContent = () => {
     switch (selectedMainTab) {
@@ -74,7 +72,7 @@ export default function App() {
         );
       }
       case 'general': {
-        const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? VictoryPerCampChart;
+        const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? CampsChart;
         return (
           <div>
             <nav className="lycans-submenu">
