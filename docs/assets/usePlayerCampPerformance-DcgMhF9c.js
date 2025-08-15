@@ -1,0 +1,1 @@
+import{u as o}from"./index-B0KpZURT.js";function p(){const{combinedData:r,isLoading:e,error:a}=o();return{playerCampPerformance:r&&r.playerCampPerformance?r.playerCampPerformance:null,isLoading:e,error:a}}export{p as u};
