@@ -8,7 +8,7 @@ type ViewMode =  'player-performance' | 'top-performers';
 export function PlayerCampPerformanceChart() {
   const [viewMode, setViewMode] = useState<ViewMode>('player-performance');
   const [selectedCamp, setSelectedCamp] = useState<string>('Villageois');
-  const [minGames, setMinGames] = useState<number>(5);
+  const [minGames, setMinGames] = useState<number>(20);
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformance();
 
@@ -114,7 +114,7 @@ export function PlayerCampPerformanceChart() {
               minWidth: '150px'
             }}
           >
-            <option value="player-performance">Meilleurs Performeurs par Camp</option>
+            <option value="player-performance">Camp</option>
             <option value="top-performers">Hall of Fame</option>
           </select>
         </div>
@@ -317,7 +317,7 @@ export function PlayerCampPerformanceChart() {
         {/* Top Performers View */}
         {viewMode === 'top-performers' && (
           <div className="lycans-graphique-section">
-            <h3>Top 20 Performances Tous Camps Confondus</h3>
+            <h3>{`Top 20 des Performances (Min. ${minGames} parties dans ce camp)`}</h3>
             <div style={{ height: 600 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
