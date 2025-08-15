@@ -314,11 +314,15 @@ export function PlayersGeneralStatisticsChart() {
                     if (active && payload && payload.length > 0) {
                       const d = payload[0].payload;
                       if (d.name === 'Autres' && d._details) {
+                        // Sort the details by descending percentage
+                        const sortedDetails = [...d._details].sort(
+                          (a, b) => parseFloat(b.percentage) - parseFloat(a.percentage)
+                        );
                         return (
                           <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                             <div><strong>Autres</strong></div>
                             <div>
-                              {d._details.map((entry: any, i: number) => (
+                              {sortedDetails.map((entry: any, i: number) => (
                                 <div key={i}>
                                   {entry.name}: {entry.value} parties ({entry.percentage}%)
                                 </div>
