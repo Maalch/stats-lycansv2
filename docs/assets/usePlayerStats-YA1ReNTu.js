@@ -1,0 +1,1 @@
+import{u as e}from"./index-BMzbn9yu.js";function n(){const{combinedData:t,isLoading:a,error:r}=e();return{playerStatsData:t&&t.playerStats?t.playerStats:null,dataLoading:a,fetchError:r}}export{n as u};

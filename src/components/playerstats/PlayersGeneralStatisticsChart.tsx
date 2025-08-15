@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, ReferenceLine } from 'recharts';
 import { usePlayerStats } from '../../hooks/usePlayerStats';
 import { getRandomColor, playersColor } from '../../types/api';
@@ -9,7 +9,55 @@ export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(50);
-  const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best'); 
+  const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
+
+  // Préparation des données pour le graphique circulaire des camps
+  const prepareCampDistributionData = (player: string) => {
+    const playerData = playerStatsData?.playerStats.find(p => p.player === player);
+    if (!playerData) return [];
+    return Object.entries(playerData.camps)
+      .filter(([_, count]) => count > 0)
+      .map(([camp, count]) => ({
+        name: camp,
+        value: count,
+        percentage: ((count / playerData.gamesPlayed) * 100).toFixed(1)
+      }));
+  };
+
+  // Group small slices into "Autres" and keep details for tooltip
+  // Move ALL the logic inside useMemo and depend on selectedPlayer directly
+  const groupedCampDistributionData = useMemo(() => {
+    if (!selectedPlayer || !playerStatsData) return [];
+    
+    const campDistributionData = prepareCampDistributionData(selectedPlayer);
+    if (!campDistributionData.length) return [];
+    
+    const MIN_PERCENT = 5;
+    let smallTotal = 0;
+    const smallEntries: typeof campDistributionData = [];
+    const large: typeof campDistributionData = [];
+    
+    campDistributionData.forEach(entry => {
+      if (parseFloat(entry.percentage) < MIN_PERCENT) {
+        smallTotal += Number(entry.value);
+        smallEntries.push(entry);
+      } else {
+        large.push(entry);
+      }
+    });
+    
+    if (smallTotal > 0) {
+      large.push({
+        name: 'Autres',
+        value: smallTotal,
+        percentage: ((smallTotal / campDistributionData.reduce((sum, e) => sum + Number(e.value), 0)) * 100).toFixed(1),
+        // @ts-ignore
+        _details: smallEntries // Attach details for tooltip
+      });
+    }
+    
+    return large;
+  }, [selectedPlayer, playerStatsData]); // Depend on selectedPlayer directly, not on campDistributionData
 
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des statistiques des joueurs...</div>;
@@ -52,23 +100,6 @@ export function PlayersGeneralStatisticsChart() {
           ) / playerStatsData.playerStats.length
         ).toFixed(1)
       : '0';
-
-  // Préparation des données pour le graphique circulaire des camps
-  const prepareCampDistributionData = (player: string) => {
-    const playerData = playerStatsData.playerStats.find(p => p.player === player);
-    if (!playerData) return [];
-    return Object.entries(playerData.camps)
-      .filter(([_, count]) => count > 0)
-      .map(([camp, count]) => ({
-        name: camp,
-        value: count,
-        percentage: ((count / playerData.gamesPlayed) * 100).toFixed(1)
-      }));
-  };
-
-  const campDistributionData = selectedPlayer
-    ? prepareCampDistributionData(selectedPlayer)
-    : [];
 
   return (
     <div className="lycans-players-stats">
@@ -252,7 +283,7 @@ export function PlayersGeneralStatisticsChart() {
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={campDistributionData}
+                  data={groupedCampDistributionData}
                   cx="50%"
                   cy="50%"
                   labelLine={true}
@@ -260,12 +291,21 @@ export function PlayersGeneralStatisticsChart() {
                   fill="#8884d8"
                   dataKey="value"
                   nameKey="name"
-                  label={({ name, percentage }) => `${name}: ${percentage}%`}
+                  label={({ name, percentage }) =>
+                    name === 'Autres'
+                      ? 'Autres'
+                      : `${name}: ${percentage}%`
+                  }
                 >
-                  {campDistributionData.map((entry, index) => (
+                  {groupedCampDistributionData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || getRandomColor(entry.name)}
+                      fill={
+                        entry.name === 'Autres'
+                          ? '#cccccc'
+                          : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] ||
+                            getRandomColor(entry.name)
+                      }
                     />
                   ))}
                 </Pie>
@@ -273,6 +313,23 @@ export function PlayersGeneralStatisticsChart() {
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0) {
                       const d = payload[0].payload;
+                      if (d.name === 'Autres' && d._details) {
+                        return (
+                          <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                            <div><strong>Autres</strong></div>
+                            <div>
+                              {d._details.map((entry: any, i: number) => (
+                                <div key={i}>
+                                  {entry.name}: {entry.value} parties ({entry.percentage}%)
+                                </div>
+                              ))}
+                            </div>
+                            <div style={{ marginTop: 4, fontWeight: 'bold' }}>
+                              Total: {d.value} parties ({d.percentage}%)
+                            </div>
+                          </div>
+                        );
+                      }
                       return (
                         <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                           <div><strong>{d.name}</strong></div>
