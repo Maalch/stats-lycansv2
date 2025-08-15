@@ -236,7 +236,7 @@ export function PlayerCampPerformanceChart() {
                               <div>Victoires: {dataPoint.wins}</div>
                               <div>Taux personnel: {dataPoint.winRate}%</div>
                               <div>Moyenne camp: {dataPoint.campAvgWinRate}%</div>
-                              <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}%</div>
+                              <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
                             </div>
                           );
                         }
@@ -292,7 +292,7 @@ export function PlayerCampPerformanceChart() {
                               }}>
                               <div><strong>{dataPoint.player}</strong></div>
                               <div>Parties: {dataPoint.games}</div>
-                              <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}%</div>
+                              <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
                               </div>
                            );
                         }
@@ -352,7 +352,7 @@ export function PlayerCampPerformanceChart() {
                             <div>Camp: {dataPoint.camp}</div>
                             <div>Parties: {dataPoint.games}</div>
                             <div>Taux personnel: {dataPoint.winRate}%</div>
-                            <div>Performance: +{dataPoint.performance}%</div>
+                            <div>Performance: +{dataPoint.performance}</div>
                           </div>
                         );
                       }
