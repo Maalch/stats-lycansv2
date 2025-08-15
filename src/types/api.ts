@@ -53,6 +53,25 @@ export const playersColor: Record<string, string> = {
   "Heimdalle": "#00ffff"
 };
 
+  // Options pour le nombre minimum de parties
+export const minGamesOptions = [5, 10, 25, 50, 75, 100, 150, 200];
+
+// Types pour les statistiques des joueurs
+export interface PlayerCamps {
+  Villageois: number;
+  Loups: number;
+  Traître: number;
+  "Idiot du Village": number;
+  Cannibale: number;
+  Agent: number;
+  Espion: number;
+  Scientifique: number;
+  Amoureux: number;
+  "La Bête": number;
+  "Chasseur de primes": number;
+  Vaudou: number;
+}
+
 // Camp Win Statistics Types
 export interface CampStat {
   camp: string;
@@ -93,24 +112,6 @@ export interface HarvestStatsResponse {
   gamesWithHarvest: number;
   harvestDistribution: HarvestDistribution;
   harvestByWinner: Record<string, CampHarvestData>;
-  error?: string;
-}
-
-// Role Survival Statistics Types
-export interface RoleStats {
-  role: string;
-  appearances: number;
-  survived: number;
-  survivalRate: string;
-  avgLifespan: string;
-  totalLifespan: number;
-}
-
-export interface RoleSurvivalStatsResponse {
-  roleStats: RoleStats[];
-  campStats: RoleStats[];
-  secondaryRoleStats: RoleStats[];
-  thirdRoleStats: RoleStats[];
   error?: string;
 }
 
@@ -181,22 +182,6 @@ export interface PlayerPairingStatsData {
     totalGames: number;
     pairs: PlayerPairStat[];
   };
-}
-
-// Types pour les statistiques des joueurs
-export interface PlayerCamps {
-  Villageois: number;
-  Loups: number;
-  Traître: number;
-  "Idiot du Village": number;
-  Cannibale: number;
-  Agent: number;
-  Espion: number;
-  Scientifique: number;
-  Amoureux: number;
-  "La Bête": number;
-  "Chasseur de primes": number;
-  Vaudou: number;
 }
 
 export interface PlayerStat {
