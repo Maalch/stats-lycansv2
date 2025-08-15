@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter } from 'recharts';
 import { usePlayerCampPerformance } from '../../hooks/usePlayerCampPerformance';
 import { lycansColorScheme, playersColor } from '../../types/api';
+import { minGamesOptions} from '../../types/api';
 
 type ViewMode =  'player-performance' | 'top-performers';
 
@@ -11,9 +12,6 @@ export function PlayerCampPerformanceChart() {
   const [minGames, setMinGames] = useState<number>(20);
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformance();
-
-// Options pour le nombre minimum de parties
-  const minGamesOptions = [5, 10, 20, 30, 50, 100, 150, 200];
 
   // Get available camps from camp averages
   const availableCamps = useMemo(() => {
