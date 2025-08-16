@@ -353,7 +353,7 @@ export function PlayerGameHistoryChart() {
                   label={({ name, value, percent }) => {
                     const pct = percent !== undefined ? percent : 0;
                     return name === 'Autres' 
-                      ? 'Autres'
+                      ? `Autres : ${value} (${(pct * 100).toFixed(1)}%)`  
                       : `${name}: ${value} (${(pct * 100).toFixed(1)}%)`;
                   }}
                 >

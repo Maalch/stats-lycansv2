@@ -165,7 +165,7 @@ export function CampsChart() {
                       dataKey="winRateNum"
                       nameKey="camp"
                       label={({ camp, winRate }) => 
-                        camp === 'Autres' ? 'Autres' : `${camp}: ${winRate}%`
+                        camp === 'Autres' ? `Autres: ${winRate}%` : `${camp}: ${winRate}%`
                       }
                     >
                       {groupedVictoryData.map((entree, indice) => (
@@ -315,7 +315,7 @@ export function CampsChart() {
                       label={({ camp, totalGames, percent }) => {
                         const pct = percent !== undefined ? percent : 0;
                         return camp === 'Autres' 
-                          ? 'Autres'
+                          ? `Autres: ${totalGames} (${(pct * 100).toFixed(1)}%)`
                           : `${camp}: ${totalGames} (${(pct * 100).toFixed(1)}%)`;
                       }}
                     >
