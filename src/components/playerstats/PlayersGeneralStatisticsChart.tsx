@@ -293,7 +293,7 @@ export function PlayersGeneralStatisticsChart() {
                   nameKey="name"
                   label={({ name, percentage }) =>
                     name === 'Autres'
-                      ? 'Autres'
+                      ? `Autres : ${percentage}%`
                       : `${name}: ${percentage}%`
                   }
                 >
