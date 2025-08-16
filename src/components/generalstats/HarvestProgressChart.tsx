@@ -53,7 +53,6 @@ export function HarvestProgressChart() {
       <div className="lycans-graphiques-conteneur">
         <div className="lycans-graphique-moitie">
           <h3>Distribution des Récoltes</h3>
-          <FullscreenChart title="Distribution des Récoltes">
             <div style={{ height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -90,7 +89,6 @@ export function HarvestProgressChart() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-          </FullscreenChart>
         </div>
 
         <div className="lycans-graphique-moitie">
