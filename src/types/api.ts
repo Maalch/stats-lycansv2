@@ -1,21 +1,20 @@
 // Custom color palette for camps
 export const lycansColorScheme: Record<string, string> = {
-  'Villageois': '#4CAF50',
-  'Loups': '#ff1100ff',
-  'Amoureux': '#E91E63',
-  'Idiot du Village': '#fbff009a',
-  'Cannibale': '#795548',
-  'La Bête': '#a00000ff',
-  'Espion': '#2196F3',
-  'Vaudou': '#673AB7',
-  'Chasseur de primes': '#FFC107',
-  'Chasseur': '#187e04ff',
-  'Scientifique': '#00BCD4',
-  'Agent': '#2196F3',
+  'Idiot du Village': '#00FF00',
+  'Cannibale': '#00FF80',
+  'Agent': '#800080',
+  'Espion': '#BF40BF',
+  'Scientifique': '#8080FF',
+  'La Bête': '#808080',
+  'Chasseur de primes': '#800080',
+  'Vaudou': '#A626FF',
+  'Traître': '#FF8000',
+  'Amoureux': '#FF80FF',
+  'Loups': '#FF0000',
+  'Villageois': '#0096FF',
+  'Chasseur': '#1faa03ff',
   'Alchimiste': '#ff00d4ff',
-  'Traître': '#aa5f0aff',
 };
-
 
 export const playersColor: Record<string, string> = {
   "Ponce": "#2e2eff",
