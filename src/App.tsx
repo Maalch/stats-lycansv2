@@ -1,5 +1,6 @@
 import { Suspense, lazy, useState } from 'react';
 import { StatsProvider } from './context/StatsContext';
+import { FullscreenProvider } from './context/FullscreenContext';
 import './App.css';
 
 // Lazy load each dashboard section
@@ -114,42 +115,44 @@ export default function App() {
 
   return (
      <StatsProvider>
-    <div className="app-container">
-      <img
-        className="lycans-banner"
-        src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
-        alt="Lycans Banner"
-      />
-      <div className="main-container">
-        <div className="lycans-dashboard-container">
-          <header className="lycans-dashboard-header">
-            <h1>Statistiques Lycans</h1>
-            <p>Analyse des parties, rôles et performances</p>
-          </header>
+      <FullscreenProvider>
+        <div className="app-container">
+          <img
+            className="lycans-banner"
+            src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
+            alt="Lycans Banner"
+          />
+          <div className="main-container">
+            <div className="lycans-dashboard-container">
+              <header className="lycans-dashboard-header">
+                <h1>Statistiques Lycans</h1>
+                <p>Analyse des parties, rôles et performances</p>
+              </header>
 
-          <nav className="lycans-main-menu">
-            {MAIN_TABS.map(tab => (
-              <button
-                key={tab.key}
-                className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
-                onClick={() => setSelectedMainTab(tab.key)}
-                type="button"
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
+              <nav className="lycans-main-menu">
+                {MAIN_TABS.map(tab => (
+                  <button
+                    key={tab.key}
+                    className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
+                    onClick={() => setSelectedMainTab(tab.key)}
+                    type="button"
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </nav>
 
-          <div className="lycans-dashboard-section">
-            {renderContent()}
+              <div className="lycans-dashboard-section">
+                {renderContent()}
+              </div>
+
+              <footer className="lycans-dashboard-footer">
+                <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
+              </footer>
+            </div>
           </div>
-
-          <footer className="lycans-dashboard-footer">
-            <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
-          </footer>
         </div>
-      </div>
-    </div>
+      </FullscreenProvider>
     </StatsProvider>
   );
 }
