@@ -30,6 +30,79 @@ export function CampsChart() {
     })) || [];
   }, [victoriesDonnees]);
 
+  // Group small slices for victory distribution pie chart
+  const groupedVictoryData = useMemo(() => {
+    if (!campStatsForChart.length) return [];
+    
+    const MIN_PERCENT = 5;
+    let smallTotal = 0;
+    const smallEntries: typeof campStatsForChart = [];
+    const large: typeof campStatsForChart = [];
+    
+    campStatsForChart.forEach(entry => {
+      if (entry.winRateNum < MIN_PERCENT) {
+        smallTotal += entry.winRateNum;
+        smallEntries.push(entry);
+      } else {
+        large.push(entry);
+      }
+    });
+    
+    if (smallTotal > 0) {
+      large.push({
+        camp: 'Autres',
+        wins: smallEntries.reduce((sum, e) => sum + e.wins, 0),
+        winRate: smallTotal.toFixed(1),
+        winRateNum: smallTotal,
+        // @ts-ignore
+        _details: smallEntries // Attach details for tooltip
+      });
+    }
+    
+    return large;
+  }, [campStatsForChart]);
+
+  // Group small slices for camp distribution pie chart
+  const groupedCampDistributionData = useMemo(() => {
+    if (!campAveragesData.length) return [];
+    
+    const MIN_PERCENT = 5;
+    const totalGames = campAveragesData.reduce((sum, camp) => sum + camp.totalGames, 0);
+    let smallTotal = 0;
+    const smallEntries: typeof campAveragesData = [];
+    const large: typeof campAveragesData = [];
+    
+    campAveragesData.forEach(entry => {
+      const percentage = (entry.totalGames / totalGames) * 100;
+      if (percentage < MIN_PERCENT) {
+        smallTotal += entry.totalGames;
+        smallEntries.push({
+          ...entry,
+          winRate: percentage.toFixed(1)
+        });
+      } else {
+        large.push(entry);
+      }
+    });
+    
+    if (smallTotal > 0) {
+      const averageWinRate = smallEntries.length > 0 
+        ? (smallEntries.reduce((sum, e) => sum + e.winRateNum, 0) / smallEntries.length).toFixed(1)
+        : '0.0';
+      
+      large.push({
+        camp: 'Autres',
+        totalGames: smallTotal,
+        winRate: averageWinRate,
+        winRateNum: parseFloat(averageWinRate),
+        // @ts-ignore
+        _details: smallEntries // Attach details for tooltip
+      });
+    }
+    
+    return large;
+  }, [campAveragesData]);
+
   const isLoading = chargementVictoires || chargementPerformance;
   const error = erreurVictoires || erreurPerformance;
 
@@ -72,7 +145,7 @@ export function CampsChart() {
 
       <div className="lycans-graphiques-groupe">
         {/* Victory Statistics Section */}
-        {victoriesDonnees && campStatsForChart.length > 0 && (
+        {victoriesDonnees && groupedVictoryData.length > 0 && (
           <>
             <div className="lycans-graphique-section">
               <h3>Répartition des Victoires par Camp</h3>
@@ -83,7 +156,7 @@ export function CampsChart() {
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={campStatsForChart}
+                      data={groupedVictoryData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -91,12 +164,18 @@ export function CampsChart() {
                       fill="#8884d8"
                       dataKey="winRateNum"
                       nameKey="camp"
-                      label={({ camp, winRate }) => `${camp}: ${winRate}%`}
+                      label={({ camp, winRate }) => 
+                        camp === 'Autres' ? 'Autres' : `${camp}: ${winRate}%`
+                      }
                     >
-                      {campStatsForChart.map((entree, indice) => (
+                      {groupedVictoryData.map((entree, indice) => (
                         <Cell 
                           key={`cellule-camp-${indice}`} 
-                          fill={lycansColorScheme[entree.camp as keyof typeof lycansColorScheme] || lycansDefaultColor} 
+                          fill={
+                            entree.camp === 'Autres'
+                              ? '#cccccc'
+                              : lycansColorScheme[entree.camp as keyof typeof lycansColorScheme] || lycansDefaultColor
+                          } 
                         />
                       ))}
                     </Pie>
@@ -104,6 +183,33 @@ export function CampsChart() {
                       content={({ active, payload }) => {
                         if (active && payload && payload.length > 0) {
                           const d = payload[0].payload;
+                          if (d.camp === 'Autres' && d._details) {
+                            // Sort the details by descending win rate
+                            const sortedDetails = [...d._details].sort(
+                              (a, b) => b.winRateNum - a.winRateNum
+                            );
+                            return (
+                              <div style={{ 
+                                background: 'var(--bg-secondary)', 
+                                color: 'var(--text-primary)', 
+                                padding: 12, 
+                                borderRadius: 8,
+                                border: '1px solid var(--border-color)'
+                              }}>
+                                <div><strong>Autres</strong></div>
+                                <div>
+                                  {sortedDetails.map((entry: any, i: number) => (
+                                    <div key={i}>
+                                      {entry.camp}: {entry.wins} victoires ({entry.winRate}%)
+                                    </div>
+                                  ))}
+                                </div>
+                                <div style={{ marginTop: 4, fontWeight: 'bold' }}>
+                                  Total: {d.wins} victoires ({d.winRate}%)
+                                </div>
+                              </div>
+                            );
+                          }
                           return (
                             <div style={{ 
                               background: 'var(--bg-secondary)', 
@@ -199,7 +305,7 @@ export function CampsChart() {
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={campAveragesData}
+                      data={groupedCampDistributionData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -208,13 +314,19 @@ export function CampsChart() {
                       dataKey="totalGames"
                       label={({ camp, totalGames, percent }) => {
                         const pct = percent !== undefined ? percent : 0;
-                        return `${camp}: ${totalGames} (${(pct * 100).toFixed(1)}%)`;
+                        return camp === 'Autres' 
+                          ? 'Autres'
+                          : `${camp}: ${totalGames} (${(pct * 100).toFixed(1)}%)`;
                       }}
                     >
-                      {campAveragesData.map((entry, index) => (
+                      {groupedCampDistributionData.map((entry, index) => (
                         <Cell 
                           key={`cell-${index}`} 
-                          fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                          fill={
+                            entry.camp === 'Autres'
+                              ? '#cccccc'
+                              : lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
+                          }
                         />
                       ))}
                     </Pie>
@@ -222,6 +334,33 @@ export function CampsChart() {
                       content={({ active, payload }) => {
                         if (active && payload && payload.length > 0) {
                           const dataPoint = payload[0].payload;
+                          if (dataPoint.camp === 'Autres' && dataPoint._details) {
+                            // Sort the details by descending total games
+                            const sortedDetails = [...dataPoint._details].sort(
+                              (a, b) => b.totalGames - a.totalGames
+                            );
+                            return (
+                              <div style={{ 
+                                background: 'var(--bg-secondary)', 
+                                color: 'var(--text-primary)', 
+                                padding: 12, 
+                                borderRadius: 8,
+                                border: '1px solid var(--border-color)'
+                              }}>
+                                <div><strong>Autres</strong></div>
+                                <div>
+                                  {sortedDetails.map((entry: any, i: number) => (
+                                    <div key={i}>
+                                      {entry.camp}: {entry.totalGames} parties
+                                    </div>
+                                  ))}
+                                </div>
+                                <div style={{ marginTop: 4, fontWeight: 'bold' }}>
+                                  Total: {dataPoint.totalGames} parties
+                                </div>
+                              </div>
+                            );
+                          }
                           return (
                             <div style={{ 
                               background: 'var(--bg-secondary)', 

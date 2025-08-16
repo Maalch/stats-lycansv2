@@ -94,9 +94,44 @@ export function PlayerGameHistoryChart() {
       name: camp,
       value: stats.appearances,
       winRate: stats.winRate,
-      wins: stats.wins
+      wins: stats.wins,
+      percentage: ((stats.appearances / data.totalGames) * 100).toFixed(1)
     }));
   }, [data]);
+
+  // Group small slices into "Autres" for pie chart
+  const groupedCampDistributionData = useMemo(() => {
+    if (!campDistributionData.length) return [];
+    
+    const MIN_PERCENT = 5;
+    let smallTotal = 0;
+    const smallEntries: typeof campDistributionData = [];
+    const large: typeof campDistributionData = [];
+    
+    campDistributionData.forEach(entry => {
+      if (parseFloat(entry.percentage) < MIN_PERCENT) {
+        smallTotal += Number(entry.value);
+        smallEntries.push(entry);
+      } else {
+        large.push(entry);
+      }
+    });
+    
+    if (smallTotal > 0) {
+      const totalGames = campDistributionData.reduce((sum, e) => sum + Number(e.value), 0);
+      large.push({
+        name: 'Autres',
+        value: smallTotal,
+        winRate: '0.0', // Will be calculated from details if needed
+        wins: smallEntries.reduce((sum, e) => sum + e.wins, 0),
+        percentage: ((smallTotal / totalGames) * 100).toFixed(1),
+        // @ts-ignore
+        _details: smallEntries // Attach details for tooltip
+      });
+    }
+    
+    return large;
+  }, [campDistributionData]);
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement de l'historique du joueur...</div>;
@@ -308,7 +343,7 @@ export function PlayerGameHistoryChart() {
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={campDistributionData}
+                  data={groupedCampDistributionData}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
@@ -317,13 +352,19 @@ export function PlayerGameHistoryChart() {
                   dataKey="value"
                   label={({ name, value, percent }) => {
                     const pct = percent !== undefined ? percent : 0;
-                    return `${name}: ${value} (${(pct * 100).toFixed(1)}%)`;
+                    return name === 'Autres' 
+                      ? 'Autres'
+                      : `${name}: ${value} (${(pct * 100).toFixed(1)}%)`;
                   }}
                 >
-                  {campDistributionData.map((entry, index) => (
+                  {groupedCampDistributionData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                      fill={
+                        entry.name === 'Autres'
+                          ? '#cccccc'
+                          : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
+                      }
                     />
                   ))}
                 </Pie>
@@ -331,6 +372,30 @@ export function PlayerGameHistoryChart() {
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0) {
                       const dataPoint = payload[0].payload;
+                      if (dataPoint.name === 'Autres' && dataPoint._details) {
+                        // Sort the details by descending appearances
+                        const sortedDetails = [...dataPoint._details].sort(
+                          (a, b) => b.value - a.value
+                        );
+                        return (
+                          <div style={{ 
+                            background: 'var(--bg-secondary)', 
+                            color: 'var(--text-primary)', 
+                            padding: 12, 
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)'
+                          }}>
+                            <div><strong>Autres - {dataPoint.value} parties ({dataPoint.percentage}%)</strong></div>
+                            <div>
+                              {sortedDetails.map((entry: any, i: number) => (
+                                <div key={i}>
+                                  {entry.name}: {entry.value} parties ({entry.percentage}%)
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      }
                       return (
                         <div style={{ 
                           background: 'var(--bg-secondary)', 
@@ -339,10 +404,9 @@ export function PlayerGameHistoryChart() {
                           borderRadius: 8,
                           border: '1px solid var(--border-color)'
                         }}>
-                          <div><strong>{dataPoint.name}</strong></div>
+                          <div><strong>{dataPoint.name} ({dataPoint.percentage}%)</strong></div>
                           <div>Apparitions: {dataPoint.value}</div>
-                          <div>Victoires: {dataPoint.wins}</div>
-                          <div>Taux: {dataPoint.winRate}%</div>
+                          <div>Victoires: {dataPoint.wins} ({dataPoint.winRate}%)</div>
                         </div>
                       );
                     }
