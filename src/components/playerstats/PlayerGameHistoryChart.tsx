@@ -62,6 +62,7 @@ export function PlayerGameHistoryChart() {
         period,
         totalGames: stats.total,
         victories: stats.wins,
+        defeats: stats.total - stats.wins, // Add defeats
         winRate: stats.total > 0 ? (stats.wins / stats.total * 100).toFixed(1) : '0.0',
         winRateNum: stats.total > 0 ? (stats.wins / stats.total * 100) : 0
       }))
@@ -132,6 +133,18 @@ export function PlayerGameHistoryChart() {
     
     return large;
   }, [campDistributionData]);
+
+  // Helper functions when there are too much data
+  const getResponsiveXAxisSettings = (dataLength: number) => {
+    if (dataLength <= 15) return { fontSize: 11, angle: -45, height: 80, interval: 0 };
+    if (dataLength <= 30) return { fontSize: 10, angle: -45, height: 85, interval: 1 };
+    if (dataLength <= 50) return { fontSize: 9, angle: -60, height: 95, interval: 2 };
+    return { fontSize: 8, angle: -75, height: 105, interval: Math.floor(dataLength / 12) };
+  };
+
+  // Apply to both LineChart and BarChart XAxis
+  const xAxisSettings = getResponsiveXAxisSettings(groupedData.length);
+
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement de l'historique du joueur...</div>;
@@ -239,11 +252,11 @@ export function PlayerGameHistoryChart() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="period"
-                  angle={-45}
+                  angle={xAxisSettings.angle}
                   textAnchor="end"
-                  height={80}
-                  interval={0}
-                  fontSize={11}
+                  height={xAxisSettings.height}
+                  interval={xAxisSettings.interval}
+                  fontSize={xAxisSettings.fontSize}
                 />
                 <YAxis 
                   label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
@@ -285,7 +298,7 @@ export function PlayerGameHistoryChart() {
 
         {/* Games per period */}
         <div className="lycans-graphique-section">
-          <h3>Nombre de Parties {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
+          <h3>Répartition Victoires/Défaites {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -295,11 +308,11 @@ export function PlayerGameHistoryChart() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="period"
-                  angle={-45}
+                  angle={xAxisSettings.angle}
                   textAnchor="end"
-                  height={80}
-                  interval={0}
-                  fontSize={11}
+                  height={xAxisSettings.height}
+                  interval={xAxisSettings.interval}
+                  fontSize={xAxisSettings.fontSize}
                 />
                 <YAxis 
                   label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }}
@@ -318,8 +331,9 @@ export function PlayerGameHistoryChart() {
                           border: '1px solid var(--border-color)'
                         }}>
                           <div><strong>{dataPoint.period}</strong></div>
-                          <div>Total parties: {dataPoint.totalGames}</div>
+                          <div>Total: {dataPoint.totalGames} parties</div>
                           <div>Victoires: {dataPoint.victories}</div>
+                          <div>Défaites: {dataPoint.defeats}</div>
                           <div>Taux: {dataPoint.winRate}%</div>
                         </div>
                       );
@@ -327,8 +341,8 @@ export function PlayerGameHistoryChart() {
                     return null;
                   }}
                 />
-                <Bar dataKey="totalGames" fill="var(--chart-color-2)" />
-                <Bar dataKey="victories" fill="var(--accent-tertiary)" />
+                <Bar dataKey="victories" stackId="games" fill="var(--accent-tertiary)" name="Victoires" />
+                <Bar dataKey="defeats" stackId="games" fill="var(--chart-color-4)" name="Défaites" />
               </BarChart>
             </ResponsiveContainer>
           </div>
