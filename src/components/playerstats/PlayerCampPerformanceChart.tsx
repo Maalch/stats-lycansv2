@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { usePlayerCampPerformance } from '../../hooks/usePlayerCampPerformance';
 import { lycansColorScheme, playersColor } from '../../types/api';
 import { minGamesOptions} from '../../types/api';
+import { FullscreenChart } from '../common/FullscreenChart';
 
 type ViewMode =  'player-performance' | 'top-performers';
 
@@ -199,6 +200,7 @@ export function PlayerCampPerformanceChart() {
           <>
             <div className="lycans-graphique-section">
               <h3>Performance des Joueurs - {selectedCamp}</h3>
+              <FullscreenChart title={`Performance des Joueurs - ${selectedCamp}`}>
               <div style={{ height: 500 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
@@ -255,11 +257,13 @@ export function PlayerCampPerformanceChart() {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
+              </FullscreenChart>
             </div>
 
             <div className="lycans-graphique-section">
               <h3>Relation Parties Jouées vs Performance - {selectedCamp}</h3>
-              <div style={{ height: 400 }}>
+              <FullscreenChart title={`Relation Parties Jouées vs Performance - ${selectedCamp}`}>
+                <div style={{ height: 400 }}>
                   <ResponsiveContainer width="100%" height="100%">
                   <ScatterChart
                      data={campPlayerData}
@@ -297,17 +301,38 @@ export function PlayerCampPerformanceChart() {
                         return null;
                         }}
                      />
-                     <Scatter dataKey="performanceNum" name="Performance">
-                        {campPlayerData.map((entry, index) => (
-                        <Cell
-                           key={`cell-${index}`}
-                           fill={playersColor[entry.player] || 'var(--accent-primary)'}
-                        />
-                        ))}
-                     </Scatter>
+                    <Scatter
+                      dataKey="performanceNum"
+                      name="Performance"
+                      shape={(props: any) => (
+                        <g>
+                          <circle
+                            cx={props.cx}
+                            cy={props.cy}
+                            r={12} // Increased size to accommodate text
+                            fill={playersColor[props.payload.player] || 'var(--accent-primary)'}
+                            stroke="#222"
+                            strokeWidth={1}
+                          />
+                          <text
+                            x={props.cx}
+                            y={props.cy}
+                            textAnchor="middle"
+                            dominantBaseline="middle"
+                            fill="#fff"
+                            fontSize="10"
+                            fontWeight="bold"
+                            pointerEvents="none"
+                          >
+                            {props.payload.player.charAt(0).toUpperCase()}
+                          </text>
+                        </g>
+                      )}
+                    />
                   </ScatterChart>
                   </ResponsiveContainer>
               </div>
+              </FullscreenChart>
             </div>
           </>
         )}

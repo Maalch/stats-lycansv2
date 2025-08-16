@@ -4,6 +4,7 @@ import { usePlayerStats } from '../../hooks/usePlayerStats';
 import { getRandomColor, playersColor } from '../../types/api';
 import { lycansColorScheme } from '../../types/api';
 import { minGamesOptions} from '../../types/api';
+import { FullscreenChart } from '../common/FullscreenChart';
 
 export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
@@ -111,6 +112,7 @@ export function PlayersGeneralStatisticsChart() {
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           <h3>Top Participations</h3>
+          <FullscreenChart title="Top Participations">
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -158,6 +160,7 @@ export function PlayersGeneralStatisticsChart() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+          </FullscreenChart>
         </div>
 
         <div className="lycans-graphique-section">
@@ -207,6 +210,10 @@ export function PlayersGeneralStatisticsChart() {
               </select>
             </div>
           </div>
+          <FullscreenChart title={winRateOrder === 'best'
+                ? 'Meilleurs Taux de Victoire'
+                : 'Moins Bon Taux de Victoire'}>
+          
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -270,6 +277,7 @@ export function PlayersGeneralStatisticsChart() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+          </FullscreenChart>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
             Top {winRateData.length} des joueurs (sur {totalEligiblePlayers} ayant au moins {minGamesForWinRate} partie{minGamesForWinRate > 1 ? 's' : ''})
           </p>

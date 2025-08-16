@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { usePlayerGameHistory } from '../../hooks/usePlayerGameHistory';
 import { usePlayerStats } from '../../hooks/usePlayerStats';
 import { lycansColorScheme } from '../../types/api';
+import { FullscreenChart } from '../common/FullscreenChart';
 
 type GroupByMethod = 'session' | 'month';
 
@@ -243,6 +244,7 @@ export function PlayerGameHistoryChart() {
         {/* Performance over time */}
         <div className="lycans-graphique-section">
           <h3>Évolution des Performances {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
+          <FullscreenChart title={`Évolution des Performances ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`}>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
@@ -294,11 +296,13 @@ export function PlayerGameHistoryChart() {
               </LineChart>
             </ResponsiveContainer>
           </div>
+          </FullscreenChart>
         </div>
 
         {/* Games per period */}
         <div className="lycans-graphique-section">
           <h3>Répartition Victoires/Défaites {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
+          <FullscreenChart title={`Répartition Victoires/Défaites ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`}>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -346,6 +350,7 @@ export function PlayerGameHistoryChart() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+          </FullscreenChart>
         </div>
       </div>
 
