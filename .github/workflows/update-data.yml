@@ -1,0 +1,100 @@
+name: Update Lycans Stats Data
+
+on:
+  schedule:
+    # Run daily at 6 AM UTC (adjust timezone as needed)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allow manual triggering
+  push:
+    paths:
+      - 'scripts/data-sync/**'
+      - '.github/workflows/update-data.yml'
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Install dependencies
+        run: |
+          cd scripts/data-sync
+          npm install
+
+      - name: Fetch and process data
+        env:
+          LYCANS_API_BASE: ${{ secrets.LYCANS_API_BASE }}
+        run: |
+          cd scripts/data-sync
+          echo "🚀 Starting data fetch..."
+          echo "📡 API Base: ${LYCANS_API_BASE:0:50}..." # Show partial URL for debugging
+          node fetch-data.js
+          echo "✅ Data fetch completed"
+          
+      - name: Validate data files
+        run: |
+          echo "🔍 Validating generated data files..."
+          if [ ! -f "data/index.json" ]; then
+            echo "❌ data/index.json not found!"
+            exit 1
+          fi
+          
+          # Check if data files are valid JSON
+          for file in data/*.json; do
+            if [ -f "$file" ]; then
+              if ! jq empty "$file" 2>/dev/null; then
+                echo "❌ Invalid JSON in $file"
+                exit 1
+              else
+                echo "✅ $file is valid JSON"
+              fi
+            fi
+          done
+          
+          # Check file sizes (should not be empty)
+          for file in data/*.json; do
+            if [ -f "$file" ] && [ ! -s "$file" ]; then
+              echo "❌ $file is empty"
+              exit 1
+            fi
+          done
+          
+          echo "✅ All data files validated successfully"
+
+      - name: Commit and push if changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update stats data $(date '+%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "✅ Data updated and pushed successfully"
+          else
+            echo "ℹ️  No data changes detected - skipping commit"
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "🔍 Workflow Summary:"
+          echo "- Data sync completed"
+          echo "- Files updated: $(git diff --name-only HEAD~1 2>/dev/null | grep '^data/' | wc -l || echo '0')"
+          echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          ls -la data/ || echo "No data directory found"

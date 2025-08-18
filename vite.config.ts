@@ -9,4 +9,7 @@ export default defineConfig({
     emptyOutDir: true,
   },
   base: '/stats-lycansv2/',
+  publicDir: 'public',
+  // Ensure data directory is copied to build output
+  assetsInclude: ['**/*.json'],
 })
