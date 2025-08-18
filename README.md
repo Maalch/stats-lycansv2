@@ -1,33 +1,69 @@
 # Stats Lycans
 
-This project is a React + TypeScript app created with Vite, configured for deployment to GitHub Pages (output in the `docs` folder).
+Stats Lycans is a web application built with React and TypeScript (using Vite) designed to visualize key performance indicators (KPIs) and statistics sourced from a Google Sheet maintained by SoldatFlippy. The application is optimized for deployment via GitHub Pages, with all production assets output to the `docs` directory.
+
+## Table of Contents
+
+- [Purpose](#purpose)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Setup & Installation](#setup--installation)
+- [Development](#development)
+- [Deployment](#deployment)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [Acknowledgements](#acknowledgements)
+- [License](#license)
 
 ## Purpose
 
-The goal of this project is to display KPIs and visual statistics from a Google Sheet from SoldatFlippy (located in Google Drive), using the Google Sheets API or Google Apps Script as the data source.
+The primary goal of Stats Lycans is to provide a clear and interactive view of statistics and KPIs sourced from a collaborative Google Sheet. It is intended for communities or teams that need to monitor and visualize data efficiently.
 
-## Deployment
+## Features
 
-- The app is configured to output the production build to the `docs` folder for GitHub Pages compatibility.
-- Update your GitHub repository settings to serve the site from the `docs` folder.
+- **KPI Dashboard:** Dynamic display of key statistics.
+- **Google Sheets Integration:** Fetches live data from Google Sheets using the Google Sheets API or Google Apps Script.
+- **Interactive Charts & Tables:** Visualization of data with modern JavaScript charting libraries.
+- **Fast & Lightweight:** Built with Vite for rapid development and optimized builds.
+- **GitHub Pages Ready:** Seamless deployment to GitHub Pages.
+
+## Architecture
+
+- **Frontend:** React + TypeScript (Vite)
+- **Data Source:** Google Sheets (via Google Sheets API or Apps Script as backend)
+- **Deployment:** Static site hosted on GitHub Pages (`docs` directory)
+
+## Setup & Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/Maalch/stats-lycansv2.git
+   cd stats-lycansv2
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+
+3. **Configure Google Sheets API:**
+   - Set up credentials and permissions in the Google Cloud Console.
+   - Update the environment variables or configuration files as required to enable API access.
 
 ## Development
 
-- `npm run dev` — Start the development server
-- `npm run build` — Build the app for production (output to `docs`)
-- `npm run preview` — Preview the production build
+- `npm run dev` — Start the local development server.
+- `npm run build` — Build the app for production (outputs to `docs`).
+- `npm run preview` — Preview the production build locally.
 
-## Next Steps
+## Deployment
 
-1. Set up access to your Google Sheet using the Google Sheets API or Google Apps Script.
-2. Implement components to fetch and display KPIs and statistics from the sheet.
-3. Add visualizations (charts, tables, etc.) as needed.
+- Production builds are output to the `docs` folder.
+- In your GitHub repository settings, configure GitHub Pages to serve from the `/docs` directory on the `main` branch.
 
----
+## Configuration
 
-This project was bootstrapped with [Vite](https://vitejs.dev/) and uses [React](https://react.dev/) and [TypeScript](https://www.typescriptlang.org/).
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+You can further enhance code quality by using recommended ESLint plugins:
 
 ```js
 // eslint.config.js
@@ -55,3 +91,17 @@ export default tseslint.config([
   },
 ])
 ```
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](../../issues) or open a pull request.
+
+## Acknowledgements
+
+- [Vite](https://vitejs.dev/)
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
