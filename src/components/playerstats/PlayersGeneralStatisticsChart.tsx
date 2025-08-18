@@ -2,9 +2,22 @@ import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, ReferenceLine } from 'recharts';
 import { usePlayerStats } from '../../hooks/usePlayerStats';
 import { getRandomColor, playersColor } from '../../types/api';
-import { lycansColorScheme } from '../../types/api';
-import { minGamesOptions} from '../../types/api';
+import { lycansColorScheme, minGamesOptions } from '../../types/api';
+import type { PlayerCamps } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
+
+// Move function outside component to prevent recreation on every render
+const prepareCampDistributionData = (player: string, playerStatsData: { playerStats: Array<{ player: string; camps: PlayerCamps; gamesPlayed: number }> }) => {
+  const playerData = playerStatsData?.playerStats.find((p) => p.player === player);
+  if (!playerData) return [];
+  return Object.entries(playerData.camps)
+    .filter(([, count]) => count > 0)
+    .map(([camp, count]) => ({
+      name: camp,
+      value: count as number,
+      percentage: (((count as number) / playerData.gamesPlayed) * 100).toFixed(1)
+    }));
+};
 
 export function PlayersGeneralStatisticsChart() {
   const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
@@ -12,25 +25,66 @@ export function PlayersGeneralStatisticsChart() {
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(50);
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
 
-  // Préparation des données pour le graphique circulaire des camps
-  const prepareCampDistributionData = (player: string) => {
-    const playerData = playerStatsData?.playerStats.find(p => p.player === player);
-    if (!playerData) return [];
-    return Object.entries(playerData.camps)
-      .filter(([_, count]) => count > 0)
-      .map(([camp, count]) => ({
-        name: camp,
-        value: count,
-        percentage: ((count / playerData.gamesPlayed) * 100).toFixed(1)
-      }));
-  };
+  // Optimized data processing - combine multiple operations to reduce iterations
+  const { participationData, winRateData, averageWinRate, totalEligiblePlayers } = useMemo(() => {
+    if (!playerStatsData?.playerStats) {
+      return {
+        participationData: [],
+        winRateData: [],
+        averageWinRate: '0',
+        totalEligiblePlayers: 0
+      };
+    }
+
+    const stats = playerStatsData.playerStats;
+    
+    // Single pass to filter and calculate what we need
+    const eligibleForWinRate = [];
+    const eligibleForParticipation = [];
+    let totalWinPercentSum = 0;
+    
+    for (const player of stats) {
+      totalWinPercentSum += parseFloat(player.winPercent);
+      
+      if (player.gamesPlayed >= minGamesForWinRate) {
+        eligibleForWinRate.push(player);
+      }
+      
+      if (player.gamesPlayed > 2) {
+        eligibleForParticipation.push(player);
+      }
+    }
+
+    // Calculate average win rate
+    const avgWinRate = stats.length > 0 ? (totalWinPercentSum / stats.length).toFixed(1) : '0';
+    
+    // Sort and slice for participation data
+    const sortedParticipation = eligibleForParticipation
+      .sort((a, b) => b.gamesPlayed - a.gamesPlayed)
+      .slice(0, 20);
+    
+    // Sort and slice for win rate data
+    const sortedWinRate = eligibleForWinRate
+      .sort((a, b) =>
+        winRateOrder === 'best'
+          ? parseFloat(b.winPercent) - parseFloat(a.winPercent)
+          : parseFloat(a.winPercent) - parseFloat(b.winPercent)
+      )
+      .slice(0, 20);
+
+    return {
+      participationData: sortedParticipation,
+      winRateData: sortedWinRate,
+      averageWinRate: avgWinRate,
+      totalEligiblePlayers: eligibleForWinRate.length
+    };
+  }, [playerStatsData, minGamesForWinRate, winRateOrder]);
 
   // Group small slices into "Autres" and keep details for tooltip
-  // Move ALL the logic inside useMemo and depend on selectedPlayer directly
   const groupedCampDistributionData = useMemo(() => {
     if (!selectedPlayer || !playerStatsData) return [];
     
-    const campDistributionData = prepareCampDistributionData(selectedPlayer);
+    const campDistributionData = prepareCampDistributionData(selectedPlayer, playerStatsData);
     if (!campDistributionData.length) return [];
     
     const MIN_PERCENT = 5;
@@ -52,13 +106,13 @@ export function PlayersGeneralStatisticsChart() {
         name: 'Autres',
         value: smallTotal,
         percentage: ((smallTotal / campDistributionData.reduce((sum, e) => sum + Number(e.value), 0)) * 100).toFixed(1),
-        // @ts-ignore
+        // @ts-expect-error - _details is used for tooltip data
         _details: smallEntries // Attach details for tooltip
       });
     }
     
     return large;
-  }, [selectedPlayer, playerStatsData]); // Depend on selectedPlayer directly, not on campDistributionData
+  }, [selectedPlayer, playerStatsData]);
 
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des statistiques des joueurs...</div>;
@@ -69,38 +123,6 @@ export function PlayersGeneralStatisticsChart() {
   if (!playerStatsData) {
     return <div className="donnees-manquantes">Aucune donnée de joueur disponible</div>;
   }
-
-  // Count all eligible players (without slicing)
-  const totalEligiblePlayers = playerStatsData.playerStats
-    .filter(player => player.gamesPlayed >= minGamesForWinRate)
-    .length;
-
-  // Données pour le graphique de participation
-  const participationData = playerStatsData.playerStats
-    .filter(player => player.gamesPlayed > 2)
-    .sort((a, b) => b.gamesPlayed - a.gamesPlayed)
-    .slice(0, 20);
-
-  // Données pour le graphique de taux de victoire (avec filtre dynamique et tri selon winRateOrder)
-  const winRateData = playerStatsData.playerStats
-    .filter(player => player.gamesPlayed >= minGamesForWinRate)
-    .sort((a, b) =>
-      winRateOrder === 'best'
-        ? parseFloat(b.winPercent) - parseFloat(a.winPercent)
-        : parseFloat(a.winPercent) - parseFloat(b.winPercent)
-    )
-    .slice(0, 20);
-
-  // Calculate global average win rate (all players, no filter)
-  const averageWinRate =
-    playerStatsData.playerStats.length > 0
-      ? (
-          playerStatsData.playerStats.reduce(
-            (sum, player) => sum + parseFloat(player.winPercent),
-            0
-          ) / playerStatsData.playerStats.length
-        ).toFixed(1)
-      : '0';
 
   return (
     <div className="lycans-players-stats">
@@ -330,7 +352,7 @@ export function PlayersGeneralStatisticsChart() {
                           <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                             <div><strong>Autres</strong></div>
                             <div>
-                              {sortedDetails.map((entry: any, i: number) => (
+                              {sortedDetails.map((entry: { name: string; value: number; percentage: string }, i: number) => (
                                 <div key={i}>
                                   {entry.name}: {entry.value} parties ({entry.percentage}%)
                                 </div>
