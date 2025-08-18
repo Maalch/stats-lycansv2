@@ -58,8 +58,8 @@ export function PlayersGeneralStatisticsChart() {
     }
     
     return large;
-  }, [selectedPlayer, playerStatsData]); // Depend on selectedPlayer directly, not on campDistributionData
-
+  }, [selectedPlayer, playerStatsData, prepareCampDistributionData]);
+  
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des statistiques des joueurs...</div>;
   }
