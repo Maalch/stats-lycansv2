@@ -6,7 +6,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 const lycansRecolteCouleurs = ['#d32f2f', '#f57c00', '#fbc02d', '#388e3c', '#1976d2'];
 
 export function HarvestProgressChart() {
-  const { harvestStats: recolteInfos, isLoading: recuperationDonnees, errorMessage: problemeChargement } = useHarvestStats();
+  const { harvestStats: recolteInfos, isLoading: recuperationDonnees, errorInfo: problemeChargement } = useHarvestStats();
 
   if (recuperationDonnees) {
     return <div className="donnees-chargement">Récupération des données de récolte...</div>;

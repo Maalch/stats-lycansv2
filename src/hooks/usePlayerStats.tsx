@@ -1,16 +1,33 @@
-import { useStatsContext } from '../context/StatsContext';
+import { useState, useEffect } from 'react';
+import { fetchPlayerStats } from '../api/statsApi';
 import type { PlayerStatsData } from '../types/api';
 
 /**
  * Hook pour obtenir les statistiques générales des joueurs.
- * Utilise StatsContext pour éviter les appels API redondants.
+ * Utilise l'API directement pour récupérer les données statiques.
  */
 export function usePlayerStats() {
-  const { combinedData, isLoading, error } = useStatsContext();
+  const [playerStatsData, setPlayerStatsData] = useState<PlayerStatsData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // On suppose que le backend renvoie playerStats dans combinedData
-  const playerStatsData: PlayerStatsData | null =
-    combinedData && combinedData.playerStats ? combinedData.playerStats : null;
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const data = await fetchPlayerStats();
+        setPlayerStatsData(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+        console.error('Error fetching player stats:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   return {
     playerStatsData,

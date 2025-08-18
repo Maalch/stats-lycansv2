@@ -1,16 +1,33 @@
-import { useStatsContext } from '../context/StatsContext';
+import { useState, useEffect } from 'react';
+import { fetchPlayerPairingStats } from '../api/statsApi';
 import type { PlayerPairingStatsData } from '../types/api';
 
 /**
  * Hook pour obtenir les statistiques de paires de joueurs (loups et amoureux).
- * Utilise StatsContext pour éviter les appels API redondants.
+ * Utilise l'API directement pour récupérer les données statiques.
  */
 export function usePlayerPairingStats() {
-  const { combinedData, isLoading, error } = useStatsContext();
+  const [data, setData] = useState<PlayerPairingStatsData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // On suppose que le backend renvoie playerPairingStats dans combinedData
-  const data: PlayerPairingStatsData | null =
-    combinedData && combinedData.playerPairingStats ? combinedData.playerPairingStats : null;
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const result = await fetchPlayerPairingStats();
+        setData(result);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+        console.error('Error fetching player pairing stats:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   return { data, isLoading, error };
 }

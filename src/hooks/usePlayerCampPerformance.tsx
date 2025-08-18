@@ -1,17 +1,33 @@
-import { useStatsContext } from '../context/StatsContext';
+import { useState, useEffect } from 'react';
+import { fetchPlayerCampPerformance } from '../api/statsApi';
 import type { PlayerCampPerformanceResponse } from '../types/api';
-
 
 /**
  * Hook pour obtenir les statistiques de performance par camp pour chaque joueur.
- * Utilise StatsContext pour éviter les appels API redondants.
+ * Utilise l'API directement pour récupérer les données statiques.
  */
 export function usePlayerCampPerformance() {
-  const { combinedData, isLoading, error } = useStatsContext();
+  const [playerCampPerformance, setPlayerCampPerformance] = useState<PlayerCampPerformanceResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // On suppose que le backend renvoie playerCampPerformance dans combinedData
-  const playerCampPerformance: PlayerCampPerformanceResponse | null =
-    combinedData && combinedData.playerCampPerformance ? combinedData.playerCampPerformance : null;
+  useEffect(() => {
+    const loadData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const data = await fetchPlayerCampPerformance();
+        setPlayerCampPerformance(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+        console.error('Error fetching player camp performance:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   return {
     playerCampPerformance,
