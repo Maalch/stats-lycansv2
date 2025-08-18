@@ -27,6 +27,9 @@ dist-ssr
 scripts/data-sync/node_modules/
 scripts/data-sync/package-lock.json
 
+# Development data copy (don't track public/data as it's a copy)
+public/data/
+
 # Keep data files in git for hybrid approach
 # (they will be updated by GitHub Actions)
 !data/
