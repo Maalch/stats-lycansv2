@@ -24,7 +24,25 @@ export function PlayerGameHistoryChart() {
       .sort();
   }, [playerStatsData]);
 
-  // Group games by the selected method
+  // Optimized date parsing - cache parsed dates to avoid repeated parsing
+  const parsedDataCache = useMemo(() => {
+    if (!data?.games) return new Map();
+    
+    const cache = new Map();
+    data.games.forEach(game => {
+      if (!cache.has(game.date)) {
+        const parts = game.date.split('/');
+        if (parts.length === 3) {
+          cache.set(game.date, new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0])).getTime());
+        } else {
+          cache.set(game.date, new Date(game.date).getTime());
+        }
+      }
+    });
+    return cache;
+  }, [data?.games]);
+
+  // Group games by the selected method with optimized sorting
   const groupedData = useMemo(() => {
     if (!data?.games) return [];
 
@@ -68,7 +86,7 @@ export function PlayerGameHistoryChart() {
         winRateNum: stats.total > 0 ? (stats.wins / stats.total * 100) : 0
       }))
       .sort((a, b) => {
-        // Sort by date
+        // Optimized sorting using cached date parsing
         if (groupingMethod === 'month') {
           const [monthA, yearA] = a.period.split('/');
           const [monthB, yearB] = b.period.split('/');
@@ -76,17 +94,13 @@ export function PlayerGameHistoryChart() {
           const dateB = new Date(parseInt(yearB), parseInt(monthB) - 1, 1);
           return dateA.getTime() - dateB.getTime();
         } else {
-          const parseDate = (dateStr: string) => {
-            const parts = dateStr.split('/');
-            if (parts.length === 3) {
-              return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
-            }
-            return new Date(dateStr);
-          };
-          return parseDate(a.period).getTime() - parseDate(b.period).getTime();
+          // Use cached parsed dates for session sorting
+          const timeA = parsedDataCache.get(a.period) || 0;
+          const timeB = parsedDataCache.get(b.period) || 0;
+          return timeA - timeB;
         }
       });
-  }, [data, groupingMethod]);
+  }, [data, groupingMethod, parsedDataCache]);
 
   // Prepare camp distribution data for pie chart
   const campDistributionData = useMemo(() => {

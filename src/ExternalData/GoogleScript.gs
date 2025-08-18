@@ -497,24 +497,27 @@ function _computePlayerStats(gameData, roleData) {
   var gameHeaders = gameValues[0];
   var roleHeaders = roleValues[0];
 
-  // Get column indexes from game sheet
-  var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
-  var playerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
-  var winnerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST);
+  // Cache all column indexes upfront to avoid repeated lookups
+  var gameColumns = {
+    gameId: findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID),
+    playerList: findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST),
+    winnerList: findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST)
+  };
 
-  // Get column indexes from role sheet
-  var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
-  var wolfsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS);
-  var traitorIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.TRAITOR);
-  var idiotIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.IDIOT);
-  var cannibalIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.CANNIBAL);
-  var agentsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.AGENTS);
-  var spyIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SPY);
-  var scientistIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SCIENTIST);
-  var loversIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS);
-  var beastIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.THEBEAST);
-  var bountyHunterIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER);
-  var voodooIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO);
+  var roleColumns = {
+    gameId: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID),
+    wolfs: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS),
+    traitor: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.TRAITOR),
+    idiot: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.IDIOT),
+    cannibal: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.CANNIBAL),
+    agents: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.AGENTS),
+    spy: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SPY),
+    scientist: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SCIENTIST),
+    lovers: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS),
+    beast: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.THEBEAST),
+    bountyHunter: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER),
+    voodoo: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO)
+  };
 
   // Skip header rows
   var gameRows = gameValues.slice(1);
@@ -523,7 +526,7 @@ function _computePlayerStats(gameData, roleData) {
   // Create map of game ID to player camps
   var gamePlayerCampMap = {};
   roleRows.forEach(function(row) {
-    var gameId = row[roleGameIdIdx];
+    var gameId = row[roleColumns.gameId];
     if (!gameId) return;
 
     if (!gamePlayerCampMap[gameId]) {
@@ -531,30 +534,30 @@ function _computePlayerStats(gameData, roleData) {
     }
 
     // Add wolves
-    var wolves = row[wolfsIdx];
+    var wolves = row[roleColumns.wolfs];
     if (wolves) {
       splitAndTrim(wolves).forEach(function(player) {
         gamePlayerCampMap[gameId][player] = "Loups";
       });
     }
 
-    // Add all other roles
+    // Add all other roles using helper function to reduce code duplication
     function addRolePlayer(player, roleName) {
       if (player && player.trim()) {
         gamePlayerCampMap[gameId][player.trim()] = roleName;
       }
     }
 
-    addRolePlayer(row[traitorIdx], "Traître");
-    addRolePlayer(row[idiotIdx], "Idiot du Village");
-    addRolePlayer(row[cannibalIdx], "Cannibale");
-    addRolePlayer(row[spyIdx], "Espion");
-    addRolePlayer(row[beastIdx], "La Bête");
-    addRolePlayer(row[bountyHunterIdx], "Chasseur de primes");
-    addRolePlayer(row[voodooIdx], "Vaudou");
+    addRolePlayer(row[roleColumns.traitor], "Traître");
+    addRolePlayer(row[roleColumns.idiot], "Idiot du Village");
+    addRolePlayer(row[roleColumns.cannibal], "Cannibale");
+    addRolePlayer(row[roleColumns.spy], "Espion");
+    addRolePlayer(row[roleColumns.beast], "La Bête");
+    addRolePlayer(row[roleColumns.bountyHunter], "Chasseur de primes");
+    addRolePlayer(row[roleColumns.voodoo], "Vaudou");
 
     // Handle agents (could be multiple)
-    var agents = row[agentsIdx];
+    var agents = row[roleColumns.agents];
     if (agents) {
       splitAndTrim(agents).forEach(function(player) {
         gamePlayerCampMap[gameId][player] = "Agent";
@@ -562,7 +565,7 @@ function _computePlayerStats(gameData, roleData) {
     }
 
     // Handle scientist (could be multiple)
-    var scientists = row[scientistIdx];
+    var scientists = row[roleColumns.scientist];
     if (scientists) {
       splitAndTrim(scientists).forEach(function(player) {
         gamePlayerCampMap[gameId][player] = "Scientifique";
@@ -570,7 +573,7 @@ function _computePlayerStats(gameData, roleData) {
     }
 
     // Handle lovers (could be multiple)
-    var lovers = row[loversIdx];
+    var lovers = row[roleColumns.lovers];
     if (lovers) {
       splitAndTrim(lovers).forEach(function(player) {
         gamePlayerCampMap[gameId][player] = "Amoureux";
@@ -583,9 +586,9 @@ function _computePlayerStats(gameData, roleData) {
   var totalGames = 0;
 
   gameRows.forEach(function(row) {
-    var gameId = row[gameIdIdx];
-    var playerList = row[playerListIdx];
-    var winnerList = row[winnerListIdx];
+    var gameId = row[gameColumns.gameId];
+    var playerList = row[gameColumns.playerList];
+    var winnerList = row[gameColumns.winnerList];
 
     if (gameId && playerList) {
       totalGames++;
@@ -1252,25 +1255,28 @@ function _computePlayerCampPerformance(gameData, roleData) {
   var gameHeaders = gameValues[0];
   var roleHeaders = roleValues[0];
 
-  // Get column indexes from game sheet
-  var gameIdIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
-  var playerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
-  var winnerCampIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP);
-  var winnerListIdx = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST);
+  // Cache all column indexes upfront to avoid repeated lookups
+  var gameColumns = {
+    gameId: findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID),
+    playerList: findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST),
+    winnerCamp: findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP),
+    winnerList: findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST)
+  };
 
-  // Get column indexes from role sheet
-  var roleGameIdIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID);
-  var wolfsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS);
-  var traitorIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.TRAITOR);
-  var idiotIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.IDIOT);
-  var cannibalIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.CANNIBAL);
-  var agentsIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.AGENTS);
-  var spyIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SPY);
-  var scientistIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SCIENTIST);
-  var loversIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS);
-  var beastIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.THEBEAST);
-  var bountyHunterIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER);
-  var voodooIdx = findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO);
+  var roleColumns = {
+    gameId: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID),
+    wolfs: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS),
+    traitor: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.TRAITOR),
+    idiot: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.IDIOT),
+    cannibal: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.CANNIBAL),
+    agents: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.AGENTS),
+    spy: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SPY),
+    scientist: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SCIENTIST),
+    lovers: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS),
+    beast: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.THEBEAST),
+    bountyHunter: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER),
+    voodoo: findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO)
+  };
 
   // Skip header rows
   var gameRows = gameValues.slice(1);
@@ -1279,7 +1285,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
   // Create map of game ID to player camps
   var gamePlayerCampMap = {};
   roleRows.forEach(function(row) {
-    var gameId = row[roleGameIdIdx];
+    var gameId = row[roleColumns.gameId];
     if (!gameId) return;
 
     if (!gamePlayerCampMap[gameId]) {
@@ -1287,30 +1293,30 @@ function _computePlayerCampPerformance(gameData, roleData) {
     }
 
     // Add wolves
-    var wolves = row[wolfsIdx];
+    var wolves = row[roleColumns.wolfs];
     if (wolves) {
       splitAndTrim(wolves).forEach(function(player) {
         gamePlayerCampMap[gameId][player] = "Loups";
       });
     }
 
-    // Add all other roles
+    // Add all other roles using helper function to reduce code duplication
     function addRolePlayer(player, roleName) {
       if (player && player.trim()) {
         gamePlayerCampMap[gameId][player.trim()] = roleName;
       }
     }
 
-    addRolePlayer(row[traitorIdx], "Traître");
-    addRolePlayer(row[idiotIdx], "Idiot du Village");
-    addRolePlayer(row[cannibalIdx], "Cannibale");
-    addRolePlayer(row[spyIdx], "Espion");
-    addRolePlayer(row[beastIdx], "La Bête");
-    addRolePlayer(row[bountyHunterIdx], "Chasseur de primes");
-    addRolePlayer(row[voodooIdx], "Vaudou");
+    addRolePlayer(row[roleColumns.traitor], "Traître");
+    addRolePlayer(row[roleColumns.idiot], "Idiot du Village");
+    addRolePlayer(row[roleColumns.cannibal], "Cannibale");
+    addRolePlayer(row[roleColumns.spy], "Espion");
+    addRolePlayer(row[roleColumns.beast], "La Bête");
+    addRolePlayer(row[roleColumns.bountyHunter], "Chasseur de primes");
+    addRolePlayer(row[roleColumns.voodoo], "Vaudou");
 
     // Handle agents (could be multiple)
-    var agents = row[agentsIdx];
+    var agents = row[roleColumns.agents];
     if (agents) {
       splitAndTrim(agents).forEach(function(player) {
         gamePlayerCampMap[gameId][player] = "Agent";
@@ -1318,7 +1324,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
     }
 
     // Handle scientist (could be multiple)
-    var scientists = row[scientistIdx];
+    var scientists = row[roleColumns.scientist];
     if (scientists) {
       splitAndTrim(scientists).forEach(function(player) {
         gamePlayerCampMap[gameId][player] = "Scientifique";
@@ -1326,7 +1332,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
     }
 
     // Handle lovers (could be multiple)
-    var lovers = row[loversIdx];
+    var lovers = row[roleColumns.lovers];
     if (lovers) {
       splitAndTrim(lovers).forEach(function(player) {
         gamePlayerCampMap[gameId][player] = "Amoureux";
@@ -1339,9 +1345,9 @@ function _computePlayerCampPerformance(gameData, roleData) {
   var totalGames = 0;
 
   gameRows.forEach(function(row) {
-    var gameId = row[gameIdIdx];
-    var playerList = row[playerListIdx];
-    var winnerCamp = row[winnerCampIdx];
+    var gameId = row[gameColumns.gameId];
+    var playerList = row[gameColumns.playerList];
+    var winnerCamp = row[gameColumns.winnerCamp];
 
     if (gameId && playerList && winnerCamp) {
       totalGames++;
@@ -1383,9 +1389,9 @@ function _computePlayerCampPerformance(gameData, roleData) {
   var playerCampPerformance = {};
 
   gameRows.forEach(function(row) {
-    var gameId = row[gameIdIdx];
-    var playerList = row[playerListIdx];
-    var winnerList = row[winnerListIdx];
+    var gameId = row[gameColumns.gameId];
+    var playerList = row[gameColumns.playerList];
+    var winnerList = row[gameColumns.winnerList];
 
     if (gameId && playerList && winnerList) {
       var players = splitAndTrim(playerList);
