@@ -56,7 +56,8 @@ async function fetchAllPlayerGameHistories() {
   const allPlayerNames = playerStats.playerStats?.map(p => p.player).filter(Boolean) || [];
   
   // For testing, limit to first 5 players to avoid overwhelming the API
-  const playerNames = allPlayerNames.slice(0, 5);
+  //const playerNames = allPlayerNames.slice(0, 5);
+  const playerNames = allPlayerNames;
   
   console.log(`📋 Found ${allPlayerNames.length} total players, fetching data for: ${playerNames.join(', ')}`);
   
