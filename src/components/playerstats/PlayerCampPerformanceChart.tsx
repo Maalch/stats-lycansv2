@@ -22,38 +22,22 @@ export function PlayerCampPerformanceChart() {
       .sort();
   }, [playerCampPerformance]);
 
-  // Prepare player performance data for selected camp
-  const campPlayerData = useMemo(() => {
-    if (!playerCampPerformance?.playerPerformance) return [];
-    
-    const playersInCamp = playerCampPerformance.playerPerformance
-      .map(player => {
-        const campData = player.campPerformance.find(cp => cp.camp === selectedCamp);
-        if (!campData || campData.games < minGames) return null;
-        
-        return {
-          player: player.player,
-          ...campData,
-          winRateNum: parseFloat(campData.winRate),
-          performanceNum: parseFloat(campData.performance),
-          campAvgWinRateNum: parseFloat(campData.campAvgWinRate)
-        };
-      })
-      .filter(Boolean)
-      .sort((a, b) => b!.performanceNum - a!.performanceNum);
-    
-    return playersInCamp as NonNullable<typeof playersInCamp[0]>[];
-  }, [playerCampPerformance, selectedCamp, minGames]);
+  // Optimize data processing by combining operations and reducing redundant calculations
+  const { campPlayerData, topPerformersData } = useMemo(() => {
+    if (!playerCampPerformance?.playerPerformance) {
+      return { campPlayerData: [], topPerformersData: [] };
+    }
 
-  // Top performers across all camps
-  const topPerformersData = useMemo(() => {
-    if (!playerCampPerformance?.playerPerformance) return [];
+    const { playerPerformance } = playerCampPerformance;
     
-    const allPerformances = playerCampPerformance.playerPerformance
-      .flatMap(player => 
-        player.campPerformance
-          .filter(cp => cp.games >= minGames)
-          .map(cp => ({
+    // Single pass to process both camp-specific and top performers data
+    const campPlayers = [];
+    const allPerformances = [];
+    
+    for (const player of playerPerformance) {
+      for (const cp of player.campPerformance) {
+        if (cp.games >= minGames) {
+          const performanceData = {
             player: player.player,
             camp: cp.camp,
             games: cp.games,
@@ -63,13 +47,36 @@ export function PlayerCampPerformanceChart() {
             winRateNum: parseFloat(cp.winRate),
             performanceNum: parseFloat(cp.performance),
             campAvgWinRateNum: parseFloat(cp.campAvgWinRate)
-          }))
-      )
+          };
+          
+          // Add to all performances for top performers view
+          allPerformances.push(performanceData);
+          
+          // Add to camp-specific data if it matches selected camp
+          if (cp.camp === selectedCamp) {
+            campPlayers.push({
+              player: player.player,
+              ...cp,
+              winRateNum: parseFloat(cp.winRate),
+              performanceNum: parseFloat(cp.performance),
+              campAvgWinRateNum: parseFloat(cp.campAvgWinRate)
+            });
+          }
+        }
+      }
+    }
+    
+    // Sort once for each dataset
+    const sortedCampPlayers = campPlayers.sort((a, b) => b.performanceNum - a.performanceNum);
+    const sortedTopPerformers = allPerformances
       .sort((a, b) => b.performanceNum - a.performanceNum)
       .slice(0, 20); // Top 20 performances
     
-    return allPerformances;
-  }, [playerCampPerformance, minGames]);
+    return {
+      campPlayerData: sortedCampPlayers,
+      topPerformersData: sortedTopPerformers
+    };
+  }, [playerCampPerformance, selectedCamp, minGames]);
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de performance par camp...</div>;
@@ -304,13 +311,13 @@ export function PlayerCampPerformanceChart() {
                     <Scatter
                       dataKey="performanceNum"
                       name="Performance"
-                      shape={(props: any) => (
+                      shape={(props: { cx?: number; cy?: number; payload?: any }) => (
                         <g>
                           <circle
                             cx={props.cx}
                             cy={props.cy}
                             r={12} // Increased size to accommodate text
-                            fill={playersColor[props.payload.player] || 'var(--accent-primary)'}
+                            fill={playersColor[props.payload?.player] || 'var(--accent-primary)'}
                             stroke="#222"
                             strokeWidth={1}
                           />
@@ -324,7 +331,7 @@ export function PlayerCampPerformanceChart() {
                             fontWeight="bold"
                             pointerEvents="none"
                           >
-                            {props.payload.player.charAt(0).toUpperCase()}
+                            {props.payload?.player?.charAt(0).toUpperCase()}
                           </text>
                         </g>
                       )}
