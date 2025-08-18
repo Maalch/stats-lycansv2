@@ -1,29 +1,49 @@
-Potential New Statistics for Lycans Project
-Based on the data structure in Utils.gs and existing implementations in GoogleScript.gs, here are some interesting new statistics features you could add:
+Google Sheets Data Access Optimization Options
+Here are several approaches to optimize how your project accesses Google Sheets data, addressing the limitations you've mentioned:
 
-Game Meta Analysis
-- Role Effectiveness Over Time: Track how different roles' win rates have changed across months/sessions
-- Game Balance Metrics: Analysis of optimal wolf-to-villager ratios for balanced gameplay
-- Meta Evolution: How game strategies and outcomes have evolved across sessions
-Advanced Player Insights
-- Player Pairing Analysis: Which players perform well together (win rates when specific players are in the same game)
-- Ponce Player Role Affinity: Which roles Ponce performs best with
-- Ponce Player Death Patterns: Analysis of how/when Ponce tend to be eliminated
-Role Interaction Analysis
-- Role Synergy Stats: Which combinations of roles lead to higher win rates
-Counter-Role Analysis: Which roles are effective against others
-- Role Value by Player Count: How certain roles perform in games with different player counts
-Temporal & Prediction Models
-- Day-by-Day Death Statistics: Mortality rates by game day
-- Death Type Distribution (Ponce only): Analysis of different death causes
-- Win Prediction: Probability of winning based on day 1 configuration
-Special Game Elements
-- Traitor Effectiveness: Analysis of games with traitors vs without
-- Lover Dynamics: Statistical impact of the lovers role on game outcomes
-- Solo Role Balance: Comparative analysis of different solo roles
-Visual & UX Improvements
-- Heat Maps: For role combinations or player pairings
-- Player Networks: Visual representation of player interactions
-- Timeline Views: Showing how the meta has evolved
+1. Enhanced Consolidated API Approach
+Expand your existing combinedStats endpoint to become your primary/only endpoint
+Implement parameter-aware caching where cache keys incorporate common parameter patterns
+Add configurable data freshness parameters (allow stale data option for non-critical views)
+Pros: Works within current architecture, minimal changes needed
+Cons: Still limited by Apps Script quotas
+2. Scheduled Data Export
+Schedule regular exports of complete datasets to static JSON files in Drive or Cloud Storage
+Frontend fetches these files instead of calling APIs directly
+Pros: Decouples data processing from user requests, reduces quota usage
+Cons: Data is not real-time (but fine if hourly/daily updates are acceptable)
+3. Database with Sync Layer
+Create a lightweight database (Firebase, MongoDB Atlas, etc.)
+Set up Apps Script to sync Sheets → Database on a schedule
+Frontend reads from database instead of Sheets
+Pros: Better scaling, faster queries, reduced quotas
+Cons: More complex setup, potential costs
+4. GitHub-based Data Pipeline
+Create GitHub Actions workflow that pulls data from Sheets via API
+Store as JSON in your repo alongside the code
+Frontend loads this JSON directly
+Pros: Free hosting, versioned data history, works well with static site
+Cons: Separate deployment step, potential GitHub API rate limits
+5. Client-side Data Processing
+Fetch raw sheet data once at app startup
+Perform all calculations in browser
+Pros: Single API call, works offline after initial load
+Cons: Initial load could be slow, duplicates logic
+6. Custom Backend Microservice
+Build small Node.js/Express server to handle Sheets access
+Implement efficient caching and data transformation
+Pros: Full control, better performance
+Cons: Requires hosting (could use serverless like Vercel/Netlify functions)
+7. Pre-processed "Data Warehouse" Sheet
+Create a derived sheet that contains pre-calculated metrics
+Apps Script updates this sheet on a schedule
+Frontend only reads from this optimized sheet
+Pros: Simplifies frontend, reduces calculation overhead
+Cons: Additional sheet maintenance
+Recommendation
+Based on your project architecture, I'd recommend a hybrid approach:
 
-These suggestions build on your existing data structure while providing deeper insights into game dynamics, player behavior, and meta evolution.
+First, implement GitHub-based data pipeline with daily updates for non-real-time data
+Keep a minimal Apps Script API for time-sensitive or parameter-heavy queries
+Consider moving to the database approach if the project continues to grow
+This gives you immediate benefits without major architecture changes, while providing a clear path for scaling.
