@@ -24,7 +24,7 @@ const PLAYER_STATS_MENU = [
   { key: 'playersGeneral', label: 'Joueurs', component: PlayersGeneralStatisticsChart },
   { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
   { key: 'pairing', label: 'Paires de Joueurs', component: PlayerPairingStatsChart }, 
-  { key: 'campPerformance', label: 'Meilleurs Performeurs', component: PlayerCampPerformanceChart }, 
+  { key: 'campPerformance', label: 'Performances', component: PlayerCampPerformanceChart }, 
 ];
 
 const GENERAL_STATS_MENU = [

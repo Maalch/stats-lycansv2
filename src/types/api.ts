@@ -17,39 +17,78 @@ export const lycansColorScheme: Record<string, string> = {
 };
 
 export const playersColor: Record<string, string> = {
-  "Ponce": "#2e2eff",
-  "Khalen": "#0000ff",
-  "Monodie": "#0000ff",
-  "Fukano": "#ffb900",
-  "Tone": "#ffff00",
-  "RomainJacques": "#ffff00",
-  "Ketchopl": "#ffff00",
-  "Arkantors": "#00ff00",
-  "Flonflon": "#00ff00",
-  "Anaee": "#a000ff",
-  "Pelerine": "#969696ff",
-  "DevGirl_": "#ff00ff",
-  "Bytell": "#00ff00",
-  "Tsuna": "#a52a2ac9",
-  "Poachimpa": "#a52a2ac9",
-  "Lutti": "#00ffff",
-  "Kao": "#969696ff",
-  "CHLOE": "#00ffff",
-  "MaMaPaprika": "#ff9000",
-  "Reivil": "#ff9000",
-  "Noamouille": "#ff9000",
-  "Zarcross": "#ff9000",
-  "Craco": "#ff00ff",
-  "Mathy": "#ff00ff",
-  "ClydeCreator": "#ff0000",
-  "Kyria": "#a000ff",
-  "Tovi": "#969696ff",
-  "BoccA": "#969696ff",
-  "Cyldhur": "#969696ff",
-  "PeoBran": "#00ffff",
-  "Miraaaaaah": "#ffff00",
-  "Brybry": "#00ff00",
-  "Heimdalle": "#00ffff"
+  "Ponce": "#0076FF",           // Bleu clair
+  "Khalen": "#0012A6",          // Bleu foncé
+  "Monodie": "#0076FF",         // Bleu clair
+  "Kao": "#909090",             // Gris
+  "Arkantors": "#FF61F4",       // Rose
+  "Bytell": "#54D90F",          // Vert clair
+  "Kyria": "#6F00D9",           // Violet
+  "Fukano": "#FF9500",          // Orange
+  "Brybry": "#009A13",          // Vert foncé
+  "Baout": "#FF61F4",           // Rose
+  "Lutti": "#00FFFF",           // Cyan
+  "Miraaaaaah": "#6F00D9",      // Violet
+  "Tsuna": "#A65200",           // Marron
+  "Noamouille": "#FF9500",      // Orange
+  "Craco": "#FF61F4",           // Rose
+  "ClydeCreator": "#FF0000",    // Rouge
+  "Ketchopi": "#FFED00",        // Jaune
+  "BoccA": "#A65200",           // Marron
+  "Koka": "#FFED00",            // Jaune
+  "Anaee": "#A65200",           // Marron
+  "Flonflon": "#54D90F",        // Vert clair
+  "Lydiaam": "#FFED00",         // Jaune
+  "Heimdalle": "#00FFFF",       // Cyan
+  "Drakony": "#A65200",         // Marron
+  "Tone": "#FFED00",            // Jaune
+  "Mathy": "#FFED00",           // Jaune
+  "Poachimpa": "#A65200",       // Marron
+  "Cyldhur": "#909090",         // Gris
+  "Reivil": "#FF9500",          // Orange
+  "Zarcross": "#FF9500",        // Orange
+  "Shaunz": "#0012A6",          // Bleu foncé
+  "Aayley": "#009A13",          // Vert foncé
+  "RomainJacques": "#FFED00",   // Jaune
+  "DevGirl_": "#FF61F4",        // Rose
+  "CHLOE": "#00FFFF",           // Cyan
+  "Yoona": "#FF0000",           // Rouge
+  "Mickalow": "#009A13",        // Vert foncé
+  "PeoBran": "#00FFFF",         // Cyan
+  "Tovi": "#909090",            // Gris
+  "Kissiffrote": "#FF0000",     // Rouge
+  "Pelerine": "#909090",        // Gris
+  "MaMaPaprika": "#FF9500",     // Orange
+  "Xari": "#009A13",            // Vert foncé
+  "Sakor": "#FFED00",           // Jaune
+  "HortyUnderscore": "#00FFFF", // Cyan
+  "LittleBigWhale": "#FF61F4",  // Rose
+  "Gom4rt": "#FF9500",          // Orange
+  "Ultia": "#6F00D9",           // Violet
+  "Onutrem": "#0076FF",         // Bleu clair
+  "DFG": "#A65200",             // Marron
+  "Crocodyle": "#909090",       // Gris
+  "GoB": "#FF0000",             // Rouge
+  "Wingo": "#FF9500",           // Orange
+  "Nahomay": "#00FFFF",         // Cyan
+  "Naka": "#FFED00",            // Jaune
+  "Covfefe": "#6F00D9",         // Violet
+  "LyeGaia": "#FF9500",         // Orange
+  "Maechi": "#009A13",          // Vert foncé
+  "TPK": "#00FFFF",             // Cyan
+  "Clem_mlrt": "#00FFFF",       // Cyan
+  "Bidji": "#FF61F4",           // Rose
+  "AfterNoune": "#FF9500",      // Orange
+  "JimmyBoyyy": "#A65200",      // Marron
+  "Mimosa_etoilee": "#FF0000",  // Rouge
+  "Leaprima": "#FFED00",        // Jaune
+  "Riri et son ptit Ricard": "#A65200", // Marron
+  "Berlu": "#009A13",           // Vert foncé
+  "Antoine": "#FF0000",         // Rouge
+  "AvaMind": "#00FFFF",         // Cyan
+  "Skyyart": "#6F00D9",         // Violet
+  "Pressea": "#A65200",         // Marron
+  "Etoiles": "#54D90F"          // Vert clair
 };
 
   // Options pour le nombre minimum de parties
