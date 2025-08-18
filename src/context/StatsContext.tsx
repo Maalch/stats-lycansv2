@@ -2,9 +2,27 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { fetchCombinedStats } from '../api/statsApi';
+import type { 
+  CampWinStatsResponse, 
+  HarvestStatsResponse, 
+  GameDurationAnalysisResponse, 
+  PlayerStatsData, 
+  PlayerPairingStatsData, 
+  PlayerCampPerformanceResponse 
+} from '../types/api';
+
+// Define more specific types using existing interfaces
+export interface CombinedStatsData {
+  campWinStats?: CampWinStatsResponse;
+  harvestStats?: HarvestStatsResponse;
+  gameDurationAnalysis?: GameDurationAnalysisResponse;
+  playerStats?: PlayerStatsData;
+  playerPairingStats?: PlayerPairingStatsData;
+  playerCampPerformance?: PlayerCampPerformanceResponse;
+}
 
 type StatsContextType = {
-  combinedData: any | null;
+  combinedData: CombinedStatsData | null;
   isLoading: boolean;
   error: string | null;
   refetchData: () => void;
@@ -13,7 +31,7 @@ type StatsContextType = {
 const StatsContext = createContext<StatsContextType | undefined>(undefined);
 
 export function StatsProvider({ children }: { children: ReactNode }) {
-  const [combinedData, setCombinedData] = useState<any | null>(null);
+  const [combinedData, setCombinedData] = useState<CombinedStatsData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
