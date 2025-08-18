@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Data sync dependencies
+scripts/data-sync/node_modules/
+scripts/data-sync/package-lock.json
+
+# Keep data files in git for hybrid approach
+# (they will be updated by GitHub Actions)
+!data/
+!data/*.json
