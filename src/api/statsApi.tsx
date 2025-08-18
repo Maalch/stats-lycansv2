@@ -53,7 +53,9 @@ export async function getAvailablePlayersFromStatic() {
 // Helper function to check if a player has static data available
 export async function isPlayerDataAvailableStatic(playerName: string): Promise<boolean> {
   try {
-    const allHistories = await fetch('/data/allPlayerGameHistories.json');
+    // Use the same path resolution as dataService
+    const dataBasePath = import.meta.env.DEV ? '/data/' : '/stats-lycansv2/data/';
+    const allHistories = await fetch(`${dataBasePath}allPlayerGameHistories.json`);
     if (!allHistories.ok) return false;
     
     const data = await allHistories.json();

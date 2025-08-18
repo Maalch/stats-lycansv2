@@ -47,7 +47,9 @@ export class DataService {
     if (this.dataIndex) return this.dataIndex;
     
     try {
-      const response = await fetch('/data/index.json');
+      const indexPath = `${this.getDataBasePath()}index.json`;
+      console.log(`📋 Loading data index from: ${indexPath}`);
+      const response = await fetch(indexPath);
       if (response.ok) {
         this.dataIndex = await response.json();
         return this.dataIndex;
@@ -59,13 +61,23 @@ export class DataService {
   }
 
   /**
+   * Get the correct base path for static data
+   */
+  private getDataBasePath(): string {
+    // In development, use root path. In production, respect the base path.
+    return import.meta.env.DEV ? '/data/' : '/stats-lycansv2/data/';
+  }
+
+  /**
    * Load static JSON data from the repository
    */
   private async loadStaticData(endpoint: string) {
     try {
-      const response = await fetch(`/data/${endpoint}.json`);
+      const dataPath = `${this.getDataBasePath()}${endpoint}.json`;
+      console.log(`🔍 Loading static data from: ${dataPath}`);
+      const response = await fetch(dataPath);
       if (!response.ok) {
-        throw new Error(`Static data not available for ${endpoint}`);
+        throw new Error(`Static data not available for ${endpoint} (${response.status})`);
       }
       return await response.json();
     } catch (error) {
@@ -118,6 +130,8 @@ export class DataService {
   public async getData(endpoint: string, params: Record<string, string> = {}) {
     const config = DATA_CONFIG.endpoints[endpoint];
     
+    console.log(`🔍 DataService.getData called for: ${endpoint}`, { config, params });
+    
     if (!config) {
       throw new Error(`Unknown endpoint: ${endpoint}`);
     }
@@ -125,9 +139,12 @@ export class DataService {
     // For static endpoints, try static first, fallback to API
     if (config === 'static') {
       try {
-        return await this.loadStaticData(endpoint);
+        console.log(`📋 Attempting to load static data for: ${endpoint}`);
+        const result = await this.loadStaticData(endpoint);
+        console.log(`✅ Static data loaded successfully for: ${endpoint}`);
+        return result;
       } catch (error) {
-        console.warn(`Static data failed for ${endpoint}, falling back to API`);
+        console.warn(`⚠️ Static data failed for ${endpoint}, falling back to API:`, error);
         return await this.fetchFromAPI(endpoint, params);
       }
     }
