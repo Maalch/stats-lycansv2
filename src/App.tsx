@@ -1,5 +1,4 @@
 import { Suspense, lazy, useState } from 'react';
-import { StatsProvider } from './context/StatsContext';
 import { FullscreenProvider } from './context/FullscreenContext';
 import './App.css';
 
@@ -114,7 +113,6 @@ export default function App() {
   };
 
   return (
-     <StatsProvider>
       <FullscreenProvider>
         <div className="app-container">
           <img
@@ -153,6 +151,5 @@ export default function App() {
           </div>
         </div>
       </FullscreenProvider>
-    </StatsProvider>
   );
 }

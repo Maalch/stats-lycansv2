@@ -12,11 +12,6 @@ function doGet(e) {
       baseKey: 'playerGameHistory', 
       fn: getPlayerGameHistoryRaw,
       paramKeys: ['playerName'] // List of parameters that affect caching
-    },
-    'combinedStats': {
-      baseKey: 'combinedStats',
-      fn: getCombinedStatsRaw,
-      paramKeys: ['stats'] // Comma-separated list of stats to include
     }
   };
   
@@ -73,33 +68,6 @@ function test_doGet() {
   return result;
 }
 
-/**
- * Debug/test function for the combinedStats endpoint.
- * Logs the combined stats result for a given set of stats.
- * You can run this in the Apps Script editor to inspect the output.
- */
-function test_combinedStats() {
-  var statsToTest = [
-    "campWinStats",
-    "harvestStats",
-    "gameDurationAnalysis",
-    "playerStats",
-    "playerPairingStats",
-    "playerCampPerformance"
-  ];
-  var e = {
-    parameter: {
-      action: "combinedStats",
-      stats: statsToTest.join(",")
-    }
-  };
-  var result = getCombinedStatsRaw(e);
-  Logger.log("Test combinedStats for stats: " + statsToTest.join(", "));
-  Logger.log("Result:");
-  Logger.log(result);
-  return result;
-}
-
 // Updated test function
 function test_getPlayerGameHistory() {
   var cache = CacheService.getScriptCache();
@@ -125,76 +93,6 @@ function test_getPlayerGameHistory() {
   return result;
 }
 
-/**
- * Clear the cache for the combinedStats endpoint for a given stats list.
- * @param {string} statsParam - Comma-separated list of stats (e.g. "campWinStats,harvestStats")
- */
-function clearCombinedStatsCache(statsParam) {
-  var cache = CacheService.getScriptCache();
-  // Simulate the request parameter object as in doGet
-  var e = { parameter: { stats: statsParam } };
-  var cacheKey = generateCacheKey('combinedStats', ['stats'], e);
-  cache.remove(cacheKey);
-  Logger.log('Cleared cache for combinedStats with key: ' + cacheKey);
-}
-
-
-/**
- * Returns multiple statistics in a single request
- * @param {Object} e - Request parameters containing 'stats' (comma-separated list of stat types to include)
- * @return {string} JSON string with combined statistics
- */
-function getCombinedStatsRaw(e) {
-  try {
-    // Parse requested stats
-    var statsToInclude = e.parameter.stats ? e.parameter.stats.split(',') : [];
-    if (statsToInclude.length === 0) {
-      return JSON.stringify({ error: 'No stats specified. Use the stats parameter with comma-separated values.' });
-    }
-    
-    // Read shared data once (all sheets that might be needed)
-    var sheetData = {};
-    var neededSheets = getNeededSheets(statsToInclude);
-    
-    neededSheets.forEach(function(sheetName) {
-      sheetData[sheetName] = getLycanSheetData(sheetName);
-    });
-    
-    // Process requested stats
-    var result = {};
-    
-    if (statsToInclude.includes('campWinStats')) {
-      result.campWinStats = JSON.parse(getCampWinStatsWithData(sheetData));
-    }
-    
-    if (statsToInclude.includes('harvestStats')) {
-      result.harvestStats = JSON.parse(getHarvestStatsWithData(sheetData));
-    }
-    
-    if (statsToInclude.includes('gameDurationAnalysis')) {
-      result.gameDurationAnalysis = JSON.parse(getGameDurationAnalysisWithData(sheetData));
-    }
-    
-    if (statsToInclude.includes('playerStats')) {
-      result.playerStats = JSON.parse(getPlayerStatsWithData(sheetData));
-    }
-    
-    if (statsToInclude.includes('playerPairingStats')) {
-      result.playerPairingStats = JSON.parse(getPlayerPairingStatsWithData(sheetData));
-    }
-    
-    if (statsToInclude.includes('playerCampPerformance')) {
-      result.playerCampPerformance = JSON.parse(getPlayerCampPerformanceWithData(sheetData));
-    }
-    
-    // Note: playerGameHistory is not included as it requires a player name parameter
-    
-    return JSON.stringify(result);
-  } catch (error) {
-    Logger.log('Error in getCombinedStatsRaw: ' + error.message);
-    return JSON.stringify({ error: error.message });
-  }
-}
 
 /**
  * Determines which sheets are needed based on requested stats

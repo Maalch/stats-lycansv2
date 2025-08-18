@@ -48,6 +48,46 @@ async function fetchEndpointData(endpoint) {
   }
 }
 
+async function fetchAllPlayerGameHistories() {
+  console.log('🔍 Discovering all players...');
+  
+  // First, get player stats to find all player names
+  const playerStats = await fetchEndpointData('playerStats');
+  const allPlayerNames = playerStats.playerStats?.map(p => p.player).filter(Boolean) || [];
+  
+  // For testing, limit to first 5 players to avoid overwhelming the API
+  const playerNames = allPlayerNames.slice(0, 5);
+  
+  console.log(`📋 Found ${allPlayerNames.length} total players, fetching data for: ${playerNames.join(', ')}`);
+  
+  const allPlayerHistories = {};
+  
+  for (const playerName of playerNames) {
+    try {
+      console.log(`  📊 Fetching history for ${playerName}...`);
+      const apiBase = process.env.LYCANS_API_BASE;
+      const url = `${apiBase}?action=playerGameHistory&playerName=${encodeURIComponent(playerName)}`;
+      
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      allPlayerHistories[playerName] = data;
+      
+      // Small delay to be respectful to the API
+      await new Promise(resolve => setTimeout(resolve, 500));
+    } catch (error) {
+      console.error(`  ❌ Failed to fetch history for ${playerName}:`, error.message);
+      // Continue with other players
+    }
+  }
+  
+  console.log(`✓ Successfully fetched game histories for ${Object.keys(allPlayerHistories).length} players`);
+  return allPlayerHistories;
+}
+
 async function saveDataToFile(endpoint, data) {
   const filename = `${endpoint}.json`;
   const filepath = path.join(ABSOLUTE_DATA_DIR, filename);
@@ -89,6 +129,11 @@ async function main() {
       // Small delay to be respectful to the API
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
+    
+    // Fetch all player game histories
+    console.log('🎮 Fetching all player game histories...');
+    const allPlayerHistories = await fetchAllPlayerGameHistories();
+    await saveDataToFile('allPlayerGameHistories', allPlayerHistories);
     
     await createDataIndex();
     

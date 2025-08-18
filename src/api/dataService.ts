@@ -19,9 +19,8 @@ export const DATA_CONFIG: DataConfig = {
     playerPairingStats: 'static',
     playerCampPerformance: 'static',
     
-    // API data - requires parameters or real-time data
-    playerGameHistory: 'api',
-    combinedStats: 'hybrid' // Can use static for basic requests
+    // Hybrid - pre-generated data available for most cases
+    playerGameHistory: 'hybrid' // Can use static for known players
   }
 };
 
@@ -76,6 +75,25 @@ export class DataService {
   }
 
   /**
+   * Load player game history from pre-generated static data
+   */
+  private async loadPlayerGameHistory(playerName: string) {
+    try {
+      const allHistories = await this.loadStaticData('allPlayerGameHistories');
+      const playerHistory = allHistories[playerName];
+      
+      if (!playerHistory) {
+        throw new Error(`No static data available for player: ${playerName}`);
+      }
+      
+      return playerHistory;
+    } catch (error) {
+      console.warn(`Failed to load static player history for ${playerName}:`, error);
+      throw error;
+    }
+  }
+
+  /**
    * Fetch data from the Apps Script API
    */
   private async fetchFromAPI(endpoint: string, params: Record<string, string> = {}) {
@@ -119,9 +137,20 @@ export class DataService {
       return await this.fetchFromAPI(endpoint, params);
     }
 
-    // For hybrid endpoints, decide based on parameters
+    // For hybrid endpoints, smart routing based on endpoint type
     if (config === 'hybrid') {
-      // If no parameters or basic request, try static first
+      // Special handling for playerGameHistory
+      if (endpoint === 'playerGameHistory' && params.playerName) {
+        try {
+          console.log(`🎮 Loading static game history for: ${params.playerName}`);
+          return await this.loadPlayerGameHistory(params.playerName);
+        } catch (error) {
+          console.warn(`Static player history failed for ${params.playerName}, falling back to API`);
+          return await this.fetchFromAPI(endpoint, params);
+        }
+      }
+      
+      // For basic requests or no parameters, try static first
       if (Object.keys(params).length === 0 || this.isBasicRequest(endpoint, params)) {
         try {
           return await this.loadStaticData(endpoint);
@@ -130,7 +159,7 @@ export class DataService {
         }
       }
       
-      // Fall back to or directly use API
+      // Fall back to API
       return await this.fetchFromAPI(endpoint, params);
     }
 
@@ -141,14 +170,9 @@ export class DataService {
    * Check if this is a basic request that can use static data
    */
   private isBasicRequest(endpoint: string, params: Record<string, string>): boolean {
-    // Add logic here to determine if params represent a "basic" request
-    // that might be available in pre-computed static data
-    
-    if (endpoint === 'combinedStats') {
-      // If requesting all stats or common combinations, use static
-      const stats = params.stats?.split(',') || [];
-      const commonStats = ['campWinStats', 'harvestStats', 'gameDurationAnalysis', 'playerStats'];
-      return stats.length === 0 || stats.every(stat => commonStats.includes(stat));
+    if (endpoint === 'playerGameHistory') {
+      // Any player with a name is considered basic
+      return !!params.playerName;
     }
 
     return false;

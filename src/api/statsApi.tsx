@@ -1,13 +1,7 @@
 // src/api/statsApi.ts
 import { dataService } from './dataService';
 
-// Legacy function - now uses hybrid data service
-export async function fetchCombinedStats(statsToInclude: string[]) {
-  const statsParam = statsToInclude.join(',');
-  return await dataService.getData('combinedStats', { stats: statsParam });
-}
-
-// New individual endpoint functions using hybrid approach
+// Individual endpoint functions using hybrid approach
 export async function fetchCampWinStats() {
   return await dataService.getData('campWinStats');
 }
@@ -43,4 +37,28 @@ export async function getDataFreshness() {
 
 export async function forceRefreshFromAPI(endpoint: string, params: Record<string, string> = {}) {
   return await dataService.refreshFromAPI(endpoint, params);
+}
+
+// Helper function to get available players from static data
+export async function getAvailablePlayersFromStatic() {
+  try {
+    const playerStats = await dataService.getData('playerStats');
+    return playerStats.playerStats?.map((p: any) => p.player).filter(Boolean) || [];
+  } catch (error) {
+    console.warn('Could not load player list from static data:', error);
+    return [];
+  }
+}
+
+// Helper function to check if a player has static data available
+export async function isPlayerDataAvailableStatic(playerName: string): Promise<boolean> {
+  try {
+    const allHistories = await fetch('/data/allPlayerGameHistories.json');
+    if (!allHistories.ok) return false;
+    
+    const data = await allHistories.json();
+    return !!data[playerName];
+  } catch {
+    return false;
+  }
 }
