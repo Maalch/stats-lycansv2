@@ -2,8 +2,8 @@ name: Update Lycans Stats Data
 
 on:
   schedule:
-    # Run daily at 6 AM UTC (adjust timezone as needed)
-    - cron: '0 6 * * *'
+    # Run daily at 4 AM UTC (adjust timezone as needed)
+    - cron: '0 4 * * *'
   workflow_dispatch: # Allow manual triggering
   push:
     paths:

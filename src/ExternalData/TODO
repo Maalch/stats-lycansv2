@@ -1,49 +1,20 @@
-Google Sheets Data Access Optimization Options
-Here are several approaches to optimize how your project accesses Google Sheets data, addressing the limitations you've mentioned:
+Benefits of Your Raw Data Approach:
+✅ Minimal API Calls: Only 3 endpoints for raw sheet data
+✅ Maximum Flexibility: All filtering, date ranges, parameters handled client-side
+✅ Better Performance: Raw data cached, no repeated API calls for different parameters
+✅ Real-time Filtering: Users can change date ranges, filters without API delays
+✅ Reduced Server Load: Google Apps Script just exports raw data, no complex calculations
 
-1. Enhanced Consolidated API Approach
-Expand your existing combinedStats endpoint to become your primary/only endpoint
-Implement parameter-aware caching where cache keys incorporate common parameter patterns
-Add configurable data freshness parameters (allow stale data option for non-critical views)
-Pros: Works within current architecture, minimal changes needed
-Cons: Still limited by Apps Script quotas
-2. Scheduled Data Export
-Schedule regular exports of complete datasets to static JSON files in Drive or Cloud Storage
-Frontend fetches these files instead of calling APIs directly
-Pros: Decouples data processing from user requests, reduces quota usage
-Cons: Data is not real-time (but fine if hourly/daily updates are acceptable)
-3. Database with Sync Layer
-Create a lightweight database (Firebase, MongoDB Atlas, etc.)
-Set up Apps Script to sync Sheets → Database on a schedule
-Frontend reads from database instead of Sheets
-Pros: Better scaling, faster queries, reduced quotas
-Cons: More complex setup, potential costs
-4. GitHub-based Data Pipeline
-Create GitHub Actions workflow that pulls data from Sheets via API
-Store as JSON in your repo alongside the code
-Frontend loads this JSON directly
-Pros: Free hosting, versioned data history, works well with static site
-Cons: Separate deployment step, potential GitHub API rate limits
-5. Client-side Data Processing
-Fetch raw sheet data once at app startup
-Perform all calculations in browser
-Pros: Single API call, works offline after initial load
-Cons: Initial load could be slow, duplicates logic
-6. Custom Backend Microservice
-Build small Node.js/Express server to handle Sheets access
-Implement efficient caching and data transformation
-Pros: Full control, better performance
-Cons: Requires hosting (could use serverless like Vercel/Netlify functions)
-7. Pre-processed "Data Warehouse" Sheet
-Create a derived sheet that contains pre-calculated metrics
-Apps Script updates this sheet on a schedule
-Frontend only reads from this optimized sheet
-Pros: Simplifies frontend, reduces calculation overhead
-Cons: Additional sheet maintenance
-Recommendation
-Based on your project architecture, I'd recommend a hybrid approach:
+Implementation Strategy:
+1. Google Apps Script - Raw Data Endpoints
+2. Static Data Sync - Raw Sheets
+3. Client-Side Processing Hooks
+4. Updated Component Usage
+Migration Plan:
+Add raw data endpoints to GoogleScript.gs
+Update data sync to fetch raw sheets instead of computed stats
+Create calculation utilities for client-side processing
+Update hooks to use raw data + client-side calculations
+Add filtering components for date ranges, players, etc.
+This approach transforms your app from "request → wait → display" to "filter → calculate → display instantly"!
 
-First, implement GitHub-based data pipeline with daily updates for non-real-time data
-Keep a minimal Apps Script API for time-sensitive or parameter-heavy queries
-Consider moving to the database approach if the project continues to grow
-This gives you immediate benefits without major architecture changes, while providing a clear path for scaling.
