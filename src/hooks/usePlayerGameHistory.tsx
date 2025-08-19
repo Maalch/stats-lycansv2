@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { dataService } from '../api/dataService';
 
 export interface PlayerGame {
   gameId: string;
@@ -32,6 +33,7 @@ export interface PlayerGameHistoryResponse {
 
 /**
  * Hook to fetch detailed game history for a specific player
+ * Uses dataService to prefer static data (allPlayerGameHistories.json) with API fallback
  * @param playerName - The name of the player to fetch history for
  * @returns Object containing data, loading state, and error state
  */
@@ -53,19 +55,10 @@ export function usePlayerGameHistory(playerName: string | null): PlayerGameHisto
       setError(null);
 
       try {
-        const baseUrl = import.meta.env.VITE_LYCANS_API_BASE;
-        if (!baseUrl) {
-          throw new Error('API base URL not configured');
-        }
-
-        const url = `${baseUrl}?action=playerGameHistory&playerName=${encodeURIComponent(playerName)}`;
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
+        // Use dataService which will check static data first, then fallback to API
+        const result = await dataService.getData('playerGameHistory', { 
+          playerName: playerName 
+        });
 
         if (result.error) {
           throw new Error(result.error);
