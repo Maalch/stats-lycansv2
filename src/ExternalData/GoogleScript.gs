@@ -231,7 +231,16 @@ function getCachedData(cacheKey, generatorFn, cacheSeconds, e) {
     }
     
     var result = generatorFn(e);
-    cache.put(cacheKey, result, cacheSeconds);
+    // Try to cache the generated result, but don't fail the whole request if the
+    // value is too large for CacheService. CacheService has a size limit for
+    // stored values and will throw "Argument too large" for big payloads.
+    try {
+      cache.put(cacheKey, result, cacheSeconds);
+    } catch (cacheError) {
+      // Log and continue without caching. The endpoint will still return the data.
+      Logger.log('Cache put failed for key ' + cacheKey + ': ' + cacheError.message);
+    }
+
     return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     Logger.log('Error in getCachedData: ' + error.message);
