@@ -1,12 +1,15 @@
 {
-  "lastUpdated": "2025-08-19T10:11:46.946Z",
+  "lastUpdated": "2025-08-19T16:24:24.014Z",
   "endpoints": [
     "campWinStats",
     "harvestStats",
     "gameDurationAnalysis",
     "playerStats",
     "playerPairingStats",
-    "playerCampPerformance"
+    "playerCampPerformance",
+    "rawGameData",
+    "rawRoleData",
+    "rawPonceData"
   ],
-  "description": "Static data cache for Lycans stats. Updated daily via GitHub Actions."
+  "description": "Static data cache for Lycans stats (includes raw sheet exports). Updated daily via GitHub Actions."
 }
