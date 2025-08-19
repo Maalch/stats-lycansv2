@@ -12,6 +12,13 @@ const STATIC_DATA_ENDPOINTS = [
   'playerCampPerformance'
 ];
 
+// Raw sheet exports (large) - do not replace existing computed endpoints; save alongside them
+const RAW_DATA_ENDPOINTS = [
+  'rawGameData',
+  'rawRoleData',
+  'rawPonceData'
+];
+
 // Data directory relative to project root
 const DATA_DIR = '../../data';
 const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
@@ -106,8 +113,8 @@ async function saveDataToFile(endpoint, data) {
 async function createDataIndex() {
   const indexData = {
     lastUpdated: new Date().toISOString(),
-    endpoints: STATIC_DATA_ENDPOINTS,
-    description: "Static data cache for Lycans stats. Updated daily via GitHub Actions."
+    endpoints: [...STATIC_DATA_ENDPOINTS, ...RAW_DATA_ENDPOINTS],
+    description: "Static data cache for Lycans stats (includes raw sheet exports). Updated daily via GitHub Actions."
   };
 
   const indexPath = path.join(ABSOLUTE_DATA_DIR, 'index.json');
@@ -129,6 +136,20 @@ async function main() {
       
       // Small delay to be respectful to the API
       await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    // Fetch raw sheet exports (these may be large)
+    for (const endpoint of RAW_DATA_ENDPOINTS) {
+      try {
+        const data = await fetchEndpointData(endpoint);
+        await saveDataToFile(endpoint, data);
+
+        // Larger delay between heavy exports
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (err) {
+        console.error(`Failed to fetch raw endpoint ${endpoint}:`, err.message);
+        // continue with other endpoints
+      }
     }
     
     // Fetch all player game histories
