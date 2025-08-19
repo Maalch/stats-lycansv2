@@ -13,15 +13,27 @@ function doGet(e) {
       fn: getPlayerGameHistoryRaw,
       paramKeys: ['playerName'] // List of parameters that affect caching
     },
-    // Raw data endpoints for client-side processing
-    'rawGameData': { baseKey: 'rawGameData', fn: getRawGameDataRaw },
-    'rawRoleData': { baseKey: 'rawRoleData', fn: getRawRoleDataRaw },
-    'rawPonceData': { baseKey: 'rawPonceData', fn: getRawPonceDataRaw }
+  // Raw data endpoints for client-side processing - do NOT cache these (too large)
+  'rawGameData': { baseKey: 'rawGameData', fn: getRawGameDataRaw, noCache: true },
+  'rawRoleData': { baseKey: 'rawRoleData', fn: getRawRoleDataRaw, noCache: true },
+  'rawPonceData': { baseKey: 'rawPonceData', fn: getRawPonceDataRaw, noCache: true }
   };
   
   var action = e.parameter.action;
   var actionData = actionMap[action];
   if (actionData) {
+    // If endpoint is marked as noCache, call function directly and return result
+    if (actionData.noCache) {
+      try {
+        var result = actionData.fn(e);
+        return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
+      } catch (err) {
+        Logger.log('Error in noCache endpoint ' + actionData.baseKey + ': ' + err.message);
+        return ContentService.createTextOutput(JSON.stringify({ error: err.message }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+
     var cacheKey = generateCacheKey(actionData.baseKey, actionData.paramKeys, e);
     return getCachedData(cacheKey, actionData.fn, 3600, e);
   } else {
