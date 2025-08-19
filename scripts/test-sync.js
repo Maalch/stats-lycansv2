@@ -28,6 +28,23 @@ async function testDataSync() {
     }
   }
 
+  // Test raw sheet exports (large)
+  const rawEndpoints = [
+    'rawGameData',
+    'rawRoleData',
+    'rawPonceData'
+  ];
+
+  console.log('\n🗂️  Testing raw sheet exports:');
+  for (const endpoint of rawEndpoints) {
+    try {
+      const data = await dataService.getData(endpoint);
+      console.log(`✅ ${endpoint}: ${JSON.stringify(data).length} bytes`);
+    } catch (error) {
+      console.log(`❌ ${endpoint}: ${error.message}`);
+    }
+  }
+
   // Test data freshness
   console.log('\n📅 Testing data freshness:');
   try {
