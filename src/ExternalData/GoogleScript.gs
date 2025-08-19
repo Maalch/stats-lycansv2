@@ -12,7 +12,11 @@ function doGet(e) {
       baseKey: 'playerGameHistory', 
       fn: getPlayerGameHistoryRaw,
       paramKeys: ['playerName'] // List of parameters that affect caching
-    }
+    },
+    // Raw data endpoints for client-side processing
+    'rawGameData': { baseKey: 'rawGameData', fn: getRawGameDataRaw },
+    'rawRoleData': { baseKey: 'rawRoleData', fn: getRawRoleDataRaw },
+    'rawPonceData': { baseKey: 'rawPonceData', fn: getRawPonceDataRaw }
   };
   
   var action = e.parameter.action;
@@ -90,6 +94,102 @@ function test_getPlayerGameHistory() {
   Logger.log("Test playerGameHistory for player: " + playerName);
   Logger.log("Cache key used: " + cacheKey);
   Logger.log(result.getContent());
+  return result;
+}
+
+/**
+ * Test function for raw game data export
+ */
+function test_getRawGameData() {
+  var cache = CacheService.getScriptCache();
+  
+  // Clear the cache for this endpoint
+  var cacheKey = generateCacheKey('rawGameData', null, { parameter: {} });
+  cache.remove(cacheKey);
+  
+  var e = { 
+    parameter: { 
+      action: 'rawGameData'
+    } 
+  };
+  
+  var result = doGet(e);
+  Logger.log("Test rawGameData");
+  Logger.log("Cache key used: " + cacheKey);
+  
+  // Parse the result to check record count
+  try {
+    var data = JSON.parse(result.getContent());
+    Logger.log("Total records: " + (data.totalRecords || 'unknown'));
+    Logger.log("Sample record: " + JSON.stringify(data.data ? data.data[0] : 'none'));
+  } catch (e) {
+    Logger.log("Raw result: " + result.getContent());
+  }
+  
+  return result;
+}
+
+/**
+ * Test function for raw role data export
+ */
+function test_getRawRoleData() {
+  var cache = CacheService.getScriptCache();
+  
+  // Clear the cache for this endpoint
+  var cacheKey = generateCacheKey('rawRoleData', null, { parameter: {} });
+  cache.remove(cacheKey);
+  
+  var e = { 
+    parameter: { 
+      action: 'rawRoleData'
+    } 
+  };
+  
+  var result = doGet(e);
+  Logger.log("Test rawRoleData");
+  Logger.log("Cache key used: " + cacheKey);
+  
+  // Parse the result to check record count
+  try {
+    var data = JSON.parse(result.getContent());
+    Logger.log("Total records: " + (data.totalRecords || 'unknown'));
+    Logger.log("Sample record: " + JSON.stringify(data.data ? data.data[0] : 'none'));
+  } catch (e) {
+    Logger.log("Raw result: " + result.getContent());
+  }
+  
+  return result;
+}
+
+/**
+ * Test function for raw Ponce data export
+ */
+function test_getRawPonceData() {
+  var cache = CacheService.getScriptCache();
+  
+  // Clear the cache for this endpoint
+  var cacheKey = generateCacheKey('rawPonceData', null, { parameter: {} });
+  cache.remove(cacheKey);
+  
+  var e = { 
+    parameter: { 
+      action: 'rawPonceData'
+    } 
+  };
+  
+  var result = doGet(e);
+  Logger.log("Test rawPonceData");
+  Logger.log("Cache key used: " + cacheKey);
+  
+  // Parse the result to check record count
+  try {
+    var data = JSON.parse(result.getContent());
+    Logger.log("Total records: " + (data.totalRecords || 'unknown'));
+    Logger.log("Sample record: " + JSON.stringify(data.data ? data.data[0] : 'none'));
+  } catch (e) {
+    Logger.log("Raw result: " + result.getContent());
+  }
+  
   return result;
 }
 
@@ -1459,6 +1559,176 @@ function getPlayerCampPerformanceWithData(sheetData) {
     return _computePlayerCampPerformance(gameData, roleData);
   } catch (error) {
     Logger.log('Error in getPlayerCampPerformanceWithData: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
+
+// ============================================================================
+// RAW DATA EXPORT FUNCTIONS
+// These functions export the complete sheet data as JSON for client-side processing
+// ============================================================================
+
+/**
+ * Returns all raw data from the "Game v2" sheet as JSON
+ * This enables client-side filtering and calculations
+ * @return {string} JSON string with all game data
+ */
+function getRawGameDataRaw() {
+  try {
+    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
+    var values = gameData.values;
+    
+    if (!values || values.length === 0) {
+      return JSON.stringify({ error: 'No game data found' });
+    }
+    
+    var headers = values[0];
+    var dataRows = values.slice(1);
+    
+    // Convert rows to objects with column names
+    var gameRecords = dataRows.map(function(row) {
+      var record = {};
+      headers.forEach(function(header, index) {
+        var value = row[index];
+        
+        // Format dates consistently
+        if (header === LYCAN_SCHEMA.GAMES.COLS.DATE && value) {
+          record[header] = formatLycanDate(value);
+        }
+        // Convert boolean checkboxes to actual booleans
+        else if (header === LYCAN_SCHEMA.GAMES.COLS.MODDED || 
+                 header === LYCAN_SCHEMA.GAMES.COLS.TRAITOR || 
+                 header === LYCAN_SCHEMA.GAMES.COLS.LOVERS) {
+          record[header] = Boolean(value);
+        }
+        // Convert numeric fields to numbers
+        else if (header === LYCAN_SCHEMA.GAMES.COLS.NBPLAYERS ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.NBWOLVES ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.NBDAYS ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.SURVIVINGVILLAGERS ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.SURVIVINGWOLVES ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.SURVIVINGLOVERS ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.SURVIVINGSOLO ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.HARVEST ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST ||
+                 header === LYCAN_SCHEMA.GAMES.COLS.HARVESTPERCENT) {
+          record[header] = value !== '' && !isNaN(value) ? parseFloat(value) : null;
+        }
+        // Keep text fields as strings, but handle empty values
+        else {
+          record[header] = value !== '' ? value : null;
+        }
+      });
+      return record;
+    });
+    
+    return JSON.stringify({
+      lastUpdated: new Date().toISOString(),
+      totalRecords: gameRecords.length,
+      data: gameRecords
+    });
+    
+  } catch (error) {
+    Logger.log('Error in getRawGameDataRaw: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
+
+/**
+ * Returns all raw data from the "Loups et solo v2" sheet as JSON
+ * This contains role assignments for each game
+ * @return {string} JSON string with all role data
+ */
+function getRawRoleDataRaw() {
+  try {
+    var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
+    var values = roleData.values;
+    
+    if (!values || values.length === 0) {
+      return JSON.stringify({ error: 'No role data found' });
+    }
+    
+    var headers = values[0];
+    var dataRows = values.slice(1);
+    
+    // Convert rows to objects with column names
+    var roleRecords = dataRows.map(function(row) {
+      var record = {};
+      headers.forEach(function(header, index) {
+        var value = row[index];
+        
+        // Convert boolean checkboxes to actual booleans
+        if (header === LYCAN_SCHEMA.ROLES.COLS.MODDED) {
+          record[header] = Boolean(value);
+        }
+        // Keep text fields as strings, but handle empty values
+        else {
+          record[header] = value !== '' ? value : null;
+        }
+      });
+      return record;
+    });
+    
+    return JSON.stringify({
+      lastUpdated: new Date().toISOString(),
+      totalRecords: roleRecords.length,
+      data: roleRecords
+    });
+    
+  } catch (error) {
+    Logger.log('Error in getRawRoleDataRaw: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
+
+/**
+ * Returns all raw data from the "Ponce v2" sheet as JSON
+ * This contains detailed data specific to player Ponce
+ * @return {string} JSON string with all Ponce data
+ */
+function getRawPonceDataRaw() {
+  try {
+    var ponceData = getLycanSheetData(LYCAN_SCHEMA.PONCE.SHEET);
+    var values = ponceData.values;
+    
+    if (!values || values.length === 0) {
+      return JSON.stringify({ error: 'No Ponce data found' });
+    }
+    
+    var headers = values[0];
+    var dataRows = values.slice(1);
+    
+    // Convert rows to objects with column names
+    var ponceRecords = dataRows.map(function(row) {
+      var record = {};
+      headers.forEach(function(header, index) {
+        var value = row[index];
+        
+        // Convert boolean checkboxes to actual booleans
+        if (header === LYCAN_SCHEMA.PONCE.COLS.MODDED || 
+            header === LYCAN_SCHEMA.PONCE.COLS.TRAITOR) {
+          record[header] = Boolean(value);
+        }
+        // Convert numeric fields to numbers
+        else if (header === LYCAN_SCHEMA.PONCE.COLS.DAYOFDEATH) {
+          record[header] = value !== '' && !isNaN(value) ? parseFloat(value) : null;
+        }
+        // Keep text fields as strings, but handle empty values
+        else {
+          record[header] = value !== '' ? value : null;
+        }
+      });
+      return record;
+    });
+    
+    return JSON.stringify({
+      lastUpdated: new Date().toISOString(),
+      totalRecords: ponceRecords.length,
+      data: ponceRecords
+    });
+    
+  } catch (error) {
+    Logger.log('Error in getRawPonceDataRaw: ' + error.message);
     return JSON.stringify({ error: error.message });
   }
 }
