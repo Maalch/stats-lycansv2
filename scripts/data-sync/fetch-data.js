@@ -2,17 +2,7 @@ import fetch from 'node-fetch';
 import fs from 'fs/promises';
 import path from 'path';
 
-// Configuration for static data endpoints
-const STATIC_DATA_ENDPOINTS = [
-  'campWinStats',
-  'harvestStats', 
-  'gameDurationAnalysis',
-  'playerStats',
-  'playerPairingStats',
-  'playerCampPerformance'
-];
-
-// Raw sheet exports (large) - do not replace existing computed endpoints; save alongside them
+// Raw sheet exports only (static endpoints now computed client-side)
 const RAW_DATA_ENDPOINTS = [
   'rawGameData',
   'rawRoleData',
@@ -55,47 +45,6 @@ async function fetchEndpointData(endpoint) {
   }
 }
 
-async function fetchAllPlayerGameHistories() {
-  console.log('🔍 Discovering all players...');
-  
-  // First, get player stats to find all player names
-  const playerStats = await fetchEndpointData('playerStats');
-  const allPlayerNames = playerStats.playerStats?.map(p => p.player).filter(Boolean) || [];
-  
-  // For testing, limit to first 5 players to avoid overwhelming the API
-  //const playerNames = allPlayerNames.slice(0, 5);
-  const playerNames = allPlayerNames;
-  
-  console.log(`📋 Found ${allPlayerNames.length} total players, fetching data for: ${playerNames.join(', ')}`);
-  
-  const allPlayerHistories = {};
-  
-  for (const playerName of playerNames) {
-    try {
-      console.log(`  📊 Fetching history for ${playerName}...`);
-      const apiBase = process.env.LYCANS_API_BASE;
-      const url = `${apiBase}?action=playerGameHistory&playerName=${encodeURIComponent(playerName)}`;
-      
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      allPlayerHistories[playerName] = data;
-      
-      // Small delay to be respectful to the API
-      await new Promise(resolve => setTimeout(resolve, 500));
-    } catch (error) {
-      console.error(`  ❌ Failed to fetch history for ${playerName}:`, error.message);
-      // Continue with other players
-    }
-  }
-  
-  console.log(`✓ Successfully fetched game histories for ${Object.keys(allPlayerHistories).length} players`);
-  return allPlayerHistories;
-}
-
 async function saveDataToFile(endpoint, data) {
   const filename = `${endpoint}.json`;
   const filepath = path.join(ABSOLUTE_DATA_DIR, filename);
@@ -113,8 +62,8 @@ async function saveDataToFile(endpoint, data) {
 async function createDataIndex() {
   const indexData = {
     lastUpdated: new Date().toISOString(),
-    endpoints: [...STATIC_DATA_ENDPOINTS, ...RAW_DATA_ENDPOINTS],
-    description: "Static data cache for Lycans stats (includes raw sheet exports). Updated daily via GitHub Actions."
+    endpoints: RAW_DATA_ENDPOINTS,
+    description: "Raw sheet exports for Lycans stats. Static computed endpoints are now calculated client-side. Updated daily via GitHub Actions."
   };
 
   const indexPath = path.join(ABSOLUTE_DATA_DIR, 'index.json');
@@ -123,20 +72,11 @@ async function createDataIndex() {
 }
 
 async function main() {
-  console.log('🚀 Starting Lycans data sync...');
+  console.log('🚀 Starting Lycans raw data sync...');
   console.log(`📁 Data directory: ${ABSOLUTE_DATA_DIR}`);
   
   try {
     await ensureDataDirectory();
-    
-    // Fetch all static data endpoints
-    for (const endpoint of STATIC_DATA_ENDPOINTS) {
-      const data = await fetchEndpointData(endpoint);
-      await saveDataToFile(endpoint, data);
-      
-      // Small delay to be respectful to the API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    }
 
     // Fetch raw sheet exports (these may be large)
     for (const endpoint of RAW_DATA_ENDPOINTS) {
@@ -152,14 +92,13 @@ async function main() {
       }
     }
     
-    // Fetch all player game histories
-    console.log('🎮 Fetching all player game histories...');
-    const allPlayerHistories = await fetchAllPlayerGameHistories();
-    await saveDataToFile('allPlayerGameHistories', allPlayerHistories);
+    // Remove player game histories fetching since it's now computed client-side
+    // Note: Individual player histories are now calculated from raw data
     
     await createDataIndex();
     
-    console.log('✅ Data sync completed successfully!');
+    console.log('✅ Raw data sync completed successfully!');
+    console.log('ℹ️  Static computed endpoints are now calculated client-side from raw data');
   } catch (error) {
     console.error('❌ Data sync failed:', error.message);
     process.exit(1);

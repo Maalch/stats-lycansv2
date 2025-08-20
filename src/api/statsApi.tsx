@@ -1,34 +1,25 @@
 // src/api/statsApi.ts
 import { dataService } from './dataService';
 
-// Individual endpoint functions using hybrid approach
-export async function fetchCampWinStats() {
-  return await dataService.getData('campWinStats');
+// ===================================================================
+// RAW DATA FUNCTIONS - Use these for the new raw data architecture
+// ===================================================================
+
+export async function fetchRawGameData() {
+  return await dataService.getData('rawGameData');
 }
 
-export async function fetchHarvestStats() {
-  return await dataService.getData('harvestStats');
+export async function fetchRawRoleData() {
+  return await dataService.getData('rawRoleData');
 }
 
-export async function fetchGameDurationAnalysis() {
-  return await dataService.getData('gameDurationAnalysis');
+export async function fetchRawPonceData() {
+  return await dataService.getData('rawPonceData');
 }
 
-export async function fetchPlayerStats() {
-  return await dataService.getData('playerStats');
-}
-
-export async function fetchPlayerPairingStats() {
-  return await dataService.getData('playerPairingStats');
-}
-
-export async function fetchPlayerCampPerformance() {
-  return await dataService.getData('playerCampPerformance');
-}
-
-export async function fetchPlayerGameHistory(playerName: string) {
-  return await dataService.getData('playerGameHistory', { playerName });
-}
+// ===================================================================
+// UTILITY FUNCTIONS
+// ===================================================================
 
 // Utility functions
 export async function getDataFreshness() {
@@ -39,27 +30,17 @@ export async function forceRefreshFromAPI(endpoint: string, params: Record<strin
   return await dataService.refreshFromAPI(endpoint, params);
 }
 
-// Helper function to get available players from static data
-export async function getAvailablePlayersFromStatic() {
-  try {
-    const playerStats = await dataService.getData('playerStats');
-    return playerStats.playerStats?.map((p: any) => p.player).filter(Boolean) || [];
-  } catch (error) {
-    console.warn('Could not load player list from static data:', error);
-    return [];
-  }
+// Helper function to get raw data freshness
+export async function getRawDataFreshness() {
+  const freshness = await dataService.getDataFreshness();
+  return freshness;
 }
 
-// Helper function to check if a player has static data available
-export async function isPlayerDataAvailableStatic(playerName: string): Promise<boolean> {
+// Helper function to check if raw data is available
+export async function isRawDataAvailable(): Promise<boolean> {
   try {
-    // Use the same path resolution as dataService
-    const dataBasePath = import.meta.env.DEV ? '/data/' : '/stats-lycansv2/data/';
-    const allHistories = await fetch(`${dataBasePath}allPlayerGameHistories.json`);
-    if (!allHistories.ok) return false;
-    
-    const data = await allHistories.json();
-    return !!data[playerName];
+    const freshness = await dataService.getDataFreshness();
+    return !!freshness && freshness.availableEndpoints.includes('rawGameData');
   } catch {
     return false;
   }
