@@ -1497,7 +1497,7 @@ function _computePlayerCampPerformance(gameData, roleData) {
   });
 
   // Convert player camp performance to array with minimum game threshold
-  var minGamesToInclude = 3; // Minimum games required in a camp to be included
+  var minGamesToInclude = 5; // Minimum games required in a camp to be included
   var playerPerformanceArray = [];
 
   Object.keys(playerCampPerformance).forEach(function(player) {
