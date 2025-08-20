@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
-import { usePlayerGameHistory } from '../../hooks/usePlayerGameHistory';
-import { usePlayerStats } from '../../hooks/usePlayerStats';
+import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
+import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
@@ -12,8 +12,9 @@ export function PlayerGameHistoryChart() {
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
   
   // Get available players from the player stats hook
-  const { playerStatsData } = usePlayerStats();
-  const { data, isLoading, error } = usePlayerGameHistory(selectedPlayerName);
+  const { data: playerStatsData } = usePlayerStatsFromRaw();
+  const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
+  console.log('DEBUG playerGameHistory:', data);
 
   // Create list of available players for the dropdown
   const availablePlayers = useMemo(() => {
