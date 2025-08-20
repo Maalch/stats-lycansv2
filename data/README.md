@@ -10,12 +10,9 @@ This directory contains pre-processed static data from Google Sheets that is upd
 ## Data Sources
 
 The data is fetched from the following endpoints:
-- `campWinStats` - Camp win statistics
-- `harvestStats` - Harvest statistics
-- `gameDurationAnalysis` - Game duration analysis
-- `playerStats` - General player statistics  
-- `playerPairingStats` - Player pairing statistics
-- `playerCampPerformance` - Player performance by camp
+- `rawGameData` - Game raw data
+- `rawPonceData` - Specific data sheet about Ponce actions
+- `rawRoleData` - Role raw data
 
 ## Usage
 

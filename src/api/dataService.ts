@@ -3,24 +3,18 @@
 export interface DataConfig {
   useStatic: boolean;
   endpoints: {
-    [key: string]: 'static' | 'api' | 'hybrid';
+    [key: string]: 'static' | 'api';
   };
 }
 
-// Configuration for data sources
+// Configuration for raw data sources only
 export const DATA_CONFIG: DataConfig = {
   useStatic: true,
   endpoints: {
-    // Static data - updated daily, no parameters needed
-    campWinStats: 'static',
-    harvestStats: 'static',
-    gameDurationAnalysis: 'static',
-    playerStats: 'static',
-    playerPairingStats: 'static',
-    playerCampPerformance: 'static',
-    
-    // Hybrid - pre-generated data available for most cases
-    playerGameHistory: 'hybrid' // Can use static for known players
+    // Raw sheet exports - these are the only static files we sync
+    rawGameData: 'static',
+    rawRoleData: 'static',
+    rawPonceData: 'static'
   }
 };
 
@@ -69,38 +63,19 @@ export class DataService {
   }
 
   /**
-   * Load static JSON data from the repository
+   * Load raw JSON data from the repository
    */
   private async loadStaticData(endpoint: string) {
     try {
       const dataPath = `${this.getDataBasePath()}${endpoint}.json`;
-      console.log(`🔍 Loading static data from: ${dataPath}`);
+      console.log(`🔍 Loading raw data from: ${dataPath}`);
       const response = await fetch(dataPath);
       if (!response.ok) {
-        throw new Error(`Static data not available for ${endpoint} (${response.status})`);
+        throw new Error(`Raw data not available for ${endpoint} (${response.status})`);
       }
       return await response.json();
     } catch (error) {
-      console.warn(`Failed to load static data for ${endpoint}:`, error);
-      throw error;
-    }
-  }
-
-  /**
-   * Load player game history from pre-generated static data
-   */
-  private async loadPlayerGameHistory(playerName: string) {
-    try {
-      const allHistories = await this.loadStaticData('allPlayerGameHistories');
-      const playerHistory = allHistories[playerName];
-      
-      if (!playerHistory) {
-        throw new Error(`No static data available for player: ${playerName}`);
-      }
-      
-      return playerHistory;
-    } catch (error) {
-      console.warn(`Failed to load static player history for ${playerName}:`, error);
+      console.warn(`Failed to load raw data for ${endpoint}:`, error);
       throw error;
     }
   }
@@ -109,6 +84,10 @@ export class DataService {
    * Fetch data from the Apps Script API
    */
   private async fetchFromAPI(endpoint: string, params: Record<string, string> = {}) {
+    if (!this.apiBase) {
+      throw new Error('API base URL not configured. Raw data hooks should be used instead.');
+    }
+
     const url = new URL(this.apiBase);
     url.searchParams.set('action', endpoint);
     
@@ -125,7 +104,7 @@ export class DataService {
   }
 
   /**
-   * Get data using the hybrid approach
+   * Get data using the simplified approach: raw data from static files, computed stats via API fallback
    */
   public async getData(endpoint: string, params: Record<string, string> = {}) {
     const config = DATA_CONFIG.endpoints[endpoint];
@@ -136,63 +115,26 @@ export class DataService {
       throw new Error(`Unknown endpoint: ${endpoint}`);
     }
 
-    // For static endpoints, try static first, fallback to API
+    // For raw data endpoints, load from static files
     if (config === 'static') {
       try {
-        console.log(`📋 Attempting to load static data for: ${endpoint}`);
+        console.log(`📋 Loading raw data for: ${endpoint}`);
         const result = await this.loadStaticData(endpoint);
-        console.log(`✅ Static data loaded successfully for: ${endpoint}`);
+        console.log(`✅ Raw data loaded successfully for: ${endpoint}`);
         return result;
       } catch (error) {
-        console.warn(`⚠️ Static data failed for ${endpoint}, falling back to API:`, error);
+        console.warn(`⚠️ Raw data failed for ${endpoint}, falling back to API:`, error);
         return await this.fetchFromAPI(endpoint, params);
       }
     }
 
-    // For API-only endpoints, always use API
+    // For computed statistics, use API (these should now use raw data hooks instead)
     if (config === 'api') {
-      return await this.fetchFromAPI(endpoint, params);
-    }
-
-    // For hybrid endpoints, smart routing based on endpoint type
-    if (config === 'hybrid') {
-      // Special handling for playerGameHistory
-      if (endpoint === 'playerGameHistory' && params.playerName) {
-        try {
-          console.log(`🎮 Loading static game history for: ${params.playerName}`);
-          return await this.loadPlayerGameHistory(params.playerName);
-        } catch (error) {
-          console.warn(`Static player history failed for ${params.playerName}, falling back to API`);
-          return await this.fetchFromAPI(endpoint, params);
-        }
-      }
-      
-      // For basic requests or no parameters, try static first
-      if (Object.keys(params).length === 0 || this.isBasicRequest(endpoint, params)) {
-        try {
-          return await this.loadStaticData(endpoint);
-        } catch (error) {
-          console.warn(`Static data failed for ${endpoint}, falling back to API`);
-        }
-      }
-      
-      // Fall back to API
+      console.warn(`⚠️ Using legacy API endpoint for ${endpoint}. Consider migrating to raw data hooks.`);
       return await this.fetchFromAPI(endpoint, params);
     }
 
     throw new Error(`Invalid configuration for endpoint: ${endpoint}`);
-  }
-
-  /**
-   * Check if this is a basic request that can use static data
-   */
-  private isBasicRequest(endpoint: string, params: Record<string, string>): boolean {
-    if (endpoint === 'playerGameHistory') {
-      // Any player with a name is considered basic
-      return !!params.playerName;
-    }
-
-    return false;
   }
 
   /**

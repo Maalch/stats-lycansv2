@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, ReferenceLine } from 'recharts';
-import { usePlayerStats } from '../../hooks/usePlayerStats';
+import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { getRandomColor, playersColor } from '../../types/api';
 import { lycansColorScheme, lycansOtherCategoryColor, minGamesOptions } from '../../types/api';
 import type { PlayerCamps } from '../../types/api';
@@ -20,7 +20,7 @@ const prepareCampDistributionData = (player: string, playerStatsData: { playerSt
 };
 
 export function PlayersGeneralStatisticsChart() {
-  const { playerStatsData, dataLoading, fetchError } = usePlayerStats();
+  const { data: playerStatsData, isLoading: dataLoading, error: fetchError } = usePlayerStatsFromRaw();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(50);
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
