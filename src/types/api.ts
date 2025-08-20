@@ -129,6 +129,9 @@ export interface CampWinStatsResponse {
   campStats: CampStat[];
   soloCamps: SoloCamp[];
   error?: string;
+  // Extended data for CampsChart to avoid dependency on PlayerCampPerformance
+  campAverages?: CampAverage[];
+  totalPlayersAnalyzed?: number;
 }
 
 // Harvest Statistics Types

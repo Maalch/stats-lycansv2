@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { usePlayerPairingStats } from '../../hooks/usePlayerPairingStats';
+import { usePlayerPairingStatsFromRaw } from '../../hooks/usePlayerPairingStatsFromRaw';
 import { playersColor } from '../../types/api';
 
 export function PlayerPairingStatsChart() {
-  const { data, isLoading, error } = usePlayerPairingStats();
+  const { data, isLoading, error } = usePlayerPairingStatsFromRaw();
+  console.log('DEBUG playerPairingStats:', data);
   const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers'>('wolves');
   const [minWolfAppearances, setMinWolfAppearances] = useState<number>(2);
   const [minLoverAppearances, setMinLoverAppearances] = useState<number>(1);

@@ -1,11 +1,11 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList } from 'recharts';
-import { useGameDurationAnalysis } from '../../hooks/useGameDurationAnalysis';
+import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
 
 // Optionally import your color scheme if you want to use the same as other charts
 // import { lycansColorScheme } from '../types/api';
 
 export function GameDurationInsights() {
-  const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysis();
+  const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysisFromRaw();
 
   if (telechargementActif) {
     return <div className="statistiques-attente">Analyse des durées de partie en cours...</div>;
@@ -20,18 +20,18 @@ export function GameDurationInsights() {
   }
 
   // Préparation des données pour le graphique de ratio loups/joueurs
-  const ratioLoupsJoueurs = Object.entries(jeuDonnees.daysByWolfRatio).map(([ratio, donnees]) => ({
+  const ratioLoupsJoueurs = jeuDonnees ? Object.entries(jeuDonnees.daysByWolfRatio).map(([ratio, donnees]) => ({
     ratio: `${(parseFloat(ratio)).toFixed(0)}%`,
     moyenne: parseFloat(donnees.average),
     parties: donnees.count
-  })).sort((a, b) => parseFloat(a.ratio) - parseFloat(b.ratio));
+  })).sort((a, b) => parseFloat(a.ratio) - parseFloat(b.ratio)) : [];
 
   // Préparation des données pour le graphique par camp
-  const dureesParCamp = Object.entries(jeuDonnees.daysByWinnerCamp).map(([camp, donnees]) => ({
+  const dureesParCamp = jeuDonnees ? Object.entries(jeuDonnees.daysByWinnerCamp).map(([camp, donnees]) => ({
     camp,
     moyenne: parseFloat(donnees.average),
     parties: donnees.count
-  })).sort((a, b) => b.moyenne - a.moyenne);
+  })).sort((a, b) => b.moyenne - a.moyenne) : [];
 
   return (
     <div className="lycans-duree-analyse">
@@ -58,7 +58,7 @@ export function GameDurationInsights() {
           <div style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
-                data={jeuDonnees.dayDistribution}
+                data={jeuDonnees?.dayDistribution || []}
                 margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter } from 'recharts';
-import { usePlayerCampPerformance } from '../../hooks/usePlayerCampPerformance';
+import { usePlayerCampPerformanceFromRaw } from '../../hooks/usePlayerCampPerformanceFromRaw';
 import { lycansColorScheme, playersColor } from '../../types/api';
 import { minGamesOptions} from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -12,7 +12,10 @@ export function PlayerCampPerformanceChart() {
   const [selectedCamp, setSelectedCamp] = useState<string>('Villageois');
   const [minGames, setMinGames] = useState<number>(5);
   
-  const { playerCampPerformance, isLoading, error } = usePlayerCampPerformance();
+  const { playerCampPerformance, isLoading, error } = usePlayerCampPerformanceFromRaw();
+
+  // Debug: Log player camp performance data
+  console.log('PlayerCampPerformanceChart - playerCampPerformance:', playerCampPerformance);
 
   // Get available camps from camp averages
   const availableCamps = useMemo(() => {
