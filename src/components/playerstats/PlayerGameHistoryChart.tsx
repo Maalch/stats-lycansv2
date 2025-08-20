@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { usePlayerGameHistory } from '../../hooks/usePlayerGameHistory';
 import { usePlayerStats } from '../../hooks/usePlayerStats';
-import { lycansColorScheme } from '../../types/api';
+import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 type GroupByMethod = 'session' | 'month';
@@ -395,7 +395,7 @@ export function PlayerGameHistoryChart() {
                       key={`cell-${index}`} 
                       fill={
                         entry.name === 'Autres'
-                          ? '#cccccc'
+                          ? lycansOtherCategoryColor
                           : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
                       }
                     />

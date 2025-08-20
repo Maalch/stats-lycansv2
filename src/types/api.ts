@@ -91,6 +91,8 @@ export const playersColor: Record<string, string> = {
   "Etoiles": "#54D90F"          // Vert clair
 };
 
+export const lycansOtherCategoryColor = '#9c9c9cff';
+
   // Options pour le nombre minimum de parties
 export const minGamesOptions = [5, 10, 25, 50, 75, 100, 150, 200];
 

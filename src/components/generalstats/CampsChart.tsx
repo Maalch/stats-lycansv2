@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { useCampWinStats } from '../../hooks/useCampWinStats';
 import { usePlayerCampPerformance } from '../../hooks/usePlayerCampPerformance';
-import { lycansColorScheme } from '../../types/api';
+import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 
 // Fallback color for camps not in the scheme
 const lycansDefaultColor = '#607D8B';
@@ -173,7 +173,7 @@ export function CampsChart() {
                           key={`cellule-camp-${indice}`} 
                           fill={
                             entree.camp === 'Autres'
-                              ? '#cccccc'
+                              ? lycansOtherCategoryColor
                               : lycansColorScheme[entree.camp as keyof typeof lycansColorScheme] || lycansDefaultColor
                           } 
                         />
@@ -324,7 +324,7 @@ export function CampsChart() {
                           key={`cell-${index}`} 
                           fill={
                             entry.camp === 'Autres'
-                              ? '#cccccc'
+                              ? lycansOtherCategoryColor
                               : lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
                           }
                         />
