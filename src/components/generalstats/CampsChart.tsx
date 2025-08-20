@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { useCampWinStatsFromRaw } from '../../hooks/useCampWinStatsFromRaw';
 import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
+import { FullscreenChart } from '../common/FullscreenChart';
 
 // Fallback color for camps not in the scheme
 const lycansDefaultColor = '#607D8B';
@@ -60,45 +61,13 @@ export function CampsChart() {
     return large;
   }, [campStatsForChart]);
 
-  // Group small slices for camp distribution pie chart
-  const groupedCampDistributionData = useMemo(() => {
+  // Sort camp distribution data by total games (descending) for bar chart
+  const campDistributionData = useMemo(() => {
     if (!campAveragesData.length) return [];
     
-    const MIN_PERCENT = 5;
-    const totalGames = campAveragesData.reduce((sum, camp) => sum + camp.totalGames, 0);
-    let smallTotal = 0;
-    const smallEntries: typeof campAveragesData = [];
-    const large: typeof campAveragesData = [];
-    
-    campAveragesData.forEach(entry => {
-      const percentage = (entry.totalGames / totalGames) * 100;
-      if (percentage < MIN_PERCENT) {
-        smallTotal += entry.totalGames;
-        smallEntries.push({
-          ...entry,
-          winRate: percentage.toFixed(1)
-        });
-      } else {
-        large.push(entry);
-      }
-    });
-    
-    if (smallTotal > 0) {
-      const averageWinRate = smallEntries.length > 0 
-        ? (smallEntries.reduce((sum, e) => sum + e.winRateNum, 0) / smallEntries.length).toFixed(1)
-        : '0.0';
-      
-      large.push({
-        camp: 'Autres',
-        totalGames: smallTotal,
-        winRate: averageWinRate,
-        winRateNum: parseFloat(averageWinRate),
-        // @ts-ignore
-        _details: smallEntries // Attach details for tooltip
-      });
-    }
-    
-    return large;
+    return campAveragesData
+      .slice() // Create a copy to avoid mutating the original
+      .sort((a, b) => b.totalGames - a.totalGames);
   }, [campAveragesData]);
 
   const isLoading = chargementVictoires;
@@ -244,99 +213,30 @@ export function CampsChart() {
           <>
             <div className="lycans-graphique-section">
               <h3>Taux de Victoire Moyen par Camp</h3>
-              <div style={{ height: 400 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={campAveragesData}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="camp"
-                      angle={-45}
-                      textAnchor="end"
-                      height={90}
-                      interval={0}
-                      fontSize={11}
-                    />
-                    <YAxis 
-                      label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
-                      domain={[0, 100]}
-                    />
-                    <Tooltip
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length > 0) {
-                          const dataPoint = payload[0].payload;
-                          return (
-                            <div style={{ 
-                              background: 'var(--bg-secondary)', 
-                              color: 'var(--text-primary)', 
-                              padding: 12, 
-                              borderRadius: 8,
-                              border: '1px solid var(--border-color)'
-                            }}>
-                              <div><strong>{dataPoint.camp}</strong></div>
-                              <div>Parties totales: {dataPoint.totalGames}</div>
-                              <div>Taux de victoire: {dataPoint.winRate}%</div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Bar dataKey="winRateNum">
-                      {campAveragesData.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            <div className="lycans-graphique-section">
-              <h3>Distribution des Parties par Camp</h3>
-              <div style={{ height: 400 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={groupedCampDistributionData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      outerRadius={120}
-                      fill="#8884d8"
-                      dataKey="totalGames"
-                      label={({ camp, totalGames, percent }) => {
-                        const pct = percent !== undefined ? percent : 0;
-                        return camp === 'Autres' 
-                          ? `Autres: ${totalGames} (${(pct * 100).toFixed(1)}%)`
-                          : `${camp}: ${totalGames} (${(pct * 100).toFixed(1)}%)`;
-                      }}
+              <FullscreenChart title="Taux de Victoire Moyen par Camp">
+                <div style={{ height: 400 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={campAveragesData}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
                     >
-                      {groupedCampDistributionData.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={
-                            entry.camp === 'Autres'
-                              ? lycansOtherCategoryColor
-                              : lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
-                          }
-                        />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length > 0) {
-                          const dataPoint = payload[0].payload;
-                          if (dataPoint.camp === 'Autres' && dataPoint._details) {
-                            // Sort the details by descending total games
-                            const sortedDetails = [...dataPoint._details].sort(
-                              (a, b) => b.totalGames - a.totalGames
-                            );
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis 
+                        dataKey="camp"
+                        angle={-45}
+                        textAnchor="end"
+                        height={90}
+                        interval={0}
+                        fontSize={11}
+                      />
+                      <YAxis 
+                        label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                        domain={[0, 100]}
+                      />
+                      <Tooltip
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length > 0) {
+                            const dataPoint = payload[0].payload;
                             return (
                               <div style={{ 
                                 background: 'var(--bg-secondary)', 
@@ -345,40 +245,86 @@ export function CampsChart() {
                                 borderRadius: 8,
                                 border: '1px solid var(--border-color)'
                               }}>
-                                <div><strong>Autres</strong></div>
-                                <div>
-                                  {sortedDetails.map((entry: any, i: number) => (
-                                    <div key={i}>
-                                      {entry.camp}: {entry.totalGames} parties
-                                    </div>
-                                  ))}
-                                </div>
-                                <div style={{ marginTop: 4, fontWeight: 'bold' }}>
-                                  Total: {dataPoint.totalGames} parties
-                                </div>
+                                <div><strong>{dataPoint.camp}</strong></div>
+                                <div>Parties totales: {dataPoint.totalGames}</div>
+                                <div>Taux de victoire: {dataPoint.winRate}%</div>
                               </div>
                             );
                           }
-                          return (
-                            <div style={{ 
-                              background: 'var(--bg-secondary)', 
-                              color: 'var(--text-primary)', 
-                              padding: 12, 
-                              borderRadius: 8,
-                              border: '1px solid var(--border-color)'
-                            }}>
-                              <div><strong>{dataPoint.camp}</strong></div>
-                              <div>Parties: {dataPoint.totalGames}</div>
-                              <div>Taux victoire: {dataPoint.winRate}%</div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
+                          return null;
+                        }}
+                      />
+                      <Bar dataKey="winRateNum">
+                        {campAveragesData.map((entry, index) => (
+                          <Cell 
+                            key={`cell-${index}`} 
+                            fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </FullscreenChart>
+            </div>
+
+            <div className="lycans-graphique-section">
+              <h3>Distribution des Parties par Camp</h3>
+              <FullscreenChart title="Distribution des Parties par Camp">
+                <div style={{ height: 400 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={campDistributionData}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis 
+                        dataKey="camp"
+                        angle={-45}
+                        textAnchor="end"
+                        height={90}
+                        interval={0}
+                        fontSize={11}
+                      />
+                      <YAxis 
+                        label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }}
+                      />
+                      <Tooltip
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length > 0) {
+                            const dataPoint = payload[0].payload;
+                            const totalGames = campDistributionData.reduce((sum, camp) => sum + camp.totalGames, 0);
+                            const percentage = ((dataPoint.totalGames / totalGames) * 100).toFixed(1);
+                            
+                            return (
+                              <div style={{ 
+                                background: 'var(--bg-secondary)', 
+                                color: 'var(--text-primary)', 
+                                padding: 12, 
+                                borderRadius: 8,
+                                border: '1px solid var(--border-color)'
+                              }}>
+                                <div><strong>{dataPoint.camp}</strong></div>
+                                <div>Parties: {dataPoint.totalGames} ({percentage}%)</div>
+                                <div>Taux victoire: {dataPoint.winRate}%</div>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Bar dataKey="totalGames">
+                        {campDistributionData.map((entry, index) => (
+                          <Cell 
+                            key={`cell-${index}`} 
+                            fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </FullscreenChart>
             </div>
           </>
         )}
