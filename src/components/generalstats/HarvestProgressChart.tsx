@@ -1,12 +1,12 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { useHarvestStats } from '../../hooks/useHarvestStats';
+import { useHarvestStatsFromRaw } from '../../hooks/useHarvestStatsFromRaw';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 // Couleurs pour les différentes tranches de récolte
 const lycansRecolteCouleurs = ['#d32f2f', '#f57c00', '#fbc02d', '#388e3c', '#1976d2'];
 
 export function HarvestProgressChart() {
-  const { harvestStats: recolteInfos, isLoading: recuperationDonnees, errorInfo: problemeChargement } = useHarvestStats();
+  const { harvestStats: recolteInfos, isLoading: recuperationDonnees, errorInfo: problemeChargement } = useHarvestStatsFromRaw();
 
   if (recuperationDonnees) {
     return <div className="donnees-chargement">Récupération des données de récolte...</div>;
@@ -21,19 +21,19 @@ export function HarvestProgressChart() {
   }
 
   // Préparation des données pour le graphique en camembert
-  const distributionDonnees = [
+  const distributionDonnees = recolteInfos ? [
     { nom: "0-25%", valeur: recolteInfos.harvestDistribution["0-25%"] },
     { nom: "26-50%", valeur: recolteInfos.harvestDistribution["26-50%"] },
     { nom: "51-75%", valeur: recolteInfos.harvestDistribution["51-75%"] },
     { nom: "76-99%", valeur: recolteInfos.harvestDistribution["76-99%"] },
     { nom: "100%", valeur: recolteInfos.harvestDistribution["100%"] }
-  ];
+  ] : [];
 
   // Préparation des données pour le graphique en barres
-  const moyenneParCamp = Object.entries(recolteInfos.harvestByWinner).map(([nomCamp, statistiques]) => ({
+  const moyenneParCamp = recolteInfos ? Object.entries(recolteInfos.harvestByWinner).map(([nomCamp, statistiques]) => ({
     camp: nomCamp,
     moyenne: parseFloat(statistiques.average)
-  })).sort((a, b) => b.moyenne - a.moyenne);
+  })).sort((a, b) => b.moyenne - a.moyenne) : [];
 
   return (
     <div className="lycans-recolte-stats">
