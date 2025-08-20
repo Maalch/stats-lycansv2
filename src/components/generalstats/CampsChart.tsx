@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
-import { useCampWinStats } from '../../hooks/useCampWinStats';
-import { usePlayerCampPerformance } from '../../hooks/usePlayerCampPerformance';
+import { useCampWinStatsFromRaw } from '../../hooks/useCampWinStatsFromRaw';
+import { usePlayerCampPerformanceFromRaw } from '../../hooks/usePlayerCampPerformanceFromRaw';
 import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 
 // Fallback color for camps not in the scheme
 const lycansDefaultColor = '#607D8B';
 
 export function CampsChart() {
-  const { campWinStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useCampWinStats();
-  const { playerCampPerformance, isLoading: chargementPerformance, error: erreurPerformance } = usePlayerCampPerformance();
+  const { campWinStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useCampWinStatsFromRaw();
+  const { playerCampPerformance, isLoading: chargementPerformance, error: erreurPerformance } = usePlayerCampPerformanceFromRaw();
 
   // Prepare camp averages data for visualization
   const campAveragesData = useMemo(() => {
