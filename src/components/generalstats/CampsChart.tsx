@@ -61,12 +61,13 @@ export function CampsChart() {
     return large;
   }, [campStatsForChart]);
 
-  // Sort camp distribution data by total games (descending) for bar chart
+  // Sort camp distribution data by total games (descending) for bar chart, excluding Villageois and Loups
   const campDistributionData = useMemo(() => {
     if (!campAveragesData.length) return [];
     
     return campAveragesData
       .slice() // Create a copy to avoid mutating the original
+      .filter(camp => camp.camp !== 'Villageois' && camp.camp !== 'Loups') // Exclude basic camps
       .sort((a, b) => b.totalGames - a.totalGames);
   }, [campAveragesData]);
 
@@ -269,8 +270,8 @@ export function CampsChart() {
             </div>
 
             <div className="lycans-graphique-section">
-              <h3>Distribution des Parties par Camp</h3>
-              <FullscreenChart title="Distribution des Parties par Camp">
+              <h3>Distribution des Parties par Camp (hors villageois et loups)</h3>
+              <FullscreenChart title="Distribution des Parties par Camp (hors villageois et loups)">
                 <div style={{ height: 400 }}>
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
