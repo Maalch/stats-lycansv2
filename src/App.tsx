@@ -1,5 +1,6 @@
 import { Suspense, lazy, useState } from 'react';
 import { FullscreenProvider } from './context/FullscreenContext';
+import { SettingsProvider } from './context/SettingsContext';
 import './App.css';
 
 // Lazy load each dashboard section
@@ -12,10 +13,13 @@ const CampsChart = lazy(() => import('./components/generalstats/CampsChart').the
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 
+// Add settings import
+const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
+
 const MAIN_TABS = [
   { key: 'players', label: 'Statistiques Joueurs' },
   { key: 'general', label: 'Statistiques Générales' },
-
+  { key: 'settings', label: 'Paramètres' },
   //{ key: 'ponce', label: 'Statistiques Survie Ponce' },
 ];
 
@@ -107,49 +111,60 @@ export default function App() {
         );
       }
       */}
+      case 'settings': {
+        return (
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <SettingsPanel />
+            </Suspense>
+          </div>
+        );
+      }
       default:
         return null;
     }
   };
 
   return (
-      <FullscreenProvider>
-        <div className="app-container">
-          <img
-            className="lycans-banner"
-            src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
-            alt="Lycans Banner"
-          />
-          <div className="main-container">
-            <div className="lycans-dashboard-container">
-              <header className="lycans-dashboard-header">
-                <h1>Statistiques Lycans</h1>
-                <p>Analyse des parties, rôles et performances</p>
-              </header>
+      <SettingsProvider>
+        <FullscreenProvider>
+          <div className="app-container">
+            <img
+              className="lycans-banner"
+              src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
+              alt="Lycans Banner"
+            />
+            <div className="main-container">
+              <div className="lycans-dashboard-container">
+                <header className="lycans-dashboard-header">
+                  <h1>Statistiques Lycans</h1>
+                  <p>Analyse des parties, rôles et performances</p>
+                </header>
 
-              <nav className="lycans-main-menu">
-                {MAIN_TABS.map(tab => (
-                  <button
-                    key={tab.key}
-                    className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
-                    onClick={() => setSelectedMainTab(tab.key)}
-                    type="button"
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </nav>
+                <nav className="lycans-main-menu">
+                  {MAIN_TABS.map(tab => (
+                    <button
+                      key={tab.key}
+                      className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
+                      onClick={() => setSelectedMainTab(tab.key)}
+                      type="button"
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </nav>
 
-              <div className="lycans-dashboard-section">
-                {renderContent()}
+                <div className="lycans-dashboard-section">
+                  {renderContent()}
+                </div>
+
+                <footer className="lycans-dashboard-footer">
+                  <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
+                </footer>
               </div>
-
-              <footer className="lycans-dashboard-footer">
-                <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
-              </footer>
             </div>
           </div>
-        </div>
-      </FullscreenProvider>
+        </FullscreenProvider>
+      </SettingsProvider>
   );
 }
