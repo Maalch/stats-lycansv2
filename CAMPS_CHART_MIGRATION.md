@@ -160,3 +160,50 @@ The CampsChart component now serves as the most advanced template for migrating 
 - **Comprehensive type safety**
 
 This establishes the complete foundation for migrating all remaining statistics components to support the comprehensive modded games filtering system.
+
+---
+
+## Recent Update: Single Hook Consolidation
+
+### Enhancement Overview (Latest Migration)
+Further optimized the CampsChart component by consolidating all data requirements into a single enhanced hook, eliminating redundant calculations and improving performance.
+
+### Changes Made
+
+#### 1. Enhanced `useCampWinStatsFromRaw` Hook
+- **Added Dependencies:** Now uses both `useFilteredRawGameData` and `useFilteredRawRoleData`
+- **Extended Calculations:** Includes camp participation statistics previously calculated separately
+- **New Data Properties:**
+  - `campAverages`: Camp-specific participation and win rate data
+  - `totalPlayersAnalyzed`: Count of unique players across all camps
+
+#### 2. Updated Type Definitions
+- **File:** `src/types/api.ts`
+- **Enhancement:** Extended `CampWinStatsResponse` interface with optional properties:
+  ```typescript
+  campAverages?: CampAverage[];
+  totalPlayersAnalyzed?: number;
+  ```
+
+#### 3. Simplified Component
+- **File:** `src/components/generalstats/CampsChart.tsx`
+- **Removed:** `usePlayerCampPerformanceFromRaw` hook dependency
+- **Simplified:** Now uses single data source for all visualizations
+- **Maintained:** All existing charts and functionality
+
+### Performance Benefits
+- **Reduced Calculations:** Eliminated duplicate role assignment processing
+- **Single Data Flow:** Simplified component logic with unified data source
+- **Better Caching:** Single hook provides comprehensive camp statistics
+- **Faster Loading:** Reduced data coordination complexity
+
+### Technical Implementation
+The enhanced hook now performs both victory statistics and camp participation analysis in a single pass:
+
+1. **Role Assignment:** Maps players to camps using role data
+2. **Victory Tracking:** Counts wins by camp (original functionality)
+3. **Participation Analysis:** Tracks camp participation across all games
+4. **Player Counting:** Calculates total unique players analyzed
+5. **Unified Output:** Returns comprehensive camp statistics in single response
+
+This consolidation pattern can be applied to other components requiring multiple related statistics, establishing a more efficient data architecture for the application.

@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { useCampWinStatsFromRaw } from '../../hooks/useCampWinStatsFromRaw';
-import { usePlayerCampPerformanceFromRaw } from '../../hooks/usePlayerCampPerformanceFromRaw';
 import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 
 // Fallback color for camps not in the scheme
@@ -9,19 +8,18 @@ const lycansDefaultColor = '#607D8B';
 
 export function CampsChart() {
   const { campWinStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useCampWinStatsFromRaw();
-  const { playerCampPerformance, isLoading: chargementPerformance, error: erreurPerformance } = usePlayerCampPerformanceFromRaw();
 
-  // Prepare camp averages data for visualization
+  // Prepare camp averages data for visualization (now from campWinStats)
   const campAveragesData = useMemo(() => {
-    if (!playerCampPerformance?.campAverages) return [];
+    if (!victoriesDonnees?.campAverages) return [];
     
-    return playerCampPerformance.campAverages
+    return victoriesDonnees.campAverages
       .map(camp => ({
         ...camp,
         winRateNum: parseFloat(camp.winRate)
       }))
       .sort((a, b) => b.winRateNum - a.winRateNum);
-  }, [playerCampPerformance]);
+  }, [victoriesDonnees]);
 
   const campStatsForChart = useMemo(() => {
     return victoriesDonnees?.campStats?.map(camp => ({
@@ -103,8 +101,8 @@ export function CampsChart() {
     return large;
   }, [campAveragesData]);
 
-  const isLoading = chargementVictoires || chargementPerformance;
-  const error = erreurVictoires || erreurPerformance;
+  const isLoading = chargementVictoires;
+  const error = erreurVictoires;
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques des camps...</div>;
@@ -114,7 +112,7 @@ export function CampsChart() {
     return <div className="donnees-probleme">Erreur: {error}</div>;
   }
 
-  if (!victoriesDonnees && !playerCampPerformance) {
+  if (!victoriesDonnees) {
     return <div className="donnees-manquantes">Aucune donnée de camp disponible</div>;
   }
 
@@ -123,16 +121,16 @@ export function CampsChart() {
       <h2>Statistiques des Camps</h2>
 
       {/* Summary Cards */}
-      {playerCampPerformance && (
+      {victoriesDonnees && (
         <div className="lycans-resume-conteneur">
           <div className="lycans-stat-carte">
             <h3>Camps Analysés</h3>
-            <div className="lycans-valeur-principale">{playerCampPerformance.campAverages.length}</div>
+            <div className="lycans-valeur-principale">{victoriesDonnees.campAverages?.length || 0}</div>
             <p>camps différents</p>
           </div>
           <div className="lycans-stat-carte">
             <h3>Joueurs Évalués</h3>
-            <div className="lycans-valeur-principale">{playerCampPerformance.playerPerformance.length}</div>
+            <div className="lycans-valeur-principale">{victoriesDonnees.totalPlayersAnalyzed || 0}</div>
             <p>joueurs analysés</p>
           </div>
           <div className="lycans-stat-carte">
@@ -242,7 +240,7 @@ export function CampsChart() {
         )}
 
         {/* Performance and Presence Section */}
-        {playerCampPerformance && campAveragesData.length > 0 && (
+        {victoriesDonnees?.campAverages && campAveragesData.length > 0 && (
           <>
             <div className="lycans-graphique-section">
               <h3>Taux de Victoire Moyen par Camp</h3>
