@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, ReferenceLine } from 'recharts';
 import { usePlayerStats } from '../../hooks/usePlayerStats';
 import { getRandomColor, playersColor } from '../../types/api';
-import { lycansColorScheme, minGamesOptions } from '../../types/api';
+import { lycansColorScheme, lycansOtherCategoryColor, minGamesOptions } from '../../types/api';
 import type { PlayerCamps } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
@@ -332,7 +332,7 @@ export function PlayersGeneralStatisticsChart() {
                       key={`cell-${index}`}
                       fill={
                         entry.name === 'Autres'
-                          ? '#cccccc'
+                          ? lycansOtherCategoryColor
                           : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] ||
                             getRandomColor(entry.name)
                       }
