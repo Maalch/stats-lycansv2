@@ -10,7 +10,7 @@ type ViewMode =  'player-performance' | 'top-performers';
 export function PlayerCampPerformanceChart() {
   const [viewMode, setViewMode] = useState<ViewMode>('player-performance');
   const [selectedCamp, setSelectedCamp] = useState<string>('Villageois');
-  const [minGames, setMinGames] = useState<number>(20);
+  const [minGames, setMinGames] = useState<number>(5);
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformance();
 
@@ -193,11 +193,6 @@ export function PlayerCampPerformanceChart() {
           <h3>Joueurs Évalués</h3>
           <div className="lycans-valeur-principale">{playerCampPerformance.playerPerformance.length}</div>
           <p>joueurs analysés</p>
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Seuil Minimum</h3>
-          <div className="lycans-valeur-principale">{playerCampPerformance.minGamesRequired}</div>
-          <p>parties requises</p>
         </div>
       </div>
 
