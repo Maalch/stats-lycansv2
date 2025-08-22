@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { useCampWinStatsFromRaw } from '../../hooks/useCampWinStatsFromRaw';
+import { useVictoryTypesFromRaw } from '../../hooks/useVictoryTypesFromRaw';
 import { lycansColorScheme } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 export function VictoryTypesChart() {
-  const { campWinStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useCampWinStatsFromRaw();
+  const { victoryTypesStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useVictoryTypesFromRaw();
 
   // Prepare victory types data for visualization
   const victoryTypesData = useMemo(() => {
