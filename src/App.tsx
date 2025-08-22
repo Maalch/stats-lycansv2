@@ -16,6 +16,9 @@ const GameDurationInsights = lazy(() => import('./components/generalstats/GameDu
 // Add settings import
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
 
+// Add prediction import
+const ResultPrediction = lazy(() => import('./components/predictionstats/ResultPrediction').then(m => ({ default: m.default })));
+
 const MAIN_TABS = [
   { key: 'players', label: 'Statistiques Joueurs' },
   { key: 'general', label: 'Statistiques Générales' },
@@ -47,6 +50,46 @@ export default function App() {
   const [selectedMainTab, setSelectedMainTab] = useState('players');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
+
+  // Check if we're on the TestPrediction route
+  const isTestPredictionRoute = window.location.pathname.includes('/TestPrediction');
+
+  // If we're on the test prediction route, show only that component
+  if (isTestPredictionRoute) {
+    return (
+      <SettingsProvider>
+        <FullscreenProvider>
+          <div className="app-container">
+            <img
+              className="lycans-banner"
+              src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
+              alt="Lycans Banner"
+            />
+            <div className="main-container">
+              <div className="lycans-dashboard-container">
+                <header className="lycans-dashboard-header">
+                  <h1>Test - Prédiction de Résultats</h1>
+                  <p>Version de test pour la prédiction des victoires</p>
+                </header>
+
+                <div className="lycans-dashboard-section">
+                  <div className="lycans-dashboard-content">
+                    <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                      <ResultPrediction />
+                    </Suspense>
+                  </div>
+                </div>
+
+                <footer className="lycans-dashboard-footer">
+                  <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </FullscreenProvider>
+      </SettingsProvider>
+    );
+  }
 
   const renderContent = () => {
     switch (selectedMainTab) {
