@@ -258,13 +258,71 @@ export function useCampWinStatsFromRaw() {
     // Sort solo camps by appearances (descending)
     soloCampStats.sort((a, b) => b.appearances - a.appearances);
 
+    // Calculate victory types statistics with camp breakdown
+    const victoryTypes: Record<string, number> = {};
+    const victoryTypesByCamp: Record<string, Record<string, number>> = {};
+    
+    rawGameData.forEach(game => {
+      const victoryType = game["Type de victoire"];
+      const winnerCamp = game["Camp victorieux"];
+      
+      if (victoryType && victoryType.trim() !== "" && winnerCamp && winnerCamp.trim() !== "") {
+        // Count total victories by type
+        if (!victoryTypes[victoryType]) {
+          victoryTypes[victoryType] = 0;
+        }
+        victoryTypes[victoryType]++;
+
+        // Count victories by type and camp
+        if (!victoryTypesByCamp[victoryType]) {
+          victoryTypesByCamp[victoryType] = {};
+        }
+        if (!victoryTypesByCamp[victoryType][winnerCamp]) {
+          victoryTypesByCamp[victoryType][winnerCamp] = 0;
+        }
+        victoryTypesByCamp[victoryType][winnerCamp]++;
+      }
+    });
+
+    // Get all unique camps that have won at least once
+    const allWinningCamps = new Set<string>();
+    Object.values(victoryTypesByCamp).forEach(campCounts => {
+      Object.keys(campCounts).forEach(camp => allWinningCamps.add(camp));
+    });
+
+    // Convert to array and sort by frequency
+    const victoryTypesArray = Object.keys(victoryTypes).map(type => {
+      const typeData: any = {
+        type: type,
+        count: victoryTypes[type],
+        percentage: ((victoryTypes[type] / totalGames) * 100).toFixed(1)
+      };
+
+      // Add camp counts and percentages for this victory type
+      const campCounts = victoryTypesByCamp[type] || {};
+      allWinningCamps.forEach(camp => {
+        const campCount = campCounts[camp] || 0;
+        const campPercentage = victoryTypes[type] > 0 ? ((campCount / victoryTypes[type]) * 100).toFixed(1) : "0.0";
+        typeData[camp] = campCount;
+        typeData[`${camp}_percentage`] = campPercentage;
+      });
+
+      return typeData;
+    });
+    victoryTypesArray.sort((a, b) => b.count - a.count);
+
+    // Store the winning camps list for the component
+    const winningCampsList = Array.from(allWinningCamps).sort();
+
     const result: CampWinStatsResponse = {
       totalGames: totalGames,
       campStats: victoryCampStats,
       soloCamps: soloCampStats,
       // Add new properties for CampsChart
       campAverages: campAverages,
-      totalPlayersAnalyzed: totalPlayersAnalyzed
+      totalPlayersAnalyzed: totalPlayersAnalyzed,
+      victoryTypes: victoryTypesArray,
+      winningCamps: winningCampsList
     };
 
     return result;
