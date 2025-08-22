@@ -71,16 +71,6 @@ export function CampsChart() {
       .sort((a, b) => b.totalGames - a.totalGames);
   }, [campAveragesData]);
 
-  // Prepare victory types data for visualization
-  const victoryTypesData = useMemo(() => {
-    if (!victoriesDonnees?.victoryTypes) return [];
-    
-    return victoriesDonnees.victoryTypes.map(victory => ({
-      ...victory,
-      percentageNum: parseFloat(victory.percentage)
-    }));
-  }, [victoriesDonnees?.victoryTypes]);
-
   const isLoading = chargementVictoires;
   const error = erreurVictoires;
 
@@ -337,90 +327,6 @@ export function CampsChart() {
                 </div>
               </FullscreenChart>
             </div>
-
-            {/* Victory Types Section */}
-            {victoryTypesData.length > 0 && (
-              <div className="lycans-graphique-section">
-                <h3>Types de Victoire par Camp</h3>
-                <p className="lycans-stats-info">
-                  Répartition des différents modes de victoire par camp victorieux sur {victoriesDonnees?.totalGames} parties
-                </p>
-                <FullscreenChart title="Types de Victoire par Camp">
-                  <div style={{ height: 500 }}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={victoryTypesData}
-                        margin={{ top: 20, right: 30, left: 20, bottom: 120 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis 
-                          dataKey="type"
-                          angle={-45}
-                          textAnchor="end"
-                          height={120}
-                          interval={0}
-                          fontSize={10}
-                        />
-                        <YAxis 
-                          label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }}
-                        />
-                        <Tooltip
-                          content={({ active, payload, label }) => {
-                            if (active && payload && payload.length > 0) {
-                              const totalForType = payload.reduce((sum, entry) => sum + (entry.value || 0), 0);
-                              return (
-                                <div style={{ 
-                                  background: 'var(--bg-secondary)', 
-                                  color: 'var(--text-primary)', 
-                                  padding: 12, 
-                                  borderRadius: 8,
-                                  border: '1px solid var(--border-color)',
-                                  maxWidth: 300
-                                }}>
-                                  <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{label}</div>
-                                  <div style={{ marginBottom: 4 }}>Total: {totalForType} parties</div>
-                                  {payload
-                                    .filter(entry => entry.value && entry.value > 0)
-                                    .sort((a, b) => (b.value || 0) - (a.value || 0))
-                                    .map((entry, index) => {
-                                      const percentage = totalForType > 0 ? ((entry.value || 0) / totalForType * 100).toFixed(1) : '0.0';
-                                      return (
-                                        <div key={index} style={{ marginBottom: 2 }}>
-                                          <span style={{ 
-                                            display: 'inline-block', 
-                                            width: 12, 
-                                            height: 12, 
-                                            backgroundColor: entry.color, 
-                                            marginRight: 8,
-                                            borderRadius: 2
-                                          }}></span>
-                                          {entry.dataKey}: {entry.value} ({percentage}%)
-                                        </div>
-                                      );
-                                    })}
-                                </div>
-                              );
-                            }
-                            return null;
-                          }}
-                        />
-                        <Legend />
-                        {/* Create stacked bars for each winning camp */}
-                        {victoriesDonnees?.winningCamps?.map((camp, index) => (
-                          <Bar 
-                            key={camp}
-                            dataKey={camp}
-                            stackId="victory"
-                            fill={lycansColorScheme[camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
-                            name={camp}
-                          />
-                        ))}
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </FullscreenChart>
-              </div>
-            )}
           </>
         )}
       </div>
