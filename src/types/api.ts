@@ -124,12 +124,6 @@ export interface SoloCamp {
   appearances: number;
 }
 
-export interface VictoryType {
-  type: string;
-  count: number;
-  percentage: string;
-}
-
 export interface CampWinStatsResponse {
   totalGames: number;
   campStats: CampStat[];
@@ -138,8 +132,6 @@ export interface CampWinStatsResponse {
   // Extended data for CampsChart to avoid dependency on PlayerCampPerformance
   campAverages?: CampAverage[];
   totalPlayersAnalyzed?: number;
-  victoryTypes?: VictoryType[];
-  winningCamps?: string[];
 }
 
 // Harvest Statistics Types
