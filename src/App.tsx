@@ -10,6 +10,7 @@ const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/Play
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
+const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 
@@ -32,6 +33,7 @@ const PLAYER_STATS_MENU = [
 
 const GENERAL_STATS_MENU = [
   { key: 'camps', label: 'Camps', component: CampsChart },
+  { key: 'victoryTypes', label: 'Types de Victoire', component: VictoryTypesChart },
   { key: 'harvest', label: 'Récolte', component: HarvestProgressChart },
   { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
 ];
