@@ -101,6 +101,11 @@ export function VictoryTypesChart() {
                       content={({ active, payload, label }) => {
                         if (active && payload && payload.length > 0) {
                           const totalForType = payload.reduce((sum, entry) => sum + (entry.value || 0), 0);
+                          // Find the percentage of games for this victory type
+                          let percentOfAll = '';
+                          if (victoriesDonnees?.totalGames && totalForType > 0) {
+                            percentOfAll = ((totalForType / victoriesDonnees.totalGames) * 100).toFixed(1);
+                          }
                           return (
                             <div style={{ 
                               background: 'var(--bg-secondary)', 
@@ -111,7 +116,7 @@ export function VictoryTypesChart() {
                               maxWidth: 300
                             }}>
                               <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{label}</div>
-                              <div style={{ marginBottom: 4 }}>Total: {totalForType} parties</div>
+                              <div style={{ marginBottom: 4 }}>Total: {totalForType} parties{percentOfAll && ` (${percentOfAll}%)`}</div>
                               {payload
                                 .filter(entry => entry.value && entry.value > 0)
                                 .sort((a, b) => (b.value || 0) - (a.value || 0))
@@ -186,6 +191,10 @@ export function VictoryTypesChart() {
                       content={({ active, payload, label }) => {
                         if (active && payload && payload.length > 0) {
                           const totalForType = payload.reduce((sum, entry) => sum + (entry.value || 0), 0);
+                          let percentOfAll = '';
+                          if (victoriesDonnees?.totalGames && totalForType > 0) {
+                            percentOfAll = ((totalForType / victoriesDonnees.totalGames) * 100).toFixed(1);
+                          }
                           return (
                             <div style={{ 
                               background: 'var(--bg-secondary)', 
@@ -196,7 +205,7 @@ export function VictoryTypesChart() {
                               maxWidth: 300
                             }}>
                               <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{label}</div>
-                              <div style={{ marginBottom: 4 }}>Total: {totalForType} parties</div>
+                              <div style={{ marginBottom: 4 }}>Total: {totalForType} parties{percentOfAll && ` (${percentOfAll}%)`}</div>
                               {payload
                                 .filter(entry => entry.value && entry.value > 0)
                                 .sort((a, b) => (b.value || 0) - (a.value || 0))
