@@ -19,12 +19,12 @@ export function GameDurationInsights() {
     return <div className="statistiques-indisponibles">Données d'analyse non disponibles</div>;
   }
 
-  // Préparation des données pour le graphique de ratio loups/joueurs
+  // Préparation des données pour le graphique de ratio loups/joueurs (ratio as number for continuous axis)
   const ratioLoupsJoueurs = jeuDonnees ? Object.entries(jeuDonnees.daysByWolfRatio).map(([ratio, donnees]) => ({
-    ratio: `${(parseFloat(ratio)).toFixed(0)}%`,
+    ratio: parseFloat(ratio), // number, not string
     moyenne: parseFloat(donnees.average),
     parties: donnees.count
-  })).sort((a, b) => parseFloat(a.ratio) - parseFloat(b.ratio)) : [];
+  })).sort((a, b) => a.ratio - b.ratio) : [];
 
   // Préparation des données pour le graphique par camp
   const dureesParCamp = jeuDonnees ? Object.entries(jeuDonnees.daysByWinnerCamp).map(([camp, donnees]) => ({
@@ -103,7 +103,11 @@ export function GameDurationInsights() {
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
-                  dataKey="ratio" 
+                  dataKey="ratio"
+                  type="number"
+                  domain={['auto', 'auto']}
+                  allowDecimals={false}
+                  tickFormatter={(v) => `${v}%`}
                   label={{ value: 'Ratio Loups/Joueurs (%)', position: 'insideBottom', offset: -5 }}
                 />
                 <YAxis 
