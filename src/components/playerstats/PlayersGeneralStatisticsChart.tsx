@@ -349,24 +349,43 @@ export function PlayersGeneralStatisticsChart() {
                           (a, b) => parseFloat(b.percentage) - parseFloat(a.percentage)
                         );
                         return (
-                          <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
-                            <div><strong>Autres</strong></div>
+                          <div style={{ 
+                            background: 'var(--bg-secondary)', 
+                            color: 'var(--text-primary)', 
+                            padding: 12, 
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)',
+                            maxWidth: 300
+                          }}>
+                            <div style={{ fontWeight: 'bold', marginBottom: 8 }}>Autres</div>
                             <div>
                               {sortedDetails.map((entry: { name: string; value: number; percentage: string }, i: number) => (
-                                <div key={i}>
-                                  {entry.name}: {entry.value} parties ({entry.percentage}%)
+                                <div key={i} style={{ marginBottom: 2 }}>
+                                  <span style={{ 
+                                    color: lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || getRandomColor(entry.name),
+                                    fontWeight: 'bold'
+                                  }}>
+                                    {entry.name}
+                                  </span>
+                                  : {entry.value} parties ({entry.percentage}%)
                                 </div>
                               ))}
                             </div>
-                            <div style={{ marginTop: 4, fontWeight: 'bold' }}>
+                            <div style={{ marginTop: 4, fontWeight: 'bold', borderTop: '1px solid var(--border-color)', paddingTop: 4 }}>
                               Total: {d.value} parties ({d.percentage}%)
                             </div>
                           </div>
                         );
                       }
                       return (
-                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
-                          <div><strong>{d.name}</strong></div>
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: 12, 
+                          borderRadius: 8,
+                          border: '1px solid var(--border-color)'
+                        }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: 4 }}>{d.name}</div>
                           <div>{d.value} parties ({d.percentage}%)</div>
                         </div>
                       );
