@@ -1,4 +1,5 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { lycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { useHarvestStatsFromRaw } from '../../hooks/useHarvestStatsFromRaw';
 import { FullscreenChart } from '../common/FullscreenChart';
 
@@ -129,8 +130,13 @@ export function HarvestProgressChart() {
                       return null;
                     }}
                   />
-                  <Legend />
-                  <Bar dataKey="moyenne" name="Moyenne de Récolte" fill="#388e3c" />
+                  <Bar dataKey="moyenne" name="Moyenne de Récolte">
+                    {moyenneParCamp.map((entry) => (
+                      <Cell key={`cell-${entry.camp}`}
+                        fill={lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp)}
+                      />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>

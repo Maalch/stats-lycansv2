@@ -1,8 +1,7 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList } from 'recharts';
-import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
 
-// Optionally import your color scheme if you want to use the same as other charts
-// import { lycansColorScheme } from '../types/api';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList, Cell } from 'recharts';
+import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
+import { lycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 
 export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysisFromRaw();
@@ -175,14 +174,18 @@ export function GameDurationInsights() {
                     return null;
                   }}
                 />
-                <Legend 
-                  formatter={(value) => value === "moyenne" ? "Durée Moyenne" : value}
-                />
                 <Bar 
                   dataKey="moyenne" 
                   name="moyenne" 
-                  fill="var(--chart-color-4)" // Use a CSS variable color
+                  isAnimationActive={false}
                 >
+                  {
+                    dureesParCamp.map((entry, idx) => (
+                      <Cell key={`cell-${entry.camp}`}
+                        fill={lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp)}
+                      />
+                    ))
+                  }
                   <LabelList
                     dataKey="moyenne"
                     position="top"
