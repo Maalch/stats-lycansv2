@@ -180,7 +180,7 @@ export function GameDurationInsights() {
                   isAnimationActive={false}
                 >
                   {
-                    dureesParCamp.map((entry, idx) => (
+                    dureesParCamp.map((entry) => (
                       <Cell key={`cell-${entry.camp}`}
                         fill={lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp)}
                       />
