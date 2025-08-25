@@ -142,8 +142,18 @@
   flex-direction: column;
 }
 
+
+/* Fix radio hover for both dark and light mode */
 .settings-radio:hover {
-  background-color: var(--color-background-hover, #f5f5f5);
+  background-color: rgba(72, 83, 168, 0.12); /* fallback: accent-primary, 12% opacity */
+  color: var(--text-primary, #23233a); /* fallback for light mode */
+}
+
+@media (prefers-color-scheme: dark) {
+  .settings-radio:hover {
+    background-color: rgba(72, 83, 168, 0.22); /* accent-primary, more visible in dark */
+    color: var(--text-primary, #fff); /* ensure readable in dark */
+  }
 }
 
 .settings-radio input[type="radio"] {

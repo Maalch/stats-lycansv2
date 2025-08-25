@@ -140,7 +140,7 @@ export default function App() {
               <div className="lycans-dashboard-container">
                 <header className="lycans-dashboard-header">
                   <h1>Statistiques Lycans</h1>
-                  <p>Analyse des parties, rôles et performances</p>
+                  <p>Basées sur les VOD des parties de Ponce uniquement</p>
                 </header>
 
                 <nav className="lycans-main-menu">
