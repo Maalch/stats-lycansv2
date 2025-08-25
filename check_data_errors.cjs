@@ -93,10 +93,26 @@ rawGameData.data.forEach((game, index) => {
       errors.push(`❌ Game ${gameNumber}: Wolves won but no wolves found in winners list`);
     }
   } else if (camp === "Villageois") {
-    // If villagers won, check if winners don't include all wolves
-    const allWolvesInWinners = wolvesInRole.every(wolf => winners.includes(wolf));
-    if (allWolvesInWinners && wolvesInRole.length > 0) {
-      errors.push(`❌ Game ${gameNumber}: Villagers won but all wolves are in winners list`);
+    // If villagers won, winners should not include any wolf or any solo role
+    let invalidWinners = [];
+    // Check wolves
+    wolvesInRole.forEach(wolf => {
+      if (winners.includes(wolf)) {
+        invalidWinners.push(wolf);
+      }
+    });
+    // Check solo roles
+    const soloRoles = ["Idiot du village", "Cannibale", "Agent", "Espion", "Scientifique", "Amoureux", "La Bête", "Chasseur de primes", "Vaudou"];
+    soloRoles.forEach(role => {
+      const soloPlayers = parsePlayerList(roleData[role] || '');
+      soloPlayers.forEach(player => {
+        if (winners.includes(player)) {
+          invalidWinners.push(player);
+        }
+      });
+    });
+    if (invalidWinners.length > 0) {
+      errors.push(`❌ Game ${gameNumber}: Villagers won but winner list includes wolf or solo role(s): ${invalidWinners.join(', ')}`);
     }
   }
 });
