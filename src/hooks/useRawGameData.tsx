@@ -142,14 +142,23 @@ export function useFilteredRawGameData() {
     // Then apply player filter
     if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
       const gamePlayersList = game["Liste des joueurs"].toLowerCase();
-      const hasMatchingPlayer = settings.playerFilter.players.some(player => 
-        gamePlayersList.includes(player.toLowerCase())
-      );
       
-      if (settings.playerFilter.mode === 'include' && !hasMatchingPlayer) {
-        return false;
-      } else if (settings.playerFilter.mode === 'exclude' && hasMatchingPlayer) {
-        return false;
+      if (settings.playerFilter.mode === 'include') {
+        // For include mode: ALL selected players must be in the game
+        const hasAllPlayers = settings.playerFilter.players.every(player => 
+          gamePlayersList.includes(player.toLowerCase())
+        );
+        if (!hasAllPlayers) {
+          return false;
+        }
+      } else if (settings.playerFilter.mode === 'exclude') {
+        // For exclude mode: if ANY selected player is in the game, exclude it
+        const hasAnyPlayer = settings.playerFilter.players.some(player => 
+          gamePlayersList.includes(player.toLowerCase())
+        );
+        if (hasAnyPlayer) {
+          return false;
+        }
       }
     }
 
@@ -196,14 +205,23 @@ export function useFilteredRawRoleData() {
     // Then apply player filter
     if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
       const gamePlayersList = correspondingGame["Liste des joueurs"].toLowerCase();
-      const hasMatchingPlayer = settings.playerFilter.players.some(player => 
-        gamePlayersList.includes(player.toLowerCase())
-      );
       
-      if (settings.playerFilter.mode === 'include' && !hasMatchingPlayer) {
-        return false;
-      } else if (settings.playerFilter.mode === 'exclude' && hasMatchingPlayer) {
-        return false;
+      if (settings.playerFilter.mode === 'include') {
+        // For include mode: ALL selected players must be in the game
+        const hasAllPlayers = settings.playerFilter.players.every(player => 
+          gamePlayersList.includes(player.toLowerCase())
+        );
+        if (!hasAllPlayers) {
+          return false;
+        }
+      } else if (settings.playerFilter.mode === 'exclude') {
+        // For exclude mode: if ANY selected player is in the game, exclude it
+        const hasAnyPlayer = settings.playerFilter.players.some(player => 
+          gamePlayersList.includes(player.toLowerCase())
+        );
+        if (hasAnyPlayer) {
+          return false;
+        }
       }
     }
 
@@ -250,14 +268,23 @@ export function useFilteredRawPonceData() {
     // Then apply player filter
     if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
       const gamePlayersList = correspondingGame["Liste des joueurs"].toLowerCase();
-      const hasMatchingPlayer = settings.playerFilter.players.some(player => 
-        gamePlayersList.includes(player.toLowerCase())
-      );
       
-      if (settings.playerFilter.mode === 'include' && !hasMatchingPlayer) {
-        return false;
-      } else if (settings.playerFilter.mode === 'exclude' && hasMatchingPlayer) {
-        return false;
+      if (settings.playerFilter.mode === 'include') {
+        // For include mode: ALL selected players must be in the game
+        const hasAllPlayers = settings.playerFilter.players.every(player => 
+          gamePlayersList.includes(player.toLowerCase())
+        );
+        if (!hasAllPlayers) {
+          return false;
+        }
+      } else if (settings.playerFilter.mode === 'exclude') {
+        // For exclude mode: if ANY selected player is in the game, exclude it
+        const hasAnyPlayer = settings.playerFilter.players.some(player => 
+          gamePlayersList.includes(player.toLowerCase())
+        );
+        if (hasAnyPlayer) {
+          return false;
+        }
       }
     }
 

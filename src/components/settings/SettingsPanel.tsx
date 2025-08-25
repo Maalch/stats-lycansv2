@@ -246,7 +246,7 @@ export function SettingsPanel() {
                 <span className="radio-mark"></span>
                 <span className="settings-radio-content">
                   Inclure seulement les parties avec ces joueurs
-                  <small>Affiche uniquement les parties où au moins un des joueurs listés a participé</small>
+                  <small>Affiche uniquement les parties où TOUS les joueurs sélectionnés ont participé ensemble</small>
                 </span>
               </label>
               
