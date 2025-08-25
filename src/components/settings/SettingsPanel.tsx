@@ -1,10 +1,43 @@
+import { useMemo, useState, useEffect } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import type { GameFilter, FilterMode, PlayerFilterMode } from '../../context/SettingsContext';
+import type { RawGameData } from '../../hooks/useRawGameData';
 import './SettingsPanel.css';
 
 export function SettingsPanel() {
 
   const { settings, updateSettings, resetSettings } = useSettings();
+  const [rawGameData, setRawGameData] = useState<RawGameData[] | null>(null);
+
+  // Fetch unfiltered game data to get all players
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.BASE_URL}data/rawGameData.json`);
+        const result = await response.json();
+        setRawGameData(result.data || []);
+      } catch (error) {
+        console.error('Error fetching raw game data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Get sorted list of players from the UNFILTERED data to avoid disappearing players
+  const availablePlayers = useMemo(() => {
+    if (!rawGameData) return [];
+    
+    const allPlayers = new Set<string>();
+    rawGameData.forEach((game: RawGameData) => {
+      const playerList = game["Liste des joueurs"];
+      if (playerList) {
+        const players = playerList.split(',').map((p: string) => p.trim()).filter((p: string) => p.length > 0);
+        players.forEach((player: string) => allPlayers.add(player));
+      }
+    });
+    
+    return Array.from(allPlayers).sort();
+  }, [rawGameData]);
 
   const handleFilterModeChange = (mode: FilterMode) => {
     updateSettings({ filterMode: mode });
@@ -22,12 +55,26 @@ export function SettingsPanel() {
     updateSettings({ playerFilter: { ...settings.playerFilter, mode } });
   };
 
-  const handlePlayerListChange = (value: string) => {
-    const players = value
-      .split(',')
-      .map(player => player.trim())
-      .filter(player => player.length > 0);
-    updateSettings({ playerFilter: { ...settings.playerFilter, players } });
+  const handlePlayerToggle = (playerName: string) => {
+    const currentPlayers = settings.playerFilter.players;
+    const isSelected = currentPlayers.includes(playerName);
+    
+    if (isSelected) {
+      // Remove player
+      const newPlayers = currentPlayers.filter(p => p !== playerName);
+      updateSettings({ playerFilter: { ...settings.playerFilter, players: newPlayers } });
+    } else {
+      // Add player
+      updateSettings({ playerFilter: { ...settings.playerFilter, players: [...currentPlayers, playerName] } });
+    }
+  };
+
+  const handleSelectAllPlayers = () => {
+    updateSettings({ playerFilter: { ...settings.playerFilter, players: [...availablePlayers] } });
+  };
+
+  const handleDeselectAllPlayers = () => {
+    updateSettings({ playerFilter: { ...settings.playerFilter, players: [] } });
   };
 
   return (
@@ -221,26 +268,60 @@ export function SettingsPanel() {
             
             {(settings.playerFilter.mode === 'include' || settings.playerFilter.mode === 'exclude') && (
               <div style={{ marginTop: '1rem' }}>
-                <label style={{ display: 'block', fontWeight: 500, marginBottom: '0.5rem' }}>
-                  Liste des joueurs (séparés par des virgules)
-                </label>
-                <input
-                  type="text"
-                  value={settings.playerFilter.players.join(', ')}
-                  onChange={e => handlePlayerListChange(e.target.value)}
-                  placeholder="Joueur1, Joueur2, Joueur3..."
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    fontSize: '1rem',
-                    border: '1px solid var(--border-color, #ccc)',
-                    borderRadius: '4px',
-                    background: 'var(--bg-primary, white)',
-                    color: 'var(--text-primary, #333)'
-                  }}
-                />
-                <small style={{ color: 'var(--text-secondary, #6c757d)', marginTop: 4, display: 'block' }}>
-                  Entrez les noms des joueurs séparés par des virgules. La casse sera ignorée.
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <label style={{ fontWeight: 500 }}>
+                    Sélection des joueurs ({settings.playerFilter.players.length} sélectionné{settings.playerFilter.players.length !== 1 ? 's' : ''})
+                  </label>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button
+                      type="button"
+                      onClick={handleSelectAllPlayers}
+                      style={{
+                        padding: '4px 8px',
+                        fontSize: '0.8rem',
+                        border: '1px solid var(--border-color, #ccc)',
+                        borderRadius: '4px',
+                        background: 'var(--bg-tertiary, #f0f0f0)',
+                        color: 'var(--text-primary, #333)',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Tout sélectionner
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleDeselectAllPlayers}
+                      style={{
+                        padding: '4px 8px',
+                        fontSize: '0.8rem',
+                        border: '1px solid var(--border-color, #ccc)',
+                        borderRadius: '4px',
+                        background: 'var(--bg-tertiary, #f0f0f0)',
+                        color: 'var(--text-primary, #333)',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Tout désélectionner
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="settings-player-grid">
+                  {availablePlayers.map(player => (
+                    <label key={player} className="settings-player-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={settings.playerFilter.players.includes(player)}
+                        onChange={() => handlePlayerToggle(player)}
+                      />
+                      <span className="settings-player-checkmark"></span>
+                      <span className="settings-player-name">{player}</span>
+                    </label>
+                  ))}
+                </div>
+                
+                <small style={{ color: 'var(--text-secondary, #6c757d)', marginTop: 8, display: 'block' }}>
+                  Sélectionnez les joueurs à {settings.playerFilter.mode === 'include' ? 'inclure' : 'exclure'} dans le filtrage.
                 </small>
               </div>
             )}
