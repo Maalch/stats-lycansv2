@@ -331,10 +331,6 @@ export function SettingsPanel() {
       
       <div className="settings-info">
         <p>
-          <strong>Fonctionnement des filtres:</strong> Le filtre principal (Section 1) détermine la base des parties affichées. 
-          Le filtre par joueurs (Section 2) s'applique ensuite sur cette sélection pour affiner davantage les résultats.
-        </p>
-        <p style={{ marginTop: 8 }}>
           <strong>Note:</strong> Les changements de paramètres sont sauvegardés automatiquement 
           et s'appliquent à toutes les statistiques affichées.
         </p>
