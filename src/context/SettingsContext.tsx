@@ -1,8 +1,19 @@
 import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
+
+export type GameFilter = 'all' | 'modded' | 'non-modded';
+export type FilterMode = 'gameType' | 'dateRange';
+
+export interface DateRange {
+  start: string | null; // ISO date string (YYYY-MM-DD) or null
+  end: string | null;
+}
+
 export interface SettingsState {
-  showOnlyModdedGames: boolean;
+  filterMode: FilterMode;
+  gameFilter: GameFilter;
+  dateRange: DateRange;
 }
 
 interface SettingsContextType {
@@ -11,8 +22,11 @@ interface SettingsContextType {
   resetSettings: () => void;
 }
 
+
 const defaultSettings: SettingsState = {
-  showOnlyModdedGames: false,
+  filterMode: 'gameType',
+  gameFilter: 'all',
+  dateRange: { start: null, end: null },
 };
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);

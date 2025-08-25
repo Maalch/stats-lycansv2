@@ -1,5 +1,14 @@
+
 import { useState, useEffect } from 'react';
 import { useSettings } from '../context/SettingsContext';
+
+// Helper to parse DD/MM/YYYY to Date
+function parseFrenchDate(dateStr: string): Date | null {
+  if (!dateStr) return null;
+  const [day, month, year] = dateStr.split('/');
+  if (!day || !month || !year) return null;
+  return new Date(Number(year), Number(month) - 1, Number(day));
+}
 
 export interface RawGameData {
   Game: number;
@@ -96,9 +105,38 @@ export function useFilteredRawGameData() {
   const { settings } = useSettings();
   const { data: rawData, isLoading, error } = useRawData<RawGameData>('rawGameData');
 
+
+  // Helper to parse DD/MM/YYYY to Date
+  function parseFrenchDate(dateStr: string): Date | null {
+    if (!dateStr) return null;
+    const [day, month, year] = dateStr.split('/');
+    if (!day || !month || !year) return null;
+    return new Date(Number(year), Number(month) - 1, Number(day));
+  }
+
   const filteredData = rawData?.filter(game => {
-    if (settings.showOnlyModdedGames && !game["Game Moddée"]) {
-      return false;
+    if (settings.filterMode === 'gameType') {
+      if (settings.gameFilter === 'all') {
+        return true;
+      } else if (settings.gameFilter === 'modded') {
+        return game["Game Moddée"];
+      } else if (settings.gameFilter === 'non-modded') {
+        return !game["Game Moddée"];
+      }
+      return true;
+    } else if (settings.filterMode === 'dateRange') {
+      if (!settings.dateRange.start && !settings.dateRange.end) return true;
+      const gameDateObj = parseFrenchDate(game.Date);
+      if (!gameDateObj) return false;
+      if (settings.dateRange.start) {
+        const startObj = new Date(settings.dateRange.start);
+        if (gameDateObj < startObj) return false;
+      }
+      if (settings.dateRange.end) {
+        const endObj = new Date(settings.dateRange.end);
+        if (gameDateObj > endObj) return false;
+      }
+      return true;
     }
     return true;
   }) || null;
@@ -109,10 +147,35 @@ export function useFilteredRawGameData() {
 export function useFilteredRawRoleData() {
   const { settings } = useSettings();
   const { data: rawData, isLoading, error } = useRawData<RawRoleData>('rawRoleData');
+  const { data: gameData } = useRawData<RawGameData>('rawGameData');
 
   const filteredData = rawData?.filter(role => {
-    if (settings.showOnlyModdedGames && !role["Game Moddée"]) {
-      return false;
+    if (settings.filterMode === 'gameType') {
+      if (settings.gameFilter === 'all') {
+        return true;
+      } else if (settings.gameFilter === 'modded') {
+        return role["Game Moddée"];
+      } else if (settings.gameFilter === 'non-modded') {
+        return !role["Game Moddée"];
+      }
+      return true;
+    } else if (settings.filterMode === 'dateRange') {
+      if (!settings.dateRange.start && !settings.dateRange.end) return true;
+      // Find corresponding game data by Game ID
+      const correspondingGame = gameData?.find(game => game.Game === role.Game);
+      if (!correspondingGame) return false;
+      
+      const gameDateObj = parseFrenchDate(correspondingGame.Date);
+      if (!gameDateObj) return false;
+      if (settings.dateRange.start) {
+        const startObj = new Date(settings.dateRange.start);
+        if (gameDateObj < startObj) return false;
+      }
+      if (settings.dateRange.end) {
+        const endObj = new Date(settings.dateRange.end);
+        if (gameDateObj > endObj) return false;
+      }
+      return true;
     }
     return true;
   }) || null;
@@ -123,10 +186,35 @@ export function useFilteredRawRoleData() {
 export function useFilteredRawPonceData() {
   const { settings } = useSettings();
   const { data: rawData, isLoading, error } = useRawData<RawPonceData>('rawPonceData');
+  const { data: gameData } = useRawData<RawGameData>('rawGameData');
 
   const filteredData = rawData?.filter(ponce => {
-    if (settings.showOnlyModdedGames && !ponce["Game Moddée"]) {
-      return false;
+    if (settings.filterMode === 'gameType') {
+      if (settings.gameFilter === 'all') {
+        return true;
+      } else if (settings.gameFilter === 'modded') {
+        return ponce["Game Moddée"];
+      } else if (settings.gameFilter === 'non-modded') {
+        return !ponce["Game Moddée"];
+      }
+      return true;
+    } else if (settings.filterMode === 'dateRange') {
+      if (!settings.dateRange.start && !settings.dateRange.end) return true;
+      // Find corresponding game data by Game ID
+      const correspondingGame = gameData?.find(game => game.Game === ponce.Game);
+      if (!correspondingGame) return false;
+      
+      const gameDateObj = parseFrenchDate(correspondingGame.Date);
+      if (!gameDateObj) return false;
+      if (settings.dateRange.start) {
+        const startObj = new Date(settings.dateRange.start);
+        if (gameDateObj < startObj) return false;
+      }
+      if (settings.dateRange.end) {
+        const endObj = new Date(settings.dateRange.end);
+        if (gameDateObj > endObj) return false;
+      }
+      return true;
     }
     return true;
   }) || null;
