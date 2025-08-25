@@ -263,3 +263,77 @@
 .settings-info strong {
   color: var(--text-primary, #495057);
 }
+
+/* Player selection grid */
+.settings-player-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 4px;
+  padding: 12px;
+  background: var(--bg-primary, white);
+}
+
+.settings-player-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.9rem;
+}
+
+.settings-player-checkbox:hover {
+  background-color: var(--bg-tertiary, #f0f0f0);
+}
+
+.settings-player-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.settings-player-checkmark {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-color, #d1d5db);
+  border-radius: 3px;
+  background-color: var(--bg-primary, white);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.settings-player-checkbox input[type="checkbox"]:checked + .settings-player-checkmark {
+  border-color: var(--accent-primary, #4853a8);
+  background-color: var(--accent-primary, #4853a8);
+}
+
+.settings-player-checkbox input[type="checkbox"]:checked + .settings-player-checkmark::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.settings-player-checkbox input[type="checkbox"]:focus + .settings-player-checkmark {
+  outline: 2px solid var(--accent-primary, #4853a8);
+  outline-offset: 2px;
+}
+
+.settings-player-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
