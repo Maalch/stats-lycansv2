@@ -302,6 +302,10 @@
   background-color: var(--bg-tertiary, #f0f0f0);
 }
 
+.settings-player-checkbox.disabled:hover {
+  background-color: transparent;
+}
+
 .settings-player-checkbox input[type="checkbox"] {
   position: absolute;
   opacity: 0;
@@ -339,6 +343,17 @@
 .settings-player-checkbox input[type="checkbox"]:focus + .settings-player-checkmark {
   outline: 2px solid var(--accent-primary, #4853a8);
   outline-offset: 2px;
+}
+
+.settings-player-checkbox input[type="checkbox"]:disabled + .settings-player-checkmark {
+  border-color: var(--border-color, #e0e0e0);
+  background-color: var(--bg-secondary, #f8f9fa);
+}
+
+.settings-player-checkbox input[type="checkbox"]:disabled:checked + .settings-player-checkmark {
+  border-color: var(--accent-primary, #4853a8);
+  background-color: var(--accent-primary, #4853a8);
+  opacity: 0.6;
 }
 
 .settings-player-name {

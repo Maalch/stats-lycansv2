@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import type { GameFilter, FilterMode, PlayerFilterMode } from '../../context/SettingsContext';
 import type { RawGameData } from '../../hooks/useRawGameData';
@@ -8,6 +8,14 @@ export function SettingsPanel() {
 
   const { settings, updateSettings, resetSettings } = useSettings();
   const [rawGameData, setRawGameData] = useState<RawGameData[] | null>(null);
+  
+  // Ref to track previous primary filter values
+  const prevPrimaryFilter = useRef({
+    filterMode: settings.filterMode,
+    gameFilter: settings.gameFilter,
+    dateStart: settings.dateRange.start,
+    dateEnd: settings.dateRange.end
+  });
 
   // Fetch unfiltered game data to get all players
   useEffect(() => {
@@ -23,21 +31,169 @@ export function SettingsPanel() {
     fetchData();
   }, []);
 
-  // Get sorted list of players from the UNFILTERED data to avoid disappearing players
-  const availablePlayers = useMemo(() => {
+  // Reset player filter when primary filter changes to avoid inconsistencies
+  useEffect(() => {
+    const current = {
+      filterMode: settings.filterMode,
+      gameFilter: settings.gameFilter,
+      dateStart: settings.dateRange.start,
+      dateEnd: settings.dateRange.end
+    };
+
+    // Check if any primary filter value has changed
+    const hasChanged = 
+      prevPrimaryFilter.current.filterMode !== current.filterMode ||
+      prevPrimaryFilter.current.gameFilter !== current.gameFilter ||
+      prevPrimaryFilter.current.dateStart !== current.dateStart ||
+      prevPrimaryFilter.current.dateEnd !== current.dateEnd;
+
+    // Reset player filter if primary filter changed and there are selected players
+    if (hasChanged && settings.playerFilter.players.length > 0) {
+      updateSettings({ 
+        playerFilter: { 
+          mode: settings.playerFilter.mode, 
+          players: [] 
+        } 
+      });
+    }
+
+    // Update the ref with current values
+    prevPrimaryFilter.current = current;
+  }, [settings.filterMode, settings.gameFilter, settings.dateRange.start, settings.dateRange.end, settings.playerFilter.players.length, updateSettings]);
+
+  // Helper to parse DD/MM/YYYY to Date
+  const parseFrenchDate = (dateStr: string): Date | null => {
+    if (!dateStr) return null;
+    const [day, month, year] = dateStr.split('/');
+    if (!day || !month || !year) return null;
+    return new Date(Number(year), Number(month) - 1, Number(day));
+  };
+
+  // Filter games based on current primary filter (game type or date range)
+  const filteredGames = useMemo(() => {
     if (!rawGameData) return [];
-    
+
+    return rawGameData.filter(game => {
+      // Apply game type filter
+      if (settings.filterMode === 'gameType') {
+        if (settings.gameFilter === 'modded' && !game["Game Moddée"]) return false;
+        if (settings.gameFilter === 'non-modded' && game["Game Moddée"]) return false;
+      }
+      
+      // Apply date range filter
+      if (settings.filterMode === 'dateRange') {
+        if (settings.dateRange.start || settings.dateRange.end) {
+          const gameDateObj = parseFrenchDate(game.Date);
+          if (!gameDateObj) return false;
+          if (settings.dateRange.start) {
+            const startObj = new Date(settings.dateRange.start);
+            if (gameDateObj < startObj) return false;
+          }
+          if (settings.dateRange.end) {
+            const endObj = new Date(settings.dateRange.end);
+            if (gameDateObj > endObj) return false;
+          }
+        }
+      }
+      
+      return true;
+    });
+  }, [rawGameData, settings.filterMode, settings.gameFilter, settings.dateRange]);
+
+  // Get all players from filtered games (based on primary filter)
+  const playersFromFilteredGames = useMemo(() => {
     const allPlayers = new Set<string>();
-    rawGameData.forEach((game: RawGameData) => {
+    filteredGames.forEach((game: RawGameData) => {
       const playerList = game["Liste des joueurs"];
       if (playerList) {
         const players = playerList.split(',').map((p: string) => p.trim()).filter((p: string) => p.length > 0);
         players.forEach((player: string) => allPlayers.add(player));
       }
     });
+    return Array.from(allPlayers);
+  }, [filteredGames]);
+
+  // Get player compatibility data for include/exclude logic
+  const playerCompatibility = useMemo(() => {
+    const compatibility: Record<string, Set<string>> = {};
     
-    return Array.from(allPlayers).sort();
-  }, [rawGameData]);
+    filteredGames.forEach((game: RawGameData) => {
+      const playerList = game["Liste des joueurs"];
+      if (playerList) {
+        const players = playerList.split(',').map((p: string) => p.trim()).filter((p: string) => p.length > 0);
+        
+        // For each player, record who they've played with
+        players.forEach((player: string) => {
+          if (!compatibility[player]) {
+            compatibility[player] = new Set();
+          }
+          players.forEach((otherPlayer: string) => {
+            if (player !== otherPlayer) {
+              compatibility[player].add(otherPlayer);
+            }
+          });
+        });
+      }
+    });
+    
+    return compatibility;
+  }, [filteredGames]);
+
+  // Calculate which players should be selectable based on current player filter selections
+  const { availablePlayers, selectablePlayers } = useMemo(() => {
+    const available = playersFromFilteredGames.sort();
+    
+    if (settings.playerFilter.mode === 'none' || settings.playerFilter.players.length === 0) {
+      return { availablePlayers: available, selectablePlayers: new Set(available) };
+    }
+    
+    const selectable = new Set<string>();
+    
+    if (settings.playerFilter.mode === 'include') {
+      // For include mode: only show players who have played with ALL currently selected players
+      available.forEach(player => {
+        if (settings.playerFilter.players.includes(player)) {
+          // Already selected players are always selectable
+          selectable.add(player);
+        } else {
+          // Check if this player has played with ALL selected players
+          const hasPlayedWithAll = settings.playerFilter.players.every(selectedPlayer => 
+            playerCompatibility[player]?.has(selectedPlayer) || false
+          );
+          if (hasPlayedWithAll) {
+            selectable.add(player);
+          }
+        }
+      });
+    } else if (settings.playerFilter.mode === 'exclude') {
+      // For exclude mode: only show players who have NOT played ONLY with the excluded players
+      available.forEach(player => {
+        if (settings.playerFilter.players.includes(player)) {
+          // Already selected players are always selectable
+          selectable.add(player);
+        } else {
+          // Check if this player has games without any of the excluded players
+          const hasGamesWithoutExcluded = filteredGames.some(game => {
+            const gamePlayersList = game["Liste des joueurs"].toLowerCase();
+            const playerInGame = gamePlayersList.includes(player.toLowerCase());
+            if (!playerInGame) return false;
+            
+            // Check if any excluded player is in this game
+            const hasExcludedPlayer = settings.playerFilter.players.some(excludedPlayer => 
+              gamePlayersList.includes(excludedPlayer.toLowerCase())
+            );
+            return !hasExcludedPlayer;
+          });
+          
+          if (hasGamesWithoutExcluded) {
+            selectable.add(player);
+          }
+        }
+      });
+    }
+    
+    return { availablePlayers: available, selectablePlayers: selectable };
+  }, [playersFromFilteredGames, settings.playerFilter, playerCompatibility, filteredGames]);
 
   const handleFilterModeChange = (mode: FilterMode) => {
     updateSettings({ filterMode: mode });
@@ -70,7 +226,7 @@ export function SettingsPanel() {
   };
 
   const handleSelectAllPlayers = () => {
-    updateSettings({ playerFilter: { ...settings.playerFilter, players: [...availablePlayers] } });
+    updateSettings({ playerFilter: { ...settings.playerFilter, players: [...selectablePlayers] } });
   };
 
   const handleDeselectAllPlayers = () => {
@@ -94,7 +250,7 @@ export function SettingsPanel() {
         {/* SECTION 1: Primary Filter Mode */}
         <div className="settings-section">
           <div className="settings-section-header">
-            <h3>Filtre Principal</h3>
+            <h3>1. Filtre Principal</h3>
           </div>
 
           <div className="settings-group">
@@ -215,7 +371,7 @@ export function SettingsPanel() {
         {/* SECTION 2: Additional Player Filter */}
         <div className="settings-section">
           <div className="settings-section-header">
-            <h3>Filtre Additionnel par Joueurs</h3>
+            <h3>2. Filtre Additionnel par Joueurs</h3>
           </div>
 
           <div className="settings-group">
@@ -270,7 +426,7 @@ export function SettingsPanel() {
               <div style={{ marginTop: '1rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                   <label style={{ fontWeight: 500 }}>
-                    Sélection des joueurs ({settings.playerFilter.players.length} sélectionné{settings.playerFilter.players.length !== 1 ? 's' : ''})
+                    Sélection des joueurs ({settings.playerFilter.players.length} sélectionné{settings.playerFilter.players.length !== 1 ? 's' : ''} sur {selectablePlayers.size} disponible{selectablePlayers.size !== 1 ? 's' : ''})
                   </label>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <button
@@ -307,17 +463,37 @@ export function SettingsPanel() {
                 </div>
                 
                 <div className="settings-player-grid">
-                  {availablePlayers.map(player => (
-                    <label key={player} className="settings-player-checkbox">
-                      <input
-                        type="checkbox"
-                        checked={settings.playerFilter.players.includes(player)}
-                        onChange={() => handlePlayerToggle(player)}
-                      />
-                      <span className="settings-player-checkmark"></span>
-                      <span className="settings-player-name">{player}</span>
-                    </label>
-                  ))}
+                  {availablePlayers.map(player => {
+                    const isSelectable = selectablePlayers.has(player);
+                    const isSelected = settings.playerFilter.players.includes(player);
+                    
+                    return (
+                      <label 
+                        key={player} 
+                        className={`settings-player-checkbox ${!isSelectable ? 'disabled' : ''}`}
+                        style={{ 
+                          opacity: isSelectable ? 1 : 0.5,
+                          cursor: isSelectable ? 'pointer' : 'not-allowed'
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => isSelectable && handlePlayerToggle(player)}
+                          disabled={!isSelectable}
+                        />
+                        <span className="settings-player-checkmark"></span>
+                        <span className="settings-player-name" title={!isSelectable && !isSelected ? 
+                          `${player} n'a ${settings.playerFilter.mode === 'include' ? 
+                            'pas joué avec tous les joueurs sélectionnés' : 
+                            'que des parties avec les joueurs exclus'
+                          }` : player
+                        }>
+                          {player}
+                        </span>
+                      </label>
+                    );
+                  })}
                 </div>
                 
                 <small style={{ color: 'var(--text-secondary, #6c757d)', marginTop: 8, display: 'block' }}>
