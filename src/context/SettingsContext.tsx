@@ -4,16 +4,23 @@ import type { ReactNode } from 'react';
 
 export type GameFilter = 'all' | 'modded' | 'non-modded';
 export type FilterMode = 'gameType' | 'dateRange';
+export type PlayerFilterMode = 'none' | 'include' | 'exclude';
 
 export interface DateRange {
   start: string | null; // ISO date string (YYYY-MM-DD) or null
   end: string | null;
 }
 
+export interface PlayerFilter {
+  mode: PlayerFilterMode;
+  players: string[]; // Array of player names
+}
+
 export interface SettingsState {
   filterMode: FilterMode;
   gameFilter: GameFilter;
   dateRange: DateRange;
+  playerFilter: PlayerFilter;
 }
 
 interface SettingsContextType {
@@ -27,6 +34,7 @@ const defaultSettings: SettingsState = {
   filterMode: 'gameType',
   gameFilter: 'all',
   dateRange: { start: null, end: null },
+  playerFilter: { mode: 'none', players: [] },
 };
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);

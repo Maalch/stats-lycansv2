@@ -49,6 +49,32 @@
   font-weight: 600;
 }
 
+.settings-section {
+  background: var(--bg-secondary, #f8f9fa);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.settings-section-header {
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color, #e0e0e0);
+}
+
+.settings-section-header h3 {
+  margin: 0 0 4px 0;
+  color: var(--text-primary, #333);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.settings-section-header small {
+  color: var(--text-secondary, #6c757d);
+  font-style: italic;
+}
+
 .settings-checkbox {
   display: block;
   position: relative;
