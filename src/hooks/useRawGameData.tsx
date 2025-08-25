@@ -115,29 +115,44 @@ export function useFilteredRawGameData() {
   }
 
   const filteredData = rawData?.filter(game => {
+    // First apply game type or date range filter
     if (settings.filterMode === 'gameType') {
       if (settings.gameFilter === 'all') {
-        return true;
+        // Continue to player filter
       } else if (settings.gameFilter === 'modded') {
-        return game["Game Moddée"];
+        if (!game["Game Moddée"]) return false;
       } else if (settings.gameFilter === 'non-modded') {
-        return !game["Game Moddée"];
+        if (game["Game Moddée"]) return false;
       }
-      return true;
     } else if (settings.filterMode === 'dateRange') {
-      if (!settings.dateRange.start && !settings.dateRange.end) return true;
-      const gameDateObj = parseFrenchDate(game.Date);
-      if (!gameDateObj) return false;
-      if (settings.dateRange.start) {
-        const startObj = new Date(settings.dateRange.start);
-        if (gameDateObj < startObj) return false;
+      if (settings.dateRange.start || settings.dateRange.end) {
+        const gameDateObj = parseFrenchDate(game.Date);
+        if (!gameDateObj) return false;
+        if (settings.dateRange.start) {
+          const startObj = new Date(settings.dateRange.start);
+          if (gameDateObj < startObj) return false;
+        }
+        if (settings.dateRange.end) {
+          const endObj = new Date(settings.dateRange.end);
+          if (gameDateObj > endObj) return false;
+        }
       }
-      if (settings.dateRange.end) {
-        const endObj = new Date(settings.dateRange.end);
-        if (gameDateObj > endObj) return false;
-      }
-      return true;
     }
+
+    // Then apply player filter
+    if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
+      const gamePlayersList = game["Liste des joueurs"].toLowerCase();
+      const hasMatchingPlayer = settings.playerFilter.players.some(player => 
+        gamePlayersList.includes(player.toLowerCase())
+      );
+      
+      if (settings.playerFilter.mode === 'include' && !hasMatchingPlayer) {
+        return false;
+      } else if (settings.playerFilter.mode === 'exclude' && hasMatchingPlayer) {
+        return false;
+      }
+    }
+
     return true;
   }) || null;
 
@@ -150,33 +165,48 @@ export function useFilteredRawRoleData() {
   const { data: gameData } = useRawData<RawGameData>('rawGameData');
 
   const filteredData = rawData?.filter(role => {
+    // Find corresponding game data by Game ID
+    const correspondingGame = gameData?.find(game => game.Game === role.Game);
+    if (!correspondingGame) return false;
+
+    // First apply game type or date range filter
     if (settings.filterMode === 'gameType') {
       if (settings.gameFilter === 'all') {
-        return true;
+        // Continue to player filter
       } else if (settings.gameFilter === 'modded') {
-        return role["Game Moddée"];
+        if (!role["Game Moddée"]) return false;
       } else if (settings.gameFilter === 'non-modded') {
-        return !role["Game Moddée"];
+        if (role["Game Moddée"]) return false;
       }
-      return true;
     } else if (settings.filterMode === 'dateRange') {
-      if (!settings.dateRange.start && !settings.dateRange.end) return true;
-      // Find corresponding game data by Game ID
-      const correspondingGame = gameData?.find(game => game.Game === role.Game);
-      if (!correspondingGame) return false;
-      
-      const gameDateObj = parseFrenchDate(correspondingGame.Date);
-      if (!gameDateObj) return false;
-      if (settings.dateRange.start) {
-        const startObj = new Date(settings.dateRange.start);
-        if (gameDateObj < startObj) return false;
+      if (settings.dateRange.start || settings.dateRange.end) {
+        const gameDateObj = parseFrenchDate(correspondingGame.Date);
+        if (!gameDateObj) return false;
+        if (settings.dateRange.start) {
+          const startObj = new Date(settings.dateRange.start);
+          if (gameDateObj < startObj) return false;
+        }
+        if (settings.dateRange.end) {
+          const endObj = new Date(settings.dateRange.end);
+          if (gameDateObj > endObj) return false;
+        }
       }
-      if (settings.dateRange.end) {
-        const endObj = new Date(settings.dateRange.end);
-        if (gameDateObj > endObj) return false;
-      }
-      return true;
     }
+
+    // Then apply player filter
+    if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
+      const gamePlayersList = correspondingGame["Liste des joueurs"].toLowerCase();
+      const hasMatchingPlayer = settings.playerFilter.players.some(player => 
+        gamePlayersList.includes(player.toLowerCase())
+      );
+      
+      if (settings.playerFilter.mode === 'include' && !hasMatchingPlayer) {
+        return false;
+      } else if (settings.playerFilter.mode === 'exclude' && hasMatchingPlayer) {
+        return false;
+      }
+    }
+
     return true;
   }) || null;
 
@@ -189,33 +219,48 @@ export function useFilteredRawPonceData() {
   const { data: gameData } = useRawData<RawGameData>('rawGameData');
 
   const filteredData = rawData?.filter(ponce => {
+    // Find corresponding game data by Game ID
+    const correspondingGame = gameData?.find(game => game.Game === ponce.Game);
+    if (!correspondingGame) return false;
+
+    // First apply game type or date range filter
     if (settings.filterMode === 'gameType') {
       if (settings.gameFilter === 'all') {
-        return true;
+        // Continue to player filter
       } else if (settings.gameFilter === 'modded') {
-        return ponce["Game Moddée"];
+        if (!ponce["Game Moddée"]) return false;
       } else if (settings.gameFilter === 'non-modded') {
-        return !ponce["Game Moddée"];
+        if (ponce["Game Moddée"]) return false;
       }
-      return true;
     } else if (settings.filterMode === 'dateRange') {
-      if (!settings.dateRange.start && !settings.dateRange.end) return true;
-      // Find corresponding game data by Game ID
-      const correspondingGame = gameData?.find(game => game.Game === ponce.Game);
-      if (!correspondingGame) return false;
-      
-      const gameDateObj = parseFrenchDate(correspondingGame.Date);
-      if (!gameDateObj) return false;
-      if (settings.dateRange.start) {
-        const startObj = new Date(settings.dateRange.start);
-        if (gameDateObj < startObj) return false;
+      if (settings.dateRange.start || settings.dateRange.end) {
+        const gameDateObj = parseFrenchDate(correspondingGame.Date);
+        if (!gameDateObj) return false;
+        if (settings.dateRange.start) {
+          const startObj = new Date(settings.dateRange.start);
+          if (gameDateObj < startObj) return false;
+        }
+        if (settings.dateRange.end) {
+          const endObj = new Date(settings.dateRange.end);
+          if (gameDateObj > endObj) return false;
+        }
       }
-      if (settings.dateRange.end) {
-        const endObj = new Date(settings.dateRange.end);
-        if (gameDateObj > endObj) return false;
-      }
-      return true;
     }
+
+    // Then apply player filter
+    if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
+      const gamePlayersList = correspondingGame["Liste des joueurs"].toLowerCase();
+      const hasMatchingPlayer = settings.playerFilter.players.some(player => 
+        gamePlayersList.includes(player.toLowerCase())
+      );
+      
+      if (settings.playerFilter.mode === 'include' && !hasMatchingPlayer) {
+        return false;
+      } else if (settings.playerFilter.mode === 'exclude' && hasMatchingPlayer) {
+        return false;
+      }
+    }
+
     return true;
   }) || null;
 
