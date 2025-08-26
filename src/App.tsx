@@ -1,6 +1,8 @@
 import { Suspense, lazy, useState } from 'react';
 import { FullscreenProvider } from './context/FullscreenContext';
 import { SettingsProvider } from './context/SettingsContext';
+import { SettingsIndicator } from './components/common/SettingsIndicator';
+import { SettingsBadge } from './components/common/SettingsBadge';
 import './App.css';
 
 // Lazy load each dashboard section
@@ -152,11 +154,13 @@ export default function App() {
                       type="button"
                     >
                       {tab.label}
+                      {tab.key === 'settings' && <SettingsBadge />}
                     </button>
                   ))}
                 </nav>
 
                 <div className="lycans-dashboard-section">
+                  <SettingsIndicator />
                   {renderContent()}
                 </div>
 
