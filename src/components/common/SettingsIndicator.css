@@ -1,0 +1,70 @@
+.settings-indicator {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settings-indicator-icon {
+  color: var(--accent-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.settings-indicator-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-indicator-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.settings-indicator-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.settings-indicator-filter {
+  background: var(--accent-primary);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .settings-indicator {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  
+  .settings-indicator-filters {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .settings-indicator-filter {
+    align-self: flex-start;
+  }
+}
+
+/* Light mode adjustments */
+@media (prefers-color-scheme: light) {
+  .settings-indicator {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+}
