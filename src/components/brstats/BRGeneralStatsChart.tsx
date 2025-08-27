@@ -1,0 +1,266 @@
+import { useMemo } from 'react';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useFilteredRawBRData, useFilteredRawBRGlobalData } from '../../hooks/useRawBRData';
+import { FullscreenChart } from '../common/FullscreenChart';
+import { lycansColorScheme } from '../../types/api';
+
+export function BRGeneralStatsChart() {
+  const { data: brData, isLoading: brLoading, error: brError } = useFilteredRawBRData();
+  const { data: globalData, isLoading: globalLoading, error: globalError } = useFilteredRawBRGlobalData();
+
+  const stats = useMemo(() => {
+    if (!brData || !globalData) return null;
+
+    // Calcul des statistiques générales
+    const totalGames = globalData.length;
+    const totalParticipations = brData.length;
+    const totalWins = brData.filter(p => p.Gagnant).length;
+    
+    // Statistiques par joueur
+    const playerStats = brData.reduce((acc, participation) => {
+      const player = participation.Participants;
+      if (!acc[player]) {
+        acc[player] = {
+          name: player,
+          participations: 0,
+          wins: 0,
+          totalScore: 0,
+          averageScore: 0,
+          winRate: 0
+        };
+      }
+      
+      acc[player].participations++;
+      acc[player].totalScore += participation.Score;
+      if (participation.Gagnant) {
+        acc[player].wins++;
+      }
+      
+      return acc;
+    }, {} as Record<string, any>);
+
+    // Calcul des moyennes et taux de victoire
+    Object.values(playerStats).forEach((player: any) => {
+      player.averageScore = player.totalScore / player.participations;
+      player.winRate = (player.wins / player.participations) * 100;
+    });
+
+    // Top joueurs par participations
+    const topPlayersByParticipations = Object.values(playerStats)
+      .sort((a: any, b: any) => b.participations - a.participations)
+      .slice(0, 10);
+
+    // Top joueurs par victoires
+    const topPlayersByWins = Object.values(playerStats)
+      .filter((p: any) => p.participations >= 3) // Minimum 3 participations
+      .sort((a: any, b: any) => b.winRate - a.winRate)
+      .slice(0, 10);
+
+    // Distribution des scores
+    const scoreDistribution = brData.reduce((acc, participation) => {
+      const score = participation.Score;
+      const scoreRange = score === 0 ? '0' : 
+                        score <= 2 ? '1-2' :
+                        score <= 4 ? '3-4' :
+                        score <= 6 ? '5-6' : '7+';
+      
+      if (!acc[scoreRange]) {
+        acc[scoreRange] = 0;
+      }
+      acc[scoreRange]++;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const scoreData = Object.entries(scoreDistribution).map(([range, count]) => ({
+      range,
+      count,
+      percentage: ((count / totalParticipations) * 100).toFixed(1)
+    }));
+
+    // Statistiques par nombre de participants
+    const participantStats = globalData.reduce((acc, game) => {
+      const count = game["Nombre de participants"];
+      if (!acc[count]) {
+        acc[count] = 0;
+      }
+      acc[count]++;
+      return acc;
+    }, {} as Record<number, number>);
+
+    const participantData = Object.entries(participantStats)
+      .map(([count, games]) => ({
+        participants: parseInt(count),
+        games: games,
+        percentage: ((games / totalGames) * 100).toFixed(1)
+      }))
+      .sort((a, b) => a.participants - b.participants);
+
+    return {
+      totalGames,
+      totalParticipations,
+      totalWins,
+      winRate: ((totalWins / totalParticipations) * 100).toFixed(1),
+      averageParticipantsPerGame: (totalParticipations / totalGames).toFixed(1),
+      topPlayersByParticipations,
+      topPlayersByWins,
+      scoreData,
+      participantData
+    };
+  }, [brData, globalData]);
+
+  if (brLoading || globalLoading) {
+    return <div className="statistiques-chargement">Chargement des données Battle Royale...</div>;
+  }
+
+  if (brError || globalError) {
+    return <div className="statistiques-erreur">Erreur: {brError || globalError}</div>;
+  }
+
+  if (!stats) {
+    return <div className="statistiques-vide">Aucune donnée Battle Royale disponible</div>;
+  }
+
+  return (
+    <div className="lycans-chart-container">
+      <div className="lycans-chart-header">
+        <h2>Statistiques Battle Royale</h2>
+        <p>{stats.totalGames} parties • {stats.totalParticipations} participations • {stats.winRate}% de victoires</p>
+      </div>
+
+      {/* Statistiques générales */}
+      <div className="lycans-stats-grid">
+        <div className="lycans-stat-card">
+          <h3>Parties totales</h3>
+          <div className="lycans-stat-value">{stats.totalGames}</div>
+        </div>
+        <div className="lycans-stat-card">
+          <h3>Participations</h3>
+          <div className="lycans-stat-value">{stats.totalParticipations}</div>
+        </div>
+        <div className="lycans-stat-card">
+          <h3>Taux de victoire global</h3>
+          <div className="lycans-stat-value">{stats.winRate}%</div>
+        </div>
+        <div className="lycans-stat-card">
+          <h3>Moy. participants/partie</h3>
+          <div className="lycans-stat-value">{stats.averageParticipantsPerGame}</div>
+        </div>
+      </div>
+
+      {/* Top joueurs par participations */}
+      <div className="lycans-chart-section">
+        <h3>Top Joueurs - Participations</h3>
+        <FullscreenChart
+          title="Top Joueurs par Participations - Battle Royale"
+          className="lycans-chart-wrapper"
+        >
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={stats.topPlayersByParticipations}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="name" 
+                angle={-45} 
+                textAnchor="end" 
+                height={80}
+                fontSize={12}
+              />
+              <YAxis />
+              <Tooltip 
+                formatter={(value: any, name: string) => [
+                  value,
+                  name === 'participations' ? 'Participations' :
+                  name === 'wins' ? 'Victoires' : name
+                ]}
+              />
+              <Legend />
+              <Bar dataKey="participations" fill={lycansColorScheme.villageois} name="Participations" />
+              <Bar dataKey="wins" fill={lycansColorScheme.loups} name="Victoires" />
+            </BarChart>
+          </ResponsiveContainer>
+        </FullscreenChart>
+      </div>
+
+      {/* Top joueurs par taux de victoire */}
+      <div className="lycans-chart-section">
+        <h3>Top Joueurs - Taux de Victoire (min. 3 parties)</h3>
+        <FullscreenChart
+          title="Top Joueurs par Taux de Victoire - Battle Royale"
+          className="lycans-chart-wrapper"
+        >
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={stats.topPlayersByWins}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis 
+                dataKey="name" 
+                angle={-45} 
+                textAnchor="end" 
+                height={80}
+                fontSize={12}
+              />
+              <YAxis />
+              <Tooltip 
+                formatter={(value: any, name: string) => [
+                  name === 'winRate' ? `${value.toFixed(1)}%` : value,
+                  name === 'winRate' ? 'Taux de victoire' :
+                  name === 'participations' ? 'Participations' :
+                  name === 'wins' ? 'Victoires' : name
+                ]}
+              />
+              <Legend />
+              <Bar dataKey="winRate" fill={lycansColorScheme.solo} name="Taux de victoire (%)" />
+            </BarChart>
+          </ResponsiveContainer>
+        </FullscreenChart>
+      </div>
+
+      {/* Distribution des scores */}
+      <div className="lycans-chart-section">
+        <h3>Distribution des Scores</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+              <Pie
+                data={stats.scoreData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ range, percentage }) => `${range}: ${percentage}%`}
+                outerRadius={140}
+                fill="#8884d8"
+                dataKey="count"
+              >
+                {stats.scoreData.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={Object.values(lycansColorScheme)[index % Object.values(lycansColorScheme).length]} />
+                ))}
+              </Pie>
+              <Tooltip formatter={(value: any) => [value, 'Participations']} />
+            </PieChart>
+          </ResponsiveContainer>
+      </div>
+
+      {/* Répartition par nombre de participants */}
+      <div className="lycans-chart-section">
+        <h3>Répartition par Nombre de Participants</h3>
+        <FullscreenChart
+          title="Répartition par Nombre de Participants - Battle Royale"
+          className="lycans-chart-wrapper"
+        >
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={stats.participantData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="participants" />
+              <YAxis />
+              <Tooltip 
+                formatter={(value: any, name: string) => [
+                  value,
+                  name === 'games' ? 'Parties' : name
+                ]}
+              />
+              <Legend />
+              <Bar dataKey="games" fill={lycansColorScheme.amoureux} name="Nombre de parties" />
+            </BarChart>
+          </ResponsiveContainer>
+        </FullscreenChart>
+      </div>
+    </div>
+  );
+}
