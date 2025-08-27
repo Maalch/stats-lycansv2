@@ -20,24 +20,79 @@ const GameDurationInsights = lazy(() => import('./components/generalstats/GameDu
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
 
 const MAIN_TABS = [
-  { key: 'players', label: 'Joueurs' },
-  { key: 'general', label: 'Parties' },
-  { key: 'settings', label: 'Paramètres' },
+  { 
+    key: 'players', 
+    label: 'Joueurs', 
+    icon: '👤',
+    description: 'Statistiques des joueurs'
+  },
+  { 
+    key: 'general', 
+    label: 'Parties', 
+    icon: '🎯',
+    description: 'Statistiques générales'
+  },
+  { 
+    key: 'settings', 
+    label: 'Paramètres', 
+    icon: '⚙️',
+    description: 'Filtres et configuration'
+  },
   //{ key: 'ponce', label: 'Ponce' },
 ];
 
 const PLAYER_STATS_MENU = [
-  { key: 'playersGeneral', label: 'Joueurs', component: PlayersGeneralStatisticsChart },
-  { key: 'history', label: 'Historique Joueur', component: PlayerGameHistoryChart },
-  { key: 'pairing', label: 'Paires de Joueurs', component: PlayerPairingStatsChart }, 
-  { key: 'campPerformance', label: 'Performances', component: PlayerCampPerformanceChart }, 
+  { 
+    key: 'playersGeneral', 
+    label: 'Joueurs', 
+    component: PlayersGeneralStatisticsChart,
+    description: 'Classement par participations et victoires'
+  },
+  { 
+    key: 'history', 
+    label: 'Historique Joueur', 
+    component: PlayerGameHistoryChart,
+    description: 'Détails par joueur'
+  },
+  { 
+    key: 'pairing', 
+    label: 'Paires de Joueurs', 
+    component: PlayerPairingStatsChart,
+    description: 'Paires de loups et d\'amoureux'
+  },
+  { 
+    key: 'campPerformance', 
+    label: 'Performances', 
+    component: PlayerCampPerformanceChart,
+    description: 'Efficacité par camp et rôle'
+  },
 ];
 
 const GENERAL_STATS_MENU = [
-  { key: 'camps', label: 'Camps', component: CampsChart },
-  { key: 'victoryTypes', label: 'Types de Victoire', component: VictoryTypesChart },
-  { key: 'harvest', label: 'Récolte', component: HarvestProgressChart },
-  { key: 'duration', label: 'Durée des Parties', component: GameDurationInsights },
+  { 
+    key: 'camps', 
+    label: 'Camps', 
+    component: CampsChart,
+    description: 'Répartition des victoires par camp'
+  },
+  { 
+    key: 'victoryTypes', 
+    label: 'Types de Victoire', 
+    component: VictoryTypesChart,
+    description: 'Détails par type de victoire'
+  },
+  { 
+    key: 'harvest', 
+    label: 'Récolte', 
+    component: HarvestProgressChart,
+    description: 'Détails sur la récolte villageoise'
+  },
+  { 
+    key: 'duration', 
+    label: 'Durée des Parties', 
+    component: GameDurationInsights,
+    description: 'Statistiques sur la durée des parties (en jours de jeu)'
+  },
 ];
 
 
