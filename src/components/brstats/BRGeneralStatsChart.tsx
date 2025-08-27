@@ -2,11 +2,26 @@ import { useMemo } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useFilteredRawBRData, useFilteredRawBRGlobalData } from '../../hooks/useRawBRData';
 import { FullscreenChart } from '../common/FullscreenChart';
-import { lycansColorScheme } from '../../types/api';
+import { playersColor, getRandomColor } from '../../types/api';
 
 export function BRGeneralStatsChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredRawBRData();
   const { data: globalData, isLoading: globalLoading, error: globalError } = useFilteredRawBRGlobalData();
+
+  // Chart colors using CSS custom properties
+  const chartColors = [
+    'var(--chart-color-1)',
+    'var(--chart-color-2)', 
+    'var(--chart-color-3)',
+    'var(--chart-color-4)',
+    'var(--chart-color-5)',
+    'var(--chart-color-6)'
+  ];
+
+  // Helper function to get player color
+  const getPlayerColor = (playerName: string) => {
+    return playersColor[playerName] || getRandomColor(playerName);
+  };
 
   const stats = useMemo(() => {
     if (!brData || !globalData) return null;
@@ -91,7 +106,7 @@ export function BRGeneralStatsChart() {
       .map(([count, games]) => ({
         participants: parseInt(count),
         games: games,
-        percentage: ((games / totalGames) * 100).toFixed(1)
+        percentage: (((games as number) / totalGames) * 100).toFixed(1)
       }))
       .sort((a, b) => a.participants - b.participants);
 
@@ -99,8 +114,8 @@ export function BRGeneralStatsChart() {
       totalGames,
       totalParticipations,
       totalWins,
-      winRate: ((totalWins / totalParticipations) * 100).toFixed(1),
-      averageParticipantsPerGame: (totalParticipations / totalGames).toFixed(1),
+      winRate: (((totalWins as number) / totalParticipations) * 100).toFixed(1),
+      averageParticipantsPerGame: ((totalParticipations as number) / totalGames).toFixed(1),
       topPlayersByParticipations,
       topPlayersByWins,
       scoreData,
@@ -124,7 +139,6 @@ export function BRGeneralStatsChart() {
     <div className="lycans-chart-container">
       <div className="lycans-chart-header">
         <h2>Statistiques Battle Royale</h2>
-        <p>{stats.totalGames} parties • {stats.totalParticipations} participations • {stats.winRate}% de victoires</p>
       </div>
 
       {/* Statistiques générales */}
@@ -136,10 +150,6 @@ export function BRGeneralStatsChart() {
         <div className="lycans-stat-card">
           <h3>Participations</h3>
           <div className="lycans-stat-value">{stats.totalParticipations}</div>
-        </div>
-        <div className="lycans-stat-card">
-          <h3>Taux de victoire global</h3>
-          <div className="lycans-stat-value">{stats.winRate}%</div>
         </div>
         <div className="lycans-stat-card">
           <h3>Moy. participants/partie</h3>
@@ -165,16 +175,27 @@ export function BRGeneralStatsChart() {
                 fontSize={12}
               />
               <YAxis />
-              <Tooltip 
-                formatter={(value: any, name: string) => [
-                  value,
-                  name === 'participations' ? 'Participations' :
-                  name === 'wins' ? 'Victoires' : name
-                ]}
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length > 0) {
+                    const d = payload[0].payload;
+                    return (
+                      <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                        <div><strong>{d.name}</strong></div>
+                        <div>Participations : {d.participations}</div>
+                        <div>Victoires : {d.wins}</div>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
               />
-              <Legend />
-              <Bar dataKey="participations" fill={lycansColorScheme.villageois} name="Participations" />
-              <Bar dataKey="wins" fill={lycansColorScheme.loups} name="Victoires" />
+              <Bar dataKey="participations" name="Participations">
+                {stats.topPlayersByParticipations.map((player: any, index: number) => (
+                  <Cell key={`cell-${index}`} fill={getPlayerColor(player.name)} />
+                ))}
+              </Bar>
+              <Bar dataKey="wins" fill="var(--chart-color-2)" name="Victoires" />
             </BarChart>
           </ResponsiveContainer>
         </FullscreenChart>
@@ -198,16 +219,26 @@ export function BRGeneralStatsChart() {
                 fontSize={12}
               />
               <YAxis />
-              <Tooltip 
-                formatter={(value: any, name: string) => [
-                  name === 'winRate' ? `${value.toFixed(1)}%` : value,
-                  name === 'winRate' ? 'Taux de victoire' :
-                  name === 'participations' ? 'Participations' :
-                  name === 'wins' ? 'Victoires' : name
-                ]}
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length > 0) {
+                    const d = payload[0].payload;
+                    return (
+                      <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                        <div><strong>{d.name}</strong></div>
+                        <div>Taux de victoire : {d.winRate.toFixed(2)}%</div>
+                        <div>Victoires : {d.wins} / {d.participations}</div>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
               />
-              <Legend />
-              <Bar dataKey="winRate" fill={lycansColorScheme.solo} name="Taux de victoire (%)" />
+              <Bar dataKey="winRate" name="Taux de victoire (%)">
+                {stats.topPlayersByWins.map((player: any, index: number) => (
+                  <Cell key={`cell-${index}`} fill={getPlayerColor(player.name)} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </FullscreenChart>
@@ -229,7 +260,7 @@ export function BRGeneralStatsChart() {
                 dataKey="count"
               >
                 {stats.scoreData.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={Object.values(lycansColorScheme)[index % Object.values(lycansColorScheme).length]} />
+                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
                 ))}
               </Pie>
               <Tooltip formatter={(value: any) => [value, 'Participations']} />
@@ -256,7 +287,7 @@ export function BRGeneralStatsChart() {
                 ]}
               />
               <Legend />
-              <Bar dataKey="games" fill={lycansColorScheme.amoureux} name="Nombre de parties" />
+              <Bar dataKey="games" fill="var(--chart-color-4)" name="Nombre de parties" />
             </BarChart>
           </ResponsiveContainer>
         </FullscreenChart>
