@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerPairingStatsFromRaw } from '../../hooks/usePlayerPairingStatsFromRaw';
 import { playersColor } from '../../types/api';
+import { FullscreenChart } from '../common/FullscreenChart';
 
 export function PlayerPairingStatsChart() {
   const { data, isLoading, error } = usePlayerPairingStatsFromRaw();
@@ -119,72 +120,74 @@ export function PlayerPairingStatsChart() {
         {/* Most Common Wolf Pairs */}
         <div className="lycans-graphique-moitie">
           <h3>Paires de Loups les Plus Fréquentes</h3>
-          {topWolfPairsByAppearances.length > 0 ? (
-            <div style={{ height: 350 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={topWolfPairsByAppearances}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-                >
-                  <defs>
-                    {generateGradientDefs(topWolfPairsByAppearances)}
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="pair" 
-                    angle={-45} 
-                    textAnchor="end" 
-                    height={90} 
-                    interval={0}
-                    fontSize={11}
-                  />
-                  <YAxis 
-                    label={{ value: 'Apparitions', angle: -90, position: 'insideLeft' }}
-                    allowDecimals={false}
-                  />
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length > 0) {
-                        const data = payload[0].payload;
-                        const [player1, player2] = data.players;
-                        return (
-                          <div style={{ 
-                            background: 'var(--bg-secondary)', 
-                            color: 'var(--text-primary)', 
-                            padding: 12, 
-                            borderRadius: 8,
-                            border: '1px solid var(--border-color)'
-                          }}>
-                            <div><strong>{data.pair}</strong></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
-                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player1), borderRadius: '2px' }}></span>
-                              <span>{player1}</span>
-                              <span>+</span>
-                              <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player2), borderRadius: '2px' }}></span>
-                              <span>{player2}</span>
+          <FullscreenChart title="Paires de Loups les Plus Fréquentes">
+            {topWolfPairsByAppearances.length > 0 ? (
+              <div style={{ height: 350 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={topWolfPairsByAppearances}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                  >
+                    <defs>
+                      {generateGradientDefs(topWolfPairsByAppearances)}
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis 
+                      dataKey="pair" 
+                      angle={-45} 
+                      textAnchor="end" 
+                      height={90} 
+                      interval={0}
+                      fontSize={11}
+                    />
+                    <YAxis 
+                      label={{ value: 'Apparitions', angle: -90, position: 'insideLeft' }}
+                      allowDecimals={false}
+                    />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length > 0) {
+                          const data = payload[0].payload;
+                          const [player1, player2] = data.players;
+                          return (
+                            <div style={{ 
+                              background: 'var(--bg-secondary)', 
+                              color: 'var(--text-primary)', 
+                              padding: 12, 
+                              borderRadius: 8,
+                              border: '1px solid var(--border-color)'
+                            }}>
+                              <div><strong>{data.pair}</strong></div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0' }}>
+                                <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player1), borderRadius: '2px' }}></span>
+                                <span>{player1}</span>
+                                <span>+</span>
+                                <span style={{ width: '12px', height: '12px', backgroundColor: getPlayerColor(player2), borderRadius: '2px' }}></span>
+                                <span>{player2}</span>
+                              </div>
+                              <div>Apparitions: {data.appearances}</div>
+                              <div>Victoires: {data.wins}</div>
+                              <div>Taux de victoire: {data.winRate}%</div>
                             </div>
-                            <div>Apparitions: {data.appearances}</div>
-                            <div>Victoires: {data.wins}</div>
-                            <div>Taux de victoire: {data.winRate}%</div>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                  <Bar dataKey="appearances" name="Apparitions">
-                    {topWolfPairsByAppearances.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          ) : (
-            <div className="lycans-empty-section">
-              <p>Aucune paire récurrente trouvée</p>
-            </div>
-          )}
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Bar dataKey="appearances" name="Apparitions">
+                      {topWolfPairsByAppearances.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="lycans-empty-section">
+                <p>Aucune paire récurrente trouvée</p>
+              </div>
+            )}
+            </FullscreenChart>
         </div>
 
         {/* Best Performing Wolf Pairs */}
@@ -216,6 +219,7 @@ export function PlayerPairingStatsChart() {
               </select>
             </div>
           </div>
+          <FullscreenChart title="Paires de Loups les Plus Performantes">
           {topWolfPairsByWinRate.length > 0 ? (
             <div style={{ height: 320 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -284,6 +288,7 @@ export function PlayerPairingStatsChart() {
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
             Top {topWolfPairsByWinRate.length} des paires (sur {totalWolfPairsWithMinAppearances}) avec au moins {minWolfAppearances} apparition{minWolfAppearances > 1 ? 's' : ''}
           </p>
+          </FullscreenChart>
         </div>
       </div>
     </div>
@@ -313,6 +318,7 @@ export function PlayerPairingStatsChart() {
         {/* Most Common Lover Pairs */}
         <div className="lycans-graphique-moitie">
           <h3>Paires d'Amoureux les Plus Fréquentes</h3>
+          <FullscreenChart title="Paires d'Amoureux les Plus Fréquentes">
           {topLoverPairsByAppearances.length > 0 ? (
             <div style={{ height: 350 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -379,6 +385,7 @@ export function PlayerPairingStatsChart() {
               <p>Aucune paire d'amoureux trouvée</p>
             </div>
           )}
+          </FullscreenChart>
         </div>
 
         {/* Best Performing Lover Pairs */}
@@ -410,6 +417,7 @@ export function PlayerPairingStatsChart() {
               </select>
             </div>
           </div>
+          <FullscreenChart title="Paires d'Amoureux les Plus Performantes">
           {topLoverPairsByWinRate.length > 0 ? (
             <div style={{ height: 320 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -478,6 +486,7 @@ export function PlayerPairingStatsChart() {
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
             Top {topLoverPairsByWinRate.length} des paires (sur {totalLoverPairsWithMinAppearances}) avec au moins {minLoverAppearances} apparition{minLoverAppearances > 1 ? 's' : ''}
           </p>
+          </FullscreenChart>
         </div>
       </div>
     </div>
