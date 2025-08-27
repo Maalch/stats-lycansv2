@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter } from 'recharts';
 import { usePlayerCampPerformanceFromRaw } from '../../hooks/usePlayerCampPerformanceFromRaw';
 import { lycansColorScheme, playersColor } from '../../types/api';
@@ -11,6 +11,7 @@ export function PlayerCampPerformanceChart() {
   const [viewMode, setViewMode] = useState<ViewMode>('player-performance');
   const [selectedCamp, setSelectedCamp] = useState<string>('Villageois');
   const [minGames, setMinGames] = useState<number>(5);
+  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformanceFromRaw();
 
@@ -80,6 +81,22 @@ export function PlayerCampPerformanceChart() {
       topPerformersData: sortedTopPerformers
     };
   }, [playerCampPerformance, selectedCamp, minGames]);
+
+  // Reset selection when camp or view mode changes
+  const resetSelection = () => setSelectedPlayer(null);
+  
+  // Effect to reset selection when dependencies change
+  useEffect(() => {
+    resetSelection();
+  }, [selectedCamp, viewMode]);
+
+  // Handler for bar chart clicks
+  const handleBarClick = (data: any) => {
+    if (data && data.player) {
+      const clickedPlayer = data.player;
+      setSelectedPlayer(selectedPlayer === clickedPlayer ? null : clickedPlayer);
+    }
+  };
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de performance par camp...</div>;
@@ -242,20 +259,31 @@ export function PlayerCampPerformanceChart() {
                               <div>Taux personnel: {dataPoint.winRate}%</div>
                               <div>Moyenne camp: {dataPoint.campAvgWinRate}%</div>
                               <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
+                              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                                {selectedPlayer === dataPoint.player ? 'Cliquez pour désélectionner' : 'Cliquez pour sélectionner'}
+                              </div>
                             </div>
                           );
                         }
                         return null;
                       }}
                     />
-                     <Bar dataKey="performanceNum">
+                     <Bar 
+                       dataKey="performanceNum" 
+                       style={{ cursor: 'pointer' }}
+                       onClick={handleBarClick}
+                     >
                      {campPlayerData.slice(0, 15).map((entry, index) => (
                         <Cell
                            key={`cell-${index}`}
                            fill={
-                           playersColor[entry.player] ||
-                           (entry.performanceNum >= 0 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
+                           selectedPlayer === entry.player 
+                             ? '#FFD700' // Gold color for selected player
+                             : playersColor[entry.player] ||
+                               (entry.performanceNum >= 0 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
                            }
+                           stroke={selectedPlayer === entry.player ? '#FFA500' : 'none'}
+                           strokeWidth={selectedPlayer === entry.player ? 2 : 0}
                         />
                      ))}
                      </Bar>
@@ -300,6 +328,11 @@ export function PlayerCampPerformanceChart() {
                               <div><strong>{dataPoint.player}</strong></div>
                               <div>Parties: {dataPoint.games}</div>
                               <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
+                              {selectedPlayer === dataPoint.player && (
+                                <div style={{ fontSize: '0.8rem', color: '#FFD700', marginTop: '4px' }}>
+                                  ★ Joueur sélectionné
+                                </div>
+                              )}
                               </div>
                            );
                         }
@@ -309,30 +342,43 @@ export function PlayerCampPerformanceChart() {
                     <Scatter
                       dataKey="performanceNum"
                       name="Performance"
-                      shape={(props: { cx?: number; cy?: number; payload?: any }) => (
+                      shape={(props: { cx?: number; cy?: number; payload?: any }) => {
+                        const isSelected = selectedPlayer === props.payload?.player;
+                        return (
                         <g>
                           <circle
                             cx={props.cx}
                             cy={props.cy}
-                            r={12} // Increased size to accommodate text
-                            fill={playersColor[props.payload?.player] || 'var(--accent-primary)'}
-                            stroke="#222"
-                            strokeWidth={1}
+                            r={isSelected ? 16 : 12} // Larger size for selected player
+                            fill={isSelected ? '#FFD700' : (playersColor[props.payload?.player] || 'var(--accent-primary)')}
+                            stroke={isSelected ? '#FFA500' : '#222'}
+                            strokeWidth={isSelected ? 3 : 1}
                           />
                           <text
                             x={props.cx}
                             y={props.cy}
                             textAnchor="middle"
                             dominantBaseline="middle"
-                            fill="#fff"
-                            fontSize="10"
+                            fill={isSelected ? '#000' : '#fff'}
+                            fontSize={isSelected ? "12" : "10"}
                             fontWeight="bold"
                             pointerEvents="none"
                           >
                             {props.payload?.player?.charAt(0).toUpperCase()}
                           </text>
+                          {isSelected && (
+                            <circle
+                              cx={props.cx}
+                              cy={props.cy}
+                              r={20}
+                              fill="none"
+                              stroke="#FFD700"
+                              strokeWidth={2}
+                              strokeDasharray="4 2"
+                            />
+                          )}
                         </g>
-                      )}
+                      )}}
                     />
                   </ScatterChart>
                   </ResponsiveContainer>
