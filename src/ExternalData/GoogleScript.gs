@@ -3,6 +3,7 @@ function doGet(e) {
   // Raw data endpoints for client-side processing - do NOT cache these (too large)
   'rawGameData': { baseKey: 'rawGameData', fn: getRawGameDataRaw, noCache: true },
   'rawRoleData': { baseKey: 'rawRoleData', fn: getRawRoleDataRaw, noCache: true },
+  'rawBRData': { baseKey: 'rawBRData', fn: getRawBRDataRaw, noCache: true },
   'rawPonceData': { baseKey: 'rawPonceData', fn: getRawPonceDataRaw, noCache: true }
   };
   
@@ -101,6 +102,38 @@ function test_getRawRoleData() {
   
   var result = doGet(e);
   Logger.log("Test rawRoleData");
+  Logger.log("Cache key used: " + cacheKey);
+  
+  // Parse the result to check record count
+  try {
+    var data = JSON.parse(result.getContent());
+    Logger.log("Total records: " + (data.totalRecords || 'unknown'));
+    Logger.log("Sample record: " + JSON.stringify(data.data ? data.data[0] : 'none'));
+  } catch (e) {
+    Logger.log("Raw result: " + result.getContent());
+  }
+  
+  return result;
+}
+
+/**
+ * Test function for raw role data export
+ */
+function test_getRawBRData() {
+  var cache = CacheService.getScriptCache();
+  
+  // Clear the cache for this endpoint
+  var cacheKey = generateCacheKey('rawBRData', null, { parameter: {} });
+  cache.remove(cacheKey);
+  
+  var e = { 
+    parameter: { 
+      action: 'rawBRData'
+    } 
+  };
+  
+  var result = doGet(e);
+  Logger.log("Test rawBRData");
   Logger.log("Cache key used: " + cacheKey);
   
   // Parse the result to check record count
@@ -369,6 +402,81 @@ function getRawPonceDataRaw() {
     
   } catch (error) {
     Logger.log('Error in getRawPonceDataRaw: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
+
+/**
+ * Returns all raw data from the "Battle Royal v2" sheet as JSON
+ * This contains detailed data of all BR games
+ * @return {string} JSON string with all BR data
+ */
+function getRawBRDataRaw() {
+  try {
+    var brData = getLycanSheetData(LYCAN_SCHEMA.BR.SHEET);
+    var values = brData.values;
+    
+    if (!values || values.length === 0) {
+      return JSON.stringify({ error: 'No BR data found' });
+    }
+    
+    var headers = values[0];
+    var dataRows = values.slice(1);
+    
+    // Find all "Game" column indices (in case there are duplicates)
+    var gameColumnIndices = [];
+    headers.forEach(function(header, index) {
+      if (header === LYCAN_SCHEMA.BR.COLS.GAMEID) {
+        gameColumnIndices.push(index);
+      }
+    });
+    
+    // Convert rows to objects with column names, skipping empty headers
+    var brRecords = dataRows.map(function(row) {
+      var record = {};
+      headers.forEach(function(header, index) {
+        // Skip empty / blank header cells to avoid "" keys in JSON
+        if (!header || header.toString().trim() === '') {
+          return;
+        }
+        
+        var value = row[index];
+        
+        // Handle multiple Game columns by creating unique keys
+        if (header === LYCAN_SCHEMA.BR.COLS.GAMEID) {
+          var gameColumnPosition = gameColumnIndices.indexOf(index);
+          var uniqueKey = gameColumnPosition === 0 ? LYCAN_SCHEMA.BR.COLS.GAMEID : LYCAN_SCHEMA.BR.COLS.GAMEID + (gameColumnPosition + 1);
+          record[uniqueKey] = value !== '' ? value : null;
+        }
+        // Convert boolean checkboxes to actual booleans
+        else if (header === LYCAN_SCHEMA.BR.COLS.WINNER)  {
+          record[header] = Boolean(value);
+        }
+        // Convert numeric fields to numbers
+        else if ((header === LYCAN_SCHEMA.BR.COLS.SCORE) || 
+          (header === LYCAN_SCHEMA.BR.NBOFPLAYERS)) {
+          record[header] = value !== '' && !isNaN(value) ? parseFloat(value) : null;
+        }
+        // Format dates consistently
+        else if (header === LYCAN_SCHEMA.BR.COLS.DATE && value) {
+          record[header] = formatLycanDate(value);
+        }
+        // Keep text fields as strings, but handle empty values
+        else {
+          record[header] = value !== '' ? value : null;
+        }
+      });
+      return record;
+    });
+    
+    return JSON.stringify({
+      lastUpdated: new Date().toISOString(),
+      totalRecords: brRecords.length,
+      data: brRecords
+    });
+    
+  } catch (error) {
+    Logger.log('Error in getRawBRDataRaw: ' + error.message);
     return JSON.stringify({ error: error.message });
   }
 }

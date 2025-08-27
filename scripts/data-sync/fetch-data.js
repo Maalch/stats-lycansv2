@@ -6,7 +6,8 @@ import path from 'path';
 const RAW_DATA_ENDPOINTS = [
   'rawGameData',
   'rawRoleData',
-  'rawPonceData'
+  'rawPonceData',
+  'rawBRData'
 ];
 
 // Data directory relative to project root
