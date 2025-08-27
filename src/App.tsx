@@ -107,19 +107,6 @@ export default function App() {
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
 
-  const getCurrentDescription = () => {
-    switch (selectedMainTab) {
-      case 'players':
-        return PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.description;
-      case 'general':
-        return GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.description;
-      case 'settings':
-        return MAIN_TABS.find(t => t.key === 'settings')?.description;
-      default:
-        return null;
-    }
-  };
-
   const renderContent = () => {
     switch (selectedMainTab) {
     
@@ -150,7 +137,7 @@ export default function App() {
       }
       case 'general': {
         const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? CampsChart;
-        return (
+         return (
           <div>
             <nav className="lycans-submenu">
               {GENERAL_STATS_MENU.map(item => (
@@ -233,11 +220,6 @@ export default function App() {
 
                 <div className="lycans-dashboard-section">
                   <SettingsIndicator />
-                  {getCurrentDescription() && (
-                    <div className="lycans-section-description">
-                      <p>{getCurrentDescription()}</p>
-                    </div>
-                  )}
                   {renderContent()}
                 </div>
 
