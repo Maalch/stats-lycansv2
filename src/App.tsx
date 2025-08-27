@@ -16,6 +16,8 @@ const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTy
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 
+const BRGeneralStatsChart = lazy(() => import('./components/brstats/BRGeneralStatsChart').then(m => ({ default: m.BRGeneralStatsChart })));
+
 // Add settings import
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
 
@@ -31,6 +33,12 @@ const MAIN_TABS = [
     label: 'Parties', 
     icon: '🎯',
     description: 'Statistiques générales'
+  },
+  { 
+    key: 'br', 
+    label: 'Battle Royale', 
+    icon: '⚔️',
+    description: 'Statistiques Battle Royale'
   },
   { 
     key: 'settings', 
@@ -95,13 +103,6 @@ const GENERAL_STATS_MENU = [
   },
 ];
 
-
-{/*}
-const PONCE_STATS_MENU = [
-  { key: '', label: '', component:  },
-];
-*/}
-
 export default function App() {
   const [selectedMainTab, setSelectedMainTab] = useState('players');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
@@ -157,6 +158,15 @@ export default function App() {
                 <SelectedGeneralComponent />
               </Suspense>
             </div>
+          </div>
+        );
+      }
+      case 'br': {
+        return (
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <BRGeneralStatsChart />
+            </Suspense>
           </div>
         );
       }

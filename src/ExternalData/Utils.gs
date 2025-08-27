@@ -74,7 +74,8 @@ const LYCAN_SCHEMA = {
       GAMEID2: 'Game', //Battle Royal Game ID (global)
       NBOFPLAYERS: 'Nombre de participants', //Number of players in that game
       DATE: 'Date', //Date of the BR game
-      VOD: 'VOD' //Link to the Youtube VOD game																
+      VOD: 'VOD', //Link to the Youtube VOD game				
+      MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded												
     }
   }
 };

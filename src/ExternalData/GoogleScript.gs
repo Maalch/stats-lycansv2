@@ -449,12 +449,13 @@ function getRawBRDataRaw() {
           record[uniqueKey] = value !== '' ? value : null;
         }
         // Convert boolean checkboxes to actual booleans
-        else if (header === LYCAN_SCHEMA.BR.COLS.WINNER)  {
+        else if (header === LYCAN_SCHEMA.BR.COLS.WINNER ||
+            header === LYCAN_SCHEMA.BR.COLS.MODDED) {
           record[header] = Boolean(value);
         }
         // Convert numeric fields to numbers
         else if ((header === LYCAN_SCHEMA.BR.COLS.SCORE) || 
-          (header === LYCAN_SCHEMA.BR.NBOFPLAYERS)) {
+          (header === LYCAN_SCHEMA.BR.COLS.NBOFPLAYERS)) {
           record[header] = value !== '' && !isNaN(value) ? parseFloat(value) : null;
         }
         // Format dates consistently
@@ -467,6 +468,12 @@ function getRawBRDataRaw() {
         }
       });
       return record;
+    }).filter(function(record) {
+      // Filter out empty rows: check if record has any meaningful data
+      // A record is considered empty if all values are null or false (for booleans)
+      return Object.values(record).some(function(value) {
+        return value !== null && value !== false;
+      });
     });
     
     return JSON.stringify({
