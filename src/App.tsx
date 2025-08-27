@@ -16,6 +16,8 @@ const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTy
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 
+const BRGeneralStatsChart = lazy(() => import('./components/brstats/BRGeneralStatsChart').then(m => ({ default: m.BRGeneralStatsChart })));
+
 // Add settings import
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
 
@@ -31,6 +33,12 @@ const MAIN_TABS = [
     label: 'Parties', 
     icon: '🎯',
     description: 'Statistiques générales'
+  },
+  { 
+    key: 'br', 
+    label: 'Battle Royale', 
+    icon: '⚔️',
+    description: 'Statistiques Battle Royale'
   },
   { 
     key: 'settings', 
@@ -95,6 +103,15 @@ const GENERAL_STATS_MENU = [
   },
 ];
 
+const BR_STATS_MENU = [
+  { 
+    key: 'brGeneral', 
+    label: 'Général', 
+    component: BRGeneralStatsChart,
+    description: 'Statistiques générales Battle Royale'
+  },
+];
+
 
 {/*}
 const PONCE_STATS_MENU = [
@@ -106,6 +123,7 @@ export default function App() {
   const [selectedMainTab, setSelectedMainTab] = useState('players');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
+  const [selectedBRStat, setSelectedBRStat] = useState('brGeneral');
 
   const renderContent = () => {
     switch (selectedMainTab) {
@@ -155,6 +173,31 @@ export default function App() {
             <div className="lycans-dashboard-content">
               <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
                 <SelectedGeneralComponent />
+              </Suspense>
+            </div>
+          </div>
+        );
+      }
+      case 'br': {
+        const SelectedBRComponent = BR_STATS_MENU.find(m => m.key === selectedBRStat)?.component ?? BRGeneralStatsChart;
+        return (
+          <div>
+            <nav className="lycans-submenu">
+              {BR_STATS_MENU.map(item => (
+                <button
+                  key={item.key}
+                  className={`lycans-submenu-btn${selectedBRStat === item.key ? ' active' : ''}`}
+                  onClick={() => setSelectedBRStat(item.key)}
+                  type="button"
+                  title={item.description}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="lycans-dashboard-content">
+              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                <SelectedBRComponent />
               </Suspense>
             </div>
           </div>

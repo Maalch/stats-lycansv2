@@ -525,3 +525,39 @@ body {
 .lycans-fullscreen-button:hover {
   background: var(--accent-primary, #ff6b35);
 }
+
+/* Stats Grid for BR and other components */
+.lycans-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.lycans-stat-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.lycans-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.lycans-stat-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.lycans-stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--accent-primary);
+  margin: 0;
+}
