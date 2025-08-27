@@ -13,6 +13,7 @@ The data is fetched from the following endpoints:
 - `rawGameData` - Game raw data
 - `rawPonceData` - Specific data sheet about Ponce actions
 - `rawRoleData` - Role raw data
+- `rawBRData` - Battle Royal raw data
 
 ## Usage
 

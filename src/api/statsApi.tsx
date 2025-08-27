@@ -17,6 +17,10 @@ export async function fetchRawPonceData() {
   return await dataService.getData('rawPonceData');
 }
 
+export async function fetchRawBRData() {
+  return await dataService.getData('rawBRData');
+}
+
 // ===================================================================
 // UTILITY FUNCTIONS
 // ===================================================================

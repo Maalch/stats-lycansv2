@@ -14,7 +14,8 @@ export const DATA_CONFIG: DataConfig = {
     // Raw sheet exports - these are the only static files we sync
     rawGameData: 'static',
     rawRoleData: 'static',
-    rawPonceData: 'static'
+    rawPonceData: 'static',
+    rawBRData: 'static'
   }
 };
 
