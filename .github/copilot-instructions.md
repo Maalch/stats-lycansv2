@@ -42,7 +42,8 @@ const Component = lazy(() => import('./path').then(m => ({ default: m.ComponentN
 // Base pattern for all *FromRaw hooks
 const { data: rawGameData } = useFilteredRawGameData();
 const { data: rawRoleData } = useFilteredRawRoleData();
-// Complex role assignment & winner detection logic mirrors Apps Script
+const { data: rawBRData } = useFilteredRawBRData();
+const { data: rawPonceData } = useFilteredRawPonceData();
 ```
 
 ### Settings-Aware Data Filtering
