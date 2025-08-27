@@ -20,10 +20,10 @@ const GameDurationInsights = lazy(() => import('./components/generalstats/GameDu
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
 
 const MAIN_TABS = [
-  { key: 'players', label: 'Statistiques Joueurs' },
-  { key: 'general', label: 'Statistiques Générales' },
+  { key: 'players', label: 'Joueurs' },
+  { key: 'general', label: 'Parties' },
   { key: 'settings', label: 'Paramètres' },
-  //{ key: 'ponce', label: 'Statistiques Survie Ponce' },
+  //{ key: 'ponce', label: 'Ponce' },
 ];
 
 const PLAYER_STATS_MENU = [
