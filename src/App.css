@@ -41,7 +41,7 @@
 
 html, body {
   margin: 0;
-  padding: 5px;
+  padding: 2px;
   height: 100%;
   color: var(--text-primary);
 }
@@ -53,7 +53,7 @@ body {
 }
 
 .app-container {
-  width: 90vw;
+  width: 95vw;
   margin: 0 auto; /* Center horizontally */
   padding: 0; /* Remove any padding */
   min-width: 1200px;
@@ -61,20 +61,20 @@ body {
 
 /* Banner styling */
 .lycans-banner {
-  width: 50%;
-  max-width: 400px;
-  min-width: 400px;
-  margin: 20px auto 0.5rem auto; 
+  width: 35%;
+  max-width: 250px;
+  min-width: 200px;
+  margin: 10px auto 0.25rem auto; 
   display: block;
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
 }
 
 /* Main container */
 .main-container {
   width: auto;
   margin: 0 auto; /* Center horizontally only */
-  padding: 0.5rem; /* Reduce top/bottom padding */
+  padding: 0.25rem; /* Further reduce padding */
   background: var(--bg-primary);
   border-radius: 18px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.08);
@@ -85,7 +85,7 @@ body {
 .lycans-main-menu {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
   justify-content: center;
@@ -129,7 +129,7 @@ body {
 .lycans-submenu {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -223,32 +223,33 @@ body {
 .lycans-dashboard-container {
   max-width: 90%;
   margin: 0 auto;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
   font-family: 'Roboto', sans-serif;
 }
 
 .lycans-dashboard-header {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .lycans-dashboard-header h1 {
   color: var(--text-primary);
-  margin-bottom: 5px;
-  font-size: 2.2rem;
+  margin-bottom: 2px;
+  font-size: 1.8rem;
 }
 
 .lycans-dashboard-header p {
   color: var(--text-secondary);
-  font-size: 1.2rem;
+  font-size: 1rem;
+  margin-top: 0;
 }
 
 .lycans-dashboard-section {
   background-color: var(--bg-secondary);
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-  padding: 20px;
+  margin-bottom: 20px;
+  padding: 15px;
 }
 
 .lycans-dashboard-section h2 {
@@ -382,17 +383,26 @@ body {
   
   .app-container {
     min-width: auto;
-    padding: 0 10px;
+    padding: 0 5px;
   }
   
   .main-container {
-    padding: 0.5rem;
+    padding: 0.25rem;
   }
   
   .lycans-banner {
-    width: 80%;
-    min-width: 200px;
-    max-width: 300px;
+    width: 60%;
+    min-width: 150px;
+    max-width: 200px;
+    margin: 5px auto 0.25rem auto;
+  }
+
+  .lycans-dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .lycans-dashboard-header p {
+    font-size: 0.9rem;
   }
 
   .lycans-winrate-controls {
