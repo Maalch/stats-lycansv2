@@ -2,6 +2,7 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList, Cell } from 'recharts';
 import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
 import { lycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
+import { FullscreenChart } from '../common/FullscreenChart';
 
 export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysisFromRaw();
@@ -54,152 +55,158 @@ export function GameDurationInsights() {
       <div className="lycans-graphiques-section">
         <div className="lycans-graphique-element">
           <h3>Distribution des Durées de Partie</h3>
-          <div style={{ height: 300 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={jeuDonnees?.dayDistribution || []}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="days" 
-                  label={{ value: 'Nombre de Jours', position: 'insideBottom', offset: -5 }}
-                />
-                <YAxis 
-                  label={{ value: 'Nombre de Parties', angle: -90, position: 'insideLeft' }}
-                />
-                <Tooltip
-                  content={({ active, payload }) => {
-                    if (active && payload && payload.length > 0) {
-                      const d = payload[0].payload;
-                      return (
-                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
-                          <div><strong>{d.days} jours</strong></div>
-                          <div>{d.count} parties</div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                <Bar 
-                  dataKey="count" 
-                  name="Nombre de Parties" 
-                  fill="var(--chart-color-2)" // Use a CSS variable color
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <FullscreenChart title="Distribution des Durées de Partie">
+            <div style={{ height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={jeuDonnees?.dayDistribution || []}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="days" 
+                    label={{ value: 'Nombre de Jours', position: 'insideBottom', offset: -5 }}
+                  />
+                  <YAxis 
+                    label={{ value: 'Nombre de Parties', angle: -90, position: 'insideLeft' }}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const d = payload[0].payload;
+                        return (
+                          <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                            <div><strong>{d.days} jours</strong></div>
+                            <div>{d.count} parties</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar 
+                    dataKey="count" 
+                    name="Nombre de Parties" 
+                    fill="var(--chart-color-2)" // Use a CSS variable color
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
         </div>
 
         <div className="lycans-graphique-element">
           <h3>Durée Moyenne par Ratio Loups/Joueurs</h3>
-          <div style={{ height: 300 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={ratioLoupsJoueurs}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="ratio"
-                  type="number"
-                  domain={['auto', 'auto']}
-                  allowDecimals={false}
-                  tickFormatter={(v) => `${v}%`}
-                  label={{ value: 'Ratio Loups/Joueurs (%)', position: 'insideBottom', offset: -5 }}
-                />
-                <YAxis 
-                  label={{ value: 'Durée Moyenne (jours)', angle: -90, position: 'insideLeft' }}
-                />
-                <Tooltip
-                  content={({ active, payload }) => {
-                    if (active && payload && payload.length > 0) {
-                      const d = payload[0].payload;
-                      return (
-                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
-                          <div><strong>Pourcentage de loups : {d.ratio}</strong></div>
-                          <div>Durée moyenne : {d.moyenne} jours</div>
-                          <div>Nombre de parties : {d.parties}</div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="moyenne" 
-                  name="Durée Moyenne" 
-                  stroke="var(--chart-color-5)" // Use a CSS variable color
-                  activeDot={{ r: 8 }} 
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <FullscreenChart title="Durée Moyenne par Ratio Loups/Joueurs">
+            <div style={{ height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={ratioLoupsJoueurs}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="ratio"
+                    type="number"
+                    domain={['auto', 'auto']}
+                    allowDecimals={false}
+                    tickFormatter={(v) => `${v}%`}
+                    label={{ value: 'Ratio Loups/Joueurs (%)', position: 'insideBottom', offset: -5 }}
+                  />
+                  <YAxis 
+                    label={{ value: 'Durée Moyenne (jours)', angle: -90, position: 'insideLeft' }}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const d = payload[0].payload;
+                        return (
+                          <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                            <div><strong>Pourcentage de loups : {d.ratio}</strong></div>
+                            <div>Durée moyenne : {d.moyenne} jours</div>
+                            <div>Nombre de parties : {d.parties}</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Legend />
+                  <Line 
+                    type="monotone" 
+                    dataKey="moyenne" 
+                    name="Durée Moyenne" 
+                    stroke="var(--chart-color-5)" // Use a CSS variable color
+                    activeDot={{ r: 8 }} 
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
         </div>
 
         <div className="lycans-graphique-element">
           <h3>Durée Moyenne par Camp Victorieux</h3>
-          <div style={{ height: 300 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={dureesParCamp}
-                margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="camp" 
-                  angle={-45} 
-                  textAnchor="end" 
-                  height={80} 
-                  interval={0}
-                />
-                <YAxis 
-                  label={{ value: 'Durée Moyenne (jours)', angle: -90, position: 'insideLeft' }}
-                />
-                <Tooltip 
-                  content={({ active, payload }) => {
-                    if (active && payload && payload.length > 0) {
-                      const d = payload[0].payload;
-                      return (
-                        <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
-                          <div><strong>{d.camp}</strong></div>
-                          <div>Durée moyenne : {d.moyenne} jours</div>
-                          <div>Nombre de parties : {d.parties}</div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                <Bar 
-                  dataKey="moyenne" 
-                  name="moyenne" 
-                  isAnimationActive={false}
+          <FullscreenChart title="Durée Moyenne par Camp Victorieux">
+            <div style={{ height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={dureesParCamp}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
                 >
-                  {
-                    dureesParCamp.map((entry) => (
-                      <Cell key={`cell-${entry.camp}`}
-                        fill={lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp)}
-                      />
-                    ))
-                  }
-                  <LabelList
-                    dataKey="moyenne"
-                    position="top"
-                    formatter={(label) => {
-                      const val = typeof label === 'number' ? label : Number(label);
-                      return !isNaN(val) ? `${val.toFixed(1)}j` : '';
-                    }}
-                    fill="var(--text-primary)"
-                    fontSize={12}
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="camp" 
+                    angle={-45} 
+                    textAnchor="end" 
+                    height={80} 
+                    interval={0}
                   />
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+                  <YAxis 
+                    label={{ value: 'Durée Moyenne (jours)', angle: -90, position: 'insideLeft' }}
+                  />
+                  <Tooltip 
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const d = payload[0].payload;
+                        return (
+                          <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
+                            <div><strong>{d.camp}</strong></div>
+                            <div>Durée moyenne : {d.moyenne} jours</div>
+                            <div>Nombre de parties : {d.parties}</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar 
+                    dataKey="moyenne" 
+                    name="moyenne" 
+                    isAnimationActive={false}
+                  >
+                    {
+                      dureesParCamp.map((entry) => (
+                        <Cell key={`cell-${entry.camp}`}
+                          fill={lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp)}
+                        />
+                      ))
+                    }
+                    <LabelList
+                      dataKey="moyenne"
+                      position="top"
+                      formatter={(label) => {
+                        const val = typeof label === 'number' ? label : Number(label);
+                        return !isNaN(val) ? `${val.toFixed(1)}j` : '';
+                      }}
+                      fill="var(--text-primary)"
+                      fontSize={12}
+                    />
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
         </div>
       </div>
     </div>

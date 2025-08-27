@@ -455,57 +455,59 @@ export function PlayerGameHistoryChart() {
         {/* Camp Performance */}
         <div className="lycans-graphique-section">
           <h3>Performance par Camp</h3>
-          <div style={{ height: 400 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={campDistributionData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="name"
-                  angle={-45}
-                  textAnchor="end"
-                  height={90}
-                  interval={0}
-                  fontSize={11}
-                />
-                <YAxis 
-                  label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
-                  domain={[0, 100]}
-                />
-                <Tooltip
-                  content={({ active, payload }) => {
-                    if (active && payload && payload.length > 0) {
-                      const dataPoint = payload[0].payload;
-                      return (
-                        <div style={{ 
-                          background: 'var(--bg-secondary)', 
-                          color: 'var(--text-primary)', 
-                          padding: 12, 
-                          borderRadius: 8,
-                          border: '1px solid var(--border-color)'
-                        }}>
-                          <div><strong>{dataPoint.name}</strong></div>
-                          <div>Victoires: {dataPoint.wins} / {dataPoint.value}</div>
-                          <div>Taux: {dataPoint.winRate}%</div>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                <Bar dataKey="winRate">
-                  {campDistributionData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <FullscreenChart title="Performance par Camp">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={campDistributionData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="name"
+                    angle={-45}
+                    textAnchor="end"
+                    height={90}
+                    interval={0}
+                    fontSize={11}
+                  />
+                  <YAxis 
+                    label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                    domain={[0, 100]}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const dataPoint = payload[0].payload;
+                        return (
+                          <div style={{ 
+                            background: 'var(--bg-secondary)', 
+                            color: 'var(--text-primary)', 
+                            padding: 12, 
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)'
+                          }}>
+                            <div><strong>{dataPoint.name}</strong></div>
+                            <div>Victoires: {dataPoint.wins} / {dataPoint.value}</div>
+                            <div>Taux: {dataPoint.winRate}%</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar dataKey="winRate">
+                    {campDistributionData.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
         </div>
       </div>
     </div>
