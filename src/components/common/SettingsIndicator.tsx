@@ -47,8 +47,15 @@ export function SettingsIndicator() {
       const playerCount = settings.playerFilter.players.length;
       if (playerCount > 0) {
         const modeText = settings.playerFilter.mode === 'include' ? 'Inclure' : 'Exclure';
-        const playerText = playerCount === 1 ? 'joueur' : 'joueurs';
-        filters.push(`${modeText} ${playerCount} ${playerText}`);
+        
+        if (playerCount === 1) {
+          // Show player name for single player
+          filters.push(`${modeText} ${settings.playerFilter.players[0]}`);
+        } else {
+          // Show count for multiple players
+          const playerText = 'joueurs';
+          filters.push(`${modeText} ${playerCount} ${playerText}`);
+        }
       } else {
         const modeText = settings.playerFilter.mode === 'include' ? 'inclusion' : 'exclusion';
         filters.push(`Filtre ${modeText} (aucun joueur sélectionné)`);
