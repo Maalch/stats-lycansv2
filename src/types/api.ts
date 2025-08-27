@@ -25,64 +25,64 @@ export const playersColor: Record<string, string> = {
   "Bytell": "#54D90F",          // Vert clair
   "Kyria": "#6F00D9",           // Violet
   "Fukano": "#FF9500",          // Orange
-  "Brybry": "#009A13",          // Vert foncé
-  "Baout": "#FF61F4",           // Rose
+  "Brybry": "#009A13",          // Vert foncé 
+  "Baout": "#54D90F",           // Vert clair
   "Lutti": "#00FFFF",           // Cyan
   "Miraaaaaah": "#6F00D9",      // Violet
   "Tsuna": "#A65200",           // Marron
   "Noamouille": "#FF9500",      // Orange
-  "Craco": "#FF61F4",           // Rose
+  "Craco": "#A65200",           // Marron
   "ClydeCreator": "#FF0000",    // Rouge
   "Ketchopi": "#FFED00",        // Jaune
-  "BoccA": "#A65200",           // Marron
-  "Koka": "#FFED00",            // Jaune
-  "Anaee": "#A65200",           // Marron
+  "BoccA": "#909090",           // Gris
+  "Koka": "#009A13",            // Vert foncé
+  "Anaee": "#6F00D9",           // Violet
   "Flonflon": "#54D90F",        // Vert clair
   "Lydiaam": "#FFED00",         // Jaune
   "Heimdalle": "#00FFFF",       // Cyan
-  "Drakony": "#A65200",         // Marron
+  "Drakony": "#909090",         // Gris
   "Tone": "#FFED00",            // Jaune
   "Mathy": "#FFED00",           // Jaune
   "Poachimpa": "#A65200",       // Marron
   "Cyldhur": "#909090",         // Gris
   "Reivil": "#FF9500",          // Orange
   "Zarcross": "#FF9500",        // Orange
-  "Shaunz": "#0012A6",          // Bleu foncé
+  "Shaunz": "#0076FF",          // Bleu clair 
   "Aayley": "#009A13",          // Vert foncé
   "RomainJacques": "#FFED00",   // Jaune
   "DevGirl_": "#FF61F4",        // Rose
   "CHLOE": "#00FFFF",           // Cyan
-  "Yoona": "#FF0000",           // Rouge
+  "Yoona": "#FF61F4",           // Rose
   "Mickalow": "#009A13",        // Vert foncé
   "PeoBran": "#00FFFF",         // Cyan
   "Tovi": "#909090",            // Gris
-  "Kissiffrote": "#FF0000",     // Rouge
+  "Kissiffrote": "#0076FF",     // Bleu clair 
   "Pelerine": "#909090",        // Gris
   "MaMaPaprika": "#FF9500",     // Orange
   "Xari": "#009A13",            // Vert foncé
-  "Sakor": "#FFED00",           // Jaune
+  "Sakor": "#FF9500",           // Orange
   "HortyUnderscore": "#00FFFF", // Cyan
   "LittleBigWhale": "#FF61F4",  // Rose
-  "Gom4rt": "#FF9500",          // Orange
+  "Gom4rt": "#FFED00",          // Jaune
   "Ultia": "#6F00D9",           // Violet
   "Onutrem": "#0076FF",         // Bleu clair
   "DFG": "#A65200",             // Marron
   "Crocodyle": "#909090",       // Gris
   "GoB": "#FF0000",             // Rouge
-  "Wingo": "#FF9500",           // Orange
-  "Nahomay": "#00FFFF",         // Cyan
+  "Wingo": "#6F00D9",           // Violet
+  "Nahomay": "#FF61F4",         // Rose
   "Naka": "#FFED00",            // Jaune
   "Covfefe": "#6F00D9",         // Violet
-  "LyeGaia": "#FF9500",         // Orange
+  "LyeGaia": "#009A13",         // Vert foncé 
   "Maechi": "#009A13",          // Vert foncé
-  "TPK": "#00FFFF",             // Cyan
-  "Clem_mlrt": "#00FFFF",       // Cyan
-  "Bidji": "#FF61F4",           // Rose
+  "TPK": "#009A13",             // Vert foncé
+  "Clem_mlrt": "#6F00D9",       // Violet
+  "Bidji": "#FF9500",           // Orange
   "AfterNoune": "#FF9500",      // Orange
   "JimmyBoyyy": "#A65200",      // Marron
   "Mimosa_etoilee": "#FF0000",  // Rouge
   "Leaprima": "#FFED00",        // Jaune
-  "Riri et son ptit Ricard": "#A65200", // Marron
+  "Riri et son ptit Ricard": "#FF61F4", // Rose
   "Berlu": "#009A13",           // Vert foncé
   "Antoine": "#FF0000",         // Rouge
   "AvaMind": "#00FFFF",         // Cyan
