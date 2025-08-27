@@ -324,8 +324,10 @@ body {
 /* Responsive design pour les menus */
 @media (max-width: 768px) {
   .lycans-main-menu {
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
   }
   
   .lycans-main-menu-btn {
@@ -334,7 +336,20 @@ body {
   }
   
   .lycans-submenu {
-    justify-content: center;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 8px;
+  }
+
+  .lycans-submenu::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .lycans-submenu-btn {
+    white-space: nowrap;
+    min-width: 120px;
   }
   
   .app-container {
