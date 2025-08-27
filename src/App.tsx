@@ -64,7 +64,7 @@ const PLAYER_STATS_MENU = [
     key: 'campPerformance', 
     label: 'Performances', 
     component: PlayerCampPerformanceChart,
-    description: 'Efficacité par camp et rôle'
+    description: 'Meilleurs performances (par rapport à la moyenne), par camp'
   },
 ];
 
@@ -73,7 +73,7 @@ const GENERAL_STATS_MENU = [
     key: 'camps', 
     label: 'Camps', 
     component: CampsChart,
-    description: 'Répartition des victoires par camp'
+    description: 'Détails des apparitions et victoires par camp'
   },
   { 
     key: 'victoryTypes', 
@@ -107,6 +107,19 @@ export default function App() {
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
 
+  const getCurrentDescription = () => {
+    switch (selectedMainTab) {
+      case 'players':
+        return PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.description;
+      case 'general':
+        return GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.description;
+      case 'settings':
+        return MAIN_TABS.find(t => t.key === 'settings')?.description;
+      default:
+        return null;
+    }
+  };
+
   const renderContent = () => {
     switch (selectedMainTab) {
     
@@ -121,6 +134,7 @@ export default function App() {
                   className={`lycans-submenu-btn${selectedPlayerStat === item.key ? ' active' : ''}`}
                   onClick={() => setSelectedPlayerStat(item.key)}
                   type="button"
+                  title={item.description}
                 >
                   {item.label}
                 </button>
@@ -145,6 +159,7 @@ export default function App() {
                   className={`lycans-submenu-btn${selectedGeneralStat === item.key ? ' active' : ''}`}
                   onClick={() => setSelectedGeneralStat(item.key)}
                   type="button"
+                  title={item.description}
                 >
                   {item.label}
                 </button>
@@ -207,8 +222,10 @@ export default function App() {
                       className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
                       onClick={() => setSelectedMainTab(tab.key)}
                       type="button"
+                      title={tab.description}
                     >
-                      {tab.label}
+                      <span className="tab-icon">{tab.icon}</span>
+                      <span className="tab-label">{tab.label}</span>
                       {tab.key === 'settings' && <SettingsBadge />}
                     </button>
                   ))}
@@ -216,6 +233,11 @@ export default function App() {
 
                 <div className="lycans-dashboard-section">
                   <SettingsIndicator />
+                  {getCurrentDescription() && (
+                    <div className="lycans-section-description">
+                      <p>{getCurrentDescription()}</p>
+                    </div>
+                  )}
                   {renderContent()}
                 </div>
 
