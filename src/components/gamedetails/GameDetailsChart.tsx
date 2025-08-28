@@ -271,16 +271,14 @@ function GameDetailView({ game }: { game: any }) {
                 <span className="value">{game.map}</span>
               </div>
             )}
-            {game.startTime && (
+            {game.youtubeEmbedUrl && (
               <div className="lycans-stat-item">
-                <span className="label">Début:</span>
-                <span className="value">{game.startTime}</span>
-              </div>
-            )}
-            {game.endTime && (
-              <div className="lycans-stat-item">
-                <span className="label">Fin:</span>
-                <span className="value">{game.endTime}</span>
+                <span className="label">Vidéo YouTube:</span>
+                <span className="value">
+                  <a href={game.youtubeEmbedUrl} target="_blank" rel="noopener noreferrer">
+                    Voir la partie
+                  </a>
+                </span>
               </div>
             )}
           </div>
