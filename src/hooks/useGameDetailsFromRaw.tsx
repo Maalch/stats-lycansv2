@@ -399,6 +399,13 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
           }
         });
       }
+
+      if (filters.selectedGameDuration) {
+        filteredGames = filteredGames.filter(game => {
+          const gameDays = game["Nombre de journées"];
+          return gameDays === filters.selectedGameDuration;
+        });
+      }
     }
 
     return filteredGames.map(game => {

@@ -93,6 +93,7 @@ export function GameDetailsChart() {
     }
     if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
     if (navigationFilters.selectedHarvestRange) filters.push(`Récolte: ${navigationFilters.selectedHarvestRange}`);
+    if (navigationFilters.selectedGameDuration) filters.push(`Durée: ${navigationFilters.selectedGameDuration} jour${navigationFilters.selectedGameDuration > 1 ? 's' : ''}`);
     if (navigationFilters.selectedGame) filters.push(`Partie #${navigationFilters.selectedGame}`);
     if (navigationFilters.selectedDate) {
       // Check if it's a month filter (MM/YYYY) or exact date (DD/MM/YYYY)
