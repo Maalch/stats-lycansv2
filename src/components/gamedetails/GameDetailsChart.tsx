@@ -75,10 +75,22 @@ export function GameDetailsChart() {
 
   const getFilterSummary = () => {
     const filters = [];
-    if (navigationFilters.selectedPlayer) filters.push(`Joueur: ${navigationFilters.selectedPlayer}`);
-    if (navigationFilters.selectedCamp) filters.push(`Camp: ${navigationFilters.selectedCamp}`);
+    if (navigationFilters.selectedPlayer && navigationFilters.selectedCamp) {
+      filters.push(`${navigationFilters.selectedPlayer} jouant ${navigationFilters.selectedCamp}`);
+    } else {
+      if (navigationFilters.selectedPlayer) filters.push(`Joueur: ${navigationFilters.selectedPlayer}`);
+      if (navigationFilters.selectedCamp) filters.push(`Camp: ${navigationFilters.selectedCamp}`);
+    }
     if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
     if (navigationFilters.selectedGame) filters.push(`Partie #${navigationFilters.selectedGame}`);
+    if (navigationFilters.selectedDate) {
+      // Check if it's a month filter (MM/YYYY) or exact date (DD/MM/YYYY)
+      if (navigationFilters.selectedDate.includes('/') && navigationFilters.selectedDate.split('/').length === 2) {
+        filters.push(`Mois: ${navigationFilters.selectedDate}`);
+      } else {
+        filters.push(`Date: ${navigationFilters.selectedDate}`);
+      }
+    }
     return filters;
   };
 
@@ -231,6 +243,37 @@ function GameDetailView({ game }: { game: any }) {
           </div>
         </div>
 
+        {/* Additional Info */}
+        <div className="lycans-game-detail-section">
+          <h4>Informations Supplémentaires</h4>
+          <div className="lycans-game-detail-stats">
+            {game.versions && (
+              <div className="lycans-stat-item">
+                <span className="label">Version:</span>
+                <span className="value">{game.versions}</span>
+              </div>
+            )}
+            {game.map && (
+              <div className="lycans-stat-item">
+                <span className="label">Map:</span>
+                <span className="value">{game.map}</span>
+              </div>
+            )}
+            {game.startTime && (
+              <div className="lycans-stat-item">
+                <span className="label">Début:</span>
+                <span className="value">{game.startTime}</span>
+              </div>
+            )}
+            {game.endTime && (
+              <div className="lycans-stat-item">
+                <span className="label">Fin:</span>
+                <span className="value">{game.endTime}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Results */}
         <div className="lycans-game-detail-section">
           <h4>Résultats</h4>
@@ -287,71 +330,24 @@ function GameDetailView({ game }: { game: any }) {
           </div>
         )}
 
-        {/* Roles */}
-        {Object.keys(game.roles).length > 0 && (
-          <div className="lycans-game-detail-section">
-            <h4>Rôles</h4>
-            <div className="lycans-game-detail-stats">
-              {game.roles.wolves && (
-                <div className="lycans-stat-item">
-                  <span className="label">Loups:</span>
-                  <span className="value">{game.roles.wolves.join(', ')}</span>
-                </div>
-              )}
-              {game.roles.traitor && (
-                <div className="lycans-stat-item">
-                  <span className="label">Traître:</span>
-                  <span className="value">{game.roles.traitor}</span>
-                </div>
-              )}
-              {game.roles.lovers && (
-                <div className="lycans-stat-item">
-                  <span className="label">Amoureux:</span>
-                  <span className="value">{game.roles.lovers.join(', ')}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Players List */}
+        {/* Player Roles */}
         <div className="lycans-game-detail-section full-width">
-          <h4>Liste des Joueurs</h4>
-          <div className="lycans-players-list">
-            {game.playersList}
+          <h4>Rôles des Joueurs</h4>
+          <div className="lycans-player-roles-grid">
+            {game.playerRoles.map((playerRole: any, index: number) => (
+              <div key={index} className="lycans-player-role-item">
+                <div className="lycans-player-name" style={{
+                  color: lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#fff'
+                }}>
+                  {playerRole.player}
+                </div>
+                <div className="lycans-player-role">{playerRole.role}</div>
+                <div className="lycans-player-camp">{playerRole.camp}</div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Additional Info */}
-        <div className="lycans-game-detail-section full-width">
-          <h4>Informations Supplémentaires</h4>
-          <div className="lycans-game-detail-stats">
-            {game.versions && (
-              <div className="lycans-stat-item">
-                <span className="label">Version:</span>
-                <span className="value">{game.versions}</span>
-              </div>
-            )}
-            {game.map && (
-              <div className="lycans-stat-item">
-                <span className="label">Map:</span>
-                <span className="value">{game.map}</span>
-              </div>
-            )}
-            {game.startTime && (
-              <div className="lycans-stat-item">
-                <span className="label">Début:</span>
-                <span className="value">{game.startTime}</span>
-              </div>
-            )}
-            {game.endTime && (
-              <div className="lycans-stat-item">
-                <span className="label">Fin:</span>
-                <span className="value">{game.endTime}</span>
-              </div>
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );
