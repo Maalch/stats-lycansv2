@@ -1,6 +1,7 @@
 import { Suspense, lazy, useState } from 'react';
 import { FullscreenProvider } from './context/FullscreenContext';
 import { SettingsProvider } from './context/SettingsContext';
+import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { SettingsIndicator } from './components/common/SettingsIndicator';
 import { SettingsBadge } from './components/common/SettingsBadge';
 import './App.css';
@@ -17,6 +18,8 @@ const HarvestProgressChart = lazy(() => import('./components/generalstats/Harves
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 
 const BRGeneralStatsChart = lazy(() => import('./components/brstats/BRGeneralStatsChart').then(m => ({ default: m.BRGeneralStatsChart })));
+
+const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
 
 // Add settings import
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
@@ -35,11 +38,18 @@ const MAIN_TABS = [
     description: 'Statistiques générales'
   },
   { 
+    key: 'gameDetails', 
+    label: 'Détails des Parties', 
+    icon: '📋',
+    description: 'Détails complets de chaque partie'
+  },
+  { 
     key: 'br', 
     label: 'Battle Royale', 
     icon: '⚔️',
     description: 'Statistiques Battle Royale'
   },
+
   { 
     key: 'settings', 
     label: 'Paramètres', 
@@ -104,9 +114,51 @@ const GENERAL_STATS_MENU = [
 ];
 
 export default function App() {
+  return (
+    <SettingsProvider>
+      <NavigationProvider>
+        <FullscreenProvider>
+          <MainApp />
+        </FullscreenProvider>
+      </NavigationProvider>
+    </SettingsProvider>
+  );
+}
+
+function MainApp() {
+  const { currentView } = useNavigation();
   const [selectedMainTab, setSelectedMainTab] = useState('players');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
+
+  // If we're in game details view, show that instead of the normal tabs
+  if (currentView === 'gameDetails') {
+    return (
+      <div className="app-container">
+        <img
+          className="lycans-banner"
+          src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
+          alt="Lycans Banner"
+        />
+        <div className="main-container">
+          <div className="lycans-dashboard-container">
+            <header className="lycans-dashboard-header">
+              <h1>Statistiques Lycans</h1>
+              <p>Basées sur les VOD des parties de Ponce uniquement</p>
+            </header>
+            <div className="lycans-dashboard-section">
+              <SettingsIndicator />
+              <div className="lycans-dashboard-content">
+                <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                  <GameDetailsChart />
+                </Suspense>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const renderContent = () => {
     switch (selectedMainTab) {
@@ -170,6 +222,15 @@ export default function App() {
           </div>
         );
       }
+      case 'gameDetails': {
+        return (
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <GameDetailsChart />
+            </Suspense>
+          </div>
+        );
+      }
       {/* Uncomment when Ponce stats are implemented}
       case 'ponce': {
         const SelectedPonceComponent = PONCE_STATS_MENU[0].component;
@@ -197,49 +258,45 @@ export default function App() {
   };
 
   return (
-      <SettingsProvider>
-        <FullscreenProvider>
-          <div className="app-container">
-            <img
-              className="lycans-banner"
-              src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
-              alt="Lycans Banner"
-            />
-            <div className="main-container">
-              <div className="lycans-dashboard-container">
-                <header className="lycans-dashboard-header">
-                  <h1>Statistiques Lycans</h1>
-                  <p>Basées sur les VOD des parties de Ponce uniquement</p>
-                </header>
+        <div className="app-container">
+          <img
+            className="lycans-banner"
+            src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
+            alt="Lycans Banner"
+          />
+          <div className="main-container">
+            <div className="lycans-dashboard-container">
+              <header className="lycans-dashboard-header">
+                <h1>Statistiques Lycans</h1>
+                <p>Basées sur les VOD des parties de Ponce uniquement</p>
+              </header>
 
-                <nav className="lycans-main-menu">
-                  {MAIN_TABS.map(tab => (
-                    <button
-                      key={tab.key}
-                      className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
-                      onClick={() => setSelectedMainTab(tab.key)}
-                      type="button"
-                      title={tab.description}
-                    >
-                      <span className="tab-icon">{tab.icon}</span>
-                      <span className="tab-label">{tab.label}</span>
-                      {tab.key === 'settings' && <SettingsBadge />}
-                    </button>
-                  ))}
-                </nav>
+              <nav className="lycans-main-menu">
+                {MAIN_TABS.map(tab => (
+                  <button
+                    key={tab.key}
+                    className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
+                    onClick={() => setSelectedMainTab(tab.key)}
+                    type="button"
+                    title={tab.description}
+                  >
+                    <span className="tab-icon">{tab.icon}</span>
+                    <span className="tab-label">{tab.label}</span>
+                    {tab.key === 'settings' && <SettingsBadge />}
+                  </button>
+                ))}
+              </nav>
 
-                <div className="lycans-dashboard-section">
-                  <SettingsIndicator />
-                  {renderContent()}
-                </div>
-
-                <footer className="lycans-dashboard-footer">
-                  <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
-                </footer>
+              <div className="lycans-dashboard-section">
+                <SettingsIndicator />
+                {renderContent()}
               </div>
+
+              <footer className="lycans-dashboard-footer">
+                <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
+              </footer>
             </div>
           </div>
-        </FullscreenProvider>
-      </SettingsProvider>
+        </div>
   );
 }

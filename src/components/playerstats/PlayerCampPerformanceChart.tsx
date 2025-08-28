@@ -4,19 +4,36 @@ import { usePlayerCampPerformanceFromRaw } from '../../hooks/usePlayerCampPerfor
 import { lycansColorScheme, playersColor } from '../../types/api';
 import { minGamesOptions} from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
+import { useNavigation } from '../../context/NavigationContext';
 
 type ViewMode =  'player-performance' | 'top-performers';
 
 export function PlayerCampPerformanceChart() {
-  const [viewMode, setViewMode] = useState<ViewMode>('player-performance');
-  const [selectedCamp, setSelectedCamp] = useState<string>('Villageois');
-  const [minGames, setMinGames] = useState<number>(5);
-  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  
+  // Use navigationState to restore state, with fallbacks
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    navigationState.selectedCampPerformanceView || 'player-performance'
+  );
+  const [selectedCamp, setSelectedCamp] = useState<string>(
+    navigationState.selectedCampPerformanceCamp || 'Villageois'
+  );
+  const [minGames, setMinGames] = useState<number>(
+    navigationState.selectedCampPerformanceMinGames || 5
+  );
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformanceFromRaw();
 
-  // Debug: Log player camp performance data
-  console.log('PlayerCampPerformanceChart - playerCampPerformance:', playerCampPerformance);
+  // Save initial state to navigation context if not already saved
+  useEffect(() => {
+    if (!navigationState.selectedCampPerformanceView) {
+      updateNavigationState({
+        selectedCampPerformanceView: viewMode,
+        selectedCampPerformanceCamp: selectedCamp,
+        selectedCampPerformanceMinGames: minGames
+      });
+    }
+  }, [viewMode, selectedCamp, minGames, navigationState.selectedCampPerformanceView, updateNavigationState]);
 
   // Get available camps from camp averages
   const availableCamps = useMemo(() => {
@@ -82,19 +99,25 @@ export function PlayerCampPerformanceChart() {
     };
   }, [playerCampPerformance, selectedCamp, minGames]);
 
-  // Reset selection when camp or view mode changes
-  const resetSelection = () => setSelectedPlayer(null);
-  
-  // Effect to reset selection when dependencies change
-  useEffect(() => {
-    resetSelection();
-  }, [selectedCamp, viewMode]);
-
-  // Handler for bar chart clicks
+  // Handler for bar chart clicks - navigate to game details
   const handleBarClick = (data: any) => {
     if (data && data.player) {
-      const clickedPlayer = data.player;
-      setSelectedPlayer(selectedPlayer === clickedPlayer ? null : clickedPlayer);
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedCamp: selectedCamp,
+        fromComponent: `Performance des Joueurs - ${selectedCamp}`
+      });
+    }
+  };
+
+  // Handler for Hall of Fame bar chart clicks - navigate to game details
+  const handleHallOfFameBarClick = (data: any) => {
+    if (data && data.player && data.camp) {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedCamp: data.camp,
+        fromComponent: `Top 20 des Performances (Min. ${minGames} parties dans ce camp)`
+      });
     }
   };
 
@@ -129,7 +152,11 @@ export function PlayerCampPerformanceChart() {
           <select
             id="view-mode-select"
             value={viewMode}
-            onChange={(e) => setViewMode(e.target.value as ViewMode)}
+            onChange={(e) => {
+              const newViewMode = e.target.value as ViewMode;
+              setViewMode(newViewMode);
+              updateNavigationState({ selectedCampPerformanceView: newViewMode });
+            }}
             style={{
               background: 'var(--bg-tertiary)',
               color: 'var(--text-primary)',
@@ -153,7 +180,11 @@ export function PlayerCampPerformanceChart() {
             <select
               id="camp-select"
               value={selectedCamp}
-              onChange={(e) => setSelectedCamp(e.target.value)}
+              onChange={(e) => {
+                const newCamp = e.target.value;
+                setSelectedCamp(newCamp);
+                updateNavigationState({ selectedCampPerformanceCamp: newCamp });
+              }}
               style={{
                 background: 'var(--bg-tertiary)',
                 color: 'var(--text-primary)',
@@ -181,7 +212,11 @@ export function PlayerCampPerformanceChart() {
             <select
               id="min-games-select"
               value={minGames}
-              onChange={(e) => setMinGames(Number(e.target.value))}
+              onChange={(e) => {
+                const newMinGames = Number(e.target.value);
+                setMinGames(newMinGames);
+                updateNavigationState({ selectedCampPerformanceMinGames: newMinGames });
+              }}
               style={{
                 background: 'var(--bg-tertiary)',
                 color: 'var(--text-primary)',
@@ -259,8 +294,13 @@ export function PlayerCampPerformanceChart() {
                               <div>Taux personnel: {dataPoint.winRate}%</div>
                               <div>Moyenne camp: {dataPoint.campAvgWinRate}%</div>
                               <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
-                              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-                                {selectedPlayer === dataPoint.player ? 'Cliquez pour désélectionner' : 'Cliquez pour sélectionner'}
+                              <div style={{ 
+                                fontSize: '0.8rem', 
+                                color: 'var(--chart-color-1)', 
+                                marginTop: '0.25rem',
+                                fontStyle: 'italic'
+                              }}>
+                                Cliquez pour voir les parties
                               </div>
                             </div>
                           );
@@ -277,13 +317,9 @@ export function PlayerCampPerformanceChart() {
                         <Cell
                            key={`cell-${index}`}
                            fill={
-                           selectedPlayer === entry.player 
-                             ? '#FFD700' // Gold color for selected player
-                             : playersColor[entry.player] ||
+                             playersColor[entry.player] ||
                                (entry.performanceNum >= 0 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
                            }
-                           stroke={selectedPlayer === entry.player ? '#FFA500' : 'none'}
-                           strokeWidth={selectedPlayer === entry.player ? 2 : 0}
                         />
                      ))}
                      </Bar>
@@ -328,11 +364,14 @@ export function PlayerCampPerformanceChart() {
                               <div><strong>{dataPoint.player}</strong></div>
                               <div>Parties: {dataPoint.games}</div>
                               <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
-                              {selectedPlayer === dataPoint.player && (
-                                <div style={{ fontSize: '0.8rem', color: '#FFD700', marginTop: '4px' }}>
-                                  ★ Joueur sélectionné
-                                </div>
-                              )}
+                              <div style={{ 
+                                fontSize: '0.8rem', 
+                                color: 'var(--chart-color-1)', 
+                                marginTop: '0.25rem',
+                                fontStyle: 'italic'
+                              }}>
+                                Cliquez pour voir les parties
+                              </div>
                               </div>
                            );
                         }
@@ -342,41 +381,38 @@ export function PlayerCampPerformanceChart() {
                     <Scatter
                       dataKey="performanceNum"
                       name="Performance"
+                      onClick={(data: any) => {
+                        if (data && data.player) {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            selectedCamp: selectedCamp,
+                            fromComponent: `Relation Parties Jouées vs Performance - ${selectedCamp}`
+                          });
+                        }
+                      }}
                       shape={(props: { cx?: number; cy?: number; payload?: any }) => {
-                        const isSelected = selectedPlayer === props.payload?.player;
                         return (
-                        <g>
+                        <g style={{ cursor: 'pointer' }}>
                           <circle
                             cx={props.cx}
                             cy={props.cy}
-                            r={isSelected ? 16 : 12} // Larger size for selected player
-                            fill={isSelected ? '#FFD700' : (playersColor[props.payload?.player] || 'var(--accent-primary)')}
-                            stroke={isSelected ? '#FFA500' : '#222'}
-                            strokeWidth={isSelected ? 3 : 1}
+                            r={12}
+                            fill={playersColor[props.payload?.player] || 'var(--accent-primary)'}
+                            stroke="#222"
+                            strokeWidth={1}
                           />
                           <text
                             x={props.cx}
                             y={props.cy}
                             textAnchor="middle"
                             dominantBaseline="middle"
-                            fill={isSelected ? '#000' : '#fff'}
-                            fontSize={isSelected ? "12" : "10"}
+                            fill="#fff"
+                            fontSize="10"
                             fontWeight="bold"
                             pointerEvents="none"
                           >
                             {props.payload?.player?.charAt(0).toUpperCase()}
                           </text>
-                          {isSelected && (
-                            <circle
-                              cx={props.cx}
-                              cy={props.cy}
-                              r={20}
-                              fill="none"
-                              stroke="#FFD700"
-                              strokeWidth={2}
-                              strokeDasharray="4 2"
-                            />
-                          )}
                         </g>
                       )}}
                     />
@@ -427,13 +463,25 @@ export function PlayerCampPerformanceChart() {
                             <div>Parties: {dataPoint.games}</div>
                             <div>Taux personnel: {dataPoint.winRate}%</div>
                             <div>Performance: +{dataPoint.performance}</div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
                       return null;
                     }}
                   />
-                  <Bar dataKey="performanceNum">
+                  <Bar 
+                    dataKey="performanceNum"
+                    style={{ cursor: 'pointer' }}
+                    onClick={handleHallOfFameBarClick}
+                  >
                     {topPerformersData.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 

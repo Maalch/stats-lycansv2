@@ -1,11 +1,13 @@
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList, Cell } from 'recharts';
 import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
+import { useNavigation } from '../../context/NavigationContext';
 import { lycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysisFromRaw();
+  const { navigateToGameDetails } = useNavigation();
 
   if (telechargementActif) {
     return <div className="statistiques-attente">Analyse des durées de partie en cours...</div>;
@@ -78,6 +80,14 @@ export function GameDurationInsights() {
                           <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                             <div><strong>{d.days} jours</strong></div>
                             <div>{d.count} parties</div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
@@ -87,7 +97,16 @@ export function GameDurationInsights() {
                   <Bar 
                     dataKey="count" 
                     name="Nombre de Parties" 
-                    fill="var(--chart-color-2)" // Use a CSS variable color
+                    fill="var(--chart-color-2)"
+                    onClick={(data: any) => {
+                      if (data && data.days) {
+                        navigateToGameDetails({
+                          selectedGameDuration: data.days,
+                          fromComponent: 'Distribution des Durées de Partie'
+                        });
+                      }
+                    }}
+                    style={{ cursor: 'pointer' }}
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -174,6 +193,14 @@ export function GameDurationInsights() {
                             <div><strong>{d.camp}</strong></div>
                             <div>Durée moyenne : {d.moyenne} jours</div>
                             <div>Nombre de parties : {d.parties}</div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
@@ -184,6 +211,16 @@ export function GameDurationInsights() {
                     dataKey="moyenne" 
                     name="moyenne" 
                     isAnimationActive={false}
+                    onClick={(data: any) => {
+                      if (data && data.camp) {
+                        navigateToGameDetails({
+                          selectedCamp: data.camp,
+                          campFilterMode: 'wins-only',
+                          fromComponent: 'Durée Moyenne par Camp Victorieux'
+                        });
+                      }
+                    }}
+                    style={{ cursor: 'pointer' }}
                   >
                     {
                       dureesParCamp.map((entry) => (

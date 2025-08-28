@@ -3,11 +3,13 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { useCampWinStatsFromRaw } from '../../hooks/useCampWinStatsFromRaw';
 import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
+import { useNavigation } from '../../context/NavigationContext';
 
 // Fallback color for camps not in the scheme
 const lycansDefaultColor = '#607D8B';
 
 export function CampsChart() {
+  const { navigateToGameDetails } = useNavigation();
   const { campWinStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useCampWinStatsFromRaw();
 
   // Prepare camp averages data for visualization (now from campWinStats)
@@ -132,6 +134,28 @@ export function CampsChart() {
                       fill="#8884d8"
                       dataKey="winRateNum"
                       nameKey="camp"
+                      onClick={(data: any) => {
+                        if (data && data.camp) {
+                          if (data.camp === 'Autres' && (data as any)._details) {
+                            // For "Autres", pass the small camps details
+                            const smallCamps = (data as any)._details.map((detail: any) => detail.camp);
+                            navigateToGameDetails({
+                              selectedCamp: 'Autres',
+                              _smallCamps: smallCamps,
+                              fromComponent: 'Répartition des Victoires par Camp',
+                              campFilterMode: 'wins-only'
+                            });
+                          } else {
+                            // For regular camps
+                            navigateToGameDetails({
+                              selectedCamp: data.camp,
+                              fromComponent: 'Répartition des Victoires par Camp',
+                              campFilterMode: 'wins-only'
+                            });
+                          }
+                        }
+                      }}
+                      style={{ cursor: 'pointer' }}
                       label={({ camp, winRate }) => 
                         camp === 'Autres' ? `Autres: ${winRate}%` : `${camp}: ${winRate}%`
                       }
@@ -143,7 +167,27 @@ export function CampsChart() {
                             entree.camp === 'Autres'
                               ? lycansOtherCategoryColor
                               : lycansColorScheme[entree.camp as keyof typeof lycansColorScheme] || lycansDefaultColor
-                          } 
+                          }
+                          onClick={() => {
+                            if (entree.camp === 'Autres' && (entree as any)._details) {
+                              // For "Autres", pass the small camps details
+                              const smallCamps = (entree as any)._details.map((detail: any) => detail.camp);
+                              navigateToGameDetails({
+                                selectedCamp: 'Autres',
+                                _smallCamps: smallCamps,
+                                fromComponent: 'Répartition des Victoires par Camp',
+                                campFilterMode: 'wins-only'
+                              });
+                            } else {
+                              // For regular camps
+                              navigateToGameDetails({
+                                selectedCamp: entree.camp,
+                                fromComponent: 'Répartition des Victoires par Camp',
+                                campFilterMode: 'wins-only'
+                              });
+                            }
+                          }}
+                          style={{ cursor: 'pointer' }}
                         />
                       ))}
                     </Pie>
@@ -175,6 +219,14 @@ export function CampsChart() {
                                 <div style={{ marginTop: 4, fontWeight: 'bold' }}>
                                   Total: {d.wins} victoires ({d.winRate}%)
                                 </div>
+                                <div style={{ 
+                                  fontSize: '0.8rem', 
+                                  color: 'var(--chart-color-1)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  Cliquez pour voir les parties
+                                </div>
                               </div>
                             );
                           }
@@ -194,6 +246,14 @@ export function CampsChart() {
                               </div>
                               <div>
                                 Taux de victoire: {d.winRate}%
+                              </div>
+                              <div style={{ 
+                                fontSize: '0.8rem', 
+                                color: 'var(--chart-color-1)', 
+                                marginTop: '0.25rem',
+                                fontStyle: 'italic'
+                              }}>
+                                Cliquez pour voir les parties
                               </div>
                             </div>
                           );
@@ -249,17 +309,45 @@ export function CampsChart() {
                                 <div><strong>{dataPoint.camp}</strong></div>
                                 <div>Parties totales: {dataPoint.totalGames}</div>
                                 <div>Taux de victoire: {dataPoint.winRate}%</div>
+                                <div style={{ 
+                                  fontSize: '0.8rem', 
+                                  color: 'var(--chart-color-1)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  Cliquez pour voir les parties
+                                </div>
                               </div>
                             );
                           }
                           return null;
                         }}
                       />
-                      <Bar dataKey="winRateNum">
+                      <Bar 
+                        dataKey="winRateNum"
+                        onClick={(data: any) => {
+                          if (data && data.camp) {
+                            navigateToGameDetails({
+                              selectedCamp: data.camp,
+                              fromComponent: 'Taux de Victoire Moyen par Camp',
+                              campFilterMode: 'all-assignments'
+                            });
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      >
                         {campAveragesData.map((entry, index) => (
                           <Cell 
                             key={`cell-${index}`} 
                             fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                            onClick={() => {
+                              navigateToGameDetails({
+                                selectedCamp: entry.camp,
+                                fromComponent: 'Taux de Victoire Moyen par Camp',
+                                campFilterMode: 'all-assignments'
+                              });
+                            }}
+                            style={{ cursor: 'pointer' }}
                           />
                         ))}
                       </Bar>
@@ -308,17 +396,45 @@ export function CampsChart() {
                                 <div><strong>{dataPoint.camp}</strong></div>
                                 <div>Parties: {dataPoint.totalGames} ({percentage}%)</div>
                                 <div>Taux victoire: {dataPoint.winRate}%</div>
+                                <div style={{ 
+                                  fontSize: '0.8rem', 
+                                  color: 'var(--chart-color-1)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  Cliquez pour voir les parties
+                                </div>
                               </div>
                             );
                           }
                           return null;
                         }}
                       />
-                      <Bar dataKey="totalGames">
+                      <Bar 
+                        dataKey="totalGames"
+                        onClick={(data: any) => {
+                          if (data && data.camp) {
+                            navigateToGameDetails({
+                              selectedCamp: data.camp,
+                              fromComponent: 'Distribution des Parties par Camp',
+                              campFilterMode: 'all-assignments'
+                            });
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      >
                         {campDistributionData.map((entry, index) => (
                           <Cell 
                             key={`cell-${index}`} 
                             fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                            onClick={() => {
+                              navigateToGameDetails({
+                                selectedCamp: entry.camp,
+                                fromComponent: 'Distribution des Parties par Camp',
+                                campFilterMode: 'all-assignments'
+                              });
+                            }}
+                            style={{ cursor: 'pointer' }}
                           />
                         ))}
                       </Bar>

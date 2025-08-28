@@ -1,0 +1,262 @@
+/* Game Details Specific Styles */
+
+.lycans-game-details {
+  padding: 1rem;
+}
+
+.lycans-game-details-header {
+  margin-bottom: 1.5rem;
+}
+
+.lycans-game-details-navigation {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.lycans-game-details-navigation h2 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.lycans-active-filters {
+  background: var(--bg-tertiary);
+  padding: 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid var(--accent-primary);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Games Table */
+
+.lycans-games-table-container {
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lycans-games-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lycans-games-table th {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: 1rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.lycans-games-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.lycans-games-table th.sortable:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+.lycans-games-table td {
+  padding: 0.875rem 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.lycans-games-table tr:hover {
+  background: var(--bg-tertiary);
+}
+
+.lycans-games-table tr.selected {
+  background: rgba(72, 83, 168, 0.2);
+}
+
+.lycans-details-btn {
+  background: var(--chart-color-1);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.lycans-details-btn:hover {
+  background: #006FD4;
+}
+
+/* Game Detail View */
+
+.lycans-games-table tr.game-details-row {
+  background: var(--bg-primary);
+}
+
+.lycans-games-table tr.game-details-row:hover {
+  background: var(--bg-primary);
+}
+
+.lycans-game-detail-view {
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin: 0.5rem 0;
+}
+
+.lycans-game-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.lycans-game-detail-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.lycans-game-detail-section.full-width {
+  grid-column: 1 / -1;
+}
+
+.lycans-game-detail-section h4 {
+  margin: 0 0 1rem 0;
+  color: var(--accent-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.lycans-game-detail-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lycans-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.lycans-stat-item .label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.lycans-stat-item .value {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: right;
+}
+
+.lycans-players-list {
+  background: var(--bg-tertiary);
+  padding: 0.75rem;
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Player Roles Grid */
+.lycans-player-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.lycans-player-role-item {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.75rem;
+  transition: background-color 0.2s ease;
+}
+
+.lycans-player-role-item:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+.lycans-player-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.lycans-player-role {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.lycans-player-camp {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .lycans-games-table-container {
+    overflow-x: auto;
+  }
+  
+  .lycans-games-table {
+    min-width: 600px;
+  }
+  
+  .lycans-games-table th,
+  .lycans-games-table td {
+    padding: 0.5rem 0.375rem;
+    font-size: 0.8rem;
+  }
+  
+  .lycans-game-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .lycans-game-detail-view {
+    padding: 1rem;
+  }
+  
+  .lycans-game-details-navigation {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .lycans-player-roles-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .lycans-player-role-item {
+    padding: 0.5rem;
+  }
+
+  .lycans-player-name {
+    font-size: 0.9rem;
+  }
+
+  .lycans-player-role {
+    font-size: 0.8rem;
+  }
+
+  .lycans-player-camp {
+    font-size: 0.75rem;
+  }
+}
