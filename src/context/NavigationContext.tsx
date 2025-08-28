@@ -9,6 +9,8 @@ export interface NavigationFilters {
   selectedDate?: string; // For filtering by specific date (DD/MM/YYYY) or period (MM/YYYY)
   fromComponent?: string; // Track which component triggered the navigation
   _smallCamps?: string[]; // List of small camps for "Autres" category
+  selectedPlayerPair?: string[]; // For filtering by specific player pair (e.g., ["Player1", "Player2"])
+  selectedPairRole?: 'wolves' | 'lovers'; // Role the pair played together
 }
 
 export interface NavigationState {

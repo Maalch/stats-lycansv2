@@ -235,6 +235,33 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
           return false;
         });
       }
+
+      if (filters.selectedPlayerPair && filters.selectedPairRole) {
+        filteredGames = filteredGames.filter(game => {
+          const roleData = rawRoleData.find(role => role.Game === game.Game);
+          if (!roleData) return false;
+
+          const [player1, player2] = filters.selectedPlayerPair!;
+          const player1Lower = player1.toLowerCase();
+          const player2Lower = player2.toLowerCase();
+
+          if (filters.selectedPairRole === 'wolves') {
+            // Check if both players are in the wolves list
+            if (roleData.Loups) {
+              const wolves = roleData.Loups.toLowerCase();
+              return wolves.includes(player1Lower) && wolves.includes(player2Lower);
+            }
+          } else if (filters.selectedPairRole === 'lovers') {
+            // Check if both players are in the lovers list
+            if (roleData.Amoureux) {
+              const lovers = roleData.Amoureux.toLowerCase();
+              return lovers.includes(player1Lower) && lovers.includes(player2Lower);
+            }
+          }
+
+          return false;
+        });
+      }
     }
 
     return filteredGames.map(game => {

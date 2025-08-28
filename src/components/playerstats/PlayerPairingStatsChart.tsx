@@ -3,8 +3,10 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { usePlayerPairingStatsFromRaw } from '../../hooks/usePlayerPairingStatsFromRaw';
 import { playersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
+import { useNavigation } from '../../context/NavigationContext';
 
 export function PlayerPairingStatsChart() {
+  const { navigateToGameDetails } = useNavigation();
   const { data, isLoading, error } = usePlayerPairingStatsFromRaw();
   console.log('DEBUG playerPairingStats:', data);
   const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers'>('wolves');
@@ -168,6 +170,14 @@ export function PlayerPairingStatsChart() {
                               <div>Apparitions: {data.appearances}</div>
                               <div>Victoires: {data.wins}</div>
                               <div>Taux de victoire: {data.winRate}%</div>
+                              <div style={{ 
+                                fontSize: '0.8rem', 
+                                color: 'var(--chart-color-1)', 
+                                marginTop: '0.25rem',
+                                fontStyle: 'italic'
+                              }}>
+                                Cliquez pour voir les parties
+                              </div>
                             </div>
                           );
                         }
@@ -176,7 +186,18 @@ export function PlayerPairingStatsChart() {
                     />
                     <Bar dataKey="appearances" name="Apparitions">
                       {topWolfPairsByAppearances.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={`url(#${entry.gradientId})`}
+                          onClick={() => {
+                            navigateToGameDetails({
+                              selectedPlayerPair: entry.players,
+                              selectedPairRole: 'wolves',
+                              fromComponent: 'Paires de Loups les Plus Fréquentes'
+                            });
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        />
                       ))}
                     </Bar>
                   </BarChart>
@@ -274,7 +295,18 @@ export function PlayerPairingStatsChart() {
                   />
                   <Bar dataKey="winRateNum" name="Taux de victoire (%)">
                     {topWolfPairsByWinRate.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={`url(#${entry.gradientId})`}
+                        onClick={() => {
+                          navigateToGameDetails({
+                            selectedPlayerPair: entry.players,
+                            selectedPairRole: 'wolves',
+                            fromComponent: 'Paires de Loups les Plus Performantes'
+                          });
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
                     ))}
                   </Bar>
                 </BarChart>
@@ -366,6 +398,14 @@ export function PlayerPairingStatsChart() {
                             <div>Apparitions: {data.appearances}</div>
                             <div>Victoires: {data.wins}</div>
                             <div>Taux de victoire: {data.winRate}%</div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
@@ -374,7 +414,18 @@ export function PlayerPairingStatsChart() {
                   />
                   <Bar dataKey="appearances" name="Apparitions">
                     {topLoverPairsByAppearances.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={`url(#${entry.gradientId})`}
+                        onClick={() => {
+                          navigateToGameDetails({
+                            selectedPlayerPair: entry.players,
+                            selectedPairRole: 'lovers',
+                            fromComponent: 'Paires d\'Amoureux les Plus Fréquentes'
+                          });
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
                     ))}
                   </Bar>
                 </BarChart>
@@ -464,6 +515,14 @@ export function PlayerPairingStatsChart() {
                             </div>
                             <div>Taux de victoire: {data.winRate}%</div>
                             <div>Victoires: {data.wins} / {data.appearances}</div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
@@ -472,7 +531,18 @@ export function PlayerPairingStatsChart() {
                   />
                   <Bar dataKey="winRateNum" name="Taux de victoire (%)">
                     {topLoverPairsByWinRate.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={`url(#${entry.gradientId})`} />
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={`url(#${entry.gradientId})`}
+                        onClick={() => {
+                          navigateToGameDetails({
+                            selectedPlayerPair: entry.players,
+                            selectedPairRole: 'lovers',
+                            fromComponent: 'Paires d\'Amoureux les Plus Performantes'
+                          });
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
                     ))}
                   </Bar>
                 </BarChart>
