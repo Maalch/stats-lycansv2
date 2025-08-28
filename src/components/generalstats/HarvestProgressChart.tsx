@@ -1,6 +1,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { lycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { useHarvestStatsFromRaw } from '../../hooks/useHarvestStatsFromRaw';
+import { useNavigation } from '../../context/NavigationContext';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 // Couleurs pour les différentes tranches de récolte
@@ -8,6 +9,7 @@ const lycansRecolteCouleurs = ['#d32f2f', '#f57c00', '#fbc02d', '#388e3c', '#197
 
 export function HarvestProgressChart() {
   const { harvestStats: recolteInfos, isLoading: recuperationDonnees, errorInfo: problemeChargement } = useHarvestStatsFromRaw();
+  const { navigateToGameDetails } = useNavigation();
 
   if (recuperationDonnees) {
     return <div className="donnees-chargement">Récupération des données de récolte...</div>;
@@ -67,6 +69,15 @@ export function HarvestProgressChart() {
                     fill="#8884d8"
                     dataKey="valeur"
                     nameKey="nom"
+                    onClick={(data: any) => {
+                      if (data && data.nom) {
+                        navigateToGameDetails({
+                          selectedHarvestRange: data.nom,
+                          fromComponent: 'Distribution des Récoltes'
+                        });
+                      }
+                    }}
+                    style={{ cursor: 'pointer' }}
                   >
                     {distributionDonnees.map((_, indice) => (
                       <Cell key={`cellule-${indice}`} fill={lycansRecolteCouleurs[indice % lycansRecolteCouleurs.length]} />
@@ -80,6 +91,14 @@ export function HarvestProgressChart() {
                           <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                             <div><strong>{d.nom}</strong></div>
                             <div>Nombre de parties : {d.valeur}</div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
@@ -124,13 +143,34 @@ export function HarvestProgressChart() {
                             <div>
                               Moyenne de Récolte : {d.moyenne}%
                             </div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
                       return null;
                     }}
                   />
-                  <Bar dataKey="moyenne" name="Moyenne de Récolte">
+                  <Bar 
+                    dataKey="moyenne" 
+                    name="Moyenne de Récolte"
+                    onClick={(data: any) => {
+                      if (data && data.camp) {
+                        navigateToGameDetails({
+                          selectedCamp: data.camp,
+                          campFilterMode: 'wins-only',
+                          fromComponent: 'Moyenne de Récolte par Camp'
+                        });
+                      }
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
                     {moyenneParCamp.map((entry) => (
                       <Cell key={`cell-${entry.camp}`}
                         fill={lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp)}

@@ -12,6 +12,7 @@ export interface NavigationFilters {
   selectedPlayerPair?: string[]; // For filtering by specific player pair (e.g., ["Player1", "Player2"])
   selectedPairRole?: 'wolves' | 'lovers'; // Role the pair played together
   campFilterMode?: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
+  selectedHarvestRange?: string; // For filtering by harvest percentage range (e.g., "0-25%", "26-50%", etc.)
 }
 
 export interface NavigationState {

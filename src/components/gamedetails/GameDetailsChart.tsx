@@ -92,6 +92,7 @@ export function GameDetailsChart() {
       filters.push(`Paire ${roleText}: ${pairText}`);
     }
     if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
+    if (navigationFilters.selectedHarvestRange) filters.push(`Récolte: ${navigationFilters.selectedHarvestRange}`);
     if (navigationFilters.selectedGame) filters.push(`Partie #${navigationFilters.selectedGame}`);
     if (navigationFilters.selectedDate) {
       // Check if it's a month filter (MM/YYYY) or exact date (DD/MM/YYYY)
