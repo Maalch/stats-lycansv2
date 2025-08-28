@@ -81,6 +81,11 @@ export function GameDetailsChart() {
       if (navigationFilters.selectedPlayer) filters.push(`Joueur: ${navigationFilters.selectedPlayer}`);
       if (navigationFilters.selectedCamp) filters.push(`Camp: ${navigationFilters.selectedCamp}`);
     }
+    if (navigationFilters.selectedPlayerPair && navigationFilters.selectedPairRole) {
+      const pairText = navigationFilters.selectedPlayerPair.join(' & ');
+      const roleText = navigationFilters.selectedPairRole === 'wolves' ? 'loups' : 'amoureux';
+      filters.push(`Paire ${roleText}: ${pairText}`);
+    }
     if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
     if (navigationFilters.selectedGame) filters.push(`Partie #${navigationFilters.selectedGame}`);
     if (navigationFilters.selectedDate) {
