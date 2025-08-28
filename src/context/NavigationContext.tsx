@@ -8,6 +8,7 @@ export interface NavigationFilters {
   selectedVictoryType?: string;
   selectedDate?: string; // For filtering by specific date (DD/MM/YYYY) or period (MM/YYYY)
   fromComponent?: string; // Track which component triggered the navigation
+  _smallCamps?: string[]; // List of small camps for "Autres" category
 }
 
 export interface NavigationState {
