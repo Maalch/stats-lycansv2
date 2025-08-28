@@ -38,17 +38,18 @@ const MAIN_TABS = [
     description: 'Statistiques générales'
   },
   { 
-    key: 'br', 
-    label: 'Battle Royale', 
-    icon: '⚔️',
-    description: 'Statistiques Battle Royale'
-  },
-  { 
     key: 'gameDetails', 
     label: 'Détails des Parties', 
     icon: '📋',
     description: 'Détails complets de chaque partie'
   },
+  { 
+    key: 'br', 
+    label: 'Battle Royale', 
+    icon: '⚔️',
+    description: 'Statistiques Battle Royale'
+  },
+
   { 
     key: 'settings', 
     label: 'Paramètres', 

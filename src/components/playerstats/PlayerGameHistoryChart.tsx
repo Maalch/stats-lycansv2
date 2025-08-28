@@ -472,7 +472,19 @@ export function PlayerGameHistoryChart() {
                           : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
                       }
                       onClick={() => {
-                        if (entry.name !== 'Autres') {
+                        if (entry.name === 'Autres') {
+                          // For "Autres", we'll navigate to show all games from the small camps
+                          // Pass the list of small camps in the navigation
+                          const smallCampNames = (entry as any)._details?.map((detail: any) => detail.name) || [];
+                          navigateToGameDetails({
+                            selectedPlayer: selectedPlayerName,
+                            selectedCamp: 'Autres',
+                            // Store the small camps list in a custom field
+                            // @ts-ignore
+                            _smallCamps: smallCampNames,
+                            fromComponent: 'Distribution par Camps'
+                          });
+                        } else {
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
                             selectedCamp: entry.name,
@@ -480,7 +492,7 @@ export function PlayerGameHistoryChart() {
                           });
                         }
                       }}
-                      style={{ cursor: entry.name !== 'Autres' ? 'pointer' : 'default' }}
+                      style={{ cursor: 'pointer' }}
                     />
                   ))}
                 </Pie>
@@ -509,6 +521,14 @@ export function PlayerGameHistoryChart() {
                                 </div>
                               ))}
                             </div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir toutes les parties de ces camps
+                            </div>
                           </div>
                         );
                       }
@@ -523,16 +543,14 @@ export function PlayerGameHistoryChart() {
                           <div><strong>{dataPoint.name} ({dataPoint.percentage}%)</strong></div>
                           <div>Apparitions: {dataPoint.value}</div>
                           <div>Victoires: {dataPoint.wins} ({dataPoint.winRate}%)</div>
-                          {dataPoint.name !== 'Autres' && (
-                            <div style={{ 
-                              fontSize: '0.8rem', 
-                              color: 'var(--chart-color-1)', 
-                              marginTop: '0.25rem',
-                              fontStyle: 'italic'
-                            }}>
-                              Cliquez pour voir les parties
-                            </div>
-                          )}
+                          <div style={{ 
+                            fontSize: '0.8rem', 
+                            color: 'var(--chart-color-1)', 
+                            marginTop: '0.25rem',
+                            fontStyle: 'italic'
+                          }}>
+                            Cliquez pour voir les parties
+                          </div>
                         </div>
                       );
                     }
