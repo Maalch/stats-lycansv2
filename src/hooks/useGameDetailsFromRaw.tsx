@@ -372,6 +372,33 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
           return false;
         });
       }
+
+      if (filters.selectedHarvestRange) {
+        filteredGames = filteredGames.filter(game => {
+          const harvestPercent = game["Pourcentage de récolte"];
+          if (harvestPercent === null || harvestPercent === undefined) return false;
+          
+          // Convert decimal to percentage for comparison
+          const percentageValue = harvestPercent * 100;
+          
+          const range = filters.selectedHarvestRange!;
+          switch (range) {
+            case "0-25%":
+              return percentageValue >= 0 && percentageValue <= 25;
+            case "26-50%":
+              return percentageValue > 25 && percentageValue <= 50;
+            case "51-75%":
+              return percentageValue > 50 && percentageValue <= 75;
+            case "76-99%":
+              return percentageValue > 75 && percentageValue <= 99;
+            case "100%":
+              // Include any value that is 100% or higher
+              return percentageValue >= 100;
+            default:
+              return true;
+          }
+        });
+      }
     }
 
     return filteredGames.map(game => {
