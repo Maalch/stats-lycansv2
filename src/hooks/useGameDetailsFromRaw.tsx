@@ -41,6 +41,12 @@ export interface EnrichedGameData {
     bountyHunter?: string;
     voodoo?: string;
   };
+  playerRoles: Array<{
+    player: string;
+    role: string;
+    camp: string;
+    isAlive: boolean;
+  }>;
   playerDetails: Array<{
     player: string;
     camp: string;
@@ -78,7 +84,47 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
       }
 
       if (filters.selectedCamp) {
-        filteredGames = filteredGames.filter(game => game["Camp victorieux"] === filters.selectedCamp);
+        filteredGames = filteredGames.filter(game => {
+          // If we have a selected player, filter by the camp that player was in
+          if (filters.selectedPlayer) {
+            const roleData = rawRoleData.find(role => role.Game === game.Game);
+            if (!roleData) return false;
+            
+            const selectedPlayer = filters.selectedPlayer.toLowerCase();
+            
+            // Check if player is in any specific role
+            if (roleData.Loups && roleData.Loups.toLowerCase().includes(selectedPlayer)) {
+              return filters.selectedCamp === 'Loups';
+            }
+            if (roleData.Traître && roleData.Traître.toLowerCase().includes(selectedPlayer)) {
+              return filters.selectedCamp === 'Loups'; // Traitor is typically part of wolf camp
+            }
+            if (roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(selectedPlayer)) {
+              return filters.selectedCamp === 'Amoureux';
+            }
+            // Check other solo roles
+            if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(selectedPlayer)) {
+              return filters.selectedCamp === 'La Bête';
+            }
+            if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(selectedPlayer)) {
+              return filters.selectedCamp === 'Chasseur de primes';
+            }
+            if (roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(selectedPlayer)) {
+              return filters.selectedCamp === 'Vaudou';
+            }
+            
+            // If player is in game but not in any special role, they're a villager
+            const isInGame = game["Liste des joueurs"].toLowerCase().includes(selectedPlayer);
+            if (isInGame) {
+              return filters.selectedCamp === 'Villageois';
+            }
+            
+            return false;
+          } else {
+            // If no specific player selected, filter by winning camp (legacy behavior)
+            return game["Camp victorieux"] === filters.selectedCamp;
+          }
+        });
       }
 
       if (filters.selectedVictoryType) {
@@ -144,6 +190,72 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
         killers: ponce["Joueurs tueurs"]
       }));
 
+      // Create comprehensive player roles list
+      const playerRoles: EnrichedGameData['playerRoles'] = [];
+      const allPlayers = game["Liste des joueurs"].split(', ').filter(Boolean);
+      const winners = game["Liste des gagnants"].split(', ').filter(Boolean);
+
+      allPlayers.forEach(player => {
+        let role = 'Villageois'; // Default role
+        let camp = 'Villageois'; // Default camp
+        const isAlive = winners.includes(player);
+
+        // Check specific roles from roleData
+        if (roleData) {
+          if (roleData.Loups && roleData.Loups.split(', ').includes(player)) {
+            role = 'Loup-Garou';
+            camp = 'Loups';
+          } else if (roleData.Traître && roleData.Traître === player) {
+            role = 'Traître';
+            camp = 'Loups';
+          } else if (roleData["Idiot du village"] && roleData["Idiot du village"] === player) {
+            role = 'Idiot du village';
+            camp = 'Idiot du village';
+          } else if (roleData.Cannibale && roleData.Cannibale === player) {
+            role = 'Cannibale';
+            camp = 'Cannibale';
+          } else if (roleData.Agent && roleData.Agent === player) {
+            role = 'Agent';
+            camp = 'Agent';
+          } else if (roleData.Espion && roleData.Espion === player) {
+            role = 'Espion';
+            camp = 'Espion';
+          } else if (roleData.Scientifique && roleData.Scientifique === player) {
+            role = 'Scientifique';
+            camp = 'Scientifique';
+          } else if (roleData["La Bête"] && roleData["La Bête"] === player) {
+            role = 'La Bête';
+            camp = 'La Bête';
+          } else if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"] === player) {
+            role = 'Chasseur de primes';
+            camp = 'Chasseur de primes';
+          } else if (roleData.Vaudou && roleData.Vaudou === player) {
+            role = 'Vaudou';
+            camp = 'Vaudou';
+          }
+
+          // Check if player is a lover (can be combined with other roles)
+          if (roleData.Amoureux && roleData.Amoureux.split(', ').includes(player)) {
+            if (role === 'Villageois') {
+              role = 'Amoureux';
+            } else {
+              role = `${role} (Amoureux)`;
+            }
+            // If player won and was lover, they were probably in the lovers camp
+            if (isAlive && game["Camp victorieux"] === "Amoureux") {
+              camp = 'Amoureux';
+            }
+          }
+        }
+
+        playerRoles.push({
+          player,
+          role,
+          camp,
+          isAlive
+        });
+      });
+
       const enriched: EnrichedGameData = {
         gameId: game.Game,
         date: game.Date,
@@ -170,6 +282,7 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
         startTime: game["Début"],
         endTime: game["Fin"],
         roles,
+        playerRoles,
         playerDetails
       };
 
