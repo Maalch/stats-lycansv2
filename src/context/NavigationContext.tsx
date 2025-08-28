@@ -10,12 +10,20 @@ export interface NavigationFilters {
   fromComponent?: string; // Track which component triggered the navigation
 }
 
+export interface NavigationState {
+  // PlayerGameHistoryChart state
+  selectedPlayerName?: string;
+  groupingMethod?: 'session' | 'month';
+}
+
 interface NavigationContextType {
   currentView: string;
   navigationFilters: NavigationFilters;
+  navigationState: NavigationState;
   navigateToGameDetails: (filters?: NavigationFilters) => void;
   navigateBack: () => void;
   clearNavigation: () => void;
+  updateNavigationState: (state: Partial<NavigationState>) => void;
 }
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
@@ -23,6 +31,7 @@ const NavigationContext = createContext<NavigationContextType | undefined>(undef
 export function NavigationProvider({ children }: { children: ReactNode }) {
   const [currentView, setCurrentView] = useState<string>('');
   const [navigationFilters, setNavigationFilters] = useState<NavigationFilters>({});
+  const [navigationState, setNavigationState] = useState<NavigationState>({});
 
   const navigateToGameDetails = (filters: NavigationFilters = {}) => {
     setNavigationFilters(filters);
@@ -37,15 +46,22 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const clearNavigation = () => {
     setCurrentView('');
     setNavigationFilters({});
+    setNavigationState({});
+  };
+
+  const updateNavigationState = (state: Partial<NavigationState>) => {
+    setNavigationState(prev => ({ ...prev, ...state }));
   };
 
   return (
     <NavigationContext.Provider value={{
       currentView,
       navigationFilters,
+      navigationState,
       navigateToGameDetails,
       navigateBack,
-      clearNavigation
+      clearNavigation,
+      updateNavigationState
     }}>
       {children}
     </NavigationContext.Provider>

@@ -88,37 +88,82 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
           // If we have a selected player, filter by the camp that player was in
           if (filters.selectedPlayer) {
             const roleData = rawRoleData.find(role => role.Game === game.Game);
-            if (!roleData) return false;
+            if (!roleData) {
+              console.log(`DEBUG: No role data found for game ${game.Game}`);
+              return false;
+            }
             
             const selectedPlayer = filters.selectedPlayer.toLowerCase();
+            console.log(`DEBUG: Checking game ${game.Game} for player "${selectedPlayer}" in camp "${filters.selectedCamp}"`);
+            console.log(`DEBUG: Role data:`, {
+              Loups: roleData.Loups,
+              Traître: roleData.Traître,
+              "Idiot du village": roleData["Idiot du village"],
+              Cannibale: roleData.Cannibale,
+              Agent: roleData.Agent,
+              Espion: roleData.Espion,
+              Scientifique: roleData.Scientifique,
+              Amoureux: roleData.Amoureux,
+              "La Bête": roleData["La Bête"],
+              "Chasseur de primes": roleData["Chasseur de primes"],
+              Vaudou: roleData.Vaudou
+            });
             
             // Check if player is in any specific role
             if (roleData.Loups && roleData.Loups.toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found in Loups, checking against ${filters.selectedCamp}`);
               return filters.selectedCamp === 'Loups';
             }
             if (roleData.Traître && roleData.Traître.toLowerCase().includes(selectedPlayer)) {
-              return filters.selectedCamp === 'Loups'; // Traitor is typically part of wolf camp
+              console.log(`DEBUG: Player found as Traître, checking against ${filters.selectedCamp}`);
+              return filters.selectedCamp === 'Traître'; // Changed: Traitor should have its own camp
+            }
+            if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found as Idiot du village, checking against ${filters.selectedCamp}`);
+              return filters.selectedCamp === 'Idiot du Village'; // Fixed: Use capital V to match color scheme
+            }
+            if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found as Cannibale, checking against ${filters.selectedCamp}`);
+              return filters.selectedCamp === 'Cannibale';
+            }
+            if (roleData.Agent && roleData.Agent.toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found as Agent, checking against ${filters.selectedCamp}`);
+              return filters.selectedCamp === 'Agent';
+            }
+            if (roleData.Espion && roleData.Espion.toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found as Espion, checking against ${filters.selectedCamp}`);
+              return filters.selectedCamp === 'Espion';
+            }
+            if (roleData.Scientifique && roleData.Scientifique.toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found as Scientifique, checking against ${filters.selectedCamp}`);
+              return filters.selectedCamp === 'Scientifique';
             }
             if (roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found in Amoureux, checking against ${filters.selectedCamp}`);
               return filters.selectedCamp === 'Amoureux';
             }
             // Check other solo roles
             if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found as La Bête, checking against ${filters.selectedCamp}`);
               return filters.selectedCamp === 'La Bête';
             }
             if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found as Chasseur de primes, checking against ${filters.selectedCamp}`);
               return filters.selectedCamp === 'Chasseur de primes';
             }
             if (roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(selectedPlayer)) {
+              console.log(`DEBUG: Player found as Vaudou, checking against ${filters.selectedCamp}`);
               return filters.selectedCamp === 'Vaudou';
             }
             
             // If player is in game but not in any special role, they're a villager
             const isInGame = game["Liste des joueurs"].toLowerCase().includes(selectedPlayer);
             if (isInGame) {
+              console.log(`DEBUG: Player found as regular Villageois, checking against ${filters.selectedCamp}`);
               return filters.selectedCamp === 'Villageois';
             }
             
+            console.log(`DEBUG: Player "${selectedPlayer}" not found in game ${game.Game}`);
             return false;
           } else {
             // If no specific player selected, filter by winning camp (legacy behavior)
@@ -207,10 +252,10 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
             camp = 'Loups';
           } else if (roleData.Traître && roleData.Traître === player) {
             role = 'Traître';
-            camp = 'Loups';
+            camp = 'Traître'; // Fixed: Use Traître camp instead of Loups
           } else if (roleData["Idiot du village"] && roleData["Idiot du village"] === player) {
             role = 'Idiot du village';
-            camp = 'Idiot du village';
+            camp = 'Idiot du Village'; // Fixed: Use capital V to match color scheme
           } else if (roleData.Cannibale && roleData.Cannibale === player) {
             role = 'Cannibale';
             camp = 'Cannibale';

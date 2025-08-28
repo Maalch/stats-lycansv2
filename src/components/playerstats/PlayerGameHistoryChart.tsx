@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
@@ -9,13 +9,24 @@ import { FullscreenChart } from '../common/FullscreenChart';
 type GroupByMethod = 'session' | 'month';
 
 export function PlayerGameHistoryChart() {
-  const [selectedPlayerName, setSelectedPlayerName] = useState<string>('Ponce');
-  const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  
+  // Use navigationState for persistence, with fallbacks to default values
+  const selectedPlayerName = navigationState.selectedPlayerName || 'Ponce';
+  const groupingMethod = navigationState.groupingMethod || 'session';
+  
+  // Update functions that also update the navigation state
+  const setSelectedPlayerName = (playerName: string) => {
+    updateNavigationState({ selectedPlayerName: playerName });
+  };
+  
+  const setGroupingMethod = (method: GroupByMethod) => {
+    updateNavigationState({ groupingMethod: method });
+  };
   
   // Get available players from the player stats hook
   const { data: playerStatsData } = usePlayerStatsFromRaw();
   const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
-  const { navigateToGameDetails } = useNavigation();
 
   // Create list of available players for the dropdown
   const availablePlayers = useMemo(() => {
