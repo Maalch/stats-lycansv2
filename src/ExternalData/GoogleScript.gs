@@ -249,12 +249,13 @@ function getCachedData(cacheKey, generatorFn, cacheSeconds, e) {
 // ============================================================================
 
 /**
- * Returns all raw data from the "Game v2" sheet as JSON
+ * Returns all raw data from the "Game v2" sheet merged with "Paramètres Games" sheet as JSON
  * This enables client-side filtering and calculations
- * @return {string} JSON string with all game data
+ * @return {string} JSON string with all game data including additional parameters
  */
 function getRawGameDataRaw() {
   try {
+    // Get main game data
     var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
     var values = gameData.values;
     
@@ -262,13 +263,48 @@ function getRawGameDataRaw() {
       return JSON.stringify({ error: 'No game data found' });
     }
     
+    // Get additional game parameters data
+    var gameParamsData = getLycanSheetData(LYCAN_SCHEMA.GAMES2.SHEET);
+    var paramsValues = gameParamsData.values;
+    
+    // Create a map of game parameters by Game ID for efficient lookup
+    var gameParamsMap = {};
+    if (paramsValues && paramsValues.length > 1) {
+      var paramsHeaders = paramsValues[0];
+      var paramsDataRows = paramsValues.slice(1);
+      
+      paramsDataRows.forEach(function(row) {
+        var gameId = row[findColumnIndex(paramsHeaders, LYCAN_SCHEMA.GAMES2.COLS.GAMEID)];
+        if (gameId) {
+          var paramsRecord = {};
+          paramsHeaders.forEach(function(header, index) {
+            // Skip the duplicate MODDED field from GAMES2 sheet
+            if (header === LYCAN_SCHEMA.GAMES2.COLS.MODDED) {
+              return;
+            }
+            
+            var value = row[index];
+            
+            // Keep text fields as strings, but handle empty values
+            paramsRecord[header] = value !== '' ? value : null;
+          });
+          gameParamsMap[gameId] = paramsRecord;
+        }
+      });
+    }
+    
     var headers = values[0];
     var dataRows = values.slice(1);
     
-    // Convert rows to objects with column names
+    // Convert rows to objects with column names and merge with parameters data
     var gameRecords = dataRows.map(function(row) {
       var record = {};
       headers.forEach(function(header, index) {
+        // Skip the VOD field from GAMES sheet as it's available in GAMES2.VODSTART
+        if (header === LYCAN_SCHEMA.GAMES.COLS.VOD) {
+          return;
+        }
+        
         var value = row[index];
         
         // Format dates consistently
@@ -299,6 +335,21 @@ function getRawGameDataRaw() {
           record[header] = value !== '' ? value : null;
         }
       });
+      
+      // Merge additional parameters data if available for this game
+      var gameId = record[LYCAN_SCHEMA.GAMES.COLS.GAMEID];
+      if (gameId && gameParamsMap[gameId]) {
+        var paramsData = gameParamsMap[gameId];
+        
+        // Add parameters data to the record (excluding duplicate Game ID and MODDED fields)
+        Object.keys(paramsData).forEach(function(key) {
+          // Skip Game ID as it's already present
+          if (key !== LYCAN_SCHEMA.GAMES2.COLS.GAMEID) {
+            record[key] = paramsData[key];
+          }
+        });
+      }
+      
       return record;
     });
     

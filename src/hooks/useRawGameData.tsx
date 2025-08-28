@@ -31,6 +31,10 @@ export interface RawGameData {
   "Total récolte": number | null;
   "Pourcentage de récolte": number | null;
   "Liste des joueurs": string;
+  "Versions": string | null;
+  "Map": string | null;
+  "Début": string | null;
+  "Fin": string | null;
 }
 
 export interface RawRoleData {

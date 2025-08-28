@@ -30,6 +30,18 @@ const LYCAN_SCHEMA = {
       PLAYERLIST: 'Liste des joueurs' //list of players in that game, separated with comma    											
     }
   },
+  GAMES2: {
+    SHEET: 'Paramètres Games', //General game data par game, second page
+    COLS: {
+      GAMEID: 'Game', //Game ID (unique), same as Game v2 sheet
+      MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
+      VERSION: 'Versions', //Version of this game
+      MAP: 'Map', //Map name of this game
+      VODSTART: 'Début', //Youtube link to the start of the game. Format: https://www.youtube.com/watch?v=XXXXXXX&t=YYYs
+      VODEND: 'Fin', //Youtube link to the end of the game. Format: https://www.youtube.com/watch?v=XXXXXXX&t=YYYs
+      DURATION: 'Temps game' //Duration of the game
+    }
+  },
   PONCE: {
     SHEET: 'Ponce v2', //Data specific to player Ponce per game - secondary role, wolf role, players killed ... are only avaialble for him
     COLS: {
