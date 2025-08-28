@@ -271,16 +271,6 @@ function GameDetailView({ game }: { game: any }) {
                 <span className="value">{game.map}</span>
               </div>
             )}
-            {game.youtubeEmbedUrl && (
-              <div className="lycans-stat-item">
-                <span className="label">Vidéo YouTube:</span>
-                <span className="value">
-                  <a href={game.youtubeEmbedUrl} target="_blank" rel="noopener noreferrer">
-                    Voir la partie
-                  </a>
-                </span>
-              </div>
-            )}
           </div>
         </div>
 
@@ -357,6 +347,22 @@ function GameDetailView({ game }: { game: any }) {
             ))}
           </div>
         </div>
+
+        {/* YouTube Video */}
+        {game.youtubeEmbedUrl && (
+          <div className="lycans-game-detail-section full-width">
+            <h4>Vidéo de la Partie</h4>
+            <div className="lycans-youtube-container">
+              <iframe
+                src={game.youtubeEmbedUrl}
+                title={`Partie Lycans #${game.gameId}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="lycans-youtube-iframe"
+              />
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
