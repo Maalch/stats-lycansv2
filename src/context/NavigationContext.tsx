@@ -11,6 +11,7 @@ export interface NavigationFilters {
   _smallCamps?: string[]; // List of small camps for "Autres" category
   selectedPlayerPair?: string[]; // For filtering by specific player pair (e.g., ["Player1", "Player2"])
   selectedPairRole?: 'wolves' | 'lovers'; // Role the pair played together
+  campFilterMode?: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
 }
 
 export interface NavigationState {

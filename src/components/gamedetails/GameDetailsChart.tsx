@@ -79,7 +79,12 @@ export function GameDetailsChart() {
       filters.push(`${navigationFilters.selectedPlayer} jouant ${navigationFilters.selectedCamp}`);
     } else {
       if (navigationFilters.selectedPlayer) filters.push(`Joueur: ${navigationFilters.selectedPlayer}`);
-      if (navigationFilters.selectedCamp) filters.push(`Camp: ${navigationFilters.selectedCamp}`);
+      if (navigationFilters.selectedCamp) {
+        const campFilter = `Camp: ${navigationFilters.selectedCamp}`;
+        const modeText = navigationFilters.campFilterMode === 'wins-only' ? ' (victoires uniquement)' : 
+                         navigationFilters.campFilterMode === 'all-assignments' ? ' (toutes assignations)' : '';
+        filters.push(campFilter + modeText);
+      }
     }
     if (navigationFilters.selectedPlayerPair && navigationFilters.selectedPairRole) {
       const pairText = navigationFilters.selectedPlayerPair.join(' & ');

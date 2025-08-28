@@ -142,13 +142,15 @@ export function CampsChart() {
                             navigateToGameDetails({
                               selectedCamp: 'Autres',
                               _smallCamps: smallCamps,
-                              fromComponent: 'Répartition des Victoires par Camp'
+                              fromComponent: 'Répartition des Victoires par Camp',
+                              campFilterMode: 'wins-only'
                             });
                           } else {
                             // For regular camps
                             navigateToGameDetails({
                               selectedCamp: data.camp,
-                              fromComponent: 'Répartition des Victoires par Camp'
+                              fromComponent: 'Répartition des Victoires par Camp',
+                              campFilterMode: 'wins-only'
                             });
                           }
                         }
@@ -173,13 +175,15 @@ export function CampsChart() {
                               navigateToGameDetails({
                                 selectedCamp: 'Autres',
                                 _smallCamps: smallCamps,
-                                fromComponent: 'Répartition des Victoires par Camp'
+                                fromComponent: 'Répartition des Victoires par Camp',
+                                campFilterMode: 'wins-only'
                               });
                             } else {
                               // For regular camps
                               navigateToGameDetails({
                                 selectedCamp: entree.camp,
-                                fromComponent: 'Répartition des Victoires par Camp'
+                                fromComponent: 'Répartition des Victoires par Camp',
+                                campFilterMode: 'wins-only'
                               });
                             }
                           }}
@@ -215,6 +219,14 @@ export function CampsChart() {
                                 <div style={{ marginTop: 4, fontWeight: 'bold' }}>
                                   Total: {d.wins} victoires ({d.winRate}%)
                                 </div>
+                                <div style={{ 
+                                  fontSize: '0.8rem', 
+                                  color: 'var(--chart-color-1)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  Cliquez pour voir les parties
+                                </div>
                               </div>
                             );
                           }
@@ -234,6 +246,14 @@ export function CampsChart() {
                               </div>
                               <div>
                                 Taux de victoire: {d.winRate}%
+                              </div>
+                              <div style={{ 
+                                fontSize: '0.8rem', 
+                                color: 'var(--chart-color-1)', 
+                                marginTop: '0.25rem',
+                                fontStyle: 'italic'
+                              }}>
+                                Cliquez pour voir les parties
                               </div>
                             </div>
                           );
@@ -289,6 +309,14 @@ export function CampsChart() {
                                 <div><strong>{dataPoint.camp}</strong></div>
                                 <div>Parties totales: {dataPoint.totalGames}</div>
                                 <div>Taux de victoire: {dataPoint.winRate}%</div>
+                                <div style={{ 
+                                  fontSize: '0.8rem', 
+                                  color: 'var(--chart-color-1)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  Cliquez pour voir les parties
+                                </div>
                               </div>
                             );
                           }
@@ -301,7 +329,8 @@ export function CampsChart() {
                           if (data && data.camp) {
                             navigateToGameDetails({
                               selectedCamp: data.camp,
-                              fromComponent: 'Taux de Victoire Moyen par Camp'
+                              fromComponent: 'Taux de Victoire Moyen par Camp',
+                              campFilterMode: 'all-assignments'
                             });
                           }
                         }}
@@ -314,7 +343,8 @@ export function CampsChart() {
                             onClick={() => {
                               navigateToGameDetails({
                                 selectedCamp: entry.camp,
-                                fromComponent: 'Taux de Victoire Moyen par Camp'
+                                fromComponent: 'Taux de Victoire Moyen par Camp',
+                                campFilterMode: 'all-assignments'
                               });
                             }}
                             style={{ cursor: 'pointer' }}
@@ -366,6 +396,14 @@ export function CampsChart() {
                                 <div><strong>{dataPoint.camp}</strong></div>
                                 <div>Parties: {dataPoint.totalGames} ({percentage}%)</div>
                                 <div>Taux victoire: {dataPoint.winRate}%</div>
+                                <div style={{ 
+                                  fontSize: '0.8rem', 
+                                  color: 'var(--chart-color-1)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  Cliquez pour voir les parties
+                                </div>
                               </div>
                             );
                           }
@@ -378,7 +416,8 @@ export function CampsChart() {
                           if (data && data.camp) {
                             navigateToGameDetails({
                               selectedCamp: data.camp,
-                              fromComponent: 'Distribution des Parties par Camp'
+                              fromComponent: 'Distribution des Parties par Camp',
+                              campFilterMode: 'all-assignments'
                             });
                           }
                         }}
@@ -391,7 +430,8 @@ export function CampsChart() {
                             onClick={() => {
                               navigateToGameDetails({
                                 selectedCamp: entry.camp,
-                                fromComponent: 'Distribution des Parties par Camp'
+                                fromComponent: 'Distribution des Parties par Camp',
+                                campFilterMode: 'all-assignments'
                               });
                             }}
                             style={{ cursor: 'pointer' }}
