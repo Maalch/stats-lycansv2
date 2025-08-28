@@ -81,8 +81,10 @@ export function BRGeneralStatsChart() {
     const scoreDistribution = brData.reduce((acc, participation) => {
       const score = participation.Score;
       const scoreRange = score === 0 ? '0' : 
-                        score <= 2 ? '1-2' :
-                        score <= 4 ? '3-4' :
+                        score === 1 ? '1' :
+                        score === 2 ? '2' :
+                        score === 3 ? '3' :
+                        score === 4 ? '4' :
                         score <= 6 ? '5-6' : '7+';
       
       if (!acc[scoreRange]) {
