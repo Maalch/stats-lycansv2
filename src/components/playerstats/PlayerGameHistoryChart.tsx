@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
+import { useNavigation } from '../../context/NavigationContext';
 import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
@@ -14,7 +15,7 @@ export function PlayerGameHistoryChart() {
   // Get available players from the player stats hook
   const { data: playerStatsData } = usePlayerStatsFromRaw();
   const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
-  console.log('DEBUG playerGameHistory:', data);
+  const { navigateToGameDetails } = useNavigation();
 
   // Create list of available players for the dropdown
   const availablePlayers = useMemo(() => {
@@ -265,6 +266,20 @@ export function PlayerGameHistoryChart() {
               <LineChart
                 data={groupedData}
                 margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                onClick={(data) => {
+                  if (data && data.activeLabel) {
+                    // Find the data point by matching the period
+                    const dataPoint = groupedData.find(item => item.period === data.activeLabel);
+                    if (dataPoint) {
+                      navigateToGameDetails({
+                        selectedPlayer: selectedPlayerName,
+                        selectedDate: dataPoint.period,
+                        fromComponent: `Évolution des Performances ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`
+                      });
+                    }
+                  }
+                }}
+                style={{ cursor: 'pointer' }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
@@ -295,6 +310,14 @@ export function PlayerGameHistoryChart() {
                           <div>Parties: {dataPoint.totalGames}</div>
                           <div>Victoires: {dataPoint.victories}</div>
                           <div>Taux: {dataPoint.winRate}%</div>
+                          <div style={{ 
+                            fontSize: '0.8rem', 
+                            color: 'var(--chart-color-1)', 
+                            marginTop: '0.25rem',
+                            fontStyle: 'italic'
+                          }}>
+                            Cliquez pour voir les parties
+                          </div>
                         </div>
                       );
                     }
@@ -354,14 +377,52 @@ export function PlayerGameHistoryChart() {
                           <div>Victoires: {dataPoint.victories}</div>
                           <div>Défaites: {dataPoint.defeats}</div>
                           <div>Taux: {dataPoint.winRate}%</div>
+                          <div style={{ 
+                            fontSize: '0.8rem', 
+                            color: 'var(--chart-color-1)', 
+                            marginTop: '0.25rem',
+                            fontStyle: 'italic'
+                          }}>
+                            Cliquez pour voir les parties
+                          </div>
                         </div>
                       );
                     }
                     return null;
                   }}
                 />
-                <Bar dataKey="victories" stackId="games" fill="var(--accent-tertiary)" name="Victoires" />
-                <Bar dataKey="defeats" stackId="games" fill="var(--chart-color-4)" name="Défaites" />
+                <Bar dataKey="victories" stackId="games" fill="var(--accent-tertiary)" name="Victoires">
+                  {groupedData.map((entry, index) => (
+                    <Cell
+                      key={`cell-victories-${index}`}
+                      fill="var(--accent-tertiary)"
+                      onClick={() => {
+                        navigateToGameDetails({
+                          selectedPlayer: selectedPlayerName,
+                          selectedDate: entry.period,
+                          fromComponent: `Historique Joueur - Victoires ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`
+                        });
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  ))}
+                </Bar>
+                <Bar dataKey="defeats" stackId="games" fill="var(--chart-color-4)" name="Défaites">
+                  {groupedData.map((entry, index) => (
+                    <Cell
+                      key={`cell-defeats-${index}`}
+                      fill="var(--chart-color-4)"
+                      onClick={() => {
+                        navigateToGameDetails({
+                          selectedPlayer: selectedPlayerName,
+                          selectedDate: entry.period,
+                          fromComponent: `Historique Joueur - Défaites ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`
+                        });
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  ))}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -399,6 +460,16 @@ export function PlayerGameHistoryChart() {
                           ? lycansOtherCategoryColor
                           : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
                       }
+                      onClick={() => {
+                        if (entry.name !== 'Autres') {
+                          navigateToGameDetails({
+                            selectedPlayer: selectedPlayerName,
+                            selectedCamp: entry.name,
+                            fromComponent: 'Distribution par Camps'
+                          });
+                        }
+                      }}
+                      style={{ cursor: entry.name !== 'Autres' ? 'pointer' : 'default' }}
                     />
                   ))}
                 </Pie>
@@ -441,6 +512,16 @@ export function PlayerGameHistoryChart() {
                           <div><strong>{dataPoint.name} ({dataPoint.percentage}%)</strong></div>
                           <div>Apparitions: {dataPoint.value}</div>
                           <div>Victoires: {dataPoint.wins} ({dataPoint.winRate}%)</div>
+                          {dataPoint.name !== 'Autres' && (
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
+                          )}
                         </div>
                       );
                     }
@@ -490,6 +571,14 @@ export function PlayerGameHistoryChart() {
                             <div><strong>{dataPoint.name}</strong></div>
                             <div>Victoires: {dataPoint.wins} / {dataPoint.value}</div>
                             <div>Taux: {dataPoint.winRate}%</div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
@@ -501,6 +590,14 @@ export function PlayerGameHistoryChart() {
                       <Cell 
                         key={`cell-${index}`} 
                         fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                        onClick={() => {
+                          navigateToGameDetails({
+                            selectedPlayer: selectedPlayerName,
+                            selectedCamp: entry.name,
+                            fromComponent: 'Performance par Camp'
+                          });
+                        }}
+                        style={{ cursor: 'pointer' }}
                       />
                     ))}
                   </Bar>

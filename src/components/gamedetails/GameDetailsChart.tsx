@@ -1,0 +1,358 @@
+import { useState, useMemo } from 'react';
+import { useGameDetailsFromRaw } from '../../hooks/useGameDetailsFromRaw';
+import { useNavigation } from '../../context/NavigationContext';
+import { lycansColorScheme } from '../../types/api';
+import './GameDetailsChart.css';
+
+type SortField = 'date' | 'gameId' | 'playerCount' | 'dayCount' | 'winningCamp' | 'victoryType';
+type SortDirection = 'asc' | 'desc';
+
+export function GameDetailsChart() {
+  const { navigationFilters, navigateBack } = useNavigation();
+  const { data, isLoading, error } = useGameDetailsFromRaw(navigationFilters);
+  
+  const [sortField, setSortField] = useState<SortField>('date');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
+
+  // Sort games
+  const sortedGames = useMemo(() => {
+    if (!data) return [];
+    
+    return [...data].sort((a, b) => {
+      let aValue: any, bValue: any;
+      
+      switch (sortField) {
+        case 'date':
+          aValue = new Date(a.date.split('/').reverse().join('-')).getTime();
+          bValue = new Date(b.date.split('/').reverse().join('-')).getTime();
+          break;
+        case 'gameId':
+          aValue = a.gameId;
+          bValue = b.gameId;
+          break;
+        case 'playerCount':
+          aValue = a.playerCount;
+          bValue = b.playerCount;
+          break;
+        case 'dayCount':
+          aValue = a.dayCount;
+          bValue = b.dayCount;
+          break;
+        case 'winningCamp':
+          aValue = a.winningCamp;
+          bValue = b.winningCamp;
+          break;
+        case 'victoryType':
+          aValue = a.victoryType;
+          bValue = b.victoryType;
+          break;
+        default:
+          return 0;
+      }
+      
+      if (sortDirection === 'asc') {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    });
+  }, [data, sortField, sortDirection]);
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
+
+  const getSortIcon = (field: SortField) => {
+    if (sortField !== field) return '↕️';
+    return sortDirection === 'asc' ? '↗️' : '↘️';
+  };
+
+  const getFilterSummary = () => {
+    const filters = [];
+    if (navigationFilters.selectedPlayer) filters.push(`Joueur: ${navigationFilters.selectedPlayer}`);
+    if (navigationFilters.selectedCamp) filters.push(`Camp: ${navigationFilters.selectedCamp}`);
+    if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
+    if (navigationFilters.selectedGame) filters.push(`Partie #${navigationFilters.selectedGame}`);
+    return filters;
+  };
+
+  if (isLoading) {
+    return <div className="statistiques-chargement">Chargement des détails des parties...</div>;
+  }
+
+  if (error) {
+    return <div className="statistiques-erreur">Erreur: {error}</div>;
+  }
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="lycans-empty-section">
+        <h2>Aucune partie trouvée</h2>
+        <p>Aucune partie ne correspond aux critères sélectionnés.</p>
+        {navigationFilters.fromComponent && (
+          <button 
+            onClick={navigateBack}
+            className="lycans-submenu-btn"
+            style={{ marginTop: '1rem' }}
+          >
+            ← Retour à {navigationFilters.fromComponent}
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="lycans-game-details">
+      {/* Header with navigation and filters */}
+      <div className="lycans-game-details-header">
+        <div className="lycans-game-details-navigation">
+          {navigationFilters.fromComponent && (
+            <button 
+              onClick={navigateBack}
+              className="lycans-submenu-btn"
+              style={{ marginRight: '1rem' }}
+            >
+              ← Retour à {navigationFilters.fromComponent}
+            </button>
+          )}
+          <h2>Détails des Parties ({data.length} partie{data.length > 1 ? 's' : ''})</h2>
+        </div>
+        
+        {getFilterSummary().length > 0 && (
+          <div className="lycans-active-filters">
+            <strong>Filtres actifs:</strong> {getFilterSummary().join(', ')}
+          </div>
+        )}
+      </div>
+
+      {/* Games Table */}
+      <div className="lycans-games-table-container">
+        <table className="lycans-games-table">
+          <thead>
+            <tr>
+              <th onClick={() => handleSort('gameId')} className="sortable">
+                Partie {getSortIcon('gameId')}
+              </th>
+              <th onClick={() => handleSort('date')} className="sortable">
+                Date {getSortIcon('date')}
+              </th>
+              <th onClick={() => handleSort('playerCount')} className="sortable">
+                Joueurs {getSortIcon('playerCount')}
+              </th>
+              <th onClick={() => handleSort('dayCount')} className="sortable">
+                Jours {getSortIcon('dayCount')}
+              </th>
+              <th onClick={() => handleSort('winningCamp')} className="sortable">
+                Camp Vainqueur {getSortIcon('winningCamp')}
+              </th>
+              <th onClick={() => handleSort('victoryType')} className="sortable">
+                Type de Victoire {getSortIcon('victoryType')}
+              </th>
+              <th>Détails</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedGames.map(game => (
+              <>
+                <tr key={game.gameId} className={selectedGameId === game.gameId ? 'selected' : ''}>
+                  <td>#{game.gameId}</td>
+                  <td>{game.date}</td>
+                  <td>{game.playerCount}</td>
+                  <td>{game.dayCount}</td>
+                  <td style={{ 
+                    color: lycansColorScheme[game.winningCamp as keyof typeof lycansColorScheme] || '#fff'
+                  }}>
+                    {game.winningCamp}
+                  </td>
+                  <td>{game.victoryType}</td>
+                  <td>
+                    <button
+                      onClick={() => setSelectedGameId(selectedGameId === game.gameId ? null : game.gameId)}
+                      className="lycans-details-btn"
+                    >
+                      {selectedGameId === game.gameId ? 'Masquer' : 'Voir'}
+                    </button>
+                  </td>
+                </tr>
+                {selectedGameId === game.gameId && (
+                  <tr key={`${game.gameId}-details`} className="game-details-row">
+                    <td colSpan={7}>
+                      <GameDetailView game={game} />
+                    </td>
+                  </tr>
+                )}
+              </>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// Component to display detailed view of a single game
+function GameDetailView({ game }: { game: any }) {
+  return (
+    <div className="lycans-game-detail-view">
+      <div className="lycans-game-detail-grid">
+        {/* Basic Game Info */}
+        <div className="lycans-game-detail-section">
+          <h4>Informations Générales</h4>
+          <div className="lycans-game-detail-stats">
+            <div className="lycans-stat-item">
+              <span className="label">Partie moddée:</span>
+              <span className="value">{game.isModded ? 'Oui' : 'Non'}</span>
+            </div>
+            <div className="lycans-stat-item">
+              <span className="label">Nombre de loups:</span>
+              <span className="value">{game.wolfCount}</span>
+            </div>
+            <div className="lycans-stat-item">
+              <span className="label">Traître:</span>
+              <span className="value">{game.hasTraitor ? 'Oui' : 'Non'}</span>
+            </div>
+            <div className="lycans-stat-item">
+              <span className="label">Amoureux:</span>
+              <span className="value">{game.hasLovers ? 'Oui' : 'Non'}</span>
+            </div>
+            {game.soloRoles && (
+              <div className="lycans-stat-item">
+                <span className="label">Rôles solo:</span>
+                <span className="value">{game.soloRoles}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Results */}
+        <div className="lycans-game-detail-section">
+          <h4>Résultats</h4>
+          <div className="lycans-game-detail-stats">
+            <div className="lycans-stat-item">
+              <span className="label">Survivants villageois:</span>
+              <span className="value">{game.villagerSurvivors}</span>
+            </div>
+            <div className="lycans-stat-item">
+              <span className="label">Survivants loups:</span>
+              <span className="value">{game.wolfSurvivors}</span>
+            </div>
+            {game.loverSurvivors !== null && (
+              <div className="lycans-stat-item">
+                <span className="label">Survivants amoureux:</span>
+                <span className="value">{game.loverSurvivors}</span>
+              </div>
+            )}
+            {game.soloSurvivors !== null && (
+              <div className="lycans-stat-item">
+                <span className="label">Survivants solo:</span>
+                <span className="value">{game.soloSurvivors}</span>
+              </div>
+            )}
+            <div className="lycans-stat-item">
+              <span className="label">Gagnants:</span>
+              <span className="value">{game.winners}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Harvest (if applicable) */}
+        {game.harvest !== null && (
+          <div className="lycans-game-detail-section">
+            <h4>Récolte</h4>
+            <div className="lycans-game-detail-stats">
+              <div className="lycans-stat-item">
+                <span className="label">Récolte:</span>
+                <span className="value">{game.harvest}</span>
+              </div>
+              <div className="lycans-stat-item">
+                <span className="label">Total possible:</span>
+                <span className="value">{game.totalHarvest}</span>
+              </div>
+              <div className="lycans-stat-item">
+                <span className="label">Pourcentage:</span>
+                <span className="value">
+                  {typeof game.harvestPercentage === 'number'
+                    ? (game.harvestPercentage * 100).toFixed(1) + '%'
+                    : 'N/A'}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Roles */}
+        {Object.keys(game.roles).length > 0 && (
+          <div className="lycans-game-detail-section">
+            <h4>Rôles</h4>
+            <div className="lycans-game-detail-stats">
+              {game.roles.wolves && (
+                <div className="lycans-stat-item">
+                  <span className="label">Loups:</span>
+                  <span className="value">{game.roles.wolves.join(', ')}</span>
+                </div>
+              )}
+              {game.roles.traitor && (
+                <div className="lycans-stat-item">
+                  <span className="label">Traître:</span>
+                  <span className="value">{game.roles.traitor}</span>
+                </div>
+              )}
+              {game.roles.lovers && (
+                <div className="lycans-stat-item">
+                  <span className="label">Amoureux:</span>
+                  <span className="value">{game.roles.lovers.join(', ')}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Players List */}
+        <div className="lycans-game-detail-section full-width">
+          <h4>Liste des Joueurs</h4>
+          <div className="lycans-players-list">
+            {game.playersList}
+          </div>
+        </div>
+
+        {/* Additional Info */}
+        <div className="lycans-game-detail-section full-width">
+          <h4>Informations Supplémentaires</h4>
+          <div className="lycans-game-detail-stats">
+            {game.versions && (
+              <div className="lycans-stat-item">
+                <span className="label">Version:</span>
+                <span className="value">{game.versions}</span>
+              </div>
+            )}
+            {game.map && (
+              <div className="lycans-stat-item">
+                <span className="label">Map:</span>
+                <span className="value">{game.map}</span>
+              </div>
+            )}
+            {game.startTime && (
+              <div className="lycans-stat-item">
+                <span className="label">Début:</span>
+                <span className="value">{game.startTime}</span>
+              </div>
+            )}
+            {game.endTime && (
+              <div className="lycans-stat-item">
+                <span className="label">Fin:</span>
+                <span className="value">{game.endTime}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
