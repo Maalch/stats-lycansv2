@@ -2,6 +2,70 @@ import { useMemo } from 'react';
 import { useFilteredRawGameData, useFilteredRawRoleData, useFilteredRawPonceData } from './useRawGameData';
 import type { NavigationFilters } from '../context/NavigationContext';
 
+// Helper function to extract YouTube video ID and timestamp from a YouTube URL
+function extractYouTubeInfo(url: string | null): { videoId: string | null; timestamp: number | null } {
+  if (!url) return { videoId: null, timestamp: null };
+  
+  try {
+    const urlObj = new URL(url);
+    let videoId: string | null = null;
+    let timestamp: number | null = null;
+    
+    // Extract video ID from different YouTube URL formats
+    if (urlObj.hostname === 'youtu.be') {
+      videoId = urlObj.pathname.slice(1); // Remove leading slash
+    } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
+      videoId = urlObj.searchParams.get('v');
+    }
+    
+    // Extract timestamp from 't' parameter
+    const tParam = urlObj.searchParams.get('t');
+    if (tParam) {
+      // Handle both numeric seconds (245) and time format (4m5s)
+      if (/^\d+$/.test(tParam)) {
+        timestamp = parseInt(tParam, 10);
+      } else {
+        // Parse time format like "4m5s" or "1h30m45s"
+        const timeMatch = tParam.match(/(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?/);
+        if (timeMatch) {
+          const hours = parseInt(timeMatch[1] || '0', 10);
+          const minutes = parseInt(timeMatch[2] || '0', 10);
+          const seconds = parseInt(timeMatch[3] || '0', 10);
+          timestamp = hours * 3600 + minutes * 60 + seconds;
+        }
+      }
+    }
+    
+    return { videoId, timestamp };
+  } catch (error) {
+    console.warn('Failed to parse YouTube URL:', url);
+    return { videoId: null, timestamp: null };
+  }
+}
+
+// Helper function to create YouTube embed URL from start and end URLs
+function createYouTubeEmbedUrl(startUrl: string | null, endUrl: string | null): string | null {
+  const startInfo = extractYouTubeInfo(startUrl);
+  const endInfo = extractYouTubeInfo(endUrl);
+  
+  // We need at least a video ID from either URL
+  const videoId = startInfo.videoId || endInfo.videoId;
+  if (!videoId) return null;
+  
+  const params = new URLSearchParams();
+  
+  if (startInfo.timestamp !== null) {
+    params.set('start', startInfo.timestamp.toString());
+  }
+  
+  if (endInfo.timestamp !== null) {
+    params.set('end', endInfo.timestamp.toString());
+  }
+  
+  const queryString = params.toString();
+  return `https://www.youtube.com/embed/${videoId}${queryString ? '?' + queryString : ''}`;
+}
+
 export interface EnrichedGameData {
   gameId: number;
   date: string;
@@ -25,8 +89,7 @@ export interface EnrichedGameData {
   playersList: string;
   versions: string | null;
   map: string | null;
-  startTime: string | null;
-  endTime: string | null;
+  youtubeEmbedUrl: string | null;
   // Enriched data from role and ponce data
   roles: {
     wolves?: string[];
@@ -534,8 +597,7 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
         playersList: game["Liste des joueurs"],
         versions: game["Versions"],
         map: game["Map"],
-        startTime: game["Début"],
-        endTime: game["Fin"],
+        youtubeEmbedUrl: createYouTubeEmbedUrl(game["Début"], game["Fin"]),
         roles,
         playerRoles,
         playerDetails
