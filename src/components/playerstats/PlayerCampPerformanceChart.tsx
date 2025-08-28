@@ -110,6 +110,17 @@ export function PlayerCampPerformanceChart() {
     }
   };
 
+  // Handler for Hall of Fame bar chart clicks - navigate to game details
+  const handleHallOfFameBarClick = (data: any) => {
+    if (data && data.player && data.camp) {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedCamp: data.camp,
+        fromComponent: `Top 20 des Performances (Min. ${minGames} parties dans ce camp)`
+      });
+    }
+  };
+
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de performance par camp...</div>;
   }
@@ -452,13 +463,25 @@ export function PlayerCampPerformanceChart() {
                             <div>Parties: {dataPoint.games}</div>
                             <div>Taux personnel: {dataPoint.winRate}%</div>
                             <div>Performance: +{dataPoint.performance}</div>
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--chart-color-1)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              Cliquez pour voir les parties
+                            </div>
                           </div>
                         );
                       }
                       return null;
                     }}
                   />
-                  <Bar dataKey="performanceNum">
+                  <Bar 
+                    dataKey="performanceNum"
+                    style={{ cursor: 'pointer' }}
+                    onClick={handleHallOfFameBarClick}
+                  >
                     {topPerformersData.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
