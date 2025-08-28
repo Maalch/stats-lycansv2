@@ -17,73 +17,118 @@ export interface RawBRData {
 }
 
 export interface RawBRGlobalData {
-  Game: number; // This corresponds to Game2 in the raw data, but represents the global game ID
+  Game: number;
   "Nombre de participants": number;
   Date: string;
   VOD: string | null;
   "Game Moddée": boolean;
 }
 
-interface RawDataResponse<T> {
+// Updated interface for the new BR data structure
+interface RawBRResponse {
   lastUpdated: string;
-  totalRecords: number;
-  data: T[];
+  BRParties: {
+    totalRecords: number;
+    data: RawBRData[];
+  };
+  BRRefParties: {
+    totalRecords: number;
+    data: RawBRGlobalData[];
+  };
 }
 
-// Generic hook to fetch raw data from static files or API
-function useRawData<T>(endpoint: string) {
-  const [data, setData] = useState<T[] | null>(null);
+// Updated hook to fetch BR data from the new structure
+function useRawBRData() {
+  const [brPartiesData, setBRPartiesData] = useState<RawBRData[] | null>(null);
+  const [brRefPartiesData, setBRRefPartiesData] = useState<RawBRGlobalData[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRawData = async () => {
+    const fetchRawBRData = async () => {
       try {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${import.meta.env.BASE_URL}data/${endpoint}.json`);
+        const response = await fetch(`${import.meta.env.BASE_URL}data/rawBRData.json`);
         if (!response.ok) {
-          throw new Error(`Failed to fetch ${endpoint}`);
+          throw new Error('Failed to fetch rawBRData');
         }
 
-        const result: RawDataResponse<T> = await response.json();
-        setData(result.data || []);
+        const result: RawBRResponse = await response.json();
+        setBRPartiesData(result.BRParties?.data || []);
+        setBRRefPartiesData(result.BRRefParties?.data || []);
       } catch (err) {
-        console.error(`Error fetching raw ${endpoint}:`, err);
+        console.error('Error fetching raw BR data:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchRawData();
-  }, [endpoint]);
+    fetchRawBRData();
+  }, []);
 
-  return { data, isLoading, error };
-}
-
-// Raw BR Data interface for the combined structure from the API
-interface RawBRCombinedData {
-  Game: number;
-  Participants: string;
-  Score: number;
-  Gagnant: boolean;
-  Game2: number;
-  "Nombre de participants": number;
-  Date: string;
-  VOD: string | null;
-  "Game Moddée": boolean;
+  return { brPartiesData, brRefPartiesData, isLoading, error };
 }
 
 export function useFilteredRawBRData() {
   const { settings } = useSettings();
-  const { data: rawData, isLoading, error } = useRawData<RawBRCombinedData>('rawBRData');
+  const { brPartiesData, brRefPartiesData, isLoading, error } = useRawBRData();
 
-  // Extract BR participant data and apply filters
-  const filteredData = rawData?.filter(record => {
+  // Apply filters to BR participant data
+  const filteredData = brPartiesData?.filter(record => {
     // Skip records without participant data
     if (!record.Game || !record.Participants) {
+      return false;
+    }
+
+    // To apply game type and date filters, we need to find the corresponding global game data
+    const globalGameData = brRefPartiesData?.find(globalRecord => globalRecord.Game === record.Game);
+    
+    if (!globalGameData) {
+      // If we can't find global data, we can't apply date/game type filters
+      // But we can still apply player filters
+      return applyPlayerFilter(record, settings);
+    }
+
+    // Apply game type filter using the "Game Moddée" field from global data
+    if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
+      if (settings.gameFilter === 'modded') {
+        if (!globalGameData["Game Moddée"]) return false;
+      } else if (settings.gameFilter === 'non-modded') {
+        if (globalGameData["Game Moddée"]) return false;
+      }
+    } else if (settings.filterMode === 'dateRange') {
+      if (settings.dateRange.start || settings.dateRange.end) {
+        const gameDateObj = parseFrenchDate(globalGameData.Date);
+        if (!gameDateObj) return false;
+        if (settings.dateRange.start) {
+          const startObj = new Date(settings.dateRange.start);
+          if (gameDateObj < startObj) return false;
+        }
+        if (settings.dateRange.end) {
+          const endObj = new Date(settings.dateRange.end);
+          if (gameDateObj > endObj) return false;
+        }
+      }
+    }
+
+    // Apply player filter
+    return applyPlayerFilter(record, settings);
+  }) || null;
+
+  return { data: filteredData, isLoading, error };
+}
+
+export function useFilteredRawBRGlobalData() {
+  const { settings } = useSettings();
+  const { brRefPartiesData, isLoading, error } = useRawBRData();
+
+  // Apply filters to global game data
+  const filteredData = brRefPartiesData?.filter(record => {
+    // Skip records without essential data
+    if (!record.Game || !record.Date) {
       return false;
     }
 
@@ -109,92 +154,36 @@ export function useFilteredRawBRData() {
       }
     }
 
-    // Apply player filter
-    if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
-      const participantName = record.Participants.toLowerCase();
-      
-      if (settings.playerFilter.mode === 'include') {
-        // For include mode: participant must be in the selected players list
-        const isIncluded = settings.playerFilter.players.some(player => 
-          player.toLowerCase() === participantName
-        );
-        if (!isIncluded) {
-          return false;
-        }
-      } else if (settings.playerFilter.mode === 'exclude') {
-        // For exclude mode: if participant is in selected players, exclude the record
-        const isExcluded = settings.playerFilter.players.some(player => 
-          player.toLowerCase() === participantName
-        );
-        if (isExcluded) {
-          return false;
-        }
-      }
-    }
-
+    // For global data, we don't apply player filters as it's about the game itself, not participants
     return true;
-  })?.map(record => ({
-    Game: record.Game,
-    Participants: record.Participants,
-    Score: record.Score,
-    Gagnant: record.Gagnant
-  })) || null;
+  }) || null;
 
   return { data: filteredData, isLoading, error };
 }
 
-export function useFilteredRawBRGlobalData() {
-  const { settings } = useSettings();
-  const { data: rawData, isLoading, error } = useRawData<RawBRCombinedData>('rawBRData');
-
-  // Extract unique global game data and apply filters
-  const filteredData = rawData?.reduce((acc, record) => {
-    // Skip records without global game data
-    if (!record.Game2 || !record.Date) {
-      return acc;
-    }
-
-    // Check if we already have this global game
-    const existingGame = acc.find(game => game.Game === record.Game2);
-    if (existingGame) {
-      return acc; // Already processed this global game
-    }
-
-    // Apply game type filter using the "Game Moddée" field
-    if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-      if (settings.gameFilter === 'modded') {
-        if (!record["Game Moddée"]) return acc;
-      } else if (settings.gameFilter === 'non-modded') {
-        if (record["Game Moddée"]) return acc;
+// Helper function to apply player filter to BR participant records
+function applyPlayerFilter(record: RawBRData, settings: any): boolean {
+  if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
+    const participantName = record.Participants.toLowerCase();
+    
+    if (settings.playerFilter.mode === 'include') {
+      // For include mode: participant must be in the selected players list
+      const isIncluded = settings.playerFilter.players.some((player: string) => 
+        player.toLowerCase() === participantName
+      );
+      if (!isIncluded) {
+        return false;
       }
-    } else if (settings.filterMode === 'dateRange') {
-      if (settings.dateRange.start || settings.dateRange.end) {
-        const gameDateObj = parseFrenchDate(record.Date);
-        if (!gameDateObj) return acc;
-        if (settings.dateRange.start) {
-          const startObj = new Date(settings.dateRange.start);
-          if (gameDateObj < startObj) return acc;
-        }
-        if (settings.dateRange.end) {
-          const endObj = new Date(settings.dateRange.end);
-          if (gameDateObj > endObj) return acc;
-        }
+    } else if (settings.playerFilter.mode === 'exclude') {
+      // For exclude mode: if participant is in selected players, exclude the record
+      const isExcluded = settings.playerFilter.players.some((player: string) => 
+        player.toLowerCase() === participantName
+      );
+      if (isExcluded) {
+        return false;
       }
     }
+  }
 
-    // For global data, we don't apply player filters as it's about the game itself, not participants
-
-    // Add the global game data
-    acc.push({
-      Game: record.Game2,
-      "Nombre de participants": record["Nombre de participants"],
-      Date: record.Date,
-      VOD: record.VOD,
-      "Game Moddée": record["Game Moddée"]
-    });
-
-    return acc;
-  }, [] as RawBRGlobalData[]) || null;
-
-  return { data: filteredData, isLoading, error };
+  return true;
 }

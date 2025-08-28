@@ -117,7 +117,7 @@ function test_getRawRoleData() {
 }
 
 /**
- * Test function for raw role data export
+ * Test function for raw BR data export
  */
 function test_getRawBRData() {
   var cache = CacheService.getScriptCache();
@@ -139,8 +139,15 @@ function test_getRawBRData() {
   // Parse the result to check record count
   try {
     var data = JSON.parse(result.getContent());
-    Logger.log("Total records: " + (data.totalRecords || 'unknown'));
-    Logger.log("Sample record: " + JSON.stringify(data.data ? data.data[0] : 'none'));
+    
+    if (data.error) {
+      Logger.log("Error: " + data.error);
+    } else {
+      Logger.log("BRParties records: " + (data.BRParties ? data.BRParties.totalRecords : 'unknown'));
+      Logger.log("BRRefParties records: " + (data.BRRefParties ? data.BRRefParties.totalRecords : 'unknown'));
+      Logger.log("Sample BRParties record: " + JSON.stringify(data.BRParties && data.BRParties.data && data.BRParties.data[0] ? data.BRParties.data[0] : 'none'));
+      Logger.log("Sample BRRefParties record: " + JSON.stringify(data.BRRefParties && data.BRRefParties.data && data.BRRefParties.data[0] ? data.BRRefParties.data[0] : 'none'));
+    }
   } catch (e) {
     Logger.log("Raw result: " + result.getContent());
   }
@@ -407,79 +414,113 @@ function getRawPonceDataRaw() {
 }
 
 /**
- * Returns all raw data from the "Battle Royal v2" sheet as JSON
- * This contains detailed data of all BR games
+ * Returns all raw data from the BR named ranges as JSON
+ * This contains detailed data of all BR games from both BRParties and BRRefParties
  * @return {string} JSON string with all BR data
  */
 function getRawBRDataRaw() {
   try {
-    var brData = getLycanSheetData(LYCAN_SCHEMA.BR.SHEET);
-    var values = brData.values;
+    // Get data from both named ranges using schema constants
+    var brPartiesData = getLycanTableData(LYCAN_SCHEMA.BR.PARTIES_RANGE);
+    var brRefPartiesData = getLycanTableData(LYCAN_SCHEMA.BR.REF_PARTIES_RANGE);
     
-    if (!values || values.length === 0) {
+    var partiesValues = brPartiesData.values;
+    var refPartiesValues = brRefPartiesData.values;
+    
+    if ((!partiesValues || partiesValues.length === 0) && 
+        (!refPartiesValues || refPartiesValues.length === 0)) {
       return JSON.stringify({ error: 'No BR data found' });
     }
     
-    var headers = values[0];
-    var dataRows = values.slice(1);
+    var brPartiesRecords = [];
+    var brRefPartiesRecords = [];
     
-    // Find all "Game" column indices (in case there are duplicates)
-    var gameColumnIndices = [];
-    headers.forEach(function(header, index) {
-      if (header === LYCAN_SCHEMA.BR.COLS.GAMEID) {
-        gameColumnIndices.push(index);
-      }
-    });
-    
-    // Convert rows to objects with column names, skipping empty headers
-    var brRecords = dataRows.map(function(row) {
-      var record = {};
-      headers.forEach(function(header, index) {
-        // Skip empty / blank header cells to avoid "" keys in JSON
-        if (!header || header.toString().trim() === '') {
-          return;
-        }
+    // Process BRParties data (Game, Participants, Score, Gagnant)
+    if (partiesValues && partiesValues.length > 0) {
+      var partiesHeaders = partiesValues[0];
+      var partiesDataRows = partiesValues.slice(1);
+      
+      partiesDataRows.forEach(function(row) {
+        var record = {};
+        partiesHeaders.forEach(function(header, index) {
+          // Skip empty / blank header cells
+          if (!header || header.toString().trim() === '') {
+            return;
+          }
+          
+          var value = row[index];
+          
+          // Convert boolean checkboxes to actual booleans
+          if (header === LYCAN_SCHEMA.BR.COLS.WINNER) {
+            record[header] = Boolean(value);
+          }
+          // Convert numeric fields to numbers
+          else if (header === LYCAN_SCHEMA.BR.COLS.SCORE) {
+            record[header] = value !== '' && !isNaN(value) ? parseFloat(value) : null;
+          }
+          // Keep text fields as strings, but handle empty values
+          else {
+            record[header] = value !== '' ? value : null;
+          }
+        });
         
-        var value = row[index];
-        
-        // Handle multiple Game columns by creating unique keys
-        if (header === LYCAN_SCHEMA.BR.COLS.GAMEID) {
-          var gameColumnPosition = gameColumnIndices.indexOf(index);
-          var uniqueKey = gameColumnPosition === 0 ? LYCAN_SCHEMA.BR.COLS.GAMEID : LYCAN_SCHEMA.BR.COLS.GAMEID + (gameColumnPosition + 1);
-          record[uniqueKey] = value !== '' ? value : null;
-        }
-        // Convert boolean checkboxes to actual booleans
-        else if (header === LYCAN_SCHEMA.BR.COLS.WINNER ||
-            header === LYCAN_SCHEMA.BR.COLS.MODDED) {
-          record[header] = Boolean(value);
-        }
-        // Convert numeric fields to numbers
-        else if ((header === LYCAN_SCHEMA.BR.COLS.SCORE) || 
-          (header === LYCAN_SCHEMA.BR.COLS.NBOFPLAYERS)) {
-          record[header] = value !== '' && !isNaN(value) ? parseFloat(value) : null;
-        }
-        // Format dates consistently
-        else if (header === LYCAN_SCHEMA.BR.COLS.DATE && value) {
-          record[header] = formatLycanDate(value);
-        }
-        // Keep text fields as strings, but handle empty values
-        else {
-          record[header] = value !== '' ? value : null;
+        // Only add records that have meaningful data
+        if (Object.values(record).some(function(value) {
+          return value !== null && value !== false;
+        })) {
+          brPartiesRecords.push(record);
         }
       });
-      return record;
-    }).filter(function(record) {
-      // Filter out empty rows: check if record has any meaningful data
-      // A record is considered empty if all values are null or false (for booleans)
-      return Object.values(record).some(function(value) {
-        return value !== null && value !== false;
+    }
+    
+    // Process BRRefParties data (Game, Nombre de participants, Date, VOD)
+    if (refPartiesValues && refPartiesValues.length > 0) {
+      var refHeaders = refPartiesValues[0];
+      var refDataRows = refPartiesValues.slice(1);
+      
+      refDataRows.forEach(function(row) {
+        var refRecord = {};
+        
+        refHeaders.forEach(function(header, index) {
+          if (!header || header.toString().trim() === '') {
+            return;
+          }
+          
+          var value = row[index];
+          
+          // Convert numeric fields to numbers
+          if (header === LYCAN_SCHEMA.BR.COLS.NBOFPLAYERS) {
+            refRecord[header] = value !== '' && !isNaN(value) ? parseFloat(value) : null;
+          }
+          // Format dates consistently
+          else if (header === LYCAN_SCHEMA.BR.COLS.DATE && value) {
+            refRecord[header] = formatLycanDate(value);
+          }
+          // Keep text fields as strings, but handle empty values
+          else {
+            refRecord[header] = value !== '' ? value : null;
+          }
+        });
+        
+        // Only add records that have meaningful data
+        if (Object.values(refRecord).some(function(value) {
+          return value !== null && value !== false;
+        })) {
+          brRefPartiesRecords.push(refRecord);
+        }
       });
-    });
+    }
     
     return JSON.stringify({
       lastUpdated: new Date().toISOString(),
-      totalRecords: brRecords.length,
-      data: brRecords
+      BRParties: {
+        totalRecords: brPartiesRecords.length,
+        data: brPartiesRecords
+      },
+      BRRefParties: {
+        totalRecords: brRefPartiesRecords.length,
+        data: brRefPartiesRecords
+      }
     });
     
   } catch (error) {
