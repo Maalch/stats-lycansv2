@@ -260,3 +260,28 @@
     font-size: 0.75rem;
   }
 }
+
+/* YouTube Video Styles */
+
+.lycans-youtube-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  margin-top: 0.5rem;
+}
+
+.lycans-youtube-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .lycans-youtube-container {
+    padding-bottom: 60%; /* Slightly taller on mobile for better visibility */
+  }
+}
