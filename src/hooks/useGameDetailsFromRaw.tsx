@@ -205,8 +205,118 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
             
             return false;
           } else {
-            // If no specific player selected, filter by winning camp (legacy behavior)
-            return game["Camp victorieux"] === filters.selectedCamp;
+            // If no specific player selected, use the campFilterMode to determine behavior
+            const filterMode = filters.campFilterMode || 'wins-only'; // Default to wins-only for backward compatibility
+            
+            if (filterMode === 'wins-only') {
+              // Original behavior: filter by winning camp only
+              if (filters.selectedCamp === 'Autres' && (filters as any)._smallCamps) {
+                const smallCamps = (filters as any)._smallCamps as string[];
+                return smallCamps.includes(game["Camp victorieux"]);
+              }
+              return game["Camp victorieux"] === filters.selectedCamp;
+            } else {
+              // New behavior: filter by role assignments (all games where players were assigned to this camp)
+              const roleData = rawRoleData.find(role => role.Game === game.Game);
+              if (!roleData) {
+                // If no role data, fall back to winning camp filter
+                return game["Camp victorieux"] === filters.selectedCamp;
+              }
+
+              // Handle "Autres" category - check if any player is in any of the small camps
+              if (filters.selectedCamp === 'Autres' && (filters as any)._smallCamps) {
+                const smallCamps = (filters as any)._smallCamps as string[];
+                return smallCamps.some(camp => {
+                  switch (camp) {
+                    case 'Traître':
+                      return !!(roleData.Traître && roleData.Traître.trim());
+                    case 'Idiot du Village':
+                      return !!(roleData["Idiot du village"] && roleData["Idiot du village"].trim());
+                    case 'Cannibale':
+                      return !!(roleData.Cannibale && roleData.Cannibale.trim());
+                    case 'Agent':
+                      return !!(roleData.Agent && roleData.Agent.trim());
+                    case 'Espion':
+                      return !!(roleData.Espion && roleData.Espion.trim());
+                    case 'Scientifique':
+                      return !!(roleData.Scientifique && roleData.Scientifique.trim());
+                    case 'Amoureux':
+                      return !!(roleData.Amoureux && roleData.Amoureux.trim());
+                    case 'La Bête':
+                      return !!(roleData["La Bête"] && roleData["La Bête"].trim());
+                    case 'Chasseur de primes':
+                      return !!(roleData["Chasseur de primes"] && roleData["Chasseur de primes"].trim());
+                    case 'Vaudou':
+                      return !!(roleData.Vaudou && roleData.Vaudou.trim());
+                    case 'Villageois':
+                      // Check if there are any players who are not in special roles
+                      const playersInGame = game["Liste des joueurs"].split(',').map(p => p.trim()).filter(p => p);
+                      const playersInSpecialRoles = [
+                        ...(roleData.Loups ? roleData.Loups.split(',').map(p => p.trim()).filter(p => p) : []),
+                        ...(roleData.Traître ? [roleData.Traître.trim()].filter(p => p) : []),
+                        ...(roleData["Idiot du village"] ? [roleData["Idiot du village"].trim()].filter(p => p) : []),
+                        ...(roleData.Cannibale ? [roleData.Cannibale.trim()].filter(p => p) : []),
+                        ...(roleData.Agent ? [roleData.Agent.trim()].filter(p => p) : []),
+                        ...(roleData.Espion ? [roleData.Espion.trim()].filter(p => p) : []),
+                        ...(roleData.Scientifique ? [roleData.Scientifique.trim()].filter(p => p) : []),
+                        ...(roleData.Amoureux ? roleData.Amoureux.split(',').map(p => p.trim()).filter(p => p) : []),
+                        ...(roleData["La Bête"] ? [roleData["La Bête"].trim()].filter(p => p) : []),
+                        ...(roleData["Chasseur de primes"] ? [roleData["Chasseur de primes"].trim()].filter(p => p) : []),
+                        ...(roleData.Vaudou ? [roleData.Vaudou.trim()].filter(p => p) : [])
+                      ];
+                      return playersInGame.some(player => !playersInSpecialRoles.includes(player));
+                    default:
+                      return false;
+                  }
+                });
+              }
+
+              // Check for specific camps
+              switch (filters.selectedCamp) {
+                case 'Loups':
+                  return !!(roleData.Loups && roleData.Loups.trim());
+                case 'Traître':
+                  return !!(roleData.Traître && roleData.Traître.trim());
+                case 'Idiot du Village':
+                  return !!(roleData["Idiot du village"] && roleData["Idiot du village"].trim());
+                case 'Cannibale':
+                  return !!(roleData.Cannibale && roleData.Cannibale.trim());
+                case 'Agent':
+                  return !!(roleData.Agent && roleData.Agent.trim());
+                case 'Espion':
+                  return !!(roleData.Espion && roleData.Espion.trim());
+                case 'Scientifique':
+                  return !!(roleData.Scientifique && roleData.Scientifique.trim());
+                case 'Amoureux':
+                  return !!(roleData.Amoureux && roleData.Amoureux.trim());
+                case 'La Bête':
+                  return !!(roleData["La Bête"] && roleData["La Bête"].trim());
+                case 'Chasseur de primes':
+                  return !!(roleData["Chasseur de primes"] && roleData["Chasseur de primes"].trim());
+                case 'Vaudou':
+                  return !!(roleData.Vaudou && roleData.Vaudou.trim());
+                case 'Villageois':
+                  // Check if there are any players who are not in special roles
+                  const playersInGame = game["Liste des joueurs"].split(',').map(p => p.trim()).filter(p => p);
+                  const playersInSpecialRoles = [
+                    ...(roleData.Loups ? roleData.Loups.split(',').map(p => p.trim()).filter(p => p) : []),
+                    ...(roleData.Traître ? [roleData.Traître.trim()].filter(p => p) : []),
+                    ...(roleData["Idiot du village"] ? [roleData["Idiot du village"].trim()].filter(p => p) : []),
+                    ...(roleData.Cannibale ? [roleData.Cannibale.trim()].filter(p => p) : []),
+                    ...(roleData.Agent ? [roleData.Agent.trim()].filter(p => p) : []),
+                    ...(roleData.Espion ? [roleData.Espion.trim()].filter(p => p) : []),
+                    ...(roleData.Scientifique ? [roleData.Scientifique.trim()].filter(p => p) : []),
+                    ...(roleData.Amoureux ? roleData.Amoureux.split(',').map(p => p.trim()).filter(p => p) : []),
+                    ...(roleData["La Bête"] ? [roleData["La Bête"].trim()].filter(p => p) : []),
+                    ...(roleData["Chasseur de primes"] ? [roleData["Chasseur de primes"].trim()].filter(p => p) : []),
+                    ...(roleData.Vaudou ? [roleData.Vaudou.trim()].filter(p => p) : [])
+                  ];
+                  return playersInGame.some(player => !playersInSpecialRoles.includes(player));
+                default:
+                  // For any other camp, fall back to winning camp filter
+                  return game["Camp victorieux"] === filters.selectedCamp;
+              }
+            }
           }
         });
       }
