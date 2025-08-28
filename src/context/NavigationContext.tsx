@@ -19,6 +19,10 @@ export interface NavigationState {
   groupingMethod?: 'session' | 'month';
   // PlayerPairingStatsChart state
   selectedPairingTab?: 'wolves' | 'lovers';
+  // PlayerCampPerformanceChart state
+  selectedCampPerformanceView?: 'player-performance' | 'top-performers';
+  selectedCampPerformanceCamp?: string;
+  selectedCampPerformanceMinGames?: number;
 }
 
 interface NavigationContextType {
