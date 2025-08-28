@@ -66,12 +66,13 @@ const LYCAN_SCHEMA = {
   },
   BR: {
     SHEET: 'Battle Royale v2', //Data specific about the roles per game
+    PARTIES_RANGE: 'BRParties', // Named range for parties data
+    REF_PARTIES_RANGE: 'BRRefParties', // Named range for reference parties data
     COLS: {
       GAMEID: 'Game', //Battle Royal-specific Game ID
       PLAYER: 'Participants', //name of the player in that BR game
       SCORE: 'Score', //Number of points scored by that player
       WINNER: 'Gagnant', //Checkbox: true / false if the player has won		
-      GAMEID2: 'Game', //Battle Royal Game ID (global)
       NBOFPLAYERS: 'Nombre de participants', //Number of players in that game
       DATE: 'Date', //Date of the BR game
       VOD: 'VOD', //Link to the Youtube VOD game				
@@ -117,6 +118,30 @@ function getLycanSheetData(tabName) {
     values: dataRange.getValues(),
     backgrounds: dataRange.getBackgrounds()
   };
+}
+
+/**
+ * Récupère les données d'une table spécifique via un named range
+ * @param {string} namedRangeName - Nom du named range (ex: "Parties", "RefParties")
+ * @return {Object} Données de la table (values, backgrounds)
+ */
+function getLycanTableData(namedRangeName) {
+  try {
+    var lycanDoc = SpreadsheetApp.getActiveSpreadsheet();
+    var namedRange = lycanDoc.getRangeByName(namedRangeName);
+    
+    if (!namedRange) {
+      throw new Error('Named range "' + namedRangeName + '" not found');
+    }
+    
+    return {
+      values: namedRange.getValues(),
+      backgrounds: namedRange.getBackgrounds()
+    };
+  } catch (error) {
+    Logger.log('Error in getLycanTableData: ' + error.message);
+    throw error;
+  }
 }
 
 /**
