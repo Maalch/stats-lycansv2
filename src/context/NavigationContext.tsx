@@ -17,6 +17,8 @@ export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
   groupingMethod?: 'session' | 'month';
+  // PlayerPairingStatsChart state
+  selectedPairingTab?: 'wolves' | 'lovers';
 }
 
 interface NavigationContextType {
