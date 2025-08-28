@@ -1,11 +1,13 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useVictoryTypesFromRaw } from '../../hooks/useVictoryTypesFromRaw';
+import { useNavigation } from '../../context/NavigationContext';
 import { lycansColorScheme } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 export function VictoryTypesChart() {
   const { victoryTypesStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useVictoryTypesFromRaw();
+  const { navigateToGameDetails } = useNavigation();
 
   // Prepare victory types data for visualization
   const victoryTypesData = useMemo(() => {
@@ -136,6 +138,14 @@ export function VictoryTypesChart() {
                                     </div>
                                   );
                                 })}
+                              <div style={{ 
+                                fontSize: '0.8rem', 
+                                color: 'var(--chart-color-1)', 
+                                marginTop: '0.25rem',
+                                fontStyle: 'italic'
+                              }}>
+                                Cliquez pour voir les parties
+                              </div>
                             </div>
                           );
                         }
@@ -151,6 +161,15 @@ export function VictoryTypesChart() {
                         stackId="victory"
                         fill={lycansColorScheme[camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
                         name={camp}
+                        onClick={(data: any) => {
+                          if (data && data.type) {
+                            navigateToGameDetails({
+                              selectedVictoryType: data.type,
+                              fromComponent: 'Types de Victoire Principaux'
+                            });
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
                       />
                     ))}
                   </BarChart>
@@ -225,6 +244,14 @@ export function VictoryTypesChart() {
                                     </div>
                                   );
                                 })}
+                              <div style={{ 
+                                fontSize: '0.8rem', 
+                                color: 'var(--chart-color-1)', 
+                                marginTop: '0.25rem',
+                                fontStyle: 'italic'
+                              }}>
+                                Cliquez pour voir les parties
+                              </div>
                             </div>
                           );
                         }
@@ -240,6 +267,15 @@ export function VictoryTypesChart() {
                         stackId="victory"
                         fill={lycansColorScheme[camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
                         name={camp}
+                        onClick={(data: any) => {
+                          if (data && data.type) {
+                            navigateToGameDetails({
+                              selectedVictoryType: data.type,
+                              fromComponent: 'Types de Victoire Spéciaux'
+                            });
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
                       />
                     ))}
                   </BarChart>
