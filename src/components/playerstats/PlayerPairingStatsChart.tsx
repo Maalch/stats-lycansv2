@@ -6,10 +6,14 @@ import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
 
 export function PlayerPairingStatsChart() {
-  const { navigateToGameDetails } = useNavigation();
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { data, isLoading, error } = usePlayerPairingStatsFromRaw();
   console.log('DEBUG playerPairingStats:', data);
-  const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers'>('wolves');
+  
+  // Use navigationState to restore tab selection, fallback to 'wolves'
+  const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers'>(
+    navigationState.selectedPairingTab || 'wolves'
+  );
   const [minWolfAppearances, setMinWolfAppearances] = useState<number>(2);
   const [minLoverAppearances, setMinLoverAppearances] = useState<number>(1);
 
@@ -573,14 +577,20 @@ export function PlayerPairingStatsChart() {
       <nav className="lycans-submenu">
         <button
           className={`lycans-submenu-btn${selectedTab === 'wolves' ? ' active' : ''}`}
-          onClick={() => setSelectedTab('wolves')}
+          onClick={() => {
+            setSelectedTab('wolves');
+            updateNavigationState({ selectedPairingTab: 'wolves' });
+          }}
           type="button"
         >
           Paires de Loups ({data.wolfPairs.pairs.length})
         </button>
         <button
           className={`lycans-submenu-btn${selectedTab === 'lovers' ? ' active' : ''}`}
-          onClick={() => setSelectedTab('lovers')}
+          onClick={() => {
+            setSelectedTab('lovers');
+            updateNavigationState({ selectedPairingTab: 'lovers' });
+          }}
           type="button"
         >
           Paires d'Amoureux ({data.loverPairs.pairs.length})
