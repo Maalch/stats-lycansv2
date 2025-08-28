@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter } from 'recharts';
 import { usePlayerCampPerformanceFromRaw } from '../../hooks/usePlayerCampPerformanceFromRaw';
 import { lycansColorScheme, playersColor } from '../../types/api';
@@ -9,12 +9,31 @@ import { useNavigation } from '../../context/NavigationContext';
 type ViewMode =  'player-performance' | 'top-performers';
 
 export function PlayerCampPerformanceChart() {
-  const { navigateToGameDetails } = useNavigation();
-  const [viewMode, setViewMode] = useState<ViewMode>('player-performance');
-  const [selectedCamp, setSelectedCamp] = useState<string>('Villageois');
-  const [minGames, setMinGames] = useState<number>(5);
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  
+  // Use navigationState to restore state, with fallbacks
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    navigationState.selectedCampPerformanceView || 'player-performance'
+  );
+  const [selectedCamp, setSelectedCamp] = useState<string>(
+    navigationState.selectedCampPerformanceCamp || 'Villageois'
+  );
+  const [minGames, setMinGames] = useState<number>(
+    navigationState.selectedCampPerformanceMinGames || 5
+  );
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformanceFromRaw();
+
+  // Save initial state to navigation context if not already saved
+  useEffect(() => {
+    if (!navigationState.selectedCampPerformanceView) {
+      updateNavigationState({
+        selectedCampPerformanceView: viewMode,
+        selectedCampPerformanceCamp: selectedCamp,
+        selectedCampPerformanceMinGames: minGames
+      });
+    }
+  }, [viewMode, selectedCamp, minGames, navigationState.selectedCampPerformanceView, updateNavigationState]);
 
   // Get available camps from camp averages
   const availableCamps = useMemo(() => {
@@ -122,7 +141,11 @@ export function PlayerCampPerformanceChart() {
           <select
             id="view-mode-select"
             value={viewMode}
-            onChange={(e) => setViewMode(e.target.value as ViewMode)}
+            onChange={(e) => {
+              const newViewMode = e.target.value as ViewMode;
+              setViewMode(newViewMode);
+              updateNavigationState({ selectedCampPerformanceView: newViewMode });
+            }}
             style={{
               background: 'var(--bg-tertiary)',
               color: 'var(--text-primary)',
@@ -146,7 +169,11 @@ export function PlayerCampPerformanceChart() {
             <select
               id="camp-select"
               value={selectedCamp}
-              onChange={(e) => setSelectedCamp(e.target.value)}
+              onChange={(e) => {
+                const newCamp = e.target.value;
+                setSelectedCamp(newCamp);
+                updateNavigationState({ selectedCampPerformanceCamp: newCamp });
+              }}
               style={{
                 background: 'var(--bg-tertiary)',
                 color: 'var(--text-primary)',
@@ -174,7 +201,11 @@ export function PlayerCampPerformanceChart() {
             <select
               id="min-games-select"
               value={minGames}
-              onChange={(e) => setMinGames(Number(e.target.value))}
+              onChange={(e) => {
+                const newMinGames = Number(e.target.value);
+                setMinGames(newMinGames);
+                updateNavigationState({ selectedCampPerformanceMinGames: newMinGames });
+              }}
               style={{
                 background: 'var(--bg-tertiary)',
                 color: 'var(--text-primary)',
