@@ -32,6 +32,11 @@ export interface PlayerComparisonData {
     player1Wins: number;
     player2Wins: number;
     averageGameDuration: string;
+    // Opposing camp statistics
+    opposingCampGames: number;
+    player1WinsAsOpponent: number;
+    player2WinsAsOpponent: number;
+    averageOpposingGameDuration: string;
   };
 }
 
@@ -302,10 +307,15 @@ export function usePlayerComparisonFromRaw() {
 
       // Find common games and head-to-head stats
       const commonGames: any[] = [];
+      const opposingCampGames: any[] = [];
       let player1CommonWins = 0;
       let player2CommonWins = 0;
+      let player1OpposingWins = 0;
+      let player2OpposingWins = 0;
       let totalGameDurationSeconds = 0;
       let gamesWithDuration = 0;
+      let totalOpposingGameDurationSeconds = 0;
+      let opposingGamesWithDuration = 0;
 
       rawGameData.forEach(game => {
         const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
@@ -315,9 +325,37 @@ export function usePlayerComparisonFromRaw() {
         const hasPlayer2 = playerList.some(p => p.toLowerCase() === player2Name.toLowerCase());
         
         if (hasPlayer1 && hasPlayer2) {
+          // Get camps for both players in this game
+          const player1Camp = getPlayerCamp(player1Name, game.Game);
+          const player2Camp = getPlayerCamp(player2Name, game.Game);
+          
+          // Determine if they're on opposing camps
+          const areOpposingCamps = (player1Camp !== player2Camp) && 
+            (player1Camp !== 'Unknown' && player2Camp !== 'Unknown');
+          
+          if (areOpposingCamps) {
+            // This is an opposing camp game
+            opposingCampGames.push(game);
+            
+            // Check who won in opposing camp games
+            const player1Won = winnerList.some(w => w.toLowerCase() === player1Name.toLowerCase());
+            const player2Won = winnerList.some(w => w.toLowerCase() === player2Name.toLowerCase());
+            
+            if (player1Won) player1OpposingWins++;
+            if (player2Won) player2OpposingWins++;
+            
+            // Calculate game duration for opposing games
+            const gameDuration = calculateGameDuration(game["Début"], game["Fin"]);
+            if (gameDuration !== null) {
+              totalOpposingGameDurationSeconds += gameDuration;
+              opposingGamesWithDuration++;
+            }
+          }
+          
+          // All games where both players participated (including opposing camp games)
           commonGames.push(game);
           
-          // Check who won
+          // Check who won overall
           const player1Won = winnerList.some(w => w.toLowerCase() === player1Name.toLowerCase());
           const player2Won = winnerList.some(w => w.toLowerCase() === player2Name.toLowerCase());
           
@@ -390,6 +428,13 @@ export function usePlayerComparisonFromRaw() {
           player2Wins: player2CommonWins,
           averageGameDuration: gamesWithDuration > 0 
             ? formatDuration(totalGameDurationSeconds / gamesWithDuration)
+            : "N/A",
+          // Opposing camp statistics
+          opposingCampGames: opposingCampGames.length,
+          player1WinsAsOpponent: player1OpposingWins,
+          player2WinsAsOpponent: player2OpposingWins,
+          averageOpposingGameDuration: opposingGamesWithDuration > 0 
+            ? formatDuration(totalOpposingGameDurationSeconds / opposingGamesWithDuration)
             : "N/A"
         }
       };

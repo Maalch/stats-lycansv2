@@ -230,28 +230,90 @@ export function PlayerComparisonChart() {
           {/* Head-to-Head Statistics */}
           <div className="lycans-head-to-head-stats">
             <h3>Statistiques Face-à-Face</h3>
-            <div className="lycans-h2h-summary">
-              <div className="lycans-h2h-metric">
-                <span className="lycans-h2h-label">Parties communes:</span>
-                <span className="lycans-h2h-value">{comparisonData.headToHeadStats.commonGames}</span>
-              </div>
-              <div className="lycans-h2h-metric">
-                <span className="lycans-h2h-label">Victoires {selectedPlayer1}:</span>
-                <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
-                  {comparisonData.headToHeadStats.player1Wins}
-                </span>
-              </div>
-              <div className="lycans-h2h-metric">
-                <span className="lycans-h2h-label">Victoires {selectedPlayer2}:</span>
-                <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
-                  {comparisonData.headToHeadStats.player2Wins}
-                </span>
-              </div>
-              <div className="lycans-h2h-metric">
-                <span className="lycans-h2h-label">Durée moyenne:</span>
-                <span className="lycans-h2h-value">{comparisonData.headToHeadStats.averageGameDuration}</span>
+            
+            {/* Overall Statistics */}
+            <div className="lycans-h2h-section">
+              <h4>📊 Toutes les parties communes</h4>
+              <div className="lycans-h2h-summary">
+                <div className="lycans-h2h-metric">
+                  <span className="lycans-h2h-label">Parties communes:</span>
+                  <span className="lycans-h2h-value">{comparisonData.headToHeadStats.commonGames}</span>
+                </div>
+                <div className="lycans-h2h-metric">
+                  <span className="lycans-h2h-label">Victoires {selectedPlayer1}:</span>
+                  <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
+                    {comparisonData.headToHeadStats.player1Wins}
+                  </span>
+                </div>
+                <div className="lycans-h2h-metric">
+                  <span className="lycans-h2h-label">Victoires {selectedPlayer2}:</span>
+                  <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
+                    {comparisonData.headToHeadStats.player2Wins}
+                  </span>
+                </div>
+                <div className="lycans-h2h-metric">
+                  <span className="lycans-h2h-label">Durée moyenne:</span>
+                  <span className="lycans-h2h-value">{comparisonData.headToHeadStats.averageGameDuration}</span>
+                </div>
               </div>
             </div>
+
+            {/* Opposing Camp Statistics */}
+            {comparisonData.headToHeadStats.opposingCampGames > 0 && (
+              <div className="lycans-h2h-section">
+                <h4>⚔️ Camps opposés</h4>
+                <p className="lycans-h2h-description">
+                  Statistiques pour les parties où les deux joueurs étaient dans des camps différents
+                </p>
+                <div className="lycans-h2h-summary">
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Parties en opposition:</span>
+                    <span className="lycans-h2h-value">{comparisonData.headToHeadStats.opposingCampGames}</span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Victoires {selectedPlayer1} (vs {selectedPlayer2}):</span>
+                    <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
+                      {comparisonData.headToHeadStats.player1WinsAsOpponent}
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Victoires {selectedPlayer2} (vs {selectedPlayer1}):</span>
+                    <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
+                      {comparisonData.headToHeadStats.player2WinsAsOpponent}
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Durée moyenne (opposition):</span>
+                    <span className="lycans-h2h-value">{comparisonData.headToHeadStats.averageOpposingGameDuration}</span>
+                  </div>
+                  {comparisonData.headToHeadStats.opposingCampGames >= 3 && (
+                    <div className="lycans-h2h-metric">
+                      <span className="lycans-h2h-label">Taux de victoire {selectedPlayer1} (opposition):</span>
+                      <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
+                        {((comparisonData.headToHeadStats.player1WinsAsOpponent / comparisonData.headToHeadStats.opposingCampGames) * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  )}
+                  {comparisonData.headToHeadStats.opposingCampGames >= 3 && (
+                    <div className="lycans-h2h-metric">
+                      <span className="lycans-h2h-label">Taux de victoire {selectedPlayer2} (opposition):</span>
+                      <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
+                        {((comparisonData.headToHeadStats.player2WinsAsOpponent / comparisonData.headToHeadStats.opposingCampGames) * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {comparisonData.headToHeadStats.opposingCampGames === 0 && (
+              <div className="lycans-h2h-section">
+                <h4>⚔️ Camps opposés</h4>
+                <p className="lycans-h2h-description">
+                  Aucune partie trouvée où ces deux joueurs étaient dans des camps opposés.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Detailed Statistics Table */}
