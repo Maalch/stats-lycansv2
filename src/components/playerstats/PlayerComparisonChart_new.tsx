@@ -3,6 +3,7 @@ import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Responsi
 import { usePlayerComparisonFromRaw } from '../../hooks/usePlayerComparisonFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { playersColor } from '../../types/api';
+import { FullscreenChart } from '../common/FullscreenChart';
 
 export function PlayerComparisonChart() {
   const { availablePlayers, generateComparison, isLoading, error } = usePlayerComparisonFromRaw();
@@ -90,14 +91,14 @@ export function PlayerComparisonChart() {
       {/* Player Selection */}
       <div className="lycans-player-selection">
         <div className="lycans-player-selector">
-          <label htmlFor="player1-select">⚔️ Joueur 1:</label>
+          <label htmlFor="player1-select">⚔️ Combattant 1:</label>
           <select
             id="player1-select"
             value={selectedPlayer1}
             onChange={(e) => setSelectedPlayer1(e.target.value)}
             className="lycans-select"
           >
-            <option value="">Choisir un joueur</option>
+            <option value="">Choisir un combattant</option>
             {availablePlayers.map(player => (
               <option key={player} value={player}>{player}</option>
             ))}
@@ -107,14 +108,14 @@ export function PlayerComparisonChart() {
         <div className="lycans-vs-indicator">⚔️ VS ⚔️</div>
 
         <div className="lycans-player-selector">
-          <label htmlFor="player2-select">⚔️ Joueur 2:</label>
+          <label htmlFor="player2-select">⚔️ Combattant 2:</label>
           <select
             id="player2-select"
             value={selectedPlayer2}
             onChange={(e) => setSelectedPlayer2(e.target.value)}
             className="lycans-select"
           >
-            <option value="">Choisir un joueur</option>
+            <option value="">Choisir un combattant</option>
             {availablePlayers
               .filter(player => player !== selectedPlayer1)
               .map(player => (
@@ -158,6 +159,7 @@ export function PlayerComparisonChart() {
 
               {/* Center Radar Chart */}
               <div className="lycans-radar-container">
+                <FullscreenChart title={`⚔️ ${selectedPlayer1} VS ${selectedPlayer2} ⚔️`}>
                   <div style={{ height: 500 }}>
                     <ResponsiveContainer width="100%" height="100%">
                       <RadarChart data={radarData} margin={{ top: 40, right: 80, bottom: 40, left: 80 }}>
@@ -216,6 +218,7 @@ export function PlayerComparisonChart() {
                       </RadarChart>
                     </ResponsiveContainer>
                   </div>
+                </FullscreenChart>
               </div>
 
               {/* Player 2 Score Card */}
@@ -421,7 +424,7 @@ export function PlayerComparisonChart() {
       {(!selectedPlayer1 || !selectedPlayer2) && (
         <div className="lycans-comparison-instructions">
           <h3>🎮 Préparez la Bataille!</h3>
-          <p>Sélectionnez deux joueurs pour découvrir qui domine vraiment dans l'arène!</p>
+          <p>Sélectionnez deux combattants pour découvrir qui domine vraiment dans l'arène!</p>
           <ul>
             <li><strong>🎯 Participation:</strong> Basé sur le nombre de parties jouées</li>
             <li><strong>🏆 Taux de Victoire:</strong> Comparé à la moyenne générale</li>
@@ -435,7 +438,7 @@ export function PlayerComparisonChart() {
 
       {selectedPlayer1 && selectedPlayer2 && selectedPlayer1 === selectedPlayer2 && (
         <div className="lycans-comparison-error">
-          <p>⚠️ Un joueur ne peut pas se battre contre lui-même! Sélectionnez deux joueurs différents.</p>
+          <p>⚠️ Un joueur ne peut pas se battre contre lui-même! Sélectionnez deux combattants différents.</p>
         </div>
       )}
     </div>
