@@ -108,7 +108,6 @@ export interface EnrichedGameData {
     player: string;
     role: string;
     camp: string;
-    isAlive: boolean;
   }>;
   playerDetails: Array<{
     player: string;
@@ -511,24 +510,22 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
       // Create comprehensive player roles list
       const playerRoles: EnrichedGameData['playerRoles'] = [];
       const allPlayers = game["Liste des joueurs"].split(', ').filter(Boolean);
-      const winners = game["Liste des gagnants"].split(', ').filter(Boolean);
 
       allPlayers.forEach(player => {
         let role = 'Villageois'; // Default role
         let camp = 'Villageois'; // Default camp
-        const isAlive = winners.includes(player);
 
         // Check specific roles from roleData
         if (roleData) {
           if (roleData.Loups && roleData.Loups.split(', ').includes(player)) {
-            role = 'Loup-Garou';
+            role = 'Loups';
             camp = 'Loups';
           } else if (roleData.Traître && roleData.Traître === player) {
             role = 'Traître';
-            camp = 'Traître'; // Fixed: Use Traître camp instead of Loups
+            camp = 'Loups'; 
           } else if (roleData["Idiot du village"] && roleData["Idiot du village"] === player) {
-            role = 'Idiot du village';
-            camp = 'Idiot du Village'; // Fixed: Use capital V to match color scheme
+            role = 'Idiot du Village';
+            camp = 'Idiot du Village'; 
           } else if (roleData.Cannibale && roleData.Cannibale === player) {
             role = 'Cannibale';
             camp = 'Cannibale';
@@ -551,16 +548,9 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
             role = 'Vaudou';
             camp = 'Vaudou';
           }
-
-          // Check if player is a lover (can be combined with other roles)
-          if (roleData.Amoureux && roleData.Amoureux.split(', ').includes(player)) {
+          else if (roleData.Amoureux && roleData.Amoureux.split(', ').includes(player)) {
             if (role === 'Villageois') {
               role = 'Amoureux';
-            } else {
-              role = `${role} (Amoureux)`;
-            }
-            // If player won and was lover, they were probably in the lovers camp
-            if (isAlive && game["Camp victorieux"] === "Amoureux") {
               camp = 'Amoureux';
             }
           }
@@ -569,8 +559,7 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
         playerRoles.push({
           player,
           role,
-          camp,
-          isAlive
+          camp
         });
       });
 
