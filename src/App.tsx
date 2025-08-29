@@ -4,7 +4,6 @@ import { SettingsProvider } from './context/SettingsContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { SettingsIndicator } from './components/common/SettingsIndicator';
 import { SettingsBadge } from './components/common/SettingsBadge';
-import { TestZoneAccess } from './components/common/TestZoneAccess';
 import './App.css';
 
 // Lazy load each dashboard section
