@@ -132,20 +132,19 @@ function MainApp() {
   const [selectedMainTab, setSelectedMainTab] = useState('players');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
-  const [currentRoute, setCurrentRoute] = useState(window.location.pathname);
+  const [currentHash, setCurrentHash] = useState(window.location.hash);
 
-  // Listen for route changes
+  // Listen for hash changes
   useEffect(() => {
-    const handlePopState = () => {
-      setCurrentRoute(window.location.pathname);
+    const handleHashChange = () => {
+      setCurrentHash(window.location.hash);
     };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Check if we're in TestZone route
-  const isTestZone = currentRoute.includes('/TestZone');
+  // Check if we're in TestZone route (hash-based)
+  const isTestZone = currentHash === '#/TestZone';
 
   // If we're in TestZone, show the PlayerComparisonChart
   if (isTestZone) {
@@ -163,8 +162,7 @@ function MainApp() {
               <p>Composants en développement</p>
               <button 
                 onClick={() => {
-                  window.history.pushState({}, '', `${import.meta.env.BASE_URL}`);
-                  setCurrentRoute(window.location.pathname);
+                  window.location.hash = '';
                 }}
                 className="lycans-back-button"
                 style={{ marginTop: '10px', padding: '8px 16px', cursor: 'pointer' }}

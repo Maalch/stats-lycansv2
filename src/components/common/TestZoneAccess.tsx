@@ -1,5 +1,6 @@
 // Development helper component for accessing TestZone
-import { navigateToTestZone } from '../../utils/navigation';
+
+// Use hash-based navigation directly for TestZone
 
 export function TestZoneAccess() {
   // Only show in development
@@ -20,7 +21,7 @@ export function TestZoneAccess() {
       fontSize: '12px'
     }}>
       <button 
-        onClick={navigateToTestZone}
+        onClick={() => { window.location.hash = '#/TestZone'; }}
         style={{
           background: 'transparent',
           border: '1px solid #666',
