@@ -8,7 +8,6 @@ import { useNavigation } from '../../context/NavigationContext';
 export function PlayerPairingStatsChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { data, isLoading, error } = usePlayerPairingStatsFromRaw();
-  console.log('DEBUG playerPairingStats:', data);
   
   // Use navigationState to restore tab selection, fallback to 'wolves'
   const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers'>(

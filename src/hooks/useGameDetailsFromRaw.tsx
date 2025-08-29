@@ -66,6 +66,23 @@ function createYouTubeEmbedUrl(startUrl: string | null, endUrl: string | null): 
   return `https://www.youtube.com/embed/${videoId}${queryString ? '?' + queryString : ''}`;
 }
 
+// Helper function to calculate game duration from start and end URLs
+function calculateGameDuration(startUrl: string | null, endUrl: string | null): number | null {
+  const startInfo = extractYouTubeInfo(startUrl);
+  const endInfo = extractYouTubeInfo(endUrl);
+  
+  // We need both timestamps to calculate duration
+  if (startInfo.timestamp === null || endInfo.timestamp === null) {
+    return null;
+  }
+
+  // Calculate duration in seconds
+  const duration = endInfo.timestamp - startInfo.timestamp;
+  
+  // Return null if duration is negative or zero (invalid)
+  return duration > 0 ? duration : null;
+}
+
 export interface EnrichedGameData {
   gameId: number;
   date: string;
@@ -90,6 +107,7 @@ export interface EnrichedGameData {
   versions: string | null;
   map: string | null;
   youtubeEmbedUrl: string | null;
+  gameDuration: number | null; // Duration in seconds calculated from start and end timestamps
   // Enriched data from role and ponce data
   roles: {
     wolves?: string[];
@@ -587,6 +605,7 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
         versions: game["Versions"],
         map: game["Map"],
         youtubeEmbedUrl: createYouTubeEmbedUrl(game["Début"], game["Fin"]),
+        gameDuration: calculateGameDuration(game["Début"], game["Fin"]),
         roles,
         playerRoles,
         playerDetails

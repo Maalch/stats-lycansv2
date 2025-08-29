@@ -43,7 +43,6 @@ export class DataService {
     
     try {
       const indexPath = `${this.getDataBasePath()}index.json`;
-      console.log(`📋 Loading data index from: ${indexPath}`);
       const response = await fetch(indexPath);
       if (response.ok) {
         this.dataIndex = await response.json();
@@ -69,7 +68,6 @@ export class DataService {
   private async loadStaticData(endpoint: string) {
     try {
       const dataPath = `${this.getDataBasePath()}${endpoint}.json`;
-      console.log(`🔍 Loading raw data from: ${dataPath}`);
       const response = await fetch(dataPath);
       if (!response.ok) {
         throw new Error(`Raw data not available for ${endpoint} (${response.status})`);
@@ -110,7 +108,6 @@ export class DataService {
   public async getData(endpoint: string, params: Record<string, string> = {}) {
     const config = DATA_CONFIG.endpoints[endpoint];
     
-    console.log(`🔍 DataService.getData called for: ${endpoint}`, { config, params });
     
     if (!config) {
       throw new Error(`Unknown endpoint: ${endpoint}`);
@@ -119,9 +116,7 @@ export class DataService {
     // For raw data endpoints, load from static files
     if (config === 'static') {
       try {
-        console.log(`📋 Loading raw data for: ${endpoint}`);
         const result = await this.loadStaticData(endpoint);
-        console.log(`✅ Raw data loaded successfully for: ${endpoint}`);
         return result;
       } catch (error) {
         console.warn(`⚠️ Raw data failed for ${endpoint}, falling back to API:`, error);
