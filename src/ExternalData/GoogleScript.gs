@@ -278,8 +278,8 @@ function getRawGameDataRaw() {
         if (gameId) {
           var paramsRecord = {};
           paramsHeaders.forEach(function(header, index) {
-            // Skip the duplicate MODDED field from GAMES2 sheet
-            if (header === LYCAN_SCHEMA.GAMES2.COLS.MODDED) {
+            // Skip the duplicate MODDED and DURATION field from GAMES2 sheet
+            if (header === LYCAN_SCHEMA.GAMES2.COLS.MODDED || header === LYCAN_SCHEMA.GAMES2.COLS.DURATION) {
               return;
             }
             
