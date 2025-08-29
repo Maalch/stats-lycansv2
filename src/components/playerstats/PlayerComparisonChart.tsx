@@ -147,7 +147,7 @@ export function PlayerComparisonChart() {
                 </div>
                 <div className="lycans-metric-info">
                   <span className="lycans-metric-name">📊 Consistance</span>
-                  <span className="lycans-metric-desc">Régularité des performances (moins de variation = plus consistant)</span>
+                  <span className="lycans-metric-desc">Stabilité des performances au fil du temps (analyse des variations entre périodes de jeu)</span>
                 </div>
                 <div className="lycans-metric-info">
                   <span className="lycans-metric-name">🏘️ Maîtrise Villageois</span>
@@ -333,7 +333,7 @@ export function PlayerComparisonChart() {
           <ul>
             <li><strong>Participation:</strong> Basé sur le nombre de parties jouées</li>
             <li><strong>Taux de Victoire:</strong> Comparé à la moyenne générale</li>
-            <li><strong>Consistance:</strong> Régularité des performances</li>
+            <li><strong>Consistance:</strong> Régularité des performances - analyse les séquences et la variabilité entre différentes périodes de jeu</li>
             <li><strong>Maîtrise Villageois:</strong> Efficacité en tant que Villageois</li>
             <li><strong>Efficacité Loups:</strong> Réussite en tant que Loup</li>
             <li><strong>Adaptabilité Rôles:</strong> Performance avec les rôles spéciaux</li>

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { usePlayerStatsFromRaw } from './usePlayerStatsFromRaw';
-import { useFilteredRawGameData } from './useRawGameData';
+import { useFilteredRawGameData, useFilteredRawRoleData } from './useRawGameData';
 import type { PlayerStat } from '../types/api';
 import { calculateGameDuration, splitAndTrim, formatDuration } from '../utils/gameUtils';
 
@@ -41,6 +41,7 @@ export interface PlayerComparisonData {
 export function usePlayerComparisonFromRaw() {
   const { data: playerStatsData, isLoading: statsLoading, error: statsError } = usePlayerStatsFromRaw();
   const { data: rawGameData, isLoading: gameLoading, error: gameError } = useFilteredRawGameData();
+  const { data: rawRoleData, isLoading: roleLoading, error: roleError } = useFilteredRawRoleData();
 
   const availablePlayers = useMemo(() => {
     if (!playerStatsData?.playerStats) return [];
@@ -54,7 +55,7 @@ export function usePlayerComparisonFromRaw() {
 
   const generateComparison = useMemo(() => {
     return (player1Name: string, player2Name: string): PlayerComparisonData | null => {
-      if (!playerStatsData?.playerStats || !rawGameData) return null;
+      if (!playerStatsData?.playerStats || !rawGameData || !rawRoleData) return null;
       
       const player1Stats = playerStatsData.playerStats.find(p => p.player === player1Name);
       const player2Stats = playerStatsData.playerStats.find(p => p.player === player2Name);
@@ -98,6 +99,145 @@ export function usePlayerComparisonFromRaw() {
         }
       });
 
+      // Helper function to determine player's camp in a specific game
+      const getPlayerCamp = (playerName: string, gameNumber: number): string => {
+        const roleData = rawRoleData.find(role => role.Game === gameNumber);
+        if (!roleData) return 'Unknown';
+        
+        // Check all role categories
+        const rolesToCheck = [
+          'Loups', 'Traître', 'Idiot du village', 'Cannibale', 'Agent', 'Espion',
+          'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'
+        ];
+        
+        for (const role of rolesToCheck) {
+          const roleValue = roleData[role as keyof typeof roleData];
+          if (roleValue && typeof roleValue === 'string') {
+            const playersInRole = splitAndTrim(roleValue);
+            if (playersInRole.some(p => p.toLowerCase() === playerName.toLowerCase())) {
+              // Determine camp based on role
+              if (role === 'Loups' || role === 'Traître') return 'Loups';
+              if (role === 'Amoureux') return 'Amoureux';
+
+              return 'Solo'; // Others special roles are solo-aligned
+            }
+          }
+        }
+        
+        return 'Villageois'; // Default assumption for players without special roles
+      };
+
+      // Enhanced consistency calculation using camp alignment and win prediction
+      const calculateAdvancedConsistency = (playerName: string): number => {
+        // Get player's game history with enhanced context
+        const playerGameHistory = rawGameData
+          .filter(game => {
+            const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+            return playerList.some(p => p.toLowerCase() === playerName.toLowerCase());
+          })
+          .map(game => {
+            const playerCamp = getPlayerCamp(playerName, game.Game);
+            const winningCamp = game["Camp victorieux"];
+            const playerWon = playerCamp === winningCamp;
+            
+            return {
+              gameNumber: game.Game,
+              playerCamp,
+              winningCamp,
+              playerWon: playerWon ? 1 : 0,
+              isModded: game["Game Moddée"],
+              playerCount: game["Nombre de joueurs"],
+              numberOfDays: game["Nombre de journées"],
+              victoryType: game["Type de victoire"]
+            };
+          })
+          .sort((a, b) => a.gameNumber - b.gameNumber); // Chronological order
+
+        if (playerGameHistory.length < 5) return 25; // Very low score for insufficient data
+
+        // 1. Overall consistency across all games
+        const outcomes = playerGameHistory.map(g => g.playerWon);
+        const overallWinRate = outcomes.reduce((sum, outcome) => sum + outcome, 0) / outcomes.length;
+        
+        // 2. Camp-specific consistency analysis
+        const villageoisGames = playerGameHistory.filter(g => g.playerCamp === 'Villageois');
+        const loupsGames = playerGameHistory.filter(g => g.playerCamp === 'Loups');
+        
+        let campConsistencyScore = 50;
+        
+        // Analyze consistency within each camp
+        if (villageoisGames.length >= 3) {
+          const villageoisOutcomes = villageoisGames.map(g => g.playerWon);
+          const villageoisWinRate = villageoisOutcomes.reduce((sum, o) => sum + o, 0) / villageoisOutcomes.length;
+          const villageoisVariance = villageoisOutcomes.reduce((sum, o) => sum + Math.pow(o - villageoisWinRate, 2), 0) / villageoisOutcomes.length;
+          const villageoisConsistency = 100 - (Math.sqrt(villageoisVariance) * 200);
+          campConsistencyScore += villageoisConsistency * 0.3;
+        }
+        
+        if (loupsGames.length >= 3) {
+          const loupsOutcomes = loupsGames.map(g => g.playerWon);
+          const loupsWinRate = loupsOutcomes.reduce((sum, o) => sum + o, 0) / loupsOutcomes.length;
+          const loupsVariance = loupsOutcomes.reduce((sum, o) => sum + Math.pow(o - loupsWinRate, 2), 0) / loupsOutcomes.length;
+          const loupsConsistency = 100 - (Math.sqrt(loupsVariance) * 200);
+          campConsistencyScore += loupsConsistency * 0.3;
+        }
+        
+        // 3. Temporal consistency (performance over time)
+        let temporalConsistency = 50;
+        if (playerGameHistory.length >= 25) {
+          const segmentSize = Math.floor(playerGameHistory.length / 3);
+          const earlyGames = playerGameHistory.slice(0, segmentSize);
+          const middleGames = playerGameHistory.slice(segmentSize, segmentSize * 2);
+          const lateGames = playerGameHistory.slice(segmentSize * 2);
+          
+          const earlyWinRate = earlyGames.reduce((sum, g) => sum + g.playerWon, 0) / earlyGames.length;
+          const middleWinRate = middleGames.reduce((sum, g) => sum + g.playerWon, 0) / middleGames.length;
+          const lateWinRate = lateGames.reduce((sum, g) => sum + g.playerWon, 0) / lateGames.length;
+          
+          const temporalVariance = [earlyWinRate, middleWinRate, lateWinRate]
+            .reduce((sum, rate) => sum + Math.pow(rate - overallWinRate, 2), 0) / 3;
+          
+          temporalConsistency = Math.max(10, 90 - (Math.sqrt(temporalVariance) * 180));
+        }
+        
+        // 4. Streak analysis (refined)
+        let maxStreak = 1;
+        let currentStreak = 1;
+        let streakChanges = 0;
+        
+        for (let i = 1; i < outcomes.length; i++) {
+          if (outcomes[i] === outcomes[i - 1]) {
+            currentStreak++;
+            maxStreak = Math.max(maxStreak, currentStreak);
+          } else {
+            currentStreak = 1;
+            streakChanges++;
+          }
+        }
+        
+        const streakiness = maxStreak / outcomes.length;
+        const volatility = streakChanges / (outcomes.length - 1);
+        
+        // Balance between too streaky and too volatile
+        const optimalVolatility = 0.4; // Some variation is normal
+        const volatilityPenalty = Math.abs(volatility - optimalVolatility) * 60;
+        const streakPenalty = streakiness > 0.3 ? (streakiness - 0.3) * 100 : 0;
+        
+        // 5. Final calculation with weighted components
+        const baseConsistency = Math.max(0, 100 - (Math.sqrt(
+          outcomes.reduce((sum, o) => sum + Math.pow(o - overallWinRate, 2), 0) / outcomes.length
+        ) * 200));
+        
+        const finalScore = (
+          baseConsistency * 0.3 +
+          (campConsistencyScore - 50) * 0.45 +
+          temporalConsistency * 0.15 +
+          Math.max(0, 90 - volatilityPenalty - streakPenalty) * 0.1
+        );
+        
+        return Math.max(5, Math.min(95, Math.round(finalScore)));
+      };
+
       // Calculate metrics for both players
       const calculateMetrics = (stats: PlayerStat): PlayerComparisonMetrics => {
         const winRate = parseFloat(stats.winPercent);
@@ -113,11 +253,14 @@ export function usePlayerComparisonFromRaw() {
         const loupsEfficiency = loupsGames > 0 ? Math.min(100, (winRate * 0.8)) : 0;
         const specialRoleAdaptability = specialRoleGames > 0 ? Math.min(100, (winRate * 1.1)) : 0;
         
+        // Use the new advanced consistency calculation
+        const trueConsistency = calculateAdvancedConsistency(stats.player);
+        
         return {
           player: stats.player,
           participationScore: (stats.gamesPlayed / maxGames) * 100,
           winRateScore: Math.min(100, (winRate / avgWinRate) * 50),
-          consistencyScore: Math.max(0, 100 - Math.abs(winRate - avgWinRate) * 2), // Simplified consistency metric
+          consistencyScore: trueConsistency,
           villageoisMastery,
           loupsEfficiency,
           specialRoleAdaptability,
@@ -145,12 +288,12 @@ export function usePlayerComparisonFromRaw() {
         }
       };
     };
-  }, [playerStatsData, rawGameData]);
+  }, [playerStatsData, rawGameData, rawRoleData]);
 
   return {
     availablePlayers,
     generateComparison,
-    isLoading: statsLoading || gameLoading,
-    error: statsError || gameError
+    isLoading: statsLoading || gameLoading || roleLoading,
+    error: statsError || gameError || roleError
   };
 }
