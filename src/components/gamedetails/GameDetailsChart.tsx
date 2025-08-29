@@ -221,6 +221,24 @@ export function GameDetailsChart() {
   );
 }
 
+// Helper function to format duration from seconds to minutes and seconds
+function formatDuration(durationInSeconds: number | null): string {
+  if (durationInSeconds === null || durationInSeconds <= 0) {
+    return 'N/A';
+  }
+
+  const minutes = Math.floor(durationInSeconds / 60);
+  const seconds = durationInSeconds % 60;
+
+  if (minutes === 0) {
+    return `${seconds}s`;
+  } else if (seconds === 0) {
+    return `${minutes}m`;
+  } else {
+    return `${minutes}m ${seconds}s`;
+  }
+}
+
 // Component to display detailed view of a single game
 function GameDetailView({ game }: { game: any }) {
   const [showVideo, setShowVideo] = useState(false);
@@ -261,6 +279,12 @@ function GameDetailView({ game }: { game: any }) {
         <div className="lycans-game-detail-section">
           <h4>Informations Supplémentaires</h4>
           <div className="lycans-game-detail-stats">
+            {game.gameDuration !== null && (
+              <div className="lycans-stat-item">
+                <span className="label">Durée de la partie:</span>
+                <span className="value">{formatDuration(game.gameDuration)}</span>
+              </div>
+            )}
             {game.versions && (
               <div className="lycans-stat-item">
                 <span className="label">Version:</span>
