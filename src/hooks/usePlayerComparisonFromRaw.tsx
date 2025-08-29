@@ -7,12 +7,12 @@ import { calculateGameDuration, splitAndTrim, formatDuration } from '../utils/ga
 export interface PlayerComparisonMetrics {
   player: string;
   // Normalized metrics (0-100 scale)
-  participationScore: number;    // Based on games played vs max
-  winRateScore: number;         // Based on win rate vs average
-  consistencyScore: number;     // Based on standard deviation of performance
-  villageoisMastery: number;    // Success rate as Villageois
-  loupsEfficiency: number;      // Success rate as Loups
-  specialRoleAdaptability: number; // Success with special roles
+  participationScore: number;       // Based on games played vs max
+  winRateScore: number;             // Based on win rate vs average
+  consistencyScore: number;         // Based on standard deviation of performance
+  villageoisMastery: number;        // Success rate as Villageois
+  loupsEfficiency: number;          // Success rate as Loups
+  specialRoleAdaptability: number;  // Success with special roles
   
   // Raw stats for detailed comparison
   gamesPlayed: number;
@@ -36,7 +36,7 @@ export interface PlayerComparisonData {
 }
 
 /**
- * Hook for generating detailed player comparison metrics
+ * Hook for generating detailed player comparison metrics with dynamic scaling
  */
 export function usePlayerComparisonFromRaw() {
   const { data: playerStatsData, isLoading: statsLoading, error: statsError } = usePlayerStatsFromRaw();
@@ -46,10 +46,10 @@ export function usePlayerComparisonFromRaw() {
   const availablePlayers = useMemo(() => {
     if (!playerStatsData?.playerStats) return [];
     
-    // Only include players with meaningful participation (>= 10 games)
+    // Only include players with meaningful participation (>= 20 games)
     return playerStatsData.playerStats
-      .filter(player => player.gamesPlayed >= 10)
-      .sort((a, b) => b.gamesPlayed - a.gamesPlayed)
+      .filter(player => player.gamesPlayed >= 20)
+      .sort((a, b) => a.player.localeCompare(b.player)) // Alphabetical order
       .map(player => player.player);
   }, [playerStatsData]);
 
@@ -61,43 +61,6 @@ export function usePlayerComparisonFromRaw() {
       const player2Stats = playerStatsData.playerStats.find(p => p.player === player2Name);
       
       if (!player1Stats || !player2Stats) return null;
-
-      // Calculate max values for normalization
-      const maxGames = Math.max(...playerStatsData.playerStats.map(p => p.gamesPlayed));
-      const avgWinRate = playerStatsData.playerStats.reduce((sum, p) => sum + parseFloat(p.winPercent), 0) / playerStatsData.playerStats.length;
-
-      // Find common games and head-to-head stats
-      const commonGames: any[] = [];
-      let player1CommonWins = 0;
-      let player2CommonWins = 0;
-      let totalGameDurationSeconds = 0;
-      let gamesWithDuration = 0;
-
-      rawGameData.forEach(game => {
-        const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
-        const winnerList = splitAndTrim(game["Liste des gagnants"]?.toString());
-        
-        const hasPlayer1 = playerList.some(p => p.toLowerCase() === player1Name.toLowerCase());
-        const hasPlayer2 = playerList.some(p => p.toLowerCase() === player2Name.toLowerCase());
-        
-        if (hasPlayer1 && hasPlayer2) {
-          commonGames.push(game);
-          
-          // Check who won
-          const player1Won = winnerList.some(w => w.toLowerCase() === player1Name.toLowerCase());
-          const player2Won = winnerList.some(w => w.toLowerCase() === player2Name.toLowerCase());
-          
-          if (player1Won) player1CommonWins++;
-          if (player2Won) player2CommonWins++;
-          
-          // Calculate game duration using YouTube URLs
-          const gameDuration = calculateGameDuration(game["Début"], game["Fin"]);
-          if (gameDuration !== null) {
-            totalGameDurationSeconds += gameDuration;
-            gamesWithDuration++;
-          }
-        }
-      });
 
       // Helper function to determine player's camp in a specific game
       const getPlayerCamp = (playerName: string, gameNumber: number): string => {
@@ -118,13 +81,55 @@ export function usePlayerComparisonFromRaw() {
               // Determine camp based on role
               if (role === 'Loups' || role === 'Traître') return 'Loups';
               if (role === 'Amoureux') return 'Amoureux';
-
-              return 'Solo'; // Others special roles are solo-aligned
+              return 'Solo'; // others special roles are solo-aligned
             }
           }
         }
         
         return 'Villageois'; // Default assumption for players without special roles
+      };
+
+      // Helper function to calculate actual camp-specific performance
+      const calculateCampSpecificPerformance = (playerName: string) => {
+        const playerGameHistory = rawGameData
+          .filter(game => {
+            const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+            return playerList.some(p => p.toLowerCase() === playerName.toLowerCase());
+          })
+          .map(game => {
+            const playerCamp = getPlayerCamp(playerName, game.Game);
+            const winningCamp = game["Camp victorieux"];
+            const playerWon = playerCamp === winningCamp;
+            
+            return {
+              gameNumber: game.Game,
+              playerCamp,
+              winningCamp,
+              playerWon: playerWon ? 1 : 0
+            };
+          });
+
+        const villageoisGames = playerGameHistory.filter(g => g.playerCamp === 'Villageois');
+        const loupsGames = playerGameHistory.filter(g => g.playerCamp === 'Loups');
+        const specialGames = playerGameHistory.filter(g => !['Villageois', 'Loups'].includes(g.playerCamp));
+
+        const villageoisWinRate = villageoisGames.length > 0 
+          ? (villageoisGames.reduce((sum, g) => sum + g.playerWon, 0) / villageoisGames.length) * 100 
+          : 0;
+        
+        const loupsWinRate = loupsGames.length > 0 
+          ? (loupsGames.reduce((sum, g) => sum + g.playerWon, 0) / loupsGames.length) * 100 
+          : 0;
+        
+        const specialRoleWinRate = specialGames.length > 0 
+          ? (specialGames.reduce((sum, g) => sum + g.playerWon, 0) / specialGames.length) * 100 
+          : 0;
+
+        return {
+          villageoisWinRate,
+          loupsWinRate,
+          specialRoleWinRate
+        };
       };
 
       // Enhanced consistency calculation using camp alignment and win prediction
@@ -145,7 +150,6 @@ export function usePlayerComparisonFromRaw() {
               playerCamp,
               winningCamp,
               playerWon: playerWon ? 1 : 0,
-              isModded: game["Game Moddée"],
               playerCount: game["Nombre de joueurs"],
               numberOfDays: game["Nombre de journées"],
               victoryType: game["Type de victoire"]
@@ -238,37 +242,139 @@ export function usePlayerComparisonFromRaw() {
         return Math.max(5, Math.min(95, Math.round(finalScore)));
       };
 
-      // Calculate metrics for both players
+      // Calculate raw metrics for ALL players to establish ranges for dynamic scaling
+      const allPlayersRawMetrics = playerStatsData.playerStats.map(playerStat => {
+        // Calculate raw participation (games played)
+        const rawParticipation = playerStat.gamesPlayed;
+        
+        // Calculate raw win rate
+        const rawWinRate = parseFloat(playerStat.winPercent);
+        
+        // Calculate raw consistency using advanced algorithm
+        const rawConsistency = calculateAdvancedConsistency(playerStat.player);
+        
+        // Calculate camp-specific raw performance
+        const totalCampGames = Object.values(playerStat.camps).reduce((sum, count) => sum + count, 0);
+        const villageoisGames = playerStat.camps["Villageois"] || 0;
+        const loupsGames = playerStat.camps["Loups"] || 0;
+        const specialRoleGames = totalCampGames - villageoisGames - loupsGames;
+        
+        // Calculate actual camp-specific win rates using role data
+        const campSpecificStats = calculateCampSpecificPerformance(playerStat.player);
+        
+        return {
+          player: playerStat.player,
+          rawParticipation,
+          rawWinRate,
+          rawConsistency,
+          rawVillageoisMastery: campSpecificStats.villageoisWinRate,
+          rawLoupsEfficiency: campSpecificStats.loupsWinRate,
+          rawSpecialRoleAdaptability: campSpecificStats.specialRoleWinRate,
+          villageoisGames,
+          loupsGames,
+          specialRoleGames
+        };
+      }).filter(metrics => metrics.rawParticipation >= 20); // Only include players with meaningful participation (20+ games)
+
+      // Calculate dynamic scaling ranges
+      const participationValues = allPlayersRawMetrics.map(m => m.rawParticipation);
+      const winRateValues = allPlayersRawMetrics.map(m => m.rawWinRate);
+      const consistencyValues = allPlayersRawMetrics.map(m => m.rawConsistency);
+      const villageoisValues = allPlayersRawMetrics.filter(m => m.villageoisGames >= 5).map(m => m.rawVillageoisMastery);
+      const loupsValues = allPlayersRawMetrics.filter(m => m.loupsGames >= 3).map(m => m.rawLoupsEfficiency);
+      const specialValues = allPlayersRawMetrics.filter(m => m.specialRoleGames >= 3).map(m => m.rawSpecialRoleAdaptability);
+
+      // Create scaling functions (min-max normalization to 0-100)
+      const createScaler = (values: number[]) => {
+        if (values.length === 0) return (_val: number) => 50; // Default for empty arrays
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        if (max === min) return (_val: number) => 50; // All values same
+        return (val: number) => Math.round(((val - min) / (max - min)) * 100);
+      };
+
+      const participationScaler = createScaler(participationValues);
+      const winRateScaler = createScaler(winRateValues);
+      const consistencyScaler = createScaler(consistencyValues);
+      const villageoisScaler = createScaler(villageoisValues);
+      const loupsScaler = createScaler(loupsValues);
+      const specialScaler = createScaler(specialValues);
+
+      // Find common games and head-to-head stats
+      const commonGames: any[] = [];
+      let player1CommonWins = 0;
+      let player2CommonWins = 0;
+      let totalGameDurationSeconds = 0;
+      let gamesWithDuration = 0;
+
+      rawGameData.forEach(game => {
+        const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+        const winnerList = splitAndTrim(game["Liste des gagnants"]?.toString());
+        
+        const hasPlayer1 = playerList.some(p => p.toLowerCase() === player1Name.toLowerCase());
+        const hasPlayer2 = playerList.some(p => p.toLowerCase() === player2Name.toLowerCase());
+        
+        if (hasPlayer1 && hasPlayer2) {
+          commonGames.push(game);
+          
+          // Check who won
+          const player1Won = winnerList.some(w => w.toLowerCase() === player1Name.toLowerCase());
+          const player2Won = winnerList.some(w => w.toLowerCase() === player2Name.toLowerCase());
+          
+          if (player1Won) player1CommonWins++;
+          if (player2Won) player2CommonWins++;
+          
+          // Calculate game duration using YouTube URLs
+          const gameDuration = calculateGameDuration(game["Début"], game["Fin"]);
+          if (gameDuration !== null) {
+            totalGameDurationSeconds += gameDuration;
+            gamesWithDuration++;
+          }
+        }
+      });
+
+      // Calculate metrics for both players using dynamic scaling
       const calculateMetrics = (stats: PlayerStat): PlayerComparisonMetrics => {
         const winRate = parseFloat(stats.winPercent);
         
-        // Calculate camp-specific performance
-        const totalCampGames = Object.values(stats.camps).reduce((sum, count) => sum + count, 0);
+        // Get actual camp-specific performance
+        const campStats = calculateCampSpecificPerformance(stats.player);
+        
+        // Use dynamic scalers for all metrics
+        const dynamicParticipationScore = participationScaler(stats.gamesPlayed);
+        const dynamicWinRateScore = winRateScaler(winRate);
+        const dynamicConsistencyScore = consistencyScaler(calculateAdvancedConsistency(stats.player));
+        
+        // Scale camp-specific metrics, with fallback for insufficient data
         const villageoisGames = stats.camps["Villageois"] || 0;
         const loupsGames = stats.camps["Loups"] || 0;
-        const specialRoleGames = totalCampGames - villageoisGames - loupsGames;
+        const specialRoleGames = Object.values(stats.camps).reduce((sum, count) => sum + count, 0) - villageoisGames - loupsGames;
         
-        // Estimate win rates by camp (simplified - we'd need more detailed data for exact calculation)
-        const villageoisMastery = villageoisGames > 0 ? Math.min(100, (winRate * 1.2)) : 0;
-        const loupsEfficiency = loupsGames > 0 ? Math.min(100, (winRate * 0.8)) : 0;
-        const specialRoleAdaptability = specialRoleGames > 0 ? Math.min(100, (winRate * 1.1)) : 0;
-        
-        // Use the new advanced consistency calculation
-        const trueConsistency = calculateAdvancedConsistency(stats.player);
+        const dynamicVillageoisMastery = villageoisGames >= 5 
+          ? villageoisScaler(campStats.villageoisWinRate)
+          : Math.min(100, winRate * 1.1); // Fallback estimate
+          
+        const dynamicLoupsEfficiency = loupsGames >= 3 
+          ? loupsScaler(campStats.loupsWinRate)
+          : Math.min(100, winRate * 0.9); // Fallback estimate
+          
+        const dynamicSpecialRoleAdaptability = specialRoleGames >= 3 
+          ? specialScaler(campStats.specialRoleWinRate)
+          : Math.min(100, winRate * 1.05); // Fallback estimate
         
         return {
           player: stats.player,
-          participationScore: (stats.gamesPlayed / maxGames) * 100,
-          winRateScore: Math.min(100, (winRate / avgWinRate) * 50),
-          consistencyScore: trueConsistency,
-          villageoisMastery,
-          loupsEfficiency,
-          specialRoleAdaptability,
+          participationScore: dynamicParticipationScore,
+          winRateScore: dynamicWinRateScore,
+          consistencyScore: dynamicConsistencyScore,
+          villageoisMastery: dynamicVillageoisMastery,
+          loupsEfficiency: dynamicLoupsEfficiency,
+          specialRoleAdaptability: dynamicSpecialRoleAdaptability,
           gamesPlayed: stats.gamesPlayed,
           winRate,
           avgGameDuration: gamesWithDuration > 0 ? totalGameDurationSeconds / gamesWithDuration : 0,
           commonGames: commonGames.length,
-          winRateVsOpponent: commonGames.length > 0 ? (winRate) : 0 // Simplified - would need detailed analysis
+          winRateVsOpponent: commonGames.length > 0 ? winRate : 0 // Simplified - would need detailed analysis
         };
       };
 

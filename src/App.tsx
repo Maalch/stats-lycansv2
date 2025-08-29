@@ -1,9 +1,10 @@
-import { Suspense, lazy, useState } from 'react';
+import { Suspense, lazy, useState, useEffect } from 'react';
 import { FullscreenProvider } from './context/FullscreenContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { SettingsIndicator } from './components/common/SettingsIndicator';
 import { SettingsBadge } from './components/common/SettingsBadge';
+import { TestZoneAccess } from './components/common/TestZoneAccess';
 import './App.css';
 
 // Lazy load each dashboard section
@@ -85,12 +86,7 @@ const PLAYER_STATS_MENU = [
     component: PlayerCampPerformanceChart,
     description: 'Meilleurs performances (par rapport à la moyenne), par camp'
   },
-  { 
-    key: 'comparison', 
-    label: 'Comparaison', 
-    component: PlayerComparisonChart,
-    description: 'Comparaison détaillée entre deux joueurs'
-  },
+  // Removed comparison - now only accessible via /TestZone
 ];
 
 const GENERAL_STATS_MENU = [
@@ -137,6 +133,59 @@ function MainApp() {
   const [selectedMainTab, setSelectedMainTab] = useState('players');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
+  const [currentRoute, setCurrentRoute] = useState(window.location.pathname);
+
+  // Listen for route changes
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentRoute(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Check if we're in TestZone route
+  const isTestZone = currentRoute.includes('/TestZone');
+
+  // If we're in TestZone, show the PlayerComparisonChart
+  if (isTestZone) {
+    return (
+      <div className="app-container">
+        <img
+          className="lycans-banner"
+          src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
+          alt="Lycans Banner"
+        />
+        <div className="main-container">
+          <div className="lycans-dashboard-container">
+            <header className="lycans-dashboard-header">
+              <h1>Zone de Test - Statistiques Lycans</h1>
+              <p>Composants en développement</p>
+              <button 
+                onClick={() => {
+                  window.history.pushState({}, '', `${import.meta.env.BASE_URL}`);
+                  setCurrentRoute(window.location.pathname);
+                }}
+                className="lycans-back-button"
+                style={{ marginTop: '10px', padding: '8px 16px', cursor: 'pointer' }}
+              >
+                ← Retour au dashboard principal
+              </button>
+            </header>
+            <div className="lycans-dashboard-section">
+              <SettingsIndicator />
+              <div className="lycans-dashboard-content">
+                <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                  <PlayerComparisonChart />
+                </Suspense>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // If we're in game details view, show that instead of the normal tabs
   if (currentView === 'gameDetails') {
