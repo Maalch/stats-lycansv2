@@ -561,3 +561,290 @@ body {
   color: var(--accent-primary);
   margin: 0;
 }
+
+/* Player Comparison Styles */
+.lycans-player-comparison {
+  padding: 1rem;
+}
+
+.lycans-player-selection {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-player-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.lycans-player-selector label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.lycans-select {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.lycans-select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.lycans-vs-indicator {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-secondary);
+  padding: 0 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.lycans-comparison-results {
+  margin-top: 2rem;
+}
+
+.lycans-head-to-head-stats {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-head-to-head-stats h3 {
+  margin-top: 0;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-primary);
+  padding-bottom: 0.5rem;
+}
+
+.lycans-h2h-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.lycans-h2h-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-h2h-label {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.lycans-h2h-value {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.lycans-detailed-stats {
+  margin: 2rem 0;
+}
+
+.lycans-stats-toggle {
+  margin-bottom: 1rem;
+}
+
+.lycans-toggle-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.lycans-toggle-btn:hover {
+  background: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.lycans-toggle-btn.active {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.lycans-stats-table {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.lycans-stats-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lycans-stats-table th,
+.lycans-stats-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.lycans-stats-table th {
+  background: var(--bg-tertiary);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.lycans-stats-table th[style*="cursor"] {
+  transition: background-color 0.2s;
+}
+
+.lycans-stats-table th[style*="cursor"]:hover {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.lycans-stats-table td {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.lycans-stats-table tr:last-child td {
+  border-bottom: none;
+}
+
+.lycans-comparison-instructions {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-comparison-instructions h3 {
+  margin-top: 0;
+  color: var(--accent-primary);
+}
+
+.lycans-comparison-instructions ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.lycans-comparison-instructions li {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.lycans-comparison-instructions li strong {
+  color: var(--text-primary);
+}
+
+.lycans-comparison-error {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--accent-secondary);
+  color: white;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .lycans-player-selection {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .lycans-vs-indicator {
+    order: 2;
+    padding: 0;
+  }
+  
+  .lycans-h2h-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .lycans-stats-table {
+    font-size: 0.9rem;
+  }
+  
+  .lycans-stats-table th,
+  .lycans-stats-table td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .lycans-metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Radar Chart Legend and Explanation Styles */
+.lycans-radar-explanation {
+  margin: 1rem 0 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-radar-info {
+  margin: 0 0 1rem 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.lycans-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.lycans-metric-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease;
+}
+
+.lycans-metric-info:hover {
+  transform: translateY(-1px);
+}
+
+.lycans-metric-name {
+  font-weight: 600;
+  color: var(--accent-primary);
+  font-size: 0.9rem;
+}
+
+.lycans-metric-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
