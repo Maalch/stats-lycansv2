@@ -341,8 +341,11 @@ function GameDetailView({ game }: { game: any }) {
                 }}>
                   {playerRole.player}
                 </div>
-                <div className="lycans-player-role">{playerRole.role}</div>
-                <div className="lycans-player-camp">{playerRole.camp}</div>
+                <div className="lycans-player-camp">
+                  {playerRole.role === playerRole.camp 
+                    ? playerRole.camp 
+                    : `${playerRole.camp} (${playerRole.role})`}
+                </div>
               </div>
             ))}
           </div>
