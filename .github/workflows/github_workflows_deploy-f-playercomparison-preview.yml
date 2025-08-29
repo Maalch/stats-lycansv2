@@ -1,0 +1,41 @@
+name: Deploy Preview for F-PlayerComparison
+
+on:
+  push:
+    branches:
+      - F-PlayerComparison
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: F-PlayerComparison
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to gh-pages subfolder
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          destination_dir: F-PlayerComparison
+          keep_files: true
