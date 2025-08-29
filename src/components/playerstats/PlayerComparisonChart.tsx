@@ -39,7 +39,7 @@ export function PlayerComparisonChart() {
         fullMark: 100
       },
       {
-        metric: 'Consistance',
+        metric: 'Régularité',
         [selectedPlayer1]: Math.round(comparisonData.player1.consistencyScore),
         [selectedPlayer2]: Math.round(comparisonData.player2.consistencyScore),
         fullMark: 100
@@ -84,7 +84,8 @@ export function PlayerComparisonChart() {
     <div className="lycans-player-comparison">
       <h2>Comparaison de Joueurs</h2>
       <p className="lycans-stats-info">
-        Comparez les performances de deux joueurs à travers différents aspects du jeu
+        Comparez les performances de deux joueurs à travers différents aspects du jeu. 
+        Seuls les joueurs ayant participé à au moins 20 parties sont inclus pour garantir des données significatives.
       </p>
 
       {/* Player Selection */}
@@ -146,7 +147,7 @@ export function PlayerComparisonChart() {
                   <span className="lycans-metric-desc">Pourcentage de victoires comparé à la moyenne générale</span>
                 </div>
                 <div className="lycans-metric-info">
-                  <span className="lycans-metric-name">📊 Consistance</span>
+                  <span className="lycans-metric-name">📊 Régularité</span>
                   <span className="lycans-metric-desc">Stabilité des performances au fil du temps (analyse des variations entre périodes de jeu)</span>
                 </div>
                 <div className="lycans-metric-info">
@@ -159,7 +160,7 @@ export function PlayerComparisonChart() {
                 </div>
                 <div className="lycans-metric-info">
                   <span className="lycans-metric-name">🎭 Adaptabilité Rôles</span>
-                  <span className="lycans-metric-desc">Performance avec les rôles spéciaux</span>
+                  <span className="lycans-metric-desc">Performance avec les rôles solo</span>
                 </div>
               </div>
             </div>
@@ -303,7 +304,7 @@ export function PlayerComparisonChart() {
                       <td>{Math.round(comparisonData.player2.participationScore)}</td>
                     </tr>
                     <tr>
-                      <td>Score de Consistance (/100)</td>
+                      <td>Score de Régularité (/100)</td>
                       <td>{Math.round(comparisonData.player1.consistencyScore)}</td>
                       <td>{Math.round(comparisonData.player2.consistencyScore)}</td>
                     </tr>
@@ -333,10 +334,10 @@ export function PlayerComparisonChart() {
           <ul>
             <li><strong>Participation:</strong> Basé sur le nombre de parties jouées</li>
             <li><strong>Taux de Victoire:</strong> Comparé à la moyenne générale</li>
-            <li><strong>Consistance:</strong> Régularité des performances - analyse les séquences et la variabilité entre différentes périodes de jeu</li>
+            <li><strong>Régularité:</strong> Régularité des performances - analyse les séquences et la variabilité entre différentes périodes de jeu</li>
             <li><strong>Maîtrise Villageois:</strong> Efficacité en tant que Villageois</li>
             <li><strong>Efficacité Loups:</strong> Réussite en tant que Loup</li>
-            <li><strong>Adaptabilité Rôles:</strong> Performance avec les rôles spéciaux</li>
+            <li><strong>Adaptabilité Rôles:</strong> Performance avec les rôles solos</li>
           </ul>
         </div>
       )}
