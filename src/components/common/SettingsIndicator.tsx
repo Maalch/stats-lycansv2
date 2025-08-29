@@ -8,7 +8,7 @@ export function SettingsIndicator() {
   const hasActiveFilters = 
     settings.gameFilter !== 'all' ||
     settings.filterMode === 'dateRange' ||
-    settings.playerFilter.mode !== 'none';
+    (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0);
 
   if (!hasActiveFilters) {
     return null; // Don't show indicator when no filters are active
@@ -43,22 +43,17 @@ export function SettingsIndicator() {
     }
 
     // Player filter
-    if (settings.playerFilter.mode !== 'none') {
+    if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
       const playerCount = settings.playerFilter.players.length;
-      if (playerCount > 0) {
-        const modeText = settings.playerFilter.mode === 'include' ? 'Inclure' : 'Exclure';
-        
-        if (playerCount === 1) {
-          // Show player name for single player
-          filters.push(`${modeText} ${settings.playerFilter.players[0]}`);
-        } else {
-          // Show count for multiple players
-          const playerText = 'joueurs';
-          filters.push(`${modeText} ${playerCount} ${playerText}`);
-        }
+      const modeText = settings.playerFilter.mode === 'include' ? 'Inclure' : 'Exclure';
+      
+      if (playerCount === 1) {
+        // Show player name for single player
+        filters.push(`${modeText} ${settings.playerFilter.players[0]}`);
       } else {
-        const modeText = settings.playerFilter.mode === 'include' ? 'inclusion' : 'exclusion';
-        filters.push(`Filtre ${modeText} (aucun joueur sélectionné)`);
+        // Show count for multiple players
+        const playerText = 'joueurs';
+        filters.push(`${modeText} ${playerCount} ${playerText}`);
       }
     }
 
