@@ -251,8 +251,8 @@ function GameDetailView({ game }: { game: any }) {
           <h4>Informations Générales</h4>
           <div className="lycans-game-detail-stats">
             <div className="lycans-stat-item">
-              <span className="label">Partie moddée:</span>
-              <span className="value">{game.isModded ? 'Oui' : 'Non'}</span>
+              <span className="label">Nombre de joueurs:</span>
+              <span className="value">{game.playerCount}</span>
             </div>
             <div className="lycans-stat-item">
               <span className="label">Nombre de loups:</span>
@@ -288,7 +288,10 @@ function GameDetailView({ game }: { game: any }) {
             {game.versions && (
               <div className="lycans-stat-item">
                 <span className="label">Version:</span>
-                <span className="value">{game.versions}</span>
+                <span className="value">
+                  {game.versions}
+                  {game.isModded ? ' (moddée)' : ''}
+                </span>
               </div>
             )}
             {game.map && (
@@ -304,6 +307,14 @@ function GameDetailView({ game }: { game: any }) {
         <div className="lycans-game-detail-section">
           <h4>Résultats</h4>
           <div className="lycans-game-detail-stats">
+            <div className="lycans-stat-item">
+              <span className="label">Camp vainqueur:</span>
+              <span className="value">{game.winningCamp}</span>
+            </div>
+            <div className="lycans-stat-item">
+              <span className="label">Type de victoire:</span>
+              <span className="value">{game.victoryType}</span>
+            </div>
             <div className="lycans-stat-item">
               <span className="label">Survivants villageois:</span>
               <span className="value">{game.villagerSurvivors}</span>
