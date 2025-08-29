@@ -11,6 +11,7 @@ const PlayersGeneralStatisticsChart = lazy(() => import('./components/playerstat
 const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
 const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
+const PlayerComparisonChart = lazy(() => import('./components/playerstats/PlayerComparisonChart').then(m => ({ default: m.PlayerComparisonChart })));
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
@@ -83,6 +84,12 @@ const PLAYER_STATS_MENU = [
     label: 'Performances', 
     component: PlayerCampPerformanceChart,
     description: 'Meilleurs performances (par rapport à la moyenne), par camp'
+  },
+  { 
+    key: 'comparison', 
+    label: 'Comparaison', 
+    component: PlayerComparisonChart,
+    description: 'Comparaison détaillée entre deux joueurs'
   },
 ];
 
