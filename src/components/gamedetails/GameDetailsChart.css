@@ -91,6 +91,54 @@
   background: #006FD4;
 }
 
+/* Spoiler Button */
+.lycans-spoiler-btn {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.lycans-spoiler-btn:hover {
+  background: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(72, 83, 168, 0.3);
+}
+
+/* Video Toggle Button */
+.lycans-video-toggle-btn {
+  background: var(--chart-color-2);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.lycans-video-toggle-btn:hover {
+  background: var(--chart-color-3);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
 /* Game Detail View */
 
 .lycans-games-table tr.game-details-row {
@@ -266,9 +314,10 @@
 .lycans-youtube-container {
   position: relative;
   width: 100%;
+  max-width: 1200px; /* Limit maximum width */
   height: 0;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  margin-top: 0.5rem;
+  padding-bottom: 67.5%; /* 16:9 aspect ratio at max 1200px width (1200 * 9/16 = 675) */
+  margin: 0.5rem auto 0; /* Center the video */
 }
 
 .lycans-youtube-iframe {
@@ -282,6 +331,7 @@
 
 @media (max-width: 768px) {
   .lycans-youtube-container {
-    padding-bottom: 60%; /* Slightly taller on mobile for better visibility */
+    max-width: 100%;
+    padding-bottom: 56.25%; /* Full 16:9 aspect ratio on mobile */
   }
 }

@@ -223,6 +223,8 @@ export function GameDetailsChart() {
 
 // Component to display detailed view of a single game
 function GameDetailView({ game }: { game: any }) {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
     <div className="lycans-game-detail-view">
       <div className="lycans-game-detail-grid">
@@ -351,8 +353,20 @@ function GameDetailView({ game }: { game: any }) {
           </div>
         </div>
 
-        {/* YouTube Video */}
+        {/* Video Toggle Button */}
         {game.youtubeEmbedUrl && (
+          <div className="lycans-game-detail-section full-width">
+            <button
+              onClick={() => setShowVideo(!showVideo)}
+              className="lycans-video-toggle-btn"
+            >
+              {showVideo ? '📹 Masquer la vidéo' : '🎥 Voir la vidéo'}
+            </button>
+          </div>
+        )}
+
+        {/* YouTube Video */}
+        {game.youtubeEmbedUrl && showVideo && (
           <div className="lycans-game-detail-section full-width">
             <h4>Vidéo de la Partie</h4>
             <div className="lycans-youtube-container">
