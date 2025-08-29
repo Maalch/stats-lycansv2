@@ -641,6 +641,30 @@ body {
   margin-top: 1rem;
 }
 
+.lycans-h2h-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-h2h-section h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--accent-primary);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lycans-h2h-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1rem 0;
+  font-style: italic;
+}
+
 .lycans-h2h-metric {
   display: flex;
   justify-content: space-between;
