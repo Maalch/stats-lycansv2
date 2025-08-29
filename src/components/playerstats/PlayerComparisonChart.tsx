@@ -421,7 +421,7 @@ export function PlayerComparisonChart() {
       {(!selectedPlayer1 || !selectedPlayer2) && (
         <div className="lycans-comparison-instructions">
           <h3>🎮 Préparez la Bataille!</h3>
-          <p>Sélectionnez deux joueurs pour découvrir qui domine vraiment dans l'arène!</p>
+          <p>Sélectionnez deux joueurs pour découvrir qui domine l'autre !</p>
           <ul>
             <li><strong>🎯 Participation:</strong> Basé sur le nombre de parties jouées</li>
             <li><strong>🏆 Taux de Victoire:</strong> Comparé à la moyenne générale</li>
