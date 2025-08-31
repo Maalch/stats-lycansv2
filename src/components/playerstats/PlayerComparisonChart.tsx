@@ -281,7 +281,8 @@ export function PlayerComparisonChart() {
             {/* Metrics Explanation - Moved below radar */}
             <div className="lycans-radar-explanation">
               <p className="lycans-radar-info">
-                <strong>Légende des métriques :</strong> Toutes les valeurs sont normalisées sur une échelle de 0 à 100 pour faciliter la comparaison.
+                <strong>Légende des métriques :</strong> Toutes les valeurs sont normalisées sur une échelle de 0 à 100 pour faciliter la comparaison
+                <strong> (100 = meilleur joueur dans cette métrique, 0 = moins bon joueur dans cette métrique)</strong>
               </p>
               <div className="lycans-metrics-grid">
                 <div className="lycans-metric-info">
@@ -289,8 +290,8 @@ export function PlayerComparisonChart() {
                   <span className="lycans-metric-desc">Nombre de parties jouées par rapport au joueur le plus actif</span>
                 </div>
                 <div className="lycans-metric-info">
-                  <span className="lycans-metric-name">🏆 Taux de Victoire</span>
-                  <span className="lycans-metric-desc">Pourcentage de victoires comparé à la moyenne générale</span>
+                  <span className="lycans-metric-name">🏆 Score de Victoire</span>
+                  <span className="lycans-metric-desc">Score de victoires, comparé à la moyenne générale</span>
                 </div>
                 <div className="lycans-metric-info">
                   <span className="lycans-metric-name">📊 Régularité</span>
@@ -423,7 +424,7 @@ export function PlayerComparisonChart() {
           <p>Sélectionnez deux joueurs pour découvrir qui l'emporte le plus souvent !</p>
           <ul>
             <li><strong>🎯 Participation:</strong> Basé sur le nombre de parties jouées</li>
-            <li><strong>🏆 Taux de Victoire:</strong> Comparé à la moyenne générale</li>
+            <li><strong>🏆 Score de Victoire:</strong> Comparé à la moyenne générale</li>
             <li><strong>📊 Régularité:</strong> Stabilité des performances au fil du temps</li>
             <li><strong>🏘️ Maîtrise Villageois:</strong> Efficacité en tant que Villageois</li>
             <li><strong>🐺 Efficacité Loups:</strong> Réussite en tant que Loup</li>
