@@ -91,6 +91,12 @@ export function GameDetailsChart() {
       const roleText = navigationFilters.selectedPairRole === 'wolves' ? 'loups' : 'amoureux';
       filters.push(`Paire ${roleText}: ${pairText}`);
     }
+    if (navigationFilters.selectedPlayers && navigationFilters.playersFilterMode) {
+      const playersText = navigationFilters.selectedPlayers.join(' & ');
+      const modeText = navigationFilters.playersFilterMode === 'all-common-games' ? 
+        'toutes les parties communes' : 'affrontements uniquement';
+      filters.push(`${playersText} (${modeText})`);
+    }
     if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
     if (navigationFilters.selectedHarvestRange) filters.push(`Récolte: ${navigationFilters.selectedHarvestRange}`);
     if (navigationFilters.selectedGameDuration) filters.push(`Durée: ${navigationFilters.selectedGameDuration} jour${navigationFilters.selectedGameDuration > 1 ? 's' : ''}`);
