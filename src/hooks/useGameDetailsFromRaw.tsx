@@ -406,6 +406,60 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
           return gameDays === filters.selectedGameDuration;
         });
       }
+
+      // New multi-player filtering for player comparison scenarios
+      if (filters.selectedPlayers && filters.selectedPlayers.length === 2) {
+        filteredGames = filteredGames.filter(game => {
+          const playersInGame = game["Liste des joueurs"].toLowerCase();
+          const [player1, player2] = filters.selectedPlayers!;
+          
+          // Check if both players are in the game
+          const bothPlayersInGame = playersInGame.includes(player1.toLowerCase()) && 
+                                   playersInGame.includes(player2.toLowerCase());
+          
+          if (!bothPlayersInGame) return false;
+
+          // If mode is 'all-common-games', just return true since both players are in the game
+          if (filters.playersFilterMode === 'all-common-games') {
+            return true;
+          }
+
+          // If mode is 'opposing-camps', check if players were in different camps
+          if (filters.playersFilterMode === 'opposing-camps') {
+            const roleData = rawRoleData.find(role => role.Game === game.Game);
+            if (!roleData) return false;
+
+            // Function to get player's camp
+            const getPlayerCamp = (playerName: string): string => {
+              const player = playerName.toLowerCase();
+              
+              // Check each role type
+              if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loups';
+              if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) return 'Loups';
+              if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(player)) return 'Idiot du Village';
+              if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
+              if (roleData.Agent && roleData.Agent.toLowerCase().includes(player)) return 'Agent';
+              if (roleData.Espion && roleData.Espion.toLowerCase().includes(player)) return 'Espion';
+              if (roleData.Scientifique && roleData.Scientifique.toLowerCase().includes(player)) return 'Scientifique';
+              if (roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(player)) return 'Amoureux';
+              if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(player)) return 'La Bête';
+              if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(player)) return 'Chasseur de primes';
+              if (roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(player)) return 'Vaudou';
+              
+              // If not in any special role, they're a villager
+              return 'Villageois';
+            };
+
+            const player1Camp = getPlayerCamp(player1);
+            const player2Camp = getPlayerCamp(player2);
+
+            // Return true if players are in different camps
+            return player1Camp !== player2Camp;
+          }
+
+          return false;
+        });
+      }
     }
 
     return filteredGames.map(game => {

@@ -71,6 +71,26 @@ export function PlayerComparisonChart() {
     });
   };
 
+  const handleCommonGamesClick = () => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'all-common-games',
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handleOpposingGamesClick = () => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'opposing-camps',
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
   if (isLoading) {
     return <div className="donnees-attente">Chargement des données de comparaison...</div>;
   }
@@ -245,8 +265,14 @@ export function PlayerComparisonChart() {
             {comparisonData.headToHeadStats.opposingCampGames > 0 && (
               <div className="lycans-battle-summary">
                 <div className="lycans-battle-stat">
-                  <span className="lycans-battle-label">🗡️ Batailles:</span>
-                  <span className="lycans-battle-value">{comparisonData.headToHeadStats.opposingCampGames}</span>
+                  <span className="lycans-battle-label">🗡️ Affrontements:</span>
+                  <span 
+                    className="lycans-battle-value lycans-clickable" 
+                    onClick={handleOpposingGamesClick}
+                    title="Cliquer pour voir les détails des affrontements"
+                  >
+                    {comparisonData.headToHeadStats.opposingCampGames}
+                  </span>
                 </div>
                 <div className="lycans-battle-stat">
                   <span className="lycans-battle-label">⏱️ Durée moyenne:</span>
@@ -323,7 +349,13 @@ export function PlayerComparisonChart() {
               <div className="lycans-h2h-summary">
                 <div className="lycans-h2h-metric">
                   <span className="lycans-h2h-label">Parties communes:</span>
-                  <span className="lycans-h2h-value">{comparisonData.headToHeadStats.commonGames}</span>
+                  <span 
+                    className="lycans-h2h-value lycans-clickable" 
+                    onClick={handleCommonGamesClick}
+                    title="Cliquer pour voir toutes les parties communes"
+                  >
+                    {comparisonData.headToHeadStats.commonGames}
+                  </span>
                 </div>
                 <div className="lycans-h2h-metric">
                   <span className="lycans-h2h-label">Victoires {selectedPlayer1}:</span>

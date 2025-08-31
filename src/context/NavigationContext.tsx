@@ -14,6 +14,8 @@ export interface NavigationFilters {
   campFilterMode?: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
   selectedHarvestRange?: string; // For filtering by harvest percentage range (e.g., "0-25%", "26-50%", etc.)
   selectedGameDuration?: number; // For filtering by specific number of days (e.g., 3, 4, 5)
+  selectedPlayers?: string[]; // For filtering games where all these players participated (comparison scenarios)
+  playersFilterMode?: 'all-common-games' | 'opposing-camps'; // Mode for multi-player filtering
 }
 
 export interface NavigationState {
