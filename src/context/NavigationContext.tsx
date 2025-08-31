@@ -28,6 +28,10 @@ export interface NavigationState {
   selectedCampPerformanceView?: 'player-performance' | 'top-performers';
   selectedCampPerformanceCamp?: string;
   selectedCampPerformanceMinGames?: number;
+  // PlayerComparisonChart state
+  selectedPlayer1?: string;
+  selectedPlayer2?: string;
+  showDetailedStats?: boolean;
 }
 
 interface NavigationContextType {

@@ -87,7 +87,7 @@ const PLAYER_STATS_MENU = [
   },
   { 
     key: 'comparison', 
-    label: 'Comparaison', 
+    label: 'Face à face', 
     component: PlayerComparisonChart,
     description: 'Comparaison détaillée entre deux joueurs'
   },

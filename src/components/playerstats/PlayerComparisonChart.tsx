@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { usePlayerComparisonFromRaw } from '../../hooks/usePlayerComparisonFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
@@ -6,11 +6,25 @@ import { playersColor } from '../../types/api';
 
 export function PlayerComparisonChart() {
   const { availablePlayers, generateComparison, isLoading, error } = usePlayerComparisonFromRaw();
-  const { navigateToGameDetails } = useNavigation();
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   
-  const [selectedPlayer1, setSelectedPlayer1] = useState<string>('');
-  const [selectedPlayer2, setSelectedPlayer2] = useState<string>('');
-  const [showDetailedStats, setShowDetailedStats] = useState<boolean>(false);
+  // Use persistent navigation state instead of local state
+  const selectedPlayer1 = navigationState.selectedPlayer1 || '';
+  const selectedPlayer2 = navigationState.selectedPlayer2 || '';
+  const showDetailedStats = navigationState.showDetailedStats || false;
+
+  // Update functions to use navigation state
+  const setSelectedPlayer1 = (player: string) => {
+    updateNavigationState({ selectedPlayer1: player });
+  };
+
+  const setSelectedPlayer2 = (player: string) => {
+    updateNavigationState({ selectedPlayer2: player });
+  };
+
+  const setShowDetailedStats = (show: boolean) => {
+    updateNavigationState({ showDetailedStats: show });
+  };
 
   // Generate comparison data when both players are selected
   const comparisonData = useMemo(() => {
