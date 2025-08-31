@@ -85,7 +85,12 @@ const PLAYER_STATS_MENU = [
     component: PlayerCampPerformanceChart,
     description: 'Meilleurs performances (par rapport à la moyenne), par camp'
   },
-  // Removed comparison - now only accessible via /TestZone
+  { 
+    key: 'comparison', 
+    label: 'Comparaison', 
+    component: PlayerComparisonChart,
+    description: 'Comparaison détaillée entre deux joueurs'
+  },
 ];
 
 const GENERAL_STATS_MENU = [

@@ -81,9 +81,8 @@ export function PlayerComparisonChart() {
 
   return (
     <div className="lycans-player-comparison">
-      <h2>⚔️ ARENA DE COMBAT ⚔️</h2>
+      <h2>⚔️ FACE A FACE ⚔️</h2>
       <p className="lycans-stats-info">
-        Découvrez qui domine vraiment quand deux joueurs s'affrontent! 
         Seuls les joueurs ayant participé à au moins 20 parties sont inclus pour garantir des données significatives.
       </p>
 
@@ -129,7 +128,7 @@ export function PlayerComparisonChart() {
         <div className="lycans-comparison-results">
           {/* Versus Battle Interface */}
           <div className="lycans-graphique-section">
-            <h3>⚔️ BATAILLE RADAR ⚔️</h3>
+            <h3>⚔️ FACE A FACE ⚔️</h3>
             
             {/* Versus Arena with Score Display */}
             <div className="lycans-versus-arena">
@@ -254,16 +253,16 @@ export function PlayerComparisonChart() {
                   <span className="lycans-battle-value">{comparisonData.headToHeadStats.averageOpposingGameDuration}</span>
                 </div>
                 {comparisonData.headToHeadStats.player1WinsAsOpponent > comparisonData.headToHeadStats.player2WinsAsOpponent ? (
-                  <div className="lycans-winner-announcement">
-                    🏆 <span style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>{selectedPlayer1}</span> domine les affrontements!
+                      <div className="lycans-winner-announcement">
+                        🏆 Victoire: <span style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>{selectedPlayer1}</span> 
                   </div>
                 ) : comparisonData.headToHeadStats.player2WinsAsOpponent > comparisonData.headToHeadStats.player1WinsAsOpponent ? (
                   <div className="lycans-winner-announcement">
-                    🏆 <span style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>{selectedPlayer2}</span> domine les affrontements!
+                    🏆 Victoire: <span style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>{selectedPlayer2}</span>
                   </div>
                 ) : (
                   <div className="lycans-winner-announcement">
-                    ⚖️ Égalité parfaite dans les affrontements!
+                    ⚖️ Égalité parfaite dans les résultats !
                   </div>
                 )}
               </div>
@@ -273,8 +272,8 @@ export function PlayerComparisonChart() {
               <div className="lycans-no-battles">
                 <div className="lycans-no-battles-icon">🤝</div>
                 <div className="lycans-no-battles-text">
-                  Aucune bataille directe trouvée entre ces deux joueurs.<br />
-                  Ils n'ont jamais été dans des camps opposés!
+                  Aucune partie trouvée entre ces deux joueurs.<br />
+                  Ils n'ont jamais été dans des camps opposés !
                 </div>
               </div>
             )}
@@ -420,8 +419,8 @@ export function PlayerComparisonChart() {
       {/* Instructions when no players selected */}
       {(!selectedPlayer1 || !selectedPlayer2) && (
         <div className="lycans-comparison-instructions">
-          <h3>🎮 Préparez la Bataille!</h3>
-          <p>Sélectionnez deux joueurs pour découvrir qui domine l'autre !</p>
+          <h3>🎮 Préparez le face-à-face !</h3>
+          <p>Sélectionnez deux joueurs pour découvrir qui l'emporte le plus souvent !</p>
           <ul>
             <li><strong>🎯 Participation:</strong> Basé sur le nombre de parties jouées</li>
             <li><strong>🏆 Taux de Victoire:</strong> Comparé à la moyenne générale</li>
@@ -435,7 +434,7 @@ export function PlayerComparisonChart() {
 
       {selectedPlayer1 && selectedPlayer2 && selectedPlayer1 === selectedPlayer2 && (
         <div className="lycans-comparison-error">
-          <p>⚠️ Un joueur ne peut pas se battre contre lui-même! Sélectionnez deux joueurs différents.</p>
+          <p>⚠️ Un joueur ne peut pas être sélectionné contre lui-même! Sélectionnez deux joueurs différents.</p>
         </div>
       )}
     </div>
