@@ -153,7 +153,8 @@ export function GameDetailsChart() {
       const playersText = navigationFilters.selectedPlayers.join(' & ');
       const modeText = navigationFilters.playersFilterMode === 'all-common-games' ? 
         'toutes les parties communes' : 'affrontements uniquement';
-      filters.push(`${playersText} (${modeText})`);
+      const winnerText = navigationFilters.winnerPlayer ? ` (victoires de ${navigationFilters.winnerPlayer})` : '';
+      filters.push(`${playersText} (${modeText}${winnerText})`);
     }
     if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
     if (navigationFilters.selectedHarvestRange) filters.push(`Récolte: ${navigationFilters.selectedHarvestRange}`);

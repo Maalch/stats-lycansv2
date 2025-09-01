@@ -16,6 +16,7 @@ export interface NavigationFilters {
   selectedGameDuration?: number; // For filtering by specific number of days (e.g., 3, 4, 5)
   selectedPlayers?: string[]; // For filtering games where all these players participated (comparison scenarios)
   playersFilterMode?: 'all-common-games' | 'opposing-camps'; // Mode for multi-player filtering
+  winnerPlayer?: string; // For head-to-head scenarios, specify which player should be the winner
 }
 
 export interface NavigationState {
