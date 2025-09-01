@@ -549,13 +549,14 @@ function GameDetailView({ game }: { game: any }) {
           <div className="lycans-player-roles-grid">
             {game.playerRoles.map((playerRole: any, index: number) => {
               // Find matching player details
-              const playerDetails = game.playerDetails.find((detail: any) => detail.player === playerRole.player);
+              //const playerDetails = game.playerDetails.find((detail: any) => detail.player === playerRole.player);
               
               // Build the display text with additional details
               let displayText = playerRole.role === playerRole.camp 
                 ? playerRole.camp 
                 : `${playerRole.camp} (${playerRole.role})`;
               
+                /*
               if (playerDetails) {
                 const additionalInfo = [];
                 
@@ -578,7 +579,7 @@ function GameDetailView({ game }: { game: any }) {
                   // Only secondary role, no job/power
                   displayText = `${playerRole.camp} (${playerDetails.secondaryRole})`;
                 }
-              }
+              }*/
               
               return (
                 <div key={index} className="lycans-player-role-item">
