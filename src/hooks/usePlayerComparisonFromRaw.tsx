@@ -83,10 +83,11 @@ export function usePlayerComparisonFromRaw() {
           if (roleValue && typeof roleValue === 'string') {
             const playersInRole = splitAndTrim(roleValue);
             if (playersInRole.some(p => p.toLowerCase() === playerName.toLowerCase())) {
-              // Determine camp based on role
+              // Determine camp based on role - each solo role is its own camp
               if (role === 'Loups' || role === 'Traître') return 'Loups';
               if (role === 'Amoureux') return 'Amoureux';
-              return 'Solo'; // others special roles are solo-aligned
+              // Return the specific role name for solo roles since they're each their own camp
+              return role;
             }
           }
         }

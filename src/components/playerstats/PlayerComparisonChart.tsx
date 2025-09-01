@@ -46,7 +46,7 @@ export function PlayerComparisonChart() {
         fullMark: 100
       },
       {
-        metric: 'Taux de Victoire',
+        metric: 'Score de Victoire',
         [selectedPlayer1]: Math.round(comparisonData.player1.winRateScore),
         [selectedPlayer2]: Math.round(comparisonData.player2.winRateScore),
         fullMark: 100
@@ -431,9 +431,9 @@ export function PlayerComparisonChart() {
                       <td>{comparisonData.player2.gamesPlayed}</td>
                     </tr>
                     <tr>
-                      <td>Taux de Victoire (%)</td>
-                      <td>{comparisonData.player1.winRate.toFixed(1)}%</td>
-                      <td>{comparisonData.player2.winRate.toFixed(1)}%</td>
+                      <td>Score de Victoire (/100)</td>
+                      <td>{comparisonData.player1.winRateScore}</td>
+                      <td>{comparisonData.player2.winRateScore}</td>
                     </tr>
                     <tr>
                       <td>Score de Participation (/100)</td>
