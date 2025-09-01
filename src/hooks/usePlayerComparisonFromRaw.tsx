@@ -37,6 +37,10 @@ export interface PlayerComparisonData {
     player1WinsAsOpponent: number;
     player2WinsAsOpponent: number;
     averageOpposingGameDuration: string;
+    // Same camp statistics
+    sameCampGames: number;
+    sameCampWins: number;
+    averageSameCampDuration: string;
   };
 }
 
@@ -321,14 +325,18 @@ export function usePlayerComparisonFromRaw() {
       // Find common games and head-to-head stats
       const commonGames: any[] = [];
       const opposingCampGames: any[] = [];
+      const sameCampGames: any[] = [];
       let player1CommonWins = 0;
       let player2CommonWins = 0;
       let player1OpposingWins = 0;
       let player2OpposingWins = 0;
+      let sameCampWins = 0;
       let totalGameDurationSeconds = 0;
       let gamesWithDuration = 0;
       let totalOpposingGameDurationSeconds = 0;
       let opposingGamesWithDuration = 0;
+      let totalSameCampDurationSeconds = 0;
+      let sameCampGamesWithDuration = 0;
 
       rawGameData.forEach(game => {
         const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
@@ -344,6 +352,9 @@ export function usePlayerComparisonFromRaw() {
           
           // Determine if they're on opposing camps
           const areOpposingCamps = (player1Camp !== player2Camp) && 
+            (player1Camp !== 'Unknown' && player2Camp !== 'Unknown');
+          
+          const areSameCamps = (player1Camp === player2Camp) && 
             (player1Camp !== 'Unknown' && player2Camp !== 'Unknown');
           
           if (areOpposingCamps) {
@@ -362,6 +373,20 @@ export function usePlayerComparisonFromRaw() {
             if (gameDuration !== null) {
               totalOpposingGameDurationSeconds += gameDuration;
               opposingGamesWithDuration++;
+            }
+          } else if (areSameCamps) {
+            // This is a same camp game
+            sameCampGames.push(game);
+            
+            // Check if their camp won
+            const theirCampWon = game["Camp victorieux"] === player1Camp;
+            if (theirCampWon) sameCampWins++;
+            
+            // Calculate game duration for same camp games
+            const gameDuration = calculateGameDuration(game["Début"], game["Fin"]);
+            if (gameDuration !== null) {
+              totalSameCampDurationSeconds += gameDuration;
+              sameCampGamesWithDuration++;
             }
           }
           
@@ -448,6 +473,12 @@ export function usePlayerComparisonFromRaw() {
           player2WinsAsOpponent: player2OpposingWins,
           averageOpposingGameDuration: opposingGamesWithDuration > 0 
             ? formatDuration(totalOpposingGameDurationSeconds / opposingGamesWithDuration)
+            : "N/A",
+          // Same camp statistics
+          sameCampGames: sameCampGames.length,
+          sameCampWins: sameCampWins,
+          averageSameCampDuration: sameCampGamesWithDuration > 0 
+            ? formatDuration(totalSameCampDurationSeconds / sameCampGamesWithDuration)
             : "N/A"
         }
       };
