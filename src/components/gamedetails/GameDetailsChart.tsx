@@ -540,20 +540,59 @@ function GameDetailView({ game }: { game: any }) {
         <div className="lycans-game-detail-section full-width">
           <h4>Rôles des Joueurs</h4>
           <div className="lycans-player-roles-grid">
-            {game.playerRoles.map((playerRole: any, index: number) => (
-              <div key={index} className="lycans-player-role-item">
-                <div className="lycans-player-name" style={{
-                  color: lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#fff'
-                }}>
-                  {playerRole.player}
+            {game.playerRoles.map((playerRole: any, index: number) => {
+              // Find matching player details
+              const playerDetails = game.playerDetails.find((detail: any) => detail.player === playerRole.player);
+              
+              // Build the display text with additional details
+              let displayText = playerRole.role === playerRole.camp 
+                ? playerRole.camp 
+                : `${playerRole.camp} (${playerRole.role})`;
+              
+              if (playerDetails) {
+                const additionalInfo = [];
+                
+                // Add wolf power or villager job
+                if (playerDetails.wolfPower && playerDetails.wolfPower.trim()) {
+                  additionalInfo.push(playerDetails.wolfPower);
+                } else if (playerDetails.villagerJob && playerDetails.villagerJob.trim()) {
+                  additionalInfo.push(playerDetails.villagerJob);
+                }
+                
+                // Build the final display text
+                if (additionalInfo.length > 0) {
+                  displayText = `${playerRole.camp} - ${additionalInfo[0]}`;
+                  
+                  // Add secondary role in parentheses if exists
+                  if (playerDetails.secondaryRole && playerDetails.secondaryRole.trim()) {
+                    displayText += ` (${playerDetails.secondaryRole})`;
+                  }
+                } else if (playerDetails.secondaryRole && playerDetails.secondaryRole.trim()) {
+                  // Only secondary role, no job/power
+                  displayText = `${playerRole.camp} (${playerDetails.secondaryRole})`;
+                }
+              }
+              
+              return (
+                <div key={index} className="lycans-player-role-item">
+                  <div
+                    className="lycans-player-name"
+                    style={{
+                      color: lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#fff',
+                      textAlign: 'left'
+                    }}
+                  >
+                    {playerRole.player}
+                  </div>
+                  <div
+                    className="lycans-player-camp"
+                    style={{ textAlign: 'left' }}
+                  >
+                    {displayText}
+                  </div>
                 </div>
-                <div className="lycans-player-camp">
-                  {playerRole.role === playerRole.camp 
-                    ? playerRole.camp 
-                    : `${playerRole.camp} (${playerRole.role})`}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

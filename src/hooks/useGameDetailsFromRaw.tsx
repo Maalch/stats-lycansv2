@@ -490,9 +490,9 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
         player: 'Ponce', // Since this is Ponce-only data
         camp: ponce.Camp || 'Unknown',
         isTraitor: ponce.Traître || false,
-        secondaryRole: ponce["Rôle secondaire"],
-        wolfPower: ponce["Pouvoir de loup"],
-        villagerJob: ponce["Métier villageois"],
+        secondaryRole: ponce["Rôle secondaire"] === "N/A" ? null : ponce["Rôle secondaire"],
+        wolfPower: ponce["Pouvoir de loup"] === "N/A" ? null : ponce["Pouvoir de loup"],
+        villagerJob: ponce["Métier villageois"] === "N/A" ? null : ponce["Métier villageois"],
         playersKilled: ponce["Joueurs tués"],
         deathDay: ponce["Jour de mort"],
         deathType: ponce["Type de mort"],
