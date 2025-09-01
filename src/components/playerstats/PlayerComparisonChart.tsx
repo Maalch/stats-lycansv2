@@ -455,6 +455,11 @@ export function PlayerComparisonChart() {
                       <td>{Math.round(comparisonData.player1.loupsEfficiency)}</td>
                       <td>{Math.round(comparisonData.player2.loupsEfficiency)}</td>
                     </tr>
+                    <tr>
+                      <td>Adaptabilité des rôles (/100)</td>
+                      <td>{Math.round(comparisonData.player1.specialRoleAdaptability)}</td>
+                      <td>{Math.round(comparisonData.player2.specialRoleAdaptability)}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

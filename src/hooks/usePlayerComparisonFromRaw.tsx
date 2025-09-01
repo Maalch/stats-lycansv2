@@ -288,7 +288,7 @@ export function usePlayerComparisonFromRaw() {
       const consistencyValues = allPlayersRawMetrics.map(m => m.rawConsistency);
       const villageoisValues = allPlayersRawMetrics.filter(m => m.villageoisGames >= 5).map(m => m.rawVillageoisMastery);
       const loupsValues = allPlayersRawMetrics.filter(m => m.loupsGames >= 3).map(m => m.rawLoupsEfficiency);
-      const specialValues = allPlayersRawMetrics.filter(m => m.specialRoleGames >= 3).map(m => m.rawSpecialRoleAdaptability);
+      const specialValues = allPlayersRawMetrics.filter(m => m.specialRoleGames >= 10).map(m => m.rawSpecialRoleAdaptability);
 
       // Create scaling functions (min-max normalization to 0-100)
       const createScaler = (values: number[]) => {
@@ -299,12 +299,25 @@ export function usePlayerComparisonFromRaw() {
         return (val: number) => Math.round(((val - min) / (max - min)) * 100);
       };
 
+      // Updated special role scaler - scales from 10 to 100 for players with 10+ games
+      const createSpecialRoleScaler = (values: number[]) => {
+        if (values.length === 0) return (_val: number) => 50; // Default for empty arrays
+        
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        if (max === min) return (_val: number) => 55; // Default mid-range if all values same
+        
+        // Scale from 10 to 100 (90 point range)
+        return (val: number) => Math.round(((val - min) / (max - min)) * 90) + 10;
+      };
+
       const participationScaler = createScaler(participationValues);
       const winRateScaler = createScaler(winRateValues);
       const consistencyScaler = createScaler(consistencyValues);
       const villageoisScaler = createScaler(villageoisValues);
       const loupsScaler = createScaler(loupsValues);
-      const specialScaler = createScaler(specialValues);
+      const specialRoleScaler = createSpecialRoleScaler(specialValues);
+
 
       // Find common games and head-to-head stats
       const commonGames: any[] = [];
@@ -391,16 +404,16 @@ export function usePlayerComparisonFromRaw() {
         
         const dynamicVillageoisMastery = villageoisGames >= 5 
           ? villageoisScaler(campStats.villageoisWinRate)
-          : Math.min(100, winRate * 1.1); // Fallback estimate
+          : Math.max(15, Math.min(85, winRate + 5)); // Improved fallback: base on winRate with reasonable bounds
           
         const dynamicLoupsEfficiency = loupsGames >= 3 
           ? loupsScaler(campStats.loupsWinRate)
-          : Math.min(100, winRate * 0.9); // Fallback estimate
+          : Math.max(10, Math.min(80, winRate - 5)); // Slightly lower than overall winrate for Loups
           
-        const dynamicSpecialRoleAdaptability = specialRoleGames >= 3 
-          ? specialScaler(campStats.specialRoleWinRate)
-          : Math.min(100, winRate * 1.05); // Fallback estimate
-        
+        const dynamicSpecialRoleAdaptability = specialRoleGames >= 10 
+          ? specialRoleScaler(campStats.specialRoleWinRate) // Use scaler for 10+ games (scales 10-100)
+          : Math.min(9, specialRoleGames); // For <10 games, score equals number of games (max 9)
+
         return {
           player: stats.player,
           participationScore: dynamicParticipationScore,
