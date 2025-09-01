@@ -105,6 +105,28 @@ export function PlayerComparisonChart() {
     }
   };
 
+  const handlePlayerScoreCardClick = (playerName: string) => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'opposing-camps',
+        winnerPlayer: playerName,
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handleCommonGameVictoryClick = (playerName: string) => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'all-common-games',
+        winnerPlayer: playerName,
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
   if (isLoading) {
     return <div className="donnees-attente">Chargement des données de comparaison...</div>;
   }
@@ -167,7 +189,11 @@ export function PlayerComparisonChart() {
             {/* Versus Arena with Score Display */}
             <div className="lycans-versus-arena">
               {/* Player 1 Score Card */}
-              <div className="lycans-player-score-card lycans-player1-card">
+              <div 
+                className="lycans-player-score-card lycans-player1-card lycans-clickable"
+                onClick={() => handlePlayerScoreCardClick(selectedPlayer1)}
+                title={`Cliquer pour voir les victoires de ${selectedPlayer1} contre ${selectedPlayer2}`}
+              >
                 <div className="lycans-player-avatar">
                   <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer1] || '#0076FF' }}>
                     {selectedPlayer1.substring(0, 2).toUpperCase()}
@@ -252,7 +278,11 @@ export function PlayerComparisonChart() {
               </div>
 
               {/* Player 2 Score Card */}
-              <div className="lycans-player-score-card lycans-player2-card">
+              <div 
+                className="lycans-player-score-card lycans-player2-card lycans-clickable"
+                onClick={() => handlePlayerScoreCardClick(selectedPlayer2)}
+                title={`Cliquer pour voir les victoires de ${selectedPlayer2} contre ${selectedPlayer1}`}
+              >
                 <div className="lycans-player-avatar">
                   <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer2] || '#FF0000' }}>
                     {selectedPlayer2.substring(0, 2).toUpperCase()}
@@ -373,13 +403,23 @@ export function PlayerComparisonChart() {
                 </div>
                 <div className="lycans-h2h-metric">
                   <span className="lycans-h2h-label">Victoires {selectedPlayer1}:</span>
-                  <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
+                  <span 
+                    className="lycans-h2h-value lycans-clickable" 
+                    style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}
+                    onClick={() => handleCommonGameVictoryClick(selectedPlayer1)}
+                    title={`Cliquer pour voir les victoires de ${selectedPlayer1} dans toutes les parties communes`}
+                  >
                     {comparisonData.headToHeadStats.player1Wins}
                   </span>
                 </div>
                 <div className="lycans-h2h-metric">
                   <span className="lycans-h2h-label">Victoires {selectedPlayer2}:</span>
-                  <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
+                  <span 
+                    className="lycans-h2h-value lycans-clickable" 
+                    style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}
+                    onClick={() => handleCommonGameVictoryClick(selectedPlayer2)}
+                    title={`Cliquer pour voir les victoires de ${selectedPlayer2} dans toutes les parties communes`}
+                  >
                     {comparisonData.headToHeadStats.player2Wins}
                   </span>
                 </div>
