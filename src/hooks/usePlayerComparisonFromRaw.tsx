@@ -51,9 +51,9 @@ export function usePlayerComparisonFromRaw() {
   const availablePlayers = useMemo(() => {
     if (!playerStatsData?.playerStats) return [];
     
-    // Only include players with meaningful participation (>= 20 games)
+    // Only include players with meaningful participation (>= 30 games)
     return playerStatsData.playerStats
-      .filter(player => player.gamesPlayed >= 20)
+      .filter(player => player.gamesPlayed >= 30)
       .sort((a, b) => a.player.localeCompare(b.player)) // Alphabetical order
       .map(player => player.player);
   }, [playerStatsData]);
@@ -162,7 +162,7 @@ export function usePlayerComparisonFromRaw() {
           })
           .sort((a, b) => a.gameNumber - b.gameNumber); // Chronological order
 
-        if (playerGameHistory.length < 5) return 25; // Very low score for insufficient data
+        if (playerGameHistory.length < 30) return 25; // Very low score for insufficient data
 
         // 1. Overall consistency across all games
         const outcomes = playerGameHistory.map(g => g.playerWon);
@@ -175,7 +175,7 @@ export function usePlayerComparisonFromRaw() {
         let campConsistencyScore = 50;
         
         // Analyze consistency within each camp
-        if (villageoisGames.length >= 3) {
+        if (villageoisGames.length >= 10) {
           const villageoisOutcomes = villageoisGames.map(g => g.playerWon);
           const villageoisWinRate = villageoisOutcomes.reduce((sum, o) => sum + o, 0) / villageoisOutcomes.length;
           const villageoisVariance = villageoisOutcomes.reduce((sum, o) => sum + Math.pow(o - villageoisWinRate, 2), 0) / villageoisOutcomes.length;
@@ -183,7 +183,7 @@ export function usePlayerComparisonFromRaw() {
           campConsistencyScore += villageoisConsistency * 0.3;
         }
         
-        if (loupsGames.length >= 3) {
+        if (loupsGames.length >= 10) {
           const loupsOutcomes = loupsGames.map(g => g.playerWon);
           const loupsWinRate = loupsOutcomes.reduce((sum, o) => sum + o, 0) / loupsOutcomes.length;
           const loupsVariance = loupsOutcomes.reduce((sum, o) => sum + Math.pow(o - loupsWinRate, 2), 0) / loupsOutcomes.length;
@@ -279,7 +279,7 @@ export function usePlayerComparisonFromRaw() {
           loupsGames,
           specialRoleGames
         };
-      }).filter(metrics => metrics.rawParticipation >= 20); // Only include players with meaningful participation (20+ games)
+      }).filter(metrics => metrics.rawParticipation >= 30); // Only include players with meaningful participation (30+ games)
 
       // Calculate dynamic scaling ranges
       const participationValues = allPlayersRawMetrics.map(m => m.rawParticipation);

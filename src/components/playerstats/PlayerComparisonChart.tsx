@@ -117,7 +117,7 @@ export function PlayerComparisonChart() {
     <div className="lycans-player-comparison">
       <h2>⚔️ FACE A FACE ⚔️</h2>
       <p className="lycans-stats-info">
-        Seuls les joueurs ayant participé à au moins 20 parties sont inclus pour garantir des données significatives.
+        Seuls les joueurs ayant participé à au moins 30 parties sont inclus pour garantir des données significatives.
       </p>
 
       {/* Player Selection */}
