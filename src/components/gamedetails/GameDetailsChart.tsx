@@ -110,6 +110,13 @@ export function GameDetailsChart() {
   setSelectedGameId(null); // Close any expanded game details when changing page size
   };
 
+  const handleToggleGameDetails = (gameId: number) => {
+    // When expanding/collapsing game details, this is a user action that
+    // should not be overridden by data-change resets. Set the ignore flag.
+    ignoreDataResetRef.current = true;
+    setSelectedGameId(selectedGameId === gameId ? null : gameId);
+  };
+
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -313,7 +320,7 @@ export function GameDetailsChart() {
                   <td>{game.victoryType}</td>
                   <td>
                     <button
-                      onClick={() => setSelectedGameId(selectedGameId === game.gameId ? null : game.gameId)}
+                      onClick={() => handleToggleGameDetails(game.gameId)}
                       className="lycans-details-btn"
                     >
                       {selectedGameId === game.gameId ? 'Masquer' : 'Voir'}
