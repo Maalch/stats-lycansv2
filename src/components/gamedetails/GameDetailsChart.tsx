@@ -151,8 +151,14 @@ export function GameDetailsChart() {
     }
     if (navigationFilters.selectedPlayers && navigationFilters.playersFilterMode) {
       const playersText = navigationFilters.selectedPlayers.join(' & ');
-      const modeText = navigationFilters.playersFilterMode === 'all-common-games' ? 
-        'toutes les parties communes' : 'affrontements uniquement';
+      let modeText = '';
+      if (navigationFilters.playersFilterMode === 'all-common-games') {
+        modeText = 'toutes les parties communes';
+      } else if (navigationFilters.playersFilterMode === 'opposing-camps') {
+        modeText = 'affrontements uniquement';
+      } else if (navigationFilters.playersFilterMode === 'same-camp') {
+        modeText = 'parties en équipe (même camp)';
+      }
       const winnerText = navigationFilters.winnerPlayer ? ` (victoires de ${navigationFilters.winnerPlayer})` : '';
       filters.push(`${playersText} (${modeText}${winnerText})`);
     }

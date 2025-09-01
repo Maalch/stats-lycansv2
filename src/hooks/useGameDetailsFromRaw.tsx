@@ -499,6 +499,49 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
             return true;
           }
 
+          // If mode is 'same-camp', check if players were in the same camp
+          if (filters.playersFilterMode === 'same-camp') {
+            const roleData = rawRoleData.find(role => role.Game === game.Game);
+            if (!roleData) return false;
+
+            // Function to get player's camp (reused from above)
+            const getPlayerCamp = (playerName: string): string => {
+              const player = playerName.toLowerCase();
+              
+              // Check each role type
+              if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loups';
+              if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) return 'Loups';
+              if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(player)) return 'Idiot du Village';
+              if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
+              if (roleData.Agent && roleData.Agent.toLowerCase().includes(player)) return 'Agent';
+              if (roleData.Espion && roleData.Espion.toLowerCase().includes(player)) return 'Espion';
+              if (roleData.Scientifique && roleData.Scientifique.toLowerCase().includes(player)) return 'Scientifique';
+              if (roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(player)) return 'Amoureux';
+              if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(player)) return 'La Bête';
+              if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(player)) return 'Chasseur de primes';
+              if (roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(player)) return 'Vaudou';
+              
+              // If not in any special role, they're a villager
+              return 'Villageois';
+            };
+
+            const player1Camp = getPlayerCamp(player1);
+            const player2Camp = getPlayerCamp(player2);
+
+            // Check if players are in the same camp
+            const inSameCamp = player1Camp === player2Camp;
+            if (!inSameCamp) return false;
+
+            // If winnerPlayer is specified, filter by games where the players' camp won
+            if (filters.winnerPlayer) {
+              const winnerCamp = getPlayerCamp(filters.winnerPlayer);
+              return game["Camp victorieux"] === winnerCamp;
+            }
+
+            // Return true if players are in the same camp (and no specific winner filter)
+            return true;
+          }
+
           return false;
         });
       }

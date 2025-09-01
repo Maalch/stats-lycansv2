@@ -127,6 +127,27 @@ export function PlayerComparisonChart() {
     }
   };
 
+  const handleSameCampGamesClick = () => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'same-camp',
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handleSameCampWinsClick = () => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'same-camp',
+        winnerPlayer: selectedPlayer1, // Both players are in same camp, so either one works
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
   if (isLoading) {
     return <div className="donnees-attente">Chargement des données de comparaison...</div>;
   }
@@ -437,13 +458,22 @@ export function PlayerComparisonChart() {
                 <div className="lycans-h2h-summary">
                   <div className="lycans-h2h-metric">
                     <span className="lycans-h2h-label">Parties en équipe:</span>
-                    <span className="lycans-h2h-value">
+                    <span 
+                      className="lycans-h2h-value lycans-clickable"
+                      onClick={handleSameCampGamesClick}
+                      title="Cliquer pour voir toutes les parties où ils étaient dans le même camp"
+                    >
                       {comparisonData.headToHeadStats.sameCampGames}
                     </span>
                   </div>
                   <div className="lycans-h2h-metric">
                     <span className="lycans-h2h-label">Victoires d'équipe:</span>
-                    <span className="lycans-h2h-value" style={{ color: 'var(--chart-color-success)' }}>
+                    <span 
+                      className="lycans-h2h-value lycans-clickable" 
+                      style={{ color: 'var(--chart-color-success)' }}
+                      onClick={handleSameCampWinsClick}
+                      title="Cliquer pour voir les victoires quand ils étaient dans le même camp"
+                    >
                       {comparisonData.headToHeadStats.sameCampWins}
                     </span>
                   </div>
