@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useGameDetailsFromRaw } from '../../hooks/useGameDetailsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { lycansColorScheme } from '../../types/api';
@@ -14,6 +14,13 @@ export function GameDetailsChart() {
   const [sortField, setSortField] = useState<SortField>('date');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+  // When the user explicitly changes page, some upstream hooks may re-create
+  // the data array which would otherwise trigger the data-change effect and
+  // reset the page back to 1. Use this ref to ignore the next data-change
+  // reset if it was caused by a user page navigation.
+  const ignoreDataResetRef = useRef(false);
 
   // Sort games
   const sortedGames = useMemo(() => {
@@ -58,6 +65,50 @@ export function GameDetailsChart() {
       }
     });
   }, [data, sortField, sortDirection]);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(sortedGames.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedGames = sortedGames.slice(startIndex, endIndex);
+
+  // Reset to page 1 when data changes (but not when just sorting changes)
+  useEffect(() => {
+    // If a user-initiated page navigation set the ignore flag, skip the
+    // automatic reset and clear the flag. This prevents brief flickers back
+    // to page 1 when data is re-created by upstream hooks on navigation.
+    if (ignoreDataResetRef.current) {
+      ignoreDataResetRef.current = false;
+      return;
+    }
+
+    setCurrentPage(1);
+    setSelectedGameId(null); // Close any expanded game details when data changes
+  }, [data]); // Only reset when the actual data changes
+
+  // Reset to page 1 when itemsPerPage changes (handled in handleItemsPerPageChange)
+  // Reset page when sorting changes
+  useEffect(() => {
+    setCurrentPage(1);
+    setSelectedGameId(null);
+  }, [sortField, sortDirection]);
+
+  const handlePageChange = (newPage: number) => {
+  // Mark that this navigation is user-initiated so the data-change
+  // effect won't reset the page when upstream recreates the data array.
+  ignoreDataResetRef.current = true;
+  setCurrentPage(newPage);
+  setSelectedGameId(null); // Close any expanded game details when changing pages
+  };
+
+  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+  // Changing page size is a user action that should not be overridden by
+  // the data-change reset that may follow. Set the ignore flag.
+  ignoreDataResetRef.current = true;
+  setItemsPerPage(newItemsPerPage);
+  setCurrentPage(1);
+  setSelectedGameId(null); // Close any expanded game details when changing page size
+  };
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -162,6 +213,64 @@ export function GameDetailsChart() {
         )}
       </div>
 
+      {/* Pagination Controls - Top */}
+      {totalPages > 1 && (
+        <div className="lycans-pagination-container">
+          <div className="lycans-pagination-info">
+            Affichage de {startIndex + 1} à {Math.min(endIndex, sortedGames.length)} sur {sortedGames.length} parties
+          </div>
+          
+          <div className="lycans-pagination-controls">
+            <select 
+              value={itemsPerPage} 
+              onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+              className="lycans-pagination-select"
+            >
+              <option value={10}>10 par page</option>
+              <option value={25}>25 par page</option>
+              <option value={50}>50 par page</option>
+              <option value={100}>100 par page</option>
+            </select>
+            
+            <div className="lycans-pagination-buttons">
+              <button 
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+                className="lycans-pagination-btn"
+              >
+                ««
+              </button>
+              <button 
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="lycans-pagination-btn"
+              >
+                ‹
+              </button>
+              
+              <span className="lycans-pagination-current">
+                Page {currentPage} sur {totalPages}
+              </span>
+              
+              <button 
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="lycans-pagination-btn"
+              >
+                ›
+              </button>
+              <button 
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === totalPages}
+                className="lycans-pagination-btn"
+              >
+                »»
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Games Table */}
       <div className="lycans-games-table-container">
         <table className="lycans-games-table">
@@ -189,7 +298,7 @@ export function GameDetailsChart() {
             </tr>
           </thead>
           <tbody>
-            {sortedGames.map(game => (
+            {paginatedGames.map(game => (
               <>
                 <tr key={game.gameId} className={selectedGameId === game.gameId ? 'selected' : ''}>
                   <td>#{game.gameId}</td>
@@ -223,6 +332,53 @@ export function GameDetailsChart() {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls - Bottom */}
+      {totalPages > 1 && (
+        <div className="lycans-pagination-container">
+          <div className="lycans-pagination-info">
+            Affichage de {startIndex + 1} à {Math.min(endIndex, sortedGames.length)} sur {sortedGames.length} parties
+          </div>
+          
+          <div className="lycans-pagination-controls">
+            <div className="lycans-pagination-buttons">
+              <button 
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+                className="lycans-pagination-btn"
+              >
+                ««
+              </button>
+              <button 
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="lycans-pagination-btn"
+              >
+                ‹
+              </button>
+              
+              <span className="lycans-pagination-current">
+                Page {currentPage} sur {totalPages}
+              </span>
+              
+              <button 
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="lycans-pagination-btn"
+              >
+                ›
+              </button>
+              <button 
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === totalPages}
+                className="lycans-pagination-btn"
+              >
+                »»
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
