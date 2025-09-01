@@ -521,7 +521,7 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
           } else if (roleData.Cannibale && roleData.Cannibale === player) {
             role = 'Cannibale';
             camp = 'Cannibale';
-          } else if (roleData.Agent && roleData.Agent === player) {
+          } else if (roleData.Agent && roleData.Agent.split(', ').includes(player)) {
             role = 'Agent';
             camp = 'Agent';
           } else if (roleData.Espion && roleData.Espion === player) {
