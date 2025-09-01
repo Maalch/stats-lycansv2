@@ -429,6 +429,37 @@ export function PlayerComparisonChart() {
                 </div>
               </div>
             </div>
+
+            {/* Same Camp Statistics */}
+            {comparisonData.headToHeadStats.sameCampGames > 0 && (
+              <div className="lycans-h2h-section">
+                <h4>🤝 Parties en équipe (même camp)</h4>
+                <div className="lycans-h2h-summary">
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Parties en équipe:</span>
+                    <span className="lycans-h2h-value">
+                      {comparisonData.headToHeadStats.sameCampGames}
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Victoires d'équipe:</span>
+                    <span className="lycans-h2h-value" style={{ color: 'var(--chart-color-success)' }}>
+                      {comparisonData.headToHeadStats.sameCampWins}
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Taux de réussite:</span>
+                    <span className="lycans-h2h-value" style={{ color: 'var(--chart-color-success)' }}>
+                      {((comparisonData.headToHeadStats.sameCampWins / comparisonData.headToHeadStats.sameCampGames) * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Durée moyenne:</span>
+                    <span className="lycans-h2h-value">{comparisonData.headToHeadStats.averageSameCampDuration}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Detailed Statistics Table */}
