@@ -12,6 +12,7 @@ const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/Playe
 const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
 const PlayerComparisonChart = lazy(() => import('./components/playerstats/PlayerComparisonChart').then(m => ({ default: m.PlayerComparisonChart })));
+const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
@@ -72,6 +73,12 @@ const PLAYER_STATS_MENU = [
     label: 'Historique Joueur', 
     component: PlayerGameHistoryChart,
     description: 'Détails par joueur'
+  },
+  { 
+    key: 'series', 
+    label: 'Séries', 
+    component: PlayerSeriesChart,
+    description: 'Séries consécutives de camps et de victoires'
   },
   { 
     key: 'pairing', 
