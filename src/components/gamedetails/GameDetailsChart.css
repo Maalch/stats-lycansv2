@@ -37,6 +37,77 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Pagination Styles */
+
+.lycans-pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.lycans-pagination-info {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.lycans-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lycans-pagination-select {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.lycans-pagination-select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.lycans-pagination-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lycans-pagination-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.lycans-pagination-btn:hover:not(:disabled) {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.lycans-pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lycans-pagination-current {
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+}
+
 .lycans-games-table {
   width: 100%;
   border-collapse: collapse;
@@ -330,6 +401,29 @@
 }
 
 @media (max-width: 768px) {
+  .lycans-games-table-container {
+    overflow-x: auto;
+  }
+  
+  .lycans-games-table {
+    min-width: 600px;
+  }
+
+  .lycans-pagination-container {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .lycans-pagination-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .lycans-pagination-buttons {
+    justify-content: center;
+  }
+
   .lycans-youtube-container {
     max-width: 100%;
     padding-bottom: 56.25%; /* Full 16:9 aspect ratio on mobile */

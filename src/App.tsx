@@ -352,6 +352,15 @@ function MainApp() {
 
               <footer className="lycans-dashboard-footer">
                 <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
+                <p>
+                  <a 
+                    href="mailto:lycansdata@gmail.com" 
+                    className="contact-link"
+                    title="Contactez-nous pour vos commentaires et suggestions"
+                  >
+                    📧 Contact & Feedback
+                  </a>
+                </p>
               </footer>
             </div>
           </div>

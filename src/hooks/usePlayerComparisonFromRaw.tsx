@@ -37,6 +37,10 @@ export interface PlayerComparisonData {
     player1WinsAsOpponent: number;
     player2WinsAsOpponent: number;
     averageOpposingGameDuration: string;
+    // Same camp statistics
+    sameCampGames: number;
+    sameCampWins: number;
+    averageSameCampDuration: string;
   };
 }
 
@@ -83,10 +87,10 @@ export function usePlayerComparisonFromRaw() {
           if (roleValue && typeof roleValue === 'string') {
             const playersInRole = splitAndTrim(roleValue);
             if (playersInRole.some(p => p.toLowerCase() === playerName.toLowerCase())) {
-              // Determine camp based on role
-              if (role === 'Loups' || role === 'Traître') return 'Loups';
-              if (role === 'Amoureux') return 'Amoureux';
-              return 'Solo'; // others special roles are solo-aligned
+              // Determine camp based on role - each solo role is its own camp. Exception: Traître in Loups
+              if (role === 'Traître') return 'Loups';
+              // Return the specific role name for solo roles since they're each their own camp
+              return role;
             }
           }
         }
@@ -287,7 +291,7 @@ export function usePlayerComparisonFromRaw() {
       const consistencyValues = allPlayersRawMetrics.map(m => m.rawConsistency);
       const villageoisValues = allPlayersRawMetrics.filter(m => m.villageoisGames >= 5).map(m => m.rawVillageoisMastery);
       const loupsValues = allPlayersRawMetrics.filter(m => m.loupsGames >= 3).map(m => m.rawLoupsEfficiency);
-      const specialValues = allPlayersRawMetrics.filter(m => m.specialRoleGames >= 3).map(m => m.rawSpecialRoleAdaptability);
+      const specialValues = allPlayersRawMetrics.filter(m => m.specialRoleGames >= 10).map(m => m.rawSpecialRoleAdaptability);
 
       // Create scaling functions (min-max normalization to 0-100)
       const createScaler = (values: number[]) => {
@@ -298,24 +302,41 @@ export function usePlayerComparisonFromRaw() {
         return (val: number) => Math.round(((val - min) / (max - min)) * 100);
       };
 
+      // Updated special role scaler - scales from 10 to 100 for players with 10+ games
+      const createSpecialRoleScaler = (values: number[]) => {
+        if (values.length === 0) return (_val: number) => 50; // Default for empty arrays
+        
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        if (max === min) return (_val: number) => 55; // Default mid-range if all values same
+        
+        // Scale from 10 to 100 (90 point range)
+        return (val: number) => Math.round(((val - min) / (max - min)) * 90) + 10;
+      };
+
       const participationScaler = createScaler(participationValues);
       const winRateScaler = createScaler(winRateValues);
       const consistencyScaler = createScaler(consistencyValues);
       const villageoisScaler = createScaler(villageoisValues);
       const loupsScaler = createScaler(loupsValues);
-      const specialScaler = createScaler(specialValues);
+      const specialRoleScaler = createSpecialRoleScaler(specialValues);
+
 
       // Find common games and head-to-head stats
       const commonGames: any[] = [];
       const opposingCampGames: any[] = [];
+      const sameCampGames: any[] = [];
       let player1CommonWins = 0;
       let player2CommonWins = 0;
       let player1OpposingWins = 0;
       let player2OpposingWins = 0;
+      let sameCampWins = 0;
       let totalGameDurationSeconds = 0;
       let gamesWithDuration = 0;
       let totalOpposingGameDurationSeconds = 0;
       let opposingGamesWithDuration = 0;
+      let totalSameCampDurationSeconds = 0;
+      let sameCampGamesWithDuration = 0;
 
       rawGameData.forEach(game => {
         const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
@@ -331,6 +352,9 @@ export function usePlayerComparisonFromRaw() {
           
           // Determine if they're on opposing camps
           const areOpposingCamps = (player1Camp !== player2Camp) && 
+            (player1Camp !== 'Unknown' && player2Camp !== 'Unknown');
+          
+          const areSameCamps = (player1Camp === player2Camp) && 
             (player1Camp !== 'Unknown' && player2Camp !== 'Unknown');
           
           if (areOpposingCamps) {
@@ -349,6 +373,20 @@ export function usePlayerComparisonFromRaw() {
             if (gameDuration !== null) {
               totalOpposingGameDurationSeconds += gameDuration;
               opposingGamesWithDuration++;
+            }
+          } else if (areSameCamps) {
+            // This is a same camp game
+            sameCampGames.push(game);
+            
+            // Check if their camp won
+            const theirCampWon = game["Camp victorieux"] === player1Camp;
+            if (theirCampWon) sameCampWins++;
+            
+            // Calculate game duration for same camp games
+            const gameDuration = calculateGameDuration(game["Début"], game["Fin"]);
+            if (gameDuration !== null) {
+              totalSameCampDurationSeconds += gameDuration;
+              sameCampGamesWithDuration++;
             }
           }
           
@@ -390,16 +428,16 @@ export function usePlayerComparisonFromRaw() {
         
         const dynamicVillageoisMastery = villageoisGames >= 5 
           ? villageoisScaler(campStats.villageoisWinRate)
-          : Math.min(100, winRate * 1.1); // Fallback estimate
+          : Math.max(15, Math.min(85, winRate + 5)); // Improved fallback: base on winRate with reasonable bounds
           
         const dynamicLoupsEfficiency = loupsGames >= 3 
           ? loupsScaler(campStats.loupsWinRate)
-          : Math.min(100, winRate * 0.9); // Fallback estimate
+          : Math.max(10, Math.min(80, winRate - 5)); // Slightly lower than overall winrate for Loups
           
-        const dynamicSpecialRoleAdaptability = specialRoleGames >= 3 
-          ? specialScaler(campStats.specialRoleWinRate)
-          : Math.min(100, winRate * 1.05); // Fallback estimate
-        
+        const dynamicSpecialRoleAdaptability = specialRoleGames >= 10 
+          ? specialRoleScaler(campStats.specialRoleWinRate) // Use scaler for 10+ games (scales 10-100)
+          : Math.min(9, specialRoleGames); // For <10 games, score equals number of games (max 9)
+
         return {
           player: stats.player,
           participationScore: dynamicParticipationScore,
@@ -435,6 +473,12 @@ export function usePlayerComparisonFromRaw() {
           player2WinsAsOpponent: player2OpposingWins,
           averageOpposingGameDuration: opposingGamesWithDuration > 0 
             ? formatDuration(totalOpposingGameDurationSeconds / opposingGamesWithDuration)
+            : "N/A",
+          // Same camp statistics
+          sameCampGames: sameCampGames.length,
+          sameCampWins: sameCampWins,
+          averageSameCampDuration: sameCampGamesWithDuration > 0 
+            ? formatDuration(totalSameCampDurationSeconds / sameCampGamesWithDuration)
             : "N/A"
         }
       };

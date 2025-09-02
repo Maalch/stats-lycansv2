@@ -419,8 +419,40 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
           
           if (!bothPlayersInGame) return false;
 
-          // If mode is 'all-common-games', just return true since both players are in the game
+          // If mode is 'all-common-games', check for winnerPlayer filter if specified
           if (filters.playersFilterMode === 'all-common-games') {
+            // If winnerPlayer is specified, filter by games where that player won
+            if (filters.winnerPlayer) {
+              // Check if the winner player is in the winning camp
+              const roleData = rawRoleData.find(role => role.Game === game.Game);
+              if (!roleData) return true; // If no role data, can't filter by winner, so include the game
+              
+              // Function to get player's camp (reused from opposing-camps logic)
+              const getPlayerCamp = (playerName: string): string => {
+                const player = playerName.toLowerCase();
+                
+                // Check each role type
+                if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loups';
+                if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) return 'Loups';
+                if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(player)) return 'Idiot du Village';
+                if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
+                if (roleData.Agent && roleData.Agent.toLowerCase().includes(player)) return 'Agent';
+                if (roleData.Espion && roleData.Espion.toLowerCase().includes(player)) return 'Espion';
+                if (roleData.Scientifique && roleData.Scientifique.toLowerCase().includes(player)) return 'Scientifique';
+                if (roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(player)) return 'Amoureux';
+                if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(player)) return 'La Bête';
+                if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(player)) return 'Chasseur de primes';
+                if (roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(player)) return 'Vaudou';
+                
+                // If not in any special role, they're a villager
+                return 'Villageois';
+              };
+
+              const winnerCamp = getPlayerCamp(filters.winnerPlayer);
+              return game["Camp victorieux"] === winnerCamp;
+            }
+            
+            // If no winnerPlayer specified, return all common games
             return true;
           }
 
@@ -453,8 +485,61 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
             const player1Camp = getPlayerCamp(player1);
             const player2Camp = getPlayerCamp(player2);
 
-            // Return true if players are in different camps
-            return player1Camp !== player2Camp;
+            // Check if players are in different camps
+            const inOpposingCamps = player1Camp !== player2Camp;
+            if (!inOpposingCamps) return false;
+
+            // If winnerPlayer is specified, filter by games where that player's camp won
+            if (filters.winnerPlayer) {
+              const winnerCamp = getPlayerCamp(filters.winnerPlayer);
+              return game["Camp victorieux"] === winnerCamp;
+            }
+
+            // Return true if players are in different camps (and no specific winner filter)
+            return true;
+          }
+
+          // If mode is 'same-camp', check if players were in the same camp
+          if (filters.playersFilterMode === 'same-camp') {
+            const roleData = rawRoleData.find(role => role.Game === game.Game);
+            if (!roleData) return false;
+
+            // Function to get player's camp (reused from above)
+            const getPlayerCamp = (playerName: string): string => {
+              const player = playerName.toLowerCase();
+              
+              // Check each role type
+              if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loups';
+              if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) return 'Loups';
+              if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(player)) return 'Idiot du Village';
+              if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
+              if (roleData.Agent && roleData.Agent.toLowerCase().includes(player)) return 'Agent';
+              if (roleData.Espion && roleData.Espion.toLowerCase().includes(player)) return 'Espion';
+              if (roleData.Scientifique && roleData.Scientifique.toLowerCase().includes(player)) return 'Scientifique';
+              if (roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(player)) return 'Amoureux';
+              if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(player)) return 'La Bête';
+              if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(player)) return 'Chasseur de primes';
+              if (roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(player)) return 'Vaudou';
+              
+              // If not in any special role, they're a villager
+              return 'Villageois';
+            };
+
+            const player1Camp = getPlayerCamp(player1);
+            const player2Camp = getPlayerCamp(player2);
+
+            // Check if players are in the same camp
+            const inSameCamp = player1Camp === player2Camp;
+            if (!inSameCamp) return false;
+
+            // If winnerPlayer is specified, filter by games where the players' camp won
+            if (filters.winnerPlayer) {
+              const winnerCamp = getPlayerCamp(filters.winnerPlayer);
+              return game["Camp victorieux"] === winnerCamp;
+            }
+
+            // Return true if players are in the same camp (and no specific winner filter)
+            return true;
           }
 
           return false;
@@ -490,9 +575,9 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
         player: 'Ponce', // Since this is Ponce-only data
         camp: ponce.Camp || 'Unknown',
         isTraitor: ponce.Traître || false,
-        secondaryRole: ponce["Rôle secondaire"],
-        wolfPower: ponce["Pouvoir de loup"],
-        villagerJob: ponce["Métier villageois"],
+        secondaryRole: ponce["Rôle secondaire"] === "N/A" ? null : ponce["Rôle secondaire"],
+        wolfPower: ponce["Pouvoir de loup"] === "N/A" ? null : ponce["Pouvoir de loup"],
+        villagerJob: ponce["Métier villageois"] === "N/A" ? null : ponce["Métier villageois"],
         playersKilled: ponce["Joueurs tués"],
         deathDay: ponce["Jour de mort"],
         deathType: ponce["Type de mort"],

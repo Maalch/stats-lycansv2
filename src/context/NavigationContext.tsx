@@ -15,7 +15,8 @@ export interface NavigationFilters {
   selectedHarvestRange?: string; // For filtering by harvest percentage range (e.g., "0-25%", "26-50%", etc.)
   selectedGameDuration?: number; // For filtering by specific number of days (e.g., 3, 4, 5)
   selectedPlayers?: string[]; // For filtering games where all these players participated (comparison scenarios)
-  playersFilterMode?: 'all-common-games' | 'opposing-camps'; // Mode for multi-player filtering
+  playersFilterMode?: 'all-common-games' | 'opposing-camps' | 'same-camp'; // Mode for multi-player filtering
+  winnerPlayer?: string; // For head-to-head scenarios, specify which player should be the winner
 }
 
 export interface NavigationState {
