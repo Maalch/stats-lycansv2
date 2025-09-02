@@ -465,18 +465,18 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
             const getPlayerCamp = (playerName: string): string => {
               const player = playerName.toLowerCase();
               
-              // Check each role type
-              if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loups';
-              if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) return 'Loups';
-              if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(player)) return 'Idiot du Village';
-              if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
-              if (roleData.Agent && roleData.Agent.toLowerCase().includes(player)) return 'Agent';
-              if (roleData.Espion && roleData.Espion.toLowerCase().includes(player)) return 'Espion';
-              if (roleData.Scientifique && roleData.Scientifique.toLowerCase().includes(player)) return 'Scientifique';
-              if (roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(player)) return 'Amoureux';
-              if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(player)) return 'La Bête';
-              if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(player)) return 'Chasseur de primes';
-              if (roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(player)) return 'Vaudou';
+              // Check each role type using split and includes for comma-separated lists
+              if (roleData.Loups && roleData.Loups.toLowerCase().split(', ').includes(player)) return 'Loups';
+              if (roleData.Traître && roleData.Traître.toLowerCase().split(', ').includes(player)) return 'Loups';
+              if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().split(', ').includes(player)) return 'Idiot du Village';
+              if (roleData.Cannibale && roleData.Cannibale.toLowerCase().split(', ').includes(player)) return 'Cannibale';
+              if (roleData.Agent && roleData.Agent.toLowerCase().split(', ').includes(player)) return 'Agent';
+              if (roleData.Espion && roleData.Espion.toLowerCase().split(', ').includes(player)) return 'Espion';
+              if (roleData.Scientifique && roleData.Scientifique.toLowerCase().split(', ').includes(player)) return 'Scientifique';
+              if (roleData.Amoureux && roleData.Amoureux.toLowerCase().split(', ').includes(player)) return 'Amoureux';
+              if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().split(', ').includes(player)) return 'La Bête';
+              if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().split(', ').includes(player)) return 'Chasseur de primes';
+              if (roleData.Vaudou && roleData.Vaudou.toLowerCase().split(', ').includes(player)) return 'Vaudou';
               
               // If not in any special role, they're a villager
               return 'Villageois';
@@ -597,31 +597,31 @@ export function useGameDetailsFromRaw(filters?: NavigationFilters) {
           if (roleData.Loups && roleData.Loups.split(', ').includes(player)) {
             role = 'Loups';
             camp = 'Loups';
-          } else if (roleData.Traître && roleData.Traître === player) {
+          } else if (roleData.Traître && roleData.Traître.split(', ').includes(player)) {
             role = 'Traître';
             camp = 'Loups'; 
-          } else if (roleData["Idiot du village"] && roleData["Idiot du village"] === player) {
+          } else if (roleData["Idiot du village"] && roleData["Idiot du village"].split(', ').includes(player)) {
             role = 'Idiot du Village';
             camp = 'Idiot du Village'; 
-          } else if (roleData.Cannibale && roleData.Cannibale === player) {
+          } else if (roleData.Cannibale && roleData.Cannibale.split(', ').includes(player)) {
             role = 'Cannibale';
             camp = 'Cannibale';
           } else if (roleData.Agent && roleData.Agent.split(', ').includes(player)) {
             role = 'Agent';
             camp = 'Agent';
-          } else if (roleData.Espion && roleData.Espion === player) {
+          } else if (roleData.Espion && roleData.Espion.split(', ').includes(player)) {
             role = 'Espion';
             camp = 'Espion';
-          } else if (roleData.Scientifique && roleData.Scientifique === player) {
+          } else if (roleData.Scientifique && roleData.Scientifique.split(', ').includes(player)) {
             role = 'Scientifique';
             camp = 'Scientifique';
-          } else if (roleData["La Bête"] && roleData["La Bête"] === player) {
+          } else if (roleData["La Bête"] && roleData["La Bête"].split(', ').includes(player)) {
             role = 'La Bête';
             camp = 'La Bête';
-          } else if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"] === player) {
+          } else if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].split(', ').includes(player)) {
             role = 'Chasseur de primes';
             camp = 'Chasseur de primes';
-          } else if (roleData.Vaudou && roleData.Vaudou === player) {
+          } else if (roleData.Vaudou && roleData.Vaudou.split(', ').includes(player)) {
             role = 'Vaudou';
             camp = 'Vaudou';
           }
