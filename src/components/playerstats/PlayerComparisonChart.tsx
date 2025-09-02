@@ -46,7 +46,7 @@ export function PlayerComparisonChart() {
         fullMark: 100
       },
       {
-        metric: 'Taux de Victoire',
+        metric: 'Score de Victoire',
         [selectedPlayer1]: Math.round(comparisonData.player1.winRateScore),
         [selectedPlayer2]: Math.round(comparisonData.player2.winRateScore),
         fullMark: 100
@@ -100,6 +100,49 @@ export function PlayerComparisonChart() {
       navigateToGameDetails({
         selectedPlayers: [selectedPlayer1, selectedPlayer2],
         playersFilterMode: 'opposing-camps',
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handlePlayerScoreCardClick = (playerName: string) => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'opposing-camps',
+        winnerPlayer: playerName,
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handleCommonGameVictoryClick = (playerName: string) => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'all-common-games',
+        winnerPlayer: playerName,
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handleSameCampGamesClick = () => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'same-camp',
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handleSameCampWinsClick = () => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        selectedPlayers: [selectedPlayer1, selectedPlayer2],
+        playersFilterMode: 'same-camp',
+        winnerPlayer: selectedPlayer1, // Both players are in same camp, so either one works
         fromComponent: 'Comparaison de Joueurs'
       });
     }
@@ -167,7 +210,11 @@ export function PlayerComparisonChart() {
             {/* Versus Arena with Score Display */}
             <div className="lycans-versus-arena">
               {/* Player 1 Score Card */}
-              <div className="lycans-player-score-card lycans-player1-card">
+              <div 
+                className="lycans-player-score-card lycans-player1-card lycans-clickable"
+                onClick={() => handlePlayerScoreCardClick(selectedPlayer1)}
+                title={`Cliquer pour voir les victoires de ${selectedPlayer1} contre ${selectedPlayer2}`}
+              >
                 <div className="lycans-player-avatar">
                   <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer1] || '#0076FF' }}>
                     {selectedPlayer1.substring(0, 2).toUpperCase()}
@@ -252,7 +299,11 @@ export function PlayerComparisonChart() {
               </div>
 
               {/* Player 2 Score Card */}
-              <div className="lycans-player-score-card lycans-player2-card">
+              <div 
+                className="lycans-player-score-card lycans-player2-card lycans-clickable"
+                onClick={() => handlePlayerScoreCardClick(selectedPlayer2)}
+                title={`Cliquer pour voir les victoires de ${selectedPlayer2} contre ${selectedPlayer1}`}
+              >
                 <div className="lycans-player-avatar">
                   <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer2] || '#FF0000' }}>
                     {selectedPlayer2.substring(0, 2).toUpperCase()}
@@ -373,13 +424,23 @@ export function PlayerComparisonChart() {
                 </div>
                 <div className="lycans-h2h-metric">
                   <span className="lycans-h2h-label">Victoires {selectedPlayer1}:</span>
-                  <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
+                  <span 
+                    className="lycans-h2h-value lycans-clickable" 
+                    style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}
+                    onClick={() => handleCommonGameVictoryClick(selectedPlayer1)}
+                    title={`Cliquer pour voir les victoires de ${selectedPlayer1} dans toutes les parties communes`}
+                  >
                     {comparisonData.headToHeadStats.player1Wins}
                   </span>
                 </div>
                 <div className="lycans-h2h-metric">
                   <span className="lycans-h2h-label">Victoires {selectedPlayer2}:</span>
-                  <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
+                  <span 
+                    className="lycans-h2h-value lycans-clickable" 
+                    style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}
+                    onClick={() => handleCommonGameVictoryClick(selectedPlayer2)}
+                    title={`Cliquer pour voir les victoires de ${selectedPlayer2} dans toutes les parties communes`}
+                  >
                     {comparisonData.headToHeadStats.player2Wins}
                   </span>
                 </div>
@@ -389,6 +450,46 @@ export function PlayerComparisonChart() {
                 </div>
               </div>
             </div>
+
+            {/* Same Camp Statistics */}
+            {comparisonData.headToHeadStats.sameCampGames > 0 && (
+              <div className="lycans-h2h-section">
+                <h4>🤝 Parties en équipe (même camp)</h4>
+                <div className="lycans-h2h-summary">
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Parties en équipe:</span>
+                    <span 
+                      className="lycans-h2h-value lycans-clickable"
+                      onClick={handleSameCampGamesClick}
+                      title="Cliquer pour voir toutes les parties où ils étaient dans le même camp"
+                    >
+                      {comparisonData.headToHeadStats.sameCampGames}
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Victoires d'équipe:</span>
+                    <span 
+                      className="lycans-h2h-value lycans-clickable" 
+                      style={{ color: 'var(--chart-color-success)' }}
+                      onClick={handleSameCampWinsClick}
+                      title="Cliquer pour voir les victoires quand ils étaient dans le même camp"
+                    >
+                      {comparisonData.headToHeadStats.sameCampWins}
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Taux de réussite:</span>
+                    <span className="lycans-h2h-value" style={{ color: 'var(--chart-color-success)' }}>
+                      {((comparisonData.headToHeadStats.sameCampWins / comparisonData.headToHeadStats.sameCampGames) * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Durée moyenne:</span>
+                    <span className="lycans-h2h-value">{comparisonData.headToHeadStats.averageSameCampDuration}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Detailed Statistics Table */}
@@ -431,9 +532,9 @@ export function PlayerComparisonChart() {
                       <td>{comparisonData.player2.gamesPlayed}</td>
                     </tr>
                     <tr>
-                      <td>Taux de Victoire (%)</td>
-                      <td>{comparisonData.player1.winRate.toFixed(1)}%</td>
-                      <td>{comparisonData.player2.winRate.toFixed(1)}%</td>
+                      <td>Score de Victoire (/100)</td>
+                      <td>{comparisonData.player1.winRateScore}</td>
+                      <td>{comparisonData.player2.winRateScore}</td>
                     </tr>
                     <tr>
                       <td>Score de Participation (/100)</td>
@@ -454,6 +555,11 @@ export function PlayerComparisonChart() {
                       <td>Efficacité Loups (/100)</td>
                       <td>{Math.round(comparisonData.player1.loupsEfficiency)}</td>
                       <td>{Math.round(comparisonData.player2.loupsEfficiency)}</td>
+                    </tr>
+                    <tr>
+                      <td>Adaptabilité des rôles (/100)</td>
+                      <td>{Math.round(comparisonData.player1.specialRoleAdaptability)}</td>
+                      <td>{Math.round(comparisonData.player2.specialRoleAdaptability)}</td>
                     </tr>
                   </tbody>
                 </table>

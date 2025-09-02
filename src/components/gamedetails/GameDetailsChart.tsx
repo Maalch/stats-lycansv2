@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useGameDetailsFromRaw } from '../../hooks/useGameDetailsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { lycansColorScheme } from '../../types/api';
@@ -14,6 +14,13 @@ export function GameDetailsChart() {
   const [sortField, setSortField] = useState<SortField>('date');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+  // When the user explicitly changes page, some upstream hooks may re-create
+  // the data array which would otherwise trigger the data-change effect and
+  // reset the page back to 1. Use this ref to ignore the next data-change
+  // reset if it was caused by a user page navigation.
+  const ignoreDataResetRef = useRef(false);
 
   // Sort games
   const sortedGames = useMemo(() => {
@@ -51,13 +58,78 @@ export function GameDetailsChart() {
           return 0;
       }
       
+      // Primary sort comparison
+      let primaryComparison: number;
       if (sortDirection === 'asc') {
-        return aValue > bValue ? 1 : -1;
+        primaryComparison = aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       } else {
-        return aValue < bValue ? 1 : -1;
+        primaryComparison = aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
       }
+      
+      // If primary values are equal, sort by gameId as secondary sort
+      if (primaryComparison === 0) {
+        // Always sort gameId in descending order for secondary sort (most recent games first)
+        if (sortDirection === 'asc') {
+          return a.gameId - b.gameId;
+        } else {
+          return b.gameId - a.gameId;
+        }
+      }
+      
+      return primaryComparison;
     });
   }, [data, sortField, sortDirection]);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(sortedGames.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedGames = sortedGames.slice(startIndex, endIndex);
+
+  // Reset to page 1 when data changes (but not when just sorting changes)
+  useEffect(() => {
+    // If a user-initiated page navigation set the ignore flag, skip the
+    // automatic reset and clear the flag. This prevents brief flickers back
+    // to page 1 when data is re-created by upstream hooks on navigation.
+    if (ignoreDataResetRef.current) {
+      ignoreDataResetRef.current = false;
+      return;
+    }
+
+    setCurrentPage(1);
+    setSelectedGameId(null); // Close any expanded game details when data changes
+  }, [data]); // Only reset when the actual data changes
+
+  // Reset to page 1 when itemsPerPage changes (handled in handleItemsPerPageChange)
+  // Reset page when sorting changes
+  useEffect(() => {
+    setCurrentPage(1);
+    setSelectedGameId(null);
+  }, [sortField, sortDirection]);
+
+  const handlePageChange = (newPage: number) => {
+  // Mark that this navigation is user-initiated so the data-change
+  // effect won't reset the page when upstream recreates the data array.
+  ignoreDataResetRef.current = true;
+  setCurrentPage(newPage);
+  setSelectedGameId(null); // Close any expanded game details when changing pages
+  };
+
+  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+  // Changing page size is a user action that should not be overridden by
+  // the data-change reset that may follow. Set the ignore flag.
+  ignoreDataResetRef.current = true;
+  setItemsPerPage(newItemsPerPage);
+  setCurrentPage(1);
+  setSelectedGameId(null); // Close any expanded game details when changing page size
+  };
+
+  const handleToggleGameDetails = (gameId: number) => {
+    // When expanding/collapsing game details, this is a user action that
+    // should not be overridden by data-change resets. Set the ignore flag.
+    ignoreDataResetRef.current = true;
+    setSelectedGameId(selectedGameId === gameId ? null : gameId);
+  };
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -93,9 +165,16 @@ export function GameDetailsChart() {
     }
     if (navigationFilters.selectedPlayers && navigationFilters.playersFilterMode) {
       const playersText = navigationFilters.selectedPlayers.join(' & ');
-      const modeText = navigationFilters.playersFilterMode === 'all-common-games' ? 
-        'toutes les parties communes' : 'affrontements uniquement';
-      filters.push(`${playersText} (${modeText})`);
+      let modeText = '';
+      if (navigationFilters.playersFilterMode === 'all-common-games') {
+        modeText = 'toutes les parties communes';
+      } else if (navigationFilters.playersFilterMode === 'opposing-camps') {
+        modeText = 'affrontements uniquement';
+      } else if (navigationFilters.playersFilterMode === 'same-camp') {
+        modeText = 'parties en équipe (même camp)';
+      }
+      const winnerText = navigationFilters.winnerPlayer ? ` (victoires de ${navigationFilters.winnerPlayer})` : '';
+      filters.push(`${playersText} (${modeText}${winnerText})`);
     }
     if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
     if (navigationFilters.selectedHarvestRange) filters.push(`Récolte: ${navigationFilters.selectedHarvestRange}`);
@@ -162,6 +241,64 @@ export function GameDetailsChart() {
         )}
       </div>
 
+      {/* Pagination Controls - Top */}
+      {totalPages > 1 && (
+        <div className="lycans-pagination-container">
+          <div className="lycans-pagination-info">
+            Affichage de {startIndex + 1} à {Math.min(endIndex, sortedGames.length)} sur {sortedGames.length} parties
+          </div>
+          
+          <div className="lycans-pagination-controls">
+            <select 
+              value={itemsPerPage} 
+              onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+              className="lycans-pagination-select"
+            >
+              <option value={10}>10 par page</option>
+              <option value={25}>25 par page</option>
+              <option value={50}>50 par page</option>
+              <option value={100}>100 par page</option>
+            </select>
+            
+            <div className="lycans-pagination-buttons">
+              <button 
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+                className="lycans-pagination-btn"
+              >
+                ««
+              </button>
+              <button 
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="lycans-pagination-btn"
+              >
+                ‹
+              </button>
+              
+              <span className="lycans-pagination-current">
+                Page {currentPage} sur {totalPages}
+              </span>
+              
+              <button 
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="lycans-pagination-btn"
+              >
+                ›
+              </button>
+              <button 
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === totalPages}
+                className="lycans-pagination-btn"
+              >
+                »»
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Games Table */}
       <div className="lycans-games-table-container">
         <table className="lycans-games-table">
@@ -189,7 +326,7 @@ export function GameDetailsChart() {
             </tr>
           </thead>
           <tbody>
-            {sortedGames.map(game => (
+            {paginatedGames.map(game => (
               <>
                 <tr key={game.gameId} className={selectedGameId === game.gameId ? 'selected' : ''}>
                   <td>#{game.gameId}</td>
@@ -204,7 +341,7 @@ export function GameDetailsChart() {
                   <td>{game.victoryType}</td>
                   <td>
                     <button
-                      onClick={() => setSelectedGameId(selectedGameId === game.gameId ? null : game.gameId)}
+                      onClick={() => handleToggleGameDetails(game.gameId)}
                       className="lycans-details-btn"
                     >
                       {selectedGameId === game.gameId ? 'Masquer' : 'Voir'}
@@ -223,6 +360,53 @@ export function GameDetailsChart() {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls - Bottom */}
+      {totalPages > 1 && (
+        <div className="lycans-pagination-container">
+          <div className="lycans-pagination-info">
+            Affichage de {startIndex + 1} à {Math.min(endIndex, sortedGames.length)} sur {sortedGames.length} parties
+          </div>
+          
+          <div className="lycans-pagination-controls">
+            <div className="lycans-pagination-buttons">
+              <button 
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+                className="lycans-pagination-btn"
+              >
+                ««
+              </button>
+              <button 
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="lycans-pagination-btn"
+              >
+                ‹
+              </button>
+              
+              <span className="lycans-pagination-current">
+                Page {currentPage} sur {totalPages}
+              </span>
+              
+              <button 
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="lycans-pagination-btn"
+              >
+                ›
+              </button>
+              <button 
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === totalPages}
+                className="lycans-pagination-btn"
+              >
+                »»
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -377,20 +561,60 @@ function GameDetailView({ game }: { game: any }) {
         <div className="lycans-game-detail-section full-width">
           <h4>Rôles des Joueurs</h4>
           <div className="lycans-player-roles-grid">
-            {game.playerRoles.map((playerRole: any, index: number) => (
-              <div key={index} className="lycans-player-role-item">
-                <div className="lycans-player-name" style={{
-                  color: lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#fff'
-                }}>
-                  {playerRole.player}
+            {game.playerRoles.map((playerRole: any, index: number) => {
+              // Find matching player details
+              //const playerDetails = game.playerDetails.find((detail: any) => detail.player === playerRole.player);
+              
+              // Build the display text with additional details
+              let displayText = playerRole.role === playerRole.camp 
+                ? playerRole.camp 
+                : `${playerRole.camp} (${playerRole.role})`;
+              
+                /*
+              if (playerDetails) {
+                const additionalInfo = [];
+                
+                // Add wolf power or villager job
+                if (playerDetails.wolfPower && playerDetails.wolfPower.trim()) {
+                  additionalInfo.push(playerDetails.wolfPower);
+                } else if (playerDetails.villagerJob && playerDetails.villagerJob.trim()) {
+                  additionalInfo.push(playerDetails.villagerJob);
+                }
+                
+                // Build the final display text
+                if (additionalInfo.length > 0) {
+                  displayText = `${playerRole.camp} - ${additionalInfo[0]}`;
+                  
+                  // Add secondary role in parentheses if exists
+                  if (playerDetails.secondaryRole && playerDetails.secondaryRole.trim()) {
+                    displayText += ` (${playerDetails.secondaryRole})`;
+                  }
+                } else if (playerDetails.secondaryRole && playerDetails.secondaryRole.trim()) {
+                  // Only secondary role, no job/power
+                  displayText = `${playerRole.camp} (${playerDetails.secondaryRole})`;
+                }
+              }*/
+              
+              return (
+                <div key={index} className="lycans-player-role-item">
+                  <div
+                    className="lycans-player-name"
+                    style={{
+                      color: lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#fff',
+                      textAlign: 'left'
+                    }}
+                  >
+                    {playerRole.player}
+                  </div>
+                  <div
+                    className="lycans-player-camp"
+                    style={{ textAlign: 'left' }}
+                  >
+                    {displayText}
+                  </div>
                 </div>
-                <div className="lycans-player-camp">
-                  {playerRole.role === playerRole.camp 
-                    ? playerRole.camp 
-                    : `${playerRole.camp} (${playerRole.role})`}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
