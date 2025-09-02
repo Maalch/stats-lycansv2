@@ -20,7 +20,8 @@ npm run sync-data    # Fetch fresh data from Apps Script to /data
 ```
 
 **Build Pipeline:** Inline Node.js in package.json scripts copies `/data` → `public/data/` (dev) or `docs/data/` (prod)  
-**Data Sync:** GitHub Actions runs weekly on Saturday 4 AM UTC, can be manually triggered via workflow_dispatch
+**Data Sync:** GitHub Actions runs weekly on Saturday 4 AM UTC, can be manually triggered via workflow_dispatch  
+**Environment Variables:** `VITE_LYCANS_API_BASE` for Apps Script URL, `LYCANS_API_BASE` for data sync script
 
 ## Key Architectural Patterns
 
@@ -89,4 +90,5 @@ All raw data hooks automatically respect `SettingsContext` filters:
 **GitHub Actions:** `.github/workflows/update-data.yml` (weekly data sync)  
 **Apps Script:** `scripts/data-sync/fetch-data.js` (endpoints: rawGameData, rawRoleData, rawPonceData, rawBRData)  
 **Build Outputs:** GitHub Pages serves from `/docs` directory with base path `/stats-lycansv2/`  
-**Environment:** `VITE_LYCANS_API_BASE` for Apps Script URL, dev/prod path handling in `dataService.ts`
+**Development:** All processed data (player histories, computed stats) calculated client-side from raw data  
+**Error Handling:** API fallback system when static files unavailable, localStorage persistence for settings
