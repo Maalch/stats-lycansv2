@@ -27,6 +27,14 @@ export interface PlayerSeriesData {
   longestLoupsSeries: CampSeries[];
   longestWinSeries: WinSeries[];
   totalGamesAnalyzed: number;
+  // Statistics for all players
+  averageVillageoisSeries: number;
+  averageLoupsSeries: number;
+  averageWinSeries: number;
+  eliteVillageoisCount: number; // Players with 5+ Villageois series
+  eliteLoupsCount: number; // Players with 3+ Loups series
+  eliteWinCount: number; // Players with 5+ win series
+  totalPlayersCount: number;
 }
 
 /**
@@ -325,11 +333,39 @@ export function usePlayerSeriesFromRaw() {
     longestLoupsSeries.sort((a, b) => b.seriesLength - a.seriesLength);
     longestWinSeries.sort((a, b) => b.seriesLength - a.seriesLength);
 
+    // Calculate statistics for all players
+    const totalPlayers = allPlayers.size;
+    
+    // Calculate averages
+    const averageVillageoisSeries = longestVillageoisSeries.length > 0 
+      ? longestVillageoisSeries.reduce((sum, series) => sum + series.seriesLength, 0) / longestVillageoisSeries.length 
+      : 0;
+    
+    const averageLoupsSeries = longestLoupsSeries.length > 0 
+      ? longestLoupsSeries.reduce((sum, series) => sum + series.seriesLength, 0) / longestLoupsSeries.length 
+      : 0;
+    
+    const averageWinSeries = longestWinSeries.length > 0 
+      ? longestWinSeries.reduce((sum, series) => sum + series.seriesLength, 0) / longestWinSeries.length 
+      : 0;
+
+    // Count elite players (with thresholds: Villageois 5+, Loups 3+, Wins 5+)
+    const eliteVillageoisCount = longestVillageoisSeries.filter(series => series.seriesLength >= 5).length;
+    const eliteLoupsCount = longestLoupsSeries.filter(series => series.seriesLength >= 3).length;
+    const eliteWinCount = longestWinSeries.filter(series => series.seriesLength >= 5).length;
+
     return {
       longestVillageoisSeries: longestVillageoisSeries.slice(0, 10), // Top 10
       longestLoupsSeries: longestLoupsSeries.slice(0, 10), // Top 10
       longestWinSeries: longestWinSeries.slice(0, 10), // Top 10
-      totalGamesAnalyzed: sortedGames.length
+      totalGamesAnalyzed: sortedGames.length,
+      averageVillageoisSeries: Math.round(averageVillageoisSeries * 10) / 10, // Round to 1 decimal
+      averageLoupsSeries: Math.round(averageLoupsSeries * 10) / 10,
+      averageWinSeries: Math.round(averageWinSeries * 10) / 10,
+      eliteVillageoisCount,
+      eliteLoupsCount,
+      eliteWinCount,
+      totalPlayersCount: totalPlayers
     };
   }, [rawGameData, rawRoleData]);
 

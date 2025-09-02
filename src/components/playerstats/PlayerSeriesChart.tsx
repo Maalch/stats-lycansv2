@@ -43,20 +43,6 @@ export function PlayerSeriesChart() {
       .join(', ');
   };
 
-  // Helper function to get the elite threshold based on series type
-  const getEliteThreshold = (): number => {
-    switch (selectedSeriesType) {
-      case 'villageois':
-        return 5;
-      case 'loups':
-        return 3;
-      case 'wins':
-        return 5;
-      default:
-        return 5;
-    }
-  };
-
   const getChartTitle = () => {
     switch (selectedSeriesType) {
       case 'villageois':
@@ -240,22 +226,31 @@ export function PlayerSeriesChart() {
             </div>
             
             <div className="lycans-stat-card">
-              <h3>📊 Moyenne Top 5</h3>
+              <h3>📊 Moyenne (tous les joueurs)</h3>
               <div className="lycans-stat-value">
-                {currentData.length >= 5 
-                  ? (currentData.slice(0, 5).reduce((sum, s) => sum + s.seriesLength, 0) / 5).toFixed(1)
-                  : 'N/A'
-                }
+                {selectedSeriesType === 'villageois' ? seriesData.averageVillageoisSeries :
+                 selectedSeriesType === 'loups' ? seriesData.averageLoupsSeries :
+                 seriesData.averageWinSeries}
               </div>
-              <p>parties consécutives</p>
+              <p>parties en moyenne</p>
+              <p className="lycans-h2h-description">
+                Basé sur {seriesData.totalPlayersCount} joueurs
+              </p>
             </div>
             
             <div className="lycans-stat-card">
-              <h3>🎯 Seuil Elite</h3>
+              <h3>⭐ Seuil Elite</h3>
               <div className="lycans-stat-value">
-                {currentData.filter(s => s.seriesLength >= getEliteThreshold()).length}
+                {selectedSeriesType === 'villageois' ? seriesData.eliteVillageoisCount :
+                 selectedSeriesType === 'loups' ? seriesData.eliteLoupsCount :
+                 seriesData.eliteWinCount}
               </div>
-              <p>joueurs avec {getEliteThreshold()}+ parties</p>
+              <p>joueurs au niveau elite</p>
+              <p className="lycans-h2h-description">
+                {selectedSeriesType === 'villageois' ? '5+ séries Villageois' :
+                 selectedSeriesType === 'loups' ? '3+ séries Loups' :
+                 '5+ séries de victoires'}
+              </p>
             </div>
           </div>
         )}
