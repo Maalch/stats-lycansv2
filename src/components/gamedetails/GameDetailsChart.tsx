@@ -58,11 +58,25 @@ export function GameDetailsChart() {
           return 0;
       }
       
+      // Primary sort comparison
+      let primaryComparison: number;
       if (sortDirection === 'asc') {
-        return aValue > bValue ? 1 : -1;
+        primaryComparison = aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       } else {
-        return aValue < bValue ? 1 : -1;
+        primaryComparison = aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
       }
+      
+      // If primary values are equal, sort by gameId as secondary sort
+      if (primaryComparison === 0) {
+        // Always sort gameId in descending order for secondary sort (most recent games first)
+        if (sortDirection === 'asc') {
+          return a.gameId - b.gameId;
+        } else {
+          return b.gameId - a.gameId;
+        }
+      }
+      
+      return primaryComparison;
     });
   }, [data, sortField, sortDirection]);
 
