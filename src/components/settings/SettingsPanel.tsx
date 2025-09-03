@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import type { GameFilter, FilterMode, PlayerFilterMode } from '../../context/SettingsContext';
-import type { RawGameData } from '../../hooks/useRawGameData';
+import type { RawGameData } from '../../hooks/useCombinedRawData';
 import './SettingsPanel.css';
 
 export function SettingsPanel() {
