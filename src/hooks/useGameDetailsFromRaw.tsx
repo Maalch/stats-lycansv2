@@ -183,6 +183,14 @@ function applyNavigationFilters(
 
         // Check specific camp for specific player
         const playerCamp = getPlayerCampFromRoles(filters.selectedPlayer, roleDataForGame);
+        
+        // Special handling for Agent camp: when filtering by Agent camp wins, 
+        // check if the specific player is in the winners list
+        if (playerCamp === 'Agent' && filters.selectedCamp === 'Agent' && game["Camp victorieux"] === 'Agent') {
+          const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
+          return winnersList.some(winner => winner.toLowerCase() === filters.selectedPlayer!.toLowerCase());
+        }
+        
         return playerCamp === filters.selectedCamp;
       } else {
         // Filter by camp without specific player
@@ -388,6 +396,13 @@ function applyNavigationFilters(
           if (!roleDataForGame) return true;
           
           const winnerCamp = getPlayerCampFromRoles(filters.winnerPlayer, roleDataForGame);
+          
+          // Special handling for Agent camp: check if player is in winners list
+          if (winnerCamp === "Agent" && game["Camp victorieux"] === "Agent") {
+            const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
+            return winnersList.some(winner => winner.toLowerCase() === filters.winnerPlayer!.toLowerCase());
+          }
+          
           return game["Camp victorieux"] === winnerCamp;
         }
         return true;
@@ -405,6 +420,13 @@ function applyNavigationFilters(
 
         if (filters.winnerPlayer) {
           const winnerCamp = getPlayerCampFromRoles(filters.winnerPlayer, roleDataForGame);
+          
+          // Special handling for Agent camp: check if player is in winners list
+          if (winnerCamp === "Agent" && game["Camp victorieux"] === "Agent") {
+            const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
+            return winnersList.some(winner => winner.toLowerCase() === filters.winnerPlayer!.toLowerCase());
+          }
+          
           return game["Camp victorieux"] === winnerCamp;
         }
 
@@ -423,6 +445,13 @@ function applyNavigationFilters(
 
         if (filters.winnerPlayer) {
           const winnerCamp = getPlayerCampFromRoles(filters.winnerPlayer, roleDataForGame);
+          
+          // Special handling for Agent camp: check if player is in winners list
+          if (winnerCamp === "Agent" && game["Camp victorieux"] === "Agent") {
+            const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
+            return winnersList.some(winner => winner.toLowerCase() === filters.winnerPlayer!.toLowerCase());
+          }
+          
           return game["Camp victorieux"] === winnerCamp;
         }
 
