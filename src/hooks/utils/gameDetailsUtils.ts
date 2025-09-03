@@ -369,6 +369,177 @@ function filterByCamp(
 }
 
 /**
+ * Filter games by multiple players with specific filtering modes
+ */
+function filterByMultiplePlayers(
+  games: RawGameData[],
+  roleData: RawRoleData[],
+  selectedPlayers: string[],
+  playersFilterMode?: 'all-common-games' | 'opposing-camps' | 'same-camp',
+  winnerPlayer?: string
+): RawGameData[] {
+  if (!playersFilterMode) return games;
+
+  return games.filter(game => {
+    // First check if all selected players are in this game
+    const playersInGame = splitAndTrim(game["Liste des joueurs"]);
+    const hasAllPlayers = selectedPlayers.every(player => 
+      playersInGame.some(gamePlayer => 
+        gamePlayer.toLowerCase() === player.toLowerCase()
+      )
+    );
+
+    if (!hasAllPlayers) return false;
+
+    // Get role data for this game
+    const roleDataForGame = roleData.find(role => role.Game === game.Game);
+    if (!roleDataForGame) return false;
+
+    // Get camps for each selected player
+    const playerCamps = selectedPlayers.map(player => 
+      getPlayerCampFromRoles(player, roleDataForGame)
+    );
+
+    // Apply filtering based on mode
+    switch (playersFilterMode) {
+      case 'all-common-games':
+        // Include all games where these players participated together
+        // If winnerPlayer is specified, filter by games where that player won
+        if (winnerPlayer) {
+          const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
+          return winnersList.some(winner => 
+            winner.toLowerCase() === winnerPlayer.toLowerCase()
+          );
+        }
+        return true;
+
+      case 'opposing-camps':
+        // Include only games where players were in different camps
+        // Special handling for camp alliances (Traître works with Loups)
+        const normalizedCamps = playerCamps.map(camp => {
+          if (camp === 'Traître') return 'Loups';
+          return camp;
+        });
+        
+        const uniqueCamps = [...new Set(normalizedCamps)];
+        const areInOpposingCamps = uniqueCamps.length > 1;
+        
+        if (!areInOpposingCamps) return false;
+        
+        // If winnerPlayer is specified, check if that player's camp won
+        if (winnerPlayer) {
+          const winnerPlayerIndex = selectedPlayers.findIndex(player => 
+            player.toLowerCase() === winnerPlayer.toLowerCase()
+          );
+          
+          if (winnerPlayerIndex !== -1) {
+            const winnerPlayerCamp = normalizedCamps[winnerPlayerIndex];
+            const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loups' : game["Camp victorieux"];
+            
+            // Special handling for Agent camp - check if specific player is in winners list
+            if (winnerPlayerCamp === 'Agent' && gameWinningCamp === 'Agent') {
+              const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
+              return winnersList.some(winner => 
+                winner.toLowerCase() === winnerPlayer.toLowerCase()
+              );
+            }
+            
+            return winnerPlayerCamp === gameWinningCamp;
+          }
+        }
+        
+        return true;
+
+      case 'same-camp':
+        // Include only games where players were in the same camp (considering alliances)
+        const normalizedCampsForSame = playerCamps.map(camp => {
+          if (camp === 'Traître') return 'Loups';
+          return camp;
+        });
+        
+        const uniqueCampsForSame = [...new Set(normalizedCampsForSame)];
+        const areInSameCamp = uniqueCampsForSame.length === 1;
+        
+        if (!areInSameCamp) return false;
+        
+        // If winnerPlayer is specified, check if their camp won
+        if (winnerPlayer) {
+          const sameCamp = normalizedCampsForSame[0];
+          const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loups' : game["Camp victorieux"];
+          
+          // Special handling for Agent camp - both players need to be winners for Agent camp
+          if (sameCamp === 'Agent' && gameWinningCamp === 'Agent') {
+            const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
+            return selectedPlayers.every(player =>
+              winnersList.some(winner => 
+                winner.toLowerCase() === player.toLowerCase()
+              )
+            );
+          }
+          
+          return sameCamp === gameWinningCamp;
+        }
+        
+        return true;
+
+      default:
+        return true;
+    }
+  });
+}
+
+/**
+ * Filter games by player pair with specific role relationship
+ */
+function filterByPlayerPair(
+  games: RawGameData[],
+  roleData: RawRoleData[],
+  selectedPlayerPair: string[],
+  selectedPairRole?: 'wolves' | 'lovers'
+): RawGameData[] {
+  if (!selectedPairRole || selectedPlayerPair.length !== 2) return games;
+
+  return games.filter(game => {
+    // Check if both players are in this game
+    const playersInGame = splitAndTrim(game["Liste des joueurs"]);
+    const hasBothPlayers = selectedPlayerPair.every(player => 
+      playersInGame.some(gamePlayer => 
+        gamePlayer.toLowerCase() === player.toLowerCase()
+      )
+    );
+
+    if (!hasBothPlayers) return false;
+
+    // Get role data for this game
+    const roleDataForGame = roleData.find(role => role.Game === game.Game);
+    if (!roleDataForGame) return false;
+
+    switch (selectedPairRole) {
+      case 'wolves':
+        // Check if both players are wolves in this game
+        const wolvesInGame = splitAndTrim(roleDataForGame.Loups || '');
+        return selectedPlayerPair.every(player =>
+          wolvesInGame.some(wolf => 
+            wolf.toLowerCase() === player.toLowerCase()
+          )
+        );
+
+      case 'lovers':
+        // Check if both players are lovers in this game
+        const loversInGame = splitAndTrim(roleDataForGame.Amoureux || '');
+        return selectedPlayerPair.every(player =>
+          loversInGame.some(lover => 
+            lover.toLowerCase() === player.toLowerCase()
+          )
+        );
+
+      default:
+        return true;
+    }
+  });
+}
+
+/**
  * Apply navigation filters to game data
  */
 export function applyNavigationFilters(
@@ -416,8 +587,26 @@ export function applyNavigationFilters(
     filteredGames = filterByGameDuration(filteredGames, filters.selectedGameDuration);
   }
 
-  // Additional complex filters would be implemented here
-  // (player pairs, multiple players, etc.)
+  // Apply multi-player filters (for player comparison scenarios)
+  if (filters.selectedPlayers && filters.selectedPlayers.length >= 2) {
+    filteredGames = filterByMultiplePlayers(
+      filteredGames, 
+      roleData, 
+      filters.selectedPlayers, 
+      filters.playersFilterMode,
+      filters.winnerPlayer
+    );
+  }
+
+  // Apply player pair filters
+  if (filters.selectedPlayerPair && filters.selectedPlayerPair.length === 2) {
+    filteredGames = filterByPlayerPair(
+      filteredGames,
+      roleData,
+      filters.selectedPlayerPair,
+      filters.selectedPairRole
+    );
+  }
 
   return filteredGames;
 }
