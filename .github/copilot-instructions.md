@@ -36,6 +36,14 @@ navigateToGameDetails({
 });
 ```
 
+### Game rules
+Players are divided into two main camps: Villageois (Villagers) and Loups (Wolves). Each camp has its own objectives and win conditions. Additionally, there are special camps that work for themselves, like Idiot Du Village, Agent, Cannibale, Amoureux, Espion, Scientifique, La Bête ... 
+The only exception are:
+- the camp Traître which works with the Loups camp
+- if the Amoureux camp is in the game, there is always 2 players and they win/lose together
+- if the Agent camp is in the game, there is always 2 players and only one of them can win
+Player may also have additional secondary rôles in any camp 
+
 ### Lazy Loading with Named Exports
 ```typescript
 // Required pattern for component imports in App.tsx
