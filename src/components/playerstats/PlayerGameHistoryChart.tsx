@@ -252,12 +252,35 @@ export function PlayerGameHistoryChart() {
       <div className="lycans-resume-conteneur">
         <div className="lycans-stat-carte">
           <h3>Total Parties</h3>
-          <div className="lycans-valeur-principale">{data.totalGames}</div>
+          <div 
+            className="lycans-valeur-principale lycans-clickable" 
+            onClick={() => {
+              navigateToGameDetails({
+                selectedPlayer: selectedPlayerName,
+                fromComponent: 'Historique Joueur - Total Parties'
+              });
+            }}
+            title={`Cliquer pour voir toutes les parties de ${selectedPlayerName}`}
+          >
+            {data.totalGames}
+          </div>
           <p>parties jouées</p>
         </div>
         <div className="lycans-stat-carte">
           <h3>Victoires</h3>
-          <div className="lycans-valeur-principale">{data.totalWins}</div>
+          <div 
+            className="lycans-valeur-principale lycans-clickable" 
+            onClick={() => {
+              navigateToGameDetails({
+                selectedPlayer: selectedPlayerName,
+                campFilterMode: 'wins-only',
+                fromComponent: 'Historique Joueur - Victoires'
+              });
+            }}
+            title={`Cliquer pour voir toutes les victoires de ${selectedPlayerName}`}
+          >
+            {data.totalWins}
+          </div>
           <p>parties gagnées</p>
         </div>
         <div className="lycans-stat-carte">
