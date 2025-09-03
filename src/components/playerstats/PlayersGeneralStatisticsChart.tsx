@@ -11,6 +11,7 @@ export function PlayersGeneralStatisticsChart() {
   const { navigateToGameDetails } = useNavigation();
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(50);
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
+  const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
 
   // Optimized data processing - combine multiple operations to reduce iterations
   const { participationData, winRateData, averageWinRate, totalEligiblePlayers } = useMemo(() => {
@@ -137,12 +138,16 @@ export function PlayersGeneralStatisticsChart() {
                     <Cell
                       key={`cell-participation-${entry.player}`}
                       fill={playersColor[entry.player] || "#00C49F"}
+                      stroke={highlightedPlayer === entry.player ? "var(--text-primary)" : "none"}
+                      strokeWidth={highlightedPlayer === entry.player ? 2 : 0}
                       onClick={() => {
                         navigateToGameDetails({
                           selectedPlayer: entry.player,
                           fromComponent: 'Statistiques Joueurs'
                         });
                       }} 
+                      onMouseEnter={() => setHighlightedPlayer(entry.player)}
+                      onMouseLeave={() => setHighlightedPlayer(null)}
                       style={{ cursor: 'pointer' }}
                     />
                   ))}
@@ -256,12 +261,16 @@ export function PlayersGeneralStatisticsChart() {
                     <Cell
                       key={`cell-winrate-${entry.player}`}
                       fill={playersColor[entry.player] || "#8884d8"}
+                      stroke={highlightedPlayer === entry.player ? "var(--text-primary)" : "none"}
+                      strokeWidth={highlightedPlayer === entry.player ? 2 : 0}
                       onClick={() => {
                         navigateToGameDetails({
                           selectedPlayer: entry.player,
                           fromComponent: 'Taux de Victoire'
                         });
                       }} 
+                      onMouseEnter={() => setHighlightedPlayer(entry.player)}
+                      onMouseLeave={() => setHighlightedPlayer(null)}
                       style={{ cursor: 'pointer' }}
                     />
                   ))}
