@@ -28,6 +28,7 @@ export interface PlayerSeriesData {
   longestLoupsSeries: CampSeries[];
   longestWinSeries: WinSeries[];
   totalGamesAnalyzed: number;
+  lastRecordedGameDate: string; // Date of the most recent game
   // Statistics for all players
   averageVillageoisSeries: number;
   averageLoupsSeries: number;
@@ -36,6 +37,14 @@ export interface PlayerSeriesData {
   eliteLoupsCount: number; // Players with 3+ Loups series
   eliteWinCount: number; // Players with 5+ win series
   totalPlayersCount: number;
+  // Active series counts (all players currently on a streak, not just top 20)
+  activeVillageoisCount: number; // Players currently on a Villageois streak
+  activeLoupsCount: number; // Players currently on a Loups streak
+  activeWinCount: number; // Players currently on a win streak
+  // Record ongoing counts (players currently in their personal best streak)
+  ongoingVillageoisCount: number;
+  ongoingLoupsCount: number;
+  ongoingWinCount: number;
 }
 
 interface PlayerSeriesState {
@@ -407,12 +416,56 @@ export function computePlayerSeries(
     allPlayers.size
   );
 
+  // Count active and ongoing series from ALL players
+  let activeVillageoisCount = 0;   // Players currently on a Villageois streak
+  let activeLoupsCount = 0;        // Players currently on a Loups streak  
+  let activeWinCount = 0;          // Players currently on a win streak
+  let ongoingVillageoisCount = 0;  // Players currently in their personal best Villageois streak
+  let ongoingLoupsCount = 0;       // Players currently in their personal best Loups streak
+  let ongoingWinCount = 0;         // Players currently in their personal best win streak
+
+  Object.values(playerCampSeries).forEach(stats => {
+    // Count active series (any current streak > 0)
+    if (stats.currentVillageoisSeries > 0) {
+      activeVillageoisCount++;
+    }
+    if (stats.currentLoupsSeries > 0) {
+      activeLoupsCount++;
+    }
+    if (stats.currentWinSeries > 0) {
+      activeWinCount++;
+    }
+
+    // Count ongoing record series (current streak equals personal best)
+    if (stats.longestVillageoisSeries?.isOngoing) {
+      ongoingVillageoisCount++;
+    }
+    if (stats.longestLoupsSeries?.isOngoing) {
+      ongoingLoupsCount++;
+    }
+    if (stats.longestWinSeries?.isOngoing) {
+      ongoingWinCount++;
+    }
+  });
+
+  // Get the date of the last recorded game (since games are sorted by Game number)
+  const lastRecordedGameDate = sortedGames.length > 0 
+    ? sortedGames[sortedGames.length - 1]?.Date?.toString() || ""
+    : "";
+
   return {
     longestVillageoisSeries,
     longestLoupsSeries,
     longestWinSeries,
     totalGamesAnalyzed: sortedGames.length,
+    lastRecordedGameDate,
     totalPlayersCount: allPlayers.size,
+    activeVillageoisCount,
+    activeLoupsCount,
+    activeWinCount,
+    ongoingVillageoisCount,
+    ongoingLoupsCount,
+    ongoingWinCount,
     ...statistics
   };
 }
