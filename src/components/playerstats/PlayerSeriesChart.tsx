@@ -202,15 +202,36 @@ export function PlayerSeriesChart() {
       <p className="lycans-stats-info">
         Basé sur {seriesData.totalGamesAnalyzed} parties analysées
       </p>
+      {seriesData.lastRecordedGameDate && (
+        <div style={{ 
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '8px',
+          padding: '12px',
+          margin: '1rem 0',
+          textAlign: 'center'
+        }}>
+          <p style={{ 
+            fontSize: '0.9rem', 
+            color: 'var(--text-secondary)', 
+            margin: '0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem'
+          }}>
+            📅 <strong>Données à jour jusqu'au :</strong> {seriesData.lastRecordedGameDate}
+          </p>
+        </div>
+      )}
       
       <div className="lycans-section-description">
         <p>
           <strong>Séries de camps :</strong> Parties consécutives dans le même camp principal (Villageois ou Loups). 
-          Jouer dans un autre camp (rôles spéciaux) brise la série.<br/>
+          Jouer dans n'importe quel autre camp brise la série.<br/>
           <strong>Séries de victoires :</strong> Victoires consécutives dans n'importe quel camp. 
           Une défaite brise la série.<br/>
-          <strong>🔥 Séries en cours :</strong> Les séries avec l'effet de flamme sont encore actives - 
-          le joueur n'a pas joué depuis la fin de sa série record !
+          <strong>🔥 Séries en cours :</strong> Les séries avec l'effet de flamme sont encore actives
         </p>
       </div>
 
@@ -319,13 +340,17 @@ export function PlayerSeriesChart() {
             <div className="lycans-stat-card">
               <h3>🔥 Séries En Cours</h3>
               <div className="lycans-stat-value">
-                {currentData.filter(entry => entry.isOngoing).length}
+                {selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
+                 selectedSeriesType === 'loups' ? seriesData.activeLoupsCount :
+                 seriesData.activeWinCount}
               </div>
               <p>séries encore actives</p>
               <p className="lycans-h2h-description">
-                {currentData.filter(entry => entry.isOngoing).length > 0 ? 
-                  'Joueurs qui n\'ont pas joué depuis' : 
-                  'Toutes les séries ont été brisées'}
+                {(selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
+                  selectedSeriesType === 'loups' ? seriesData.activeLoupsCount :
+                  seriesData.activeWinCount) > 0 ? 
+                  'Joueurs actuellement dans une série de ce type' : 
+                  'Aucune série active de ce type'}
               </p>
             </div>
           </div>
