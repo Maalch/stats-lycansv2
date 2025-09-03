@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerSeriesFromRaw } from '../../hooks/usePlayerSeriesFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
@@ -10,42 +10,6 @@ export function PlayerSeriesChart() {
   const { navigateToGameDetails } = useNavigation();
   const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loups' | 'wins'>('villageois');
   const chartRef = useRef<HTMLDivElement>(null);
-
-  // Apply flame effect to ongoing series bars after render
-  useEffect(() => {
-    const applyFlameEffect = () => {
-      const currentData = getCurrentData();
-      
-      // Only target bars within this specific chart component
-      const bars = chartRef.current?.querySelectorAll('.recharts-bar-rectangle');
-      if (!bars) return;
-      
-      // Apply flame effect using CSS classes only
-      bars.forEach((bar, index) => {
-        // Always remove the class first to prevent stacking
-        bar.classList.remove('lycans-ongoing-series');
-        
-        // Then add it back only if needed
-        if (currentData[index] && currentData[index].isOngoing) {
-          bar.classList.add('lycans-ongoing-series');
-        }
-      });
-    };
-
-    // Apply effect after a short delay to ensure chart is rendered
-    const timer = setTimeout(applyFlameEffect, 100);
-    
-    // Cleanup function
-    return () => {
-      clearTimeout(timer);
-      const bars = chartRef.current?.querySelectorAll('.recharts-bar-rectangle');
-      if (bars) {
-        bars.forEach((bar) => {
-          bar.classList.remove('lycans-ongoing-series');
-        });
-      }
-    };
-  }, [seriesData, selectedSeriesType]);
 
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des séries de joueurs...</div>;
