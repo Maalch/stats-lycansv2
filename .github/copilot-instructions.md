@@ -2,7 +2,7 @@
 
 # Copilot Instructions for `stats-lycansv2`
 
-A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Uses a **hybrid data pipeline** with static JSON files (updated weekly via GitHub Actions) and Apps Script API fallback.
+A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Uses a **static data pipeline** with JSON files (updated weekly via GitHub Actions).
 
 ## Architecture Overview
 
@@ -25,6 +25,16 @@ npm run sync-data    # Fetch fresh data from Apps Script to /data
 
 ## Key Architectural Patterns
 
+### Triple Context System
+```typescript
+// SettingsContext - persistent filters via localStorage
+const { settings, updateSettings } = useSettings();
+// NavigationContext - drill-down navigation with filters
+const { navigateToGameDetails } = useNavigation();
+// FullscreenContext - chart fullscreen state
+const { isFullscreen, toggleFullscreen } = useFullscreen();
+```
+
 ### Navigation Context for Drill-Down Views
 ```typescript
 // Navigate from any chart to GameDetailsChart with filters
@@ -36,38 +46,35 @@ navigateToGameDetails({
 });
 ```
 
-### Game rules
-Players are divided into two main camps: Villageois (Villagers) and Loups (Wolves). Each camp has its own objectives and win conditions. Additionally, there are special camps that work for themselves, like Idiot Du Village, Agent, Cannibale, Amoureux, Espion, Scientifique, La Bête ... 
-The only exception are:
-- the camp Traître which works with the Loups camp
-- if the Amoureux camp is in the game, there is always 2 players and they win/lose together
-- if the Agent camp is in the game, there is always 2 players and only one of them can win
-Player may also have additional secondary rôles in any camp 
-
 ### Lazy Loading with Named Exports
 ```typescript
 // Required pattern for component imports in App.tsx
 const Component = lazy(() => import('./path').then(m => ({ default: m.ComponentName })));
 ```
 
-### Raw Data Processing Pattern
+### Optimized Data Processing Pattern
 ```typescript
-// Base pattern for all *FromRaw hooks
+// New centralized pattern using base hooks
+const { data: playerStats, isLoading, error } = usePlayerStatsBase(
+  (gameData, roleData) => computePlayerStats(gameData, roleData)
+);
+
+// Legacy pattern (avoid for new features)
 const { data: rawGameData } = useFilteredRawGameData();
 const { data: rawRoleData } = useFilteredRawRoleData();
-const { data: rawBRData } = useFilteredRawBRData();
-const { data: rawPonceData } = useFilteredRawPonceData();
 ```
 
-### Settings-Aware Data Filtering
-All raw data hooks automatically respect `SettingsContext` filters:
-- Game type filter (all/modded/non-modded)
-- Date range filtering  
-- Player inclusion/exclusion filters
+### Base Hook Hierarchy
+```typescript
+// useBaseStats - core hook with options for data requirements
+// useGameStatsBase - game data only
+// usePlayerStatsBase - game + role data  
+// useFullStatsBase - game + role + ponce data
+```
 
 ## Data Architecture
 
-**Core Data Types:** `RawGameData`, `RawRoleData`, `RawPonceData` in `hooks/useRawGameData.tsx`  
+**Core Data Types:** `RawGameData`, `RawRoleData`, `RawPonceData` in `hooks/useCombinedRawData.tsx`  
 **Data Service:** Simplified `DataService` in `dataService.ts` loads only from static JSON files  
 **Color Schemes:** `lycansColorScheme` (camps/roles), `playersColor` (players) in `types/api.ts`  
 **French Language:** All UI labels and data values in French ("Villageois", "Loups", etc.)
@@ -76,8 +83,20 @@ All raw data hooks automatically respect `SettingsContext` filters:
 1. GitHub Actions → Apps Script → `/data/*.json` (weekly sync)
 2. Build scripts → copy to `public/data/` or `docs/data/`  
 3. `useCombinedRawData()` → loads from static files directly
-4. `useFiltered*Data()` → applies SettingsContext filters
-5. `use*FromRaw()` → processes filtered data client-side
+4. `useCombinedFilteredRawData()` → applies SettingsContext filters consistently
+5. `use*FromRaw()` → processes filtered data client-side using pure computation functions
+
+### Settings-Aware Data Filtering
+All data hooks automatically respect `SettingsContext` filters:
+- Game type filter (all/modded/non-modded)  
+- Date range filtering with French date parsing
+- Player inclusion/exclusion filters (all selected must be present vs any selected excludes game)
+
+### Game Domain Rules
+Players are divided into camps: **Villageois** (Villagers) and **Loups** (Wolves). Special camps work independently: `Idiot Du Village`, `Agent`, `Cannibale`, `Amoureux`, `Espion`, `Scientifique`, `La Bête`. Exceptions:
+- `Traître` camp works with Loups
+- `Amoureux` camp always has 2 players (win/lose together)  
+- `Agent` camp has 2 players (only one can win)
 
 ## Project-Specific Conventions
 
@@ -88,10 +107,21 @@ All raw data hooks automatically respect `SettingsContext` filters:
 
 ## Adding Features
 
-1. **New Statistics:** Create `use*FromRaw` hook → add to menu constants in `App.tsx`
-2. **New Settings:** Add to `SettingsState` interface → ensure localStorage persistence  
-3. **New Data Sources:** Add to `DATA_CONFIG` → update sync script → create interface
+1. **New Statistics:** Create `use*FromRaw` hook using base hook pattern → add computation function to `utils/` → add to menu constants in `App.tsx`
+2. **New Settings:** Add to `SettingsState` interface → ensure localStorage persistence in `SettingsContext`
+3. **New Data Sources:** Add to `DATA_CONFIG` in sync script → update interfaces in `useCombinedRawData.tsx`
 4. **Navigation Integration:** Use `NavigationContext` for chart drill-downs to `GameDetailsChart`
+
+### Base Hook Migration Pattern
+When creating new statistics hooks, use the optimized base hook pattern:
+```typescript
+export function useNewStatsFromRaw() {
+  const { data, isLoading, error } = usePlayerStatsBase(
+    (gameData, roleData) => computeNewStats(gameData, roleData)
+  );
+  return { data, isLoading, error };
+}
+```
 
 ## Integration Points
 
