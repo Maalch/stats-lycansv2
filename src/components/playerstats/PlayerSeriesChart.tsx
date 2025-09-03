@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerSeriesFromRaw } from '../../hooks/usePlayerSeriesFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
@@ -9,6 +9,43 @@ export function PlayerSeriesChart() {
   const { data: seriesData, isLoading: dataLoading, error: fetchError } = usePlayerSeriesFromRaw();
   const { navigateToGameDetails } = useNavigation();
   const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loups' | 'wins'>('villageois');
+  const chartRef = useRef<HTMLDivElement>(null);
+
+  // Apply flame effect to ongoing series bars after render
+  useEffect(() => {
+    const applyFlameEffect = () => {
+      const currentData = getCurrentData();
+      
+      // Only target bars within this specific chart component
+      const bars = chartRef.current?.querySelectorAll('.recharts-bar-rectangle');
+      if (!bars) return;
+      
+      // Apply flame effect using CSS classes only
+      bars.forEach((bar, index) => {
+        // Always remove the class first to prevent stacking
+        bar.classList.remove('lycans-ongoing-series');
+        
+        // Then add it back only if needed
+        if (currentData[index] && currentData[index].isOngoing) {
+          bar.classList.add('lycans-ongoing-series');
+        }
+      });
+    };
+
+    // Apply effect after a short delay to ensure chart is rendered
+    const timer = setTimeout(applyFlameEffect, 100);
+    
+    // Cleanup function
+    return () => {
+      clearTimeout(timer);
+      const bars = chartRef.current?.querySelectorAll('.recharts-bar-rectangle');
+      if (bars) {
+        bars.forEach((bar) => {
+          bar.classList.remove('lycans-ongoing-series');
+        });
+      }
+    };
+  }, [seriesData, selectedSeriesType]);
 
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des séries de joueurs...</div>;
@@ -24,11 +61,11 @@ export function PlayerSeriesChart() {
   const getCurrentData = () => {
     switch (selectedSeriesType) {
       case 'villageois':
-        return seriesData.longestVillageoisSeries.slice(0, 15);
+        return seriesData.longestVillageoisSeries.slice(0, 20);
       case 'loups':
-        return seriesData.longestLoupsSeries.slice(0, 15);
+        return seriesData.longestLoupsSeries.slice(0, 20);
       case 'wins':
-        return seriesData.longestWinSeries.slice(0, 15);
+        return seriesData.longestWinSeries.slice(0, 20);
       default:
         return [];
     }
@@ -70,11 +107,25 @@ export function PlayerSeriesChart() {
           borderRadius: 6,
           border: '1px solid var(--border-color)'
         }}>
-          <div><strong>{data.player}</strong></div>
-          <div>Série de victoires : {data.seriesLength} parties</div>
+          <div>
+            <strong>{data.player}</strong>
+            {data.isOngoing && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
+          </div>
+          <div>Série de victoires : {data.seriesLength} parties {data.isOngoing ? '(En cours)' : ''}</div>
           <div>Du jeu #{data.startGame} au jeu #{data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
           <div>Camps joués : {formatCampCounts(data.campCounts)}</div>
+          {data.isOngoing && (
+            <div style={{ 
+              fontSize: '0.8rem', 
+              color: '#FF8C00', 
+              marginTop: '0.5rem',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+              🔥 Série en cours - Aucun jeu depuis !
+            </div>
+          )}
           <div style={{ 
             fontSize: '0.8rem', 
             color: 'var(--accent-primary)', 
@@ -96,10 +147,24 @@ export function PlayerSeriesChart() {
           borderRadius: 6,
           border: '1px solid var(--border-color)'
         }}>
-          <div><strong>{data.player}</strong></div>
-          <div>Série {data.camp} : {data.seriesLength} parties consécutives</div>
+          <div>
+            <strong>{data.player}</strong>
+            {data.isOngoing && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
+          </div>
+          <div>Série {data.camp} : {data.seriesLength} parties consécutives {data.isOngoing ? '(En cours)' : ''}</div>
           <div>Du jeu #{data.startGame} au jeu #{data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
+          {data.isOngoing && (
+            <div style={{ 
+              fontSize: '0.8rem', 
+              color: '#FF8C00', 
+              marginTop: '0.5rem',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+              🔥 Série en cours - Aucun jeu depuis !
+            </div>
+          )}
           <div style={{ 
             fontSize: '0.8rem', 
             color: 'var(--accent-primary)', 
@@ -143,7 +208,9 @@ export function PlayerSeriesChart() {
           <strong>Séries de camps :</strong> Parties consécutives dans le même camp principal (Villageois ou Loups). 
           Jouer dans un autre camp (rôles spéciaux) brise la série.<br/>
           <strong>Séries de victoires :</strong> Victoires consécutives dans n'importe quel camp. 
-          Une défaite brise la série.
+          Une défaite brise la série.<br/>
+          <strong>🔥 Séries en cours :</strong> Les séries avec l'effet de flamme sont encore actives - 
+          le joueur n'a pas joué depuis la fin de sa série record !
         </p>
       </div>
 
@@ -171,7 +238,7 @@ export function PlayerSeriesChart() {
 
       <div className="lycans-graphique-section">
         <FullscreenChart title={getChartTitle()}>
-          <div style={{ height: 500 }}>
+          <div ref={chartRef} style={{ height: 500 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={currentData}
@@ -204,6 +271,7 @@ export function PlayerSeriesChart() {
                       fill={playersColor[entry.player] || (selectedSeriesType === 'villageois' ? '#82ca9d' : selectedSeriesType === 'loups' ? '#FF8042' : '#8884d8')}
                       onClick={() => handleBarClick(entry)}
                       style={{ cursor: 'pointer' }}
+                      className={entry.isOngoing ? 'lycans-ongoing-series' : ''}
                     />
                   ))}
                 </Bar>
@@ -216,8 +284,14 @@ export function PlayerSeriesChart() {
           <div className="lycans-stats-grid" style={{ marginTop: '0rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
             <div className="lycans-stat-card">
               <h3>🏆 Record Absolu</h3>
-              <div className="lycans-stat-value">{currentData[0].seriesLength}</div>
-              <p>par <strong>{currentData[0].player}</strong></p>
+              <div className="lycans-stat-value">
+                {currentData[0].seriesLength}
+                {currentData[0].isOngoing && <span style={{ fontSize: '0.6em', marginLeft: '5px' }}>🔥</span>}
+              </div>
+              <p>
+                par <strong>{currentData[0].player}</strong>
+                {currentData[0].isOngoing && <span style={{ color: '#FF8C00', fontWeight: 'bold' }}> (En cours)</span>}
+              </p>
               {selectedSeriesType === 'wins' ? (
                 <p className="lycans-h2h-description">
                   Camps : {formatCampCounts((currentData[0] as any).campCounts || {})}
@@ -243,17 +317,15 @@ export function PlayerSeriesChart() {
             </div>
             
             <div className="lycans-stat-card">
-              <h3>⭐ Seuil Elite</h3>
+              <h3>🔥 Séries En Cours</h3>
               <div className="lycans-stat-value">
-                {selectedSeriesType === 'villageois' ? seriesData.eliteVillageoisCount :
-                 selectedSeriesType === 'loups' ? seriesData.eliteLoupsCount :
-                 seriesData.eliteWinCount}
+                {currentData.filter(entry => entry.isOngoing).length}
               </div>
-              <p>joueurs au niveau elite</p>
+              <p>séries encore actives</p>
               <p className="lycans-h2h-description">
-                {selectedSeriesType === 'villageois' ? '5+ séries Villageois' :
-                 selectedSeriesType === 'loups' ? '3+ séries Loups' :
-                 '5+ séries de victoires'}
+                {currentData.filter(entry => entry.isOngoing).length > 0 ? 
+                  'Joueurs qui n\'ont pas joué depuis' : 
+                  'Toutes les séries ont été brisées'}
               </p>
             </div>
           </div>

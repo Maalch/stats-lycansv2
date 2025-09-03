@@ -1099,3 +1099,16 @@ body {
   color: var(--accent-primary);
   text-decoration: underline;
 }
+
+/* Flaming effect for ongoing series */
+.lycans-ongoing-series {
+  filter: drop-shadow(0 0 6px #FF8C00) drop-shadow(0 0 12px #FF4500) drop-shadow(0 0 18px #FF0000);
+  position: relative;
+}
+
+/* Alternative flame effect for chart bars - consistent sizing */
+.recharts-bar-rectangle.lycans-ongoing-series {
+  filter: drop-shadow(0 0 6px #FF8C00) drop-shadow(0 0 12px #FF4500) drop-shadow(0 0 18px #FF0000);
+  stroke: #FF8C00;
+  stroke-width: 1px;
+}
