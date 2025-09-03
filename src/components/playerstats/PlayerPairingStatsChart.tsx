@@ -175,11 +175,13 @@ export function PlayerPairingStatsChart() {
                               <div>Taux de victoire: {data.winRate}%</div>
                               <div style={{ 
                                 fontSize: '0.8rem', 
-                                color: 'var(--chart-color-1)', 
-                                marginTop: '0.25rem',
-                                fontStyle: 'italic'
+                                color: 'var(--accent-primary)', 
+                                marginTop: '0.5rem',
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                animation: 'pulse 1.5s infinite'
                               }}>
-                                Cliquez pour voir les parties
+                                🖱️ Cliquez pour voir les parties
                               </div>
                             </div>
                           );
@@ -403,11 +405,13 @@ export function PlayerPairingStatsChart() {
                             <div>Taux de victoire: {data.winRate}%</div>
                             <div style={{ 
                               fontSize: '0.8rem', 
-                              color: 'var(--chart-color-1)', 
-                              marginTop: '0.25rem',
-                              fontStyle: 'italic'
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.5rem',
+                              fontWeight: 'bold',
+                              textAlign: 'center',
+                              animation: 'pulse 1.5s infinite'
                             }}>
-                              Cliquez pour voir les parties
+                              🖱️ Cliquez pour voir les parties
                             </div>
                           </div>
                         );
@@ -520,11 +524,13 @@ export function PlayerPairingStatsChart() {
                             <div>Victoires: {data.wins} / {data.appearances}</div>
                             <div style={{ 
                               fontSize: '0.8rem', 
-                              color: 'var(--chart-color-1)', 
-                              marginTop: '0.25rem',
-                              fontStyle: 'italic'
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.5rem',
+                              fontWeight: 'bold',
+                              textAlign: 'center',
+                              animation: 'pulse 1.5s infinite'
                             }}>
-                              Cliquez pour voir les parties
+                              🖱️ Cliquez pour voir les parties
                             </div>
                           </div>
                         );

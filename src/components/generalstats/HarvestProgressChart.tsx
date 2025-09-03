@@ -93,11 +93,13 @@ export function HarvestProgressChart() {
                             <div>Nombre de parties : {d.valeur}</div>
                             <div style={{ 
                               fontSize: '0.8rem', 
-                              color: 'var(--chart-color-1)', 
-                              marginTop: '0.25rem',
-                              fontStyle: 'italic'
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.5rem',
+                              fontWeight: 'bold',
+                              textAlign: 'center',
+                              animation: 'pulse 1.5s infinite'
                             }}>
-                              Cliquez pour voir les parties
+                              🖱️ Cliquez pour voir les parties
                             </div>
                           </div>
                         );
@@ -145,11 +147,13 @@ export function HarvestProgressChart() {
                             </div>
                             <div style={{ 
                               fontSize: '0.8rem', 
-                              color: 'var(--chart-color-1)', 
-                              marginTop: '0.25rem',
-                              fontStyle: 'italic'
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.5rem',
+                              fontWeight: 'bold',
+                              textAlign: 'center',
+                              animation: 'pulse 1.5s infinite'
                             }}>
-                              Cliquez pour voir les parties
+                              🖱️ Cliquez pour voir les parties
                             </div>
                           </div>
                         );
