@@ -1,18 +1,14 @@
-import { useMemo } from 'react';
-import { useFilteredRawGameData } from './useRawGameData';
+import { useGameStatsBase } from './utils/baseStatsHook';
+import type { RawGameData } from './useCombinedRawData';
 import type { HarvestStatsResponse, HarvestDistribution, CampHarvestData } from '../types/api';
 
 /**
- * Hook pour calculer les statistiques de récolte à partir des données brutes filtrées.
- * Implémente la même logique que _computeHarvestStats du Google Apps Script.
+ * Compute harvest statistics from raw game data
  */
-export function useHarvestStatsFromRaw() {
-  const { data: rawGameData, isLoading, error } = useFilteredRawGameData();
-
-  const harvestStats = useMemo((): HarvestStatsResponse | null => {
-    if (!rawGameData || rawGameData.length === 0) {
-      return null;
-    }
+function computeHarvestStats(gameData: RawGameData[]): HarvestStatsResponse | null {
+  if (gameData.length === 0) {
+    return null;
+  }
 
     // Initialize statistics object
     const harvestStats = {
@@ -33,7 +29,7 @@ export function useHarvestStatsFromRaw() {
     let totalMaxHarvest = 0;
 
     // Process each game
-    rawGameData.forEach(game => {
+    gameData.forEach(game => {
       const winnerCamp = game["Camp victorieux"];
       const harvest = game["Récolte"];
       const maxHarvest = game["Total récolte"];
@@ -110,7 +106,14 @@ export function useHarvestStatsFromRaw() {
     };
 
     return result;
-  }, [rawGameData]);
+}
+
+/**
+ * Hook pour calculer les statistiques de récolte à partir des données brutes filtrées.
+ * Implémente la même logique que _computeHarvestStats du Google Apps Script.
+ */
+export function useHarvestStatsFromRaw() {
+  const { data: harvestStats, isLoading, error } = useGameStatsBase(computeHarvestStats);
 
   return {
     harvestStats,
