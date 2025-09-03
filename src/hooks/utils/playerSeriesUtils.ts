@@ -9,6 +9,7 @@ export interface CampSeries {
   endGame: number;
   startDate: string;
   endDate: string;
+  isOngoing: boolean; // True if the series is still active (player hasn't played since)
 }
 
 export interface WinSeries {
@@ -19,6 +20,7 @@ export interface WinSeries {
   startDate: string;
   endDate: string;
   campCounts: Record<string, number>; // Count of times each camp was played
+  isOngoing: boolean; // True if the series is still active (player hasn't played since)
 }
 
 export interface PlayerSeriesData {
@@ -125,7 +127,8 @@ function processCampSeries(
           startGame: playerStats.villageoisSeriesStart?.game || gameIdNum,
           endGame: gameIdNum,
           startDate: playerStats.villageoisSeriesStart?.date || date,
-          endDate: date
+          endDate: date,
+          isOngoing: false // Will be updated at the end
         };
       }
       
@@ -153,7 +156,8 @@ function processCampSeries(
           startGame: playerStats.loupsSeriesStart?.game || gameIdNum,
           endGame: gameIdNum,
           startDate: playerStats.loupsSeriesStart?.date || date,
-          endDate: date
+          endDate: date,
+          isOngoing: false // Will be updated at the end
         };
       }
       
@@ -211,7 +215,8 @@ function processWinSeries(
         endGame: gameIdNum,
         startDate: playerStats.winSeriesStart?.date || date,
         endDate: date,
-        campCounts: campCounts
+        campCounts: campCounts,
+        isOngoing: false // Will be updated at the end
       };
     }
     
@@ -255,9 +260,9 @@ function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState
   longestWinSeries.sort((a, b) => b.seriesLength - a.seriesLength);
 
   return {
-    longestVillageoisSeries: longestVillageoisSeries.slice(0, 10), // Top 10
-    longestLoupsSeries: longestLoupsSeries.slice(0, 10), // Top 10
-    longestWinSeries: longestWinSeries.slice(0, 10) // Top 10
+    longestVillageoisSeries: longestVillageoisSeries.slice(0, 20), // Top 20
+    longestLoupsSeries: longestLoupsSeries.slice(0, 20), // Top 20
+    longestWinSeries: longestWinSeries.slice(0, 20) // Top 20
   };
 }
 
@@ -369,6 +374,32 @@ export function computePlayerSeries(
 
   // Collect and sort results
   const { longestVillageoisSeries, longestLoupsSeries, longestWinSeries } = collectSeriesResults(playerCampSeries);
+
+  // Mark ongoing series - a series is ongoing if:
+  // 1. The current series length equals the longest series length
+  // 2. This indicates the player hasn't played since the series started
+  Object.values(playerCampSeries).forEach(stats => {
+    // Check Villageois series
+    if (stats.longestVillageoisSeries && 
+        stats.currentVillageoisSeries === stats.longestVillageoisSeries.seriesLength &&
+        stats.currentVillageoisSeries > 0) {
+      stats.longestVillageoisSeries.isOngoing = true;
+    }
+
+    // Check Loups series
+    if (stats.longestLoupsSeries && 
+        stats.currentLoupsSeries === stats.longestLoupsSeries.seriesLength &&
+        stats.currentLoupsSeries > 0) {
+      stats.longestLoupsSeries.isOngoing = true;
+    }
+
+    // Check Win series
+    if (stats.longestWinSeries && 
+        stats.currentWinSeries === stats.longestWinSeries.seriesLength &&
+        stats.currentWinSeries > 0) {
+      stats.longestWinSeries.isOngoing = true;
+    }
+  });
 
   // Calculate statistics based on ALL players' series data
   const statistics = calculatePlayerStatistics(
