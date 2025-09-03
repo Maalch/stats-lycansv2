@@ -1,31 +1,15 @@
 // src/api/dataService.ts
 
-export interface DataConfig {
-  useStatic: boolean;
-  endpoints: {
-    [key: string]: 'static' | 'api';
-  };
-}
-
-// Configuration for raw data sources only
-export const DATA_CONFIG: DataConfig = {
-  useStatic: true,
-  endpoints: {
-    // Raw sheet exports - these are the only static files we sync
-    rawGameData: 'static',
-    rawRoleData: 'static',
-    rawPonceData: 'static',
-    rawBRData: 'static'
-  }
-};
-
+/**
+ * Simplified data service that only handles static JSON files
+ * No API fallback - static files are always expected to be available
+ */
 export class DataService {
   private static instance: DataService;
-  private apiBase: string;
   private dataIndex: any = null;
 
   private constructor() {
-    this.apiBase = import.meta.env.VITE_LYCANS_API_BASE || '';
+    // No API base needed anymore
   }
 
   public static getInstance(): DataService {
@@ -63,7 +47,7 @@ export class DataService {
   }
 
   /**
-   * Load raw JSON data from the repository
+   * Load raw JSON data from static files only
    */
   private async loadStaticData(endpoint: string) {
     try {
@@ -74,63 +58,23 @@ export class DataService {
       }
       return await response.json();
     } catch (error) {
-      console.warn(`Failed to load raw data for ${endpoint}:`, error);
+      console.error(`Failed to load raw data for ${endpoint}:`, error);
       throw error;
     }
   }
 
   /**
-   * Fetch data from the Apps Script API
+   * Get data from static files only
    */
-  private async fetchFromAPI(endpoint: string, params: Record<string, string> = {}) {
-    if (!this.apiBase) {
-      throw new Error('API base URL not configured. Raw data hooks should be used instead.');
-    }
-
-    const url = new URL(this.apiBase);
-    url.searchParams.set('action', endpoint);
+  public async getData(endpoint: string) {
+    // Only support known raw data endpoints
+    const supportedEndpoints = ['rawGameData', 'rawRoleData', 'rawPonceData', 'rawBRData'];
     
-    Object.entries(params).forEach(([key, value]) => {
-      url.searchParams.set(key, value);
-    });
-
-    const response = await fetch(url.toString());
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-    
-    return await response.json();
-  }
-
-  /**
-   * Get data using the simplified approach: raw data from static files, computed stats via API fallback
-   */
-  public async getData(endpoint: string, params: Record<string, string> = {}) {
-    const config = DATA_CONFIG.endpoints[endpoint];
-    
-    
-    if (!config) {
+    if (!supportedEndpoints.includes(endpoint)) {
       throw new Error(`Unknown endpoint: ${endpoint}`);
     }
 
-    // For raw data endpoints, load from static files
-    if (config === 'static') {
-      try {
-        const result = await this.loadStaticData(endpoint);
-        return result;
-      } catch (error) {
-        console.warn(`⚠️ Raw data failed for ${endpoint}, falling back to API:`, error);
-        return await this.fetchFromAPI(endpoint, params);
-      }
-    }
-
-    // For computed statistics, use API (these should now use raw data hooks instead)
-    if (config === 'api') {
-      console.warn(`⚠️ Using legacy API endpoint for ${endpoint}. Consider migrating to raw data hooks.`);
-      return await this.fetchFromAPI(endpoint, params);
-    }
-
-    throw new Error(`Invalid configuration for endpoint: ${endpoint}`);
+    return await this.loadStaticData(endpoint);
   }
 
   /**
@@ -144,13 +88,6 @@ export class DataService {
       lastUpdated: new Date(index.lastUpdated),
       availableEndpoints: index.endpoints
     };
-  }
-
-  /**
-   * Force refresh from API (bypass static data)
-   */
-  public async refreshFromAPI(endpoint: string, params: Record<string, string> = {}) {
-    return await this.fetchFromAPI(endpoint, params);
   }
 }
 

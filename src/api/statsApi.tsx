@@ -2,7 +2,7 @@
 import { dataService } from './dataService';
 
 // ===================================================================
-// RAW DATA FUNCTIONS - Use these for the new raw data architecture
+// RAW DATA FUNCTIONS - For compatibility with existing code
 // ===================================================================
 
 export async function fetchRawGameData() {
@@ -25,13 +25,9 @@ export async function fetchRawBRData() {
 // UTILITY FUNCTIONS
 // ===================================================================
 
-// Utility functions
+// Get data freshness information from static index
 export async function getDataFreshness() {
   return await dataService.getDataFreshness();
-}
-
-export async function forceRefreshFromAPI(endpoint: string, params: Record<string, string> = {}) {
-  return await dataService.refreshFromAPI(endpoint, params);
 }
 
 // Helper function to get raw data freshness
