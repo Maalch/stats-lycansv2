@@ -7,7 +7,8 @@ import type { RawGameData, RawRoleData } from '../useCombinedRawData';
 import { 
   splitAndTrim, 
   getPlayerCamp, 
-  buildGamePlayerCampMap
+  buildGamePlayerCampMap,
+  didCampWin
 } from './dataUtils';
 import { calculateGameDuration, formatDuration } from '../../utils/gameUtils';
 
@@ -74,7 +75,7 @@ export function calculateCampSpecificPerformance(
         const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
         playerWon = winnersList.some(winner => winner.toLowerCase() === playerName.toLowerCase()) ? 1 : 0;
       } else {
-        playerWon = playerCamp === winningCamp ? 1 : 0;
+        playerWon = didCampWin(playerCamp, winningCamp) ? 1 : 0;
       }
       
       return {
@@ -131,7 +132,7 @@ export function calculateAdvancedConsistency(
         const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
         playerWon = winnersList.some(winner => winner.toLowerCase() === playerName.toLowerCase()) ? 1 : 0;
       } else {
-        playerWon = playerCamp === winningCamp ? 1 : 0;
+        playerWon = didCampWin(playerCamp, winningCamp) ? 1 : 0;
       }
       
       return {
@@ -351,9 +352,9 @@ export function generatePlayerComparison(
         player1Won = player1Camp === "Agent" && winnersList.some(winner => winner.toLowerCase() === player1Name.toLowerCase());
         player2Won = player2Camp === "Agent" && winnersList.some(winner => winner.toLowerCase() === player2Name.toLowerCase());
       } else {
-        // For other camps, check if player's camp matches winning camp
-        player1Won = player1Camp === winnerCamp;
-        player2Won = player2Camp === winnerCamp;
+        // For other camps, use didCampWin to handle Traître-Loups alliance
+        player1Won = didCampWin(player1Camp, winnerCamp);
+        player2Won = didCampWin(player2Camp, winnerCamp);
       }
       
       if (player1Won) player1CommonWins++;
@@ -404,8 +405,8 @@ export function generatePlayerComparison(
             player2OpposingWins++;
           }
         } else {
-          if (player1Camp === winnerCamp) player1OpposingWins++;
-          if (player2Camp === winnerCamp) player2OpposingWins++;
+          if (didCampWin(player1Camp, winnerCamp)) player1OpposingWins++;
+          if (didCampWin(player2Camp, winnerCamp)) player2OpposingWins++;
         }
         
         if (game["Début"] && game["Fin"]) {
@@ -428,7 +429,7 @@ export function generatePlayerComparison(
             sameCampWins++;
           }
         } else {
-          if (player1Camp === winnerCamp) sameCampWins++;
+          if (didCampWin(player1Camp, winnerCamp)) sameCampWins++;
         }
         
         if (game["Début"] && game["Fin"]) {
