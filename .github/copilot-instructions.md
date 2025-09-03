@@ -7,7 +7,7 @@ A Vite-based React + TypeScript dashboard for visualizing werewolf game statisti
 ## Architecture Overview
 
 **Frontend:** React 19 + TypeScript, Vite, Recharts for charts, triple context system (`SettingsContext` + `FullscreenContext` + `NavigationContext`)  
-**Data Pipeline:** Hybrid - static JSON files in `/data` (primary) with Apps Script API fallback (`src/api/dataService.ts`)  
+**Data Pipeline:** Static JSON files in `/data` (updated weekly via GitHub Actions)  
 **Build System:** Vite outputs to `docs/` for GitHub Pages, with data copying via inline Node.js scripts in `package.json`  
 **Data Processing:** Client-side calculations using `*FromRaw` hooks that process raw game/role/ponce data locally
 
@@ -21,7 +21,7 @@ npm run sync-data    # Fetch fresh data from Apps Script to /data
 
 **Build Pipeline:** Inline Node.js in package.json scripts copies `/data` → `public/data/` (dev) or `docs/data/` (prod)  
 **Data Sync:** GitHub Actions runs weekly on Saturday 4 AM UTC, can be manually triggered via workflow_dispatch  
-**Environment Variables:** `VITE_LYCANS_API_BASE` for Apps Script URL, `LYCANS_API_BASE` for data sync script
+**Environment Variables:** None required - all data comes from static JSON files
 
 ## Key Architectural Patterns
 
@@ -68,14 +68,14 @@ All raw data hooks automatically respect `SettingsContext` filters:
 ## Data Architecture
 
 **Core Data Types:** `RawGameData`, `RawRoleData`, `RawPonceData` in `hooks/useRawGameData.tsx`  
-**Data Service:** `DATA_CONFIG` in `dataService.ts` routes between static JSON and API fallback  
+**Data Service:** Simplified `DataService` in `dataService.ts` loads only from static JSON files  
 **Color Schemes:** `lycansColorScheme` (camps/roles), `playersColor` (players) in `types/api.ts`  
 **French Language:** All UI labels and data values in French ("Villageois", "Loups", etc.)
 
 ### Data Flow
 1. GitHub Actions → Apps Script → `/data/*.json` (weekly sync)
 2. Build scripts → copy to `public/data/` or `docs/data/`  
-3. `useRawData<T>()` → loads from static files or API fallback
+3. `useCombinedRawData()` → loads from static files directly
 4. `useFiltered*Data()` → applies SettingsContext filters
 5. `use*FromRaw()` → processes filtered data client-side
 
@@ -99,4 +99,4 @@ All raw data hooks automatically respect `SettingsContext` filters:
 **Apps Script:** `scripts/data-sync/fetch-data.js` (endpoints: rawGameData, rawRoleData, rawPonceData, rawBRData)  
 **Build Outputs:** GitHub Pages serves from `/docs` directory with base path `/stats-lycansv2/`  
 **Development:** All processed data (player histories, computed stats) calculated client-side from raw data  
-**Error Handling:** API fallback system when static files unavailable, localStorage persistence for settings
+**Error Handling:** Static file loading only, localStorage persistence for settings
