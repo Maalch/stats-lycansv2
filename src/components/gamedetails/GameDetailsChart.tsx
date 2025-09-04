@@ -158,22 +158,24 @@ export function GameDetailsChart() {
         filters.push(campFilter + modeText);
       }
     }
-    if (navigationFilters.selectedPlayerPair && navigationFilters.selectedPairRole) {
-      const pairText = navigationFilters.selectedPlayerPair.join(' & ');
-      const roleText = navigationFilters.selectedPairRole === 'wolves' ? 'loups' : 'amoureux';
+    if (navigationFilters.playerPairFilter) {
+      const { selectedPlayerPair, selectedPairRole } = navigationFilters.playerPairFilter;
+      const pairText = selectedPlayerPair.join(' & ');
+      const roleText = selectedPairRole === 'wolves' ? 'loups' : 'amoureux';
       filters.push(`Paire ${roleText}: ${pairText}`);
     }
-    if (navigationFilters.selectedPlayers && navigationFilters.playersFilterMode) {
-      const playersText = navigationFilters.selectedPlayers.join(' & ');
+    if (navigationFilters.multiPlayerFilter) {
+      const { selectedPlayers, playersFilterMode, winnerPlayer } = navigationFilters.multiPlayerFilter;
+      const playersText = selectedPlayers.join(' & ');
       let modeText = '';
-      if (navigationFilters.playersFilterMode === 'all-common-games') {
+      if (playersFilterMode === 'all-common-games') {
         modeText = 'toutes les parties communes';
-      } else if (navigationFilters.playersFilterMode === 'opposing-camps') {
+      } else if (playersFilterMode === 'opposing-camps') {
         modeText = 'affrontements uniquement';
-      } else if (navigationFilters.playersFilterMode === 'same-camp') {
+      } else if (playersFilterMode === 'same-camp') {
         modeText = 'parties en équipe (même camp)';
       }
-      const winnerText = navigationFilters.winnerPlayer ? ` (victoires de ${navigationFilters.winnerPlayer})` : '';
+      const winnerText = winnerPlayer ? ` (victoires de ${winnerPlayer})` : '';
       filters.push(`${playersText} (${modeText}${winnerText})`);
     }
     if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
