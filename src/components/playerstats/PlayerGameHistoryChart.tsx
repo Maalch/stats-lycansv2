@@ -123,6 +123,7 @@ export function PlayerGameHistoryChart() {
       name: camp,
       value: stats.appearances,
       winRate: stats.winRate,
+      winRateDisplay: Math.max(parseFloat(stats.winRate), 1), // Ensure minimum 1% for visibility
       wins: stats.wins,
       percentage: ((stats.appearances / data.totalGames) * 100).toFixed(1)
     }));
@@ -644,6 +645,7 @@ export function PlayerGameHistoryChart() {
                     content={({ active, payload }) => {
                       if (active && payload && payload.length > 0) {
                         const dataPoint = payload[0].payload;
+                        const hasWins = parseFloat(dataPoint.winRate) > 0;
                         return (
                           <div style={{ 
                             background: 'var(--bg-secondary)', 
@@ -663,7 +665,7 @@ export function PlayerGameHistoryChart() {
                               textAlign: 'center',
                               animation: 'pulse 1.5s infinite'
                             }}>
-                              🖱️ Cliquez pour voir les parties
+                              🖱️ Cliquez pour voir {hasWins ? 'les victoires' : 'toutes les parties'}
                             </div>
                           </div>
                         );
@@ -671,11 +673,16 @@ export function PlayerGameHistoryChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="winRate">
+                  <Bar dataKey="winRateDisplay">
                     {campDistributionData.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
-                        fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                        fill={
+                          // Use a dimmed color for camps with 0 wins to indicate they have no victories
+                          parseFloat(entry.winRate) === 0
+                            ? `${lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}50`
+                            : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
+                        }
                         onClick={() => {
                           // Special handling for Traître and Loups camps
                           if (entry.name === 'Traître') {
@@ -683,7 +690,7 @@ export function PlayerGameHistoryChart() {
                               selectedPlayer: selectedPlayerName,
                               campFilter: {
                                 selectedCamp: entry.name,
-                                campFilterMode: 'wins-only',
+                                campFilterMode: parseFloat(entry.winRate) === 0 ? 'all-assignments' : 'wins-only',
                                 excludeTraitor: true
                               },
                               fromComponent: 'Performance par Camp'
@@ -694,7 +701,7 @@ export function PlayerGameHistoryChart() {
                               selectedPlayer: selectedPlayerName,
                               campFilter: {
                                 selectedCamp: entry.name,
-                                campFilterMode: 'wins-only',
+                                campFilterMode: parseFloat(entry.winRate) === 0 ? 'all-assignments' : 'wins-only',
                                 excludeTraitor: true
                               },
                               fromComponent: 'Performance par Camp'
@@ -704,7 +711,7 @@ export function PlayerGameHistoryChart() {
                               selectedPlayer: selectedPlayerName,
                               campFilter: {
                                 selectedCamp: entry.name,
-                                campFilterMode: 'wins-only'
+                                campFilterMode: parseFloat(entry.winRate) === 0 ? 'all-assignments' : 'wins-only'
                               },
                               fromComponent: 'Performance par Camp'
                             });
