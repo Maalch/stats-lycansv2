@@ -30,7 +30,6 @@ export interface PlayerSeriesData {
   longestLoupsSeries: CampSeries[];
   longestWinSeries: WinSeries[];
   totalGamesAnalyzed: number;
-  lastRecordedGameDate: string; // Date of the most recent game
   // Statistics for all players
   averageVillageoisSeries: number;
   averageLoupsSeries: number;
@@ -471,17 +470,11 @@ export function computePlayerSeries(
     }
   });
 
-  // Get the date of the last recorded game (since games are sorted by Game number)
-  const lastRecordedGameDate = sortedGames.length > 0 
-    ? sortedGames[sortedGames.length - 1]?.Date?.toString() || ""
-    : "";
-
   return {
     longestVillageoisSeries,
     longestLoupsSeries,
     longestWinSeries,
     totalGamesAnalyzed: sortedGames.length,
-    lastRecordedGameDate,
     totalPlayersCount: allPlayers.size,
     activeVillageoisCount,
     activeLoupsCount,
