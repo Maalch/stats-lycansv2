@@ -13,27 +13,29 @@ export function PlayerCampPerformanceChart() {
   
   // Use navigationState to restore state, with fallbacks
   const [viewMode, setViewMode] = useState<ViewMode>(
-    navigationState.selectedCampPerformanceView || 'player-performance'
+    navigationState.campPerformanceState?.selectedCampPerformanceView || 'player-performance'
   );
   const [selectedCamp, setSelectedCamp] = useState<string>(
-    navigationState.selectedCampPerformanceCamp || 'Villageois'
+    navigationState.campPerformanceState?.selectedCampPerformanceCamp || 'Villageois'
   );
   const [minGames, setMinGames] = useState<number>(
-    navigationState.selectedCampPerformanceMinGames || 5
+    navigationState.campPerformanceState?.selectedCampPerformanceMinGames || 5
   );
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformanceFromRaw();
 
   // Save initial state to navigation context if not already saved
   useEffect(() => {
-    if (!navigationState.selectedCampPerformanceView) {
+    if (!navigationState.campPerformanceState) {
       updateNavigationState({
-        selectedCampPerformanceView: viewMode,
-        selectedCampPerformanceCamp: selectedCamp,
-        selectedCampPerformanceMinGames: minGames
+        campPerformanceState: {
+          selectedCampPerformanceView: viewMode,
+          selectedCampPerformanceCamp: selectedCamp,
+          selectedCampPerformanceMinGames: minGames
+        }
       });
     }
-  }, [viewMode, selectedCamp, minGames, navigationState.selectedCampPerformanceView, updateNavigationState]);
+  }, [viewMode, selectedCamp, minGames, navigationState.campPerformanceState, updateNavigationState]);
 
   // Get available camps from camp averages
   const availableCamps = useMemo(() => {
@@ -155,7 +157,13 @@ export function PlayerCampPerformanceChart() {
             onChange={(e) => {
               const newViewMode = e.target.value as ViewMode;
               setViewMode(newViewMode);
-              updateNavigationState({ selectedCampPerformanceView: newViewMode });
+              updateNavigationState({ 
+                campPerformanceState: {
+                  selectedCampPerformanceView: newViewMode,
+                  selectedCampPerformanceCamp: selectedCamp,
+                  selectedCampPerformanceMinGames: minGames
+                }
+              });
             }}
             style={{
               background: 'var(--bg-tertiary)',
@@ -183,7 +191,13 @@ export function PlayerCampPerformanceChart() {
               onChange={(e) => {
                 const newCamp = e.target.value;
                 setSelectedCamp(newCamp);
-                updateNavigationState({ selectedCampPerformanceCamp: newCamp });
+                updateNavigationState({ 
+                  campPerformanceState: {
+                    selectedCampPerformanceView: viewMode,
+                    selectedCampPerformanceCamp: newCamp,
+                    selectedCampPerformanceMinGames: minGames
+                  }
+                });
               }}
               style={{
                 background: 'var(--bg-tertiary)',
@@ -215,7 +229,13 @@ export function PlayerCampPerformanceChart() {
               onChange={(e) => {
                 const newMinGames = Number(e.target.value);
                 setMinGames(newMinGames);
-                updateNavigationState({ selectedCampPerformanceMinGames: newMinGames });
+                updateNavigationState({ 
+                  campPerformanceState: {
+                    selectedCampPerformanceView: viewMode,
+                    selectedCampPerformanceCamp: selectedCamp,
+                    selectedCampPerformanceMinGames: newMinGames
+                  }
+                });
               }}
               style={{
                 background: 'var(--bg-tertiary)',

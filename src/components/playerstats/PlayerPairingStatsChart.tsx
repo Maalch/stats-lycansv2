@@ -196,8 +196,10 @@ export function PlayerPairingStatsChart() {
                           fill={`url(#${entry.gradientId})`}
                           onClick={() => {
                             navigateToGameDetails({
-                              selectedPlayerPair: entry.players,
-                              selectedPairRole: 'wolves',
+                              playerPairFilter: {
+                                selectedPlayerPair: entry.players,
+                                selectedPairRole: 'wolves'
+                              },
                               fromComponent: 'Paires de Loups les Plus Fréquentes'
                             });
                           }}
@@ -305,8 +307,10 @@ export function PlayerPairingStatsChart() {
                         fill={`url(#${entry.gradientId})`}
                         onClick={() => {
                           navigateToGameDetails({
-                            selectedPlayerPair: entry.players,
-                            selectedPairRole: 'wolves',
+                            playerPairFilter: {
+                              selectedPlayerPair: entry.players,
+                              selectedPairRole: 'wolves'
+                            },
                             fromComponent: 'Paires de Loups les Plus Performantes'
                           });
                         }}
@@ -426,8 +430,10 @@ export function PlayerPairingStatsChart() {
                         fill={`url(#${entry.gradientId})`}
                         onClick={() => {
                           navigateToGameDetails({
-                            selectedPlayerPair: entry.players,
-                            selectedPairRole: 'lovers',
+                            playerPairFilter: {
+                              selectedPlayerPair: entry.players,
+                              selectedPairRole: 'lovers'
+                            },
                             fromComponent: 'Paires d\'Amoureux les Plus Fréquentes'
                           });
                         }}
@@ -545,8 +551,10 @@ export function PlayerPairingStatsChart() {
                         fill={`url(#${entry.gradientId})`}
                         onClick={() => {
                           navigateToGameDetails({
-                            selectedPlayerPair: entry.players,
-                            selectedPairRole: 'lovers',
+                            playerPairFilter: {
+                              selectedPlayerPair: entry.players,
+                              selectedPairRole: 'lovers'
+                            },
                             fromComponent: 'Paires d\'Amoureux les Plus Performantes'
                           });
                         }}

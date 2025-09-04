@@ -9,21 +9,39 @@ export function PlayerComparisonChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   
   // Use persistent navigation state instead of local state
-  const selectedPlayer1 = navigationState.selectedPlayer1 || '';
-  const selectedPlayer2 = navigationState.selectedPlayer2 || '';
-  const showDetailedStats = navigationState.showDetailedStats || false;
+  const selectedPlayer1 = navigationState.playerComparisonState?.selectedPlayer1 || '';
+  const selectedPlayer2 = navigationState.playerComparisonState?.selectedPlayer2 || '';
+  const showDetailedStats = navigationState.playerComparisonState?.showDetailedStats || false;
 
   // Update functions to use navigation state
   const setSelectedPlayer1 = (player: string) => {
-    updateNavigationState({ selectedPlayer1: player });
+    updateNavigationState({ 
+      playerComparisonState: { 
+        selectedPlayer1: player,
+        selectedPlayer2: selectedPlayer2,
+        showDetailedStats: showDetailedStats
+      }
+    });
   };
 
   const setSelectedPlayer2 = (player: string) => {
-    updateNavigationState({ selectedPlayer2: player });
+    updateNavigationState({ 
+      playerComparisonState: { 
+        selectedPlayer1: selectedPlayer1,
+        selectedPlayer2: player,
+        showDetailedStats: showDetailedStats
+      }
+    });
   };
 
   const setShowDetailedStats = (show: boolean) => {
-    updateNavigationState({ showDetailedStats: show });
+    updateNavigationState({ 
+      playerComparisonState: { 
+        selectedPlayer1: selectedPlayer1,
+        selectedPlayer2: selectedPlayer2,
+        showDetailedStats: show
+      }
+    });
   };
 
   // Generate comparison data when both players are selected
@@ -88,8 +106,10 @@ export function PlayerComparisonChart() {
   const handleCommonGamesClick = () => {
     if (selectedPlayer1 && selectedPlayer2) {
       navigateToGameDetails({
-        selectedPlayers: [selectedPlayer1, selectedPlayer2],
-        playersFilterMode: 'all-common-games',
+        multiPlayerFilter: {
+          selectedPlayers: [selectedPlayer1, selectedPlayer2],
+          playersFilterMode: 'all-common-games'
+        },
         fromComponent: 'Comparaison de Joueurs'
       });
     }
@@ -98,8 +118,10 @@ export function PlayerComparisonChart() {
   const handleOpposingGamesClick = () => {
     if (selectedPlayer1 && selectedPlayer2) {
       navigateToGameDetails({
-        selectedPlayers: [selectedPlayer1, selectedPlayer2],
-        playersFilterMode: 'opposing-camps',
+        multiPlayerFilter: {
+          selectedPlayers: [selectedPlayer1, selectedPlayer2],
+          playersFilterMode: 'opposing-camps'
+        },
         fromComponent: 'Comparaison de Joueurs'
       });
     }
@@ -108,9 +130,11 @@ export function PlayerComparisonChart() {
   const handlePlayerScoreCardClick = (playerName: string) => {
     if (selectedPlayer1 && selectedPlayer2) {
       navigateToGameDetails({
-        selectedPlayers: [selectedPlayer1, selectedPlayer2],
-        playersFilterMode: 'opposing-camps',
-        winnerPlayer: playerName,
+        multiPlayerFilter: {
+          selectedPlayers: [selectedPlayer1, selectedPlayer2],
+          playersFilterMode: 'opposing-camps',
+          winnerPlayer: playerName
+        },
         fromComponent: 'Comparaison de Joueurs'
       });
     }
@@ -119,9 +143,11 @@ export function PlayerComparisonChart() {
   const handleCommonGameVictoryClick = (playerName: string) => {
     if (selectedPlayer1 && selectedPlayer2) {
       navigateToGameDetails({
-        selectedPlayers: [selectedPlayer1, selectedPlayer2],
-        playersFilterMode: 'all-common-games',
-        winnerPlayer: playerName,
+        multiPlayerFilter: {
+          selectedPlayers: [selectedPlayer1, selectedPlayer2],
+          playersFilterMode: 'all-common-games',
+          winnerPlayer: playerName
+        },
         fromComponent: 'Comparaison de Joueurs'
       });
     }
@@ -130,8 +156,10 @@ export function PlayerComparisonChart() {
   const handleSameCampGamesClick = () => {
     if (selectedPlayer1 && selectedPlayer2) {
       navigateToGameDetails({
-        selectedPlayers: [selectedPlayer1, selectedPlayer2],
-        playersFilterMode: 'same-camp',
+        multiPlayerFilter: {
+          selectedPlayers: [selectedPlayer1, selectedPlayer2],
+          playersFilterMode: 'same-camp'
+        },
         fromComponent: 'Comparaison de Joueurs'
       });
     }
@@ -140,9 +168,11 @@ export function PlayerComparisonChart() {
   const handleSameCampWinsClick = () => {
     if (selectedPlayer1 && selectedPlayer2) {
       navigateToGameDetails({
-        selectedPlayers: [selectedPlayer1, selectedPlayer2],
-        playersFilterMode: 'same-camp',
-        winnerPlayer: selectedPlayer1, // Both players are in same camp, so either one works
+        multiPlayerFilter: {
+          selectedPlayers: [selectedPlayer1, selectedPlayer2],
+          playersFilterMode: 'same-camp',
+          winnerPlayer: selectedPlayer1 // Both players are in same camp, so either one works
+        },
         fromComponent: 'Comparaison de Joueurs'
       });
     }

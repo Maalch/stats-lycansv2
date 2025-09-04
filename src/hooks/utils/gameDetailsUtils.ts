@@ -1,5 +1,5 @@
 import type { RawGameData, RawRoleData, RawPonceData } from '../useCombinedRawData';
-import type { NavigationFilters } from '../../context/NavigationContext';
+import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter } from '../../context/NavigationContext';
 import { splitAndTrim } from './dataUtils';
 
 export interface EnrichedGameData {
@@ -374,11 +374,9 @@ function filterByCamp(
 function filterByMultiplePlayers(
   games: RawGameData[],
   roleData: RawRoleData[],
-  selectedPlayers: string[],
-  playersFilterMode?: 'all-common-games' | 'opposing-camps' | 'same-camp',
-  winnerPlayer?: string
+  multiPlayerFilter: MultiPlayerFilter
 ): RawGameData[] {
-  if (!playersFilterMode) return games;
+  const { selectedPlayers, playersFilterMode, winnerPlayer } = multiPlayerFilter;
 
   return games.filter(game => {
     // First check if all selected players are in this game
@@ -494,10 +492,10 @@ function filterByMultiplePlayers(
 function filterByPlayerPair(
   games: RawGameData[],
   roleData: RawRoleData[],
-  selectedPlayerPair: string[],
-  selectedPairRole?: 'wolves' | 'lovers'
+  playerPairFilter: PlayerPairFilter
 ): RawGameData[] {
-  if (!selectedPairRole || selectedPlayerPair.length !== 2) return games;
+  const { selectedPlayerPair, selectedPairRole } = playerPairFilter;
+  if (selectedPlayerPair.length !== 2) return games;
 
   return games.filter(game => {
     // Check if both players are in this game
@@ -588,23 +586,20 @@ export function applyNavigationFilters(
   }
 
   // Apply multi-player filters (for player comparison scenarios)
-  if (filters.selectedPlayers && filters.selectedPlayers.length >= 2) {
+  if (filters.multiPlayerFilter) {
     filteredGames = filterByMultiplePlayers(
       filteredGames, 
       roleData, 
-      filters.selectedPlayers, 
-      filters.playersFilterMode,
-      filters.winnerPlayer
+      filters.multiPlayerFilter
     );
   }
 
   // Apply player pair filters
-  if (filters.selectedPlayerPair && filters.selectedPlayerPair.length === 2) {
+  if (filters.playerPairFilter) {
     filteredGames = filterByPlayerPair(
       filteredGames,
       roleData,
-      filters.selectedPlayerPair,
-      filters.selectedPairRole
+      filters.playerPairFilter
     );
   }
 

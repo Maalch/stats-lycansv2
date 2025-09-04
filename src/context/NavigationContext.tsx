@@ -1,6 +1,17 @@
 import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
+export interface PlayerPairFilter {
+  selectedPlayerPair: string[]; // Array of exactly 2 players (e.g., ["Player1", "Player2"])
+  selectedPairRole: 'wolves' | 'lovers'; // Role the pair played together
+}
+
+export interface MultiPlayerFilter {
+  selectedPlayers: string[]; // For filtering games where all these players participated (comparison scenarios)
+  playersFilterMode: 'all-common-games' | 'opposing-camps' | 'same-camp'; // Mode for multi-player filtering
+  winnerPlayer?: string; // For head-to-head scenarios, specify which player should be the winner
+}
+
 export interface NavigationFilters {
   selectedPlayer?: string;
   selectedGame?: number;
@@ -9,14 +20,25 @@ export interface NavigationFilters {
   selectedDate?: string; // For filtering by specific date (DD/MM/YYYY) or period (MM/YYYY)
   fromComponent?: string; // Track which component triggered the navigation
   _smallCamps?: string[]; // List of small camps for "Autres" category
-  selectedPlayerPair?: string[]; // For filtering by specific player pair (e.g., ["Player1", "Player2"])
-  selectedPairRole?: 'wolves' | 'lovers'; // Role the pair played together
   campFilterMode?: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
   selectedHarvestRange?: string; // For filtering by harvest percentage range (e.g., "0-25%", "26-50%", etc.)
   selectedGameDuration?: number; // For filtering by specific number of days (e.g., 3, 4, 5)
-  selectedPlayers?: string[]; // For filtering games where all these players participated (comparison scenarios)
-  playersFilterMode?: 'all-common-games' | 'opposing-camps' | 'same-camp'; // Mode for multi-player filtering
-  winnerPlayer?: string; // For head-to-head scenarios, specify which player should be the winner
+  
+  // Grouped filters - all properties in each group must be provided together
+  playerPairFilter?: PlayerPairFilter;
+  multiPlayerFilter?: MultiPlayerFilter;
+}
+
+export interface CampPerformanceState {
+  selectedCampPerformanceView: 'player-performance' | 'top-performers';
+  selectedCampPerformanceCamp: string;
+  selectedCampPerformanceMinGames: number;
+}
+
+export interface PlayerComparisonState {
+  selectedPlayer1: string;
+  selectedPlayer2: string;
+  showDetailedStats: boolean;
 }
 
 export interface NavigationState {
@@ -25,14 +47,10 @@ export interface NavigationState {
   groupingMethod?: 'session' | 'month';
   // PlayerPairingStatsChart state
   selectedPairingTab?: 'wolves' | 'lovers';
-  // PlayerCampPerformanceChart state
-  selectedCampPerformanceView?: 'player-performance' | 'top-performers';
-  selectedCampPerformanceCamp?: string;
-  selectedCampPerformanceMinGames?: number;
-  // PlayerComparisonChart state
-  selectedPlayer1?: string;
-  selectedPlayer2?: string;
-  showDetailedStats?: boolean;
+  
+  // Grouped state - all properties in each group must be provided together
+  campPerformanceState?: CampPerformanceState;
+  playerComparisonState?: PlayerComparisonState;
 }
 
 interface NavigationContextType {
