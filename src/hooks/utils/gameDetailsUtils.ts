@@ -201,6 +201,13 @@ function filterByGame(games: RawGameData[], selectedGame: number): RawGameData[]
 }
 
 /**
+ * Filter games by multiple game IDs (for series navigation)
+ */
+function filterByGameIds(games: RawGameData[], selectedGameIds: number[]): RawGameData[] {
+  return games.filter(game => selectedGameIds.includes(game.Game));
+}
+
+/**
  * Filter games by victory type
  */
 function filterByVictoryType(games: RawGameData[], victoryType: string): RawGameData[] {
@@ -588,6 +595,10 @@ export function applyNavigationFilters(
 
   if (filters.selectedGame) {
     filteredGames = filterByGame(filteredGames, filters.selectedGame);
+  }
+
+  if (filters.selectedGameIds) {
+    filteredGames = filterByGameIds(filteredGames, filters.selectedGameIds);
   }
 
   if (filters.campFilter) {
