@@ -16,6 +16,7 @@ export interface CampFilter {
   selectedCamp: string; // The camp to filter by
   campFilterMode: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
   _smallCamps?: string[]; // List of small camps for "Autres" category
+  excludeTraitor?: boolean; // When true, excludes traitor from Loups filtering (for "Loups sans Traître")
 }
 
 export interface NavigationFilters {
