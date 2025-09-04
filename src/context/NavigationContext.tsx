@@ -12,19 +12,24 @@ export interface MultiPlayerFilter {
   winnerPlayer?: string; // For head-to-head scenarios, specify which player should be the winner
 }
 
+export interface CampFilter {
+  selectedCamp: string; // The camp to filter by
+  campFilterMode: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
+  _smallCamps?: string[]; // List of small camps for "Autres" category
+}
+
 export interface NavigationFilters {
   selectedPlayer?: string;
+  selectedPlayerWinMode?: 'wins-only' | 'all-assignments'; // How to filter by selected player: only wins or all assignments
   selectedGame?: number;
-  selectedCamp?: string;
   selectedVictoryType?: string;
   selectedDate?: string; // For filtering by specific date (DD/MM/YYYY) or period (MM/YYYY)
   fromComponent?: string; // Track which component triggered the navigation
-  _smallCamps?: string[]; // List of small camps for "Autres" category
-  campFilterMode?: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
   selectedHarvestRange?: string; // For filtering by harvest percentage range (e.g., "0-25%", "26-50%", etc.)
   selectedGameDuration?: number; // For filtering by specific number of days (e.g., 3, 4, 5)
   
   // Grouped filters - all properties in each group must be provided together
+  campFilter?: CampFilter;
   playerPairFilter?: PlayerPairFilter;
   multiPlayerFilter?: MultiPlayerFilter;
 }

@@ -266,6 +266,7 @@ export function PlayersGeneralStatisticsChart() {
                       onClick={() => {
                         navigateToGameDetails({
                           selectedPlayer: entry.player,
+                          selectedPlayerWinMode: 'wins-only',
                           fromComponent: 'Taux de Victoire'
                         });
                       }} 

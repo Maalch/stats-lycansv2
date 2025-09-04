@@ -106,7 +106,10 @@ export function PlayerCampPerformanceChart() {
     if (data && data.player) {
       navigateToGameDetails({
         selectedPlayer: data.player,
-        selectedCamp: selectedCamp,
+        campFilter: {
+          selectedCamp: selectedCamp,
+          campFilterMode: 'wins-only'
+        },
         fromComponent: `Performance des Joueurs - ${selectedCamp}`
       });
     }
@@ -117,7 +120,10 @@ export function PlayerCampPerformanceChart() {
     if (data && data.player && data.camp) {
       navigateToGameDetails({
         selectedPlayer: data.player,
-        selectedCamp: data.camp,
+        campFilter: {
+          selectedCamp: data.camp,
+          campFilterMode: 'wins-only'
+        },
         fromComponent: `Top 20 des Performances (Min. ${minGames} parties dans ce camp)`
       });
     }
@@ -409,7 +415,10 @@ export function PlayerCampPerformanceChart() {
                         if (data && data.player) {
                           navigateToGameDetails({
                             selectedPlayer: data.player,
-                            selectedCamp: selectedCamp,
+                            campFilter: {
+                              selectedCamp: selectedCamp,
+                              campFilterMode: 'wins-only'
+                            },
                             fromComponent: `Relation Parties Jouées vs Performance - ${selectedCamp}`
                           });
                         }

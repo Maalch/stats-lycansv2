@@ -273,7 +273,7 @@ export function PlayerGameHistoryChart() {
             onClick={() => {
               navigateToGameDetails({
                 selectedPlayer: selectedPlayerName,
-                campFilterMode: 'wins-only',
+                selectedPlayerWinMode: 'wins-only',
                 fromComponent: 'Historique Joueur - Victoires'
               });
             }}
@@ -505,16 +505,20 @@ export function PlayerGameHistoryChart() {
                           const smallCampNames = (entry as any)._details?.map((detail: any) => detail.name) || [];
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
-                            selectedCamp: 'Autres',
-                            // Store the small camps list in a custom field
-                            // @ts-ignore
-                            _smallCamps: smallCampNames,
+                            campFilter: {
+                              selectedCamp: 'Autres',
+                              campFilterMode: 'wins-only',
+                              _smallCamps: smallCampNames
+                            },
                             fromComponent: 'Distribution par Camps'
                           });
                         } else {
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
-                            selectedCamp: entry.name,
+                            campFilter: {
+                              selectedCamp: entry.name,
+                              campFilterMode: 'wins-only'
+                            },
                             fromComponent: 'Distribution par Camps'
                           });
                         }
@@ -653,7 +657,10 @@ export function PlayerGameHistoryChart() {
                         onClick={() => {
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
-                            selectedCamp: entry.name,
+                            campFilter: {
+                              selectedCamp: entry.name,
+                              campFilterMode: 'wins-only'
+                            },
                             fromComponent: 'Performance par Camp'
                           });
                         }}

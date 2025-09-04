@@ -154,7 +154,10 @@ export function PlayerSeriesChart() {
       const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loups';
       navigateToGameDetails({
         selectedPlayer: data.player,
-        selectedCamp: campFilter,
+        campFilter: {
+          selectedCamp: campFilter,
+          campFilterMode: 'wins-only'
+        },
         fromComponent: `Séries ${campFilter}`
       });
     }

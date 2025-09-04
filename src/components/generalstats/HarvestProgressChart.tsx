@@ -167,8 +167,10 @@ export function HarvestProgressChart() {
                     onClick={(data: any) => {
                       if (data && data.camp) {
                         navigateToGameDetails({
-                          selectedCamp: data.camp,
-                          campFilterMode: 'wins-only',
+                          campFilter: {
+                            selectedCamp: data.camp,
+                            campFilterMode: 'wins-only'
+                          },
                           fromComponent: 'Moyenne de Récolte par Camp'
                         });
                       }

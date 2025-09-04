@@ -218,8 +218,10 @@ export function GameDurationInsights() {
                     onClick={(data: any) => {
                       if (data && data.camp) {
                         navigateToGameDetails({
-                          selectedCamp: data.camp,
-                          campFilterMode: 'wins-only',
+                          campFilter: {
+                            selectedCamp: data.camp,
+                            campFilterMode: 'wins-only'
+                          },
                           fromComponent: 'Durée Moyenne par Camp Victorieux'
                         });
                       }
