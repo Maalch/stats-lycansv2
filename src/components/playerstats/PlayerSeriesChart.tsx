@@ -171,28 +171,6 @@ export function PlayerSeriesChart() {
       <p className="lycans-stats-info">
         Basé sur {seriesData.totalGamesAnalyzed} parties analysées
       </p>
-      {seriesData.lastRecordedGameDate && (
-        <div style={{ 
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '8px',
-          padding: '12px',
-          margin: '1rem 0',
-          textAlign: 'center'
-        }}>
-          <p style={{ 
-            fontSize: '0.9rem', 
-            color: 'var(--text-secondary)', 
-            margin: '0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.5rem'
-          }}>
-            📅 <strong>Données à jour jusqu'au :</strong> {seriesData.lastRecordedGameDate}
-          </p>
-        </div>
-      )}
       
       <div className="lycans-section-description">
         <p>

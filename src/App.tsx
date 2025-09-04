@@ -4,6 +4,7 @@ import { SettingsProvider } from './context/SettingsContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { SettingsIndicator } from './components/common/SettingsIndicator';
 import { SettingsBadge } from './components/common/SettingsBadge';
+import { useLastRecordedGameDate } from './hooks/useLastRecordedGameDate';
 import './App.css';
 
 // Lazy load each dashboard section
@@ -141,10 +142,22 @@ export default function App() {
 
 function MainApp() {
   const { currentView } = useNavigation();
+  const { lastRecordedGameDate, isLoading: dateLoading } = useLastRecordedGameDate();
   const [selectedMainTab, setSelectedMainTab] = useState('players');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
+
+  // Helper function to format the subtitle text
+  const getSubtitleText = () => {
+    if (dateLoading) {
+      return "Chargement des données...";
+    }
+    if (lastRecordedGameDate) {
+      return `Données à jour jusqu'au ${lastRecordedGameDate}`;
+    }
+    return "";
+  };
 
   // Listen for hash changes
   useEffect(() => {
@@ -209,7 +222,7 @@ function MainApp() {
           <div className="lycans-dashboard-container">
             <header className="lycans-dashboard-header">
               <h1>Statistiques Lycans</h1>
-              <p>Basées sur les VOD des parties de Ponce uniquement</p>
+              <p>{getSubtitleText()}</p>
             </header>
             <div className="lycans-dashboard-section">
               <SettingsIndicator />
@@ -333,7 +346,7 @@ function MainApp() {
             <div className="lycans-dashboard-container">
               <header className="lycans-dashboard-header">
                 <h1>Statistiques Lycans</h1>
-                <p>Basées sur les VOD des parties de Ponce uniquement</p>
+                <p>{getSubtitleText()}</p>
               </header>
 
               <nav className="lycans-main-menu">
