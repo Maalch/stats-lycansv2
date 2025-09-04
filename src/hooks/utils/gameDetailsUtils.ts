@@ -1,6 +1,6 @@
 import type { RawGameData, RawRoleData, RawPonceData } from '../useCombinedRawData';
-import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter } from '../../context/NavigationContext';
-import { splitAndTrim } from './dataUtils';
+import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
+import { splitAndTrim, didPlayerWin } from './dataUtils';
 
 export interface EnrichedGameData {
   gameId: number;
@@ -165,10 +165,28 @@ function isPlayerInSmallCamp(
 /**
  * Filter games by selected player
  */
-function filterByPlayer(games: RawGameData[], selectedPlayer: string): RawGameData[] {
-  return games.filter(game => 
+function filterByPlayer(
+  games: RawGameData[], 
+  selectedPlayer: string, 
+  winMode?: 'wins-only' | 'all-assignments'
+): RawGameData[] {
+  const playerFilteredGames = games.filter(game => 
     game["Liste des joueurs"].toLowerCase().includes(selectedPlayer.toLowerCase())
   );
+
+  // If no win mode specified, return all games with the player
+  if (!winMode || winMode === 'all-assignments') {
+    return playerFilteredGames;
+  }
+
+  // For 'wins-only' mode, filter to only games where the player won
+  if (winMode === 'wins-only') {
+    return playerFilteredGames.filter(game => 
+      didPlayerWin(selectedPlayer, game["Liste des gagnants"])
+    );
+  }
+
+  return playerFilteredGames;
 }
 
 /**
@@ -250,11 +268,10 @@ function filterByGameDuration(games: RawGameData[], gameDuration: number): RawGa
 function filterByCamp(
   games: RawGameData[],
   roleData: RawRoleData[],
-  selectedCamp: string,
-  selectedPlayer?: string,
-  campFilterMode: 'wins-only' | 'all-assignments' = 'wins-only',
-  smallCamps?: string[]
+  campFilter: CampFilter,
+  selectedPlayer?: string
 ): RawGameData[] {
+  const { selectedCamp, campFilterMode, _smallCamps: smallCamps } = campFilter;
   return games.filter(game => {
     const roleDataForGame = roleData.find(role => role.Game === game.Game);
     if (!roleDataForGame) return false;
@@ -551,21 +568,23 @@ export function applyNavigationFilters(
 
   // Apply filters sequentially
   if (filters.selectedPlayer) {
-    filteredGames = filterByPlayer(filteredGames, filters.selectedPlayer);
+    filteredGames = filterByPlayer(
+      filteredGames, 
+      filters.selectedPlayer, 
+      filters.selectedPlayerWinMode
+    );
   }
 
   if (filters.selectedGame) {
     filteredGames = filterByGame(filteredGames, filters.selectedGame);
   }
 
-  if (filters.selectedCamp) {
+  if (filters.campFilter) {
     filteredGames = filterByCamp(
       filteredGames,
       roleData,
-      filters.selectedCamp,
-      filters.selectedPlayer,
-      filters.campFilterMode,
-      (filters as any)._smallCamps
+      filters.campFilter,
+      filters.selectedPlayer
     );
   }
 

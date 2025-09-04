@@ -147,15 +147,21 @@ export function GameDetailsChart() {
 
   const getFilterSummary = () => {
     const filters = [];
-    if (navigationFilters.selectedPlayer && navigationFilters.selectedCamp) {
-      filters.push(`${navigationFilters.selectedPlayer} jouant ${navigationFilters.selectedCamp}`);
+    if (navigationFilters.selectedPlayer && navigationFilters.campFilter) {
+      const playerWinModeText = navigationFilters.selectedPlayerWinMode === 'wins-only' ? ' (victoires uniquement)' : '';
+      filters.push(`${navigationFilters.selectedPlayer} jouant ${navigationFilters.campFilter.selectedCamp}${playerWinModeText}`);
     } else {
-      if (navigationFilters.selectedPlayer) filters.push(`Joueur: ${navigationFilters.selectedPlayer}`);
-      if (navigationFilters.selectedCamp) {
-        const campFilter = `Camp: ${navigationFilters.selectedCamp}`;
-        const modeText = navigationFilters.campFilterMode === 'wins-only' ? ' (victoires uniquement)' : 
-                         navigationFilters.campFilterMode === 'all-assignments' ? ' (toutes assignations)' : '';
-        filters.push(campFilter + modeText);
+      if (navigationFilters.selectedPlayer) {
+        const playerWinModeText = navigationFilters.selectedPlayerWinMode === 'wins-only' ? ' (victoires uniquement)' : 
+                                 navigationFilters.selectedPlayerWinMode === 'all-assignments' ? ' (toutes parties)' : '';
+        filters.push(`Joueur: ${navigationFilters.selectedPlayer}${playerWinModeText}`);
+      }
+      if (navigationFilters.campFilter) {
+        const { selectedCamp, campFilterMode } = navigationFilters.campFilter;
+        const campFilterText = `Camp: ${selectedCamp}`;
+        const modeText = campFilterMode === 'wins-only' ? ' (victoires uniquement)' : 
+                         campFilterMode === 'all-assignments' ? ' (toutes assignations)' : '';
+        filters.push(campFilterText + modeText);
       }
     }
     if (navigationFilters.playerPairFilter) {

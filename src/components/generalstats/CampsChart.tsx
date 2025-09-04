@@ -140,17 +140,21 @@ export function CampsChart() {
                             // For "Autres", pass the small camps details
                             const smallCamps = (data as any)._details.map((detail: any) => detail.camp);
                             navigateToGameDetails({
-                              selectedCamp: 'Autres',
-                              _smallCamps: smallCamps,
-                              fromComponent: 'Répartition des Victoires par Camp',
-                              campFilterMode: 'wins-only'
+                              campFilter: {
+                                selectedCamp: 'Autres',
+                                campFilterMode: 'wins-only',
+                                _smallCamps: smallCamps
+                              },
+                              fromComponent: 'Répartition des Victoires par Camp'
                             });
                           } else {
                             // For regular camps
                             navigateToGameDetails({
-                              selectedCamp: data.camp,
-                              fromComponent: 'Répartition des Victoires par Camp',
-                              campFilterMode: 'wins-only'
+                              campFilter: {
+                                selectedCamp: data.camp,
+                                campFilterMode: 'wins-only'
+                              },
+                              fromComponent: 'Répartition des Victoires par Camp'
                             });
                           }
                         }
@@ -173,17 +177,21 @@ export function CampsChart() {
                               // For "Autres", pass the small camps details
                               const smallCamps = (entree as any)._details.map((detail: any) => detail.camp);
                               navigateToGameDetails({
-                                selectedCamp: 'Autres',
-                                _smallCamps: smallCamps,
-                                fromComponent: 'Répartition des Victoires par Camp',
-                                campFilterMode: 'wins-only'
+                                campFilter: {
+                                  selectedCamp: 'Autres',
+                                  campFilterMode: 'wins-only',
+                                  _smallCamps: smallCamps
+                                },
+                                fromComponent: 'Répartition des Victoires par Camp'
                               });
                             } else {
                               // For regular camps
                               navigateToGameDetails({
-                                selectedCamp: entree.camp,
-                                fromComponent: 'Répartition des Victoires par Camp',
-                                campFilterMode: 'wins-only'
+                                campFilter: {
+                                  selectedCamp: entree.camp,
+                                  campFilterMode: 'wins-only'
+                                },
+                                fromComponent: 'Répartition des Victoires par Camp'
                               });
                             }
                           }}
@@ -334,9 +342,12 @@ export function CampsChart() {
                         onClick={(data: any) => {
                           if (data && data.camp) {
                             navigateToGameDetails({
-                              selectedCamp: data.camp,
-                              fromComponent: 'Taux de Victoire Moyen par Camp',
-                              campFilterMode: 'all-assignments'
+                              campFilter: {
+                                selectedCamp: data.camp,
+                                campFilterMode: 'all-assignments',
+                                _smallCamps: [] as string[]
+                              },
+                              fromComponent: 'Taux de Victoire Moyen par Camp'
                             });
                           }
                         }}
@@ -348,9 +359,12 @@ export function CampsChart() {
                             fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
                             onClick={() => {
                               navigateToGameDetails({
-                                selectedCamp: entry.camp,
-                                fromComponent: 'Taux de Victoire Moyen par Camp',
-                                campFilterMode: 'all-assignments'
+                                campFilter: {
+                                  selectedCamp: entry.camp,
+                                  campFilterMode: 'all-assignments',
+                                  _smallCamps: [] as string[]
+                                },
+                                fromComponent: 'Taux de Victoire Moyen par Camp'
                               });
                             }}
                             style={{ cursor: 'pointer' }}
@@ -423,9 +437,12 @@ export function CampsChart() {
                         onClick={(data: any) => {
                           if (data && data.camp) {
                             navigateToGameDetails({
-                              selectedCamp: data.camp,
-                              fromComponent: 'Distribution des Parties par Camp',
-                              campFilterMode: 'all-assignments'
+                              campFilter: {
+                                selectedCamp: data.camp,
+                                campFilterMode: 'all-assignments',
+                                _smallCamps: [] as string[]
+                              },
+                              fromComponent: 'Distribution des Parties par Camp'
                             });
                           }
                         }}
@@ -437,9 +454,12 @@ export function CampsChart() {
                             fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
                             onClick={() => {
                               navigateToGameDetails({
-                                selectedCamp: entry.camp,
-                                fromComponent: 'Distribution des Parties par Camp',
-                                campFilterMode: 'all-assignments'
+                                campFilter: {
+                                  selectedCamp: entry.camp,
+                                  campFilterMode: 'all-assignments',
+                                  _smallCamps: [] as string[]
+                                },
+                                fromComponent: 'Distribution des Parties par Camp'
                               });
                             }}
                             style={{ cursor: 'pointer' }}
