@@ -105,21 +105,24 @@ function updateDaysByWolfRatio(
   daysByWolfRatio: Record<string, { totalDays: number; count: number; average: string }>
 ): void {
   if (nbPlayers && nbWolves && !isNaN(nbPlayers) && !isNaN(nbWolves) && nbPlayers > 0) {
-    // Calculate ratio as a percentage
-    const wolfRatioPercent = Math.round((nbWolves / nbPlayers) * 100);
-    // Round to nearest 1% (same as Google Apps Script logic)
-    const roundedWolfRatio = Math.round(wolfRatioPercent / 1) * 1;
-    const wolfRatioKey = roundedWolfRatio.toString(); // e.g., "35" for 35%
+    // Calculate wolves/villagers ratio as a percentage
+    const nbVillagers = nbPlayers - nbWolves;
+    if (nbVillagers > 0) {
+      const wolfRatioPercent = Math.round((nbWolves / nbVillagers) * 100);
+      // Round to nearest 1% 
+      const roundedWolfRatio = Math.round(wolfRatioPercent / 1) * 1;
+      const wolfRatioKey = roundedWolfRatio.toString(); // e.g., "35" for 35%
 
-    if (!daysByWolfRatio[wolfRatioKey]) {
-      daysByWolfRatio[wolfRatioKey] = {
-        totalDays: 0,
-        count: 0,
-        average: '0'
-      };
+      if (!daysByWolfRatio[wolfRatioKey]) {
+        daysByWolfRatio[wolfRatioKey] = {
+          totalDays: 0,
+          count: 0,
+          average: '0'
+        };
+      }
+      daysByWolfRatio[wolfRatioKey].totalDays += nbDays;
+      daysByWolfRatio[wolfRatioKey].count++;
     }
-    daysByWolfRatio[wolfRatioKey].totalDays += nbDays;
-    daysByWolfRatio[wolfRatioKey].count++;
   }
 }
 
