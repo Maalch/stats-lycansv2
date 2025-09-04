@@ -64,22 +64,109 @@ export interface EnrichedGameData {
  * Create YouTube embed URL from timestamps
  */
 function createYouTubeEmbedUrl(start: string | null, end: string | null): string | null {
-  // Implementation depends on your specific YouTube URL logic
-  // This is a placeholder - you'll need to implement based on your existing logic
-  if (!start || !end) return null;
-  // Add your YouTube embed URL creation logic here
-  return null;
+  if (!start) return null;
+  
+  try {
+    // Extract video ID and start timestamp from the start URL
+    const startUrl = new URL(start);
+    let videoId = '';
+    let startTime = 0;
+    
+    // Handle different YouTube URL formats
+    if (startUrl.hostname === 'youtu.be') {
+      // Format: https://youtu.be/VIDEO_ID?t=TIMESTAMP
+      videoId = startUrl.pathname.slice(1); // Remove leading '/'
+      const tParam = startUrl.searchParams.get('t');
+      if (tParam) {
+        startTime = parseInt(tParam, 10) || 0;
+      }
+    } else if (startUrl.hostname === 'www.youtube.com' || startUrl.hostname === 'youtube.com') {
+      // Format: https://www.youtube.com/watch?v=VIDEO_ID&t=TIMESTAMP
+      videoId = startUrl.searchParams.get('v') || '';
+      const tParam = startUrl.searchParams.get('t');
+      if (tParam) {
+        startTime = parseInt(tParam, 10) || 0;
+      }
+    }
+    
+    if (!videoId) return null;
+    
+    // Create embed URL with start time
+    const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTime}`;
+    
+    // If we have an end URL, try to extract the end time
+    if (end) {
+      try {
+        const endUrl = new URL(end);
+        let endTime = 0;
+        
+        if (endUrl.hostname === 'youtu.be') {
+          const tParam = endUrl.searchParams.get('t');
+          if (tParam) {
+            endTime = parseInt(tParam, 10) || 0;
+          }
+        } else if (endUrl.hostname === 'www.youtube.com' || endUrl.hostname === 'youtube.com') {
+          const tParam = endUrl.searchParams.get('t');
+          if (tParam) {
+            endTime = parseInt(tParam, 10) || 0;
+          }
+        }
+        
+        if (endTime > startTime) {
+          return `${embedUrl}&end=${endTime}`;
+        }
+      } catch (endError) {
+        // If end URL parsing fails, just use the start URL
+        console.warn('Failed to parse end URL:', end, endError);
+      }
+    }
+    
+    return embedUrl;
+  } catch (error) {
+    console.warn('Failed to create YouTube embed URL:', start, error);
+    return null;
+  }
 }
 
 /**
  * Calculate game duration from timestamps
  */
 function calculateGameDuration(start: string | null, end: string | null): number | null {
-  // Implementation depends on your specific duration calculation logic
-  // This is a placeholder - you'll need to implement based on your existing logic
   if (!start || !end) return null;
-  // Add your duration calculation logic here
-  return null;
+  
+  try {
+    // Extract timestamps from both URLs
+    const getTimestamp = (url: string): number => {
+      const urlObj = new URL(url);
+      let timestamp = 0;
+      
+      if (urlObj.hostname === 'youtu.be') {
+        const tParam = urlObj.searchParams.get('t');
+        if (tParam) {
+          timestamp = parseInt(tParam, 10) || 0;
+        }
+      } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
+        const tParam = urlObj.searchParams.get('t');
+        if (tParam) {
+          timestamp = parseInt(tParam, 10) || 0;
+        }
+      }
+      
+      return timestamp;
+    };
+    
+    const startTime = getTimestamp(start);
+    const endTime = getTimestamp(end);
+    
+    if (endTime > startTime) {
+      return endTime - startTime; // Duration in seconds
+    }
+    
+    return null;
+  } catch (error) {
+    console.warn('Failed to calculate game duration:', start, end, error);
+    return null;
+  }
 }
 
 /**
