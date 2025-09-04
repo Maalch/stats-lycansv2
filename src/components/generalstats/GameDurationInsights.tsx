@@ -21,8 +21,8 @@ export function GameDurationInsights() {
     return <div className="statistiques-indisponibles">Données d'analyse non disponibles</div>;
   }
 
-  // Préparation des données pour le graphique de ratio loups/joueurs (ratio as number for continuous axis)
-  const ratioLoupsJoueurs = jeuDonnees ? Object.entries(jeuDonnees.daysByWolfRatio).map(([ratio, donnees]) => ({
+  // Préparation des données pour le graphique de ratio loups/villageois (ratio as number for continuous axis)
+  const ratioLoupsVillageois = jeuDonnees ? Object.entries(jeuDonnees.daysByWolfRatio).map(([ratio, donnees]) => ({
     ratio: parseFloat(ratio), // number, not string
     moyenne: parseFloat(donnees.average),
     parties: donnees.count
@@ -117,12 +117,12 @@ export function GameDurationInsights() {
         </div>
 
         <div className="lycans-graphique-element">
-          <h3>Durée Moyenne par Ratio Loups/Joueurs</h3>
-          <FullscreenChart title="Durée Moyenne par Ratio Loups/Joueurs">
+          <h3>Durée Moyenne par Ratio Loups/Villageois</h3>
+          <FullscreenChart title="Durée Moyenne par Ratio Loups/Villageois">
             <div style={{ height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
-                  data={ratioLoupsJoueurs}
+                  data={ratioLoupsVillageois}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
