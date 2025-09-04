@@ -148,12 +148,14 @@ export function PlayerSeriesChart() {
     if (selectedSeriesType === 'wins') {
       navigateToGameDetails({
         selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
         fromComponent: 'Séries de Victoires'
       });
     } else {
       const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loups';
       navigateToGameDetails({
         selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
         campFilter: {
           selectedCamp: campFilter,
           campFilterMode: 'wins-only'

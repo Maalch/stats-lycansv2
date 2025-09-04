@@ -10,6 +10,7 @@ export interface CampSeries {
   startDate: string;
   endDate: string;
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
+  gameIds: number[]; // List of game IDs that comprise this series
 }
 
 export interface WinSeries {
@@ -21,6 +22,7 @@ export interface WinSeries {
   endDate: string;
   campCounts: Record<string, number>; // Count of times each camp was played
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
+  gameIds: number[]; // List of game IDs that comprise this series
 }
 
 export interface PlayerSeriesData {
@@ -60,6 +62,10 @@ interface PlayerSeriesState {
   villageoisSeriesStart: { game: number; date: string } | null;
   loupsSeriesStart: { game: number; date: string } | null;
   winSeriesStart: { game: number; date: string } | null;
+  // Track game IDs for current series
+  currentVillageoisGameIds: number[];
+  currentLoupsGameIds: number[];
+  currentWinGameIds: number[];
 }
 
 /**
@@ -99,7 +105,10 @@ function initializePlayerSeries(allPlayers: Set<string>): Record<string, PlayerS
       lastWon: false,
       villageoisSeriesStart: null,
       loupsSeriesStart: null,
-      winSeriesStart: null
+      winSeriesStart: null,
+      currentVillageoisGameIds: [],
+      currentLoupsGameIds: [],
+      currentWinGameIds: []
     };
   });
   
@@ -121,9 +130,11 @@ function processCampSeries(
     if (mainCamp === 'Villageois') {
       if (playerStats.lastCamp === 'Villageois') {
         playerStats.currentVillageoisSeries++;
+        playerStats.currentVillageoisGameIds.push(gameIdNum);
       } else {
         playerStats.currentVillageoisSeries = 1;
         playerStats.villageoisSeriesStart = { game: gameIdNum, date };
+        playerStats.currentVillageoisGameIds = [gameIdNum];
       }
       
       // Update longest if current is longer
@@ -137,22 +148,26 @@ function processCampSeries(
           endGame: gameIdNum,
           startDate: playerStats.villageoisSeriesStart?.date || date,
           endDate: date,
-          isOngoing: false // Will be updated at the end
+          isOngoing: false, // Will be updated at the end
+          gameIds: [...playerStats.currentVillageoisGameIds]
         };
       }
       
       // Reset Loups series
       playerStats.currentLoupsSeries = 0;
       playerStats.loupsSeriesStart = null;
+      playerStats.currentLoupsGameIds = [];
     }
     
     // Check Loups series
     if (mainCamp === 'Loups') {
       if (playerStats.lastCamp === 'Loups') {
         playerStats.currentLoupsSeries++;
+        playerStats.currentLoupsGameIds.push(gameIdNum);
       } else {
         playerStats.currentLoupsSeries = 1;
         playerStats.loupsSeriesStart = { game: gameIdNum, date };
+        playerStats.currentLoupsGameIds = [gameIdNum];
       }
       
       // Update longest if current is longer
@@ -166,13 +181,15 @@ function processCampSeries(
           endGame: gameIdNum,
           startDate: playerStats.loupsSeriesStart?.date || date,
           endDate: date,
-          isOngoing: false // Will be updated at the end
+          isOngoing: false, // Will be updated at the end
+          gameIds: [...playerStats.currentLoupsGameIds]
         };
       }
       
       // Reset Villageois series
       playerStats.currentVillageoisSeries = 0;
       playerStats.villageoisSeriesStart = null;
+      playerStats.currentVillageoisGameIds = [];
     }
     
     playerStats.lastCamp = mainCamp;
@@ -182,6 +199,8 @@ function processCampSeries(
     playerStats.currentLoupsSeries = 0;
     playerStats.villageoisSeriesStart = null;
     playerStats.loupsSeriesStart = null;
+    playerStats.currentVillageoisGameIds = [];
+    playerStats.currentLoupsGameIds = [];
     playerStats.lastCamp = 'Autres';
   }
 }
@@ -201,10 +220,12 @@ function processWinSeries(
     if (playerStats.lastWon) {
       playerStats.currentWinSeries++;
       playerStats.currentWinCamps.push(actualCamp);
+      playerStats.currentWinGameIds.push(gameIdNum);
     } else {
       playerStats.currentWinSeries = 1;
       playerStats.currentWinCamps = [actualCamp];
       playerStats.winSeriesStart = { game: gameIdNum, date };
+      playerStats.currentWinGameIds = [gameIdNum];
     }
     
     // Update longest win series if current is longer
@@ -225,7 +246,8 @@ function processWinSeries(
         startDate: playerStats.winSeriesStart?.date || date,
         endDate: date,
         campCounts: campCounts,
-        isOngoing: false // Will be updated at the end
+        isOngoing: false, // Will be updated at the end
+        gameIds: [...playerStats.currentWinGameIds]
       };
     }
     
@@ -235,6 +257,7 @@ function processWinSeries(
     playerStats.currentWinSeries = 0;
     playerStats.currentWinCamps = [];
     playerStats.winSeriesStart = null;
+    playerStats.currentWinGameIds = [];
     playerStats.lastWon = false;
   }
 }

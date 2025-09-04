@@ -28,6 +28,7 @@ export interface NavigationFilters {
   fromComponent?: string; // Track which component triggered the navigation
   selectedHarvestRange?: string; // For filtering by harvest percentage range (e.g., "0-25%", "26-50%", etc.)
   selectedGameDuration?: number; // For filtering by specific number of days (e.g., 3, 4, 5)
+  selectedGameIds?: number[]; // For filtering by a specific list of game IDs (e.g., from player series)
   
   // Grouped filters - all properties in each group must be provided together
   campFilter?: CampFilter;

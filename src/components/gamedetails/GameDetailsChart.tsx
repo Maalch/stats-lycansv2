@@ -200,6 +200,9 @@ export function GameDetailsChart() {
         filters.push(`Date: ${navigationFilters.selectedDate}`);
       }
     }
+    if (navigationFilters.selectedGameIds && navigationFilters.selectedGameIds.length > 0) {
+      filters.push(`${navigationFilters.selectedGameIds.length} parties sélectionnée${navigationFilters.selectedGameIds.length > 1 ? 's' : ''}`);
+    }
     return filters;
   };
 
