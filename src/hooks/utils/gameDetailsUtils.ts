@@ -87,13 +87,17 @@ function calculateGameDuration(start: string | null, end: string | null): number
  */
 export function getPlayerCampFromRoles(
   playerName: string, 
-  roleData: RawRoleData
+  roleData: RawRoleData,
+  excludeTraitor: boolean = false
 ): string {
   const player = playerName.toLowerCase();
   
   // Check each role type
   if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loups';
-  if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) return 'Loups';
+  if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) {
+    if (excludeTraitor) return 'Traître'; // Return Traître if we want to exclude traitor from Loups
+    return 'Loups';
+  }
   if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(player)) return 'Idiot du Village';
   if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
   if (roleData.Agent && roleData.Agent.toLowerCase().includes(player)) return 'Agent';
@@ -271,7 +275,7 @@ function filterByCamp(
   campFilter: CampFilter,
   selectedPlayer?: string
 ): RawGameData[] {
-  const { selectedCamp, campFilterMode, _smallCamps: smallCamps } = campFilter;
+  const { selectedCamp, campFilterMode, _smallCamps: smallCamps, excludeTraitor } = campFilter;
   return games.filter(game => {
     const roleDataForGame = roleData.find(role => role.Game === game.Game);
     if (!roleDataForGame) return false;
@@ -285,7 +289,14 @@ function filterByCamp(
       }
 
       // Check specific camp for specific player
-      const playerCamp = getPlayerCampFromRoles(selectedPlayer, roleDataForGame);
+      const playerCamp = getPlayerCampFromRoles(selectedPlayer, roleDataForGame, excludeTraitor);
+      
+      // Special handling for "Loups" with excludeTraitor flag
+      if (selectedCamp === 'Loups' && excludeTraitor) {
+        // Only include games where player was a regular wolf (not traitor)
+        return playerCamp === 'Loups' && 
+               !(roleDataForGame.Traître && roleDataForGame.Traître.toLowerCase().includes(selectedPlayer.toLowerCase()));
+      }
       
       // Special handling for Agent camp: when filtering by Agent camp wins, 
       // check if the specific player is in the winners list

@@ -512,6 +512,28 @@ export function PlayerGameHistoryChart() {
                             },
                             fromComponent: 'Distribution par Camps'
                           });
+                        } else if (entry.name === 'Traître') {
+                          // Special handling for Traître camp, add excludeTraitor flag
+                          navigateToGameDetails({
+                            selectedPlayer: selectedPlayerName,
+                            campFilter: {
+                              selectedCamp: 'Traître',
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: true
+                            },
+                            fromComponent: 'Distribution par Camps'
+                          });
+                        } else if (entry.name === 'Loups') {
+                          // When clicking on Loups, exclude traitor games to show only regular wolf games
+                          navigateToGameDetails({
+                            selectedPlayer: selectedPlayerName,
+                            campFilter: {
+                              selectedCamp: 'Loups',
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: true
+                            },
+                            fromComponent: 'Distribution par Camps'
+                          });
                         } else {
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
@@ -655,14 +677,38 @@ export function PlayerGameHistoryChart() {
                         key={`cell-${index}`} 
                         fill={lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
                         onClick={() => {
-                          navigateToGameDetails({
-                            selectedPlayer: selectedPlayerName,
-                            campFilter: {
-                              selectedCamp: entry.name,
-                              campFilterMode: 'wins-only'
-                            },
-                            fromComponent: 'Performance par Camp'
-                          });
+                          // Special handling for Traître and Loups camps
+                          if (entry.name === 'Traître') {
+                            navigateToGameDetails({
+                              selectedPlayer: selectedPlayerName,
+                              campFilter: {
+                                selectedCamp: entry.name,
+                                campFilterMode: 'wins-only',
+                                excludeTraitor: true
+                              },
+                              fromComponent: 'Performance par Camp'
+                            });
+                          } else if (entry.name === 'Loups') {
+                            // When clicking on Loups, exclude traitor games to show only regular wolf games
+                            navigateToGameDetails({
+                              selectedPlayer: selectedPlayerName,
+                              campFilter: {
+                                selectedCamp: entry.name,
+                                campFilterMode: 'wins-only',
+                                excludeTraitor: true
+                              },
+                              fromComponent: 'Performance par Camp'
+                            });
+                          } else {
+                            navigateToGameDetails({
+                              selectedPlayer: selectedPlayerName,
+                              campFilter: {
+                                selectedCamp: entry.name,
+                                campFilterMode: 'wins-only'
+                              },
+                              fromComponent: 'Performance par Camp'
+                            });
+                          }
                         }}
                         style={{ cursor: 'pointer' }}
                       />
