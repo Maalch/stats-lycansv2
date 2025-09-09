@@ -274,7 +274,49 @@
   color: var(--text-primary, #495057);
 }
 
-/* Player selection grid */
+/* Nested settings group for date range inputs */
+.settings-nested-group {
+  margin-top: 1rem;
+  margin-left: 2rem;
+  padding: 1rem;
+  background: var(--bg-tertiary, #f8f9fa);
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #e0e0e0);
+}
+
+.settings-date-inputs {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.settings-date-label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+.settings-date-input {
+  margin-top: 4px;
+  font-size: 1rem;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: var(--bg-primary, white);
+  color: var(--text-primary, #333);
+}
+
+.settings-date-separator {
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
+.settings-explanation {
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary, #6c757d);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
 .settings-player-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
