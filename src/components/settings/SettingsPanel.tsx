@@ -255,6 +255,9 @@ export function SettingsPanel() {
 
           <div className="settings-group">
             <h4>Mode de Filtrage</h4>
+            <p className="settings-explanation">
+              Choisissez le type de filtre principal à appliquer aux données :
+            </p>
             <div className="settings-radio-group" style={{ flexDirection: 'row', gap: '2rem' }}>
               <label className="settings-radio">
                 <input
@@ -266,7 +269,8 @@ export function SettingsPanel() {
                 />
                 <span className="radio-mark"></span>
                 <span className="settings-radio-content">
-                  Par type de partie
+                  Filtrer par type de partie
+                  <small>Sélectionner selon le type de jeu (moddé/standard)</small>
                 </span>
               </label>
               <label className="settings-radio">
@@ -279,7 +283,8 @@ export function SettingsPanel() {
                 />
                 <span className="radio-mark"></span>
                 <span className="settings-radio-content">
-                  Par plage de dates
+                  Filtrer par période
+                  <small>Sélectionner selon une plage de dates</small>
                 </span>
               </label>
             </div>
@@ -287,7 +292,7 @@ export function SettingsPanel() {
 
           {settings.filterMode === 'gameType' && (
             <div className="settings-group">
-              <h4>Filtres de Parties</h4>
+              <h4>Filtres de Type de Partie</h4>
               <div className="settings-radio-group">
                 <label className="settings-radio">
                   <input
@@ -299,8 +304,8 @@ export function SettingsPanel() {
                   />
                   <span className="radio-mark"></span>
                   <span className="settings-radio-content">
-                    Toutes les parties
-                    <small>Affiche toutes les parties disponibles</small>
+                    Tous les types de parties
+                    <small>Inclut toutes les parties, moddées et non-moddées</small>
                   </span>
                 </label>
                 <label className="settings-radio">
@@ -337,33 +342,82 @@ export function SettingsPanel() {
 
           {settings.filterMode === 'dateRange' && (
             <div className="settings-group">
-              <h4>Plage de dates</h4>
-              <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                <label style={{ display: 'flex', flexDirection: 'column', fontWeight: 500 }}>
-                  Début
+              <h4>Filtres de Dates</h4>
+              <div className="settings-radio-group">
+                <label className="settings-radio">
                   <input
-                    type="date"
-                    value={settings.dateRange.start || ''}
-                    onChange={e => handleDateChange('start', e.target.value)}
-                    style={{ marginTop: 4, fontSize: '1rem', padding: '4px 8px', borderRadius: 4, border: '1px solid #ccc' }}
-                    max={settings.dateRange.end || undefined}
+                    type="radio"
+                    name="dateFilter"
+                    value="all"
+                    checked={!settings.dateRange.start && !settings.dateRange.end}
+                    onChange={() => {
+                      updateSettings({ dateRange: { start: null, end: null } });
+                    }}
                   />
+                  <span className="radio-mark"></span>
+                  <span className="settings-radio-content">
+                    Toutes les dates
+                    <small>Affiche toutes les parties sans restriction de date</small>
+                  </span>
                 </label>
-                <span style={{ fontWeight: 600 }}>—</span>
-                <label style={{ display: 'flex', flexDirection: 'column', fontWeight: 500 }}>
-                  Fin
+                <label className="settings-radio">
                   <input
-                    type="date"
-                    value={settings.dateRange.end || ''}
-                    onChange={e => handleDateChange('end', e.target.value)}
-                    style={{ marginTop: 4, fontSize: '1rem', padding: '4px 8px', borderRadius: 4, border: '1px solid #ccc' }}
-                    min={settings.dateRange.start || undefined}
+                    type="radio"
+                    name="dateFilter"
+                    value="custom"
+                    checked={!!(settings.dateRange.start || settings.dateRange.end)}
+                    onChange={() => {
+                      // When selecting custom range, set a default range if none exists
+                      if (!settings.dateRange.start && !settings.dateRange.end) {
+                        const today = new Date();
+                        const oneMonthAgo = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+                        updateSettings({ 
+                          dateRange: { 
+                            start: oneMonthAgo.toISOString().split('T')[0], 
+                            end: today.toISOString().split('T')[0] 
+                          } 
+                        });
+                      }
+                    }}
                   />
+                  <span className="radio-mark"></span>
+                  <span className="settings-radio-content">
+                    Plage de dates personnalisée
+                    <small>Définir une période spécifique à analyser</small>
+                  </span>
                 </label>
               </div>
-              <small style={{ color: 'var(--text-secondary, #6c757d)', marginTop: 8, display: 'block' }}>
-                Affiche uniquement les parties comprises dans la plage de dates sélectionnée.
-              </small>
+              
+              {(settings.dateRange.start || settings.dateRange.end) && (
+                <div className="settings-nested-group">
+                  <div className="settings-date-inputs">
+                    <label className="settings-date-label">
+                      Date de début
+                      <input
+                        type="date"
+                        value={settings.dateRange.start || ''}
+                        onChange={e => handleDateChange('start', e.target.value)}
+                        className="settings-date-input"
+                        max={settings.dateRange.end || undefined}
+                      />
+                    </label>
+                    <span className="settings-date-separator">—</span>
+                    <label className="settings-date-label">
+                      Date de fin
+                      <input
+                        type="date"
+                        value={settings.dateRange.end || ''}
+                        onChange={e => handleDateChange('end', e.target.value)}
+                        className="settings-date-input"
+                        min={settings.dateRange.start || undefined}
+                      />
+                    </label>
+                  </div>
+                  <small style={{ color: 'var(--text-secondary, #6c757d)', marginTop: 8, display: 'block' }}>
+                    Laissez vide pour ne pas limiter le début ou la fin de la période.
+                  </small>
+                </div>
+              )}
             </div>
           )}
         </div>
