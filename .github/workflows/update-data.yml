@@ -2,8 +2,10 @@ name: Update Lycans Stats Data
 
 on:
   schedule:
-    # Run weekly on Saturday at 4 AM UTC
-    - cron: '0 4 * * 6'
+    # Run on Monday at 4 AM UTC
+    - cron: '0 4 * * 1'
+    # Run on Tuesday at 4 AM UTC
+    - cron: '0 4 * * 2'
   workflow_dispatch: # Allow manual triggering
   push:
     paths:
@@ -76,6 +78,11 @@ jobs:
           done
           
           echo "✅ All data files validated successfully"
+
+      - name: Copy data to docs folder
+        run: |
+          mkdir -p docs/data
+          cp -r data/* docs/data/
 
       - name: Commit and push if changes
         run: |
