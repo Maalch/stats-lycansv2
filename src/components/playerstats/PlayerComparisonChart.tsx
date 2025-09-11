@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { usePlayerComparisonFromRaw } from '../../hooks/usePlayerComparisonFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { playersColor } from '../../types/api';
+import { playersColor, lycansColorScheme } from '../../types/api';
 
 export function PlayerComparisonChart() {
   const { availablePlayers, generateComparison, isLoading, error } = usePlayerComparisonFromRaw();
@@ -172,6 +172,39 @@ export function PlayerComparisonChart() {
           selectedPlayers: [selectedPlayer1, selectedPlayer2],
           playersFilterMode: 'same-camp',
           winnerPlayer: selectedPlayer1 // Both players are in same camp, so either one works
+        },
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handleSameLoupsGamesClick = () => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        multiPlayerFilter: {
+          selectedPlayers: [selectedPlayer1, selectedPlayer2],
+          playersFilterMode: 'same-camp'
+        },
+        campFilter: {
+          selectedCamp: 'Loups',
+          campFilterMode: 'all-assignments'
+        },
+        fromComponent: 'Comparaison de Joueurs'
+      });
+    }
+  };
+
+  const handleSameLoupsWinsClick = () => {
+    if (selectedPlayer1 && selectedPlayer2) {
+      navigateToGameDetails({
+        multiPlayerFilter: {
+          selectedPlayers: [selectedPlayer1, selectedPlayer2],
+          playersFilterMode: 'same-camp',
+          winnerPlayer: selectedPlayer1 // Both players are in same camp, so either one works
+        },
+        campFilter: {
+          selectedCamp: 'Loups',
+          campFilterMode: 'wins-only'
         },
         fromComponent: 'Comparaison de Joueurs'
       });
@@ -516,6 +549,46 @@ export function PlayerComparisonChart() {
                   <div className="lycans-h2h-metric">
                     <span className="lycans-h2h-label">Durée moyenne:</span>
                     <span className="lycans-h2h-value">{comparisonData.headToHeadStats.averageSameCampDuration}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Loups Team Statistics */}
+            {comparisonData.headToHeadStats.sameLoupsGames > 0 && (
+              <div className="lycans-h2h-section">
+                <h4>🐺 Parties en équipe (Loups)</h4>
+                <div className="lycans-h2h-summary">
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Parties en équipe (Loups):</span>
+                    <span 
+                      className="lycans-h2h-value lycans-clickable"
+                      onClick={handleSameLoupsGamesClick}
+                      title="Cliquer pour voir toutes les parties où ils étaient ensemble dans l'équipe des Loups"
+                    >
+                      {comparisonData.headToHeadStats.sameLoupsGames}
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Victoires d'équipe (Loups):</span>
+                    <span 
+                      className="lycans-h2h-value lycans-clickable" 
+                      style={{ color: lycansColorScheme['Loups'] }}
+                      onClick={handleSameLoupsWinsClick}
+                      title="Cliquer pour voir les victoires quand ils étaient ensemble dans l'équipe des Loups"
+                    >
+                      {comparisonData.headToHeadStats.sameLoupsWins}
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Taux de réussite (Loups):</span>
+                    <span className="lycans-h2h-value" style={{ color: lycansColorScheme['Loups'] }}>
+                      {((comparisonData.headToHeadStats.sameLoupsWins / comparisonData.headToHeadStats.sameLoupsGames) * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">Durée moyenne (Loups):</span>
+                    <span className="lycans-h2h-value">{comparisonData.headToHeadStats.averageSameLoupsDuration}</span>
                   </div>
                 </div>
               </div>
