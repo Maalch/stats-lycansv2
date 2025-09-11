@@ -496,7 +496,8 @@ function filterByCamp(
 function filterByMultiplePlayers(
   games: RawGameData[],
   roleData: RawRoleData[],
-  multiPlayerFilter: MultiPlayerFilter
+  multiPlayerFilter: MultiPlayerFilter,
+  campFilter?: CampFilter
 ): RawGameData[] {
   const { selectedPlayers, playersFilterMode, winnerPlayer } = multiPlayerFilter;
 
@@ -582,9 +583,37 @@ function filterByMultiplePlayers(
         
         if (!areInSameCamp) return false;
         
+        const sameCamp = normalizedCampsForSame[0];
+        
+        // If campFilter is specified, ensure the shared camp matches the required camp
+        if (campFilter && campFilter.selectedCamp) {
+          const requiredCamp = campFilter.selectedCamp;
+          
+          // Handle "Loups sans Traître" case
+          if (requiredCamp === 'Loups' && campFilter.excludeTraitor) {
+            // Ensure all players are regular wolves (not traitors)
+            const areAllRegularWolves = selectedPlayers.every(player => {
+              const originalCamp = playerCamps[selectedPlayers.indexOf(player)];
+              return originalCamp === 'Loups'; // They should be Loups, and we'll check they're not traitors below
+            });
+            if (!areAllRegularWolves) return false;
+            
+            // Also check that none of the players are traitors in the role data
+            const hasTraitor = selectedPlayers.some(player => {
+              const traitors = splitAndTrim(roleDataForGame.Traître || '');
+              return traitors.some(traitor => 
+                traitor.toLowerCase() === player.toLowerCase()
+              );
+            });
+            if (hasTraitor) return false;
+          }
+          
+          // Ensure the shared camp matches the required camp
+          if (sameCamp !== requiredCamp) return false;
+        }
+        
         // If winnerPlayer is specified, check if their camp won
         if (winnerPlayer) {
-          const sameCamp = normalizedCampsForSame[0];
           const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loups' : game["Camp victorieux"];
           
           // Special handling for Agent camp - both players need to be winners for Agent camp
@@ -718,7 +747,8 @@ export function applyNavigationFilters(
     filteredGames = filterByMultiplePlayers(
       filteredGames, 
       roleData, 
-      filters.multiPlayerFilter
+      filters.multiPlayerFilter,
+      filters.campFilter
     );
   }
 
