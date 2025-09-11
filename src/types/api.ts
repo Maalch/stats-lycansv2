@@ -159,25 +159,27 @@ export interface HarvestStatsResponse {
 }
 
 // Game Duration Analysis Types
-export interface DayDistribution {
-  days: number;
+export interface DurationDistribution {
+  duration: number; // Duration in seconds
   count: number;
 }
 
-export interface CampDaysData {
-  totalDays: number;
+export interface CampDurationData {
+  totalDuration: number; // Total duration in seconds
   count: number;
-  average: string;
+  average: string; // Formatted average duration
 }
 
 export interface GameDurationAnalysisResponse {
-  averageDays: string;
-  maxDays: number;
-  minDays: number;
-  dayDistribution: DayDistribution[];
-  daysByWinnerCamp: Record<string, CampDaysData>;
-  daysByPlayerCount: Record<string, CampDaysData>;
-  daysByWolfRatio: Record<string, CampDaysData>;
+  averageDuration: string; // Formatted average duration
+  maxDuration: number; // Max duration in seconds
+  minDuration: number; // Min duration in seconds
+  maxDurationGameId: number | null; // Game ID with maximum duration
+  minDurationGameId: number | null; // Game ID with minimum duration
+  durationDistribution: DurationDistribution[];
+  durationsByWinnerCamp: Record<string, CampDurationData>;
+  durationsByPlayerCount: Record<string, CampDurationData>;
+  durationsByWolfRatio: Record<string, CampDurationData>;
   error?: string;
 }
 
