@@ -186,6 +186,7 @@ export interface GameDurationAnalysisResponse {
 export interface CampAverage {
   camp: string;
   totalGames: number;
+  wins: number;
   winRate: string;
 }
 
