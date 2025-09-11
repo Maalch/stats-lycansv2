@@ -49,6 +49,10 @@ export interface PlayerComparisonData {
     sameCampGames: number;
     sameCampWins: number;
     averageSameCampDuration: string;
+    // Loups team specific statistics
+    sameLoupsGames: number;
+    sameLoupsWins: number;
+    averageSameLoupsDuration: string;
   };
 }
 
@@ -318,17 +322,21 @@ export function generatePlayerComparison(
   const commonGames: any[] = [];
   const opposingCampGames: any[] = [];
   const sameCampGames: any[] = [];
+  const sameLoupsGames: any[] = [];
   let player1CommonWins = 0;
   let player2CommonWins = 0;
   let player1OpposingWins = 0;
   let player2OpposingWins = 0;
   let sameCampWins = 0;
+  let sameLoupsWins = 0;
   let totalGameDurationSeconds = 0;
   let gamesWithDuration = 0;
   let totalOpposingGameDurationSeconds = 0;
   let opposingGamesWithDuration = 0;
   let totalSameCampDurationSeconds = 0;
   let sameCampGamesWithDuration = 0;
+  let totalSameLoupsDurationSeconds = 0;
+  let sameLoupsGamesWithDuration = 0;
 
   rawGameData.forEach(game => {
     const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
@@ -420,6 +428,12 @@ export function generatePlayerComparison(
         // Same camp affiliation (only possible for Loups+Traître or same exact role)
         sameCampGames.push(game);
         
+        // Check if both are specifically in the Loups team
+        const isBothLoupsTeam = player1MainCamp === 'Loups';
+        if (isBothLoupsTeam) {
+          sameLoupsGames.push(game);
+        }
+        
         // Handle Agent camp wins correctly in same camp (both agents, but only one can win)
         if (winnerCamp === "Agent") {
           const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
@@ -429,7 +443,12 @@ export function generatePlayerComparison(
             sameCampWins++;
           }
         } else {
-          if (didCampWin(player1Camp, winnerCamp)) sameCampWins++;
+          if (didCampWin(player1Camp, winnerCamp)) {
+            sameCampWins++;
+            if (isBothLoupsTeam) {
+              sameLoupsWins++;
+            }
+          }
         }
         
         if (game["Début"] && game["Fin"]) {
@@ -437,6 +456,10 @@ export function generatePlayerComparison(
           if (duration) {
             totalSameCampDurationSeconds += duration;
             sameCampGamesWithDuration++;
+            if (isBothLoupsTeam) {
+              totalSameLoupsDurationSeconds += duration;
+              sameLoupsGamesWithDuration++;
+            }
           }
         }
       }
@@ -511,6 +534,11 @@ export function generatePlayerComparison(
       sameCampWins: sameCampWins,
       averageSameCampDuration: sameCampGamesWithDuration > 0 
         ? formatDuration(totalSameCampDurationSeconds / sameCampGamesWithDuration)
+        : "N/A",
+      sameLoupsGames: sameLoupsGames.length,
+      sameLoupsWins: sameLoupsWins,
+      averageSameLoupsDuration: sameLoupsGamesWithDuration > 0 
+        ? formatDuration(totalSameLoupsDurationSeconds / sameLoupsGamesWithDuration)
         : "N/A"
     }
   };
