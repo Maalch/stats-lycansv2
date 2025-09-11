@@ -8,7 +8,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 export function PlayerSeriesChart() {
   const { data: seriesData, isLoading: dataLoading, error: fetchError } = usePlayerSeriesFromRaw();
   const { navigateToGameDetails } = useNavigation();
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loups' | 'wins'>('villageois');
+  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loups' | 'wins' | 'losses'>('villageois');
   const chartRef = useRef<HTMLDivElement>(null);
 
   if (dataLoading) {
@@ -30,6 +30,8 @@ export function PlayerSeriesChart() {
         return seriesData.longestLoupsSeries.slice(0, 20);
       case 'wins':
         return seriesData.longestWinSeries.slice(0, 20);
+      case 'losses':
+        return seriesData.longestLossSeries.slice(0, 20);
       default:
         return [];
     }
@@ -52,6 +54,8 @@ export function PlayerSeriesChart() {
         return 'Plus Longues Séries Loups Consécutives';
       case 'wins':
         return 'Plus Longues Séries de Victoires';
+      case 'losses':
+        return 'Plus Longues Séries de Défaites';
       default:
         return '';
     }
@@ -76,6 +80,46 @@ export function PlayerSeriesChart() {
             {data.isOngoing && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
           </div>
           <div>Série de victoires : {data.seriesLength} parties {data.isOngoing ? '(En cours)' : ''}</div>
+          <div>Du jeu #{data.startGame} au jeu #{data.endGame}</div>
+          <div>Du {data.startDate} au {data.endDate}</div>
+          <div>Camps joués : {formatCampCounts(data.campCounts)}</div>
+          {data.isOngoing && (
+            <div style={{ 
+              fontSize: '0.8rem', 
+              color: '#FF8C00', 
+              marginTop: '0.5rem',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+              🔥 Série en cours - Aucun jeu depuis !
+            </div>
+          )}
+          <div style={{ 
+            fontSize: '0.8rem', 
+            color: 'var(--accent-primary)', 
+            marginTop: '0.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'pulse 1.5s infinite'
+          }}>
+            🖱️ Cliquez pour voir les parties
+          </div>
+        </div>
+      );
+    } else if (selectedSeriesType === 'losses') {
+      return (
+        <div style={{ 
+          background: 'var(--bg-secondary)', 
+          color: 'var(--text-primary)', 
+          padding: 12, 
+          borderRadius: 6,
+          border: '1px solid var(--border-color)'
+        }}>
+          <div>
+            <strong>{data.player}</strong>
+            {data.isOngoing && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
+          </div>
+          <div>Série de défaites : {data.seriesLength} parties {data.isOngoing ? '(En cours)' : ''}</div>
           <div>Du jeu #{data.startGame} au jeu #{data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
           <div>Camps joués : {formatCampCounts(data.campCounts)}</div>
@@ -151,6 +195,12 @@ export function PlayerSeriesChart() {
         selectedGameIds: data.gameIds,
         fromComponent: 'Séries de Victoires'
       });
+    } else if (selectedSeriesType === 'losses') {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
+        fromComponent: 'Séries de Défaites'
+      });
     } else {
       const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loups';
       navigateToGameDetails({
@@ -178,6 +228,8 @@ export function PlayerSeriesChart() {
           Jouer dans n'importe quel autre camp brise la série.<br/>
           <strong>Séries de victoires :</strong> Victoires consécutives dans n'importe quel camp. 
           Une défaite brise la série.<br/>
+          <strong>Séries de défaites :</strong> Défaites consécutives dans n'importe quel camp. 
+          Une victoire brise la série.<br/>
           <strong>🔥 Séries en cours :</strong> Les séries avec l'effet de flamme sont encore actives
         </p>
       </div>
@@ -202,6 +254,12 @@ export function PlayerSeriesChart() {
         >
           Séries de Victoires
         </button>
+        <button
+          className={`lycans-categorie-btn ${selectedSeriesType === 'losses' ? 'active' : ''}`}
+          onClick={() => setSelectedSeriesType('losses')}
+        >
+          Séries de Défaites
+        </button>
       </div>
 
       <div className="lycans-graphique-section">
@@ -222,7 +280,9 @@ export function PlayerSeriesChart() {
                 />
                 <YAxis 
                   label={{ 
-                    value: selectedSeriesType === 'wins' ? 'Victoires consécutives' : 'Parties consécutives', 
+                    value: selectedSeriesType === 'wins' ? 'Victoires consécutives' : 
+                           selectedSeriesType === 'losses' ? 'Défaites consécutives' : 
+                           'Parties consécutives', 
                     angle: -90, 
                     position: 'insideLeft' 
                   }} 
@@ -230,13 +290,22 @@ export function PlayerSeriesChart() {
                 <Tooltip content={getTooltipContent} />
                 <Bar
                   dataKey="seriesLength"
-                  name={selectedSeriesType === 'wins' ? 'Victoires consécutives' : 'Parties consécutives'}
-                  fill={selectedSeriesType === 'villageois' ? '#82ca9d' : selectedSeriesType === 'loups' ? '#FF8042' : '#8884d8'}
+                  name={selectedSeriesType === 'wins' ? 'Victoires consécutives' : 
+                       selectedSeriesType === 'losses' ? 'Défaites consécutives' : 
+                       'Parties consécutives'}
+                  fill={selectedSeriesType === 'villageois' ? '#82ca9d' : 
+                       selectedSeriesType === 'loups' ? '#FF8042' : 
+                       selectedSeriesType === 'wins' ? '#8884d8' : 
+                       '#dc3545'}
                 >
                   {currentData.map((entry, index) => (
                     <Cell
                       key={`cell-${selectedSeriesType}-${index}`}
-                      fill={playersColor[entry.player] || (selectedSeriesType === 'villageois' ? '#82ca9d' : selectedSeriesType === 'loups' ? '#FF8042' : '#8884d8')}
+                      fill={playersColor[entry.player] || 
+                           (selectedSeriesType === 'villageois' ? '#82ca9d' : 
+                            selectedSeriesType === 'loups' ? '#FF8042' : 
+                            selectedSeriesType === 'wins' ? '#8884d8' : 
+                            '#dc3545')}
                       onClick={() => handleBarClick(entry)}
                       style={{ cursor: 'pointer' }}
                       className={entry.isOngoing ? 'lycans-ongoing-series' : ''}
@@ -276,7 +345,8 @@ export function PlayerSeriesChart() {
               <div className="lycans-stat-value">
                 {selectedSeriesType === 'villageois' ? seriesData.averageVillageoisSeries :
                  selectedSeriesType === 'loups' ? seriesData.averageLoupsSeries :
-                 seriesData.averageWinSeries}
+                 selectedSeriesType === 'wins' ? seriesData.averageWinSeries :
+                 seriesData.averageLossSeries}
               </div>
               <p>parties en moyenne</p>
               <p className="lycans-h2h-description">
@@ -289,13 +359,15 @@ export function PlayerSeriesChart() {
               <div className="lycans-stat-value">
                 {selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
                  selectedSeriesType === 'loups' ? seriesData.activeLoupsCount :
-                 seriesData.activeWinCount}
+                 selectedSeriesType === 'wins' ? seriesData.activeWinCount :
+                 seriesData.activeLossCount}
               </div>
               <p>séries encore actives</p>
               <p className="lycans-h2h-description">
                 {(selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
                   selectedSeriesType === 'loups' ? seriesData.activeLoupsCount :
-                  seriesData.activeWinCount) > 0 ? 
+                  selectedSeriesType === 'wins' ? seriesData.activeWinCount :
+                  seriesData.activeLossCount) > 0 ? 
                   'Joueurs actuellement dans une série de ce type' : 
                   'Aucune série active de ce type'}
               </p>

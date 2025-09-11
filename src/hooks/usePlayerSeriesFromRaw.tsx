@@ -2,7 +2,7 @@ import { usePlayerStatsBase } from './utils/baseStatsHook';
 import { computePlayerSeries } from './utils/playerSeriesUtils';
 
 // Re-export interfaces for convenience
-export type { CampSeries, WinSeries, PlayerSeriesData } from './utils/playerSeriesUtils';
+export type { CampSeries, WinSeries, LossSeries, PlayerSeriesData } from './utils/playerSeriesUtils';
 
 /**
  * Hook pour calculer les séries les plus longues des joueurs à partir des données brutes filtrées.
