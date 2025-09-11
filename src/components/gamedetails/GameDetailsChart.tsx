@@ -4,7 +4,7 @@ import { useNavigation } from '../../context/NavigationContext';
 import { lycansColorScheme } from '../../types/api';
 import './GameDetailsChart.css';
 
-type SortField = 'date' | 'gameId' | 'playerCount' | 'dayCount' | 'winningCamp' | 'victoryType';
+type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp' | 'victoryType';
 type SortDirection = 'asc' | 'desc';
 
 export function GameDetailsChart() {
@@ -42,9 +42,9 @@ export function GameDetailsChart() {
           aValue = a.playerCount;
           bValue = b.playerCount;
           break;
-        case 'dayCount':
-          aValue = a.dayCount;
-          bValue = b.dayCount;
+        case 'gameDuration':
+          aValue = a.gameDuration || 0;
+          bValue = b.gameDuration || 0;
           break;
         case 'winningCamp':
           aValue = a.winningCamp;
@@ -328,8 +328,8 @@ export function GameDetailsChart() {
               <th onClick={() => handleSort('playerCount')} className="sortable">
                 Joueurs {getSortIcon('playerCount')}
               </th>
-              <th onClick={() => handleSort('dayCount')} className="sortable">
-                Jours {getSortIcon('dayCount')}
+              <th onClick={() => handleSort('gameDuration')} className="sortable">
+                Durée {getSortIcon('gameDuration')}
               </th>
               <th onClick={() => handleSort('winningCamp')} className="sortable">
                 Camp Vainqueur {getSortIcon('winningCamp')}
@@ -347,7 +347,7 @@ export function GameDetailsChart() {
                   <td>#{game.gameId}</td>
                   <td>{game.date}</td>
                   <td>{game.playerCount}</td>
-                  <td>{game.dayCount}</td>
+                  <td>{formatDuration(game.gameDuration)}</td>
                   <td style={{ 
                     color: lycansColorScheme[game.winningCamp as keyof typeof lycansColorScheme] || '#fff'
                   }}>
@@ -484,6 +484,10 @@ function GameDetailView({ game }: { game: any }) {
         <div className="lycans-game-detail-section">
           <h4>Informations Supplémentaires</h4>
           <div className="lycans-game-detail-stats">
+            <div className="lycans-stat-item">
+              <span className="label">Jours de jeu:</span>
+              <span className="value">{game.dayCount}</span>
+            </div>
             {game.gameDuration !== null && (
               <div className="lycans-stat-item">
                 <span className="label">Durée de la partie:</span>

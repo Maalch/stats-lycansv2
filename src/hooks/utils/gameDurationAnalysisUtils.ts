@@ -1,108 +1,201 @@
 import type { RawGameData } from '../useCombinedRawData';
-import type { GameDurationAnalysisResponse, DayDistribution, CampDaysData } from '../../types/api';
+import type { GameDurationAnalysisResponse, DurationDistribution, CampDurationData } from '../../types/api';
+
+/**
+ * Calculate game duration from timestamps
+ */
+function calculateGameDuration(start: string | null, end: string | null): number | null {
+  if (!start || !end) return null;
+  
+  try {
+    // Extract timestamps from both URLs
+    const getTimestamp = (url: string): number => {
+      const urlObj = new URL(url);
+      let timestamp = 0;
+      
+      if (urlObj.hostname === 'youtu.be') {
+        // Format: https://youtu.be/VIDEO_ID?t=TIMESTAMP
+        const tParam = urlObj.searchParams.get('t');
+        if (tParam) {
+          // Handle both seconds (123) and time format (1h23m45s)
+          if (tParam.includes('h') || tParam.includes('m') || tParam.includes('s')) {
+            const hours = tParam.match(/(\d+)h/)?.[1] || '0';
+            const minutes = tParam.match(/(\d+)m/)?.[1] || '0';
+            const seconds = tParam.match(/(\d+)s/)?.[1] || '0';
+            timestamp = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+          } else {
+            timestamp = parseInt(tParam) || 0;
+          }
+        }
+      } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
+        // Format: https://www.youtube.com/watch?v=VIDEO_ID&t=TIMESTAMP
+        const tParam = urlObj.searchParams.get('t');
+        if (tParam) {
+          // Handle both seconds (123) and time format (1h23m45s)
+          if (tParam.includes('h') || tParam.includes('m') || tParam.includes('s')) {
+            const hours = tParam.match(/(\d+)h/)?.[1] || '0';
+            const minutes = tParam.match(/(\d+)m/)?.[1] || '0';
+            const seconds = tParam.match(/(\d+)s/)?.[1] || '0';
+            timestamp = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+          } else {
+            timestamp = parseInt(tParam) || 0;
+          }
+        }
+      }
+      
+      return timestamp;
+    };
+    
+    const startTime = getTimestamp(start);
+    const endTime = getTimestamp(end);
+    
+    if (endTime > startTime) {
+      return endTime - startTime; // Duration in seconds
+    }
+    
+    return null;
+  } catch (error) {
+    console.warn('Failed to calculate game duration:', start, end, error);
+    return null;
+  }
+}
+
+/**
+ * Format duration in seconds to a human-readable string
+ */
+function formatDuration(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  
+  if (hours > 0) {
+    return `${hours}h${minutes.toString().padStart(2, '0')}m${secs.toString().padStart(2, '0')}s`;
+  } else if (minutes > 0) {
+    return `${minutes}m${secs.toString().padStart(2, '0')}s`;
+  } else {
+    return `${secs}s`;
+  }
+}
+
+/**
+ * Round duration to nearest interval for grouping (in minutes)
+ */
+function roundDurationForGrouping(durationInSeconds: number, intervalMinutes: number = 10): number {
+  const durationInMinutes = Math.round(durationInSeconds / 60);
+  return Math.round(durationInMinutes / intervalMinutes) * intervalMinutes;
+}
 
 /**
  * Initialize game duration statistics object
  */
 function initializeDurationStats(): {
-  averageDays: string;
-  maxDays: number;
-  minDays: number;
-  dayDistribution: Record<number, number>;
-  daysByWinnerCamp: Record<string, { totalDays: number; count: number; average: string }>;
-  daysByPlayerCount: Record<string, { totalDays: number; count: number; average: string }>;
-  daysByWolfRatio: Record<string, { totalDays: number; count: number; average: string }>;
+  averageDuration: string;
+  maxDuration: number;
+  minDuration: number;
+  maxDurationGameId: number | null;
+  minDurationGameId: number | null;
+  durationDistribution: Record<number, number>;
+  durationsByWinnerCamp: Record<string, { totalDuration: number; count: number; average: string }>;
+  durationsByPlayerCount: Record<string, { totalDuration: number; count: number; average: string }>;
+  durationsByWolfRatio: Record<string, { totalDuration: number; count: number; average: string }>;
 } {
   return {
-    averageDays: '0',
-    maxDays: 0,
-    minDays: 99,
-    dayDistribution: {},
-    daysByWinnerCamp: {},
-    daysByPlayerCount: {},
-    daysByWolfRatio: {}
+    averageDuration: '0s',
+    maxDuration: 0,
+    minDuration: Infinity,
+    maxDurationGameId: null,
+    minDurationGameId: null,
+    durationDistribution: {},
+    durationsByWinnerCamp: {},
+    durationsByPlayerCount: {},
+    durationsByWolfRatio: {}
   };
 }
 
 /**
- * Update min/max days tracking
+ * Update min/max duration tracking
  */
-function updateMinMaxDays(
-  nbDays: number,
+function updateMinMaxDuration(
+  duration: number,
+  gameId: number,
   durationStats: ReturnType<typeof initializeDurationStats>
 ): void {
-  if (nbDays > durationStats.maxDays) {
-    durationStats.maxDays = nbDays;
+  if (duration > durationStats.maxDuration) {
+    durationStats.maxDuration = duration;
+    durationStats.maxDurationGameId = gameId;
   }
-  if (nbDays < durationStats.minDays) {
-    durationStats.minDays = nbDays;
+  if (duration < durationStats.minDuration) {
+    durationStats.minDuration = duration;
+    durationStats.minDurationGameId = gameId;
   }
 }
 
 /**
- * Update day distribution tracking
+ * Update duration distribution tracking (grouped by 2-minute intervals)
  */
-function updateDayDistribution(
-  nbDays: number,
-  dayDistribution: Record<number, number>
+function updateDurationDistribution(
+  duration: number,
+  durationDistribution: Record<number, number>
 ): void {
-  if (!dayDistribution[nbDays]) {
-    dayDistribution[nbDays] = 0;
+  // Round to nearest 2-minute interval for grouping
+  const roundedDuration = roundDurationForGrouping(duration, 2);
+  if (!durationDistribution[roundedDuration]) {
+    durationDistribution[roundedDuration] = 0;
   }
-  dayDistribution[nbDays]++;
+  durationDistribution[roundedDuration]++;
 }
 
 /**
- * Update days by winner camp tracking
+ * Update durations by winner camp tracking
  */
-function updateDaysByWinnerCamp(
+function updateDurationsByWinnerCamp(
   winnerCamp: string,
-  nbDays: number,
-  daysByWinnerCamp: Record<string, { totalDays: number; count: number; average: string }>
+  duration: number,
+  durationsByWinnerCamp: Record<string, { totalDuration: number; count: number; average: string }>
 ): void {
   if (winnerCamp && winnerCamp.trim() !== '') {
-    if (!daysByWinnerCamp[winnerCamp]) {
-      daysByWinnerCamp[winnerCamp] = {
-        totalDays: 0,
+    if (!durationsByWinnerCamp[winnerCamp]) {
+      durationsByWinnerCamp[winnerCamp] = {
+        totalDuration: 0,
         count: 0,
-        average: '0'
+        average: '0s'
       };
     }
-    daysByWinnerCamp[winnerCamp].totalDays += nbDays;
-    daysByWinnerCamp[winnerCamp].count++;
+    durationsByWinnerCamp[winnerCamp].totalDuration += duration;
+    durationsByWinnerCamp[winnerCamp].count++;
   }
 }
 
 /**
- * Update days by player count tracking
+ * Update durations by player count tracking
  */
-function updateDaysByPlayerCount(
+function updateDurationsByPlayerCount(
   nbPlayers: number,
-  nbDays: number,
-  daysByPlayerCount: Record<string, { totalDays: number; count: number; average: string }>
+  duration: number,
+  durationsByPlayerCount: Record<string, { totalDuration: number; count: number; average: string }>
 ): void {
   if (nbPlayers && !isNaN(nbPlayers) && nbPlayers > 0) {
     const playerCountKey = nbPlayers.toString();
-    if (!daysByPlayerCount[playerCountKey]) {
-      daysByPlayerCount[playerCountKey] = {
-        totalDays: 0,
+    if (!durationsByPlayerCount[playerCountKey]) {
+      durationsByPlayerCount[playerCountKey] = {
+        totalDuration: 0,
         count: 0,
-        average: '0'
+        average: '0s'
       };
     }
-    daysByPlayerCount[playerCountKey].totalDays += nbDays;
-    daysByPlayerCount[playerCountKey].count++;
+    durationsByPlayerCount[playerCountKey].totalDuration += duration;
+    durationsByPlayerCount[playerCountKey].count++;
   }
 }
 
 /**
- * Update days by wolf ratio tracking
+ * Update durations by wolf ratio tracking
  */
-function updateDaysByWolfRatio(
+function updateDurationsByWolfRatio(
   nbPlayers: number,
   nbWolves: number,
-  nbDays: number,
-  daysByWolfRatio: Record<string, { totalDays: number; count: number; average: string }>
+  duration: number,
+  durationsByWolfRatio: Record<string, { totalDuration: number; count: number; average: string }>
 ): void {
   if (nbPlayers && nbWolves && !isNaN(nbPlayers) && !isNaN(nbWolves) && nbPlayers > 0) {
     // Calculate wolves/villagers ratio as a percentage
@@ -113,15 +206,15 @@ function updateDaysByWolfRatio(
       const roundedWolfRatio = Math.round(wolfRatioPercent / 1) * 1;
       const wolfRatioKey = roundedWolfRatio.toString(); // e.g., "35" for 35%
 
-      if (!daysByWolfRatio[wolfRatioKey]) {
-        daysByWolfRatio[wolfRatioKey] = {
-          totalDays: 0,
+      if (!durationsByWolfRatio[wolfRatioKey]) {
+        durationsByWolfRatio[wolfRatioKey] = {
+          totalDuration: 0,
           count: 0,
-          average: '0'
+          average: '0s'
         };
       }
-      daysByWolfRatio[wolfRatioKey].totalDays += nbDays;
-      daysByWolfRatio[wolfRatioKey].count++;
+      durationsByWolfRatio[wolfRatioKey].totalDuration += duration;
+      durationsByWolfRatio[wolfRatioKey].count++;
     }
   }
 }
@@ -132,31 +225,33 @@ function updateDaysByWolfRatio(
 function processGameDuration(
   game: RawGameData,
   durationStats: ReturnType<typeof initializeDurationStats>,
-  totals: { totalDays: number; gamesWithDays: number }
+  totals: { totalDuration: number; gamesWithDuration: number }
 ): void {
-  const nbDays = game["Nombre de journées"];
   const winnerCamp = game["Camp victorieux"];
   const nbPlayers = game["Nombre de joueurs"];
   const nbWolves = game["Nombre de loups"];
+  
+  // Calculate actual game duration in seconds
+  const gameDuration = calculateGameDuration(game["Début"], game["Fin"]);
 
-  if (nbDays && !isNaN(nbDays) && nbDays > 0) {
-    totals.gamesWithDays++;
-    totals.totalDays += nbDays;
+  if (gameDuration && !isNaN(gameDuration) && gameDuration > 0) {
+    totals.gamesWithDuration++;
+    totals.totalDuration += gameDuration;
 
     // Update min/max
-    updateMinMaxDays(nbDays, durationStats);
+    updateMinMaxDuration(gameDuration, game.Game, durationStats);
 
-    // Update day distribution
-    updateDayDistribution(nbDays, durationStats.dayDistribution);
+    // Update duration distribution
+    updateDurationDistribution(gameDuration, durationStats.durationDistribution);
 
-    // Update days by winner camp
-    updateDaysByWinnerCamp(winnerCamp, nbDays, durationStats.daysByWinnerCamp);
+    // Update durations by winner camp
+    updateDurationsByWinnerCamp(winnerCamp, gameDuration, durationStats.durationsByWinnerCamp);
 
-    // Update days by player count
-    updateDaysByPlayerCount(nbPlayers, nbDays, durationStats.daysByPlayerCount);
+    // Update durations by player count
+    updateDurationsByPlayerCount(nbPlayers, gameDuration, durationStats.durationsByPlayerCount);
 
-    // Update days by wolf ratio
-    updateDaysByWolfRatio(nbPlayers, nbWolves, nbDays, durationStats.daysByWolfRatio);
+    // Update durations by wolf ratio
+    updateDurationsByWolfRatio(nbPlayers, nbWolves, gameDuration, durationStats.durationsByWolfRatio);
   }
 }
 
@@ -165,51 +260,55 @@ function processGameDuration(
  */
 function calculateDurationAverages(
   durationStats: ReturnType<typeof initializeDurationStats>,
-  totals: { totalDays: number; gamesWithDays: number }
+  totals: { totalDuration: number; gamesWithDuration: number }
 ): void {
-  if (totals.gamesWithDays > 0) {
-    durationStats.averageDays = (totals.totalDays / totals.gamesWithDays).toFixed(1);
+  if (totals.gamesWithDuration > 0) {
+    const averageDurationSeconds = totals.totalDuration / totals.gamesWithDuration;
+    durationStats.averageDuration = formatDuration(Math.round(averageDurationSeconds));
 
     // Calculate averages for each category
-    Object.keys(durationStats.daysByWinnerCamp).forEach(camp => {
-      const campData = durationStats.daysByWinnerCamp[camp];
+    Object.keys(durationStats.durationsByWinnerCamp).forEach(camp => {
+      const campData = durationStats.durationsByWinnerCamp[camp];
       if (campData.count > 0) {
-        campData.average = (campData.totalDays / campData.count).toFixed(1);
+        const avgSeconds = campData.totalDuration / campData.count;
+        campData.average = formatDuration(Math.round(avgSeconds));
       }
     });
 
-    Object.keys(durationStats.daysByPlayerCount).forEach(playerCount => {
-      const playerData = durationStats.daysByPlayerCount[playerCount];
+    Object.keys(durationStats.durationsByPlayerCount).forEach(playerCount => {
+      const playerData = durationStats.durationsByPlayerCount[playerCount];
       if (playerData.count > 0) {
-        playerData.average = (playerData.totalDays / playerData.count).toFixed(1);
+        const avgSeconds = playerData.totalDuration / playerData.count;
+        playerData.average = formatDuration(Math.round(avgSeconds));
       }
     });
 
-    Object.keys(durationStats.daysByWolfRatio).forEach(ratio => {
-      const ratioData = durationStats.daysByWolfRatio[ratio];
+    Object.keys(durationStats.durationsByWolfRatio).forEach(ratio => {
+      const ratioData = durationStats.durationsByWolfRatio[ratio];
       if (ratioData.count > 0) {
-        ratioData.average = (ratioData.totalDays / ratioData.count).toFixed(1);
+        const avgSeconds = ratioData.totalDuration / ratioData.count;
+        ratioData.average = formatDuration(Math.round(avgSeconds));
       }
     });
   }
 }
 
 /**
- * Convert day distribution to sorted array format
+ * Convert duration distribution to sorted array format
  */
-function formatDayDistribution(
-  dayDistribution: Record<number, number>
-): DayDistribution[] {
-  // Convert day distribution to array for easier frontend processing
-  const dayDistributionArray: DayDistribution[] = Object.keys(dayDistribution).map(day => ({
-    days: parseInt(day),
-    count: dayDistribution[parseInt(day)]
+function formatDurationDistribution(
+  durationDistribution: Record<number, number>
+): DurationDistribution[] {
+  // Convert duration distribution to array for easier frontend processing
+  const durationDistributionArray: DurationDistribution[] = Object.keys(durationDistribution).map(duration => ({
+    duration: parseInt(duration), // duration in minutes (rounded to 2-minute intervals)
+    count: durationDistribution[parseInt(duration)]
   }));
 
-  // Sort by day count
-  dayDistributionArray.sort((a, b) => a.days - b.days);
+  // Sort by duration
+  durationDistributionArray.sort((a, b) => a.duration - b.duration);
 
-  return dayDistributionArray;
+  return durationDistributionArray;
 }
 
 /**
@@ -222,7 +321,7 @@ export function computeGameDurationAnalysis(rawGameData: RawGameData[]): GameDur
 
   // Initialize statistics object
   const durationStats = initializeDurationStats();
-  const totals = { totalDays: 0, gamesWithDays: 0 };
+  const totals = { totalDuration: 0, gamesWithDuration: 0 };
 
   // Process each game
   rawGameData.forEach(game => {
@@ -232,17 +331,19 @@ export function computeGameDurationAnalysis(rawGameData: RawGameData[]): GameDur
   // Calculate averages
   calculateDurationAverages(durationStats, totals);
 
-  // Convert day distribution to sorted array format
-  const dayDistributionArray = formatDayDistribution(durationStats.dayDistribution);
+  // Convert duration distribution to sorted array format
+  const durationDistributionArray = formatDurationDistribution(durationStats.durationDistribution);
 
   // Convert the internal format to the expected API format
   return {
-    averageDays: durationStats.averageDays,
-    maxDays: durationStats.maxDays,
-    minDays: durationStats.minDays,
-    dayDistribution: dayDistributionArray,
-    daysByWinnerCamp: durationStats.daysByWinnerCamp as Record<string, CampDaysData>,
-    daysByPlayerCount: durationStats.daysByPlayerCount as Record<string, CampDaysData>,
-    daysByWolfRatio: durationStats.daysByWolfRatio as Record<string, CampDaysData>
+    averageDuration: durationStats.averageDuration,
+    maxDuration: durationStats.maxDuration,
+    minDuration: durationStats.minDuration === Infinity ? 0 : durationStats.minDuration,
+    maxDurationGameId: durationStats.maxDurationGameId,
+    minDurationGameId: durationStats.minDurationGameId,
+    durationDistribution: durationDistributionArray,
+    durationsByWinnerCamp: durationStats.durationsByWinnerCamp as Record<string, CampDurationData>,
+    durationsByPlayerCount: durationStats.durationsByPlayerCount as Record<string, CampDurationData>,
+    durationsByWolfRatio: durationStats.durationsByWolfRatio as Record<string, CampDurationData>
   };
 }
