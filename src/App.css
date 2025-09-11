@@ -1105,3 +1105,34 @@ body {
   filter: drop-shadow(0 0 3px #FF8C00) drop-shadow(0 0 5px #FF4500) drop-shadow(0 0 9px #FF0000);
   position: relative;
 }
+
+/* Shareable URL Component */
+.shareable-url-container {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.shareable-url-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.shareable-url-btn:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
+}
+
+.shareable-url-btn:active {
+  transform: translateY(1px);
+}
