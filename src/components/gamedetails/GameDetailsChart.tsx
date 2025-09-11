@@ -4,7 +4,7 @@ import { useNavigation } from '../../context/NavigationContext';
 import { lycansColorScheme } from '../../types/api';
 import './GameDetailsChart.css';
 
-type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp' | 'victoryType';
+type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp' | 'victoryType' | 'winner';
 type SortDirection = 'asc' | 'desc';
 
 export function GameDetailsChart() {
@@ -21,6 +21,37 @@ export function GameDetailsChart() {
   // reset the page back to 1. Use this ref to ignore the next data-change
   // reset if it was caused by a user page navigation.
   const ignoreDataResetRef = useRef(false);
+
+  // Determine if we should show the winner column and get the target players
+  const getTargetPlayers = (): string[] => {
+    if (navigationFilters.selectedPlayer) {
+      return [navigationFilters.selectedPlayer];
+    }
+    if (navigationFilters.playerPairFilter?.selectedPlayerPair) {
+      return navigationFilters.playerPairFilter.selectedPlayerPair;
+    }
+    if (navigationFilters.multiPlayerFilter?.selectedPlayers) {
+      return navigationFilters.multiPlayerFilter.selectedPlayers;
+    }
+    return [];
+  };
+
+  const targetPlayers = getTargetPlayers();
+  const showWinnerColumn = targetPlayers.length > 0;
+
+  // Helper function to get winners from target players for a specific game
+  const getGameWinners = (game: any): string => {
+    if (!showWinnerColumn) return '';
+    
+    const winners = game.winners ? game.winners.split(',').map((w: string) => w.trim()) : [];
+    const targetWinners = winners.filter((winner: string) => 
+      targetPlayers.some(player => 
+        player.toLowerCase() === winner.toLowerCase()
+      )
+    );
+    
+    return targetWinners.join(', ');
+  };
 
   // Sort games
   const sortedGames = useMemo(() => {
@@ -53,6 +84,10 @@ export function GameDetailsChart() {
         case 'victoryType':
           aValue = a.victoryType;
           bValue = b.victoryType;
+          break;
+        case 'winner':
+          aValue = getGameWinners(a);
+          bValue = getGameWinners(b);
           break;
         default:
           return 0;
@@ -337,6 +372,11 @@ export function GameDetailsChart() {
               <th onClick={() => handleSort('victoryType')} className="sortable">
                 Type de Victoire {getSortIcon('victoryType')}
               </th>
+              {showWinnerColumn && (
+                <th onClick={() => handleSort('winner')} className="sortable">
+                  Vainqueur {getSortIcon('winner')}
+                </th>
+              )}
               <th>Détails</th>
             </tr>
           </thead>
@@ -354,6 +394,9 @@ export function GameDetailsChart() {
                     {game.winningCamp}
                   </td>
                   <td>{game.victoryType}</td>
+                  {showWinnerColumn && (
+                    <td>{getGameWinners(game)}</td>
+                  )}
                   <td>
                     <button
                       onClick={() => handleToggleGameDetails(game.gameId)}
@@ -365,7 +408,7 @@ export function GameDetailsChart() {
                 </tr>
                 {selectedGameId === game.gameId && (
                   <tr key={`${game.gameId}-details`} className="game-details-row">
-                    <td colSpan={7}>
+                    <td colSpan={showWinnerColumn ? 8 : 7}>
                       <GameDetailView game={game} />
                     </td>
                   </tr>
