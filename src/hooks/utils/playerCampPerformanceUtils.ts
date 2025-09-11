@@ -293,6 +293,7 @@ function formatResults(
   const campAverages: CampAverage[] = Object.keys(campStats).map(camp => ({
     camp: camp,
     totalGames: campStats[camp].totalGames,
+    wins: campStats[camp].wins,
     winRate: campStats[camp].winRate.toFixed(2)
   }));
 

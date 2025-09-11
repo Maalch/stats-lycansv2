@@ -319,7 +319,7 @@ export function CampsChart() {
                                 border: '1px solid var(--border-color)'
                               }}>
                                 <div><strong>{dataPoint.camp}</strong></div>
-                                <div>Parties totales: {dataPoint.totalGames}</div>
+                                <div>Victoires : {dataPoint.wins} / {dataPoint.totalGames}</div>
                                 <div>Taux de victoire: {dataPoint.winRate}%</div>
                                 <div style={{ 
                                   fontSize: '0.8rem', 
