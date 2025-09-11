@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect, useRef } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import type { GameFilter, FilterMode, PlayerFilterMode } from '../../context/SettingsContext';
 import type { RawGameData } from '../../hooks/useCombinedRawData';
+import { ShareableUrl } from '../common/ShareableUrl';
 import './SettingsPanel.css';
 
 export function SettingsPanel() {
@@ -556,6 +557,19 @@ export function SettingsPanel() {
               </div>
             )}
           </div>
+        </div>
+      </div>
+      
+      <div className="settings-section">
+        <div className="settings-section-header">
+          <h3>3. Partage des Paramètres</h3>
+        </div>
+        <div className="settings-group">
+          <p className="settings-explanation">
+            Copiez le lien ci-dessous pour partager les paramètres actuels avec d'autres personnes.
+            Ils pourront ouvrir le site avec ces mêmes filtres appliqués.
+          </p>
+          <ShareableUrl />
         </div>
       </div>
       
