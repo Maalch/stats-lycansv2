@@ -20,8 +20,8 @@ npm run sync-data    # Fetch fresh data from Apps Script to /data
 ```
 
 **Build Pipeline:** Inline Node.js in package.json scripts copies `/data` → `public/data/` (dev) or `docs/data/` (prod)  
-**Data Sync:** GitHub Actions runs weekly on Saturday 4 AM UTC, can be manually triggered via workflow_dispatch  
-**Environment Variables:** None required - all data comes from static JSON files
+**Data Sync:** GitHub Actions runs twice a week, can be manually triggered via workflow_dispatch  
+**Environment Variables:** None required - all data comes from static JSON files. secrets.LYCANS_API_BASE on GitHub for data sync only.
 
 ## Key Architectural Patterns
 
@@ -75,7 +75,6 @@ const { data: rawRoleData } = useFilteredRawRoleData();
 ## Data Architecture
 
 **Core Data Types:** `RawGameData`, `RawRoleData`, `RawPonceData` in `hooks/useCombinedRawData.tsx`  
-**Data Service:** Simplified `DataService` in `dataService.ts` loads only from static JSON files  
 **Color Schemes:** `lycansColorScheme` (camps/roles), `playersColor` (players) in `types/api.ts`  
 **French Language:** All UI labels and data values in French ("Villageois", "Loups", etc.)
 
@@ -109,7 +108,7 @@ Players are divided into camps: **Villageois** (Villagers) and **Loups** (Wolves
 
 1. **New Statistics:** Create `use*FromRaw` hook using base hook pattern → add computation function to `utils/` → add to menu constants in `App.tsx`
 2. **New Settings:** Add to `SettingsState` interface → ensure localStorage persistence in `SettingsContext`
-3. **New Data Sources:** Add to `DATA_CONFIG` in sync script → update interfaces in `useCombinedRawData.tsx`
+3. **New Data Sources:** Update interfaces in `useCombinedRawData.tsx`
 4. **Navigation Integration:** Use `NavigationContext` for chart drill-downs to `GameDetailsChart`
 
 ### Base Hook Migration Pattern
