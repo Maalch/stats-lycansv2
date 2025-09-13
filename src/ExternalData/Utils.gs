@@ -165,3 +165,88 @@ function getLycanTableData(namedRangeName) {
 function findColumnIndex(headerRow, columnName) {
   return headerRow.indexOf(columnName);
 }
+
+/**
+ * Helper function to parse comma-separated player lists
+ */
+function parsePlayerList(playerListStr) {
+  if (!playerListStr) return [];
+  return playerListStr.split(',').map(function(p) { return p.trim(); });
+}
+
+/**
+ * Helper function to determine if a player was victorious
+ */
+function isPlayerVictorious(playerName, gameRow, gameHeaders) {
+  var winnerList = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST)];
+  if (!winnerList) return false;
+  
+  var winners = winnerList.split(',').map(function(p) { return p.trim(); });
+  return winners.includes(playerName);
+}
+
+/**
+ * Helper function to convert various date inputs to ISO (YYYY-MM-DDT00:00:00.000Z)
+ * Accepts:
+ *   - Date object (Google Sheets often returns this)
+ *   - DD/MM/YYYY
+ *   - YYYY-MM-DD
+ *   - Already ISO (returns as is normalized)
+ * Returns null if invalid.
+ */
+function convertDateToISO(dateInput) {
+  if (!dateInput && dateInput !== 0) return null;
+  
+  // If already a Date object
+  if (Object.prototype.toString.call(dateInput) === '[object Date]') {
+    if (isNaN(dateInput.getTime())) return null;
+    var y = dateInput.getFullYear();
+    var m = (dateInput.getMonth() + 1).toString().padStart(2, '0');
+    var d = dateInput.getDate().toString().padStart(2, '0');
+    return y + '-' + m + '-' + d + 'T00:00:00.000Z';
+  }
+  
+  // If number (sometimes Sheets serials leak through) -> treat as Date
+  if (typeof dateInput === 'number') {
+    try {
+      var dateFromNumber = new Date(dateInput);
+      if (!isNaN(dateFromNumber.getTime())) {
+        var y2 = dateFromNumber.getFullYear();
+        var m2 = (dateFromNumber.getMonth() + 1).toString().padStart(2, '0');
+        var d2 = dateFromNumber.getDate().toString().padStart(2, '0');
+        return y2 + '-' + m2 + '-' + d2 + 'T00:00:00.000Z';
+      }
+    } catch (e) {
+      Logger.log('convertDateToISO: invalid numeric date ' + dateInput);
+      return null;
+    }
+  }
+  
+  if (typeof dateInput !== 'string') {
+    // Fallback: try to String() and continue
+    dateInput = String(dateInput);
+  }
+  
+  var trimmed = dateInput.trim();
+  if (trimmed === '') return null;
+  
+  // Already ISO-like (YYYY-MM-DD or full ISO)
+  if (/^\d{4}-\d{2}-\d{2}/.test(trimmed)) {
+    var isoParts = trimmed.substring(0, 10).split('-');
+    if (isoParts.length === 3) {
+      return isoParts[0] + '-' + isoParts[1] + '-' + isoParts[2] + 'T00:00:00.000Z';
+    }
+  }
+  
+  // DD/MM/YYYY
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(trimmed)) {
+    var dmyparts = trimmed.split('/');
+    var day = dmyparts[0];
+    var month = dmyparts[1];
+    var year = dmyparts[2];
+    return year + '-' + month + '-' + day + 'T00:00:00.000Z';
+  }
+  
+  Logger.log('convertDateToISO: unsupported date format "' + trimmed + '"');
+  return null;
+}
