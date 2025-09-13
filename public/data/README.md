@@ -10,6 +10,7 @@ This directory contains pre-processed static data from Google Sheets that is upd
 ## Data Sources
 
 The data is fetched from the following endpoints:
+- `gameLog` - Game raw data in the new format (mapping the mod automatic log for Legacy data)
 - `rawGameData` - Game raw data
 - `rawPonceData` - Specific data sheet about Ponce actions
 - `rawRoleData` - Role raw data

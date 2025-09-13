@@ -4,6 +4,7 @@ import path from 'path';
 
 // Raw sheet exports only (static endpoints now computed client-side)
 const RAW_DATA_ENDPOINTS = [
+  'gameLog',
   'rawGameData',
   'rawRoleData',
   'rawPonceData',

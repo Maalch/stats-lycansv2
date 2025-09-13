@@ -54,6 +54,40 @@ function generateCacheKey(baseKey, paramKeys, e) {
   return baseKey + '_' + paramParts.join('_');
 }
 
+
+/**
+ * Test function for raw game data export
+ */
+function test_getRawGameDataInNewFormat() {
+  var cache = CacheService.getScriptCache();
+  
+  // Clear the cache for this endpoint
+  var cacheKey = generateCacheKey('gameLog', null, { parameter: {} });
+  cache.remove(cacheKey);
+  
+  var e = { 
+    parameter: { 
+      action: 'gameLog'
+    } 
+  };
+  
+  var result = doGet(e);
+  Logger.log("Test gameLog");
+  Logger.log("Cache key used: " + cacheKey);
+  
+  // Parse the result to check record count
+  try {
+    var data = JSON.parse(result.getContent());
+
+    Logger.log("Total records: " + (data.TotalRecords || 'unknown'));
+    Logger.log("Sample record: " + JSON.stringify(data.GameStats ? data.GameStats[0] : 'none'));
+  } catch (e) {
+    Logger.log("Raw result: " + result.getContent());
+  }
+  
+  return result;
+}
+
 /**
  * Test function for raw game data export
  */
@@ -583,6 +617,8 @@ function getRawBRDataRaw() {
 }
 
 
+
+
 /**
  * Returns game data in the new GameLog format compatible with the game-generated JSON
  */
@@ -596,10 +632,6 @@ function getRawGameDataInNewFormat() {
     var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
     var roleValues = roleData.values;
     
-    // Get Ponce data
-    var ponceData = getLycanSheetData(LYCAN_SCHEMA.PONCE.SHEET);
-    var ponceValues = ponceData.values;
-    
     if (!gameValues || gameValues.length === 0) {
       return JSON.stringify({ error: 'No game data found' });
     }
@@ -609,9 +641,6 @@ function getRawGameDataInNewFormat() {
     
     var roleHeaders = roleValues ? roleValues[0] : [];
     var roleDataRows = roleValues ? roleValues.slice(1) : [];
-    
-    var ponceHeaders = ponceValues ? ponceValues[0] : [];
-    var ponceDataRows = ponceValues ? ponceValues.slice(1) : [];
     
     // Create game stats array
     var gameStats = gameDataRows.map(function(gameRow) {
@@ -626,7 +655,7 @@ function getRawGameDataInNewFormat() {
         HarvestGoal: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST)],
         HarvestDone: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.HARVEST)],
         DaysCount: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)],
-        FinalGamePhase: determineFinalPhase(gameRow, gameHeaders),
+        FinalGamePhase: null,
         PlayerStats: []
       };
       
@@ -637,19 +666,19 @@ function getRawGameDataInNewFormat() {
       // Get role assignments for this game
       var roleAssignments = getRoleAssignmentsForGame(gameId, roleHeaders, roleDataRows);
       
-      // Get Ponce data for this game
-      var ponceInfo = getPonceDataForGame(gameId, ponceHeaders, ponceDataRows);
-      
       // Build player stats
       gameRecord.PlayerStats = players.map(function(playerName) {
-        return buildPlayerStats(playerName, gameId, roleAssignments, ponceInfo, gameRow, gameHeaders);
+        return buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders);
       });
       
       return gameRecord;
     });
+
+    var totalRecords = gameStats.length; // New count
     
     return JSON.stringify({
       ModVersion: "Legacy",
+      TotalRecords: totalRecords, 
       GameStats: gameStats
     });
     
@@ -662,7 +691,7 @@ function getRawGameDataInNewFormat() {
 /**
  * Helper function to build player stats from legacy data
  */
-function buildPlayerStats(playerName, gameId, roleAssignments, ponceInfo, gameRow, gameHeaders) {
+function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders) {
   var playerStats = {
     Username: playerName,
     MainRoleInitial: determineMainRole(playerName, roleAssignments),
@@ -676,15 +705,6 @@ function buildPlayerStats(playerName, gameId, roleAssignments, ponceInfo, gameRo
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
   };
   
-  // Add Ponce-specific data if available
-  if (playerName === 'Ponce' && ponceInfo) {
-    playerStats.DeathTiming = ponceInfo.dayOfDeath ? "J" + ponceInfo.dayOfDeath : null;
-    playerStats.KillerName = ponceInfo.killerPlayers;
-    // Map legacy roles to new format
-    playerStats.Power = ponceInfo.villagerRole || ponceInfo.wolfRole;
-    playerStats.SecondaryRole = ponceInfo.secondaryRole;
-  }
-  
   return playerStats;
 }
 
@@ -692,17 +712,10 @@ function buildPlayerStats(playerName, gameId, roleAssignments, ponceInfo, gameRo
  * Helper function to determine main role from role assignments
  */
 function determineMainRole(playerName, roleAssignments) {
-  // Check if player is in wolves list
-  if (roleAssignments.wolves && roleAssignments.wolves.includes(playerName)) {
-    return "Loup";
-  }
-  
-  // Check if player is traitor
-  if (roleAssignments.traitor === playerName) {
-    return "Traître";
-  }
-  
-  // Check other special roles
+
+  // Check all special roles
+  if (roleAssignments.wolves && roleAssignments.wolves.includes(playerName)) return "Loup";
+  if (roleAssignments.traitor === playerName) return "Traître";
   if (roleAssignments.idiot === playerName) return "Idiot du Village";
   if (roleAssignments.cannibal === playerName) return "Cannibale";
   if (roleAssignments.agents && roleAssignments.agents.includes(playerName)) return "Agent";
@@ -742,71 +755,6 @@ function getRoleAssignmentsForGame(gameId, roleHeaders, roleDataRows) {
   };
 }
 
-/**
- * Helper function to get Ponce data for a specific game
- */
-function getPonceDataForGame(gameId, ponceHeaders, ponceDataRows) {
-  var ponceRow = ponceDataRows.find(function(row) {
-    return row[findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.GAMEID)] == gameId;
-  });
-  
-  if (!ponceRow) return null;
-  
-  return {
-    dayOfDeath: ponceRow[findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.DAYOFDEATH)],
-    killerPlayers: ponceRow[findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.KILLERPLAYERS)],
-    villagerRole: ponceRow[findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.VILLAGEROLE)],
-    wolfRole: ponceRow[findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.WOLFROLE)],
-    secondaryRole: ponceRow[findColumnIndex(ponceHeaders, LYCAN_SCHEMA.PONCE.COLS.SECONDARYROLE)]
-  };
-}
 
-/**
- * Helper function to parse comma-separated player lists
- */
-function parsePlayerList(playerListStr) {
-  if (!playerListStr) return [];
-  return playerListStr.split(',').map(function(p) { return p.trim(); });
-}
 
-/**
- * Helper function to determine if a player was victorious
- */
-function isPlayerVictorious(playerName, gameRow, gameHeaders) {
-  var winnerList = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERLIST)];
-  if (!winnerList) return false;
-  
-  var winners = winnerList.split(',').map(function(p) { return p.trim(); });
-  return winners.includes(playerName);
-}
 
-/**
- * Helper function to convert DD/MM/YYYY date to ISO format
- */
-function convertDateToISO(dateStr) {
-  if (!dateStr) return null;
-  
-  // Parse DD/MM/YYYY format
-  var parts = dateStr.split('/');
-  if (parts.length !== 3) return null;
-  
-  var day = parts[0];
-  var month = parts[1];
-  var year = parts[2];
-  
-  // Create ISO date string (assuming start of day)
-  return year + '-' + month.padStart(2, '0') + '-' + day.padStart(2, '0') + 'T00:00:00.000Z';
-}
-
-/**
- * Helper function to determine final game phase
- */
-function determineFinalPhase(gameRow, gameHeaders) {
-  var victoryType = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)];
-  
-  if (victoryType === 'Votes') return 'Meeting';
-  if (victoryType === 'Récolte') return 'Jour';
-  if (victoryType === 'Domination') return 'Nuit';
-  
-  return 'Unknown';
-}
