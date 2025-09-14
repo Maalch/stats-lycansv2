@@ -723,6 +723,8 @@ function getRawGameDataInNewFormat() {
         EndDate: endDate,
         VODLink: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODSTART)],
         MapName: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)],
+        Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES2.COLS.MODDED)],
+        ModVersion: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
         HarvestGoal: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST)],
         HarvestDone: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.HARVEST)],
         DaysCount: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)],
