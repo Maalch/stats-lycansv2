@@ -2,7 +2,42 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
 
-// Re-export the interfaces for convenience
+// New GameLog interfaces
+export interface PlayerStat {
+  Username: string;
+  MainRoleInitial: string;
+  MainRoleFinal: string | null;
+  Power: string | null;
+  SecondaryRole: string | null;
+  DeathDateIrl: string | null;
+  DeathTiming: string | null;
+  DeathPosition: number | null;
+  KillerName: string | null;
+  Victorious: boolean;
+}
+
+export interface GameLogEntry {
+  Id: string;
+  StartDate: string;
+  EndDate: string;
+  VODLink: string;
+  MapName: string;
+  Modded: boolean;
+  ModVersion: string;
+  HarvestGoal: number;
+  HarvestDone: number;
+  DaysCount: number;
+  FinalGamePhase: string | null;
+  PlayerStats: PlayerStat[];
+}
+
+export interface GameLogData {
+  ModVersion: string;
+  TotalRecords: number;
+  GameStats: GameLogEntry[];
+}
+
+// Legacy interfaces for backward compatibility
 export interface RawGameData {
   Game: number;
   Date: string;
@@ -75,12 +110,6 @@ export interface RawBRGlobalData {
   "Game Moddée": boolean;
 }
 
-interface RawDataResponse<T> {
-  lastUpdated: string;
-  totalRecords: number;
-  data: T[];
-}
-
 interface RawBRResponse {
   lastUpdated: string;
   BRParties: {
@@ -112,8 +141,203 @@ interface CombinedFilteredData {
 }
 
 /**
+ * Transform GameLogData to legacy RawGameData format
+ */
+function transformToRawGameData(gameLogData: GameLogData): RawGameData[] {
+  return gameLogData.GameStats.map((game, index) => {
+    const gameNumber = index + 1;
+    
+    // Extract game date from StartDate and format as French date (DD/MM/YYYY)
+    const startDate = new Date(game.StartDate);
+    const gameDate = startDate.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    
+    // Count players and roles
+    const totalPlayers = game.PlayerStats.length;
+    const loups = game.PlayerStats.filter(p => 
+      p.MainRoleInitial === 'Loup' || 
+      (p.MainRoleInitial === 'Traître' && p.MainRoleFinal === 'Loup')
+    );
+    const loupsCount = loups.length;
+    
+    // Check for special roles
+    const hasTraitor = game.PlayerStats.some(p => p.MainRoleInitial === 'Traître');
+    const hasAmoureux = game.PlayerStats.some(p => p.SecondaryRole === 'Amoureux');
+    
+    // Get solo roles (excluding Traître and Amoureux)
+    const soloRoles = game.PlayerStats
+      .filter(p => !['Villageois', 'Loup'].includes(p.MainRoleInitial) && p.MainRoleInitial !== 'Traître')
+      .map(p => p.MainRoleInitial)
+      .filter((role, index, arr) => arr.indexOf(role) === index);
+    
+    // Determine winning camp
+    const winners = game.PlayerStats.filter(p => p.Victorious);
+    let campVictorieux = '';
+    let typeVictoire = '';
+    
+    if (winners.length > 0) {
+      const winnerRoles = winners.map(w => w.MainRoleInitial);
+      if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
+        campVictorieux = 'Loups';
+        typeVictoire = 'Domination'; // Default, could be enhanced with more logic
+      } else if (winnerRoles.every(role => role === 'Villageois' || !['Loup', 'Traître'].includes(role))) {
+        campVictorieux = 'Villageois';
+        typeVictoire = 'Élimination'; // Default, could be enhanced
+      } else {
+        campVictorieux = winnerRoles[0]; // Solo victory
+        typeVictoire = 'Solo';
+      }
+    }
+    
+    // Count survivors by camp
+    const survivantsVillageois = game.PlayerStats.filter(p => 
+      p.Victorious && (p.MainRoleInitial === 'Villageois' || 
+      (!['Loup', 'Traître'].includes(p.MainRoleInitial) && campVictorieux === 'Villageois'))
+    ).length;
+    
+    const survivantsLoups = game.PlayerStats.filter(p => 
+      p.Victorious && (p.MainRoleInitial === 'Loup' || 
+      (p.MainRoleInitial === 'Traître' && campVictorieux === 'Loups'))
+    ).length;
+    
+    const survivantsAmoureux = hasAmoureux ? 
+      game.PlayerStats.filter(p => p.Victorious && p.SecondaryRole === 'Amoureux').length : null;
+    
+    const survivantsSolo = soloRoles.length > 0 ? 
+      game.PlayerStats.filter(p => p.Victorious && soloRoles.includes(p.MainRoleInitial)).length : null;
+    
+    // Get player and winner lists
+    const listeJoueurs = game.PlayerStats.map(p => p.Username).join(', ');
+    const listeGagnants = winners.map(w => w.Username).join(', ');
+    
+    // Calculate harvest percentage
+    const pourcentageRecolte = game.HarvestGoal > 0 ? game.HarvestDone / game.HarvestGoal : 0;
+    
+    return {
+      Game: gameNumber,
+      Date: gameDate,
+      "Game Moddée": game.Modded,
+      "Nombre de joueurs": totalPlayers,
+      "Nombre de loups": loupsCount,
+      "Rôle Traître": hasTraitor,
+      "Rôle Amoureux": hasAmoureux,
+      "Rôles solo": soloRoles.length > 0 ? soloRoles.join(', ') : null,
+      "Camp victorieux": campVictorieux,
+      "Type de victoire": typeVictoire,
+      "Nombre de journées": game.DaysCount,
+      "Survivants villageois": survivantsVillageois,
+      "Survivants loups (traître inclus)": survivantsLoups,
+      "Survivants amoureux": survivantsAmoureux,
+      "Survivants solo": survivantsSolo,
+      "Liste des gagnants": listeGagnants,
+      "Récolte": game.HarvestDone,
+      "Total récolte": game.HarvestGoal,
+      "Pourcentage de récolte": pourcentageRecolte,
+      "Liste des joueurs": listeJoueurs,
+      "Versions": game.ModVersion,
+      "Map": game.MapName,
+      "Début": game.VODLink,
+      "Fin": game.VODLink // Same link for now, could be enhanced
+    };
+  });
+}
+
+/**
+ * Transform GameLogData to legacy RawRoleData format
+ */
+function transformToRawRoleData(gameLogData: GameLogData): RawRoleData[] {
+  return gameLogData.GameStats.map((game, index) => {
+    const gameNumber = index + 1;
+    
+    // Group players by role
+    const roleGroups: { [key: string]: string[] } = {};
+    
+    game.PlayerStats.forEach(player => {
+      const role = player.MainRoleInitial;
+      if (!roleGroups[role]) {
+        roleGroups[role] = [];
+      }
+      roleGroups[role].push(player.Username);
+    });
+    
+    return {
+      Game: gameNumber,
+      "Game Moddée": game.Modded,
+      Loups: roleGroups['Loup']?.join(', ') || null,
+      Traître: roleGroups['Traître']?.join(', ') || null,
+      "Idiot du village": roleGroups['Idiot du village']?.join(', ') || null,
+      Cannibale: roleGroups['Cannibale']?.join(', ') || null,
+      Agent: roleGroups['Agent']?.join(', ') || null,
+      Espion: roleGroups['Espion']?.join(', ') || null,
+      Scientifique: roleGroups['Scientifique']?.join(', ') || null,
+      Amoureux: game.PlayerStats.filter(p => p.SecondaryRole === 'Amoureux').map(p => p.Username).join(', ') || null,
+      "La Bête": roleGroups['La Bête']?.join(', ') || null,
+      "Chasseur de primes": roleGroups['Chasseur de primes']?.join(', ') || null,
+      Vaudou: roleGroups['Vaudou']?.join(', ') || null
+    };
+  });
+}
+
+/**
+ * Transform GameLogData to legacy RawPonceData format
+ * Note: This focuses on Ponce's data specifically
+ */
+function transformToRawPonceData(gameLogData: GameLogData): RawPonceData[] {
+  return gameLogData.GameStats.map((game, index) => {
+    const gameNumber = index + 1;
+    const ponceData = game.PlayerStats.find(p => p.Username === 'Ponce');
+    
+    if (!ponceData) {
+      // Return empty data if Ponce not in game
+      return {
+        Game: gameNumber,
+        "Game Moddée": game.Modded,
+        Camp: null,
+        Traître: false,
+        "Rôle secondaire": null,
+        "Pouvoir de loup": null,
+        "Métier villageois": null,
+        "Joueurs tués": null,
+        "Jour de mort": null,
+        "Type de mort": null,
+        "Joueurs tueurs": null
+      };
+    }
+    
+    // Determine camp based on role
+    let camp = '';
+    if (ponceData.MainRoleInitial === 'Loup') {
+      camp = 'Loups';
+    } else if (ponceData.MainRoleInitial === 'Villageois') {
+      camp = 'Villageois';
+    } else if (ponceData.MainRoleInitial === 'Traître') {
+      camp = 'Traître';
+    } else {
+      camp = ponceData.MainRoleInitial; // Solo roles
+    }
+    
+    return {
+      Game: gameNumber,
+      "Game Moddée": game.Modded,
+      Camp: camp,
+      Traître: ponceData.MainRoleInitial === 'Traître',
+      "Rôle secondaire": ponceData.SecondaryRole,
+      "Pouvoir de loup": ponceData.Power,
+      "Métier villageois": ponceData.MainRoleInitial === 'Villageois' ? ponceData.Power : null,
+      "Joueurs tués": null, // This would need additional data from game log
+      "Jour de mort": ponceData.DeathPosition,
+      "Type de mort": ponceData.DeathTiming,
+      "Joueurs tueurs": ponceData.KillerName
+    };
+  });
+}
+
+/**
  * Centralized hook to fetch all raw data with a single loading state
- * This prevents multiple concurrent API calls and provides better performance
+ * Now loads from gameLog.json and transforms to legacy format for backward compatibility
  */
 function useCombinedRawData(): {
   data: CombinedRawData | null;
@@ -130,32 +354,31 @@ function useCombinedRawData(): {
         setIsLoading(true);
         setError(null);
 
-        // Fetch all data concurrently
-        const [gameResponse, roleResponse, ponceResponse, brResponse] = await Promise.all([
-          fetch(`${import.meta.env.BASE_URL}data/rawGameData.json`),
-          fetch(`${import.meta.env.BASE_URL}data/rawRoleData.json`),
-          fetch(`${import.meta.env.BASE_URL}data/rawPonceData.json`),
+        // Fetch the new gameLog.json and legacy BR data
+        const [gameLogResponse, brResponse] = await Promise.all([
+          fetch(`${import.meta.env.BASE_URL}data/gameLog.json`),
           fetch(`${import.meta.env.BASE_URL}data/rawBRData.json`)
         ]);
 
-        // Check if all responses are ok
-        if (!gameResponse.ok) throw new Error('Failed to fetch game data');
-        if (!roleResponse.ok) throw new Error('Failed to fetch role data');
-        if (!ponceResponse.ok) throw new Error('Failed to fetch ponce data');
+        // Check if responses are ok
+        if (!gameLogResponse.ok) throw new Error('Failed to fetch game log data');
         if (!brResponse.ok) throw new Error('Failed to fetch BR data');
 
-        // Parse all responses
-        const [gameResult, roleResult, ponceResult, brResult] = await Promise.all([
-          gameResponse.json() as Promise<RawDataResponse<RawGameData>>,
-          roleResponse.json() as Promise<RawDataResponse<RawRoleData>>,
-          ponceResponse.json() as Promise<RawDataResponse<RawPonceData>>,
+        // Parse responses
+        const [gameLogResult, brResult] = await Promise.all([
+          gameLogResponse.json() as Promise<GameLogData>,
           brResponse.json() as Promise<RawBRResponse>
         ]);
 
+        // Transform gameLog data to legacy formats
+        const transformedGameData = transformToRawGameData(gameLogResult);
+        const transformedRoleData = transformToRawRoleData(gameLogResult);
+        const transformedPonceData = transformToRawPonceData(gameLogResult);
+
         setData({
-          gameData: gameResult.data || [],
-          roleData: roleResult.data || [],
-          ponceData: ponceResult.data || [],
+          gameData: transformedGameData,
+          roleData: transformedRoleData,
+          ponceData: transformedPonceData,
           brPartiesData: brResult.BRParties?.data || [],
           brRefPartiesData: brResult.BRRefParties?.data || []
         });
@@ -369,4 +592,104 @@ export function useFilteredRawBRData() {
 export function useFilteredRawBRGlobalData() {
   const { brRefPartiesData, isLoading, error } = useCombinedFilteredRawData();
   return { data: brRefPartiesData, isLoading, error };
+}
+
+/**
+ * New hook to work directly with GameLog structure
+ * Use this for new features that can benefit from the richer data structure
+ */
+export function useGameLogData(): {
+  data: GameLogData | null;
+  isLoading: boolean;
+  error: string | null;
+} {
+  const [data, setData] = useState<GameLogData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchGameLogData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const response = await fetch(`${import.meta.env.BASE_URL}data/gameLog.json`);
+        if (!response.ok) throw new Error('Failed to fetch game log data');
+
+        const result = await response.json() as GameLogData;
+        setData(result);
+      } catch (err) {
+        console.error('Error fetching game log data:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchGameLogData();
+  }, []);
+
+  return { data, isLoading, error };
+}
+
+/**
+ * Filtered GameLog data that respects settings context
+ */
+export function useFilteredGameLogData(): {
+  data: GameLogEntry[] | null;
+  isLoading: boolean;
+  error: string | null;
+} {
+  const { settings } = useSettings();
+  const { data: rawGameLogData, isLoading, error } = useGameLogData();
+
+  const filteredData = useMemo(() => {
+    if (!rawGameLogData) return null;
+
+    return rawGameLogData.GameStats.filter(game => {
+      // Apply game type filter
+      if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
+        if (settings.gameFilter === 'modded') {
+          if (!game.Modded) return false;
+        } else if (settings.gameFilter === 'non-modded') {
+          if (game.Modded) return false;
+        }
+      }
+      // Apply date range filter
+      else if (settings.filterMode === 'dateRange') {
+        if (settings.dateRange.start || settings.dateRange.end) {
+          const gameDate = new Date(game.StartDate);
+          if (settings.dateRange.start) {
+            const startDate = new Date(settings.dateRange.start);
+            if (gameDate < startDate) return false;
+          }
+          if (settings.dateRange.end) {
+            const endDate = new Date(settings.dateRange.end);
+            if (gameDate > endDate) return false;
+          }
+        }
+      }
+
+      // Apply player filter
+      if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
+        const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
+        
+        if (settings.playerFilter.mode === 'include') {
+          const hasAllPlayers = settings.playerFilter.players.every((player: string) => 
+            gamePlayersList.includes(player.toLowerCase())
+          );
+          if (!hasAllPlayers) return false;
+        } else if (settings.playerFilter.mode === 'exclude') {
+          const hasAnyPlayer = settings.playerFilter.players.some((player: string) => 
+            gamePlayersList.includes(player.toLowerCase())
+          );
+          if (hasAnyPlayer) return false;
+        }
+      }
+
+      return true;
+    });
+  }, [rawGameLogData, settings]);
+
+  return { data: filteredData, isLoading, error };
 }
