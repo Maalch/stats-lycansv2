@@ -2,14 +2,14 @@
 
 # Copilot Instructions for `stats-lycansv2`
 
-A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Uses a **static data pipeline** with JSON files (updated weekly via GitHub Actions).
+A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Recently migrated from multiple JSON files to a unified `gameLog.json` structure while maintaining backward compatibility.
 
 ## Architecture Overview
 
 **Frontend:** React 19 + TypeScript, Vite, Recharts for charts, triple context system (`SettingsContext` + `FullscreenContext` + `NavigationContext`)  
-**Data Pipeline:** Static JSON files in `/data` (updated weekly via GitHub Actions)  
-**Build System:** Vite outputs to `docs/` for GitHub Pages, with data copying via inline Node.js scripts in `package.json`  
-**Data Processing:** Client-side calculations using `*FromRaw` hooks that process raw game/role/ponce data locally
+**Data Pipeline:** Unified `gameLog.json` with transformation layer for backward compatibility  
+**Build System:** Vite outputs to `docs/` for GitHub Pages, inline Node.js scripts copy data files  
+**Data Processing:** Client-side calculations using optimized base hook pattern with pure computation functions
 
 ## Critical Workflows
 
@@ -19,113 +19,110 @@ npm run build        # TypeScript check + Vite build + copy data to docs/data/
 npm run sync-data    # Fetch fresh data from Apps Script to /data
 ```
 
-**Build Pipeline:** Inline Node.js in package.json scripts copies `/data` → `public/data/` (dev) or `docs/data/` (prod)  
-**Data Sync:** GitHub Actions runs twice a week, can be manually triggered via workflow_dispatch  
-**Environment Variables:** None required - all data comes from static JSON files. secrets.LYCANS_API_BASE on GitHub for data sync only.
+**Build Pipeline:** Inline Node.js scripts in `package.json` copy `/data` → `public/data/` (dev) or `docs/data/` (prod)  
+**Data Sync:** GitHub Actions runs weekly, manually triggerable via workflow_dispatch  
+**Environment:** No env vars needed locally - all data from static files. `LYCANS_API_BASE` secret on GitHub only.
+
+## Data Architecture Migration (RECENT CHANGE)
+
+**New Primary Source:** `gameLog.json` - unified structure with nested `PlayerStats` arrays  
+**Backward Compatibility:** `useCombinedRawData.tsx` transforms new structure to legacy interfaces  
+**Legacy Interfaces:** `RawGameData`, `RawRoleData`, `RawPonceData` still work unchanged  
+
+### Key Data Interfaces
+```typescript
+// New unified structure
+interface GameLogEntry {
+  Id: string; StartDate: string; PlayerStats: PlayerStat[];
+}
+interface PlayerStat {
+  Username: string; MainRoleInitial: string; Victorious: boolean;
+}
+
+// Legacy interfaces (auto-transformed from gameLog)
+interface RawGameData {
+  Game: number; "Camp victorieux": string; "Liste des joueurs": string;
+}
+```
+
+**Critical:** `Amoureux` is `MainRoleInitial`, not `SecondaryRole`. Solo roles win as their role name, not "Villageois".
 
 ## Key Architectural Patterns
+
+### Base Hook System (PREFERRED PATTERN)
+```typescript
+// Optimized pattern for new statistics
+const { data, isLoading, error } = usePlayerStatsBase(
+  (gameData, roleData) => computePlayerStats(gameData, roleData)
+);
+
+// Base hook hierarchy: useBaseStats → useGameStatsBase → usePlayerStatsBase → useFullStatsBase
+```
 
 ### Triple Context System
 ```typescript
 // SettingsContext - persistent filters via localStorage
 const { settings, updateSettings } = useSettings();
-// NavigationContext - drill-down navigation with filters
-const { navigateToGameDetails } = useNavigation();
+// NavigationContext - drill-down navigation with complex filters
+const { navigateToGameDetails, filters } = useNavigation();
 // FullscreenContext - chart fullscreen state
 const { isFullscreen, toggleFullscreen } = useFullscreen();
 ```
 
-### Navigation Context for Drill-Down Views
+### Navigation Context for Drill-Down
 ```typescript
-// Navigate from any chart to GameDetailsChart with filters
-const { navigateToGameDetails } = useNavigation();
+// Complex filter navigation between charts
 navigateToGameDetails({ 
   selectedPlayer: 'Ponce', 
-  selectedCamp: 'Loups',
+  campFilter: { selectedCamp: 'Loups', campFilterMode: 'wins-only' },
   fromComponent: 'Statistiques Joueurs' 
 });
 ```
 
-### Lazy Loading with Named Exports
+### Lazy Loading Pattern
 ```typescript
-// Required pattern for component imports in App.tsx
+// Required pattern for App.tsx component imports
 const Component = lazy(() => import('./path').then(m => ({ default: m.ComponentName })));
 ```
 
-### Optimized Data Processing Pattern
-```typescript
-// New centralized pattern using base hooks
-const { data: playerStats, isLoading, error } = usePlayerStatsBase(
-  (gameData, roleData) => computePlayerStats(gameData, roleData)
-);
+## Data Flow & Filtering
 
-// Legacy pattern (avoid for new features)
-const { data: rawGameData } = useFilteredRawGameData();
-const { data: rawRoleData } = useFilteredRawRoleData();
-```
-
-### Base Hook Hierarchy
-```typescript
-// useBaseStats - core hook with options for data requirements
-// useGameStatsBase - game data only
-// usePlayerStatsBase - game + role data  
-// useFullStatsBase - game + role + ponce data
-```
-
-## Data Architecture
-
-**Core Data Types:** `RawGameData`, `RawRoleData`, `RawPonceData` in `hooks/useCombinedRawData.tsx`  
-**Color Schemes:** `lycansColorScheme` (camps/roles), `playersColor` (players) in `types/api.ts`  
-**French Language:** All UI labels and data values in French ("Villageois", "Loups", etc.)
-
-### Data Flow
-1. GitHub Actions → Apps Script → `/data/*.json` (weekly sync)
-2. Build scripts → copy to `public/data/` or `docs/data/`  
-3. `useCombinedRawData()` → loads from static files directly
-4. `useCombinedFilteredRawData()` → applies SettingsContext filters consistently
-5. `use*FromRaw()` → processes filtered data client-side using pure computation functions
-
-### Settings-Aware Data Filtering
-All data hooks automatically respect `SettingsContext` filters:
-- Game type filter (all/modded/non-modded)  
-- Date range filtering with French date parsing
-- Player inclusion/exclusion filters (all selected must be present vs any selected excludes game)
+**Primary Flow:** `gameLog.json` → `useCombinedRawData()` → transformation → `useCombinedFilteredRawData()` → base hooks  
+**Filter Application:** All hooks automatically respect `SettingsContext` filters (game type, date range, player inclusion/exclusion)  
+**French Date Parsing:** Uses `parseFrenchDate()` for DD/MM/YYYY format compatibility
 
 ### Game Domain Rules
-Players are divided into camps: **Villageois** (Villagers) and **Loups** (Wolves). Special camps work independently: `Idiot Du Village`, `Agent`, `Cannibale`, `Amoureux`, `Espion`, `Scientifique`, `La Bête`. Exceptions:
-- `Traître` camp works with Loups
-- `Amoureux` camp always has 2 players (win/lose together)  
-- `Agent` camp has 2 players (only one can win)
+**Camps:** Villageois, Loups, solo roles (`Amoureux`, `Idiot du Village`, `Agent`, etc.)  
+**Special Cases:** `Traître` works with Loups, `Amoureux` always 2 players (win/lose together)  
+**Victory Logic:** Pure role-based - solo roles win as their role name, not grouped into Villageois
 
 ## Project-Specific Conventions
 
-**Component Organization:** Domain-based (`generalstats/`, `playerstats/`, `gamedetails/`, `settings/`)  
-**Context Usage:** Persistent settings via localStorage, fullscreen chart state, navigation state  
-**No Test Suite:** Visual testing via dev server, verify chart rendering manually  
-**Menu Structure:** Hierarchical tabs (`MAIN_TABS` → `*_STATS_MENU`) defined in `App.tsx`
+**Component Structure:** Domain-based folders (`generalstats/`, `playerstats/`, `gamedetails/`, `settings/`)  
+**Menu System:** Hierarchical tabs (`MAIN_TABS` → `*_STATS_MENU`) in `App.tsx`  
+**Testing:** Visual testing via dev server only - no automated test suite  
+**Language:** All UI and data labels in French ("Villageois", "Loups", "Camp victorieux")
 
-## Adding Features
+## Adding Features Workflow
 
-1. **New Statistics:** Create `use*FromRaw` hook using base hook pattern → add computation function to `utils/` → add to menu constants in `App.tsx`
-2. **New Settings:** Add to `SettingsState` interface → ensure localStorage persistence in `SettingsContext`
-3. **New Data Sources:** Update interfaces in `useCombinedRawData.tsx`
-4. **Navigation Integration:** Use `NavigationContext` for chart drill-downs to `GameDetailsChart`
+1. **New Statistics:** Create computation function in `utils/` → use base hook pattern → add to menu in `App.tsx`
+2. **Data Access:** Use `useGameLogData()` for new features, legacy hooks for backward compatibility
+3. **Navigation:** Integrate with `NavigationContext` for chart drill-downs
+4. **Settings:** Add to `SettingsState` interface → ensure localStorage persistence
 
-### Base Hook Migration Pattern
-When creating new statistics hooks, use the optimized base hook pattern:
+### Base Hook Template
 ```typescript
 export function useNewStatsFromRaw() {
-  const { data, isLoading, error } = usePlayerStatsBase(
-    (gameData, roleData) => computeNewStats(gameData, roleData)
-  );
-  return { data, isLoading, error };
+  return usePlayerStatsBase((gameData, roleData) => {
+    // Pure computation function here
+    return computeNewStats(gameData, roleData);
+  });
 }
 ```
 
 ## Integration Points
 
-**GitHub Actions:** `.github/workflows/update-data.yml` (weekly data sync)  
-**Apps Script:** `scripts/data-sync/fetch-data.js` (endpoints: rawGameData, rawRoleData, rawPonceData, rawBRData)  
-**Build Outputs:** GitHub Pages serves from `/docs` directory with base path `/stats-lycansv2/`  
-**Development:** All processed data (player histories, computed stats) calculated client-side from raw data  
-**Error Handling:** Static file loading only, localStorage persistence for settings
+**GitHub Actions:** `.github/workflows/update-data.yml` for weekly data sync  
+**Apps Script:** `scripts/data-sync/fetch-data.js` fetches from Google Sheets  
+**Build Output:** GitHub Pages serves from `/docs` with base path `/stats-lycansv2/`  
+**Error Handling:** Static file loading only, graceful degradation for missing data

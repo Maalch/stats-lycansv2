@@ -129,37 +129,27 @@ function createYouTubeEmbedUrl(start: string | null, end: string | null): string
 }
 
 /**
- * Calculate game duration from timestamps
+ * Calculate game duration from ISO date strings
  */
 function calculateGameDuration(start: string | null, end: string | null): number | null {
   if (!start || !end) return null;
   
   try {
-    // Extract timestamps from both URLs
-    const getTimestamp = (url: string): number => {
-      const urlObj = new URL(url);
-      let timestamp = 0;
-      
-      if (urlObj.hostname === 'youtu.be') {
-        const tParam = urlObj.searchParams.get('t');
-        if (tParam) {
-          timestamp = parseInt(tParam, 10) || 0;
-        }
-      } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
-        const tParam = urlObj.searchParams.get('t');
-        if (tParam) {
-          timestamp = parseInt(tParam, 10) || 0;
-        }
-      }
-      
-      return timestamp;
-    };
+    // Parse ISO date strings
+    const startDate = new Date(start);
+    const endDate = new Date(end);
     
-    const startTime = getTimestamp(start);
-    const endTime = getTimestamp(end);
+    // Validate that the dates are valid
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.warn('Invalid date format:', start, end);
+      return null;
+    }
     
-    if (endTime > startTime) {
-      return endTime - startTime; // Duration in seconds
+    // Calculate duration in milliseconds, then convert to seconds
+    const durationMs = endDate.getTime() - startDate.getTime();
+    
+    if (durationMs > 0) {
+      return Math.round(durationMs / 1000); // Duration in seconds
     }
     
     return null;
@@ -185,7 +175,7 @@ export function getPlayerCampFromRoles(
     if (excludeTraitor) return 'Traître'; // Return Traître if we want to exclude traitor from Loups
     return 'Loups';
   }
-  if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(player)) return 'Idiot du Village';
+  if (roleData["Idiot du Village"] && roleData["Idiot du Village"].toLowerCase().includes(player)) return 'Idiot du Village';
   if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
   if (roleData.Agent && roleData.Agent.toLowerCase().includes(player)) return 'Agent';
   if (roleData.Espion && roleData.Espion.toLowerCase().includes(player)) return 'Espion';
@@ -213,7 +203,7 @@ function isPlayerInSmallCamp(
     case 'Traître':
       return !!(roleData.Traître && roleData.Traître.toLowerCase().includes(selectedPlayer));
     case 'Idiot du Village':
-      return !!(roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(selectedPlayer));
+      return !!(roleData["Idiot du Village"] && roleData["Idiot du Village"].toLowerCase().includes(selectedPlayer));
     case 'Cannibale':
       return !!(roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(selectedPlayer));
     case 'Agent':
@@ -236,7 +226,7 @@ function isPlayerInSmallCamp(
       const playersInSpecialRoles = [
         ...(roleData.Loups ? splitAndTrim(roleData.Loups) : []),
         ...(roleData.Traître ? [roleData.Traître.trim()] : []),
-        ...(roleData["Idiot du village"] ? [roleData["Idiot du village"].trim()] : []),
+        ...(roleData["Idiot du Village"] ? [roleData["Idiot du Village"].trim()] : []),
         ...(roleData.Cannibale ? [roleData.Cannibale.trim()] : []),
         ...(roleData.Agent ? splitAndTrim(roleData.Agent) : []),
         ...(roleData.Espion ? [roleData.Espion.trim()] : []),
@@ -415,7 +405,7 @@ function filterByCamp(
               case 'Traître':
                 return !!(roleDataForGame.Traître && roleDataForGame.Traître.trim());
               case 'Idiot du Village':
-                return !!(roleDataForGame["Idiot du village"] && roleDataForGame["Idiot du village"].trim());
+                return !!(roleDataForGame["Idiot du Village"] && roleDataForGame["Idiot du Village"].trim());
               case 'Cannibale':
                 return !!(roleDataForGame.Cannibale && roleDataForGame.Cannibale.trim());
               case 'Agent':
@@ -452,7 +442,7 @@ function filterByCamp(
             const playersInSpecialRoles = [
               ...splitAndTrim(roleDataForGame.Loups || ''),
               ...(roleDataForGame.Traître ? [roleDataForGame.Traître.trim()] : []),
-              ...(roleDataForGame["Idiot du village"] ? [roleDataForGame["Idiot du village"].trim()] : []),
+              ...(roleDataForGame["Idiot du Village"] ? [roleDataForGame["Idiot du Village"].trim()] : []),
               ...(roleDataForGame.Cannibale ? [roleDataForGame.Cannibale.trim()] : []),
               ...(roleDataForGame.Agent ? splitAndTrim(roleDataForGame.Agent) : []),
               ...(roleDataForGame.Espion ? [roleDataForGame.Espion.trim()] : []),
@@ -464,7 +454,7 @@ function filterByCamp(
             ];
             return playersInGame.some(player => !playersInSpecialRoles.includes(player));
           case 'Idiot du Village':
-            return !!(roleDataForGame["Idiot du village"] && roleDataForGame["Idiot du village"].trim());
+            return !!(roleDataForGame["Idiot du Village"] && roleDataForGame["Idiot du Village"].trim());
           case 'Cannibale':
             return !!(roleDataForGame.Cannibale && roleDataForGame.Cannibale.trim());
           case 'Agent':
@@ -773,7 +763,7 @@ function parseRoles(roleDataForGame: RawRoleData | undefined): EnrichedGameData[
   if (roleDataForGame) {
     if (roleDataForGame.Loups) roles.wolves = splitAndTrim(roleDataForGame.Loups);
     if (roleDataForGame.Traître) roles.traitor = roleDataForGame.Traître;
-    if (roleDataForGame["Idiot du village"]) roles.villageIdiot = roleDataForGame["Idiot du village"];
+    if (roleDataForGame["Idiot du Village"]) roles.villageIdiot = roleDataForGame["Idiot du Village"];
     if (roleDataForGame.Cannibale) roles.cannibal = roleDataForGame.Cannibale;
     if (roleDataForGame.Agent) roles.agent = splitAndTrim(roleDataForGame.Agent);
     if (roleDataForGame.Espion) roles.spy = roleDataForGame.Espion;
@@ -808,7 +798,7 @@ function createPlayerRoles(
       } else if (roleDataForGame.Traître && splitAndTrim(roleDataForGame.Traître).includes(player)) {
         role = 'Traître';
         camp = 'Loups'; 
-      } else if (roleDataForGame["Idiot du village"] && splitAndTrim(roleDataForGame["Idiot du village"]).includes(player)) {
+      } else if (roleDataForGame["Idiot du Village"] && splitAndTrim(roleDataForGame["Idiot du Village"]).includes(player)) {
         role = 'Idiot du Village';
         camp = 'Idiot du Village'; 
       } else if (roleDataForGame.Cannibale && splitAndTrim(roleDataForGame.Cannibale).includes(player)) {
@@ -913,7 +903,7 @@ export function computeGameDetails(
       playersList: game["Liste des joueurs"],
       versions: game["Versions"],
       map: game["Map"],
-      youtubeEmbedUrl: createYouTubeEmbedUrl(game["Début"], game["Fin"]),
+      youtubeEmbedUrl: createYouTubeEmbedUrl(game["VOD"], game["VODEnd"]),
       gameDuration: calculateGameDuration(game["Début"], game["Fin"]),
       roles,
       playerRoles,

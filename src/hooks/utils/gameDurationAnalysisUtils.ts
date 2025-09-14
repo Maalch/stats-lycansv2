@@ -1,64 +1,6 @@
 import type { RawGameData } from '../useCombinedRawData';
 import type { GameDurationAnalysisResponse, DurationDistribution, CampDurationData } from '../../types/api';
-
-/**
- * Calculate game duration from timestamps
- */
-function calculateGameDuration(start: string | null, end: string | null): number | null {
-  if (!start || !end) return null;
-  
-  try {
-    // Extract timestamps from both URLs
-    const getTimestamp = (url: string): number => {
-      const urlObj = new URL(url);
-      let timestamp = 0;
-      
-      if (urlObj.hostname === 'youtu.be') {
-        // Format: https://youtu.be/VIDEO_ID?t=TIMESTAMP
-        const tParam = urlObj.searchParams.get('t');
-        if (tParam) {
-          // Handle both seconds (123) and time format (1h23m45s)
-          if (tParam.includes('h') || tParam.includes('m') || tParam.includes('s')) {
-            const hours = tParam.match(/(\d+)h/)?.[1] || '0';
-            const minutes = tParam.match(/(\d+)m/)?.[1] || '0';
-            const seconds = tParam.match(/(\d+)s/)?.[1] || '0';
-            timestamp = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-          } else {
-            timestamp = parseInt(tParam) || 0;
-          }
-        }
-      } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
-        // Format: https://www.youtube.com/watch?v=VIDEO_ID&t=TIMESTAMP
-        const tParam = urlObj.searchParams.get('t');
-        if (tParam) {
-          // Handle both seconds (123) and time format (1h23m45s)
-          if (tParam.includes('h') || tParam.includes('m') || tParam.includes('s')) {
-            const hours = tParam.match(/(\d+)h/)?.[1] || '0';
-            const minutes = tParam.match(/(\d+)m/)?.[1] || '0';
-            const seconds = tParam.match(/(\d+)s/)?.[1] || '0';
-            timestamp = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-          } else {
-            timestamp = parseInt(tParam) || 0;
-          }
-        }
-      }
-      
-      return timestamp;
-    };
-    
-    const startTime = getTimestamp(start);
-    const endTime = getTimestamp(end);
-    
-    if (endTime > startTime) {
-      return endTime - startTime; // Duration in seconds
-    }
-    
-    return null;
-  } catch (error) {
-    console.warn('Failed to calculate game duration:', start, end, error);
-    return null;
-  }
-}
+import { calculateGameDuration } from '../../utils/gameUtils';
 
 /**
  * Format duration in seconds to a human-readable string
