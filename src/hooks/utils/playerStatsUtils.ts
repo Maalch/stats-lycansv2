@@ -1,12 +1,12 @@
-import type { RawGameData, RawRoleData } from '../useCombinedRawData';
-import { splitAndTrim, didPlayerWin, buildGamePlayerCampMap, getPlayerCamp } from './dataUtils';
+import type { GameLogEntry, RawRoleData } from '../useCombinedRawData';
+import { buildGamePlayerCampMap, getPlayerCamp } from './dataUtils';
 import type { PlayerStatsData, PlayerStat, PlayerCamps } from '../../types/api';
 
 /**
  * Compute player statistics from raw game and role data
  */
 export function computePlayerStats(
-  gameData: RawGameData[],
+  gameData: GameLogEntry[],
   roleData: RawRoleData[]
 ): PlayerStatsData | null {
   if (gameData.length === 0 || roleData.length === 0) {
@@ -28,14 +28,13 @@ export function computePlayerStats(
   let totalGames = 0;
 
   // Process game data to collect player statistics
-  gameData.forEach(gameRow => {
-    const gameId = gameRow["Game"]?.toString();
-    const playerList = gameRow["Liste des joueurs"];
-    const winnerList = gameRow["Liste des gagnants"];
+  gameData.forEach((gameEntry, index) => {
+    const gameId = (index + 1).toString(); // Use index + 1 as game ID
+    const players = gameEntry.PlayerStats.map(p => p.Username);
+    const winners = gameEntry.PlayerStats.filter(p => p.Victorious).map(p => p.Username);
 
-    if (gameId && playerList) {
+    if (gameId && players.length > 0) {
       totalGames++;
-      const players = splitAndTrim(playerList.toString());
 
       players.forEach(playerName => {
         const player = playerName.trim();
@@ -73,8 +72,8 @@ export function computePlayerStats(
           // Increment camp count
           allPlayers[player].camps[playerCamp as keyof PlayerCamps]++;
 
-          // Check if player won using shared utility
-          const playerWon = didPlayerWin(player, winnerList?.toString());
+          // Check if player won by checking if they're in the winners list
+          const playerWon = winners.includes(player);
           if (playerWon) {
             allPlayers[player].wins++;
           }

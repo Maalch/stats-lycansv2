@@ -1,14 +1,14 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import type { GameFilter, FilterMode, PlayerFilterMode } from '../../context/SettingsContext';
-import type { RawGameData } from '../../hooks/useCombinedRawData';
+import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import { ShareableUrl } from '../common/ShareableUrl';
 import './SettingsPanel.css';
 
 export function SettingsPanel() {
 
   const { settings, updateSettings, resetSettings } = useSettings();
-  const [rawGameData, setRawGameData] = useState<RawGameData[] | null>(null);
+  const [gameLogData, setGameLogData] = useState<GameLogEntry[] | null>(null);
   
   // Ref to track previous primary filter values
   const prevPrimaryFilter = useRef({
@@ -22,11 +22,11 @@ export function SettingsPanel() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.BASE_URL}data/rawGameData.json`);
+        const response = await fetch(`${import.meta.env.BASE_URL}data/gameLog.json`);
         const result = await response.json();
-        setRawGameData(result.data || []);
+        setGameLogData(result.data || []);
       } catch (error) {
-        console.error('Error fetching raw game data:', error);
+        console.error('Error fetching game log data:', error);
       }
     };
     fetchData();
@@ -62,29 +62,31 @@ export function SettingsPanel() {
     prevPrimaryFilter.current = current;
   }, [settings.filterMode, settings.gameFilter, settings.dateRange.start, settings.dateRange.end, settings.playerFilter.players.length, updateSettings]);
 
-  // Helper to parse DD/MM/YYYY to Date
-  const parseFrenchDate = (dateStr: string): Date | null => {
+  // Helper to parse ISO date string to Date
+  const parseISODate = (dateStr: string): Date | null => {
     if (!dateStr) return null;
-    const [day, month, year] = dateStr.split('/');
-    if (!day || !month || !year) return null;
-    return new Date(Number(year), Number(month) - 1, Number(day));
+    try {
+      return new Date(dateStr);
+    } catch {
+      return null;
+    }
   };
 
   // Filter games based on current primary filter (game type or date range)
   const filteredGames = useMemo(() => {
-    if (!rawGameData) return [];
+    if (!gameLogData) return [];
 
-    return rawGameData.filter(game => {
+    return gameLogData.filter(game => {
       // Apply game type filter
       if (settings.filterMode === 'gameType') {
-        if (settings.gameFilter === 'modded' && !game["Game Moddée"]) return false;
-        if (settings.gameFilter === 'non-modded' && game["Game Moddée"]) return false;
+        if (settings.gameFilter === 'modded' && !game.LegacyData?.Modded) return false;
+        if (settings.gameFilter === 'non-modded' && game.LegacyData?.Modded) return false;
       }
       
       // Apply date range filter
       if (settings.filterMode === 'dateRange') {
         if (settings.dateRange.start || settings.dateRange.end) {
-          const gameDateObj = parseFrenchDate(game.Date);
+          const gameDateObj = parseISODate(game.StartDate);
           if (!gameDateObj) return false;
           if (settings.dateRange.start) {
             const startObj = new Date(settings.dateRange.start);
@@ -99,17 +101,15 @@ export function SettingsPanel() {
       
       return true;
     });
-  }, [rawGameData, settings.filterMode, settings.gameFilter, settings.dateRange]);
+  }, [gameLogData, settings.filterMode, settings.gameFilter, settings.dateRange]);
 
   // Get all players from filtered games (based on primary filter)
   const playersFromFilteredGames = useMemo(() => {
     const allPlayers = new Set<string>();
-    filteredGames.forEach((game: RawGameData) => {
-      const playerList = game["Liste des joueurs"];
-      if (playerList) {
-        const players = playerList.split(',').map((p: string) => p.trim()).filter((p: string) => p.length > 0);
-        players.forEach((player: string) => allPlayers.add(player));
-      }
+    filteredGames.forEach((game: GameLogEntry) => {
+      game.PlayerStats.forEach((playerStat) => {
+        allPlayers.add(playerStat.Username);
+      });
     });
     return Array.from(allPlayers);
   }, [filteredGames]);
@@ -118,23 +118,20 @@ export function SettingsPanel() {
   const playerCompatibility = useMemo(() => {
     const compatibility: Record<string, Set<string>> = {};
     
-    filteredGames.forEach((game: RawGameData) => {
-      const playerList = game["Liste des joueurs"];
-      if (playerList) {
-        const players = playerList.split(',').map((p: string) => p.trim()).filter((p: string) => p.length > 0);
-        
-        // For each player, record who they've played with
-        players.forEach((player: string) => {
-          if (!compatibility[player]) {
-            compatibility[player] = new Set();
+    filteredGames.forEach((game: GameLogEntry) => {
+      const players = game.PlayerStats.map(p => p.Username);
+      
+      // For each player, record who they've played with
+      players.forEach((player: string) => {
+        if (!compatibility[player]) {
+          compatibility[player] = new Set();
+        }
+        players.forEach((otherPlayer: string) => {
+          if (player !== otherPlayer) {
+            compatibility[player].add(otherPlayer);
           }
-          players.forEach((otherPlayer: string) => {
-            if (player !== otherPlayer) {
-              compatibility[player].add(otherPlayer);
-            }
-          });
         });
-      }
+      });
     });
     
     return compatibility;
@@ -175,13 +172,13 @@ export function SettingsPanel() {
         } else {
           // Check if this player has games without any of the excluded players
           const hasGamesWithoutExcluded = filteredGames.some(game => {
-            const gamePlayersList = game["Liste des joueurs"].toLowerCase();
-            const playerInGame = gamePlayersList.includes(player.toLowerCase());
+            const gamePlayers = game.PlayerStats.map(p => p.Username.toLowerCase());
+            const playerInGame = gamePlayers.includes(player.toLowerCase());
             if (!playerInGame) return false;
             
             // Check if any excluded player is in this game
             const hasExcludedPlayer = settings.playerFilter.players.some(excludedPlayer => 
-              gamePlayersList.includes(excludedPlayer.toLowerCase())
+              gamePlayers.includes(excludedPlayer.toLowerCase())
             );
             return !hasExcludedPlayer;
           });

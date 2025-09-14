@@ -3,9 +3,8 @@
  */
 
 import type { PlayerStat } from '../../types/api';
-import type { RawGameData, RawRoleData } from '../useCombinedRawData';
+import type { GameLogEntry, RawRoleData } from '../useCombinedRawData';
 import { 
-  splitAndTrim, 
   getPlayerCamp, 
   buildGamePlayerCampMap,
   didCampWin
@@ -61,29 +60,55 @@ export interface PlayerComparisonData {
  */
 export function calculateCampSpecificPerformance(
   playerName: string,
-  rawGameData: RawGameData[],
+  rawGameData: GameLogEntry[],
   gamePlayerCampMap: Record<string, Record<string, string>>
 ) {
   const playerGameHistory = rawGameData
     .filter(game => {
-      const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+      const playerList = game.PlayerStats.map(p => p.Username);
       return playerList.some(p => p.toLowerCase() === playerName.toLowerCase());
     })
-    .map(game => {
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), playerName);
-      const winningCamp = game["Camp victorieux"];
+    .map((game, index) => {
+      const gameNumber = index + 1;
+      const playerCamp = getPlayerCamp(gamePlayerCampMap, gameNumber.toString(), playerName);
+      
+      // Determine winning camp from PlayerStats
+      const winners = game.PlayerStats.filter(p => p.Victorious);
+      let winningCamp = '';
+      
+      if (winners.length > 0) {
+        const winnerRoles = winners.map(w => w.MainRoleInitial);
+        
+        // Check for wolf/traitor victory
+        if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
+          winningCamp = 'Loups';
+        } 
+        // Check for pure villager victory (only villagers win)
+        else if (winnerRoles.every(role => role === 'Villageois')) {
+          winningCamp = 'Villageois';
+        }
+        // Check for solo role victory
+        else {
+          const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
+          if (soloWinnerRoles.length > 0) {
+            winningCamp = soloWinnerRoles[0];
+          } else {
+            winningCamp = 'Villageois';
+          }
+        }
+      }
       
       // Special case for Agent camp: only winners in the list actually won
       let playerWon = 0;
       if (winningCamp === "Agent" && playerCamp === "Agent") {
-        const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
-        playerWon = winnersList.some(winner => winner.toLowerCase() === playerName.toLowerCase()) ? 1 : 0;
+        const isPlayerWinner = game.PlayerStats.find(p => p.Username.toLowerCase() === playerName.toLowerCase())?.Victorious || false;
+        playerWon = isPlayerWinner ? 1 : 0;
       } else {
         playerWon = didCampWin(playerCamp, winningCamp) ? 1 : 0;
       }
       
       return {
-        gameNumber: game.Game,
+        gameNumber,
         playerCamp,
         playerWon
       };
@@ -117,30 +142,56 @@ export function calculateCampSpecificPerformance(
  */
 export function calculateAdvancedConsistency(
   playerName: string,
-  rawGameData: RawGameData[],
+  rawGameData: GameLogEntry[],
   gamePlayerCampMap: Record<string, Record<string, string>>
 ): number {
   // Get player's game history with enhanced context
   const playerGameHistory = rawGameData
     .filter(game => {
-      const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+      const playerList = game.PlayerStats.map(p => p.Username);
       return playerList.some(p => p.toLowerCase() === playerName.toLowerCase());
     })
-    .map(game => {
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), playerName);
-      const winningCamp = game["Camp victorieux"];
+    .map((game, index) => {
+      const gameNumber = index + 1;
+      const playerCamp = getPlayerCamp(gamePlayerCampMap, gameNumber.toString(), playerName);
+      
+      // Determine winning camp from PlayerStats
+      const winners = game.PlayerStats.filter(p => p.Victorious);
+      let winningCamp = '';
+      
+      if (winners.length > 0) {
+        const winnerRoles = winners.map(w => w.MainRoleInitial);
+        
+        // Check for wolf/traitor victory
+        if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
+          winningCamp = 'Loups';
+        } 
+        // Check for pure villager victory (only villagers win)
+        else if (winnerRoles.every(role => role === 'Villageois')) {
+          winningCamp = 'Villageois';
+        }
+        // Check for solo role victory
+        else {
+          const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
+          if (soloWinnerRoles.length > 0) {
+            winningCamp = soloWinnerRoles[0];
+          } else {
+            winningCamp = 'Villageois';
+          }
+        }
+      }
       
       // Special case for Agent camp: only winners in the list actually won
       let playerWon = 0;
       if (winningCamp === "Agent" && playerCamp === "Agent") {
-        const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
-        playerWon = winnersList.some(winner => winner.toLowerCase() === playerName.toLowerCase()) ? 1 : 0;
+        const isPlayerWinner = game.PlayerStats.find(p => p.Username.toLowerCase() === playerName.toLowerCase())?.Victorious || false;
+        playerWon = isPlayerWinner ? 1 : 0;
       } else {
         playerWon = didCampWin(playerCamp, winningCamp) ? 1 : 0;
       }
       
       return {
-        gameNumber: game.Game,
+        gameNumber,
         playerCamp,
         playerWon
       };
@@ -257,7 +308,7 @@ export function generatePlayerComparison(
   player1Name: string,
   player2Name: string,
   playerStatsData: { playerStats: PlayerStat[] },
-  rawGameData: RawGameData[],
+  rawGameData: GameLogEntry[],
   rawRoleData: RawRoleData[]
 ): PlayerComparisonData | null {
   const player1Stats = playerStatsData.playerStats.find(p => p.player === player1Name);
@@ -281,22 +332,22 @@ export function generatePlayerComparison(
       rawVillageoisMastery: campPerformance.villageoisWinRate,
       rawLoupsEfficiency: campPerformance.loupsWinRate,
       rawSpecialRoleAdaptability: campPerformance.specialRoleWinRate,
-      villageoisGames: rawGameData.filter(game => {
-        const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+      villageoisGames: rawGameData.filter((game, index) => {
+        const playerList = game.PlayerStats.map(p => p.Username);
         if (!playerList.some(p => p.toLowerCase() === playerStat.player.toLowerCase())) return false;
-        const playerCamp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), playerStat.player);
+        const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), playerStat.player);
         return playerCamp === 'Villageois';
       }).length,
-      loupsGames: rawGameData.filter(game => {
-        const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+      loupsGames: rawGameData.filter((game, index) => {
+        const playerList = game.PlayerStats.map(p => p.Username);
         if (!playerList.some(p => p.toLowerCase() === playerStat.player.toLowerCase())) return false;
-        const playerCamp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), playerStat.player);
+        const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), playerStat.player);
         return playerCamp === 'Loups';
       }).length,
-      specialRoleGames: rawGameData.filter(game => {
-        const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+      specialRoleGames: rawGameData.filter((game, index) => {
+        const playerList = game.PlayerStats.map(p => p.Username);
         if (!playerList.some(p => p.toLowerCase() === playerStat.player.toLowerCase())) return false;
-        const playerCamp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), playerStat.player);
+        const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), playerStat.player);
         return !['Villageois', 'Loups'].includes(playerCamp);
       }).length
     };
@@ -338,27 +389,52 @@ export function generatePlayerComparison(
   let totalSameLoupsDurationSeconds = 0;
   let sameLoupsGamesWithDuration = 0;
 
-  rawGameData.forEach(game => {
-    const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+  rawGameData.forEach((game, index) => {
+    const gameNumber = index + 1;
+    const playerList = game.PlayerStats.map(p => p.Username);
     const hasPlayer1 = playerList.some(p => p.toLowerCase() === player1Name.toLowerCase());
     const hasPlayer2 = playerList.some(p => p.toLowerCase() === player2Name.toLowerCase());
     
     if (hasPlayer1 && hasPlayer2) {
       commonGames.push(game);
       
-      const player1Camp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), player1Name);
-      const player2Camp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), player2Name);
-      const winnerCamp = game["Camp victorieux"];
+      const player1Camp = getPlayerCamp(gamePlayerCampMap, gameNumber.toString(), player1Name);
+      const player2Camp = getPlayerCamp(gamePlayerCampMap, gameNumber.toString(), player2Name);
+      
+      // Determine winning camp from PlayerStats
+      const winners = game.PlayerStats.filter(p => p.Victorious);
+      let winnerCamp = '';
+      
+      if (winners.length > 0) {
+        const winnerRoles = winners.map(w => w.MainRoleInitial);
+        
+        // Check for wolf/traitor victory
+        if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
+          winnerCamp = 'Loups';
+        } 
+        // Check for pure villager victory (only villagers win)
+        else if (winnerRoles.every(role => role === 'Villageois')) {
+          winnerCamp = 'Villageois';
+        }
+        // Check for solo role victory
+        else {
+          const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
+          if (soloWinnerRoles.length > 0) {
+            winnerCamp = soloWinnerRoles[0];
+          } else {
+            winnerCamp = 'Villageois';
+          }
+        }
+      }
       
       // Count wins in common games with special Agent camp handling
       let player1Won = false;
       let player2Won = false;
       
       if (winnerCamp === "Agent") {
-        // For Agent camp, check the actual winners list
-        const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
-        player1Won = player1Camp === "Agent" && winnersList.some(winner => winner.toLowerCase() === player1Name.toLowerCase());
-        player2Won = player2Camp === "Agent" && winnersList.some(winner => winner.toLowerCase() === player2Name.toLowerCase());
+        // For Agent camp, check if each player actually won
+        player1Won = player1Camp === "Agent" && game.PlayerStats.find(p => p.Username.toLowerCase() === player1Name.toLowerCase())?.Victorious || false;
+        player2Won = player2Camp === "Agent" && game.PlayerStats.find(p => p.Username.toLowerCase() === player2Name.toLowerCase())?.Victorious || false;
       } else {
         // For other camps, use didCampWin to handle Traître-Loups alliance
         player1Won = didCampWin(player1Camp, winnerCamp);
@@ -369,8 +445,8 @@ export function generatePlayerComparison(
       if (player2Won) player2CommonWins++;
       
       // Duration calculation for common games
-      if (game["Début"] && game["Fin"]) {
-        const duration = calculateGameDuration(game["Début"], game["Fin"]);
+      if (game.StartDate && game.EndDate) {
+        const duration = calculateGameDuration(game.StartDate, game.EndDate);
         if (duration) {
           totalGameDurationSeconds += duration;
           gamesWithDuration++;
@@ -405,11 +481,14 @@ export function generatePlayerComparison(
         
         // Handle Agent camp wins correctly in opposing camps
         if (winnerCamp === "Agent") {
-          const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
-          if (player1Camp === "Agent" && winnersList.some(winner => winner.toLowerCase() === player1Name.toLowerCase())) {
+          // Check if each player won based on PlayerStats
+          const player1Won = game.PlayerStats.find(p => p.Username.toLowerCase() === player1Name.toLowerCase())?.Victorious || false;
+          const player2Won = game.PlayerStats.find(p => p.Username.toLowerCase() === player2Name.toLowerCase())?.Victorious || false;
+          
+          if (player1Camp === "Agent" && player1Won) {
             player1OpposingWins++;
           }
-          if (player2Camp === "Agent" && winnersList.some(winner => winner.toLowerCase() === player2Name.toLowerCase())) {
+          if (player2Camp === "Agent" && player2Won) {
             player2OpposingWins++;
           }
         } else {
@@ -417,8 +496,8 @@ export function generatePlayerComparison(
           if (didCampWin(player2Camp, winnerCamp)) player2OpposingWins++;
         }
         
-        if (game["Début"] && game["Fin"]) {
-          const duration = calculateGameDuration(game["Début"], game["Fin"]);
+        if (game.StartDate && game.EndDate) {
+          const duration = calculateGameDuration(game.StartDate, game.EndDate);
           if (duration) {
             totalOpposingGameDurationSeconds += duration;
             opposingGamesWithDuration++;
@@ -436,10 +515,13 @@ export function generatePlayerComparison(
         
         // Handle Agent camp wins correctly in same camp (both agents, but only one can win)
         if (winnerCamp === "Agent") {
-          const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
+          // Check if either player won based on PlayerStats
+          const player1Won = game.PlayerStats.find(p => p.Username.toLowerCase() === player1Name.toLowerCase())?.Victorious || false;
+          const player2Won = game.PlayerStats.find(p => p.Username.toLowerCase() === player2Name.toLowerCase())?.Victorious || false;
+          
           // Count as team win if either player wins (since they're both agents)
-          if ((player1Camp === "Agent" && winnersList.some(winner => winner.toLowerCase() === player1Name.toLowerCase())) ||
-              (player2Camp === "Agent" && winnersList.some(winner => winner.toLowerCase() === player2Name.toLowerCase()))) {
+          if ((player1Camp === "Agent" && player1Won) ||
+              (player2Camp === "Agent" && player2Won)) {
             sameCampWins++;
           }
         } else {
@@ -451,8 +533,8 @@ export function generatePlayerComparison(
           }
         }
         
-        if (game["Début"] && game["Fin"]) {
-          const duration = calculateGameDuration(game["Début"], game["Fin"]);
+        if (game.StartDate && game.EndDate) {
+          const duration = calculateGameDuration(game.StartDate, game.EndDate);
           if (duration) {
             totalSameCampDurationSeconds += duration;
             sameCampGamesWithDuration++;
@@ -472,24 +554,24 @@ export function generatePlayerComparison(
     const consistencyScore = calculateAdvancedConsistency(stats.player, rawGameData, gamePlayerCampMap);
     
     // Count games in each category for the player
-    const playerVillageoisGames = rawGameData.filter(game => {
-      const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+    const playerVillageoisGames = rawGameData.filter((game, index) => {
+      const playerList = game.PlayerStats.map(p => p.Username);
       if (!playerList.some(p => p.toLowerCase() === stats.player.toLowerCase())) return false;
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), stats.player);
+      const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), stats.player);
       return playerCamp === 'Villageois';
     }).length;
     
-    const playerLoupsGames = rawGameData.filter(game => {
-      const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+    const playerLoupsGames = rawGameData.filter((game, index) => {
+      const playerList = game.PlayerStats.map(p => p.Username);
       if (!playerList.some(p => p.toLowerCase() === stats.player.toLowerCase())) return false;
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), stats.player);
+      const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), stats.player);
       return playerCamp === 'Loups';
     }).length;
     
-    const playerSpecialRoleGames = rawGameData.filter(game => {
-      const playerList = splitAndTrim(game["Liste des joueurs"]?.toString());
+    const playerSpecialRoleGames = rawGameData.filter((game, index) => {
+      const playerList = game.PlayerStats.map(p => p.Username);
       if (!playerList.some(p => p.toLowerCase() === stats.player.toLowerCase())) return false;
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, game.Game.toString(), stats.player);
+      const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), stats.player);
       return !['Villageois', 'Loups'].includes(playerCamp);
     }).length;
 

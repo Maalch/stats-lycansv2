@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useCombinedFilteredRawData } from '../useCombinedRawData';
-import type { RawGameData, RawRoleData, RawPonceData } from '../useCombinedRawData';
+import type { GameLogEntry, RawRoleData, RawPonceData } from '../useCombinedRawData';
 
 /**
  * Base hook template for statistics calculation from raw data
@@ -27,7 +27,7 @@ export interface StatsHookOptions {
  */
 export function useBaseStats<T>(
   computeFunction: (data: {
-    gameData: RawGameData[];
+    gameData: GameLogEntry[];
     roleData: RawRoleData[];
     ponceData: RawPonceData[];
   }) => T | null,
@@ -76,7 +76,7 @@ export function useBaseStats<T>(
  * Specialized hook for statistics that only need game data
  */
 export function useGameStatsBase<T>(
-  computeFunction: (gameData: RawGameData[]) => T | null
+  computeFunction: (gameData: GameLogEntry[]) => T | null
 ): BaseStatsResult<T> {
   return useBaseStats(
     ({ gameData }) => computeFunction(gameData),
@@ -88,7 +88,7 @@ export function useGameStatsBase<T>(
  * Specialized hook for statistics that need game + role data
  */
 export function usePlayerStatsBase<T>(
-  computeFunction: (gameData: RawGameData[], roleData: RawRoleData[]) => T | null
+  computeFunction: (gameData: GameLogEntry[], roleData: RawRoleData[]) => T | null
 ): BaseStatsResult<T> {
   return useBaseStats(
     ({ gameData, roleData }) => computeFunction(gameData, roleData),
@@ -100,7 +100,7 @@ export function usePlayerStatsBase<T>(
  * Specialized hook for statistics that need all data types
  */
 export function useFullStatsBase<T>(
-  computeFunction: (gameData: RawGameData[], roleData: RawRoleData[], ponceData: RawPonceData[]) => T | null
+  computeFunction: (gameData: GameLogEntry[], roleData: RawRoleData[], ponceData: RawPonceData[]) => T | null
 ): BaseStatsResult<T> {
   return useBaseStats(
     ({ gameData, roleData, ponceData }) => computeFunction(gameData, roleData, ponceData),
