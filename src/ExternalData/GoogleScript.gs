@@ -620,6 +620,44 @@ function getRawBRDataRaw() {
 
 
 /**
+ * Helper function to parse MM:SS duration format and add it to a date
+ * @param {string|Date} startDate - Start date (ISO string or Date object)
+ * @param {string} durationStr - Duration in MM:SS format (e.g., "45:30")
+ * @return {string|null} End date in ISO format or null if invalid
+ */
+function calculateEndDate(startDate, durationStr) {
+  if (!startDate || !durationStr) return null;
+  
+  // Parse the duration string (MM:SS format)
+  var durationParts = durationStr.toString().split(':');
+  if (durationParts.length !== 2) return null;
+  
+  var minutes = parseInt(durationParts[0], 10);
+  var seconds = parseInt(durationParts[1], 10);
+  
+  if (isNaN(minutes) || isNaN(seconds)) return null;
+  
+  // Convert start date to Date object
+  var startDateObj;
+  if (typeof startDate === 'string') {
+    startDateObj = new Date(startDate);
+  } else if (Object.prototype.toString.call(startDate) === '[object Date]') {
+    startDateObj = new Date(startDate.getTime());
+  } else {
+    return null;
+  }
+  
+  if (isNaN(startDateObj.getTime())) return null;
+  
+  // Add the duration (minutes and seconds) to the start date
+  var totalSecondsToAdd = (minutes * 60) + seconds;
+  var endDateObj = new Date(startDateObj.getTime() + (totalSecondsToAdd * 1000));
+  
+  // Return in ISO format
+  return endDateObj.toISOString();
+}
+
+/**
  * Returns game data in the new GameLog format compatible with the game-generated JSON
  */
 function getRawGameDataInNewFormat() {
@@ -627,6 +665,10 @@ function getRawGameDataInNewFormat() {
     // Get main game data
     var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
     var gameValues = gameData.values;
+
+    // Get secondary game data
+    var gameData2 = getLycanSheetData(LYCAN_SCHEMA.GAMES2.SHEET);
+    var gameValues2 = gameData2.values;
     
     // Get role data
     var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
@@ -638,6 +680,20 @@ function getRawGameDataInNewFormat() {
     
     var gameHeaders = gameValues[0];
     var gameDataRows = gameValues.slice(1);
+
+    var gameHeaders2 = gameValues2[0];
+    var gameDataRows2 = gameValues2.slice(1);
+    
+    // Create a map of game2 data by Game ID for efficient lookup
+    var game2DataMap = {};
+    if (gameDataRows2 && gameDataRows2.length > 0) {
+      gameDataRows2.forEach(function(row) {
+        var gameId = row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEID)];
+        if (gameId) {
+          game2DataMap[gameId] = row;
+        }
+      });
+    }
     
     var roleHeaders = roleValues ? roleValues[0] : [];
     var roleDataRows = roleValues ? roleValues.slice(1) : [];
@@ -646,12 +702,27 @@ function getRawGameDataInNewFormat() {
     var gameStats = gameDataRows.map(function(gameRow) {
       var gameId = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID)];
       
-      // Build base game record
+      var rawDateCell = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.DATE)];
+      var isoStart = convertDateToISO(rawDateCell);
+      var legacyDateFragment = formatDateForLegacyId(rawDateCell); // YYYYMMDDHHmmSS
+      
+      // Get duration from GAMES2 sheet if available
+      var endDate = null;
+      var game2Row = game2DataMap[gameId];
+      if (game2Row && isoStart) {
+        var duration = game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.DURATION)];
+        if (duration) {
+          endDate = calculateEndDate(isoStart, duration);
+        }
+      }
+      
+      // Build base game record with new Id format "Ponce-YYYYMMDDHHmmSS"
       var gameRecord = {
-        Id: "Legacy-" + gameId,
-        StartDate: convertDateToISO(gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.DATE)]),
-        EndDate: null, // Not available in legacy data
-        MapName: gameRow[findColumnIndex(gameHeaders, 'Map')] || "Unknown",
+        Id: "Ponce-" + legacyDateFragment + "-" + gameId,
+        StartDate: isoStart,
+        EndDate: endDate,
+        VODLink: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODSTART)],
+        MapName: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)],
         HarvestGoal: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST)],
         HarvestDone: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.HARVEST)],
         DaysCount: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)],
@@ -659,14 +730,11 @@ function getRawGameDataInNewFormat() {
         PlayerStats: []
       };
       
-      // Get player list for this game
       var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
       var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
       
-      // Get role assignments for this game
       var roleAssignments = getRoleAssignmentsForGame(gameId, roleHeaders, roleDataRows);
       
-      // Build player stats
       gameRecord.PlayerStats = players.map(function(playerName) {
         return buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders);
       });
@@ -674,11 +742,11 @@ function getRawGameDataInNewFormat() {
       return gameRecord;
     });
 
-    var totalRecords = gameStats.length; // New count
+    var totalRecords = gameStats.length;
     
     return JSON.stringify({
       ModVersion: "Legacy",
-      TotalRecords: totalRecords, 
+      TotalRecords: totalRecords,
       GameStats: gameStats
     });
     
@@ -687,6 +755,7 @@ function getRawGameDataInNewFormat() {
     return JSON.stringify({ error: error.message });
   }
 }
+
 
 /**
  * Helper function to build player stats from legacy data

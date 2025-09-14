@@ -250,3 +250,41 @@ function convertDateToISO(dateInput) {
   Logger.log('convertDateToISO: unsupported date format "' + trimmed + '"');
   return null;
 }
+
+
+function formatDateForLegacyId(dateInput) {
+  if (!dateInput && dateInput !== 0) return '00000000000000';
+  
+  var d;
+  // Native Date
+  if (Object.prototype.toString.call(dateInput) === '[object Date]') {
+    if (isNaN(dateInput.getTime())) return '00000000000000';
+    d = dateInput;
+  } else if (typeof dateInput === 'number') {
+    d = new Date(dateInput);
+    if (isNaN(d.getTime())) return '00000000000000';
+  } else {
+    var str = String(dateInput).trim();
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(str)) { // DD/MM/YYYY
+      var parts = str.split('/');
+      d = new Date(parts[2], parseInt(parts[1],10)-1, parts[0]);
+    } else if (/^\d{4}-\d{2}-\d{2}/.test(str)) { // YYYY-MM-DD or ISO
+      d = new Date(str);
+      if (isNaN(d.getTime())) {
+        // Fallback: manual parse first 10 chars
+        var y = str.substring(0,4), m = str.substring(5,7), da = str.substring(8,10);
+        d = new Date(y, parseInt(m,10)-1, da);
+      }
+    } else {
+      return '00000000000000';
+    }
+  }
+  
+  var yyyy = d.getFullYear().toString();
+  var MM = (d.getMonth()+1).toString().padStart(2,'0');
+  var DD = d.getDate().toString().padStart(2,'0');
+  var hh = d.getHours().toString().padStart(2,'0');
+  var mm = d.getMinutes().toString().padStart(2,'0');
+  var ss = d.getSeconds().toString().padStart(2,'0');
+  return yyyy + MM + DD + hh + mm + ss;
+}
