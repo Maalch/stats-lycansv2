@@ -1,4 +1,4 @@
-import type { RawGameData } from '../useCombinedRawData';
+import type { GameLogEntry } from '../useCombinedRawData';
 import type { GameDurationAnalysisResponse, DurationDistribution, CampDurationData } from '../../types/api';
 import { calculateGameDuration } from '../../utils/gameUtils';
 
@@ -165,23 +165,50 @@ function updateDurationsByWolfRatio(
  * Process a single game's duration data
  */
 function processGameDuration(
-  game: RawGameData,
+  game: GameLogEntry,
   durationStats: ReturnType<typeof initializeDurationStats>,
-  totals: { totalDuration: number; gamesWithDuration: number }
+  totals: { totalDuration: number; gamesWithDuration: number },
+  gameIndex: number
 ): void {
-  const winnerCamp = game["Camp victorieux"];
-  const nbPlayers = game["Nombre de joueurs"];
-  const nbWolves = game["Nombre de loups"];
+  // Extract data from GameLogEntry structure
+  const nbPlayers = game.PlayerStats.length;
+  const nbWolves = game.PlayerStats.filter(p => p.MainRoleInitial === 'Loup').length;
+  
+  // Determine winner camp from PlayerStats
+  const winners = game.PlayerStats.filter(p => p.Victorious);
+  let winnerCamp = '';
+  
+  if (winners.length > 0) {
+    const winnerRoles = winners.map(w => w.MainRoleInitial);
+    
+    // Check for wolf/traitor victory
+    if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
+      winnerCamp = 'Loups';
+    } 
+    // Check for pure villager victory (only villagers win)
+    else if (winnerRoles.every(role => role === 'Villageois')) {
+      winnerCamp = 'Villageois';
+    }
+    // Check for solo role victory
+    else {
+      const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
+      if (soloWinnerRoles.length > 0) {
+        winnerCamp = soloWinnerRoles[0]; // Use the first solo role as camp name
+      } else {
+        winnerCamp = 'Villageois'; // Fallback
+      }
+    }
+  }
   
   // Calculate actual game duration in seconds
-  const gameDuration = calculateGameDuration(game["Début"], game["Fin"]);
+  const gameDuration = calculateGameDuration(game.StartDate, game.EndDate);
 
   if (gameDuration && !isNaN(gameDuration) && gameDuration > 0) {
     totals.gamesWithDuration++;
     totals.totalDuration += gameDuration;
 
     // Update min/max
-    updateMinMaxDuration(gameDuration, game.Game, durationStats);
+    updateMinMaxDuration(gameDuration, gameIndex + 1, durationStats);
 
     // Update duration distribution
     updateDurationDistribution(gameDuration, durationStats.durationDistribution);
@@ -256,7 +283,7 @@ function formatDurationDistribution(
 /**
  * Compute game duration analysis from raw game data
  */
-export function computeGameDurationAnalysis(rawGameData: RawGameData[]): GameDurationAnalysisResponse | null {
+export function computeGameDurationAnalysis(rawGameData: GameLogEntry[]): GameDurationAnalysisResponse | null {
   if (rawGameData.length === 0) {
     return null;
   }
@@ -266,8 +293,8 @@ export function computeGameDurationAnalysis(rawGameData: RawGameData[]): GameDur
   const totals = { totalDuration: 0, gamesWithDuration: 0 };
 
   // Process each game
-  rawGameData.forEach(game => {
-    processGameDuration(game, durationStats, totals);
+  rawGameData.forEach((game, index) => {
+    processGameDuration(game, durationStats, totals, index);
   });
 
   // Calculate averages

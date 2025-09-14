@@ -17,11 +17,23 @@ export function useLastRecordedGameDate(): {
       return null;
     }
 
-    // Games are sorted by Game number, so the last one is the most recent
-    const sortedGames = [...gameData].sort((a, b) => a.Game - b.Game);
+    // Games are sorted by StartDate, so the last one is the most recent
+    const sortedGames = [...gameData].sort(
+      (a, b) => new Date(a.StartDate).getTime() - new Date(b.StartDate).getTime()
+    );
     const lastGame = sortedGames[sortedGames.length - 1];
     
-    return lastGame?.Date?.toString() || null;
+    if (!lastGame?.StartDate) {
+      return null;
+    }
+
+    // Convert ISO date to French format DD/MM/YYYY
+    const date = new Date(lastGame.StartDate);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    
+    return `${day}/${month}/${year}`;
   }, [gameData]);
 
   return {

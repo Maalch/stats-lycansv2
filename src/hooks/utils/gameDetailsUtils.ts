@@ -1,4 +1,4 @@
-import type { RawGameData, RawRoleData, RawPonceData } from '../useCombinedRawData';
+import type { GameLogEntry, RawRoleData, RawPonceData } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
 import { splitAndTrim, didPlayerWin } from './dataUtils';
 

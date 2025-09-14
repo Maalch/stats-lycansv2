@@ -41,35 +41,7 @@ export interface GameLogData {
   GameStats: GameLogEntry[];
 }
 
-// Legacy interfaces for backward compatibility
-export interface RawGameData {
-  Game: number;
-  Date: string;
-  "Game Moddée": boolean;
-  "Nombre de joueurs": number;
-  "Nombre de loups": number;
-  "Rôle Traître": boolean;
-  "Rôle Amoureux": boolean;
-  "Rôles solo": string | null;
-  "Camp victorieux": string;
-  "Type de victoire": string;
-  "Nombre de journées": number;
-  "Survivants villageois": number;
-  "Survivants loups (traître inclus)": number;
-  "Survivants amoureux": number | null;
-  "Survivants solo": number | null;
-  "Liste des gagnants": string;
-  "Récolte": number | null;
-  "Total récolte": number | null;
-  "Pourcentage de récolte": number | null;
-  "Liste des joueurs": string;
-  "Versions": string | null;
-  "Map": string | null;
-  "Début": string | null;
-  "Fin": string | null;
-  "VOD": string | null;
-  "VODEnd": string | null;
-}
+// RawGameData interface removed - using GameLogEntry directly
 
 export interface RawRoleData {
   Game: number;
@@ -129,7 +101,7 @@ interface RawBRResponse {
 }
 
 interface CombinedRawData {
-  gameData: RawGameData[];
+  gameData: GameLogEntry[];
   roleData: RawRoleData[];
   ponceData: RawPonceData[];
   brPartiesData: RawBRData[];
@@ -137,7 +109,7 @@ interface CombinedRawData {
 }
 
 interface CombinedFilteredData {
-  gameData: RawGameData[] | null;
+  gameData: GameLogEntry[] | null;
   roleData: RawRoleData[] | null;
   ponceData: RawPonceData[] | null;
   brPartiesData: RawBRData[] | null;
@@ -146,129 +118,7 @@ interface CombinedFilteredData {
   error: string | null;
 }
 
-/**
- * Transform GameLogData to legacy RawGameData format
- */
-function transformToRawGameData(gameLogData: GameLogData): RawGameData[] {
-  return gameLogData.GameStats.map((game, index) => {
-    const gameNumber = index + 1;
-    
-    // Extract game date from StartDate and format as French date (DD/MM/YYYY)
-    const startDate = new Date(game.StartDate);
-    const gameDate = startDate.toLocaleDateString('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-    
-    // Count players and roles
-    const totalPlayers = game.PlayerStats.length;
-    const loups = game.PlayerStats.filter(p => 
-      p.MainRoleInitial === 'Loup' 
-    );
-    const loupsCount = loups.length;
-    
-    // Check for special roles
-    const hasTraitor = game.PlayerStats.some(p => p.MainRoleInitial === 'Traître');
-    const hasAmoureux = game.PlayerStats.some(p => p.MainRoleInitial === 'Amoureux');
-    
-    // Get solo roles (excluding Traître)
-    const soloRoles = game.PlayerStats
-      .filter(p => !['Villageois', 'Loup'].includes(p.MainRoleInitial) && p.MainRoleInitial !== 'Traître')
-      .map(p => p.MainRoleInitial)
-      .filter((role, index, arr) => arr.indexOf(role) === index);
-    
-    // Determine winning camp
-    const winners = game.PlayerStats.filter(p => p.Victorious);
-    let campVictorieux = '';
-    let typeVictoire = '';
-    
-    if (winners.length > 0) {
-      const winnerRoles = winners.map(w => w.MainRoleInitial);
-      
-      // Check for wolf/traitor victory
-      if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-        campVictorieux = 'Loups';
-        typeVictoire = 'Domination';
-      } 
-      // Check for pure villager victory (only villagers win)
-      else if (winnerRoles.every(role => role === 'Villageois')) {
-        campVictorieux = 'Villageois';
-        typeVictoire = 'Élimination';
-      }
-      // Check for solo role victory or mixed victory with solo roles
-      else {
-        // Find the solo roles among winners
-        const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
-        if (soloWinnerRoles.length > 0) {
-          // Solo role victory - use the first solo role as camp name
-          campVictorieux = soloWinnerRoles[0];
-          typeVictoire = 'Solo';
-        } else {
-          // Fallback case - shouldn't happen with proper data
-          campVictorieux = 'Villageois';
-          typeVictoire = 'Élimination';
-        }
-      }
-    }
-    
-    // Count survivors by camp
-    const survivantsVillageois = game.PlayerStats.filter(p => 
-      p.Victorious && p.MainRoleInitial === 'Villageois' && campVictorieux === 'Villageois'
-    ).length;
-    
-    const survivantsLoups = game.PlayerStats.filter(p => 
-      p.Victorious && (p.MainRoleInitial === 'Loup' || 
-      (p.MainRoleInitial === 'Traître' && campVictorieux === 'Loups'))
-    ).length;
-    
-    const survivantsAmoureux = hasAmoureux ? 
-      game.PlayerStats.filter(p => p.Victorious && p.MainRoleInitial === 'Amoureux').length : null;
-    
-    const survivantsSolo = soloRoles.length > 0 ? 
-      game.PlayerStats.filter(p => p.Victorious && soloRoles.includes(p.MainRoleInitial)).length : null;
-    
-    // Get player and winner lists
-    const listeJoueurs = game.PlayerStats.map(p => p.Username).join(', ');
-    const listeGagnants = winners.map(w => w.Username).join(', ');
-    
-    // Calculate harvest percentage
-    const pourcentageRecolte = game.HarvestGoal > 0 ? game.HarvestDone / game.HarvestGoal : 0;
-    
-    // Parse number from EndTiming (e.g., 'M4' -> 4)
-    const numberofDays = game.EndTiming ? parseInt(game.EndTiming.slice(1), 10) || 0 : 0;
-
-    return {
-      Game: gameNumber,
-      Date: gameDate,   
-      "Game Moddée": game.LegacyData?.Modded || true,
-      "Nombre de joueurs": totalPlayers,
-      "Nombre de loups": loupsCount,
-      "Rôle Traître": hasTraitor,
-      "Rôle Amoureux": hasAmoureux,
-      "Rôles solo": soloRoles.length > 0 ? soloRoles.join(', ') : null,
-      "Camp victorieux": campVictorieux,
-      "Type de victoire": typeVictoire,
-        // Parse the number from EndTiming (e.g., 'M4' -> 4)
-        "Nombre de journées": numberofDays,
-      "Survivants villageois": survivantsVillageois,
-      "Survivants loups (traître inclus)": survivantsLoups,
-      "Survivants amoureux": survivantsAmoureux,
-      "Survivants solo": survivantsSolo,
-      "Liste des gagnants": listeGagnants,
-      "Récolte": game.HarvestDone,
-      "Total récolte": game.HarvestGoal,
-      "Pourcentage de récolte": pourcentageRecolte,
-      "Liste des joueurs": listeJoueurs,
-      "Versions": game.LegacyData?.Version || 'Inconnu',
-      "Map": game.MapName,
-      "Début": game.StartDate,
-      "Fin": game.EndDate,
-      "VOD": game.LegacyData?.VODLink || null,
-      "VODEnd": game.LegacyData?.VODLinkEnd || null
-    };
-  });
-}
+// Transformation functions removed - using GameLogEntry directly
 
 /**
  * Transform GameLogData to legacy RawRoleData format
@@ -395,13 +245,12 @@ function useCombinedRawData(): {
           brResponse.json() as Promise<RawBRResponse>
         ]);
 
-        // Transform gameLog data to legacy formats
-        const transformedGameData = transformToRawGameData(gameLogResult);
+        // Use GameLogEntry directly instead of transforming to legacy format
         const transformedRoleData = transformToRawRoleData(gameLogResult);
         const transformedPonceData = transformToRawPonceData(gameLogResult);
 
         setData({
-          gameData: transformedGameData,
+          gameData: gameLogResult.GameStats,
           roleData: transformedRoleData,
           ponceData: transformedPonceData,
           brPartiesData: brResult.BRParties?.data || [],
@@ -424,18 +273,26 @@ function useCombinedRawData(): {
 /**
  * Apply common filter logic to any dataset
  */
-function applyCommonFilters<T extends { Game: number; "Game Moddée"?: boolean; Date?: string }>(
+function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean; Date?: string }>(
   data: T[],
   settings: any,
-  gameData?: RawGameData[]
+  gameData?: GameLogEntry[]
 ): T[] {
   return data.filter(record => {
     // For non-game data, we need to find the corresponding game data
     let gameRecord = record as any;
     if (gameData && record.Game) {
-      const correspondingGame = gameData.find(game => game.Game === record.Game);
+      const correspondingGame = gameData.find((_, index) => index + 1 === record.Game);
       if (!correspondingGame) return false;
-      gameRecord = correspondingGame;
+      // Convert GameLogEntry to a format compatible with legacy filtering
+      gameRecord = {
+        "Game Moddée": correspondingGame.LegacyData?.Modded || true,
+        Date: new Date(correspondingGame.StartDate).toLocaleDateString('fr-FR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        })
+      };
     }
 
     // Apply game type filter
@@ -469,13 +326,13 @@ function applyCommonFilters<T extends { Game: number; "Game Moddée"?: boolean; 
 /**
  * Apply player filter to game data
  */
-function applyPlayerFilter(data: RawGameData[], settings: any): RawGameData[] {
+function applyPlayerFilter(data: GameLogEntry[], settings: any): GameLogEntry[] {
   if (settings.playerFilter.mode === 'none' || settings.playerFilter.players.length === 0) {
     return data;
   }
 
   return data.filter(game => {
-    const gamePlayersList = game["Liste des joueurs"].toLowerCase();
+    const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
     
     if (settings.playerFilter.mode === 'include') {
       // For include mode: ALL selected players must be in the game
@@ -489,6 +346,38 @@ function applyPlayerFilter(data: RawGameData[], settings: any): RawGameData[] {
         gamePlayersList.includes(player.toLowerCase())
       );
       return !hasAnyPlayer;
+    }
+
+    return true;
+  });
+}
+
+/**
+ * Apply common filters to GameLogEntry data
+ */
+function applyGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
+  return data.filter(game => {
+    // Apply game type filter
+    if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
+      if (settings.gameFilter === 'modded') {
+        if (!game.LegacyData?.Modded) return false;
+      } else if (settings.gameFilter === 'non-modded') {
+        if (game.LegacyData?.Modded) return false;
+      }
+    } 
+    // Apply date range filter
+    else if (settings.filterMode === 'dateRange') {
+      if (settings.dateRange.start || settings.dateRange.end) {
+        const gameDate = new Date(game.StartDate);
+        if (settings.dateRange.start) {
+          const startDate = new Date(settings.dateRange.start);
+          if (gameDate < startDate) return false;
+        }
+        if (settings.dateRange.end) {
+          const endDate = new Date(settings.dateRange.end);
+          if (gameDate > endDate) return false;
+        }
+      }
     }
 
     return true;
@@ -539,11 +428,11 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
     }
 
     // Apply filters to game data first (with player filters)
-    let filteredGameData = applyCommonFilters(rawData.gameData, settings);
+    let filteredGameData = applyGameLogFilters(rawData.gameData, settings);
     filteredGameData = applyPlayerFilter(filteredGameData, settings);
 
     // Apply filters to other data based on the filtered game list
-    const filteredGameIds = new Set(filteredGameData.map(game => game.Game));
+    const filteredGameIds = new Set(filteredGameData.map((_, index) => index + 1));
     
     const filteredRoleData = rawData.roleData.filter(role => 
       filteredGameIds.has(role.Game)

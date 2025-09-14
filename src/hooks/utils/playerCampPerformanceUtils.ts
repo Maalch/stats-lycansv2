@@ -1,4 +1,4 @@
-import type { RawGameData, RawRoleData } from '../useCombinedRawData';
+import type { GameLogEntry, RawRoleData } from '../useCombinedRawData';
 import { 
   splitAndTrim, 
   didPlayerWin, 

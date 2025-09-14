@@ -5,7 +5,7 @@ import {
   buildGamePlayerCampMap,
   getPlayerCamp 
 } from './dataUtils';
-import type { RawGameData, RawRoleData } from '../useCombinedRawData';
+import type { GameLogEntry, RawRoleData } from '../useCombinedRawData';
 import type { CampWinStatsResponse, CampStat, SoloCamp, CampAverage } from '../../types/api';
 
 /**
@@ -228,7 +228,7 @@ function buildSoloCampStats(soloCamps: Record<string, number>): SoloCamp[] {
 /**
  * Compute camp win statistics from raw game and role data
  */
-export function computeCampWinStats(gameData: RawGameData[], roleData: RawRoleData[]): CampWinStatsResponse | null {
+export function computeCampWinStats(gameData: GameLogEntry[], roleData: RawRoleData[]): CampWinStatsResponse | null {
   if (gameData.length === 0 || roleData.length === 0) {
     return null;
   }
