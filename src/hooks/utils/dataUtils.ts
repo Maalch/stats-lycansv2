@@ -97,7 +97,7 @@ export function buildGamePlayerCampMap(rawRoleData: any[]): Record<string, Recor
 
     // Add all other single roles
     addRolePlayer(roleRow["Traître"], "Traître");
-    addRolePlayer(roleRow["Idiot du village"], "Idiot du Village");
+    addRolePlayer(roleRow["Idiot du Village"], "Idiot du Village");
     addRolePlayer(roleRow["Cannibale"], "Cannibale");
     addRolePlayer(roleRow["Espion"], "Espion");
     addRolePlayer(roleRow["La Bête"], "La Bête");

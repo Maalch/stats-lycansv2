@@ -16,18 +16,22 @@ export interface PlayerStat {
   Victorious: boolean;
 }
 
+export interface LegacyData {
+  VODLink: string | null;
+  VODLinkEnd: string | null;
+  Modded: boolean;
+  Version: string;
+}
+
 export interface GameLogEntry {
   Id: string;
   StartDate: string;
   EndDate: string;
-  VODLink: string;
   MapName: string;
-  Modded: boolean;
-  ModVersion: string;
   HarvestGoal: number;
   HarvestDone: number;
-  DaysCount: number;
-  FinalGamePhase: string | null;
+  EndTiming: string | null;
+  LegacyData: LegacyData | null;
   PlayerStats: PlayerStat[];
 }
 
@@ -63,6 +67,8 @@ export interface RawGameData {
   "Map": string | null;
   "Début": string | null;
   "Fin": string | null;
+  "VOD": string | null;
+  "VODEnd": string | null;
 }
 
 export interface RawRoleData {
@@ -70,7 +76,7 @@ export interface RawRoleData {
   "Game Moddée": boolean;
   Loups: string | null;
   Traître: string | null;
-  "Idiot du village": string | null;
+  "Idiot du Village": string | null;
   Cannibale: string | null;
   Agent: string | null;
   Espion: string | null;
@@ -158,16 +164,15 @@ function transformToRawGameData(gameLogData: GameLogData): RawGameData[] {
     // Count players and roles
     const totalPlayers = game.PlayerStats.length;
     const loups = game.PlayerStats.filter(p => 
-      p.MainRoleInitial === 'Loup' || 
-      (p.MainRoleInitial === 'Traître' && p.MainRoleFinal === 'Loup')
+      p.MainRoleInitial === 'Loup' 
     );
     const loupsCount = loups.length;
     
     // Check for special roles
     const hasTraitor = game.PlayerStats.some(p => p.MainRoleInitial === 'Traître');
-    const hasAmoureux = game.PlayerStats.some(p => p.SecondaryRole === 'Amoureux');
+    const hasAmoureux = game.PlayerStats.some(p => p.MainRoleInitial === 'Amoureux');
     
-    // Get solo roles (excluding Traître and Amoureux)
+    // Get solo roles (excluding Traître)
     const soloRoles = game.PlayerStats
       .filter(p => !['Villageois', 'Loup'].includes(p.MainRoleInitial) && p.MainRoleInitial !== 'Traître')
       .map(p => p.MainRoleInitial)
@@ -180,22 +185,36 @@ function transformToRawGameData(gameLogData: GameLogData): RawGameData[] {
     
     if (winners.length > 0) {
       const winnerRoles = winners.map(w => w.MainRoleInitial);
+      
+      // Check for wolf/traitor victory
       if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
         campVictorieux = 'Loups';
-        typeVictoire = 'Domination'; // Default, could be enhanced with more logic
-      } else if (winnerRoles.every(role => role === 'Villageois' || !['Loup', 'Traître'].includes(role))) {
+        typeVictoire = 'Domination';
+      } 
+      // Check for pure villager victory (only villagers win)
+      else if (winnerRoles.every(role => role === 'Villageois')) {
         campVictorieux = 'Villageois';
-        typeVictoire = 'Élimination'; // Default, could be enhanced
-      } else {
-        campVictorieux = winnerRoles[0]; // Solo victory
-        typeVictoire = 'Solo';
+        typeVictoire = 'Élimination';
+      }
+      // Check for solo role victory or mixed victory with solo roles
+      else {
+        // Find the solo roles among winners
+        const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
+        if (soloWinnerRoles.length > 0) {
+          // Solo role victory - use the first solo role as camp name
+          campVictorieux = soloWinnerRoles[0];
+          typeVictoire = 'Solo';
+        } else {
+          // Fallback case - shouldn't happen with proper data
+          campVictorieux = 'Villageois';
+          typeVictoire = 'Élimination';
+        }
       }
     }
     
     // Count survivors by camp
     const survivantsVillageois = game.PlayerStats.filter(p => 
-      p.Victorious && (p.MainRoleInitial === 'Villageois' || 
-      (!['Loup', 'Traître'].includes(p.MainRoleInitial) && campVictorieux === 'Villageois'))
+      p.Victorious && p.MainRoleInitial === 'Villageois' && campVictorieux === 'Villageois'
     ).length;
     
     const survivantsLoups = game.PlayerStats.filter(p => 
@@ -204,7 +223,7 @@ function transformToRawGameData(gameLogData: GameLogData): RawGameData[] {
     ).length;
     
     const survivantsAmoureux = hasAmoureux ? 
-      game.PlayerStats.filter(p => p.Victorious && p.SecondaryRole === 'Amoureux').length : null;
+      game.PlayerStats.filter(p => p.Victorious && p.MainRoleInitial === 'Amoureux').length : null;
     
     const survivantsSolo = soloRoles.length > 0 ? 
       game.PlayerStats.filter(p => p.Victorious && soloRoles.includes(p.MainRoleInitial)).length : null;
@@ -216,10 +235,13 @@ function transformToRawGameData(gameLogData: GameLogData): RawGameData[] {
     // Calculate harvest percentage
     const pourcentageRecolte = game.HarvestGoal > 0 ? game.HarvestDone / game.HarvestGoal : 0;
     
+    // Parse number from EndTiming (e.g., 'M4' -> 4)
+    const numberofDays = game.EndTiming ? parseInt(game.EndTiming.slice(1), 10) || 0 : 0;
+
     return {
       Game: gameNumber,
-      Date: gameDate,
-      "Game Moddée": game.Modded,
+      Date: gameDate,   
+      "Game Moddée": game.LegacyData?.Modded || true,
       "Nombre de joueurs": totalPlayers,
       "Nombre de loups": loupsCount,
       "Rôle Traître": hasTraitor,
@@ -227,7 +249,8 @@ function transformToRawGameData(gameLogData: GameLogData): RawGameData[] {
       "Rôles solo": soloRoles.length > 0 ? soloRoles.join(', ') : null,
       "Camp victorieux": campVictorieux,
       "Type de victoire": typeVictoire,
-      "Nombre de journées": game.DaysCount,
+        // Parse the number from EndTiming (e.g., 'M4' -> 4)
+        "Nombre de journées": numberofDays,
       "Survivants villageois": survivantsVillageois,
       "Survivants loups (traître inclus)": survivantsLoups,
       "Survivants amoureux": survivantsAmoureux,
@@ -237,10 +260,12 @@ function transformToRawGameData(gameLogData: GameLogData): RawGameData[] {
       "Total récolte": game.HarvestGoal,
       "Pourcentage de récolte": pourcentageRecolte,
       "Liste des joueurs": listeJoueurs,
-      "Versions": game.ModVersion,
+      "Versions": game.LegacyData?.Version || 'Inconnu',
       "Map": game.MapName,
-      "Début": game.VODLink,
-      "Fin": game.VODLink // Same link for now, could be enhanced
+      "Début": game.StartDate,
+      "Fin": game.EndDate,
+      "VOD": game.LegacyData?.VODLink || null,
+      "VODEnd": game.LegacyData?.VODLinkEnd || null
     };
   });
 }
@@ -265,15 +290,15 @@ function transformToRawRoleData(gameLogData: GameLogData): RawRoleData[] {
     
     return {
       Game: gameNumber,
-      "Game Moddée": game.Modded,
+      "Game Moddée": game.LegacyData?.Modded || true,
       Loups: roleGroups['Loup']?.join(', ') || null,
       Traître: roleGroups['Traître']?.join(', ') || null,
-      "Idiot du village": roleGroups['Idiot du village']?.join(', ') || null,
+      "Idiot du Village": roleGroups['Idiot du Village']?.join(', ') || null,
       Cannibale: roleGroups['Cannibale']?.join(', ') || null,
       Agent: roleGroups['Agent']?.join(', ') || null,
       Espion: roleGroups['Espion']?.join(', ') || null,
       Scientifique: roleGroups['Scientifique']?.join(', ') || null,
-      Amoureux: game.PlayerStats.filter(p => p.SecondaryRole === 'Amoureux').map(p => p.Username).join(', ') || null,
+      Amoureux: roleGroups['Amoureux']?.join(', ') || null,
       "La Bête": roleGroups['La Bête']?.join(', ') || null,
       "Chasseur de primes": roleGroups['Chasseur de primes']?.join(', ') || null,
       Vaudou: roleGroups['Vaudou']?.join(', ') || null
@@ -294,7 +319,7 @@ function transformToRawPonceData(gameLogData: GameLogData): RawPonceData[] {
       // Return empty data if Ponce not in game
       return {
         Game: gameNumber,
-        "Game Moddée": game.Modded,
+        "Game Moddée": game.LegacyData?.Modded || true,
         Camp: null,
         Traître: false,
         "Rôle secondaire": null,
@@ -321,7 +346,7 @@ function transformToRawPonceData(gameLogData: GameLogData): RawPonceData[] {
     
     return {
       Game: gameNumber,
-      "Game Moddée": game.Modded,
+      "Game Moddée": game.LegacyData?.Modded || true,
       Camp: camp,
       Traître: ponceData.MainRoleInitial === 'Traître',
       "Rôle secondaire": ponceData.SecondaryRole,
@@ -650,9 +675,9 @@ export function useFilteredGameLogData(): {
       // Apply game type filter
       if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
         if (settings.gameFilter === 'modded') {
-          if (!game.Modded) return false;
+          if (!game.LegacyData?.Modded) return false;
         } else if (settings.gameFilter === 'non-modded') {
-          if (game.Modded) return false;
+          if (game.LegacyData?.Modded) return false;
         }
       }
       // Apply date range filter

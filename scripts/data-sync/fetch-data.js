@@ -5,9 +5,6 @@ import path from 'path';
 // Raw sheet exports only (static endpoints now computed client-side)
 const RAW_DATA_ENDPOINTS = [
   'gameLog',
-  'rawGameData',
-  'rawRoleData',
-  'rawPonceData',
   'rawBRData'
 ];
 
@@ -93,9 +90,6 @@ async function main() {
         // continue with other endpoints
       }
     }
-    
-    // Remove player game histories fetching since it's now computed client-side
-    // Note: Individual player histories are now calculated from raw data
     
     await createDataIndex();
     

@@ -721,14 +721,17 @@ function getRawGameDataInNewFormat() {
         Id: "Ponce-" + legacyDateFragment + "-" + gameId,
         StartDate: isoStart,
         EndDate: endDate,
-        VODLink: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODSTART)],
         MapName: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)],
-        Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES2.COLS.MODDED)],
-        ModVersion: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
         HarvestGoal: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST)],
         HarvestDone: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.HARVEST)],
-        DaysCount: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)],
-        FinalGamePhase: null,
+        EndTiming: "U" + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)],
+        VictoryTypeLegacy: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
+        LegacyData: {
+          VODLink: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODSTART)],
+          VODLinkEnd: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODEND)],
+          Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES2.COLS.MODDED)],
+          Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)]
+        },
         PlayerStats: []
       };
       
@@ -766,7 +769,7 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
   var playerStats = {
     Username: playerName,
     MainRoleInitial: determineMainRole(playerName, roleAssignments),
-    MainRoleFinal: null, // Not available in legacy data
+    MainRoleFinal: determineMainRole(playerName, roleAssignments), // same as initial in legacy data
     Power: null, // Not available in legacy data
     SecondaryRole: null, // Not available in legacy data
     DeathDateIrl: null, // Not available in legacy data
