@@ -10,7 +10,7 @@ export type { EnrichedGameData };
  */
 export function useGameDetailsFromRaw(filters?: NavigationFilters) {
   const { data: enrichedGames, isLoading, error } = useFullStatsBase(
-    (gameData, roleData, ponceData) => computeGameDetails(gameData, roleData, ponceData, filters)
+    (gameData) => computeGameDetails(gameData, filters)
   );
 
   return {
