@@ -1,4 +1,4 @@
-import type { GameLogEntry, RawRoleData, RawPonceData } from '../useCombinedRawData';
+import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
 import { splitAndTrim, didPlayerWin } from './dataUtils';
 
@@ -27,7 +27,7 @@ export interface EnrichedGameData {
   map: string | null;
   youtubeEmbedUrl: string | null;
   gameDuration: number | null; // Duration in seconds calculated from start and end timestamps
-  // Enriched data from role and ponce data
+  // Enriched data from role 
   roles: {
     wolves?: string[];
     traitor?: string;
@@ -45,18 +45,6 @@ export interface EnrichedGameData {
     player: string;
     role: string;
     camp: string;
-  }>;
-  playerDetails: Array<{
-    player: string;
-    camp: string;
-    isTraitor: boolean;
-    secondaryRole: string | null;
-    wolfPower: string | null;
-    villagerJob: string | null;
-    playersKilled: string | null;
-    deathDay: number | null;
-    deathType: string | null;
-    killers: string | null;
   }>;
 }
 
@@ -835,24 +823,6 @@ function createPlayerRoles(
 }
 
 /**
- * Create player details from ponce data
- */
-function createPlayerDetails(ponceDataForGame: RawPonceData[]): EnrichedGameData['playerDetails'] {
-  return ponceDataForGame.map(ponce => ({
-    player: 'Ponce',
-    camp: ponce.Camp || 'Unknown',
-    isTraitor: ponce.Traître || false,
-    secondaryRole: ponce["Rôle secondaire"] === "N/A" ? null : ponce["Rôle secondaire"],
-    wolfPower: ponce["Pouvoir de loup"] === "N/A" ? null : ponce["Pouvoir de loup"],
-    villagerJob: ponce["Métier villageois"] === "N/A" ? null : ponce["Métier villageois"],
-    playersKilled: ponce["Joueurs tués"],
-    deathDay: ponce["Jour de mort"],
-    deathType: ponce["Type de mort"],
-    killers: ponce["Joueurs tueurs"]
-  }));
-}
-
-/**
  * Compute enriched game details from raw data
  */
 export function computeGameDetails(
@@ -878,7 +848,6 @@ export function computeGameDetails(
 
     // Create player roles and details
     const playerRoles = createPlayerRoles(game, roleDataForGame);
-    const playerDetails = createPlayerDetails(ponceDataForGame);
 
     return {
       gameId: game.Game,
@@ -906,8 +875,7 @@ export function computeGameDetails(
       youtubeEmbedUrl: createYouTubeEmbedUrl(game["VOD"], game["VODEnd"]),
       gameDuration: calculateGameDuration(game["Début"], game["Fin"]),
       roles,
-      playerRoles,
-      playerDetails
+      playerRoles
     };
   });
 }
