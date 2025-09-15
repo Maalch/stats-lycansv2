@@ -8,7 +8,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 export function PlayerSeriesChart() {
   const { data: seriesData, isLoading: dataLoading, error: fetchError } = usePlayerSeriesFromRaw();
   const { navigateToGameDetails } = useNavigation();
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loups' | 'wins' | 'losses'>('villageois');
+  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'wins' | 'losses'>('villageois');
   const chartRef = useRef<HTMLDivElement>(null);
 
   if (dataLoading) {
@@ -26,7 +26,7 @@ export function PlayerSeriesChart() {
     switch (selectedSeriesType) {
       case 'villageois':
         return seriesData.longestVillageoisSeries.slice(0, 20);
-      case 'loups':
+      case 'loup':
         return seriesData.longestLoupsSeries.slice(0, 20);
       case 'wins':
         return seriesData.longestWinSeries.slice(0, 20);
@@ -50,7 +50,7 @@ export function PlayerSeriesChart() {
     switch (selectedSeriesType) {
       case 'villageois':
         return 'Plus Longues Séries Villageois Consécutives';
-      case 'loups':
+      case 'loup':
         return 'Plus Longues Séries Loups Consécutives';
       case 'wins':
         return 'Plus Longues Séries de Victoires';
@@ -202,7 +202,7 @@ export function PlayerSeriesChart() {
         fromComponent: 'Séries de Défaites'
       });
     } else {
-      const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loups';
+      const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loup';
       navigateToGameDetails({
         selectedPlayer: data.player,
         selectedGameIds: data.gameIds,
@@ -243,8 +243,8 @@ export function PlayerSeriesChart() {
           Séries Villageois
         </button>
         <button
-          className={`lycans-categorie-btn ${selectedSeriesType === 'loups' ? 'active' : ''}`}
-          onClick={() => setSelectedSeriesType('loups')}
+          className={`lycans-categorie-btn ${selectedSeriesType === 'loup' ? 'active' : ''}`}
+          onClick={() => setSelectedSeriesType('loup')}
         >
           Séries Loups
         </button>
@@ -294,7 +294,7 @@ export function PlayerSeriesChart() {
                        selectedSeriesType === 'losses' ? 'Défaites consécutives' : 
                        'Parties consécutives'}
                   fill={selectedSeriesType === 'villageois' ? '#82ca9d' : 
-                       selectedSeriesType === 'loups' ? '#FF8042' : 
+                       selectedSeriesType === 'loup' ? '#FF8042' : 
                        selectedSeriesType === 'wins' ? '#8884d8' : 
                        '#dc3545'}
                 >
@@ -303,7 +303,7 @@ export function PlayerSeriesChart() {
                       key={`cell-${selectedSeriesType}-${index}`}
                       fill={playersColor[entry.player] || 
                            (selectedSeriesType === 'villageois' ? '#82ca9d' : 
-                            selectedSeriesType === 'loups' ? '#FF8042' : 
+                            selectedSeriesType === 'loup' ? '#FF8042' : 
                             selectedSeriesType === 'wins' ? '#8884d8' : 
                             '#dc3545')}
                       onClick={() => handleBarClick(entry)}
@@ -341,10 +341,10 @@ export function PlayerSeriesChart() {
             </div>
             
             <div className="lycans-stat-card">
-              <h3>📊 Moyenne (tous les joueurs)</h3>
+              <h3>📊 Meilleure série moyenne (tous les joueurs)</h3>
               <div className="lycans-stat-value">
                 {selectedSeriesType === 'villageois' ? seriesData.averageVillageoisSeries :
-                 selectedSeriesType === 'loups' ? seriesData.averageLoupsSeries :
+                 selectedSeriesType === 'loup' ? seriesData.averageLoupsSeries :
                  selectedSeriesType === 'wins' ? seriesData.averageWinSeries :
                  seriesData.averageLossSeries}
               </div>
@@ -358,14 +358,14 @@ export function PlayerSeriesChart() {
               <h3>🔥 Séries En Cours</h3>
               <div className="lycans-stat-value">
                 {selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
-                 selectedSeriesType === 'loups' ? seriesData.activeLoupsCount :
+                 selectedSeriesType === 'loup' ? seriesData.activeLoupsCount :
                  selectedSeriesType === 'wins' ? seriesData.activeWinCount :
                  seriesData.activeLossCount}
               </div>
               <p>séries encore actives</p>
               <p className="lycans-h2h-description">
                 {(selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
-                  selectedSeriesType === 'loups' ? seriesData.activeLoupsCount :
+                  selectedSeriesType === 'loup' ? seriesData.activeLoupsCount :
                   selectedSeriesType === 'wins' ? seriesData.activeWinCount :
                   seriesData.activeLossCount) > 0 ? 
                   'Joueurs actuellement dans une série de ce type' : 

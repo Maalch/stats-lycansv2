@@ -10,7 +10,7 @@ export const lycansColorScheme: Record<string, string> = {
   'Vaudou': '#A626FF',
   'Traître': '#FF8000',
   'Amoureux': '#FF80FF',
-  'Loups': '#FF0000',
+  'Loup': '#FF0000',
   'Villageois': '#0096FF',
   'Chasseur': '#1faa03ff',
   'Alchimiste': '#ff00d4ff',
@@ -99,7 +99,7 @@ export const minGamesOptions = [5, 10, 25, 50, 75, 100, 150, 200];
 // Types pour les statistiques des joueurs
 export interface PlayerCamps {
   Villageois: number;
-  Loups: number;
+  Loup: number;
   Traître: number;
   "Idiot du Village": number;
   Cannibale: number;

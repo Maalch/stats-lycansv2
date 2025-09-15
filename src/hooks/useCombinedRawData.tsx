@@ -2,7 +2,47 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
 
-// Re-export the interfaces for convenience
+// New GameLog interfaces
+export interface PlayerStat {
+  Username: string;
+  MainRoleInitial: string;        // Original role at game start
+  MainRoleFinal: string | null;    // Final role if changed (e.g., by role swap)
+  Power: string | null;           // Special power (linked to the role), if any
+  SecondaryRole: string | null;     // Secondary role if any
+  DeathDateIrl: string | null;    // Real-life date of death in game
+  DeathTiming: string | null;     // Timing of death (e.g., "Nuit 2 --> N2", "Jour 3 --> J3")
+  DeathPosition: number | null;   // Game coordinates  of death (x, y ,z), if applicable
+  KillerName: string | null;      // Name of the killer if applicable
+  Victorious: boolean;            // Whether the player was on the winning side
+}
+
+export interface LegacyData {
+  VODLink: string | null;
+  VODLinkEnd: string | null;
+  Modded: boolean;
+  Version: string;
+}
+
+export interface GameLogEntry {
+  Id: string;
+  StartDate: string;
+  EndDate: string;
+  MapName: string;
+  HarvestGoal: number;           // Target harvest for the game
+  HarvestDone: number;            // Actual harvest achieved at the end of the game
+  EndTiming: string | null;       // Timing of game end (e.g., "Nuit 5 --> N5", "Jour 6 --> J6")
+  LegacyData: LegacyData | null;
+  PlayerStats: PlayerStat[];
+}
+
+export interface GameLogData {
+  ModVersion: string;
+  TotalRecords: number;
+  GameStats: GameLogEntry[];
+}
+
+// Legacy interfaces DONT USE THEM ANYMORE - generated now from GameLogEntry
+/*
 export interface RawGameData {
   Game: number;
   Date: string;
@@ -20,12 +60,14 @@ export interface RawGameData {
   "Survivants amoureux": number | null;
   "Survivants solo": number | null;
   "Liste des gagnants": string;
+  "Liste des joueurs": string;
   "Récolte": number | null;
   "Total récolte": number | null;
   "Pourcentage de récolte": number | null;
-  "Liste des joueurs": string;
   "Versions": string | null;
   "Map": string | null;
+  "VOD": string | null;
+  "VODEnd": string | null;
   "Début": string | null;
   "Fin": string | null;
 }
@@ -35,7 +77,7 @@ export interface RawRoleData {
   "Game Moddée": boolean;
   Loups: string | null;
   Traître: string | null;
-  "Idiot du village": string | null;
+  "Idiot du Village": string | null;
   Cannibale: string | null;
   Agent: string | null;
   Espion: string | null;
@@ -59,6 +101,7 @@ export interface RawPonceData {
   "Type de mort": string | null;
   "Joueurs tueurs": string | null;
 }
+  */
 
 export interface RawBRData {
   Game: number;
@@ -75,12 +118,6 @@ export interface RawBRGlobalData {
   "Game Moddée": boolean;
 }
 
-interface RawDataResponse<T> {
-  lastUpdated: string;
-  totalRecords: number;
-  data: T[];
-}
-
 interface RawBRResponse {
   lastUpdated: string;
   BRParties: {
@@ -94,26 +131,26 @@ interface RawBRResponse {
 }
 
 interface CombinedRawData {
-  gameData: RawGameData[];
-  roleData: RawRoleData[];
-  ponceData: RawPonceData[];
+  gameData: GameLogEntry[];
   brPartiesData: RawBRData[];
   brRefPartiesData: RawBRGlobalData[];
 }
 
 interface CombinedFilteredData {
-  gameData: RawGameData[] | null;
-  roleData: RawRoleData[] | null;
-  ponceData: RawPonceData[] | null;
+  gameData: GameLogEntry[] | null;
+  roleData: any[] | null; // Legacy field, always null in new migration
+  ponceData: any[] | null; // Legacy field, always null in new migration
   brPartiesData: RawBRData[] | null;
   brRefPartiesData: RawBRGlobalData[] | null;
   isLoading: boolean;
   error: string | null;
 }
 
+// Transformation functions removed - using GameLogEntry directly
+
 /**
  * Centralized hook to fetch all raw data with a single loading state
- * This prevents multiple concurrent API calls and provides better performance
+ * Now loads from gameLog.json directly without legacy transformations
  */
 function useCombinedRawData(): {
   data: CombinedRawData | null;
@@ -130,32 +167,25 @@ function useCombinedRawData(): {
         setIsLoading(true);
         setError(null);
 
-        // Fetch all data concurrently
-        const [gameResponse, roleResponse, ponceResponse, brResponse] = await Promise.all([
-          fetch(`${import.meta.env.BASE_URL}data/rawGameData.json`),
-          fetch(`${import.meta.env.BASE_URL}data/rawRoleData.json`),
-          fetch(`${import.meta.env.BASE_URL}data/rawPonceData.json`),
+        // Fetch the new gameLog.json and legacy BR data
+        const [gameLogResponse, brResponse] = await Promise.all([
+          fetch(`${import.meta.env.BASE_URL}data/gameLog.json`),
           fetch(`${import.meta.env.BASE_URL}data/rawBRData.json`)
         ]);
 
-        // Check if all responses are ok
-        if (!gameResponse.ok) throw new Error('Failed to fetch game data');
-        if (!roleResponse.ok) throw new Error('Failed to fetch role data');
-        if (!ponceResponse.ok) throw new Error('Failed to fetch ponce data');
+        // Check if responses are ok
+        if (!gameLogResponse.ok) throw new Error('Failed to fetch game log data');
         if (!brResponse.ok) throw new Error('Failed to fetch BR data');
 
-        // Parse all responses
-        const [gameResult, roleResult, ponceResult, brResult] = await Promise.all([
-          gameResponse.json() as Promise<RawDataResponse<RawGameData>>,
-          roleResponse.json() as Promise<RawDataResponse<RawRoleData>>,
-          ponceResponse.json() as Promise<RawDataResponse<RawPonceData>>,
+        // Parse responses
+        const [gameLogResult, brResult] = await Promise.all([
+          gameLogResponse.json() as Promise<GameLogData>,
           brResponse.json() as Promise<RawBRResponse>
         ]);
 
+
         setData({
-          gameData: gameResult.data || [],
-          roleData: roleResult.data || [],
-          ponceData: ponceResult.data || [],
+          gameData: gameLogResult.GameStats,
           brPartiesData: brResult.BRParties?.data || [],
           brRefPartiesData: brResult.BRRefParties?.data || []
         });
@@ -176,18 +206,26 @@ function useCombinedRawData(): {
 /**
  * Apply common filter logic to any dataset
  */
-function applyCommonFilters<T extends { Game: number; "Game Moddée"?: boolean; Date?: string }>(
+function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean; Date?: string }>(
   data: T[],
   settings: any,
-  gameData?: RawGameData[]
+  gameData?: GameLogEntry[]
 ): T[] {
   return data.filter(record => {
     // For non-game data, we need to find the corresponding game data
     let gameRecord = record as any;
     if (gameData && record.Game) {
-      const correspondingGame = gameData.find(game => game.Game === record.Game);
+      const correspondingGame = gameData.find((_, index) => index + 1 === record.Game);
       if (!correspondingGame) return false;
-      gameRecord = correspondingGame;
+      // Convert GameLogEntry to a format compatible with legacy filtering
+      gameRecord = {
+        "Game Moddée": correspondingGame.LegacyData?.Modded || true,
+        Date: new Date(correspondingGame.StartDate).toLocaleDateString('fr-FR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        })
+      };
     }
 
     // Apply game type filter
@@ -221,13 +259,13 @@ function applyCommonFilters<T extends { Game: number; "Game Moddée"?: boolean; 
 /**
  * Apply player filter to game data
  */
-function applyPlayerFilter(data: RawGameData[], settings: any): RawGameData[] {
+function applyPlayerFilter(data: GameLogEntry[], settings: any): GameLogEntry[] {
   if (settings.playerFilter.mode === 'none' || settings.playerFilter.players.length === 0) {
     return data;
   }
 
   return data.filter(game => {
-    const gamePlayersList = game["Liste des joueurs"].toLowerCase();
+    const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
     
     if (settings.playerFilter.mode === 'include') {
       // For include mode: ALL selected players must be in the game
@@ -241,6 +279,38 @@ function applyPlayerFilter(data: RawGameData[], settings: any): RawGameData[] {
         gamePlayersList.includes(player.toLowerCase())
       );
       return !hasAnyPlayer;
+    }
+
+    return true;
+  });
+}
+
+/**
+ * Apply common filters to GameLogEntry data
+ */
+function applyGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
+  return data.filter(game => {
+    // Apply game type filter
+    if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
+      if (settings.gameFilter === 'modded') {
+        if (!game.LegacyData?.Modded) return false;
+      } else if (settings.gameFilter === 'non-modded') {
+        if (game.LegacyData?.Modded) return false;
+      }
+    } 
+    // Apply date range filter
+    else if (settings.filterMode === 'dateRange') {
+      if (settings.dateRange.start || settings.dateRange.end) {
+        const gameDate = new Date(game.StartDate);
+        if (settings.dateRange.start) {
+          const startDate = new Date(settings.dateRange.start);
+          if (gameDate < startDate) return false;
+        }
+        if (settings.dateRange.end) {
+          const endDate = new Date(settings.dateRange.end);
+          if (gameDate > endDate) return false;
+        }
+      }
     }
 
     return true;
@@ -291,19 +361,9 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
     }
 
     // Apply filters to game data first (with player filters)
-    let filteredGameData = applyCommonFilters(rawData.gameData, settings);
+    let filteredGameData = applyGameLogFilters(rawData.gameData, settings);
     filteredGameData = applyPlayerFilter(filteredGameData, settings);
 
-    // Apply filters to other data based on the filtered game list
-    const filteredGameIds = new Set(filteredGameData.map(game => game.Game));
-    
-    const filteredRoleData = rawData.roleData.filter(role => 
-      filteredGameIds.has(role.Game)
-    );
-    
-    const filteredPonceData = rawData.ponceData.filter(ponce => 
-      filteredGameIds.has(ponce.Game)
-    );
 
     // For BR data, apply filters with reference to global game data
     let filteredBRPartiesData = rawData.brPartiesData.filter(record => {
@@ -329,8 +389,8 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
 
     return {
       gameData: filteredGameData,
-      roleData: filteredRoleData,
-      ponceData: filteredPonceData,
+      roleData: null, // No longer used in migration
+      ponceData: null, // No longer used in migration
       brPartiesData: filteredBRPartiesData,
       brRefPartiesData: filteredBRRefPartiesData
     };
@@ -351,16 +411,6 @@ export function useFilteredRawGameData() {
   return { data: gameData, isLoading, error };
 }
 
-export function useFilteredRawRoleData() {
-  const { roleData, isLoading, error } = useCombinedFilteredRawData();
-  return { data: roleData, isLoading, error };
-}
-
-export function useFilteredRawPonceData() {
-  const { ponceData, isLoading, error } = useCombinedFilteredRawData();
-  return { data: ponceData, isLoading, error };
-}
-
 export function useFilteredRawBRData() {
   const { brPartiesData, isLoading, error } = useCombinedFilteredRawData();
   return { data: brPartiesData, isLoading, error };
@@ -369,4 +419,104 @@ export function useFilteredRawBRData() {
 export function useFilteredRawBRGlobalData() {
   const { brRefPartiesData, isLoading, error } = useCombinedFilteredRawData();
   return { data: brRefPartiesData, isLoading, error };
+}
+
+/**
+ * New hook to work directly with GameLog structure
+ * Use this for new features that can benefit from the richer data structure
+ */
+export function useGameLogData(): {
+  data: GameLogData | null;
+  isLoading: boolean;
+  error: string | null;
+} {
+  const [data, setData] = useState<GameLogData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchGameLogData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const response = await fetch(`${import.meta.env.BASE_URL}data/gameLog.json`);
+        if (!response.ok) throw new Error('Failed to fetch game log data');
+
+        const result = await response.json() as GameLogData;
+        setData(result);
+      } catch (err) {
+        console.error('Error fetching game log data:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchGameLogData();
+  }, []);
+
+  return { data, isLoading, error };
+}
+
+/**
+ * Filtered GameLog data that respects settings context
+ */
+export function useFilteredGameLogData(): {
+  data: GameLogEntry[] | null;
+  isLoading: boolean;
+  error: string | null;
+} {
+  const { settings } = useSettings();
+  const { data: rawGameLogData, isLoading, error } = useGameLogData();
+
+  const filteredData = useMemo(() => {
+    if (!rawGameLogData) return null;
+
+    return rawGameLogData.GameStats.filter(game => {
+      // Apply game type filter
+      if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
+        if (settings.gameFilter === 'modded') {
+          if (!game.LegacyData?.Modded) return false;
+        } else if (settings.gameFilter === 'non-modded') {
+          if (game.LegacyData?.Modded) return false;
+        }
+      }
+      // Apply date range filter
+      else if (settings.filterMode === 'dateRange') {
+        if (settings.dateRange.start || settings.dateRange.end) {
+          const gameDate = new Date(game.StartDate);
+          if (settings.dateRange.start) {
+            const startDate = new Date(settings.dateRange.start);
+            if (gameDate < startDate) return false;
+          }
+          if (settings.dateRange.end) {
+            const endDate = new Date(settings.dateRange.end);
+            if (gameDate > endDate) return false;
+          }
+        }
+      }
+
+      // Apply player filter
+      if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
+        const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
+        
+        if (settings.playerFilter.mode === 'include') {
+          const hasAllPlayers = settings.playerFilter.players.every((player: string) => 
+            gamePlayersList.includes(player.toLowerCase())
+          );
+          if (!hasAllPlayers) return false;
+        } else if (settings.playerFilter.mode === 'exclude') {
+          const hasAnyPlayer = settings.playerFilter.players.some((player: string) => 
+            gamePlayersList.includes(player.toLowerCase())
+          );
+          if (hasAnyPlayer) return false;
+        }
+      }
+
+      return true;
+    });
+  }, [rawGameLogData, settings]);
+
+  return { data: filteredData, isLoading, error };
 }

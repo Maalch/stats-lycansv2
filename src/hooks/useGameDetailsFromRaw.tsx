@@ -1,8 +1,6 @@
 import { useFullStatsBase } from './utils/baseStatsHook';
-import { computeGameDetails, type EnrichedGameData } from './utils/gameDetailsUtils';
+import { computeGameDetailsFromGameLog } from './utils/gameDetailsUtils';
 import type { NavigationFilters } from '../context/NavigationContext';
-
-export type { EnrichedGameData };
 
 /**
  * Hook pour calculer les détails des parties enrichies à partir des données brutes filtrées.
@@ -10,7 +8,7 @@ export type { EnrichedGameData };
  */
 export function useGameDetailsFromRaw(filters?: NavigationFilters) {
   const { data: enrichedGames, isLoading, error } = useFullStatsBase(
-    (gameData, roleData, ponceData) => computeGameDetails(gameData, roleData, ponceData, filters)
+    (gameData) => computeGameDetailsFromGameLog(gameData, filters)
   );
 
   return {

@@ -97,7 +97,7 @@ export function buildGamePlayerCampMap(rawRoleData: any[]): Record<string, Recor
 
     // Add all other single roles
     addRolePlayer(roleRow["Traître"], "Traître");
-    addRolePlayer(roleRow["Idiot du village"], "Idiot du Village");
+    addRolePlayer(roleRow["Idiot du Village"], "Idiot du Village");
     addRolePlayer(roleRow["Cannibale"], "Cannibale");
     addRolePlayer(roleRow["Espion"], "Espion");
     addRolePlayer(roleRow["La Bête"], "La Bête");
@@ -121,7 +121,7 @@ export function buildGamePlayerCampMap(rawRoleData: any[]): Record<string, Recor
 export function didCampWin(camp: string, winnerCamp: string): boolean {
   if (camp === winnerCamp) return true;
   // Special case: Traitor wins if Wolves win
-  if (camp === "Traître" && winnerCamp === "Loups") return true;
+  if (camp === "Traître" && winnerCamp === "Loup") return true;
   return false;
 }
 
@@ -130,11 +130,11 @@ export function getPlayerMainCamp(
   gamePlayerCampMap: Record<string, Record<string, string>>, 
   gameId: string, 
   playerName: string
-): 'Villageois' | 'Loups' | 'Autres' {
+): 'Villageois' | 'Loup' | 'Autres' {
   const camp = getPlayerCamp(gamePlayerCampMap, gameId, playerName);
   
-  if (camp === 'Loups' || camp === 'Traître') {
-    return 'Loups';
+  if (camp === 'Loup' || camp === 'Traître') {
+    return 'Loup';
   } else if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(camp)) {
     return 'Autres';
   } else {

@@ -1,64 +1,6 @@
-import type { RawGameData } from '../useCombinedRawData';
+import type { GameLogEntry } from '../useCombinedRawData';
 import type { GameDurationAnalysisResponse, DurationDistribution, CampDurationData } from '../../types/api';
-
-/**
- * Calculate game duration from timestamps
- */
-function calculateGameDuration(start: string | null, end: string | null): number | null {
-  if (!start || !end) return null;
-  
-  try {
-    // Extract timestamps from both URLs
-    const getTimestamp = (url: string): number => {
-      const urlObj = new URL(url);
-      let timestamp = 0;
-      
-      if (urlObj.hostname === 'youtu.be') {
-        // Format: https://youtu.be/VIDEO_ID?t=TIMESTAMP
-        const tParam = urlObj.searchParams.get('t');
-        if (tParam) {
-          // Handle both seconds (123) and time format (1h23m45s)
-          if (tParam.includes('h') || tParam.includes('m') || tParam.includes('s')) {
-            const hours = tParam.match(/(\d+)h/)?.[1] || '0';
-            const minutes = tParam.match(/(\d+)m/)?.[1] || '0';
-            const seconds = tParam.match(/(\d+)s/)?.[1] || '0';
-            timestamp = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-          } else {
-            timestamp = parseInt(tParam) || 0;
-          }
-        }
-      } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
-        // Format: https://www.youtube.com/watch?v=VIDEO_ID&t=TIMESTAMP
-        const tParam = urlObj.searchParams.get('t');
-        if (tParam) {
-          // Handle both seconds (123) and time format (1h23m45s)
-          if (tParam.includes('h') || tParam.includes('m') || tParam.includes('s')) {
-            const hours = tParam.match(/(\d+)h/)?.[1] || '0';
-            const minutes = tParam.match(/(\d+)m/)?.[1] || '0';
-            const seconds = tParam.match(/(\d+)s/)?.[1] || '0';
-            timestamp = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
-          } else {
-            timestamp = parseInt(tParam) || 0;
-          }
-        }
-      }
-      
-      return timestamp;
-    };
-    
-    const startTime = getTimestamp(start);
-    const endTime = getTimestamp(end);
-    
-    if (endTime > startTime) {
-      return endTime - startTime; // Duration in seconds
-    }
-    
-    return null;
-  } catch (error) {
-    console.warn('Failed to calculate game duration:', start, end, error);
-    return null;
-  }
-}
+import { calculateGameDuration } from '../../utils/gameUtils';
 
 /**
  * Format duration in seconds to a human-readable string
@@ -223,23 +165,50 @@ function updateDurationsByWolfRatio(
  * Process a single game's duration data
  */
 function processGameDuration(
-  game: RawGameData,
+  game: GameLogEntry,
   durationStats: ReturnType<typeof initializeDurationStats>,
-  totals: { totalDuration: number; gamesWithDuration: number }
+  totals: { totalDuration: number; gamesWithDuration: number },
+  gameIndex: number
 ): void {
-  const winnerCamp = game["Camp victorieux"];
-  const nbPlayers = game["Nombre de joueurs"];
-  const nbWolves = game["Nombre de loups"];
+  // Extract data from GameLogEntry structure
+  const nbPlayers = game.PlayerStats.length;
+  const nbWolves = game.PlayerStats.filter(p => p.MainRoleInitial === 'Loup').length;
+  
+  // Determine winner camp from PlayerStats
+  const winners = game.PlayerStats.filter(p => p.Victorious);
+  let winnerCamp = '';
+  
+  if (winners.length > 0) {
+    const winnerRoles = winners.map(w => w.MainRoleInitial);
+    
+    // Check for wolf/traitor victory
+    if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
+      winnerCamp = 'Loup';
+    } 
+    // Check for pure villager victory (only villagers win)
+    else if (winnerRoles.every(role => role === 'Villageois')) {
+      winnerCamp = 'Villageois';
+    }
+    // Check for solo role victory
+    else {
+      const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
+      if (soloWinnerRoles.length > 0) {
+        winnerCamp = soloWinnerRoles[0]; // Use the first solo role as camp name
+      } else {
+        winnerCamp = 'Villageois'; // Fallback
+      }
+    }
+  }
   
   // Calculate actual game duration in seconds
-  const gameDuration = calculateGameDuration(game["Début"], game["Fin"]);
+  const gameDuration = calculateGameDuration(game.StartDate, game.EndDate);
 
   if (gameDuration && !isNaN(gameDuration) && gameDuration > 0) {
     totals.gamesWithDuration++;
     totals.totalDuration += gameDuration;
 
     // Update min/max
-    updateMinMaxDuration(gameDuration, game.Game, durationStats);
+    updateMinMaxDuration(gameDuration, gameIndex + 1, durationStats);
 
     // Update duration distribution
     updateDurationDistribution(gameDuration, durationStats.durationDistribution);
@@ -314,7 +283,7 @@ function formatDurationDistribution(
 /**
  * Compute game duration analysis from raw game data
  */
-export function computeGameDurationAnalysis(rawGameData: RawGameData[]): GameDurationAnalysisResponse | null {
+export function computeGameDurationAnalysis(rawGameData: GameLogEntry[]): GameDurationAnalysisResponse | null {
   if (rawGameData.length === 0) {
     return null;
   }
@@ -324,8 +293,8 @@ export function computeGameDurationAnalysis(rawGameData: RawGameData[]): GameDur
   const totals = { totalDuration: 0, gamesWithDuration: 0 };
 
   // Process each game
-  rawGameData.forEach(game => {
-    processGameDuration(game, durationStats, totals);
+  rawGameData.forEach((game, index) => {
+    processGameDuration(game, durationStats, totals, index);
   });
 
   // Calculate averages

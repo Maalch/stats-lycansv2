@@ -1,13 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSettings } from '../context/SettingsContext';
-
-// Helper to parse DD/MM/YYYY to Date
-function parseFrenchDate(dateStr: string): Date | null {
-  if (!dateStr) return null;
-  const [day, month, year] = dateStr.split('/');
-  if (!day || !month || !year) return null;
-  return new Date(Number(year), Number(month) - 1, Number(day));
-}
+import { parseFrenchDate } from './utils/dataUtils';
 
 export interface RawBRData {
   Game: number;
