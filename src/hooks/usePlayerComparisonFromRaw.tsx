@@ -15,7 +15,7 @@ export { type PlayerComparisonMetrics, type PlayerComparisonData } from './utils
  */
 export function usePlayerComparisonFromRaw() {
   const { data: playerStatsData, isLoading: statsLoading, error: statsError } = usePlayerStatsFromRaw();
-  const { gameData: rawGameData, roleData: rawRoleData, isLoading: dataLoading, error: dataError } = useCombinedFilteredRawData();
+  const { gameData: rawGameData, isLoading: dataLoading, error: dataError } = useCombinedFilteredRawData();
 
   const availablePlayers = useMemo(() => {
     return getAvailablePlayersForComparison(playerStatsData);
@@ -23,17 +23,35 @@ export function usePlayerComparisonFromRaw() {
 
   const generateComparison = useMemo(() => {
     return (player1Name: string, player2Name: string): PlayerComparisonData | null => {
-      if (!playerStatsData?.playerStats || !rawGameData || !rawRoleData) return null;
+      console.log('Hook Debug:', {
+        player1Name,
+        player2Name,
+        hasPlayerStats: !!playerStatsData?.playerStats,
+        playerStatsCount: playerStatsData?.playerStats?.length || 0,
+        hasGameData: !!rawGameData,
+        gameDataCount: rawGameData?.length || 0
+      });
       
-      return generatePlayerComparison(
-        player1Name, 
-        player2Name, 
-        playerStatsData, 
-        rawGameData, 
-        rawRoleData
-      );
+      if (!playerStatsData?.playerStats || !rawGameData) {
+        console.log('Hook: Missing required data');
+        return null;
+      }
+      
+      try {
+        const result = generatePlayerComparison(
+          player1Name, 
+          player2Name, 
+          playerStatsData, 
+          rawGameData
+        );
+        console.log('Hook: Generated comparison result:', result);
+        return result;
+      } catch (error) {
+        console.error('Hook: Error generating comparison:', error);
+        return null;
+      }
     };
-  }, [playerStatsData, rawGameData, rawRoleData]);
+  }, [playerStatsData, rawGameData]);
 
   return {
     availablePlayers,

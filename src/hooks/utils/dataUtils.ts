@@ -121,7 +121,7 @@ export function buildGamePlayerCampMap(rawRoleData: any[]): Record<string, Recor
 export function didCampWin(camp: string, winnerCamp: string): boolean {
   if (camp === winnerCamp) return true;
   // Special case: Traitor wins if Wolves win
-  if (camp === "Traître" && winnerCamp === "Loups") return true;
+  if (camp === "Traître" && winnerCamp === "Loup") return true;
   return false;
 }
 

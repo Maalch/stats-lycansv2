@@ -3,13 +3,33 @@
  */
 
 import type { PlayerStat } from '../../types/api';
-import type { GameLogEntry, RawRoleData } from '../useCombinedRawData';
-import { 
-  getPlayerCamp, 
-  buildGamePlayerCampMap,
-  didCampWin
-} from './dataUtils';
+import type { GameLogEntry } from '../useCombinedRawData';
 import { calculateGameDuration, formatDuration } from '../../utils/gameUtils';
+
+/**
+ * Helper function to get player's camp from role name
+ */
+function getPlayerCampFromRole(roleName: string): string {
+  if (!roleName) return 'Villageois';
+  
+  // Map role names to camps - keep original logic for comparison
+  if (roleName === 'Loup') {
+    return 'Loup';
+  }
+  
+  if (roleName === 'Traître') {
+    return 'Traître';
+  }
+  
+  // Special roles keep their role name as camp
+  if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 
+       'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(roleName)) {
+    return roleName;
+  }
+  
+  // Default to Villageois
+  return 'Villageois';
+}
 
 export interface PlayerComparisonMetrics {
   player: string;
@@ -60,59 +80,30 @@ export interface PlayerComparisonData {
  */
 export function calculateCampSpecificPerformance(
   playerName: string,
-  rawGameData: GameLogEntry[],
-  gamePlayerCampMap: Record<string, Record<string, string>>
+  rawGameData: GameLogEntry[]
 ) {
   const playerGameHistory = rawGameData
     .filter(game => {
-      const playerList = game.PlayerStats.map(p => p.Username);
-      return playerList.some(p => p.toLowerCase() === playerName.toLowerCase());
+      return game.PlayerStats.some(p => p.Username.toLowerCase() === playerName.toLowerCase());
     })
-    .map((game, index) => {
-      const gameNumber = index + 1;
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, gameNumber.toString(), playerName);
+    .map(game => {
+      const playerStat = game.PlayerStats.find(p => p.Username.toLowerCase() === playerName.toLowerCase());
+      if (!playerStat) return null;
       
-      // Determine winning camp from PlayerStats
-      const winners = game.PlayerStats.filter(p => p.Victorious);
-      let winningCamp = '';
-      
-      if (winners.length > 0) {
-        const winnerRoles = winners.map(w => w.MainRoleInitial);
-        
-        // Check for wolf/traitor victory
-        if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-          winningCamp = 'Loup';
-        } 
-        // Check for pure villager victory (only villagers win)
-        else if (winnerRoles.every(role => role === 'Villageois')) {
-          winningCamp = 'Villageois';
-        }
-        // Check for solo role victory
-        else {
-          const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
-          if (soloWinnerRoles.length > 0) {
-            winningCamp = soloWinnerRoles[0];
-          } else {
-            winningCamp = 'Villageois';
-          }
-        }
-      }
-      
-      // Special case for Agent camp: only winners in the list actually won
-      let playerWon = 0;
-      if (winningCamp === "Agent" && playerCamp === "Agent") {
-        const isPlayerWinner = game.PlayerStats.find(p => p.Username.toLowerCase() === playerName.toLowerCase())?.Victorious || false;
-        playerWon = isPlayerWinner ? 1 : 0;
-      } else {
-        playerWon = didCampWin(playerCamp, winningCamp) ? 1 : 0;
-      }
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+      const playerWon = playerStat.Victorious ? 1 : 0;
       
       return {
-        gameNumber,
+        gameNumber: parseInt(game.Id),
         playerCamp,
         playerWon
       };
-    });
+    })
+    .filter(Boolean) as Array<{
+      gameNumber: number;
+      playerCamp: string;
+      playerWon: number;
+    }>;
 
   const villageoisGames = playerGameHistory.filter(g => g.playerCamp === 'Villageois');
   const loupsGames = playerGameHistory.filter(g => g.playerCamp === 'Loup');
@@ -142,61 +133,34 @@ export function calculateCampSpecificPerformance(
  */
 export function calculateAdvancedConsistency(
   playerName: string,
-  rawGameData: GameLogEntry[],
-  gamePlayerCampMap: Record<string, Record<string, string>>
+  rawGameData: GameLogEntry[]
 ): number {
   // Get player's game history with enhanced context
   const playerGameHistory = rawGameData
     .filter(game => {
-      const playerList = game.PlayerStats.map(p => p.Username);
-      return playerList.some(p => p.toLowerCase() === playerName.toLowerCase());
+      return game.PlayerStats.some(p => p.Username.toLowerCase() === playerName.toLowerCase());
     })
-    .map((game, index) => {
-      const gameNumber = index + 1;
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, gameNumber.toString(), playerName);
+    .map(game => {
+      const playerStat = game.PlayerStats.find(p => p.Username.toLowerCase() === playerName.toLowerCase());
+      if (!playerStat) return null;
       
-      // Determine winning camp from PlayerStats
-      const winners = game.PlayerStats.filter(p => p.Victorious);
-      let winningCamp = '';
-      
-      if (winners.length > 0) {
-        const winnerRoles = winners.map(w => w.MainRoleInitial);
-        
-        // Check for wolf/traitor victory
-        if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-          winningCamp = 'Loup';
-        } 
-        // Check for pure villager victory (only villagers win)
-        else if (winnerRoles.every(role => role === 'Villageois')) {
-          winningCamp = 'Villageois';
-        }
-        // Check for solo role victory
-        else {
-          const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
-          if (soloWinnerRoles.length > 0) {
-            winningCamp = soloWinnerRoles[0];
-          } else {
-            winningCamp = 'Villageois';
-          }
-        }
-      }
-      
-      // Special case for Agent camp: only winners in the list actually won
-      let playerWon = 0;
-      if (winningCamp === "Agent" && playerCamp === "Agent") {
-        const isPlayerWinner = game.PlayerStats.find(p => p.Username.toLowerCase() === playerName.toLowerCase())?.Victorious || false;
-        playerWon = isPlayerWinner ? 1 : 0;
-      } else {
-        playerWon = didCampWin(playerCamp, winningCamp) ? 1 : 0;
-      }
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+      const playerWon = playerStat.Victorious ? 1 : 0;
       
       return {
-        gameNumber,
+        gameNumber: parseInt(game.Id),
         playerCamp,
         playerWon
       };
     })
-    .sort((a, b) => a.gameNumber - b.gameNumber); // Chronological order
+    .filter(Boolean) as Array<{
+      gameNumber: number;
+      playerCamp: string;
+      playerWon: number;
+    }>;
+
+  // Sort chronologically
+  playerGameHistory.sort((a, b) => a.gameNumber - b.gameNumber);
 
   if (playerGameHistory.length < 30) return 25; // Very low score for insufficient data
 
@@ -308,21 +272,17 @@ export function generatePlayerComparison(
   player1Name: string,
   player2Name: string,
   playerStatsData: { playerStats: PlayerStat[] },
-  rawGameData: GameLogEntry[],
-  rawRoleData: RawRoleData[]
+  rawGameData: GameLogEntry[]
 ): PlayerComparisonData | null {
   const player1Stats = playerStatsData.playerStats.find(p => p.player === player1Name);
   const player2Stats = playerStatsData.playerStats.find(p => p.player === player2Name);
   
   if (!player1Stats || !player2Stats) return null;
 
-  // Build game-player-camp mapping once for efficient lookups
-  const gamePlayerCampMap = buildGamePlayerCampMap(rawRoleData);
-
   // Calculate raw metrics for ALL players to establish ranges for dynamic scaling
   const allPlayersRawMetrics = playerStatsData.playerStats.map(playerStat => {
-    const campPerformance = calculateCampSpecificPerformance(playerStat.player, rawGameData, gamePlayerCampMap);
-    const consistencyScore = calculateAdvancedConsistency(playerStat.player, rawGameData, gamePlayerCampMap);
+    const campPerformance = calculateCampSpecificPerformance(playerStat.player, rawGameData);
+    const consistencyScore = calculateAdvancedConsistency(playerStat.player, rawGameData);
     
     return {
       player: playerStat.player,
@@ -332,22 +292,22 @@ export function generatePlayerComparison(
       rawVillageoisMastery: campPerformance.villageoisWinRate,
       rawLoupsEfficiency: campPerformance.loupsWinRate,
       rawSpecialRoleAdaptability: campPerformance.specialRoleWinRate,
-      villageoisGames: rawGameData.filter((game, index) => {
-        const playerList = game.PlayerStats.map(p => p.Username);
-        if (!playerList.some(p => p.toLowerCase() === playerStat.player.toLowerCase())) return false;
-        const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), playerStat.player);
+      villageoisGames: rawGameData.filter(game => {
+        const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === playerStat.player.toLowerCase());
+        if (!playerInGame) return false;
+        const playerCamp = getPlayerCampFromRole(playerInGame.MainRoleInitial);
         return playerCamp === 'Villageois';
       }).length,
-      loupsGames: rawGameData.filter((game, index) => {
-        const playerList = game.PlayerStats.map(p => p.Username);
-        if (!playerList.some(p => p.toLowerCase() === playerStat.player.toLowerCase())) return false;
-        const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), playerStat.player);
+      loupsGames: rawGameData.filter(game => {
+        const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === playerStat.player.toLowerCase());
+        if (!playerInGame) return false;
+        const playerCamp = getPlayerCampFromRole(playerInGame.MainRoleInitial);
         return playerCamp === 'Loup';
       }).length,
-      specialRoleGames: rawGameData.filter((game, index) => {
-        const playerList = game.PlayerStats.map(p => p.Username);
-        if (!playerList.some(p => p.toLowerCase() === playerStat.player.toLowerCase())) return false;
-        const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), playerStat.player);
+      specialRoleGames: rawGameData.filter(game => {
+        const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === playerStat.player.toLowerCase());
+        if (!playerInGame) return false;
+        const playerCamp = getPlayerCampFromRole(playerInGame.MainRoleInitial);
         return !['Villageois', 'Loup'].includes(playerCamp);
       }).length
     };
@@ -370,10 +330,10 @@ export function generatePlayerComparison(
   const specialRoleScaler = createSpecialRoleScaler(specialValues);
 
   // Find common games and head-to-head stats
-  const commonGames: any[] = [];
-  const opposingCampGames: any[] = [];
-  const sameCampGames: any[] = [];
-  const sameLoupsGames: any[] = [];
+  const commonGames: GameLogEntry[] = [];
+  const opposingCampGames: GameLogEntry[] = [];
+  const sameCampGames: GameLogEntry[] = [];
+  const sameLoupsGames: GameLogEntry[] = [];
   let player1CommonWins = 0;
   let player2CommonWins = 0;
   let player1OpposingWins = 0;
@@ -389,57 +349,24 @@ export function generatePlayerComparison(
   let totalSameLoupsDurationSeconds = 0;
   let sameLoupsGamesWithDuration = 0;
 
-  rawGameData.forEach((game, index) => {
-    const gameNumber = index + 1;
-    const playerList = game.PlayerStats.map(p => p.Username);
-    const hasPlayer1 = playerList.some(p => p.toLowerCase() === player1Name.toLowerCase());
-    const hasPlayer2 = playerList.some(p => p.toLowerCase() === player2Name.toLowerCase());
+  rawGameData.forEach(game => {
+    const hasPlayer1 = game.PlayerStats.some(p => p.Username.toLowerCase() === player1Name.toLowerCase());
+    const hasPlayer2 = game.PlayerStats.some(p => p.Username.toLowerCase() === player2Name.toLowerCase());
     
     if (hasPlayer1 && hasPlayer2) {
       commonGames.push(game);
       
-      const player1Camp = getPlayerCamp(gamePlayerCampMap, gameNumber.toString(), player1Name);
-      const player2Camp = getPlayerCamp(gamePlayerCampMap, gameNumber.toString(), player2Name);
+      const player1Stat = game.PlayerStats.find(p => p.Username.toLowerCase() === player1Name.toLowerCase());
+      const player2Stat = game.PlayerStats.find(p => p.Username.toLowerCase() === player2Name.toLowerCase());
       
-      // Determine winning camp from PlayerStats
-      const winners = game.PlayerStats.filter(p => p.Victorious);
-      let winnerCamp = '';
+      if (!player1Stat || !player2Stat) return;
       
-      if (winners.length > 0) {
-        const winnerRoles = winners.map(w => w.MainRoleInitial);
-        
-        // Check for wolf/traitor victory
-        if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-          winnerCamp = 'Loup';
-        } 
-        // Check for pure villager victory (only villagers win)
-        else if (winnerRoles.every(role => role === 'Villageois')) {
-          winnerCamp = 'Villageois';
-        }
-        // Check for solo role victory
-        else {
-          const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
-          if (soloWinnerRoles.length > 0) {
-            winnerCamp = soloWinnerRoles[0];
-          } else {
-            winnerCamp = 'Villageois';
-          }
-        }
-      }
+      const player1Camp = getPlayerCampFromRole(player1Stat.MainRoleInitial);
+      const player2Camp = getPlayerCampFromRole(player2Stat.MainRoleInitial);
       
-      // Count wins in common games with special Agent camp handling
-      let player1Won = false;
-      let player2Won = false;
-      
-      if (winnerCamp === "Agent") {
-        // For Agent camp, check if each player actually won
-        player1Won = player1Camp === "Agent" && game.PlayerStats.find(p => p.Username.toLowerCase() === player1Name.toLowerCase())?.Victorious || false;
-        player2Won = player2Camp === "Agent" && game.PlayerStats.find(p => p.Username.toLowerCase() === player2Name.toLowerCase())?.Victorious || false;
-      } else {
-        // For other camps, use didCampWin to handle Traître-Loups alliance
-        player1Won = didCampWin(player1Camp, winnerCamp);
-        player2Won = didCampWin(player2Camp, winnerCamp);
-      }
+      // Count wins in common games
+      const player1Won = player1Stat.Victorious;
+      const player2Won = player2Stat.Victorious;
       
       if (player1Won) player1CommonWins++;
       if (player2Won) player2CommonWins++;
@@ -470,31 +397,13 @@ export function generatePlayerComparison(
       const player2MainCamp = getMainCampAffiliation(player2Camp);
       
       // Players are in opposing camps if they have different camp affiliations
-      // e.g., 'Idiot du Village' vs 'Villageois' = opposing camps (different roles)
-      //       'Villageois' vs 'Cannibale' = opposing camps (different roles)
-      //       'Traître' vs 'Loup' = same camp (both wolves team)
-      //       'Villageois' vs 'Villageois' = same camp (same role)
       const isOpposingCamps = player1MainCamp !== player2MainCamp;
       
       if (isOpposingCamps) {
         opposingCampGames.push(game);
         
-        // Handle Agent camp wins correctly in opposing camps
-        if (winnerCamp === "Agent") {
-          // Check if each player won based on PlayerStats
-          const player1Won = game.PlayerStats.find(p => p.Username.toLowerCase() === player1Name.toLowerCase())?.Victorious || false;
-          const player2Won = game.PlayerStats.find(p => p.Username.toLowerCase() === player2Name.toLowerCase())?.Victorious || false;
-          
-          if (player1Camp === "Agent" && player1Won) {
-            player1OpposingWins++;
-          }
-          if (player2Camp === "Agent" && player2Won) {
-            player2OpposingWins++;
-          }
-        } else {
-          if (didCampWin(player1Camp, winnerCamp)) player1OpposingWins++;
-          if (didCampWin(player2Camp, winnerCamp)) player2OpposingWins++;
-        }
+        if (player1Won) player1OpposingWins++;
+        if (player2Won) player2OpposingWins++;
         
         if (game.StartDate && game.EndDate) {
           const duration = calculateGameDuration(game.StartDate, game.EndDate);
@@ -513,23 +422,11 @@ export function generatePlayerComparison(
           sameLoupsGames.push(game);
         }
         
-        // Handle Agent camp wins correctly in same camp (both agents, but only one can win)
-        if (winnerCamp === "Agent") {
-          // Check if either player won based on PlayerStats
-          const player1Won = game.PlayerStats.find(p => p.Username.toLowerCase() === player1Name.toLowerCase())?.Victorious || false;
-          const player2Won = game.PlayerStats.find(p => p.Username.toLowerCase() === player2Name.toLowerCase())?.Victorious || false;
-          
-          // Count as team win if either player wins (since they're both agents)
-          if ((player1Camp === "Agent" && player1Won) ||
-              (player2Camp === "Agent" && player2Won)) {
-            sameCampWins++;
-          }
-        } else {
-          if (didCampWin(player1Camp, winnerCamp)) {
-            sameCampWins++;
-            if (isBothLoupsTeam) {
-              sameLoupsWins++;
-            }
+        // Count as team win if either player wins
+        if (player1Won || player2Won) {
+          sameCampWins++;
+          if (isBothLoupsTeam) {
+            sameLoupsWins++;
           }
         }
         
@@ -550,28 +447,28 @@ export function generatePlayerComparison(
 
   // Calculate metrics for both players using dynamic scaling
   const calculateMetrics = (stats: PlayerStat): PlayerComparisonMetrics => {
-    const campPerformance = calculateCampSpecificPerformance(stats.player, rawGameData, gamePlayerCampMap);
-    const consistencyScore = calculateAdvancedConsistency(stats.player, rawGameData, gamePlayerCampMap);
+    const campPerformance = calculateCampSpecificPerformance(stats.player, rawGameData);
+    const consistencyScore = calculateAdvancedConsistency(stats.player, rawGameData);
     
     // Count games in each category for the player
-    const playerVillageoisGames = rawGameData.filter((game, index) => {
-      const playerList = game.PlayerStats.map(p => p.Username);
-      if (!playerList.some(p => p.toLowerCase() === stats.player.toLowerCase())) return false;
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), stats.player);
+    const playerVillageoisGames = rawGameData.filter(game => {
+      const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === stats.player.toLowerCase());
+      if (!playerInGame) return false;
+      const playerCamp = getPlayerCampFromRole(playerInGame.MainRoleInitial);
       return playerCamp === 'Villageois';
     }).length;
     
-    const playerLoupsGames = rawGameData.filter((game, index) => {
-      const playerList = game.PlayerStats.map(p => p.Username);
-      if (!playerList.some(p => p.toLowerCase() === stats.player.toLowerCase())) return false;
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), stats.player);
+    const playerLoupsGames = rawGameData.filter(game => {
+      const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === stats.player.toLowerCase());
+      if (!playerInGame) return false;
+      const playerCamp = getPlayerCampFromRole(playerInGame.MainRoleInitial);
       return playerCamp === 'Loup';
     }).length;
     
-    const playerSpecialRoleGames = rawGameData.filter((game, index) => {
-      const playerList = game.PlayerStats.map(p => p.Username);
-      if (!playerList.some(p => p.toLowerCase() === stats.player.toLowerCase())) return false;
-      const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), stats.player);
+    const playerSpecialRoleGames = rawGameData.filter(game => {
+      const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === stats.player.toLowerCase());
+      if (!playerInGame) return false;
+      const playerCamp = getPlayerCampFromRole(playerInGame.MainRoleInitial);
       return !['Villageois', 'Loup'].includes(playerCamp);
     }).length;
 
