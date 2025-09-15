@@ -1,6 +1,7 @@
 /**
  * Utility functions for processing YouTube URLs and game duration calculations
  */
+import type { GameLogEntry } from '../hooks/useCombinedRawData';
 
 // Helper function to extract YouTube video ID and timestamp from a YouTube URL
 export function extractYouTubeInfo(url: string | null): { videoId: string | null; timestamp: number | null } {
@@ -110,4 +111,67 @@ export function formatDuration(durationInSeconds: number): string {
 // Helper function to split and trim strings like the Google Apps Script
 export function splitAndTrim(str: string | null | undefined): string[] {
   return str ? str.split(',').map(s => s.trim()).filter(Boolean) : [];
+}
+
+/**
+ * Helper function to get player's camp from role name
+ */
+export function getPlayerCampFromRole(roleName: string): string {
+  if (!roleName) return 'Villageois';
+  
+  // Map role names to camps - keep original logic for comparison
+  if (roleName === 'Loup') {
+    return 'Loup';
+  }
+  
+  if (roleName === 'Traître') {
+    return 'Traître';
+  }
+
+  if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
+    return 'Amoureux';
+  }
+  
+  // Special roles keep their role name as camp
+  if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 
+       'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(roleName)) {
+    return roleName;
+  }
+  
+  // Default to Villageois
+  return 'Villageois';
+}
+
+export function getWinnerCampFromGame(game: GameLogEntry): string {
+ // Determine winner camp from PlayerStats
+  const winners = game.PlayerStats.filter(p => p.Victorious);
+  let winnerCamp = '';
+  
+  if (winners.length > 0) {
+    const winnerRoles = winners.map(w => w.MainRoleInitial);
+    
+    // Check for wolf/traitor victory
+    if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
+      winnerCamp = 'Loup';
+    }
+    // Check for Amoureux camp victory
+    else if (winnerRoles.includes('Amoureux Loup') || winnerRoles.includes('Amoureux Villageois')) {
+      winnerCamp = 'Amoureux';
+    }
+    // Check for Villageois camp victory (Villageois, Chasseur, or Alchmiste)
+    else if (winnerRoles.includes('Villageois') || winnerRoles.includes('Chasseur') || winnerRoles.includes('Alchmiste')) {
+      winnerCamp = 'Villageois';
+    }
+    // Check for solo role victory
+    else {
+      const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître', 'Chasseur', 'Alchmiste', 'Amoureux Loup', 'Amoureux Villageois'].includes(role));
+      if (soloWinnerRoles.length > 0) {
+        winnerCamp = soloWinnerRoles[0]; // Use the first solo role as camp name
+      } else {
+        winnerCamp = 'Villageois'; // Fallback
+      }
+    }
+    return winnerCamp;
+  }
+  return 'Villageois';
 }
