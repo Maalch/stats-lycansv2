@@ -11,7 +11,7 @@ export type { CampSeries, WinSeries, LossSeries, PlayerSeriesData } from './util
  */
 export function usePlayerSeriesFromRaw() {
   const { data: seriesData, isLoading, error } = usePlayerStatsBase(
-    (gameData, roleData) => computePlayerSeries(gameData, roleData)
+    (gameData) => computePlayerSeries(gameData)
   );
 
   return {

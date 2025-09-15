@@ -5,15 +5,15 @@ import { parseFrenchDate } from './utils/dataUtils';
 // New GameLog interfaces
 export interface PlayerStat {
   Username: string;
-  MainRoleInitial: string;
-  MainRoleFinal: string | null;
-  Power: string | null;
-  SecondaryRole: string | null;
-  DeathDateIrl: string | null;
-  DeathTiming: string | null;
-  DeathPosition: number | null;
-  KillerName: string | null;
-  Victorious: boolean;
+  MainRoleInitial: string;        // Original role at game start
+  MainRoleFinal: string | null;    // Final role if changed (e.g., by role swap)
+  Power: string | null;           // Special power (linked to the role), if any
+  SecondaryRole: string | null;     // Secondary role if any
+  DeathDateIrl: string | null;    // Real-life date of death in game
+  DeathTiming: string | null;     // Timing of death (e.g., "Nuit 2 --> N2", "Jour 3 --> J3")
+  DeathPosition: number | null;   // Game coordinates  of death (x, y ,z), if applicable
+  KillerName: string | null;      // Name of the killer if applicable
+  Victorious: boolean;            // Whether the player was on the winning side
 }
 
 export interface LegacyData {
@@ -28,9 +28,9 @@ export interface GameLogEntry {
   StartDate: string;
   EndDate: string;
   MapName: string;
-  HarvestGoal: number;
-  HarvestDone: number;
-  EndTiming: string | null;
+  HarvestGoal: number;           // Target harvest for the game
+  HarvestDone: number;            // Actual harvest achieved at the end of the game
+  EndTiming: string | null;       // Timing of game end (e.g., "Nuit 5 --> N5", "Jour 6 --> J6")
   LegacyData: LegacyData | null;
   PlayerStats: PlayerStat[];
 }

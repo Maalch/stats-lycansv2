@@ -341,7 +341,7 @@ export function PlayerSeriesChart() {
             </div>
             
             <div className="lycans-stat-card">
-              <h3>📊 Moyenne (tous les joueurs)</h3>
+              <h3>📊 Meilleure série moyenne (tous les joueurs)</h3>
               <div className="lycans-stat-value">
                 {selectedSeriesType === 'villageois' ? seriesData.averageVillageoisSeries :
                  selectedSeriesType === 'loup' ? seriesData.averageLoupsSeries :
