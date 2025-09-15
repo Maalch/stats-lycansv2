@@ -130,11 +130,11 @@ export function getPlayerMainCamp(
   gamePlayerCampMap: Record<string, Record<string, string>>, 
   gameId: string, 
   playerName: string
-): 'Villageois' | 'Loups' | 'Autres' {
+): 'Villageois' | 'Loup' | 'Autres' {
   const camp = getPlayerCamp(gamePlayerCampMap, gameId, playerName);
   
-  if (camp === 'Loups' || camp === 'Traître') {
-    return 'Loups';
+  if (camp === 'Loup' || camp === 'Traître') {
+    return 'Loup';
   } else if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(camp)) {
     return 'Autres';
   } else {

@@ -1,4 +1,4 @@
-import { usePlayerStatsBase } from './utils/baseStatsHook';
+import { useGameStatsBase } from './utils/baseStatsHook';
 import { computePlayerStats } from './utils/playerStatsUtils';
 
 // Re-export interfaces for convenience
@@ -10,8 +10,8 @@ export type { PlayerStatsData, PlayerStat, PlayerCamps } from '../types/api';
  * 
  */
 export function usePlayerStatsFromRaw() {
-  const { data: playerStats, isLoading, error } = usePlayerStatsBase(
-    (gameData, roleData) => computePlayerStats(gameData, roleData)
+  const { data: playerStats, isLoading, error } = useGameStatsBase(
+    (gameData) => computePlayerStats(gameData)
   );
 
   return {

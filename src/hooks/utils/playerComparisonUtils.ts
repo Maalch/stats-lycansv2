@@ -81,7 +81,7 @@ export function calculateCampSpecificPerformance(
         
         // Check for wolf/traitor victory
         if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-          winningCamp = 'Loups';
+          winningCamp = 'Loup';
         } 
         // Check for pure villager victory (only villagers win)
         else if (winnerRoles.every(role => role === 'Villageois')) {
@@ -115,8 +115,8 @@ export function calculateCampSpecificPerformance(
     });
 
   const villageoisGames = playerGameHistory.filter(g => g.playerCamp === 'Villageois');
-  const loupsGames = playerGameHistory.filter(g => g.playerCamp === 'Loups');
-  const specialGames = playerGameHistory.filter(g => !['Villageois', 'Loups'].includes(g.playerCamp));
+  const loupsGames = playerGameHistory.filter(g => g.playerCamp === 'Loup');
+  const specialGames = playerGameHistory.filter(g => !['Villageois', 'Loup'].includes(g.playerCamp));
 
   const villageoisWinRate = villageoisGames.length > 0 
     ? (villageoisGames.reduce((sum, g) => sum + g.playerWon, 0) / villageoisGames.length) * 100 
@@ -164,7 +164,7 @@ export function calculateAdvancedConsistency(
         
         // Check for wolf/traitor victory
         if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-          winningCamp = 'Loups';
+          winningCamp = 'Loup';
         } 
         // Check for pure villager victory (only villagers win)
         else if (winnerRoles.every(role => role === 'Villageois')) {
@@ -205,7 +205,7 @@ export function calculateAdvancedConsistency(
   
   // 2. Camp-specific consistency analysis
   const villageoisGames = playerGameHistory.filter(g => g.playerCamp === 'Villageois');
-  const loupsGames = playerGameHistory.filter(g => g.playerCamp === 'Loups');
+  const loupsGames = playerGameHistory.filter(g => g.playerCamp === 'Loup');
   
   let campConsistencyScore = 50;
   
@@ -342,13 +342,13 @@ export function generatePlayerComparison(
         const playerList = game.PlayerStats.map(p => p.Username);
         if (!playerList.some(p => p.toLowerCase() === playerStat.player.toLowerCase())) return false;
         const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), playerStat.player);
-        return playerCamp === 'Loups';
+        return playerCamp === 'Loup';
       }).length,
       specialRoleGames: rawGameData.filter((game, index) => {
         const playerList = game.PlayerStats.map(p => p.Username);
         if (!playerList.some(p => p.toLowerCase() === playerStat.player.toLowerCase())) return false;
         const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), playerStat.player);
-        return !['Villageois', 'Loups'].includes(playerCamp);
+        return !['Villageois', 'Loup'].includes(playerCamp);
       }).length
     };
   }).filter(metrics => metrics.rawParticipation >= 30); // Only include players with meaningful participation (30+ games)
@@ -410,7 +410,7 @@ export function generatePlayerComparison(
         
         // Check for wolf/traitor victory
         if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-          winnerCamp = 'Loups';
+          winnerCamp = 'Loup';
         } 
         // Check for pure villager victory (only villagers win)
         else if (winnerRoles.every(role => role === 'Villageois')) {
@@ -456,8 +456,8 @@ export function generatePlayerComparison(
       // Check if they were in opposing camps
       // Helper function to determine the main camp affiliation based on werewolf game rules
       const getMainCampAffiliation = (camp: string): string => {
-        if (camp === 'Loups' || camp === 'Traître') {
-          return 'Loups'; // Wolves team: Loups + Traître (only exception)
+        if (camp === 'Loup' || camp === 'Traître') {
+          return 'Loup'; // Wolves team: Loups + Traître (only exception)
         } else {
           // Every other role works alone and is its own camp
           // Villageois, Idiot du Village, Cannibale, Agent, Espion, Scientifique, 
@@ -472,7 +472,7 @@ export function generatePlayerComparison(
       // Players are in opposing camps if they have different camp affiliations
       // e.g., 'Idiot du Village' vs 'Villageois' = opposing camps (different roles)
       //       'Villageois' vs 'Cannibale' = opposing camps (different roles)
-      //       'Traître' vs 'Loups' = same camp (both wolves team)
+      //       'Traître' vs 'Loup' = same camp (both wolves team)
       //       'Villageois' vs 'Villageois' = same camp (same role)
       const isOpposingCamps = player1MainCamp !== player2MainCamp;
       
@@ -508,7 +508,7 @@ export function generatePlayerComparison(
         sameCampGames.push(game);
         
         // Check if both are specifically in the Loups team
-        const isBothLoupsTeam = player1MainCamp === 'Loups';
+        const isBothLoupsTeam = player1MainCamp === 'Loup';
         if (isBothLoupsTeam) {
           sameLoupsGames.push(game);
         }
@@ -565,14 +565,14 @@ export function generatePlayerComparison(
       const playerList = game.PlayerStats.map(p => p.Username);
       if (!playerList.some(p => p.toLowerCase() === stats.player.toLowerCase())) return false;
       const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), stats.player);
-      return playerCamp === 'Loups';
+      return playerCamp === 'Loup';
     }).length;
     
     const playerSpecialRoleGames = rawGameData.filter((game, index) => {
       const playerList = game.PlayerStats.map(p => p.Username);
       if (!playerList.some(p => p.toLowerCase() === stats.player.toLowerCase())) return false;
       const playerCamp = getPlayerCamp(gamePlayerCampMap, (index + 1).toString(), stats.player);
-      return !['Villageois', 'Loups'].includes(playerCamp);
+      return !['Villageois', 'Loup'].includes(playerCamp);
     }).length;
 
     return {

@@ -1,4 +1,4 @@
-import { usePlayerStatsBase } from './utils/baseStatsHook';
+import { useGameStatsBase } from './utils/baseStatsHook';
 import { computeCampWinStats } from './utils/campWinStatsUtils';
 
 /**
@@ -6,7 +6,7 @@ import { computeCampWinStats } from './utils/campWinStatsUtils';
  * Implémente la même logique que _computeCampWinStats du Google Apps Script.
  */
 export function useCampWinStatsFromRaw() {
-  const { data: campWinStats, isLoading, error } = usePlayerStatsBase(computeCampWinStats);
+  const { data: campWinStats, isLoading, error } = useGameStatsBase(computeCampWinStats);
 
   return {
     campWinStats,

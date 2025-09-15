@@ -524,12 +524,12 @@ export function PlayerGameHistoryChart() {
                             },
                             fromComponent: 'Distribution par Camps'
                           });
-                        } else if (entry.name === 'Loups') {
+                        } else if (entry.name === 'Loup') {
                           // When clicking on Loups, exclude traitor games to show only regular wolf games
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
                             campFilter: {
-                              selectedCamp: 'Loups',
+                              selectedCamp: 'Loup',
                               campFilterMode: 'wins-only',
                               excludeTraitor: true
                             },
@@ -695,7 +695,7 @@ export function PlayerGameHistoryChart() {
                               },
                               fromComponent: 'Performance par Camp'
                             });
-                          } else if (entry.name === 'Loups') {
+                          } else if (entry.name === 'Loup') {
                             // When clicking on Loups, exclude traitor games to show only regular wolf games
                             navigateToGameDetails({
                               selectedPlayer: selectedPlayerName,

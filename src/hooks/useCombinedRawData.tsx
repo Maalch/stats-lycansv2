@@ -41,7 +41,36 @@ export interface GameLogData {
   GameStats: GameLogEntry[];
 }
 
-// RawGameData interface removed - using GameLogEntry directly
+// Legacy interfaces DONT USE THEM ANYMORE - generated now from GameLogEntry
+/*
+export interface RawGameData {
+  Game: number;
+  Date: string;
+  "Game Moddée": boolean;
+  "Nombre de joueurs": number;
+  "Nombre de loups": number;
+  "Rôle Traître": boolean;
+  "Rôle Amoureux": boolean;
+  "Rôles solo": string | null;
+  "Camp victorieux": string;
+  "Type de victoire": string;
+  "Nombre de journées": number;
+  "Survivants villageois": number;
+  "Survivants loups (traître inclus)": number;
+  "Survivants amoureux": number | null;
+  "Survivants solo": number | null;
+  "Liste des gagnants": string;
+  "Liste des joueurs": string;
+  "Récolte": number | null;
+  "Total récolte": number | null;
+  "Pourcentage de récolte": number | null;
+  "Versions": string | null;
+  "Map": string | null;
+  "VOD": string | null;
+  "VODEnd": string | null;
+  "Début": string | null;
+  "Fin": string | null;
+}
 
 export interface RawRoleData {
   Game: number;
@@ -72,6 +101,7 @@ export interface RawPonceData {
   "Type de mort": string | null;
   "Joueurs tueurs": string | null;
 }
+  */
 
 export interface RawBRData {
   Game: number;
@@ -102,16 +132,14 @@ interface RawBRResponse {
 
 interface CombinedRawData {
   gameData: GameLogEntry[];
-  roleData: RawRoleData[];
-  ponceData: RawPonceData[];
   brPartiesData: RawBRData[];
   brRefPartiesData: RawBRGlobalData[];
 }
 
 interface CombinedFilteredData {
   gameData: GameLogEntry[] | null;
-  roleData: RawRoleData[] | null;
-  ponceData: RawPonceData[] | null;
+  roleData: any[] | null; // Legacy field, always null in new migration
+  ponceData: any[] | null; // Legacy field, always null in new migration
   brPartiesData: RawBRData[] | null;
   brRefPartiesData: RawBRGlobalData[] | null;
   isLoading: boolean;
@@ -121,98 +149,8 @@ interface CombinedFilteredData {
 // Transformation functions removed - using GameLogEntry directly
 
 /**
- * Transform GameLogData to legacy RawRoleData format
- */
-function transformToRawRoleData(gameLogData: GameLogData): RawRoleData[] {
-  return gameLogData.GameStats.map((game, index) => {
-    const gameNumber = index + 1;
-    
-    // Group players by role
-    const roleGroups: { [key: string]: string[] } = {};
-    
-    game.PlayerStats.forEach(player => {
-      const role = player.MainRoleInitial;
-      if (!roleGroups[role]) {
-        roleGroups[role] = [];
-      }
-      roleGroups[role].push(player.Username);
-    });
-    
-    return {
-      Game: gameNumber,
-      "Game Moddée": game.LegacyData?.Modded || true,
-      Loups: roleGroups['Loup']?.join(', ') || null,
-      Traître: roleGroups['Traître']?.join(', ') || null,
-      "Idiot du Village": roleGroups['Idiot du Village']?.join(', ') || null,
-      Cannibale: roleGroups['Cannibale']?.join(', ') || null,
-      Agent: roleGroups['Agent']?.join(', ') || null,
-      Espion: roleGroups['Espion']?.join(', ') || null,
-      Scientifique: roleGroups['Scientifique']?.join(', ') || null,
-      Amoureux: roleGroups['Amoureux']?.join(', ') || null,
-      "La Bête": roleGroups['La Bête']?.join(', ') || null,
-      "Chasseur de primes": roleGroups['Chasseur de primes']?.join(', ') || null,
-      Vaudou: roleGroups['Vaudou']?.join(', ') || null
-    };
-  });
-}
-
-/**
- * Transform GameLogData to legacy RawPonceData format
- * Note: This focuses on Ponce's data specifically
- */
-function transformToRawPonceData(gameLogData: GameLogData): RawPonceData[] {
-  return gameLogData.GameStats.map((game, index) => {
-    const gameNumber = index + 1;
-    const ponceData = game.PlayerStats.find(p => p.Username === 'Ponce');
-    
-    if (!ponceData) {
-      // Return empty data if Ponce not in game
-      return {
-        Game: gameNumber,
-        "Game Moddée": game.LegacyData?.Modded || true,
-        Camp: null,
-        Traître: false,
-        "Rôle secondaire": null,
-        "Pouvoir de loup": null,
-        "Métier villageois": null,
-        "Joueurs tués": null,
-        "Jour de mort": null,
-        "Type de mort": null,
-        "Joueurs tueurs": null
-      };
-    }
-    
-    // Determine camp based on role
-    let camp = '';
-    if (ponceData.MainRoleInitial === 'Loup') {
-      camp = 'Loups';
-    } else if (ponceData.MainRoleInitial === 'Villageois') {
-      camp = 'Villageois';
-    } else if (ponceData.MainRoleInitial === 'Traître') {
-      camp = 'Traître';
-    } else {
-      camp = ponceData.MainRoleInitial; // Solo roles
-    }
-    
-    return {
-      Game: gameNumber,
-      "Game Moddée": game.LegacyData?.Modded || true,
-      Camp: camp,
-      Traître: ponceData.MainRoleInitial === 'Traître',
-      "Rôle secondaire": ponceData.SecondaryRole,
-      "Pouvoir de loup": ponceData.Power,
-      "Métier villageois": ponceData.MainRoleInitial === 'Villageois' ? ponceData.Power : null,
-      "Joueurs tués": null, // This would need additional data from game log
-      "Jour de mort": ponceData.DeathPosition,
-      "Type de mort": ponceData.DeathTiming,
-      "Joueurs tueurs": ponceData.KillerName
-    };
-  });
-}
-
-/**
  * Centralized hook to fetch all raw data with a single loading state
- * Now loads from gameLog.json and transforms to legacy format for backward compatibility
+ * Now loads from gameLog.json directly without legacy transformations
  */
 function useCombinedRawData(): {
   data: CombinedRawData | null;
@@ -245,14 +183,9 @@ function useCombinedRawData(): {
           brResponse.json() as Promise<RawBRResponse>
         ]);
 
-        // Use GameLogEntry directly instead of transforming to legacy format
-        const transformedRoleData = transformToRawRoleData(gameLogResult);
-        const transformedPonceData = transformToRawPonceData(gameLogResult);
 
         setData({
           gameData: gameLogResult.GameStats,
-          roleData: transformedRoleData,
-          ponceData: transformedPonceData,
           brPartiesData: brResult.BRParties?.data || [],
           brRefPartiesData: brResult.BRRefParties?.data || []
         });
@@ -431,16 +364,6 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
     let filteredGameData = applyGameLogFilters(rawData.gameData, settings);
     filteredGameData = applyPlayerFilter(filteredGameData, settings);
 
-    // Apply filters to other data based on the filtered game list
-    const filteredGameIds = new Set(filteredGameData.map((_, index) => index + 1));
-    
-    const filteredRoleData = rawData.roleData.filter(role => 
-      filteredGameIds.has(role.Game)
-    );
-    
-    const filteredPonceData = rawData.ponceData.filter(ponce => 
-      filteredGameIds.has(ponce.Game)
-    );
 
     // For BR data, apply filters with reference to global game data
     let filteredBRPartiesData = rawData.brPartiesData.filter(record => {
@@ -466,8 +389,8 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
 
     return {
       gameData: filteredGameData,
-      roleData: filteredRoleData,
-      ponceData: filteredPonceData,
+      roleData: null, // No longer used in migration
+      ponceData: null, // No longer used in migration
       brPartiesData: filteredBRPartiesData,
       brRefPartiesData: filteredBRRefPartiesData
     };
@@ -486,16 +409,6 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
 export function useFilteredRawGameData() {
   const { gameData, isLoading, error } = useCombinedFilteredRawData();
   return { data: gameData, isLoading, error };
-}
-
-export function useFilteredRawRoleData() {
-  const { roleData, isLoading, error } = useCombinedFilteredRawData();
-  return { data: roleData, isLoading, error };
-}
-
-export function useFilteredRawPonceData() {
-  const { ponceData, isLoading, error } = useCombinedFilteredRawData();
-  return { data: ponceData, isLoading, error };
 }
 
 export function useFilteredRawBRData() {

@@ -183,7 +183,7 @@ function processGameDuration(
     
     // Check for wolf/traitor victory
     if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-      winnerCamp = 'Loups';
+      winnerCamp = 'Loup';
     } 
     // Check for pure villager victory (only villagers win)
     else if (winnerRoles.every(role => role === 'Villageois')) {
