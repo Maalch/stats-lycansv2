@@ -28,15 +28,20 @@ npm run sync-data    # Fetch fresh data from Apps Script to /data
 **New Primary Source:** `gameLog.json` - unified structure with nested `PlayerStats` arrays  
 **Backward Compatibility:** `useCombinedRawData.tsx` transforms new structure to legacy interfaces  
 **Legacy Interfaces:** `RawGameData`, `RawRoleData`, `RawPonceData` still work unchanged  
+**Data Evolution:** Recent format includes detailed vote tracking, color assignments, and enhanced death metadata  
 
 ### Key Data Interfaces
 ```typescript
-// New unified structure
+// New unified structure (current format)
 interface GameLogEntry {
-  Id: string; StartDate: string; PlayerStats: PlayerStat[];
+  Id: string; StartDate: string; EndDate: string; MapName: string;
+  HarvestGoal: number; HarvestDone: number; PlayerStats: PlayerStat[];
 }
 interface PlayerStat {
-  Username: string; MainRoleInitial: string; Victorious: boolean;
+  Username: string; MainRoleInitial: string; MainRoleFinal: string;
+  Power: string | null; SecondaryRole: string | null; 
+  Victorious: boolean; DeathTiming: string | null;
+  Votes: Array<{Target: string; Date: string}>; // New voting data
 }
 
 // Legacy interfaces (auto-transformed from gameLog)
@@ -45,7 +50,7 @@ interface RawGameData {
 }
 ```
 
-**Critical:** `Amoureux` is `MainRoleInitial`, not `SecondaryRole`. Solo roles win as their role name, not "Villageois".
+**Critical:** `Amoureux` is `MainRoleInitial`, not `SecondaryRole`. Solo roles win as their role name, not "Villageois". Recent data includes detailed vote tracking and death metadata.
 
 ## Key Architectural Patterns
 
