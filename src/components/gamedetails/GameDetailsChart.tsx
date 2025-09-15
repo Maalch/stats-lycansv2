@@ -4,7 +4,7 @@ import { useNavigation } from '../../context/NavigationContext';
 import { lycansColorScheme } from '../../types/api';
 import './GameDetailsChart.css';
 
-type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp' | 'victoryType' | 'winner';
+type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp'  | 'winner';
 type SortDirection = 'asc' | 'desc';
 
 export function GameDetailsChart() {
@@ -80,10 +80,6 @@ export function GameDetailsChart() {
         case 'winningCamp':
           aValue = a.winningCamp;
           bValue = b.winningCamp;
-          break;
-        case 'victoryType':
-          aValue = a.victoryType;
-          bValue = b.victoryType;
           break;
         case 'winner':
           aValue = getGameWinners(a);
@@ -223,7 +219,6 @@ export function GameDetailsChart() {
       const winnerText = winnerPlayer ? ` (victoires de ${winnerPlayer})` : '';
       filters.push(`${playersText} (${modeText}${winnerText})`);
     }
-    if (navigationFilters.selectedVictoryType) filters.push(`Victoire: ${navigationFilters.selectedVictoryType}`);
     if (navigationFilters.selectedHarvestRange) filters.push(`Récolte: ${navigationFilters.selectedHarvestRange}`);
     if (navigationFilters.selectedGameDuration) filters.push(`Durée: ${navigationFilters.selectedGameDuration} jour${navigationFilters.selectedGameDuration > 1 ? 's' : ''}`);
     if (navigationFilters.selectedGame) filters.push(`Partie #${navigationFilters.selectedGame}`);
@@ -369,9 +364,6 @@ export function GameDetailsChart() {
               <th onClick={() => handleSort('winningCamp')} className="sortable">
                 Camp Vainqueur {getSortIcon('winningCamp')}
               </th>
-              <th onClick={() => handleSort('victoryType')} className="sortable">
-                Type de Victoire {getSortIcon('victoryType')}
-              </th>
               {showWinnerColumn && (
                 <th onClick={() => handleSort('winner')} className="sortable">
                   Vainqueur {getSortIcon('winner')}
@@ -393,7 +385,6 @@ export function GameDetailsChart() {
                   }}>
                     {game.winningCamp}
                   </td>
-                  <td>{game.victoryType}</td>
                   {showWinnerColumn && (
                     <td>{getGameWinners(game)}</td>
                   )}
@@ -562,10 +553,6 @@ function GameDetailView({ game }: { game: any }) {
             <div className="lycans-stat-item">
               <span className="label">Camp vainqueur:</span>
               <span className="value">{game.winningCamp}</span>
-            </div>
-            <div className="lycans-stat-item">
-              <span className="label">Type de victoire:</span>
-              <span className="value">{game.victoryType}</span>
             </div>
             <div className="lycans-stat-item">
               <span className="label">Survivants villageois:</span>
