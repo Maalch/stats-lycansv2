@@ -1,6 +1,99 @@
-import type { GameLogEntry } from '../useCombinedRawData';
+import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
 import { splitAndTrim, didPlayerWin } from './dataUtils';
+
+/**
+ * gameDetailsUtils.ts - Game filtering and details computation utilities
+ * 
+ * MIGRATION STATUS:
+ * - ✅ getPlayerCampFromGameLog() - NEW: Works with GameLogEntry structure
+ * - ✅ isPlayerInSmallCampFromGameLog() - NEW: Works with GameLogEntry structure  
+ * - ✅ filterByPlayerFromGameLog() - NEW: Works with GameLogEntry structure
+ * - ✅ filterByGameFromGameLog() - NEW: Works with GameLogEntry structure
+ * - ✅ filterByGameIdsFromGameLog() - NEW: Works with GameLogEntry structure
+ * - ✅ filterByDateFromGameLog() - NEW: Works with GameLogEntry structure
+ * - ✅ filterByHarvestRangeFromGameLog() - NEW: Works with GameLogEntry structure
+ * - ✅ filterByGameDurationFromGameLog() - NEW: Works with GameLogEntry structure
+ * - ⏳ Other functions still use legacy RawGameData/RawRoleData structure
+ * 
+ * For new features, prefer the *FromGameLog() versions which work with the new data structure.
+ * 
+ * Usage example:
+ * ```typescript
+ * // Use the new functions with GameLogEntry data
+ * const gameLogData = useFilteredGameLogData();
+ * if (gameLogData.data) {
+ *   const playerGames = filterByPlayerFromGameLog(gameLogData.data, 'PlayerName', 'wins-only');
+ *   const gameById = filterByGameFromGameLog(gameLogData.data, 42);
+ *   const gamesByIds = filterByGameIdsFromGameLog(gameLogData.data, [1, 5, 10]);
+ *   const gamesByDate = filterByDateFromGameLog(gameLogData.data, '15/09/2025');
+ *   const gamesByHarvest = filterByHarvestRangeFromGameLog(gameLogData.data, '76-99%');
+ *   const gamesByDuration = filterByGameDurationFromGameLog(gameLogData.data, 5);
+ *   const playerCamp = getPlayerCampFromGameLog('PlayerName', gameLogData.data[0]);
+ *   const isInCamp = isPlayerInSmallCampFromGameLog('PlayerName', 'Agent', gameLogData.data[0]);
+ * }
+ * ```
+ */
+
+// Legacy interfaces for backward compatibility (while migration is in progress)
+interface RawGameData {
+  Game: number;
+  Date: string;
+  "Game Moddée": boolean;
+  "Nombre de joueurs": number;
+  "Nombre de loups": number;
+  "Rôle Traître": boolean;
+  "Rôle Amoureux": boolean;
+  "Rôles solo": string | null;
+  "Camp victorieux": string;
+  "Type de victoire": string;
+  "Nombre de journées": number;
+  "Survivants villageois": number;
+  "Survivants loups (traître inclus)": number;
+  "Survivants amoureux": number | null;
+  "Survivants solo": number | null;
+  "Liste des gagnants": string;
+  "Liste des joueurs": string;
+  "Récolte": number | null;
+  "Total récolte": number | null;
+  "Pourcentage de récolte": number | null;
+  "Versions": string | null;
+  "Map": string | null;
+  "VOD": string | null;
+  "VODEnd": string | null;
+  "Début": string | null;
+  "Fin": string | null;
+}
+
+interface RawRoleData {
+  Game: number;
+  "Game Moddée": boolean;
+  Loups: string | null;
+  Traître: string | null;
+  "Idiot du Village": string | null;
+  Cannibale: string | null;
+  Agent: string | null;
+  Espion: string | null;
+  Scientifique: string | null;
+  Amoureux: string | null;
+  "La Bête": string | null;
+  "Chasseur de primes": string | null;
+  Vaudou: string | null;
+}
+
+interface RawPonceData {
+  Game: number;
+  "Game Moddée": boolean;
+  Camp: string | null;
+  Traître: boolean;
+  "Rôle secondaire": string | null;
+  "Pouvoir de loup": string | null;
+  "Métier villageois": string | null;
+  "Joueurs tués": string | null;
+  "Jour de mort": number | null;
+  "Type de mort": string | null;
+  "Joueurs tueurs": string | null;
+}
 
 export interface EnrichedGameData {
   gameId: number;
@@ -177,6 +270,40 @@ export function getPlayerCampFromRoles(
 }
 
 /**
+ * Helper function to get player's camp from GameLogEntry PlayerStats
+ * 
+ * @param playerName - The name of the player to check
+ * @param game - The GameLogEntry to check within  
+ * @param excludeTraitor - If true, return 'Traître' instead of 'Loup' for traitors
+ * @returns The player's camp/role from MainRoleInitial, or 'Villageois' if not found
+ * 
+ * Note: This is the new version that works with GameLogEntry structure.
+ * Use this instead of getPlayerCampFromRoles for new features.
+ */
+export function getPlayerCampFromGameLog(
+  playerName: string, 
+  game: GameLogEntry,
+  excludeTraitor: boolean = false
+): string {
+  const playerStat = game.PlayerStats.find(
+    player => player.Username.toLowerCase() === playerName.toLowerCase()
+  );
+  
+  if (!playerStat) return 'Villageois';
+  
+  // In the new structure, MainRoleInitial contains the full role name
+  const playerRole = playerStat.MainRoleInitial;
+  
+  // Handle traitor case with excludeTraitor logic
+  if (playerRole === 'Traître') {
+    if (excludeTraitor) return 'Traître'; // Return Traître if we want to exclude traitor from Loups
+    return 'Loup'; // Otherwise, traitor is considered part of Loup camp
+  }
+  
+  return playerRole;
+}
+
+/**
  * Helper function to check if a player is in a specific camp for "Autres" filtering
  */
 function isPlayerInSmallCamp(
@@ -232,6 +359,66 @@ function isPlayerInSmallCamp(
 }
 
 /**
+ * Helper function to check if a player is in a specific camp for "Autres" filtering
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param playerName - The name of the player to check
+ * @param campName - The camp name to check against  
+ * @param game - The GameLogEntry to check within
+ * @returns true if the player is in the specified camp in this game
+ * 
+ * Note: This is the new version that works with GameLogEntry. 
+ * Use this instead of isPlayerInSmallCamp for new features.
+ */
+export function isPlayerInSmallCampFromGameLog(
+  playerName: string,
+  campName: string,
+  game: GameLogEntry
+): boolean {
+  const selectedPlayer = playerName.toLowerCase();
+  
+  // Find the player in this game's PlayerStats
+  const playerStat = game.PlayerStats.find(
+    player => player.Username.toLowerCase() === selectedPlayer
+  );
+  
+  if (!playerStat) return false;
+  
+  // Check if the player's MainRoleInitial matches the requested camp
+  const playerCamp = playerStat.MainRoleInitial;
+  
+  switch (campName) {
+    case 'Traître':
+      return playerCamp === 'Traître';
+    case 'Idiot du Village':
+      return playerCamp === 'Idiot du Village';
+    case 'Cannibale':
+      return playerCamp === 'Cannibale';
+    case 'Agent':
+      return playerCamp === 'Agent';
+    case 'Espion':
+      return playerCamp === 'Espion';
+    case 'Scientifique':
+      return playerCamp === 'Scientifique';
+    case 'Amoureux':
+      return playerCamp === 'Amoureux';
+    case 'La Bête':
+      return playerCamp === 'La Bête';
+    case 'Chasseur de primes':
+      return playerCamp === 'Chasseur de primes';
+    case 'Vaudou':
+      return playerCamp === 'Vaudou';
+    case 'Villageois':
+      // For villagers, check if player is in game but not in any special role
+      const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
+                           'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
+      return !specialRoles.includes(playerCamp);
+    default:
+      return false;
+  }
+}
+
+/**
  * Filter games by selected player
  */
 function filterByPlayer(
@@ -259,6 +446,48 @@ function filterByPlayer(
 }
 
 /**
+ * Filter games by selected player
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedPlayer - The player name to filter by
+ * @param winMode - Optional filter mode: 'wins-only' or 'all-assignments'
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry. 
+ * Use this instead of filterByPlayer for new features.
+ */
+export function filterByPlayerFromGameLog(
+  games: GameLogEntry[], 
+  selectedPlayer: string, 
+  winMode?: 'wins-only' | 'all-assignments'
+): GameLogEntry[] {
+  // First filter games where the player participated
+  const playerFilteredGames = games.filter(game => 
+    game.PlayerStats.some(player => 
+      player.Username.toLowerCase() === selectedPlayer.toLowerCase()
+    )
+  );
+
+  // If no win mode specified, return all games with the player
+  if (!winMode || winMode === 'all-assignments') {
+    return playerFilteredGames;
+  }
+
+  // For 'wins-only' mode, filter to only games where the player won
+  if (winMode === 'wins-only') {
+    return playerFilteredGames.filter(game => 
+      game.PlayerStats.some(player => 
+        player.Username.toLowerCase() === selectedPlayer.toLowerCase() && 
+        player.Victorious
+      )
+    );
+  }
+
+  return playerFilteredGames;
+}
+
+/**
  * Filter games by selected game ID
  */
 function filterByGame(games: RawGameData[], selectedGame: number): RawGameData[] {
@@ -272,12 +501,6 @@ function filterByGameIds(games: RawGameData[], selectedGameIds: number[]): RawGa
   return games.filter(game => selectedGameIds.includes(game.Game));
 }
 
-/**
- * Filter games by victory type
- */
-function filterByVictoryType(games: RawGameData[], victoryType: string): RawGameData[] {
-  return games.filter(game => game["Type de victoire"] === victoryType);
-}
 
 /**
  * Filter games by date (supports both full date and month/year)
@@ -295,6 +518,78 @@ function filterByDate(games: RawGameData[], selectedDate: string): RawGameData[]
       }
     } else {
       return gameDate === selectedDate;
+    }
+    
+    return false;
+  });
+}
+
+/**
+ * Filter games by selected game ID
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedGame - The game ID to filter by (1-based index)
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByGame for new features.
+ */
+export function filterByGameFromGameLog(games: GameLogEntry[], selectedGame: number): GameLogEntry[] {
+  // GameLogEntry uses 0-based index, but selectedGame is 1-based
+  const gameIndex = selectedGame - 1;
+  return games.filter((_, index) => index === gameIndex);
+}
+
+/**
+ * Filter games by multiple game IDs (for series navigation)
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedGameIds - Array of game IDs to filter by (1-based indices)
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByGameIds for new features.
+ */
+export function filterByGameIdsFromGameLog(games: GameLogEntry[], selectedGameIds: number[]): GameLogEntry[] {
+  // Convert 1-based selectedGameIds to 0-based indices
+  const gameIndices = selectedGameIds.map(id => id - 1);
+  return games.filter((_, index) => gameIndices.includes(index));
+}
+
+/**
+ * Filter games by date (supports both full date and month/year)
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedDate - Date string to filter by (DD/MM/YYYY or MM/YYYY format)
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByDate for new features.
+ */
+export function filterByDateFromGameLog(games: GameLogEntry[], selectedDate: string): GameLogEntry[] {
+  return games.filter(game => {
+    // Convert StartDate (ISO format) to DD/MM/YYYY format for comparison
+    const gameDate = new Date(game.StartDate);
+    const formattedGameDate = gameDate.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    
+    if (selectedDate.includes('/') && selectedDate.split('/').length === 2) {
+      // Month/year format (MM/YYYY)
+      const [month, year] = selectedDate.split('/');
+      const gameDateParts = formattedGameDate.split('/');
+      if (gameDateParts.length === 3) {
+        const [, gameMonth, gameYear] = gameDateParts;
+        return gameMonth === month && gameYear === year;
+      }
+    } else {
+      // Full date format (DD/MM/YYYY)
+      return formattedGameDate === selectedDate;
     }
     
     return false;
@@ -339,6 +634,71 @@ function filterByGameDuration(games: RawGameData[], gameDuration: number): RawGa
 }
 
 /**
+ * Filter games by harvest range
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param harvestRange - Harvest percentage range to filter by
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByHarvestRange for new features.
+ */
+export function filterByHarvestRangeFromGameLog(games: GameLogEntry[], harvestRange: string): GameLogEntry[] {
+  return games.filter(game => {
+    const harvestGoal = game.HarvestGoal;
+    const harvestDone = game.HarvestDone;
+    
+    if (harvestGoal === null || harvestGoal === undefined || 
+        harvestDone === null || harvestDone === undefined || harvestGoal === 0) {
+      return false;
+    }
+    
+    const percentageValue = (harvestDone / harvestGoal) * 100;
+    
+    switch (harvestRange) {
+      case "0-25%":
+        return percentageValue >= 0 && percentageValue <= 25;
+      case "26-50%":
+        return percentageValue > 25 && percentageValue <= 50;
+      case "51-75%":
+        return percentageValue > 50 && percentageValue <= 75;
+      case "76-99%":
+        return percentageValue > 75 && percentageValue <= 99;
+      case "100%":
+        return percentageValue >= 100;
+      default:
+        return true;
+    }
+  });
+}
+
+/**
+ * Filter games by game duration (number of days)
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param gameDuration - Number of days/nights to filter by
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByGameDuration for new features.
+ */
+export function filterByGameDurationFromGameLog(games: GameLogEntry[], gameDuration: number): GameLogEntry[] {
+  return games.filter(game => {
+    if (!game.EndTiming) return false;
+    
+    // Parse EndTiming to extract the day/night number
+    // Format examples: "Nuit 5 --> N5", "Jour 6 --> J6"
+    const timingMatch = game.EndTiming.match(/(?:Nuit|Jour)\s+(\d+)/);
+    if (!timingMatch) return false;
+    
+    const gameDays = parseInt(timingMatch[1], 10);
+    return gameDays === gameDuration;
+  });
+}
+
+/**
  * Complex camp filtering logic
  */
 function filterByCamp(
@@ -356,12 +716,12 @@ function filterByCamp(
       // Handle "Autres" category for specific player
       if (selectedCamp === 'Autres' && smallCamps) {
         return smallCamps.some(camp => 
-          isPlayerInSmallCamp(selectedPlayer, camp, roleDataForGame, game)
+          isPlayerInSmallCampFromGameLog(selectedPlayer, camp, roleDataForGame, game)
         );
       }
 
       // Check specific camp for specific player
-      const playerCamp = getPlayerCampFromRoles(selectedPlayer, roleDataForGame, excludeTraitor);
+      const playerCamp = getPlayerCampFromGameLog(selectedPlayer, roleDataForGame, excludeTraitor);
       
       // Special handling for "Loup" with excludeTraitor flag
       if (selectedCamp === 'Loup' && excludeTraitor) {
@@ -496,7 +856,7 @@ function filterByMultiplePlayers(
 
     // Get camps for each selected player
     const playerCamps = selectedPlayers.map(player => 
-      getPlayerCampFromRoles(player, roleDataForGame)
+      getPlayerCampFromGameLog(player, roleDataForGame)
     );
 
     // Apply filtering based on mode
@@ -680,7 +1040,7 @@ export function applyNavigationFilters(
 
   // Apply filters sequentially
   if (filters.selectedPlayer) {
-    filteredGames = filterByPlayer(
+    filteredGames = filterByPlayerFromGameLog(
       filteredGames, 
       filters.selectedPlayer, 
       filters.selectedPlayerWinMode
@@ -688,11 +1048,11 @@ export function applyNavigationFilters(
   }
 
   if (filters.selectedGame) {
-    filteredGames = filterByGame(filteredGames, filters.selectedGame);
+    filteredGames = filterByGameFromGameLog(filteredGames, filters.selectedGame);
   }
 
   if (filters.selectedGameIds) {
-    filteredGames = filterByGameIds(filteredGames, filters.selectedGameIds);
+    filteredGames = filterByGameIdsFromGameLog(filteredGames, filters.selectedGameIds);
   }
 
   if (filters.campFilter) {
@@ -704,20 +1064,16 @@ export function applyNavigationFilters(
     );
   }
 
-  if (filters.selectedVictoryType) {
-    filteredGames = filterByVictoryType(filteredGames, filters.selectedVictoryType);
-  }
-
   if (filters.selectedDate) {
-    filteredGames = filterByDate(filteredGames, filters.selectedDate);
+    filteredGames = filterByDateFromGameLog(filteredGames, filters.selectedDate);
   }
 
   if (filters.selectedHarvestRange) {
-    filteredGames = filterByHarvestRange(filteredGames, filters.selectedHarvestRange);
+    filteredGames = filterByHarvestRangeFromGameLog(filteredGames, filters.selectedHarvestRange);
   }
 
   if (filters.selectedGameDuration) {
-    filteredGames = filterByGameDuration(filteredGames, filters.selectedGameDuration);
+    filteredGames = filterByGameDurationFromGameLog(filteredGames, filters.selectedGameDuration);
   }
 
   // Apply multi-player filters (for player comparison scenarios)
@@ -780,7 +1136,7 @@ function createPlayerRoles(
     let camp = 'Villageois';
 
     if (roleDataForGame) {
-      if (roleDataForGame.Loup && splitAndTrim(roleDataForGame.Loup).includes(player)) {
+      if (roleDataForGame.Loups && splitAndTrim(roleDataForGame.Loups).includes(player)) {
         role = 'Loup';
         camp = 'Loup';
       } else if (roleDataForGame.Traître && splitAndTrim(roleDataForGame.Traître).includes(player)) {
