@@ -2,13 +2,9 @@
  * Pure computation functions for player game history
  */
 
-import type { GameLogEntry, RawRoleData } from '../useCombinedRawData';
+import type { GameLogEntry } from '../useCombinedRawData';
 import { 
-  splitAndTrim, 
-  buildGamePlayerCampMap, 
-  getPlayerCamp, 
-  formatLycanDate,
-  didCampWin
+  formatLycanDate
 } from './dataUtils';
 
 export interface PlayerGame {
@@ -36,87 +32,63 @@ export interface PlayerGameHistoryData {
 }
 
 /**
- * Helper function to determine if a player won the game with Agent camp logic
+ * Helper function to get the winning camp from a game
  */
-function didPlayerWinWithAgentLogic(
-  playerName: string, 
-  playerCamp: string,
-  winnerCamp: string,
-  winnerList: string | null | undefined
-): boolean {
-  // Special case for Agent camp: only winners in the list actually won
-  if (playerCamp === "Agent" && winnerCamp === "Agent") {
-    if (winnerList && winnerList.trim() !== "") {
-      const winners = splitAndTrim(winnerList);
-      return winners.some(winner => winner.toLowerCase() === playerName.toLowerCase());
-    }
-    return false;
-  }
+function getWinningCamp(game: GameLogEntry): string {
+  // Find any victorious player and determine their camp from MainRoleInitial
+  const victoriousPlayer = game.PlayerStats.find(player => player.Victorious);
+  if (!victoriousPlayer) return 'Unknown';
   
-  // For other camps, use the didCampWin utility which handles Traître-Loups alliance
-  return didCampWin(playerCamp, winnerCamp);
+  return victoriousPlayer.MainRoleInitial;
 }
 
 /**
- * Compute player game history from raw data
+ * Compute player game history from GameLogEntry data
  */
 export function computePlayerGameHistory(
   playerName: string,
-  gameData: RawGameData[],
-  roleData: RawRoleData[]
+  gameData: GameLogEntry[]
 ): PlayerGameHistoryData | null {
-  if (!playerName || playerName.trim() === '' || gameData.length === 0 || roleData.length === 0) {
+  if (!playerName || playerName.trim() === '' || gameData.length === 0) {
     return null;
   }
-
-  // Build game-player-camp mapping once for efficient lookups
-  const gamePlayerCampMap = buildGamePlayerCampMap(roleData);
 
   // Find games where the player participated
   const playerGames: PlayerGame[] = [];
 
-  gameData.forEach(gameRow => {
-    const gameId = gameRow.Game?.toString();
-    const date = gameRow.Date;
-    const playerList = gameRow["Liste des joueurs"];
-    const winnerCamp = gameRow["Camp victorieux"];
-    const winnerList = gameRow["Liste des gagnants"];
+  gameData.forEach((game) => {
+    // Find the player in this game's PlayerStats
+    const playerStat = game.PlayerStats.find(
+      player => player.Username.toLowerCase() === playerName.toLowerCase()
+    );
 
-    if (gameId && playerList && date && winnerList) {
-      // Check if player is in the game
-      const players = splitAndTrim(playerList.toString());
-      const playerInGame = players.some(p => p.toLowerCase() === playerName.toLowerCase());
+    if (playerStat) {
+      // Get player's camp from their MainRoleInitial (which contains the full role name)
+      const playerCamp = playerStat.MainRoleInitial;
+      
+      // Get the winning camp
+      const winnerCamp = getWinningCamp(game);
+      
+      // Player won if they are marked as Victorious
+      const playerWon = playerStat.Victorious;
 
-      if (playerInGame) {
-        // Determine player's camp
-        const playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, playerName);
+      // Format date consistently
+      const formattedDate = formatLycanDate(new Date(game.StartDate));
 
-        // Determine win/loss status with Agent camp logic
-        const playerWon = didPlayerWinWithAgentLogic(
-          playerName, 
-          playerCamp, 
-          winnerCamp, 
-          winnerList?.toString()
-        );
-
-        // Format date consistently
-        const formattedDate = formatLycanDate(date);
-
-        playerGames.push({
-          gameId: gameId,
-          date: formattedDate,
-          camp: playerCamp,
-          won: playerWon,
-          winnerCamp: winnerCamp?.toString() || '',
-          playersInGame: players.length
-        });
-      }
+      playerGames.push({
+        gameId: game.Id,
+        date: formattedDate,
+        camp: playerCamp,
+        won: playerWon,
+        winnerCamp: winnerCamp,
+        playersInGame: game.PlayerStats.length
+      });
     }
   });
 
   // Sort games by date (most recent first)
   playerGames.sort((a, b) => {
-    // Convert DD/MM/YYYY to comparable format
+    // Convert DD/MM/YYYY to comparable format or use direct date comparison
     const parseDate = (dateStr: string): Date => {
       const parts = dateStr.split('/');
       if (parts.length === 3) {

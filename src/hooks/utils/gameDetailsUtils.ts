@@ -170,10 +170,10 @@ export function getPlayerCampFromRoles(
   const player = playerName.toLowerCase();
   
   // Check each role type
-  if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loups';
+  if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loup';
   if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) {
     if (excludeTraitor) return 'Traître'; // Return Traître if we want to exclude traitor from Loups
-    return 'Loups';
+    return 'Loup';
   }
   if (roleData["Idiot du Village"] && roleData["Idiot du Village"].toLowerCase().includes(player)) return 'Idiot du Village';
   if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
@@ -375,10 +375,10 @@ function filterByCamp(
       // Check specific camp for specific player
       const playerCamp = getPlayerCampFromRoles(selectedPlayer, roleDataForGame, excludeTraitor);
       
-      // Special handling for "Loups" with excludeTraitor flag
-      if (selectedCamp === 'Loups' && excludeTraitor) {
+      // Special handling for "Loup" with excludeTraitor flag
+      if (selectedCamp === 'Loup' && excludeTraitor) {
         // Only include games where player was a regular wolf (not traitor)
-        return playerCamp === 'Loups' && 
+        return playerCamp === 'Loup' && 
                !(roleDataForGame.Traître && roleDataForGame.Traître.toLowerCase().includes(selectedPlayer.toLowerCase()));
       }
       
@@ -433,7 +433,7 @@ function filterByCamp(
 
         // Check specific camp assignment
         switch (selectedCamp) {
-          case 'Loups':
+          case 'Loup':
             return !!(roleDataForGame.Loups && roleDataForGame.Loups.trim());
           case 'Traître':
             return !!(roleDataForGame.Traître && roleDataForGame.Traître.trim());
@@ -528,7 +528,7 @@ function filterByMultiplePlayers(
         // Include only games where players were in different camps
         // Special handling for camp alliances (Traître works with Loups)
         const normalizedCamps = playerCamps.map(camp => {
-          if (camp === 'Traître') return 'Loups';
+          if (camp === 'Traître') return 'Loup';
           return camp;
         });
         
@@ -545,7 +545,7 @@ function filterByMultiplePlayers(
           
           if (winnerPlayerIndex !== -1) {
             const winnerPlayerCamp = normalizedCamps[winnerPlayerIndex];
-            const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loups' : game["Camp victorieux"];
+            const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loup' : game["Camp victorieux"];
             
             // Special handling for Agent camp - check if specific player is in winners list
             if (winnerPlayerCamp === 'Agent' && gameWinningCamp === 'Agent') {
@@ -564,7 +564,7 @@ function filterByMultiplePlayers(
       case 'same-camp':
         // Include only games where players were in the same camp (considering alliances)
         const normalizedCampsForSame = playerCamps.map(camp => {
-          if (camp === 'Traître') return 'Loups';
+          if (camp === 'Traître') return 'Loup';
           return camp;
         });
         
@@ -579,12 +579,12 @@ function filterByMultiplePlayers(
         if (campFilter && campFilter.selectedCamp) {
           const requiredCamp = campFilter.selectedCamp;
           
-          // Handle "Loups sans Traître" case
-          if (requiredCamp === 'Loups' && campFilter.excludeTraitor) {
+          // Handle "Loup sans Traître" case
+          if (requiredCamp === 'Loup' && campFilter.excludeTraitor) {
             // Ensure all players are regular wolves (not traitors)
             const areAllRegularWolves = selectedPlayers.every(player => {
               const originalCamp = playerCamps[selectedPlayers.indexOf(player)];
-              return originalCamp === 'Loups'; // They should be Loups, and we'll check they're not traitors below
+              return originalCamp === 'Loup'; // They should be Loups, and we'll check they're not traitors below
             });
             if (!areAllRegularWolves) return false;
             
@@ -604,7 +604,7 @@ function filterByMultiplePlayers(
         
         // If winnerPlayer is specified, check if their camp won
         if (winnerPlayer) {
-          const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loups' : game["Camp victorieux"];
+          const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loup' : game["Camp victorieux"];
           
           // Special handling for Agent camp - both players need to be winners for Agent camp
           if (sameCamp === 'Agent' && gameWinningCamp === 'Agent') {
@@ -792,12 +792,12 @@ function createPlayerRoles(
     let camp = 'Villageois';
 
     if (roleDataForGame) {
-      if (roleDataForGame.Loups && splitAndTrim(roleDataForGame.Loups).includes(player)) {
-        role = 'Loups';
-        camp = 'Loups';
+      if (roleDataForGame.Loup && splitAndTrim(roleDataForGame.Loup).includes(player)) {
+        role = 'Loup';
+        camp = 'Loup';
       } else if (roleDataForGame.Traître && splitAndTrim(roleDataForGame.Traître).includes(player)) {
         role = 'Traître';
-        camp = 'Loups'; 
+        camp = 'Loup';
       } else if (roleDataForGame["Idiot du Village"] && splitAndTrim(roleDataForGame["Idiot du Village"]).includes(player)) {
         role = 'Idiot du Village';
         camp = 'Idiot du Village'; 

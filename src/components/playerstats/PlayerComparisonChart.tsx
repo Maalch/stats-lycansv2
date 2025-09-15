@@ -186,7 +186,7 @@ export function PlayerComparisonChart() {
           playersFilterMode: 'same-camp'
         },
         campFilter: {
-          selectedCamp: 'Loups',
+          selectedCamp: 'Loup',
           campFilterMode: 'all-assignments'
         },
         fromComponent: 'Comparaison de Joueurs'
@@ -203,7 +203,7 @@ export function PlayerComparisonChart() {
           winnerPlayer: selectedPlayer1 // Both players are in same camp, so either one works
         },
         campFilter: {
-          selectedCamp: 'Loups',
+          selectedCamp: 'Loup',
           campFilterMode: 'wins-only'
         },
         fromComponent: 'Comparaison de Joueurs'
@@ -573,7 +573,7 @@ export function PlayerComparisonChart() {
                     <span className="lycans-h2h-label">Victoires d'équipe (Loups):</span>
                     <span 
                       className="lycans-h2h-value lycans-clickable" 
-                      style={{ color: lycansColorScheme['Loups'] }}
+                      style={{ color: lycansColorScheme['Loup'] }}
                       onClick={handleSameLoupsWinsClick}
                       title="Cliquer pour voir les victoires quand ils étaient ensemble dans l'équipe des Loups"
                     >
@@ -582,7 +582,7 @@ export function PlayerComparisonChart() {
                   </div>
                   <div className="lycans-h2h-metric">
                     <span className="lycans-h2h-label">Taux de réussite (Loups):</span>
-                    <span className="lycans-h2h-value" style={{ color: lycansColorScheme['Loups'] }}>
+                    <span className="lycans-h2h-value" style={{ color: lycansColorScheme['Loup'] }}>
                       {((comparisonData.headToHeadStats.sameLoupsWins / comparisonData.headToHeadStats.sameLoupsGames) * 100).toFixed(0)}%
                     </span>
                   </div>

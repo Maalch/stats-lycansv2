@@ -184,7 +184,7 @@ export function GameDetailsChart() {
     const filters = [];
     if (navigationFilters.selectedPlayer && navigationFilters.campFilter) {
       const playerWinModeText = navigationFilters.selectedPlayerWinMode === 'wins-only' ? ' (victoires uniquement)' : '';
-      const campDisplayName = navigationFilters.campFilter.excludeTraitor && navigationFilters.campFilter.selectedCamp === 'Loups' 
+      const campDisplayName = navigationFilters.campFilter.excludeTraitor && navigationFilters.campFilter.selectedCamp === 'Loup' 
         ? 'Loups sans Traître' 
         : navigationFilters.campFilter.selectedCamp;
       filters.push(`${navigationFilters.selectedPlayer} jouant ${campDisplayName}${playerWinModeText}`);
@@ -196,7 +196,7 @@ export function GameDetailsChart() {
       }
       if (navigationFilters.campFilter) {
         const { selectedCamp, campFilterMode, excludeTraitor } = navigationFilters.campFilter;
-        const campDisplayName = excludeTraitor && selectedCamp === 'Loups' ? 'Loups sans Traître' : selectedCamp;
+        const campDisplayName = excludeTraitor && selectedCamp === 'Loup' ? 'Loups sans Traître' : selectedCamp;
         const campFilterText = `Camp: ${campDisplayName}`;
         const modeText = campFilterMode === 'wins-only' ? ' (victoires uniquement)' : 
                          campFilterMode === 'all-assignments' ? ' (toutes assignations)' : '';

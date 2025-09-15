@@ -69,7 +69,7 @@ export function CampsChart() {
     
     return campAveragesData
       .slice() // Create a copy to avoid mutating the original
-      .filter(camp => camp.camp !== 'Villageois' && camp.camp !== 'Loups') // Exclude basic camps
+      .filter(camp => camp.camp !== 'Villageois' && camp.camp !== 'Loup') // Exclude basic camps
       .sort((a, b) => b.totalGames - a.totalGames);
   }, [campAveragesData]);
 

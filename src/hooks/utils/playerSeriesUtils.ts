@@ -76,7 +76,7 @@ interface PlayerSeriesState {
   currentLossSeries: number;
   longestLossSeries: LossSeries | null;
   currentLossCamps: string[];
-  lastCamp: 'Villageois' | 'Loups' | 'Autres' | null;
+  lastCamp: 'Villageois' | 'Loup' | 'Autres' | null;
   lastWon: boolean;
   villageoisSeriesStart: { game: number; date: string } | null;
   loupsSeriesStart: { game: number; date: string } | null;
@@ -147,11 +147,11 @@ function initializePlayerSeries(allPlayers: Set<string>): Record<string, PlayerS
 function processCampSeries(
   playerStats: PlayerSeriesState,
   player: string,
-  mainCamp: 'Villageois' | 'Loups' | 'Autres',
+  mainCamp: 'Villageois' | 'Loup' | 'Autres',
   gameIdNum: number,
   date: string
 ): void {
-  if (mainCamp === 'Villageois' || mainCamp === 'Loups') {
+  if (mainCamp === 'Villageois' || mainCamp === 'Loup') {
     // Check Villageois series
     if (mainCamp === 'Villageois') {
       if (playerStats.lastCamp === 'Villageois') {
@@ -186,8 +186,8 @@ function processCampSeries(
     }
     
     // Check Loups series
-    if (mainCamp === 'Loups') {
-      if (playerStats.lastCamp === 'Loups') {
+    if (mainCamp === 'Loup') {
+      if (playerStats.lastCamp === 'Loup') {
         playerStats.currentLoupsSeries++;
         playerStats.currentLoupsGameIds.push(gameIdNum);
       } else {
@@ -201,7 +201,7 @@ function processCampSeries(
           playerStats.currentLoupsSeries > playerStats.longestLoupsSeries.seriesLength) {
         playerStats.longestLoupsSeries = {
           player,
-          camp: 'Loups',
+          camp: 'Loup',
           seriesLength: playerStats.currentLoupsSeries,
           startGame: playerStats.loupsSeriesStart?.game || gameIdNum,
           endGame: gameIdNum,

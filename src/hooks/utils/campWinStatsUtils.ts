@@ -1,34 +1,126 @@
 import { 
   splitAndTrim, 
   didPlayerWin, 
-  didCampWin, 
-  buildGamePlayerCampMap,
-  getPlayerCamp 
+  didCampWin 
 } from './dataUtils';
-import type { GameLogEntry, RawRoleData } from '../useCombinedRawData';
+import type { GameLogEntry } from '../useCombinedRawData';
 import type { CampWinStatsResponse, CampStat, SoloCamp, CampAverage } from '../../types/api';
+
+/**
+ * Build game-player-camp mapping from GameLogEntry data
+ * Maps players to their camp names, not individual roles
+ */
+function buildGamePlayerCampMapFromGameLog(gameData: GameLogEntry[]): Record<string, Record<string, string>> {
+  const gamePlayerCampMap: Record<string, Record<string, string>> = {};
+  
+  gameData.forEach(game => {
+    const gameId = game.Id;
+    if (!gamePlayerCampMap[gameId]) {
+      gamePlayerCampMap[gameId] = {};
+    }
+
+    game.PlayerStats.forEach(playerStat => {
+      const playerName = playerStat.Username;
+      const playerRole = playerStat.MainRoleInitial;
+      
+      if (playerName && playerRole) {
+        gamePlayerCampMap[gameId][playerName] = playerRole;
+      }
+    });
+  });
+
+  return gamePlayerCampMap;
+}
+
+/**
+ * Get player's camp/role from the game-player-camp mapping
+ */
+function getPlayerCamp(
+  gamePlayerCampMap: Record<string, Record<string, string>>, 
+  gameId: string, 
+  playerName: string
+): string {
+  return gamePlayerCampMap[gameId]?.[playerName] || 'Villageois';
+}
+
+/**
+ * Extract solo roles from a game's PlayerStats
+ */
+function extractSoloRoles(game: GameLogEntry): string[] {
+  const soloRoles: string[] = [];
+  
+  // Solo roles are roles that aren't standard village/wolf camps
+  const standardRoles = ['Villageois', 'Loup', 'Traître'];
+  
+  game.PlayerStats.forEach(playerStat => {
+    const role = playerStat.MainRoleInitial;
+    if (role && !standardRoles.includes(role)) {
+      soloRoles.push(role);
+    }
+  });
+  
+  return soloRoles;
+}
+
+/**
+ * Determine winner camp from game's PlayerStats
+ */
+function getWinnerCamp(game: GameLogEntry): string | null {
+  // Find the camp/role of the victorious players
+  const victoriousPlayers = game.PlayerStats.filter(player => player.Victorious);
+  
+  if (victoriousPlayers.length === 0) {
+    return null;
+  }
+  
+  // Get the role of the first victorious player
+  const winnerRole = victoriousPlayers[0].MainRoleInitial;
+  
+  // Group roles into camps
+  if (winnerRole === 'Loup' || winnerRole === 'Traître') {
+    return 'Loup';
+  } else if (winnerRole === 'Villageois') {
+    return 'Villageois';
+  } else {
+    // Solo role wins as their specific role name
+    return winnerRole;
+  }
+}
+
+/**
+ * Get list of all players in a game
+ */
+function getPlayerList(game: GameLogEntry): string {
+  return game.PlayerStats.map(player => player.Username).join(', ');
+}
+
+/**
+ * Get list of victorious players in a game
+ */
+function getWinnerList(game: GameLogEntry): string {
+  return game.PlayerStats
+    .filter(player => player.Victorious)
+    .map(player => player.Username)
+    .join(', ');
+}
 
 /**
  * Process solo roles from a game and update solo camps statistics
  */
 function processSoloRoles(
-  soloRoles: any,
+  soloRoles: string[],
   soloCamps: Record<string, number>
 ): void {
-  if (soloRoles && soloRoles.toString().trim() !== "") {
-    // Split by comma and process each solo role
-    const soloRolesList = splitAndTrim(soloRoles.toString());
-    soloRolesList.forEach(soloRole => {
-      const trimmedRole = soloRole.trim();
-      if (trimmedRole !== "") {
-        // Track solo camps
-        if (!soloCamps[trimmedRole]) {
-          soloCamps[trimmedRole] = 0;
-        }
-        soloCamps[trimmedRole]++;
+  soloRoles.forEach(soloRole => {
+    const trimmedRole = soloRole.trim();
+    if (trimmedRole !== "") {
+      // Track solo camps
+      if (!soloCamps[trimmedRole]) {
+        soloCamps[trimmedRole] = 0;
       }
-    });
-  }
+      soloCamps[trimmedRole]++;
+    }
+  });
 }
 
 /**
@@ -226,15 +318,15 @@ function buildSoloCampStats(soloCamps: Record<string, number>): SoloCamp[] {
 }
 
 /**
- * Compute camp win statistics from raw game and role data
+ * Compute camp win statistics from GameLogEntry data
  */
-export function computeCampWinStats(gameData: GameLogEntry[], roleData: RawRoleData[]): CampWinStatsResponse | null {
-  if (gameData.length === 0 || roleData.length === 0) {
+export function computeCampWinStats(gameData: GameLogEntry[]): CampWinStatsResponse | null {
+  if (gameData.length === 0) {
     return null;
   }
 
-  // Build game-player-camp mapping from role data
-  const gamePlayerCampMap = buildGamePlayerCampMap(roleData);
+  // Build game-player-camp mapping from GameLogEntry data
+  const gamePlayerCampMap = buildGamePlayerCampMapFromGameLog(gameData);
 
   // Initialize statistics objects
   const soloCamps: Record<string, number> = {};
@@ -249,17 +341,17 @@ export function computeCampWinStats(gameData: GameLogEntry[], roleData: RawRoleD
 
   // Process each game for both victory stats and camp participation
   gameData.forEach(game => {
-    const gameId = game.Game.toString();
-    const soloRoles = game["Rôles solo"];
-    const winnerCamp = game["Camp victorieux"];
-    const playerList = game["Liste des joueurs"];
-    const winnerList = game["Liste des gagnants"];
+    const gameId = game.Id;
+    const soloRoles = extractSoloRoles(game);
+    const winnerCamp = getWinnerCamp(game);
+    const playerList = getPlayerList(game);
+    const winnerList = getWinnerList(game);
 
     // Process solo roles if they exist
     processSoloRoles(soloRoles, soloCamps);
 
     // Process regular winner camp for victory statistics
-    if (processWinnerCamp(winnerCamp, campWins)) {
+    if (processWinnerCamp(winnerCamp || '', campWins)) {
       totalGames++;
     }
 
