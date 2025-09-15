@@ -10,9 +10,9 @@ export type { PlayerGame, CampStats, PlayerGameHistoryData } from './utils/playe
  */
 export function usePlayerGameHistoryFromRaw(playerName: string | null) {
   const { data: playerGameHistory, isLoading, error } = usePlayerStatsBase(
-    (gameData, roleData) => {
+    (gameData) => {
       if (!playerName) return null;
-      return computePlayerGameHistory(playerName, gameData, roleData);
+      return computePlayerGameHistory(playerName, gameData);
     }
   );
 
