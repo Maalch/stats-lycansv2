@@ -16,7 +16,6 @@ const PlayerComparisonChart = lazy(() => import('./components/playerstats/Player
 const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
-const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 
@@ -107,12 +106,6 @@ const GENERAL_STATS_MENU = [
     label: 'Camps', 
     component: CampsChart,
     description: 'Détails des apparitions et victoires par camp'
-  },
-  { 
-    key: 'victoryTypes', 
-    label: 'Types de Victoire', 
-    component: VictoryTypesChart,
-    description: 'Détails par type de victoire'
   },
   { 
     key: 'harvest', 

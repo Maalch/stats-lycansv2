@@ -1,4 +1,4 @@
-import type { RawGameData } from '../useCombinedRawData';
+import type { GameLogEntry } from '../useCombinedRawData';
 import type { HarvestStatsResponse, HarvestDistribution, CampHarvestData } from '../../types/api';
 
 /**
@@ -72,14 +72,40 @@ function trackHarvestByWinner(
  * Process a single game's harvest data
  */
 function processGameHarvest(
-  game: RawGameData,
+  game: GameLogEntry,
   harvestStats: ReturnType<typeof initializeHarvestStats>,
   totals: { totalHarvest: number; totalMaxHarvest: number }
 ): void {
-  const winnerCamp = game["Camp victorieux"];
-  const harvest = game["Récolte"];
-  const maxHarvest = game["Total récolte"];
-  const harvestPercent = game["Pourcentage de récolte"];
+  // Extract data from GameLogEntry structure
+  const harvest = game.HarvestDone;
+  const maxHarvest = game.HarvestGoal;
+  const harvestPercent = maxHarvest > 0 ? harvest / maxHarvest : 0;
+  
+  // Determine winner camp from PlayerStats
+  const winners = game.PlayerStats.filter(p => p.Victorious);
+  let winnerCamp = '';
+  
+  if (winners.length > 0) {
+    const winnerRoles = winners.map(w => w.MainRoleInitial);
+    
+    // Check for wolf/traitor victory
+    if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
+      winnerCamp = 'Loup';
+    } 
+    // Check for pure villager victory (only villagers win)
+    else if (winnerRoles.every(role => role === 'Villageois')) {
+      winnerCamp = 'Villageois';
+    }
+    // Check for solo role victory
+    else {
+      const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
+      if (soloWinnerRoles.length > 0) {
+        winnerCamp = soloWinnerRoles[0]; // Use the first solo role as camp name
+      } else {
+        winnerCamp = 'Villageois'; // Fallback
+      }
+    }
+  }
 
   // Count harvest values
   if (harvest !== null && harvest !== undefined && !isNaN(harvest)) {
@@ -131,7 +157,7 @@ function calculateAverages(
 /**
  * Compute harvest statistics from raw game data
  */
-export function computeHarvestStats(gameData: RawGameData[]): HarvestStatsResponse | null {
+export function computeHarvestStats(gameData: GameLogEntry[]): HarvestStatsResponse | null {
   if (gameData.length === 0) {
     return null;
   }

@@ -1,20 +1,15 @@
-import type { RawGameData, RawRoleData } from '../useCombinedRawData';
-import { splitAndTrim, didPlayerWin, buildGamePlayerCampMap, getPlayerCamp } from './dataUtils';
+import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerStatsData, PlayerStat, PlayerCamps } from '../../types/api';
 
 /**
- * Compute player statistics from raw game and role data
+ * Compute player statistics from GameLogEntry data
  */
 export function computePlayerStats(
-  gameData: RawGameData[],
-  roleData: RawRoleData[]
+  gameData: GameLogEntry[]
 ): PlayerStatsData | null {
-  if (gameData.length === 0 || roleData.length === 0) {
+  if (gameData.length === 0) {
     return null;
   }
-
-  // Build game-player-camp mapping from role data using shared utility
-  const gamePlayerCampMap = buildGamePlayerCampMap(roleData);
 
   // Initialize player statistics
   const allPlayers: Record<string, {
@@ -28,17 +23,14 @@ export function computePlayerStats(
   let totalGames = 0;
 
   // Process game data to collect player statistics
-  gameData.forEach(gameRow => {
-    const gameId = gameRow["Game"]?.toString();
-    const playerList = gameRow["Liste des joueurs"];
-    const winnerList = gameRow["Liste des gagnants"];
+  gameData.forEach((gameEntry) => {
+    const players = gameEntry.PlayerStats;
 
-    if (gameId && playerList) {
+    if (players.length > 0) {
       totalGames++;
-      const players = splitAndTrim(playerList.toString());
 
-      players.forEach(playerName => {
-        const player = playerName.trim();
+      players.forEach(playerStat => {
+        const player = playerStat.Username.trim();
         if (player) {
           // Initialize player if not seen before
           if (!allPlayers[player]) {
@@ -49,7 +41,7 @@ export function computePlayerStats(
               winPercent: "0",
               camps: {
                 "Villageois": 0,
-                "Loups": 0,
+                "Loup": 0,
                 "Traître": 0,
                 "Idiot du Village": 0,
                 "Cannibale": 0,
@@ -67,15 +59,16 @@ export function computePlayerStats(
           // Increment games played
           allPlayers[player].gamesPlayed++;
 
-          // Determine player's camp in this game using shared utility
-          const playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, player);
+          // Get player's camp from their MainRoleInitial
+          const playerCamp = playerStat.MainRoleInitial;
 
-          // Increment camp count
-          allPlayers[player].camps[playerCamp as keyof PlayerCamps]++;
+          // Increment camp count (using type assertion for safety)
+          if (playerCamp in allPlayers[player].camps) {
+            allPlayers[player].camps[playerCamp as keyof PlayerCamps]++;
+          }
 
-          // Check if player won using shared utility
-          const playerWon = didPlayerWin(player, winnerList?.toString());
-          if (playerWon) {
+          // Check if player won using the Victorious boolean
+          if (playerStat.Victorious) {
             allPlayers[player].wins++;
           }
         }

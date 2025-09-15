@@ -10,7 +10,7 @@ export type { PlayerPairingStatsData, PlayerPairStat } from '../types/api';
  */
 export function usePlayerPairingStatsFromRaw() {
   const { data: playerPairingStats, isLoading, error } = usePlayerStatsBase(
-    (gameData, roleData) => computePlayerPairingStats(gameData, roleData)
+    (gameData) => computePlayerPairingStats(gameData)
   );
 
   return {

@@ -1,63 +1,26 @@
-import type { RawGameData, RawRoleData, RawPonceData } from '../useCombinedRawData';
+import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
-import { splitAndTrim, didPlayerWin } from './dataUtils';
 
-export interface EnrichedGameData {
-  gameId: number;
-  date: string;
-  isModded: boolean;
-  playerCount: number;
-  wolfCount: number;
-  hasTraitor: boolean;
-  hasLovers: boolean;
-  soloRoles: string | null;
-  winningCamp: string;
-  victoryType: string;
-  dayCount: number;
-  villagerSurvivors: number;
-  wolfSurvivors: number;
-  loverSurvivors: number | null;
-  soloSurvivors: number | null;
-  winners: string;
-  harvest: number | null;
-  totalHarvest: number | null;
-  harvestPercentage: number | null;
-  playersList: string;
-  versions: string | null;
-  map: string | null;
-  youtubeEmbedUrl: string | null;
-  gameDuration: number | null; // Duration in seconds calculated from start and end timestamps
-  // Enriched data from role and ponce data
-  roles: {
-    wolves?: string[];
-    traitor?: string;
-    villageIdiot?: string;
-    cannibal?: string;
-    agent?: string[];
-    spy?: string;
-    scientist?: string;
-    lovers?: string[];
-    beast?: string;
-    bountyHunter?: string;
-    voodoo?: string;
-  };
-  playerRoles: Array<{
-    player: string;
-    role: string;
-    camp: string;
-  }>;
-  playerDetails: Array<{
-    player: string;
-    camp: string;
-    isTraitor: boolean;
-    secondaryRole: string | null;
-    wolfPower: string | null;
-    villagerJob: string | null;
-    playersKilled: string | null;
-    deathDay: number | null;
-    deathType: string | null;
-    killers: string | null;
-  }>;
+// Standalone interface for player role information
+export interface PlayerRole {
+  player: string;
+  role: string;
+  camp: string;
+}
+
+// Standalone interface for game roles information
+export interface GameRoles {
+  wolves?: string[];
+  traitor?: string;
+  villageIdiot?: string;
+  cannibal?: string;
+  agent?: string[];
+  spy?: string;
+  scientist?: string;
+  lovers?: string[];
+  beast?: string;
+  bountyHunter?: string;
+  voodoo?: string;
 }
 
 /**
@@ -129,37 +92,27 @@ function createYouTubeEmbedUrl(start: string | null, end: string | null): string
 }
 
 /**
- * Calculate game duration from timestamps
+ * Calculate game duration from ISO date strings
  */
 function calculateGameDuration(start: string | null, end: string | null): number | null {
   if (!start || !end) return null;
   
   try {
-    // Extract timestamps from both URLs
-    const getTimestamp = (url: string): number => {
-      const urlObj = new URL(url);
-      let timestamp = 0;
-      
-      if (urlObj.hostname === 'youtu.be') {
-        const tParam = urlObj.searchParams.get('t');
-        if (tParam) {
-          timestamp = parseInt(tParam, 10) || 0;
-        }
-      } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
-        const tParam = urlObj.searchParams.get('t');
-        if (tParam) {
-          timestamp = parseInt(tParam, 10) || 0;
-        }
-      }
-      
-      return timestamp;
-    };
+    // Parse ISO date strings
+    const startDate = new Date(start);
+    const endDate = new Date(end);
     
-    const startTime = getTimestamp(start);
-    const endTime = getTimestamp(end);
+    // Validate that the dates are valid
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.warn('Invalid date format:', start, end);
+      return null;
+    }
     
-    if (endTime > startTime) {
-      return endTime - startTime; // Duration in seconds
+    // Calculate duration in milliseconds, then convert to seconds
+    const durationMs = endDate.getTime() - startDate.getTime();
+    
+    if (durationMs > 0) {
+      return Math.round(durationMs / 1000); // Duration in seconds
     }
     
     return null;
@@ -170,84 +123,94 @@ function calculateGameDuration(start: string | null, end: string | null): number
 }
 
 /**
- * Helper function to get player's camp from role data
+ * Helper function to get player's camp from GameLogEntry PlayerStats
+ * 
+ * @param playerName - The name of the player to check
+ * @param game - The GameLogEntry to check within  
+ * @param excludeTraitor - If true, return 'Traître' instead of 'Loup' for traitors
+ * @returns The player's camp/role from MainRoleInitial, or 'Villageois' if not found
+ * 
+ * Note: This is the new version that works with GameLogEntry structure.
+ * Use this instead of getPlayerCampFromRoles for new features.
  */
-export function getPlayerCampFromRoles(
+export function getPlayerCampFromGameLog(
   playerName: string, 
-  roleData: RawRoleData,
+  game: GameLogEntry,
   excludeTraitor: boolean = false
 ): string {
-  const player = playerName.toLowerCase();
+  const playerStat = game.PlayerStats.find(
+    player => player.Username.toLowerCase() === playerName.toLowerCase()
+  );
   
-  // Check each role type
-  if (roleData.Loups && roleData.Loups.toLowerCase().includes(player)) return 'Loups';
-  if (roleData.Traître && roleData.Traître.toLowerCase().includes(player)) {
+  if (!playerStat) return 'Villageois';
+  
+  // In the new structure, MainRoleInitial contains the full role name
+  const playerRole = playerStat.MainRoleInitial;
+  
+  // Handle traitor case with excludeTraitor logic
+  if (playerRole === 'Traître') {
     if (excludeTraitor) return 'Traître'; // Return Traître if we want to exclude traitor from Loups
-    return 'Loups';
+    return 'Loup'; // Otherwise, traitor is considered part of Loup camp
   }
-  if (roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(player)) return 'Idiot du Village';
-  if (roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(player)) return 'Cannibale';
-  if (roleData.Agent && roleData.Agent.toLowerCase().includes(player)) return 'Agent';
-  if (roleData.Espion && roleData.Espion.toLowerCase().includes(player)) return 'Espion';
-  if (roleData.Scientifique && roleData.Scientifique.toLowerCase().includes(player)) return 'Scientifique';
-  if (roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(player)) return 'Amoureux';
-  if (roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(player)) return 'La Bête';
-  if (roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(player)) return 'Chasseur de primes';
-  if (roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(player)) return 'Vaudou';
   
-  return 'Villageois';
+  return playerRole;
 }
 
 /**
  * Helper function to check if a player is in a specific camp for "Autres" filtering
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param playerName - The name of the player to check
+ * @param campName - The camp name to check against  
+ * @param game - The GameLogEntry to check within
+ * @returns true if the player is in the specified camp in this game
+ * 
+ * Note: This is the new version that works with GameLogEntry. 
+ * Use this instead of isPlayerInSmallCamp for new features.
  */
-function isPlayerInSmallCamp(
+export function isPlayerInSmallCampFromGameLog(
   playerName: string,
   campName: string,
-  roleData: RawRoleData,
-  gameData: RawGameData
+  game: GameLogEntry
 ): boolean {
   const selectedPlayer = playerName.toLowerCase();
   
+  // Find the player in this game's PlayerStats
+  const playerStat = game.PlayerStats.find(
+    player => player.Username.toLowerCase() === selectedPlayer
+  );
+  
+  if (!playerStat) return false;
+  
+  // Check if the player's MainRoleInitial matches the requested camp
+  const playerCamp = playerStat.MainRoleInitial;
+  
   switch (campName) {
     case 'Traître':
-      return !!(roleData.Traître && roleData.Traître.toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Traître';
     case 'Idiot du Village':
-      return !!(roleData["Idiot du village"] && roleData["Idiot du village"].toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Idiot du Village';
     case 'Cannibale':
-      return !!(roleData.Cannibale && roleData.Cannibale.toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Cannibale';
     case 'Agent':
-      return !!(roleData.Agent && roleData.Agent.toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Agent';
     case 'Espion':
-      return !!(roleData.Espion && roleData.Espion.toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Espion';
     case 'Scientifique':
-      return !!(roleData.Scientifique && roleData.Scientifique.toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Scientifique';
     case 'Amoureux':
-      return !!(roleData.Amoureux && roleData.Amoureux.toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Amoureux';
     case 'La Bête':
-      return !!(roleData["La Bête"] && roleData["La Bête"].toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'La Bête';
     case 'Chasseur de primes':
-      return !!(roleData["Chasseur de primes"] && roleData["Chasseur de primes"].toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Chasseur de primes';
     case 'Vaudou':
-      return !!(roleData.Vaudou && roleData.Vaudou.toLowerCase().includes(selectedPlayer));
+      return playerCamp === 'Vaudou';
     case 'Villageois':
       // For villagers, check if player is in game but not in any special role
-      const isInGame = gameData["Liste des joueurs"].toLowerCase().includes(selectedPlayer);
-      const playersInSpecialRoles = [
-        ...(roleData.Loups ? splitAndTrim(roleData.Loups) : []),
-        ...(roleData.Traître ? [roleData.Traître.trim()] : []),
-        ...(roleData["Idiot du village"] ? [roleData["Idiot du village"].trim()] : []),
-        ...(roleData.Cannibale ? [roleData.Cannibale.trim()] : []),
-        ...(roleData.Agent ? splitAndTrim(roleData.Agent) : []),
-        ...(roleData.Espion ? [roleData.Espion.trim()] : []),
-        ...(roleData.Scientifique ? [roleData.Scientifique.trim()] : []),
-        ...(roleData.Amoureux ? splitAndTrim(roleData.Amoureux) : []),
-        ...(roleData["La Bête"] ? [roleData["La Bête"].trim()] : []),
-        ...(roleData["Chasseur de primes"] ? [roleData["Chasseur de primes"].trim()] : []),
-        ...(roleData.Vaudou ? [roleData.Vaudou.trim()] : [])
-      ].map(p => p.toLowerCase());
-      
-      return isInGame && !playersInSpecialRoles.includes(selectedPlayer);
+      const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
+                           'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
+      return !specialRoles.includes(playerCamp);
     default:
       return false;
   }
@@ -255,14 +218,26 @@ function isPlayerInSmallCamp(
 
 /**
  * Filter games by selected player
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedPlayer - The player name to filter by
+ * @param winMode - Optional filter mode: 'wins-only' or 'all-assignments'
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry. 
+ * Use this instead of filterByPlayer for new features.
  */
-function filterByPlayer(
-  games: RawGameData[], 
+export function filterByPlayerFromGameLog(
+  games: GameLogEntry[], 
   selectedPlayer: string, 
   winMode?: 'wins-only' | 'all-assignments'
-): RawGameData[] {
+): GameLogEntry[] {
+  // First filter games where the player participated
   const playerFilteredGames = games.filter(game => 
-    game["Liste des joueurs"].toLowerCase().includes(selectedPlayer.toLowerCase())
+    game.PlayerStats.some(player => 
+      player.Username.toLowerCase() === selectedPlayer.toLowerCase()
+    )
   );
 
   // If no win mode specified, return all games with the player
@@ -273,7 +248,10 @@ function filterByPlayer(
   // For 'wins-only' mode, filter to only games where the player won
   if (winMode === 'wins-only') {
     return playerFilteredGames.filter(game => 
-      didPlayerWin(selectedPlayer, game["Liste des gagnants"])
+      game.PlayerStats.some(player => 
+        player.Username.toLowerCase() === selectedPlayer.toLowerCase() && 
+        player.Victorious
+      )
     );
   }
 
@@ -282,41 +260,70 @@ function filterByPlayer(
 
 /**
  * Filter games by selected game ID
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedGame - The game ID to filter by (1-based index)
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByGame for new features.
  */
-function filterByGame(games: RawGameData[], selectedGame: number): RawGameData[] {
-  return games.filter(game => game.Game === selectedGame);
+export function filterByGameFromGameLog(games: GameLogEntry[], selectedGame: number): GameLogEntry[] {
+  // GameLogEntry uses 0-based index, but selectedGame is 1-based
+  const gameIndex = selectedGame - 1;
+  return games.filter((_, index) => index === gameIndex);
 }
 
 /**
  * Filter games by multiple game IDs (for series navigation)
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedGameIds - Array of game IDs to filter by (1-based indices)
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByGameIds for new features.
  */
-function filterByGameIds(games: RawGameData[], selectedGameIds: number[]): RawGameData[] {
-  return games.filter(game => selectedGameIds.includes(game.Game));
-}
-
-/**
- * Filter games by victory type
- */
-function filterByVictoryType(games: RawGameData[], victoryType: string): RawGameData[] {
-  return games.filter(game => game["Type de victoire"] === victoryType);
+export function filterByGameIdsFromGameLog(games: GameLogEntry[], selectedGameIds: number[]): GameLogEntry[] {
+  // Convert 1-based selectedGameIds to 0-based indices
+  const gameIndices = selectedGameIds.map(id => id - 1);
+  return games.filter((_, index) => gameIndices.includes(index));
 }
 
 /**
  * Filter games by date (supports both full date and month/year)
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedDate - Date string to filter by (DD/MM/YYYY or MM/YYYY format)
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByDate for new features.
  */
-function filterByDate(games: RawGameData[], selectedDate: string): RawGameData[] {
+export function filterByDateFromGameLog(games: GameLogEntry[], selectedDate: string): GameLogEntry[] {
   return games.filter(game => {
-    const gameDate = game.Date;
+    // Convert StartDate (ISO format) to DD/MM/YYYY format for comparison
+    const gameDate = new Date(game.StartDate);
+    const formattedGameDate = gameDate.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
     
     if (selectedDate.includes('/') && selectedDate.split('/').length === 2) {
+      // Month/year format (MM/YYYY)
       const [month, year] = selectedDate.split('/');
-      const gameDateParts = gameDate.split('/');
+      const gameDateParts = formattedGameDate.split('/');
       if (gameDateParts.length === 3) {
         const [, gameMonth, gameYear] = gameDateParts;
         return gameMonth === month && gameYear === year;
       }
     } else {
-      return gameDate === selectedDate;
+      // Full date format (DD/MM/YYYY)
+      return formattedGameDate === selectedDate;
     }
     
     return false;
@@ -325,13 +332,26 @@ function filterByDate(games: RawGameData[], selectedDate: string): RawGameData[]
 
 /**
  * Filter games by harvest range
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param harvestRange - Harvest percentage range to filter by
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByHarvestRange for new features.
  */
-function filterByHarvestRange(games: RawGameData[], harvestRange: string): RawGameData[] {
+export function filterByHarvestRangeFromGameLog(games: GameLogEntry[], harvestRange: string): GameLogEntry[] {
   return games.filter(game => {
-    const harvestPercent = game["Pourcentage de récolte"];
-    if (harvestPercent === null || harvestPercent === undefined) return false;
+    const harvestGoal = game.HarvestGoal;
+    const harvestDone = game.HarvestDone;
     
-    const percentageValue = harvestPercent * 100;
+    if (harvestGoal === null || harvestGoal === undefined || 
+        harvestDone === null || harvestDone === undefined || harvestGoal === 0) {
+      return false;
+    }
+    
+    const percentageValue = (harvestDone / harvestGoal) * 100;
     
     switch (harvestRange) {
       case "0-25%":
@@ -352,173 +372,241 @@ function filterByHarvestRange(games: RawGameData[], harvestRange: string): RawGa
 
 /**
  * Filter games by game duration (number of days)
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param gameDuration - Number of days/nights to filter by
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByGameDuration for new features.
  */
-function filterByGameDuration(games: RawGameData[], gameDuration: number): RawGameData[] {
+export function filterByGameDurationFromGameLog(games: GameLogEntry[], gameDuration: number): GameLogEntry[] {
   return games.filter(game => {
-    const gameDays = game["Nombre de journées"];
+    if (!game.EndTiming) return false;
+    
+    // Parse EndTiming to extract the day/night number
+    // Format examples: "Nuit 5 --> N5", "Jour 6 --> J6"
+    const timingMatch = game.EndTiming.match(/(?:Nuit|Jour)\s+(\d+)/);
+    if (!timingMatch) return false;
+    
+    const gameDays = parseInt(timingMatch[1], 10);
     return gameDays === gameDuration;
   });
 }
 
 /**
  * Complex camp filtering logic
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param campFilter - Camp filter configuration
+ * @param selectedPlayer - Optional specific player to filter by
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByCamp for new features.
  */
-function filterByCamp(
-  games: RawGameData[],
-  roleData: RawRoleData[],
+export function filterByCampFromGameLog(
+  games: GameLogEntry[],
   campFilter: CampFilter,
   selectedPlayer?: string
-): RawGameData[] {
+): GameLogEntry[] {
   const { selectedCamp, campFilterMode, _smallCamps: smallCamps, excludeTraitor } = campFilter;
+  
   return games.filter(game => {
-    const roleDataForGame = roleData.find(role => role.Game === game.Game);
-    if (!roleDataForGame) return false;
-
     if (selectedPlayer) {
       // Handle "Autres" category for specific player
       if (selectedCamp === 'Autres' && smallCamps) {
         return smallCamps.some(camp => 
-          isPlayerInSmallCamp(selectedPlayer, camp, roleDataForGame, game)
+          isPlayerInSmallCampFromGameLog(selectedPlayer, camp, game)
         );
       }
 
       // Check specific camp for specific player
-      const playerCamp = getPlayerCampFromRoles(selectedPlayer, roleDataForGame, excludeTraitor);
+      const playerCamp = getPlayerCampFromGameLog(selectedPlayer, game, excludeTraitor);
       
-      // Special handling for "Loups" with excludeTraitor flag
-      if (selectedCamp === 'Loups' && excludeTraitor) {
+      // Special handling for "Loup" with excludeTraitor flag
+      if (selectedCamp === 'Loup' && excludeTraitor) {
         // Only include games where player was a regular wolf (not traitor)
-        return playerCamp === 'Loups' && 
-               !(roleDataForGame.Traître && roleDataForGame.Traître.toLowerCase().includes(selectedPlayer.toLowerCase()));
+        return playerCamp === 'Loup' && 
+               !game.PlayerStats.some(p => 
+                 p.Username.toLowerCase() === selectedPlayer.toLowerCase() && 
+                 p.MainRoleInitial === 'Traître'
+               );
       }
       
       // Special handling for Agent camp: when filtering by Agent camp wins, 
       // check if the specific player is in the winners list
-      if (playerCamp === 'Agent' && selectedCamp === 'Agent' && game["Camp victorieux"] === 'Agent') {
-        const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
-        return winnersList.some(winner => winner.toLowerCase() === selectedPlayer.toLowerCase());
+      if (playerCamp === 'Agent' && selectedCamp === 'Agent') {
+        // Check if player was victorious in this game
+        const playerStat = game.PlayerStats.find(p => 
+          p.Username.toLowerCase() === selectedPlayer.toLowerCase()
+        );
+        return playerStat?.Victorious === true;
       }
       
       return playerCamp === selectedCamp;
     } else {
       // Filter by camp without specific player
       if (campFilterMode === 'wins-only') {
+        // Find winning camp by checking which camp has victorious players
+        const winningCamp = getWinningCampFromGameLog(game);
+        
         if (selectedCamp === 'Autres' && smallCamps) {
-          return smallCamps.includes(game["Camp victorieux"]);
+          return smallCamps.includes(winningCamp);
         }
-        return game["Camp victorieux"] === selectedCamp;
+        return winningCamp === selectedCamp;
       } else {
         // Check if any player was assigned to this camp (all-assignments mode)
         if (selectedCamp === 'Autres' && smallCamps) {
           return smallCamps.some(camp => {
-            switch (camp) {
-              case 'Traître':
-                return !!(roleDataForGame.Traître && roleDataForGame.Traître.trim());
-              case 'Idiot du Village':
-                return !!(roleDataForGame["Idiot du village"] && roleDataForGame["Idiot du village"].trim());
-              case 'Cannibale':
-                return !!(roleDataForGame.Cannibale && roleDataForGame.Cannibale.trim());
-              case 'Agent':
-                return !!(roleDataForGame.Agent && roleDataForGame.Agent.trim());
-              case 'Espion':
-                return !!(roleDataForGame.Espion && roleDataForGame.Espion.trim());
-              case 'Scientifique':
-                return !!(roleDataForGame.Scientifique && roleDataForGame.Scientifique.trim());
-              case 'Amoureux':
-                return !!(roleDataForGame.Amoureux && roleDataForGame.Amoureux.trim());
-              case 'La Bête':
-                return !!(roleDataForGame["La Bête"] && roleDataForGame["La Bête"].trim());
-              case 'Chasseur de primes':
-                return !!(roleDataForGame["Chasseur de primes"] && roleDataForGame["Chasseur de primes"].trim());
-              case 'Vaudou':
-                return !!(roleDataForGame.Vaudou && roleDataForGame.Vaudou.trim());
-              case 'Villageois':
-                const playersInGame = splitAndTrim(game["Liste des joueurs"]);
-                return playersInGame.length > 0; // Simplified check
-              default:
-                return false;
-            }
+            return game.PlayerStats.some(player => {
+              const playerRole = player.MainRoleInitial;
+              switch (camp) {
+                case 'Traître':
+                  return playerRole === 'Traître';
+                case 'Idiot du Village':
+                  return playerRole === 'Idiot du Village';
+                case 'Cannibale':
+                  return playerRole === 'Cannibale';
+                case 'Agent':
+                  return playerRole === 'Agent';
+                case 'Espion':
+                  return playerRole === 'Espion';
+                case 'Scientifique':
+                  return playerRole === 'Scientifique';
+                case 'Amoureux':
+                  return playerRole === 'Amoureux';
+                case 'La Bête':
+                  return playerRole === 'La Bête';
+                case 'Chasseur de primes':
+                  return playerRole === 'Chasseur de primes';
+                case 'Vaudou':
+                  return playerRole === 'Vaudou';
+                case 'Villageois':
+                  const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
+                                       'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
+                  return !specialRoles.includes(playerRole);
+                default:
+                  return false;
+              }
+            });
           });
         }
 
         // Check specific camp assignment
-        switch (selectedCamp) {
-          case 'Loups':
-            return !!(roleDataForGame.Loups && roleDataForGame.Loups.trim());
-          case 'Traître':
-            return !!(roleDataForGame.Traître && roleDataForGame.Traître.trim());
-          case 'Villageois':
-            const playersInGame = splitAndTrim(game["Liste des joueurs"]);
-            const playersInSpecialRoles = [
-              ...splitAndTrim(roleDataForGame.Loups || ''),
-              ...(roleDataForGame.Traître ? [roleDataForGame.Traître.trim()] : []),
-              ...(roleDataForGame["Idiot du village"] ? [roleDataForGame["Idiot du village"].trim()] : []),
-              ...(roleDataForGame.Cannibale ? [roleDataForGame.Cannibale.trim()] : []),
-              ...(roleDataForGame.Agent ? splitAndTrim(roleDataForGame.Agent) : []),
-              ...(roleDataForGame.Espion ? [roleDataForGame.Espion.trim()] : []),
-              ...(roleDataForGame.Scientifique ? [roleDataForGame.Scientifique.trim()] : []),
-              ...splitAndTrim(roleDataForGame.Amoureux || ''),
-              ...(roleDataForGame["La Bête"] ? [roleDataForGame["La Bête"].trim()] : []),
-              ...(roleDataForGame["Chasseur de primes"] ? [roleDataForGame["Chasseur de primes"].trim()] : []),
-              ...(roleDataForGame.Vaudou ? [roleDataForGame.Vaudou.trim()] : [])
-            ];
-            return playersInGame.some(player => !playersInSpecialRoles.includes(player));
-          case 'Idiot du Village':
-            return !!(roleDataForGame["Idiot du village"] && roleDataForGame["Idiot du village"].trim());
-          case 'Cannibale':
-            return !!(roleDataForGame.Cannibale && roleDataForGame.Cannibale.trim());
-          case 'Agent':
-            return !!(roleDataForGame.Agent && roleDataForGame.Agent.trim());
-          case 'Espion':
-            return !!(roleDataForGame.Espion && roleDataForGame.Espion.trim());
-          case 'Scientifique':
-            return !!(roleDataForGame.Scientifique && roleDataForGame.Scientifique.trim());
-          case 'Amoureux':
-            return !!(roleDataForGame.Amoureux && roleDataForGame.Amoureux.trim());
-          case 'La Bête':
-            return !!(roleDataForGame["La Bête"] && roleDataForGame["La Bête"].trim());
-          case 'Chasseur de primes':
-            return !!(roleDataForGame["Chasseur de primes"] && roleDataForGame["Chasseur de primes"].trim());
-          case 'Vaudou':
-            return !!(roleDataForGame.Vaudou && roleDataForGame.Vaudou.trim());
-          default:
-            // For any unrecognized camp, fall back to checking wins only
-            return game["Camp victorieux"] === selectedCamp;
-        }
+        return game.PlayerStats.some(player => {
+          const playerRole = player.MainRoleInitial;
+          switch (selectedCamp) {
+            case 'Loup':
+              return playerRole === 'Loup';
+            case 'Traître':
+              return playerRole === 'Traître';
+            case 'Villageois':
+              const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
+                                   'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
+              return !specialRoles.includes(playerRole);
+            case 'Idiot du Village':
+              return playerRole === 'Idiot du Village';
+            case 'Cannibale':
+              return playerRole === 'Cannibale';
+            case 'Agent':
+              return playerRole === 'Agent';
+            case 'Espion':
+              return playerRole === 'Espion';
+            case 'Scientifique':
+              return playerRole === 'Scientifique';
+            case 'Amoureux':
+              return playerRole === 'Amoureux';
+            case 'La Bête':
+              return playerRole === 'La Bête';
+            case 'Chasseur de primes':
+              return playerRole === 'Chasseur de primes';
+            case 'Vaudou':
+              return playerRole === 'Vaudou';
+            default:
+              // For any unrecognized camp, check if any player has that role
+              return playerRole === selectedCamp;
+          }
+        });
       }
     }
   });
 }
 
 /**
- * Filter games by multiple players with specific filtering modes
+ * Helper function to determine the winning camp from a GameLogEntry
+ * 
+ * @param game - The GameLogEntry to analyze
+ * @returns The name of the winning camp
  */
-function filterByMultiplePlayers(
-  games: RawGameData[],
-  roleData: RawRoleData[],
+export function getWinningCampFromGameLog(game: GameLogEntry): string {
+  // Find the first victorious player and use their role to determine winning camp
+  const victoriousPlayer = game.PlayerStats.find(player => player.Victorious);
+  
+  if (!victoriousPlayer) {
+    // Fallback: if no victorious player found, return empty string
+    return '';
+  }
+  
+  const winnerRole = victoriousPlayer.MainRoleInitial;
+  
+  // Map individual roles to camps
+  switch (winnerRole) {
+    case 'Loup':
+    case 'Traître':
+      return 'Loup';
+    case 'Villageois':
+      return 'Villageois';
+    case 'Amoureux':
+      return 'Amoureux';
+    case 'Idiot du Village':
+    case 'Cannibale':
+    case 'Agent':
+    case 'Espion':
+    case 'Scientifique':
+    case 'La Bête':
+    case 'Chasseur de primes':
+    case 'Vaudou':
+      // Solo roles win as their own camp
+      return winnerRole;
+    default:
+      return winnerRole; // Return the role name as camp for unknown roles
+  }
+}
+
+/**
+ * Filter games by multiple players with specific filtering modes
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param multiPlayerFilter - Multi-player filter configuration
+ * @param campFilter - Optional camp filter configuration
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByMultiplePlayers for new features.
+ */
+export function filterByMultiplePlayersFromGameLog(
+  games: GameLogEntry[],
   multiPlayerFilter: MultiPlayerFilter,
   campFilter?: CampFilter
-): RawGameData[] {
+): GameLogEntry[] {
   const { selectedPlayers, playersFilterMode, winnerPlayer } = multiPlayerFilter;
 
   return games.filter(game => {
     // First check if all selected players are in this game
-    const playersInGame = splitAndTrim(game["Liste des joueurs"]);
+    const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
     const hasAllPlayers = selectedPlayers.every(player => 
-      playersInGame.some(gamePlayer => 
-        gamePlayer.toLowerCase() === player.toLowerCase()
-      )
+      gamePlayersList.includes(player.toLowerCase())
     );
 
     if (!hasAllPlayers) return false;
 
-    // Get role data for this game
-    const roleDataForGame = roleData.find(role => role.Game === game.Game);
-    if (!roleDataForGame) return false;
-
     // Get camps for each selected player
     const playerCamps = selectedPlayers.map(player => 
-      getPlayerCampFromRoles(player, roleDataForGame)
+      getPlayerCampFromGameLog(player, game)
     );
 
     // Apply filtering based on mode
@@ -527,10 +615,10 @@ function filterByMultiplePlayers(
         // Include all games where these players participated together
         // If winnerPlayer is specified, filter by games where that player won
         if (winnerPlayer) {
-          const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
-          return winnersList.some(winner => 
-            winner.toLowerCase() === winnerPlayer.toLowerCase()
+          const winnerPlayerStat = game.PlayerStats.find(p => 
+            p.Username.toLowerCase() === winnerPlayer.toLowerCase()
           );
+          return winnerPlayerStat?.Victorious === true;
         }
         return true;
 
@@ -538,7 +626,7 @@ function filterByMultiplePlayers(
         // Include only games where players were in different camps
         // Special handling for camp alliances (Traître works with Loups)
         const normalizedCamps = playerCamps.map(camp => {
-          if (camp === 'Traître') return 'Loups';
+          if (camp === 'Traître') return 'Loup';
           return camp;
         });
         
@@ -555,17 +643,18 @@ function filterByMultiplePlayers(
           
           if (winnerPlayerIndex !== -1) {
             const winnerPlayerCamp = normalizedCamps[winnerPlayerIndex];
-            const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loups' : game["Camp victorieux"];
+            const gameWinningCamp = getWinningCampFromGameLog(game);
+            const normalizedWinningCamp = gameWinningCamp === 'Traître' ? 'Loup' : gameWinningCamp;
             
-            // Special handling for Agent camp - check if specific player is in winners list
-            if (winnerPlayerCamp === 'Agent' && gameWinningCamp === 'Agent') {
-              const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
-              return winnersList.some(winner => 
-                winner.toLowerCase() === winnerPlayer.toLowerCase()
+            // Special handling for Agent camp - check if specific player is victorious
+            if (winnerPlayerCamp === 'Agent' && normalizedWinningCamp === 'Agent') {
+              const winnerPlayerStat = game.PlayerStats.find(p => 
+                p.Username.toLowerCase() === winnerPlayer.toLowerCase()
               );
+              return winnerPlayerStat?.Victorious === true;
             }
             
-            return winnerPlayerCamp === gameWinningCamp;
+            return winnerPlayerCamp === normalizedWinningCamp;
           }
         }
         
@@ -574,7 +663,7 @@ function filterByMultiplePlayers(
       case 'same-camp':
         // Include only games where players were in the same camp (considering alliances)
         const normalizedCampsForSame = playerCamps.map(camp => {
-          if (camp === 'Traître') return 'Loups';
+          if (camp === 'Traître') return 'Loup';
           return camp;
         });
         
@@ -589,21 +678,21 @@ function filterByMultiplePlayers(
         if (campFilter && campFilter.selectedCamp) {
           const requiredCamp = campFilter.selectedCamp;
           
-          // Handle "Loups sans Traître" case
-          if (requiredCamp === 'Loups' && campFilter.excludeTraitor) {
+          // Handle "Loup sans Traître" case
+          if (requiredCamp === 'Loup' && campFilter.excludeTraitor) {
             // Ensure all players are regular wolves (not traitors)
             const areAllRegularWolves = selectedPlayers.every(player => {
               const originalCamp = playerCamps[selectedPlayers.indexOf(player)];
-              return originalCamp === 'Loups'; // They should be Loups, and we'll check they're not traitors below
+              return originalCamp === 'Loup'; // They should be Loups, and we'll check they're not traitors below
             });
             if (!areAllRegularWolves) return false;
             
-            // Also check that none of the players are traitors in the role data
+            // Also check that none of the players are traitors in the PlayerStats
             const hasTraitor = selectedPlayers.some(player => {
-              const traitors = splitAndTrim(roleDataForGame.Traître || '');
-              return traitors.some(traitor => 
-                traitor.toLowerCase() === player.toLowerCase()
+              const playerStat = game.PlayerStats.find(p => 
+                p.Username.toLowerCase() === player.toLowerCase()
               );
+              return playerStat?.MainRoleInitial === 'Traître';
             });
             if (hasTraitor) return false;
           }
@@ -614,19 +703,20 @@ function filterByMultiplePlayers(
         
         // If winnerPlayer is specified, check if their camp won
         if (winnerPlayer) {
-          const gameWinningCamp = game["Camp victorieux"] === 'Traître' ? 'Loups' : game["Camp victorieux"];
+          const gameWinningCamp = getWinningCampFromGameLog(game);
+          const normalizedWinningCamp = gameWinningCamp === 'Traître' ? 'Loup' : gameWinningCamp;
           
           // Special handling for Agent camp - both players need to be winners for Agent camp
-          if (sameCamp === 'Agent' && gameWinningCamp === 'Agent') {
-            const winnersList = splitAndTrim(game["Liste des gagnants"]?.toString() || "");
-            return selectedPlayers.every(player =>
-              winnersList.some(winner => 
-                winner.toLowerCase() === player.toLowerCase()
-              )
-            );
+          if (sameCamp === 'Agent' && normalizedWinningCamp === 'Agent') {
+            return selectedPlayers.every(player => {
+              const playerStat = game.PlayerStats.find(p => 
+                p.Username.toLowerCase() === player.toLowerCase()
+              );
+              return playerStat?.Victorious === true;
+            });
           }
           
-          return sameCamp === gameWinningCamp;
+          return sameCamp === normalizedWinningCamp;
         }
         
         return true;
@@ -639,48 +729,49 @@ function filterByMultiplePlayers(
 
 /**
  * Filter games by player pair with specific role relationship
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param playerPairFilter - Player pair filter configuration
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of filterByPlayerPair for new features.
  */
-function filterByPlayerPair(
-  games: RawGameData[],
-  roleData: RawRoleData[],
+export function filterByPlayerPairFromGameLog(
+  games: GameLogEntry[],
   playerPairFilter: PlayerPairFilter
-): RawGameData[] {
+): GameLogEntry[] {
   const { selectedPlayerPair, selectedPairRole } = playerPairFilter;
   if (selectedPlayerPair.length !== 2) return games;
 
   return games.filter(game => {
     // Check if both players are in this game
-    const playersInGame = splitAndTrim(game["Liste des joueurs"]);
+    const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
     const hasBothPlayers = selectedPlayerPair.every(player => 
-      playersInGame.some(gamePlayer => 
-        gamePlayer.toLowerCase() === player.toLowerCase()
-      )
+      gamePlayersList.includes(player.toLowerCase())
     );
 
     if (!hasBothPlayers) return false;
 
-    // Get role data for this game
-    const roleDataForGame = roleData.find(role => role.Game === game.Game);
-    if (!roleDataForGame) return false;
-
     switch (selectedPairRole) {
       case 'wolves':
         // Check if both players are wolves in this game
-        const wolvesInGame = splitAndTrim(roleDataForGame.Loups || '');
-        return selectedPlayerPair.every(player =>
-          wolvesInGame.some(wolf => 
-            wolf.toLowerCase() === player.toLowerCase()
-          )
-        );
+        return selectedPlayerPair.every(player => {
+          const playerStat = game.PlayerStats.find(p => 
+            p.Username.toLowerCase() === player.toLowerCase()
+          );
+          return playerStat?.MainRoleInitial === 'Loup';
+        });
 
       case 'lovers':
         // Check if both players are lovers in this game
-        const loversInGame = splitAndTrim(roleDataForGame.Amoureux || '');
-        return selectedPlayerPair.every(player =>
-          loversInGame.some(lover => 
-            lover.toLowerCase() === player.toLowerCase()
-          )
-        );
+        return selectedPlayerPair.every(player => {
+          const playerStat = game.PlayerStats.find(p => 
+            p.Username.toLowerCase() === player.toLowerCase()
+          );
+          return playerStat?.MainRoleInitial === 'Amoureux';
+        });
 
       default:
         return true;
@@ -690,19 +781,26 @@ function filterByPlayerPair(
 
 /**
  * Apply navigation filters to game data
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param gameData - Array of GameLogEntry to filter
+ * @param filters - Navigation filters to apply
+ * @returns Filtered array of GameLogEntry
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of applyNavigationFilters for new features.
  */
-export function applyNavigationFilters(
-  gameData: RawGameData[],
-  roleData: RawRoleData[],
+export function applyNavigationFiltersFromGameLog(
+  gameData: GameLogEntry[],
   filters?: NavigationFilters
-): RawGameData[] {
+): GameLogEntry[] {
   if (!filters) return gameData;
 
   let filteredGames = [...gameData];
 
   // Apply filters sequentially
   if (filters.selectedPlayer) {
-    filteredGames = filterByPlayer(
+    filteredGames = filterByPlayerFromGameLog(
       filteredGames, 
       filters.selectedPlayer, 
       filters.selectedPlayerWinMode
@@ -710,43 +808,37 @@ export function applyNavigationFilters(
   }
 
   if (filters.selectedGame) {
-    filteredGames = filterByGame(filteredGames, filters.selectedGame);
+    filteredGames = filterByGameFromGameLog(filteredGames, filters.selectedGame);
   }
 
   if (filters.selectedGameIds) {
-    filteredGames = filterByGameIds(filteredGames, filters.selectedGameIds);
+    filteredGames = filterByGameIdsFromGameLog(filteredGames, filters.selectedGameIds);
   }
 
   if (filters.campFilter) {
-    filteredGames = filterByCamp(
+    filteredGames = filterByCampFromGameLog(
       filteredGames,
-      roleData,
       filters.campFilter,
       filters.selectedPlayer
     );
   }
 
-  if (filters.selectedVictoryType) {
-    filteredGames = filterByVictoryType(filteredGames, filters.selectedVictoryType);
-  }
-
   if (filters.selectedDate) {
-    filteredGames = filterByDate(filteredGames, filters.selectedDate);
+    filteredGames = filterByDateFromGameLog(filteredGames, filters.selectedDate);
   }
 
   if (filters.selectedHarvestRange) {
-    filteredGames = filterByHarvestRange(filteredGames, filters.selectedHarvestRange);
+    filteredGames = filterByHarvestRangeFromGameLog(filteredGames, filters.selectedHarvestRange);
   }
 
   if (filters.selectedGameDuration) {
-    filteredGames = filterByGameDuration(filteredGames, filters.selectedGameDuration);
+    filteredGames = filterByGameDurationFromGameLog(filteredGames, filters.selectedGameDuration);
   }
 
   // Apply multi-player filters (for player comparison scenarios)
   if (filters.multiPlayerFilter) {
-    filteredGames = filterByMultiplePlayers(
+    filteredGames = filterByMultiplePlayersFromGameLog(
       filteredGames, 
-      roleData, 
       filters.multiPlayerFilter,
       filters.campFilter
     );
@@ -754,9 +846,8 @@ export function applyNavigationFilters(
 
   // Apply player pair filters
   if (filters.playerPairFilter) {
-    filteredGames = filterByPlayerPair(
+    filteredGames = filterByPlayerPairFromGameLog(
       filteredGames,
-      roleData,
       filters.playerPairFilter
     );
   }
@@ -764,78 +855,159 @@ export function applyNavigationFilters(
   return filteredGames;
 }
 
+
 /**
- * Parse roles from role data
+ * Parse roles from GameLogEntry structure
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param game - The GameLogEntry to parse roles from
+ * @returns GameRoles object with role assignments
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of parseRoles for new features.
  */
-function parseRoles(roleDataForGame: RawRoleData | undefined): EnrichedGameData['roles'] {
-  const roles: EnrichedGameData['roles'] = {};
+export function parseRolesFromGameLog(game: GameLogEntry): GameRoles {
+  const roles: GameRoles = {};
   
-  if (roleDataForGame) {
-    if (roleDataForGame.Loups) roles.wolves = splitAndTrim(roleDataForGame.Loups);
-    if (roleDataForGame.Traître) roles.traitor = roleDataForGame.Traître;
-    if (roleDataForGame["Idiot du village"]) roles.villageIdiot = roleDataForGame["Idiot du village"];
-    if (roleDataForGame.Cannibale) roles.cannibal = roleDataForGame.Cannibale;
-    if (roleDataForGame.Agent) roles.agent = splitAndTrim(roleDataForGame.Agent);
-    if (roleDataForGame.Espion) roles.spy = roleDataForGame.Espion;
-    if (roleDataForGame.Scientifique) roles.scientist = roleDataForGame.Scientifique;
-    if (roleDataForGame.Amoureux) roles.lovers = splitAndTrim(roleDataForGame.Amoureux);
-    if (roleDataForGame["La Bête"]) roles.beast = roleDataForGame["La Bête"];
-    if (roleDataForGame["Chasseur de primes"]) roles.bountyHunter = roleDataForGame["Chasseur de primes"];
-    if (roleDataForGame.Vaudou) roles.voodoo = roleDataForGame.Vaudou;
-  }
+  // Extract roles from PlayerStats
+  const playerStats = game.PlayerStats;
+  
+  // Group players by role
+  const wolves: string[] = [];
+  const lovers: string[] = [];
+  const agents: string[] = [];
+  let traitor: string | undefined;
+  let villageIdiot: string | undefined;
+  let cannibal: string | undefined;
+  let spy: string | undefined;
+  let scientist: string | undefined;
+  let beast: string | undefined;
+  let bountyHunter: string | undefined;
+  let voodoo: string | undefined;
+  
+  playerStats.forEach(player => {
+    switch (player.MainRoleInitial) {
+      case 'Loup':
+        wolves.push(player.Username);
+        break;
+      case 'Traître':
+        traitor = player.Username;
+        break;
+      case 'Idiot du Village':
+        villageIdiot = player.Username;
+        break;
+      case 'Cannibale':
+        cannibal = player.Username;
+        break;
+      case 'Agent':
+        agents.push(player.Username);
+        break;
+      case 'Espion':
+        spy = player.Username;
+        break;
+      case 'Scientifique':
+        scientist = player.Username;
+        break;
+      case 'Amoureux':
+        lovers.push(player.Username);
+        break;
+      case 'La Bête':
+        beast = player.Username;
+        break;
+      case 'Chasseur de primes':
+        bountyHunter = player.Username;
+        break;
+      case 'Vaudou':
+        voodoo = player.Username;
+        break;
+    }
+  });
+  
+  // Assign to roles object (only if arrays have content or strings are defined)
+  if (wolves.length > 0) roles.wolves = wolves;
+  if (traitor) roles.traitor = traitor;
+  if (villageIdiot) roles.villageIdiot = villageIdiot;
+  if (cannibal) roles.cannibal = cannibal;
+  if (agents.length > 0) roles.agent = agents;
+  if (spy) roles.spy = spy;
+  if (scientist) roles.scientist = scientist;
+  if (lovers.length > 0) roles.lovers = lovers;
+  if (beast) roles.beast = beast;
+  if (bountyHunter) roles.bountyHunter = bountyHunter;
+  if (voodoo) roles.voodoo = voodoo;
   
   return roles;
 }
 
 /**
- * Create player roles list from game and role data
+ * Create player roles list from GameLogEntry structure
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param game - The GameLogEntry to create player roles from
+ * @returns PlayerRole array with player, role, and camp information
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of createPlayerRoles for new features.
  */
-function createPlayerRoles(
-  game: RawGameData,
-  roleDataForGame: RawRoleData | undefined
-): EnrichedGameData['playerRoles'] {
-  const playerRoles: EnrichedGameData['playerRoles'] = [];
-  const allPlayers = splitAndTrim(game["Liste des joueurs"]);
+export function createPlayerRolesFromGameLog(game: GameLogEntry): PlayerRole[] {
+  const playerRoles: PlayerRole[] = [];
 
-  allPlayers.forEach(player => {
-    let role = 'Villageois';
-    let camp = 'Villageois';
+  game.PlayerStats.forEach(playerStat => {
+    const player = playerStat.Username;
+    let role = playerStat.MainRoleInitial;
+    let camp = playerStat.MainRoleInitial;
 
-    if (roleDataForGame) {
-      if (roleDataForGame.Loups && splitAndTrim(roleDataForGame.Loups).includes(player)) {
-        role = 'Loups';
-        camp = 'Loups';
-      } else if (roleDataForGame.Traître && splitAndTrim(roleDataForGame.Traître).includes(player)) {
+    // Map roles to appropriate camps
+    switch (playerStat.MainRoleInitial) {
+      case 'Loup':
+        role = 'Loup';
+        camp = 'Loup';
+        break;
+      case 'Traître':
         role = 'Traître';
-        camp = 'Loups'; 
-      } else if (roleDataForGame["Idiot du village"] && splitAndTrim(roleDataForGame["Idiot du village"]).includes(player)) {
+        camp = 'Loup';
+        break;
+      case 'Idiot du Village':
         role = 'Idiot du Village';
-        camp = 'Idiot du Village'; 
-      } else if (roleDataForGame.Cannibale && splitAndTrim(roleDataForGame.Cannibale).includes(player)) {
+        camp = 'Idiot du Village';
+        break;
+      case 'Cannibale':
         role = 'Cannibale';
         camp = 'Cannibale';
-      } else if (roleDataForGame.Agent && splitAndTrim(roleDataForGame.Agent).includes(player)) {
+        break;
+      case 'Agent':
         role = 'Agent';
         camp = 'Agent';
-      } else if (roleDataForGame.Espion && splitAndTrim(roleDataForGame.Espion).includes(player)) {
+        break;
+      case 'Espion':
         role = 'Espion';
         camp = 'Espion';
-      } else if (roleDataForGame.Scientifique && splitAndTrim(roleDataForGame.Scientifique).includes(player)) {
+        break;
+      case 'Scientifique':
         role = 'Scientifique';
         camp = 'Scientifique';
-      } else if (roleDataForGame["La Bête"] && splitAndTrim(roleDataForGame["La Bête"]).includes(player)) {
+        break;
+      case 'La Bête':
         role = 'La Bête';
         camp = 'La Bête';
-      } else if (roleDataForGame["Chasseur de primes"] && splitAndTrim(roleDataForGame["Chasseur de primes"]).includes(player)) {
+        break;
+      case 'Chasseur de primes':
         role = 'Chasseur de primes';
         camp = 'Chasseur de primes';
-      } else if (roleDataForGame.Vaudou && splitAndTrim(roleDataForGame.Vaudou).includes(player)) {
+        break;
+      case 'Vaudou':
         role = 'Vaudou';
         camp = 'Vaudou';
-      } else if (roleDataForGame.Amoureux && splitAndTrim(roleDataForGame.Amoureux).includes(player)) {
+        break;
+      case 'Amoureux':
         role = 'Amoureux';
         camp = 'Amoureux';
-      }
+        break;
+      case 'Villageois':
+      default:
+        role = 'Villageois';
+        camp = 'Villageois';
+        break;
     }
 
     playerRoles.push({ player, role, camp });
@@ -845,79 +1017,117 @@ function createPlayerRoles(
 }
 
 /**
- * Create player details from ponce data
- */
-function createPlayerDetails(ponceDataForGame: RawPonceData[]): EnrichedGameData['playerDetails'] {
-  return ponceDataForGame.map(ponce => ({
-    player: 'Ponce',
-    camp: ponce.Camp || 'Unknown',
-    isTraitor: ponce.Traître || false,
-    secondaryRole: ponce["Rôle secondaire"] === "N/A" ? null : ponce["Rôle secondaire"],
-    wolfPower: ponce["Pouvoir de loup"] === "N/A" ? null : ponce["Pouvoir de loup"],
-    villagerJob: ponce["Métier villageois"] === "N/A" ? null : ponce["Métier villageois"],
-    playersKilled: ponce["Joueurs tués"],
-    deathDay: ponce["Jour de mort"],
-    deathType: ponce["Type de mort"],
-    killers: ponce["Joueurs tueurs"]
-  }));
-}
-
-/**
  * Compute enriched game details from raw data
+ * NEW VERSION: Works with GameLogEntry structure
+ * 
+ * @param gameData - Array of GameLogEntry to process
+ * @param filters - Optional navigation filters to apply
+ * @returns Enriched game data array or null if empty input
+ * 
+ * Note: This is the new version that works with GameLogEntry.
+ * Use this instead of the legacy version for new features.
  */
-export function computeGameDetails(
-  gameData: RawGameData[],
-  roleData: RawRoleData[],
-  ponceData: RawPonceData[],
+export function computeGameDetailsFromGameLog(
+  gameData: GameLogEntry[],
   filters?: NavigationFilters
-): EnrichedGameData[] | null {
+){
   if (gameData.length === 0) return null;
 
   // Apply navigation filters
-  const filteredGames = applyNavigationFilters(gameData, roleData, filters);
+  const filteredGames = applyNavigationFiltersFromGameLog(gameData, filters);
 
-  return filteredGames.map(game => {
-    // Find corresponding role data
-    const roleDataForGame = roleData.find(role => role.Game === game.Game);
-    
-    // Find corresponding ponce data for this game
-    const ponceDataForGame = ponceData.filter(ponce => ponce.Game === game.Game);
-
+  return filteredGames.map((game, index) => {
     // Parse roles
-    const roles = parseRoles(roleDataForGame);
+    const roles = parseRolesFromGameLog(game);
 
     // Create player roles and details
-    const playerRoles = createPlayerRoles(game, roleDataForGame);
-    const playerDetails = createPlayerDetails(ponceDataForGame);
+    const playerRoles = createPlayerRolesFromGameLog(game);
+
+    // Calculate derived fields from PlayerStats
+    const playerCount = game.PlayerStats.length;
+    const wolves = game.PlayerStats.filter(p => p.MainRoleInitial === 'Loup');
+    const traitors = game.PlayerStats.filter(p => p.MainRoleInitial === 'Traître');
+    const lovers = game.PlayerStats.filter(p => p.MainRoleInitial === 'Amoureux');
+    const victoriousPlayers = game.PlayerStats.filter(p => p.Victorious);
+    
+    // Calculate wolf count (includes traitors)
+    const wolfCount = wolves.length + traitors.length;
+    
+    // Determine winning camp
+    const winningCamp = getWinningCampFromGameLog(game);
+    
+    // Extract solo roles
+    const soloRoleTypes = ['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 'La Bête', 'Chasseur de primes', 'Vaudou'];
+    const soloRolePlayers = game.PlayerStats.filter(p => soloRoleTypes.includes(p.MainRoleInitial));
+    const soloRoles = soloRolePlayers.length > 0 ? soloRolePlayers.map(p => p.MainRoleInitial).join(', ') : null;
+    
+    // Convert StartDate (ISO) to French format (DD/MM/YYYY)
+    const gameDate = new Date(game.StartDate);
+    const formattedDate = gameDate.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    
+    // Extract day count from EndTiming
+    let dayCount = 0;
+    if (game.EndTiming) {
+      const timingMatch = game.EndTiming.match(/(?:Nuit|Jour)\s+(\d+)/);
+      if (timingMatch) {
+        dayCount = parseInt(timingMatch[1], 10);
+      }
+    }
+    
+    // Calculate harvest percentage
+    let harvestPercentage: number | null = null;
+    if (game.HarvestGoal && game.HarvestGoal > 0) {
+      harvestPercentage = (game.HarvestDone / game.HarvestGoal);
+    }
+
+    // Calculate survivors by camp
+    const villagerSurvivors = victoriousPlayers.filter(p => 
+      p.MainRoleInitial === 'Villageois' || 
+      (winningCamp === 'Villageois' && !['Loup', 'Traître', 'Amoureux'].includes(p.MainRoleInitial) && !soloRoleTypes.includes(p.MainRoleInitial))
+    ).length;
+    
+    const wolfSurvivors = victoriousPlayers.filter(p => 
+      p.MainRoleInitial === 'Loup' || p.MainRoleInitial === 'Traître'
+    ).length;
+    
+    const loverSurvivors = lovers.length > 0 ? victoriousPlayers.filter(p => 
+      p.MainRoleInitial === 'Amoureux'
+    ).length : null;
+    
+    const soloSurvivors = soloRolePlayers.length > 0 ? victoriousPlayers.filter(p => 
+      soloRoleTypes.includes(p.MainRoleInitial)
+    ).length : null;
 
     return {
-      gameId: game.Game,
-      date: game.Date,
-      isModded: game["Game Moddée"],
-      playerCount: game["Nombre de joueurs"],
-      wolfCount: game["Nombre de loups"],
-      hasTraitor: game["Rôle Traître"],
-      hasLovers: game["Rôle Amoureux"],
-      soloRoles: game["Rôles solo"],
-      winningCamp: game["Camp victorieux"],
-      victoryType: game["Type de victoire"],
-      dayCount: game["Nombre de journées"],
-      villagerSurvivors: game["Survivants villageois"],
-      wolfSurvivors: game["Survivants loups (traître inclus)"],
-      loverSurvivors: game["Survivants amoureux"],
-      soloSurvivors: game["Survivants solo"],
-      winners: game["Liste des gagnants"],
-      harvest: game["Récolte"],
-      totalHarvest: game["Total récolte"],
-      harvestPercentage: game["Pourcentage de récolte"],
-      playersList: game["Liste des joueurs"],
-      versions: game["Versions"],
-      map: game["Map"],
-      youtubeEmbedUrl: createYouTubeEmbedUrl(game["Début"], game["Fin"]),
-      gameDuration: calculateGameDuration(game["Début"], game["Fin"]),
+      gameId: index + 1, // Use 1-based index for gameId
+      date: formattedDate,
+      isModded: game.LegacyData?.Modded || false,
+      playerCount,
+      wolfCount,
+      hasTraitor: traitors.length > 0,
+      hasLovers: lovers.length > 0,
+      soloRoles,
+      winningCamp,
+      dayCount,
+      villagerSurvivors,
+      wolfSurvivors,
+      loverSurvivors,
+      soloSurvivors,
+      winners: victoriousPlayers.map(p => p.Username).join(', '),
+      harvest: game.HarvestDone,
+      totalHarvest: game.HarvestGoal,
+      harvestPercentage,
+      playersList: game.PlayerStats.map(p => p.Username).join(', '),
+      versions: game.LegacyData?.Version || null,
+      map: game.MapName,
+      youtubeEmbedUrl: createYouTubeEmbedUrl(game.LegacyData?.VODLink || null, game.LegacyData?.VODLinkEnd || null),
+      gameDuration: calculateGameDuration(game.StartDate, game.EndDate),
       roles,
-      playerRoles,
-      playerDetails
+      playerRoles
     };
   });
 }

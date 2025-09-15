@@ -1,5 +1,35 @@
-import type { RawGameData, RawRoleData } from '../useCombinedRawData';
-import { splitAndTrim, didPlayerWin, buildGamePlayerCampMap, getPlayerMainCamp } from './dataUtils';
+import type { GameLogEntry } from '../useCombinedRawData';
+
+/**
+ * Helper function to get player's main camp from role name
+ */
+function getPlayerMainCampFromRole(roleName: string): 'Villageois' | 'Loup' | 'Autres' {
+  if (!roleName) return 'Villageois';
+  
+  // Loups camp
+  if (['Loup', 'Traître'].includes(roleName)) {
+    return 'Loup';
+  }
+  
+  // Special roles (solo or special mechanics) 
+  if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 
+       'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(roleName)) {
+    return 'Autres';
+  }
+  
+  // Default to Villageois (includes 'Villageois' and any other unrecognized roles)
+  return 'Villageois';
+}
+
+/**
+ * Helper function to map role name to display camp name (for statistics)
+ */
+function mapRoleToDisplayCamp(roleName: string): string {
+  if (!roleName) return 'Villageois';
+  
+  // Return the role name as-is, since it's already the proper display name
+  return roleName;
+}
 
 export interface CampSeries {
   player: string;
@@ -76,7 +106,7 @@ interface PlayerSeriesState {
   currentLossSeries: number;
   longestLossSeries: LossSeries | null;
   currentLossCamps: string[];
-  lastCamp: 'Villageois' | 'Loups' | 'Autres' | null;
+  lastCamp: 'Villageois' | 'Loup' | 'Autres' | null;
   lastWon: boolean;
   villageoisSeriesStart: { game: number; date: string } | null;
   loupsSeriesStart: { game: number; date: string } | null;
@@ -92,16 +122,13 @@ interface PlayerSeriesState {
 /**
  * Get all unique players from game data
  */
-function getAllPlayers(gameData: RawGameData[]): Set<string> {
+function getAllPlayers(gameData: GameLogEntry[]): Set<string> {
   const allPlayers = new Set<string>();
   
-  gameData.forEach(gameRow => {
-    const playerList = gameRow["Liste des joueurs"];
-    if (playerList) {
-      splitAndTrim(playerList.toString()).forEach(player => {
-        allPlayers.add(player.trim());
-      });
-    }
+  gameData.forEach(game => {
+    game.PlayerStats.forEach(playerStat => {
+      allPlayers.add(playerStat.Username.trim());
+    });
   });
   
   return allPlayers;
@@ -147,11 +174,11 @@ function initializePlayerSeries(allPlayers: Set<string>): Record<string, PlayerS
 function processCampSeries(
   playerStats: PlayerSeriesState,
   player: string,
-  mainCamp: 'Villageois' | 'Loups' | 'Autres',
+  mainCamp: 'Villageois' | 'Loup' | 'Autres',
   gameIdNum: number,
   date: string
 ): void {
-  if (mainCamp === 'Villageois' || mainCamp === 'Loups') {
+  if (mainCamp === 'Villageois' || mainCamp === 'Loup') {
     // Check Villageois series
     if (mainCamp === 'Villageois') {
       if (playerStats.lastCamp === 'Villageois') {
@@ -186,8 +213,8 @@ function processCampSeries(
     }
     
     // Check Loups series
-    if (mainCamp === 'Loups') {
-      if (playerStats.lastCamp === 'Loups') {
+    if (mainCamp === 'Loup') {
+      if (playerStats.lastCamp === 'Loup') {
         playerStats.currentLoupsSeries++;
         playerStats.currentLoupsGameIds.push(gameIdNum);
       } else {
@@ -457,18 +484,17 @@ function calculatePlayerStatistics(
  * Compute player series statistics from raw data
  */
 export function computePlayerSeries(
-  gameData: RawGameData[],
-  roleData: RawRoleData[]
+  gameData: GameLogEntry[]
 ): PlayerSeriesData | null {
-  if (gameData.length === 0 || roleData.length === 0) {
+  if (gameData.length === 0) {
     return null;
   }
 
   // Build game-player-camp mapping from role data
-  const gamePlayerCampMap = buildGamePlayerCampMap(roleData);
+  // No longer needed - we get this directly from PlayerStats
 
-  // Sort games by game ID to ensure chronological order
-  const sortedGames = [...gameData].sort((a, b) => (a.Game || 0) - (b.Game || 0));
+  // Sort games by ID to ensure chronological order
+  const sortedGames = [...gameData].sort((a, b) => parseInt(a.Id) - parseInt(b.Id));
 
   // Get all unique players
   const allPlayers = getAllPlayers(sortedGames);
@@ -477,25 +503,24 @@ export function computePlayerSeries(
   const playerCampSeries = initializePlayerSeries(allPlayers);
 
   // Process each game chronologically
-  sortedGames.forEach(gameRow => {
-    const gameId = gameRow["Game"]?.toString();
-    const playerList = gameRow["Liste des joueurs"];
-    const winnerList = gameRow["Liste des gagnants"];
-    const date = gameRow["Date"]?.toString() || "";
+  sortedGames.forEach(game => {
+    const gameId = game.Id;
+    const date = new Date(game.StartDate).toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit', 
+      year: 'numeric'
+    });
 
-    if (!gameId || !playerList) return;
-
-    const players = splitAndTrim(playerList.toString());
     const gameIdNum = parseInt(gameId);
 
-    players.forEach(playerName => {
-      const player = playerName.trim();
+    game.PlayerStats.forEach(playerStat => {
+      const player = playerStat.Username.trim();
       if (!player) return;
 
       const playerStats = playerCampSeries[player];
-      const mainCamp = getPlayerMainCamp(gamePlayerCampMap, gameId, player);
-      const playerWon = didPlayerWin(player, winnerList?.toString());
-      const actualCamp = (gamePlayerCampMap[gameId] && gamePlayerCampMap[gameId][player]) || "Villageois";
+      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
+      const playerWon = playerStat.Victorious;
+      const actualCamp = mapRoleToDisplayCamp(playerStat.MainRoleInitial);
 
       // Process camp series
       processCampSeries(playerStats, player, mainCamp, gameIdNum, date);

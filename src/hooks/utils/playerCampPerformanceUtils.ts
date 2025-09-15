@@ -1,19 +1,36 @@
-import type { RawGameData, RawRoleData } from '../useCombinedRawData';
-import { 
-  splitAndTrim, 
-  didPlayerWin, 
-  didCampWin, 
-  buildGamePlayerCampMap,
-  getPlayerCamp 
-} from './dataUtils';
+import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, PlayerCampPerformance } from '../../types/api';
+
+/**
+ * Helper function to get player's camp from role name
+ */
+function getPlayerCampFromRole(roleName: string): string {
+  if (!roleName) return 'Villageois';
+  
+  // Keep 'Loup' and 'Traître' as separate camps for detailed analysis
+  if (roleName === 'Loup') {
+    return 'Loup';
+  }
+  
+  if (roleName === 'Traître') {
+    return 'Traître';
+  }
+  
+  // Special roles keep their role name as camp
+  if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 
+       'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(roleName)) {
+    return roleName;
+  }
+  
+  // Default to Villageois
+  return 'Villageois';
+}
 
 /**
  * Calculate overall camp statistics
  */
 function calculateCampStatistics(
-  gameData: RawGameData[],
-  gamePlayerCampMap: Record<string, Record<string, string>>
+  gameData: GameLogEntry[]
 ): Record<string, {
   totalGames: number;
   wins: number;
@@ -27,45 +44,44 @@ function calculateCampStatistics(
     players: Record<string, { games: number; wins: number; winRate: number }>;
   }> = {};
 
-  // First pass: count participations and wins by camp
+  // Process each game
   gameData.forEach(game => {
-    const gameId = game.Game.toString();
-    const playerList = game["Liste des joueurs"];
-    const winnerCamp = game["Camp victorieux"];
+    // Count participation for each camp in this game
+    const campsInGame = new Set<string>();
+    
+    game.PlayerStats.forEach(playerStat => {
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+      campsInGame.add(playerCamp);
+    });
 
-    if (gameId && playerList && winnerCamp) {
-      const players = splitAndTrim(playerList);
+    // Initialize and count participations
+    campsInGame.forEach(camp => {
+      if (!campStats[camp]) {
+        campStats[camp] = {
+          totalGames: 0,
+          wins: 0,
+          winRate: 0,
+          players: {}
+        };
+      }
+      campStats[camp].totalGames++;
+    });
 
-      // Count participation for each camp in this game
-      const campsInGame = new Set<string>();
-      players.forEach(playerName => {
-        const player = playerName.trim();
-        if (player) {
-          const playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, player);
-          campsInGame.add(playerCamp);
-        }
-      });
+    // Count wins for camps based on victorious players
+    const winningCamps = new Set<string>();
+    game.PlayerStats.forEach(playerStat => {
+      if (playerStat.Victorious) {
+        const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+        winningCamps.add(playerCamp);
+      }
+    });
 
-      // Initialize and count participations
-      campsInGame.forEach(camp => {
-        if (!campStats[camp]) {
-          campStats[camp] = {
-            totalGames: 0,
-            wins: 0,
-            winRate: 0,
-            players: {}
-          };
-        }
-        campStats[camp].totalGames++;
-      });
-
-      // Count wins for all camps (including special cases)
-      campsInGame.forEach(camp => {
-        if (didCampWin(camp, winnerCamp)) {
-          campStats[camp].wins++;
-        }
-      });
-    }
+    // Increment wins for winning camps
+    winningCamps.forEach(camp => {
+      if (campStats[camp]) {
+        campStats[camp].wins++;
+      }
+    });
   });
 
   return campStats;
@@ -75,8 +91,7 @@ function calculateCampStatistics(
  * Analyze player performance by camp
  */
 function analyzePlayerPerformance(
-  gameData: RawGameData[],
-  gamePlayerCampMap: Record<string, Record<string, string>>,
+  gameData: GameLogEntry[],
   campStats: Record<string, {
     totalGames: number;
     wins: number;
@@ -103,62 +118,53 @@ function analyzePlayerPerformance(
   }> = {};
 
   gameData.forEach(game => {
-    const gameId = game.Game.toString();
-    const playerList = game["Liste des joueurs"];
-    const winnerList = game["Liste des gagnants"];
+    game.PlayerStats.forEach(playerStat => {
+      const player = playerStat.Username.trim();
+      if (!player) return;
 
-    if (gameId && playerList && winnerList) {
-      const players = splitAndTrim(playerList);
+      // Determine player's camp using helper function
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
 
-      players.forEach(playerName => {
-        const player = playerName.trim();
-        if (player) {
-          // Determine player's camp using utility function
-          const playerCamp = getPlayerCamp(gamePlayerCampMap, gameId, player);
+      // Track player performance in this camp
+      if (!campStats[playerCamp].players[player]) {
+        campStats[playerCamp].players[player] = {
+          games: 0,
+          wins: 0,
+          winRate: 0
+        };
+      }
+      campStats[playerCamp].players[player].games++;
 
-          // Track player performance in this camp
-          if (!campStats[playerCamp].players[player]) {
-            campStats[playerCamp].players[player] = {
-              games: 0,
-              wins: 0,
-              winRate: 0
-            };
-          }
-          campStats[playerCamp].players[player].games++;
+      // Check if player won using Victorious boolean
+      if (playerStat.Victorious) {
+        campStats[playerCamp].players[player].wins++;
+      }
 
-          // Check if player won using utility function
-          const playerWon = didPlayerWin(player, winnerList);
-          if (playerWon) {
-            campStats[playerCamp].players[player].wins++;
-          }
+      // Initialize player statistics
+      if (!playerCampPerformance[player]) {
+        playerCampPerformance[player] = {
+          totalGames: 0,
+          camps: {}
+        };
+      }
 
-          // Initialize player statistics
-          if (!playerCampPerformance[player]) {
-            playerCampPerformance[player] = {
-              totalGames: 0,
-              camps: {}
-            };
-          }
+      // Add camp data for this player
+      if (!playerCampPerformance[player].camps[playerCamp]) {
+        playerCampPerformance[player].camps[playerCamp] = {
+          games: 0,
+          wins: 0,
+          winRate: 0,
+          performance: 0
+        };
+      }
 
-          // Add camp data for this player
-          if (!playerCampPerformance[player].camps[playerCamp]) {
-            playerCampPerformance[player].camps[playerCamp] = {
-              games: 0,
-              wins: 0,
-              winRate: 0,
-              performance: 0
-            };
-          }
+      playerCampPerformance[player].totalGames++;
+      playerCampPerformance[player].camps[playerCamp].games++;
 
-          playerCampPerformance[player].totalGames++;
-          playerCampPerformance[player].camps[playerCamp].games++;
-
-          if (playerWon) {
-            playerCampPerformance[player].camps[playerCamp].wins++;
-          }
-        }
-      });
-    }
+      if (playerStat.Victorious) {
+        playerCampPerformance[player].camps[playerCamp].wins++;
+      }
+    });
   });
 
   return playerCampPerformance;
@@ -304,24 +310,20 @@ function formatResults(
 }
 
 /**
- * Compute player camp performance statistics from raw game and role data
+ * Compute player camp performance statistics from game log data
  */
 export function computePlayerCampPerformance(
-  gameData: RawGameData[], 
-  roleData: RawRoleData[]
+  gameData: GameLogEntry[]
 ): PlayerCampPerformanceResponse | null {
-  if (gameData.length === 0 || roleData.length === 0) {
+  if (gameData.length === 0) {
     return null;
   }
 
-  // Create map of game ID to player camps from role data using utility function
-  const gamePlayerCampMap = buildGamePlayerCampMap(roleData);
-
   // Calculate overall camp statistics (both participations and wins)
-  const campStats = calculateCampStatistics(gameData, gamePlayerCampMap);
+  const campStats = calculateCampStatistics(gameData);
 
   // Analyze player performance by camp
-  const playerCampPerformance = analyzePlayerPerformance(gameData, gamePlayerCampMap, campStats);
+  const playerCampPerformance = analyzePlayerPerformance(gameData, campStats);
 
   // Calculate win rates for camps and players
   calculateWinRates(campStats);
