@@ -1,6 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { GameDurationAnalysisResponse, DurationDistribution, CampDurationData } from '../../types/api';
-import { calculateGameDuration } from '../../utils/gameUtils';
+import { calculateGameDuration,getWinnerCampFromGame } from '../../utils/gameUtils';
 
 /**
  * Format duration in seconds to a human-readable string
@@ -175,30 +175,7 @@ function processGameDuration(
   const nbWolves = game.PlayerStats.filter(p => p.MainRoleInitial === 'Loup').length;
   
   // Determine winner camp from PlayerStats
-  const winners = game.PlayerStats.filter(p => p.Victorious);
-  let winnerCamp = '';
-  
-  if (winners.length > 0) {
-    const winnerRoles = winners.map(w => w.MainRoleInitial);
-    
-    // Check for wolf/traitor victory
-    if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-      winnerCamp = 'Loup';
-    } 
-    // Check for pure villager victory (only villagers win)
-    else if (winnerRoles.every(role => role === 'Villageois')) {
-      winnerCamp = 'Villageois';
-    }
-    // Check for solo role victory
-    else {
-      const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître'].includes(role));
-      if (soloWinnerRoles.length > 0) {
-        winnerCamp = soloWinnerRoles[0]; // Use the first solo role as camp name
-      } else {
-        winnerCamp = 'Villageois'; // Fallback
-      }
-    }
-  }
+  let winnerCamp = getWinnerCampFromGame(game);
   
   // Calculate actual game duration in seconds
   const gameDuration = calculateGameDuration(game.StartDate, game.EndDate);

@@ -4,32 +4,8 @@
 
 import type { PlayerStat } from '../../types/api';
 import type { GameLogEntry } from '../useCombinedRawData';
-import { calculateGameDuration, formatDuration } from '../../utils/gameUtils';
+import { calculateGameDuration, formatDuration, getPlayerCampFromRole } from '../../utils/gameUtils';
 
-/**
- * Helper function to get player's camp from role name
- */
-function getPlayerCampFromRole(roleName: string): string {
-  if (!roleName) return 'Villageois';
-  
-  // Map role names to camps - keep original logic for comparison
-  if (roleName === 'Loup') {
-    return 'Loup';
-  }
-  
-  if (roleName === 'Traître') {
-    return 'Traître';
-  }
-  
-  // Special roles keep their role name as camp
-  if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 
-       'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(roleName)) {
-    return roleName;
-  }
-  
-  // Default to Villageois
-  return 'Villageois';
-}
 
 export interface PlayerComparisonMetrics {
   player: string;
