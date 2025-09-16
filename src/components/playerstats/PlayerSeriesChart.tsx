@@ -80,7 +80,7 @@ export function PlayerSeriesChart() {
             {data.isOngoing && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
           </div>
           <div>Série de victoires : {data.seriesLength} parties {data.isOngoing ? '(En cours)' : ''}</div>
-          <div>Du jeu #{data.startGame} au jeu #{data.endGame}</div>
+          <div>Du {data.startGame} au {data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
           <div>Camps joués : {formatCampCounts(data.campCounts)}</div>
           {data.isOngoing && (
@@ -120,7 +120,7 @@ export function PlayerSeriesChart() {
             {data.isOngoing && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
           </div>
           <div>Série de défaites : {data.seriesLength} parties {data.isOngoing ? '(En cours)' : ''}</div>
-          <div>Du jeu #{data.startGame} au jeu #{data.endGame}</div>
+          <div>Du {data.startGame} au {data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
           <div>Camps joués : {formatCampCounts(data.campCounts)}</div>
           {data.isOngoing && (
@@ -160,7 +160,7 @@ export function PlayerSeriesChart() {
             {data.isOngoing && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
           </div>
           <div>Série {data.camp} : {data.seriesLength} parties consécutives {data.isOngoing ? '(En cours)' : ''}</div>
-          <div>Du jeu #{data.startGame} au jeu #{data.endGame}</div>
+          <div>Du {data.startGame} au {data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
           {data.isOngoing && (
             <div style={{ 

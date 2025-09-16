@@ -35,36 +35,36 @@ export interface CampSeries {
   player: string;
   camp: 'Villageois' | 'Loups';
   seriesLength: number;
-  startGame: number;
-  endGame: number;
+  startGame: string;    // DisplayedId of first game in series
+  endGame: string;      // DisplayedId of last game in series
   startDate: string;
   endDate: string;
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
-  gameIds: number[]; // List of game IDs that comprise this series
+  gameIds: string[]; // List of DisplayedIds that comprise this series
 }
 
 export interface WinSeries {
   player: string;
   seriesLength: number;
-  startGame: number;
-  endGame: number;
+  startGame: string;    // DisplayedId of first game in series
+  endGame: string;      // DisplayedId of last game in series
   startDate: string;
   endDate: string;
   campCounts: Record<string, number>; // Count of times each camp was played
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
-  gameIds: number[]; // List of game IDs that comprise this series
+  gameIds: string[]; // List of DisplayedIds that comprise this series
 }
 
 export interface LossSeries {
   player: string;
   seriesLength: number;
-  startGame: number;
-  endGame: number;
+  startGame: string;    // DisplayedId of first game in series
+  endGame: string;      // DisplayedId of last game in series
   startDate: string;
   endDate: string;
   campCounts: Record<string, number>; // Count of times each camp was played
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
-  gameIds: number[]; // List of game IDs that comprise this series
+  gameIds: string[]; // List of DisplayedIds that comprise this series
 }
 
 export interface PlayerSeriesData {
@@ -108,15 +108,15 @@ interface PlayerSeriesState {
   currentLossCamps: string[];
   lastCamp: 'Villageois' | 'Loup' | 'Autres' | null;
   lastWon: boolean;
-  villageoisSeriesStart: { game: number; date: string } | null;
-  loupsSeriesStart: { game: number; date: string } | null;
-  winSeriesStart: { game: number; date: string } | null;
-  lossSeriesStart: { game: number; date: string } | null;
-  // Track game IDs for current series
-  currentVillageoisGameIds: number[];
-  currentLoupsGameIds: number[];
-  currentWinGameIds: number[];
-  currentLossGameIds: number[];
+  villageoisSeriesStart: { game: string; date: string } | null;    // Changed to string
+  loupsSeriesStart: { game: string; date: string } | null;          // Changed to string
+  winSeriesStart: { game: string; date: string } | null;            // Changed to string
+  lossSeriesStart: { game: string; date: string } | null;           // Changed to string
+  // Track game IDs for current series - now DisplayedIds
+  currentVillageoisGameIds: string[];
+  currentLoupsGameIds: string[];
+  currentWinGameIds: string[];
+  currentLossGameIds: string[];
 }
 
 /**
@@ -175,7 +175,7 @@ function processCampSeries(
   playerStats: PlayerSeriesState,
   player: string,
   mainCamp: 'Villageois' | 'Loup' | 'Autres',
-  gameIdNum: number,
+  gameDisplayedId: string,
   date: string
 ): void {
   if (mainCamp === 'Villageois' || mainCamp === 'Loup') {
@@ -183,11 +183,11 @@ function processCampSeries(
     if (mainCamp === 'Villageois') {
       if (playerStats.lastCamp === 'Villageois') {
         playerStats.currentVillageoisSeries++;
-        playerStats.currentVillageoisGameIds.push(gameIdNum);
+        playerStats.currentVillageoisGameIds.push(gameDisplayedId);
       } else {
         playerStats.currentVillageoisSeries = 1;
-        playerStats.villageoisSeriesStart = { game: gameIdNum, date };
-        playerStats.currentVillageoisGameIds = [gameIdNum];
+        playerStats.villageoisSeriesStart = { game: gameDisplayedId, date };
+        playerStats.currentVillageoisGameIds = [gameDisplayedId];
       }
       
       // Update longest if current is longer
@@ -197,8 +197,8 @@ function processCampSeries(
           player,
           camp: 'Villageois',
           seriesLength: playerStats.currentVillageoisSeries,
-          startGame: playerStats.villageoisSeriesStart?.game || gameIdNum,
-          endGame: gameIdNum,
+          startGame: playerStats.villageoisSeriesStart?.game || gameDisplayedId,
+          endGame: gameDisplayedId,
           startDate: playerStats.villageoisSeriesStart?.date || date,
           endDate: date,
           isOngoing: false, // Will be updated at the end
@@ -216,11 +216,11 @@ function processCampSeries(
     if (mainCamp === 'Loup') {
       if (playerStats.lastCamp === 'Loup') {
         playerStats.currentLoupsSeries++;
-        playerStats.currentLoupsGameIds.push(gameIdNum);
+        playerStats.currentLoupsGameIds.push(gameDisplayedId);
       } else {
         playerStats.currentLoupsSeries = 1;
-        playerStats.loupsSeriesStart = { game: gameIdNum, date };
-        playerStats.currentLoupsGameIds = [gameIdNum];
+        playerStats.loupsSeriesStart = { game: gameDisplayedId, date };
+        playerStats.currentLoupsGameIds = [gameDisplayedId];
       }
       
       // Update longest if current is longer
@@ -230,8 +230,8 @@ function processCampSeries(
           player,
           camp: 'Loups',
           seriesLength: playerStats.currentLoupsSeries,
-          startGame: playerStats.loupsSeriesStart?.game || gameIdNum,
-          endGame: gameIdNum,
+          startGame: playerStats.loupsSeriesStart?.game || gameDisplayedId,
+          endGame: gameDisplayedId,
           startDate: playerStats.loupsSeriesStart?.date || date,
           endDate: date,
           isOngoing: false, // Will be updated at the end
@@ -266,19 +266,19 @@ function processWinSeries(
   player: string,
   playerWon: boolean,
   actualCamp: string,
-  gameIdNum: number,
+  gameDisplayedId: string,
   date: string
 ): void {
   if (playerWon) {
     if (playerStats.lastWon) {
       playerStats.currentWinSeries++;
       playerStats.currentWinCamps.push(actualCamp);
-      playerStats.currentWinGameIds.push(gameIdNum);
+      playerStats.currentWinGameIds.push(gameDisplayedId);
     } else {
       playerStats.currentWinSeries = 1;
       playerStats.currentWinCamps = [actualCamp];
-      playerStats.winSeriesStart = { game: gameIdNum, date };
-      playerStats.currentWinGameIds = [gameIdNum];
+      playerStats.winSeriesStart = { game: gameDisplayedId, date };
+      playerStats.currentWinGameIds = [gameDisplayedId];
     }
     
     // Update longest win series if current is longer
@@ -294,8 +294,8 @@ function processWinSeries(
       playerStats.longestWinSeries = {
         player,
         seriesLength: playerStats.currentWinSeries,
-        startGame: playerStats.winSeriesStart?.game || gameIdNum,
-        endGame: gameIdNum,
+        startGame: playerStats.winSeriesStart?.game || gameDisplayedId,
+        endGame: gameDisplayedId,
         startDate: playerStats.winSeriesStart?.date || date,
         endDate: date,
         campCounts: campCounts,
@@ -323,7 +323,7 @@ function processLossSeries(
   player: string,
   playerWon: boolean,
   actualCamp: string,
-  gameIdNum: number,
+  gameDisplayedId: string,
   date: string
 ): void {
   if (!playerWon) {
@@ -332,13 +332,13 @@ function processLossSeries(
       // Continue existing loss series
       playerStats.currentLossSeries++;
       playerStats.currentLossCamps.push(actualCamp);
-      playerStats.currentLossGameIds.push(gameIdNum);
+      playerStats.currentLossGameIds.push(gameDisplayedId);
     } else {
       // Start new loss series
       playerStats.currentLossSeries = 1;
       playerStats.currentLossCamps = [actualCamp];
-      playerStats.lossSeriesStart = { game: gameIdNum, date };
-      playerStats.currentLossGameIds = [gameIdNum];
+      playerStats.lossSeriesStart = { game: gameDisplayedId, date };
+      playerStats.currentLossGameIds = [gameDisplayedId];
     }
     
     // Update longest loss series if current is longer
@@ -354,8 +354,8 @@ function processLossSeries(
       playerStats.longestLossSeries = {
         player,
         seriesLength: playerStats.currentLossSeries,
-        startGame: playerStats.lossSeriesStart?.game || gameIdNum,
-        endGame: gameIdNum,
+        startGame: playerStats.lossSeriesStart?.game || gameDisplayedId,
+        endGame: gameDisplayedId,
         startDate: playerStats.lossSeriesStart?.date || date,
         endDate: date,
         campCounts: campCounts,
@@ -504,14 +504,12 @@ export function computePlayerSeries(
 
   // Process each game chronologically
   sortedGames.forEach(game => {
-    const gameId = game.Id;
+    const gameDisplayedId = game.DisplayedId;  // Use DisplayedId instead of numeric ID
     const date = new Date(game.StartDate).toLocaleDateString('fr-FR', {
       day: '2-digit',
       month: '2-digit', 
       year: 'numeric'
     });
-
-    const gameIdNum = parseInt(gameId);
 
     game.PlayerStats.forEach(playerStat => {
       const player = playerStat.Username.trim();
@@ -522,14 +520,14 @@ export function computePlayerSeries(
       const playerWon = playerStat.Victorious;
       const actualCamp = mapRoleToDisplayCamp(playerStat.MainRoleInitial);
 
-      // Process camp series
-      processCampSeries(playerStats, player, mainCamp, gameIdNum, date);
+      // Process camp series - now using DisplayedId
+      processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date);
 
-      // Process win series
-      processWinSeries(playerStats, player, playerWon, actualCamp, gameIdNum, date);
+      // Process win series - now using DisplayedId
+      processWinSeries(playerStats, player, playerWon, actualCamp, gameDisplayedId, date);
       
-      // Process loss series
-      processLossSeries(playerStats, player, playerWon, actualCamp, gameIdNum, date);
+      // Process loss series - now using DisplayedId
+      processLossSeries(playerStats, player, playerWon, actualCamp, gameDisplayedId, date);
     });
   });
 
