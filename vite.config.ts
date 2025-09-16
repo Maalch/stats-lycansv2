@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: 'docs',
     emptyOutDir: true,
   },
-  base: '/stats-lycansv2/',
+  base: '/', // Changed from '/stats-lycansv2/' for custom domain
   publicDir: 'public',
   // Ensure data directory is copied to build output
   assetsInclude: ['**/*.json'],
