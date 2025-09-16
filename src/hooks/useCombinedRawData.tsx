@@ -3,17 +3,29 @@ import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
 
 // New GameLog interfaces
+export interface Vote {
+  Target: string;                 // Player name targeted by the vote or "Passé" for abstention
+  Date: string;                   // ISO date string when the vote was cast
+}
+
 export interface PlayerStat {
   Username: string;
+  Color?: string;                 // Player color assigned in game
   MainRoleInitial: string;        // Original role at game start
   MainRoleFinal: string | null;    // Final role if changed (e.g., by role swap)
   Power: string | null;           // Special power (linked to the role), if any
   SecondaryRole: string | null;     // Secondary role if any
   DeathDateIrl: string | null;    // Real-life date of death in game
   DeathTiming: string | null;     // Timing of death (e.g., "Nuit 2 --> N2", "Jour 3 --> J3")
-  DeathPosition: number | null;   // Game coordinates  of death (x, y ,z), if applicable
+  DeathPosition: {                // Game coordinates of death
+    x: number;
+    y: number;
+    z: number;
+  } | null;
+  DeathType: string | null;       // Type of death (e.g., "Tué par un loup")
   KillerName: string | null;      // Name of the killer if applicable
   Victorious: boolean;            // Whether the player was on the winning side
+  Votes: Vote[];                  // Array of votes cast by this player during meetings
 }
 
 export interface LegacyData {
