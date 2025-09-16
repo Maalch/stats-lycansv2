@@ -22,14 +22,21 @@ async function ensureDataDirectory() {
 }
 
 async function fetchLegacyEndpointData(endpoint) {
-  const apiBase = process.env.LYCANS_API_BASE;
+  let apiBase = process.env.LYCANS_API_BASE;
   if (!apiBase) {
-    console.warn('LYCANS_API_BASE environment variable not found - skipping legacy data fetch');
+    console.warn('[legacy] LYCANS_API_BASE environment variable not found - skipping legacy data fetch');
     return null;
   }
 
+  // Sanitize accidental trailing commas / spaces from workflow YAML or secrets UI
+  const originalApiBase = apiBase;
+  apiBase = apiBase.trim().replace(/[;,]+$/,'');
+  if (apiBase !== originalApiBase) {
+    console.log(`[legacy] Sanitized LYCANS_API_BASE from "${originalApiBase}" to "${apiBase}"`);
+  }
+
   const url = `${apiBase}?action=${endpoint}`;
-  console.log(`Fetching legacy ${endpoint}...`);
+  console.log(`Fetching legacy ${endpoint} from ${apiBase}...`);
   
   try {
     const response = await fetch(url);
@@ -42,6 +49,12 @@ async function fetchLegacyEndpointData(endpoint) {
     return data;
   } catch (error) {
     console.error(`Failed to fetch legacy ${endpoint}:`, error.message);
+    if (error.message.includes('ENOTFOUND')) {
+      console.error('[legacy] DNS resolution failed - check LYCANS_API_BASE value.');
+    }
+    if (/HTTP 40[34]/.test(error.message)) {
+      console.error('[legacy] Received 4xx error - endpoint may have changed or requires auth.');
+    }
     return null;
   }
 }

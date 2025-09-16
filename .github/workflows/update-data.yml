@@ -41,13 +41,23 @@ jobs:
 
       - name: Fetch and process data
         env:
-          LYCANS_API_BASE: ${{ secrets.LYCANS_API_BASE }},
+          # Legacy Google Sheets API base (no trailing comma!)
+          LYCANS_API_BASE: ${{ secrets.LYCANS_API_BASE }}
           STATS_LIST_URL: ${{ secrets.STATS_LIST_URL }}
         run: |
           cd scripts/data-sync
           echo "🚀 Starting multi-source data fetch..."
           echo "📡 Legacy API: ${LYCANS_API_BASE:0:10}..." # Show partial URL for debugging
           echo "📡 AWS S3: ${STATS_LIST_URL:0:10}..." # Show partial URL for debugging
+          # Quick sanity check: legacy endpoint reachability (does not fail pipeline, just info)
+          if [ -n "$LYCANS_API_BASE" ]; then
+            LEGACY_PING_URL="${LYCANS_API_BASE}?action=gameLog"
+            echo "🔍 Probing legacy endpoint (HEAD): $LEGACY_PING_URL"
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$LEGACY_PING_URL" || echo "000")
+            echo "🔍 Legacy endpoint HTTP status: $HTTP_STATUS"
+          else
+            echo "⚠️  LYCANS_API_BASE not set (legacy data will be skipped)"
+          fi
           node fetch-data.js
           echo "✅ Data fetch completed"
           
