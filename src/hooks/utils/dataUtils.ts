@@ -58,70 +58,13 @@ export function formatLycanDate(date: any): string {
   return date?.toString() || '';
 }
 
-// Helper function to build game-player-camp mapping from role data
-export function buildGamePlayerCampMap(rawRoleData: any[]): Record<string, Record<string, string>> {
-  const gamePlayerCampMap: Record<string, Record<string, string>> = {};
-  
-  rawRoleData.forEach(roleRow => {
-    const gameId = roleRow["Game"]?.toString();
-    if (!gameId) return;
-
-    if (!gamePlayerCampMap[gameId]) {
-      gamePlayerCampMap[gameId] = {};
-    }
-
-    // Helper function to add a single role player
-    const addRolePlayer = (player: string | null | undefined, roleName: string) => {
-      if (player && player.toString().trim() !== "") {
-        const playerName = player.toString().trim();
-        if (!gamePlayerCampMap[gameId][playerName]) {
-          gamePlayerCampMap[gameId][playerName] = roleName;
-        }
-      }
-    };
-
-    // Helper function to add multiple players from a comma-separated string
-    const addMultiplePlayers = (players: string | null | undefined, roleName: string) => {
-      if (players) {
-        const playerArray = splitAndTrim(players.toString());
-        playerArray.forEach(player => {
-          if (!gamePlayerCampMap[gameId][player]) {
-            gamePlayerCampMap[gameId][player] = roleName;
-          }
-        });
-      }
-    };
-
-    // Add wolves (could be multiple)
-    addMultiplePlayers(roleRow["Loups"], "Loups");
-
-    // Add all other single roles
-    addRolePlayer(roleRow["Traître"], "Traître");
-    addRolePlayer(roleRow["Idiot du Village"], "Idiot du Village");
-    addRolePlayer(roleRow["Cannibale"], "Cannibale");
-    addRolePlayer(roleRow["Espion"], "Espion");
-    addRolePlayer(roleRow["La Bête"], "La Bête");
-    addRolePlayer(roleRow["Chasseur de primes"], "Chasseur de primes");
-    addRolePlayer(roleRow["Vaudou"], "Vaudou");
-
-    // Handle agents (could be multiple)
-    addMultiplePlayers(roleRow["Agent"], "Agent");
-
-    // Handle scientists (could be multiple)
-    addMultiplePlayers(roleRow["Scientifique"], "Scientifique");
-
-    // Handle lovers (could be multiple)
-    addMultiplePlayers(roleRow["Amoureux"], "Amoureux");
-  });
-
-  return gamePlayerCampMap;
-}
-
 // Helper to determine if a camp won based on camp name and winner camp
 export function didCampWin(camp: string, winnerCamp: string): boolean {
   if (camp === winnerCamp) return true;
   // Special case: Traitor wins if Wolves win
   if (camp === "Traître" && winnerCamp === "Loup") return true;
+  if ((camp === "Amoureux Villageois" || camp === "Amoureux Loup") && winnerCamp === "Amoureux") return true;
+  if ((camp === "Chasseur" || camp === "Alchimiste") && winnerCamp === "Villageois") return true;
   return false;
 }
 
@@ -135,7 +78,7 @@ export function getPlayerMainCamp(
   
   if (camp === 'Loup' || camp === 'Traître') {
     return 'Loup';
-  } else if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(camp)) {
+  } else if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux', 'Amoureux Villageois', 'Amoureux'].includes(camp)) {
     return 'Autres';
   } else {
     return 'Villageois';

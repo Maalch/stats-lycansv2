@@ -3,9 +3,8 @@
  */
 
 import type { GameLogEntry } from '../useCombinedRawData';
-import { 
-  formatLycanDate
-} from './dataUtils';
+import { formatLycanDate} from './dataUtils';
+import { getWinnerCampFromGame, getPlayerCampFromRole } from '../../utils/gameUtils';
 
 export interface PlayerGame {
   gameId: string;
@@ -31,16 +30,6 @@ export interface PlayerGameHistoryData {
   campStats: Record<string, CampStats>;
 }
 
-/**
- * Helper function to get the winning camp from a game
- */
-function getWinningCamp(game: GameLogEntry): string {
-  // Find any victorious player and determine their camp from MainRoleInitial
-  const victoriousPlayer = game.PlayerStats.find(player => player.Victorious);
-  if (!victoriousPlayer) return 'Unknown';
-  
-  return victoriousPlayer.MainRoleInitial;
-}
 
 /**
  * Compute player game history from GameLogEntry data
@@ -64,10 +53,10 @@ export function computePlayerGameHistory(
 
     if (playerStat) {
       // Get player's camp from their MainRoleInitial (which contains the full role name)
-      const playerCamp = playerStat.MainRoleInitial;
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
       
       // Get the winning camp
-      const winnerCamp = getWinningCamp(game);
+      const winnerCamp = getWinnerCampFromGame(game);
       
       // Player won if they are marked as Victorious
       const playerWon = playerStat.Victorious;

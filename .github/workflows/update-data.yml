@@ -44,8 +44,9 @@ jobs:
           LYCANS_API_BASE: ${{ secrets.LYCANS_API_BASE }}
         run: |
           cd scripts/data-sync
-          echo "🚀 Starting data fetch..."
-          echo "📡 API Base: ${LYCANS_API_BASE:0:50}..." # Show partial URL for debugging
+          echo "🚀 Starting multi-source data fetch..."
+          echo "📡 Legacy API: ${LYCANS_API_BASE:0:50}..." # Show partial URL for debugging
+          echo "📡 AWS S3: https://nales-lsd.s3.eu-west-1.amazonaws.com/Lycans/Stats/"
           node fetch-data.js
           echo "✅ Data fetch completed"
           
@@ -90,7 +91,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ docs/data/
           if ! git diff --cached --quiet; then
-            git commit -m "chore: update stats data $(date '+%Y-%m-%d %H:%M:%S')"
+            git commit -m "chore: update stats data from Legacy + AWS sources $(date '+%Y-%m-%d %H:%M:%S')"
             git push
             echo "✅ Data updated and pushed successfully"
           else
@@ -101,7 +102,8 @@ jobs:
         if: always()
         run: |
           echo "🔍 Workflow Summary:"
-          echo "- Data sync completed"
+          echo "- Data sync completed from Legacy + AWS sources"
           echo "- Files updated: $(git diff --name-only HEAD~1 2>/dev/null | grep '^data/' | wc -l || echo '0')"
           echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "- Sources: Legacy Google Sheets API + AWS S3 Lycans Stats bucket"
           ls -la data/ || echo "No data directory found"
