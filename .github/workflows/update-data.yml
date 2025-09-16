@@ -41,12 +41,13 @@ jobs:
 
       - name: Fetch and process data
         env:
-          LYCANS_API_BASE: ${{ secrets.LYCANS_API_BASE }}
+          LYCANS_API_BASE: ${{ secrets.LYCANS_API_BASE }},
+          STATS_LIST_URL: ${{ secrets.STATS_LIST_URL }}
         run: |
           cd scripts/data-sync
           echo "🚀 Starting multi-source data fetch..."
-          echo "📡 Legacy API: ${LYCANS_API_BASE:0:50}..." # Show partial URL for debugging
-          echo "📡 AWS S3: https://nales-lsd.s3.eu-west-1.amazonaws.com/Lycans/Stats/"
+          echo "📡 Legacy API: ${LYCANS_API_BASE:0:10}..." # Show partial URL for debugging
+          echo "📡 AWS S3: ${STATS_LIST_URL:0:10}..." # Show partial URL for debugging
           node fetch-data.js
           echo "✅ Data fetch completed"
           

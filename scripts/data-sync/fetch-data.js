@@ -3,7 +3,6 @@ import fs from 'fs/promises';
 import path from 'path';
 
 // Data sources
-const STATS_LIST_URL = 'https://nales-lsd.s3.eu-west-1.amazonaws.com/Lycans/Stats/StatsList.json';
 const LEGACY_DATA_ENDPOINTS = [
   'gameLog',
   'rawBRData'
@@ -51,7 +50,7 @@ async function fetchStatsListUrls() {
   console.log('Fetching stats list from AWS S3...');
   
   try {
-    const response = await fetch(STATS_LIST_URL);
+    const response = await fetch(process.env.STATS_LIST_URL);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
@@ -160,7 +159,7 @@ async function createDataIndex(legacyAvailable, awsFilesCount, totalGames) {
 async function main() {
   console.log('🚀 Starting Lycans data sync from multiple sources...');
   console.log(`📁 Data directory: ${ABSOLUTE_DATA_DIR}`);
-  
+
   try {
     await ensureDataDirectory();
 
