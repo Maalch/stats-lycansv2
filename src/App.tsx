@@ -302,18 +302,6 @@ function MainApp() {
           </div>
         );
       }
-      {/* Uncomment when Ponce stats are implemented}
-      case 'ponce': {
-        const SelectedPonceComponent = PONCE_STATS_MENU[0].component;
-        return (
-          <div className="lycans-dashboard-content">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <SelectedPonceComponent />
-            </Suspense>
-          </div>
-        );
-      }
-      */}
       case 'settings': {
         return (
           <div className="lycans-dashboard-content">
