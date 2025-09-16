@@ -34,8 +34,8 @@ function initializeDurationStats(): {
   averageDuration: string;
   maxDuration: number;
   minDuration: number;
-  maxDurationGameId: number | null;
-  minDurationGameId: number | null;
+  maxDurationGameId: string | null;
+  minDurationGameId: string | null;
   durationDistribution: Record<number, number>;
   durationsByWinnerCamp: Record<string, { totalDuration: number; count: number; average: string }>;
   durationsByPlayerCount: Record<string, { totalDuration: number; count: number; average: string }>;
@@ -59,16 +59,16 @@ function initializeDurationStats(): {
  */
 function updateMinMaxDuration(
   duration: number,
-  gameId: number,
+  gameDisplayedId: string,
   durationStats: ReturnType<typeof initializeDurationStats>
 ): void {
   if (duration > durationStats.maxDuration) {
     durationStats.maxDuration = duration;
-    durationStats.maxDurationGameId = gameId;
+    durationStats.maxDurationGameId = gameDisplayedId;
   }
   if (duration < durationStats.minDuration) {
     durationStats.minDuration = duration;
-    durationStats.minDurationGameId = gameId;
+    durationStats.minDurationGameId = gameDisplayedId;
   }
 }
 
@@ -167,8 +167,7 @@ function updateDurationsByWolfRatio(
 function processGameDuration(
   game: GameLogEntry,
   durationStats: ReturnType<typeof initializeDurationStats>,
-  totals: { totalDuration: number; gamesWithDuration: number },
-  gameIndex: number
+  totals: { totalDuration: number; gamesWithDuration: number }
 ): void {
   // Extract data from GameLogEntry structure
   const nbPlayers = game.PlayerStats.length;
@@ -184,8 +183,8 @@ function processGameDuration(
     totals.gamesWithDuration++;
     totals.totalDuration += gameDuration;
 
-    // Update min/max
-    updateMinMaxDuration(gameDuration, gameIndex + 1, durationStats);
+    // Update min/max using DisplayedId
+    updateMinMaxDuration(gameDuration, game.DisplayedId, durationStats);
 
     // Update duration distribution
     updateDurationDistribution(gameDuration, durationStats.durationDistribution);
@@ -270,8 +269,8 @@ export function computeGameDurationAnalysis(rawGameData: GameLogEntry[]): GameDu
   const totals = { totalDuration: 0, gamesWithDuration: 0 };
 
   // Process each game
-  rawGameData.forEach((game, index) => {
-    processGameDuration(game, durationStats, totals, index);
+  rawGameData.forEach((game) => {
+    processGameDuration(game, durationStats, totals);
   });
 
   // Calculate averages

@@ -174,8 +174,8 @@ export interface GameDurationAnalysisResponse {
   averageDuration: string; // Formatted average duration
   maxDuration: number; // Max duration in seconds
   minDuration: number; // Min duration in seconds
-  maxDurationGameId: number | null; // Game ID with maximum duration
-  minDurationGameId: number | null; // Game ID with minimum duration
+  maxDurationGameId: string | null; // DisplayedId with maximum duration (e.g., "Ponce #123")
+  minDurationGameId: string | null; // DisplayedId with minimum duration (e.g., "Ponce #124")
   durationDistribution: DurationDistribution[];
   durationsByWinnerCamp: Record<string, CampDurationData>;
   durationsByPlayerCount: Record<string, CampDurationData>;

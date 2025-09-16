@@ -13,7 +13,7 @@ export function GameDetailsChart() {
   
   const [sortField, setSortField] = useState<SortField>('date');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
-  const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
+  const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
   // When the user explicitly changes page, some upstream hooks may re-create
@@ -57,6 +57,16 @@ export function GameDetailsChart() {
   const sortedGames = useMemo(() => {
     if (!data) return [];
     
+    // Helper function to parse DisplayedId format "Host #123"
+    const parseDisplayedId = (displayedId: string) => {
+      const match = displayedId.match(/^(.+) #(\d+)$/);
+      if (match) {
+        return { host: match[1], gameNumber: parseInt(match[2], 10) };
+      }
+      // Fallback for any non-standard format
+      return { host: displayedId, gameNumber: 0 };
+    };
+    
     return [...data].sort((a, b) => {
       let aValue: any, bValue: any;
       
@@ -66,8 +76,17 @@ export function GameDetailsChart() {
           bValue = new Date(b.date.split('/').reverse().join('-')).getTime();
           break;
         case 'gameId':
-          aValue = a.gameId;
-          bValue = b.gameId;
+          const aParsed = parseDisplayedId(a.gameId);
+          const bParsed = parseDisplayedId(b.gameId);
+          
+          // First sort by host name, then by game number
+          if (aParsed.host !== bParsed.host) {
+            aValue = aParsed.host;
+            bValue = bParsed.host;
+          } else {
+            aValue = aParsed.gameNumber;
+            bValue = bParsed.gameNumber;
+          }
           break;
         case 'playerCount':
           aValue = a.playerCount;
@@ -100,10 +119,17 @@ export function GameDetailsChart() {
       // If primary values are equal, sort by gameId as secondary sort
       if (primaryComparison === 0) {
         // Always sort gameId in descending order for secondary sort (most recent games first)
-        if (sortDirection === 'asc') {
-          return a.gameId - b.gameId;
+        const aGameParsed = parseDisplayedId(a.gameId);
+        const bGameParsed = parseDisplayedId(b.gameId);
+        
+        if (aGameParsed.host !== bGameParsed.host) {
+          return sortDirection === 'asc' ? 
+            aGameParsed.host.localeCompare(bGameParsed.host) : 
+            bGameParsed.host.localeCompare(aGameParsed.host);
         } else {
-          return b.gameId - a.gameId;
+          return sortDirection === 'asc' ? 
+            aGameParsed.gameNumber - bGameParsed.gameNumber : 
+            bGameParsed.gameNumber - aGameParsed.gameNumber;
         }
       }
       
@@ -155,7 +181,7 @@ export function GameDetailsChart() {
   setSelectedGameId(null); // Close any expanded game details when changing page size
   };
 
-  const handleToggleGameDetails = (gameId: number) => {
+  const handleToggleGameDetails = (gameId: string) => {
     // When expanding/collapsing game details, this is a user action that
     // should not be overridden by data-change resets. Set the ignore flag.
     ignoreDataResetRef.current = true;
@@ -221,7 +247,7 @@ export function GameDetailsChart() {
     }
     if (navigationFilters.selectedHarvestRange) filters.push(`Récolte: ${navigationFilters.selectedHarvestRange}`);
     if (navigationFilters.selectedGameDuration) filters.push(`Durée: ${navigationFilters.selectedGameDuration} jour${navigationFilters.selectedGameDuration > 1 ? 's' : ''}`);
-    if (navigationFilters.selectedGame) filters.push(`Partie #${navigationFilters.selectedGame}`);
+    if (navigationFilters.selectedGame) filters.push(`Partie ${navigationFilters.selectedGame}`);
     if (navigationFilters.selectedDate) {
       // Check if it's a month filter (MM/YYYY) or exact date (DD/MM/YYYY)
       if (navigationFilters.selectedDate.includes('/') && navigationFilters.selectedDate.split('/').length === 2) {
@@ -376,7 +402,7 @@ export function GameDetailsChart() {
             {paginatedGames.map(game => (
               <>
                 <tr key={game.gameId} className={selectedGameId === game.gameId ? 'selected' : ''}>
-                  <td>#{game.gameId}</td>
+                  <td>{game.gameId}</td>
                   <td>{game.date}</td>
                   <td>{game.playerCount}</td>
                   <td>{formatDuration(game.gameDuration)}</td>

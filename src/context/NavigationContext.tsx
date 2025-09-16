@@ -22,13 +22,13 @@ export interface CampFilter {
 export interface NavigationFilters {
   selectedPlayer?: string;
   selectedPlayerWinMode?: 'wins-only' | 'all-assignments'; // How to filter by selected player: only wins or all assignments
-  selectedGame?: number;
+  selectedGame?: string; // Changed from number to string to support DisplayedId format (e.g., "Ponce #123")
   selectedVictoryType?: string;
   selectedDate?: string; // For filtering by specific date (DD/MM/YYYY) or period (MM/YYYY)
   fromComponent?: string; // Track which component triggered the navigation
   selectedHarvestRange?: string; // For filtering by harvest percentage range (e.g., "0-25%", "26-50%", etc.)
   selectedGameDuration?: number; // For filtering by specific number of days (e.g., 3, 4, 5)
-  selectedGameIds?: number[]; // For filtering by a specific list of game IDs (e.g., from player series)
+  selectedGameIds?: string[]; // Changed from number[] to string[] to support DisplayedId format
   
   // Grouped filters - all properties in each group must be provided together
   campFilter?: CampFilter;

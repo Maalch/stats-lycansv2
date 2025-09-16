@@ -25,6 +25,7 @@ export interface LegacyData {
 
 export interface GameLogEntry {
   Id: string;
+  DisplayedId: string;    // User-friendly game ID (e.g., "Ponce #123")
   StartDate: string;
   EndDate: string;
   MapName: string;
@@ -84,8 +85,6 @@ interface CombinedFilteredData {
   error: string | null;
 }
 
-// Transformation functions removed - using GameLogEntry directly
-
 /**
  * Centralized hook to fetch all raw data with a single loading state
  * Now loads from gameLog.json directly without legacy transformations
@@ -121,9 +120,17 @@ function useCombinedRawData(): {
           brResponse.json() as Promise<RawBRResponse>
         ]);
 
+        // Generate DisplayedId values for all games
+        const displayedIdMap = generateDisplayedIds(gameLogResult.GameStats);
+
+        // Add DisplayedId to each game
+        const gameDataWithDisplayedIds = gameLogResult.GameStats.map(game => ({
+          ...game,
+          DisplayedId: displayedIdMap.get(game.Id) || game.Id // Fallback to original ID
+        }));
 
         setData({
-          gameData: gameLogResult.GameStats,
+          gameData: gameDataWithDisplayedIds,
           brPartiesData: brResult.BRParties?.data || [],
           brRefPartiesData: brResult.BRRefParties?.data || []
         });
@@ -460,4 +467,60 @@ export function useFilteredGameLogData(): {
   }, [rawGameLogData, settings]);
 
   return { data: filteredData, isLoading, error };
+}
+
+
+/**
+ * Extract host name and timestamp from game ID
+ */
+function parseGameId(gameId: string): { host: string; timestamp: string } {
+  const parts = gameId.split('-');
+  const host = parts[0];
+  
+  if (parts.length === 3) {
+    // Legacy format: "Ponce-20231013000000-1"
+    return { host, timestamp: parts[1] };
+  } else if (parts.length === 2) {
+    // New format: "Nales-20250912210715"
+    return { host, timestamp: parts[1] };
+  }
+  
+  // Fallback
+  return { host: gameId, timestamp: '0' };
+}
+
+/**
+ * Generate DisplayedId values for all games based on chronological order per host
+ */
+function generateDisplayedIds(games: GameLogEntry[]): Map<string, string> {
+  const displayedIdMap = new Map<string, string>();
+  
+  // Group games by host
+  const gamesByHost = new Map<string, GameLogEntry[]>();
+  
+  games.forEach(game => {
+    const { host } = parseGameId(game.Id);
+    if (!gamesByHost.has(host)) {
+      gamesByHost.set(host, []);
+    }
+    gamesByHost.get(host)!.push(game);
+  });
+  
+  // For each host, sort games chronologically and assign numbers
+  gamesByHost.forEach((hostGames, host) => {
+    // Sort by timestamp (extracted from ID)
+    const sortedGames = hostGames.sort((a, b) => {
+      const timestampA = parseGameId(a.Id).timestamp;
+      const timestampB = parseGameId(b.Id).timestamp;
+      return timestampA.localeCompare(timestampB);
+    });
+    
+    // Assign sequential numbers
+    sortedGames.forEach((game, index) => {
+      const gameNumber = index + 1;
+      displayedIdMap.set(game.Id, `${host} #${gameNumber}`);
+    });
+  });
+  
+  return displayedIdMap;
 }

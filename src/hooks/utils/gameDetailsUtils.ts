@@ -264,16 +264,14 @@ export function filterByPlayerFromGameLog(
  * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
- * @param selectedGame - The game ID to filter by (1-based index)
+ * @param selectedGame - The DisplayedId to filter by (e.g., "Ponce #123")
  * @returns Filtered array of GameLogEntry
  * 
  * Note: This is the new version that works with GameLogEntry.
  * Use this instead of filterByGame for new features.
  */
-export function filterByGameFromGameLog(games: GameLogEntry[], selectedGame: number): GameLogEntry[] {
-  // GameLogEntry uses 0-based index, but selectedGame is 1-based
-  const gameIndex = selectedGame - 1;
-  return games.filter((_, index) => index === gameIndex);
+export function filterByGameFromGameLog(games: GameLogEntry[], selectedGame: string): GameLogEntry[] {
+  return games.filter(game => game.DisplayedId === selectedGame);
 }
 
 /**
@@ -281,16 +279,14 @@ export function filterByGameFromGameLog(games: GameLogEntry[], selectedGame: num
  * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
- * @param selectedGameIds - Array of game IDs to filter by (1-based indices)
+ * @param selectedGameIds - Array of DisplayedIds to filter by (e.g., ["Ponce #123", "Ponce #124"])
  * @returns Filtered array of GameLogEntry
  * 
  * Note: This is the new version that works with GameLogEntry.
  * Use this instead of filterByGameIds for new features.
  */
-export function filterByGameIdsFromGameLog(games: GameLogEntry[], selectedGameIds: number[]): GameLogEntry[] {
-  // Convert 1-based selectedGameIds to 0-based indices
-  const gameIndices = selectedGameIds.map(id => id - 1);
-  return games.filter((_, index) => gameIndices.includes(index));
+export function filterByGameIdsFromGameLog(games: GameLogEntry[], selectedGameIds: string[]): GameLogEntry[] {
+  return games.filter(game => selectedGameIds.includes(game.DisplayedId));
 }
 
 /**
@@ -976,7 +972,7 @@ export function computeGameDetailsFromGameLog(
   // Apply navigation filters
   const filteredGames = applyNavigationFiltersFromGameLog(gameData, filters);
 
-  return filteredGames.map((game, index) => {
+  return filteredGames.map((game) => {
     // Parse roles
     const roles = parseRolesFromGameLog(game);
 
@@ -1043,7 +1039,7 @@ export function computeGameDetailsFromGameLog(
     ).length : null;
 
     return {
-      gameId: index + 1, // Use 1-based index for gameId
+      gameId: game.DisplayedId, 
       date: formattedDate,
       isModded: game.LegacyData?.Modded || false,
       playerCount,
