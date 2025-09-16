@@ -1058,7 +1058,7 @@ export function computeGameDetailsFromGameLog(
       totalHarvest: game.HarvestGoal,
       harvestPercentage,
       playersList: game.PlayerStats.map(p => p.Username).join(', '),
-      versions: game.LegacyData?.Version || null,
+      versions: game.Version || null,
       map: game.MapName,
       youtubeEmbedUrl: createYouTubeEmbedUrl(game.LegacyData?.VODLink || null, game.LegacyData?.VODLinkEnd || null),
       gameDuration: calculateGameDuration(game.StartDate, game.EndDate),

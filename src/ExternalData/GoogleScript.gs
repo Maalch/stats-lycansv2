@@ -726,11 +726,11 @@ function getRawGameDataInNewFormat() {
         HarvestDone: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.HARVEST)],
         EndTiming: "U" + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)],
         VictoryTypeLegacy: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
+        Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
         LegacyData: {
           VODLink: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODSTART)],
           VODLinkEnd: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODEND)],
-          Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES2.COLS.MODDED)],
-          Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)]
+          Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES2.COLS.MODDED)]
         },
         PlayerStats: []
       };

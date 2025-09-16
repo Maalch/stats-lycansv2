@@ -32,7 +32,6 @@ export interface LegacyData {
   VODLink: string | null;
   VODLinkEnd: string | null;
   Modded: boolean;
-  Version: string;
 }
 
 export interface GameLogEntry {
@@ -44,6 +43,7 @@ export interface GameLogEntry {
   HarvestGoal: number;           // Target harvest for the game
   HarvestDone: number;            // Actual harvest achieved at the end of the game
   EndTiming: string | null;       // Timing of game end (e.g., "Nuit 5 --> N5", "Jour 6 --> J6")
+  Version: string;               // Mod version used for the game
   LegacyData: LegacyData | null;
   PlayerStats: PlayerStat[];
 }
@@ -252,10 +252,11 @@ function applyGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[
 
     // Apply game type filter
     if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
+      const isModded = game.LegacyData?.Modded ?? true; // Default to true if no LegacyData
       if (settings.gameFilter === 'modded') {
-        if (!game.LegacyData?.Modded) return false;
+        if (!isModded) return false;
       } else if (settings.gameFilter === 'non-modded') {
-        if (game.LegacyData?.Modded) return false;
+        if (isModded) return false;
       }
     } 
     // Apply date range filter
@@ -436,10 +437,11 @@ export function useFilteredGameLogData(): {
     return rawGameLogData.GameStats.filter(game => {
       // Apply game type filter
       if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
+        const isModded = game.LegacyData?.Modded ?? true; // Default to true if no LegacyData
         if (settings.gameFilter === 'modded') {
-          if (!game.LegacyData?.Modded) return false;
+          if (!isModded) return false;
         } else if (settings.gameFilter === 'non-modded') {
-          if (game.LegacyData?.Modded) return false;
+          if (isModded) return false;
         }
       }
       // Apply date range filter
