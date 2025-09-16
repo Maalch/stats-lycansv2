@@ -116,11 +116,11 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   for (const gameLog of awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       // Add ModVersion to each game from this AWS log file
-      const gamesWithModVersion = gameLog.GameStats.map(game => ({
+      const gamesWithVersion = gameLog.GameStats.map(game => ({
         ...game,
-        ModVersion: gameLog.ModVersion
+        Version: gameLog.ModVersion
       }));
-      allGameStats.push(...gamesWithModVersion);
+      allGameStats.push(...gamesWithVersion);
     }
   }
   
