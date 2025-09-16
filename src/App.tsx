@@ -367,7 +367,7 @@ function MainApp() {
                 <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
                 <p>
                   <a 
-                    href="mailto:lycansdata@gmail.com" 
+                    href="mailto:admin@lycanstracker.fr" 
                     className="contact-link"
                     title="Contactez-nous pour vos commentaires et suggestions"
                   >
