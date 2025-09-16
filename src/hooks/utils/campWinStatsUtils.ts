@@ -21,8 +21,10 @@ function buildGamePlayerCampMapFromGameLog(gameData: GameLogEntry[]): Record<str
 
     game.PlayerStats.forEach(playerStat => {
       const playerName = playerStat.Username;
-      const playerRole = playerStat.MainRoleInitial;
-      
+      let playerRole = playerStat.MainRoleInitial;
+
+      if (playerRole === 'Chasseur' || playerRole === 'Alchimiste') playerRole = 'Villageois';
+      else if (playerRole === 'Amoureux Villageois' || playerRole === 'Amoureux Loup') playerRole = 'Amoureux';
       if (playerName && playerRole) {
         gamePlayerCampMap[gameId][playerName] = playerRole;
       }
@@ -79,8 +81,8 @@ function getWinnerCamp(game: GameLogEntry): string | null {
   // Group roles into camps
   if (winnerRole === 'Loup' || winnerRole === 'Traître') {
     return 'Loup';
-  } else if (winnerRole === 'Villageois') {
-    return 'Villageois';
+  } else if (winnerRole === 'Amoureux Villageois' || winnerRole === 'Amoureux Loup') {
+    return 'Amoureux';
   } else {
     // Solo role wins as their specific role name
     return winnerRole;

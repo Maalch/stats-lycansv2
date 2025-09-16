@@ -1,30 +1,7 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, PlayerCampPerformance } from '../../types/api';
+import { getPlayerCampFromRole } from '../../utils/gameUtils';
 
-/**
- * Helper function to get player's camp from role name
- */
-function getPlayerCampFromRole(roleName: string): string {
-  if (!roleName) return 'Villageois';
-  
-  // Keep 'Loup' and 'Traître' as separate camps for detailed analysis
-  if (roleName === 'Loup') {
-    return 'Loup';
-  }
-  
-  if (roleName === 'Traître') {
-    return 'Traître';
-  }
-  
-  // Special roles keep their role name as camp
-  if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 
-       'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(roleName)) {
-    return roleName;
-  }
-  
-  // Default to Villageois
-  return 'Villageois';
-}
 
 /**
  * Calculate overall camp statistics

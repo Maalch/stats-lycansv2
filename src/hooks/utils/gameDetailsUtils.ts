@@ -1,5 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
+import { getWinnerCampFromGame } from '../../utils/gameUtils';
 
 // Standalone interface for player role information
 export interface PlayerRole {
@@ -451,7 +452,7 @@ export function filterByCampFromGameLog(
       // Filter by camp without specific player
       if (campFilterMode === 'wins-only') {
         // Find winning camp by checking which camp has victorious players
-        const winningCamp = getWinningCampFromGameLog(game);
+        const winningCamp = getWinnerCampFromGame(game);
         
         if (selectedCamp === 'Autres' && smallCamps) {
           return smallCamps.includes(winningCamp);
@@ -476,7 +477,7 @@ export function filterByCampFromGameLog(
                   return playerRole === 'Espion';
                 case 'Scientifique':
                   return playerRole === 'Scientifique';
-                case 'Amoureux':
+                case 'Amoureux': case 'Amoureux Loup': case 'Amoureux Villageois':
                   return playerRole === 'Amoureux';
                 case 'La Bête':
                   return playerRole === 'La Bête';
@@ -499,32 +500,12 @@ export function filterByCampFromGameLog(
         return game.PlayerStats.some(player => {
           const playerRole = player.MainRoleInitial;
           switch (selectedCamp) {
-            case 'Loup':
-              return playerRole === 'Loup';
-            case 'Traître':
-              return playerRole === 'Traître';
             case 'Villageois':
               const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
                                    'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
               return !specialRoles.includes(playerRole);
-            case 'Idiot du Village':
-              return playerRole === 'Idiot du Village';
-            case 'Cannibale':
-              return playerRole === 'Cannibale';
-            case 'Agent':
-              return playerRole === 'Agent';
-            case 'Espion':
-              return playerRole === 'Espion';
-            case 'Scientifique':
-              return playerRole === 'Scientifique';
-            case 'Amoureux':
+            case 'Amoureux': case 'Amoureux Loup': case 'Amoureux Villageois':
               return playerRole === 'Amoureux';
-            case 'La Bête':
-              return playerRole === 'La Bête';
-            case 'Chasseur de primes':
-              return playerRole === 'Chasseur de primes';
-            case 'Vaudou':
-              return playerRole === 'Vaudou';
             default:
               // For any unrecognized camp, check if any player has that role
               return playerRole === selectedCamp;
@@ -533,47 +514,6 @@ export function filterByCampFromGameLog(
       }
     }
   });
-}
-
-/**
- * Helper function to determine the winning camp from a GameLogEntry
- * 
- * @param game - The GameLogEntry to analyze
- * @returns The name of the winning camp
- */
-export function getWinningCampFromGameLog(game: GameLogEntry): string {
-  // Find the first victorious player and use their role to determine winning camp
-  const victoriousPlayer = game.PlayerStats.find(player => player.Victorious);
-  
-  if (!victoriousPlayer) {
-    // Fallback: if no victorious player found, return empty string
-    return '';
-  }
-  
-  const winnerRole = victoriousPlayer.MainRoleInitial;
-  
-  // Map individual roles to camps
-  switch (winnerRole) {
-    case 'Loup':
-    case 'Traître':
-      return 'Loup';
-    case 'Villageois':
-      return 'Villageois';
-    case 'Amoureux':
-      return 'Amoureux';
-    case 'Idiot du Village':
-    case 'Cannibale':
-    case 'Agent':
-    case 'Espion':
-    case 'Scientifique':
-    case 'La Bête':
-    case 'Chasseur de primes':
-    case 'Vaudou':
-      // Solo roles win as their own camp
-      return winnerRole;
-    default:
-      return winnerRole; // Return the role name as camp for unknown roles
-  }
 }
 
 /**
@@ -643,7 +583,7 @@ export function filterByMultiplePlayersFromGameLog(
           
           if (winnerPlayerIndex !== -1) {
             const winnerPlayerCamp = normalizedCamps[winnerPlayerIndex];
-            const gameWinningCamp = getWinningCampFromGameLog(game);
+            const gameWinningCamp = getWinnerCampFromGame(game);
             const normalizedWinningCamp = gameWinningCamp === 'Traître' ? 'Loup' : gameWinningCamp;
             
             // Special handling for Agent camp - check if specific player is victorious
@@ -703,7 +643,7 @@ export function filterByMultiplePlayersFromGameLog(
         
         // If winnerPlayer is specified, check if their camp won
         if (winnerPlayer) {
-          const gameWinningCamp = getWinningCampFromGameLog(game);
+          const gameWinningCamp = getWinnerCampFromGame(game);
           const normalizedWinningCamp = gameWinningCamp === 'Traître' ? 'Loup' : gameWinningCamp;
           
           // Special handling for Agent camp - both players need to be winners for Agent camp
@@ -1054,7 +994,7 @@ export function computeGameDetailsFromGameLog(
     const wolfCount = wolves.length + traitors.length;
     
     // Determine winning camp
-    const winningCamp = getWinningCampFromGameLog(game);
+    const winningCamp = getWinnerCampFromGame(game);
     
     // Extract solo roles
     const soloRoleTypes = ['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 'La Bête', 'Chasseur de primes', 'Vaudou'];
