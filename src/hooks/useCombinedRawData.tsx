@@ -25,7 +25,7 @@ export interface LegacyData {
 
 export interface GameLogEntry {
   Id: string;
-  DisplayedId: string;    // User-friendly game ID (e.g., "Ponce #123")
+  DisplayedId: string;    // Global chronological game number (e.g., "123")
   StartDate: string;
   EndDate: string;
   MapName: string;
@@ -471,55 +471,54 @@ export function useFilteredGameLogData(): {
 
 
 /**
- * Extract host name and timestamp from game ID
+ * Extract timestamp and trailing number from game ID
  */
-function parseGameId(gameId: string): { host: string; timestamp: string } {
+function parseGameId(gameId: string): { timestamp: string; trailingNumber: number } {
   const parts = gameId.split('-');
-  const host = parts[0];
   
   if (parts.length === 3) {
     // Legacy format: "Ponce-20231013000000-1"
-    return { host, timestamp: parts[1] };
+    return { 
+      timestamp: parts[1], 
+      trailingNumber: parseInt(parts[2]) || 0 
+    };
   } else if (parts.length === 2) {
     // New format: "Nales-20250912210715"
-    return { host, timestamp: parts[1] };
+    return { 
+      timestamp: parts[1], 
+      trailingNumber: 0 
+    };
   }
   
   // Fallback
-  return { host: gameId, timestamp: '0' };
+  return { timestamp: '0', trailingNumber: 0 };
 }
 
 /**
- * Generate DisplayedId values for all games based on chronological order per host
+ * Generate DisplayedId values for all games based on global chronological order
  */
 function generateDisplayedIds(games: GameLogEntry[]): Map<string, string> {
   const displayedIdMap = new Map<string, string>();
   
-  // Group games by host
-  const gamesByHost = new Map<string, GameLogEntry[]>();
-  
-  games.forEach(game => {
-    const { host } = parseGameId(game.Id);
-    if (!gamesByHost.has(host)) {
-      gamesByHost.set(host, []);
+  // Sort all games globally by timestamp, then by trailing number
+  const sortedGames = [...games].sort((a, b) => {
+    const parsedA = parseGameId(a.Id);
+    const parsedB = parseGameId(b.Id);
+    
+    // First compare by timestamp
+    const timestampCompare = parsedA.timestamp.localeCompare(parsedB.timestamp);
+    if (timestampCompare !== 0) {
+      return timestampCompare;
     }
-    gamesByHost.get(host)!.push(game);
+    
+    // If timestamps are equal, compare by trailing number
+    return parsedA.trailingNumber - parsedB.trailingNumber;
   });
   
-  // For each host, sort games chronologically and assign numbers
-  gamesByHost.forEach((hostGames, host) => {
-    // Sort by timestamp (extracted from ID)
-    const sortedGames = hostGames.sort((a, b) => {
-      const timestampA = parseGameId(a.Id).timestamp;
-      const timestampB = parseGameId(b.Id).timestamp;
-      return timestampA.localeCompare(timestampB);
-    });
-    
-    // Assign sequential numbers
-    sortedGames.forEach((game, index) => {
-      const gameNumber = index + 1;
-      displayedIdMap.set(game.Id, `${host} #${gameNumber}`);
-    });
+  // Assign sequential global numbers
+  sortedGames.forEach((game, index) => {
+    const globalNumber = index + 1;
+    displayedIdMap.set(game.Id, globalNumber.toString());
   });
   
   return displayedIdMap;

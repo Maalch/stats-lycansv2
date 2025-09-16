@@ -35,36 +35,36 @@ export interface CampSeries {
   player: string;
   camp: 'Villageois' | 'Loups';
   seriesLength: number;
-  startGame: string;    // DisplayedId of first game in series
-  endGame: string;      // DisplayedId of last game in series
+  startGame: string;    // Global chronological game number (e.g., "123")
+  endGame: string;      // Global chronological game number (e.g., "127")
   startDate: string;
   endDate: string;
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
-  gameIds: string[]; // List of DisplayedIds that comprise this series
+  gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
 }
 
 export interface WinSeries {
   player: string;
   seriesLength: number;
-  startGame: string;    // DisplayedId of first game in series
-  endGame: string;      // DisplayedId of last game in series
+  startGame: string;    // Global chronological game number (e.g., "123")
+  endGame: string;      // Global chronological game number (e.g., "127")
   startDate: string;
   endDate: string;
   campCounts: Record<string, number>; // Count of times each camp was played
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
-  gameIds: string[]; // List of DisplayedIds that comprise this series
+  gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
 }
 
 export interface LossSeries {
   player: string;
   seriesLength: number;
-  startGame: string;    // DisplayedId of first game in series
-  endGame: string;      // DisplayedId of last game in series
+  startGame: string;    // Global chronological game number (e.g., "123")
+  endGame: string;      // Global chronological game number (e.g., "127")
   startDate: string;
   endDate: string;
   campCounts: Record<string, number>; // Count of times each camp was played
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
-  gameIds: string[]; // List of DisplayedIds that comprise this series
+  gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
 }
 
 export interface PlayerSeriesData {
