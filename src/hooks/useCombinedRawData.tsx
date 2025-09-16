@@ -41,68 +41,6 @@ export interface GameLogData {
   GameStats: GameLogEntry[];
 }
 
-// Legacy interfaces DONT USE THEM ANYMORE - generated now from GameLogEntry
-/*
-export interface RawGameData {
-  Game: number;
-  Date: string;
-  "Game Moddée": boolean;
-  "Nombre de joueurs": number;
-  "Nombre de loups": number;
-  "Rôle Traître": boolean;
-  "Rôle Amoureux": boolean;
-  "Rôles solo": string | null;
-  "Camp victorieux": string;
-  "Type de victoire": string;
-  "Nombre de journées": number;
-  "Survivants villageois": number;
-  "Survivants loups (traître inclus)": number;
-  "Survivants amoureux": number | null;
-  "Survivants solo": number | null;
-  "Liste des gagnants": string;
-  "Liste des joueurs": string;
-  "Récolte": number | null;
-  "Total récolte": number | null;
-  "Pourcentage de récolte": number | null;
-  "Versions": string | null;
-  "Map": string | null;
-  "VOD": string | null;
-  "VODEnd": string | null;
-  "Début": string | null;
-  "Fin": string | null;
-}
-
-export interface RawRoleData {
-  Game: number;
-  "Game Moddée": boolean;
-  Loups: string | null;
-  Traître: string | null;
-  "Idiot du Village": string | null;
-  Cannibale: string | null;
-  Agent: string | null;
-  Espion: string | null;
-  Scientifique: string | null;
-  Amoureux: string | null;
-  "La Bête": string | null;
-  "Chasseur de primes": string | null;
-  Vaudou: string | null;
-}
-
-export interface RawPonceData {
-  Game: number;
-  "Game Moddée": boolean;
-  Camp: string | null;
-  Traître: boolean;
-  "Rôle secondaire": string | null;
-  "Pouvoir de loup": string | null;
-  "Métier villageois": string | null;
-  "Joueurs tués": string | null;
-  "Jour de mort": number | null;
-  "Type de mort": string | null;
-  "Joueurs tueurs": string | null;
-}
-  */
-
 export interface RawBRData {
   Game: number;
   Participants: string;
@@ -290,6 +228,9 @@ function applyPlayerFilter(data: GameLogEntry[], settings: any): GameLogEntry[] 
  */
 function applyGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
   return data.filter(game => {
+    //for now: hard filter on only Ponce game
+    if (!game.Id.toLowerCase().includes('ponce')) return false;
+
     // Apply game type filter
     if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
       if (settings.gameFilter === 'modded') {
