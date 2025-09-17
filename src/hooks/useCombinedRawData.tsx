@@ -89,8 +89,6 @@ interface CombinedRawData {
 
 interface CombinedFilteredData {
   gameData: GameLogEntry[] | null;
-  roleData: any[] | null; // Legacy field, always null in new migration
-  ponceData: any[] | null; // Legacy field, always null in new migration
   brPartiesData: RawBRData[] | null;
   brRefPartiesData: RawBRGlobalData[] | null;
   isLoading: boolean;
