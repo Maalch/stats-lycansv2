@@ -32,7 +32,7 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
   });
 
   return (
-    <div className="lycans-camp-visualization">
+    <div className="lycans-game-detail-section full-width">
       <h4>Composition des Camps</h4>
       <div className="camps-grid">
         {sortedCamps.map(([camp, players]) => {
@@ -282,10 +282,11 @@ export function GameDetailView({ game }: { game: any }) {
               }
 
               // Get the camp border color
-              let campBorderColor = lycansColorScheme[playerStat.MainRoleInitial as keyof typeof lycansColorScheme] || '#666';
-              if (campBorderColor === '#666') {
-                 campBorderColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#666';
+              let campTextColor = lycansColorScheme[playerStat.MainRoleInitial as keyof typeof lycansColorScheme] || '#666';
+              if (campTextColor === '#666') {
+                 campTextColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#666';
               }
+              const campBorderColor = lycansColorScheme[role as keyof typeof lycansColorScheme] || '#666';
 
               // Get player color for name (if available)
               // First try the French color mapping from the log, then fall back to camp color
@@ -311,7 +312,7 @@ export function GameDetailView({ game }: { game: any }) {
                   <div
                     className="lycans-player-name"
                     style={{
-                      color: playerColor,
+                      color: campTextColor,
                       textAlign: 'left'
                     }}
                   >
@@ -331,9 +332,7 @@ export function GameDetailView({ game }: { game: any }) {
         </div>
 
         {/* Interactive Camp Visualization */}
-        <div className="lycans-game-detail-section full-width">
-          <CampVisualization playerData={game.playerData} />
-        </div>
+        <CampVisualization playerData={game.playerData} />
 
         {/* Video Toggle Button */}
         {game.youtubeEmbedUrl && (
