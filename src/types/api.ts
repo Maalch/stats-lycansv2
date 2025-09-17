@@ -97,20 +97,8 @@ export const lycansOtherCategoryColor = '#808080ff';
 export const minGamesOptions = [3, 5, 10, 25, 50, 75, 100, 150, 200];
 
 // Types pour les statistiques des joueurs
-export interface PlayerCamps {
-  Villageois: number;
-  Loup: number;
-  Traître: number;
-  "Idiot du Village": number;
-  Cannibale: number;
-  Agent: number;
-  Espion: number;
-  Scientifique: number;
-  Amoureux: number;
-  "La Bête": number;
-  "Chasseur de primes": number;
-  Vaudou: number;
-}
+// Dynamic interface that adapts to the camps found in the game data
+export type PlayerCamps = Record<string, number>;
 
 // Camp Win Statistics Types
 export interface CampStat {
@@ -252,4 +240,23 @@ export function getRandomColor(seed: string) {
   }
   const h = hash % 360;
   return `hsl(${h}, 60%, 70%)`;
+}
+
+/**
+ * Get color for a camp, with fallback to generated color for unknown camps
+ * @param campName - The name of the camp
+ * @param fallbackColor - Optional fallback color if camp not found and random generation fails
+ * @returns Color string (hex or hsl)
+ */
+export function getCampColor(campName: string, fallbackColor?: string): string {
+  // Check if we have a predefined color
+  if (lycansColorScheme[campName]) {
+    return lycansColorScheme[campName];
+  }
+  
+  // Generate a consistent color based on camp name
+  const generatedColor = getRandomColor(campName);
+  
+  // Return generated color or fallback
+  return generatedColor || fallbackColor || lycansOtherCategoryColor;
 }
