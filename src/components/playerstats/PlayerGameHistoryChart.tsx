@@ -508,7 +508,7 @@ export function PlayerGameHistoryChart() {
                             selectedPlayer: selectedPlayerName,
                             campFilter: {
                               selectedCamp: 'Autres',
-                              campFilterMode: 'wins-only',
+                              campFilterMode: 'all-assignments',
                               _smallCamps: smallCampNames
                             },
                             fromComponent: 'Distribution par Camps'
@@ -519,7 +519,7 @@ export function PlayerGameHistoryChart() {
                             selectedPlayer: selectedPlayerName,
                             campFilter: {
                               selectedCamp: 'Traître',
-                              campFilterMode: 'wins-only',
+                              campFilterMode: 'all-assignments',
                               excludeTraitor: true
                             },
                             fromComponent: 'Distribution par Camps'
@@ -530,7 +530,7 @@ export function PlayerGameHistoryChart() {
                             selectedPlayer: selectedPlayerName,
                             campFilter: {
                               selectedCamp: 'Loup',
-                              campFilterMode: 'wins-only',
+                              campFilterMode: 'all-assignments',
                               excludeTraitor: true
                             },
                             fromComponent: 'Distribution par Camps'
@@ -540,7 +540,7 @@ export function PlayerGameHistoryChart() {
                             selectedPlayer: selectedPlayerName,
                             campFilter: {
                               selectedCamp: entry.name,
-                              campFilterMode: 'wins-only'
+                              campFilterMode: 'all-assignments'
                             },
                             fromComponent: 'Distribution par Camps'
                           });
@@ -690,7 +690,7 @@ export function PlayerGameHistoryChart() {
                               selectedPlayer: selectedPlayerName,
                               campFilter: {
                                 selectedCamp: entry.name,
-                                campFilterMode: parseFloat(entry.winRate) === 0 ? 'all-assignments' : 'wins-only',
+                                campFilterMode: 'all-assignments',
                                 excludeTraitor: true
                               },
                               fromComponent: 'Performance par Camp'
@@ -701,7 +701,7 @@ export function PlayerGameHistoryChart() {
                               selectedPlayer: selectedPlayerName,
                               campFilter: {
                                 selectedCamp: entry.name,
-                                campFilterMode: parseFloat(entry.winRate) === 0 ? 'all-assignments' : 'wins-only',
+                                campFilterMode: 'all-assignments',
                                 excludeTraitor: true
                               },
                               fromComponent: 'Performance par Camp'
@@ -711,7 +711,7 @@ export function PlayerGameHistoryChart() {
                               selectedPlayer: selectedPlayerName,
                               campFilter: {
                                 selectedCamp: entry.name,
-                                campFilterMode: parseFloat(entry.winRate) === 0 ? 'all-assignments' : 'wins-only'
+                                campFilterMode: 'all-assignments',
                               },
                               fromComponent: 'Performance par Camp'
                             });

@@ -122,36 +122,36 @@ export function getPlayerCampFromRole(roleName: string): string {
   // Map role names to camps - keep original logic for comparison
   if (roleName === 'Loup') {
     return 'Loup';
-  }
-  
-  if (roleName === 'Traître') {
+  }  
+  else if (roleName === 'Traître') {
     return 'Traître';
   }
-
-  if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
+  else if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
     return 'Amoureux';
   }
-  
+  else if (roleName === 'Chasseur' || roleName === 'Alchimiste') {
+    return 'Villageois';
+  }
   // Special roles keep their role name as camp
-  if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 
-       'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(roleName)) {
+  else {
     return roleName;
   }
-  
-  // Default to Villageois
-  return 'Villageois';
 }
 
 
 /**
  * Helper function to get player's main role from role name
  */
-export function getPlayerMainRoleFromRole(mainRoleName: string): string {
+export function getPlayerMainRoleFromRole(mainRoleName?: string): string {
   if (!mainRoleName) return 'Villageois';
 
   //special rules for Chasseur and Alchimiste: they are Villageois main role
   if (mainRoleName === 'Chasseur' || mainRoleName === 'Alchimiste') {
     return 'Villageois';
+  }
+  else if (mainRoleName === 'Amoureux Loup' || mainRoleName === 'Amoureux Villageois') 
+  {
+    return 'Amoureux';
   }
 
   // All other roles keep their main role name
@@ -172,7 +172,7 @@ export function getWinnerCampFromGame(game: GameLogEntry): string {
       winnerCamp = 'Loup';
     }
     // Check for Amoureux camp victory
-    else if (winnerRoles.includes('Amoureux Loup') || winnerRoles.includes('Amoureux Villageois')) {
+    else if (winnerRoles.includes('Amoureux Loup') || winnerRoles.includes('Amoureux Villageois') || winnerRoles.includes('Amoureux')) {
       winnerCamp = 'Amoureux';
     }
     // Check for Villageois camp victory (Villageois, Chasseur, or Alchmiste)

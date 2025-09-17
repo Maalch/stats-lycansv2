@@ -9,19 +9,15 @@ export interface PlayerRole {
   camp: string;
 }
 
+// Role entry interface for the new unified structure
+export interface RoleEntry {
+  roleName: string;
+  players: string[];
+}
+
 // Standalone interface for game roles information
 export interface GameRoles {
-  wolves?: string[];
-  traitor?: string;
-  villageIdiot?: string;
-  cannibal?: string;
-  agent?: string[];
-  spy?: string;
-  scientist?: string;
-  lovers?: string[];
-  beast?: string;
-  bountyHunter?: string;
-  voodoo?: string;
+  roles: RoleEntry[];
 }
 
 /**
@@ -146,7 +142,7 @@ export function getPlayerCampFromGameLog(
   if (!playerStat) return 'Villageois';
   
   // In the new structure, MainRoleInitial contains the full role name
-  const playerRole = playerStat.MainRoleInitial;
+  const playerRole = getPlayerMainRoleFromRole(playerStat.MainRoleInitial);
   
   // Handle traitor case with excludeTraitor logic
   if (playerRole === 'Traître') {
@@ -184,20 +180,9 @@ export function isPlayerInSmallCampFromGameLog(
   if (!playerStat) return false;
   
   // Check if the player's MainRoleInitial matches the requested camp
-  const playerCamp = playerStat.MainRoleInitial;
-  
-  switch (campName) {
-    case 'Traître': case 'Idiot du Village': case 'Cannibale': case 'Agent': case 'Espion': case 'Scientifique': 
-    case 'Amoureux': case 'La Bête': case 'Chasseur de primes': case 'Vaudou':
-      return playerCamp === campName;
-    case 'Villageois':
-      // For villagers, check if player is in game but not in any special role
-      const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
-                           'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
-      return !specialRoles.includes(playerCamp);
-    default:
-      return false;
-  }
+  const playerCamp = getPlayerMainRoleFromRole(playerStat.MainRoleInitial);
+
+  return playerCamp === campName;
 }
 
 /**
@@ -398,35 +383,52 @@ export function filterByCampFromGameLog(
     if (selectedPlayer) {
       // Handle "Autres" category for specific player
       if (selectedCamp === 'Autres' && smallCamps) {
-        return smallCamps.some(camp => 
+        const isInSmallCamp = smallCamps.some(camp => 
           isPlayerInSmallCampFromGameLog(selectedPlayer, camp, game)
         );
+        
+        if (!isInSmallCamp) return false;
+        
+        // If wins-only mode, also check if player was victorious
+        if (campFilterMode === 'wins-only') {
+          const playerStat = game.PlayerStats.find(p => 
+            p.Username.toLowerCase() === selectedPlayer.toLowerCase()
+          );
+          return playerStat?.Victorious === true;
+        }
+        
+        return true;
       }
 
       // Check specific camp for specific player
       const playerCamp = getPlayerCampFromGameLog(selectedPlayer, game, excludeTraitor);
       
+      // First check if player is in the selected camp
+      let isInSelectedCamp = false;
+      
       // Special handling for "Loup" with excludeTraitor flag
       if (selectedCamp === 'Loup' && excludeTraitor) {
         // Only include games where player was a regular wolf (not traitor)
-        return playerCamp === 'Loup' && 
+        isInSelectedCamp = playerCamp === 'Loup' && 
                !game.PlayerStats.some(p => 
                  p.Username.toLowerCase() === selectedPlayer.toLowerCase() && 
                  p.MainRoleInitial === 'Traître'
                );
+      } else {
+        isInSelectedCamp = playerCamp === selectedCamp;
       }
       
-      // Special handling for Agent camp: when filtering by Agent camp wins, 
-      // check if the specific player is in the winners list
-      if (playerCamp === 'Agent' && selectedCamp === 'Agent') {
-        // Check if player was victorious in this game
+      if (!isInSelectedCamp) return false;
+      
+      // If wins-only mode, also check if player was victorious
+      if (campFilterMode === 'wins-only') {
         const playerStat = game.PlayerStats.find(p => 
           p.Username.toLowerCase() === selectedPlayer.toLowerCase()
         );
         return playerStat?.Victorious === true;
       }
       
-      return playerCamp === selectedCamp;
+      return true;
     } else {
       // Filter by camp without specific player
       if (campFilterMode === 'wins-only') {
@@ -442,38 +444,16 @@ export function filterByCampFromGameLog(
         if (selectedCamp === 'Autres' && smallCamps) {
           return smallCamps.some(camp => {
             return game.PlayerStats.some(player => {
-              const playerRole = player.MainRoleInitial;
-              switch (camp) {
-                case 'Traître': case 'Idiot du Village': case 'Cannibale': case 'Agent': case 'Espion': case 'Scientifique':
-                case 'Amoureux': case 'La Bête': case 'Chasseur de primes': case 'Vaudou':
-                  return playerRole === camp;
-                 case 'Amoureux Loup': case 'Amoureux Villageois':
-                  return playerRole === 'Amoureux';
-                case 'Villageois':
-                  const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
-                                       'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
-                  return !specialRoles.includes(playerRole);
-                default:
-                  return false;
-              }
+              const playerRole = getPlayerMainRoleFromRole(player.MainRoleInitial);
+              return playerRole === camp;
             });
           });
         }
 
         // Check specific camp assignment
         return game.PlayerStats.some(player => {
-          const playerRole = player.MainRoleInitial;
-          switch (selectedCamp) {
-            case 'Villageois':
-              const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
-                                   'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
-              return !specialRoles.includes(playerRole);
-            case 'Amoureux': case 'Amoureux Loup': case 'Amoureux Villageois':
-              return playerRole === 'Amoureux';
-            default:
-              // For any unrecognized camp, check if any player has that role
-              return playerRole === selectedCamp;
-          }
+          const playerRole = getPlayerMainRoleFromRole(player.MainRoleInitial);
+          return playerRole === selectedCamp;
         });
       }
     }
@@ -596,7 +576,7 @@ export function filterByMultiplePlayersFromGameLog(
               const playerStat = game.PlayerStats.find(p => 
                 p.Username.toLowerCase() === player.toLowerCase()
               );
-              return playerStat?.MainRoleInitial === 'Traître';
+              return getPlayerMainRoleFromRole(playerStat?.MainRoleInitial) === 'Traître';
             });
             if (hasTraitor) return false;
           }
@@ -665,7 +645,7 @@ export function filterByPlayerPairFromGameLog(
           const playerStat = game.PlayerStats.find(p => 
             p.Username.toLowerCase() === player.toLowerCase()
           );
-          return playerStat?.MainRoleInitial === 'Loup';
+          return getPlayerMainRoleFromRole(playerStat?.MainRoleInitial) === 'Loup';
         });
 
       case 'lovers':
@@ -674,7 +654,7 @@ export function filterByPlayerPairFromGameLog(
           const playerStat = game.PlayerStats.find(p => 
             p.Username.toLowerCase() === player.toLowerCase()
           );
-          return playerStat?.MainRoleInitial === 'Amoureux';
+          return getPlayerMainRoleFromRole(playerStat?.MainRoleInitial) === 'Amoureux';
         });
 
       default:
@@ -771,76 +751,24 @@ export function applyNavigationFiltersFromGameLog(
  * Use this instead of parseRoles for new features.
  */
 export function parseRolesFromGameLog(game: GameLogEntry): GameRoles {
-  const roles: GameRoles = {};
+  const roleMap = new Map<string, string[]>();
   
-  // Extract roles from PlayerStats
-  const playerStats = game.PlayerStats;
-  
-  // Group players by role
-  const wolves: string[] = [];
-  const lovers: string[] = [];
-  const agents: string[] = [];
-  let traitor: string | undefined;
-  let villageIdiot: string | undefined;
-  let cannibal: string | undefined;
-  let spy: string | undefined;
-  let scientist: string | undefined;
-  let beast: string | undefined;
-  let bountyHunter: string | undefined;
-  let voodoo: string | undefined;
-  
-  playerStats.forEach(player => {
-    switch (player.MainRoleInitial) {
-      case 'Loup':
-        wolves.push(player.Username);
-        break;
-      case 'Traître':
-        traitor = player.Username;
-        break;
-      case 'Idiot du Village':
-        villageIdiot = player.Username;
-        break;
-      case 'Cannibale':
-        cannibal = player.Username;
-        break;
-      case 'Agent':
-        agents.push(player.Username);
-        break;
-      case 'Espion':
-        spy = player.Username;
-        break;
-      case 'Scientifique':
-        scientist = player.Username;
-        break;
-      case 'Amoureux':
-        lovers.push(player.Username);
-        break;
-      case 'La Bête':
-        beast = player.Username;
-        break;
-      case 'Chasseur de primes':
-        bountyHunter = player.Username;
-        break;
-      case 'Vaudou':
-        voodoo = player.Username;
-        break;
+  // Extract roles from PlayerStats and group players by role
+  game.PlayerStats.forEach(player => {
+    const roleName = getPlayerMainRoleFromRole(player.MainRoleInitial);
+    if (!roleMap.has(roleName)) {
+      roleMap.set(roleName, []);
     }
+    roleMap.get(roleName)!.push(player.Username);
   });
   
-  // Assign to roles object (only if arrays have content or strings are defined)
-  if (wolves.length > 0) roles.wolves = wolves;
-  if (traitor) roles.traitor = traitor;
-  if (villageIdiot) roles.villageIdiot = villageIdiot;
-  if (cannibal) roles.cannibal = cannibal;
-  if (agents.length > 0) roles.agent = agents;
-  if (spy) roles.spy = spy;
-  if (scientist) roles.scientist = scientist;
-  if (lovers.length > 0) roles.lovers = lovers;
-  if (beast) roles.beast = beast;
-  if (bountyHunter) roles.bountyHunter = bountyHunter;
-  if (voodoo) roles.voodoo = voodoo;
+  // Convert map to array of RoleEntry objects
+  const roles: RoleEntry[] = Array.from(roleMap.entries()).map(([roleName, players]) => ({
+    roleName,
+    players
+  }));
   
-  return roles;
+  return { roles };
 }
 
 /**
@@ -896,9 +824,9 @@ export function computeGameDetailsFromGameLog(
 
     // Calculate derived fields from PlayerStats
     const playerCount = game.PlayerStats.length;
-    const wolves = game.PlayerStats.filter(p => p.MainRoleInitial === 'Loup');
-    const traitors = game.PlayerStats.filter(p => p.MainRoleInitial === 'Traître');
-    const lovers = game.PlayerStats.filter(p => p.MainRoleInitial === 'Amoureux');
+    const wolves = game.PlayerStats.filter(p => getPlayerMainRoleFromRole(p.MainRoleInitial) === 'Loup');
+    const traitors = game.PlayerStats.filter(p => getPlayerMainRoleFromRole(p.MainRoleInitial) === 'Traître');
+    const lovers = game.PlayerStats.filter(p => getPlayerMainRoleFromRole(p.MainRoleInitial) === 'Amoureux');
     const victoriousPlayers = game.PlayerStats.filter(p => p.Victorious);
     
     // Calculate wolf count (includes traitors)
@@ -907,10 +835,10 @@ export function computeGameDetailsFromGameLog(
     // Determine winning camp
     const winningCamp = getWinnerCampFromGame(game);
     
-    // Extract solo roles
-    const soloRoleTypes = ['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 'La Bête', 'Chasseur de primes', 'Vaudou'];
-    const soloRolePlayers = game.PlayerStats.filter(p => soloRoleTypes.includes(p.MainRoleInitial));
-    const soloRoles = soloRolePlayers.length > 0 ? soloRolePlayers.map(p => p.MainRoleInitial).join(', ') : null;
+    // Extract solo roles (players who are not in main camps: Loup, Villageois, Amoureux)
+    const mainCampRoles = ['Loup', 'Villageois', 'Amoureux'];
+    const soloRolePlayers = game.PlayerStats.filter(p => !mainCampRoles.includes(getPlayerMainRoleFromRole(p.MainRoleInitial)));
+    const soloRoles = soloRolePlayers.length > 0 ? soloRolePlayers.map(p => getPlayerMainRoleFromRole(p.MainRoleInitial)).join(', ') : null;
     
     // Convert StartDate (ISO) to French format (DD/MM/YYYY)
     const gameDate = new Date(game.StartDate);
