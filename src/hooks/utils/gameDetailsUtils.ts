@@ -884,7 +884,8 @@ export function computeGameDetailsFromGameLog(
       youtubeEmbedUrl: createYouTubeEmbedUrl(game.LegacyData?.VODLink || null, game.LegacyData?.VODLinkEnd || null),
       gameDuration: calculateGameDuration(game.StartDate, game.EndDate),
       roles,
-      playerRoles
+      playerRoles,
+      playerDetails: game.PlayerStats // Include full player stats for detailed info
     };
   });
 }

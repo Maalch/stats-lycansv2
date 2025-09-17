@@ -17,17 +17,17 @@ export const lycansColorScheme: Record<string, string> = {
 };
 
 export const playersColor: Record<string, string> = {
-  "Ponce": "#0076FF",           // Bleu clair
+  "Ponce": "#0076FF",           // Bleu royal
   "Khalen": "#0012A6",          // Bleu foncé
-  "Monodie": "#0076FF",         // Bleu clair
+  "Monodie": "#0076FF",         // Bleu royal
   "Kao": "#909090",             // Gris
   "Arkantors": "#FF61F4",       // Rose
-  "Bytell": "#54D90F",          // Vert clair
+  "Bytell": "#54D90F",          // Vert pomme
   "Kyria": "#6F00D9",           // Violet
   "Fukano": "#FF9500",          // Orange
   "Brybry": "#009A13",          // Vert foncé 
-  "Baout": "#54D90F",           // Vert clair
-  "Lutti": "#00FFFF",           // Cyan
+  "Baout": "#54D90F",           // Vert pomme
+  "Lutti": "#00FFFF",           // Turquoise
   "Miraaaaaah": "#6F00D9",      // Violet
   "Tsuna": "#A65200",           // Marron
   "Noamouille": "#FF9500",      // Orange
@@ -37,9 +37,9 @@ export const playersColor: Record<string, string> = {
   "BoccA": "#909090",           // Gris
   "Koka": "#009A13",            // Vert foncé
   "Anaee": "#6F00D9",           // Violet
-  "Flonflon": "#54D90F",        // Vert clair
+  "Flonflon": "#54D90F",        // Vert pomme
   "Lydiaam": "#FFED00",         // Jaune
-  "Heimdalle": "#00FFFF",       // Cyan
+  "Heimdalle": "#00FFFF",       // Turquoise
   "Drakony": "#909090",         // Gris
   "Tone": "#FFED00",            // Jaune
   "Mathy": "#FFED00",           // Jaune
@@ -47,25 +47,25 @@ export const playersColor: Record<string, string> = {
   "Cyldhur": "#909090",         // Gris
   "Reivil": "#FF9500",          // Orange
   "Zarcross": "#FF9500",        // Orange
-  "Shaunz": "#0076FF",          // Bleu clair 
+  "Shaunz": "#0076FF",          // Bleu royal 
   "Aayley": "#009A13",          // Vert foncé
   "RomainJacques": "#FFED00",   // Jaune
   "DevGirl_": "#FF61F4",        // Rose
-  "CHLOE": "#00FFFF",           // Cyan
+  "CHLOE": "#00FFFF",           // Turquoise
   "Yoona": "#FF61F4",           // Rose
   "Mickalow": "#009A13",        // Vert foncé
-  "PeoBran": "#00FFFF",         // Cyan
+  "PeoBran": "#00FFFF",         // Turquoise
   "Tovi": "#909090",            // Gris
-  "Kissiffrote": "#0076FF",     // Bleu clair 
+  "Kissiffrote": "#0076FF",     // Bleu royal 
   "Pelerine": "#909090",        // Gris
   "MaMaPaprika": "#FF9500",     // Orange
   "Xari": "#009A13",            // Vert foncé
   "Sakor": "#FF9500",           // Orange
-  "HortyUnderscore": "#00FFFF", // Cyan
+  "HortyUnderscore": "#00FFFF", // Turquoise
   "LittleBigWhale": "#FF61F4",  // Rose
   "Gom4rt": "#FFED00",          // Jaune
   "Ultia": "#6F00D9",           // Violet
-  "Onutrem": "#0076FF",         // Bleu clair
+  "Onutrem": "#0076FF",         // Bleu royal
   "DFG": "#A65200",             // Marron
   "Crocodyle": "#909090",       // Gris
   "GoB": "#FF0000",             // Rouge
@@ -85,10 +85,26 @@ export const playersColor: Record<string, string> = {
   "Riri et son ptit Ricard": "#FF61F4", // Rose
   "Berlu": "#009A13",           // Vert foncé
   "Antoine": "#FF0000",         // Rouge
-  "AvaMind": "#00FFFF",         // Cyan
+  "AvaMind": "#00FFFF",         // Turquoise
   "Skyyart": "#6F00D9",         // Violet
   "Pressea": "#A65200",         // Marron
-  "Etoiles": "#54D90F"          // Vert clair
+  "Etoiles": "#54D90F"          // Vert pomme
+};
+
+// Mapping for French color names to hex codes 
+export const frenchColorMapping: Record<string, string> = {
+  "Bleu foncé": "#0012A6",      
+  "Orange": "#FF9500",          
+  "Turquoise": "#00FFFF",       
+  "Bleu royal": "#0076FF",      
+  "Rouge": "#FF0000",           
+  "Jaune": "#FFED00",           
+  "Vert foncé": "#009A13",      
+  "Marron": "#A65200",         
+  "Vert pomme": "#54D90F",     
+  "Violet": "#6F00D9",         
+  "Gris": "#909090",           
+  "Rose": "#FF61F4"            
 };
 
 export const lycansOtherCategoryColor = '#808080ff';

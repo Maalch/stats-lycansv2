@@ -79,3 +79,4 @@ export function getCanonicalPlayerNames(): string[] {
   const canonicalNames = new Set(Object.values(PLAYER_NAME_MAPPING));
   return Array.from(canonicalNames).sort();
 }
+
