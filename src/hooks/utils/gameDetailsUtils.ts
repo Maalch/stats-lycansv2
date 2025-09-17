@@ -1,13 +1,7 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
-import { getWinnerCampFromGame, getPlayerCampFromRole, getPlayerMainRoleFromRole } from '../../utils/gameUtils';
+import { getWinnerCampFromGame, getPlayerMainRoleFromRole } from '../../utils/gameUtils';
 
-// Standalone interface for player role information
-export interface PlayerRole {
-  player: string;
-  role: string;
-  camp: string;
-}
 
 // Role entry interface for the new unified structure
 export interface RoleEntry {
@@ -127,8 +121,6 @@ function calculateGameDuration(start: string | null, end: string | null): number
  * @param excludeTraitor - If true, return 'Traître' instead of 'Loup' for traitors
  * @returns The player's camp/role from MainRoleInitial, or 'Villageois' if not found
  * 
- * Note: This is the new version that works with GameLogEntry structure.
- * Use this instead of getPlayerCampFromRoles for new features.
  */
 export function getPlayerCampFromGameLog(
   playerName: string, 
@@ -155,15 +147,12 @@ export function getPlayerCampFromGameLog(
 
 /**
  * Helper function to check if a player is in a specific camp for "Autres" filtering
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param playerName - The name of the player to check
  * @param campName - The camp name to check against  
  * @param game - The GameLogEntry to check within
  * @returns true if the player is in the specified camp in this game
  * 
- * Note: This is the new version that works with GameLogEntry. 
- * Use this instead of isPlayerInSmallCamp for new features.
  */
 export function isPlayerInSmallCampFromGameLog(
   playerName: string,
@@ -187,15 +176,12 @@ export function isPlayerInSmallCampFromGameLog(
 
 /**
  * Filter games by selected player
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
  * @param selectedPlayer - The player name to filter by
  * @param winMode - Optional filter mode: 'wins-only' or 'all-assignments'
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry. 
- * Use this instead of filterByPlayer for new features.
  */
 export function filterByPlayerFromGameLog(
   games: GameLogEntry[], 
@@ -229,14 +215,11 @@ export function filterByPlayerFromGameLog(
 
 /**
  * Filter games by selected game ID
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
  * @param selectedGame - The DisplayedId to filter by (e.g., "Ponce #123")
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of filterByGame for new features.
  */
 export function filterByGameFromGameLog(games: GameLogEntry[], selectedGame: string): GameLogEntry[] {
   return games.filter(game => game.DisplayedId === selectedGame);
@@ -244,14 +227,11 @@ export function filterByGameFromGameLog(games: GameLogEntry[], selectedGame: str
 
 /**
  * Filter games by multiple game IDs (for series navigation)
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
  * @param selectedGameIds - Array of DisplayedIds to filter by (e.g., ["Ponce #123", "Ponce #124"])
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of filterByGameIds for new features.
  */
 export function filterByGameIdsFromGameLog(games: GameLogEntry[], selectedGameIds: string[]): GameLogEntry[] {
   return games.filter(game => selectedGameIds.includes(game.DisplayedId));
@@ -259,14 +239,11 @@ export function filterByGameIdsFromGameLog(games: GameLogEntry[], selectedGameId
 
 /**
  * Filter games by date (supports both full date and month/year)
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
  * @param selectedDate - Date string to filter by (DD/MM/YYYY or MM/YYYY format)
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of filterByDate for new features.
  */
 export function filterByDateFromGameLog(games: GameLogEntry[], selectedDate: string): GameLogEntry[] {
   return games.filter(game => {
@@ -297,14 +274,11 @@ export function filterByDateFromGameLog(games: GameLogEntry[], selectedDate: str
 
 /**
  * Filter games by harvest range
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
  * @param harvestRange - Harvest percentage range to filter by
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of filterByHarvestRange for new features.
  */
 export function filterByHarvestRangeFromGameLog(games: GameLogEntry[], harvestRange: string): GameLogEntry[] {
   return games.filter(game => {
@@ -337,14 +311,11 @@ export function filterByHarvestRangeFromGameLog(games: GameLogEntry[], harvestRa
 
 /**
  * Filter games by game duration (number of days)
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
  * @param gameDuration - Number of days/nights to filter by
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of filterByGameDuration for new features.
  */
 export function filterByGameDurationFromGameLog(games: GameLogEntry[], gameDuration: number): GameLogEntry[] {
   return games.filter(game => {
@@ -361,16 +332,13 @@ export function filterByGameDurationFromGameLog(games: GameLogEntry[], gameDurat
 }
 
 /**
- * Complex camp filtering logic
- * NEW VERSION: Works with GameLogEntry structure
+ * Camp filtering logic
  * 
  * @param games - Array of GameLogEntry to filter
  * @param campFilter - Camp filter configuration
  * @param selectedPlayer - Optional specific player to filter by
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of filterByCamp for new features.
  */
 export function filterByCampFromGameLog(
   games: GameLogEntry[],
@@ -462,15 +430,12 @@ export function filterByCampFromGameLog(
 
 /**
  * Filter games by multiple players with specific filtering modes
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
  * @param multiPlayerFilter - Multi-player filter configuration
  * @param campFilter - Optional camp filter configuration
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of filterByMultiplePlayers for new features.
  */
 export function filterByMultiplePlayersFromGameLog(
   games: GameLogEntry[],
@@ -613,14 +578,11 @@ export function filterByMultiplePlayersFromGameLog(
 
 /**
  * Filter games by player pair with specific role relationship
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param games - Array of GameLogEntry to filter
  * @param playerPairFilter - Player pair filter configuration
  * @returns Filtered array of GameLogEntry
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of filterByPlayerPair for new features.
  */
 export function filterByPlayerPairFromGameLog(
   games: GameLogEntry[],
@@ -665,14 +627,11 @@ export function filterByPlayerPairFromGameLog(
 
 /**
  * Apply navigation filters to game data
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param gameData - Array of GameLogEntry to filter
  * @param filters - Navigation filters to apply
  * @returns Filtered array of GameLogEntry
- * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of applyNavigationFilters for new features.
+ *
  */
 export function applyNavigationFiltersFromGameLog(
   gameData: GameLogEntry[],
@@ -742,13 +701,10 @@ export function applyNavigationFiltersFromGameLog(
 
 /**
  * Parse roles from GameLogEntry structure
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param game - The GameLogEntry to parse roles from
  * @returns GameRoles object with role assignments
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of parseRoles for new features.
  */
 export function parseRolesFromGameLog(game: GameLogEntry): GameRoles {
   const roleMap = new Map<string, string[]>();
@@ -772,39 +728,12 @@ export function parseRolesFromGameLog(game: GameLogEntry): GameRoles {
 }
 
 /**
- * Create player roles list from GameLogEntry structure
- * NEW VERSION: Works with GameLogEntry structure
- * 
- * @param game - The GameLogEntry to create player roles from
- * @returns PlayerRole array with player, role, and camp information
- * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of createPlayerRoles for new features.
- */
-export function createPlayerRolesFromGameLog(game: GameLogEntry): PlayerRole[] {
-  const playerRoles: PlayerRole[] = [];
-
-  game.PlayerStats.forEach(playerStat => {
-    const player = playerStat.Username;
-    let role = getPlayerMainRoleFromRole(playerStat.MainRoleInitial);
-    let camp = getPlayerCampFromRole(playerStat.MainRoleInitial);
-
-    playerRoles.push({ player, role, camp });
-  });
-
-  return playerRoles;
-}
-
-/**
  * Compute enriched game details from raw data
- * NEW VERSION: Works with GameLogEntry structure
  * 
  * @param gameData - Array of GameLogEntry to process
  * @param filters - Optional navigation filters to apply
  * @returns Enriched game data array or null if empty input
  * 
- * Note: This is the new version that works with GameLogEntry.
- * Use this instead of the legacy version for new features.
  */
 export function computeGameDetailsFromGameLog(
   gameData: GameLogEntry[],
@@ -816,11 +745,6 @@ export function computeGameDetailsFromGameLog(
   const filteredGames = applyNavigationFiltersFromGameLog(gameData, filters);
 
   return filteredGames.map((game) => {
-    // Parse roles
-    const roles = parseRolesFromGameLog(game);
-
-    // Create player roles and details
-    const playerRoles = createPlayerRolesFromGameLog(game);
 
     // Calculate derived fields from PlayerStats
     const playerCount = game.PlayerStats.length;
@@ -883,9 +807,7 @@ export function computeGameDetailsFromGameLog(
       map: game.MapName,
       youtubeEmbedUrl: createYouTubeEmbedUrl(game.LegacyData?.VODLink || null, game.LegacyData?.VODLinkEnd || null),
       gameDuration: calculateGameDuration(game.StartDate, game.EndDate),
-      roles,
-      playerRoles,
-      playerDetails: game.PlayerStats // Include full player stats for detailed info
+      playerData : game.PlayerStats,
     };
   });
 }
