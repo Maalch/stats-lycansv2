@@ -557,26 +557,6 @@ function GameDetailView({ game }: { game: any }) {
               <span className="value">{game.winningCamp}</span>
             </div>
             <div className="lycans-stat-item">
-              <span className="label">Survivants villageois:</span>
-              <span className="value">{game.villagerSurvivors}</span>
-            </div>
-            <div className="lycans-stat-item">
-              <span className="label">Survivants loups:</span>
-              <span className="value">{game.wolfSurvivors}</span>
-            </div>
-            {game.loverSurvivors !== null && (
-              <div className="lycans-stat-item">
-                <span className="label">Survivants amoureux:</span>
-                <span className="value">{game.loverSurvivors}</span>
-              </div>
-            )}
-            {game.soloSurvivors !== null && (
-              <div className="lycans-stat-item">
-                <span className="label">Survivants solo:</span>
-                <span className="value">{game.soloSurvivors}</span>
-              </div>
-            )}
-            <div className="lycans-stat-item">
               <span className="label">Gagnants:</span>
               <span className="value">{game.winners}</span>
             </div>
