@@ -235,8 +235,22 @@
 
 .lycans-game-detail-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1.5rem;
+  width: 100%;
+}
+
+/* Responsive behavior for smaller screens */
+@media (max-width: 900px) {
+  .lycans-game-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .lycans-game-detail-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .lycans-game-detail-section {
