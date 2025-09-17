@@ -12,7 +12,7 @@ export const lycansColorScheme: Record<string, string> = {
   'Amoureux': '#FF80FF',
   'Loup': '#FF0000',
   'Villageois': '#0096FF',
-  'Chasseur': '#1faa03ff',
+  'Chasseur': '#fbff00ff',
   'Alchimiste': '#ff00d4ff',
 };
 
