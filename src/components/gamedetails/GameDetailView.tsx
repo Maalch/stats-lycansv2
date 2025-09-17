@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { lycansColorScheme, frenchColorMapping } from '../../types/api';
+import { getPlayerMainRoleFromRole, getPlayerCampFromRole } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
 
 // Helper function to format duration from seconds to minutes and seconds
@@ -132,55 +133,55 @@ export function GameDetailView({ game }: { game: any }) {
         <div className="lycans-game-detail-section full-width">
           <h4>Rôles des Joueurs</h4>
           <div className="lycans-player-roles-grid">
-            {game.playerRoles.map((playerRole: any, index: number) => {
-              // Find matching player details
-              const playerDetails = game.playerDetails.find((detail: any) => detail.Username === playerRole.player);
+            {game.playerData.map((playerStat: any, index: number) => {
+              // Get role and camp information from MainRoleInitial
+              const role = getPlayerMainRoleFromRole(playerStat.MainRoleInitial);
+              const camp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+              const originalRole = playerStat.MainRoleInitial;
+              const power = playerStat.Power;
+              const secondaryRole = playerStat.SecondaryRole;
               
-              // Build the display text with additional details
-              let displayText = playerRole.role === playerRole.camp 
-                ? playerRole.camp 
-                : `${playerRole.camp} (${playerRole.role})`;
-
-                /*
-              if (playerDetails) {
-                const additionalInfo = [];
-                
-                // Add wolf power or villager job
-                if (playerDetails.wolfPower && playerDetails.wolfPower.trim()) {
-                  additionalInfo.push(playerDetails.wolfPower);
-                } else if (playerDetails.villagerJob && playerDetails.villagerJob.trim()) {
-                  additionalInfo.push(playerDetails.villagerJob);
-                }
-                
-                // Build the final display text
-                if (additionalInfo.length > 0) {
-                  displayText = `${playerRole.camp} - ${additionalInfo[0]}`;
-                  
-                  // Add secondary role in parentheses if exists
-                  if (playerDetails.secondaryRole && playerDetails.secondaryRole.trim()) {
-                    displayText += ` (${playerDetails.secondaryRole})`;
-                  }
-                } else if (playerDetails.secondaryRole && playerDetails.secondaryRole.trim()) {
-                  // Only secondary role, no job/power
-                  displayText = `${playerRole.camp} (${playerDetails.secondaryRole})`;
-                }
-              }*/
+              // Build the comprehensive display text
+              let displayText = camp; // Start with main camp
+              
+              // Add main role if different from camp
+              if (role !== camp) {
+                displayText += ` (${role})`;
+              }
+              
+              // Add original role if different from main role
+              if (originalRole && originalRole !== role) {
+                displayText += ` - ${originalRole}`;
+              }
+              
+              // Add power if available
+              if (power && power.trim()) {
+                displayText += ` - ${power}`;
+              }
+              
+              // Add secondary role if available
+              if (secondaryRole && secondaryRole.trim()) {
+                displayText += ` + ${secondaryRole}`;
+              }
 
               // Get the camp border color
-              const campBorderColor = lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#666';
-              
+              let campBorderColor = lycansColorScheme[playerStat.MainRoleInitial as keyof typeof lycansColorScheme] || '#666';
+              if (campBorderColor === '#666') {
+                 campBorderColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#666';
+              }
+
               // Get player color for name (if available)
               // First try the French color mapping from the log, then fall back to camp color
-              let playerColor = lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#fff';
-              if (playerDetails?.Color && frenchColorMapping[playerDetails.Color]) {
-                playerColor = frenchColorMapping[playerDetails.Color];
+              let playerColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#fff';
+              if (playerStat.Color && frenchColorMapping[playerStat.Color]) {
+                playerColor = frenchColorMapping[playerStat.Color];
               }
               
               // Check if player is dead
-              const isDead = playerDetails?.DeathTiming;
+              const isDead = playerStat.DeathTiming;
               
               // Check if player is victorious
-              const isVictorious = playerDetails?.Victorious;
+              const isVictorious = playerStat.Victorious;
               
               return (
                 <div 
@@ -197,7 +198,7 @@ export function GameDetailView({ game }: { game: any }) {
                       textAlign: 'left'
                     }}
                   >
-                    {playerRole.player}
+                    {playerStat.Username}
                     {isDead && <span className="death-skull">💀</span>}
                   </div>
                   <div
