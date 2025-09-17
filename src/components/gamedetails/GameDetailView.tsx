@@ -287,13 +287,6 @@ export function GameDetailView({ game }: { game: any }) {
                  campTextColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#666';
               }
               const campBorderColor = lycansColorScheme[role as keyof typeof lycansColorScheme] || '#666';
-
-              // Get player color for name (if available)
-              // First try the French color mapping from the log, then fall back to camp color
-              let playerColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#fff';
-              if (playerStat.Color && frenchColorMapping[playerStat.Color]) {
-                playerColor = frenchColorMapping[playerStat.Color];
-              }
               
               // Check if player is dead
               const isDead = playerStat.DeathTiming;

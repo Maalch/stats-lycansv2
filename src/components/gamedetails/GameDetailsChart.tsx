@@ -378,7 +378,12 @@ export function GameDetailsChart() {
           <tbody>
             {paginatedGames.map(game => (
               <>
-                <tr key={game.gameId} className={selectedGameId === game.gameId ? 'selected' : ''}>
+                <tr 
+                  key={game.gameId} 
+                  className={`${selectedGameId === game.gameId ? 'selected' : ''} clickable-row`}
+                  onClick={() => handleToggleGameDetails(game.gameId)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <td>#{game.gameId}</td>
                   <td>{game.date}</td>
                   <td>{game.playerCount}</td>
@@ -393,7 +398,10 @@ export function GameDetailsChart() {
                   )}
                   <td>
                     <button
-                      onClick={() => handleToggleGameDetails(game.gameId)}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent row click when button is clicked
+                        handleToggleGameDetails(game.gameId);
+                      }}
                       className="lycans-details-btn"
                     >
                       {selectedGameId === game.gameId ? 'Masquer' : 'Voir'}

@@ -143,6 +143,12 @@
   background: var(--bg-tertiary);
 }
 
+.lycans-games-table tr.clickable-row:hover {
+  background: var(--bg-tertiary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .lycans-games-table tr.selected {
   background: rgba(72, 83, 168, 0.2);
 }
@@ -558,6 +564,9 @@
 
 .player-badge.dead {
   opacity: 0.7;
+}
+
+.player-badge.dead .player-name {
   text-decoration: line-through;
 }
 
