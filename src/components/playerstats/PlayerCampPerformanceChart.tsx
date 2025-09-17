@@ -108,7 +108,8 @@ export function PlayerCampPerformanceChart() {
         selectedPlayer: data.player,
         campFilter: {
           selectedCamp: selectedCamp,
-          campFilterMode: 'wins-only'
+          campFilterMode: 'wins-only',
+          excludeTraitor: selectedCamp === 'Traître' // Exclude traitor from Loups filtering
         },
         fromComponent: `Performance des Joueurs - ${selectedCamp}`
       });
@@ -122,7 +123,8 @@ export function PlayerCampPerformanceChart() {
         selectedPlayer: data.player,
         campFilter: {
           selectedCamp: data.camp,
-          campFilterMode: 'wins-only'
+          campFilterMode: 'wins-only',
+          excludeTraitor: data.camp === 'Traître' // Exclude traitor from Loups filtering
         },
         fromComponent: `Top 20 des Performances (Min. ${minGames} parties dans ce camp)`
       });
