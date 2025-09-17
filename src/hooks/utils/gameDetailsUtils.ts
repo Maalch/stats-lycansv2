@@ -1,6 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
-import { getWinnerCampFromGame } from '../../utils/gameUtils';
+import { getWinnerCampFromGame, getPlayerCampFromRole, getPlayerMainRoleFromRole } from '../../utils/gameUtils';
 
 // Standalone interface for player role information
 export interface PlayerRole {
@@ -187,26 +187,9 @@ export function isPlayerInSmallCampFromGameLog(
   const playerCamp = playerStat.MainRoleInitial;
   
   switch (campName) {
-    case 'Traître':
-      return playerCamp === 'Traître';
-    case 'Idiot du Village':
-      return playerCamp === 'Idiot du Village';
-    case 'Cannibale':
-      return playerCamp === 'Cannibale';
-    case 'Agent':
-      return playerCamp === 'Agent';
-    case 'Espion':
-      return playerCamp === 'Espion';
-    case 'Scientifique':
-      return playerCamp === 'Scientifique';
-    case 'Amoureux':
-      return playerCamp === 'Amoureux';
-    case 'La Bête':
-      return playerCamp === 'La Bête';
-    case 'Chasseur de primes':
-      return playerCamp === 'Chasseur de primes';
-    case 'Vaudou':
-      return playerCamp === 'Vaudou';
+    case 'Traître': case 'Idiot du Village': case 'Cannibale': case 'Agent': case 'Espion': case 'Scientifique': 
+    case 'Amoureux': case 'La Bête': case 'Chasseur de primes': case 'Vaudou':
+      return playerCamp === campName;
     case 'Villageois':
       // For villagers, check if player is in game but not in any special role
       const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
@@ -461,26 +444,11 @@ export function filterByCampFromGameLog(
             return game.PlayerStats.some(player => {
               const playerRole = player.MainRoleInitial;
               switch (camp) {
-                case 'Traître':
-                  return playerRole === 'Traître';
-                case 'Idiot du Village':
-                  return playerRole === 'Idiot du Village';
-                case 'Cannibale':
-                  return playerRole === 'Cannibale';
-                case 'Agent':
-                  return playerRole === 'Agent';
-                case 'Espion':
-                  return playerRole === 'Espion';
-                case 'Scientifique':
-                  return playerRole === 'Scientifique';
-                case 'Amoureux': case 'Amoureux Loup': case 'Amoureux Villageois':
+                case 'Traître': case 'Idiot du Village': case 'Cannibale': case 'Agent': case 'Espion': case 'Scientifique':
+                case 'Amoureux': case 'La Bête': case 'Chasseur de primes': case 'Vaudou':
+                  return playerRole === camp;
+                 case 'Amoureux Loup': case 'Amoureux Villageois':
                   return playerRole === 'Amoureux';
-                case 'La Bête':
-                  return playerRole === 'La Bête';
-                case 'Chasseur de primes':
-                  return playerRole === 'Chasseur de primes';
-                case 'Vaudou':
-                  return playerRole === 'Vaudou';
                 case 'Villageois':
                   const specialRoles = ['Loup', 'Traître', 'Idiot du Village', 'Cannibale', 'Agent', 
                                        'Espion', 'Scientifique', 'Amoureux', 'La Bête', 'Chasseur de primes', 'Vaudou'];
@@ -890,61 +858,8 @@ export function createPlayerRolesFromGameLog(game: GameLogEntry): PlayerRole[] {
 
   game.PlayerStats.forEach(playerStat => {
     const player = playerStat.Username;
-    let role = playerStat.MainRoleInitial;
-    let camp = playerStat.MainRoleInitial;
-
-    // Map roles to appropriate camps
-    switch (playerStat.MainRoleInitial) {
-      case 'Loup':
-        role = 'Loup';
-        camp = 'Loup';
-        break;
-      case 'Traître':
-        role = 'Traître';
-        camp = 'Loup';
-        break;
-      case 'Idiot du Village':
-        role = 'Idiot du Village';
-        camp = 'Idiot du Village';
-        break;
-      case 'Cannibale':
-        role = 'Cannibale';
-        camp = 'Cannibale';
-        break;
-      case 'Agent':
-        role = 'Agent';
-        camp = 'Agent';
-        break;
-      case 'Espion':
-        role = 'Espion';
-        camp = 'Espion';
-        break;
-      case 'Scientifique':
-        role = 'Scientifique';
-        camp = 'Scientifique';
-        break;
-      case 'La Bête':
-        role = 'La Bête';
-        camp = 'La Bête';
-        break;
-      case 'Chasseur de primes':
-        role = 'Chasseur de primes';
-        camp = 'Chasseur de primes';
-        break;
-      case 'Vaudou':
-        role = 'Vaudou';
-        camp = 'Vaudou';
-        break;
-      case 'Amoureux':
-        role = 'Amoureux';
-        camp = 'Amoureux';
-        break;
-      case 'Villageois':
-      default:
-        role = 'Villageois';
-        camp = 'Villageois';
-        break;
-    }
+    let role = getPlayerMainRoleFromRole(playerStat.MainRoleInitial);
+    let camp = getPlayerCampFromRole(playerStat.MainRoleInitial);
 
     playerRoles.push({ player, role, camp });
   });
