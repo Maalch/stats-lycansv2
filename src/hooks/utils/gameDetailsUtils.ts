@@ -1023,7 +1023,7 @@ export function computeGameDetailsFromGameLog(
     return {
       gameId: game.DisplayedId, 
       date: formattedDate,
-      isModded: game.LegacyData?.Modded || false,
+      isModded: game.Modded || false,
       playerCount,
       wolfCount,
       hasTraitor: traitors.length > 0,

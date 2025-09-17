@@ -31,7 +31,6 @@ export interface PlayerStat {
 export interface LegacyData {
   VODLink: string | null;
   VODLinkEnd: string | null;
-  Modded: boolean;
 }
 
 export interface GameLogEntry {
@@ -44,6 +43,7 @@ export interface GameLogEntry {
   HarvestDone: number;            // Actual harvest achieved at the end of the game
   EndTiming: string | null;       // Timing of game end (e.g., "Nuit 5 --> N5", "Jour 6 --> J6")
   Version: string;               // Mod version used for the game
+  Modded: boolean;              // Whether the game was modded or not
   LegacyData: LegacyData | null;
   PlayerStats: PlayerStat[];
 }
@@ -176,7 +176,7 @@ function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean;
       if (!correspondingGame) return false;
       // Convert GameLogEntry to a format compatible with legacy filtering
       gameRecord = {
-        "Game Moddée": correspondingGame.LegacyData?.Modded || true,
+        "Game Moddée": correspondingGame.Modded || true,
         Date: new Date(correspondingGame.StartDate).toLocaleDateString('fr-FR', {
           day: '2-digit',
           month: '2-digit',
@@ -252,7 +252,7 @@ function applyGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[
 
     // Apply game type filter
     if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-      const isModded = game.LegacyData?.Modded ?? true; // Default to true if no LegacyData
+      const isModded = game.Modded ?? true; // Default to true if no LegacyData
       if (settings.gameFilter === 'modded') {
         if (!isModded) return false;
       } else if (settings.gameFilter === 'non-modded') {
@@ -437,7 +437,7 @@ export function useFilteredGameLogData(): {
     return rawGameLogData.GameStats.filter(game => {
       // Apply game type filter
       if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-        const isModded = game.LegacyData?.Modded ?? true; // Default to true if no LegacyData
+        const isModded = game.Modded ?? true; // Default to true if no LegacyData
         if (settings.gameFilter === 'modded') {
           if (!isModded) return false;
         } else if (settings.gameFilter === 'non-modded') {

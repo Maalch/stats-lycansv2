@@ -79,8 +79,8 @@ export function SettingsPanel() {
     return gameLogData.filter(game => {
       // Apply game type filter
       if (settings.filterMode === 'gameType') {
-        if (settings.gameFilter === 'modded' && !game.LegacyData?.Modded) return false;
-        if (settings.gameFilter === 'non-modded' && game.LegacyData?.Modded) return false;
+        if (settings.gameFilter === 'modded' && !game.Modded) return false;
+        if (settings.gameFilter === 'non-modded' && game.Modded) return false;
       }
       
       // Apply date range filter
