@@ -142,6 +142,23 @@ export function getPlayerCampFromRole(roleName: string): string {
   return 'Villageois';
 }
 
+
+/**
+ * Helper function to get player's main role from role name
+ */
+export function getPlayerMainRoleFromRole(mainRoleName: string): string {
+  if (!mainRoleName) return 'Villageois';
+
+  //special rules for Chasseur and Alchimiste: they are Villageois main role
+  if (mainRoleName === 'Chasseur' || mainRoleName === 'Alchimiste') {
+    return 'Villageois';
+  }
+
+  // All other roles keep their main role name
+  return mainRoleName;
+}
+
+
 export function getWinnerCampFromGame(game: GameLogEntry): string {
  // Determine winner camp from PlayerStats
   const winners = game.PlayerStats.filter(p => p.Victorious);
