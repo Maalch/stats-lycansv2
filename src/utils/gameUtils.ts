@@ -176,12 +176,12 @@ export function getWinnerCampFromGame(game: GameLogEntry): string {
       winnerCamp = 'Amoureux';
     }
     // Check for Villageois camp victory (Villageois, Chasseur, or Alchmiste)
-    else if (winnerRoles.includes('Villageois') || winnerRoles.includes('Chasseur') || winnerRoles.includes('Alchmiste')) {
+    else if (winnerRoles.includes('Villageois') || winnerRoles.includes('Chasseur') || winnerRoles.includes('Alchimiste')) {
       winnerCamp = 'Villageois';
     }
     // Check for solo role victory
     else {
-      const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître', 'Chasseur', 'Alchmiste', 'Amoureux Loup', 'Amoureux Villageois'].includes(role));
+      const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître', 'Chasseur', 'Alchimiste', 'Amoureux Loup', 'Amoureux Villageois'].includes(role));
       if (soloWinnerRoles.length > 0) {
         winnerCamp = soloWinnerRoles[0]; // Use the first solo role as camp name
       } else {

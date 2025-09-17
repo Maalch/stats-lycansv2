@@ -39,20 +39,7 @@ export function computePlayerStats(
               gamesPlayedPercent: "0",
               wins: 0,
               winPercent: "0",
-              camps: {
-                "Villageois": 0,
-                "Loup": 0,
-                "Traître": 0,
-                "Idiot du Village": 0,
-                "Cannibale": 0,
-                "Agent": 0,
-                "Espion": 0,
-                "Scientifique": 0,
-                "Amoureux": 0,
-                "La Bête": 0,
-                "Chasseur de primes": 0,
-                "Vaudou": 0
-              }
+              camps: {} // Empty object, camps will be added dynamically
             };
           }
 
@@ -62,9 +49,12 @@ export function computePlayerStats(
           // Get player's camp from their MainRoleInitial
           const playerCamp = playerStat.MainRoleInitial;
 
-          // Increment camp count (using type assertion for safety)
-          if (playerCamp in allPlayers[player].camps) {
-            allPlayers[player].camps[playerCamp as keyof PlayerCamps]++;
+          // Increment camp count - create the camp if it doesn't exist
+          if (playerCamp) {
+            if (!(playerCamp in allPlayers[player].camps)) {
+              allPlayers[player].camps[playerCamp] = 0;
+            }
+            allPlayers[player].camps[playerCamp]++;
           }
 
           // Check if player won using the Victorious boolean
