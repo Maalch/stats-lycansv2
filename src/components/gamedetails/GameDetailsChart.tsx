@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { useGameDetailsFromRaw } from '../../hooks/useGameDetailsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { lycansColorScheme } from '../../types/api';
+import { lycansColorScheme, frenchColorMapping } from '../../types/api';
 import './GameDetailsChart.css';
 
 type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp'  | 'winner';
@@ -594,48 +594,46 @@ function GameDetailView({ game }: { game: any }) {
           <div className="lycans-player-roles-grid">
             {game.playerRoles.map((playerRole: any, index: number) => {
               // Find matching player details
-              //const playerDetails = game.playerDetails.find((detail: any) => detail.player === playerRole.player);
+              const playerDetails = game.playerDetails.find((detail: any) => detail.Username === playerRole.player);
               
               // Build the display text with additional details
               let displayText = playerRole.role === playerRole.camp 
                 ? playerRole.camp 
                 : `${playerRole.camp} (${playerRole.role})`;
+
+              // Get the camp border color
+              const campBorderColor = lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#666';
               
-                /*
-              if (playerDetails) {
-                const additionalInfo = [];
-                
-                // Add wolf power or villager job
-                if (playerDetails.wolfPower && playerDetails.wolfPower.trim()) {
-                  additionalInfo.push(playerDetails.wolfPower);
-                } else if (playerDetails.villagerJob && playerDetails.villagerJob.trim()) {
-                  additionalInfo.push(playerDetails.villagerJob);
-                }
-                
-                // Build the final display text
-                if (additionalInfo.length > 0) {
-                  displayText = `${playerRole.camp} - ${additionalInfo[0]}`;
-                  
-                  // Add secondary role in parentheses if exists
-                  if (playerDetails.secondaryRole && playerDetails.secondaryRole.trim()) {
-                    displayText += ` (${playerDetails.secondaryRole})`;
-                  }
-                } else if (playerDetails.secondaryRole && playerDetails.secondaryRole.trim()) {
-                  // Only secondary role, no job/power
-                  displayText = `${playerRole.camp} (${playerDetails.secondaryRole})`;
-                }
-              }*/
+              // Get player color for name (if available)
+              // First try the French color mapping from the log, then fall back to camp color
+              let playerColor = lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#fff';
+              if (playerDetails?.Color && frenchColorMapping[playerDetails.Color]) {
+                playerColor = frenchColorMapping[playerDetails.Color];
+              }
+              
+              // Check if player is dead
+              const isDead = playerDetails?.DeathTiming;
+              
+              // Check if player is victorious
+              const isVictorious = playerDetails?.Victorious;
               
               return (
-                <div key={index} className="lycans-player-role-item">
+                <div 
+                  key={index} 
+                  className={`lycans-player-role-item ${isVictorious ? 'victorious' : ''}`}
+                  style={{
+                    borderColor: campBorderColor,
+                  }}
+                >
                   <div
                     className="lycans-player-name"
                     style={{
-                      color: lycansColorScheme[playerRole.camp as keyof typeof lycansColorScheme] || '#fff',
+                      color: playerColor,
                       textAlign: 'left'
                     }}
                   >
                     {playerRole.player}
+                    {isDead && <span className="death-skull">💀</span>}
                   </div>
                   <div
                     className="lycans-player-camp"

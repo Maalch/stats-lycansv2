@@ -3,93 +3,6 @@ import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
 import { PLAYER_NAME_MAPPING } from '../utils/playerNameMapping';
 
-/**
- * Normalize a player name using the mapping configuration
- * Performs case-insensitive matching and returns the canonical name
- * 
- * @param playerName - The original player name from the data
- * @returns The normalized/canonical player name
- */
-function normalizePlayerName(playerName: string): string {
-  if (!playerName) return playerName;
-  
-  // Try exact match first
-  if (PLAYER_NAME_MAPPING[playerName]) {
-    return PLAYER_NAME_MAPPING[playerName];
-  }
-  
-  // Try case-insensitive match
-  const lowerPlayerName = playerName.toLowerCase();
-  for (const [variant, canonical] of Object.entries(PLAYER_NAME_MAPPING)) {
-    if (variant.toLowerCase() === lowerPlayerName) {
-      return canonical;
-    }
-  }
-  
-  // Return original name if no mapping found
-  return playerName;
-}
-
-/**
- * Normalize all player names in a PlayerStat object
- * Handles Username, KillerName, and Vote targets
- */
-function normalizePlayerStat(playerStat: PlayerStat): PlayerStat {
-  if (!playerStat) {
-    console.warn('normalizePlayerStat: received null/undefined playerStat');
-    return playerStat;
-  }
-  
-  // Add safety check for Votes array
-  if (playerStat.Votes && !Array.isArray(playerStat.Votes)) {
-    console.warn('normalizePlayerStat: Votes is not an array for player', playerStat.Username, playerStat.Votes);
-  }
-  
-  return {
-    ...playerStat,
-    Username: normalizePlayerName(playerStat.Username),
-    KillerName: playerStat.KillerName ? normalizePlayerName(playerStat.KillerName) : playerStat.KillerName,
-    Votes: (playerStat.Votes || []).map(vote => {
-      if (!vote) return vote;
-      return {
-        ...vote,
-        Target: vote.Target === 'Passé' ? vote.Target : normalizePlayerName(vote.Target)
-      };
-    })
-  };
-}
-
-/**
- * Normalize all player names in a GameLogEntry
- */
-function normalizeGameLogEntry(game: GameLogEntry): GameLogEntry {
-  if (!game) {
-    console.warn('normalizeGameLogEntry: received null/undefined game');
-    return game;
-  }
-  
-  // Add safety check for PlayerStats array
-  if (game.PlayerStats && !Array.isArray(game.PlayerStats)) {
-    console.warn('normalizeGameLogEntry: PlayerStats is not an array for game', game.Id, game.PlayerStats);
-  }
-  
-  return {
-    ...game,
-    PlayerStats: (game.PlayerStats || []).map(normalizePlayerStat)
-  };
-}
-
-/**
- * Normalize player names in BR data
- * BR data has player names in the "Participants" field
- */
-function normalizeBRData(brData: RawBRData): RawBRData {
-  return {
-    ...brData,
-    Participants: normalizePlayerName(brData.Participants)
-  };
-}
-
 // New GameLog interfaces
 export interface Vote {
   Target: string;                 // Player name targeted by the vote or "Passé" for abstention
@@ -182,6 +95,8 @@ interface CombinedFilteredData {
   isLoading: boolean;
   error: string | null;
 }
+
+
 
 /**
  * Centralized hook to fetch all raw data with a single loading state
@@ -634,4 +549,91 @@ function generateDisplayedIds(games: GameLogEntry[]): Map<string, string> {
   });
   
   return displayedIdMap;
+}
+
+/**
+ * Normalize a player name using the mapping configuration
+ * Performs case-insensitive matching and returns the canonical name
+ * 
+ * @param playerName - The original player name from the data
+ * @returns The normalized/canonical player name
+ */
+function normalizePlayerName(playerName: string): string {
+  if (!playerName) return playerName;
+  
+  // Try exact match first
+  if (PLAYER_NAME_MAPPING[playerName]) {
+    return PLAYER_NAME_MAPPING[playerName];
+  }
+  
+  // Try case-insensitive match
+  const lowerPlayerName = playerName.toLowerCase();
+  for (const [variant, canonical] of Object.entries(PLAYER_NAME_MAPPING)) {
+    if (variant.toLowerCase() === lowerPlayerName) {
+      return canonical;
+    }
+  }
+  
+  // Return original name if no mapping found
+  return playerName;
+}
+
+/**
+ * Normalize all player names in a PlayerStat object
+ * Handles Username, KillerName, and Vote targets
+ */
+function normalizePlayerStat(playerStat: PlayerStat): PlayerStat {
+  if (!playerStat) {
+    console.warn('normalizePlayerStat: received null/undefined playerStat');
+    return playerStat;
+  }
+  
+  // Add safety check for Votes array
+  if (playerStat.Votes && !Array.isArray(playerStat.Votes)) {
+    console.warn('normalizePlayerStat: Votes is not an array for player', playerStat.Username, playerStat.Votes);
+  }
+  
+  return {
+    ...playerStat,
+    Username: normalizePlayerName(playerStat.Username),
+    KillerName: playerStat.KillerName ? normalizePlayerName(playerStat.KillerName) : playerStat.KillerName,
+    Votes: (playerStat.Votes || []).map(vote => {
+      if (!vote) return vote;
+      return {
+        ...vote,
+        Target: vote.Target === 'Passé' ? vote.Target : normalizePlayerName(vote.Target)
+      };
+    })
+  };
+}
+
+/**
+ * Normalize all player names in a GameLogEntry
+ */
+function normalizeGameLogEntry(game: GameLogEntry): GameLogEntry {
+  if (!game) {
+    console.warn('normalizeGameLogEntry: received null/undefined game');
+    return game;
+  }
+  
+  // Add safety check for PlayerStats array
+  if (game.PlayerStats && !Array.isArray(game.PlayerStats)) {
+    console.warn('normalizeGameLogEntry: PlayerStats is not an array for game', game.Id, game.PlayerStats);
+  }
+  
+  return {
+    ...game,
+    PlayerStats: (game.PlayerStats || []).map(normalizePlayerStat)
+  };
+}
+
+/**
+ * Normalize player names in BR data
+ * BR data has player names in the "Participants" field
+ */
+function normalizeBRData(brData: RawBRData): RawBRData {
+  return {
+    ...brData,
+    Participants: normalizePlayerName(brData.Participants)
+  };
 }

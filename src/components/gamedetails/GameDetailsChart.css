@@ -296,10 +296,11 @@
 
 .lycans-player-role-item {
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
   border-radius: 6px;
   padding: 0.75rem;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 .lycans-player-role-item:hover {
@@ -307,10 +308,38 @@
   color: white;
 }
 
+.lycans-player-role-item.victorious {
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, rgba(255, 215, 0, 0.1) 100%);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.lycans-player-role-item.victorious:hover {
+  background: linear-gradient(135deg, var(--accent-color) 0%, rgba(255, 215, 0, 0.2) 100%);
+  color: white;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+.lycans-player-role-item.victorious::before {
+  content: '👑';
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
 .lycans-player-name {
   font-weight: 600;
   font-size: 0.95rem;
   margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.lycans-player-name .death-skull {
+  color: #ff4444;
+  font-size: 0.8rem;
 }
 
 .lycans-player-role {
