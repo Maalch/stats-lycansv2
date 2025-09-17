@@ -1020,24 +1020,6 @@ export function computeGameDetailsFromGameLog(
       harvestPercentage = (game.HarvestDone / game.HarvestGoal);
     }
 
-    // Calculate survivors by camp
-    const villagerSurvivors = victoriousPlayers.filter(p => 
-      p.MainRoleInitial === 'Villageois' || 
-      (winningCamp === 'Villageois' && !['Loup', 'Traître', 'Amoureux'].includes(p.MainRoleInitial) && !soloRoleTypes.includes(p.MainRoleInitial))
-    ).length;
-    
-    const wolfSurvivors = victoriousPlayers.filter(p => 
-      p.MainRoleInitial === 'Loup' || p.MainRoleInitial === 'Traître'
-    ).length;
-    
-    const loverSurvivors = lovers.length > 0 ? victoriousPlayers.filter(p => 
-      p.MainRoleInitial === 'Amoureux'
-    ).length : null;
-    
-    const soloSurvivors = soloRolePlayers.length > 0 ? victoriousPlayers.filter(p => 
-      soloRoleTypes.includes(p.MainRoleInitial)
-    ).length : null;
-
     return {
       gameId: game.DisplayedId, 
       date: formattedDate,
@@ -1049,10 +1031,6 @@ export function computeGameDetailsFromGameLog(
       soloRoles,
       winningCamp,
       dayCount,
-      villagerSurvivors,
-      wolfSurvivors,
-      loverSurvivors,
-      soloSurvivors,
       winners: victoriousPlayers.map(p => p.Username).join(', '),
       harvest: game.HarvestDone,
       totalHarvest: game.HarvestGoal,
