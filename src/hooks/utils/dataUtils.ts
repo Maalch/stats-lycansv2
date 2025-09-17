@@ -61,26 +61,9 @@ export function formatLycanDate(date: any): string {
 // Helper to determine if a camp won based on camp name and winner camp
 export function didCampWin(camp: string, winnerCamp: string): boolean {
   if (camp === winnerCamp) return true;
-  // Special case: Traitor wins if Wolves win
+  // Special case: Traitor wins if Wolves win, Amoureux can be disambiguous and chasseur/alchimiste count as villageois
   if (camp === "Traître" && winnerCamp === "Loup") return true;
   if ((camp === "Amoureux Villageois" || camp === "Amoureux Loup") && winnerCamp === "Amoureux") return true;
   if ((camp === "Chasseur" || camp === "Alchimiste") && winnerCamp === "Villageois") return true;
   return false;
-}
-
-// Helper to get player's main camp (Villageois or Loups) from game-player-camp map
-export function getPlayerMainCamp(
-  gamePlayerCampMap: Record<string, Record<string, string>>, 
-  gameId: string, 
-  playerName: string
-): 'Villageois' | 'Loup' | 'Autres' {
-  const camp = getPlayerCamp(gamePlayerCampMap, gameId, playerName);
-  
-  if (camp === 'Loup' || camp === 'Traître') {
-    return 'Loup';
-  } else if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux', 'Amoureux Villageois', 'Amoureux'].includes(camp)) {
-    return 'Autres';
-  } else {
-    return 'Villageois';
-  }
 }

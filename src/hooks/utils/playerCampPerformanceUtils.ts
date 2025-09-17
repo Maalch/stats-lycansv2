@@ -309,7 +309,7 @@ export function computePlayerCampPerformance(
   calculatePerformanceDifferentials(playerCampPerformance, campStats);
 
   // Format results with minimum game threshold
-  const minGamesToInclude = 5; // Minimum games required in a camp to be included
+  const minGamesToInclude = 3; // Minimum games required in a camp to be included
   const { campAverages, playerPerformanceArray } = formatResults(
     playerCampPerformance, 
     campStats, 

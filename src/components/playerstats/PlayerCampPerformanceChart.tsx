@@ -19,7 +19,7 @@ export function PlayerCampPerformanceChart() {
     navigationState.campPerformanceState?.selectedCampPerformanceCamp || 'Villageois'
   );
   const [minGames, setMinGames] = useState<number>(
-    navigationState.campPerformanceState?.selectedCampPerformanceMinGames || 5
+    navigationState.campPerformanceState?.selectedCampPerformanceMinGames || 3
   );
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformanceFromRaw();

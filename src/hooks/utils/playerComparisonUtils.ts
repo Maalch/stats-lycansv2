@@ -363,8 +363,6 @@ export function generatePlayerComparison(
           return 'Loup'; // Wolves team: Loups + Traître (only exception)
         } else {
           // Every other role works alone and is its own camp
-          // Villageois, Idiot du Village, Cannibale, Agent, Espion, Scientifique, 
-          // La Bête, Chasseur de primes, Vaudou, Amoureux - all separate camps
           return camp;
         }
       };

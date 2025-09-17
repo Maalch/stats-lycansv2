@@ -94,7 +94,7 @@ export const playersColor: Record<string, string> = {
 export const lycansOtherCategoryColor = '#808080ff';
 
   // Options pour le nombre minimum de parties
-export const minGamesOptions = [5, 10, 25, 50, 75, 100, 150, 200];
+export const minGamesOptions = [3, 5, 10, 25, 50, 75, 100, 150, 200];
 
 // Types pour les statistiques des joueurs
 export interface PlayerCamps {

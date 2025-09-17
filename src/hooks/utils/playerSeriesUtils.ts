@@ -1,4 +1,5 @@
 import type { GameLogEntry } from '../useCombinedRawData';
+import { getPlayerMainRoleFromRole } from '../../utils/gameUtils';
 
 /**
  * Helper function to get player's main camp from role name
@@ -6,19 +7,18 @@ import type { GameLogEntry } from '../useCombinedRawData';
 function getPlayerMainCampFromRole(roleName: string): 'Villageois' | 'Loup' | 'Autres' {
   if (!roleName) return 'Villageois';
   
+  roleName = getPlayerMainRoleFromRole(roleName);
+
   // Loups camp
   if (['Loup', 'Traître'].includes(roleName)) {
     return 'Loup';
   }
-  
-  // Special roles (solo or special mechanics) 
-  if (['Idiot du Village', 'Cannibale', 'Agent', 'Espion', 'Scientifique', 
-       'La Bête', 'Chasseur de primes', 'Vaudou', 'Amoureux'].includes(roleName)) {
+  else if (roleName === 'Villageois') {
+    return 'Villageois';
+  }
+  else {
     return 'Autres';
   }
-  
-  // Default to Villageois (includes 'Villageois' and any other unrecognized roles)
-  return 'Villageois';
 }
 
 /**
