@@ -72,8 +72,7 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
                       key={player.Username} 
                       className={`player-badge ${player.Victorious ? 'winner' : ''} ${player.DeathTiming ? 'dead' : 'alive'}`}
                       style={{ 
-                        borderColor: playerColor,
-                        color: playerColor
+                        borderColor: playerColor
                       }}
                       title={`${player.Username} - ${getPlayerMainRoleFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${player.DeathTiming})` : ''}`}
                     >
@@ -178,21 +177,6 @@ export function GameDetailView({ game }: { game: any }) {
           </div>
         </div>
 
-        {/* Results */}
-        <div className="lycans-game-detail-section">
-          <h4>Résultats</h4>
-          <div className="lycans-game-detail-stats">
-            <div className="lycans-stat-item">
-              <span className="label">Camp vainqueur:</span>
-              <span className="value">{game.winningCamp}</span>
-            </div>
-            <div className="lycans-stat-item">
-              <span className="label">Gagnants:</span>
-              <span className="value">{game.winners}</span>
-            </div>
-          </div>
-        </div>
-
         {/* Harvest (if applicable) */}
         {game.harvest !== null && (
           <div className="lycans-game-detail-section">
@@ -217,6 +201,9 @@ export function GameDetailView({ game }: { game: any }) {
             </div>
           </div>
         )}
+
+        {/* Interactive Camp Visualization */}
+        <CampVisualization playerData={game.playerData} />
 
         {/* Player Roles */}
         <div className="lycans-game-detail-section full-width">
@@ -324,8 +311,6 @@ export function GameDetailView({ game }: { game: any }) {
           </div>
         </div>
 
-        {/* Interactive Camp Visualization */}
-        <CampVisualization playerData={game.playerData} />
 
         {/* Video Toggle Button */}
         {game.youtubeEmbedUrl && (
