@@ -775,7 +775,7 @@ export function computeGameDetailsFromGameLog(
     // Extract day count from EndTiming
     let dayCount = 0;
     if (game.EndTiming) {
-      const timingMatch = game.EndTiming.match(/(?:Nuit|Jour)\s+(\d+)/);
+      const timingMatch = game.EndTiming.match(/[UNJMC](\d+)/);
       if (timingMatch) {
         dayCount = parseInt(timingMatch[1], 10);
       }
