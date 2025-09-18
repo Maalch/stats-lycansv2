@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter } from 'recharts';
 import { usePlayerCampPerformanceFromRaw } from '../../hooks/usePlayerCampPerformanceFromRaw';
-import { lycansColorScheme, playersColor } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
 import { minGamesOptions} from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
@@ -10,6 +10,10 @@ type ViewMode =  'player-performance' | 'top-performers';
 
 export function PlayerCampPerformanceChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  
+  // Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  const playersColor = useThemeAdjustedFrenchColorMapping();
   
   // Use navigationState to restore state, with fallbacks
   const [viewMode, setViewMode] = useState<ViewMode>(

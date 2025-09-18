@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { useCampWinStatsFromRaw } from '../../hooks/useCampWinStatsFromRaw';
-import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
 
@@ -11,7 +11,9 @@ const lycansDefaultColor = '#607D8B';
 export function CampsChart() {
   const { navigateToGameDetails } = useNavigation();
   const { campWinStats: victoriesDonnees, isLoading: chargementVictoires, errorInfo: erreurVictoires } = useCampWinStatsFromRaw();
-
+  // Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  
   // Prepare camp averages data for visualization (now from campWinStats)
   const campAveragesData = useMemo(() => {
     if (!victoriesDonnees?.campAverages) return [];

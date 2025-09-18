@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { lycansColorScheme, frenchColorMapping } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
 import { getPlayerMainRoleFromRole, getPlayerCampFromRole } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
 
@@ -9,6 +9,10 @@ interface CampVisualizationProps {
 }
 
 const CampVisualization = ({ playerData }: CampVisualizationProps) => {
+  // Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  const frenchColorMapping = useThemeAdjustedFrenchColorMapping();
+  
   // Group players by their camps
   const campGroups = playerData.reduce((groups, player) => {
     const camp = getPlayerCampFromRole(player.MainRoleInitial);
@@ -112,6 +116,9 @@ function formatDuration(durationInSeconds: number | null): string {
 // Component to display detailed view of a single game
 export function GameDetailView({ game }: { game: any }) {
   const [showVideo, setShowVideo] = useState(false);
+  
+  // Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
 
   return (
     <div className="lycans-game-detail-view">

@@ -2,12 +2,15 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList, Cell } from 'recharts';
 import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { lycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysisFromRaw();
   const { navigateToGameDetails } = useNavigation();
+
+  // Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
 
   if (telechargementActif) {
     return <div className="statistiques-attente">Analyse des durées de partie en cours...</div>;

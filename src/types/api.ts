@@ -1,5 +1,7 @@
+import { getThemeAdjustedColor, getThemeAdjustedLycansColors, useThemeAdjustedColors } from '../utils/themeColors';
+
 // Custom color palette for camps
-export const lycansColorScheme: Record<string, string> = {
+const lycansColorScheme: Record<string, string> = {
   'Idiot du Village': '#00FF00',
   'Cannibale': '#00FF80',
   'Agent': '#800080',
@@ -12,87 +14,12 @@ export const lycansColorScheme: Record<string, string> = {
   'Amoureux': '#FF80FF',
   'Loup': '#FF0000',
   'Villageois': '#0096FF',
-  'Chasseur': '#fbff00ff',
-  'Alchimiste': '#ff00d4ff',
-};
-
-export const playersColor: Record<string, string> = {
-  "Ponce": "#0076FF",           // Bleu royal
-  "Khalen": "#0012A6",          // Bleu foncé
-  "Monodie": "#0076FF",         // Bleu royal
-  "Kao": "#909090",             // Gris
-  "Arkantors": "#FF61F4",       // Rose
-  "Bytell": "#54D90F",          // Vert pomme
-  "Kyria": "#6F00D9",           // Violet
-  "Fukano": "#FF9500",          // Orange
-  "Brybry": "#009A13",          // Vert foncé 
-  "Baout": "#54D90F",           // Vert pomme
-  "Lutti": "#00FFFF",           // Turquoise
-  "Miraaaaaah": "#6F00D9",      // Violet
-  "Tsuna": "#A65200",           // Marron
-  "Noamouille": "#FF9500",      // Orange
-  "Craco": "#A65200",           // Marron
-  "ClydeCreator": "#FF0000",    // Rouge
-  "Ketchopi": "#FFED00",        // Jaune
-  "BoccA": "#909090",           // Gris
-  "Koka": "#009A13",            // Vert foncé
-  "Anaee": "#6F00D9",           // Violet
-  "Flonflon": "#54D90F",        // Vert pomme
-  "Lydiaam": "#FFED00",         // Jaune
-  "Heimdalle": "#00FFFF",       // Turquoise
-  "Drakony": "#909090",         // Gris
-  "Tone": "#FFED00",            // Jaune
-  "Mathy": "#FFED00",           // Jaune
-  "Poachimpa": "#A65200",       // Marron
-  "Cyldhur": "#909090",         // Gris
-  "Reivil": "#FF9500",          // Orange
-  "Zarcross": "#FF9500",        // Orange
-  "Shaunz": "#0076FF",          // Bleu royal 
-  "Aayley": "#009A13",          // Vert foncé
-  "RomainJacques": "#FFED00",   // Jaune
-  "DevGirl_": "#FF61F4",        // Rose
-  "CHLOE": "#00FFFF",           // Turquoise
-  "Yoona": "#FF61F4",           // Rose
-  "Mickalow": "#009A13",        // Vert foncé
-  "PeoBran": "#00FFFF",         // Turquoise
-  "Tovi": "#909090",            // Gris
-  "Kissiffrote": "#0076FF",     // Bleu royal 
-  "Pelerine": "#909090",        // Gris
-  "MaMaPaprika": "#FF9500",     // Orange
-  "Xari": "#009A13",            // Vert foncé
-  "Sakor": "#FF9500",           // Orange
-  "HortyUnderscore": "#00FFFF", // Turquoise
-  "LittleBigWhale": "#FF61F4",  // Rose
-  "Gom4rt": "#FFED00",          // Jaune
-  "Ultia": "#6F00D9",           // Violet
-  "Onutrem": "#0076FF",         // Bleu royal
-  "DFG": "#A65200",             // Marron
-  "Crocodyle": "#909090",       // Gris
-  "GoB": "#FF0000",             // Rouge
-  "Wingo": "#6F00D9",           // Violet
-  "Nahomay": "#FF61F4",         // Rose
-  "Naka": "#FFED00",            // Jaune
-  "Covfefe": "#6F00D9",         // Violet
-  "LyeGaia": "#009A13",         // Vert foncé 
-  "Maechi": "#009A13",          // Vert foncé
-  "TPK": "#009A13",             // Vert foncé
-  "Clem_mlrt": "#6F00D9",       // Violet
-  "Bidji": "#FF9500",           // Orange
-  "AfterNoune": "#FF9500",      // Orange
-  "JimmyBoyyy": "#A65200",      // Marron
-  "Mimosa_etoilee": "#FF0000",  // Rouge
-  "Leaprima": "#FFED00",        // Jaune
-  "Riri et son ptit Ricard": "#FF61F4", // Rose
-  "Berlu": "#009A13",           // Vert foncé
-  "Antoine": "#FF0000",         // Rouge
-  "AvaMind": "#00FFFF",         // Turquoise
-  "Skyyart": "#6F00D9",         // Violet
-  "Pressea": "#A65200",         // Marron
-  "Etoiles": "#54D90F"          // Vert pomme
+  'Chasseur': '#fbff00',
+  'Alchimiste': '#ff00d4',
 };
 
 // Mapping for French color names to hex codes 
-export const frenchColorMapping: Record<string, string> = {
+const frenchColorMapping: Record<string, string> = {
   "Bleu foncé": "#0012A6",      
   "Orange": "#FF9500",          
   "Turquoise": "#00FFFF",       
@@ -108,6 +35,89 @@ export const frenchColorMapping: Record<string, string> = {
 };
 
 export const lycansOtherCategoryColor = '#808080ff';
+
+const playerFrenchColorNames: Record<string, keyof typeof frenchColorMapping> = {
+  "Ponce": "Bleu royal",
+  "Khalen": "Bleu foncé",
+  "Monodie": "Bleu royal",
+  "Kao": "Gris",
+  "Arkantors": "Rose",
+  "Bytell": "Vert pomme",
+  "Kyria": "Violet",
+  "Fukano": "Orange",
+  "Brybry": "Vert foncé",
+  "Baout": "Vert pomme",
+  "Lutti": "Turquoise",
+  "Miraaaaaah": "Violet",
+  "Tsuna": "Marron",
+  "Noamouille": "Orange",
+  "Craco": "Marron",
+  "ClydeCreator": "Rouge",
+  "Ketchopi": "Jaune",
+  "BoccA": "Gris",
+  "Koka": "Vert foncé",
+  "Anaee": "Violet",
+  "Flonflon": "Vert pomme",
+  "Lydiaam": "Jaune",
+  "Heimdalle": "Turquoise",
+  "Drakony": "Gris",
+  "Tone": "Jaune",
+  "Mathy": "Jaune",
+  "Poachimpa": "Marron",
+  "Cyldhur": "Gris",
+  "Reivil": "Orange",
+  "Zarcross": "Orange",
+  "Shaunz": "Bleu royal",
+  "Aayley": "Vert foncé",
+  "RomainJacques": "Jaune",
+  "DevGirl_": "Rose",
+  "CHLOE": "Turquoise",
+  "Yoona": "Rose",
+  "Mickalow": "Vert foncé",
+  "PeoBran": "Turquoise",
+  "Tovi": "Gris",
+  "Kissiffrote": "Bleu royal",
+  "Pelerine": "Gris",
+  "MaMaPaprika": "Orange",
+  "Xari": "Vert foncé",
+  "Sakor": "Orange",
+  "HortyUnderscore": "Turquoise",
+  "LittleBigWhale": "Rose",
+  "Gom4rt": "Jaune",
+  "Ultia": "Violet",
+  "Onutrem": "Bleu royal",
+  "DFG": "Marron",
+  "Crocodyle": "Gris",
+  "GoB": "Rouge",
+  "Wingo": "Violet",
+  "Nahomay": "Rose",
+  "Naka": "Jaune",
+  "Covfefe": "Violet",
+  "LyeGaia": "Vert foncé",
+  "Maechi": "Vert foncé",
+  "TPK": "Vert foncé",
+  "Clem_mlrt": "Violet",
+  "Bidji": "Orange",
+  "AfterNoune": "Orange",
+  "JimmyBoyyy": "Marron",
+  "Mimosa_etoilee": "Rouge",
+  "Leaprima": "Jaune",
+  "Riri et son ptit Ricard": "Rose",
+  "Berlu": "Vert foncé",
+  "Antoine": "Rouge",
+  "AvaMind": "Turquoise",
+  "Skyyart": "Violet",
+  "Pressea": "Marron",
+  "Etoiles": "Vert pomme"
+};
+
+export const playersColor: Record<string, string> = Object.fromEntries(
+  Object.entries(playerFrenchColorNames).map(([player, colorName]) => [
+    player,
+    frenchColorMapping[colorName]
+  ])
+);
+
 
   // Options pour le nombre minimum de parties
 export const minGamesOptions = [3, 5, 10, 25, 50, 75, 100, 150, 200];
@@ -267,7 +277,7 @@ export function getRandomColor(seed: string) {
 export function getCampColor(campName: string, fallbackColor?: string): string {
   // Check if we have a predefined color
   if (lycansColorScheme[campName]) {
-    return lycansColorScheme[campName];
+    return getThemeAdjustedColor(lycansColorScheme[campName]);
   }
   
   // Generate a consistent color based on camp name
@@ -275,4 +285,52 @@ export function getCampColor(campName: string, fallbackColor?: string): string {
   
   // Return generated color or fallback
   return generatedColor || fallbackColor || lycansOtherCategoryColor;
+}
+
+/**
+ * Get theme-adjusted version of the lycans color scheme
+ * @returns Color scheme object with theme-appropriate colors
+ */
+export function getThemeAdjustedLycansColorScheme(): Record<string, string> {
+  return getThemeAdjustedLycansColors(lycansColorScheme);
+}
+
+/**
+ * Get theme-adjusted version of the French color mapping
+ * @returns Color mapping object with theme-appropriate colors
+ */
+export function getThemeAdjustedFrenchColorMapping(): Record<string, string> {
+  return getThemeAdjustedLycansColors(frenchColorMapping);
+}
+
+/**
+ * Get theme-adjusted version of the players color mapping
+ * @returns Players color mapping with theme-appropriate colors
+ */
+export function getThemeAdjustedPlayersColor(): Record<string, string> {
+  return getThemeAdjustedLycansColors(playersColor);
+}
+
+/**
+ * React hook to get theme-adjusted lycans color scheme that updates on theme change
+ * @returns Reactive color scheme object with theme-appropriate colors
+ */
+export function useThemeAdjustedLycansColorScheme(): Record<string, string> {
+  return useThemeAdjustedColors(lycansColorScheme);
+}
+
+/**
+ * React hook to get theme-adjusted French color mapping that updates on theme change
+ * @returns Reactive color mapping with theme-appropriate colors
+ */
+export function useThemeAdjustedFrenchColorMapping(): Record<string, string> {
+  return useThemeAdjustedColors(frenchColorMapping);
+}
+
+/**
+ * React hook to get theme-adjusted players color that updates on theme change
+ * @returns Reactive players color mapping with theme-appropriate colors
+ */
+export function useThemeAdjustedPlayersColor(): Record<string, string> {
+  return useThemeAdjustedColors(playersColor);
 }

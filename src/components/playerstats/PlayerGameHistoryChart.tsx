@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { lycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 type GroupByMethod = 'session' | 'month';
@@ -11,6 +11,9 @@ type GroupByMethod = 'session' | 'month';
 export function PlayerGameHistoryChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   
+// Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+
   // Use navigationState for persistence, with fallbacks to default values
   const selectedPlayerName = navigationState.selectedPlayerName || 'Ponce';
   const groupingMethod = navigationState.groupingMethod || 'session';
