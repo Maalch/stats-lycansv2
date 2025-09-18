@@ -4,8 +4,8 @@ on:
   schedule:
     # Run on Monday at 4 AM UTC
     - cron: '0 4 * * 1'
-    # Run on Tuesday at 4 AM UTC
-    - cron: '0 4 * * 2'
+    # Run on Thursday at 4 AM UTC
+    - cron: '0 4 * * 4'
   workflow_dispatch: # Allow manual triggering
   push:
     paths:
