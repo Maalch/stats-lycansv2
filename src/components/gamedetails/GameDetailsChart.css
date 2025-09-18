@@ -328,6 +328,15 @@
   color: white;
 }
 
+@media (prefers-color-scheme: light) {
+  .lycans-player-role-item:hover {
+    background: rgba(72, 83, 168, 0.2);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(72, 83, 168, 0.15);
+  }
+}
+
 .lycans-player-role-item.victorious {
   background: linear-gradient(135deg, var(--bg-tertiary) 0%, rgba(255, 215, 0, 0.1) 100%);
   box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
@@ -337,6 +346,15 @@
   background: linear-gradient(135deg, var(--accent-color) 0%, rgba(255, 215, 0, 0.2) 100%);
   color: white;
   box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+@media (prefers-color-scheme: light) {
+  .lycans-player-role-item.victorious:hover {
+    background: linear-gradient(135deg, rgba(72, 83, 168, 0.2) 0%, rgba(255, 215, 0, 0.3) 100%);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+  }
 }
 
 .lycans-player-role-item.victorious::before {
