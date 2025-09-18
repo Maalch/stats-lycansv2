@@ -2,11 +2,13 @@ import { useMemo } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useFilteredRawBRData, useFilteredRawBRGlobalData } from '../../hooks/useRawBRData';
 import { FullscreenChart } from '../common/FullscreenChart';
-import { playersColor, getRandomColor } from '../../types/api';
+import { useThemeAdjustedPlayersColor, getRandomColor } from '../../types/api';
 
 export function BRGeneralStatsChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredRawBRData();
   const { data: globalData, isLoading: globalLoading, error: globalError } = useFilteredRawBRGlobalData();
+
+  const playersColor = useThemeAdjustedPlayersColor();
 
   // Chart colors using CSS custom properties
   const chartColors = [
