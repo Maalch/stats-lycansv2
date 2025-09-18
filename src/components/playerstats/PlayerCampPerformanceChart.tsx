@@ -288,8 +288,8 @@ export function PlayerCampPerformanceChart() {
         {viewMode === 'player-performance' && (
           <>
             <div className="lycans-graphique-section">
-              <h3>Performance des Joueurs - {selectedCamp}</h3>
-              <FullscreenChart title={`Performance des Joueurs - ${selectedCamp}`}>
+              <h3>Meilleurs joueurs en {selectedCamp}</h3>
+              <FullscreenChart title={`Meilleurs Joueurs - ${selectedCamp}`}>
               <div style={{ height: 500 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
