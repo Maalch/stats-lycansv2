@@ -168,10 +168,10 @@ export function PlayerGameHistoryChart() {
 
   // Helper functions when there are too much data
   const getResponsiveXAxisSettings = (dataLength: number) => {
-    if (dataLength <= 15) return { fontSize: 11, angle: -45, height: 80, interval: 0 };
-    if (dataLength <= 30) return { fontSize: 10, angle: -45, height: 85, interval: 1 };
-    if (dataLength <= 50) return { fontSize: 9, angle: -60, height: 95, interval: 2 };
-    return { fontSize: 8, angle: -75, height: 105, interval: Math.floor(dataLength / 12) };
+    if (dataLength <= 15) return { fontSize: 12, angle: -45, height: 80, interval: 0 };
+    if (dataLength <= 30) return { fontSize: 12, angle: -45, height: 85, interval: 1 };
+    if (dataLength <= 50) return { fontSize: 12, angle: -60, height: 95, interval: 2 };
+    return { fontSize: 12, angle: -75, height: 105, interval: Math.floor(dataLength / 12) };
   };
 
   // Apply to both LineChart and BarChart XAxis
@@ -303,7 +303,7 @@ export function PlayerGameHistoryChart() {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={groupedData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 onClick={(data) => {
                   if (data && data.activeLabel) {
                     // Find the data point by matching the period
@@ -329,7 +329,7 @@ export function PlayerGameHistoryChart() {
                   fontSize={xAxisSettings.fontSize}
                 />
                 <YAxis 
-                  label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                  label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
                   domain={[0, 100]}
                 />
                 <Tooltip
@@ -385,7 +385,7 @@ export function PlayerGameHistoryChart() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={groupedData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
@@ -397,7 +397,7 @@ export function PlayerGameHistoryChart() {
                   fontSize={xAxisSettings.fontSize}
                 />
                 <YAxis 
-                  label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }}
+                  label={{ value: 'Nombre de parties', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
                   allowDecimals={false}
                 />
                 <Tooltip
@@ -629,7 +629,7 @@ export function PlayerGameHistoryChart() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={campDistributionData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
@@ -638,10 +638,10 @@ export function PlayerGameHistoryChart() {
                     textAnchor="end"
                     height={90}
                     interval={0}
-                    fontSize={11}
+                    fontSize={14}
                   />
                   <YAxis 
-                    label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
                     domain={[0, 100]}
                   />
                   <Tooltip

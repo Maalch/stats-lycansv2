@@ -293,7 +293,7 @@ export function CampsChart() {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={campAveragesData}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                      margin={{ top: 50, right: 30, left: 20, bottom: 0 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis 
@@ -305,7 +305,7 @@ export function CampsChart() {
                         fontSize={11}
                       />
                       <YAxis 
-                        label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                        label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
                         domain={[0, 100]}
                       />
                       <Tooltip
@@ -386,7 +386,7 @@ export function CampsChart() {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                       data={campDistributionData}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis 
@@ -398,7 +398,7 @@ export function CampsChart() {
                         fontSize={11}
                       />
                       <YAxis 
-                        label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }}
+                        label={{ value: 'Nombre de parties', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
                       />
                       <Tooltip
                         content={({ active, payload }) => {

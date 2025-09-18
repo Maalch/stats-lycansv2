@@ -1,5 +1,5 @@
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, LabelList, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, LabelList, Cell } from 'recharts';
 import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
@@ -146,7 +146,7 @@ export function GameDurationInsights() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={jeuDonnees?.durationDistribution || []}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
@@ -155,7 +155,7 @@ export function GameDurationInsights() {
                     tickFormatter={(value) => `${value}min`}
                   />
                   <YAxis 
-                    label={{ value: 'Nombre de Parties', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Nombre de Parties', angle: 270, position: 'insideLeft', style: { textAnchor: 'middle' } }}
                   />
                   <Tooltip
                     content={({ active, payload }) => {
@@ -196,7 +196,7 @@ export function GameDurationInsights() {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={ratioLoupsVillageois}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
@@ -208,7 +208,7 @@ export function GameDurationInsights() {
                     label={{ value: 'Ratio Loups/Joueurs (%)', position: 'insideBottom', offset: -5 }}
                   />
                   <YAxis 
-                    label={{ value: 'Durée Moyenne (minutes)', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Durée Moyenne (minutes)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
                     tickFormatter={(value) => `${Math.round(value)}min`}
                   />
                   <Tooltip
@@ -226,12 +226,12 @@ export function GameDurationInsights() {
                       return null;
                     }}
                   />
-                  <Legend />
                   <Line 
                     type="monotone" 
                     dataKey="moyenne" 
                     name="Durée Moyenne" 
-                    stroke="var(--chart-color-5)" // Use a CSS variable color
+                    stroke="var(--chart-color-5)" 
+                    strokeWidth={2}
                     activeDot={{ r: 8 }} 
                   />
                 </LineChart>
@@ -247,7 +247,7 @@ export function GameDurationInsights() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={dureesParCamp}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
@@ -258,7 +258,7 @@ export function GameDurationInsights() {
                     interval={0}
                   />
                   <YAxis 
-                    label={{ value: 'Durée Moyenne (minutes)', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Durée Moyenne (minutes)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
                     tickFormatter={(value) => `${Math.round(value)}min`}
                   />
                   <Tooltip 

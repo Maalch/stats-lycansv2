@@ -285,8 +285,9 @@ export function PlayerSeriesChart() {
                     value: selectedSeriesType === 'wins' ? 'Victoires consécutives' : 
                            selectedSeriesType === 'losses' ? 'Défaites consécutives' : 
                            'Parties consécutives', 
-                    angle: -90, 
-                    position: 'insideLeft' 
+                    angle: 270, 
+                    position: 'insideLeft',
+                    style: { textAnchor: 'middle' } 
                   }} 
                 />
                 <Tooltip content={getTooltipContent} />

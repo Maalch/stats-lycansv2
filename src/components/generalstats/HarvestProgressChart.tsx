@@ -119,11 +119,11 @@ export function HarvestProgressChart() {
         <div className="lycans-graphique-moitie">
           <h3>Moyenne de Récolte au Moment de la Victoire</h3>
           <FullscreenChart title="Moyenne de Récolte au Moment de la Victoire">
-            <div style={{ height: 300 }}>
+            <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={moyenneParCamp}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 40 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
@@ -134,7 +134,7 @@ export function HarvestProgressChart() {
                     interval={0}
                   />
                   <YAxis 
-                    label={{ value: 'Moyenne de Récolte (%)', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Moyenne de Récolte (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
                   />
                   <Tooltip
                     content={({ active, payload }) => {
