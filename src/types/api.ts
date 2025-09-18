@@ -1,4 +1,4 @@
-import { getThemeAdjustedColor, getThemeAdjustedLycansColors, useThemeAdjustedColors } from '../utils/themeColors';
+import { getThemeAdjustedColor, useThemeAdjustedColors } from '../utils/themeColors';
 
 // Custom color palette for camps
 const lycansColorScheme: Record<string, string> = {
@@ -111,7 +111,7 @@ const playerFrenchColorNames: Record<string, keyof typeof frenchColorMapping> = 
   "Etoiles": "Vert pomme"
 };
 
-export const playersColor: Record<string, string> = Object.fromEntries(
+const playersColor: Record<string, string> = Object.fromEntries(
   Object.entries(playerFrenchColorNames).map(([player, colorName]) => [
     player,
     frenchColorMapping[colorName]
@@ -285,30 +285,6 @@ export function getCampColor(campName: string, fallbackColor?: string): string {
   
   // Return generated color or fallback
   return generatedColor || fallbackColor || lycansOtherCategoryColor;
-}
-
-/**
- * Get theme-adjusted version of the lycans color scheme
- * @returns Color scheme object with theme-appropriate colors
- */
-export function getThemeAdjustedLycansColorScheme(): Record<string, string> {
-  return getThemeAdjustedLycansColors(lycansColorScheme);
-}
-
-/**
- * Get theme-adjusted version of the French color mapping
- * @returns Color mapping object with theme-appropriate colors
- */
-export function getThemeAdjustedFrenchColorMapping(): Record<string, string> {
-  return getThemeAdjustedLycansColors(frenchColorMapping);
-}
-
-/**
- * Get theme-adjusted version of the players color mapping
- * @returns Players color mapping with theme-appropriate colors
- */
-export function getThemeAdjustedPlayersColor(): Record<string, string> {
-  return getThemeAdjustedLycansColors(playersColor);
 }
 
 /**

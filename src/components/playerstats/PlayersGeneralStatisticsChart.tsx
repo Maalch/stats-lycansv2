@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { playersColor } from '../../types/api';
+import { useThemeAdjustedPlayersColor } from '../../types/api';
 import { minGamesOptions } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
@@ -12,6 +12,8 @@ export function PlayersGeneralStatisticsChart() {
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(50);
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
+
+  const playersColor = useThemeAdjustedPlayersColor();
 
   // Optimized data processing - combine multiple operations to reduce iterations
   const { participationData, winRateData, averageWinRate, totalEligiblePlayers } = useMemo(() => {

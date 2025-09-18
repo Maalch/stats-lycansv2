@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerSeriesFromRaw } from '../../hooks/usePlayerSeriesFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { playersColor } from '../../types/api';
+import { useThemeAdjustedPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
 export function PlayerSeriesChart() {
@@ -10,6 +10,8 @@ export function PlayerSeriesChart() {
   const { navigateToGameDetails } = useNavigation();
   const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'wins' | 'losses'>('villageois');
   const chartRef = useRef<HTMLDivElement>(null);
+
+  const playersColor = useThemeAdjustedPlayersColor();
 
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des séries de joueurs...</div>;
