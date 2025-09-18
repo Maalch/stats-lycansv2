@@ -1,5 +1,5 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { lycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { useHarvestStatsFromRaw } from '../../hooks/useHarvestStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -10,6 +10,9 @@ const lycansRecolteCouleurs = ['#d32f2f', '#f57c00', '#fbc02d', '#388e3c', '#197
 export function HarvestProgressChart() {
   const { harvestStats: recolteInfos, isLoading: recuperationDonnees, errorInfo: problemeChargement } = useHarvestStatsFromRaw();
   const { navigateToGameDetails } = useNavigation();
+
+  // Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
 
   if (recuperationDonnees) {
     return <div className="donnees-chargement">Récupération des données de récolte...</div>;

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { useGameDetailsFromRaw } from '../../hooks/useGameDetailsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { lycansColorScheme } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme } from '../../types/api';
 import { GameDetailView } from './GameDetailView';
 import './GameDetailsChart.css';
 
@@ -12,6 +12,9 @@ export function GameDetailsChart() {
   const { navigationFilters, navigateBack } = useNavigation();
   const { data, isLoading, error } = useGameDetailsFromRaw(navigationFilters);
   
+// Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+
   const [sortField, setSortField] = useState<SortField>('date');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedGameId, setSelectedGameId] = useState<string | null>(null);

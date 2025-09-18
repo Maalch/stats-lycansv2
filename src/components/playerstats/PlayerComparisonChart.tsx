@@ -2,12 +2,16 @@ import { useMemo } from 'react';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { usePlayerComparisonFromRaw } from '../../hooks/usePlayerComparisonFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { playersColor, lycansColorScheme } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
 
 export function PlayerComparisonChart() {
   const { availablePlayers, generateComparison, isLoading, error } = usePlayerComparisonFromRaw();
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   
+  // Get theme-adjusted colors
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  const playersColor = useThemeAdjustedFrenchColorMapping();
+
   // Use persistent navigation state instead of local state
   const selectedPlayer1 = navigationState.playerComparisonState?.selectedPlayer1 || '';
   const selectedPlayer2 = navigationState.playerComparisonState?.selectedPlayer2 || '';
