@@ -24,7 +24,7 @@ export function SettingsPanel() {
       try {
         const response = await fetch(`${import.meta.env.BASE_URL}data/gameLog.json`);
         const result = await response.json();
-        setGameLogData(result.data || []);
+        setGameLogData(result.GameStats || []);
       } catch (error) {
         console.error('Error fetching game log data:', error);
       }
