@@ -95,7 +95,7 @@ export function PlayersGeneralStatisticsChart() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={participationData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
+                margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
@@ -105,7 +105,7 @@ export function PlayersGeneralStatisticsChart() {
                   height={80}
                   interval={0}
                 />
-                <YAxis label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }} />
+                <YAxis label={{ value: 'Nombre de parties', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0) {
@@ -215,7 +215,7 @@ export function PlayersGeneralStatisticsChart() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={winRateData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
@@ -226,7 +226,7 @@ export function PlayersGeneralStatisticsChart() {
                   interval={0}
                 />
                 <YAxis
-                  label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                  label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
                   domain={[0, 100]}
                 />
                 <Tooltip

@@ -133,7 +133,7 @@ export function PlayerPairingStatsChart() {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={topWolfPairsByAppearances}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                   >
                     <defs>
                       {generateGradientDefs(topWolfPairsByAppearances)}
@@ -148,7 +148,7 @@ export function PlayerPairingStatsChart() {
                       fontSize={11}
                     />
                     <YAxis 
-                      label={{ value: 'Apparitions', angle: -90, position: 'insideLeft' }}
+                      label={{ value: 'Apparitions', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
                       allowDecimals={false}
                     />
                     <Tooltip
@@ -255,7 +255,7 @@ export function PlayerPairingStatsChart() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={topWolfPairsByWinRate}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
                   <defs>
                     {generateGradientDefs(topWolfPairsByWinRate)}
@@ -270,7 +270,7 @@ export function PlayerPairingStatsChart() {
                     fontSize={11}
                   />
                   <YAxis 
-                    label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
                     domain={[0, 100]}
                   />
                   <Tooltip
@@ -367,7 +367,7 @@ export function PlayerPairingStatsChart() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={topLoverPairsByAppearances}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
                   <defs>
                     {generateGradientDefs(topLoverPairsByAppearances)}
@@ -382,7 +382,7 @@ export function PlayerPairingStatsChart() {
                     fontSize={11}
                   />
                   <YAxis 
-                    label={{ value: 'Apparitions', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Apparitions', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
                     allowDecimals={false}
                   />
                   <Tooltip
@@ -489,7 +489,7 @@ export function PlayerPairingStatsChart() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={topLoverPairsByWinRate}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
                   <defs>
                     {generateGradientDefs(topLoverPairsByWinRate)}
@@ -504,7 +504,7 @@ export function PlayerPairingStatsChart() {
                     fontSize={11}
                   />
                   <YAxis 
-                    label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
                     domain={[0, 100]}
                   />
                   <Tooltip

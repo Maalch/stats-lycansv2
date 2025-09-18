@@ -294,7 +294,7 @@ export function PlayerCampPerformanceChart() {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={campPlayerData.slice(0, 15)} // Top 15 players
-                    margin={{ top: 20, right: 30, left: 20, bottom: 100 }}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 0 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis 
@@ -303,10 +303,10 @@ export function PlayerCampPerformanceChart() {
                       textAnchor="end"
                       height={110}
                       interval={0}
-                      fontSize={10}
+                      fontSize={15}
                     />
                     <YAxis 
-                      label={{ value: 'Performance vs moyenne (%)', angle: -90, position: 'insideLeft' }}
+                      label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}                 
                     />
                     <Tooltip
                       content={({ active, payload }) => {
@@ -381,7 +381,7 @@ export function PlayerCampPerformanceChart() {
                      <YAxis 
                         dataKey="performanceNum"
                         type="number"
-                        label={{ value: 'Performance (%)', angle: -90, position: 'insideLeft' }}
+                        label={{ value: 'Performance (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
                      />
                      <Tooltip
                         content={({ active, payload }) => {
@@ -471,7 +471,7 @@ export function PlayerCampPerformanceChart() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={topPerformersData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 100 }}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
@@ -480,10 +480,10 @@ export function PlayerCampPerformanceChart() {
                     textAnchor="end"
                     height={110}
                     interval={0}
-                    fontSize={10}
+                    fontSize={15}
                   />
                   <YAxis 
-                    label={{ value: 'Performance vs moyenne (%)', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
                   />
                   <Tooltip
                     content={({ active, payload }) => {
