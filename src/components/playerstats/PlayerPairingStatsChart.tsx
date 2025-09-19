@@ -4,10 +4,13 @@ import { usePlayerPairingStatsFromRaw } from '../../hooks/usePlayerPairingStatsF
 import { useThemeAdjustedPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
+import { useSettings } from '../../context/SettingsContext';
+import { findPlayerMostCommonPairings, type ChartPlayerPairStat } from '../../hooks/utils/playerPairingUtils';
 
 export function PlayerPairingStatsChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { data, isLoading, error } = usePlayerPairingStatsFromRaw();
+  const { settings } = useSettings();
   
   const playersColor = useThemeAdjustedPlayersColor();
 
@@ -75,6 +78,15 @@ export function PlayerPairingStatsChart() {
     gradientId: createGradientId(pair.pair)
   }));
 
+  // Find highlighted player's most common pairings
+  const highlightedPlayerWolfPairs = settings.highlightedPlayer 
+    ? findPlayerMostCommonPairings(data.wolfPairs.pairs, settings.highlightedPlayer, 5)
+    : [];
+  
+  const highlightedPlayerLoverPairs = settings.highlightedPlayer 
+    ? findPlayerMostCommonPairings(data.loverPairs.pairs, settings.highlightedPlayer, 5)
+    : [];
+
   // Total wolf pairs with at least minWolfAppearances
   const totalWolfPairsWithMinAppearances = wolfPairsData.filter(pair => pair.appearances >= minWolfAppearances).length;
   // Total lover pairs with at least minLoverAppearances
@@ -84,24 +96,75 @@ export function PlayerPairingStatsChart() {
   const recurringWolfPairs = wolfPairsData.filter(pair => pair.appearances >= 2);
   const recurringLoverPairs = loverPairsData.filter(pair => pair.appearances >= 2);
 
+  // Helper function to combine top pairs with highlighted player pairs
+  // This ensures highlighted player pairs are always shown, even if they weren't in the original top 10
+  const combineWithHighlighted = (
+    topPairs: any[],
+    highlightedPairs: any[]
+  ): ChartPlayerPairStat[] => {
+    const result = new Map<string, ChartPlayerPairStat>();
+    
+    // Add all top pairs
+    topPairs.forEach(pair => {
+      result.set(pair.pair, { ...pair, isHighlightedAddition: false });
+    });
+    
+    // Add highlighted pairs (mark as additions if not already included)
+    highlightedPairs.forEach(pair => {
+      const existing = result.get(pair.pair);
+      if (existing) {
+        // Already in top results, just ensure it's properly formatted
+        result.set(pair.pair, { 
+          ...existing, 
+          winRateNum: parseFloat(existing.winRate),
+          gradientId: createGradientId(existing.pair)
+        });
+      } else {
+        // New addition from highlighted player
+        result.set(pair.pair, { 
+          ...pair, 
+          winRateNum: parseFloat(pair.winRate),
+          gradientId: createGradientId(pair.pair),
+          isHighlightedAddition: true 
+        });
+      }
+    });
+    
+    // Return all results - highlighted pairs should always be included
+    // even if it means showing more than maxResults
+    return Array.from(result.values());
+  };
+
   // Split data for frequency vs performance charts
-  const topWolfPairsByAppearances = [...wolfPairsData]
-    .sort((a, b) => b.appearances - a.appearances)
-    .slice(0, 10);
+  const topWolfPairsByAppearances = combineWithHighlighted(
+    [...wolfPairsData]
+      .sort((a, b) => b.appearances - a.appearances)
+      .slice(0, 10),
+    highlightedPlayerWolfPairs
+  );
 
-  const topWolfPairsByWinRate = [...wolfPairsData]
-    .filter(pair => pair.appearances >= minWolfAppearances)
-    .sort((a, b) => b.winRateNum - a.winRateNum)
-    .slice(0, 10);
+  const topWolfPairsByWinRate = combineWithHighlighted(
+    [...wolfPairsData]
+      .filter(pair => pair.appearances >= minWolfAppearances)
+      .sort((a, b) => b.winRateNum - a.winRateNum)
+      .slice(0, 10),
+    highlightedPlayerWolfPairs.filter(pair => pair.appearances >= minWolfAppearances)
+  );
 
-  const topLoverPairsByAppearances = [...loverPairsData]
-    .sort((a, b) => b.appearances - a.appearances)
-    .slice(0, 10);
+  const topLoverPairsByAppearances = combineWithHighlighted(
+    [...loverPairsData]
+      .sort((a, b) => b.appearances - a.appearances)
+      .slice(0, 10),
+    highlightedPlayerLoverPairs
+  );
 
-  const topLoverPairsByWinRate = [...loverPairsData]
-    .filter(pair => pair.appearances >= minLoverAppearances)
-    .sort((a, b) => b.winRateNum - a.winRateNum)
-    .slice(0, 10);
+  const topLoverPairsByWinRate = combineWithHighlighted(
+    [...loverPairsData]
+      .filter(pair => pair.appearances >= minLoverAppearances)
+      .sort((a, b) => b.winRateNum - a.winRateNum)
+      .slice(0, 10),
+    highlightedPlayerLoverPairs.filter(pair => pair.appearances >= minLoverAppearances)
+  );
 
   const renderWolfPairsSection = () => (
     <div>
@@ -196,6 +259,20 @@ export function PlayerPairingStatsChart() {
                         <Cell 
                           key={`cell-${index}`} 
                           fill={`url(#${entry.gradientId})`}
+                          stroke={
+                            settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                              ? 'var(--accent-primary)'
+                              : entry.isHighlightedAddition
+                              ? 'var(--accent-secondary)'
+                              : 'transparent'
+                          }
+                          strokeWidth={
+                            settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                              ? 3
+                              : entry.isHighlightedAddition
+                              ? 2
+                              : 0
+                          }
                           onClick={() => {
                             navigateToGameDetails({
                               playerPairFilter: {
@@ -307,6 +384,20 @@ export function PlayerPairingStatsChart() {
                       <Cell 
                         key={`cell-${index}`} 
                         fill={`url(#${entry.gradientId})`}
+                        stroke={
+                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                            ? 'var(--accent-primary)'
+                            : entry.isHighlightedAddition
+                            ? 'var(--accent-secondary)'
+                            : 'transparent'
+                        }
+                        strokeWidth={
+                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                            ? 3
+                            : entry.isHighlightedAddition
+                            ? 2
+                            : 0
+                        }
                         onClick={() => {
                           navigateToGameDetails({
                             playerPairFilter: {
@@ -430,6 +521,20 @@ export function PlayerPairingStatsChart() {
                       <Cell 
                         key={`cell-${index}`} 
                         fill={`url(#${entry.gradientId})`}
+                        stroke={
+                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                            ? 'var(--accent-primary)'
+                            : entry.isHighlightedAddition
+                            ? 'var(--accent-secondary)'
+                            : 'transparent'
+                        }
+                        strokeWidth={
+                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                            ? 3
+                            : entry.isHighlightedAddition
+                            ? 2
+                            : 0
+                        }
                         onClick={() => {
                           navigateToGameDetails({
                             playerPairFilter: {
@@ -551,6 +656,20 @@ export function PlayerPairingStatsChart() {
                       <Cell 
                         key={`cell-${index}`} 
                         fill={`url(#${entry.gradientId})`}
+                        stroke={
+                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                            ? 'var(--accent-primary)'
+                            : entry.isHighlightedAddition
+                            ? 'var(--accent-secondary)'
+                            : 'transparent'
+                        }
+                        strokeWidth={
+                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                            ? 3
+                            : entry.isHighlightedAddition
+                            ? 2
+                            : 0
+                        }
                         onClick={() => {
                           navigateToGameDetails({
                             playerPairFilter: {
