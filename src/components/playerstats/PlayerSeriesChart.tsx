@@ -1,17 +1,89 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerSeriesFromRaw } from '../../hooks/usePlayerSeriesFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useThemeAdjustedPlayersColor } from '../../types/api';
+import { useSettings } from '../../context/SettingsContext';
 import { FullscreenChart } from '../common/FullscreenChart';
+
+// Extended type for chart data with highlighting info
+type ChartSeriesData = {
+  player: string;
+  seriesLength: number;
+  startGame: string;
+  endGame: string;
+  startDate: string;
+  endDate: string;
+  gameIds: string[];
+  isOngoing: boolean;
+  camp?: string;
+  campCounts?: Record<string, number>;
+  isHighlightedAddition?: boolean;
+};
 
 export function PlayerSeriesChart() {
   const { data: seriesData, isLoading: dataLoading, error: fetchError } = usePlayerSeriesFromRaw();
   const { navigateToGameDetails } = useNavigation();
+  const { settings } = useSettings();
   const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'wins' | 'losses'>('villageois');
+  const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
   const chartRef = useRef<HTMLDivElement>(null);
 
   const playersColor = useThemeAdjustedPlayersColor();
+
+  // Get current data based on selected type with highlighted player logic
+  const { currentData, highlightedPlayerAdded } = useMemo(() => {
+    if (!seriesData) {
+      return { currentData: [], highlightedPlayerAdded: false };
+    }
+
+    let fullDataset: any[] = [];
+    
+    switch (selectedSeriesType) {
+      case 'villageois':
+        fullDataset = seriesData.allVillageoisSeries;
+        break;
+      case 'loup':
+        fullDataset = seriesData.allLoupsSeries;
+        break;
+      case 'wins':
+        fullDataset = seriesData.allWinSeries;
+        break;
+      case 'losses':
+        fullDataset = seriesData.allLossSeries;
+        break;
+      default:
+        fullDataset = [];
+    }
+
+    // Get top 20 from the full dataset
+    const top20Data = fullDataset.slice(0, 20);
+
+    // Check if highlighted player is in the top 20
+    const highlightedPlayerInTop20 = settings.highlightedPlayer && 
+      top20Data.some(entry => entry.player === settings.highlightedPlayer);
+    
+    let finalData: ChartSeriesData[] = [...top20Data];
+    let highlightedPlayerAddedToChart = false;
+    
+    // If highlighted player is not in top 20, try to find them in the full dataset
+    if (settings.highlightedPlayer && !highlightedPlayerInTop20) {
+      const highlightedPlayerData = fullDataset.find(entry => entry.player === settings.highlightedPlayer);
+      
+      if (highlightedPlayerData) {
+        finalData.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        } as ChartSeriesData);
+        highlightedPlayerAddedToChart = true;
+      }
+    }
+
+    return { 
+      currentData: finalData, 
+      highlightedPlayerAdded: highlightedPlayerAddedToChart 
+    };
+  }, [seriesData, selectedSeriesType, settings.highlightedPlayer]);
 
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des séries de joueurs...</div>;
@@ -22,24 +94,6 @@ export function PlayerSeriesChart() {
   if (!seriesData) {
     return <div className="donnees-manquantes">Aucune donnée de série disponible</div>;
   }
-
-  // Get current data based on selected type
-  const getCurrentData = () => {
-    switch (selectedSeriesType) {
-      case 'villageois':
-        return seriesData.longestVillageoisSeries.slice(0, 20);
-      case 'loup':
-        return seriesData.longestLoupsSeries.slice(0, 20);
-      case 'wins':
-        return seriesData.longestWinSeries.slice(0, 20);
-      case 'losses':
-        return seriesData.longestLossSeries.slice(0, 20);
-      default:
-        return [];
-    }
-  };
-
-  const currentData = getCurrentData();
 
   // Helper function to format camp counts for display
   const formatCampCounts = (campCounts: Record<string, number>): string => {
@@ -67,6 +121,8 @@ export function PlayerSeriesChart() {
     if (!active || !payload || payload.length === 0) return null;
     
     const data = payload[0].payload;
+    const isHighlightedAddition = (data as ChartSeriesData).isHighlightedAddition;
+    const isHighlightedFromSettings = settings.highlightedPlayer === data.player;
     
     if (selectedSeriesType === 'wins') {
       return (
@@ -85,6 +141,28 @@ export function PlayerSeriesChart() {
           <div>Du {data.startGame} au {data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
           <div>Camps joués : {formatCampCounts(data.campCounts)}</div>
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence (hors top 20)
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence
+            </div>
+          )}
           {data.isOngoing && (
             <div style={{ 
               fontSize: '0.8rem', 
@@ -125,6 +203,28 @@ export function PlayerSeriesChart() {
           <div>Du {data.startGame} au {data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
           <div>Camps joués : {formatCampCounts(data.campCounts)}</div>
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence (hors top 20)
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence
+            </div>
+          )}
           {data.isOngoing && (
             <div style={{ 
               fontSize: '0.8rem', 
@@ -164,6 +264,28 @@ export function PlayerSeriesChart() {
           <div>Série {data.camp} : {data.seriesLength} parties consécutives {data.isOngoing ? '(En cours)' : ''}</div>
           <div>Du {data.startGame} au {data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence (hors top 20)
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence
+            </div>
+          )}
           {data.isOngoing && (
             <div style={{ 
               fontSize: '0.8rem', 
@@ -210,7 +332,7 @@ export function PlayerSeriesChart() {
         selectedGameIds: data.gameIds,
         campFilter: {
           selectedCamp: campFilter,
-          campFilterMode: 'wins-only'
+          campFilterMode: 'all-assignments'
         },
         fromComponent: `Séries ${campFilter}`
       });
@@ -265,6 +387,20 @@ export function PlayerSeriesChart() {
       </div>
 
       <div className="lycans-graphique-section">
+        <div>
+          <h3>{getChartTitle()}</h3>
+          {highlightedPlayerAdded && settings.highlightedPlayer && (
+            <p style={{ 
+              fontSize: '0.8rem', 
+              color: 'var(--accent-primary)', 
+              fontStyle: 'italic',
+              marginTop: '0.25rem',
+              marginBottom: '0.5rem'
+            }}>
+              🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+            </p>
+          )}
+        </div>
         <FullscreenChart title={getChartTitle()}>
           <div ref={chartRef} style={{ height: 500 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -301,19 +437,46 @@ export function PlayerSeriesChart() {
                        selectedSeriesType === 'wins' ? '#8884d8' : 
                        '#dc3545'}
                 >
-                  {currentData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${selectedSeriesType}-${index}`}
-                      fill={playersColor[entry.player] || 
-                           (selectedSeriesType === 'villageois' ? '#82ca9d' : 
-                            selectedSeriesType === 'loup' ? '#FF8042' : 
-                            selectedSeriesType === 'wins' ? '#8884d8' : 
-                            '#dc3545')}
-                      onClick={() => handleBarClick(entry)}
-                      style={{ cursor: 'pointer' }}
-                      className={entry.isOngoing ? 'lycans-ongoing-series' : ''}
-                    />
-                  ))}
+                  {currentData.map((entry, index) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
+                    const isHoveredPlayer = hoveredPlayer === entry.player;
+                    const isHighlightedAddition = (entry as ChartSeriesData).isHighlightedAddition;
+                    
+                    // Get the player's base color first
+                    const baseColor = playersColor[entry.player] || 
+                      (selectedSeriesType === 'villageois' ? '#82ca9d' : 
+                       selectedSeriesType === 'loup' ? '#FF8042' : 
+                       selectedSeriesType === 'wins' ? '#8884d8' : 
+                       '#dc3545');
+                    
+                    return (
+                      <Cell
+                        key={`cell-${selectedSeriesType}-${index}`}
+                        fill={baseColor}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => handleBarClick(entry)}
+                        onMouseEnter={() => setHoveredPlayer(entry.player)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
+                        className={entry.isOngoing ? 'lycans-ongoing-series' : ''}
+                      />
+                    );
+                  })}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
@@ -332,7 +495,7 @@ export function PlayerSeriesChart() {
                 par <strong>{currentData[0].player}</strong>
                 {currentData[0].isOngoing && <span style={{ color: '#FF8C00', fontWeight: 'bold' }}> (En cours)</span>}
               </p>
-              {selectedSeriesType === 'wins' ? (
+              {selectedSeriesType === 'wins' || selectedSeriesType === 'losses' ? (
                 <p className="lycans-h2h-description">
                   Camps : {formatCampCounts((currentData[0] as any).campCounts || {})}
                 </p>

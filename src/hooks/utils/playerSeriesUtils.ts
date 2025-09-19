@@ -68,10 +68,11 @@ export interface LossSeries {
 }
 
 export interface PlayerSeriesData {
-  longestVillageoisSeries: CampSeries[];
-  longestLoupsSeries: CampSeries[];
-  longestWinSeries: WinSeries[];
-  longestLossSeries: LossSeries[];
+  // Full datasets for all players with series data
+  allVillageoisSeries: CampSeries[];
+  allLoupsSeries: CampSeries[];
+  allWinSeries: WinSeries[];
+  allLossSeries: LossSeries[];
   totalGamesAnalyzed: number;
   // Statistics for all players
   averageVillageoisSeries: number;
@@ -376,42 +377,42 @@ function processLossSeries(
  * Collect and sort series results
  */
 function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState>): {
-  longestVillageoisSeries: CampSeries[];
-  longestLoupsSeries: CampSeries[];
-  longestWinSeries: WinSeries[];
-  longestLossSeries: LossSeries[];
+  allVillageoisSeries: CampSeries[];
+  allLoupsSeries: CampSeries[];
+  allWinSeries: WinSeries[];
+  allLossSeries: LossSeries[];
 } {
-  const longestVillageoisSeries: CampSeries[] = [];
-  const longestLoupsSeries: CampSeries[] = [];
-  const longestWinSeries: WinSeries[] = [];
-  const longestLossSeries: LossSeries[] = [];
+  const allVillageoisSeries: CampSeries[] = [];
+  const allLoupsSeries: CampSeries[] = [];
+  const allWinSeries: WinSeries[] = [];
+  const allLossSeries: LossSeries[] = [];
 
   Object.values(playerCampSeries).forEach(stats => {
     if (stats.longestVillageoisSeries) {
-      longestVillageoisSeries.push(stats.longestVillageoisSeries);
+      allVillageoisSeries.push(stats.longestVillageoisSeries);
     }
     if (stats.longestLoupsSeries) {
-      longestLoupsSeries.push(stats.longestLoupsSeries);
+      allLoupsSeries.push(stats.longestLoupsSeries);
     }
     if (stats.longestWinSeries) {
-      longestWinSeries.push(stats.longestWinSeries);
+      allWinSeries.push(stats.longestWinSeries);
     }
     if (stats.longestLossSeries) {
-      longestLossSeries.push(stats.longestLossSeries);
+      allLossSeries.push(stats.longestLossSeries);
     }
   });
 
-  // Sort by series length (descending)
-  longestVillageoisSeries.sort((a, b) => b.seriesLength - a.seriesLength);
-  longestLoupsSeries.sort((a, b) => b.seriesLength - a.seriesLength);
-  longestWinSeries.sort((a, b) => b.seriesLength - a.seriesLength);
-  longestLossSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  // Sort by series length (descending) - no slicing here
+  allVillageoisSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  allLoupsSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  allWinSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  allLossSeries.sort((a, b) => b.seriesLength - a.seriesLength);
 
   return {
-    longestVillageoisSeries: longestVillageoisSeries.slice(0, 20), // Top 20
-    longestLoupsSeries: longestLoupsSeries.slice(0, 20), // Top 20
-    longestWinSeries: longestWinSeries.slice(0, 20), // Top 20
-    longestLossSeries: longestLossSeries.slice(0, 20) // Top 20
+    allVillageoisSeries,
+    allLoupsSeries,
+    allWinSeries,
+    allLossSeries
   };
 }
 
@@ -532,7 +533,12 @@ export function computePlayerSeries(
   });
 
   // Collect and sort results
-  const { longestVillageoisSeries, longestLoupsSeries, longestWinSeries, longestLossSeries } = collectSeriesResults(playerCampSeries);
+  const { 
+    allVillageoisSeries,
+    allLoupsSeries,
+    allWinSeries,
+    allLossSeries
+  } = collectSeriesResults(playerCampSeries);
 
   // Mark ongoing series - a series is ongoing if:
   // 1. The current series length equals the longest series length
@@ -614,10 +620,10 @@ export function computePlayerSeries(
   });
 
   return {
-    longestVillageoisSeries,
-    longestLoupsSeries,
-    longestWinSeries,
-    longestLossSeries,
+    allVillageoisSeries,
+    allLoupsSeries,
+    allWinSeries,
+    allLossSeries,
     totalGamesAnalyzed: sortedGames.length,
     totalPlayersCount: allPlayers.size,
     activeVillageoisCount,
