@@ -5,7 +5,7 @@ import { useThemeAdjustedPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
-import { findPlayerMostCommonPairings, type ChartPlayerPairStat } from '../../hooks/utils/playerPairingUtils';
+import { findPlayerMostCommonPairings, findPlayerBestPerformingPairings, type ChartPlayerPairStat } from '../../hooks/utils/playerPairingUtils';
 
 export function PlayerPairingStatsChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
@@ -80,13 +80,22 @@ export function PlayerPairingStatsChart() {
     gradientId: createGradientId(pair.pair)
   }));
 
-  // Find highlighted player's most common pairings
+  // Find highlighted player's most common pairings (for frequency charts)
   const highlightedPlayerWolfPairs = settings.highlightedPlayer 
     ? findPlayerMostCommonPairings(data.wolfPairs.pairs, settings.highlightedPlayer, 5)
     : [];
   
   const highlightedPlayerLoverPairs = settings.highlightedPlayer 
     ? findPlayerMostCommonPairings(data.loverPairs.pairs, settings.highlightedPlayer, 5)
+    : [];
+
+  // Find highlighted player's best performing pairings (for performance charts)
+  const highlightedPlayerWolfPairsPerformance = settings.highlightedPlayer 
+    ? findPlayerBestPerformingPairings(data.wolfPairs.pairs, settings.highlightedPlayer, 5)
+    : [];
+  
+  const highlightedPlayerLoverPairsPerformance = settings.highlightedPlayer 
+    ? findPlayerBestPerformingPairings(data.loverPairs.pairs, settings.highlightedPlayer, 5)
     : [];
 
   // Total wolf pairs with at least minWolfAppearances
@@ -152,7 +161,7 @@ export function PlayerPairingStatsChart() {
       .filter(pair => pair.appearances >= minWolfAppearances)
       .sort((a, b) => b.winRateNum - a.winRateNum)
       .slice(0, 10),
-    highlightedPlayerWolfPairs.filter(pair => pair.appearances >= minWolfAppearances)
+    highlightedPlayerWolfPairsPerformance.filter(pair => pair.appearances >= minWolfAppearances)
   );
 
   const topLoverPairsByAppearances = combineWithHighlighted(
@@ -167,7 +176,7 @@ export function PlayerPairingStatsChart() {
       .filter(pair => pair.appearances >= minLoverAppearances)
       .sort((a, b) => b.winRateNum - a.winRateNum)
       .slice(0, 10),
-    highlightedPlayerLoverPairs.filter(pair => pair.appearances >= minLoverAppearances)
+    highlightedPlayerLoverPairsPerformance.filter(pair => pair.appearances >= minLoverAppearances)
   );
 
   const renderWolfPairsSection = () => (

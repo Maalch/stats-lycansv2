@@ -45,6 +45,35 @@ export function findPlayerMostCommonPairings(
 }
 
 /**
+ * Find the best performing pairings for a specific player
+ */
+export function findPlayerBestPerformingPairings(
+  pairs: PlayerPairStat[],
+  playerName: string,
+  maxResults: number = 5
+): PlayerPairStat[] {
+  if (!playerName) return [];
+
+  // Find all pairs involving the player
+  const playerPairs = pairs.filter(pair => 
+    pair.players.includes(playerName)
+  );
+
+  if (playerPairs.length === 0) return [];
+
+  // Find the maximum win rate for this player
+  const maxWinRate = Math.max(...playerPairs.map(pair => parseFloat(pair.winRate)));
+
+  // Get all pairs with the maximum win rate (handling ties)
+  const topPairs = playerPairs.filter(pair => parseFloat(pair.winRate) === maxWinRate);
+
+  // Limit to maxResults and sort by appearances as secondary criteria
+  return topPairs
+    .sort((a, b) => b.appearances - a.appearances)
+    .slice(0, maxResults);
+}
+
+/**
  * Compute player pairing statistics from game log data
  */
 export function computePlayerPairingStats(
