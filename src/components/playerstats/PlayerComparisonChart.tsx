@@ -1,21 +1,49 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { usePlayerComparisonFromRaw } from '../../hooks/usePlayerComparisonFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
+import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
 
 export function PlayerComparisonChart() {
   const { availablePlayers, generateComparison, isLoading, error } = usePlayerComparisonFromRaw();
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  const { settings } = useSettings();
   
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
   const playersColor = useThemeAdjustedFrenchColorMapping();
 
   // Use persistent navigation state instead of local state
-  const selectedPlayer1 = navigationState.playerComparisonState?.selectedPlayer1 || '';
+  // If no player1 is selected, default to highlighted player if available and valid
+  const defaultPlayer1 = useMemo(() => {
+    const storedPlayer1 = navigationState.playerComparisonState?.selectedPlayer1;
+    if (storedPlayer1) return storedPlayer1;
+    
+    // Use highlighted player as default if available and in the available players list (min 30 games)
+    if (settings.highlightedPlayer && availablePlayers.includes(settings.highlightedPlayer)) {
+      return settings.highlightedPlayer;
+    }
+    
+    return '';
+  }, [navigationState.playerComparisonState?.selectedPlayer1, settings.highlightedPlayer, availablePlayers]);
+
+  const selectedPlayer1 = defaultPlayer1;
   const selectedPlayer2 = navigationState.playerComparisonState?.selectedPlayer2 || '';
   const showDetailedStats = navigationState.playerComparisonState?.showDetailedStats || false;
+
+  // Sync highlighted player as default player1 to navigation state
+  useEffect(() => {
+    if (defaultPlayer1 && !navigationState.playerComparisonState?.selectedPlayer1) {
+      updateNavigationState({ 
+        playerComparisonState: { 
+          selectedPlayer1: defaultPlayer1,
+          selectedPlayer2: selectedPlayer2,
+          showDetailedStats: showDetailedStats
+        }
+      });
+    }
+  }, [defaultPlayer1, navigationState.playerComparisonState?.selectedPlayer1, selectedPlayer2, showDetailedStats, updateNavigationState]);
 
   // Update functions to use navigation state
   const setSelectedPlayer1 = (player: string) => {

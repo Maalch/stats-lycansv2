@@ -11,6 +11,7 @@ import type { GameLogEntry } from '../useCombinedRawData';
 export interface ChartPlayerPairStat extends PlayerPairStat {
   isHighlightedAddition?: boolean;
   winRateNum?: number;
+  winRateDisplay?: number;
   gradientId?: string;
 }
 

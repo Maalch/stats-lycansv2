@@ -676,7 +676,6 @@ export function PlayerGameHistoryChart() {
                     content={({ active, payload }) => {
                       if (active && payload && payload.length > 0) {
                         const dataPoint = payload[0].payload;
-                        const hasWins = parseFloat(dataPoint.winRate) > 0;
                         return (
                           <div style={{ 
                             background: 'var(--bg-secondary)', 
@@ -696,7 +695,7 @@ export function PlayerGameHistoryChart() {
                               textAlign: 'center',
                               animation: 'pulse 1.5s infinite'
                             }}>
-                              🖱️ Cliquez pour voir {hasWins ? 'les victoires' : 'toutes les parties'}
+                              🖱️ Cliquez pour voir les parties
                             </div>
                           </div>
                         );

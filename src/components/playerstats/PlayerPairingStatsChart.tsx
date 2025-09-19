@@ -69,12 +69,14 @@ export function PlayerPairingStatsChart() {
   const wolfPairsData = data.wolfPairs.pairs.map(pair => ({
     ...pair,
     winRateNum: parseFloat(pair.winRate),
+    winRateDisplay: Math.max(parseFloat(pair.winRate), 1), // Ensure minimum 1% for visibility and clickability
     gradientId: createGradientId(pair.pair)
   }));
 
   const loverPairsData = data.loverPairs.pairs.map(pair => ({
     ...pair,
     winRateNum: parseFloat(pair.winRate),
+    winRateDisplay: Math.max(parseFloat(pair.winRate), 1), // Ensure minimum 1% for visibility and clickability
     gradientId: createGradientId(pair.pair)
   }));
 
@@ -117,6 +119,7 @@ export function PlayerPairingStatsChart() {
         result.set(pair.pair, { 
           ...existing, 
           winRateNum: parseFloat(existing.winRate),
+          winRateDisplay: Math.max(parseFloat(existing.winRate), 1),
           gradientId: createGradientId(existing.pair)
         });
       } else {
@@ -124,6 +127,7 @@ export function PlayerPairingStatsChart() {
         result.set(pair.pair, { 
           ...pair, 
           winRateNum: parseFloat(pair.winRate),
+          winRateDisplay: Math.max(parseFloat(pair.winRate), 1),
           gradientId: createGradientId(pair.pair),
           isHighlightedAddition: true 
         });
@@ -379,11 +383,12 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="winRateNum" name="Taux de victoire (%)">
+                  <Bar dataKey="winRateDisplay" name="Taux de victoire (%)">
                     {topWolfPairsByWinRate.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={`url(#${entry.gradientId})`}
+                        fillOpacity={parseFloat(entry.winRate) === 0 ? 0.3 : 1}
                         stroke={
                           settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
                             ? 'var(--accent-primary)'
@@ -651,11 +656,12 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="winRateNum" name="Taux de victoire (%)">
+                  <Bar dataKey="winRateDisplay" name="Taux de victoire (%)">
                     {topLoverPairsByWinRate.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={`url(#${entry.gradientId})`}
+                        fillOpacity={parseFloat(entry.winRate) === 0 ? 0.3 : 1}
                         stroke={
                           settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
                             ? 'var(--accent-primary)'
