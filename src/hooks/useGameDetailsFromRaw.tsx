@@ -6,9 +6,9 @@ import type { NavigationFilters } from '../context/NavigationContext';
  * Hook pour calculer les détails des parties enrichies à partir des données brutes filtrées.
  * Combine les données de jeu pour fournir une vue complète des parties.
  */
-export function useGameDetailsFromRaw(filters?: NavigationFilters) {
+export function useGameDetailsFromRaw(filters?: NavigationFilters, highlightedPlayer?: string | null) {
   const { data: enrichedGames, isLoading, error } = useFullStatsBase(
-    (gameData) => computeGameDetailsFromGameLog(gameData, filters)
+    (gameData) => computeGameDetailsFromGameLog(gameData, filters, highlightedPlayer)
   );
 
   return {
