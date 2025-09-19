@@ -635,9 +635,30 @@ export function filterByPlayerPairFromGameLog(
  */
 export function applyNavigationFiltersFromGameLog(
   gameData: GameLogEntry[],
-  filters?: NavigationFilters
+  filters?: NavigationFilters,
+  highlightedPlayer?: string | null
 ): GameLogEntry[] {
-  if (!filters) return gameData;
+  // Check if filters object exists and has any meaningful filter properties
+  const hasFilters = filters && (
+    filters.selectedPlayer ||
+    filters.selectedGame ||
+    filters.selectedVictoryType ||
+    filters.selectedDate ||
+    filters.selectedHarvestRange ||
+    filters.selectedGameDuration ||
+    (filters.selectedGameIds && filters.selectedGameIds.length > 0) ||
+    filters.campFilter ||
+    filters.playerPairFilter ||
+    filters.multiPlayerFilter
+  );
+
+  // If no meaningful navigation filters but we have a highlighted player, filter by highlighted player only
+  if (!hasFilters && highlightedPlayer) {
+    return filterByPlayerFromGameLog(gameData, highlightedPlayer, 'all-assignments');
+  }
+
+  // If we have no filters at all, return all data
+  if (!hasFilters) return gameData;
 
   let filteredGames = [...gameData];
 
@@ -737,12 +758,13 @@ export function parseRolesFromGameLog(game: GameLogEntry): GameRoles {
  */
 export function computeGameDetailsFromGameLog(
   gameData: GameLogEntry[],
-  filters?: NavigationFilters
+  filters?: NavigationFilters,
+  highlightedPlayer?: string | null
 ){
   if (gameData.length === 0) return null;
 
-  // Apply navigation filters
-  const filteredGames = applyNavigationFiltersFromGameLog(gameData, filters);
+  // Apply navigation filters or highlighted player filter
+  const filteredGames = applyNavigationFiltersFromGameLog(gameData, filters, highlightedPlayer);
 
   return filteredGames.map((game) => {
 

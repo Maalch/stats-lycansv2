@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { useGameDetailsFromRaw } from '../../hooks/useGameDetailsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
+import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
 import { GameDetailView } from './GameDetailView';
 import './GameDetailsChart.css';
@@ -10,7 +11,26 @@ type SortDirection = 'asc' | 'desc';
 
 export function GameDetailsChart() {
   const { navigationFilters, navigateBack } = useNavigation();
-  const { data, isLoading, error } = useGameDetailsFromRaw(navigationFilters);
+  const { settings } = useSettings();
+  
+  // Determine if we have any meaningful navigation filters
+  const hasNavigationFilters = Boolean(
+    navigationFilters.selectedPlayer ||
+    navigationFilters.selectedGame ||
+    navigationFilters.selectedVictoryType ||
+    navigationFilters.selectedDate ||
+    navigationFilters.selectedHarvestRange ||
+    navigationFilters.selectedGameDuration ||
+    (navigationFilters.selectedGameIds && navigationFilters.selectedGameIds.length > 0) ||
+    navigationFilters.campFilter ||
+    navigationFilters.playerPairFilter ||
+    navigationFilters.multiPlayerFilter
+  );
+  
+  // Pass highlighted player only if there are no navigation filters
+  const highlightedPlayerForFiltering = hasNavigationFilters ? null : settings.highlightedPlayer;
+  
+  const { data, isLoading, error } = useGameDetailsFromRaw(navigationFilters, highlightedPlayerForFiltering);
   
 // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
@@ -28,6 +48,7 @@ export function GameDetailsChart() {
 
   // Determine if we should show the winner column and get the target players
   const getTargetPlayers = (): string[] => {
+    // Priority 1: Navigation filters (highest priority)
     if (navigationFilters.selectedPlayer) {
       return [navigationFilters.selectedPlayer];
     }
@@ -37,16 +58,61 @@ export function GameDetailsChart() {
     if (navigationFilters.multiPlayerFilter?.selectedPlayers) {
       return navigationFilters.multiPlayerFilter.selectedPlayers;
     }
+    
+    // Priority 2: Highlighted player from settings (fallback)
+    if (settings.highlightedPlayer) {
+      return [settings.highlightedPlayer];
+    }
+    
     return [];
   };
 
   const targetPlayers = getTargetPlayers();
   const showWinnerColumn = targetPlayers.length > 0;
 
+  // Get dynamic column name based on target players
+  const getWinnerColumnName = (): string => {
+    if (targetPlayers.length === 0) return 'Vainqueur';
+    if (targetPlayers.length === 1) return targetPlayers[0] + ' (victoire)';
+    if (targetPlayers.length === 2) return targetPlayers.join(' & ') + ' (victoires)';
+    return `${targetPlayers.slice(0, 2).join(' & ')} (+${targetPlayers.length - 2}) (victoires)`;
+  };
+
   // Helper function to get winners from target players for a specific game
   const getGameWinners = (game: any): string => {
     if (!showWinnerColumn) return '';
     
+    // When we have highlighted player filtering (no navigation filters), 
+    // we know all games contain the highlighted player, so skip the "not in game" check
+    if (!hasNavigationFilters && highlightedPlayerForFiltering) {
+      // Check if the highlighted player won this game
+      const winners = game.winners ? game.winners.split(',').map((w: string) => w.trim()) : [];
+      const targetWinners = winners.filter((winner: string) => 
+        targetPlayers.some(player => 
+          player.toLowerCase() === winner.toLowerCase()
+        )
+      );
+      
+      return targetWinners.length > 0 ? '✅' : '❌';
+    }
+    
+    // For navigation filters, use the original logic with presence check
+    // Get all players in this game
+    const gamePlayers = game.playersList ? game.playersList.split(',').map((p: string) => p.trim()) : [];
+    
+    // Check if any target player is in this game
+    const targetPlayersInGame = targetPlayers.filter(player => 
+      gamePlayers.some((gamePlayer: string) => 
+        gamePlayer.toLowerCase() === player.toLowerCase()
+      )
+    );
+    
+    // If no target players are in this game, show "not in game" indicator
+    if (targetPlayersInGame.length === 0) {
+      return 'Pas dans la partie';
+    }
+    
+    // Check if any target player won this game
     const winners = game.winners ? game.winners.split(',').map((w: string) => w.trim()) : [];
     const targetWinners = winners.filter((winner: string) => 
       targetPlayers.some(player => 
@@ -54,7 +120,7 @@ export function GameDetailsChart() {
       )
     );
     
-    return targetWinners.join(', ');
+    return targetWinners.length > 0 ? '✅' : '❌';
   };
 
   // Sort games
@@ -372,7 +438,7 @@ export function GameDetailsChart() {
               </th>
               {showWinnerColumn && (
                 <th onClick={() => handleSort('winner')} className="sortable">
-                  Vainqueur {getSortIcon('winner')}
+                  {getWinnerColumnName()} {getSortIcon('winner')}
                 </th>
               )}
               <th>Détails</th>
@@ -397,7 +463,13 @@ export function GameDetailsChart() {
                     {game.winningCamp}
                   </td>
                   {showWinnerColumn && (
-                    <td>{getGameWinners(game)}</td>
+                    <td style={{ 
+                      textAlign: 'left', 
+                      fontSize: '1.2rem',
+                      verticalAlign: 'middle'
+                    }}>
+                      {getGameWinners(game)}
+                    </td>
                   )}
                   <td>
                     <button
