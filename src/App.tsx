@@ -62,7 +62,6 @@ const MAIN_TABS = [
     icon: '⚙️',
     description: 'Filtres et configuration'
   },
-  //{ key: 'ponce', label: 'Ponce' },
 ];
 
 const PLAYER_STATS_MENU = [

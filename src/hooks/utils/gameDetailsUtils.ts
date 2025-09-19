@@ -217,7 +217,7 @@ export function filterByPlayerFromGameLog(
  * Filter games by selected game ID
  * 
  * @param games - Array of GameLogEntry to filter
- * @param selectedGame - The DisplayedId to filter by (e.g., "Ponce #123")
+ * @param selectedGame - The DisplayedId to filter by 
  * @returns Filtered array of GameLogEntry
  * 
  */
@@ -229,7 +229,7 @@ export function filterByGameFromGameLog(games: GameLogEntry[], selectedGame: str
  * Filter games by multiple game IDs (for series navigation)
  * 
  * @param games - Array of GameLogEntry to filter
- * @param selectedGameIds - Array of DisplayedIds to filter by (e.g., ["Ponce #123", "Ponce #124"])
+ * @param selectedGameIds - Array of DisplayedIds to filter by 
  * @returns Filtered array of GameLogEntry
  * 
  */

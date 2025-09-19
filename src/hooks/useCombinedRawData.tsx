@@ -320,8 +320,6 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
     if (!rawData) {
       return {
         gameData: null,
-        roleData: null,
-        ponceData: null,
         brPartiesData: null,
         brRefPartiesData: null
       };
@@ -356,8 +354,6 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
 
     return {
       gameData: filteredGameData,
-      roleData: null, // No longer used in migration
-      ponceData: null, // No longer used in migration
       brPartiesData: filteredBRPartiesData,
       brRefPartiesData: filteredBRRefPartiesData
     };

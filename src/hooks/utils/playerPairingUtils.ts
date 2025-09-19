@@ -6,6 +6,44 @@ import type { PlayerPairingStatsData, PlayerPairStat } from '../../types/api';
 import type { GameLogEntry } from '../useCombinedRawData';
 
 /**
+ * Extended interface for chart display with highlighting support
+ */
+export interface ChartPlayerPairStat extends PlayerPairStat {
+  isHighlightedAddition?: boolean;
+  winRateNum?: number;
+  gradientId?: string;
+}
+
+/**
+ * Find the most common pairings for a specific player
+ */
+export function findPlayerMostCommonPairings(
+  pairs: PlayerPairStat[],
+  playerName: string,
+  maxResults: number = 5
+): PlayerPairStat[] {
+  if (!playerName) return [];
+
+  // Find all pairs involving the player
+  const playerPairs = pairs.filter(pair => 
+    pair.players.includes(playerName)
+  );
+
+  if (playerPairs.length === 0) return [];
+
+  // Find the maximum number of appearances for this player
+  const maxAppearances = Math.max(...playerPairs.map(pair => pair.appearances));
+
+  // Get all pairs with the maximum appearances (handling ties)
+  const topPairs = playerPairs.filter(pair => pair.appearances === maxAppearances);
+
+  // Limit to maxResults and sort by win rate as secondary criteria
+  return topPairs
+    .sort((a, b) => parseFloat(b.winRate) - parseFloat(a.winRate))
+    .slice(0, maxResults);
+}
+
+/**
  * Compute player pairing statistics from game log data
  */
 export function computePlayerPairingStats(
