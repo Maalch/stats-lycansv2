@@ -9,7 +9,7 @@ A Vite-based React + TypeScript dashboard for visualizing werewolf game statisti
 **Frontend:** React 19 + TypeScript, Vite, Recharts for charts, triple context system (`SettingsContext` + `FullscreenContext` + `NavigationContext`)  
 **Data Pipeline:** Unified `gameLog.json` with transformation layer for backward compatibility  
 **Build System:** Vite outputs to `docs/` for GitHub Pages, inline Node.js scripts copy data files  
-**Data Processing:** Client-side calculations using optimized base hook pattern with pure computation functions
+**Data Processing:** Client-side calculations using optimized base hook pattern (`useBaseStats` → `useGameStatsBase` → `usePlayerStatsBase` → `useFullStatsBase`) with pure computation functions
 
 ## Critical Workflows
 
@@ -20,8 +20,8 @@ npm run sync-data    # Fetch fresh data from Apps Script to /data
 ```
 
 **Build Pipeline:** Inline Node.js scripts in `package.json` copy `/data` → `public/data/` (dev) or `docs/data/` (prod)  
-**Data Sync:** GitHub Actions runs weekly, manually triggerable via workflow_dispatch  
-**Environment:** No env vars needed locally - all data from static files. `LYCANS_API_BASE` secret on GitHub only.
+**Data Sync:** GitHub Actions runs weekly (Mon/Tue 4AM UTC), manually triggerable via workflow_dispatch  
+**Environment:** No env vars needed locally - all data from static files. `LYCANS_API_BASE` + `STATS_LIST_URL` secrets on GitHub only.
 
 ## Data Architecture Migration (RECENT CHANGE)
 
@@ -34,13 +34,16 @@ npm run sync-data    # Fetch fresh data from Apps Script to /data
 ```typescript
 // New unified structure (current format)
 interface GameLogEntry {
-  Id: string; StartDate: string; EndDate: string; MapName: string;
-  HarvestGoal: number; HarvestDone: number; PlayerStats: PlayerStat[];
+  Id: string; DisplayedId: string; StartDate: string; EndDate: string; MapName: string;
+  HarvestGoal: number; HarvestDone: number; EndTiming: string | null;
+  Version: string; Modded: boolean; PlayerStats: PlayerStat[];
 }
 interface PlayerStat {
-  Username: string; MainRoleInitial: string; MainRoleFinal: string;
+  Username: string; Color?: string; MainRoleInitial: string; MainRoleFinal: string | null;
   Power: string | null; SecondaryRole: string | null; 
   Victorious: boolean; DeathTiming: string | null;
+  DeathPosition: {x: number; y: number; z: number} | null;
+  DeathType: string | null; KillerName: string | null;
   Votes: Array<{Target: string; Date: string}>; // New voting data
 }
 
@@ -58,10 +61,11 @@ interface RawGameData {
 ```typescript
 // Optimized pattern for new statistics
 const { data, isLoading, error } = usePlayerStatsBase(
-  (gameData, roleData) => computePlayerStats(gameData, roleData)
+  (gameData) => computePlayerStats(gameData)
 );
 
 // Base hook hierarchy: useBaseStats → useGameStatsBase → usePlayerStatsBase → useFullStatsBase
+// Located in: src/hooks/utils/baseStatsHook.ts
 ```
 
 ### Triple Context System
@@ -88,6 +92,15 @@ navigateToGameDetails({
 ```typescript
 // Required pattern for App.tsx component imports
 const Component = lazy(() => import('./path').then(m => ({ default: m.ComponentName })));
+```
+
+### Fullscreen Chart Pattern
+```typescript
+// Wrap charts with FullscreenChart for zoom functionality
+import { FullscreenChart } from '../common/FullscreenChart';
+<FullscreenChart title="Chart Title">
+  <YourChart />
+</FullscreenChart>
 ```
 
 ## Data Flow & Filtering
@@ -118,10 +131,31 @@ const Component = lazy(() => import('./path').then(m => ({ default: m.ComponentN
 ### Base Hook Template
 ```typescript
 export function useNewStatsFromRaw() {
-  return usePlayerStatsBase((gameData, roleData) => {
+  return usePlayerStatsBase((gameData) => {
     // Pure computation function here
-    return computeNewStats(gameData, roleData);
+    return computeNewStats(gameData);
   });
+}
+```
+
+### Component File Structure
+```typescript
+// Typical chart component pattern
+import { useNewStatsFromRaw } from '../../hooks/useNewStatsFromRaw';
+import { FullscreenChart } from '../common/FullscreenChart';
+
+export function NewStatsChart() {
+  const { data, isLoading, error } = useNewStatsFromRaw();
+  
+  if (isLoading) return <div>Chargement...</div>;
+  if (error) return <div>Erreur: {error}</div>;
+  if (!data) return <div>Aucune donnée disponible</div>;
+  
+  return (
+    <FullscreenChart title="Titre du Graphique">
+      {/* Chart implementation */}
+    </FullscreenChart>
+  );
 }
 ```
 
