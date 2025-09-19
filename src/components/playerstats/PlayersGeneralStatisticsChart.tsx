@@ -2,13 +2,21 @@ import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
+import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedPlayersColor } from '../../types/api';
 import { minGamesOptions } from '../../types/api';
+import type { PlayerStat } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
+
+// Extended type for chart data with highlighting info
+type ChartPlayerStat = PlayerStat & {
+  isHighlightedAddition?: boolean;
+};
 
 export function PlayersGeneralStatisticsChart() {
   const { data: playerStatsData, isLoading: dataLoading, error: fetchError } = usePlayerStatsFromRaw();
   const { navigateToGameDetails } = useNavigation();
+  const { settings } = useSettings();
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(50);
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
@@ -16,13 +24,15 @@ export function PlayersGeneralStatisticsChart() {
   const playersColor = useThemeAdjustedPlayersColor();
 
   // Optimized data processing - combine multiple operations to reduce iterations
-  const { participationData, winRateData, averageWinRate, totalEligiblePlayers } = useMemo(() => {
+  const { participationData, winRateData, averageWinRate, totalEligiblePlayers, highlightedPlayerInParticipation, highlightedPlayerInWinRate } = useMemo(() => {
     if (!playerStatsData?.playerStats) {
       return {
         participationData: [],
         winRateData: [],
         averageWinRate: '0',
-        totalEligiblePlayers: 0
+        totalEligiblePlayers: 0,
+        highlightedPlayerInParticipation: false,
+        highlightedPlayerInWinRate: false
       };
     }
 
@@ -36,6 +46,7 @@ export function PlayersGeneralStatisticsChart() {
     for (const player of stats) {
       totalWinPercentSum += parseFloat(player.winPercent);
       
+      // Only include players who actually meet the minimum games criteria
       if (player.gamesPlayed >= minGamesForWinRate) {
         eligibleForWinRate.push(player);
       }
@@ -53,6 +64,26 @@ export function PlayersGeneralStatisticsChart() {
       .sort((a, b) => b.gamesPlayed - a.gamesPlayed)
       .slice(0, 20);
     
+    // Check if highlighted player is in the top 20 participation
+    const highlightedPlayerInTop20 = settings.highlightedPlayer && 
+      sortedParticipation.some(p => p.player === settings.highlightedPlayer);
+    
+    // If highlighted player is not in top 20 but exists in eligible data, add them
+    let finalParticipationData: ChartPlayerStat[] = [...sortedParticipation];
+    let highlightedPlayerAddedToParticipation = false;
+    
+    if (settings.highlightedPlayer && !highlightedPlayerInTop20) {
+      const highlightedPlayerData = eligibleForParticipation.find(p => p.player === settings.highlightedPlayer);
+      if (highlightedPlayerData) {
+        // Add highlighted player with a special flag
+        finalParticipationData.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        } as ChartPlayerStat);
+        highlightedPlayerAddedToParticipation = true;
+      }
+    }
+    
     // Sort and slice for win rate data
     const sortedWinRate = eligibleForWinRate
       .sort((a, b) =>
@@ -62,13 +93,37 @@ export function PlayersGeneralStatisticsChart() {
       )
       .slice(0, 20);
 
+    // Check if highlighted player is in the top 20 win rate
+    const highlightedPlayerInWinRateTop20 = settings.highlightedPlayer && 
+      sortedWinRate.some(p => p.player === settings.highlightedPlayer);
+    
+    // If highlighted player is not in top 20 OR doesn't meet min games criteria, add them
+    let finalWinRateData: ChartPlayerStat[] = [...sortedWinRate];
+    let highlightedPlayerAddedToWinRate = false;
+    
+    if (settings.highlightedPlayer && !highlightedPlayerInWinRateTop20) {
+      // Search for highlighted player in all stats (not just eligible)
+      const highlightedPlayerData = stats.find(p => p.player === settings.highlightedPlayer);
+      
+      if (highlightedPlayerData) {
+        // Add highlighted player with a special flag
+        finalWinRateData.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        } as ChartPlayerStat);
+        highlightedPlayerAddedToWinRate = true;
+      }
+    }
+
     return {
-      participationData: sortedParticipation,
-      winRateData: sortedWinRate,
+      participationData: finalParticipationData,
+      winRateData: finalWinRateData,
       averageWinRate: avgWinRate,
-      totalEligiblePlayers: eligibleForWinRate.length
+      totalEligiblePlayers: eligibleForWinRate.length,
+      highlightedPlayerInParticipation: highlightedPlayerAddedToParticipation,
+      highlightedPlayerInWinRate: highlightedPlayerAddedToWinRate
     };
-  }, [playerStatsData, minGamesForWinRate, winRateOrder]);
+  }, [playerStatsData, minGamesForWinRate, winRateOrder, settings.highlightedPlayer]);
 
   if (dataLoading) {
     return <div className="donnees-attente">Récupération des statistiques des joueurs...</div>;
@@ -89,7 +144,20 @@ export function PlayersGeneralStatisticsChart() {
 
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
-          <h3>Top Participations</h3>
+          <div>
+            <h3>Top Participations</h3>
+            {highlightedPlayerInParticipation && settings.highlightedPlayer && (
+              <p style={{ 
+                fontSize: '0.8rem', 
+                color: 'var(--accent-primary)', 
+                fontStyle: 'italic',
+                marginTop: '0.25rem',
+                marginBottom: '0.5rem'
+              }}>
+                🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+              </p>
+            )}
+          </div>
           <FullscreenChart title="Top Participations">
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -110,11 +178,34 @@ export function PlayersGeneralStatisticsChart() {
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0) {
                       const d = payload[0].payload;
+                      const isHighlightedAddition = (d as ChartPlayerStat).isHighlightedAddition;
+                      const isHighlightedFromSettings = settings.highlightedPlayer === d.player;
+                      
                       return (
                         <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                           <div><strong>{d.player}</strong></div>
                           <div>Parties jouées : {d.gamesPlayed}</div>
                           <div>Pourcentage : {d.gamesPlayedPercent}%</div>
+                          {isHighlightedAddition && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              🎯 Affiché via sélection personnelle
+                            </div>
+                          )}
+                          {isHighlightedFromSettings && !isHighlightedAddition && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              🎯 Joueur sélectionné
+                            </div>
+                          )}
                           <div style={{ 
                             fontSize: '0.8rem', 
                             color: 'var(--accent-primary)', 
@@ -136,23 +227,43 @@ export function PlayersGeneralStatisticsChart() {
                   name="Parties jouées"
                   fill="#00C49F"
                 >
-                  {participationData.map((entry) => (
-                    <Cell
-                      key={`cell-participation-${entry.player}`}
-                      fill={playersColor[entry.player] || "#00C49F"}
-                      stroke={highlightedPlayer === entry.player ? "var(--text-primary)" : "none"}
-                      strokeWidth={highlightedPlayer === entry.player ? 2 : 0}
-                      onClick={() => {
-                        navigateToGameDetails({
-                          selectedPlayer: entry.player,
-                          fromComponent: 'Statistiques Joueurs'
-                        });
-                      }} 
-                      onMouseEnter={() => setHighlightedPlayer(entry.player)}
-                      onMouseLeave={() => setHighlightedPlayer(null)}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  ))}
+                  {participationData.map((entry) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
+                    const isHoveredPlayer = highlightedPlayer === entry.player;
+                    const isHighlightedAddition = (entry as ChartPlayerStat).isHighlightedAddition;
+                    
+                    return (
+                      <Cell
+                        key={`cell-participation-${entry.player}`}
+                        fill={playersColor[entry.player] || "#00C49F"}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => {
+                          navigateToGameDetails({
+                            selectedPlayer: entry.player,
+                            fromComponent: 'Statistiques Joueurs'
+                          });
+                        }} 
+                        onMouseEnter={() => setHighlightedPlayer(entry.player)}
+                        onMouseLeave={() => setHighlightedPlayer(null)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  })}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
@@ -162,11 +273,24 @@ export function PlayersGeneralStatisticsChart() {
 
         <div className="lycans-graphique-section">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <h3>
-              {winRateOrder === 'best'
-                ? 'Meilleurs Taux de Victoire'
-                : 'Moins Bon Taux de Victoire'}
-            </h3>
+            <div>
+              <h3>
+                {winRateOrder === 'best'
+                  ? 'Meilleurs Taux de Victoire'
+                  : 'Moins Bon Taux de Victoire'}
+              </h3>
+              {highlightedPlayerInWinRate && settings.highlightedPlayer && (
+                <p style={{ 
+                  fontSize: '0.8rem', 
+                  color: 'var(--accent-primary)', 
+                  fontStyle: 'italic',
+                  marginTop: '0.25rem',
+                  marginBottom: '0'
+                }}>
+                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+                </p>
+              )}
+            </div>
             <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                 Min. parties:
@@ -233,11 +357,45 @@ export function PlayersGeneralStatisticsChart() {
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0) {
                       const d = payload[0].payload;
+                      const isHighlightedAddition = (d as ChartPlayerStat).isHighlightedAddition;
+                      const isHighlightedFromSettings = settings.highlightedPlayer === d.player;
+                      const meetsMinGames = d.gamesPlayed >= minGamesForWinRate;
+                      
                       return (
                         <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                           <div><strong>{d.player}</strong></div>
                           <div>Taux de victoire : {d.winPercent}%</div>
                           <div>Victoires : {d.wins} / {d.gamesPlayed}</div>
+                          {isHighlightedAddition && !meetsMinGames && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              🎯 Affiché via sélection (&lt; {minGamesForWinRate} parties)
+                            </div>
+                          )}
+                          {isHighlightedAddition && meetsMinGames && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              🎯 Affiché via sélection (hors top 20)
+                            </div>
+                          )}
+                          {isHighlightedFromSettings && !isHighlightedAddition && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.25rem',
+                              fontStyle: 'italic'
+                            }}>
+                              🎯 Joueur sélectionné
+                            </div>
+                          )}
                           <div style={{ 
                             fontSize: '0.8rem', 
                             color: 'var(--accent-primary)', 
@@ -259,24 +417,44 @@ export function PlayersGeneralStatisticsChart() {
                   name="Taux de Victoire"
                   fill="#8884d8"
                 >
-                  {winRateData.map((entry) => (
-                    <Cell
-                      key={`cell-winrate-${entry.player}`}
-                      fill={playersColor[entry.player] || "#8884d8"}
-                      stroke={highlightedPlayer === entry.player ? "var(--text-primary)" : "none"}
-                      strokeWidth={highlightedPlayer === entry.player ? 2 : 0}
-                      onClick={() => {
-                        navigateToGameDetails({
-                          selectedPlayer: entry.player,
-                          selectedPlayerWinMode: 'wins-only',
-                          fromComponent: 'Taux de Victoire'
-                        });
-                      }} 
-                      onMouseEnter={() => setHighlightedPlayer(entry.player)}
-                      onMouseLeave={() => setHighlightedPlayer(null)}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  ))}
+                  {winRateData.map((entry) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
+                    const isHoveredPlayer = highlightedPlayer === entry.player;
+                    const isHighlightedAddition = (entry as ChartPlayerStat).isHighlightedAddition;
+                    
+                    return (
+                      <Cell
+                        key={`cell-winrate-${entry.player}`}
+                        fill={playersColor[entry.player] || "#8884d8"}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => {
+                          navigateToGameDetails({
+                            selectedPlayer: entry.player,
+                            selectedPlayerWinMode: 'wins-only',
+                            fromComponent: 'Taux de Victoire'
+                          });
+                        }} 
+                        onMouseEnter={() => setHighlightedPlayer(entry.player)}
+                        onMouseLeave={() => setHighlightedPlayer(null)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  })}
                 </Bar>
               {/* Add the average win rate reference line */}
               <ReferenceLine

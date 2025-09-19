@@ -9,6 +9,7 @@ const defaultSettings: SettingsState = {
   gameFilter: 'all',
   dateRange: { start: null, end: null },
   playerFilter: { mode: 'none', players: [] },
+  highlightedPlayer: null,
 };
 
 /**
@@ -42,6 +43,10 @@ export function generateUrlWithSettings(baseUrl: string, settings: Partial<Setti
     if (settings.playerFilter.players && settings.playerFilter.players.length > 0) {
       urlParams.set('players', encodeURIComponent(settings.playerFilter.players.join(',')));
     }
+  }
+  
+  if (settings.highlightedPlayer && settings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
+    urlParams.set('highlightedPlayer', encodeURIComponent(settings.highlightedPlayer));
   }
   
   const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
@@ -105,6 +110,33 @@ export const UrlGenerators = {
       gameFilter: 'modded',
       playerFilter: { mode: 'include', players }
     }),
+
+  /**
+   * Generate URL with highlighted player
+   */
+  withHighlightedPlayer: (baseUrl: string, playerName: string) => 
+    generateUrlWithSettings(baseUrl, {
+      highlightedPlayer: playerName
+    }),
+
+  /**
+   * Generate URL for specific players with one highlighted
+   */
+  playersWithHighlight: (baseUrl: string, players: string[], highlightedPlayer: string) => 
+    generateUrlWithSettings(baseUrl, {
+      playerFilter: { mode: 'include', players },
+      highlightedPlayer: highlightedPlayer
+    }),
+
+  /**
+   * Generate URL for modded games with highlighted player
+   */
+  moddedGamesWithHighlight: (baseUrl: string, highlightedPlayer: string) => 
+    generateUrlWithSettings(baseUrl, {
+      filterMode: 'gameType',
+      gameFilter: 'modded',
+      highlightedPlayer: highlightedPlayer
+    }),
 };
 
 /**
@@ -116,10 +148,17 @@ export const UrlGenerators = {
  * // Modded games only
  * const url2 = UrlGenerators.moddedGames('https://maalch.github.io/stats-lycansv2/');
  * 
+ * // Highlight specific player
+ * const url3 = UrlGenerators.withHighlightedPlayer('https://maalch.github.io/stats-lycansv2/', 'Ponce');
+ * 
+ * // Player filtering with highlighted player
+ * const url4 = UrlGenerators.playersWithHighlight('https://maalch.github.io/stats-lycansv2/', ['Ponce', 'AmberAerin'], 'Ponce');
+ * 
  * // Custom complex filtering
- * const url3 = generateUrlWithSettings('https://maalch.github.io/stats-lycansv2/', {
+ * const url5 = generateUrlWithSettings('https://maalch.github.io/stats-lycansv2/', {
  *   filterMode: 'gameType',
  *   gameFilter: 'modded',
- *   playerFilter: { mode: 'include', players: ['Ponce', 'Flippy'] }
+ *   playerFilter: { mode: 'include', players: ['Ponce', 'Flippy'] },
+ *   highlightedPlayer: 'Ponce'
  * });
  */

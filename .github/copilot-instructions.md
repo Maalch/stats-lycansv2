@@ -9,7 +9,8 @@ A Vite-based React + TypeScript dashboard for visualizing werewolf game statisti
 **Frontend:** React 19 + TypeScript, Vite, Recharts for charts, triple context system (`SettingsContext` + `FullscreenContext` + `NavigationContext`)  
 **Data Pipeline:** Unified `gameLog.json` with transformation layer for backward compatibility  
 **Build System:** Vite outputs to `docs/` for GitHub Pages, inline Node.js scripts copy data files  
-**Data Processing:** Client-side calculations using optimized base hook pattern (`useBaseStats` → `useGameStatsBase` → `usePlayerStatsBase` → `useFullStatsBase`) with pure computation functions
+**Data Processing:** Client-side calculations using optimized base hook pattern (`useBaseStats` → `useGameStatsBase` → `usePlayerStatsBase` → `useFullStatsBase`) with pure computation functions  
+**URL Sharing:** Settings persist via localStorage + URL parameters for shareable dashboard states
 
 ## Critical Workflows
 
@@ -88,6 +89,17 @@ navigateToGameDetails({
 });
 ```
 
+### Player Highlighting System 
+```typescript
+// SettingsContext includes highlightedPlayer field with URL/localStorage persistence
+const { settings } = useSettings();
+// Chart components extend data types for highlighting logic
+interface ChartPlayerStat extends PlayerStat {
+  isHighlightedAddition?: boolean; // Player added outside normal criteria
+}
+// Complex inclusion logic: show highlighted players even if below min games or outside top rankings
+```
+
 ### Lazy Loading Pattern
 ```typescript
 // Required pattern for App.tsx component imports
@@ -107,7 +119,8 @@ import { FullscreenChart } from '../common/FullscreenChart';
 
 **Primary Flow:** `gameLog.json` → `useCombinedRawData()` → transformation → `useCombinedFilteredRawData()` → base hooks  
 **Filter Application:** All hooks automatically respect `SettingsContext` filters (game type, date range, player inclusion/exclusion)  
-**French Date Parsing:** Uses `parseFrenchDate()` for DD/MM/YYYY format compatibility
+**French Date Parsing:** Uses `parseFrenchDate()` for DD/MM/YYYY format compatibility  
+**URL Sharing:** Complete settings state serialized to URL parameters (see `URL_PARAMETERS.md`) with localStorage fallback
 
 ### Game Domain Rules
 **Camps:** Villageois, Loups, solo roles (`Amoureux`, `Idiot du Village`, `Agent`, etc.)  
@@ -127,6 +140,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 2. **Data Access:** Use `useGameLogData()` for new features, legacy hooks for backward compatibility
 3. **Navigation:** Integrate with `NavigationContext` for chart drill-downs
 4. **Settings:** Add to `SettingsState` interface → ensure localStorage persistence
+5. **Player Highlighting:** Extend chart data types with `isHighlightedAddition` for special inclusion logic
 
 ### Base Hook Template
 ```typescript
@@ -157,6 +171,25 @@ export function NewStatsChart() {
     </FullscreenChart>
   );
 }
+```
+
+### Chart Highlighting Pattern
+```typescript
+// For charts with player highlighting support
+interface ChartPlayerStat extends PlayerStat {
+  isHighlightedAddition?: boolean;
+}
+
+// Multi-level highlighting in Recharts Cell components
+<Cell 
+  key={`cell-${index}`}
+  fill={
+    settings.highlightedPlayer === entry.player ? 'var(--accent-primary)' :
+    isHighlightedAddition ? 'var(--accent-secondary)' :
+    hoveredPlayer === entry.player ? 'var(--accent-hover)' : 
+    'var(--chart-primary)'
+  }
+/>
 ```
 
 ## Integration Points
