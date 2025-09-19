@@ -320,14 +320,11 @@ export function BRGeneralStatsChart() {
                 />
                 <Bar dataKey="participations" name="Participations">
                   {stats.topPlayersByParticipations.map((player: ChartPlayerStat, index: number) => {
-                    const isHighlightedAddition = player.isHighlightedAddition;
-                    
                     return (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={
                           settings.highlightedPlayer === player.name ? 'var(--accent-primary)' :
-                          isHighlightedAddition ? 'var(--accent-secondary)' :
                           hoveredPlayer === player.name ? 'var(--accent-hover)' : 
                           getPlayerColor(player.name)
                         }
@@ -419,14 +416,11 @@ export function BRGeneralStatsChart() {
                 />
                 <Bar dataKey="winRate" name="Taux de victoire (%)">
                   {stats.topPlayersByWins.map((player: ChartPlayerStat, index: number) => {
-                    const isHighlightedAddition = player.isHighlightedAddition;
-                    
                     return (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={
                           settings.highlightedPlayer === player.name ? 'var(--accent-primary)' :
-                          isHighlightedAddition ? 'var(--accent-secondary)' :
                           hoveredPlayer === player.name ? 'var(--accent-hover)' : 
                           getPlayerColor(player.name)
                         }
@@ -519,14 +513,11 @@ export function BRGeneralStatsChart() {
                 />
                 <Bar dataKey="averageScore" name="Score moyen par partie">
                   {stats.topPlayersByAverageScore.map((player: ChartPlayerStat, index: number) => {
-                    const isHighlightedAddition = player.isHighlightedAddition;
-                    
                     return (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={
                           settings.highlightedPlayer === player.name ? 'var(--accent-primary)' :
-                          isHighlightedAddition ? 'var(--accent-secondary)' :
                           hoveredPlayer === player.name ? 'var(--accent-hover)' : 
                           getPlayerColor(player.name)
                         }
