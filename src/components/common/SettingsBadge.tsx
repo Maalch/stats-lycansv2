@@ -11,6 +11,7 @@ export function SettingsBadge() {
     if (settings.gameFilter !== 'all') count++;
     if (settings.filterMode === 'dateRange' && (settings.dateRange.start || settings.dateRange.end)) count++;
     if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) count++;
+    if (settings.highlightedPlayer) count++;
     
     return count;
   };

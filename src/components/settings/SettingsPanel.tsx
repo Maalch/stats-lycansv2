@@ -231,6 +231,10 @@ export function SettingsPanel() {
     updateSettings({ playerFilter: { ...settings.playerFilter, players: [] } });
   };
 
+  const handleHighlightedPlayerChange = (playerName: string) => {
+    updateSettings({ highlightedPlayer: playerName || null });
+  };
+
   return (
     <div className="settings-panel">
       <div className="settings-header">
@@ -557,9 +561,64 @@ export function SettingsPanel() {
         </div>
       </div>
       
+      {/* SECTION 3: Highlighted Player */}
       <div className="settings-section">
         <div className="settings-section-header">
-          <h3>3. Partage des Paramètres</h3>
+          <h3>3. Joueur à Mettre en Évidence</h3>
+        </div>
+        <div className="settings-group">
+          <p className="settings-explanation">
+            Sélectionnez un joueur qui sera toujours affiché et mis en évidence dans tous les graphiques généraux, 
+            même s'il n'est pas dans le top classement.
+          </p>
+          <div style={{ marginTop: '1rem' }}>
+            <label htmlFor="highlighted-player-select" style={{ 
+              display: 'block', 
+              marginBottom: '0.5rem', 
+              color: 'var(--text-primary)', 
+              fontWeight: '500' 
+            }}>
+              Joueur à mettre en évidence :
+            </label>
+            <select
+              id="highlighted-player-select"
+              value={settings.highlightedPlayer || ''}
+              onChange={(e) => handleHighlightedPlayerChange(e.target.value)}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.5rem',
+                fontSize: '0.9rem',
+                width: '100%',
+                maxWidth: '300px'
+              }}
+            >
+              <option value="">Aucun joueur sélectionné</option>
+              {availablePlayers.map(player => (
+                <option key={player} value={player}>
+                  {player}
+                </option>
+              ))}
+            </select>
+            {settings.highlightedPlayer && (
+              <p style={{ 
+                fontSize: '0.8rem', 
+                color: 'var(--accent-primary)', 
+                marginTop: '0.5rem',
+                fontStyle: 'italic'
+              }}>
+                Le joueur "{settings.highlightedPlayer}" sera mis en évidence dans tous les graphiques.
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+      
+      <div className="settings-section">
+        <div className="settings-section-header">
+          <h3>4. Partage des Paramètres</h3>
         </div>
         <div className="settings-group">
           <p className="settings-explanation">

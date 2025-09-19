@@ -21,6 +21,7 @@ export interface SettingsState {
   gameFilter: GameFilter;
   dateRange: DateRange;
   playerFilter: PlayerFilter;
+  highlightedPlayer: string | null; // Player to highlight and always show in charts
 }
 
 interface SettingsContextType {
@@ -36,6 +37,7 @@ const defaultSettings: SettingsState = {
   gameFilter: 'all',
   dateRange: { start: null, end: null },
   playerFilter: { mode: 'none', players: [] },
+  highlightedPlayer: null,
 };
 
 // Helper functions for URL parameters
@@ -77,6 +79,12 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
     };
   }
 
+  // Parse highlighted player
+  const highlightedPlayer = urlParams.get('highlightedPlayer');
+  if (highlightedPlayer) {
+    settings.highlightedPlayer = decodeURIComponent(highlightedPlayer);
+  }
+
   return settings;
 }
 
@@ -103,6 +111,10 @@ function updateUrlFromSettings(settings: SettingsState) {
   
   if (settings.playerFilter.players.length > 0) {
     urlParams.set('players', encodeURIComponent(settings.playerFilter.players.join(',')));
+  }
+  
+  if (settings.highlightedPlayer && settings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
+    urlParams.set('highlightedPlayer', encodeURIComponent(settings.highlightedPlayer));
   }
   
   // Update URL without triggering page reload
@@ -184,6 +196,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     
     if (targetSettings.playerFilter.players.length > 0) {
       urlParams.set('players', encodeURIComponent(targetSettings.playerFilter.players.join(',')));
+    }
+    
+    if (targetSettings.highlightedPlayer && targetSettings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
+      urlParams.set('highlightedPlayer', encodeURIComponent(targetSettings.highlightedPlayer));
     }
     
     const baseUrl = `${window.location.origin}${window.location.pathname}`;

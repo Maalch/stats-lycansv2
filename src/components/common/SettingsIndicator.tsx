@@ -8,7 +8,8 @@ export function SettingsIndicator() {
   const hasActiveFilters = 
     settings.gameFilter !== 'all' ||
     settings.filterMode === 'dateRange' ||
-    (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0);
+    (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) ||
+    settings.highlightedPlayer;
 
   if (!hasActiveFilters) {
     return null; // Don't show indicator when no filters are active
@@ -55,6 +56,11 @@ export function SettingsIndicator() {
         const playerText = 'joueurs';
         filters.push(`${modeText} ${playerCount} ${playerText}`);
       }
+    }
+
+    // Highlighted player
+    if (settings.highlightedPlayer) {
+      filters.push(`🎯 Mettre en évidence ${settings.highlightedPlayer}`);
     }
 
     return filters;
