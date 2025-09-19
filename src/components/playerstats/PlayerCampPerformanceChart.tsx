@@ -5,11 +5,27 @@ import { useThemeAdjustedLycansColorScheme, useThemeAdjustedPlayersColor } from 
 import { minGamesOptions} from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
+import { useSettings } from '../../context/SettingsContext';
 
 type ViewMode =  'player-performance' | 'top-performers';
 
+// Extended interface for chart display with highlighting support
+interface ChartPlayerCampPerformance {
+  player: string;
+  camp: string;
+  games: number;
+  wins: number;
+  winRate: string;
+  performance: string;
+  winRateNum: number;
+  performanceNum: number;
+  campAvgWinRateNum: number;
+  isHighlightedAddition?: boolean;
+}
+
 export function PlayerCampPerformanceChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  const { settings } = useSettings();
   
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
@@ -64,7 +80,7 @@ export function PlayerCampPerformanceChart() {
     for (const player of playerPerformance) {
       for (const cp of player.campPerformance) {
         if (cp.games >= minGames) {
-          const performanceData = {
+          const performanceData: ChartPlayerCampPerformance = {
             player: player.player,
             camp: cp.camp,
             games: cp.games,
@@ -73,7 +89,8 @@ export function PlayerCampPerformanceChart() {
             performance: cp.performance,
             winRateNum: parseFloat(cp.winRate),
             performanceNum: parseFloat(cp.performance),
-            campAvgWinRateNum: parseFloat(cp.campAvgWinRate)
+            campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
+            isHighlightedAddition: false
           };
           
           // Add to all performances for top performers view
@@ -86,24 +103,102 @@ export function PlayerCampPerformanceChart() {
               ...cp,
               winRateNum: parseFloat(cp.winRate),
               performanceNum: parseFloat(cp.performance),
-              campAvgWinRateNum: parseFloat(cp.campAvgWinRate)
+              campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
+              isHighlightedAddition: false
             });
           }
         }
       }
     }
+
+    // Helper function to add highlighted player if not already included
+    const addHighlightedPlayer = (
+      dataArray: ChartPlayerCampPerformance[],
+      campFilter?: string
+    ): ChartPlayerCampPerformance[] => {
+      if (!settings.highlightedPlayer) return dataArray;
+
+      // Check if highlighted player is already in the results
+      const highlightedPlayerExists = dataArray.some(
+        item => item.player === settings.highlightedPlayer && 
+                (!campFilter || item.camp === campFilter)
+      );
+
+      if (highlightedPlayerExists) {
+        return dataArray;
+      }
+
+      // Find highlighted player's data
+      const highlightedPlayerData = playerPerformance.find(
+        player => player.player === settings.highlightedPlayer
+      );
+
+      if (!highlightedPlayerData) return dataArray;
+
+      // Add highlighted player's camp performance(s)
+      const highlightedAdditions: ChartPlayerCampPerformance[] = [];
+      
+      for (const cp of highlightedPlayerData.campPerformance) {
+        // For camp-specific view, only add if it matches the selected camp
+        // For top performers view, add all camps (no campFilter)
+        if ((!campFilter || cp.camp === campFilter) && cp.games >= 1) { // Lower minimum for highlighted player
+          highlightedAdditions.push({
+            player: highlightedPlayerData.player,
+            camp: cp.camp,
+            games: cp.games,
+            wins: cp.wins,
+            winRate: cp.winRate,
+            performance: cp.performance,
+            winRateNum: parseFloat(cp.winRate),
+            performanceNum: parseFloat(cp.performance),
+            campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
+            isHighlightedAddition: true
+          });
+        }
+      }
+
+      return [...dataArray, ...highlightedAdditions];
+    };
+
+    // Add highlighted player to camp-specific data
+    const campPlayersWithHighlighted = addHighlightedPlayer(campPlayers, selectedCamp);
+    
+    // Add highlighted player to top performers data  
+    const topPerformersWithHighlighted = addHighlightedPlayer(allPerformances);
     
     // Sort once for each dataset
-    const sortedCampPlayers = campPlayers.sort((a, b) => b.performanceNum - a.performanceNum);
-    const sortedTopPerformers = allPerformances
-      .sort((a, b) => b.performanceNum - a.performanceNum)
-      .slice(0, 20); // Top 20 performances
+    const sortedCampPlayers = campPlayersWithHighlighted.sort((a, b) => b.performanceNum - a.performanceNum);
+    const sortedTopPerformers = topPerformersWithHighlighted
+      .sort((a, b) => b.performanceNum - a.performanceNum);
+    
+    // Limit data smartly: top N + highlighted additions (only if not already in top N)
+    const getTopPlayersWithHighlighted = (data: ChartPlayerCampPerformance[], limit: number) => {
+      // Get top N players first
+      const topPlayers = data.slice(0, limit);
+      
+      // Check if highlighted player is already in top N
+      const highlightedPlayerInTop = topPlayers.some(p => p.player === settings.highlightedPlayer);
+      
+      // If highlighted player is already in top N, don't add as addition
+      if (highlightedPlayerInTop || !settings.highlightedPlayer) {
+        return topPlayers;
+      }
+      
+      // Otherwise, add highlighted player as addition (with special flag)
+      const highlightedPlayerData = data.find(p => p.player === settings.highlightedPlayer);
+      if (highlightedPlayerData) {
+        const highlightedAddition = { ...highlightedPlayerData, isHighlightedAddition: true };
+        return [...topPlayers, highlightedAddition];
+      }
+      
+      return topPlayers;
+    };
     
     return {
-      campPlayerData: sortedCampPlayers,
-      topPerformersData: sortedTopPerformers
+      campPlayerData: getTopPlayersWithHighlighted(sortedCampPlayers, 15),
+      topPerformersData: getTopPlayersWithHighlighted(sortedTopPerformers, 20)
     };
-  }, [playerCampPerformance, selectedCamp, minGames]);
+  }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer]);
 
   // Handler for bar chart clicks - navigate to game details
   const handleBarClick = (data: any) => {
@@ -293,7 +388,7 @@ export function PlayerCampPerformanceChart() {
               <div style={{ height: 500 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
-                    data={campPlayerData.slice(0, 15)} // Top 15 players
+                    data={campPlayerData} 
                     margin={{ top: 20, right: 30, left: 20, bottom: 0 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
@@ -347,15 +442,32 @@ export function PlayerCampPerformanceChart() {
                        style={{ cursor: 'pointer' }}
                        onClick={handleBarClick}
                      >
-                     {campPlayerData.slice(0, 15).map((entry, index) => (
+                     {campPlayerData.map((entry, index) => {
+                       const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
+                       const isHighlightedAddition = entry.isHighlightedAddition;
+                       
+                       return (
                         <Cell
                            key={`cell-${index}`}
                            fill={
                              playersColor[entry.player] ||
                                (entry.performanceNum >= 0 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
                            }
+                           stroke={
+                             isHighlightedFromSettings 
+                               ? 'var(--accent-primary)' 
+                               : 'transparent'
+                           }
+                           strokeWidth={
+                             isHighlightedFromSettings 
+                               ? 3 
+                               : 0
+                           }
+                           strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                           opacity={isHighlightedAddition ? 0.8 : 1}
                         />
-                     ))}
+                       );
+                     })}
                      </Bar>
                   </BarChart>
                 </ResponsiveContainer>
@@ -430,15 +542,24 @@ export function PlayerCampPerformanceChart() {
                         }
                       }}
                       shape={(props: { cx?: number; cy?: number; payload?: any }) => {
+                        const isHighlighted = settings.highlightedPlayer === props.payload?.player;
+                        const isHighlightedAddition = props.payload?.isHighlightedAddition;
+                        
                         return (
                         <g style={{ cursor: 'pointer' }}>
                           <circle
                             cx={props.cx}
                             cy={props.cy}
-                            r={12}
+                            r={isHighlighted ? 15 : 12}
                             fill={playersColor[props.payload?.player] || 'var(--accent-primary)'}
-                            stroke="#222"
-                            strokeWidth={1}
+                            stroke={
+                              isHighlighted
+                                ? 'var(--accent-primary)'
+                                : '#222'
+                            }
+                            strokeWidth={isHighlighted ? 3 : 1}
+                            strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                            opacity={isHighlightedAddition ? 0.8 : 1}
                           />
                           <text
                             x={props.cx}
@@ -446,7 +567,7 @@ export function PlayerCampPerformanceChart() {
                             textAnchor="middle"
                             dominantBaseline="middle"
                             fill="#fff"
-                            fontSize="10"
+                            fontSize={isHighlighted ? "12" : "10"}
                             fontWeight="bold"
                             pointerEvents="none"
                           >
@@ -523,12 +644,29 @@ export function PlayerCampPerformanceChart() {
                     style={{ cursor: 'pointer' }}
                     onClick={handleHallOfFameBarClick}
                   >
-                    {topPerformersData.map((entry, index) => (
+                    {topPerformersData.map((entry, index) => {
+                      const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
+                      const isHighlightedAddition = entry.isHighlightedAddition;
+                      
+                      return (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? 'var(--accent-primary)' 
+                            : 'transparent'
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
                       />
-                    ))}
+                      );
+                    })}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
