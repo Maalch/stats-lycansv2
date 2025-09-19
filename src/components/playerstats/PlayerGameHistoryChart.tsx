@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
+import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
@@ -10,12 +11,50 @@ type GroupByMethod = 'session' | 'month';
 
 export function PlayerGameHistoryChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  const { settings } = useSettings();
   
 // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
 
-  // Use navigationState for persistence, with fallbacks to default values
-  const selectedPlayerName = navigationState.selectedPlayerName || 'Ponce';
+  // Get available players from the player stats hook
+  const { data: playerStatsData } = usePlayerStatsFromRaw();
+
+  // Create list of available players for the dropdown
+  const availablePlayers = useMemo(() => {
+    if (!playerStatsData?.playerStats) return ['Ponce'];
+    const players = playerStatsData.playerStats
+      .filter(player => player.gamesPlayed > 0)
+      .map(player => player.player)
+      .sort();
+    
+    // Ensure highlighted player is in the list if it exists and has games
+    if (settings.highlightedPlayer && 
+        !players.includes(settings.highlightedPlayer) && 
+        playerStatsData.playerStats.some(p => p.player === settings.highlightedPlayer && p.gamesPlayed > 0)) {
+      players.push(settings.highlightedPlayer);
+      players.sort();
+    }
+    
+    return players;
+  }, [playerStatsData, settings.highlightedPlayer]);
+
+  // Use navigationState for persistence, with smart fallback logic
+  const getDefaultSelectedPlayer = () => {
+    // First priority: existing navigation state
+    if (navigationState.selectedPlayerName && availablePlayers.includes(navigationState.selectedPlayerName)) {
+      return navigationState.selectedPlayerName;
+    }
+    
+    // Second priority: highlighted player from settings (if available)
+    if (settings.highlightedPlayer && availablePlayers.includes(settings.highlightedPlayer)) {
+      return settings.highlightedPlayer;
+    }
+    
+    // Third priority: first available player
+    return availablePlayers[0] || 'Ponce';
+  };
+
+  const selectedPlayerName = getDefaultSelectedPlayer();
   const groupingMethod = navigationState.groupingMethod || 'session';
   
   // Update functions that also update the navigation state
@@ -26,19 +65,8 @@ export function PlayerGameHistoryChart() {
   const setGroupingMethod = (method: GroupByMethod) => {
     updateNavigationState({ groupingMethod: method });
   };
-  
-  // Get available players from the player stats hook
-  const { data: playerStatsData } = usePlayerStatsFromRaw();
-  const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
 
-  // Create list of available players for the dropdown
-  const availablePlayers = useMemo(() => {
-    if (!playerStatsData?.playerStats) return ['Ponce'];
-    return playerStatsData.playerStats
-      .filter(player => player.gamesPlayed > 0)
-      .map(player => player.player)
-      .sort();
-  }, [playerStatsData]);
+  const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
 
   // Optimized date parsing - cache parsed dates to avoid repeated parsing
   const parsedDataCache = useMemo(() => {

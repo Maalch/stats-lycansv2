@@ -43,9 +43,8 @@ I've successfully implemented a comprehensive highlighted player feature that al
 ## 🎨 **Advanced Visual Design Features**
 
 ### **Multi-Level Highlighting System** (Applied to BOTH charts)
-1. **🎯 Settings Highlight**: `var(--accent-primary)` color, 3px solid border
-2. **👆 Hover Highlight**: `var(--text-primary)` color, 2px solid border  
-3. **➕ Addition Highlight**: Dashed border pattern + 80% opacity
+1. **👆 Hover Highlight**: `var(--text-primary)` color, 2px solid border  
+2. **➕ Addition Highlight**: Dashed border pattern + 80% opacity
 
 ### **Smart Chart Intelligence** (Applied to BOTH charts)
 - **Dual Eligibility Check**: Separate logic for participation (>2 games) vs win rate (≥min games OR highlighted)
