@@ -1,6 +1,6 @@
 # Stats Lycans
 
-Stats Lycans is a web application built with React and TypeScript (using Vite) designed to visualize key performance indicators (KPIs) and statistics sourced from a Google Sheet maintained by SoldatFlippy. The application is optimized for deployment via GitHub Pages, with all production assets output to the `docs` directory.
+Stats Lycans is a web application built with React and TypeScript (using Vite) designed to visualize key performance indicators (KPIs) and statistics sourced from a Google Sheet maintained by SoldatFlippy and AmberAerin. The application is optimized for deployment via GitHub Pages, with all production assets output to the `docs` directory.
 
 ## Table of Contents
 
