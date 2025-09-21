@@ -172,6 +172,20 @@ export function PlayersGeneralStatisticsChart() {
                   textAnchor="end"
                   height={80}
                   interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
                 />
                 <YAxis label={{ value: 'Nombre de parties', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} />
                 <Tooltip
@@ -348,6 +362,20 @@ export function PlayersGeneralStatisticsChart() {
                   textAnchor="end"
                   height={80}
                   interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
                 />
                 <YAxis
                   label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}

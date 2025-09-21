@@ -222,6 +222,24 @@ export function PlayerPairingStatsChart() {
                       height={90} 
                       interval={0}
                       fontSize={11}
+                      tick={({ x, y, payload }) => {
+                        const isPairHighlighted = settings.highlightedPlayer && 
+                          payload.value.includes(settings.highlightedPlayer);
+                        return (
+                          <text
+                            x={x}
+                            y={y}
+                            dy={16}
+                            textAnchor="end"
+                            fill={isPairHighlighted ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                            fontSize={isPairHighlighted ? 12 : 11}
+                            fontWeight={isPairHighlighted ? 'bold' : 'normal'}
+                            transform={`rotate(-45 ${x} ${y})`}
+                          >
+                            {payload.value}
+                          </text>
+                        );
+                      }}
                     />
                     <YAxis 
                       label={{ value: 'Apparitions', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
@@ -358,6 +376,24 @@ export function PlayerPairingStatsChart() {
                     height={90} 
                     interval={0}
                     fontSize={11}
+                    tick={({ x, y, payload }) => {
+                      const isPairHighlighted = settings.highlightedPlayer && 
+                        payload.value.includes(settings.highlightedPlayer);
+                      return (
+                        <text
+                          x={x}
+                          y={y}
+                          dy={16}
+                          textAnchor="end"
+                          fill={isPairHighlighted ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                          fontSize={isPairHighlighted ? 12 : 11}
+                          fontWeight={isPairHighlighted ? 'bold' : 'normal'}
+                          transform={`rotate(-45 ${x} ${y})`}
+                        >
+                          {payload.value}
+                        </text>
+                      );
+                    }}
                   />
                   <YAxis 
                     label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
@@ -485,6 +521,24 @@ export function PlayerPairingStatsChart() {
                     height={90} 
                     interval={0}
                     fontSize={11}
+                    tick={({ x, y, payload }) => {
+                      const isPairHighlighted = settings.highlightedPlayer && 
+                        payload.value.includes(settings.highlightedPlayer);
+                      return (
+                        <text
+                          x={x}
+                          y={y}
+                          dy={16}
+                          textAnchor="end"
+                          fill={isPairHighlighted ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                          fontSize={isPairHighlighted ? 12 : 11}
+                          fontWeight={isPairHighlighted ? 'bold' : 'normal'}
+                          transform={`rotate(-45 ${x} ${y})`}
+                        >
+                          {payload.value}
+                        </text>
+                      );
+                    }}
                   />
                   <YAxis 
                     label={{ value: 'Apparitions', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
@@ -621,6 +675,24 @@ export function PlayerPairingStatsChart() {
                     height={90} 
                     interval={0}
                     fontSize={11}
+                    tick={({ x, y, payload }) => {
+                      const isPairHighlighted = settings.highlightedPlayer && 
+                        payload.value.includes(settings.highlightedPlayer);
+                      return (
+                        <text
+                          x={x}
+                          y={y}
+                          dy={16}
+                          textAnchor="end"
+                          fill={isPairHighlighted ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                          fontSize={isPairHighlighted ? 12 : 11}
+                          fontWeight={isPairHighlighted ? 'bold' : 'normal'}
+                          transform={`rotate(-45 ${x} ${y})`}
+                        >
+                          {payload.value}
+                        </text>
+                      );
+                    }}
                   />
                   <YAxis 
                     label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}

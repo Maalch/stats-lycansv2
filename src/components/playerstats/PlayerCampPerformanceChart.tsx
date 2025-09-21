@@ -399,6 +399,20 @@ export function PlayerCampPerformanceChart() {
                       height={110}
                       interval={0}
                       fontSize={15}
+                      tick={({ x, y, payload }) => (
+                        <text
+                          x={x}
+                          y={y}
+                          dy={16}
+                          textAnchor="end"
+                          fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                          fontSize={settings.highlightedPlayer === payload.value ? 16 : 15}
+                          fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                          transform={`rotate(-45 ${x} ${y})`}
+                        >
+                          {payload.value}
+                        </text>
+                      )}
                     />
                     <YAxis 
                       label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}                 
@@ -602,6 +616,20 @@ export function PlayerCampPerformanceChart() {
                     height={110}
                     interval={0}
                     fontSize={15}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                        fontSize={settings.highlightedPlayer === payload.value ? 16 : 15}
+                        fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
                   />
                   <YAxis 
                     label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
