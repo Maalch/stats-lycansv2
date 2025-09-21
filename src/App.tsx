@@ -15,9 +15,11 @@ const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/P
 const PlayerComparisonChart = lazy(() => import('./components/playerstats/PlayerComparisonChart').then(m => ({ default: m.PlayerComparisonChart })));
 const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
 
+
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
+const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
 
 const BRGeneralStatsChart = lazy(() => import('./components/brstats/BRGeneralStatsChart').then(m => ({ default: m.BRGeneralStatsChart })));
 
@@ -109,6 +111,12 @@ const GENERAL_STATS_MENU = [
     label: 'Camps', 
     component: CampsChart,
     description: 'Détails des apparitions et victoires par camp'
+  },
+  { 
+    key: 'victoryTypes',
+    label: 'Types de Victoire',
+    component: VictoryTypesChart,
+    description: 'Répartition des types de victoire par camp'
   },
   { 
     key: 'harvest', 
