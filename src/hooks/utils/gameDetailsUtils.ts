@@ -273,6 +273,13 @@ export function filterByDateFromGameLog(games: GameLogEntry[], selectedDate: str
 }
 
 /**
+ * Filter games by victory type
+ */
+export function filterByVictoryType(games: GameLogEntry[], victoryType: string): GameLogEntry[] {
+  return games.filter(game => game.LegacyData?.VictoryType === victoryType);
+}
+
+/**
  * Filter games by harvest range
  * 
  * @param games - Array of GameLogEntry to filter
@@ -695,6 +702,10 @@ export function applyNavigationFiltersFromGameLog(
     filteredGames = filterByHarvestRangeFromGameLog(filteredGames, filters.selectedHarvestRange);
   }
 
+  if (filters.selectedVictoryType) {
+    filteredGames = filterByVictoryType(filteredGames, filters.selectedVictoryType);
+  }
+
   if (filters.selectedGameDuration) {
     filteredGames = filterByGameDurationFromGameLog(filteredGames, filters.selectedGameDuration);
   }
@@ -827,6 +838,7 @@ export function computeGameDetailsFromGameLog(
       playersList: game.PlayerStats.map(p => p.Username).join(', '),
       versions: game.Version || null,
       map: game.MapName,
+      victoryType: game.LegacyData?.VictoryType || null,
       youtubeEmbedUrl: createYouTubeEmbedUrl(game.LegacyData?.VODLink || null, game.LegacyData?.VODLinkEnd || null),
       gameDuration: calculateGameDuration(game.StartDate, game.EndDate),
       playerData : game.PlayerStats,

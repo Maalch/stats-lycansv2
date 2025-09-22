@@ -152,10 +152,16 @@ export function GameDetailView({ game }: { game: any }) {
           </div>
         </div>
 
-        {/* Additional Info */}
+          {/* Additional Info */}
         <div className="lycans-game-detail-section">
           <h4>Informations Supplémentaires</h4>
           <div className="lycans-game-detail-stats">
+            {game.victoryType !== null && (
+              <div className="lycans-stat-item">
+                <span className="label">Type de victoire:</span>
+                <span className="value">{game.victoryType}</span>
+              </div>
+            )}
             <div className="lycans-stat-item">
               <span className="label">Jours de jeu:</span>
               <span className="value">{game.dayCount}</span>
