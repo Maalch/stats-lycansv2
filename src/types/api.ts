@@ -108,8 +108,12 @@ const playerFrenchColorNames: Record<string, keyof typeof frenchColorMapping> = 
   "AvaMind": "Turquoise",
   "Skyyart": "Violet",
   "Pressea": "Marron",
-  "Etoiles": "Vert pomme"
+  "Etoiles": "Vert pomme",
+  "Areliann": "Jaune",
+  "SpicY": "Rose"
 };
+
+
 
 const playersColor: Record<string, string> = Object.fromEntries(
   Object.entries(playerFrenchColorNames).map(([player, colorName]) => [
