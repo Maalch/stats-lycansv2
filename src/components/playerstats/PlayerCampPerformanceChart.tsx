@@ -405,9 +405,9 @@ export function PlayerCampPerformanceChart() {
                           y={y}
                           dy={16}
                           textAnchor="end"
-                          fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-primary)'}
-                          fontSize={settings.highlightedPlayer === payload.value ? 16 : 15}
-                          fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                          fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                          fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
+                          fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
                           transform={`rotate(-45 ${x} ${y})`}
                         >
                           {payload.value}
@@ -622,9 +622,9 @@ export function PlayerCampPerformanceChart() {
                         y={y}
                         dy={16}
                         textAnchor="end"
-                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-primary)'}
-                        fontSize={settings.highlightedPlayer === payload.value ? 16 : 15}
-                        fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                        fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
+                        fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
                         transform={`rotate(-45 ${x} ${y})`}
                       >
                         {payload.value}
