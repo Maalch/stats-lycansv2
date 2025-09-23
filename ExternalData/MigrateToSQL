@@ -1,0 +1,802 @@
+## GitHub Pages + External API
+
+### Architecture
+```typescript
+// Separate API deployment, static site on GitHub Pages
+GitHub Pages (Static) → External API (Railway/Render) → Database
+```
+
+### Advantages ✅
+
+**Cost Efficiency:**
+- **GitHub Pages free** - unlimited static hosting
+- **Railway/Render** - $5-10/month for API + database
+- **No platform fees** or execution limits
+
+**Flexibility:**
+- **Full Node.js/Express** - no edge function limitations
+- **Any database** - PostgreSQL, SQLite, MongoDB
+- **Custom caching** strategies
+- **Easier local development**
+
+**Control:**
+- **No vendor lock-in** - portable to any cloud
+- **Full SQL support** - complex queries, transactions
+- **Custom middleware** for authentication, rate limiting
+- **Detailed logging** and monitoring
+
+### Disadvantages ❌
+
+**Performance:**
+- **Higher latency** - API not at edge (200-500ms from EU)
+- **Cold starts** possible during low usage
+- **CORS complexity** for cross-origin requests
+
+**Operational Overhead:**
+- **Separate deployments** - API and static site
+- **Database management** - backups, updates
+- **Monitoring** multiple services
+
+**Specific Implementation:**
+````typescript
+import express from 'express';
+import cors from 'cors';
+import { Database } from 'better-sqlite3';
+
+const app = express();
+const db = new Database('./lycans-stats.db');
+
+// Enable CORS for GitHub Pages domain
+app.use(cors({
+  origin: ['https://your-username.github.io', 'http://localhost:5173'],
+  credentials: true
+}));
+
+app.post('/api/stats', async (req, res) => {
+  const { startDate, endDate, excludedPlayers, statType } = req.body;
+  
+  try {
+    let query = `
+      SELECT 
+        ps.username,
+        COUNT(*) as gamesPlayed,
+        SUM(CASE WHEN ps.victorious THEN 1 ELSE 0 END) as wins,
+        ROUND(AVG(CASE WHEN ps.victorious THEN 100.0 ELSE 0.0 END), 2) as winRate
+      FROM player_stats ps
+      JOIN games g ON ps.gameId = g.id
+      WHERE 1=1
+    `;
+    
+    const params = [];
+    if (startDate) {
+      query += ` AND g.startDate >= ?`;
+      params.push(startDate);
+    }
+    
+    if (excludedPlayers?.length) {
+      const placeholders = excludedPlayers.map(() => '?').join(',');
+      query += ` AND ps.username NOT IN (${placeholders})`;
+      params.push(...excludedPlayers);
+    }
+    
+    query += ` GROUP BY ps.username ORDER BY gamesPlayed DESC`;
+    
+    const stmt = db.prepare(query);
+    const results = stmt.all(...params);
+    
+    res.json(results);
+  } catch (error) {
+    console.error('Database error:', error);
+    res.status(500).json({ error: 'Query failed' });
+  }
+});
+
+export default app;
+````
+
+## Recommendation for Your Use Case
+
+Given your specific requirements, I recommend **GitHub Pages + External API** for these reasons:
+
+### 1. **Perfect Fit for Your Workflow**
+````json
+{
+  "currentSetup": "GitHub Pages + GitHub Actions",
+  "dataSync": "Weekly automated updates",
+  "traffic": "Low to moderate (gaming group)",
+  "budget": "Minimal preferred"
+}
+````
+
+### 2. **Migration Strategy**
+````typescript
+// Phase 1: Keep current setup, add API gradually
+export function usePlayerStatsFromRaw() {
+  const { data: apiData } = useApiStats({ statType: 'playerStats' });
+  const { data: staticData } = usePlayerStatsFromRaw(); // Current method
+  
+  // Graceful fallback
+  return apiData || staticData;
+}
+
+// Phase 2: Switch default to API, keep static as backup
+// Phase 3: Remove static computation, API only
+````
+
+### 3. **Enhanced GitHub Actions Pipeline**
+````yaml
+name: Update Data and Deploy API
+
+on:
+  schedule:
+    - cron: '0 4 * * 1,2'  # Your current schedule
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      # Your current data sync
+      - name: Sync game data
+        run: |
+          cd scripts/data-sync
+          npm install
+          node fetch-data.js
+      
+      # New: Generate database
+      - name: Generate SQLite database
+        run: |
+          cd scripts/data-sync
+          node generate-database.js
+      
+      # Deploy to Railway/Render
+      - name: Deploy API
+        run: |
+          curl -X POST "${{ secrets.RAILWAY_DEPLOY_WEBHOOK }}" \
+            -H "Content-Type: application/json" \
+            -d '{"database": "updated"}'
+      
+      # Your current static site update
+      - name: Update GitHub Pages
+        run: npm run build
+````
+
+### 4. **Cost Breakdown**
+```
+GitHub Pages: Free
+Railway Starter: $5/month (500GB transfer, always-on)
+Total: $5/month vs Vercel Pro $20/month
+```
+
+### 5. **Performance Comparison for Your Use Case**
+```
+Current (Static): 2-5MB download, 2-5s load time
+External API: 10-50KB response, 300-500ms from EU
+Edge Functions: 10-50KB response, 100-200ms from EU
+
+For a gaming group dashboard, 300ms vs 100ms is negligible
+Cost savings of $15/month is significant
+```
+
+## Implementation Priority
+
+1. **Start with External API** - Railway + SQLite
+2. **Keep GitHub Pages** for static assets and fallback
+3. **Gradual migration** - chart by chart
+4. **Monitor performance** - upgrade to edge functions only if needed
+
+The external API approach gives you the best balance of performance improvement, cost efficiency, and migration flexibility for your lycans stats dashboard.
+Let me walk you through setting up Railway + SQLite for your lycans stats dashboard. This approach will give you the best balance of performance and cost for your use case.
+
+## Step-by-Step Railway + SQLite Setup
+
+### 1. Prepare Your Local Environment
+
+First, lets create the API structure in your existing project:
+
+````bash
+# In your stats-lycansv2 root directory
+mkdir api-server
+cd api-server
+npm init -y
+````
+
+````json
+{
+  "name": "lycans-stats-api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "build-db": "node src/build-database.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^9.2.2",
+    "compression": "^1.7.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
+````
+
+### 2. Create the Database Schema and Builder
+
+````javascript
+import Database from 'better-sqlite3';
+import fs from 'fs/promises';
+import path from 'path';
+
+export async function buildDatabase() {
+  console.log('🗄️ Building SQLite database for lycans stats...');
+  
+  // Create database
+  const db = new Database('./lycans-stats.db');
+  
+  // Create optimized schema based on your GameLogEntry structure
+  db.exec(`
+    -- Games table
+    CREATE TABLE IF NOT EXISTS games (
+      id TEXT PRIMARY KEY,
+      displayedId TEXT,
+      startDate TEXT NOT NULL,
+      endDate TEXT,
+      mapName TEXT,
+      harvestGoal INTEGER,
+      harvestDone INTEGER,
+      endTiming TEXT,
+      version TEXT,
+      modded BOOLEAN DEFAULT 0,
+      winnerCamp TEXT
+    );
+    
+    -- Player stats table - core data from PlayerStat interface
+    CREATE TABLE IF NOT EXISTS player_stats (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      gameId TEXT NOT NULL,
+      username TEXT NOT NULL,
+      color TEXT,
+      mainRoleInitial TEXT NOT NULL,
+      mainRoleFinal TEXT,
+      power TEXT,
+      secondaryRole TEXT,
+      victorious BOOLEAN DEFAULT 0,
+      deathTiming TEXT,
+      deathType TEXT,
+      killerName TEXT,
+      deathPositionX REAL,
+      deathPositionY REAL,
+      deathPositionZ REAL,
+      FOREIGN KEY (gameId) REFERENCES games (id)
+    );
+    
+    -- Votes table - from your vote tracking
+    CREATE TABLE IF NOT EXISTS votes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      gameId TEXT NOT NULL,
+      voterUsername TEXT NOT NULL,
+      targetUsername TEXT NOT NULL,
+      voteDate TEXT NOT NULL,
+      FOREIGN KEY (gameId) REFERENCES games (id)
+    );
+    
+    -- Critical indexes for your filtering patterns
+    CREATE INDEX IF NOT EXISTS idx_games_startDate ON games (startDate);
+    CREATE INDEX IF NOT EXISTS idx_games_endDate ON games (endDate);
+    CREATE INDEX IF NOT EXISTS idx_games_winnerCamp ON games (winnerCamp);
+    CREATE INDEX IF NOT EXISTS idx_player_stats_gameId ON player_stats (gameId);
+    CREATE INDEX IF NOT EXISTS idx_player_stats_username ON player_stats (username);
+    CREATE INDEX IF NOT EXISTS idx_player_stats_mainRole ON player_stats (mainRoleInitial);
+    CREATE INDEX IF NOT EXISTS idx_player_stats_victorious ON player_stats (victorious);
+    CREATE INDEX IF NOT EXISTS idx_votes_gameId ON votes (gameId);
+    CREATE INDEX IF NOT EXISTS idx_votes_voter ON votes (voterUsername);
+  `);
+
+  // Load your gameLog.json
+  const gameLogPath = path.join('../data/gameLog.json');
+  const gameLogData = JSON.parse(await fs.readFile(gameLogPath, 'utf-8'));
+
+  // Prepare statements for batch insert
+  const insertGame = db.prepare(`
+    INSERT OR REPLACE INTO games 
+    (id, displayedId, startDate, endDate, mapName, harvestGoal, harvestDone, endTiming, version, modded, winnerCamp)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const insertPlayerStat = db.prepare(`
+    INSERT INTO player_stats 
+    (gameId, username, color, mainRoleInitial, mainRoleFinal, power, secondaryRole, victorious, deathTiming, deathType, killerName, deathPositionX, deathPositionY, deathPositionZ)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const insertVote = db.prepare(`
+    INSERT INTO votes (gameId, voterUsername, targetUsername, voteDate)
+    VALUES (?, ?, ?, ?)
+  `);
+
+  // Batch insert using transaction for performance
+  const insertAllData = db.transaction((games) => {
+    for (const game of games) {
+      // Determine winner camp using your existing logic
+      const winnerCamp = determineWinnerCamp(game.PlayerStats);
+      
+      // Insert game
+      insertGame.run(
+        game.Id,
+        game.DisplayedId,
+        game.StartDate,
+        game.EndDate,
+        game.MapName,
+        game.HarvestGoal,
+        game.HarvestDone,
+        game.EndTiming,
+        game.Version,
+        game.Modded ? 1 : 0,
+        winnerCamp
+      );
+
+      // Insert player stats
+      for (const playerStat of game.PlayerStats) {
+        insertPlayerStat.run(
+          game.Id,
+          playerStat.Username,
+          playerStat.Color,
+          playerStat.MainRoleInitial,
+          playerStat.MainRoleFinal,
+          playerStat.Power,
+          playerStat.SecondaryRole,
+          playerStat.Victorious ? 1 : 0,
+          playerStat.DeathTiming,
+          playerStat.DeathType,
+          playerStat.KillerName,
+          playerStat.DeathPosition?.x || null,
+          playerStat.DeathPosition?.y || null,
+          playerStat.DeathPosition?.z || null
+        );
+
+        // Insert votes if they exist
+        if (playerStat.Votes) {
+          for (const vote of playerStat.Votes) {
+            insertVote.run(game.Id, playerStat.Username, vote.Target, vote.Date);
+          }
+        }
+      }
+    }
+  });
+
+  // Execute the transaction
+  console.log('📝 Inserting game data...');
+  insertAllData(gameLogData.GameStats);
+
+  // Verify data
+  const gameCount = db.prepare('SELECT COUNT(*) as count FROM games').get();
+  const playerStatsCount = db.prepare('SELECT COUNT(*) as count FROM player_stats').get();
+  
+  console.log(`✅ Database built successfully:`);
+  console.log(`   - ${gameCount.count} games`);
+  console.log(`   - ${playerStatsCount.count} player stats records`);
+
+  db.close();
+}
+
+// Your existing camp determination logic from campWinStatsUtils.ts
+function determineWinnerCamp(playerStats) {
+  const victoriousPlayers = playerStats.filter(p => p.Victorious);
+  
+  if (victoriousPlayers.length === 0) {
+    return null;
+  }
+  
+  const winnerRole = victoriousPlayers[0].MainRoleInitial;
+  
+  if (winnerRole === 'Loup' || winnerRole === 'Traître') {
+    return 'Loup';
+  } else if (winnerRole === 'Amoureux Villageois' || winnerRole === 'Amoureux Loup') {
+    return 'Amoureux';
+  } else {
+    // Solo roles win as their specific role name
+    return winnerRole;
+  }
+}
+
+// Run if called directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  buildDatabase().catch(console.error);
+}
+````
+
+### 3. Create the Express API Server
+
+````javascript
+import express from 'express';
+import cors from 'cors';
+import compression from 'compression';
+import Database from 'better-sqlite3';
+import path from 'path';
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+// Initialize database
+const db = new Database('./lycans-stats.db', { 
+  readonly: true,
+  fileMustExist: true 
+});
+
+// Middleware
+app.use(compression());
+app.use(express.json({ limit: '1mb' }));
+
+// CORS for your GitHub Pages domain
+app.use(cors({
+  origin: [
+    'https://pierre-evrard.github.io', // Replace with your GitHub username
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST']
+}));
+
+// Health check
+app.get('/health', (req, res) => {
+  try {
+    const result = db.prepare('SELECT COUNT(*) as count FROM games').get();
+    res.json({ 
+      status: 'healthy', 
+      games: result.count,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ status: 'unhealthy', error: error.message });
+  }
+});
+
+// Main stats endpoint
+app.post('/api/stats', async (req, res) => {
+  try {
+    const {
+      statType,
+      startDate,
+      endDate,
+      excludedPlayers = [],
+      includedPlayers = [],
+      gameTypes = []
+    } = req.body;
+
+    console.log(`📊 Stats request: ${statType}`, { startDate, endDate, excludedPlayers });
+
+    let result;
+    switch (statType) {
+      case 'playerStats':
+        result = getPlayerStats({ startDate, endDate, excludedPlayers, includedPlayers });
+        break;
+      case 'campStats':
+        result = getCampStats({ startDate, endDate, excludedPlayers, includedPlayers });
+        break;
+      case 'gameDetails':
+        result = getGameDetails({ startDate, endDate, excludedPlayers, includedPlayers });
+        break;
+      default:
+        return res.status(400).json({ error: 'Invalid statType' });
+    }
+
+    res.json(result);
+  } catch (error) {
+    console.error('API Error:', error);
+    res.status(500).json({ error: 'Database query failed', details: error.message });
+  }
+});
+
+// Player statistics query
+function getPlayerStats({ startDate, endDate, excludedPlayers, includedPlayers }) {
+  let query = `
+    SELECT 
+      ps.username as player,
+      COUNT(*) as gamesPlayed,
+      SUM(CASE WHEN ps.victorious THEN 1 ELSE 0 END) as wins,
+      ROUND(AVG(CASE WHEN ps.victorious THEN 100.0 ELSE 0.0 END), 2) as winPercent,
+      COUNT(DISTINCT ps.mainRoleInitial) as rolesPlayed,
+      GROUP_CONCAT(DISTINCT ps.mainRoleInitial) as roles
+    FROM player_stats ps
+    JOIN games g ON ps.gameId = g.id
+    WHERE 1=1
+  `;
+
+  const params = [];
+  
+  // Apply your SettingsContext filters
+  if (startDate) {
+    query += ` AND g.startDate >= ?`;
+    params.push(startDate);
+  }
+  
+  if (endDate) {
+    query += ` AND g.endDate <= ?`;
+    params.push(endDate);
+  }
+  
+  if (excludedPlayers.length > 0) {
+    const placeholders = excludedPlayers.map(() => '?').join(',');
+    query += ` AND ps.username NOT IN (${placeholders})`;
+    params.push(...excludedPlayers);
+  }
+  
+  if (includedPlayers.length > 0) {
+    const placeholders = includedPlayers.map(() => '?').join(',');
+    query += ` AND ps.username IN (${placeholders})`;
+    params.push(...includedPlayers);
+  }
+
+  query += `
+    GROUP BY ps.username
+    ORDER BY gamesPlayed DESC, wins DESC
+  `;
+
+  const stmt = db.prepare(query);
+  const playerStats = stmt.all(...params);
+
+  return {
+    playerStats,
+    totalGames: playerStats.reduce((sum, p) => sum + p.gamesPlayed, 0),
+    totalPlayers: playerStats.length
+  };
+}
+
+// Camp statistics query
+function getCampStats({ startDate, endDate, excludedPlayers, includedPlayers }) {
+  let query = `
+    WITH camp_games AS (
+      SELECT DISTINCT
+        g.id,
+        g.winnerCamp,
+        CASE 
+          WHEN ps.mainRoleInitial IN ('Loup', 'Traître') THEN 'Loup'
+          WHEN ps.mainRoleInitial LIKE 'Amoureux%' THEN 'Amoureux'
+          WHEN ps.mainRoleInitial IN ('Chasseur', 'Alchimiste') THEN 'Villageois'
+          ELSE ps.mainRoleInitial
+        END as playerCamp
+      FROM games g
+      JOIN player_stats ps ON g.id = ps.gameId
+      WHERE 1=1
+  `;
+
+  const params = [];
+  
+  if (startDate) {
+    query += ` AND g.startDate >= ?`;
+    params.push(startDate);
+  }
+  
+  if (endDate) {
+    query += ` AND g.endDate <= ?`;
+    params.push(endDate);
+  }
+  
+  if (excludedPlayers.length > 0) {
+    const placeholders = excludedPlayers.map(() => '?').join(',');
+    query += ` AND ps.username NOT IN (${placeholders})`;
+    params.push(...excludedPlayers);
+  }
+
+  query += `
+    )
+    SELECT 
+      playerCamp as camp,
+      COUNT(*) as totalGames,
+      SUM(CASE WHEN winnerCamp = playerCamp THEN 1 ELSE 0 END) as wins,
+      ROUND(AVG(CASE WHEN winnerCamp = playerCamp THEN 100.0 ELSE 0.0 END), 2) as winRate
+    FROM camp_games
+    GROUP BY playerCamp
+    ORDER BY wins DESC
+  `;
+
+  const stmt = db.prepare(query);
+  return stmt.all(...params);
+}
+
+// Game details query  
+function getGameDetails({ startDate, endDate, excludedPlayers, includedPlayers }) {
+  let query = `
+    SELECT 
+      g.id,
+      g.displayedId,
+      g.startDate,
+      g.endDate,
+      g.mapName,
+      g.winnerCamp,
+      GROUP_CONCAT(ps.username) as players,
+      GROUP_CONCAT(CASE WHEN ps.victorious THEN ps.username END) as winners
+    FROM games g
+    JOIN player_stats ps ON g.id = ps.gameId
+    WHERE 1=1
+  `;
+
+  const params = [];
+  
+  if (startDate) {
+    query += ` AND g.startDate >= ?`;
+    params.push(startDate);
+  }
+  
+  if (endDate) {
+    query += ` AND g.endDate <= ?`;
+    params.push(endDate);
+  }
+
+  query += `
+    GROUP BY g.id, g.displayedId, g.startDate, g.endDate, g.mapName, g.winnerCamp
+    ORDER BY g.startDate DESC
+  `;
+
+  const stmt = db.prepare(query);
+  return stmt.all(...params);
+}
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+  console.log('🛑 Shutting down gracefully...');
+  db.close();
+  process.exit(0);
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Lycans Stats API running on port ${PORT}`);
+  console.log(`📊 Health check: http://localhost:${PORT}/health`);
+});
+````
+
+### 4. Update Your Data Sync Script
+
+````javascript
+import { buildDatabase } from '../../api-server/src/build-database.js';
+import fs from 'fs/promises';
+
+async function syncAndDeploy() {
+  console.log('🔄 Starting data sync and deploy process...');
+  
+  try {
+    // 1. Your existing data fetch (keep as-is)
+    console.log('📥 Fetching latest game data...');
+    // ... your existing fetch-data.js logic ...
+    
+    // 2. Build database
+    console.log('🗄️ Building SQLite database...');
+    await buildDatabase();
+    
+    // 3. Copy database to api-server directory
+    await fs.copyFile('../data/lycans-stats.db', '../api-server/lycans-stats.db');
+    
+    // 4. Trigger Railway deployment (if webhook configured)
+    if (process.env.RAILWAY_WEBHOOK_URL) {
+      console.log('🚀 Triggering Railway deployment...');
+      await fetch(process.env.RAILWAY_WEBHOOK_URL, { method: 'POST' });
+    }
+    
+    console.log('✅ Sync and deploy completed successfully');
+  } catch (error) {
+    console.error('❌ Sync and deploy failed:', error);
+    process.exit(1);
+  }
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  syncAndDeploy();
+}
+````
+
+### 5. Set Up Railway Deployment
+
+1. **Create Railway Account**: Go to [railway.app](https://railway.app) and sign up with GitHub
+
+2. **Install Railway CLI**:
+````bash
+npm install -g @railway/cli
+railway login
+````
+
+3. **Initialize Railway Project**:
+````bash
+cd api-server
+railway init
+railway variables set NODE_ENV=production
+````
+
+4. **Create Railway Configuration**:
+````json
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 100,
+    "restartPolicyType": "ON_FAILURE"
+  }
+}
+````
+
+5. **Deploy**:
+````bash
+railway up
+````
+
+### 6. Update GitHub Actions
+
+````yaml
+name: Update Data and Deploy API
+
+on:
+  schedule:
+    - cron: '0 4 * * 1,2'
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: |
+          cd scripts/data-sync && npm install
+          cd ../../api-server && npm install
+      
+      - name: Sync game data and build database
+        env:
+          LYCANS_API_BASE: ${{ secrets.LYCANS_API_BASE }}
+          STATS_LIST_URL: ${{ secrets.STATS_LIST_URL }}
+        run: |
+          cd scripts/data-sync
+          node fetch-data.js
+          node sync-and-deploy.js
+      
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          cd api-server
+          npx @railway/cli up --service ${{ secrets.RAILWAY_SERVICE_ID }}
+      
+      - name: Build and deploy static site
+        run: |
+          npm install
+          npm run build
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+````
+
+### 7. Test Your Setup
+
+````bash
+# Build database locally
+cd api-server
+npm run build-db
+
+# Test server locally
+npm run dev
+
+# Test API endpoint
+curl -X POST http://localhost:3001/api/stats \
+  -H "Content-Type: application/json" \
+  -d '{"statType": "playerStats", "startDate": "2024-01-01"}'
+````
+
+Once Railway is set up, you'll get a public URL like `https://your-app.railway.app` that you can use in your frontend API calls. Your total monthly cost will be around $5-10 depending on usage.
+
+Would you like me to help you with the frontend integration next, or do you have questions about any of these setup steps?
