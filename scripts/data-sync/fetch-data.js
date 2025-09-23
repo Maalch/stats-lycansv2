@@ -160,7 +160,6 @@ async function saveDataToFile(filename, data) {
 
 async function createDataIndex(legacyAvailable, awsFilesCount, totalGames) {
   const indexData = {
-    lastUpdated: new Date().toISOString(),
     sources: {
       legacy: legacyAvailable ? "Available (gameLog-Legacy.json)" : "Not available",
       aws: `${awsFilesCount} files from S3 bucket`,
