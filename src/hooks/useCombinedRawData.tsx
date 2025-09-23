@@ -72,7 +72,6 @@ export interface RawBRGlobalData {
 }
 
 interface RawBRResponse {
-  lastUpdated: string;
   BRParties: {
     totalRecords: number;
     data: RawBRData[];
