@@ -1,0 +1,71 @@
+Great idea for analyzing map-specific performance! Looking at your `GameLogEntry.MapName` data, here are some cool visualization concepts for comparing Village vs Château performance:
+
+## 1. **Split Performance Dashboard**
+A side-by-side comparison showing key metrics for each map:
+
+```typescript
+interface MapPerformanceData {
+  mapName: string;
+  totalGames: number;
+  winRate: number;
+  avgSurvivalTime: number;
+  favoriteRole: string;
+  deathTypes: { [key: string]: number };
+  killCount: number;
+}
+```
+
+## 2. **Radar/Spider Chart Comparison**
+Perfect for showing multiple performance dimensions at once:
+- Win rate by camp (Villageois/Loups/Solo)
+- Survival rate
+- Vote accuracy
+- Kill efficiency
+- Role diversity
+
+## 3. **Heat Map Matrix**
+Players on Y-axis, performance metrics on X-axis, with color intensity showing Village vs Château performance difference.
+
+## 4. **"Map Preference" Scatter Plot**
+X-axis: Village performance score, Y-axis: Château performance score. Players in different quadrants show their map strengths.
+
+## 5. **Interactive Toggle Charts**
+Your existing charts with a map filter toggle - users can switch between "Village only", "Château only", or "Compare both" modes.
+
+## Implementation Suggestions:
+
+### Most Impactful: **Map Performance Comparison Component**
+```typescript
+// New computation function
+function computeMapPerformanceComparison(gameData: GameLogEntry[]) {
+  const mapStats = new Map<string, {
+    village: PlayerMapStats,
+    chateau: PlayerMapStats
+  }>();
+  
+  // Process each game by map
+  gameData.forEach(game => {
+    const mapType = game.MapName.toLowerCase();
+    if (!['village', 'château'].includes(mapType)) return;
+    
+    game.PlayerStats.forEach(player => {
+      // Calculate map-specific metrics
+    });
+  });
+  
+  return Array.from(mapStats.entries()).map(([player, stats]) => ({
+    player,
+    ...stats,
+    winRateDifference: stats.chateau.winRate - stats.village.winRate,
+    preferredMap: stats.chateau.winRate > stats.village.winRate ? 'Château' : 'Village'
+  }));
+}
+```
+
+### Chart Ideas:
+1. **Diverging Bar Chart** - Win rate difference (Village ← → Château)
+2. **Dual-axis Line Chart** - Performance trends over time by map
+3. **Bubble Chart** - Bubble size = total games, X/Y = map performance
+4. **Split Violin Plot** - Distribution of performance metrics by map
+
+Which visualization approach interests you most? I can help implement the specific chart type and computation logic you prefer!
