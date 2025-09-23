@@ -19,7 +19,6 @@ export interface RawBRGlobalData {
 
 // Updated interface for the new BR data structure
 interface RawBRResponse {
-  lastUpdated: string;
   BRParties: {
     totalRecords: number;
     data: RawBRData[];

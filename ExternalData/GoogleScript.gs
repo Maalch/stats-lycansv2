@@ -390,7 +390,6 @@ function getRawGameDataRaw() {
     });
     
     return JSON.stringify({
-      lastUpdated: new Date().toISOString(),
       totalRecords: gameRecords.length,
       data: gameRecords
     });
@@ -437,7 +436,6 @@ function getRawRoleDataRaw() {
     });
     
     return JSON.stringify({
-      lastUpdated: new Date().toISOString(),
       totalRecords: roleRecords.length,
       data: roleRecords
     });
@@ -489,7 +487,6 @@ function getRawPonceDataRaw() {
     });
     
     return JSON.stringify({
-      lastUpdated: new Date().toISOString(),
       totalRecords: ponceRecords.length,
       data: ponceRecords
     });
@@ -599,7 +596,6 @@ function getRawBRDataRaw() {
     }
     
     return JSON.stringify({
-      lastUpdated: new Date().toISOString(),
       BRParties: {
         totalRecords: brPartiesRecords.length,
         data: brPartiesRecords
