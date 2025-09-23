@@ -1,14 +1,5 @@
 New Statistics Components
-1. Role Performance Deep Dive
-
-const RoleEfficiencyChart = lazy(() => import('./components/rolestats/RoleEfficiencyChart'))
-
-Win rates by specific roles (Chasseur, Alchimiste, etc.)
-Role impact analysis - which roles change game outcomes most
-Meta evolution - how role usage and effectiveness changed over time
-Role synergy matrix - which role combinations work best together
-
-2. Temporal Analysis Dashboard
+1. Temporal Analysis Dashboard
 
 const GameEvolutionChart = lazy(() => import('./components/temporal/GameEvolutionChart'))
 
@@ -17,7 +8,7 @@ Learning curves - how players improve over time
 Meta shifts - changes in strategies and success patterns
 Anniversary milestones with special statistics
 
-3. Social Network Analysis
+2. Social Network Analysis
 
 const PlayerRelationshipChart = lazy(() => import('./components/social/PlayerRelationshipChart'))
 
@@ -27,7 +18,7 @@ Alliance formation - frequent team-ups and their outcomes
 Player influence networks - who affects others' play styles
 Advanced Analytical Components
 
-4. Predictive Analytics
+3. Predictive Analytics
 
 const GamePredictionChart = lazy(() => import('./components/prediction/GamePredictionChart'))
 
@@ -36,7 +27,7 @@ Optimal role distribution suggestions
 Player matchmaking for balanced games
 Comeback analysis - conditions that lead to dramatic reversals
 
-5. Performance Comparison Tool
+4. Performance Comparison Tool
 
 const PlayerVersusChart = lazy(() => import('./components/comparison/PlayerVersusChart'))
 Head-to-head player comparisons with radar charts
@@ -44,7 +35,7 @@ Performance vs. average benchmarking
 Skill ceiling analysis - identifying improvement areas
 Play style clustering - grouping similar players
 
-6. Game Quality Metrics
+5. Game Quality Metrics
 
 const GameHealthChart = lazy(() => import('./components/health/GameHealthChart'))
 
@@ -54,7 +45,7 @@ Optimal game length analysis
 Player engagement trends
 Interactive Features
 
-7. What-If Scenario Builder
+6. What-If Scenario Builder
 
 const ScenarioBuilder = lazy(() => import('./components/scenario/ScenarioBuilder'))
 
@@ -63,7 +54,7 @@ Strategy simulation - test different approaches
 Role rebalancing impact analysis
 Tournament bracket predictor
 
-8. Achievement System
+7. Achievement System
 
 const AchievementTracker = lazy(() => import('./components/achievements/AchievementTracker'))
 
@@ -73,7 +64,7 @@ Progress visualization toward goals
 Leaderboards for various categories
 Data Insights Components
 
-9. Pattern Recognition Dashboard
+8. Pattern Recognition Dashboard
 
 const PatternAnalysisChart = lazy(() => import('./components/patterns/PatternAnalysisChart'))
 
@@ -82,7 +73,7 @@ Elimination sequences - common early/mid/late game patterns
 Communication analysis - if chat data were available
 Behavioral fingerprinting - identifying players by play style
 
-10. Statistical Anomalies
+9. Statistical Anomalies
 
 const AnomalyDetectionChart = lazy(() => import('./components/anomalies/AnomalyDetectionChart'))
 
@@ -93,7 +84,7 @@ Lucky vs. skilled performance separation
 Implementation Priority
 Based on data richness and user value:
 
-High Priority: Role Performance, Temporal Analysis, Player Comparison
+High Priority:  Temporal Analysis, Player Comparison
 Medium Priority: Social Network Analysis, Game Quality Metrics
 Future Enhancements: Predictive Analytics, Achievement System
 Each would integrate with the existing navigation system and follow the established patterns:
