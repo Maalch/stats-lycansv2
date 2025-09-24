@@ -774,8 +774,8 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
   
   var playerStats = {
     Username: playerName,
-    MainRoleInitial: determineMainRoleWithDetails(playerName, roleAssignments, playerDetails, 'initial'),
-    MainRoleFinal: determineMainRoleWithDetails(playerName, roleAssignments, playerDetails, 'final'),
+    MainRoleInitial: determineMainRoleInitialWithDetails(playerName, roleAssignments, playerDetails),
+    MainRoleFinal: null,
     Color: playerDetails && playerDetails.color ? playerDetails.color : null,
     Power: determinePlayerPower(playerDetails),
     SecondaryRole: determineSecondaryRole(playerDetails),
@@ -786,6 +786,8 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
     KillerName: determineKillerName(playerDetails),
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
   };
+
+  playerStats.MainRoleFinal = determineMainRoleFinalWithDetails(playerName, roleAssignments, playerDetails, playerStats);
   
   return playerStats;
 }
@@ -867,36 +869,54 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
 /**
  * Helper function to determine main role with details data priority
  */
-function determineMainRoleWithDetails(playerName, roleAssignments, playerDetails, type) {
+function determineMainRoleInitialWithDetails(playerName, roleAssignments, playerDetails) {
   var campFromDetails = null;
   
-  // Determine which camp to use based on type (initial or final)
-  if (type === 'final') {
-    if (playerDetails) {
-      if (playerDetails.finalPower === 'Chasseur') {
-        campFromDetails = playerDetails.finalPower;
-      }
-      else if (playerDetails.finalRole) {
-        campFromDetails = playerDetails.finalRole;
-      }
-      else if (playerDetails.finalCamp) {
-        campFromDetails = playerDetails.finalCamp;
-      }
+  // Determine which camp to use based on type (initial)
+  if (playerDetails) {
+    if (playerDetails.traitor === 'true') {
+      campFromDetails = 'Traître';
     }
-  } else if (type === 'initial') {
-    if (playerDetails) {
-      if (playerDetails.traitor === 'true') {
-        campFromDetails = 'Traître';
-      }
-      else if (playerDetails.villagerPower === 'Alchimiste' || playerDetails.villagerPower === 'Chasseur') {
-        campFromDetails = playerDetails.villagerPower;
-      }
-      else if (playerDetails.camp) {
-        campFromDetails = playerDetails.camp;
-      }
+    else if (playerDetails.villagerPower === 'Alchimiste' || playerDetails.villagerPower === 'Chasseur') {
+      campFromDetails = playerDetails.villagerPower;
+    }
+    else if (playerDetails.camp) {
+      campFromDetails = playerDetails.camp;
     }
   }
+
   
+  // If we have camp information from details, use it
+  if (campFromDetails) {
+    return campFromDetails;
+  }
+  
+  // Otherwise, fall back to the original method
+  return determineMainRole(playerName, roleAssignments);
+}
+
+/**
+ * Helper function to determine main role with details data priority
+ */
+function determineMainRoleFinalWithDetails(playerName, roleAssignments, playerDetails, playerStats) {
+  var campFromDetails = null;
+  
+  // Determine which camp to use based on type (final)
+  if (playerDetails) {
+    if (playerDetails.finalPower === 'Chasseur') {
+      campFromDetails = playerDetails.finalPower;
+    }
+    else if (playerDetails.finalRole) {
+      campFromDetails = playerDetails.finalRole;
+    }
+    else if (playerDetails.finalCamp) {
+      campFromDetails = playerDetails.finalCamp;
+    }
+    else {
+      campFromDetails = playerStats.MainRoleInitial;
+    }
+  }
+ 
   // If we have camp information from details, use it
   if (campFromDetails) {
     return campFromDetails;
