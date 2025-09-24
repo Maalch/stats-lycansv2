@@ -192,3 +192,35 @@ export function getWinnerCampFromGame(game: GameLogEntry): string {
   }
   return 'Villageois';
 }
+
+// Helper function to format death timing from abbreviated format to readable French
+export function formatDeathTiming(deathTiming: string | null): string {
+  if (!deathTiming) return '';
+  
+  // Extract the moment character and day number
+  const momentChar = deathTiming.charAt(0);
+  const dayNumber = deathTiming.slice(1);
+  
+  // Map moment characters to French descriptions
+  const momentMap: Record<string, string> = {
+    'J': 'Jour',
+    'N': 'Nuit', 
+    'M': 'Meeting',
+    'U': 'Journée' // Unknown timing, just say "day"
+  };
+  
+  const moment = momentMap[momentChar] || 'Moment inconnu';
+  
+  // Handle ordinal numbers in French
+  const getOrdinal = (num: string) => {
+    const n = parseInt(num);
+    if (n === 1) return '1ère';
+    return `${n}ème`;
+  };
+  
+  if (momentChar === 'U') {
+    return `${getOrdinal(dayNumber)} journée`;
+  } else {
+    return `${moment} de la ${getOrdinal(dayNumber)} journée`;
+  }
+}

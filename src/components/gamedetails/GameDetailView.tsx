@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
 import { getPlayerMainRoleFromRole, getPlayerCampFromRole } from '../../utils/gameUtils';
+import { formatDeathTiming } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
 
 // Interactive Camp Visualization Component
@@ -78,7 +79,7 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
                       style={{ 
                         borderColor: playerColor
                       }}
-                      title={`${player.Username} - ${getPlayerMainRoleFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${player.DeathTiming})` : ''}`}
+                      title={`${player.Username} - ${getPlayerMainRoleFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${formatDeathTiming(player.DeathTiming)})` : ''}`}
                     >
                       <span className="player-name">{player.Username}</span>
                       {player.DeathTiming && <span className="death-indicator">💀</span>}

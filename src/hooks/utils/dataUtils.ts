@@ -67,3 +67,4 @@ export function didCampWin(camp: string, winnerCamp: string): boolean {
   if ((camp === "Chasseur" || camp === "Alchimiste") && winnerCamp === "Villageois") return true;
   return false;
 }
+
