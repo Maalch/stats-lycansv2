@@ -22,6 +22,7 @@ export function GameDetailsChart() {
     navigationFilters.selectedHarvestRange ||
     navigationFilters.selectedGameDuration ||
     (navigationFilters.selectedGameIds && navigationFilters.selectedGameIds.length > 0) ||
+    navigationFilters.selectedMapName ||
     navigationFilters.campFilter ||
     navigationFilters.playerPairFilter ||
     navigationFilters.multiPlayerFilter
@@ -270,6 +271,10 @@ export function GameDetailsChart() {
                          campFilterMode === 'all-assignments' ? ' (toutes assignations)' : '';
         filters.push(campFilterText + modeText);
       }
+    }
+    if (navigationFilters.selectedMapName) {
+      const mapName = navigationFilters.selectedMapName === 'Autres' ? 'autres cartes' : navigationFilters.selectedMapName;
+      filters.push(`Carte: ${mapName}`);
     }
     if (navigationFilters.playerPairFilter) {
       const { selectedPlayerPair, selectedPairRole } = navigationFilters.playerPairFilter;

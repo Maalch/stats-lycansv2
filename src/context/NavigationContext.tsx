@@ -29,6 +29,7 @@ export interface NavigationFilters {
   selectedHarvestRange?: string; // For filtering by harvest percentage range (e.g., "0-25%", "26-50%", etc.)
   selectedGameDuration?: number; // For filtering by specific number of days (e.g., 3, 4, 5)
   selectedGameIds?: string[]; // Changed from number[] to string[] to support DisplayedId format
+  selectedMapName?: string; // For filtering by map name (e.g., "Village", "Château", "Autres")
   
   // Grouped filters - all properties in each group must be provided together
   campFilter?: CampFilter;
