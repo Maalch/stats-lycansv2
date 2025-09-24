@@ -11,6 +11,16 @@ const defaultSettings: SettingsState = {
   mapNameFilter: 'all',
   playerFilter: { mode: 'none', players: [] },
   highlightedPlayer: null,
+  useIndependentFilters: true,
+  independentFilters: {
+    gameTypeEnabled: false,
+    gameFilter: 'all',
+    dateRangeEnabled: false,
+    dateRange: { start: null, end: null },
+    mapNameEnabled: false,
+    mapNameFilter: 'all',
+    playerFilter: { mode: 'none', players: [] },
+  },
 };
 
 /**

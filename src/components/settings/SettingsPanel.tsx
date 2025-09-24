@@ -1,23 +1,34 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSettings } from '../../context/SettingsContext';
-import type { GameFilter, FilterMode, PlayerFilterMode, MapNameFilter } from '../../context/SettingsContext';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
+import type { GameFilter, MapNameFilter, PlayerFilterMode } from '../../context/SettingsContext';
 import { ShareableUrl } from '../common/ShareableUrl';
 import './SettingsPanel.css';
 
 export function SettingsPanel() {
-
   const { settings, updateSettings, resetSettings } = useSettings();
   const [gameLogData, setGameLogData] = useState<GameLogEntry[] | null>(null);
   
-  // Ref to track previous primary filter values
-  const prevPrimaryFilter = useRef({
-    filterMode: settings.filterMode,
-    gameFilter: settings.gameFilter,
-    dateStart: settings.dateRange.start,
-    dateEnd: settings.dateRange.end,
-    mapNameFilter: settings.mapNameFilter
-  });
+  // Ensure independent filters are initialized
+  useEffect(() => {
+    if (!settings.independentFilters) {
+      // Initialize with default independent filters
+      const independentFilters = {
+        gameTypeEnabled: false,
+        gameFilter: 'all' as GameFilter,
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: false,
+        mapNameFilter: 'all' as MapNameFilter,
+        playerFilter: { mode: 'none' as PlayerFilterMode, players: [] },
+      };
+      
+      updateSettings({ 
+        useIndependentFilters: true, 
+        independentFilters 
+      });
+    }
+  }, [settings, updateSettings]);
 
   // Fetch unfiltered game data to get all players
   useEffect(() => {
@@ -33,38 +44,6 @@ export function SettingsPanel() {
     fetchData();
   }, []);
 
-  // Reset player filter when primary filter changes to avoid inconsistencies
-  useEffect(() => {
-    const current = {
-      filterMode: settings.filterMode,
-      gameFilter: settings.gameFilter,
-      dateStart: settings.dateRange.start,
-      dateEnd: settings.dateRange.end,
-      mapNameFilter: settings.mapNameFilter
-    };
-
-    // Check if any primary filter value has changed
-    const hasChanged = 
-      prevPrimaryFilter.current.filterMode !== current.filterMode ||
-      prevPrimaryFilter.current.gameFilter !== current.gameFilter ||
-      prevPrimaryFilter.current.dateStart !== current.dateStart ||
-      prevPrimaryFilter.current.dateEnd !== current.dateEnd ||
-      prevPrimaryFilter.current.mapNameFilter !== current.mapNameFilter;
-
-    // Reset player filter if primary filter changed and there are selected players
-    if (hasChanged && settings.playerFilter.players.length > 0) {
-      updateSettings({ 
-        playerFilter: { 
-          mode: settings.playerFilter.mode, 
-          players: [] 
-        } 
-      });
-    }
-
-    // Update the ref with current values
-    prevPrimaryFilter.current = current;
-  }, [settings.filterMode, settings.gameFilter, settings.dateRange.start, settings.dateRange.end, settings.mapNameFilter, settings.playerFilter.players.length, updateSettings]);
-
   // Helper to parse ISO date string to Date
   const parseISODate = (dateStr: string): Date | null => {
     if (!dateStr) return null;
@@ -75,48 +54,46 @@ export function SettingsPanel() {
     }
   };
 
-  // Filter games based on current primary filter (game type or date range)
+  // Get filtered games based on enabled filters
   const filteredGames = useMemo(() => {
-    if (!gameLogData) return [];
+    if (!gameLogData || !settings.independentFilters) return [];
 
     return gameLogData.filter(game => {
-      // Apply game type filter
-      if (settings.filterMode === 'gameType') {
-        if (settings.gameFilter === 'modded' && !game.Modded) return false;
-        if (settings.gameFilter === 'non-modded' && game.Modded) return false;
+      const filters = settings.independentFilters!;
+      
+      // Apply game type filter if enabled
+      if (filters.gameTypeEnabled && filters.gameFilter !== 'all') {
+        if (filters.gameFilter === 'modded' && !game.Modded) return false;
+        if (filters.gameFilter === 'non-modded' && game.Modded) return false;
       }
       
-      // Apply date range filter
-      if (settings.filterMode === 'dateRange') {
-        if (settings.dateRange.start || settings.dateRange.end) {
-          const gameDateObj = parseISODate(game.StartDate);
-          if (!gameDateObj) return false;
-          if (settings.dateRange.start) {
-            const startObj = new Date(settings.dateRange.start);
-            if (gameDateObj < startObj) return false;
-          }
-          if (settings.dateRange.end) {
-            const endObj = new Date(settings.dateRange.end);
-            if (gameDateObj > endObj) return false;
-          }
+      // Apply date range filter if enabled
+      if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
+        const gameDateObj = parseISODate(game.StartDate);
+        if (!gameDateObj) return false;
+        if (filters.dateRange.start) {
+          const startObj = new Date(filters.dateRange.start);
+          if (gameDateObj < startObj) return false;
+        }
+        if (filters.dateRange.end) {
+          const endObj = new Date(filters.dateRange.end);
+          if (gameDateObj > endObj) return false;
         }
       }
       
-      // Apply map name filter
-      if (settings.filterMode === 'mapName') {
-        if (settings.mapNameFilter !== 'all') {
-          const mapName = game.MapName || '';
-          if (settings.mapNameFilter === 'village' && mapName !== 'Village') return false;
-          if (settings.mapNameFilter === 'chateau' && mapName !== 'Château') return false;
-          if (settings.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
-        }
+      // Apply map name filter if enabled
+      if (filters.mapNameEnabled && filters.mapNameFilter !== 'all') {
+        const mapName = game.MapName || '';
+        if (filters.mapNameFilter === 'village' && mapName !== 'Village') return false;
+        if (filters.mapNameFilter === 'chateau' && mapName !== 'Château') return false;
+        if (filters.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
       }
       
       return true;
     });
-  }, [gameLogData, settings.filterMode, settings.gameFilter, settings.dateRange, settings.mapNameFilter]);
+  }, [gameLogData, settings.independentFilters]);
 
-  // Get all players from filtered games (based on primary filter)
+  // Get all players from filtered games
   const playersFromFilteredGames = useMemo(() => {
     const allPlayers = new Set<string>();
     filteredGames.forEach((game: GameLogEntry) => {
@@ -124,7 +101,7 @@ export function SettingsPanel() {
         allPlayers.add(playerStat.Username);
       });
     });
-    return Array.from(allPlayers);
+    return Array.from(allPlayers).sort();
   }, [filteredGames]);
 
   // Get player compatibility data for include/exclude logic
@@ -134,7 +111,6 @@ export function SettingsPanel() {
     filteredGames.forEach((game: GameLogEntry) => {
       const players = game.PlayerStats.map(p => p.Username);
       
-      // For each player, record who they've played with
       players.forEach((player: string) => {
         if (!compatibility[player]) {
           compatibility[player] = new Set();
@@ -150,25 +126,25 @@ export function SettingsPanel() {
     return compatibility;
   }, [filteredGames]);
 
-  // Calculate which players should be selectable based on current player filter selections
+  // Calculate selectable players based on current player filter selections
   const { availablePlayers, selectablePlayers } = useMemo(() => {
-    const available = playersFromFilteredGames.sort();
+    const available = playersFromFilteredGames;
     
-    if (settings.playerFilter.mode === 'none' || settings.playerFilter.players.length === 0) {
+    if (!settings.independentFilters?.playerFilter || 
+        settings.independentFilters.playerFilter.mode === 'none' || 
+        settings.independentFilters.playerFilter.players.length === 0) {
       return { availablePlayers: available, selectablePlayers: new Set(available) };
     }
     
     const selectable = new Set<string>();
+    const playerFilter = settings.independentFilters.playerFilter;
     
-    if (settings.playerFilter.mode === 'include') {
-      // For include mode: only show players who have played with ALL currently selected players
+    if (playerFilter.mode === 'include') {
       available.forEach(player => {
-        if (settings.playerFilter.players.includes(player)) {
-          // Already selected players are always selectable
+        if (playerFilter.players.includes(player)) {
           selectable.add(player);
         } else {
-          // Check if this player has played with ALL selected players
-          const hasPlayedWithAll = settings.playerFilter.players.every(selectedPlayer => 
+          const hasPlayedWithAll = playerFilter.players.every(selectedPlayer => 
             playerCompatibility[player]?.has(selectedPlayer) || false
           );
           if (hasPlayedWithAll) {
@@ -176,21 +152,17 @@ export function SettingsPanel() {
           }
         }
       });
-    } else if (settings.playerFilter.mode === 'exclude') {
-      // For exclude mode: only show players who have NOT played ONLY with the excluded players
+    } else if (playerFilter.mode === 'exclude') {
       available.forEach(player => {
-        if (settings.playerFilter.players.includes(player)) {
-          // Already selected players are always selectable
+        if (playerFilter.players.includes(player)) {
           selectable.add(player);
         } else {
-          // Check if this player has games without any of the excluded players
           const hasGamesWithoutExcluded = filteredGames.some(game => {
             const gamePlayers = game.PlayerStats.map(p => p.Username.toLowerCase());
             const playerInGame = gamePlayers.includes(player.toLowerCase());
             if (!playerInGame) return false;
             
-            // Check if any excluded player is in this game
-            const hasExcludedPlayer = settings.playerFilter.players.some(excludedPlayer => 
+            const hasExcludedPlayer = playerFilter.players.some(excludedPlayer => 
               gamePlayers.includes(excludedPlayer.toLowerCase())
             );
             return !hasExcludedPlayer;
@@ -204,60 +176,195 @@ export function SettingsPanel() {
     }
     
     return { availablePlayers: available, selectablePlayers: selectable };
-  }, [playersFromFilteredGames, settings.playerFilter, playerCompatibility, filteredGames]);
+  }, [playersFromFilteredGames, settings.independentFilters?.playerFilter, playerCompatibility, filteredGames]);
 
-  const handleFilterModeChange = (mode: FilterMode) => {
-    updateSettings({ filterMode: mode });
+  // Handlers for independent filters
+  const handleGameTypeToggle = (enabled: boolean) => {
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        gameTypeEnabled: enabled 
+      } 
+    });
   };
 
   const handleGameFilterChange = (filter: GameFilter) => {
-    updateSettings({ gameFilter: filter });
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        gameFilter: filter 
+      } 
+    });
+  };
+
+  const handleDateRangeToggle = (enabled: boolean) => {
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        dateRangeEnabled: enabled 
+      } 
+    });
   };
 
   const handleDateChange = (field: 'start' | 'end', value: string) => {
-    updateSettings({ dateRange: { ...settings.dateRange, [field]: value || null } });
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        dateRange: { 
+          ...settings.independentFilters.dateRange, 
+          [field]: value || null 
+        } 
+      } 
+    });
+  };
+
+  const handleMapNameToggle = (enabled: boolean) => {
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        mapNameEnabled: enabled 
+      } 
+    });
   };
 
   const handleMapNameFilterChange = (filter: MapNameFilter) => {
-    updateSettings({ mapNameFilter: filter });
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        mapNameFilter: filter 
+      } 
+    });
   };
 
   const handlePlayerFilterModeChange = (mode: PlayerFilterMode) => {
-    updateSettings({ playerFilter: { ...settings.playerFilter, mode } });
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        playerFilter: { 
+          ...settings.independentFilters.playerFilter, 
+          mode 
+        } 
+      } 
+    });
   };
 
   const handlePlayerToggle = (playerName: string) => {
-    const currentPlayers = settings.playerFilter.players;
+    if (!settings.independentFilters) return;
+    const currentPlayers = settings.independentFilters.playerFilter.players;
     const isSelected = currentPlayers.includes(playerName);
     
     if (isSelected) {
-      // Remove player
       const newPlayers = currentPlayers.filter(p => p !== playerName);
-      updateSettings({ playerFilter: { ...settings.playerFilter, players: newPlayers } });
+      updateSettings({ 
+        independentFilters: { 
+          ...settings.independentFilters, 
+          playerFilter: { 
+            ...settings.independentFilters.playerFilter, 
+            players: newPlayers 
+          } 
+        } 
+      });
     } else {
-      // Add player
-      updateSettings({ playerFilter: { ...settings.playerFilter, players: [...currentPlayers, playerName] } });
+      updateSettings({ 
+        independentFilters: { 
+          ...settings.independentFilters, 
+          playerFilter: { 
+            ...settings.independentFilters.playerFilter, 
+            players: [...currentPlayers, playerName] 
+          } 
+        } 
+      });
     }
   };
 
   const handleSelectAllPlayers = () => {
-    updateSettings({ playerFilter: { ...settings.playerFilter, players: [...selectablePlayers] } });
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        playerFilter: { 
+          ...settings.independentFilters.playerFilter, 
+          players: [...selectablePlayers] 
+        } 
+      } 
+    });
   };
 
   const handleDeselectAllPlayers = () => {
-    updateSettings({ playerFilter: { ...settings.playerFilter, players: [] } });
+    if (!settings.independentFilters) return;
+    updateSettings({ 
+      independentFilters: { 
+        ...settings.independentFilters, 
+        playerFilter: { 
+          ...settings.independentFilters.playerFilter, 
+          players: [] 
+        } 
+      } 
+    });
   };
 
   const handleHighlightedPlayerChange = (playerName: string) => {
     updateSettings({ highlightedPlayer: playerName || null });
   };
 
+  const handleResetFilters = () => {
+    resetSettings();
+  };
+
+  // Count active filters for summary
+  const activeFilterCount = useMemo(() => {
+    if (!settings.independentFilters) return 0;
+    let count = 0;
+    if (settings.independentFilters.gameTypeEnabled && settings.independentFilters.gameFilter !== 'all') count++;
+    if (settings.independentFilters.dateRangeEnabled && (settings.independentFilters.dateRange.start || settings.independentFilters.dateRange.end)) count++;
+    if (settings.independentFilters.mapNameEnabled && settings.independentFilters.mapNameFilter !== 'all') count++;
+    if (settings.independentFilters.playerFilter.mode !== 'none' && settings.independentFilters.playerFilter.players.length > 0) count++;
+    return count;
+  }, [settings.independentFilters]);
+
+  if (!settings.independentFilters) {
+    return <div>Chargement des paramètres...</div>;
+  }
+
   return (
     <div className="settings-panel">
-      {/* SECTION: Highlighted Player (outside of filtering group) */}
+      {/* Header with active filter summary */}
+      <div className="settings-header">
+        <div>
+          <h3>Paramètres de Filtrage</h3>
+          {activeFilterCount > 0 && (
+            <p style={{ 
+              margin: '0.5rem 0 0 0', 
+              color: 'var(--accent-primary)', 
+              fontSize: '0.9rem',
+              fontWeight: '500'
+            }}>
+              {activeFilterCount} filtre{activeFilterCount > 1 ? 's' : ''} actif{activeFilterCount > 1 ? 's' : ''}
+            </p>
+          )}
+        </div>
+        <div>
+          <button 
+            onClick={handleResetFilters}
+            className="settings-reset-btn"
+            type="button"
+          >
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      {/* Highlighted Player Section (always visible) */}
       <div className="settings-section">
         <div className="settings-section-header">
-          <h3>Joueur à Mettre en Évidence</h3>
+          <h3>🎯 Joueur à Mettre en Évidence</h3>
         </div>
         <div className="settings-group">
           <p className="settings-explanation">
@@ -265,28 +372,14 @@ export function SettingsPanel() {
             même s'il n'est pas dans le top classement.
           </p>
           <div style={{ marginTop: '1rem' }}>
-            <label htmlFor="highlighted-player-select" style={{ 
-              display: 'block', 
-              marginBottom: '0.5rem', 
-              color: 'var(--text-primary)', 
-              fontWeight: '500' 
-            }}>
+            <label htmlFor="highlighted-player-select" className="settings-label">
               Joueur à mettre en évidence :
             </label>
             <select
               id="highlighted-player-select"
               value={settings.highlightedPlayer || ''}
               onChange={(e) => handleHighlightedPlayerChange(e.target.value)}
-              style={{
-                background: 'var(--bg-tertiary)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '4px',
-                padding: '0.5rem',
-                fontSize: '0.9rem',
-                width: '100%',
-                maxWidth: '300px'
-              }}
+              className="settings-select"
             >
               <option value="">Aucun joueur sélectionné</option>
               {availablePlayers.map(player => (
@@ -296,12 +389,7 @@ export function SettingsPanel() {
               ))}
             </select>
             {settings.highlightedPlayer && (
-              <p style={{ 
-                fontSize: '0.8rem', 
-                color: 'var(--accent-primary)', 
-                marginTop: '0.5rem',
-                fontStyle: 'italic'
-              }}>
+              <p className="settings-info-text">
                 Le joueur "{settings.highlightedPlayer}" sera mis en évidence dans tous les graphiques.
               </p>
             )}
@@ -309,414 +397,307 @@ export function SettingsPanel() {
         </div>
       </div>
 
-      <div className="settings-header">
-        <h3>Paramètres de Filtrage</h3>
-        <button 
-          onClick={resetSettings}
-          className="settings-reset-btn"
-          type="button"
-        >
-          Réinitialiser
-        </button>
-      </div>
-      
-      <div className="settings-sections-container">
-        {/* SECTION 1: Primary Filter Mode */}
-        <div className="settings-section">
-          <div className="settings-section-header">
-            <h3>1. Filtre Principal</h3>
-          </div>
-
-          <div className="settings-group">
-            <h4>Mode de Filtrage</h4>
-            <p className="settings-explanation">
-              Choisissez le type de filtre principal à appliquer aux données :
-            </p>
-            <div className="settings-radio-group" style={{ flexDirection: 'row', gap: '2rem' }}>
-              <label className="settings-radio">
-                <input
-                  type="radio"
-                  name="filterMode"
-                  value="gameType"
-                  checked={settings.filterMode === 'gameType'}
-                  onChange={() => handleFilterModeChange('gameType')}
-                />
-                <span className="radio-mark"></span>
-                <span className="settings-radio-content">
-                  Filtrer par type de partie
-                  <small>Sélectionner selon le type de jeu (moddé/standard)</small>
+      {/* Independent Filter Sections */}
+      <div className="settings-filters-container">
+        
+        {/* Game Type Filter */}
+        <div className={`settings-filter-card ${settings.independentFilters.gameTypeEnabled ? 'active' : ''}`}>
+          <div className="settings-filter-header">
+            <label className="settings-toggle">
+              <input
+                type="checkbox"
+                checked={settings.independentFilters.gameTypeEnabled}
+                onChange={(e) => handleGameTypeToggle(e.target.checked)}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+            <h4>🎮 Filtrer par Type de Partie</h4>
+            <div className="settings-filter-status">
+              {settings.independentFilters.gameTypeEnabled && settings.independentFilters.gameFilter !== 'all' && (
+                <span className="filter-active-badge">
+                  {settings.independentFilters.gameFilter === 'modded' ? 'Moddées' : 'Non-moddées'}
                 </span>
-              </label>
-              <label className="settings-radio">
-                <input
-                  type="radio"
-                  name="filterMode"
-                  value="dateRange"
-                  checked={settings.filterMode === 'dateRange'}
-                  onChange={() => handleFilterModeChange('dateRange')}
-                />
-                <span className="radio-mark"></span>
-                <span className="settings-radio-content">
-                  Filtrer par période
-                  <small>Sélectionner selon une plage de dates</small>
-                </span>
-              </label>
-              <label className="settings-radio">
-                <input
-                  type="radio"
-                  name="filterMode"
-                  value="mapName"
-                  checked={settings.filterMode === 'mapName'}
-                  onChange={() => handleFilterModeChange('mapName')}
-                />
-                <span className="radio-mark"></span>
-                <span className="settings-radio-content">
-                  Filtrer par carte
-                  <small>Sélectionner selon la carte utilisée</small>
-                </span>
-              </label>
+              )}
             </div>
           </div>
-
-          {settings.filterMode === 'gameType' && (
-            <div className="settings-group">
-              <h4>Filtres de Type de Partie</h4>
-              <div className="settings-radio-group">
-                <label className="settings-radio">
+          
+          {settings.independentFilters.gameTypeEnabled && (
+            <div className="settings-filter-content">
+              <div className="settings-radio-group-inline">
+                <label className="settings-radio-inline">
                   <input
                     type="radio"
                     name="gameFilter"
                     value="all"
-                    checked={settings.gameFilter === 'all'}
+                    checked={settings.independentFilters.gameFilter === 'all'}
                     onChange={() => handleGameFilterChange('all')}
                   />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Tous les types de parties
-                    <small>Inclut toutes les parties, moddées et non-moddées</small>
-                  </span>
+                  <span>Toutes</span>
                 </label>
-                <label className="settings-radio">
+                <label className="settings-radio-inline">
                   <input
                     type="radio"
                     name="gameFilter"
                     value="modded"
-                    checked={settings.gameFilter === 'modded'}
+                    checked={settings.independentFilters.gameFilter === 'modded'}
                     onChange={() => handleGameFilterChange('modded')}
                   />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Parties moddées uniquement
-                    <small>Affiche uniquement les parties avec des rôles modifiés</small>
-                  </span>
+                  <span>Moddées</span>
                 </label>
-                <label className="settings-radio">
+                <label className="settings-radio-inline">
                   <input
                     type="radio"
                     name="gameFilter"
                     value="non-modded"
-                    checked={settings.gameFilter === 'non-modded'}
+                    checked={settings.independentFilters.gameFilter === 'non-modded'}
                     onChange={() => handleGameFilterChange('non-modded')}
                   />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Parties non-moddées uniquement
-                    <small>Affiche uniquement les parties avec des rôles standards</small>
-                  </span>
+                  <span>Non-moddées</span>
                 </label>
               </div>
             </div>
           )}
+        </div>
 
-          {settings.filterMode === 'dateRange' && (
-            <div className="settings-group">
-              <h4>Filtres de Dates</h4>
-              <div className="settings-radio-group">
-                <label className="settings-radio">
-                  <input
-                    type="radio"
-                    name="dateFilter"
-                    value="all"
-                    checked={!settings.dateRange.start && !settings.dateRange.end}
-                    onChange={() => {
-                      updateSettings({ dateRange: { start: null, end: null } });
-                    }}
-                  />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Toutes les dates
-                    <small>Affiche toutes les parties sans restriction de date</small>
-                  </span>
-                </label>
-                <label className="settings-radio">
-                  <input
-                    type="radio"
-                    name="dateFilter"
-                    value="custom"
-                    checked={!!(settings.dateRange.start || settings.dateRange.end)}
-                    onChange={() => {
-                      // When selecting custom range, set a default range if none exists
-                      if (!settings.dateRange.start && !settings.dateRange.end) {
-                        const today = new Date();
-                        const oneMonthAgo = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-                        updateSettings({ 
-                          dateRange: { 
-                            start: oneMonthAgo.toISOString().split('T')[0], 
-                            end: today.toISOString().split('T')[0] 
-                          } 
-                        });
-                      }
-                    }}
-                  />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Plage de dates personnalisée
-                    <small>Définir une période spécifique à analyser</small>
-                  </span>
-                </label>
-              </div>
-              
-              {(settings.dateRange.start || settings.dateRange.end) && (
-                <div className="settings-nested-group">
-                  <div className="settings-date-inputs">
-                    <label className="settings-date-label">
-                      Date de début
-                      <input
-                        type="date"
-                        value={settings.dateRange.start || ''}
-                        onChange={e => handleDateChange('start', e.target.value)}
-                        className="settings-date-input"
-                        max={settings.dateRange.end || undefined}
-                      />
-                    </label>
-                    <span className="settings-date-separator">—</span>
-                    <label className="settings-date-label">
-                      Date de fin
-                      <input
-                        type="date"
-                        value={settings.dateRange.end || ''}
-                        onChange={e => handleDateChange('end', e.target.value)}
-                        className="settings-date-input"
-                        min={settings.dateRange.start || undefined}
-                      />
-                    </label>
-                  </div>
-                  <small style={{ color: 'var(--text-secondary, #6c757d)', marginTop: 8, display: 'block' }}>
-                    Laissez vide pour ne pas limiter le début ou la fin de la période.
-                  </small>
-                </div>
+        {/* Date Range Filter */}
+        <div className={`settings-filter-card ${settings.independentFilters.dateRangeEnabled ? 'active' : ''}`}>
+          <div className="settings-filter-header">
+            <label className="settings-toggle">
+              <input
+                type="checkbox"
+                checked={settings.independentFilters.dateRangeEnabled}
+                onChange={(e) => handleDateRangeToggle(e.target.checked)}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+            <h4>📅 Filtrer par Période</h4>
+            <div className="settings-filter-status">
+              {settings.independentFilters.dateRangeEnabled && (settings.independentFilters.dateRange.start || settings.independentFilters.dateRange.end) && (
+                <span className="filter-active-badge">
+                  {settings.independentFilters.dateRange.start || 'Début'} - {settings.independentFilters.dateRange.end || 'Fin'}
+                </span>
               )}
             </div>
+          </div>
+          
+          {settings.independentFilters.dateRangeEnabled && (
+            <div className="settings-filter-content">
+              <div className="settings-date-inputs">
+                <div>
+                  <label htmlFor="date-start" className="settings-label">Du :</label>
+                  <input
+                    id="date-start"
+                    type="date"
+                    value={settings.independentFilters.dateRange.start || ''}
+                    onChange={(e) => handleDateChange('start', e.target.value)}
+                    className="settings-input"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="date-end" className="settings-label">Au :</label>
+                  <input
+                    id="date-end"
+                    type="date"
+                    value={settings.independentFilters.dateRange.end || ''}
+                    onChange={(e) => handleDateChange('end', e.target.value)}
+                    className="settings-input"
+                  />
+                </div>
+              </div>
+              <small className="settings-hint">
+                Laissez vide pour ne pas limiter le début ou la fin de la période.
+              </small>
+            </div>
           )}
+        </div>
 
-          {settings.filterMode === 'mapName' && (
-            <div className="settings-group">
-              <h4>Sélection de Cartes</h4>
-              <p className="settings-explanation">
-                Choisissez quelles cartes inclure dans les statistiques :
-              </p>
-              <div className="settings-radio-group">
-                <label className="settings-radio">
+        {/* Map Name Filter */}
+        <div className={`settings-filter-card ${settings.independentFilters.mapNameEnabled ? 'active' : ''}`}>
+          <div className="settings-filter-header">
+            <label className="settings-toggle">
+              <input
+                type="checkbox"
+                checked={settings.independentFilters.mapNameEnabled}
+                onChange={(e) => handleMapNameToggle(e.target.checked)}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+            <h4>🗺️ Filtrer par Carte</h4>
+            <div className="settings-filter-status">
+              {settings.independentFilters.mapNameEnabled && settings.independentFilters.mapNameFilter !== 'all' && (
+                <span className="filter-active-badge">
+                  {settings.independentFilters.mapNameFilter === 'village' ? 'Village' : 
+                   settings.independentFilters.mapNameFilter === 'chateau' ? 'Château' : 'Autres'}
+                </span>
+              )}
+            </div>
+          </div>
+          
+          {settings.independentFilters.mapNameEnabled && (
+            <div className="settings-filter-content">
+              <div className="settings-radio-group-inline">
+                <label className="settings-radio-inline">
                   <input
                     type="radio"
                     name="mapNameFilter"
                     value="all"
-                    checked={settings.mapNameFilter === 'all'}
+                    checked={settings.independentFilters.mapNameFilter === 'all'}
                     onChange={() => handleMapNameFilterChange('all')}
                   />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Toutes les cartes
-                    <small>Inclure toutes les cartes disponibles</small>
-                  </span>
+                  <span>Toutes</span>
                 </label>
-                <label className="settings-radio">
+                <label className="settings-radio-inline">
                   <input
                     type="radio"
                     name="mapNameFilter"
                     value="village"
-                    checked={settings.mapNameFilter === 'village'}
+                    checked={settings.independentFilters.mapNameFilter === 'village'}
                     onChange={() => handleMapNameFilterChange('village')}
                   />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Village
-                    <small>Uniquement les parties sur la carte Village</small>
-                  </span>
+                  <span>Village</span>
                 </label>
-                <label className="settings-radio">
+                <label className="settings-radio-inline">
                   <input
                     type="radio"
                     name="mapNameFilter"
                     value="chateau"
-                    checked={settings.mapNameFilter === 'chateau'}
+                    checked={settings.independentFilters.mapNameFilter === 'chateau'}
                     onChange={() => handleMapNameFilterChange('chateau')}
                   />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Château
-                    <small>Uniquement les parties sur la carte Château</small>
-                  </span>
+                  <span>Château</span>
                 </label>
-                <label className="settings-radio">
+                <label className="settings-radio-inline">
                   <input
                     type="radio"
                     name="mapNameFilter"
                     value="others"
-                    checked={settings.mapNameFilter === 'others'}
+                    checked={settings.independentFilters.mapNameFilter === 'others'}
                     onChange={() => handleMapNameFilterChange('others')}
                   />
-                  <span className="radio-mark"></span>
-                  <span className="settings-radio-content">
-                    Autres
-                    <small>Toutes les autres cartes (Ashfang Woods, Donjon, etc.)</small>
-                  </span>
+                  <span>Autres</span>
                 </label>
               </div>
             </div>
           )}
         </div>
-        
-        {/* SECTION 2: Additional Player Filter */}
-        <div className="settings-section">
-          <div className="settings-section-header">
-            <h3>2. Filtre Additionnel par Joueurs</h3>
-          </div>
 
-          <div className="settings-group">
-            <div className="settings-radio-group">
-              <label className="settings-radio">
-                <input
-                  type="radio"
-                  name="playerFilterMode"
-                  value="none"
-                  checked={settings.playerFilter.mode === 'none'}
-                  onChange={() => handlePlayerFilterModeChange('none')}
-                />
-                <span className="radio-mark"></span>
-                <span className="settings-radio-content">
-                  Aucun filtre par joueur
-                  <small>Affiche toutes les parties sans restriction par joueur</small>
+        {/* Player Filter */}
+        <div className={`settings-filter-card ${settings.independentFilters.playerFilter.mode !== 'none' ? 'active' : ''}`}>
+          <div className="settings-filter-header">
+            <label className="settings-toggle">
+              <input
+                type="checkbox"
+                checked={settings.independentFilters.playerFilter.mode !== 'none'}
+                onChange={(e) => handlePlayerFilterModeChange(e.target.checked ? 'include' : 'none')}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+            <h4>👥 Filtrer par Joueurs</h4>
+            <div className="settings-filter-status">
+              {settings.independentFilters.playerFilter.mode !== 'none' && settings.independentFilters.playerFilter.players.length > 0 && (
+                <span className="filter-active-badge">
+                  {settings.independentFilters.playerFilter.players.length} joueur{settings.independentFilters.playerFilter.players.length > 1 ? 's' : ''}
                 </span>
-              </label>
-              
-              <label className="settings-radio">
-                <input
-                  type="radio"
-                  name="playerFilterMode"
-                  value="include"
-                  checked={settings.playerFilter.mode === 'include'}
-                  onChange={() => handlePlayerFilterModeChange('include')}
-                />
-                <span className="radio-mark"></span>
-                <span className="settings-radio-content">
-                  Inclure seulement les parties avec ces joueurs
-                  <small>Affiche uniquement les parties où TOUS les joueurs sélectionnés ont participé ensemble</small>
-                </span>
-              </label>
-              
-              <label className="settings-radio">
-                <input
-                  type="radio"
-                  name="playerFilterMode"
-                  value="exclude"
-                  checked={settings.playerFilter.mode === 'exclude'}
-                  onChange={() => handlePlayerFilterModeChange('exclude')}
-                />
-                <span className="radio-mark"></span>
-                <span className="settings-radio-content">
-                  Exclure les parties avec ces joueurs
-                  <small>Affiche uniquement les parties où aucun des joueurs listés n'a participé</small>
-                </span>
-              </label>
+              )}
             </div>
-            
-            {(settings.playerFilter.mode === 'include' || settings.playerFilter.mode === 'exclude') && (
-              <div style={{ marginTop: '1rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <label style={{ fontWeight: 500 }}>
-                    Sélection des joueurs ({settings.playerFilter.players.length} sélectionné{settings.playerFilter.players.length !== 1 ? 's' : ''} sur {selectablePlayers.size} disponible{selectablePlayers.size !== 1 ? 's' : ''})
-                  </label>
+          </div>
+          
+          {settings.independentFilters.playerFilter.mode !== 'none' && (
+            <div className="settings-filter-content">
+              {/* Player filter mode selection */}
+              <div className="settings-radio-group-inline" style={{ marginBottom: '1rem' }}>
+                <label className="settings-radio-inline">
+                  <input
+                    type="radio"
+                    name="playerFilterMode"
+                    value="include"
+                    checked={settings.independentFilters.playerFilter.mode === 'include'}
+                    onChange={() => handlePlayerFilterModeChange('include')}
+                  />
+                  <span>Inclure</span>
+                </label>
+                <label className="settings-radio-inline">
+                  <input
+                    type="radio"
+                    name="playerFilterMode"
+                    value="exclude"
+                    checked={settings.independentFilters.playerFilter.mode === 'exclude'}
+                    onChange={() => handlePlayerFilterModeChange('exclude')}
+                  />
+                  <span>Exclure</span>
+                </label>
+              </div>
+
+              {/* Player selection */}
+              <div style={{ marginBottom: '0.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span className="settings-label">
+                    Joueurs ({settings.independentFilters.playerFilter.players.length} sélectionné{settings.independentFilters.playerFilter.players.length > 1 ? 's' : ''}) :
+                  </span>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <button
                       type="button"
                       onClick={handleSelectAllPlayers}
-                      style={{
-                        padding: '4px 8px',
-                        fontSize: '0.8rem',
-                        border: '1px solid var(--border-color, #ccc)',
-                        borderRadius: '4px',
-                        background: 'var(--bg-tertiary, #f0f0f0)',
-                        color: 'var(--text-primary, #333)',
-                        cursor: 'pointer'
-                      }}
+                      className="settings-btn-small"
+                      disabled={selectablePlayers.size === 0}
                     >
-                      Tout sélectionner
+                      Tous
                     </button>
                     <button
                       type="button"
                       onClick={handleDeselectAllPlayers}
-                      style={{
-                        padding: '4px 8px',
-                        fontSize: '0.8rem',
-                        border: '1px solid var(--border-color, #ccc)',
-                        borderRadius: '4px',
-                        background: 'var(--bg-tertiary, #f0f0f0)',
-                        color: 'var(--text-primary, #333)',
-                        cursor: 'pointer'
-                      }}
+                      className="settings-btn-small"
+                      disabled={settings.independentFilters.playerFilter.players.length === 0}
                     >
-                      Tout désélectionner
+                      Aucun
                     </button>
                   </div>
                 </div>
-                
-                <div className="settings-player-grid">
-                  {availablePlayers.map(player => {
-                    const isSelectable = selectablePlayers.has(player);
-                    const isSelected = settings.playerFilter.players.includes(player);
-                    
-                    return (
-                      <label 
-                        key={player} 
-                        className={`settings-player-checkbox ${!isSelectable ? 'disabled' : ''}`}
-                        style={{ 
-                          opacity: isSelectable ? 1 : 0.5,
-                          cursor: isSelectable ? 'pointer' : 'not-allowed'
-                        }}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={isSelected}
-                          onChange={() => isSelectable && handlePlayerToggle(player)}
-                          disabled={!isSelectable}
-                        />
-                        <span className="settings-player-checkmark"></span>
-                        <span className="settings-player-name" title={!isSelectable && !isSelected ? 
-                          `${player} n'a ${settings.playerFilter.mode === 'include' ? 
-                            'pas joué avec tous les joueurs sélectionnés' : 
-                            'que des parties avec les joueurs exclus'
-                          }` : player
-                        }>
-                          {player}
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-                
-                <small style={{ color: 'var(--text-secondary, #6c757d)', marginTop: 8, display: 'block' }}>
-                  Sélectionnez les joueurs à {settings.playerFilter.mode === 'include' ? 'inclure' : 'exclure'} dans le filtrage.
-                </small>
               </div>
-            )}
-          </div>
+              
+              <div className="settings-player-grid">
+                {availablePlayers.map(player => {
+                  const isSelected = settings.independentFilters!.playerFilter.players.includes(player);
+                  const isSelectable = selectablePlayers.has(player);
+                  
+                  return (
+                    <label
+                      key={player}
+                      className={`settings-player-option ${isSelected ? 'selected' : ''} ${!isSelectable ? 'disabled' : ''}`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        disabled={!isSelectable}
+                        onChange={() => handlePlayerToggle(player)}
+                      />
+                      <span>{player}</span>
+                    </label>
+                  );
+                })}
+              </div>
+              
+              <small className="settings-hint">
+                Sélectionnez les joueurs à {settings.independentFilters.playerFilter.mode === 'include' ? 'inclure dans' : 'exclure du'} le filtrage.
+              </small>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Summary */}
+      <div className="settings-info">
+        <p>
+          <strong>Résumé:</strong> {filteredGames.length} partie{filteredGames.length > 1 ? 's' : ''} 
+          {activeFilterCount > 0 ? ` (avec ${activeFilterCount} filtre${activeFilterCount > 1 ? 's' : ''} actif${activeFilterCount > 1 ? 's' : ''})` : ' (aucun filtre actif)'}
+          {settings.highlightedPlayer && ` • "${settings.highlightedPlayer}" mis en évidence`}
+        </p>
+      </div>
       
+      {/* Shareable URL */}
       <div className="settings-section">
         <div className="settings-section-header">
-          <h3>Partage des Filtres</h3>
+          <h3>🔗 Partage des Filtres</h3>
         </div>
         <div className="settings-group">
           <p className="settings-explanation">
@@ -727,12 +708,7 @@ export function SettingsPanel() {
         </div>
       </div>
       
-      <div className="settings-info">
-        <p>
-          <strong>Note:</strong> Les changements de filtres sont sauvegardés automatiquement 
-          et s'appliquent à toutes les statistiques affichées.
-        </p>
-      </div>
+
     </div>
   );
 }
