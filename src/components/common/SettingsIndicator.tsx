@@ -5,12 +5,27 @@ export function SettingsIndicator() {
   const { settings } = useSettings();
 
   // Check if any non-default settings are active
-  const hasActiveFilters = 
-    settings.gameFilter !== 'all' ||
-    settings.filterMode === 'dateRange' ||
-    settings.filterMode === 'mapName' ||
-    (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) ||
-    settings.highlightedPlayer;
+  const hasActiveFilters = (() => {
+    if (settings.independentFilters) {
+      const filters = settings.independentFilters;
+      return (
+        (filters.gameTypeEnabled && filters.gameFilter !== 'all') ||
+        (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) ||
+        (filters.mapNameEnabled && filters.mapNameFilter !== 'all') ||
+        (filters.playerFilter.mode !== 'none' && filters.playerFilter.players.length > 0) ||
+        settings.highlightedPlayer
+      );
+    } else {
+      // Legacy fallback
+      return (
+        settings.gameFilter !== 'all' ||
+        settings.filterMode === 'dateRange' ||
+        settings.filterMode === 'mapName' ||
+        (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) ||
+        settings.highlightedPlayer
+      );
+    }
+  })();
 
   if (!hasActiveFilters) {
     return null; // Don't show indicator when no filters are active
@@ -19,57 +34,112 @@ export function SettingsIndicator() {
   const getFilterSummary = () => {
     const filters = [];
 
-    // Game type filter
-    if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-      filters.push(
-        settings.gameFilter === 'modded' ? 'Parties moddées' : 'Parties non-moddées'
-      );
-    }
+    if (settings.independentFilters) {
+      const independentFilters = settings.independentFilters;
 
-    // Date range filter
-    if (settings.filterMode === 'dateRange') {
-      if (settings.dateRange.start || settings.dateRange.end) {
-        const start = settings.dateRange.start ? new Date(settings.dateRange.start).toLocaleDateString('fr-FR') : '';
-        const end = settings.dateRange.end ? new Date(settings.dateRange.end).toLocaleDateString('fr-FR') : '';
-        
-        if (start && end) {
-          filters.push(`Période: ${start} - ${end}`);
-        } else if (start) {
-          filters.push(`Depuis: ${start}`);
-        } else if (end) {
-          filters.push(`Jusqu'à: ${end}`);
+      // Game type filter
+      if (independentFilters.gameTypeEnabled && independentFilters.gameFilter !== 'all') {
+        filters.push(
+          independentFilters.gameFilter === 'modded' ? 'Parties moddées' : 'Parties non-moddées'
+        );
+      }
+
+      // Date range filter
+      if (independentFilters.dateRangeEnabled) {
+        if (independentFilters.dateRange.start || independentFilters.dateRange.end) {
+          const start = independentFilters.dateRange.start ? new Date(independentFilters.dateRange.start).toLocaleDateString('fr-FR') : '';
+          const end = independentFilters.dateRange.end ? new Date(independentFilters.dateRange.end).toLocaleDateString('fr-FR') : '';
+          
+          if (start && end) {
+            filters.push(`Période: ${start} - ${end}`);
+          } else if (start) {
+            filters.push(`Depuis: ${start}`);
+          } else if (end) {
+            filters.push(`Jusqu'à: ${end}`);
+          }
+        } else {
+          filters.push('Filtre par date (aucune date sélectionnée)');
         }
-      } else {
-        filters.push('Filtre par date (aucune date sélectionnée)');
+      }
+
+      // Map name filter
+      if (independentFilters.mapNameEnabled && independentFilters.mapNameFilter !== 'all') {
+        const mapLabels = {
+          'village': 'Carte: Village',
+          'chateau': 'Carte: Château',
+          'others': 'Carte: Autres'
+        };
+        filters.push(mapLabels[independentFilters.mapNameFilter] || 'Carte: Inconnue');
+      }
+
+      // Player filter
+      if (independentFilters.playerFilter.mode !== 'none' && independentFilters.playerFilter.players.length > 0) {
+        const playerCount = independentFilters.playerFilter.players.length;
+        const modeText = independentFilters.playerFilter.mode === 'include' ? 'Inclure' : 'Exclure';
+        
+        if (playerCount === 1) {
+          // Show player name for single player
+          filters.push(`${modeText} ${independentFilters.playerFilter.players[0]}`);
+        } else {
+          // Show count for multiple players
+          const playerText = 'joueurs';
+          filters.push(`${modeText} ${playerCount} ${playerText}`);
+        }
+      }
+    } else {
+      // Legacy fallback
+      // Game type filter
+      if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
+        filters.push(
+          settings.gameFilter === 'modded' ? 'Parties moddées' : 'Parties non-moddées'
+        );
+      }
+
+      // Date range filter
+      if (settings.filterMode === 'dateRange') {
+        if (settings.dateRange.start || settings.dateRange.end) {
+          const start = settings.dateRange.start ? new Date(settings.dateRange.start).toLocaleDateString('fr-FR') : '';
+          const end = settings.dateRange.end ? new Date(settings.dateRange.end).toLocaleDateString('fr-FR') : '';
+          
+          if (start && end) {
+            filters.push(`Période: ${start} - ${end}`);
+          } else if (start) {
+            filters.push(`Depuis: ${start}`);
+          } else if (end) {
+            filters.push(`Jusqu'à: ${end}`);
+          }
+        } else {
+          filters.push('Filtre par date (aucune date sélectionnée)');
+        }
+      }
+
+      // Map name filter
+      if (settings.filterMode === 'mapName' && settings.mapNameFilter !== 'all') {
+        const mapLabels = {
+          'village': 'Carte: Village',
+          'chateau': 'Carte: Château',
+          'others': 'Carte: Autres'
+        };
+        filters.push(mapLabels[settings.mapNameFilter] || 'Carte: Inconnue');
+      }
+
+      // Player filter
+      if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
+        const playerCount = settings.playerFilter.players.length;
+        const modeText = settings.playerFilter.mode === 'include' ? 'Inclure' : 'Exclure';
+        
+        if (playerCount === 1) {
+          // Show player name for single player
+          filters.push(`${modeText} ${settings.playerFilter.players[0]}`);
+        } else {
+          // Show count for multiple players
+          const playerText = 'joueurs';
+          filters.push(`${modeText} ${playerCount} ${playerText}`);
+        }
       }
     }
 
-    // Map name filter
-    if (settings.filterMode === 'mapName' && settings.mapNameFilter !== 'all') {
-      const mapLabels = {
-        'village': 'Carte: Village',
-        'chateau': 'Carte: Château',
-        'others': 'Carte: Autres'
-      };
-      filters.push(mapLabels[settings.mapNameFilter] || 'Carte: Inconnue');
-    }
-
-    // Player filter
-    if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
-      const playerCount = settings.playerFilter.players.length;
-      const modeText = settings.playerFilter.mode === 'include' ? 'Inclure' : 'Exclure';
-      
-      if (playerCount === 1) {
-        // Show player name for single player
-        filters.push(`${modeText} ${settings.playerFilter.players[0]}`);
-      } else {
-        // Show count for multiple players
-        const playerText = 'joueurs';
-        filters.push(`${modeText} ${playerCount} ${playerText}`);
-      }
-    }
-
-    // Highlighted player
+    // Highlighted player (same for both systems)
     if (settings.highlightedPlayer) {
       filters.push(`🎯 Mettre en évidence ${settings.highlightedPlayer}`);
     }
