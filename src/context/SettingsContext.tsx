@@ -3,8 +3,9 @@ import type { ReactNode } from 'react';
 
 
 export type GameFilter = 'all' | 'modded' | 'non-modded';
-export type FilterMode = 'gameType' | 'dateRange';
+export type FilterMode = 'gameType' | 'dateRange' | 'mapName';
 export type PlayerFilterMode = 'none' | 'include' | 'exclude';
+export type MapNameFilter = 'all' | 'village' | 'chateau' | 'others';
 
 export interface DateRange {
   start: string | null; // ISO date string (YYYY-MM-DD) or null
@@ -20,6 +21,7 @@ export interface SettingsState {
   filterMode: FilterMode;
   gameFilter: GameFilter;
   dateRange: DateRange;
+  mapNameFilter: MapNameFilter;
   playerFilter: PlayerFilter;
   highlightedPlayer: string | null; // Player to highlight and always show in charts
 }
@@ -36,6 +38,7 @@ const defaultSettings: SettingsState = {
   filterMode: 'gameType',
   gameFilter: 'all',
   dateRange: { start: null, end: null },
+  mapNameFilter: 'all',
   playerFilter: { mode: 'none', players: [] },
   highlightedPlayer: null,
 };
@@ -47,7 +50,7 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
 
   // Parse filter mode
   const filterMode = urlParams.get('filterMode') as FilterMode;
-  if (filterMode && ['gameType', 'dateRange'].includes(filterMode)) {
+  if (filterMode && ['gameType', 'dateRange', 'mapName'].includes(filterMode)) {
     settings.filterMode = filterMode;
   }
 
@@ -65,6 +68,12 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
       start: dateStart || null,
       end: dateEnd || null,
     };
+  }
+
+  // Parse map name filter
+  const mapNameFilter = urlParams.get('mapNameFilter') as MapNameFilter;
+  if (mapNameFilter && ['all', 'village', 'chateau', 'others'].includes(mapNameFilter)) {
+    settings.mapNameFilter = mapNameFilter;
   }
 
   // Parse player filter
@@ -103,6 +112,10 @@ function updateUrlFromSettings(settings: SettingsState) {
   if (settings.dateRange.start || settings.dateRange.end) {
     if (settings.dateRange.start) urlParams.set('dateStart', settings.dateRange.start);
     if (settings.dateRange.end) urlParams.set('dateEnd', settings.dateRange.end);
+  }
+  
+  if (settings.mapNameFilter !== defaultSettings.mapNameFilter) {
+    urlParams.set('mapNameFilter', settings.mapNameFilter);
   }
   
   if (settings.playerFilter.mode !== defaultSettings.playerFilter.mode) {
@@ -188,6 +201,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     if (targetSettings.dateRange.start || targetSettings.dateRange.end) {
       if (targetSettings.dateRange.start) urlParams.set('dateStart', targetSettings.dateRange.start);
       if (targetSettings.dateRange.end) urlParams.set('dateEnd', targetSettings.dateRange.end);
+    }
+    
+    if (targetSettings.mapNameFilter !== defaultSettings.mapNameFilter) {
+      urlParams.set('mapNameFilter', targetSettings.mapNameFilter);
     }
     
     if (targetSettings.playerFilter.mode !== defaultSettings.playerFilter.mode) {

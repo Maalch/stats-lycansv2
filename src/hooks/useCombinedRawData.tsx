@@ -279,6 +279,15 @@ function applyGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[
         }
       }
     }
+    // Apply map name filter
+    else if (settings.filterMode === 'mapName') {
+      if (settings.mapNameFilter !== 'all') {
+        const mapName = game.MapName || '';
+        if (settings.mapNameFilter === 'village' && mapName !== 'Village') return false;
+        if (settings.mapNameFilter === 'chateau' && mapName !== 'Château') return false;
+        if (settings.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
+      }
+    }
 
     return true;
   });
@@ -465,6 +474,15 @@ export function useFilteredGameLogData(): {
             const endDate = new Date(settings.dateRange.end);
             if (gameDate > endDate) return false;
           }
+        }
+      }
+      // Apply map name filter
+      else if (settings.filterMode === 'mapName') {
+        if (settings.mapNameFilter !== 'all') {
+          const mapName = game.MapName || '';
+          if (settings.mapNameFilter === 'village' && mapName !== 'Village') return false;
+          if (settings.mapNameFilter === 'chateau' && mapName !== 'Château') return false;
+          if (settings.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
         }
       }
 
