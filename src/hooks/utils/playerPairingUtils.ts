@@ -111,7 +111,7 @@ export function computePlayerPairingStats(
 
     // Find all lovers in this game
     const lovers = game.PlayerStats.filter(player => 
-      player.MainRoleInitial === 'Amoureux'
+      (player.MainRoleInitial === 'Amoureux' || player.MainRoleInitial === 'Amoureux Villageois' || player.MainRoleInitial === 'Amoureux Loup')
     );
 
     // Process wolf pairs

@@ -50,17 +50,17 @@ function getPlayerCamp(
  */
 function extractSoloRoles(game: GameLogEntry): string[] {
   const soloRoles: string[] = [];
-  
   // Solo roles are roles that aren't standard village/wolf camps
   const standardRoles = ['Villageois', 'Loup', 'Traître'];
-  
   game.PlayerStats.forEach(playerStat => {
-    const role = playerStat.MainRoleInitial;
+    let role = playerStat.MainRoleInitial;
+    if (role === 'Amoureux Loup' || role === 'Amoureux Villageois') {
+      role = 'Amoureux';
+    }
     if (role && !standardRoles.includes(role)) {
       soloRoles.push(role);
     }
   });
-  
   return soloRoles;
 }
 
