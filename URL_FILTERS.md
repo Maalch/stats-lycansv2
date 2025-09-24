@@ -48,7 +48,7 @@ https://your-domain.com/stats-lycansv2/?filterMode=gameType&gameFilter=modded&pl
 ### Method 1: Using the Share Button
 1. Go to the Settings tab (⚙️)
 2. Configure your desired filters
-3. Scroll down to "3. Partage des Paramètres"
+3. Scroll down to "3. Partage des Filtres"
 4. Click "🔗 Copier le lien" to copy the URL with current settings
 
 ### Method 2: Manual URL Construction

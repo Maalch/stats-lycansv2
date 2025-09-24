@@ -60,7 +60,7 @@ const MAIN_TABS = [
 
   { 
     key: 'settings', 
-    label: 'Paramètres', 
+    label: 'Filtres', 
     icon: '⚙️',
     description: 'Filtres et configuration'
   },
