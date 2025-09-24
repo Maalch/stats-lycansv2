@@ -670,6 +670,10 @@ function getRawGameDataInNewFormat() {
     var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
     var roleValues = roleData.values;
     
+    // Get details data
+    var detailsData = getLycanSheetData(LYCAN_SCHEMA.DETAILS.SHEET);
+    var detailsValues = detailsData.values;
+    
     if (!gameValues || gameValues.length === 0) {
       return JSON.stringify({ error: 'No game data found' });
     }
@@ -693,6 +697,9 @@ function getRawGameDataInNewFormat() {
     
     var roleHeaders = roleValues ? roleValues[0] : [];
     var roleDataRows = roleValues ? roleValues.slice(1) : [];
+    
+    var detailsHeaders = detailsValues ? detailsValues[0] : [];
+    var detailsDataRows = detailsValues ? detailsValues.slice(1) : [];
     
     // Create game stats array
     var gameStats = gameDataRows.map(function(gameRow) {
@@ -737,7 +744,7 @@ function getRawGameDataInNewFormat() {
       var roleAssignments = getRoleAssignmentsForGame(gameId, roleHeaders, roleDataRows);
       
       gameRecord.PlayerStats = players.map(function(playerName) {
-        return buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders);
+        return buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders, detailsHeaders, detailsDataRows);
       });
       
       return gameRecord;
@@ -761,17 +768,22 @@ function getRawGameDataInNewFormat() {
 /**
  * Helper function to build player stats from legacy data
  */
-function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders) {
+function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders, detailsHeaders, detailsDataRows) {
+  // Get player details from the Details sheet
+  var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
+  
   var playerStats = {
     Username: playerName,
-    MainRoleInitial: determineMainRole(playerName, roleAssignments),
-    MainRoleFinal: determineMainRole(playerName, roleAssignments), // same as initial in legacy data
-    Power: null, // Not available in legacy data
-    SecondaryRole: null, // Not available in legacy data
+    MainRoleInitial: determineMainRoleWithDetails(playerName, roleAssignments, playerDetails, 'initial'),
+    MainRoleFinal: determineMainRoleWithDetails(playerName, roleAssignments, playerDetails, 'final'),
+    Color: playerDetails && playerDetails.color ? playerDetails.color : null,
+    Power: determinePlayerPower(playerDetails),
+    SecondaryRole: determineSecondaryRole(playerDetails),
     DeathDateIrl: null, // Not available in legacy data
-    DeathTiming: null, // Not available in legacy data
+    DeathTiming: determineDeathTiming(playerDetails),
     DeathPosition: null, // Not available in legacy data
-    KillerName: null, // Not available in legacy data
+    DeathType: determineDeathType(playerDetails),
+    KillerName: determineKillerName(playerDetails),
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
   };
   
@@ -823,6 +835,147 @@ function getRoleAssignmentsForGame(gameId, roleHeaders, roleDataRows) {
     bountyHunter: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER)] || null,
     voodoo: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO)] || null
   };
+}
+
+/**
+ * Helper function to get player details for a specific game and player
+ */
+function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows) {
+  var detailsRow = detailsDataRows.find(function(row) {
+    return row[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.GAMEID)] == gameId &&
+           row[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.PLAYER)] === playerName;
+  });
+  
+  if (!detailsRow) return null;
+  
+  return {
+    color: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.COLOR)] || null,
+    camp: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.CAMP)] || null,
+    traitor: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.TRAITOR)] || null,
+    finalCamp: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALCAMP)] || null,
+    finalRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALROLE)] || null,
+    villagerPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.VILLAGERPOWER)] || null,
+    wolfPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.WOLFPOWER)] || null,
+    secondaryRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.SECONDARYROLE)] || null,
+    dayOfDeath: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.DAYOFDEATH)] || null,
+    typeOfDeath: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.TYPEOFDEATH)] || null,
+    killerPlayers: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.KILLERPLAYERS)] || null
+  };
+}
+
+/**
+ * Helper function to determine main role with details data priority
+ */
+function determineMainRoleWithDetails(playerName, roleAssignments, playerDetails, type) {
+  var campFromDetails = null;
+  
+  // Determine which camp to use based on type (initial or final)
+  if (type === 'final') {
+    if (playerDetails && playerDetails.finalRole) {
+      campFromDetails = playerDetails.finalRole;
+    }
+    else if (playerDetails && playerDetails.finalCamp) {
+       campFromDetails = playerDetails.finalCamp;
+    }
+  } else if (type === 'initial') {
+    if (playerDetails) {
+      if (playerDetails.traitor === 'true') {
+        campFromDetails = 'Traître';
+      }
+      else if (playerDetails.villagerPower === 'Alchimiste' || playerDetails.villagerPower === 'Chasseur') {
+        campFromDetails = playerDetails.villagerPower;
+      }
+      else if (playerDetails.camp) {
+        campFromDetails = playerDetails.camp;
+      }
+    }
+  }
+  
+  // If we have camp information from details, use it
+  if (campFromDetails) {
+    return campFromDetails;
+  }
+  
+  // Otherwise, fall back to the original method
+  return determineMainRole(playerName, roleAssignments);
+}
+
+/**
+ * Helper function to determine player power
+ */
+function determinePlayerPower(playerDetails) {
+  if (!playerDetails) return null;
+  
+  // Use villager power if available
+  if (playerDetails.villagerPower && playerDetails.villagerPower !== '') {
+    return playerDetails.villagerPower;
+  }
+  
+  // Use wolf power if available
+  if (playerDetails.wolfPower && playerDetails.wolfPower !== '') {
+    return playerDetails.wolfPower;
+  }
+  
+  return null;
+}
+
+/**
+ * Helper function to determine secondary role
+ */
+function determineSecondaryRole(playerDetails) {
+  if (!playerDetails || !playerDetails.secondaryRole) return null;
+  
+  // Return secondary role if it's not 'N/A'
+  if (playerDetails.secondaryRole !== 'N/A' && playerDetails.secondaryRole !== '') {
+    return playerDetails.secondaryRole;
+  }
+  
+  return null;
+}
+
+/**
+ * Helper function to determine death timing
+ */
+function determineDeathTiming(playerDetails) {
+  if (!playerDetails || !playerDetails.dayOfDeath) return null;
+  
+  // Return death timing in format "U" + day number (e.g., "U3")
+  if (playerDetails.dayOfDeath !== '' && playerDetails.dayOfDeath !== null) {
+    return "U" + playerDetails.dayOfDeath;
+  }
+  
+  return null;
+}
+
+/**
+ * Helper function to determine death type
+ */
+function determineDeathType(playerDetails) {
+  if (!playerDetails || !playerDetails.typeOfDeath) return null;
+  
+  // Return death type if it's not 'N/A'
+  if (playerDetails.typeOfDeath !== 'N/A' && playerDetails.typeOfDeath !== '') {
+    return playerDetails.typeOfDeath;
+  }
+  
+  return null;
+}
+
+/**
+ * Helper function to determine killer name
+ */
+function determineKillerName(playerDetails) {
+  if (!playerDetails || !playerDetails.killerPlayers || !playerDetails.typeOfDeath) return null;
+  
+  // Return killer name only if death type is not "Mort aux votes"
+  if (playerDetails.typeOfDeath !== 'Mort aux votes' && 
+      playerDetails.typeOfDeath !== 'N/A' && 
+      playerDetails.killerPlayers !== '' && 
+      playerDetails.killerPlayers !== null) {
+    return playerDetails.killerPlayers;
+  }
+  
+  return null;
 }
 
 
