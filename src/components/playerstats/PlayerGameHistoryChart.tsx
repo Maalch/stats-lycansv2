@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, ReferenceLine } from 'recharts';
 import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
+import { getGroupedMapStats } from '../../hooks/utils/playerGameHistoryUtils';
 
 type GroupByMethod = 'session' | 'month';
 
@@ -44,14 +45,17 @@ export function PlayerGameHistoryChart() {
     if (navigationState.selectedPlayerName && availablePlayers.includes(navigationState.selectedPlayerName)) {
       return navigationState.selectedPlayerName;
     }
-    
+
     // Second priority: highlighted player from settings (if available)
     if (settings.highlightedPlayer && availablePlayers.includes(settings.highlightedPlayer)) {
       return settings.highlightedPlayer;
     }
-    
-    // Third priority: first available player
-    return availablePlayers[0] || 'Ponce';
+
+    // Third priority: select 'Ponce' if present, else first available player
+    if (availablePlayers.includes('Ponce')) {
+      return 'Ponce';
+    }
+    return availablePlayers[0] || '';
   };
 
   const selectedPlayerName = getDefaultSelectedPlayer();
@@ -193,6 +197,23 @@ export function PlayerGameHistoryChart() {
     
     return large;
   }, [campDistributionData]);
+
+  // Prepare map performance data
+  const mapPerformanceData = useMemo(() => {
+    if (!data?.mapStats) return [];
+    
+    // Group maps using the utility function
+    const groupedMapStats = getGroupedMapStats(data.mapStats);
+    
+    return Object.entries(groupedMapStats).map(([mapName, stats]) => ({
+      name: mapName,
+      value: stats.appearances,
+      winRate: stats.winRate,
+      winRateDisplay: Math.max(parseFloat(stats.winRate), 0.1), // Ensure minimum for visibility
+      wins: stats.wins,
+      percentage: ((stats.appearances / data.totalGames) * 100).toFixed(1)
+    }));
+  }, [data]);
 
   // Helper functions when there are too much data
   const getResponsiveXAxisSettings = (dataLength: number) => {
@@ -756,6 +777,315 @@ export function PlayerGameHistoryChart() {
             </div>
           </FullscreenChart>
         </div>
+
+        {/* Map Performance */}
+        {mapPerformanceData.length > 0 && (
+          <div className="lycans-graphique-section">
+            <h3>Performance par Carte</h3>
+                     
+            <FullscreenChart title="Performance par Carte">
+              <div style={{ height: 400 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={mapPerformanceData}
+                    margin={{ top: 20, right: 140, left: 20, bottom: 20 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis 
+                      dataKey="name"
+                      angle={-45}
+                      textAnchor="end"
+                      height={90}
+                      interval={0}
+                      fontSize={14}
+                    />
+                    <YAxis 
+                      label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                      domain={[0, 100]}
+                    />
+                    {/* Add reference lines for average and 50% */}
+                    <ReferenceLine 
+                      y={50} 
+                      stroke="var(--text-secondary)" 
+                      strokeDasharray="5 5" 
+                      strokeOpacity={0.5}
+                    />
+                    {(() => {
+                      // Calculate overall average win rate for reference
+                      if (mapPerformanceData.length > 0) {
+                        const totalGames = mapPerformanceData.reduce((sum, map) => sum + map.value, 0);
+                        const totalWins = mapPerformanceData.reduce((sum, map) => sum + map.wins, 0);
+                        const avgWinRate = totalGames > 0 ? (totalWins / totalGames) * 100 : 0;
+                        
+                        if (avgWinRate !== 50) {
+                          return (
+                            <ReferenceLine 
+                              y={avgWinRate} 
+                              stroke="var(--accent-primary)" 
+                              strokeDasharray="3 3" 
+                              strokeOpacity={0.7}
+                              label={{ 
+                                value: `Moyenne: ${avgWinRate.toFixed(1)}%`, 
+                                position: "right", 
+                                offset: 5,
+                                style: { fill: 'var(--accent-primary)' }
+                              }}
+                            />
+                          );
+                        }
+                      }
+                      return null;
+                    })()}
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length > 0) {
+                          const dataPoint = payload[0].payload;
+                          
+                          // Calculate comparison with other maps
+                          const comparisons: { map: string; diff: number; better: boolean }[] = [];
+                          mapPerformanceData.forEach(otherMap => {
+                            if (otherMap.name !== dataPoint.name && otherMap.value >= 5) { // Only compare with maps that have enough games
+                              const diff = parseFloat(dataPoint.winRate) - parseFloat(otherMap.winRate);
+                              if (Math.abs(diff) >= 2) { // Only show significant differences
+                                comparisons.push({
+                                  map: otherMap.name,
+                                  diff: diff,
+                                  better: diff > 0
+                                });
+                              }
+                            }
+                          });
+                          
+                          return (
+                            <div style={{ 
+                              background: 'var(--bg-secondary)', 
+                              color: 'var(--text-primary)', 
+                              padding: 12, 
+                              borderRadius: 8,
+                              border: '1px solid var(--border-color)',
+                              maxWidth: '250px'
+                            }}>
+                              <div><strong>{dataPoint.name}</strong></div>
+                              <div>Parties: {dataPoint.value}</div>
+                              <div>Victoires: {dataPoint.wins}</div>
+                              <div style={{ marginBottom: '0.5rem' }}>
+                                <strong>Taux: {dataPoint.winRate}%</strong>
+                              </div>
+                              
+                              {comparisons.length > 0 && (
+                                <div style={{ 
+                                  borderTop: '1px solid var(--border-color)',
+                                  paddingTop: '0.5rem',
+                                  marginTop: '0.5rem'
+                                }}>
+                                  <div style={{ fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '0.25rem' }}>
+                                    Comparaisons:
+                                  </div>
+                                  {comparisons.map((comp, idx) => (
+                                    <div key={idx} style={{ 
+                                      fontSize: '0.75rem',
+                                      color: comp.better ? 'var(--accent-tertiary)' : 'var(--chart-color-4)'
+                                    }}>
+                                      {comp.better ? '↗' : '↘'} {Math.abs(comp.diff).toFixed(1)}% vs {comp.map}
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                              
+                              <div style={{ 
+                                fontSize: '0.7rem', 
+                                color: 'var(--accent-primary)', 
+                                marginTop: '0.5rem',
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                animation: 'pulse 1.5s infinite'
+                              }}>
+                                🖱️ Cliquez pour voir les parties
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Bar 
+                      dataKey="winRateDisplay"
+                      label={({ name, x, y, width }) => {
+                        // Add percentage labels on top of bars
+                        const percentage = mapPerformanceData.find(d => d.name === name)?.winRate || '0';
+                        return (
+                          <text 
+                            x={x + width / 2} 
+                            y={y - 5} 
+                            fill="var(--text-primary)" 
+                            textAnchor="middle" 
+                            fontSize="12"
+                            fontWeight="bold"
+                          >
+                            {percentage}%
+                          </text>
+                        );
+                      }}
+                    >
+                      {mapPerformanceData.map((entry, index) => {
+                        // Define colors for specific maps with enhanced contrast
+                        let fillColor;
+                        let strokeColor = 'transparent';
+                        
+                        if (entry.name === 'Village') {
+                          fillColor = 'var(--accent-secondary)';
+                          strokeColor = 'var(--accent-primary)';
+                        } else if (entry.name === 'Château') {
+                          fillColor = 'var(--accent-tertiary)';
+                          strokeColor = 'var(--accent-primary)';
+                        } else if (entry.name === 'Autres') {
+                          fillColor = lycansOtherCategoryColor;
+                          strokeColor = 'var(--text-secondary)';
+                        } else {
+                          fillColor = `var(--chart-color-${(index % 6) + 1})`;
+                        }
+
+                        // Highlight the best performing map
+                        const bestWinRate = Math.max(...mapPerformanceData.map(m => parseFloat(m.winRate)));
+                        const isHighest = parseFloat(entry.winRate) === bestWinRate && bestWinRate > 0;
+
+                        return (
+                          <Cell 
+                            key={`cell-map-${index}`} 
+                            fill={
+                              parseFloat(entry.winRate) === 0
+                                ? `${fillColor}30`  // More dimmed for 0% win rate
+                                : fillColor
+                            }
+                            stroke={isHighest ? 'var(--accent-primary)' : strokeColor}
+                            strokeWidth={isHighest ? 3 : 1}
+                            onClick={() => {
+                              navigateToGameDetails({
+                                selectedPlayer: selectedPlayerName,
+                                selectedMapName: entry.name,
+                                fromComponent: 'Performance par Carte'
+                              });
+                            }}
+                            style={{ cursor: 'pointer' }}
+                          />
+                        );
+                      })}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </FullscreenChart>
+            
+            {/* Detailed Comparison Table */}
+            {mapPerformanceData.length >= 2 && (
+              <div style={{ 
+                marginTop: '1.5rem',
+                padding: '1rem',
+                background: 'var(--bg-tertiary)',
+                borderRadius: '8px',
+                border: '1px solid var(--border-color)'
+              }}>
+                <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>Tableau Comparatif Détaillé</h4>
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ 
+                    width: '100%',
+                    borderCollapse: 'collapse',
+                    fontSize: '0.9rem'
+                  }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid var(--border-color)' }}>
+                        <th style={{ padding: '0.5rem', textAlign: 'left', color: 'var(--text-primary)' }}>Carte</th>
+                        <th style={{ padding: '0.5rem', textAlign: 'center', color: 'var(--text-primary)' }}>Parties</th>
+                        <th style={{ padding: '0.5rem', textAlign: 'center', color: 'var(--text-primary)' }}>Victoires</th>
+                        <th style={{ padding: '0.5rem', textAlign: 'center', color: 'var(--text-primary)' }}>Taux de Victoire</th>
+                        <th style={{ padding: '0.5rem', textAlign: 'center', color: 'var(--text-primary)' }}>Différence vs Moyenne</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(() => {
+                        // Calculate overall average for comparison
+                        const totalGames = mapPerformanceData.reduce((sum, map) => sum + map.value, 0);
+                        const totalWins = mapPerformanceData.reduce((sum, map) => sum + map.wins, 0);
+                        const overallAverage = totalGames > 0 ? (totalWins / totalGames) * 100 : 0;
+                        
+                        return mapPerformanceData
+                          .sort((a, b) => parseFloat(b.winRate) - parseFloat(a.winRate)) // Sort by win rate descending
+                          .map((map, index) => {
+                            const difference = parseFloat(map.winRate) - overallAverage;
+                            const isHighest = index === 0;
+                            
+                            return (
+                              <tr 
+                                key={map.name} 
+                                style={{ 
+                                  borderBottom: '1px solid var(--border-color)',
+                                  background: isHighest ? 'var(--accent-primary)15' : 'transparent',
+                                  cursor: 'pointer'
+                                }}
+                                onClick={() => {
+                                  navigateToGameDetails({
+                                    selectedPlayer: selectedPlayerName,
+                                    selectedMapName: map.name,
+                                    fromComponent: 'Tableau Comparatif Cartes'
+                                  });
+                                }}
+                              >
+                                <td style={{ 
+                                  padding: '0.5rem', 
+                                  fontWeight: isHighest ? 'bold' : 'normal',
+                                  color: isHighest ? 'var(--accent-primary)' : 'var(--text-primary)'
+                                }}>
+                                  {isHighest && '👑 '}{map.name}
+                                </td>
+                                <td style={{ padding: '0.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                                  {map.value}
+                                </td>
+                                <td style={{ padding: '0.5rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                                  {map.wins}
+                                </td>
+                                <td style={{ 
+                                  padding: '0.5rem', 
+                                  textAlign: 'center', 
+                                  fontWeight: 'bold',
+                                  color: 'var(--text-primary)'
+                                }}>
+                                  {map.winRate}%
+                                </td>
+                                <td style={{ 
+                                  padding: '0.5rem', 
+                                  textAlign: 'center',
+                                  fontWeight: 'bold',
+                                  color: difference > 0 
+                                    ? 'var(--accent-tertiary)' 
+                                    : difference < 0 
+                                      ? 'var(--chart-color-4)' 
+                                      : 'var(--text-secondary)'
+                                }}>
+                                  {difference > 0 ? '+' : ''}{difference.toFixed(1)}%
+                                  {Math.abs(difference) >= 10 && ' ⭐'}
+                                </td>
+                              </tr>
+                            );
+                          });
+                      })()}
+                    </tbody>
+                  </table>
+                </div>
+                <div style={{ 
+                  marginTop: '0.5rem', 
+                  fontSize: '0.75rem', 
+                  color: 'var(--text-secondary)', 
+                  fontStyle: 'italic' 
+                }}>
+                  💡 Cliquez sur une ligne pour voir toutes les parties sur cette carte
+                  {mapPerformanceData.some(m => Math.abs(parseFloat(m.winRate) - (mapPerformanceData.reduce((sum, map) => sum + map.value * parseFloat(map.winRate), 0) / mapPerformanceData.reduce((sum, map) => sum + map.value, 0))) >= 10) && 
+                    ' • ⭐ Différence significative (≥10%)'
+                  }
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

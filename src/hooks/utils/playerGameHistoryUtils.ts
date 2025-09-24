@@ -13,9 +13,16 @@ export interface PlayerGame {
   won: boolean;
   winnerCamp: string;
   playersInGame: number;
+  mapName: string;
 }
 
 export interface CampStats {
+  appearances: number;
+  wins: number;
+  winRate: string;
+}
+
+export interface MapStats {
   appearances: number;
   wins: number;
   winRate: string;
@@ -28,6 +35,7 @@ export interface PlayerGameHistoryData {
   winRate: string;
   games: PlayerGame[];
   campStats: Record<string, CampStats>;
+  mapStats: Record<string, MapStats>;
 }
 
 
@@ -70,7 +78,8 @@ export function computePlayerGameHistory(
         camp: playerCamp,
         won: playerWon,
         winnerCamp: winnerCamp,
-        playersInGame: game.PlayerStats.length
+        playersInGame: game.PlayerStats.length,
+        mapName: game.MapName
       });
     }
   });
@@ -116,12 +125,68 @@ export function computePlayerGameHistory(
     stats.winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
   });
 
+  // Calculate map distribution with grouping logic
+  const mapStats: Record<string, MapStats> = {};
+  playerGames.forEach(game => {
+    if (!mapStats[game.mapName]) {
+      mapStats[game.mapName] = {
+        appearances: 0,
+        wins: 0,
+        winRate: "0.00"
+      };
+    }
+    mapStats[game.mapName].appearances++;
+    if (game.won) {
+      mapStats[game.mapName].wins++;
+    }
+  });
+
+  // Calculate win rates for each map
+  Object.keys(mapStats).forEach(mapName => {
+    const stats = mapStats[mapName];
+    stats.winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
+  });
+
   return {
     playerName: playerName,
     totalGames: totalGames,
     totalWins: totalWins,
     winRate: winRate,
     games: playerGames,
-    campStats: campStats
+    campStats: campStats,
+    mapStats: mapStats
   };
+}
+
+/**
+ * Group maps into main categories (Village, Château) and "Autres" if >= 10 games on other maps
+ */
+export function getGroupedMapStats(mapStats: Record<string, MapStats>): Record<string, MapStats> {
+  const groupedStats: Record<string, MapStats> = {};
+  
+  // Count games on "other" maps (not Village or Château)
+  let otherMapsTotal = 0;
+  let otherMapsWins = 0;
+  
+  Object.entries(mapStats).forEach(([mapName, stats]) => {
+    if (mapName === 'Village' || mapName === 'Château') {
+      // Keep Village and Château as separate categories
+      groupedStats[mapName] = { ...stats };
+    } else {
+      // Group all other maps
+      otherMapsTotal += stats.appearances;
+      otherMapsWins += stats.wins;
+    }
+  });
+  
+  // Add "Autres" category if there are at least 10 games on other maps
+  if (otherMapsTotal >= 10) {
+    groupedStats['Autres'] = {
+      appearances: otherMapsTotal,
+      wins: otherMapsWins,
+      winRate: otherMapsTotal > 0 ? (otherMapsWins / otherMapsTotal * 100).toFixed(2) : "0.00"
+    };
+  }
+  
+  return groupedStats;
 }

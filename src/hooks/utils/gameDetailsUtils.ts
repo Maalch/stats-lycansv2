@@ -280,6 +280,28 @@ export function filterByVictoryType(games: GameLogEntry[], victoryType: string):
 }
 
 /**
+ * Filter games by map name (with support for "Autres" grouping)
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedMapName - Map name to filter by (Village, Château, or Autres)
+ * @returns Filtered array of GameLogEntry
+ */
+export function filterByMapNameFromGameLog(games: GameLogEntry[], selectedMapName: string): GameLogEntry[] {
+  return games.filter(game => {
+    if (selectedMapName === 'Village' || selectedMapName === 'Château') {
+      // Direct match for main maps
+      return game.MapName === selectedMapName;
+    } else if (selectedMapName === 'Autres') {
+      // Filter for all maps that are not Village or Château
+      return game.MapName !== 'Village' && game.MapName !== 'Château';
+    } else {
+      // Direct match for any other specific map name
+      return game.MapName === selectedMapName;
+    }
+  });
+}
+
+/**
  * Filter games by harvest range
  * 
  * @param games - Array of GameLogEntry to filter
@@ -654,6 +676,7 @@ export function applyNavigationFiltersFromGameLog(
     filters.selectedHarvestRange ||
     filters.selectedGameDuration ||
     (filters.selectedGameIds && filters.selectedGameIds.length > 0) ||
+    filters.selectedMapName ||
     filters.campFilter ||
     filters.playerPairFilter ||
     filters.multiPlayerFilter
@@ -708,6 +731,10 @@ export function applyNavigationFiltersFromGameLog(
 
   if (filters.selectedGameDuration) {
     filteredGames = filterByGameDurationFromGameLog(filteredGames, filters.selectedGameDuration);
+  }
+
+  if (filters.selectedMapName) {
+    filteredGames = filterByMapNameFromGameLog(filteredGames, filters.selectedMapName);
   }
 
   // Apply multi-player filters (for player comparison scenarios)
