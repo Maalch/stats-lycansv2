@@ -191,9 +191,9 @@ function processCampSeries(
         playerStats.currentVillageoisGameIds = [gameDisplayedId];
       }
       
-      // Update longest if current is longer
+      // Update longest if current is longer or equal (keep most recent in case of ties)
       if (!playerStats.longestVillageoisSeries || 
-          playerStats.currentVillageoisSeries > playerStats.longestVillageoisSeries.seriesLength) {
+          playerStats.currentVillageoisSeries >= playerStats.longestVillageoisSeries.seriesLength) {
         playerStats.longestVillageoisSeries = {
           player,
           camp: 'Villageois',
@@ -224,9 +224,9 @@ function processCampSeries(
         playerStats.currentLoupsGameIds = [gameDisplayedId];
       }
       
-      // Update longest if current is longer
+      // Update longest if current is longer or equal (keep most recent in case of ties)
       if (!playerStats.longestLoupsSeries || 
-          playerStats.currentLoupsSeries > playerStats.longestLoupsSeries.seriesLength) {
+          playerStats.currentLoupsSeries >= playerStats.longestLoupsSeries.seriesLength) {
         playerStats.longestLoupsSeries = {
           player,
           camp: 'Loups',
@@ -282,9 +282,9 @@ function processWinSeries(
       playerStats.currentWinGameIds = [gameDisplayedId];
     }
     
-    // Update longest win series if current is longer
+    // Update longest win series if current is longer or equal (keep most recent in case of ties)
     if (!playerStats.longestWinSeries || 
-        playerStats.currentWinSeries > playerStats.longestWinSeries.seriesLength) {
+        playerStats.currentWinSeries >= playerStats.longestWinSeries.seriesLength) {
       
       // Calculate camp counts from the current win camps array
       const campCounts: Record<string, number> = {};
@@ -342,9 +342,9 @@ function processLossSeries(
       playerStats.currentLossGameIds = [gameDisplayedId];
     }
     
-    // Update longest loss series if current is longer
+    // Update longest loss series if current is longer or equal (keep most recent in case of ties)
     if (!playerStats.longestLossSeries || 
-        playerStats.currentLossSeries > playerStats.longestLossSeries.seriesLength) {
+        playerStats.currentLossSeries >= playerStats.longestLossSeries.seriesLength) {
       
       // Calculate camp counts from the current loss camps array
       const campCounts: Record<string, number> = {};
@@ -495,7 +495,7 @@ export function computePlayerSeries(
   // No longer needed - we get this directly from PlayerStats
 
   // Sort games by ID to ensure chronological order
-  const sortedGames = [...gameData].sort((a, b) => parseInt(a.Id) - parseInt(b.Id));
+  const sortedGames = [...gameData].sort((a, b) => parseInt(a.DisplayedId) - parseInt(b.DisplayedId));
 
   // Get all unique players
   const allPlayers = getAllPlayers(sortedGames);
@@ -542,7 +542,8 @@ export function computePlayerSeries(
 
   // Mark ongoing series - a series is ongoing if:
   // 1. The current series length equals the longest series length
-  // 2. This indicates the player hasn't played since the series started
+  // 2. The current series length is greater than 0 (player is currently on that type of streak)
+  // 3. This indicates the player is currently in their record-tying or record-breaking streak
   Object.values(playerCampSeries).forEach(stats => {
     // Check Villageois series
     if (stats.longestVillageoisSeries && 
