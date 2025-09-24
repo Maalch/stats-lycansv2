@@ -854,6 +854,7 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
     traitor: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.TRAITOR)] || null,
     finalCamp: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALCAMP)] || null,
     finalRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALROLE)] || null,
+    finalPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALROLE)] || null,
     villagerPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.VILLAGERPOWER)] || null,
     wolfPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.WOLFPOWER)] || null,
     secondaryRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.SECONDARYROLE)] || null,
@@ -871,11 +872,16 @@ function determineMainRoleWithDetails(playerName, roleAssignments, playerDetails
   
   // Determine which camp to use based on type (initial or final)
   if (type === 'final') {
-    if (playerDetails && playerDetails.finalRole) {
-      campFromDetails = playerDetails.finalRole;
-    }
-    else if (playerDetails && playerDetails.finalCamp) {
-       campFromDetails = playerDetails.finalCamp;
+    if (playerDetails) {
+      if (playerDetails.finalPower === 'Chasseur') {
+        campFromDetails = playerDetails.finalPower;
+      }
+      else if (playerDetails.finalRole) {
+        campFromDetails = playerDetails.finalRole;
+      }
+      else if (playerDetails.finalCamp) {
+        campFromDetails = playerDetails.finalCamp;
+      }
     }
   } else if (type === 'initial') {
     if (playerDetails) {
