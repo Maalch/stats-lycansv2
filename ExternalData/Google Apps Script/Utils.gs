@@ -90,6 +90,7 @@ const LYCAN_SCHEMA = {
       SECONDARYROLE: 'Rôle secondaire', //Name of the secondary role for that player. Empty or 'N/A' if no secondary role
       FINALCAMP: 'Camp final', //Name of the camp at the end of the game, only if different from start camp
       FINALROLE: 'Rôle final', //Name of the rôle at the end of the game, only if different from start role 
+      FINALPOWER: 'Métier final', //Name of the power at the end of the game, only if different from start power
       DAYOFDEATH: 'Jour de mort', //Day of the death for that player (integer)
       TYPEOFDEATH: 'Type de mort', //Type of death for that player (Tué par Loup, Mort aux votes, etc...). 'N/A' is not killed
       KILLERPLAYERS: 'Joueurs tueurs', //List of player(s) that killed that player. Empty if not killed.
