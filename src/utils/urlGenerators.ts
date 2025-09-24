@@ -8,6 +8,7 @@ const defaultSettings: SettingsState = {
   filterMode: 'gameType',
   gameFilter: 'all',
   dateRange: { start: null, end: null },
+  mapNameFilter: 'all',
   playerFilter: { mode: 'none', players: [] },
   highlightedPlayer: null,
 };
@@ -33,6 +34,10 @@ export function generateUrlWithSettings(baseUrl: string, settings: Partial<Setti
   if (settings.dateRange) {
     if (settings.dateRange.start) urlParams.set('dateStart', settings.dateRange.start);
     if (settings.dateRange.end) urlParams.set('dateEnd', settings.dateRange.end);
+  }
+  
+  if (settings.mapNameFilter && settings.mapNameFilter !== defaultSettings.mapNameFilter) {
+    urlParams.set('mapNameFilter', settings.mapNameFilter);
   }
   
   if (settings.playerFilter) {
@@ -102,6 +107,33 @@ export const UrlGenerators = {
     }),
 
   /**
+   * Generate URL for Village map only
+   */
+  villageMap: (baseUrl: string) => 
+    generateUrlWithSettings(baseUrl, {
+      filterMode: 'mapName',
+      mapNameFilter: 'village'
+    }),
+
+  /**
+   * Generate URL for Château map only
+   */
+  chateauMap: (baseUrl: string) => 
+    generateUrlWithSettings(baseUrl, {
+      filterMode: 'mapName',
+      mapNameFilter: 'chateau'
+    }),
+
+  /**
+   * Generate URL for other maps (Ashfang Woods, Donjon, etc.)
+   */
+  otherMaps: (baseUrl: string) => 
+    generateUrlWithSettings(baseUrl, {
+      filterMode: 'mapName',
+      mapNameFilter: 'others'
+    }),
+
+  /**
    * Generate URL for modded games with specific players
    */
   moddedGamesWithPlayers: (baseUrl: string, players: string[]) => 
@@ -137,28 +169,35 @@ export const UrlGenerators = {
       gameFilter: 'modded',
       highlightedPlayer: highlightedPlayer
     }),
+
+  /**
+   * Generate URL for Village map with specific players
+   */
+  villageMapWithPlayers: (baseUrl: string, players: string[]) => 
+    generateUrlWithSettings(baseUrl, {
+      filterMode: 'mapName',
+      mapNameFilter: 'village',
+      playerFilter: { mode: 'include', players }
+    }),
+
+  /**
+   * Generate URL for Château map with specific players
+   */
+  chateauMapWithPlayers: (baseUrl: string, players: string[]) => 
+    generateUrlWithSettings(baseUrl, {
+      filterMode: 'mapName',
+      mapNameFilter: 'chateau',
+      playerFilter: { mode: 'include', players }
+    }),
+
+  /**
+   * Generate URL for specific map with highlighted player
+   */
+  mapWithHighlight: (baseUrl: string, mapName: 'village' | 'chateau' | 'others', highlightedPlayer: string) => 
+    generateUrlWithSettings(baseUrl, {
+      filterMode: 'mapName',
+      mapNameFilter: mapName,
+      highlightedPlayer: highlightedPlayer
+    }),
 };
 
-/**
- * Example usage:
- * 
- * // Basic player filtering
- * const url1 = UrlGenerators.forPlayers('https://maalch.github.io/stats-lycansv2/', ['Ponce', 'AmberAerin']);
- * 
- * // Modded games only
- * const url2 = UrlGenerators.moddedGames('https://maalch.github.io/stats-lycansv2/');
- * 
- * // Highlight specific player
- * const url3 = UrlGenerators.withHighlightedPlayer('https://maalch.github.io/stats-lycansv2/', 'Ponce');
- * 
- * // Player filtering with highlighted player
- * const url4 = UrlGenerators.playersWithHighlight('https://maalch.github.io/stats-lycansv2/', ['Ponce', 'AmberAerin'], 'Ponce');
- * 
- * // Custom complex filtering
- * const url5 = generateUrlWithSettings('https://maalch.github.io/stats-lycansv2/', {
- *   filterMode: 'gameType',
- *   gameFilter: 'modded',
- *   playerFilter: { mode: 'include', players: ['Ponce', 'Flippy'] },
- *   highlightedPlayer: 'Ponce'
- * });
- */

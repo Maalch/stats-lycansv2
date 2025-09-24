@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { useSettings } from '../../context/SettingsContext';
-import type { GameFilter, FilterMode, PlayerFilterMode } from '../../context/SettingsContext';
+import type { GameFilter, FilterMode, PlayerFilterMode, MapNameFilter } from '../../context/SettingsContext';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import { ShareableUrl } from '../common/ShareableUrl';
 import './SettingsPanel.css';
@@ -15,7 +15,8 @@ export function SettingsPanel() {
     filterMode: settings.filterMode,
     gameFilter: settings.gameFilter,
     dateStart: settings.dateRange.start,
-    dateEnd: settings.dateRange.end
+    dateEnd: settings.dateRange.end,
+    mapNameFilter: settings.mapNameFilter
   });
 
   // Fetch unfiltered game data to get all players
@@ -38,7 +39,8 @@ export function SettingsPanel() {
       filterMode: settings.filterMode,
       gameFilter: settings.gameFilter,
       dateStart: settings.dateRange.start,
-      dateEnd: settings.dateRange.end
+      dateEnd: settings.dateRange.end,
+      mapNameFilter: settings.mapNameFilter
     };
 
     // Check if any primary filter value has changed
@@ -46,7 +48,8 @@ export function SettingsPanel() {
       prevPrimaryFilter.current.filterMode !== current.filterMode ||
       prevPrimaryFilter.current.gameFilter !== current.gameFilter ||
       prevPrimaryFilter.current.dateStart !== current.dateStart ||
-      prevPrimaryFilter.current.dateEnd !== current.dateEnd;
+      prevPrimaryFilter.current.dateEnd !== current.dateEnd ||
+      prevPrimaryFilter.current.mapNameFilter !== current.mapNameFilter;
 
     // Reset player filter if primary filter changed and there are selected players
     if (hasChanged && settings.playerFilter.players.length > 0) {
@@ -60,7 +63,7 @@ export function SettingsPanel() {
 
     // Update the ref with current values
     prevPrimaryFilter.current = current;
-  }, [settings.filterMode, settings.gameFilter, settings.dateRange.start, settings.dateRange.end, settings.playerFilter.players.length, updateSettings]);
+  }, [settings.filterMode, settings.gameFilter, settings.dateRange.start, settings.dateRange.end, settings.mapNameFilter, settings.playerFilter.players.length, updateSettings]);
 
   // Helper to parse ISO date string to Date
   const parseISODate = (dateStr: string): Date | null => {
@@ -99,9 +102,19 @@ export function SettingsPanel() {
         }
       }
       
+      // Apply map name filter
+      if (settings.filterMode === 'mapName') {
+        if (settings.mapNameFilter !== 'all') {
+          const mapName = game.MapName || '';
+          if (settings.mapNameFilter === 'village' && mapName !== 'Village') return false;
+          if (settings.mapNameFilter === 'chateau' && mapName !== 'Château') return false;
+          if (settings.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
+        }
+      }
+      
       return true;
     });
-  }, [gameLogData, settings.filterMode, settings.gameFilter, settings.dateRange]);
+  }, [gameLogData, settings.filterMode, settings.gameFilter, settings.dateRange, settings.mapNameFilter]);
 
   // Get all players from filtered games (based on primary filter)
   const playersFromFilteredGames = useMemo(() => {
@@ -203,6 +216,10 @@ export function SettingsPanel() {
 
   const handleDateChange = (field: 'start' | 'end', value: string) => {
     updateSettings({ dateRange: { ...settings.dateRange, [field]: value || null } });
+  };
+
+  const handleMapNameFilterChange = (filter: MapNameFilter) => {
+    updateSettings({ mapNameFilter: filter });
   };
 
   const handlePlayerFilterModeChange = (mode: PlayerFilterMode) => {
@@ -344,6 +361,20 @@ export function SettingsPanel() {
                   <small>Sélectionner selon une plage de dates</small>
                 </span>
               </label>
+              <label className="settings-radio">
+                <input
+                  type="radio"
+                  name="filterMode"
+                  value="mapName"
+                  checked={settings.filterMode === 'mapName'}
+                  onChange={() => handleFilterModeChange('mapName')}
+                />
+                <span className="radio-mark"></span>
+                <span className="settings-radio-content">
+                  Filtrer par carte
+                  <small>Sélectionner selon la carte utilisée</small>
+                </span>
+              </label>
             </div>
           </div>
 
@@ -475,6 +506,73 @@ export function SettingsPanel() {
                   </small>
                 </div>
               )}
+            </div>
+          )}
+
+          {settings.filterMode === 'mapName' && (
+            <div className="settings-group">
+              <h4>Sélection de Cartes</h4>
+              <p className="settings-explanation">
+                Choisissez quelles cartes inclure dans les statistiques :
+              </p>
+              <div className="settings-radio-group">
+                <label className="settings-radio">
+                  <input
+                    type="radio"
+                    name="mapNameFilter"
+                    value="all"
+                    checked={settings.mapNameFilter === 'all'}
+                    onChange={() => handleMapNameFilterChange('all')}
+                  />
+                  <span className="radio-mark"></span>
+                  <span className="settings-radio-content">
+                    Toutes les cartes
+                    <small>Inclure toutes les cartes disponibles</small>
+                  </span>
+                </label>
+                <label className="settings-radio">
+                  <input
+                    type="radio"
+                    name="mapNameFilter"
+                    value="village"
+                    checked={settings.mapNameFilter === 'village'}
+                    onChange={() => handleMapNameFilterChange('village')}
+                  />
+                  <span className="radio-mark"></span>
+                  <span className="settings-radio-content">
+                    Village
+                    <small>Uniquement les parties sur la carte Village</small>
+                  </span>
+                </label>
+                <label className="settings-radio">
+                  <input
+                    type="radio"
+                    name="mapNameFilter"
+                    value="chateau"
+                    checked={settings.mapNameFilter === 'chateau'}
+                    onChange={() => handleMapNameFilterChange('chateau')}
+                  />
+                  <span className="radio-mark"></span>
+                  <span className="settings-radio-content">
+                    Château
+                    <small>Uniquement les parties sur la carte Château</small>
+                  </span>
+                </label>
+                <label className="settings-radio">
+                  <input
+                    type="radio"
+                    name="mapNameFilter"
+                    value="others"
+                    checked={settings.mapNameFilter === 'others'}
+                    onChange={() => handleMapNameFilterChange('others')}
+                  />
+                  <span className="radio-mark"></span>
+                  <span className="settings-radio-content">
+                    Autres
+                    <small>Toutes les autres cartes (Ashfang Woods, Donjon, etc.)</small>
+                  </span>
+                </label>
+              </div>
             </div>
           )}
         </div>

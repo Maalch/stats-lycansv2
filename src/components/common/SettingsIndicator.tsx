@@ -8,6 +8,7 @@ export function SettingsIndicator() {
   const hasActiveFilters = 
     settings.gameFilter !== 'all' ||
     settings.filterMode === 'dateRange' ||
+    settings.filterMode === 'mapName' ||
     (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) ||
     settings.highlightedPlayer;
 
@@ -41,6 +42,16 @@ export function SettingsIndicator() {
       } else {
         filters.push('Filtre par date (aucune date sélectionnée)');
       }
+    }
+
+    // Map name filter
+    if (settings.filterMode === 'mapName' && settings.mapNameFilter !== 'all') {
+      const mapLabels = {
+        'village': 'Carte: Village',
+        'chateau': 'Carte: Château',
+        'others': 'Carte: Autres'
+      };
+      filters.push(mapLabels[settings.mapNameFilter] || 'Carte: Inconnue');
     }
 
     // Player filter
