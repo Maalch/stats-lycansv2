@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
-import { usePlayerStatsWithMapFilter } from '../../hooks/usePlayerStatsWithMapFilter';
+import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedPlayersColor } from '../../types/api';
@@ -14,14 +14,12 @@ type ChartPlayerStat = PlayerStat & {
 };
 
 export function PlayersGeneralStatisticsChart() {
+  const { data: playerStatsData, isLoading: dataLoading, error: fetchError } = usePlayerStatsFromRaw();
   const { navigateToGameDetails } = useNavigation();
   const { settings } = useSettings();
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(10);
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
-  const [mapFilter, setMapFilter] = useState<string>('Toutes les cartes');
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
-
-  const { data: playerStatsData, isLoading: dataLoading, error: fetchError } = usePlayerStatsWithMapFilter(mapFilter);
 
   const playersColor = useThemeAdjustedPlayersColor();
 
@@ -143,31 +141,6 @@ export function PlayersGeneralStatisticsChart() {
       <p className="lycans-stats-info">
         Total de {playerStatsData.totalGames} parties analysées avec {playerStatsData.playerStats.length} joueurs
       </p>
-
-      {/* Global map filter */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
-        <label htmlFor="global-map-filter-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-          Type de carte:
-        </label>
-        <select
-          id="global-map-filter-select"
-          value={mapFilter}
-          onChange={(e) => setMapFilter(e.target.value)}
-          style={{
-            background: 'var(--bg-tertiary)',
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '4px',
-            padding: '0.25rem 0.5rem',
-            fontSize: '0.9rem'
-          }}
-        >
-          <option value="Toutes les cartes">Toutes les cartes</option>
-          <option value="Village">Village</option>
-          <option value="Château">Château</option>
-          <option value="Autres">Autres</option>
-        </select>
-      </div>
 
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
@@ -314,7 +287,7 @@ export function PlayersGeneralStatisticsChart() {
 
         <div className="lycans-graphique-section">
           <div>
-            <h3 style={{ marginBottom: '0.5rem' }}>
+            <h3>
               {winRateOrder === 'best'
                 ? 'Meilleurs Taux de Victoire'
                 : 'Moins Bon Taux de Victoire'}
@@ -330,7 +303,9 @@ export function PlayersGeneralStatisticsChart() {
                 🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
               </p>
             )}
-            <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+          </div>
+          <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+
               <select
                 value={winRateOrder}
                 onChange={e => setWinRateOrder(e.target.value as 'best' | 'worst')}
@@ -369,7 +344,6 @@ export function PlayersGeneralStatisticsChart() {
                 ))}
               </select>
             </div>
-          </div>
           <FullscreenChart title={winRateOrder === 'best'
                 ? 'Meilleurs Taux de Victoire'
                 : 'Moins Bon Taux de Victoire'}>

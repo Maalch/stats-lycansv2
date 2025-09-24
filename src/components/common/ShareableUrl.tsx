@@ -31,7 +31,7 @@ export function ShareableUrl() {
         onClick={handleCopyUrl}
         className="shareable-url-btn"
         type="button"
-        title="Copier le lien avec les paramètres actuels"
+        title="Copier le lien avec les filtres actuels"
       >
         {copied ? '✅ Copié!' : '🔗 Copier le lien'}
       </button>

@@ -618,11 +618,11 @@ export function SettingsPanel() {
       
       <div className="settings-section">
         <div className="settings-section-header">
-          <h3>Partage des Paramètres</h3>
+          <h3>Partage des Filtres</h3>
         </div>
         <div className="settings-group">
           <p className="settings-explanation">
-            Copiez le lien ci-dessous pour partager les paramètres actuels avec d'autres personnes.
+            Copiez le lien ci-dessous pour partager les filtres actuels avec d'autres personnes.
             Ils pourront ouvrir le site avec ces mêmes filtres appliqués.
           </p>
           <ShareableUrl />
@@ -631,7 +631,7 @@ export function SettingsPanel() {
       
       <div className="settings-info">
         <p>
-          <strong>Note:</strong> Les changements de paramètres sont sauvegardés automatiquement 
+          <strong>Note:</strong> Les changements de filtres sont sauvegardés automatiquement 
           et s'appliquent à toutes les statistiques affichées.
         </p>
       </div>
