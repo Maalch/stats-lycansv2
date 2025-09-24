@@ -1,7 +1,8 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useGameDetailsFromRaw } from '../../hooks/useGameDetailsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
+
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
 import { GameDetailView } from './GameDetailView';
 import './GameDetailsChart.css';
@@ -9,6 +10,7 @@ import './GameDetailsChart.css';
 type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp'  | 'winner';
 type SortDirection = 'asc' | 'desc';
 
+// Performance optimized component for displaying game details with map backgrounds
 export function GameDetailsChart() {
   const { navigationFilters, navigateBack } = useNavigation();
   const { settings } = useSettings();
@@ -124,6 +126,18 @@ export function GameDetailsChart() {
     return targetWinners.length > 0 ? '✅' : '❌';
   };
 
+  // Memoized helper function to get background image based on map name
+  const getMapBackgroundImage = useCallback((mapName: string | null | undefined): string => {
+    if (!mapName) return 'none';
+    
+    if (mapName === 'Village') {
+      return `url(${import.meta.env.BASE_URL}images/VillageBanner.webp)`;
+    } else if (mapName === 'Château') {
+      return `url(${import.meta.env.BASE_URL}images/CastleBanner.webp)`;
+    }
+    
+    return 'none';
+  }, []);
   // Sort games
   const sortedGames = useMemo(() => {
     if (!data) return [];
@@ -451,33 +465,55 @@ export function GameDetailsChart() {
             </tr>
           </thead>
           <tbody>
-            {paginatedGames.map(game => (
+            {paginatedGames.map(game => {
+              const backgroundImage = getMapBackgroundImage(game.map);
+              const hasMapBackground = backgroundImage !== 'none';
+              
+              return (
               <>
                 <tr 
                   key={game.gameId} 
-                  className={`${selectedGameId === game.gameId ? 'selected' : ''} clickable-row`}
+                  className={`${selectedGameId === game.gameId ? 'selected' : ''} clickable-row ${hasMapBackground ? 'lycans-map-background-row' : ''}`}
                   onClick={() => handleToggleGameDetails(game.gameId)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ 
+                    cursor: 'pointer',
+                    ...(hasMapBackground && {
+                      backgroundImage: backgroundImage,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundAttachment: 'scroll',
+                      transform: 'translateZ(0)',
+                      willChange: 'transform'
+                    }),
+                    position: 'relative'
+                  }}
                 >
-                  <td>#{game.gameId}</td>
-                  <td>{game.date}</td>
-                  <td>{game.playerCount}</td>
-                  <td>{formatDuration(game.gameDuration)}</td>
-                  <td style={{ 
-                    color: lycansColorScheme[game.winningCamp as keyof typeof lycansColorScheme] || '#fff'
-                  }}>
+                  <td className={hasMapBackground ? 'lycans-map-background-cell' : ''}>#{game.gameId}</td>
+                  <td className={hasMapBackground ? 'lycans-map-background-cell' : ''}>{game.date}</td>
+                  <td className={hasMapBackground ? 'lycans-map-background-cell' : ''}>{game.playerCount}</td>
+                  <td className={hasMapBackground ? 'lycans-map-background-cell' : ''}>{formatDuration(game.gameDuration)}</td>
+                  <td 
+                    className={hasMapBackground ? 'lycans-map-background-cell' : ''}
+                    style={{ 
+                      color: lycansColorScheme[game.winningCamp as keyof typeof lycansColorScheme] || '#fff'
+                    }}
+                  >
                     {game.winningCamp}
                   </td>
                   {showWinnerColumn && (
-                    <td style={{ 
-                      textAlign: 'left', 
-                      fontSize: '1.2rem',
-                      verticalAlign: 'middle'
-                    }}>
+                    <td 
+                      className={hasMapBackground ? 'lycans-map-background-cell' : ''}
+                      style={{ 
+                        textAlign: 'left', 
+                        fontSize: '1.2rem',
+                        verticalAlign: 'middle'
+                      }}
+                    >
                       {getGameWinners(game)}
                     </td>
                   )}
-                  <td>
+                  <td className={hasMapBackground ? 'lycans-map-background-cell' : ''}>
                     <button
                       onClick={(e) => {
                         e.stopPropagation(); // Prevent row click when button is clicked
@@ -497,7 +533,8 @@ export function GameDetailsChart() {
                   </tr>
                 )}
               </>
-            ))}
+            );
+            })}
           </tbody>
         </table>
       </div>
