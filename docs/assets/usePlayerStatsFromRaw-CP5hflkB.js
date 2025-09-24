@@ -1,0 +1,1 @@
+import{u as e}from"./baseStatsHook-BLfWpVJc.js";import{a as o}from"./playerStatsUtils-QYCi_Tjz.js";function i(){const{data:a,isLoading:t,error:r}=e(s=>o(s));return{data:a,isLoading:t,error:r}}export{i as u};

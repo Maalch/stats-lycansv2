@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
-import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
+import { usePlayerStatsWithMapFilter } from '../../hooks/usePlayerStatsWithMapFilter';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedPlayersColor } from '../../types/api';
@@ -14,12 +14,14 @@ type ChartPlayerStat = PlayerStat & {
 };
 
 export function PlayersGeneralStatisticsChart() {
-  const { data: playerStatsData, isLoading: dataLoading, error: fetchError } = usePlayerStatsFromRaw();
   const { navigateToGameDetails } = useNavigation();
   const { settings } = useSettings();
-  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(50);
+  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(10);
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
+  const [mapFilter, setMapFilter] = useState<string>('Toutes les cartes');
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
+
+  const { data: playerStatsData, isLoading: dataLoading, error: fetchError } = usePlayerStatsWithMapFilter(mapFilter);
 
   const playersColor = useThemeAdjustedPlayersColor();
 
@@ -141,6 +143,31 @@ export function PlayersGeneralStatisticsChart() {
       <p className="lycans-stats-info">
         Total de {playerStatsData.totalGames} parties analysées avec {playerStatsData.playerStats.length} joueurs
       </p>
+
+      {/* Global map filter */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
+        <label htmlFor="global-map-filter-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+          Type de carte:
+        </label>
+        <select
+          id="global-map-filter-select"
+          value={mapFilter}
+          onChange={(e) => setMapFilter(e.target.value)}
+          style={{
+            background: 'var(--bg-tertiary)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '4px',
+            padding: '0.25rem 0.5rem',
+            fontSize: '0.9rem'
+          }}
+        >
+          <option value="Toutes les cartes">Toutes les cartes</option>
+          <option value="Village">Village</option>
+          <option value="Château">Château</option>
+          <option value="Autres">Autres</option>
+        </select>
+      </div>
 
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
@@ -286,26 +313,39 @@ export function PlayersGeneralStatisticsChart() {
         </div>
 
         <div className="lycans-graphique-section">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <div>
-              <h3>
-                {winRateOrder === 'best'
-                  ? 'Meilleurs Taux de Victoire'
-                  : 'Moins Bon Taux de Victoire'}
-              </h3>
-              {highlightedPlayerInWinRate && settings.highlightedPlayer && (
-                <p style={{ 
-                  fontSize: '0.8rem', 
-                  color: 'var(--accent-primary)', 
-                  fontStyle: 'italic',
-                  marginTop: '0.25rem',
-                  marginBottom: '0'
-                }}>
-                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
-                </p>
-              )}
-            </div>
-            <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div>
+            <h3 style={{ marginBottom: '0.5rem' }}>
+              {winRateOrder === 'best'
+                ? 'Meilleurs Taux de Victoire'
+                : 'Moins Bon Taux de Victoire'}
+            </h3>
+            {highlightedPlayerInWinRate && settings.highlightedPlayer && (
+              <p style={{ 
+                fontSize: '0.8rem', 
+                color: 'var(--accent-primary)', 
+                fontStyle: 'italic',
+                marginTop: '0.25rem',
+                marginBottom: '0.5rem'
+              }}>
+                🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+              </p>
+            )}
+            <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+              <select
+                value={winRateOrder}
+                onChange={e => setWinRateOrder(e.target.value as 'best' | 'worst')}
+                style={{
+                  background: 'var(--bg-tertiary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.9rem'
+                }}
+              >
+                <option value="best">Meilleurs Taux de Victoire</option>
+                <option value="worst">Moins Bon Taux de Victoire</option>
+              </select>
               <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                 Min. parties:
               </label>
@@ -327,21 +367,6 @@ export function PlayersGeneralStatisticsChart() {
                     {option}
                   </option>
                 ))}
-              </select>
-              <select
-                value={winRateOrder}
-                onChange={e => setWinRateOrder(e.target.value as 'best' | 'worst')}
-                style={{
-                  background: 'var(--bg-tertiary)',
-                  color: 'var(--text-primary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '4px',
-                  padding: '0.25rem 0.5rem',
-                  fontSize: '0.9rem'
-                }}
-              >
-                <option value="best">Meilleurs Taux de Victoire</option>
-                <option value="worst">Moins Bon Taux de Victoire</option>
               </select>
             </div>
           </div>
