@@ -35,6 +35,12 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Optimize scrolling performance */
+  transform: translateZ(0);
+  /* Use GPU for compositing */
+  will-change: scroll-position;
+  /* Optimize for large content */
+  contain: layout style paint;
 }
 
 /* Pagination Styles */
@@ -393,6 +399,31 @@
   opacity: 0.8;
 }
 
+/* Performance optimization for slower devices */
+@media (prefers-reduced-motion: reduce) {
+  .lycans-map-background-row {
+    /* Disable animations and transforms for users who prefer reduced motion */
+    transform: none !important;
+    will-change: auto !important;
+  }
+  
+  .lycans-map-background-row::before {
+    transition: none !important;
+  }
+}
+
+/* Disable background images on very small screens for performance */
+@media (max-width: 480px) {
+  .lycans-map-background-row {
+    background-image: none !important;
+  }
+  
+  .lycans-map-background-cell {
+    color: var(--text-primary) !important;
+    text-shadow: none !important;
+  }
+}
+
 /* Responsive Design */
 
 @media (max-width: 768px) {
@@ -644,4 +675,76 @@
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
   }
+}
+
+/* Map Background Styles for Game Rows - Optimized for Performance */
+.lycans-map-background-row {
+  position: relative;
+  /* Use will-change to optimize for scrolling */
+  will-change: transform;
+  /* Use transform3d to enable hardware acceleration */
+  transform: translateZ(0);
+  /* Optimize background rendering */
+  background-attachment: scroll;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.lycans-map-background-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 1;
+  /* Hardware acceleration for overlay */
+  transform: translateZ(0);
+  will-change: background-color;
+}
+
+.lycans-map-background-cell {
+  position: relative;
+  z-index: 2;
+  color: white !important;
+  /* Reduce text-shadow complexity for better performance */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+  font-weight: 600;
+}
+
+/* Enhanced readability for map background rows */
+.lycans-games-table tr.lycans-map-background-row {
+  /* Use CSS containment for better performance */
+  contain: layout style paint;
+  /* Optimize for scrolling */
+  transform: translateZ(0);
+}
+
+.lycans-games-table tr.lycans-map-background-row:hover {
+  background-color: transparent !important;
+}
+
+.lycans-games-table tr.lycans-map-background-row:hover::before {
+  background-color: rgba(0, 0, 0, 0.75);
+  /* Smooth transition for better UX */
+  transition: background-color 0.2s ease;
+}
+
+/* Ensure buttons remain visible on map backgrounds */
+.lycans-map-background-cell .lycans-details-btn {
+  background: var(--chart-color-1) !important;
+  color: white !important;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+  text-shadow: none;
+}
+
+.lycans-map-background-cell .lycans-details-btn:hover {
+  background: #006FD4 !important;
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
