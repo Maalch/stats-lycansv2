@@ -854,7 +854,7 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
     traitor: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.TRAITOR)] || null,
     finalCamp: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALCAMP)] || null,
     finalRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALROLE)] || null,
-    finalPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALROLE)] || null,
+    finalPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.FINALPOWER)] || null,
     villagerPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.VILLAGERPOWER)] || null,
     wolfPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.WOLFPOWER)] || null,
     secondaryRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILS.COLS.SECONDARYROLE)] || null,
