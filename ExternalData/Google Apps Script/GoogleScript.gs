@@ -939,9 +939,16 @@ function determineSecondaryRole(playerDetails) {
 function determineDeathTiming(playerDetails) {
   if (!playerDetails || !playerDetails.dayOfDeath) return null;
   
-  // Return death timing in format "U" + day number (e.g., "U3")
   if (playerDetails.dayOfDeath !== '' && playerDetails.dayOfDeath !== null) {
-    return "U" + playerDetails.dayOfDeath;
+    var dayValue = playerDetails.dayOfDeath.toString();
+    
+    // If the value already starts with a letter, return it as is
+    if (dayValue.length > 0 && /^[A-Za-z]/.test(dayValue)) {
+      return dayValue;
+    }
+    
+    // Otherwise, it's an integer, so add "U" prefix
+    return "U" + dayValue;
   }
   
   return null;

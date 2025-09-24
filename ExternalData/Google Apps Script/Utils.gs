@@ -16,7 +16,7 @@ const LYCAN_SCHEMA = {
       TRAITOR: 'Rôle Traître', //Checkbox: true / false if a traitor is in the game 
       LOVERS: 'Rôle Amoureux', //Checkbox: true / false if the lovers are in the game
       SOLO: 'Rôles solo',  //name of the solo roles. If several, separated with comma
-      WINNERCAMP: 'Camp victorieux', //name of the winner camp ("Loups", "Villageois"...)
+      WINNERCAMP: 'Camp victorieux', //name of the winner camp ("Loup", "Villageois"...)
       VICTORYTYPE: 'Type de victoire', //Type of victory for the winning camp ("Vote", "Récolte", "Domination"...)
       NBDAYS: 'Nombre de journées', //number of days in the game
       SURVIVINGVILLAGERS: 'Survivants villageois', //number of villagers that survived at the end
@@ -47,7 +47,7 @@ const LYCAN_SCHEMA = {
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
       MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
-      CAMP: 'Camp', //Camp of Ponce ("Villageois", "Loups", "Idiot du village" ...)
+      CAMP: 'Camp', //Camp of Ponce ("Villageois", "Loup", "Idiot du village" ...)
       TRAITOR: 'Traître', //Checkbox: true / false if Ponce was the traitor in that game
       SECONDARYROLE: 'Rôle secondaire', //Name of the secondary role of Ponce
       WOLFROLE: 'Pouvoir de loup', //Name of the wolf role (if Ponce was wolf)
@@ -63,7 +63,7 @@ const LYCAN_SCHEMA = {
     COLS: {
       GAMEID: 'Game', //Game ID (unique)
       MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
-      WOLFS: 'Loups', //Name of the wolves in the game, separated by comma
+      WOLFS: 'Loup', //Name of the wolves in the game, separated by comma
       TRAITOR: 'Traître', //name of the traitor in the game (if any)
       IDIOT: 'Idiot du village', //name of the idiot in the game, if any
       CANNIBAL: 'Cannibale', //name of the cannibal in the game, if any
@@ -83,7 +83,7 @@ const LYCAN_SCHEMA = {
       PLAYER: 'Joueur', //Name of the player
       VOD: 'POV', //Youtube link of the game for that player,
       COLOR: 'Couleur', //Name of the color (follow frenchColorMapping in api.ts),
-      CAMP: 'Camp', //Name of the camp (Villageois, Loups ...)	
+      CAMP: 'Camp', //Name of the camp (Villageois, Loup ...)	
       TRAITOR: 'Traître', //Checkbox: true / false if the player is the traitor in that game
       VILLAGERPOWER: 'Métier villageois', //Power of the player, if in Villageois camp
       WOLFPOWER: 'Pouvoir loup', //Power of the player, if in Wolf camp
