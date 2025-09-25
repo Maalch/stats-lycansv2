@@ -196,5 +196,26 @@ interface ChartPlayerStat extends PlayerStat {
 
 **GitHub Actions:** `.github/workflows/update-data.yml` for weekly data sync  
 **Apps Script:** `scripts/data-sync/fetch-data.js` fetches from Google Sheets  
-**Build Output:** GitHub Pages serves from `/docs` with base path `/stats-lycansv2/`  
+**Build Output:** GitHub Pages serves from `/docs` with custom domain (base path `/`)  
 **Error Handling:** Static file loading only, graceful degradation for missing data
+
+## Development Patterns
+
+### Error Boundary Pattern
+```typescript
+// All chart components use consistent error handling
+if (isLoading) return <div>Chargement...</div>;
+if (error) return <div>Erreur: {error}</div>;
+if (!data) return <div>Aucune donnée disponible</div>;
+```
+
+### URL Parameters & Sharing
+Complete settings serialization via `generateUrlWithSettings()` enables shareable dashboard states. Settings persist in localStorage with URL parameter override capability. See `SettingsContext.tsx` for implementation details.
+
+### Data Filtering Architecture
+**Independent Filters:** System allows combining multiple filter types simultaneously (gameType, dateRange, mapName, playerFilter)  
+**Filter Application:** Automatic filtering in `useCombinedFilteredRawData()` respects all `SettingsContext` state  
+**URL Compatibility:** Legacy URL parameters automatically converted to independent filters for backward compatibility
+
+### Theme System
+Uses CSS custom properties (`--accent-primary`, `--chart-primary`) with theme-adjusted colors via `useThemeAdjusted*Color()` hooks for consistent chart styling across light/dark themes.

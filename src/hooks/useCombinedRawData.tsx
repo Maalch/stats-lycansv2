@@ -167,20 +167,27 @@ function useCombinedRawData(): {
 }
 
 /**
- * Apply common filter logic to any dataset
+ * Apply common filter logic to any dataset using independent filters
  */
 function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean; Date?: string }>(
   data: T[],
   settings: any,
   gameData?: GameLogEntry[]
 ): T[] {
+  // Only use independent filters - legacy filterMode no longer supported
+  if (!settings.independentFilters) {
+    return data;
+  }
+
+  const filters = settings.independentFilters;
+
   return data.filter(record => {
     // For non-game data, we need to find the corresponding game data
     let gameRecord = record as any;
     if (gameData && record.Game) {
       const correspondingGame = gameData.find((_, index) => index + 1 === record.Game);
       if (!correspondingGame) return false;
-      // Convert GameLogEntry to a format compatible with legacy filtering
+      // Convert GameLogEntry to a format compatible with filtering
       gameRecord = {
         "Game Moddée": correspondingGame.Modded || true,
         Date: new Date(correspondingGame.StartDate).toLocaleDateString('fr-FR', {
@@ -191,27 +198,26 @@ function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean;
       };
     }
 
-    // Apply game type filter
-    if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-      if (settings.gameFilter === 'modded') {
+    // Apply game type filter if enabled
+    if (filters.gameTypeEnabled && filters.gameFilter !== 'all') {
+      if (filters.gameFilter === 'modded') {
         if (!gameRecord["Game Moddée"]) return false;
-      } else if (settings.gameFilter === 'non-modded') {
+      } else if (filters.gameFilter === 'non-modded') {
         if (gameRecord["Game Moddée"]) return false;
       }
-    } 
-    // Apply date range filter
-    else if (settings.filterMode === 'dateRange') {
-      if (settings.dateRange.start || settings.dateRange.end) {
-        const gameDateObj = parseFrenchDate(gameRecord.Date);
-        if (!gameDateObj) return false;
-        if (settings.dateRange.start) {
-          const startObj = new Date(settings.dateRange.start);
-          if (gameDateObj < startObj) return false;
-        }
-        if (settings.dateRange.end) {
-          const endObj = new Date(settings.dateRange.end);
-          if (gameDateObj > endObj) return false;
-        }
+    }
+    
+    // Apply date range filter if enabled
+    if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
+      const gameDateObj = parseFrenchDate(gameRecord.Date);
+      if (!gameDateObj) return false;
+      if (filters.dateRange.start) {
+        const startObj = new Date(filters.dateRange.start);
+        if (gameDateObj < startObj) return false;
+      }
+      if (filters.dateRange.end) {
+        const endObj = new Date(filters.dateRange.end);
+        if (gameDateObj > endObj) return false;
       }
     }
 
@@ -220,44 +226,7 @@ function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean;
 }
 
 /**
- * Apply player filter to game data
- */
-function applyPlayerFilter(data: GameLogEntry[], settings: any): GameLogEntry[] {
-  // Get player filter from independent filters if available, otherwise use legacy
-  let playerFilter;
-  if (settings.useIndependentFilters && settings.independentFilters) {
-    playerFilter = settings.independentFilters.playerFilter;
-  } else {
-    playerFilter = settings.playerFilter;
-  }
-
-  if (playerFilter.mode === 'none' || playerFilter.players.length === 0) {
-    return data;
-  }
-
-  return data.filter(game => {
-    const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
-    
-    if (playerFilter.mode === 'include') {
-      // For include mode: ALL selected players must be in the game
-      const hasAllPlayers = playerFilter.players.every((player: string) => 
-        gamePlayersList.includes(player.toLowerCase())
-      );
-      return hasAllPlayers;
-    } else if (playerFilter.mode === 'exclude') {
-      // For exclude mode: if ANY selected player is in the game, exclude it
-      const hasAnyPlayer = playerFilter.players.some((player: string) => 
-        gamePlayersList.includes(player.toLowerCase())
-      );
-      return !hasAnyPlayer;
-    }
-
-    return true;
-  });
-}
-
-/**
- * Apply independent filters to GameLogEntry data (new system)
+ * Apply independent filters to GameLogEntry data
  */
 function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
   return data.filter(game => {
@@ -266,8 +235,8 @@ function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): Ga
 
     const filters = settings.independentFilters;
     if (!filters) {
-      // Fallback to legacy filtering if independent filters not available
-      return applyLegacyGameLogFilters(game, settings);
+      // If no independent filters, don't filter
+      return true;
     }
 
     // Apply game type filter if enabled
@@ -298,65 +267,35 @@ function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): Ga
       if (filters.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
     }
 
+    // Apply player filter
+    if (filters.playerFilter.mode !== 'none' && filters.playerFilter.players.length > 0) {
+      const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
+      
+      if (filters.playerFilter.mode === 'include') {
+        const hasAllPlayers = filters.playerFilter.players.every((player: string) => 
+          gamePlayersList.includes(player.toLowerCase())
+        );
+        if (!hasAllPlayers) return false;
+      } else if (filters.playerFilter.mode === 'exclude') {
+        const hasAnyPlayer = filters.playerFilter.players.some((player: string) => 
+          gamePlayersList.includes(player.toLowerCase())
+        );
+        if (hasAnyPlayer) return false;
+      }
+    }
+
     return true;
   });
 }
 
-/**
- * Apply legacy filters to a single game (for backward compatibility)
- */
-function applyLegacyGameLogFilters(game: GameLogEntry, settings: any): boolean {
-  // Apply game type filter
-  if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-    const isModded = game.Modded ?? true; // Default to true if no LegacyData
-    if (settings.gameFilter === 'modded') {
-      if (!isModded) return false;
-    } else if (settings.gameFilter === 'non-modded') {
-      if (isModded) return false;
-    }
-  } 
-  // Apply date range filter
-  else if (settings.filterMode === 'dateRange') {
-    if (settings.dateRange.start || settings.dateRange.end) {
-      const gameDate = new Date(game.StartDate);
-      if (settings.dateRange.start) {
-        const startDate = new Date(settings.dateRange.start);
-        if (gameDate < startDate) return false;
-      }
-      if (settings.dateRange.end) {
-        const endDate = new Date(settings.dateRange.end);
-        if (gameDate > endDate) return false;
-      }
-    }
-  }
-  // Apply map name filter
-  else if (settings.filterMode === 'mapName') {
-    if (settings.mapNameFilter !== 'all') {
-      const mapName = game.MapName || '';
-      if (settings.mapNameFilter === 'village' && mapName !== 'Village') return false;
-      if (settings.mapNameFilter === 'chateau' && mapName !== 'Château') return false;
-      if (settings.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
-    }
-  }
 
-  return true;
-}
 
 /**
- * Apply common filters to GameLogEntry data (backward compatible)
+ * Apply filters to GameLogEntry data using independent filters only
  */
 function applyGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
-  // Use independent filters if available
-  if (settings.useIndependentFilters && settings.independentFilters) {
-    return applyIndependentGameLogFilters(data, settings);
-  }
-  
-  // Legacy filtering
-  return data.filter(game => {
-    //for now: hard filter on only Ponce game
-    if (!game.Id.toLowerCase().includes('ponce')) return false;
-    return applyLegacyGameLogFilters(game, settings);
-  });
+  // Only use independent filters - legacy mode removed
+  return applyIndependentGameLogFilters(data, settings);
 }
 
 /**
@@ -400,9 +339,8 @@ export function useCombinedFilteredRawData(): CombinedFilteredData {
       };
     }
 
-    // Apply filters to game data first (with player filters)
-    let filteredGameData = applyGameLogFilters(rawData.gameData, settings);
-    filteredGameData = applyPlayerFilter(filteredGameData, settings);
+    // Apply filters to game data (player filters already included in applyGameLogFilters)
+    const filteredGameData = applyGameLogFilters(rawData.gameData, settings);
 
 
     // For BR data, apply filters with reference to global game data
@@ -517,60 +455,9 @@ export function useFilteredGameLogData(): {
 
   const filteredData = useMemo(() => {
     if (!rawGameLogData) return null;
-
-    return rawGameLogData.GameStats.filter(game => {
-      // Apply game type filter
-      if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-        const isModded = game.Modded ?? true; // Default to true if no LegacyData
-        if (settings.gameFilter === 'modded') {
-          if (!isModded) return false;
-        } else if (settings.gameFilter === 'non-modded') {
-          if (isModded) return false;
-        }
-      }
-      // Apply date range filter
-      else if (settings.filterMode === 'dateRange') {
-        if (settings.dateRange.start || settings.dateRange.end) {
-          const gameDate = new Date(game.StartDate);
-          if (settings.dateRange.start) {
-            const startDate = new Date(settings.dateRange.start);
-            if (gameDate < startDate) return false;
-          }
-          if (settings.dateRange.end) {
-            const endDate = new Date(settings.dateRange.end);
-            if (gameDate > endDate) return false;
-          }
-        }
-      }
-      // Apply map name filter
-      else if (settings.filterMode === 'mapName') {
-        if (settings.mapNameFilter !== 'all') {
-          const mapName = game.MapName || '';
-          if (settings.mapNameFilter === 'village' && mapName !== 'Village') return false;
-          if (settings.mapNameFilter === 'chateau' && mapName !== 'Château') return false;
-          if (settings.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
-        }
-      }
-
-      // Apply player filter
-      if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
-        const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
-        
-        if (settings.playerFilter.mode === 'include') {
-          const hasAllPlayers = settings.playerFilter.players.every((player: string) => 
-            gamePlayersList.includes(player.toLowerCase())
-          );
-          if (!hasAllPlayers) return false;
-        } else if (settings.playerFilter.mode === 'exclude') {
-          const hasAnyPlayer = settings.playerFilter.players.some((player: string) => 
-            gamePlayersList.includes(player.toLowerCase())
-          );
-          if (hasAnyPlayer) return false;
-        }
-      }
-
-      return true;
-    });
+    
+    // Use the independent filters approach
+    return applyIndependentGameLogFilters(rawGameLogData.GameStats, settings);
   }, [rawGameLogData, settings]);
 
   return { data: filteredData, isLoading, error };

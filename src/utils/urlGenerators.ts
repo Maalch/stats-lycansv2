@@ -5,7 +5,6 @@ import type { SettingsState } from '../context/SettingsContext';
  */
 
 const defaultSettings: SettingsState = {
-  filterMode: 'gameType',
   gameFilter: 'all',
   dateRange: { start: null, end: null },
   mapNameFilter: 'all',
@@ -32,31 +31,36 @@ const defaultSettings: SettingsState = {
 export function generateUrlWithSettings(baseUrl: string, settings: Partial<SettingsState>): string {
   const urlParams = new URLSearchParams();
   
-  // Only add parameters that differ from defaults
-  if (settings.filterMode && settings.filterMode !== defaultSettings.filterMode) {
-    urlParams.set('filterMode', settings.filterMode);
-  }
-  
-  if (settings.gameFilter && settings.gameFilter !== defaultSettings.gameFilter) {
-    urlParams.set('gameFilter', settings.gameFilter);
-  }
-  
-  if (settings.dateRange) {
-    if (settings.dateRange.start) urlParams.set('dateStart', settings.dateRange.start);
-    if (settings.dateRange.end) urlParams.set('dateEnd', settings.dateRange.end);
-  }
-  
-  if (settings.mapNameFilter && settings.mapNameFilter !== defaultSettings.mapNameFilter) {
-    urlParams.set('mapNameFilter', settings.mapNameFilter);
-  }
-  
-  if (settings.playerFilter) {
-    if (settings.playerFilter.mode !== defaultSettings.playerFilter.mode) {
-      urlParams.set('playerFilterMode', settings.playerFilter.mode);
+  // Use independent filters format only
+  if (settings.independentFilters) {
+    const filters = settings.independentFilters;
+    
+    // Only add parameters for enabled filters or non-default values
+    if (filters.gameTypeEnabled) {
+      urlParams.set('gameTypeEnabled', 'true');
+      if (filters.gameFilter !== 'all') {
+        urlParams.set('gameFilter', filters.gameFilter);
+      }
     }
     
-    if (settings.playerFilter.players && settings.playerFilter.players.length > 0) {
-      urlParams.set('players', encodeURIComponent(settings.playerFilter.players.join(',')));
+    if (filters.dateRangeEnabled) {
+      urlParams.set('dateRangeEnabled', 'true');
+      if (filters.dateRange.start) urlParams.set('dateStart', filters.dateRange.start);
+      if (filters.dateRange.end) urlParams.set('dateEnd', filters.dateRange.end);
+    }
+    
+    if (filters.mapNameEnabled) {
+      urlParams.set('mapNameEnabled', 'true');
+      if (filters.mapNameFilter !== 'all') {
+        urlParams.set('mapNameFilter', filters.mapNameFilter);
+      }
+    }
+    
+    if (filters.playerFilter.mode !== 'none') {
+      urlParams.set('playerFilterMode', filters.playerFilter.mode);
+      if (filters.playerFilter.players.length > 0) {
+        urlParams.set('players', encodeURIComponent(filters.playerFilter.players.join(',')));
+      }
     }
   }
   
@@ -94,8 +98,15 @@ export const UrlGenerators = {
    */
   moddedGames: (baseUrl: string) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'gameType',
-      gameFilter: 'modded'
+      independentFilters: {
+        gameTypeEnabled: true,
+        gameFilter: 'modded',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: false,
+        mapNameFilter: 'all',
+        playerFilter: { mode: 'none', players: [] },
+      }
     }),
 
   /**
@@ -103,8 +114,15 @@ export const UrlGenerators = {
    */
   nonModdedGames: (baseUrl: string) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'gameType',
-      gameFilter: 'non-modded'
+      independentFilters: {
+        gameTypeEnabled: true,
+        gameFilter: 'non-modded',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: false,
+        mapNameFilter: 'all',
+        playerFilter: { mode: 'none', players: [] },
+      }
     }),
 
   /**
@@ -112,8 +130,15 @@ export const UrlGenerators = {
    */
   dateRange: (baseUrl: string, startDate: string, endDate?: string) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'dateRange',
-      dateRange: { start: startDate, end: endDate || null }
+      independentFilters: {
+        gameTypeEnabled: false,
+        gameFilter: 'all',
+        dateRangeEnabled: true,
+        dateRange: { start: startDate, end: endDate || null },
+        mapNameEnabled: false,
+        mapNameFilter: 'all',
+        playerFilter: { mode: 'none', players: [] },
+      }
     }),
 
   /**
@@ -121,8 +146,15 @@ export const UrlGenerators = {
    */
   villageMap: (baseUrl: string) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'mapName',
-      mapNameFilter: 'village'
+      independentFilters: {
+        gameTypeEnabled: false,
+        gameFilter: 'all',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: true,
+        mapNameFilter: 'village',
+        playerFilter: { mode: 'none', players: [] },
+      }
     }),
 
   /**
@@ -130,8 +162,15 @@ export const UrlGenerators = {
    */
   chateauMap: (baseUrl: string) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'mapName',
-      mapNameFilter: 'chateau'
+      independentFilters: {
+        gameTypeEnabled: false,
+        gameFilter: 'all',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: true,
+        mapNameFilter: 'chateau',
+        playerFilter: { mode: 'none', players: [] },
+      }
     }),
 
   /**
@@ -139,8 +178,15 @@ export const UrlGenerators = {
    */
   otherMaps: (baseUrl: string) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'mapName',
-      mapNameFilter: 'others'
+      independentFilters: {
+        gameTypeEnabled: false,
+        gameFilter: 'all',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: true,
+        mapNameFilter: 'others',
+        playerFilter: { mode: 'none', players: [] },
+      }
     }),
 
   /**
@@ -148,9 +194,15 @@ export const UrlGenerators = {
    */
   moddedGamesWithPlayers: (baseUrl: string, players: string[]) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'gameType',
-      gameFilter: 'modded',
-      playerFilter: { mode: 'include', players }
+      independentFilters: {
+        gameTypeEnabled: true,
+        gameFilter: 'modded',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: false,
+        mapNameFilter: 'all',
+        playerFilter: { mode: 'include', players },
+      }
     }),
 
   /**
@@ -175,8 +227,15 @@ export const UrlGenerators = {
    */
   moddedGamesWithHighlight: (baseUrl: string, highlightedPlayer: string) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'gameType',
-      gameFilter: 'modded',
+      independentFilters: {
+        gameTypeEnabled: true,
+        gameFilter: 'modded',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: false,
+        mapNameFilter: 'all',
+        playerFilter: { mode: 'none', players: [] },
+      },
       highlightedPlayer: highlightedPlayer
     }),
 
@@ -185,9 +244,15 @@ export const UrlGenerators = {
    */
   villageMapWithPlayers: (baseUrl: string, players: string[]) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'mapName',
-      mapNameFilter: 'village',
-      playerFilter: { mode: 'include', players }
+      independentFilters: {
+        gameTypeEnabled: false,
+        gameFilter: 'all',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: true,
+        mapNameFilter: 'village',
+        playerFilter: { mode: 'include', players },
+      }
     }),
 
   /**
@@ -195,9 +260,15 @@ export const UrlGenerators = {
    */
   chateauMapWithPlayers: (baseUrl: string, players: string[]) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'mapName',
-      mapNameFilter: 'chateau',
-      playerFilter: { mode: 'include', players }
+      independentFilters: {
+        gameTypeEnabled: false,
+        gameFilter: 'all',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: true,
+        mapNameFilter: 'chateau',
+        playerFilter: { mode: 'include', players },
+      }
     }),
 
   /**
@@ -205,8 +276,15 @@ export const UrlGenerators = {
    */
   mapWithHighlight: (baseUrl: string, mapName: 'village' | 'chateau' | 'others', highlightedPlayer: string) => 
     generateUrlWithSettings(baseUrl, {
-      filterMode: 'mapName',
-      mapNameFilter: mapName,
+      independentFilters: {
+        gameTypeEnabled: false,
+        gameFilter: 'all',
+        dateRangeEnabled: false,
+        dateRange: { start: null, end: null },
+        mapNameEnabled: true,
+        mapNameFilter: mapName,
+        playerFilter: { mode: 'none', players: [] },
+      },
       highlightedPlayer: highlightedPlayer
     }),
 };

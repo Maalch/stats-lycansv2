@@ -15,16 +15,8 @@ export function SettingsIndicator() {
         (filters.playerFilter.mode !== 'none' && filters.playerFilter.players.length > 0) ||
         settings.highlightedPlayer
       );
-    } else {
-      // Legacy fallback
-      return (
-        settings.gameFilter !== 'all' ||
-        settings.filterMode === 'dateRange' ||
-        settings.filterMode === 'mapName' ||
-        (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) ||
-        settings.highlightedPlayer
-      );
     }
+    return false; // No filters active if independentFilters not available
   })();
 
   if (!hasActiveFilters) {
@@ -80,57 +72,6 @@ export function SettingsIndicator() {
         if (playerCount === 1) {
           // Show player name for single player
           filters.push(`${modeText} ${independentFilters.playerFilter.players[0]}`);
-        } else {
-          // Show count for multiple players
-          const playerText = 'joueurs';
-          filters.push(`${modeText} ${playerCount} ${playerText}`);
-        }
-      }
-    } else {
-      // Legacy fallback
-      // Game type filter
-      if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-        filters.push(
-          settings.gameFilter === 'modded' ? 'Parties moddées' : 'Parties non-moddées'
-        );
-      }
-
-      // Date range filter
-      if (settings.filterMode === 'dateRange') {
-        if (settings.dateRange.start || settings.dateRange.end) {
-          const start = settings.dateRange.start ? new Date(settings.dateRange.start).toLocaleDateString('fr-FR') : '';
-          const end = settings.dateRange.end ? new Date(settings.dateRange.end).toLocaleDateString('fr-FR') : '';
-          
-          if (start && end) {
-            filters.push(`Période: ${start} - ${end}`);
-          } else if (start) {
-            filters.push(`Depuis: ${start}`);
-          } else if (end) {
-            filters.push(`Jusqu'à: ${end}`);
-          }
-        } else {
-          filters.push('Filtre par date (aucune date sélectionnée)');
-        }
-      }
-
-      // Map name filter
-      if (settings.filterMode === 'mapName' && settings.mapNameFilter !== 'all') {
-        const mapLabels = {
-          'village': 'Carte: Village',
-          'chateau': 'Carte: Château',
-          'others': 'Carte: Autres'
-        };
-        filters.push(mapLabels[settings.mapNameFilter] || 'Carte: Inconnue');
-      }
-
-      // Player filter
-      if (settings.playerFilter.mode !== 'none' && settings.playerFilter.players.length > 0) {
-        const playerCount = settings.playerFilter.players.length;
-        const modeText = settings.playerFilter.mode === 'include' ? 'Inclure' : 'Exclure';
-        
-        if (playerCount === 1) {
-          // Show player name for single player
-          filters.push(`${modeText} ${settings.playerFilter.players[0]}`);
         } else {
           // Show count for multiple players
           const playerText = 'joueurs';
