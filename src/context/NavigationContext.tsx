@@ -55,6 +55,8 @@ export interface NavigationState {
   groupingMethod?: 'session' | 'month';
   // PlayerPairingStatsChart state
   selectedPairingTab?: 'wolves' | 'lovers';
+  // DeathStatisticsChart state
+  deathStatsSelectedCamp?: string;
   
   // Grouped state - all properties in each group must be provided together
   campPerformanceState?: CampPerformanceState;

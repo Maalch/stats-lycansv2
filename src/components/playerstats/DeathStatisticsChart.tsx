@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { useDeathStatisticsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
+import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
@@ -18,13 +18,22 @@ type ChartKillerData = {
 };
 
 export function DeathStatisticsChart() {
-  const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw();
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  const [selectedCamp, setSelectedCamp] = useState<string>(
+    navigationState.deathStatsSelectedCamp || 'Tous les camps'
+  );
+  const { data: availableCamps } = useAvailableCampsFromRaw();
+  const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp);
   const { settings } = useSettings();
-  const { navigateToGameDetails } = useNavigation();
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
 
-
   const playersColor = useThemeAdjustedPlayersColor();
+
+  // Function to handle camp selection change with persistence
+  const handleCampChange = (newCamp: string) => {
+    setSelectedCamp(newCamp);
+    updateNavigationState({ deathStatsSelectedCamp: newCamp });
+  };
 
   // Process killer data for both total and average charts
   const { totalKillsData, averageKillsData, highlightedPlayerAddedToTotal, highlightedPlayerAddedToAverage, gamesWithKillers } = useMemo(() => {
@@ -284,7 +293,36 @@ export function DeathStatisticsChart() {
       <h2>Statistiques de Mort</h2>
       <p className="lycans-stats-info">
         Analyse de {deathStats.totalDeaths} morts avec {deathStats.killerStats.length} tueurs identifiés
+        {selectedCamp !== 'Tous les camps' && ` - Camp: ${selectedCamp}`}
       </p>
+
+      {/* Camp Filter */}
+      <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+          Camp :
+        </label>
+        <select
+          id="camp-select"
+          value={selectedCamp}
+          onChange={(e) => handleCampChange(e.target.value)}
+          style={{
+            background: 'var(--bg-tertiary)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '4px',
+            padding: '0.5rem',
+            fontSize: '0.9rem',
+            minWidth: '150px'
+          }}
+        >
+          <option value="Tous les camps">Tous les camps</option>
+          {availableCamps?.map(camp => (
+            <option key={camp} value={camp}>
+              {camp}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Summary statistics using lycans styling */}
       <div className="lycans-resume-conteneur" style={{ marginBottom: '2rem' }}>
@@ -393,10 +431,20 @@ export function DeathStatisticsChart() {
                           strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                           opacity={isHighlightedAddition ? 0.8 : 1}
                           onClick={() => {
-                            navigateToGameDetails({
+                            const navigationFilters: any = {
                               selectedPlayer: entry.name,
                               fromComponent: 'Statistiques de Mort'
-                            });
+                            };
+                            
+                            // If a specific camp is selected, add camp filter
+                            if (selectedCamp !== 'Tous les camps') {
+                              navigationFilters.campFilter = {
+                                selectedCamp: selectedCamp,
+                                campFilterMode: 'all-assignments'
+                              };
+                            }
+                            
+                            navigateToGameDetails(navigationFilters);
                           }} 
                           onMouseEnter={() => setHoveredPlayer(entry.name)}
                           onMouseLeave={() => setHoveredPlayer(null)}
@@ -498,10 +546,20 @@ export function DeathStatisticsChart() {
                           strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                           opacity={isHighlightedAddition ? 0.8 : 1}
                           onClick={() => {
-                            navigateToGameDetails({
+                            const navigationFilters: any = {
                               selectedPlayer: entry.name,
                               fromComponent: 'Statistiques de Mort'
-                            });
+                            };
+                            
+                            // If a specific camp is selected, add camp filter
+                            if (selectedCamp !== 'Tous les camps') {
+                              navigationFilters.campFilter = {
+                                selectedCamp: selectedCamp,
+                                campFilterMode: 'all-assignments'
+                              };
+                            }
+                            
+                            navigateToGameDetails(navigationFilters);
                           }} 
                           onMouseEnter={() => setHoveredPlayer(entry.name)}
                           onMouseLeave={() => setHoveredPlayer(null)}
