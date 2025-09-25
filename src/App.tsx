@@ -28,10 +28,6 @@ const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetails
 // Add settings import
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
 
-// Standalone example components (not in main navigation)
-const VotingStatsExample = lazy(() => import('./components/common/VotingStatsExample'));
-const DeathStatsExample = lazy(() => import('./components/common/DeathStatsExample'));
-
 const MAIN_TABS = [
   { 
     key: 'players', 
@@ -151,7 +147,6 @@ function MainApp() {
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
-  const [selectedTestComponent, setSelectedTestComponent] = useState('voting'); // Move outside conditional
 
   // Helper function to format the subtitle text
   const getSubtitleText = () => {
@@ -178,13 +173,7 @@ function MainApp() {
 
   // If we're in TestZone, show test components
   if (isTestZone) {
-    const testComponents = [
-      { key: 'voting', label: 'Statistiques de Vote', component: VotingStatsExample },
-      { key: 'death', label: 'Statistiques de Mort', component: DeathStatsExample }
-    ];
-    
-    const SelectedTestComponent = testComponents.find(c => c.key === selectedTestComponent)?.component ?? VotingStatsExample;
-    
+   
     return (
       <div className="app-container">
         <img
@@ -208,24 +197,12 @@ function MainApp() {
               </button>
             </header>
             
-            <nav className="lycans-submenu" style={{ marginTop: '20px' }}>
-              {testComponents.map(component => (
-                <button
-                  key={component.key}
-                  className={`lycans-submenu-btn${selectedTestComponent === component.key ? ' active' : ''}`}
-                  onClick={() => setSelectedTestComponent(component.key)}
-                  type="button"
-                >
-                  {component.label}
-                </button>
-              ))}
-            </nav>
             
             <div className="lycans-dashboard-section">
               <SettingsIndicator />
               <div className="lycans-dashboard-content">
                 <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                  <SelectedTestComponent />
+
                 </Suspense>
               </div>
             </div>
