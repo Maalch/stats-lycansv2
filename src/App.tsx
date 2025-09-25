@@ -17,15 +17,15 @@ const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeri
 
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
-const PlayerDeathStatsChart = lazy(() => import('./components/playerstats/PlayerDeathStatsChart').then(m => ({ default: m.PlayerDeathStatsChart })));
-const DeathTimingAnalysisChart = lazy(() => import('./components/playerstats/DeathTimingAnalysisChart').then(m => ({ default: m.DeathTimingAnalysisChart })));
+//const PlayerDeathStatsChart = lazy(() => import('./components/playerstats/PlayerDeathStatsChart').then(m => ({ default: m.PlayerDeathStatsChart })));
+//const DeathTimingAnalysisChart = lazy(() => import('./components/playerstats/DeathTimingAnalysisChart').then(m => ({ default: m.DeathTimingAnalysisChart })));
 
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
-const GeneralDeathStatisticsChart = lazy(() => import('./components/generalstats/GeneralDeathStatisticsChart').then(m => ({ default: m.GeneralDeathStatisticsChart })));
+//const GeneralDeathStatisticsChart = lazy(() => import('./components/generalstats/GeneralDeathStatisticsChart').then(m => ({ default: m.GeneralDeathStatisticsChart })));
 
 const BRGeneralStatsChart = lazy(() => import('./components/brstats/BRGeneralStatsChart').then(m => ({ default: m.BRGeneralStatsChart })));
 
@@ -111,6 +111,7 @@ const PLAYER_STATS_MENU = [
     component: DeathStatisticsChart,
     description: 'Analyse des joueurs les plus meurtriers'
   },
+  /*
   { 
     key: 'playerDeaths', 
     label: 'Morts par Joueur', 
@@ -122,7 +123,7 @@ const PLAYER_STATS_MENU = [
     label: 'Analyse Temporelle', 
     component: DeathTimingAnalysisChart,
     description: 'Évolution des morts dans le temps'
-  },
+  },*/
 ];
 
 const GENERAL_STATS_MENU = [
@@ -150,12 +151,12 @@ const GENERAL_STATS_MENU = [
     component: GameDurationInsights,
     description: 'Statistiques sur la durée des parties (en jours de jeu)'
   },
-  { 
+  /*{ 
     key: 'generalDeathStats', 
     label: 'Statistiques de Mort', 
     component: GeneralDeathStatisticsChart,
     description: 'Analyse générale des morts: timing et types'
-  },
+  },*/
 ];
 
 export default function App() {
