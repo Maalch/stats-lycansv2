@@ -4,6 +4,7 @@ import {
   didCampWin 
 } from './dataUtils';
 import type { GameLogEntry } from '../useCombinedRawData';
+import { getPlayerCampFromRole } from '../../utils/gameUtils';
 import type { CampWinStatsResponse, CampStat, SoloCamp, CampAverage } from '../../types/api';
 
 /**
@@ -21,10 +22,8 @@ function buildGamePlayerCampMapFromGameLog(gameData: GameLogEntry[]): Record<str
 
     game.PlayerStats.forEach(playerStat => {
       const playerName = playerStat.Username;
-      let playerRole = playerStat.MainRoleInitial;
+      let playerRole = getPlayerCampFromRole(playerStat.MainRoleInitial);
 
-      if (playerRole === 'Chasseur' || playerRole === 'Alchimiste') playerRole = 'Villageois';
-      else if (playerRole === 'Amoureux Villageois' || playerRole === 'Amoureux Loup') playerRole = 'Amoureux';
       if (playerName && playerRole) {
         gamePlayerCampMap[gameId][playerName] = playerRole;
       }
@@ -53,10 +52,8 @@ function extractSoloRoles(game: GameLogEntry): string[] {
   // Solo roles are roles that aren't standard village/wolf camps
   const standardRoles = ['Villageois', 'Loup', 'Traître'];
   game.PlayerStats.forEach(playerStat => {
-    let role = playerStat.MainRoleInitial;
-    if (role === 'Amoureux Loup' || role === 'Amoureux Villageois') {
-      role = 'Amoureux';
-    }
+    let role = getPlayerCampFromRole(playerStat.MainRoleInitial);
+
     if (role && !standardRoles.includes(role)) {
       soloRoles.push(role);
     }
@@ -75,18 +72,15 @@ function getWinnerCamp(game: GameLogEntry): string | null {
     return null;
   }
   
-  // Get the role of the first victorious player
-  const winnerRole = victoriousPlayers[0].MainRoleInitial;
+  // Get the role of the first victorious player with all grouping options enabled
+  const winnerRole = getPlayerCampFromRole(victoriousPlayers[0].MainRoleInitial, {
+    regroupLovers: true,
+    regroupVillagers: true,
+    regroupTraitor: true
+  });
   
-  // Group roles into camps
-  if (winnerRole === 'Loup' || winnerRole === 'Traître') {
-    return 'Loup';
-  } else if (winnerRole === 'Amoureux Villageois' || winnerRole === 'Amoureux Loup') {
-    return 'Amoureux';
-  } else {
-    // Solo role wins as their specific role name
-    return winnerRole;
-  }
+  // Return the grouped camp directly (no additional grouping needed since getPlayerCampFromRole handles it)
+  return winnerRole;
 }
 
 /**

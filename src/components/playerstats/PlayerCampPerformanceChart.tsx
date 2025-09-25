@@ -490,8 +490,8 @@ export function PlayerCampPerformanceChart() {
             </div>
 
             <div className="lycans-graphique-section">
-              <h3>Relation Parties Jouées vs Performance - {selectedCamp}</h3>
-              <FullscreenChart title={`Relation Parties Jouées vs Performance - ${selectedCamp}`}>
+              <h3>Performances en {selectedCamp} sur nombre de parties jouées</h3>
+              <FullscreenChart title={`Performances vs Parties Jouées - ${selectedCamp}`}>
                 <div style={{ height: 400 }}>
                   <ResponsiveContainer width="100%" height="100%">
                   <ScatterChart

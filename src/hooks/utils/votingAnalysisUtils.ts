@@ -1,3 +1,4 @@
+import { getPlayerCampFromRole, getWinnerCampFromGame } from '../../utils/gameUtils';
 import type { GameLogEntry } from '../useCombinedRawData';
 
 export interface VotingStats {
@@ -133,7 +134,7 @@ export function computePlayerVotingBehavior(gameData: GameLogEntry[]): PlayerVot
       if (!playerBehavior[playerName]) {
         playerBehavior[playerName] = {
           player: playerName,
-          role: player.MainRoleInitial,
+          role: getPlayerCampFromRole(player.MainRoleInitial),
           totalVotesCast: 0,
           totalAbstentions: 0,
           participationRate: 0,
@@ -175,8 +176,8 @@ export function computePlayerVotingBehavior(gameData: GameLogEntry[]): PlayerVot
       });
 
       // Track role-specific behavior
-      const roleCategory = player.MainRoleInitial === "Villageois" ? "asVillageois" : 
-                         player.MainRoleInitial === "Loup" ? "asLoup" : "asOther";
+      const roleCategory = getPlayerCampFromRole(player.MainRoleInitial) === "Villageois" ? "asVillageois" : 
+                         getPlayerCampFromRole(player.MainRoleInitial) === "Loup" ? "asLoup" : "asOther";
       
       if (!behavior.roleBasedBehavior[roleCategory].totalVotesCast) {
         behavior.roleBasedBehavior[roleCategory] = {
@@ -270,10 +271,10 @@ export function computeVoteTargetingAnalysis(gameData: GameLogEntry[]): VoteTarg
           target.targetedByPlayers[voter.Username]++;
           
           // Track which roles voted for them
-          if (!target.targetedByRoles[voter.MainRoleInitial]) {
-            target.targetedByRoles[voter.MainRoleInitial] = 0;
+          if (!target.targetedByRoles[getPlayerCampFromRole(voter.MainRoleInitial)]) {
+            target.targetedByRoles[getPlayerCampFromRole(voter.MainRoleInitial)] = 0;
           }
-          target.targetedByRoles[voter.MainRoleInitial]++;
+          target.targetedByRoles[getPlayerCampFromRole(voter.MainRoleInitial)]++;
         }
       });
     });
@@ -325,7 +326,7 @@ export function computeGameVotingAnalysis(gameData: GameLogEntry[]): GameVotingA
           meetingVotes.push({
             voter: player.Username,
             target: player.Votes[meetingIndex].Target,
-            role: player.MainRoleInitial
+            role: getPlayerCampFromRole(player.MainRoleInitial)
           });
         }
       });
@@ -385,10 +386,9 @@ export function computeGameVotingAnalysis(gameData: GameLogEntry[]): GameVotingA
     const mostTargetedPlayer = Object.entries(allTargets)
       .sort(([,a], [,b]) => b - a)[0]?.[0] || null;
     
-    // Determine winning camp (simplified - could be enhanced)
-    const winningPlayers = game.PlayerStats.filter(p => p.Victorious);
-    const winningCamp = winningPlayers.length > 0 ? winningPlayers[0].MainRoleInitial : "Unknown";
-    
+    // Determine winning camp
+    const winningCamp = getWinnerCampFromGame(game);
+
     // Role-based voting patterns
     const votingPatternsByRole: Record<string, {
       totalVotes: number;
@@ -397,7 +397,7 @@ export function computeGameVotingAnalysis(gameData: GameLogEntry[]): GameVotingA
     }> = {};
     
     game.PlayerStats.forEach(player => {
-      const role = player.MainRoleInitial;
+      const role = getPlayerCampFromRole(player.MainRoleInitial);
       if (!votingPatternsByRole[role]) {
         votingPatternsByRole[role] = {
           totalVotes: 0,

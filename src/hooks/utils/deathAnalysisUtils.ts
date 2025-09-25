@@ -1,4 +1,5 @@
 import type { GameLogEntry } from '../useCombinedRawData';
+import { getPlayerCampFromRole } from '../../utils/gameUtils';
 
 export interface DeathStats {
   totalDeaths: number;
@@ -228,7 +229,7 @@ export function computeKillerAnalysis(gameData: GameLogEntry[]): KillerAnalysis[
         killerStats.victims.push(player.Username);
         
         // Role targeting
-        const victimRole = player.MainRoleInitial;
+        const victimRole = getPlayerCampFromRole(player.MainRoleInitial);
         killerStats.victimsByRole[victimRole] = (killerStats.victimsByRole[victimRole] || 0) + 1;
         
         // Death type analysis
@@ -331,7 +332,7 @@ export function computeDeathTimingAnalysis(gameData: GameLogEntry[]): DeathTimin
         timingStats.deathsByType[deathType] = (timingStats.deathsByType[deathType] || 0) + 1;
         
         // Role analysis
-        const role = player.MainRoleInitial;
+        const role = getPlayerCampFromRole(player.MainRoleInitial);
         timingStats.deathsByRole[role] = (timingStats.deathsByRole[role] || 0) + 1;
         
         // Killer analysis
@@ -394,7 +395,7 @@ export function computePlayerSurvivalAnalysis(gameData: GameLogEntry[]): PlayerS
       playerStats.gamesPlayed++;
       
       // Role-based survival tracking
-      const role = player.MainRoleInitial;
+      const role = getPlayerCampFromRole(player.MainRoleInitial);
       if (!playerStats.roleBasedSurvival[role]) {
         playerStats.roleBasedSurvival[role] = { played: 0, survived: 0, survivalRate: 0 };
       }
@@ -465,7 +466,7 @@ export function computeGameDeathAnalysis(gameData: GameLogEntry[]): GameDeathAna
     
     // Determine winning camp
     const winners = game.PlayerStats.filter(p => p.Victorious);
-    const winningCamp = winners.length > 0 ? winners[0].MainRoleInitial : 'Unknown';
+    const winningCamp = winners.length > 0 ? getPlayerCampFromRole(winners[0].MainRoleInitial) : 'Unknown';
     
     // Death progression
     const deathProgression = deaths

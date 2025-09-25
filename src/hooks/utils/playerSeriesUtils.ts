@@ -21,16 +21,6 @@ function getPlayerMainCampFromRole(roleName: string): 'Villageois' | 'Loup' | 'A
   }
 }
 
-/**
- * Helper function to map role name to display camp name (for statistics)
- */
-function mapRoleToDisplayCamp(roleName: string): string {
-  if (!roleName) return 'Villageois';
-  
-  // Return the role name as-is, since it's already the proper display name
-  return roleName;
-}
-
 export interface CampSeries {
   player: string;
   camp: 'Villageois' | 'Loups';
@@ -519,16 +509,15 @@ export function computePlayerSeries(
       const playerStats = playerCampSeries[player];
       const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
       const playerWon = playerStat.Victorious;
-      const actualCamp = mapRoleToDisplayCamp(playerStat.MainRoleInitial);
 
       // Process camp series - now using DisplayedId
       processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date);
 
       // Process win series - now using DisplayedId
-      processWinSeries(playerStats, player, playerWon, actualCamp, gameDisplayedId, date);
+      processWinSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
       
       // Process loss series - now using DisplayedId
-      processLossSeries(playerStats, player, playerWon, actualCamp, gameDisplayedId, date);
+      processLossSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
     });
   });
 
