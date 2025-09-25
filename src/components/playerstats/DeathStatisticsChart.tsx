@@ -290,16 +290,12 @@ export function DeathStatisticsChart() {
 
   return (
     <div className="lycans-players-stats">
-      <h2>Statistiques de Mort</h2>
-      <p className="lycans-stats-info">
-        Analyse de {deathStats.totalDeaths} morts avec {deathStats.killerStats.length} tueurs identifiés
-        {selectedCamp !== 'Tous les camps' && ` - Camp: ${selectedCamp}`}
-      </p>
+      <h2>Statistiques de Tueurs (VERSION PROTOTYPE)</h2>
 
       {/* Camp Filter */}
       <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-          Camp :
+          Camp du tueur :
         </label>
         <select
           id="camp-select"
