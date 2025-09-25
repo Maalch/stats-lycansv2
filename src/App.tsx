@@ -15,6 +15,11 @@ const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/P
 const PlayerComparisonChart = lazy(() => import('./components/playerstats/PlayerComparisonChart').then(m => ({ default: m.PlayerComparisonChart })));
 const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
 
+// Death statistics components
+const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
+const PlayerDeathStatsChart = lazy(() => import('./components/playerstats/PlayerDeathStatsChart').then(m => ({ default: m.PlayerDeathStatsChart })));
+const DeathTimingAnalysisChart = lazy(() => import('./components/playerstats/DeathTimingAnalysisChart').then(m => ({ default: m.DeathTimingAnalysisChart })));
+
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
@@ -98,6 +103,24 @@ const PLAYER_STATS_MENU = [
     label: 'Face à Face', 
     component: PlayerComparisonChart,
     description: 'Comparaison détaillée entre deux joueurs'
+  },
+  { 
+    key: 'deathStats', 
+    label: 'Statistiques de Mort', 
+    component: DeathStatisticsChart,
+    description: 'Analyse des morts: timing, types et tueurs'
+  },
+  { 
+    key: 'playerDeaths', 
+    label: 'Morts par Joueur', 
+    component: PlayerDeathStatsChart,
+    description: 'Analyse détaillée des morts de chaque joueur'
+  },
+  { 
+    key: 'deathTiming', 
+    label: 'Analyse Temporelle', 
+    component: DeathTimingAnalysisChart,
+    description: 'Évolution des morts dans le temps'
   },
 ];
 
