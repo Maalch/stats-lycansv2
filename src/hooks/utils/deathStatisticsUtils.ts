@@ -41,6 +41,8 @@ export interface KillerStats {
   kills: number;
   victims: string[];
   percentage: number;
+  gamesPlayed: number;
+  averageKillsPerGame: number;
 }
 
 /**
@@ -275,12 +277,18 @@ export function computeDeathStatistics(gameData: GameLogEntry[]): DeathStatistic
   });
 
   const killerStats: KillerStats[] = Object.entries(killerCounts)
-    .map(([killerName, data]) => ({
-      killerName,
-      kills: data.kills,
-      victims: Array.from(data.victims),
-      percentage: totalDeaths > 0 ? (data.kills / totalDeaths) * 100 : 0
-    }))
+    .map(([killerName, data]) => {
+      const gamesPlayed = playerGameCounts[killerName] || 0;
+      const averageKillsPerGame = gamesPlayed > 0 ? data.kills / gamesPlayed : 0;
+      return {
+        killerName,
+        kills: data.kills,
+        victims: Array.from(data.victims),
+        percentage: totalDeaths > 0 ? (data.kills / totalDeaths) * 100 : 0,
+        gamesPlayed,
+        averageKillsPerGame
+      };
+    })
     .sort((a, b) => b.kills - a.kills);
 
   // Calculate player-specific death statistics
