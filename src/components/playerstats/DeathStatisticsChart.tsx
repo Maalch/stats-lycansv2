@@ -24,8 +24,8 @@ export function DeathStatisticsChart() {
   const playersColor = useThemeAdjustedPlayersColor();
 
   // Process killer data with highlighting support
-  const { killerChartData, highlightedPlayerAddedToKillers } = useMemo(() => {
-    if (!deathStats) return { killerChartData: [], highlightedPlayerAddedToKillers: false };
+  const { killerChartData, highlightedPlayerAddedToKillers, gamesWithKillers } = useMemo(() => {
+    if (!deathStats) return { killerChartData: [], highlightedPlayerAddedToKillers: false, gamesWithKillers: 0 };
     
     const sortedKillers = deathStats.killerStats
       .sort((a, b) => b.kills - a.kills)
@@ -62,7 +62,8 @@ export function DeathStatisticsChart() {
     
     return { 
       killerChartData: baseData, 
-      highlightedPlayerAddedToKillers: highlightedPlayerAdded 
+      highlightedPlayerAddedToKillers: highlightedPlayerAdded,
+      gamesWithKillers: deathStats.gamesWithDeaths
     };
   }, [deathStats, settings.highlightedPlayer]);
 
@@ -168,12 +169,9 @@ export function DeathStatisticsChart() {
           </div>
         </div>
         <div className="lycans-stat-carte">
-          <h3>Tueur le plus actif</h3>
-          <div className="lycans-valeur-principale" style={{ 
-            color: 'var(--accent-primary)',
-            fontSize: deathStats.mostDeadlyKiller && deathStats.mostDeadlyKiller.length > 10 ? '1.5rem' : '2rem'
-          }}>
-            {deathStats.mostDeadlyKiller || 'N/A'}
+          <h3>Nombre de parties analysées</h3>
+          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
+            {gamesWithKillers}
           </div>
         </div>
       </div>
@@ -283,9 +281,8 @@ export function DeathStatisticsChart() {
       {/* Insights section using lycans styling */}
       <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>
         <p>
-          <strong>Insights:</strong> {deathStats.mostDeadlyKiller && `${deathStats.mostDeadlyKiller} est le joueur le plus meurtrier.`} 
-          {killerChartData.length > 0 && ` Le top tueur a éliminé ${killerChartData[0]?.value || 0} victimes.`}
-          {` Au total, ${deathStats.killerStats.length} joueurs différents ont causé des morts dans les parties analysées.`}
+          <strong>Note : </strong> 
+          {killerChartData.length > 0 && `Les morts lors de votes aux conseils ne sont pas comptabilisées ici.`}
         </p>
       </div>
     </div>
