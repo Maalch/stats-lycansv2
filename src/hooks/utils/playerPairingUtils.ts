@@ -4,6 +4,7 @@
 
 import type { PlayerPairingStatsData, PlayerPairStat } from '../../types/api';
 import type { GameLogEntry } from '../useCombinedRawData';
+import { getPlayerCampFromRole } from '../../utils/gameUtils';
 
 /**
  * Extended interface for chart display with highlighting support
@@ -104,14 +105,14 @@ export function computePlayerPairingStats(
 
   // Process each game
   gameData.forEach(game => {
-    // Find all wolves in this game (only 'Loup', not 'Traître')
+    // Find all wolves in this game (exclude traitors by default with regroupTraitor: false, only pure wolves)
     const wolves = game.PlayerStats.filter(player => 
-      player.MainRoleInitial === 'Loup'
+      getPlayerCampFromRole(player.MainRoleInitial, { regroupTraitor: false }) === 'Loup'
     );
 
-    // Find all lovers in this game
+    // Find all lovers in this game (using regroupLovers: true to group them as 'Amoureux')
     const lovers = game.PlayerStats.filter(player => 
-      (player.MainRoleInitial === 'Amoureux' || player.MainRoleInitial === 'Amoureux Villageois' || player.MainRoleInitial === 'Amoureux Loup')
+      getPlayerCampFromRole(player.MainRoleInitial, { regroupLovers: true }) === 'Amoureux'
     );
 
     // Process wolf pairs

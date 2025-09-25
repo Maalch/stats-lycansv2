@@ -133,14 +133,12 @@ export function getPlayerCampFromGameLog(
   
   if (!playerStat) return 'Villageois';
   
-  // In the new structure, MainRoleInitial contains the full role name
-  const playerRole = getPlayerCampFromRole(playerStat.MainRoleInitial);
-  
-  // Handle traitor case with excludeTraitor logic
-  if (playerRole === 'Traître') {
-    if (excludeTraitor) return 'Traître'; // Return Traître if we want to exclude traitor from Loups
-    return 'Loup'; // Otherwise, traitor is considered part of Loup camp
-  }
+  // Use the improved getPlayerCampFromRole with regroupTraitor option based on excludeTraitor
+  const playerRole = getPlayerCampFromRole(playerStat.MainRoleInitial, {
+    regroupLovers: true,
+    regroupVillagers: true,
+    regroupTraitor: !excludeTraitor // If excludeTraitor is true, don't regroup traitor (keep as 'Traître')
+  });
   
   return playerRole;
 }
@@ -482,9 +480,9 @@ export function filterByMultiplePlayersFromGameLog(
 
     if (!hasAllPlayers) return false;
 
-    // Get camps for each selected player
+    // Get camps for each selected player. Exclude traitor from wolf camp if specified
     const playerCamps = selectedPlayers.map(player => 
-      getPlayerCampFromGameLog(player, game)
+      getPlayerCampFromGameLog(player, game, campFilter?.excludeTraitor || false)
     );
 
     // Apply filtering based on mode
@@ -502,13 +500,8 @@ export function filterByMultiplePlayersFromGameLog(
 
       case 'opposing-camps':
         // Include only games where players were in different camps
-        // Special handling for camp alliances (Traître works with Loups)
-        const normalizedCamps = playerCamps.map(camp => {
-          if (camp === 'Traître') return 'Loup';
-          return camp;
-        });
-        
-        const uniqueCamps = [...new Set(normalizedCamps)];
+
+        const uniqueCamps = [...new Set(playerCamps)];
         const areInOpposingCamps = uniqueCamps.length > 1;
         
         if (!areInOpposingCamps) return false;
@@ -520,60 +513,35 @@ export function filterByMultiplePlayersFromGameLog(
           );
           
           if (winnerPlayerIndex !== -1) {
-            const winnerPlayerCamp = normalizedCamps[winnerPlayerIndex];
+            const winnerPlayerCamp = playerCamps[winnerPlayerIndex];
             const gameWinningCamp = getWinnerCampFromGame(game);
-            const normalizedWinningCamp = gameWinningCamp === 'Traître' ? 'Loup' : gameWinningCamp;
             
             // Special handling for Agent camp - check if specific player is victorious
-            if (winnerPlayerCamp === 'Agent' && normalizedWinningCamp === 'Agent') {
+            if (winnerPlayerCamp === 'Agent' && gameWinningCamp === 'Agent') {
               const winnerPlayerStat = game.PlayerStats.find(p => 
                 p.Username.toLowerCase() === winnerPlayer.toLowerCase()
               );
               return winnerPlayerStat?.Victorious === true;
             }
             
-            return winnerPlayerCamp === normalizedWinningCamp;
+            return winnerPlayerCamp === gameWinningCamp;
           }
         }
         
         return true;
 
       case 'same-camp':
-        // Include only games where players were in the same camp (considering alliances)
-        const normalizedCampsForSame = playerCamps.map(camp => {
-          if (camp === 'Traître') return 'Loup';
-          return camp;
-        });
-        
-        const uniqueCampsForSame = [...new Set(normalizedCampsForSame)];
+        // Include only games where players were in the same camp 
+        const uniqueCampsForSame = [...new Set(playerCamps)];
         const areInSameCamp = uniqueCampsForSame.length === 1;
         
         if (!areInSameCamp) return false;
         
-        const sameCamp = normalizedCampsForSame[0];
+        const sameCamp = playerCamps[0];
         
         // If campFilter is specified, ensure the shared camp matches the required camp
         if (campFilter && campFilter.selectedCamp) {
-          const requiredCamp = campFilter.selectedCamp;
-          
-          // Handle "Loup sans Traître" case
-          if (requiredCamp === 'Loup' && campFilter.excludeTraitor) {
-            // Ensure all players are regular wolves (not traitors)
-            const areAllRegularWolves = selectedPlayers.every(player => {
-              const originalCamp = playerCamps[selectedPlayers.indexOf(player)];
-              return originalCamp === 'Loup'; // They should be Loups, and we'll check they're not traitors below
-            });
-            if (!areAllRegularWolves) return false;
-            
-            // Also check that none of the players are traitors in the PlayerStats
-            const hasTraitor = selectedPlayers.some(player => {
-              const playerStat = game.PlayerStats.find(p => 
-                p.Username.toLowerCase() === player.toLowerCase()
-              );
-              return getPlayerCampFromRole(playerStat?.MainRoleInitial) === 'Traître';
-            });
-            if (hasTraitor) return false;
-          }
+          const requiredCamp = campFilter.selectedCamp;          
           
           // Ensure the shared camp matches the required camp
           if (sameCamp !== requiredCamp) return false;
@@ -582,10 +550,9 @@ export function filterByMultiplePlayersFromGameLog(
         // If winnerPlayer is specified, check if their camp won
         if (winnerPlayer) {
           const gameWinningCamp = getWinnerCampFromGame(game);
-          const normalizedWinningCamp = gameWinningCamp === 'Traître' ? 'Loup' : gameWinningCamp;
           
           // Special handling for Agent camp - both players need to be winners for Agent camp
-          if (sameCamp === 'Agent' && normalizedWinningCamp === 'Agent') {
+          if (sameCamp === 'Agent' && gameWinningCamp === 'Agent') {
             return selectedPlayers.every(player => {
               const playerStat = game.PlayerStats.find(p => 
                 p.Username.toLowerCase() === player.toLowerCase()
@@ -594,7 +561,7 @@ export function filterByMultiplePlayersFromGameLog(
             });
           }
           
-          return sameCamp === normalizedWinningCamp;
+          return sameCamp === gameWinningCamp;
         }
         
         return true;
