@@ -1,13 +1,22 @@
 import { usePlayerStatsBase } from './utils/baseStatsHook';
-import { computeDeathStatistics } from './utils/deathStatisticsUtils';
+import { computeDeathStatistics, getAvailableCamps } from './utils/deathStatisticsUtils';
 
 /**
  * Hook to compute comprehensive death statistics from game data
  * Uses the base stats hook pattern for consistent loading/error handling
  */
-export function useDeathStatisticsFromRaw() {
+export function useDeathStatisticsFromRaw(campFilter?: string) {
   return usePlayerStatsBase((gameData) => {
-    return computeDeathStatistics(gameData);
+    return computeDeathStatistics(gameData, campFilter);
+  });
+}
+
+/**
+ * Hook to get available camps from game data
+ */
+export function useAvailableCampsFromRaw() {
+  return usePlayerStatsBase((gameData) => {
+    return getAvailableCamps(gameData);
   });
 }
 

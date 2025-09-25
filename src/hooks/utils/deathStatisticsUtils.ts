@@ -1,4 +1,39 @@
 import type { GameLogEntry } from '../useCombinedRawData';
+import { getPlayerCampFromRole } from '../../utils/gameUtils';
+
+/**
+ * Get all available camps from game data (camps that have at least one killer)
+ */
+export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
+  const campsSet = new Set<string>();
+  
+  gameData.forEach(game => {
+    game.PlayerStats.forEach(player => {
+      // Check if this player has killed someone in this game
+      const hasKills = game.PlayerStats.some(victim => victim.KillerName === player.Username);
+      
+      if (hasKills) {
+        const camp = getPlayerCampFromRole(player.MainRoleInitial, {
+          regroupLovers: true,
+          regroupVillagers: true,
+          regroupTraitor: true
+        });
+        campsSet.add(camp);
+      }
+    });
+  });
+  
+  const camps = Array.from(campsSet);
+  
+  // Sort camps to put main camps first
+  const mainCamps = ['Villageois', 'Loup', 'Amoureux'];
+  const sortedCamps = [
+    ...mainCamps.filter(camp => camps.includes(camp)),
+    ...camps.filter(camp => !mainCamps.includes(camp)).sort()
+  ];
+  
+  return sortedCamps;
+}
 
 /**
  * Death timing phases
@@ -156,26 +191,49 @@ export function normalizeDeathType(deathType: string | null): string {
 /**
  * Extract all deaths from a game
  */
-export function extractDeathsFromGame(game: GameLogEntry): Array<{
+export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): Array<{
   playerName: string;
   deathTiming: DeathTiming | null;
   deathType: string;
   killerName: string | null;
+  killerCamp: string | null;
 }> {
   return game.PlayerStats
     .filter(player => player.DeathTiming || player.DeathType)
-    .map(player => ({
-      playerName: player.Username,
-      deathTiming: parseDeathTiming(player.DeathTiming),
-      deathType: normalizeDeathType(player.DeathType),
-      killerName: player.KillerName
-    }));
+    .map(player => {
+      // Find the killer's camp if killer exists
+      let killerCamp: string | null = null;
+      if (player.KillerName) {
+        const killerPlayer = game.PlayerStats.find(p => p.Username === player.KillerName);
+        if (killerPlayer) {
+          killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
+            regroupLovers: true,
+            regroupVillagers: true,
+            regroupTraitor: true
+          });
+        }
+      }
+      
+      return {
+        playerName: player.Username,
+        deathTiming: parseDeathTiming(player.DeathTiming),
+        deathType: normalizeDeathType(player.DeathType),
+        killerName: player.KillerName,
+        killerCamp
+      };
+    })
+    // Filter by killer's camp if specified
+    .filter(death => {
+      if (!campFilter || campFilter === 'Tous les camps') return true;
+      // Only include deaths where the killer is from the selected camp
+      return death.killerCamp === campFilter;
+    });
 }
 
 /**
  * Calculate comprehensive death statistics from game data
  */
-export function computeDeathStatistics(gameData: GameLogEntry[]): DeathStatistics | null {
+export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: string): DeathStatistics | null {
   if (gameData.length === 0) {
     return null;
   }
@@ -186,6 +244,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[]): DeathStatistic
     deathTiming: DeathTiming | null;
     deathType: string;
     killerName: string | null;
+    killerCamp: string | null;
     gameId: string;
   }> = [];
   
@@ -193,7 +252,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[]): DeathStatistic
   const gamesWithDeathsSet = new Set<string>(); // Track unique games with deaths
   
   gameData.forEach(game => {
-    const deaths = extractDeathsFromGame(game);
+    const deaths = extractDeathsFromGame(game, campFilter);
     if (deaths.length > 0) {
       gamesWithDeathsSet.add(game.Id); // Mark this game as having deaths
     }
@@ -204,10 +263,26 @@ export function computeDeathStatistics(gameData: GameLogEntry[]): DeathStatistic
       });
     });
     
-    // Count total games per player
+    // Count total games per player (for killer statistics)
+    // When filtering by camp, only count games where the player was in that camp
     game.PlayerStats.forEach(player => {
       const playerName = player.Username;
-      playerGameCounts[playerName] = (playerGameCounts[playerName] || 0) + 1;
+      
+      if (!campFilter || campFilter === 'Tous les camps') {
+        // No filter: count all games
+        playerGameCounts[playerName] = (playerGameCounts[playerName] || 0) + 1;
+      } else {
+        // Filter active: only count games where player was in the filtered camp
+        const playerCamp = getPlayerCampFromRole(player.MainRoleInitial, {
+          regroupLovers: true,
+          regroupVillagers: true,
+          regroupTraitor: true
+        });
+        
+        if (playerCamp === campFilter) {
+          playerGameCounts[playerName] = (playerGameCounts[playerName] || 0) + 1;
+        }
+      }
     });
   });
 
