@@ -116,17 +116,11 @@ export function splitAndTrim(str: string | null | undefined): string[] {
 /**
  * Helper function to get player's camp from role name
  */
-export function getPlayerCampFromRole(roleName: string): string {
+export function getPlayerCampFromRole(roleName?: string): string {
   if (!roleName) return 'Villageois';
   
   // Map role names to camps - keep original logic for comparison
-  if (roleName === 'Loup') {
-    return 'Loup';
-  }  
-  else if (roleName === 'Traître') {
-    return 'Traître';
-  }
-  else if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
+  if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
     return 'Amoureux';
   }
   else if (roleName === 'Chasseur' || roleName === 'Alchimiste') {
@@ -137,27 +131,6 @@ export function getPlayerCampFromRole(roleName: string): string {
     return roleName;
   }
 }
-
-
-/**
- * Helper function to get player's main role from role name
- */
-export function getPlayerMainRoleFromRole(mainRoleName?: string): string {
-  if (!mainRoleName) return 'Villageois';
-
-  //special rules for Chasseur and Alchimiste: they are Villageois main role
-  if (mainRoleName === 'Chasseur' || mainRoleName === 'Alchimiste') {
-    return 'Villageois';
-  }
-  else if (mainRoleName === 'Amoureux Loup' || mainRoleName === 'Amoureux Villageois') 
-  {
-    return 'Amoureux';
-  }
-
-  // All other roles keep their main role name
-  return mainRoleName;
-}
-
 
 export function getWinnerCampFromGame(game: GameLogEntry): string {
  // Determine winner camp from PlayerStats
