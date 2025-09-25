@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
-import { getPlayerMainRoleFromRole, getPlayerCampFromRole } from '../../utils/gameUtils';
+import { getPlayerCampFromRole } from '../../utils/gameUtils';
 import { formatDeathTiming } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
 
@@ -79,7 +79,7 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
                       style={{ 
                         borderColor: playerColor
                       }}
-                      title={`${player.Username} - ${getPlayerMainRoleFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${formatDeathTiming(player.DeathTiming)})` : ''}`}
+                      title={`${player.Username} - ${getPlayerCampFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${formatDeathTiming(player.DeathTiming)})` : ''}`}
                     >
                       <span className="player-name">{player.Username}</span>
                       {player.DeathTiming && <span className="death-indicator">💀</span>}
@@ -253,7 +253,6 @@ export function GameDetailView({ game }: { game: any }) {
               })
               .map((playerStat: any) => {
               // Get role and camp information from MainRoleInitial
-              const role = getPlayerMainRoleFromRole(playerStat.MainRoleInitial);
               const camp = getPlayerCampFromRole(playerStat.MainRoleInitial);
               const originalRole = playerStat.MainRoleInitial;
               const power = playerStat.Power;
@@ -261,14 +260,9 @@ export function GameDetailView({ game }: { game: any }) {
               
               // Build the comprehensive display text
               let displayText = camp; // Start with main camp
-              
-              // Add main role if different from camp
-              if (role !== camp) {
-                displayText += ` (${role})`;
-              }
-              
+                            
               // Add original role if different from main role
-              if (originalRole && originalRole !== role) {
+              if (originalRole && originalRole !== camp) {
                 displayText += ` - ${originalRole}`;
               }
               
@@ -287,7 +281,7 @@ export function GameDetailView({ game }: { game: any }) {
               if (campTextColor === '#666') {
                  campTextColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#666';
               }
-              const campBorderColor = lycansColorScheme[role as keyof typeof lycansColorScheme] || '#666';
+              const campBorderColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#666';
               
               // Check if player is dead
               const isDead = playerStat.DeathTiming;

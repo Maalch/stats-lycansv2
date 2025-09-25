@@ -933,7 +933,7 @@ function determinePlayerPower(playerDetails) {
   if (!playerDetails) return null;
   
   // Use villager power if available
-  if (playerDetails.villagerPower && playerDetails.villagerPower !== '') {
+  if (playerDetails.villagerPower && playerDetails.villagerPower !== '' && playerDetails.villagerPower !== 'Chasseur' && playerDetails.villagerPower !== 'Alchimiste') {
     return playerDetails.villagerPower;
   }
   

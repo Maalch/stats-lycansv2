@@ -1,5 +1,5 @@
 import type { GameLogEntry } from '../useCombinedRawData';
-import { getPlayerMainRoleFromRole } from '../../utils/gameUtils';
+import { getPlayerCampFromRole } from '../../utils/gameUtils';
 
 /**
  * Helper function to get player's main camp from role name
@@ -7,7 +7,7 @@ import { getPlayerMainRoleFromRole } from '../../utils/gameUtils';
 function getPlayerMainCampFromRole(roleName: string): 'Villageois' | 'Loup' | 'Autres' {
   if (!roleName) return 'Villageois';
   
-  roleName = getPlayerMainRoleFromRole(roleName);
+  roleName = getPlayerCampFromRole(roleName);
 
   // Loups camp
   if (['Loup', 'Traître'].includes(roleName)) {
