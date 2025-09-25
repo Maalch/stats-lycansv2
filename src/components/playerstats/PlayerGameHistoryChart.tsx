@@ -926,6 +926,16 @@ export function PlayerGameHistoryChart() {
                           </text>
                         );
                       }}
+                      onClick={(data) => {
+                        // Handle click on the entire bar - get the map name from the clicked data
+                        if (data && data.name) {
+                          navigateToGameDetails({
+                            selectedPlayer: selectedPlayerName,
+                            selectedMapName: data.name,
+                            fromComponent: 'Performance par Carte'
+                          });
+                        }
+                      }}
                     >
                       {mapPerformanceData.map((entry, index) => {
                         // Define colors for specific maps with enhanced contrast
@@ -959,13 +969,6 @@ export function PlayerGameHistoryChart() {
                             }
                             stroke={isHighest ? 'var(--accent-primary)' : strokeColor}
                             strokeWidth={isHighest ? 3 : 1}
-                            onClick={() => {
-                              navigateToGameDetails({
-                                selectedPlayer: selectedPlayerName,
-                                selectedMapName: entry.name,
-                                fromComponent: 'Performance par Carte'
-                              });
-                            }}
                             style={{ cursor: 'pointer' }}
                           />
                         );
