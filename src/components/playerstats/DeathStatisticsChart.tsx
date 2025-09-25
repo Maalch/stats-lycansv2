@@ -339,7 +339,7 @@ export function DeathStatisticsChart() {
           </div>
         </div>
         <div className="lycans-stat-carte">
-          <h3>Nombre de parties analysées</h3>
+          <h3>Nombre de parties enregistrées</h3>
           <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
             {gamesWithKillers}
           </div>
