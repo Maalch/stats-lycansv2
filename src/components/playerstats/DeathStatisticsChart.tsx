@@ -12,6 +12,8 @@ type ChartKillerData = {
   value: number;
   victims: number;
   percentage: number;
+  gamesPlayed: number;
+  averageKillsPerGame: number;
   isHighlightedAddition?: boolean;
 };
 
@@ -21,48 +23,96 @@ export function DeathStatisticsChart() {
   const { navigateToGameDetails } = useNavigation();
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
 
+
   const playersColor = useThemeAdjustedPlayersColor();
 
-  // Process killer data with highlighting support
-  const { killerChartData, highlightedPlayerAddedToKillers, gamesWithKillers } = useMemo(() => {
-    if (!deathStats) return { killerChartData: [], highlightedPlayerAddedToKillers: false, gamesWithKillers: 0 };
+  // Process killer data for both total and average charts
+  const { totalKillsData, averageKillsData, highlightedPlayerAddedToTotal, highlightedPlayerAddedToAverage, gamesWithKillers } = useMemo(() => {
+    if (!deathStats) return { 
+      totalKillsData: [], 
+      averageKillsData: [], 
+      highlightedPlayerAddedToTotal: false, 
+      highlightedPlayerAddedToAverage: false, 
+      gamesWithKillers: 0 
+    };
     
-    const sortedKillers = deathStats.killerStats
+    // Process total kills data
+    const sortedByTotal = deathStats.killerStats
       .sort((a, b) => b.kills - a.kills)
       .slice(0, 20);
     
-    // Check if highlighted player is in top 20
-    const highlightedPlayerInTop20 = settings.highlightedPlayer && 
-      sortedKillers.some(k => k.killerName === settings.highlightedPlayer);
+    const highlightedPlayerInTotalTop20 = settings.highlightedPlayer && 
+      sortedByTotal.some(k => k.killerName === settings.highlightedPlayer);
     
-    const baseData: ChartKillerData[] = sortedKillers.map(killer => ({
+    const totalBaseData: ChartKillerData[] = sortedByTotal.map(killer => ({
       name: killer.killerName,
       value: killer.kills,
       victims: killer.victims.length,
       percentage: killer.percentage,
+      gamesPlayed: killer.gamesPlayed,
+      averageKillsPerGame: killer.averageKillsPerGame,
       isHighlightedAddition: false
     }));
     
-    let highlightedPlayerAdded = false;
+    let highlightedPlayerAddedTotal = false;
     
-    // If highlighted player is not in top 20 but exists in all killers, add them
-    if (settings.highlightedPlayer && !highlightedPlayerInTop20) {
+    if (settings.highlightedPlayer && !highlightedPlayerInTotalTop20) {
       const highlightedKiller = deathStats.killerStats.find(k => k.killerName === settings.highlightedPlayer);
       if (highlightedKiller) {
-        baseData.push({
+        totalBaseData.push({
           name: highlightedKiller.killerName,
           value: highlightedKiller.kills,
           victims: highlightedKiller.victims.length,
           percentage: highlightedKiller.percentage,
+          gamesPlayed: highlightedKiller.gamesPlayed,
+          averageKillsPerGame: highlightedKiller.averageKillsPerGame,
           isHighlightedAddition: true
         });
-        highlightedPlayerAdded = true;
+        highlightedPlayerAddedTotal = true;
+      }
+    }
+    
+    // Process average kills data
+    const sortedByAverage = deathStats.killerStats
+      .sort((a, b) => b.averageKillsPerGame - a.averageKillsPerGame)
+      .slice(0, 20);
+    
+    const highlightedPlayerInAverageTop20 = settings.highlightedPlayer && 
+      sortedByAverage.some(k => k.killerName === settings.highlightedPlayer);
+    
+    const averageBaseData: ChartKillerData[] = sortedByAverage.map(killer => ({
+      name: killer.killerName,
+      value: killer.averageKillsPerGame,
+      victims: killer.victims.length,
+      percentage: killer.percentage,
+      gamesPlayed: killer.gamesPlayed,
+      averageKillsPerGame: killer.averageKillsPerGame,
+      isHighlightedAddition: false
+    }));
+    
+    let highlightedPlayerAddedAverage = false;
+    
+    if (settings.highlightedPlayer && !highlightedPlayerInAverageTop20) {
+      const highlightedKiller = deathStats.killerStats.find(k => k.killerName === settings.highlightedPlayer);
+      if (highlightedKiller) {
+        averageBaseData.push({
+          name: highlightedKiller.killerName,
+          value: highlightedKiller.averageKillsPerGame,
+          victims: highlightedKiller.victims.length,
+          percentage: highlightedKiller.percentage,
+          gamesPlayed: highlightedKiller.gamesPlayed,
+          averageKillsPerGame: highlightedKiller.averageKillsPerGame,
+          isHighlightedAddition: true
+        });
+        highlightedPlayerAddedAverage = true;
       }
     }
     
     return { 
-      killerChartData: baseData, 
-      highlightedPlayerAddedToKillers: highlightedPlayerAdded,
+      totalKillsData: totalBaseData,
+      averageKillsData: averageBaseData,
+      highlightedPlayerAddedToTotal: highlightedPlayerAddedTotal,
+      highlightedPlayerAddedToAverage: highlightedPlayerAddedAverage,
       gamesWithKillers: deathStats.gamesWithDeaths
     };
   }, [deathStats, settings.highlightedPlayer]);
@@ -71,7 +121,7 @@ export function DeathStatisticsChart() {
   if (error) return <div className="donnees-probleme">Erreur: {error}</div>;
   if (!deathStats) return <div className="donnees-manquantes">Aucune donnée de mort disponible</div>;
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const TotalKillsTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       const isHighlightedAddition = data.isHighlightedAddition;
@@ -103,13 +153,95 @@ export function DeathStatisticsChart() {
             )}
           </p>
           <p style={{ color: 'var(--accent-secondary)', margin: '4px 0' }}>
-            <strong>Victimes:</strong> {data.value}
+            <strong>Victimes totales:</strong> {data.value}
           </p>
           <p style={{ color: 'var(--accent-tertiary)', margin: '4px 0' }}>
-            <strong>Pourcentage:</strong> {data.percentage.toFixed(1)}%
+            <strong>Parties jouées:</strong> {data.gamesPlayed}
           </p>
           <p style={{ color: 'var(--chart-color-5)', margin: '4px 0' }}>
             <strong>Victimes uniques:</strong> {data.victims}
+          </p>
+          <p style={{ color: 'var(--chart-color-2)', margin: '4px 0' }}>
+            <strong>Moyenne par partie:</strong> {data.averageKillsPerGame.toFixed(2)}
+          </p>
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.25rem',
+              fontStyle: 'italic'
+            }}>
+              🎯 Affiché via sélection personnelle
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.25rem',
+              fontStyle: 'italic'
+            }}>
+              🎯 Joueur sélectionné
+            </div>
+          )}
+          <div style={{ 
+            fontSize: '0.8rem', 
+            color: 'var(--accent-primary)', 
+            marginTop: '0.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'pulse 1.5s infinite'
+          }}>
+            🖱️ Cliquez pour voir les parties
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const AverageKillsTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const isHighlightedAddition = data.isHighlightedAddition;
+      const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
+      
+      return (
+        <div style={{
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '8px',
+          padding: '12px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          color: 'var(--text-primary)',
+          fontSize: '0.9rem'
+        }}>
+          <p style={{ 
+            fontWeight: 'bold', 
+            marginBottom: '8px',
+            color: isHighlightedFromSettings ? 'var(--accent-primary)' : 'var(--text-primary)'
+          }}>
+            {label}
+            {isHighlightedAddition && (
+              <span style={{ 
+                color: 'var(--accent-primary)', 
+                fontSize: '0.8rem',
+                fontStyle: 'italic',
+                marginLeft: '4px'
+              }}> (🎯)</span>
+            )}
+          </p>
+          <p style={{ color: 'var(--accent-secondary)', margin: '4px 0' }}>
+            <strong>Moyenne par partie:</strong> {data.value.toFixed(2)}
+          </p>
+          <p style={{ color: 'var(--accent-tertiary)', margin: '4px 0' }}>
+            <strong>Parties jouées:</strong> {data.gamesPlayed}
+          </p>
+          <p style={{ color: 'var(--chart-color-5)', margin: '4px 0' }}>
+            <strong>Victimes uniques:</strong> {data.victims}
+          </p>
+          <p style={{ color: 'var(--chart-color-2)', margin: '4px 0' }}>
+            <strong>Victimes totales:</strong> {Math.round(data.averageKillsPerGame * data.gamesPlayed)}
           </p>
           {isHighlightedAddition && (
             <div style={{ 
@@ -179,8 +311,8 @@ export function DeathStatisticsChart() {
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           <div>
-            <h3>Joueurs les Plus Meurtriers</h3>
-            {highlightedPlayerAddedToKillers && settings.highlightedPlayer && (
+            <h3>Top Tueurs (Total)</h3>
+            {highlightedPlayerAddedToTotal && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 
                 color: 'var(--accent-primary)', 
@@ -192,11 +324,11 @@ export function DeathStatisticsChart() {
               </p>
             )}
           </div>
-          <FullscreenChart title="Joueurs les Plus Meurtriers">
+          <FullscreenChart title="Top Tueurs (Total)">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={killerChartData}
+                  data={totalKillsData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
                   onMouseEnter={() => {}}
                   onMouseLeave={() => setHoveredPlayer(null)}
@@ -223,21 +355,26 @@ export function DeathStatisticsChart() {
                       </text>
                     )}
                   />
-                  <YAxis label={{ value: 'Nombre de victimes', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} />
-                  <Tooltip content={<CustomTooltip />} />
+                  <YAxis label={{ 
+                    value: 'Nombre total de victimes', 
+                    angle: 270, 
+                    position: 'left', 
+                    style: { textAnchor: 'middle' } 
+                  }} />
+                  <Tooltip content={<TotalKillsTooltip />} />
                   <Bar
                     dataKey="value"
                     name="Victimes"
                     onMouseEnter={(data) => setHoveredPlayer(data?.name || null)}
                   >
-                    {killerChartData.map((entry) => {
+                    {totalKillsData.map((entry) => {
                       const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                       const isHoveredPlayer = hoveredPlayer === entry.name;
                       const isHighlightedAddition = entry.isHighlightedAddition;
                       
                       return (
                         <Cell
-                          key={`cell-killer-${entry.name}`}
+                          key={`cell-total-${entry.name}`}
                           fill={playersColor[entry.name] || "#e53e3e"}
                           stroke={
                             isHighlightedFromSettings 
@@ -273,7 +410,112 @@ export function DeathStatisticsChart() {
             </div>
           </FullscreenChart>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            Top {Math.min(20, killerChartData.filter(k => !k.isHighlightedAddition).length)} des tueurs les plus actifs
+            Top {Math.min(20, totalKillsData.filter(k => !k.isHighlightedAddition).length)} des tueurs les plus actifs (total)
+          </p>
+        </div>
+
+        <div className="lycans-graphique-section">
+          <div>
+            <h3>Top Tueurs (Moyenne par Partie)</h3>
+            {highlightedPlayerAddedToAverage && settings.highlightedPlayer && (
+              <p style={{ 
+                fontSize: '0.8rem', 
+                color: 'var(--accent-primary)', 
+                fontStyle: 'italic',
+                marginTop: '0.25rem',
+                marginBottom: '0.5rem'
+              }}>
+                🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+              </p>
+            )}
+          </div>
+          <FullscreenChart title="Top Tueurs (Moyenne par Partie)">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={averageKillsData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+                  onMouseEnter={() => {}}
+                  onMouseLeave={() => setHoveredPlayer(null)}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="name"
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                    interval={0}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                        fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
+                        fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
+                  />
+                  <YAxis label={{ 
+                    value: 'Moyenne de victimes par partie', 
+                    angle: 270, 
+                    position: 'left', 
+                    style: { textAnchor: 'middle' } 
+                  }} />
+                  <Tooltip content={<AverageKillsTooltip />} />
+                  <Bar
+                    dataKey="value"
+                    name="Moyenne"
+                    onMouseEnter={(data) => setHoveredPlayer(data?.name || null)}
+                  >
+                    {averageKillsData.map((entry) => {
+                      const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                      const isHoveredPlayer = hoveredPlayer === entry.name;
+                      const isHighlightedAddition = entry.isHighlightedAddition;
+                      
+                      return (
+                        <Cell
+                          key={`cell-average-${entry.name}`}
+                          fill={playersColor[entry.name] || "#8884d8"}
+                          stroke={
+                            isHighlightedFromSettings 
+                              ? "var(--accent-primary)" 
+                              : isHoveredPlayer 
+                                ? "var(--text-primary)" 
+                                : "none"
+                          }
+                          strokeWidth={
+                            isHighlightedFromSettings 
+                              ? 3 
+                              : isHoveredPlayer 
+                                ? 2 
+                                : 0
+                          }
+                          strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                          opacity={isHighlightedAddition ? 0.8 : 1}
+                          onClick={() => {
+                            navigateToGameDetails({
+                              selectedPlayer: entry.name,
+                              fromComponent: 'Statistiques de Mort'
+                            });
+                          }} 
+                          onMouseEnter={() => setHoveredPlayer(entry.name)}
+                          onMouseLeave={() => setHoveredPlayer(null)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      );
+                    })}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+            Top {Math.min(20, averageKillsData.filter(k => !k.isHighlightedAddition).length)} des tueurs les plus efficaces (moyenne)
           </p>
         </div>
       </div>
@@ -282,7 +524,8 @@ export function DeathStatisticsChart() {
       <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>
         <p>
           <strong>Note : </strong> 
-          {killerChartData.length > 0 && `Les morts lors de votes aux conseils ne sont pas comptabilisées ici.`}
+          {`Les morts lors de votes aux conseils ne sont pas comptabilisées ici. `}
+          {`Données en cours de récupération (données partielles).`}
         </p>
       </div>
     </div>
