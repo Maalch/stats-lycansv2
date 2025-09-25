@@ -84,23 +84,29 @@ export function useFilteredRawBRData() {
       return applyPlayerFilter(record, settings);
     }
 
-    // Apply game type filter using the "Game Moddée" field from global data
-    if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-      if (settings.gameFilter === 'modded') {
-        if (!globalGameData["Game Moddée"]) return false;
-      } else if (settings.gameFilter === 'non-modded') {
-        if (globalGameData["Game Moddée"]) return false;
+    // Apply independent filters using the "Game Moddée" field from global data
+    if (settings.independentFilters) {
+      const filters = settings.independentFilters;
+      
+      // Game type filter
+      if (filters.gameTypeEnabled && filters.gameFilter !== 'all') {
+        if (filters.gameFilter === 'modded') {
+          if (!globalGameData["Game Moddée"]) return false;
+        } else if (filters.gameFilter === 'non-modded') {
+          if (globalGameData["Game Moddée"]) return false;
+        }
       }
-    } else if (settings.filterMode === 'dateRange') {
-      if (settings.dateRange.start || settings.dateRange.end) {
+      
+      // Date range filter
+      if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
         const gameDateObj = parseFrenchDate(globalGameData.Date);
         if (!gameDateObj) return false;
-        if (settings.dateRange.start) {
-          const startObj = new Date(settings.dateRange.start);
+        if (filters.dateRange.start) {
+          const startObj = new Date(filters.dateRange.start);
           if (gameDateObj < startObj) return false;
         }
-        if (settings.dateRange.end) {
-          const endObj = new Date(settings.dateRange.end);
+        if (filters.dateRange.end) {
+          const endObj = new Date(filters.dateRange.end);
           if (gameDateObj > endObj) return false;
         }
       }
@@ -124,23 +130,29 @@ export function useFilteredRawBRGlobalData() {
       return false;
     }
 
-    // Apply game type filter using the "Game Moddée" field
-    if (settings.filterMode === 'gameType' && settings.gameFilter !== 'all') {
-      if (settings.gameFilter === 'modded') {
-        if (!record["Game Moddée"]) return false;
-      } else if (settings.gameFilter === 'non-modded') {
-        if (record["Game Moddée"]) return false;
+    // Apply independent filters using the "Game Moddée" field
+    if (settings.independentFilters) {
+      const filters = settings.independentFilters;
+      
+      // Game type filter
+      if (filters.gameTypeEnabled && filters.gameFilter !== 'all') {
+        if (filters.gameFilter === 'modded') {
+          if (!record["Game Moddée"]) return false;
+        } else if (filters.gameFilter === 'non-modded') {
+          if (record["Game Moddée"]) return false;
+        }
       }
-    } else if (settings.filterMode === 'dateRange') {
-      if (settings.dateRange.start || settings.dateRange.end) {
+      
+      // Date range filter
+      if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
         const gameDateObj = parseFrenchDate(record.Date);
         if (!gameDateObj) return false;
-        if (settings.dateRange.start) {
-          const startObj = new Date(settings.dateRange.start);
+        if (filters.dateRange.start) {
+          const startObj = new Date(filters.dateRange.start);
           if (gameDateObj < startObj) return false;
         }
-        if (settings.dateRange.end) {
-          const endObj = new Date(settings.dateRange.end);
+        if (filters.dateRange.end) {
+          const endObj = new Date(filters.dateRange.end);
           if (gameDateObj > endObj) return false;
         }
       }

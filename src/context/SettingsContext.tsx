@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 
 
 export type GameFilter = 'all' | 'modded' | 'non-modded';
-export type FilterMode = 'gameType' | 'dateRange' | 'mapName';
 export type PlayerFilterMode = 'none' | 'include' | 'exclude';
 export type MapNameFilter = 'all' | 'village' | 'chateau' | 'others';
 
@@ -30,7 +29,6 @@ export interface IndependentFilters {
 
 export interface SettingsState {
   // Legacy fields (kept for URL parameter backward compatibility)
-  filterMode: FilterMode;
   gameFilter: GameFilter;
   dateRange: DateRange;
   mapNameFilter: MapNameFilter;
@@ -51,7 +49,6 @@ interface SettingsContextType {
 
 
 const defaultSettings: SettingsState = {
-  filterMode: 'gameType',
   gameFilter: 'all',
   dateRange: { start: null, end: null },
   mapNameFilter: 'all',
@@ -78,12 +75,14 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
   // Always use independent filters (the default now)
   settings.useIndependentFilters = true;
   
-  // Check if we have new-style or legacy URL parameters
+  // Parse independent filters (support both new-style and legacy URL parameters)
   const hasNewStyle = urlParams.has('gameTypeEnabled') || urlParams.has('dateRangeEnabled') || urlParams.has('mapNameEnabled');
   
+  let independentFilters: IndependentFilters;
+  
   if (hasNewStyle) {
-    // Parse independent filters
-    const independentFilters: IndependentFilters = {
+    // New-style URL parameters
+    independentFilters = {
       gameTypeEnabled: urlParams.get('gameTypeEnabled') === 'true',
       gameFilter: (urlParams.get('gameFilter') as GameFilter) || 'all',
       dateRangeEnabled: urlParams.get('dateRangeEnabled') === 'true',
@@ -100,11 +99,9 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
           : [],
       },
     };
-    
-    settings.independentFilters = independentFilters;
   } else {
-    // Legacy URL parameters - convert to independent filters
-    const filterMode = urlParams.get('filterMode') as FilterMode;
+    // Legacy URL parameters - convert to independent filters for backward compatibility
+    const legacyFilterMode = urlParams.get('filterMode');
     const gameFilter = (urlParams.get('gameFilter') as GameFilter) || 'all';
     const mapNameFilter = (urlParams.get('mapNameFilter') as MapNameFilter) || 'all';
     const dateStart = urlParams.get('dateStart');
@@ -112,15 +109,15 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
     const playerFilterMode = (urlParams.get('playerFilterMode') as PlayerFilterMode) || 'none';
     const playersList = urlParams.get('players');
     
-    const independentFilters: IndependentFilters = {
-      gameTypeEnabled: filterMode === 'gameType' && gameFilter !== 'all',
+    independentFilters = {
+      gameTypeEnabled: legacyFilterMode === 'gameType' && gameFilter !== 'all',
       gameFilter: gameFilter,
-      dateRangeEnabled: filterMode === 'dateRange' && (!!dateStart || !!dateEnd),
+      dateRangeEnabled: legacyFilterMode === 'dateRange' && (!!dateStart || !!dateEnd),
       dateRange: {
         start: dateStart || null,
         end: dateEnd || null,
       },
-      mapNameEnabled: filterMode === 'mapName' && mapNameFilter !== 'all',
+      mapNameEnabled: legacyFilterMode === 'mapName' && mapNameFilter !== 'all',
       mapNameFilter: mapNameFilter,
       playerFilter: {
         mode: playerFilterMode,
@@ -128,10 +125,7 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
       },
     };
     
-    settings.independentFilters = independentFilters;
-    
-    // Also set legacy values for backward compatibility
-    if (filterMode) settings.filterMode = filterMode;
+    // Set legacy values for backward compatibility
     if (gameFilter !== 'all') settings.gameFilter = gameFilter;
     if (mapNameFilter !== 'all') settings.mapNameFilter = mapNameFilter;
     if (dateStart || dateEnd) {
@@ -144,6 +138,8 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
       };
     }
   }
+  
+  settings.independentFilters = independentFilters;
 
   // Parse highlighted player
   const highlightedPlayer = urlParams.get('highlightedPlayer');
@@ -208,21 +204,29 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     const urlSettings = parseSettingsFromUrl();
     
     if (Object.keys(urlSettings).length > 0) {
-      // URL params found, merge with defaults
-      return { ...defaultSettings, ...urlSettings };
+      // URL params found, merge with defaults and force useIndependentFilters
+      return { ...defaultSettings, ...urlSettings, useIndependentFilters: true };
     }
     
     // No URL params, try localStorage
     const saved = localStorage.getItem('lycans-settings');
     if (saved) {
       try {
-        return { ...defaultSettings, ...JSON.parse(saved) };
+        const parsed = JSON.parse(saved);
+        return { ...defaultSettings, ...parsed, useIndependentFilters: true };
       } catch {
         return defaultSettings;
       }
     }
     return defaultSettings;
   });
+
+  // Ensure useIndependentFilters is always true
+  useEffect(() => {
+    if (!settings.useIndependentFilters) {
+      setSettings(prev => ({ ...prev, useIndependentFilters: true }));
+    }
+  }, [settings.useIndependentFilters]);
 
   // Listen for URL changes (back/forward navigation)
   useEffect(() => {
