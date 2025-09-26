@@ -46,17 +46,13 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
   
   filteredGameData.forEach(game => {
     game.PlayerStats.forEach(player => {
-      // Check if this player has killed someone in this game
-      const hasKills = game.PlayerStats.some(victim => victim.KillerName === player.Username);
-      
-      if (hasKills) {
+
         const camp = getPlayerCampFromRole(player.MainRoleInitial, {
           regroupLovers: true,
           regroupVillagers: true,
-          regroupTraitor: true
+          regroupTraitor: false
         });
         campsSet.add(camp);
-      }
     });
   });
   
@@ -68,7 +64,7 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
     ...mainCamps.filter(camp => camps.includes(camp)),
     ...camps.filter(camp => !mainCamps.includes(camp)).sort()
   ];
-  
+
   return sortedCamps;
 }
 
@@ -460,7 +456,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
           killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
             regroupLovers: true,
             regroupVillagers: true,
-            regroupTraitor: true
+            regroupTraitor: false
           });
         }
       }
@@ -485,7 +481,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       const victimCamp = getPlayerCampFromRole(victimPlayer.MainRoleInitial, {
         regroupLovers: true,
         regroupVillagers: true,
-        regroupTraitor: true
+        regroupTraitor: false
       });
       
       // Only include deaths where the victim is from the selected camp
@@ -545,7 +541,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
         const playerCamp = getPlayerCampFromRole(player.MainRoleInitial, {
           regroupLovers: true,
           regroupVillagers: true,
-          regroupTraitor: true
+          regroupTraitor: false
         });
         
         if (playerCamp === campFilter) {
