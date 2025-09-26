@@ -105,7 +105,6 @@ export interface PlayerDeathStats {
 export interface DeathStatistics {
   totalDeaths: number;
   totalGames: number;
-  gamesWithDeaths: number; // Games that have at least 1 death/killer
   averageDeathsPerGame: number;
   
   // Death timing statistics
@@ -265,13 +264,9 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   }> = [];
   
   const playerGameCounts: Record<string, number> = {};
-  const gamesWithDeathsSet = new Set<string>(); // Track unique games with deaths
   
   filteredGameData.forEach(game => {
     const deaths = extractDeathsFromGame(game, campFilter);
-    if (deaths.length > 0) {
-      gamesWithDeathsSet.add(game.Id); // Mark this game as having deaths
-    }
     deaths.forEach(death => {
       allDeaths.push({
         ...death,
@@ -304,7 +299,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
 
   const totalDeaths = allDeaths.length;
   const totalGames = filteredGameData.length;
-  const gamesWithDeaths = gamesWithDeathsSet.size;
   const averageDeathsPerGame = totalGames > 0 ? totalDeaths / totalGames : 0;
 
   // Calculate death timing statistics
@@ -455,7 +449,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   return {
     totalDeaths,
     totalGames,
-    gamesWithDeaths,
     averageDeathsPerGame,
     deathsByTiming,
     deathsByPhase: phaseCounts,

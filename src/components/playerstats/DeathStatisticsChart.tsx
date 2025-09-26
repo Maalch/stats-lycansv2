@@ -122,7 +122,7 @@ export function DeathStatisticsChart() {
       averageKillsData: averageBaseData,
       highlightedPlayerAddedToTotal: highlightedPlayerAddedTotal,
       highlightedPlayerAddedToAverage: highlightedPlayerAddedAverage,
-      gamesWithKillers: deathStats.gamesWithDeaths
+      gamesWithKillers: deathStats.totalGames
     };
   }, [deathStats, settings.highlightedPlayer]);
 
