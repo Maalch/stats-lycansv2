@@ -1281,7 +1281,7 @@ export function DeathStatisticsChart() {
 
         <div className="lycans-graphique-section">
           <div>
-            <h3>Meilleur Survivants</h3>
+            <h3>Meilleurs Survivants</h3>
             {highlightedPlayerAddedToSurvival && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 
@@ -1318,7 +1318,7 @@ export function DeathStatisticsChart() {
               ))}
             </select>
           </div>
-          <FullscreenChart title="Meilleur Survivants">
+          <FullscreenChart title="Meilleurs Survivants">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
