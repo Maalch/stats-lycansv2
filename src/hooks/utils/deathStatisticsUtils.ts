@@ -84,6 +84,7 @@ export interface KillerStats {
   percentage: number;
   gamesPlayed: number;
   averageKillsPerGame: number;
+  killsByDeathType: Record<string, number>; // New field for death type breakdown
 }
 
 /**
@@ -175,22 +176,59 @@ export function normalizeDeathType(deathType: string | null): string {
     return 'Mort aux votes';
   }
   if (normalized.includes('Loup') || normalized.includes('loup')) {
-    return 'Tué par Loup';
+    return 'Kill en Loup';
   }
   if (normalized.includes('Zombie') || normalized.includes('zombie')) {
-    return 'Tué par Zombie';
+    return 'Kill en Zombie';
   }
   if (normalized.includes('Chasseur') || normalized.includes('chasseur')) {
-    return 'Tué par Chasseur';
+    return 'Tir de Chasseur';
   }
   if (normalized.includes('Déco') || normalized.includes('déco')) {
     return 'Déconnexion';
   }
   if (normalized.includes('Potion') || normalized.includes('potion')) {
-    return 'Tué par Potion';
+    return 'Kill avec Potion';
+  }
+  if (normalized.includes('vengeur') || normalized.includes('Vengeur')) {
+    return 'Kill en Vengeur';
   }
   
   return normalized;
+}
+
+/**
+ * Get all unique death types from game data for chart configuration
+ */
+export function getAllDeathTypes(gameData: GameLogEntry[]): string[] {
+  const deathTypesSet = new Set<string>();
+  
+  gameData.forEach(game => {
+    game.PlayerStats.forEach(player => {
+      if (player.DeathType) {
+        deathTypesSet.add(normalizeDeathType(player.DeathType));
+      }
+    });
+  });
+  
+  const deathTypes = Array.from(deathTypesSet);
+  
+  // Sort death types to put common ones first
+  const commonTypes = [
+    'Kill en Loup',
+    'Mort aux votes', 
+    'Tir de Chasseur',
+    'Kill en Zombie',
+    'Kill avec Potion',
+    'Kill en Vengeur',
+    'Déconnexion',
+    'Survivant'
+  ];
+  
+  return [
+    ...commonTypes.filter(type => deathTypes.includes(type)),
+    ...deathTypes.filter(type => !commonTypes.includes(type)).sort()
+  ];
 }
 
 /**
@@ -350,14 +388,19 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     .sort((a, b) => b.count - a.count);
 
   // Calculate killer statistics
-  const killerCounts: Record<string, { kills: number; victims: Set<string> }> = {};
+  const killerCounts: Record<string, { kills: number; victims: Set<string>; killsByDeathType: Record<string, number> }> = {};
   allDeaths.forEach(death => {
     if (death.killerName) {
       if (!killerCounts[death.killerName]) {
-        killerCounts[death.killerName] = { kills: 0, victims: new Set() };
+        killerCounts[death.killerName] = { kills: 0, victims: new Set(), killsByDeathType: {} };
       }
       killerCounts[death.killerName].kills++;
       killerCounts[death.killerName].victims.add(death.playerName);
+      
+      // Track kills by death type
+      const deathType = death.deathType;
+      killerCounts[death.killerName].killsByDeathType[deathType] = 
+        (killerCounts[death.killerName].killsByDeathType[deathType] || 0) + 1;
     }
   });
 
@@ -371,7 +414,8 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
         victims: Array.from(data.victims),
         percentage: totalDeaths > 0 ? (data.kills / totalDeaths) * 100 : 0,
         gamesPlayed,
-        averageKillsPerGame
+        averageKillsPerGame,
+        killsByDeathType: data.killsByDeathType
       };
     })
     .sort((a, b) => b.kills - a.kills);
