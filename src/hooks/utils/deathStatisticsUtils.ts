@@ -65,6 +65,7 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
     ...camps.filter(camp => !mainCamps.includes(camp)).sort()
   ];
 
+
   return sortedCamps;
 }
 
