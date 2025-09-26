@@ -178,17 +178,14 @@ export function normalizeDeathType(deathType: string | null): string {
   if (normalized.includes('Loup') || normalized.includes('loup')) {
     return 'Kill en Loup';
   }
-  if (normalized.includes('Zombie') || normalized.includes('zombie')) {
-    return 'Kill en Zombie';
-  }
-  if (normalized.includes('Chasseur') || normalized.includes('chasseur')) {
+  if (normalized.includes('Chasseur') || normalized.includes('chasseur') || normalized.includes('balle')) {
     return 'Tir de Chasseur';
-  }
-  if (normalized.includes('Déco') || normalized.includes('déco')) {
-    return 'Déconnexion';
   }
   if (normalized.includes('Potion') || normalized.includes('potion')) {
     return 'Kill avec Potion';
+  }
+  if (normalized.includes('Zombie') || normalized.includes('zombie')) {
+    return 'Kill en Zombie';
   }
   if (normalized.includes('vengeur') || normalized.includes('Vengeur')) {
     return 'Kill en Vengeur';
@@ -221,7 +218,6 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): string[] {
     'Kill en Zombie',
     'Kill avec Potion',
     'Kill en Vengeur',
-    'Déconnexion',
     'Survivant'
   ];
   
