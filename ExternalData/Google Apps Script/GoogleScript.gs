@@ -715,6 +715,21 @@ function getRawGameDataInNewFormat() {
         }
       }
       
+      // Check if GAMEMODID is filled - if so, return minimal structure only
+      var gameModId = game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEMODID)] : null;
+      if (gameModId && gameModId.trim() !== '') {
+        return {
+          Id: gameModId,
+          Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
+          Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
+          LegacyData: {
+            VODLink: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODSTART)],
+            VODLinkEnd: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODEND)],
+            VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)]
+          }
+        };
+      }
+      
       // Build base game record with new Id format "Ponce-YYYYMMDDHHmmSS"
       var gameRecord = {
         Id: "Ponce-" + legacyDateFragment + "-" + gameId,
@@ -725,7 +740,7 @@ function getRawGameDataInNewFormat() {
         HarvestDone: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.HARVEST)],
         EndTiming: "U" + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)],
         Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
-        Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES2.COLS.MODDED)],
+        Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         LegacyData: {
           VODLink: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODSTART)],
           VODLinkEnd: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODEND)],
