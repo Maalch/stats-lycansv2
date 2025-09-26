@@ -7,7 +7,13 @@ import { getPlayerCampFromRole } from '../../utils/gameUtils';
 export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
   const campsSet = new Set<string>();
   
-  gameData.forEach(game => {
+  // Filter games to only include those with complete death information
+  // Include games where LegacyData.deathInformationFilled is true OR where LegacyData is not present
+  const filteredGameData = gameData.filter(game => 
+    !game.LegacyData || game.LegacyData.deathInformationFilled === true
+  );
+  
+  filteredGameData.forEach(game => {
     game.PlayerStats.forEach(player => {
       // Check if this player has killed someone in this game
       const hasKills = game.PlayerStats.some(victim => victim.KillerName === player.Username);
@@ -238,6 +244,16 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     return null;
   }
 
+  // Filter games to only include those with complete death information
+  // Include games where LegacyData.deathInformationFilled is true OR where LegacyData is not present
+  const filteredGameData = gameData.filter(game => 
+    !game.LegacyData || game.LegacyData.deathInformationFilled === true
+  );
+
+  if (filteredGameData.length === 0) {
+    return null;
+  }
+
   // Extract all deaths
   const allDeaths: Array<{
     playerName: string;
@@ -251,7 +267,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   const playerGameCounts: Record<string, number> = {};
   const gamesWithDeathsSet = new Set<string>(); // Track unique games with deaths
   
-  gameData.forEach(game => {
+  filteredGameData.forEach(game => {
     const deaths = extractDeathsFromGame(game, campFilter);
     if (deaths.length > 0) {
       gamesWithDeathsSet.add(game.Id); // Mark this game as having deaths
@@ -287,7 +303,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   });
 
   const totalDeaths = allDeaths.length;
-  const totalGames = gameData.length;
+  const totalGames = filteredGameData.length;
   const gamesWithDeaths = gamesWithDeathsSet.size;
   const averageDeathsPerGame = totalGames > 0 ? totalDeaths / totalGames : 0;
 
