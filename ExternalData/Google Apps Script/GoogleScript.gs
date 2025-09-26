@@ -357,10 +357,6 @@ function getRawGameDataRaw() {
         else if (header === LYCAN_SCHEMA.GAMES.COLS.NBPLAYERS ||
                  header === LYCAN_SCHEMA.GAMES.COLS.NBWOLVES ||
                  header === LYCAN_SCHEMA.GAMES.COLS.NBDAYS ||
-                 header === LYCAN_SCHEMA.GAMES.COLS.SURVIVINGVILLAGERS ||
-                 header === LYCAN_SCHEMA.GAMES.COLS.SURVIVINGWOLVES ||
-                 header === LYCAN_SCHEMA.GAMES.COLS.SURVIVINGLOVERS ||
-                 header === LYCAN_SCHEMA.GAMES.COLS.SURVIVINGSOLO ||
                  header === LYCAN_SCHEMA.GAMES.COLS.HARVEST ||
                  header === LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST ||
                  header === LYCAN_SCHEMA.GAMES.COLS.HARVESTPERCENT) {
@@ -747,6 +743,14 @@ function getRawGameDataInNewFormat() {
         return buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders, detailsHeaders, detailsDataRows);
       });
       
+      // Check if death information is filled for all players
+      var allPlayersHaveDeathInfo = gameRecord.PlayerStats.every(function(playerStat) {
+        return playerStat.DeathType !== null && playerStat.DeathType !== '';
+      });
+      
+      // Add deathInformationFilled to LegacyData
+      gameRecord.LegacyData.deathInformationFilled = allPlayersHaveDeathInfo;
+      
       return gameRecord;
     });
 
@@ -782,7 +786,7 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
     DeathDateIrl: null, // Not available in legacy data
     DeathTiming: determineDeathTiming(playerDetails),
     DeathPosition: null, // Not available in legacy data
-    DeathType: determineDeathType(playerDetails),
+    DeathType: playerDetails && playerDetails.typeOfDeath ? playerDetails.typeOfDeath : null,
     KillerName: determineKillerName(playerDetails),
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
   };
@@ -981,27 +985,14 @@ function determineDeathTiming(playerDetails) {
 }
 
 /**
- * Helper function to determine death type
- */
-function determineDeathType(playerDetails) {
-  if (!playerDetails || !playerDetails.typeOfDeath) return null;
-  
-  // Return death type if it's not 'N/A'
-  if (playerDetails.typeOfDeath !== 'N/A' && playerDetails.typeOfDeath !== '') {
-    return playerDetails.typeOfDeath;
-  }
-  
-  return null;
-}
-
-/**
  * Helper function to determine killer name
  */
 function determineKillerName(playerDetails) {
   if (!playerDetails || !playerDetails.killerPlayers || !playerDetails.typeOfDeath) return null;
   
-  // Return killer name only if death type is not "Mort aux votes"
+  // Return killer name only if death type is not "Mort aux votes" or "Déco"
   if (playerDetails.typeOfDeath !== 'Mort aux votes' && 
+      playerDetails.typeOfDeath !== 'Déco' && 
       playerDetails.typeOfDeath !== 'N/A' && 
       playerDetails.killerPlayers !== '' && 
       playerDetails.killerPlayers !== null) {

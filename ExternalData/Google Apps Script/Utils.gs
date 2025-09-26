@@ -19,10 +19,7 @@ const LYCAN_SCHEMA = {
       WINNERCAMP: 'Camp victorieux', //name of the winner camp ("Loup", "Villageois"...)
       VICTORYTYPE: 'Type de victoire', //Type of victory for the winning camp ("Vote", "Récolte", "Domination"...)
       NBDAYS: 'Nombre de journées', //number of days in the game
-      SURVIVINGVILLAGERS: 'Survivants villageois', //number of villagers that survived at the end
-      SURVIVINGWOLVES: 'Survivants loups (traître inclus)', //number of wolves (+ traitor) that survived in the end
-      SURVIVINGLOVERS: 'Survivants amoureux', //number of lovers that survived in the end
-      SURVIVINGSOLO: 'Survivants solo', //number of solo roles that survived in the game
+      SURVIVINGPLAYERS: 'Survivants', //list of players alive at the end of the game
       WINNERLIST: 'Liste des gagnants', //list of players that won this game, separated with comma if several winners
       HARVEST: 'Récolte', //haverst at the end of the game
       TOTALHARVEST: 'Total récolte', //total haverst needed in that game to win as villagers
