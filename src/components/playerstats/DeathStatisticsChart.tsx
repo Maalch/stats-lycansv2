@@ -42,13 +42,13 @@ export function DeathStatisticsChart() {
   const deathTypeColors = useMemo(() => {
     const colorMap: Record<string, string> = {
       'Kill en Loup': lycansColors['Loup'],
-      'Mort aux votes': 'var(--chart-color-2)',
+      'Mort aux votes': 'var(--chart-color-1)',
       'Tir de Chasseur': lycansColors['Chasseur'],
-      'Kill en Zombie': 'var(--chart-color-4)',
+      'Kill en Zombie': lycansColors['Vaudou'],
       'Kill avec Potion': lycansColors['Alchimiste'],
-      'Kill en Vengeur': 'var(--chart-color-6)',
-      'Déconnexion': 'var(--chart-color-7)',
-      'Survivant': 'var(--chart-color-8)'
+      'Kill en Vengeur': 'var(--chart-color-2)',
+      'Déconnexion': 'var(--chart-color-3)',
+      'Survivant': 'var(--chart-color-4)'
     };
     
     // Assign colors to any additional death types
