@@ -446,7 +446,11 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
   killerCamp: string | null;
 }> {
   return game.PlayerStats
-    .filter(player => player.DeathTiming || player.DeathType)
+    .filter(player => {
+      // Only include players who actually died (not survivors)
+      const deathCode = codifyDeathType(player.DeathType);
+      return deathCode !== 'SURVIVOR' && (player.DeathTiming || player.DeathType);
+    })
     .map(player => {
       // Find the killer's camp if killer exists
       let killerCamp: string | null = null;
@@ -470,11 +474,22 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
         killerCamp
       };
     })
-    // Filter by killer's camp if specified
+    // Filter by camp if specified - for victim statistics, filter by victim's camp
     .filter(death => {
       if (!campFilter || campFilter === 'Tous les camps') return true;
-      // Only include deaths where the killer is from the selected camp
-      return death.killerCamp === campFilter;
+      
+      // Find the victim's camp
+      const victimPlayer = game.PlayerStats.find(p => p.Username === death.playerName);
+      if (!victimPlayer) return false;
+      
+      const victimCamp = getPlayerCampFromRole(victimPlayer.MainRoleInitial, {
+        regroupLovers: true,
+        regroupVillagers: true,
+        regroupTraitor: true
+      });
+      
+      // Only include deaths where the victim is from the selected camp
+      return victimCamp === campFilter;
     });
 }
 
