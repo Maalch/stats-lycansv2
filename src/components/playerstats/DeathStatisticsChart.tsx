@@ -4,7 +4,7 @@ import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw } from '../../hooks
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
-import { useThemeAdjustedPlayersColor } from '../../types/api';
+import { useThemeAdjustedPlayersColor, minGamesOptions } from '../../types/api';
 
 // Extended type for chart data with highlighting info
 type ChartKillerData = {
@@ -22,6 +22,7 @@ export function DeathStatisticsChart() {
   const [selectedCamp, setSelectedCamp] = useState<string>(
     navigationState.deathStatsSelectedCamp || 'Tous les camps'
   );
+  const [minGamesForAverage, setMinGamesForAverage] = useState<number>(5);
   const { data: availableCamps } = useAvailableCampsFromRaw();
   const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp);
   const { settings } = useSettings();
@@ -36,13 +37,14 @@ export function DeathStatisticsChart() {
   };
 
   // Process killer data for both total and average charts
-  const { totalKillsData, averageKillsData, highlightedPlayerAddedToTotal, highlightedPlayerAddedToAverage, gamesWithKillers } = useMemo(() => {
+  const { totalKillsData, averageKillsData, highlightedPlayerAddedToTotal, highlightedPlayerAddedToAverage, gamesWithKillers, totalEligibleForAverage } = useMemo(() => {
     if (!deathStats) return { 
       totalKillsData: [], 
       averageKillsData: [], 
       highlightedPlayerAddedToTotal: false, 
       highlightedPlayerAddedToAverage: false, 
-      gamesWithKillers: 0 
+      gamesWithKillers: 0,
+      totalEligibleForAverage: 0
     };
     
     // Process total kills data
@@ -81,8 +83,9 @@ export function DeathStatisticsChart() {
       }
     }
     
-    // Process average kills data
-    const sortedByAverage = deathStats.killerStats
+    // Process average kills data (with minimum games filter)
+    const eligibleForAverage = deathStats.killerStats.filter(killer => killer.gamesPlayed >= minGamesForAverage);
+    const sortedByAverage = eligibleForAverage
       .sort((a, b) => b.averageKillsPerGame - a.averageKillsPerGame)
       .slice(0, 20);
     
@@ -102,6 +105,7 @@ export function DeathStatisticsChart() {
     let highlightedPlayerAddedAverage = false;
     
     if (settings.highlightedPlayer && !highlightedPlayerInAverageTop20) {
+      // Search for highlighted player in all stats (not just eligible)
       const highlightedKiller = deathStats.killerStats.find(k => k.killerName === settings.highlightedPlayer);
       if (highlightedKiller) {
         averageBaseData.push({
@@ -122,9 +126,10 @@ export function DeathStatisticsChart() {
       averageKillsData: averageBaseData,
       highlightedPlayerAddedToTotal: highlightedPlayerAddedTotal,
       highlightedPlayerAddedToAverage: highlightedPlayerAddedAverage,
-      gamesWithKillers: deathStats.totalGames
+      gamesWithKillers: deathStats.totalGames,
+      totalEligibleForAverage: eligibleForAverage.length
     };
-  }, [deathStats, settings.highlightedPlayer]);
+  }, [deathStats, settings.highlightedPlayer, minGamesForAverage]);
 
   if (isLoading) return <div className="donnees-attente">Chargement des statistiques de mort...</div>;
   if (error) return <div className="donnees-probleme">Erreur: {error}</div>;
@@ -214,6 +219,7 @@ export function DeathStatisticsChart() {
       const data = payload[0].payload;
       const isHighlightedAddition = data.isHighlightedAddition;
       const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
+      const meetsMinGames = data.gamesPlayed >= minGamesForAverage;
       
       return (
         <div style={{
@@ -252,14 +258,24 @@ export function DeathStatisticsChart() {
           <p style={{ color: 'var(--chart-color-2)', margin: '4px 0' }}>
             <strong>Victimes totales:</strong> {Math.round(data.averageKillsPerGame * data.gamesPlayed)}
           </p>
-          {isHighlightedAddition && (
+          {isHighlightedAddition && !meetsMinGames && (
             <div style={{ 
               fontSize: '0.75rem', 
               color: 'var(--accent-primary)', 
               marginTop: '0.25rem',
               fontStyle: 'italic'
             }}>
-              🎯 Affiché via sélection personnelle
+              🎯 Affiché via sélection (&lt; {minGamesForAverage} parties)
+            </div>
+          )}
+          {isHighlightedAddition && meetsMinGames && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.25rem',
+              fontStyle: 'italic'
+            }}>
+              🎯 Affiché via sélection (hors top 20)
             </div>
           )}
           {isHighlightedFromSettings && !isHighlightedAddition && (
@@ -473,6 +489,30 @@ export function DeathStatisticsChart() {
               </p>
             )}
           </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <label htmlFor="min-games-average-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Min. parties:
+            </label>
+            <select
+              id="min-games-average-select"
+              value={minGamesForAverage}
+              onChange={(e) => setMinGamesForAverage(Number(e.target.value))}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem'
+              }}
+            >
+              {minGamesOptions.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
           <FullscreenChart title="Top Tueurs (Moyenne par Partie)">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -569,7 +609,7 @@ export function DeathStatisticsChart() {
             </div>
           </FullscreenChart>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            Top {Math.min(20, averageKillsData.filter(k => !k.isHighlightedAddition).length)} des tueurs les plus efficaces (moyenne)
+            Top {Math.min(20, averageKillsData.filter(k => !k.isHighlightedAddition).length)} des tueurs les plus efficaces (sur {totalEligibleForAverage} ayant au moins {minGamesForAverage} partie{minGamesForAverage > 1 ? 's' : ''})
           </p>
         </div>
       </div>
