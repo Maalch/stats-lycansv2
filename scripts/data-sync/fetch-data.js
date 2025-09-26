@@ -104,28 +104,62 @@ async function fetchGameLogData(url) {
 async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   console.log('Merging legacy and AWS game logs into unified structure...');
   
-  const allGameStats = [];
+  const gamesByIdMap = new Map();
+  let legacyCount = 0;
+  let awsCount = 0;
+  let mergedCount = 0;
   
-  // Add legacy games if available
+  // Add legacy games to map first
   if (legacyGameLog && legacyGameLog.GameStats && Array.isArray(legacyGameLog.GameStats)) {
-    allGameStats.push(...legacyGameLog.GameStats);
-    console.log(`✓ Added ${legacyGameLog.GameStats.length} legacy games`);
+    legacyGameLog.GameStats.forEach(game => {
+      gamesByIdMap.set(game.Id, {
+        ...game,
+        source: 'legacy'
+      });
+    });
+    legacyCount = legacyGameLog.GameStats.length;
+    console.log(`✓ Added ${legacyCount} legacy games to map`);
   }
   
-  // Add AWS games with ModVersion preserved at game level
+  // Add AWS games, merging with legacy if same ID exists
   for (const gameLog of awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
-      // Add ModVersion and Modded flag to each game from this AWS log file
-      const gamesWithVersion = gameLog.GameStats.map(game => ({
-        ...game,
-        Version: gameLog.ModVersion,
-        Modded: true
-      }));
-      allGameStats.push(...gamesWithVersion);
+      gameLog.GameStats.forEach(awsGame => {
+        const gameId = awsGame.Id;
+        const existingLegacyGame = gamesByIdMap.get(gameId);
+        
+        if (existingLegacyGame && existingLegacyGame.source === 'legacy') {
+          // Merge: Use AWS data but preserve legacy Modded/Version/LegacyData
+          const mergedGame = {
+            ...awsGame,
+            Version: existingLegacyGame.Version || gameLog.ModVersion,
+            Modded: existingLegacyGame.Modded !== undefined ? existingLegacyGame.Modded : true,
+            LegacyData: existingLegacyGame.LegacyData || undefined,
+            source: 'merged'
+          };
+          gamesByIdMap.set(gameId, mergedGame);
+          mergedCount++;
+          console.log(`✓ Merged game ${gameId}: AWS data + legacy metadata`);
+        } else {
+          // Pure AWS game - add ModVersion and Modded flag
+          const awsGameWithVersion = {
+            ...awsGame,
+            Version: gameLog.ModVersion,
+            Modded: true,
+            source: 'aws'
+          };
+          gamesByIdMap.set(gameId, awsGameWithVersion);
+          awsCount++;
+        }
+      });
     }
   }
   
-  console.log(`✓ Added ${allGameStats.length - (legacyGameLog?.GameStats?.length || 0)} AWS games`);
+  // Convert map back to array and remove source tracking
+  const allGameStats = Array.from(gamesByIdMap.values()).map(game => {
+    const { source, ...gameWithoutSource } = game;
+    return gameWithoutSource;
+  });
   
   // Sort by StartDate to maintain chronological order
   allGameStats.sort((a, b) => new Date(a.StartDate) - new Date(b.StartDate));
@@ -134,13 +168,13 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
     ModVersion: "Legacy + AWS",
     TotalRecords: allGameStats.length,
     Sources: {
-      Legacy: legacyGameLog ? legacyGameLog.GameStats.length : 0,
-      AWS: allGameStats.length - (legacyGameLog?.GameStats?.length || 0)
+      Legacy: legacyCount - mergedCount,
+      AWS: awsCount,
+      Merged: mergedCount
     },
     GameStats: allGameStats
   };
   
-  console.log(`✓ Merged ${allGameStats.length} total games from both sources`);
   
   return mergedGameLog;
 }
