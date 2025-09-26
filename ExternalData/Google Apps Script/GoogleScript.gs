@@ -893,7 +893,7 @@ function determineMainRoleInitialWithDetails(playerName, roleAssignments, player
   
   // Determine which camp to use based on type (initial)
   if (playerDetails) {
-    if (playerDetails.traitor === 'true') {
+    if (playerDetails.traitor === true) {
       campFromDetails = 'Traître';
     }
     else if (playerDetails.villagerPower === 'Alchimiste' || playerDetails.villagerPower === 'Chasseur') {
