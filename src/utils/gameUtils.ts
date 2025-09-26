@@ -161,6 +161,12 @@ export function getPlayerCampFromRole(
   return roleName;
 }
 
+/**
+ * Helper function to get the winner camp for a specific game
+ * 
+ * @param game - The game log entry to analyze
+ * @returns The winner camp name
+ */
 export function getWinnerCampFromGame(game: GameLogEntry): string {
  // Determine winner camp from PlayerStats
   const winners = game.PlayerStats.filter(p => p.Victorious);

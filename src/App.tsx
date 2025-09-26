@@ -107,7 +107,7 @@ const PLAYER_STATS_MENU = [
   },
   { 
     key: 'deathStats', 
-    label: 'Kills', 
+    label: 'Morts & Kills', 
     component: DeathStatisticsChart,
     description: 'Analyse des morts des joueurs'
   },
