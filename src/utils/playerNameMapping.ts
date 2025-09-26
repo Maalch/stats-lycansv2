@@ -36,8 +36,7 @@ export const PLAYER_NAME_MAPPING: Record<string, string> = {
  * Helper function to check if a player name needs normalization
  * Useful for debugging and validation
  */
-export function getPlayerNameMapping(playerName: string): string | null {
-  if (!playerName) return null;
+export function getPlayerNameMapping(playerName: string): string {
   
   // Try exact match first
   if (PLAYER_NAME_MAPPING[playerName]) {
@@ -52,7 +51,7 @@ export function getPlayerNameMapping(playerName: string): string | null {
     }
   }
   
-  return null; // No mapping found
+  return playerName; // No mapping found
 }
 
 /**

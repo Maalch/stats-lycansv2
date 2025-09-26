@@ -1281,7 +1281,7 @@ export function DeathStatisticsChart() {
 
         <div className="lycans-graphique-section">
           <div>
-            <h3>Meilleur Taux de Survie</h3>
+            <h3>Meilleur Survivants</h3>
             {highlightedPlayerAddedToSurvival && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 
@@ -1318,7 +1318,7 @@ export function DeathStatisticsChart() {
               ))}
             </select>
           </div>
-          <FullscreenChart title="Meilleur Taux de Survie">
+          <FullscreenChart title="Meilleur Survivants">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -1348,7 +1348,7 @@ export function DeathStatisticsChart() {
                     )}
                   />
                   <YAxis label={{ 
-                    value: 'Taux de survie (%)', 
+                    value: 'Taux de mort (%)', 
                     angle: 270, 
                     position: 'left', 
                     style: { textAnchor: 'middle' } 

@@ -4,6 +4,7 @@ import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import type { GameFilter, MapNameFilter, PlayerFilterMode } from '../../context/SettingsContext';
 import { ShareableUrl } from '../common/ShareableUrl';
 import './SettingsPanel.css';
+import { getPlayerNameMapping } from '../../utils/playerNameMapping';
 
 export function SettingsPanel() {
   const { settings, updateSettings, resetSettings } = useSettings();
@@ -98,7 +99,7 @@ export function SettingsPanel() {
     const allPlayers = new Set<string>();
     filteredGames.forEach((game: GameLogEntry) => {
       game.PlayerStats.forEach((playerStat) => {
-        allPlayers.add(playerStat.Username);
+        allPlayers.add(getPlayerNameMapping(playerStat.Username));
       });
     });
     return Array.from(allPlayers).sort();
@@ -109,7 +110,7 @@ export function SettingsPanel() {
     const compatibility: Record<string, Set<string>> = {};
     
     filteredGames.forEach((game: GameLogEntry) => {
-      const players = game.PlayerStats.map(p => p.Username);
+      const players = game.PlayerStats.map(p => getPlayerNameMapping(p.Username));
       
       players.forEach((player: string) => {
         if (!compatibility[player]) {
