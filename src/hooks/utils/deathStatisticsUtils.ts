@@ -160,7 +160,7 @@ export function parseDeathTiming(deathTiming: string | null): DeathTiming | null
  * Normalize death type for consistent grouping
  */
 export function normalizeDeathType(deathType: string | null): string {
-  if (!deathType) return 'Survivant';
+  if (!deathType || (deathType == 'N/A')) return 'Survivant';
   
   // Normalize common variations
   const normalized = deathType.trim();
