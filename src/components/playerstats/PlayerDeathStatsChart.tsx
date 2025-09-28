@@ -9,7 +9,6 @@ interface ChartPlayerDeathStat {
   playerName: string;
   totalDeaths: number;
   deathRate: number;
-  averageDeathDay: number | null;
   isHighlightedAddition?: boolean;
 }
 
@@ -58,10 +57,6 @@ export function PlayerDeathStatsChart() {
       switch (sortBy) {
         case 'deathRate':
           return b.deathRate - a.deathRate;
-        case 'averageDeathDay':
-          const aDay = a.averageDeathDay ?? 999;
-          const bDay = b.averageDeathDay ?? 999;
-          return aDay - bDay; // Lower day means died earlier (worse)
         case 'totalDeaths':
         default:
           return b.totalDeaths - a.totalDeaths;
@@ -76,7 +71,6 @@ export function PlayerDeathStatsChart() {
       playerName: player.playerName,
       totalDeaths: player.totalDeaths,
       deathRate: player.deathRate,
-      averageDeathDay: player.averageDeathDay,
       isHighlightedAddition: highlightedPlayerIncluded && 
         settings.highlightedPlayer?.toLowerCase() === player.playerName.toLowerCase()
     }));

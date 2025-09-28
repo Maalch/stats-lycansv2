@@ -70,30 +70,6 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
 }
 
 /**
- * Death timing phases
- */
-export type DeathPhase = 'Nuit' | 'Jour' | 'Meeting';
-
-/**
- * Parsed death timing information
- */
-export interface DeathTiming {
-  phase: DeathPhase;
-  day: number;
-  originalString: string;
-}
-
-/**
- * Death statistics by timing
- */
-export interface DeathTimingStats {
-  phase: DeathPhase;
-  day: number;
-  count: number;
-  percentage: number;
-}
-
-/**
  * Death statistics by type
  */
 export interface DeathTypeStats {
@@ -121,10 +97,8 @@ export interface KillerStats {
 export interface PlayerDeathStats {
   playerName: string;
   totalDeaths: number;
-  deathsByPhase: Record<DeathPhase, number>;
   deathsByType: Record<DeathTypeCodeType, number>;
   killedBy: Record<string, number>;
-  averageDeathDay: number | null;
   deathRate: number; // Deaths per game played
 }
 
@@ -136,10 +110,6 @@ export interface DeathStatistics {
   totalGames: number;
   averageDeathsPerGame: number;
   
-  // Death timing statistics
-  deathsByTiming: DeathTimingStats[];
-  deathsByPhase: Record<DeathPhase, number>;
-  
   // Death type statistics
   deathsByType: DeathTypeStats[];
   
@@ -150,44 +120,8 @@ export interface DeathStatistics {
   playerDeathStats: PlayerDeathStats[];
   
   // Most dangerous phases/times
-  mostDeadlyPhase: DeathPhase;
-  mostDeadlyDay: number;
   mostCommonDeathType: DeathTypeCodeType | null;
   mostDeadlyKiller: string | null;
-}
-
-/**
- * Parse death timing string (e.g., "N1", "J2", "M3")
- */
-export function parseDeathTiming(deathTiming: string | null): DeathTiming | null {
-  if (!deathTiming) return null;
-  
-  const match = deathTiming.match(/^([NJM])(\d+)$/);
-  if (!match) return null;
-  
-  const [, phaseCode, dayStr] = match;
-  const day = parseInt(dayStr, 10);
-  
-  let phase: DeathPhase;
-  switch (phaseCode) {
-    case 'N':
-      phase = 'Nuit';
-      break;
-    case 'J':
-      phase = 'Jour';
-      break;
-    case 'M':
-      phase = 'Meeting';
-      break;
-    default:
-      return null;
-  }
-  
-  return {
-    phase,
-    day,
-    originalString: deathTiming
-  };
 }
 
 
@@ -437,7 +371,6 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
  */
 export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): Array<{
   playerName: string;
-  deathTiming: DeathTiming | null;
   deathType: DeathTypeCodeType;
   killerName: string | null;
   killerCamp: string | null;
@@ -465,7 +398,6 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       const deathCode = codifyDeathType(player.DeathType);
       return {
         playerName: player.Username,
-        deathTiming: parseDeathTiming(player.DeathTiming),
         deathType: deathCode,
         killerName: player.KillerName,
         killerCamp
@@ -511,7 +443,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   // Extract all deaths
   const allDeaths: Array<{
     playerName: string;
-    deathTiming: DeathTiming | null;
     deathType: DeathTypeCodeType;
     killerName: string | null;
     killerCamp: string | null;
@@ -556,39 +487,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   const totalGames = filteredGameData.length;
   const averageDeathsPerGame = totalGames > 0 ? totalDeaths / totalGames : 0;
 
-  // Calculate death timing statistics
-  const timingCounts: Record<string, number> = {};
-  const phaseCounts: Record<DeathPhase, number> = {
-    'Nuit': 0,
-    'Jour': 0,
-    'Meeting': 0
-  };
-  
-  allDeaths.forEach(death => {
-    if (death.deathTiming) {
-      const key = `${death.deathTiming.phase}-${death.deathTiming.day}`;
-      timingCounts[key] = (timingCounts[key] || 0) + 1;
-      phaseCounts[death.deathTiming.phase]++;
-    }
-  });
-
-  const deathsByTiming: DeathTimingStats[] = Object.entries(timingCounts)
-    .map(([key, count]) => {
-      const [phase, dayStr] = key.split('-');
-      return {
-        phase: phase as DeathPhase,
-        day: parseInt(dayStr, 10),
-        count,
-        percentage: totalDeaths > 0 ? (count / totalDeaths) * 100 : 0
-      };
-    })
-    .sort((a, b) => {
-      if (a.phase !== b.phase) {
-        const phaseOrder = { 'Nuit': 0, 'Jour': 1, 'Meeting': 2 };
-        return phaseOrder[a.phase] - phaseOrder[b.phase];
-      }
-      return a.day - b.day;
-    });
 
   // Calculate death type statistics
   const typeCounts: Partial<Record<DeathTypeCodeType, number>> = {};
@@ -640,7 +538,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   // Calculate player-specific death statistics
   const playerDeathCounts: Record<string, {
     totalDeaths: number;
-    deathsByPhase: Record<DeathPhase, number>;
     deathsByType: Record<DeathTypeCodeType, number>;
     killedBy: Record<string, number>;
     deathDays: number[];
@@ -650,7 +547,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     if (!playerDeathCounts[death.playerName]) {
       playerDeathCounts[death.playerName] = {
         totalDeaths: 0,
-        deathsByPhase: { 'Nuit': 0, 'Jour': 0, 'Meeting': 0 },
         deathsByType: {} as Record<DeathTypeCodeType, number>,
         killedBy: {},
         deathDays: []
@@ -659,11 +555,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     
     const playerData = playerDeathCounts[death.playerName];
     playerData.totalDeaths++;
-    
-    if (death.deathTiming) {
-      playerData.deathsByPhase[death.deathTiming.phase]++;
-      playerData.deathDays.push(death.deathTiming.day);
-    }
     
     playerData.deathsByType[death.deathType] = (playerData.deathsByType[death.deathType] || 0) + 1;
     
@@ -676,7 +567,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     .map(([playerName, data]) => ({
       playerName,
       totalDeaths: data.totalDeaths,
-      deathsByPhase: data.deathsByPhase,
       deathsByType: data.deathsByType,
       killedBy: data.killedBy,
       averageDeathDay: data.deathDays.length > 0 
@@ -688,22 +578,6 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     }))
     .sort((a, b) => b.totalDeaths - a.totalDeaths);
 
-  // Find most dangerous statistics
-  const mostDeadlyPhase = Object.entries(phaseCounts)
-    .reduce((max, [phase, count]) => count > max.count ? { phase: phase as DeathPhase, count } : max, 
-            { phase: 'Nuit' as DeathPhase, count: 0 }).phase;
-
-  const dayDeathCounts: Record<number, number> = {};
-  allDeaths.forEach(death => {
-    if (death.deathTiming) {
-      dayDeathCounts[death.deathTiming.day] = (dayDeathCounts[death.deathTiming.day] || 0) + 1;
-    }
-  });
-  
-  const mostDeadlyDay = Object.entries(dayDeathCounts)
-    .reduce((max, [day, count]) => count > max.count ? { day: parseInt(day, 10), count } : max,
-            { day: 1, count: 0 }).day;
-
   const mostCommonDeathType = deathsByType.length > 0 ? deathsByType[0].type : null;
   const mostDeadlyKiller = killerStats.length > 0 ? killerStats[0].killerName : null;
 
@@ -711,13 +585,9 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     totalDeaths,
     totalGames,
     averageDeathsPerGame,
-    deathsByTiming,
-    deathsByPhase: phaseCounts,
     deathsByType,
     killerStats,
     playerDeathStats,
-    mostDeadlyPhase,
-    mostDeadlyDay,
     mostCommonDeathType,
     mostDeadlyKiller
   };
