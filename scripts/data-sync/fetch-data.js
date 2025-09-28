@@ -240,6 +240,7 @@ async function main() {
     }
 
     // === FETCH AWS DATA ===
+    /*
     console.log('\n📦 Fetching AWS data from S3 bucket...');
     const gameLogUrls = await fetchStatsListUrls();
     
@@ -264,6 +265,7 @@ async function main() {
     } else {
       console.log('⚠️  No AWS game log files found');
     }
+      */
 
     // === MERGE AND SAVE UNIFIED DATA ===
     console.log('\n🔄 Creating unified dataset...');
