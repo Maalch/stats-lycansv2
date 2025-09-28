@@ -952,7 +952,7 @@ export function DeathStatisticsChart() {
       {/* Camp Filter */}
       <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-          Camp du tueur :
+          Camp :
         </label>
         <select
           id="camp-select"
@@ -1002,7 +1002,7 @@ export function DeathStatisticsChart() {
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           <div>
-            <h3>Top Tueurs (Total)</h3>
+            <h3>{selectedCamp === 'Tous les camps' ? 'Top Tueurs (Total)' : `Top Tueurs en ${selectedCamp} (Total)`}</h3>
             {highlightedPlayerAddedToTotal && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 
@@ -1015,7 +1015,7 @@ export function DeathStatisticsChart() {
               </p>
             )}
           </div>
-          <FullscreenChart title="Top Tueurs (Total)">
+          <FullscreenChart title={selectedCamp === 'Tous les camps' ? 'Top Tueurs (Total)' : `Top Tueurs en ${selectedCamp} (Total)`}>
             <div style={{ height: 440 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -1087,7 +1087,7 @@ export function DeathStatisticsChart() {
 
         <div className="lycans-graphique-section">
           <div>
-            <h3>Top Tueurs (Moyenne par Partie)</h3>
+            <h3>{selectedCamp === 'Tous les camps' ? 'Top Tueurs (Moyenne par Partie)' : `Top Tueurs en ${selectedCamp} (Moyenne par partie)`}</h3>
             {highlightedPlayerAddedToAverage && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 
@@ -1124,7 +1124,7 @@ export function DeathStatisticsChart() {
               ))}
             </select>
           </div>
-          <FullscreenChart title="Top Tueurs (Moyenne par Partie)">
+          <FullscreenChart title={selectedCamp === 'Tous les camps' ? 'Top Tueurs (Moyenne par Partie)' : `Top Tueurs en ${selectedCamp} (Moyenne par partie)`}>
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -1196,7 +1196,7 @@ export function DeathStatisticsChart() {
 
         <div className="lycans-graphique-section">
           <div>
-            <h3>Top Victimes</h3>
+            <h3>{selectedCamp === 'Tous les camps' ? 'Morts (Total)' : `Morts en ${selectedCamp} (Total)`}</h3>
             {highlightedPlayerAddedToDeaths && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 
@@ -1209,7 +1209,7 @@ export function DeathStatisticsChart() {
               </p>
             )}
           </div>
-          <FullscreenChart title="Top Victimes">
+          <FullscreenChart title={selectedCamp === 'Tous les camps' ? 'Morts (Total)' : `Morts en ${selectedCamp} (Total)`}>
             <div style={{ height: 440 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -1281,7 +1281,7 @@ export function DeathStatisticsChart() {
 
         <div className="lycans-graphique-section">
           <div>
-            <h3>Meilleurs Survivants</h3>
+            <h3>Meilleurs Survivants {selectedCamp === 'Tous les camps' ? '(Total)' : ` en ${selectedCamp}`}</h3>
             {highlightedPlayerAddedToSurvival && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 

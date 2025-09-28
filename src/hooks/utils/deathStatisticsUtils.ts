@@ -367,6 +367,56 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
 }
 
 /**
+ * Extract all kills from a game using the PlayersKilled field
+ */
+export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): Array<{
+  killerName: string;
+  victimName: string;
+  deathType: DeathTypeCodeType;
+  killerCamp: string;
+}> {
+  const kills: Array<{
+    killerName: string;
+    victimName: string;
+    deathType: DeathTypeCodeType;
+    killerCamp: string;
+  }> = [];
+
+  game.PlayerStats.forEach(killer => {
+    if (!killer.KilledNames || killer.KilledNames.length === 0) return;
+
+    const killerCamp = getPlayerCampFromRole(killer.MainRoleInitial, {
+      regroupLovers: true,
+      regroupVillagers: true,
+      regroupTraitor: false
+    });
+
+    // Apply camp filter for killers if specified
+    if (campFilter && campFilter !== 'Tous les camps' && killerCamp !== campFilter) {
+      return;
+    }
+
+    killer.KilledNames.forEach(victimName => {
+      // Find the victim's death information to get the death type
+      const victim = game.PlayerStats.find(p => p.Username === victimName);
+      if (!victim || !victim.DeathType) return;
+
+      const deathType = codifyDeathType(victim.DeathType);
+      if (deathType === DeathTypeCode.SURVIVOR) return;
+
+      kills.push({
+        killerName: killer.Username,
+        victimName,
+        deathType,
+        killerCamp
+      });
+    });
+  });
+
+  return kills;
+}
+
+/**
  * Extract all deaths from a game
  */
 export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): Array<{
@@ -502,21 +552,23 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     }))
     .sort((a, b) => b.count - a.count);
 
-  // Calculate killer statistics
+  // Calculate killer statistics using PlayersKilled arrays
   const killerCounts: Record<string, { kills: number; victims: Set<string>; killsByDeathType: Record<DeathTypeCodeType, number> }> = {};
-  allDeaths.forEach(death => {
-    if (death.killerName) {
-      if (!killerCounts[death.killerName]) {
-        killerCounts[death.killerName] = { kills: 0, victims: new Set(), killsByDeathType: {} as Record<DeathTypeCodeType, number> };
+  
+  // Extract all kills from PlayersKilled arrays
+  filteredGameData.forEach(game => {
+    const kills = extractKillsFromGame(game, campFilter);
+    kills.forEach(kill => {
+      if (!killerCounts[kill.killerName]) {
+        killerCounts[kill.killerName] = { kills: 0, victims: new Set(), killsByDeathType: {} as Record<DeathTypeCodeType, number> };
       }
-      killerCounts[death.killerName].kills++;
-      killerCounts[death.killerName].victims.add(death.playerName);
+      killerCounts[kill.killerName].kills++;
+      killerCounts[kill.killerName].victims.add(kill.victimName);
       
       // Track kills by death type
-      const deathType = death.deathType;
-      killerCounts[death.killerName].killsByDeathType[deathType] = 
-        (killerCounts[death.killerName].killsByDeathType[deathType] || 0) + 1;
-    }
+      killerCounts[kill.killerName].killsByDeathType[kill.deathType] = 
+        (killerCounts[kill.killerName].killsByDeathType[kill.deathType] || 0) + 1;
+    });
   });
 
   const killerStats: KillerStats[] = Object.entries(killerCounts)

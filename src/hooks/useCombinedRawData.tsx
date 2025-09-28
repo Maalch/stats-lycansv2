@@ -25,6 +25,7 @@ export interface PlayerStat {
   } | null;
   DeathType: string | null;       // Type of death (e.g., "Tué par un loup")
   KillerName: string | null;      // Name of the killer if applicable
+  KilledNames: string[];          // Names of players killed by this player (e.g., as a wolf)
   Victorious: boolean;            // Whether the player was on the winning side
   Votes: Vote[];                  // Array of votes cast by this player during meetings
 }
