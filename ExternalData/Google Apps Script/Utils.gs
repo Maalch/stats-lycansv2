@@ -74,23 +74,23 @@ const LYCAN_SCHEMA = {
       VOODOO: 'Vaudou'	//name of the voodoo in the game, if any																				
     }
   },
-  DETAILS: {
-    SHEET: 'Détails', //Details data about each player each game
+  DETAILSV2: {
+    SHEET: 'Détails v2', //Details data about each player each game in the new format
     COLS: {
       GAMEID: 'Game', //Game ID (unique),
       PLAYER: 'Joueur', //Name of the player
       VOD: 'POV', //Youtube link of the game for that player,
       COLOR: 'Couleur', //Name of the color (follow frenchColorMapping in api.ts),
       CAMP: 'Camp', //Name of the camp (Villageois, Loup ...)	
-      TRAITOR: 'Traître', //Checkbox: true / false if the player is the traitor in that game
-      VILLAGERPOWER: 'Métier villageois', //Power of the player, if in Villageois camp
-      WOLFPOWER: 'Pouvoir loup', //Power of the player, if in Wolf camp
+      MAINROLE: 'Rôle principal', //Main role of that player in the game, following the game logic (Villageois, Chasseur, Traître ...)
+      POWER: 'Métier & Pouvoir', //Power of the player (any camp)
       SECONDARYROLE: 'Rôle secondaire', //Name of the secondary role for that player. Empty or 'N/A' if no secondary role
       FINALCAMP: 'Camp final', //Name of the camp at the end of the game, only if different from start camp
       FINALROLE: 'Rôle final', //Name of the rôle at the end of the game, only if different from start role 
       FINALPOWER: 'Métier final', //Name of the power at the end of the game, only if different from start power
       DAYOFDEATH: 'Jour de mort', //Day of the death for that player (integer)
       TYPEOFDEATH: 'Type de mort', //Type of death for that player (Tué par Loup, Mort aux votes, etc...). 'N/A' is not killed
+      KILLEDPLAYERS: 'Personnes tuées', //List of player(s) killed by that player. If empty, killed no one
       KILLERPLAYERS: 'Joueurs tueurs', //List of player(s) that killed that player. Empty if not killed.
 
     }
