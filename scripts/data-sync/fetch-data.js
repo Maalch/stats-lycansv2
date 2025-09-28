@@ -120,7 +120,7 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
     legacyCount = legacyGameLog.GameStats.length;
     console.log(`✓ Added ${legacyCount} legacy games to map`);
   }
-  
+  /* FOR NOW, REMOVE
   // Add AWS games, merging with legacy if same ID exists
   for (const gameLog of awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
@@ -154,7 +154,7 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
       });
     }
   }
-  
+  */
   // Convert map back to array and remove source tracking
   const allGameStats = Array.from(gamesByIdMap.values()).map(game => {
     const { source, ...gameWithoutSource } = game;
