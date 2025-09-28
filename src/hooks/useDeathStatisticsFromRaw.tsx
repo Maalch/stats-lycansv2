@@ -20,19 +20,6 @@ export function useAvailableCampsFromRaw() {
   });
 }
 
-// Individual hooks for specific death statistics aspects
-export function useDeathTimingStats() {
-  return usePlayerStatsBase((gameData) => {
-    const stats = computeDeathStatistics(gameData);
-    return stats ? {
-      deathsByTiming: stats.deathsByTiming,
-      deathsByPhase: stats.deathsByPhase,
-      mostDeadlyPhase: stats.mostDeadlyPhase,
-      mostDeadlyDay: stats.mostDeadlyDay
-    } : null;
-  });
-}
-
 export function useDeathTypeStats() {
   return usePlayerStatsBase((gameData) => {
     const stats = computeDeathStatistics(gameData);
