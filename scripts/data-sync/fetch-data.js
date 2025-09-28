@@ -59,6 +59,7 @@ async function fetchLegacyEndpointData(endpoint) {
   }
 }
 
+/* TEMPORARILY DISABLED - AWS SYNC
 async function fetchStatsListUrls() {
   console.log('Fetching stats list from AWS S3...');
   
@@ -81,7 +82,9 @@ async function fetchStatsListUrls() {
     throw error;
   }
 }
+*/
 
+/* TEMPORARILY DISABLED - AWS SYNC
 async function fetchGameLogData(url) {
   console.log(`Fetching game log: ${path.basename(url)}`);
   
@@ -100,6 +103,7 @@ async function fetchGameLogData(url) {
     throw error;
   }
 }
+*/
 
 async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   console.log('Merging legacy and AWS game logs into unified structure...');
@@ -165,12 +169,12 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   allGameStats.sort((a, b) => new Date(a.StartDate) - new Date(b.StartDate));
   
   const mergedGameLog = {
-    ModVersion: "Legacy + AWS",
+    ModVersion: "Legacy Only",
     TotalRecords: allGameStats.length,
     Sources: {
-      Legacy: legacyCount - mergedCount,
-      AWS: awsCount,
-      Merged: mergedCount
+      Legacy: legacyCount,
+      AWS: 0, // Temporarily disabled
+      Merged: 0 // Temporarily disabled
     },
     GameStats: allGameStats
   };
@@ -269,6 +273,7 @@ async function main() {
 
     // === MERGE AND SAVE UNIFIED DATA ===
     console.log('\n🔄 Creating unified dataset...');
+    const awsGameLogs = []; // Temporarily disabled AWS sync
     const mergedGameLog = await mergeAllGameLogs(legacyGameLogData, awsGameLogs);
     await saveDataToFile('gameLog.json', mergedGameLog);
     
@@ -283,10 +288,10 @@ async function main() {
     
     await createDataIndex(!!legacyGameLogData, awsGameLogs.length, mergedGameLog.TotalRecords);
     
-    console.log('\n✅ Multi-source data sync completed successfully!');
+    console.log('\n✅ Legacy-only data sync completed successfully!');
     console.log(`📊 Total games processed: ${mergedGameLog.TotalRecords}`);
     console.log(`   - Legacy: ${mergedGameLog.Sources.Legacy} games`);
-    console.log(`   - AWS: ${mergedGameLog.Sources.AWS} games`);
+    console.log(`   - AWS: ${mergedGameLog.Sources.AWS} games (temporarily disabled)`);
   } catch (error) {
     console.error('❌ Data sync failed:', error.message);
     process.exit(1);
