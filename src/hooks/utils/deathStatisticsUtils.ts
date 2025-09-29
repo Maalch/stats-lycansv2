@@ -141,7 +141,7 @@ export function codifyDeathType(deathType: string | null): DeathTypeCodeType {
   }
   
   // Werewolf kills (various forms)
-  if (normalized.includes('tué par loup') || 
+  if (normalized === 'tué par loup' || 
       normalized.includes('tué par un loup') ||
       normalized.includes('tué par loup ressuscité')) {
     if (normalized.includes('ressuscité')) {
@@ -237,7 +237,7 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
     case DeathTypeCode.LOVER_DEATH:
       return 'Mort par amoureux';
     case DeathTypeCode.LOVER_WEREWOLF:
-      return 'Tué par son amoureux loup';
+      return 'Tué par un loup amoureux';
     case DeathTypeCode.BEAST_KILL:
       return 'Dévoré par la Bête';
     case DeathTypeCode.ASSASSIN_POTION:
