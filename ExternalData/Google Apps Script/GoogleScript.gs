@@ -590,7 +590,6 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
     DeathPosition: null, // Not available in legacy data
     DeathType: playerDetails && playerDetails.typeOfDeath ? playerDetails.typeOfDeath : null,
     KillerName: determineKillerName(playerDetails),
-    KilledNames: determinateKilledNames(playerDetails.killedPlayers),
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
   };
 
@@ -746,15 +745,3 @@ function determineKillerName(playerDetails) {
   
   return null;
 }
-
-/**
- * Helper function to determine the killed names
- */
-function determinateKilledNames(killedPlayersList) {
-  if (!killedPlayersList) return null;
-  
-  const killedPlayers = killedPlayersList ? killedPlayersList.split(',').map(function(p) { return p.trim(); }) : [];
-
-  return killedPlayers;
-}
-

@@ -367,56 +367,6 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
 }
 
 /**
- * Extract all kills from a game using the PlayersKilled field
- */
-export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): Array<{
-  killerName: string;
-  victimName: string;
-  deathType: DeathTypeCodeType;
-  killerCamp: string;
-}> {
-  const kills: Array<{
-    killerName: string;
-    victimName: string;
-    deathType: DeathTypeCodeType;
-    killerCamp: string;
-  }> = [];
-
-  game.PlayerStats.forEach(killer => {
-    if (!killer.KilledNames || killer.KilledNames.length === 0) return;
-
-    const killerCamp = getPlayerCampFromRole(killer.MainRoleFinal, {
-      regroupLovers: true,
-      regroupVillagers: true,
-      regroupTraitor: false
-    });
-
-    // Apply camp filter for killers if specified
-    if (campFilter && campFilter !== 'Tous les camps' && killerCamp !== campFilter) {
-      return;
-    }
-
-    killer.KilledNames.forEach(victimName => {
-      // Find the victim's death information to get the death type
-      const victim = game.PlayerStats.find(p => p.Username === victimName);
-      if (!victim || !victim.DeathType) return;
-
-      const deathType = codifyDeathType(victim.DeathType);
-      if (deathType === DeathTypeCode.SURVIVOR) return;
-
-      kills.push({
-        killerName: killer.Username,
-        victimName,
-        deathType,
-        killerCamp
-      });
-    });
-  });
-
-  return kills;
-}
-
-/**
  * Extract all deaths from a game
  */
 export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): Array<{
@@ -470,6 +420,63 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       // Only include deaths where the victim is from the selected camp
       return victimCamp === campFilter;
     });
+}
+
+/**
+ * Extract all kills from a game by analyzing the KillerName field from victim perspectives
+ */
+export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): Array<{
+  killerName: string;
+  victimName: string;
+  deathType: DeathTypeCodeType;
+  killerCamp: string;
+}> {
+  const kills: Array<{
+    killerName: string;
+    victimName: string;
+    deathType: DeathTypeCodeType;
+    killerCamp: string;
+  }> = [];
+  
+  game.PlayerStats.forEach(player => {
+    // Only process players who were killed by someone (not environmental deaths or votes)
+    if (player.KillerName && player.DeathType) {
+      const deathCode = codifyDeathType(player.DeathType);
+      
+      // Skip non-kill deaths (survivors, votes, environmental deaths)
+      if (deathCode === 'SURVIVOR' || deathCode === 'VOTE' || 
+          deathCode === 'DISCONNECT' || deathCode === 'STARVATION' || 
+          deathCode === 'FALL_DEATH' || deathCode === 'AVATAR_DEATH') {
+        return;
+      }
+      
+      // Find the killer's information
+      const killerPlayer = game.PlayerStats.find(p => p.Username === player.KillerName);
+      if (!killerPlayer) {
+        return; // Skip if killer not found in this game
+      }
+      
+      const killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleFinal, {
+        regroupLovers: true,
+        regroupVillagers: true,
+        regroupTraitor: false
+      });
+      
+      kills.push({
+        killerName: player.KillerName,
+        victimName: player.Username,
+        deathType: deathCode,
+        killerCamp
+      });
+    }
+  });
+  
+  // Filter by camp if specified - for killer statistics, filter by killer's camp
+  if (campFilter && campFilter !== 'Tous les camps') {
+    return kills.filter(kill => kill.killerCamp === campFilter);
+  }
+  
+  return kills;
 }
 
 /**
