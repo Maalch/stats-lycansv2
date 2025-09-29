@@ -262,10 +262,11 @@ export function DeathStatisticsChart() {
           playerGameCounts[playerName] = (playerGameCounts[playerName] || 0) + 1;
         } else {
           // Filter active: only count games where player was in the filtered camp
-          const playerCamp = getPlayerCampFromRole(player.MainRoleFinal, {
+          // Use MainRoleInitial for consistency with the new role detection logic
+          const playerCamp = getPlayerCampFromRole(player.MainRoleInitial, {
             regroupLovers: true,
             regroupVillagers: true,
-            regroupTraitor: true
+            regroupTraitor: false
           });
           
           if (playerCamp === selectedCamp) {
@@ -353,10 +354,10 @@ export function DeathStatisticsChart() {
         
         // Apply the same camp filter logic as for game counting
         const shouldCountThisPlayer = !selectedCamp || selectedCamp === 'Tous les camps' || 
-          getPlayerCampFromRole(player.MainRoleFinal, {
+          getPlayerCampFromRole(player.MainRoleInitial, {
             regroupLovers: true,
             regroupVillagers: true,
-            regroupTraitor: true
+            regroupTraitor: false
           }) === selectedCamp;
           
         if (shouldCountThisPlayer && player.DeathType && player.DeathType !== 'N/A') {

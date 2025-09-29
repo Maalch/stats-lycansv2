@@ -46,8 +46,8 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
   
   filteredGameData.forEach(game => {
     game.PlayerStats.forEach(player => {
-
-        const camp = getPlayerCampFromRole(player.MainRoleFinal, {
+        // Use MainRoleInitial for camp detection to match the new role detection logic
+        const camp = getPlayerCampFromRole(player.MainRoleInitial, {
           regroupLovers: true,
           regroupVillagers: true,
           regroupTraitor: false
@@ -387,11 +387,23 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       if (player.KillerName) {
         const killerPlayer = game.PlayerStats.find(p => p.Username === player.KillerName);
         if (killerPlayer) {
-          killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleFinal, {
+          // For killer statistics: use MainRoleInitial as base camp
+          // But add special logic for kills when MainRoleFinal differs from MainRoleInitial
+          killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
             regroupLovers: true,
             regroupVillagers: true,
             regroupTraitor: false
           });
+          
+          // Special case: if MainRoleFinal is Loup or Zombie and different from MainRoleInitial,
+          // categorize these kills under the final role
+          if (killerPlayer.MainRoleFinal && killerPlayer.MainRoleFinal !== killerPlayer.MainRoleInitial) {
+            if (killerPlayer.MainRoleFinal === 'Loup') {
+              killerCamp = 'Loup';
+            } else if (killerPlayer.MainRoleFinal === 'Zombie') {
+              killerCamp = 'Zombie';
+            }
+          }
         }
       }
       
@@ -407,11 +419,11 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
     .filter(death => {
       if (!campFilter || campFilter === 'Tous les camps') return true;
       
-      // Find the victim's camp
+      // Find the victim's camp using MainRoleInitial
       const victimPlayer = game.PlayerStats.find(p => p.Username === death.playerName);
       if (!victimPlayer) return false;
       
-      const victimCamp = getPlayerCampFromRole(victimPlayer.MainRoleFinal, {
+      const victimCamp = getPlayerCampFromRole(victimPlayer.MainRoleInitial, {
         regroupLovers: true,
         regroupVillagers: true,
         regroupTraitor: false
@@ -456,11 +468,23 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
         return; // Skip if killer not found in this game
       }
       
-      const killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleFinal, {
+      // For killer statistics: use MainRoleInitial as base camp
+      // But add special logic for kills when MainRoleFinal differs from MainRoleInitial
+      let killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
         regroupLovers: true,
         regroupVillagers: true,
         regroupTraitor: false
       });
+      
+      // Special case: if MainRoleFinal is Loup or Zombie and different from MainRoleInitial,
+      // categorize these kills under the final role
+      if (killerPlayer.MainRoleFinal && killerPlayer.MainRoleFinal !== killerPlayer.MainRoleInitial) {
+        if (killerPlayer.MainRoleFinal === 'Loup') {
+          killerCamp = 'Loup';
+        } else if (killerPlayer.MainRoleFinal === 'Zombie') {
+          killerCamp = 'Zombie';
+        }
+      }
       
       kills.push({
         killerName: player.KillerName,
@@ -527,7 +551,8 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
         playerGameCounts[playerName] = (playerGameCounts[playerName] || 0) + 1;
       } else {
         // Filter active: only count games where player was in the filtered camp
-        const playerCamp = getPlayerCampFromRole(player.MainRoleFinal, {
+        // Use MainRoleInitial for consistency with the new role detection logic
+        const playerCamp = getPlayerCampFromRole(player.MainRoleInitial, {
           regroupLovers: true,
           regroupVillagers: true,
           regroupTraitor: false
