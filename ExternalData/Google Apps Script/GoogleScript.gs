@@ -681,8 +681,11 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
 function determineMainRoleInitialWithDetails(playerName, roleAssignments, playerDetails) {
   
   // Determine which camp to use based on type (initial)
-  if (playerDetails.mainRole) {
+  if (playerDetails.mainRole && playerDetails.mainRole !== 'Inconnu') {
       return playerDetails.mainRole;
+  }
+  else if (playerDetails.mainRole === 'Inconnu') {
+    return playerDetails.camp;
   }
   else {
     // Otherwise, fall back to the original method
