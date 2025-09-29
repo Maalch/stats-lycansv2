@@ -42,7 +42,7 @@ export function DeathStatisticsChart() {
   const [selectedCamp, setSelectedCamp] = useState<string>(
     navigationState.deathStatsSelectedCamp || 'Tous les camps'
   );
-  const [minGamesForAverage, setMinGamesForAverage] = useState<number>(5);
+  const [minGamesForAverage, setMinGamesForAverage] = useState<number>(10);
   const { data: availableCamps } = useAvailableCampsFromRaw();
   const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp);
   const { data: gameLogData } = useFilteredGameLogData();
