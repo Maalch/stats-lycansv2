@@ -10,6 +10,7 @@ const lycansColorScheme: Record<string, string> = {
   'La Bête': '#808080',
   'Chasseur de primes': '#800080',
   'Vaudou': '#A626FF',
+  'Zombie': '#A626FF',
   'Traître': '#FF8000',
   'Amoureux': '#FF80FF',
   'Loup': '#FF0000',

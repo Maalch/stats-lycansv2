@@ -583,8 +583,8 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
     MainRoleInitial: determineMainRoleInitialWithDetails(playerName, roleAssignments, playerDetails),
     MainRoleFinal: null,
     Color: playerDetails && playerDetails.color ? playerDetails.color : null,
-    Power: playerDetails && playerDetails.power ? playerDetails.power : null,
-    SecondaryRole: determineSecondaryRole(playerDetails),
+    Power: playerDetails && playerDetails.power && playerDetails.power !== 'N/A' && playerDetails.power !== 'Inconnu' ? playerDetails.power : null,
+    SecondaryRole: playerDetails && playerDetails.secondaryRole && playerDetails.secondaryRole !== 'N/A' && playerDetails.secondaryRole !== 'Inconnu' ? playerDetails.secondaryRole : null,
     DeathDateIrl: null, // Not available in legacy data
     DeathTiming: determineDeathTiming(playerDetails),
     DeathPosition: null, // Not available in legacy data
@@ -594,7 +594,7 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
   };
 
-  playerStats.MainRoleFinal = determineMainRoleFinalWithDetails(playerName, roleAssignments, playerDetails, playerStats);
+  playerStats.MainRoleFinal = determineMainRoleFinalWithDetails(playerDetails, playerStats);
   
   return playerStats;
 }
@@ -696,30 +696,16 @@ function determineMainRoleInitialWithDetails(playerName, roleAssignments, player
 /**
  * Helper function to determine main role with details data priority
  */
-function determineMainRoleFinalWithDetails(playerName, roleAssignments, playerDetails, playerStats) {
+function determineMainRoleFinalWithDetails(playerDetails, playerStats) {
   
   // Determine which camp to use based on type (final)
   if (playerDetails.finalRole) {
     return playerDetails.finalRole;
   }
-  else {
-    // Otherwise, fall back to the original method
-    return determineMainRole(playerName, roleAssignments);
+  else { 
+    // Otherwise, fall back to the main role initial
+    return playerStats.MainRoleInitial;
   }
-}
-
-/**
- * Helper function to determine secondary role
- */
-function determineSecondaryRole(playerDetails) {
-  if (!playerDetails || !playerDetails.secondaryRole) return null;
-  
-  // Return secondary role if it's not 'N/A'
-  if (playerDetails.secondaryRole !== 'N/A' && playerDetails.secondaryRole !== '') {
-    return playerDetails.secondaryRole;
-  }
-  
-  return null;
 }
 
 /**

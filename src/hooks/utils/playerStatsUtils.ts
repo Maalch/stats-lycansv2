@@ -46,8 +46,8 @@ export function computePlayerStats(
           // Increment games played
           allPlayers[player].gamesPlayed++;
 
-          // Get player's camp from their MainRoleInitial
-          const playerCamp = playerStat.MainRoleInitial;
+          // Get player's camp from their MainRoleFinal
+          const playerCamp = playerStat.MainRoleFinal;
 
           // Increment camp count - create the camp if it doesn't exist
           if (playerCamp) {

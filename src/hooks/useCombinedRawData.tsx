@@ -13,7 +13,7 @@ export interface PlayerStat {
   Username: string;
   Color?: string;                 // Player color assigned in game
   MainRoleInitial: string;        // Original role at game start
-  MainRoleFinal: string | null;    // Final role if changed (e.g., by role swap)
+  MainRoleFinal: string;    // Final role if changed (e.g., by role swap)
   Power: string | null;           // Special power (linked to the role), if any
   SecondaryRole: string | null;     // Secondary role if any
   DeathDateIrl: string | null;    // Real-life date of death in game

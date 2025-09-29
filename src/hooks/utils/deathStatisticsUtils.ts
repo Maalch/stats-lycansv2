@@ -47,7 +47,7 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
   filteredGameData.forEach(game => {
     game.PlayerStats.forEach(player => {
 
-        const camp = getPlayerCampFromRole(player.MainRoleInitial, {
+        const camp = getPlayerCampFromRole(player.MainRoleFinal, {
           regroupLovers: true,
           regroupVillagers: true,
           regroupTraitor: false
@@ -385,7 +385,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
   game.PlayerStats.forEach(killer => {
     if (!killer.KilledNames || killer.KilledNames.length === 0) return;
 
-    const killerCamp = getPlayerCampFromRole(killer.MainRoleInitial, {
+    const killerCamp = getPlayerCampFromRole(killer.MainRoleFinal, {
       regroupLovers: true,
       regroupVillagers: true,
       regroupTraitor: false
@@ -437,7 +437,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       if (player.KillerName) {
         const killerPlayer = game.PlayerStats.find(p => p.Username === player.KillerName);
         if (killerPlayer) {
-          killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
+          killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleFinal, {
             regroupLovers: true,
             regroupVillagers: true,
             regroupTraitor: false
@@ -461,7 +461,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       const victimPlayer = game.PlayerStats.find(p => p.Username === death.playerName);
       if (!victimPlayer) return false;
       
-      const victimCamp = getPlayerCampFromRole(victimPlayer.MainRoleInitial, {
+      const victimCamp = getPlayerCampFromRole(victimPlayer.MainRoleFinal, {
         regroupLovers: true,
         regroupVillagers: true,
         regroupTraitor: false
@@ -520,7 +520,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
         playerGameCounts[playerName] = (playerGameCounts[playerName] || 0) + 1;
       } else {
         // Filter active: only count games where player was in the filtered camp
-        const playerCamp = getPlayerCampFromRole(player.MainRoleInitial, {
+        const playerCamp = getPlayerCampFromRole(player.MainRoleFinal, {
           regroupLovers: true,
           regroupVillagers: true,
           regroupTraitor: false

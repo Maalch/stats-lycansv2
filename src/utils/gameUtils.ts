@@ -151,6 +151,10 @@ export function getPlayerCampFromRole(
   if (roleName === 'Chasseur' || roleName === 'Alchimiste') {
     return regroupVillagers ? 'Villageois' : roleName;
   }
+
+  if (roleName === 'Zombie') {
+    return 'Vaudou';
+  }
   
   // Handle Traitor role
   if (roleName === 'Traître') {
@@ -173,7 +177,7 @@ export function getWinnerCampFromGame(game: GameLogEntry): string {
   let winnerCamp = '';
   
   if (winners.length > 0) {
-    const winnerRoles = winners.map(w => w.MainRoleInitial);
+    const winnerRoles = winners.map(w => w.MainRoleFinal);
     
     // Check for wolf/traitor victory
     if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {

@@ -171,7 +171,7 @@ function processGameDuration(
 ): void {
   // Extract data from GameLogEntry structure
   const nbPlayers = game.PlayerStats.length;
-  const nbWolves = game.PlayerStats.filter(p => p.MainRoleInitial === 'Loup').length;
+  const nbWolves = game.PlayerStats.filter(p => p.MainRoleFinal === 'Loup').length;
   
   // Determine winner camp from PlayerStats
   let winnerCamp = getWinnerCampFromGame(game);

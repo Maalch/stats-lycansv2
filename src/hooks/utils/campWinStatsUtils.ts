@@ -22,7 +22,7 @@ function buildGamePlayerCampMapFromGameLog(gameData: GameLogEntry[]): Record<str
 
     game.PlayerStats.forEach(playerStat => {
       const playerName = playerStat.Username;
-      let playerRole = getPlayerCampFromRole(playerStat.MainRoleInitial);
+      let playerRole = getPlayerCampFromRole(playerStat.MainRoleFinal);
 
       if (playerName && playerRole) {
         gamePlayerCampMap[gameId][playerName] = playerRole;
@@ -52,7 +52,7 @@ function extractSoloRoles(game: GameLogEntry): string[] {
   // Solo roles are roles that aren't standard village/wolf camps
   const standardRoles = ['Villageois', 'Loup', 'Traître'];
   game.PlayerStats.forEach(playerStat => {
-    let role = getPlayerCampFromRole(playerStat.MainRoleInitial);
+    let role = getPlayerCampFromRole(playerStat.MainRoleFinal);
 
     if (role && !standardRoles.includes(role)) {
       soloRoles.push(role);
@@ -73,7 +73,7 @@ function getWinnerCamp(game: GameLogEntry): string | null {
   }
   
   // Get the role of the first victorious player with all grouping options enabled
-  const winnerRole = getPlayerCampFromRole(victoriousPlayers[0].MainRoleInitial, {
+  const winnerRole = getPlayerCampFromRole(victoriousPlayers[0].MainRoleFinal, {
     regroupLovers: true,
     regroupVillagers: true,
     regroupTraitor: true
