@@ -679,8 +679,8 @@ export function PlayerComparisonChart() {
                     </tr>
                     <tr>
                       <td>Score de Victoire (/100)</td>
-                      <td>{comparisonData.player1.winRateScore}</td>
-                      <td>{comparisonData.player2.winRateScore}</td>
+                      <td>{comparisonData.player1.winRateScore.toFixed(0)}</td>
+                      <td>{comparisonData.player2.winRateScore.toFixed(0)}</td>
                     </tr>
                     <tr>
                       <td>Score de Participation (/100)</td>
