@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
 import { getAllDeathTypes, getKillDescription, getDeathDescription, codifyDeathType, type DeathTypeCodeType } from '../../hooks/utils/deathStatisticsUtils';
-import { useGameLogData } from '../../hooks/useCombinedRawData';
+import { useFilteredGameLogData } from '../../hooks/useCombinedRawData';
 import { getPlayerCampFromRole } from '../../utils/gameUtils';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useSettings } from '../../context/SettingsContext';
@@ -45,13 +45,13 @@ export function DeathStatisticsChart() {
   const [minGamesForAverage, setMinGamesForAverage] = useState<number>(5);
   const { data: availableCamps } = useAvailableCampsFromRaw();
   const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp);
-  const { data: gameLogData } = useGameLogData();
+  const { data: gameLogData } = useFilteredGameLogData();
   const { settings } = useSettings();
   const lycansColors = useThemeAdjustedLycansColorScheme();
 
   // Get all unique death types for chart configuration
   const availableDeathTypes = useMemo(() => {
-    return gameLogData ? getAllDeathTypes(gameLogData.GameStats) : [];
+    return gameLogData ? getAllDeathTypes(gameLogData) : [];
   }, [gameLogData]);
 
   // Define colors for different death types
@@ -249,7 +249,7 @@ export function DeathStatisticsChart() {
     const playerGameCounts: Record<string, number> = {};
     
     // Filter games to only include those with complete death information (same as in deathStatisticsUtils)
-    const filteredGameData = gameLogData.GameStats.filter(game => 
+    const filteredGameData = gameLogData.filter(game => 
       !game.LegacyData || game.LegacyData.deathInformationFilled === true
     );
     
