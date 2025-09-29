@@ -119,7 +119,7 @@ function calculateGameDuration(start: string | null, end: string | null): number
  * @param playerName - The name of the player to check
  * @param game - The GameLogEntry to check within  
  * @param excludeTraitor - If true, return 'Traître' instead of 'Loup' for traitors
- * @returns The player's camp/role from MainRoleInitial, or 'Villageois' if not found
+ * @returns The player's camp/role from MainRoleFinal, or 'Villageois' if not found
  * 
  */
 export function getPlayerCampFromGameLog(
@@ -134,7 +134,7 @@ export function getPlayerCampFromGameLog(
   if (!playerStat) return 'Villageois';
   
   // Use the improved getPlayerCampFromRole with regroupTraitor option based on excludeTraitor
-  const playerRole = getPlayerCampFromRole(playerStat.MainRoleInitial, {
+  const playerRole = getPlayerCampFromRole(playerStat.MainRoleFinal, {
     regroupLovers: true,
     regroupVillagers: true,
     regroupTraitor: !excludeTraitor // If excludeTraitor is true, don't regroup traitor (keep as 'Traître')
@@ -166,8 +166,8 @@ export function isPlayerInSmallCampFromGameLog(
   
   if (!playerStat) return false;
   
-  // Check if the player's MainRoleInitial matches the requested camp
-  const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+  // Check if the player's MainRoleFinal matches the requested camp
+  const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
 
   return playerCamp === campName;
 }
@@ -407,7 +407,7 @@ export function filterByCampFromGameLog(
         isInSelectedCamp = playerCamp === 'Loup' && 
                !game.PlayerStats.some(p => 
                  p.Username.toLowerCase() === selectedPlayer.toLowerCase() && 
-                 p.MainRoleInitial === 'Traître'
+                 p.MainRoleFinal === 'Traître'
                );
       } else {
         isInSelectedCamp = playerCamp === selectedCamp;
@@ -439,7 +439,7 @@ export function filterByCampFromGameLog(
         if (selectedCamp === 'Autres' && smallCamps) {
           return smallCamps.some(camp => {
             return game.PlayerStats.some(player => {
-              const playerRole = getPlayerCampFromRole(player.MainRoleInitial);
+              const playerRole = getPlayerCampFromRole(player.MainRoleFinal);
               return playerRole === camp;
             });
           });
@@ -447,7 +447,7 @@ export function filterByCampFromGameLog(
 
         // Check specific camp assignment
         return game.PlayerStats.some(player => {
-          const playerRole = getPlayerCampFromRole(player.MainRoleInitial);
+          const playerRole = getPlayerCampFromRole(player.MainRoleFinal);
           return playerRole === selectedCamp;
         });
       }
@@ -603,7 +603,7 @@ export function filterByPlayerPairFromGameLog(
           const playerStat = game.PlayerStats.find(p => 
             p.Username.toLowerCase() === player.toLowerCase()
           );
-          return getPlayerCampFromRole(playerStat?.MainRoleInitial) === 'Loup';
+          return getPlayerCampFromRole(playerStat?.MainRoleFinal) === 'Loup';
         });
 
       case 'lovers':
@@ -612,7 +612,7 @@ export function filterByPlayerPairFromGameLog(
           const playerStat = game.PlayerStats.find(p => 
             p.Username.toLowerCase() === player.toLowerCase()
           );
-          return getPlayerCampFromRole(playerStat?.MainRoleInitial) === 'Amoureux';
+          return getPlayerCampFromRole(playerStat?.MainRoleFinal) === 'Amoureux';
         });
 
       default:
@@ -737,7 +737,7 @@ export function parseRolesFromGameLog(game: GameLogEntry): GameRoles {
   
   // Extract roles from PlayerStats and group players by role
   game.PlayerStats.forEach(player => {
-    const roleName = getPlayerCampFromRole(player.MainRoleInitial);
+    const roleName = getPlayerCampFromRole(player.MainRoleFinal);
     if (!roleMap.has(roleName)) {
       roleMap.set(roleName, []);
     }
@@ -775,9 +775,9 @@ export function computeGameDetailsFromGameLog(
 
     // Calculate derived fields from PlayerStats
     const playerCount = game.PlayerStats.length;
-    const wolves = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleInitial) === 'Loup');
-    const traitors = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleInitial) === 'Traître');
-    const lovers = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleInitial) === 'Amoureux');
+    const wolves = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleFinal) === 'Loup');
+    const traitors = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleFinal) === 'Traître');
+    const lovers = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleFinal) === 'Amoureux');
     const victoriousPlayers = game.PlayerStats.filter(p => p.Victorious);
     
     // Calculate wolf count (includes traitors)
@@ -788,8 +788,8 @@ export function computeGameDetailsFromGameLog(
     
     // Extract solo roles (players who are not in main camps: Loup, Villageois, Amoureux)
     const mainCampRoles = ['Loup', 'Villageois', 'Amoureux'];
-    const soloRolePlayers = game.PlayerStats.filter(p => !mainCampRoles.includes(getPlayerCampFromRole(p.MainRoleInitial)));
-    const soloRoles = soloRolePlayers.length > 0 ? soloRolePlayers.map(p => getPlayerCampFromRole(p.MainRoleInitial)).join(', ') : null;
+    const soloRolePlayers = game.PlayerStats.filter(p => !mainCampRoles.includes(getPlayerCampFromRole(p.MainRoleFinal)));
+    const soloRoles = soloRolePlayers.length > 0 ? soloRolePlayers.map(p => getPlayerCampFromRole(p.MainRoleFinal)).join(', ') : null;
     
     // Convert StartDate (ISO) to French format (DD/MM/YYYY)
     const gameDate = new Date(game.StartDate);

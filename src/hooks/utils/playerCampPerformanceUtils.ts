@@ -27,7 +27,7 @@ function calculateCampStatistics(
     const campsInGame = new Set<string>();
     
     game.PlayerStats.forEach(playerStat => {
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
       campsInGame.add(playerCamp);
     });
 
@@ -48,7 +48,7 @@ function calculateCampStatistics(
     const winningCamps = new Set<string>();
     game.PlayerStats.forEach(playerStat => {
       if (playerStat.Victorious) {
-        const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+        const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
         winningCamps.add(playerCamp);
       }
     });
@@ -100,7 +100,7 @@ function analyzePlayerPerformance(
       if (!player) return;
 
       // Determine player's camp using helper function
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
 
       // Track player performance in this camp
       if (!campStats[playerCamp].players[player]) {

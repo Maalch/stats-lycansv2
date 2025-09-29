@@ -16,7 +16,7 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
   
   // Group players by their camps
   const campGroups = playerData.reduce((groups, player) => {
-    const camp = getPlayerCampFromRole(player.MainRoleInitial);
+    const camp = getPlayerCampFromRole(player.MainRoleFinal);
     if (!groups[camp]) {
       groups[camp] = [];
     }
@@ -79,7 +79,9 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
                       style={{ 
                         borderColor: playerColor
                       }}
-                      title={`${player.Username} - ${getPlayerCampFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${formatDeathTiming(player.DeathTiming)})` : ''}`}
+                        title={`${player.Username} - ${getPlayerCampFromRole(player.MainRoleInitial) !== getPlayerCampFromRole(player.MainRoleFinal)
+                          ? `${getPlayerCampFromRole(player.MainRoleInitial)} puis ${getPlayerCampFromRole(player.MainRoleFinal)}`
+                          : getPlayerCampFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${formatDeathTiming(player.DeathTiming)})` : ''}`}
                     >
                       <span className="player-name">{player.Username}</span>
                       {player.DeathTiming && <span className="death-indicator">💀</span>}
@@ -226,11 +228,11 @@ export function GameDetailView({ game }: { game: any }) {
             {game.playerData
               .sort((a: any, b: any) => {
                 // Get camps for both players
-                const campA = getPlayerCampFromRole(a.MainRoleInitial);
-                const campB = getPlayerCampFromRole(b.MainRoleInitial);
-                
+                const campA = getPlayerCampFromRole(a.MainRoleFinal);
+                const campB = getPlayerCampFromRole(b.MainRoleFinal);
+
                 // Define camp priority order
-                const campPriority = ['Villageois', 'Loup', 'Traître', 'Amoureux'];
+                const campPriority = ['Villageois', 'Loup', 'Amoureux'];
                 const priorityA = campPriority.indexOf(campA);
                 const priorityB = campPriority.indexOf(campB);
                 
@@ -253,8 +255,10 @@ export function GameDetailView({ game }: { game: any }) {
               })
               .map((playerStat: any) => {
               // Get role and camp information from MainRoleInitial
-              const camp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+              const camp = getPlayerCampFromRole(playerStat.MainRoleInitial);          
               const originalRole = playerStat.MainRoleInitial;
+              const finalcamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
+              const finalRole = playerStat.MainRoleFinal;
               const power = playerStat.Power;
               const secondaryRole = playerStat.SecondaryRole;
               
@@ -276,12 +280,16 @@ export function GameDetailView({ game }: { game: any }) {
                 displayText += ` + ${secondaryRole}`;
               }
 
-              // Get the camp border color
-              let campTextColor = lycansColorScheme[playerStat.MainRoleInitial as keyof typeof lycansColorScheme] || '#666';
-              if (campTextColor === '#666') {
-                 campTextColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#666';
+              if (finalRole && finalRole !== originalRole) {
+                displayText += ` (devient ${finalRole})`;
               }
-              const campBorderColor = lycansColorScheme[camp as keyof typeof lycansColorScheme] || '#666';
+
+              // Get the camp border color
+              let campTextColor = lycansColorScheme[playerStat.MainRoleFinal as keyof typeof lycansColorScheme] || '#666';
+              if (campTextColor === '#666') {
+                 campTextColor = lycansColorScheme[finalcamp as keyof typeof lycansColorScheme] || '#666';
+              }
+              const campBorderColor = lycansColorScheme[finalcamp as keyof typeof lycansColorScheme] || '#666';
               
               // Check if player is dead
               const isDead = playerStat.DeathTiming;

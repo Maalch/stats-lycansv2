@@ -107,12 +107,12 @@ export function computePlayerPairingStats(
   gameData.forEach(game => {
     // Find all wolves in this game (exclude traitors by default with regroupTraitor: false, only pure wolves)
     const wolves = game.PlayerStats.filter(player => 
-      getPlayerCampFromRole(player.MainRoleInitial, { regroupTraitor: false }) === 'Loup'
+      getPlayerCampFromRole(player.MainRoleFinal, { regroupTraitor: false }) === 'Loup'
     );
 
     // Find all lovers in this game (using regroupLovers: true to group them as 'Amoureux')
     const lovers = game.PlayerStats.filter(player => 
-      getPlayerCampFromRole(player.MainRoleInitial, { regroupLovers: true }) === 'Amoureux'
+      getPlayerCampFromRole(player.MainRoleFinal, { regroupLovers: true }) === 'Amoureux'
     );
 
     // Process wolf pairs

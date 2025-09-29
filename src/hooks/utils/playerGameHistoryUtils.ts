@@ -60,8 +60,8 @@ export function computePlayerGameHistory(
     );
 
     if (playerStat) {
-      // Get player's camp from their MainRoleInitial (which contains the full role name)
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+      // Get player's camp from their MainRoleFinal (which contains the full role name)
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
       
       // Get the winning camp
       const winnerCamp = getWinnerCampFromGame(game);

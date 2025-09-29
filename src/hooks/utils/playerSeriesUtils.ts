@@ -507,7 +507,7 @@ export function computePlayerSeries(
       if (!player) return;
 
       const playerStats = playerCampSeries[player];
-      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
+      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
       const playerWon = playerStat.Victorious;
 
       // Process camp series - now using DisplayedId
