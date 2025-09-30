@@ -1,71 +1,21 @@
 import { useMemo } from 'react';
 import { usePlayerStatsBase } from './utils/baseStatsHook';
 import { computePlayerStats } from './utils/playerStatsUtils';
-import type { PlayerStat } from '../types/api';
-
-export interface Achievement {
-  id: string;
-  title: string;
-  description: string;
-  type: 'good' | 'bad';
-  category: 'general' | 'performance' | 'series' | 'kills';
-  rank?: number; // Position in the top 10 (1-10)
-  value?: number; // The actual value (games, win rate, etc.)
-  redirectTo?: {
-    tab: string;
-    subTab?: string;
-    chartSection?: string;
-  };
-}
-
-export interface PlayerAchievements {
-  playerId: string;
-  allGamesAchievements: Achievement[];
-  moddedOnlyAchievements: Achievement[];
-}
-
-// Helper function to check if a player is in top 10 of a sorted list
-function findPlayerRank(sortedPlayers: PlayerStat[], playerName: string): { rank: number; value: number } | null {
-  const index = sortedPlayers.findIndex(p => p.player === playerName);
-  if (index === -1 || index >= 10) return null;
-  
-  return {
-    rank: index + 1,
-    value: getPlayerValue(sortedPlayers[index])
-  };
-}
-
-// Helper to extract the relevant value from PlayerStat for different achievement types
-function getPlayerValue(playerStat: PlayerStat): number {
-  return playerStat.gamesPlayed; // Default, will be overridden in specific contexts
-}
-
-// Helper to create achievement object
-function createAchievement(
-  id: string,
-  title: string,
-  description: string,
-  type: 'good' | 'bad',
-  rank: number,
-  value: number,
-  redirectTo?: Achievement['redirectTo']
-): Achievement {
-  return {
-    id,
-    title,
-    description,
-    type,
-    category: 'general',
-    rank,
-    value,
-    redirectTo: redirectTo || {
-      tab: 'players',
-      subTab: 'playersGeneral'
-    }
-  };
-}
+import { processGeneralAchievements } from './utils/achievementProcessors/generalAchievements';
+import { processHistoryAchievements, computeMapStats } from './utils/achievementProcessors/historyAchievements';
+import { processPerformanceAchievements, computeCampStats } from './utils/achievementProcessors/performanceAchievements';
+import { processSeriesAchievements } from './utils/achievementProcessors/seriesAchievements';
+import { processKillsAchievements } from './utils/achievementProcessors/killsAchievements';
+import { processComparisonAchievements } from './utils/achievementProcessors/comparisonAchievements';
+import { computePlayerSeries } from './utils/playerSeriesUtils';
+import { computeDeathStatistics } from './utils/deathStatisticsUtils';
+import { useGameLogData } from './useCombinedRawData';
+import type { Achievement, PlayerAchievements } from '../types/achievements';
 
 export function usePlayerAchievements(playerName: string | null): PlayerAchievements | null {
+  // Get raw game data for comparison achievements
+  const { data: rawGameData } = useGameLogData();
+  
   // Get player stats for all games
   const { data: allGamesStats } = usePlayerStatsBase((gameData) => computePlayerStats(gameData));
   
@@ -75,100 +25,98 @@ export function usePlayerAchievements(playerName: string | null): PlayerAchievem
     return computePlayerStats(moddedGames);
   });
 
+  // Get map-based statistics for all games
+  const { data: allGamesMapStats } = usePlayerStatsBase((gameData) => computeMapStats(gameData));
+  
+  // Get map-based statistics for modded games only
+  const { data: moddedOnlyMapStats } = usePlayerStatsBase((gameData) => {
+    const moddedGames = gameData.filter(game => game.Modded === true);
+    return computeMapStats(moddedGames);
+  });
+
+  // Get camp performance statistics for all games
+  const { data: allGamesCampStats } = usePlayerStatsBase((gameData) => computeCampStats(gameData));
+  
+  // Get camp performance statistics for modded games only
+  const { data: moddedOnlyCampStats } = usePlayerStatsBase((gameData) => {
+    const moddedGames = gameData.filter(game => game.Modded === true);
+    return computeCampStats(moddedGames);
+  });
+
+  // Get series statistics for all games
+  const { data: allGamesSeriesStats } = usePlayerStatsBase((gameData) => computePlayerSeries(gameData));
+  
+  // Get series statistics for modded games only
+  const { data: moddedOnlySeriesStats } = usePlayerStatsBase((gameData) => {
+    const moddedGames = gameData.filter(game => game.Modded === true);
+    return computePlayerSeries(moddedGames);
+  });
+
+  // Get death statistics for all games
+  const { data: allGamesDeathStats } = usePlayerStatsBase((gameData) => computeDeathStatistics(gameData));
+  
+  // Get death statistics for modded games only
+  const { data: moddedOnlyDeathStats } = usePlayerStatsBase((gameData) => {
+    const moddedGames = gameData.filter(game => game.Modded === true);
+    return computeDeathStatistics(moddedGames);
+  });
+
   const achievements = useMemo(() => {
-    if (!playerName || !allGamesStats || !moddedOnlyStats) return null;
+    if (!playerName || !allGamesStats || !moddedOnlyStats || !allGamesMapStats || !moddedOnlyMapStats || !allGamesCampStats || !moddedOnlyCampStats || !allGamesSeriesStats || !moddedOnlySeriesStats || !allGamesDeathStats || !moddedOnlyDeathStats || !rawGameData) return null;
 
     const allGamesAchievements: Achievement[] = [];
     const moddedOnlyAchievements: Achievement[] = [];
 
     // Process both all games and modded only
     const datasets = [
-      { stats: allGamesStats, achievements: allGamesAchievements, suffix: '' },
-      { stats: moddedOnlyStats, achievements: moddedOnlyAchievements, suffix: ' (Parties Moddées)' }
+      { 
+        stats: allGamesStats, 
+        mapStats: allGamesMapStats, 
+        campStats: allGamesCampStats, 
+        seriesStats: allGamesSeriesStats,
+        deathStats: allGamesDeathStats,
+        gameData: rawGameData.GameStats,
+        achievements: allGamesAchievements, 
+        suffix: '' 
+      },
+      { 
+        stats: moddedOnlyStats, 
+        mapStats: moddedOnlyMapStats, 
+        campStats: moddedOnlyCampStats, 
+        seriesStats: moddedOnlySeriesStats,
+        deathStats: moddedOnlyDeathStats,
+        gameData: rawGameData.GameStats.filter((game: any) => game.Modded === true),
+        achievements: moddedOnlyAchievements, 
+        suffix: ' (Parties Moddées)' 
+      }
     ];
 
-    datasets.forEach(({ stats, achievements, suffix }) => {
-      if (!stats || !stats.playerStats) return;
+    datasets.forEach(({ stats, mapStats, campStats, seriesStats, deathStats, gameData, achievements, suffix }) => {
+      if (!stats || !stats.playerStats || !mapStats || !campStats || !seriesStats || !deathStats || !gameData) return;
 
-      // 1. Top 10 in participations
-      const byParticipations = [...stats.playerStats].sort((a, b) => b.gamesPlayed - a.gamesPlayed);
-      const participationRank = findPlayerRank(byParticipations, playerName);
-      if (participationRank) {
-        achievements.push(createAchievement(
-          `participation-${suffix ? 'modded' : 'all'}`,
-          `🎯 Top ${participationRank.rank} Participations${suffix}`,
-          `${participationRank.rank}${participationRank.rank === 1 ? 'er' : 'ème'} joueur le plus actif avec ${participationRank.value} parties`,
-          'good',
-          participationRank.rank,
-          participationRank.value
-        ));
-      }
+      // Process general achievements (participations, win rates)
+      const generalAchievements = processGeneralAchievements(stats.playerStats, playerName, suffix);
+      achievements.push(...generalAchievements);
 
-      // 2. Top 10 in best win rate (min. 10 games)
-      const eligibleFor10Games = stats.playerStats.filter(p => p.gamesPlayed >= 10);
-      const byWinRate10 = [...eligibleFor10Games].sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent));
-      const winRate10Rank = findPlayerRank(byWinRate10, playerName);
-      if (winRate10Rank) {
-        const winRate = parseFloat(byWinRate10.find(p => p.player === playerName)?.winPercent || '0');
-        achievements.push(createAchievement(
-          `winrate-10-${suffix ? 'modded' : 'all'}`,
-          `🏆 Top ${winRate10Rank.rank} Taux de Victoire${suffix}`,
-          `${winRate10Rank.rank}${winRate10Rank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire: ${winRate}% (min. 10 parties)`,
-          'good',
-          winRate10Rank.rank,
-          winRate
-        ));
-      }
+      // Process history/map achievements
+      const historyAchievements = processHistoryAchievements(mapStats, playerName, suffix);
+      achievements.push(...historyAchievements);
 
-      // 3. Top 10 in best win rate (min. 50 games)
-      const eligibleFor50Games = stats.playerStats.filter(p => p.gamesPlayed >= 50);
-      if (eligibleFor50Games.length > 0) {
-        const byWinRate50 = [...eligibleFor50Games].sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent));
-        const winRate50Rank = findPlayerRank(byWinRate50, playerName);
-        if (winRate50Rank) {
-          const winRate = parseFloat(byWinRate50.find(p => p.player === playerName)?.winPercent || '0');
-          achievements.push(createAchievement(
-            `winrate-50-${suffix ? 'modded' : 'all'}`,
-            `🌟 Top ${winRate50Rank.rank} Taux de Victoire Expert${suffix}`,
-            `${winRate50Rank.rank}${winRate50Rank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire: ${winRate}% (min. 50 parties)`,
-            'good',
-            winRate50Rank.rank,
-            winRate
-          ));
-        }
-      }
+      // Process performance/camp achievements  
+      const performanceAchievements = processPerformanceAchievements(campStats, playerName, suffix);
+      achievements.push(...performanceAchievements);
 
-      // 4. Top 10 in lowest win rate (min. 10 games) - "bad" achievement
-      const byWorstWinRate10 = [...eligibleFor10Games].sort((a, b) => parseFloat(a.winPercent) - parseFloat(b.winPercent));
-      const worstWinRate10Rank = findPlayerRank(byWorstWinRate10, playerName);
-      if (worstWinRate10Rank) {
-        const winRate = parseFloat(byWorstWinRate10.find(p => p.player === playerName)?.winPercent || '0');
-        achievements.push(createAchievement(
-          `worst-winrate-10-${suffix ? 'modded' : 'all'}`,
-          `💀 Top ${worstWinRate10Rank.rank} Pire Taux de Victoire${suffix}`,
-          `${worstWinRate10Rank.rank}${worstWinRate10Rank.rank === 1 ? 'er' : 'ème'} pire taux de victoire: ${winRate}% (min. 10 parties)`,
-          'bad',
-          worstWinRate10Rank.rank,
-          winRate
-        ));
-      }
+      // Process series achievements
+      const seriesAchievements = processSeriesAchievements(seriesStats, playerName, suffix);
+      achievements.push(...seriesAchievements);
 
-      // 5. Top 10 in lowest win rate (min. 50 games) - "bad" achievement
-      if (eligibleFor50Games.length > 0) {
-        const byWorstWinRate50 = [...eligibleFor50Games].sort((a, b) => parseFloat(a.winPercent) - parseFloat(b.winPercent));
-        const worstWinRate50Rank = findPlayerRank(byWorstWinRate50, playerName);
-        if (worstWinRate50Rank) {
-          const winRate = parseFloat(byWorstWinRate50.find(p => p.player === playerName)?.winPercent || '0');
-          achievements.push(createAchievement(
-            `worst-winrate-50-${suffix ? 'modded' : 'all'}`,
-            `☠️ Top ${worstWinRate50Rank.rank} Pire Taux de Victoire Expert${suffix}`,
-            `${worstWinRate50Rank.rank}${worstWinRate50Rank.rank === 1 ? 'er' : 'ème'} pire taux de victoire: ${winRate}% (min. 50 parties)`,
-            'bad',
-            worstWinRate50Rank.rank,
-            winRate
-          ));
-        }
-      }
+      // Process kills and deaths achievements
+      const killsAchievements = processKillsAchievements(deathStats, playerName, suffix);
+      achievements.push(...killsAchievements);
+
+      // Process comparison achievements (face-to-face)
+      const comparisonAchievements = processComparisonAchievements(stats, gameData, playerName, suffix);
+      achievements.push(...comparisonAchievements);
     });
 
     return {
@@ -176,7 +124,7 @@ export function usePlayerAchievements(playerName: string | null): PlayerAchievem
       allGamesAchievements,
       moddedOnlyAchievements
     };
-  }, [playerName, allGamesStats, moddedOnlyStats]);
+  }, [playerName, allGamesStats, moddedOnlyStats, allGamesMapStats, moddedOnlyMapStats, allGamesCampStats, moddedOnlyCampStats, allGamesSeriesStats, moddedOnlySeriesStats, allGamesDeathStats, moddedOnlyDeathStats, rawGameData]);
 
   return achievements;
 }

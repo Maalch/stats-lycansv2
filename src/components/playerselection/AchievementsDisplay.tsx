@@ -1,5 +1,5 @@
 import { useNavigation } from '../../context/NavigationContext';
-import type { Achievement } from '../../hooks/usePlayerAchievements';
+import type { Achievement } from '../../types/achievements';
 import './AchievementsDisplay.css';
 
 interface AchievementsDisplayProps {

@@ -134,10 +134,9 @@ export function PlayerSelectionPage() {
   return (
     <div className="player-selection-container">
       <div className="player-selection-header">
-        <h1>Sélection de Joueur</h1>
+        <h2>Sélection de Joueur</h2>
         <p className="header-description">
           Choisissez un joueur pour le mettre en évidence dans tous les graphiques. 
-          Cliquez sur une carte pour voir l'historique détaillé du joueur.
         </p>
         
         <div className="search-controls">

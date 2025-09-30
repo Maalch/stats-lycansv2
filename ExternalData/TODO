@@ -8,21 +8,21 @@ Here is the list of possible achievements:
    - Top 10 in participations
    - Top 10 in best win rate (min. 10 games)
    - Top 10 in best win rate (min. 50 games)
-- From "Player history" charts:
+- From "Player history" charts / playerGameHistoryUtils hook:
    - Top 10 in best win rate (Village map)
    - Top 10 in best win rate (Château map)
-- From "Player Performances" charts:
+- From "Player Performances" charts / playerCamPerformancesUtils hook:
    - Top 10 in best "overperformer" (min. 25 games) --> from "Hall of fame"
    - Top 10 in best Villageois (min. 25 games)
    - Top 10 in best Loup (min. 10 games)
    - Top 10 in best Idiot du Village (min. 5 games)
    - Top 10 in best Amoureux (min. 5 games)
    - Top 10 in best solo rôle (min. 10 games) --> need a new "solo role" group here
-- From "Player series" charts:
+- From "Player series" charts / playerSeriesUtils hook:
    - Top 10 in longest Villageois serie 
    - Top 10 in longest Loup serie 
    - Top 10 in longest win serie 
-- From "Morts & Kills" charts:
+- From "Morts & Kills" charts / deathStatisticsUtils hook:
    - Top 10 killers
    - Top 10 killers (average per game, min. 20 games)
    - Top 10 killers as Loup
@@ -46,7 +46,7 @@ From "Morts & Kills" charts:
    - Top 10 killed as Loup (average per game, min. 10 games) 
 
 Here is a list of individual cards:
-- From "Face à face" charts:
+- From "Face à face" charts / playerComparisonUtils hook:
    - Best mate (min. 10 games together)
    - Worst mate (min. 10 games together)
    - Best matchup (min. 10 games against)
