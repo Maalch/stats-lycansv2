@@ -401,7 +401,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
             if (killerPlayer.MainRoleFinal === 'Loup') {
               killerCamp = 'Loup';
             } else if (killerPlayer.MainRoleFinal === 'Zombie') {
-              killerCamp = 'Zombie';
+              killerCamp = 'Vaudou';
             }
           }
         }
@@ -482,7 +482,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
         if (killerPlayer.MainRoleFinal === 'Loup') {
           killerCamp = 'Loup';
         } else if (killerPlayer.MainRoleFinal === 'Zombie') {
-          killerCamp = 'Zombie';
+          killerCamp = 'Vaudou';
         }
       }
       
