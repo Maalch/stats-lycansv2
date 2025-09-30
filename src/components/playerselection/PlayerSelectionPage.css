@@ -92,7 +92,6 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  max-width: 400px;
   width: 100%;
 }
 
@@ -231,8 +230,8 @@
 .player-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .stat-item {
@@ -263,10 +262,11 @@
 /* Player Period */
 .player-period {
   margin-bottom: 1.5rem;
-  padding: 0.75rem;
+  padding: 1rem;
   background: var(--background-primary);
   border-radius: 8px;
   border: 1px solid var(--border-color);
+  text-align: center;
 }
 
 .period-label {
@@ -290,6 +290,43 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+/* Achievements Section */
+.achievements-section {
+  margin-top: 1.5rem;
+}
+
+.achievements-filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.filter-btn {
+  flex: 1;
+  max-width: 200px;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--background-primary);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.filter-btn.active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
 }
 
 .highlight-btn {
@@ -372,11 +409,56 @@
   color: var(--text-secondary);
 }
 
+/* Search Results */
+.search-results {
+  width: 100%;
+  max-width: 600px;
+  background: var(--background-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.search-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.search-results-header h3 {
+  color: var(--text-primary);
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.suggestion-btn.highlighted {
+  background: var(--accent-primary-transparent);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.suggestion-btn.highlighted:hover {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.highlight-indicator {
+  color: var(--accent-primary);
+  font-weight: bold;
+}
+
 /* No Results */
 .no-results {
   text-align: center;
   padding: 2rem;
   color: var(--text-secondary);
+  background: var(--background-secondary);
+  border: 2px dashed var(--border-color);
+  border-radius: 16px;
+  max-width: 400px;
+  width: 100%;
 }
 
 .clear-search-btn {
