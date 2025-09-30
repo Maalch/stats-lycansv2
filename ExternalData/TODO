@@ -4,7 +4,7 @@ Player selection page: chose what player will be highlighted by default on all w
 Display Achievements and individual card for that player.
 
 Here is the list of possible achievements:
-- From "Player general stats" charts:
+- From "Player general stats" charts / playerStatsUtils hook:
    - Top 10 in participations
    - Top 10 in best win rate (min. 10 games)
    - Top 10 in best win rate (min. 50 games)
@@ -32,7 +32,7 @@ Here is the list of possible achievements:
    - Top 10 killer of Loup/Solo as Villageois with Tir de Chasseur
 
 Here is a list of "bad" achievements:
-- From "Player general stats" charts:
+- From "Player general stats" charts / playerStatsUtils hook:
    - Top 10 in lowest win rate (min. 10 games)
    - Top 10 in lowest win rate (min. 50 games)
 - From "Player series" charts:

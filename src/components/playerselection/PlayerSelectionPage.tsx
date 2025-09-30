@@ -2,7 +2,9 @@ import { useState, useMemo } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
 import { useGameLogData } from '../../hooks/useCombinedRawData';
+import { usePlayerAchievements } from '../../hooks/usePlayerAchievements';
 import { getPlayerNameMapping } from '../../utils/playerNameMapping';
+import { AchievementsDisplay } from './AchievementsDisplay';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import './PlayerSelectionPage.css';
 
@@ -20,7 +22,9 @@ export function PlayerSelectionPage() {
   const { settings, updateSettings } = useSettings();
   const { navigateToTab } = useNavigation();
   const { data: gameLogData, isLoading, error } = useGameLogData();
+  const playerAchievements = usePlayerAchievements(settings.highlightedPlayer);
   const [searchQuery, setSearchQuery] = useState('');
+  const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
 
   // Calculate basic stats for all players
   const playerStats = useMemo(() => {
@@ -91,6 +95,7 @@ export function PlayerSelectionPage() {
 
   const handlePlayerSelect = (playerName: string) => {
     updateSettings({ highlightedPlayer: playerName });
+    setSearchQuery(''); // Clear search to show the selected player's card
   };
 
   const handlePlayerCardClick = (playerName: string) => {
@@ -155,8 +160,45 @@ export function PlayerSelectionPage() {
       </div>
 
       <div className="player-display">
-        {settings.highlightedPlayer ? (
-          // Show the highlighted player's card
+        {searchQuery ? (
+          // Show search results when there's a search query
+          filteredPlayers.length > 0 ? (
+            <div className="search-results">
+              <div className="search-results-header">
+                <h3>Résultats de recherche:</h3>
+                <button 
+                  className="clear-search-btn"
+                  onClick={() => setSearchQuery('')}
+                >
+                  Effacer la recherche
+                </button>
+              </div>
+              <div className="suggestion-list">
+                {sortedFilteredPlayers.map((player) => (
+                  <button
+                    key={player.name}
+                    className={`suggestion-btn ${player.isHighlighted ? 'highlighted' : ''}`}
+                    onClick={() => handlePlayerSelect(player.name)}
+                  >
+                    {player.name} ({player.totalGames} parties, {player.winRate.toFixed(1)}% victoires)
+                    {player.isHighlighted && <span className="highlight-indicator"> ★</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="no-results">
+              <p>Aucun joueur trouvé pour "{searchQuery}"</p>
+              <button 
+                className="clear-search-btn"
+                onClick={() => setSearchQuery('')}
+              >
+                Effacer la recherche
+              </button>
+            </div>
+          )
+        ) : settings.highlightedPlayer ? (
+          // Show the highlighted player's card when no search query
           (() => {
             const highlightedPlayerStats = playerStats.find(p => p.name === settings.highlightedPlayer);
             if (!highlightedPlayerStats) {
@@ -215,11 +257,43 @@ export function PlayerSelectionPage() {
                     ★ Retirer la mise en évidence
                   </button>
                   
-                  {/* Placeholder for future achievements */}
-                  <div className="achievements-placeholder">
-                    <span className="achievements-label">Succès:</span>
-                    <span className="achievements-coming-soon">À venir...</span>
-                  </div>
+                  {/* Achievements Display */}
+                  {playerAchievements && (
+                    <div className="achievements-section">
+                      <div className="achievements-filter">
+                        <button
+                          className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setAchievementFilter('all');
+                          }}
+                        >
+                          Toutes les parties
+                        </button>
+                        <button
+                          className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setAchievementFilter('modded');
+                          }}
+                        >
+                          Parties moddées
+                        </button>
+                      </div>
+                      
+                      <AchievementsDisplay
+                        achievements={achievementFilter === 'all' 
+                          ? playerAchievements.allGamesAchievements 
+                          : playerAchievements.moddedOnlyAchievements
+                        }
+                        title={achievementFilter === 'all' 
+                          ? 'Succès - Toutes les parties' 
+                          : 'Succès - Parties moddées'
+                        }
+                        emptyMessage="Aucun succès dans les statistiques générales"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -251,18 +325,6 @@ export function PlayerSelectionPage() {
           </div>
         )}
       </div>
-      
-      {filteredPlayers.length === 0 && searchQuery && (
-        <div className="no-results">
-          <p>Aucun joueur trouvé pour "{searchQuery}"</p>
-          <button 
-            className="clear-search-btn"
-            onClick={() => setSearchQuery('')}
-          >
-            Effacer la recherche
-          </button>
-        </div>
-      )}
     </div>
   );
 }
