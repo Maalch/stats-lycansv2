@@ -189,6 +189,23 @@ interface ChartPlayerStat extends PlayerStat {
     hoveredPlayer === entry.player ? 'var(--accent-hover)' : 
     'var(--chart-primary)'
   }
+  stroke={isHighlightedFromSettings ? "var(--accent-primary)" : "none"}
+  strokeWidth={isHighlightedFromSettings ? 3 : 0}
+  strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+  opacity={isHighlightedAddition ? 0.8 : 1}
+/>
+
+// X-axis player name highlighting
+<XAxis 
+  tick={({ x, y, payload }) => (
+    <text
+      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+    >
+      {payload.value}
+    </text>
+  )}
 />
 ```
 
