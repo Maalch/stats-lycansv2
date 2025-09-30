@@ -71,6 +71,10 @@ interface NavigationContextType {
   navigateBack: () => void;
   clearNavigation: () => void;
   updateNavigationState: (state: Partial<NavigationState>) => void;
+  // Tab navigation
+  requestedTab?: { mainTab: string; subTab?: string };
+  navigateToTab: (mainTab: string, subTab?: string) => void;
+  clearTabNavigation: () => void;
 }
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
@@ -79,6 +83,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const [currentView, setCurrentView] = useState<string>('');
   const [navigationFilters, setNavigationFilters] = useState<NavigationFilters>({});
   const [navigationState, setNavigationState] = useState<NavigationState>({});
+  const [requestedTab, setRequestedTab] = useState<{ mainTab: string; subTab?: string } | undefined>();
 
   const navigateToGameDetails = (filters: NavigationFilters = {}) => {
     setNavigationFilters(filters);
@@ -100,6 +105,14 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
     setNavigationState(prev => ({ ...prev, ...state }));
   };
 
+  const navigateToTab = (mainTab: string, subTab?: string) => {
+    setRequestedTab({ mainTab, subTab });
+  };
+
+  const clearTabNavigation = () => {
+    setRequestedTab(undefined);
+  };
+
   return (
     <NavigationContext.Provider value={{
       currentView,
@@ -108,7 +121,10 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       navigateToGameDetails,
       navigateBack,
       clearNavigation,
-      updateNavigationState
+      updateNavigationState,
+      requestedTab,
+      navigateToTab,
+      clearTabNavigation
     }}>
       {children}
     </NavigationContext.Provider>
