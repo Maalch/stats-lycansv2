@@ -34,7 +34,16 @@ const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetails
 // Add settings import
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
 
+// Player selection page
+const PlayerSelectionPage = lazy(() => import('./components/playerselection/PlayerSelectionPage').then(m => ({ default: m.PlayerSelectionPage })));
+
 const MAIN_TABS = [
+  { 
+    key: 'playerSelection', 
+    label: 'Sélection Joueur', 
+    icon: '🏆',
+    description: 'Choisir un joueur et voir ses succès'
+  },
   { 
     key: 'players', 
     label: 'Joueurs', 
@@ -172,9 +181,9 @@ export default function App() {
 }
 
 function MainApp() {
-  const { currentView } = useNavigation();
+  const { currentView, requestedTab, clearTabNavigation } = useNavigation();
   const { lastRecordedGameDate, isLoading: dateLoading } = useLastRecordedGameDate();
-  const [selectedMainTab, setSelectedMainTab] = useState('players');
+  const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
@@ -198,6 +207,21 @@ function MainApp() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  // Handle tab navigation requests
+  useEffect(() => {
+    if (requestedTab) {
+      setSelectedMainTab(requestedTab.mainTab);
+      if (requestedTab.subTab) {
+        if (requestedTab.mainTab === 'players') {
+          setSelectedPlayerStat(requestedTab.subTab);
+        } else if (requestedTab.mainTab === 'general') {
+          setSelectedGeneralStat(requestedTab.subTab);
+        }
+      }
+      clearTabNavigation();
+    }
+  }, [requestedTab, clearTabNavigation]);
 
   // Check if we're in TestZone route (hash-based)
   const isTestZone = currentHash === '#/TestZone';
@@ -274,6 +298,16 @@ function MainApp() {
 
   const renderContent = () => {
     switch (selectedMainTab) {
+      
+      case 'playerSelection': {
+        return (
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <PlayerSelectionPage />
+            </Suspense>
+          </div>
+        );
+      }
     
       case 'players': {
         const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayerGameHistoryChart;
