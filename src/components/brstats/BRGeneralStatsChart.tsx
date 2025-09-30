@@ -81,17 +81,17 @@ export function BRGeneralStatsChart() {
     const sortedByParticipations = Object.values(playerStats)
       .sort((a: any, b: any) => b.participations - a.participations);
     
-    const top20Participations = sortedByParticipations.slice(0, 20);
+    const top15Participations = sortedByParticipations.slice(0, 15);
     
-    // Check if highlighted player is in top 20 participations
-    const highlightedPlayerInTop20Participations = settings.highlightedPlayer && 
-      top20Participations.some(p => p.name === settings.highlightedPlayer);
+    // Check if highlighted player is in top 15 participations
+    const highlightedPlayerInTop15Participations = settings.highlightedPlayer && 
+      top15Participations.some(p => p.name === settings.highlightedPlayer);
     
-    // If highlighted player is not in top 20 but exists in all stats, add them
+    // If highlighted player is not in top 15 but exists in all stats, add them
     let highlightedPlayerAddedToParticipations = false;
-    let topPlayersByParticipations: ChartPlayerStat[] = [...top20Participations];
-    
-    if (settings.highlightedPlayer && !highlightedPlayerInTop20Participations) {
+    let topPlayersByParticipations: ChartPlayerStat[] = [...top15Participations];
+
+    if (settings.highlightedPlayer && !highlightedPlayerInTop15Participations) {
       const highlightedPlayerData = sortedByParticipations.find(p => p.name === settings.highlightedPlayer);
       if (highlightedPlayerData) {
         topPlayersByParticipations.push({
@@ -109,17 +109,17 @@ export function BRGeneralStatsChart() {
     const sortedByWinRate = eligibleForWinRate
       .sort((a: any, b: any) => b.winRate - a.winRate);
     
-    const top20WinRate = sortedByWinRate.slice(0, 20);
-    
-    // Check if highlighted player is in top 20 win rate (among eligible players)
-    const highlightedPlayerInTop20WinRate = settings.highlightedPlayer && 
-      top20WinRate.some(p => p.name === settings.highlightedPlayer);
-    
-    // If highlighted player is not in top 20 but exists in all stats, add them
+    const top15WinRate = sortedByWinRate.slice(0, 15);
+
+    // Check if highlighted player is in top 15 win rate (among eligible players)
+    const highlightedPlayerInTop15WinRate = settings.highlightedPlayer && 
+      top15WinRate.some(p => p.name === settings.highlightedPlayer);
+
+    // If highlighted player is not in top 15 but exists in all stats, add them
     let highlightedPlayerAddedToWinRate = false;
-    let topPlayersByWins: ChartPlayerStat[] = [...top20WinRate];
-    
-    if (settings.highlightedPlayer && !highlightedPlayerInTop20WinRate) {
+    let topPlayersByWins: ChartPlayerStat[] = [...top15WinRate];
+
+    if (settings.highlightedPlayer && !highlightedPlayerInTop15WinRate) {
       // Search in all player stats, not just eligible ones
       const highlightedPlayerData = sortedByParticipations.find(p => p.name === settings.highlightedPlayer);
       if (highlightedPlayerData) {
@@ -138,17 +138,17 @@ export function BRGeneralStatsChart() {
     const sortedByAverageScore = eligibleForAverageScore
       .sort((a: any, b: any) => b.averageScore - a.averageScore);
     
-    const top20AverageScore = sortedByAverageScore.slice(0, 20);
-    
-    // Check if highlighted player is in top 20 average score (among eligible players)
-    const highlightedPlayerInTop20AverageScore = settings.highlightedPlayer && 
-      top20AverageScore.some(p => p.name === settings.highlightedPlayer);
-    
-    // If highlighted player is not in top 20 but exists in all stats, add them
+    const top15AverageScore = sortedByAverageScore.slice(0, 15);
+
+    // Check if highlighted player is in top 15 average score (among eligible players)
+    const highlightedPlayerInTop15AverageScore = settings.highlightedPlayer &&
+      top15AverageScore.some(p => p.name === settings.highlightedPlayer);
+
+    // If highlighted player is not in top 15 but exists in all stats, add them
     let highlightedPlayerAddedToAverageScore = false;
-    let topPlayersByAverageScore: ChartPlayerStat[] = [...top20AverageScore];
+    let topPlayersByAverageScore: ChartPlayerStat[] = [...top15AverageScore];
     
-    if (settings.highlightedPlayer && !highlightedPlayerInTop20AverageScore) {
+    if (settings.highlightedPlayer && !highlightedPlayerInTop15AverageScore) {
       // Search in all player stats, not just eligible ones
       const highlightedPlayerData = sortedByParticipations.find(p => p.name === settings.highlightedPlayer);
       if (highlightedPlayerData) {
@@ -258,7 +258,7 @@ export function BRGeneralStatsChart() {
           <h3>Top Joueurs - Participations</h3>
           {stats.highlightedPlayerInParticipations && settings.highlightedPlayer && (
             <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
-              🎯 {settings.highlightedPlayer} affiché en plus du top 20
+              🎯 {settings.highlightedPlayer} affiché en plus du top 15
             </p>
           )}
           <FullscreenChart
@@ -278,6 +278,21 @@ export function BRGeneralStatsChart() {
                   textAnchor="end" 
                   height={80}
                   fontSize={12}
+                  interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
                 />
                 <YAxis />
                 <Tooltip
@@ -299,7 +314,7 @@ export function BRGeneralStatsChart() {
                               marginTop: '0.25rem',
                               fontStyle: 'italic'
                             }}>
-                              🎯 Affiché via sélection (hors top 20)
+                              🎯 Affiché via sélection (hors top 15)
                             </div>
                           )}
                           {isHighlightedFromSettings && !isHighlightedAddition && (
@@ -392,7 +407,7 @@ export function BRGeneralStatsChart() {
           <h3>Top Joueurs - Taux de Victoire (min. 3 parties)</h3>
           {stats.highlightedPlayerInWinRate && settings.highlightedPlayer && (
             <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
-              🎯 {settings.highlightedPlayer} affiché en plus du top 20
+              🎯 {settings.highlightedPlayer} affiché en plus du top 15
             </p>
           )}
           <FullscreenChart
@@ -412,6 +427,21 @@ export function BRGeneralStatsChart() {
                   textAnchor="end" 
                   height={80}
                   fontSize={12}
+                  interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
                 />
                 <YAxis />
                 <Tooltip
@@ -444,7 +474,7 @@ export function BRGeneralStatsChart() {
                               marginTop: '0.25rem',
                               fontStyle: 'italic'
                             }}>
-                              🎯 Affiché via sélection (hors top 20)
+                              🎯 Affiché via sélection (hors top 15)
                             </div>
                           )}
                           {isHighlightedFromSettings && !isHighlightedAddition && (
@@ -507,7 +537,7 @@ export function BRGeneralStatsChart() {
           <h3>Top Joueurs - Score Moyen par Partie (min. 3 parties)</h3>
           {stats.highlightedPlayerInAverageScore && settings.highlightedPlayer && (
             <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
-              🎯 {settings.highlightedPlayer} affiché en plus du top 20
+              🎯 {settings.highlightedPlayer} affiché en plus du top 15
             </p>
           )}
           <FullscreenChart
@@ -527,6 +557,21 @@ export function BRGeneralStatsChart() {
                   textAnchor="end" 
                   height={80}
                   fontSize={12}
+                  interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
                 />
                 <YAxis />
                 <Tooltip
@@ -559,7 +604,7 @@ export function BRGeneralStatsChart() {
                               marginTop: '0.25rem',
                               fontStyle: 'italic'
                             }}>
-                              🎯 Affiché via sélection (hors top 20)
+                              🎯 Affiché via sélection (hors top 15)
                             </div>
                           )}
                           {isHighlightedFromSettings && !isHighlightedAddition && (
