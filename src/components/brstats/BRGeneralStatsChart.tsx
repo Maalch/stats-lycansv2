@@ -320,19 +320,68 @@ export function BRGeneralStatsChart() {
                 />
                 <Bar dataKey="participations" name="Participations">
                   {stats.topPlayersByParticipations.map((player: ChartPlayerStat, index: number) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === player.name;
+                    const isHoveredPlayer = hoveredPlayer === player.name;
+                    const isHighlightedAddition = player.isHighlightedAddition;
+                    
                     return (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={
-                          settings.highlightedPlayer === player.name ? 'var(--accent-primary)' :
-                          hoveredPlayer === player.name ? 'var(--accent-hover)' : 
                           getPlayerColor(player.name)
                         }
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
                       />
                     );
                   })}
                 </Bar>
-                <Bar dataKey="wins" fill="var(--chart-color-2)" name="Victoires" />
+                <Bar dataKey="wins" fill="var(--chart-color-2)" name="Victoires">
+                  {stats.topPlayersByParticipations.map((player: ChartPlayerStat, index: number) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === player.name;
+                    const isHoveredPlayer = hoveredPlayer === player.name;
+                    const isHighlightedAddition = player.isHighlightedAddition;
+                    
+                    return (
+                      <Cell 
+                        key={`cell-wins-${index}`} 
+                        fill={
+                          getPlayerColor(player.name)
+                        }
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-secondary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                      />
+                    );
+                  })}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </FullscreenChart>
@@ -416,14 +465,32 @@ export function BRGeneralStatsChart() {
                 />
                 <Bar dataKey="winRate" name="Taux de victoire (%)">
                   {stats.topPlayersByWins.map((player: ChartPlayerStat, index: number) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === player.name;
+                    const isHoveredPlayer = hoveredPlayer === player.name;
+                    const isHighlightedAddition = player.isHighlightedAddition;
+                    
                     return (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={
-                          settings.highlightedPlayer === player.name ? 'var(--accent-primary)' :
-                          hoveredPlayer === player.name ? 'var(--accent-hover)' : 
                           getPlayerColor(player.name)
                         }
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
                       />
                     );
                   })}
@@ -513,14 +580,32 @@ export function BRGeneralStatsChart() {
                 />
                 <Bar dataKey="averageScore" name="Score moyen par partie">
                   {stats.topPlayersByAverageScore.map((player: ChartPlayerStat, index: number) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === player.name;
+                    const isHoveredPlayer = hoveredPlayer === player.name;
+                    const isHighlightedAddition = player.isHighlightedAddition;
+                    
                     return (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={
-                          settings.highlightedPlayer === player.name ? 'var(--accent-primary)' :
-                          hoveredPlayer === player.name ? 'var(--accent-hover)' : 
                           getPlayerColor(player.name)
                         }
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
                       />
                     );
                   })}
