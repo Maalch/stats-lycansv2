@@ -3,7 +3,7 @@ export interface Achievement {
   title: string;
   description: string;
   type: 'good' | 'bad';
-  category: 'general' | 'performance' | 'series' | 'kills' | 'history';
+  category: 'general' | 'performance' | 'series' | 'kills' | 'history' | 'comparison';
   rank?: number; // Position in the top 10 (1-10)
   value?: number; // The actual value (games, win rate, etc.)
   redirectTo?: {

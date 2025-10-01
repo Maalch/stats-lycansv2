@@ -207,7 +207,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .player-name {
@@ -226,38 +226,6 @@
   font-weight: 500;
 }
 
-/* Player Stats Grid */
-.player-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.stat-item {
-  text-align: center;
-  padding: 0.75rem;
-  background: var(--background-primary);
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-}
-
-.stat-label {
-  display: block;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.stat-value {
-  display: block;
-  color: var(--text-primary);
-  font-size: 1.2rem;
-  font-weight: 700;
-}
 
 /* Player Period */
 .player-period {
@@ -294,7 +262,7 @@
 
 /* Achievements Section */
 .achievements-section {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
 }
 
 .achievements-filter {
@@ -489,19 +457,6 @@
   
   .header-description {
     font-size: 1rem;
-  }
-  
-  .single-player-card {
-    padding: 1.5rem;
-  }
-  
-  .player-stats {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-  
-  .stat-item {
-    padding: 0.5rem;
   }
   
   .player-selection-prompt {
