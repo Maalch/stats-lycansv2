@@ -220,64 +220,11 @@ export function PlayerSelectionPage() {
                   <h3 className="player-name">{highlightedPlayerStats.name}</h3>
                   <span className="highlight-badge">★ Mis en évidence</span>
                 </div>
-                
-                <div className="player-stats">
-                  <div className="stat-item">
-                    <span className="stat-label">Parties</span>
-                    <span className="stat-value">{highlightedPlayerStats.totalGames}</span>
-                  </div>
-                  
-                  <div className="stat-item">
-                    <span className="stat-label">Victoires</span>
-                    <span className="stat-value">{highlightedPlayerStats.totalWins}</span>
-                  </div>
-                  
-                  <div className="stat-item">
-                    <span className="stat-label">Taux de victoire</span>
-                    <span className="stat-value">{highlightedPlayerStats.winRate.toFixed(1)}%</span>
-                  </div>
-                </div>
-                
-                <div className="player-period">
-                  <span className="period-label">Période d'activité:</span>
-                  <span className="period-range">
-                    {highlightedPlayerStats.firstGameDate} - {highlightedPlayerStats.lastGameDate}
-                  </span>
-                </div>
-                
-                <div className="player-actions">
-                  <button
-                    className="highlight-btn active"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      updateSettings({ highlightedPlayer: null });
-                    }}
-                  >
-                    ★ Retirer la mise en évidence
-                  </button>
-                  
+                                             
+                <div className="player-actions">                  
                   {/* Achievements Display */}
                   <div className="achievements-section">
-                    <div className="achievements-filter">
-                      <button
-                        className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setAchievementFilter('all');
-                        }}
-                      >
-                        Toutes les parties
-                      </button>
-                      <button
-                        className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setAchievementFilter('modded');
-                        }}
-                      >
-                        Parties moddées
-                      </button>
-                    </div>
+
                     
                     {achievementsLoading ? (
                       <div className="achievements-loading">
@@ -305,9 +252,44 @@ export function PlayerSelectionPage() {
                         <p>Aucun succès disponible pour ce joueur</p>
                       </div>
                     )}
-                  </div>
+                    <div className="achievements-filter">
+                      <button
+                        className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAchievementFilter('all');
+                        }}
+                      >
+                        Toutes les parties
+                      </button>
+                      <button
+                        className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAchievementFilter('modded');
+                        }}
+                      >
+                        Parties moddées
+                      </button>
+                    </div>
+                  <button
+                    className="highlight-btn active"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      updateSettings({ highlightedPlayer: null });
+                    }}
+                  >
+                    ★ Retirer la mise en évidence
+                  </button>
+                </div>
+                <div className="player-period">
+                  <span className="period-label">Période d'activité:</span>
+                  <span className="period-range">
+                    {highlightedPlayerStats.firstGameDate} - {highlightedPlayerStats.lastGameDate}
+                  </span>
                 </div>
               </div>
+            </div>
             );
           })()
         ) : (

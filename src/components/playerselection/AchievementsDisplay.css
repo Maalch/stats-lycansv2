@@ -71,6 +71,24 @@
   background: var(--error-color-transparent, rgba(255, 107, 107, 0.05));
 }
 
+/* Comparison achievements styling */
+.achievement-card.comparison {
+  border-left: 4px solid var(--accent-secondary, #6c5ce7);
+}
+
+.achievement-card.comparison:hover {
+  border-left-color: var(--accent-primary, #5a4ae3);
+  background: var(--accent-secondary-transparent, rgba(108, 92, 231, 0.05));
+}
+
+/* Player name styling in comparison achievements */
+.player-name-highlight {
+  font-weight: 600;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
 /* Rank-based styling */
 .achievement-card.rank-1 {
   background: linear-gradient(135deg, var(--background-primary) 0%, rgba(255, 215, 0, 0.1) 100%);
