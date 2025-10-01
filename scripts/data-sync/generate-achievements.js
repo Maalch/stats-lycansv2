@@ -29,13 +29,14 @@ function findPlayerRank(sortedPlayers, playerName, valueExtractor) {
  * @param {string} title - Achievement title
  * @param {string} description - Achievement description
  * @param {'good'|'bad'} type - Achievement type
- * @param {number} rank - Player rank (1-10)
+ * @param {number} rank - Player rank
  * @param {number} value - Achievement value
+ * @param {number} totalRanked - Total number of players ranked in this category
  * @param {Object} redirectTo - Navigation target
  * @param {string} category - Achievement category
  * @returns {Object} - Achievement object
  */
-function createAchievement(id, title, description, type, rank, value, redirectTo, category = 'general') {
+function createAchievement(id, title, description, type, rank, value, totalRanked, redirectTo, category = 'general') {
   return {
     id,
     title,
@@ -44,6 +45,7 @@ function createAchievement(id, title, description, type, rank, value, redirectTo
     category,
     rank,
     value,
+    totalRanked,
     redirectTo: redirectTo || {
       tab: 'players',
       subTab: 'playersGeneral'
@@ -69,11 +71,12 @@ function processGeneralAchievements(playerStats, playerName, suffix) {
   if (participationRank) {
     achievements.push(createAchievement(
       `participation-${suffix ? 'modded' : 'all'}`,
-      `🎯 Top ${participationRank.rank} Participations${suffix}`,
+      `🎯 Rang ${participationRank.rank} Participations${suffix}`,
       `${participationRank.rank}${participationRank.rank === 1 ? 'er' : 'ème'} joueur le plus actif avec ${participationRank.value} parties`,
       'good',
       participationRank.rank,
-      participationRank.value
+      participationRank.value,
+      byParticipations.length
     ));
   }
 
@@ -84,11 +87,12 @@ function processGeneralAchievements(playerStats, playerName, suffix) {
   if (winRate10Rank) {
     achievements.push(createAchievement(
       `winrate-10-${suffix ? 'modded' : 'all'}`,
-      `🏆 Top ${winRate10Rank.rank} Taux de Victoire${suffix}`,
+      `🏆 Rang ${winRate10Rank.rank} Taux de Victoire${suffix}`,
       `${winRate10Rank.rank}${winRate10Rank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire: ${winRate10Rank.value}% (min. 10 parties)`,
       'good',
       winRate10Rank.rank,
-      winRate10Rank.value
+      winRate10Rank.value,
+      byWinRate10.length
     ));
   }
 
@@ -100,11 +104,12 @@ function processGeneralAchievements(playerStats, playerName, suffix) {
     if (winRate50Rank) {
       achievements.push(createAchievement(
         `winrate-50-${suffix ? 'modded' : 'all'}`,
-        `🌟 Top ${winRate50Rank.rank} Taux de Victoire Expert${suffix}`,
+        `🌟 Rang ${winRate50Rank.rank} Taux de Victoire Expert${suffix}`,
         `${winRate50Rank.rank}${winRate50Rank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire: ${winRate50Rank.value}% (min. 50 parties)`,
         'good',
         winRate50Rank.rank,
-        winRate50Rank.value
+        winRate50Rank.value,
+        byWinRate50.length
       ));
     }
   }
@@ -379,11 +384,12 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
     if (villageWinRateRank) {
       achievements.push(createAchievement(
         `village-winrate-${suffix ? 'modded' : 'all'}`,
-        `🏘️ Top ${villageWinRateRank.rank} Village${suffix}`,
+        `🏘️ Rang ${villageWinRateRank.rank} Village${suffix}`,
         `${villageWinRateRank.rank}${villageWinRateRank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire sur Village: ${villageWinRateRank.value.toFixed(1)}% (${villageWinRateRank.games} parties, min. 10)`,
         'good',
         villageWinRateRank.rank,
         villageWinRateRank.value,
+        byVillageWinRate.length,
         {
           tab: 'players',
           subTab: 'history'
@@ -401,11 +407,12 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
     if (chateauWinRateRank) {
       achievements.push(createAchievement(
         `chateau-winrate-${suffix ? 'modded' : 'all'}`,
-        `🏰 Top ${chateauWinRateRank.rank} Château${suffix}`,
+        `🏰 Rang ${chateauWinRateRank.rank} Château${suffix}`,
         `${chateauWinRateRank.rank}${chateauWinRateRank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire sur Château: ${chateauWinRateRank.value.toFixed(1)}% (${chateauWinRateRank.games} parties, min. 10)`,
         'good',
         chateauWinRateRank.rank,
         chateauWinRateRank.value,
+        byChateauWinRate.length,
         {
           tab: 'players',
           subTab: 'history'
@@ -583,6 +590,7 @@ function createComparisonAchievement(id, title, description, type, value, redire
     type,
     category: 'comparison', // Special comparison statistics, separate from achievements
     value,
+    totalRanked: null, // Not applicable for comparison achievements
     redirectTo
   };
 }
@@ -964,6 +972,7 @@ function createKillsAchievement(id, title, description, type, rank, value, redir
     category: 'kills',
     rank,
     value,
+    totalRanked: null, // Will be updated when we enhance this function
     redirectTo
   };
 }
@@ -1348,6 +1357,7 @@ function createPerformanceAchievement(id, title, description, type, rank, value,
     category,
     rank,
     value,
+    totalRanked: null, // Will be updated when we enhance this function
     redirectTo: redirectTo || {
       tab: 'players',
       subTab: 'playersGeneral'
@@ -1954,6 +1964,7 @@ function createSeriesAchievement(id, title, description, type, rank, value, redi
     category: 'series',
     rank,
     value,
+    totalRanked: null, // Will be updated when we enhance this function
     redirectTo
   };
 }
