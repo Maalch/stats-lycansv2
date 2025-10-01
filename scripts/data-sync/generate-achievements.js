@@ -610,7 +610,7 @@ function createComparisonAchievement(id, title, description, type, value, redire
     title,
     description,
     type,
-    category: 'general', // These are special individual cards, not ranked achievements
+    category: 'comparison', // Special comparison statistics, separate from achievements
     value,
     redirectTo
   };
