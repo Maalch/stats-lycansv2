@@ -37,6 +37,10 @@ const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').t
 // Player selection page
 const PlayerSelectionPage = lazy(() => import('./components/playerselection/PlayerSelectionPage').then(m => ({ default: m.PlayerSelectionPage })));
 
+// Import VersionDisplay component
+import { VersionDisplay } from './components/common/VersionDisplay';
+import { ChangelogPage } from './components/common/ChangelogPage';
+
 const MAIN_TABS = [
   { 
     key: 'playerSelection', 
@@ -187,6 +191,7 @@ function MainApp() {
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
+  const [showChangelog, setShowChangelog] = useState(false);
 
   // Helper function to format the subtitle text
   const getSubtitleText = () => {
@@ -392,6 +397,7 @@ function MainApp() {
   };
 
   return (
+    <>
         <div className="app-container">
           <img
             className="lycans-banner"
@@ -401,8 +407,13 @@ function MainApp() {
           <div className="main-container">
             <div className="lycans-dashboard-container">
               <header className="lycans-dashboard-header">
+                <div className="lycans-header-content">
+                  <div className="lycans-header-main">
                 <h1>Statistiques Lycans</h1>
                 <p>{getSubtitleText()}</p>
+                  </div>
+                  <VersionDisplay onVersionClick={() => setShowChangelog(true)} />
+                </div>
               </header>
 
               <nav className="lycans-main-menu">
@@ -441,5 +452,11 @@ function MainApp() {
             </div>
           </div>
         </div>
+
+        {/* Changelog overlay */}
+        {showChangelog && (
+          <ChangelogPage onClose={() => setShowChangelog(false)} />
+        )}
+      </>
   );
 }

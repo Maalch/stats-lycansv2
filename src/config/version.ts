@@ -1,0 +1,53 @@
+// This file is auto-generated - do not edit manually
+// Run 'npm run sync-version' to update from package.json
+export const APP_VERSION = '1.2.2';
+
+// Changelog data
+export interface ChangelogEntry {
+  version: string;
+  date: string;
+  description: string;
+}
+
+export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.2.2',
+    date: '01/10/2025',
+    description: 'Ajout du numéro de version et de la page des changements'
+  },
+  {
+    version: 'v1.2.1',
+    date: '30/09/2025',
+    description: 'Correction du camp Vaudou / Zombie dans le graphique des Kills'
+  },
+  {
+    version: 'v1.2.0',
+    date: '25/09/2025',
+    description: 'Ajout des graphiques "Morts & Kills" (dans "Joueurs")'
+  },
+  {
+    version: 'v1.1.3',
+    date: '24/09/2025',
+    description: 'Ajout des taux de victoire par Map dans "Joueurs" / "Historique Joueur"'
+  },
+  {
+    version: 'v1.1.2',
+    date: '22/09/2025',
+    description: 'Amélioration de la lisibilité des joueurs mis en avant dans les graphiques'
+  },
+  {
+    version: 'v1.1.1',
+    date: '21/09/2025',
+    description: 'Ajout des graphiques "Camp" / "Types de Victoire"'
+  },
+  {
+    version: 'v1.1.0',
+    date: '19/09/2025',
+    description: 'Ajout du filtre "Joueur mis en avant", pour voir un joueur en particulier dans tous les graphiques du site. Refonte des "Paramètres" en "Filtre".'
+  },
+  {
+    version: 'v1.0.0',
+    date: '18/08/2025',
+    description: 'Publication du site'
+  }
+];
