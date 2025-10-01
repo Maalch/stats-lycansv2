@@ -679,11 +679,17 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
  */
 function determineMainRoleInitialWithDetails(playerName, roleAssignments, playerDetails) {
   
+  // Check if playerDetails is null first
+  if (!playerDetails) {
+    // Fall back to the original method if no details available
+    return determineMainRole(playerName, roleAssignments);
+  }
+  
   // Determine which camp to use based on type (initial)
   if (playerDetails.mainRole && playerDetails.mainRole !== 'Inconnu') {
       return playerDetails.mainRole;
   }
-  else if (playerDetails.mainRole === 'Inconnu') {
+  else if (playerDetails.mainRole && playerDetails.mainRole === 'Inconnu') {
     return playerDetails.camp;
   }
   else {
@@ -696,6 +702,12 @@ function determineMainRoleInitialWithDetails(playerName, roleAssignments, player
  * Helper function to determine main role with details data priority
  */
 function determineMainRoleFinalWithDetails(playerDetails, playerStats) {
+  
+  // Check if playerDetails is null first
+  if (!playerDetails) {
+    // Fall back to the main role initial if no details available
+    return playerStats.MainRoleInitial;
+  }
   
   // Determine which camp to use based on type (final)
   if (playerDetails.finalRole) {
@@ -745,3 +757,5 @@ function determineKillerName(playerDetails) {
   
   return null;
 }
+
+
