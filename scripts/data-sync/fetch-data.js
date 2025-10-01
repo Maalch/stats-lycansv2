@@ -45,6 +45,13 @@ async function fetchLegacyEndpointData(endpoint) {
     }
     
     const data = await response.json();
+    
+    // Check if the response contains an error
+    if (data && typeof data === 'object' && data.error) {
+      console.error(`API returned error for ${endpoint}:`, data.error);
+      return null;
+    }
+    
     console.log(`✓ Fetched legacy ${endpoint} data`);
     return data;
   } catch (error) {
@@ -235,6 +242,8 @@ async function main() {
             legacyBRData = data;
             await saveDataToFile('rawBRData.json', data);
           }
+        } else {
+          console.warn(`⚠️  No valid data received for ${endpoint} - existing file will not be overwritten`);
         }
         // Small delay between requests
         await new Promise(resolve => setTimeout(resolve, 1000));
