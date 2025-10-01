@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import fs from 'fs/promises';
 import path from 'path';
+import { generateAllPlayerAchievements } from './generate-achievements.js';
 
 // Data sources
 const LEGACY_DATA_ENDPOINTS = [
@@ -283,8 +284,32 @@ async function main() {
     // === MERGE AND SAVE UNIFIED DATA ===
     console.log('\n🔄 Creating unified dataset...');
     const awsGameLogs = []; // Temporarily disabled AWS sync
-    const mergedGameLog = await mergeAllGameLogs(legacyGameLogData, awsGameLogs);
-    await saveDataToFile('gameLog.json', mergedGameLog);
+    
+    let mergedGameLog;
+    if (legacyGameLogData) {
+      // We have fresh data from API
+      mergedGameLog = await mergeAllGameLogs(legacyGameLogData, awsGameLogs);
+      await saveDataToFile('gameLog.json', mergedGameLog);
+    } else {
+      // No fresh data, try to use existing gameLog.json for achievements generation
+      console.log('⚠️  No fresh data from API, attempting to use existing gameLog.json for achievements...');
+      try {
+        const existingGameLogPath = path.join(ABSOLUTE_DATA_DIR, 'gameLog.json');
+        const existingGameLogContent = await fs.readFile(existingGameLogPath, 'utf-8');
+        mergedGameLog = JSON.parse(existingGameLogContent);
+        console.log(`✓ Using existing gameLog.json with ${mergedGameLog.TotalRecords} games`);
+      } catch (error) {
+        console.error('❌ Could not read existing gameLog.json:', error.message);
+        // Create empty data structure
+        mergedGameLog = {
+          ModVersion: "No Data",
+          TotalRecords: 0,
+          Sources: { Legacy: 0, AWS: 0, Merged: 0 },
+          GameStats: []
+        };
+        await saveDataToFile('gameLog.json', mergedGameLog);
+      }
+    }
     
     // Create placeholder BR data if not fetched from legacy
     if (!legacyBRData) {
@@ -296,6 +321,17 @@ async function main() {
     }
     
     await createDataIndex(!!legacyGameLogData, awsGameLogs.length, mergedGameLog.TotalRecords);
+    
+    // === GENERATE ACHIEVEMENTS ===
+    console.log('\n🏆 Generating player achievements...');
+    try {
+      const achievementsData = generateAllPlayerAchievements(mergedGameLog);
+      await saveDataToFile('playerAchievements.json', achievementsData);
+      console.log(`✓ Generated achievements for ${achievementsData.totalPlayers} players`);
+    } catch (error) {
+      console.error('❌ Failed to generate achievements:', error.message);
+      // Don't fail the entire sync for achievements generation failure
+    }
     
     console.log('\n✅ Legacy-only data sync completed successfully!');
     console.log(`📊 Total games processed: ${mergedGameLog.TotalRecords}`);

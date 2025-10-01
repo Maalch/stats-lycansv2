@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
 import { useGameLogData } from '../../hooks/useCombinedRawData';
-import { usePlayerAchievements } from '../../hooks/usePlayerAchievements';
+import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculatedPlayerAchievements';
 import { getPlayerNameMapping } from '../../utils/playerNameMapping';
 import { AchievementsDisplay } from './AchievementsDisplay';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
@@ -22,7 +22,7 @@ export function PlayerSelectionPage() {
   const { settings, updateSettings } = useSettings();
   const { navigateToTab } = useNavigation();
   const { data: gameLogData, isLoading, error } = useGameLogData();
-  const playerAchievements = usePlayerAchievements(settings.highlightedPlayer);
+  const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
   const [searchQuery, setSearchQuery] = useState('');
   const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
 
@@ -257,29 +257,38 @@ export function PlayerSelectionPage() {
                   </button>
                   
                   {/* Achievements Display */}
-                  {playerAchievements && (
-                    <div className="achievements-section">
-                      <div className="achievements-filter">
-                        <button
-                          className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setAchievementFilter('all');
-                          }}
-                        >
-                          Toutes les parties
-                        </button>
-                        <button
-                          className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setAchievementFilter('modded');
-                          }}
-                        >
-                          Parties moddées
-                        </button>
+                  <div className="achievements-section">
+                    <div className="achievements-filter">
+                      <button
+                        className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAchievementFilter('all');
+                        }}
+                      >
+                        Toutes les parties
+                      </button>
+                      <button
+                        className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAchievementFilter('modded');
+                        }}
+                      >
+                        Parties moddées
+                      </button>
+                    </div>
+                    
+                    {achievementsLoading ? (
+                      <div className="achievements-loading">
+                        <div className="loading-spinner"></div>
+                        <p>Chargement des succès...</p>
                       </div>
-                      
+                    ) : achievementsError ? (
+                      <div className="achievements-error">
+                        <p>❌ Erreur lors du chargement des succès: {achievementsError}</p>
+                      </div>
+                    ) : playerAchievements ? (
                       <AchievementsDisplay
                         achievements={achievementFilter === 'all' 
                           ? playerAchievements.allGamesAchievements 
@@ -289,10 +298,14 @@ export function PlayerSelectionPage() {
                           ? 'Succès - Toutes les parties' 
                           : 'Succès - Parties moddées'
                         }
-                        emptyMessage="Aucun succès dans les statistiques générales"
+                        emptyMessage="Aucun succès dans cette catégorie"
                       />
-                    </div>
-                  )}
+                    ) : (
+                      <div className="achievements-empty">
+                        <p>Aucun succès disponible pour ce joueur</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             );
