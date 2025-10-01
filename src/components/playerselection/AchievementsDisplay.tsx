@@ -72,18 +72,20 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
       
       {goodAchievements.length > 0 && (
         <div className="achievements-section good-achievements">
-          <h5>🏆 Succès</h5>
+          <h5>🏆 Classements</h5>
           <div className="achievements-grid">
             {goodAchievements.map((achievement) => (
               <div
                 key={achievement.id}
                 className={`achievement-card good rank-${achievement.rank}`}
                 onClick={() => handleAchievementClick(achievement)}
-                title={`Cliquez pour voir le classement complet`}
+                title={`Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le classement complet`}
               >
                 <div className="achievement-header">
                   <span className="achievement-title">{achievement.title}</span>
-                  <span className="achievement-rank">#{achievement.rank}</span>
+                  <span className="achievement-rank">
+                    #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
+                  </span>
                 </div>
                 <p className="achievement-description">{achievement.description}</p>
               </div>
@@ -94,18 +96,20 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
 
       {badAchievements.length > 0 && (
         <div className="achievements-section bad-achievements">
-          <h5>💀 Anti-succès</h5>
+          <h5>💀 Classements (Inversés)</h5>
           <div className="achievements-grid">
             {badAchievements.map((achievement) => (
               <div
                 key={achievement.id}
                 className={`achievement-card bad rank-${achievement.rank}`}
                 onClick={() => handleAchievementClick(achievement)}
-                title={`Cliquez pour voir le classement complet`}
+                title={`Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le classement complet`}
               >
                 <div className="achievement-header">
                   <span className="achievement-title">{achievement.title}</span>
-                  <span className="achievement-rank">#{achievement.rank}</span>
+                  <span className="achievement-rank">
+                    #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
+                  </span>
                 </div>
                 <p className="achievement-description">{achievement.description}</p>
               </div>

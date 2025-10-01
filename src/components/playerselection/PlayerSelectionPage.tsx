@@ -229,11 +229,11 @@ export function PlayerSelectionPage() {
                     {achievementsLoading ? (
                       <div className="achievements-loading">
                         <div className="loading-spinner"></div>
-                        <p>Chargement des succès...</p>
+                        <p>Chargement des classements...</p>
                       </div>
                     ) : achievementsError ? (
                       <div className="achievements-error">
-                        <p>❌ Erreur lors du chargement des succès: {achievementsError}</p>
+                        <p>❌ Erreur lors du chargement des classements: {achievementsError}</p>
                       </div>
                     ) : playerAchievements ? (
                       <AchievementsDisplay
@@ -242,14 +242,14 @@ export function PlayerSelectionPage() {
                           : playerAchievements.moddedOnlyAchievements
                         }
                         title={achievementFilter === 'all' 
-                          ? 'Succès - Toutes les parties' 
-                          : 'Succès - Parties moddées'
+                          ? 'Classements - Toutes les parties' 
+                          : 'Classements - Parties moddées'
                         }
-                        emptyMessage="Aucun succès dans cette catégorie"
+                        emptyMessage="Aucun classement dans cette catégorie"
                       />
                     ) : (
                       <div className="achievements-empty">
-                        <p>Aucun succès disponible pour ce joueur</p>
+                        <p>Aucun classement disponible pour ce joueur</p>
                       </div>
                     )}
                     <div className="achievements-filter">
