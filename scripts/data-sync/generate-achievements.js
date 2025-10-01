@@ -7,15 +7,15 @@ const DATA_DIR = '../../data';
 const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
 
 /**
- * Helper function to check if a player is in top 10 of a sorted list
+ * Helper function to find a player's rank in a sorted list
  * @param {Array} sortedPlayers - Array of player stats sorted by the metric
  * @param {string} playerName - Name of the player to find
  * @param {Function} valueExtractor - Function to extract the value from player stat
- * @returns {Object|null} - Object with rank and value, or null if not in top 10
+ * @returns {Object|null} - Object with rank and value, or null if not found
  */
 function findPlayerRank(sortedPlayers, playerName, valueExtractor) {
   const index = sortedPlayers.findIndex(p => p.player === playerName);
-  if (index === -1 || index >= 10) return null;
+  if (index === -1) return null;
   
   return {
     rank: index + 1,
@@ -63,7 +63,7 @@ function processGeneralAchievements(playerStats, playerName, suffix) {
 
   if (!playerStats || playerStats.length === 0) return achievements;
 
-  // 1. Top 10 in participations
+  // 1. Participations ranking
   const byParticipations = [...playerStats].sort((a, b) => b.gamesPlayed - a.gamesPlayed);
   const participationRank = findPlayerRank(byParticipations, playerName, p => p.gamesPlayed);
   if (participationRank) {
@@ -77,7 +77,7 @@ function processGeneralAchievements(playerStats, playerName, suffix) {
     ));
   }
 
-  // 2. Top 10 in best win rate (min. 10 games)
+  // 2. Best win rate ranking (min. 10 games)
   const eligibleFor10Games = playerStats.filter(p => p.gamesPlayed >= 10);
   const byWinRate10 = [...eligibleFor10Games].sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent));
   const winRate10Rank = findPlayerRank(byWinRate10, playerName, p => parseFloat(p.winPercent));
@@ -92,7 +92,7 @@ function processGeneralAchievements(playerStats, playerName, suffix) {
     ));
   }
 
-  // 3. Top 10 in best win rate (min. 50 games)
+  // 3. Best win rate ranking (min. 50 games)
   const eligibleFor50Games = playerStats.filter(p => p.gamesPlayed >= 50);
   if (eligibleFor50Games.length > 0) {
     const byWinRate50 = [...eligibleFor50Games].sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent));
@@ -105,36 +105,6 @@ function processGeneralAchievements(playerStats, playerName, suffix) {
         'good',
         winRate50Rank.rank,
         winRate50Rank.value
-      ));
-    }
-  }
-
-  // 4. Top 10 in lowest win rate (min. 10 games) - "bad" achievement
-  const byWorstWinRate10 = [...eligibleFor10Games].sort((a, b) => parseFloat(a.winPercent) - parseFloat(b.winPercent));
-  const worstWinRate10Rank = findPlayerRank(byWorstWinRate10, playerName, p => parseFloat(p.winPercent));
-  if (worstWinRate10Rank) {
-    achievements.push(createAchievement(
-      `worst-winrate-10-${suffix ? 'modded' : 'all'}`,
-      `💀 Top ${worstWinRate10Rank.rank} Pire Taux de Victoire${suffix}`,
-      `${worstWinRate10Rank.rank}${worstWinRate10Rank.rank === 1 ? 'er' : 'ème'} pire taux de victoire: ${worstWinRate10Rank.value}% (min. 10 parties)`,
-      'bad',
-      worstWinRate10Rank.rank,
-      worstWinRate10Rank.value
-    ));
-  }
-
-  // 5. Top 10 in lowest win rate (min. 50 games) - "bad" achievement
-  if (eligibleFor50Games.length > 0) {
-    const byWorstWinRate50 = [...eligibleFor50Games].sort((a, b) => parseFloat(a.winPercent) - parseFloat(b.winPercent));
-    const worstWinRate50Rank = findPlayerRank(byWorstWinRate50, playerName, p => parseFloat(p.winPercent));
-    if (worstWinRate50Rank) {
-      achievements.push(createAchievement(
-        `worst-winrate-50-${suffix ? 'modded' : 'all'}`,
-        `☠️ Top ${worstWinRate50Rank.rank} Pire Taux de Victoire Expert${suffix}`,
-        `${worstWinRate50Rank.rank}${worstWinRate50Rank.rank === 1 ? 'er' : 'ème'} pire taux de victoire: ${worstWinRate50Rank.value}% (min. 50 parties)`,
-        'bad',
-        worstWinRate50Rank.rank,
-        worstWinRate50Rank.value
       ));
     }
   }
@@ -371,15 +341,15 @@ function computeMapStats(gameData) {
 }
 
 /**
- * Helper function to check if a player is in top 10 of a map-based sorted list
+ * Helper function to find a player's rank in a map-based sorted list
  * @param {Array} sortedPlayers - Array of player map stats sorted by the metric
  * @param {string} playerName - Name of the player to find
  * @param {string} mapType - 'village' or 'chateau'
- * @returns {Object|null} - Object with rank, value, and games, or null if not in top 10
+ * @returns {Object|null} - Object with rank, value, and games, or null if not found
  */
 function findPlayerMapRank(sortedPlayers, playerName, mapType) {
   const index = sortedPlayers.findIndex(p => p.player === playerName);
-  if (index === -1 || index >= 10) return null;
+  if (index === -1) return null;
   
   const playerData = sortedPlayers[index];
   return {
@@ -401,7 +371,7 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
 
   if (!mapStats || mapStats.length === 0) return achievements;
 
-  // 1. Top 10 in best win rate (Village map)
+  // 1. Best win rate ranking (Village map)
   const eligibleForVillage = mapStats.filter(p => p.villageGames >= 10);
   if (eligibleForVillage.length > 0) {
     const byVillageWinRate = [...eligibleForVillage].sort((a, b) => b.villageWinRate - a.villageWinRate);
@@ -423,7 +393,7 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
     }
   }
 
-  // 2. Top 10 in best win rate (Château map)
+  // 2. Best win rate ranking (Château map)
   const eligibleForChateau = mapStats.filter(p => p.chateauGames >= 10);
   if (eligibleForChateau.length > 0) {
     const byChateauWinRate = [...eligibleForChateau].sort((a, b) => b.chateauWinRate - a.chateauWinRate);
@@ -910,13 +880,12 @@ function computeDeathStatistics(gameData) {
  * @param {Array} killerStats - Array of killer statistics
  * @param {number} minGames - Minimum games required
  * @param {string} sortBy - Sort criteria ('kills' or 'averageKillsPerGame')
- * @returns {Array} - Top 10 killers
+ * @returns {Array} - All killers sorted by criteria
  */
 function findTopKillers(killerStats, minGames = 1, sortBy = 'kills') {
   return killerStats
     .filter(killer => killer.gamesPlayed >= minGames)
-    .sort((a, b) => b[sortBy] - a[sortBy])
-    .slice(0, 10);
+    .sort((a, b) => b[sortBy] - a[sortBy]);
 }
 
 /**
@@ -924,7 +893,7 @@ function findTopKillers(killerStats, minGames = 1, sortBy = 'kills') {
  * @param {Array} playerDeathStats - Array of player death statistics
  * @param {string} sortBy - Sort criteria ('totalDeaths' or 'deathRate')
  * @param {number} minGames - Minimum games required
- * @returns {Array} - Top 10 most killed players
+ * @returns {Array} - All players sorted by death criteria
  */
 function findTopDeaths(playerDeathStats, sortBy = 'totalDeaths', minGames = 1) {
   return playerDeathStats
@@ -935,8 +904,7 @@ function findTopDeaths(playerDeathStats, sortBy = 'totalDeaths', minGames = 1) {
       }
       return true;
     })
-    .sort((a, b) => b[sortBy] - a[sortBy])
-    .slice(0, 10);
+    .sort((a, b) => b[sortBy] - a[sortBy]);
 }
 
 /**
@@ -1014,7 +982,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
 
   // GOOD ACHIEVEMENTS (Killer achievements)
 
-  // 1. Top 10 killers (total kills)
+  // 1. Killers ranking (total kills)
   const topKillers = findTopKillers(deathStats.killerStats, 1, 'kills');
   const killerRank = findPlayerKillerRank(topKillers, playerName);
   if (killerRank) {
@@ -1033,7 +1001,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
     ));
   }
 
-  // 2. Top 10 killers (average per game, min. 20 games)
+  // 2. Killers ranking (average per game, min. 20 games)
   const topKillersAverage = findTopKillers(deathStats.killerStats, 20, 'averageKillsPerGame');
   const killerAverageRank = findPlayerKillerRank(topKillersAverage, playerName);
   if (killerAverageRank) {
@@ -1054,7 +1022,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
 
   // BAD ACHIEVEMENTS (Death achievements)
 
-  // 3. Top 10 killed (total deaths)
+  // 3. Most killed ranking (total deaths)
   const topDeaths = findTopDeaths(deathStats.playerDeathStats, 'totalDeaths', 1);
   const deathRank = findPlayerDeathRank(topDeaths, playerName, 'totalDeaths');
   if (deathRank) {
@@ -1073,7 +1041,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
     ));
   }
 
-  // 4. Top 10 killed (average per game, min. 25 games)
+  // 4. Most killed ranking (average per game, min. 25 games)
   const topDeathsAverage = findTopDeaths(deathStats.playerDeathStats, 'deathRate', 25);
   const deathAverageRank = findPlayerDeathRank(topDeathsAverage, playerName, 'deathRate');
   if (deathAverageRank) {
@@ -1240,7 +1208,7 @@ function findTopCampPerformers(campStats, targetCamp, minGames, sortBy = 'perfor
  * Find top solo role performers
  * @param {Array} campStats - Array of player camp statistics
  * @param {number} minGames - Minimum total solo games required
- * @returns {Array} - Top 10 solo role performers
+ * @returns {Array} - All solo role performers sorted by performance
  */
 function findTopSoloRolePerformers(campStats, minGames) {
   // Get all solo role performances for each player
@@ -1288,14 +1256,14 @@ function findTopSoloRolePerformers(campStats, minGames) {
     }
   });
 
-  return eligiblePlayers.sort((a, b) => b.performance - a.performance).slice(0, 10);
+  return eligiblePlayers.sort((a, b) => b.performance - a.performance);
 }
 
 /**
  * Find top overall performers (Hall of Fame)
  * @param {Array} campStats - Array of player camp statistics
  * @param {number} minGames - Minimum total games required
- * @returns {Array} - Top 10 overall performers
+ * @returns {Array} - All overall performers sorted by performance
  */
 function findTopOverallPerformers(campStats, minGames) {
   // Group by player and calculate overall weighted performance
@@ -1337,18 +1305,18 @@ function findTopOverallPerformers(campStats, minGames) {
     }
   });
 
-  return eligiblePlayers.sort((a, b) => b.performance - a.performance).slice(0, 10);
+  return eligiblePlayers.sort((a, b) => b.performance - a.performance);
 }
 
 /**
- * Check if a player is in top 10 of camp performance
+ * Check if a player's rank in camp performance
  * @param {Array} sortedPlayers - Sorted array of players
  * @param {string} playerName - Player name to find
- * @returns {Object|null} - Rank and performance data, or null if not in top 10
+ * @returns {Object|null} - Rank and performance data, or null if not found
  */
 function findPlayerCampRank(sortedPlayers, playerName) {
   const index = sortedPlayers.findIndex(p => p.player === playerName);
-  if (index === -1 || index >= 10) return null;
+  if (index === -1) return null;
   
   const playerData = sortedPlayers[index];
   return {
@@ -1399,7 +1367,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
 
   if (!campStats || campStats.length === 0) return achievements;
 
-  // 1. Top 10 in best "overperformer" (min. 25 games) - Hall of Fame
+  // 1. Best "overperformer" ranking (min. 25 games) - Hall of Fame
   const topOverallPerformers = findTopOverallPerformers(campStats, 25);
   const overallPerformanceRank = findPlayerCampRank(topOverallPerformers, playerName);
   if (overallPerformanceRank) {
@@ -1949,7 +1917,7 @@ function findTopSeriesPerformers(seriesData, minLength = 2) {
 }
 
 /**
- * Helper function to check if a player is in top 10 of series
+ * Helper function to check a player's rank in series
  * @param {Array} topSeries - Top series array
  * @param {string} playerName - Player name to find
  * @returns {Object|null} - Rank info or null
