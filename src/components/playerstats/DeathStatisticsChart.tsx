@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
-import { getAllDeathTypes, getKillDescription, getDeathDescription, codifyDeathType, type DeathTypeCodeType } from '../../hooks/utils/deathStatisticsUtils';
+import { getAllDeathTypes, getKillDescription, getDeathDescription } from '../../hooks/utils/deathStatisticsUtils';
+import { codifyDeathType, type DeathTypeCodeType } from '../../utils/deathTypeConstants';
 import { useFilteredGameLogData } from '../../hooks/useCombinedRawData';
 import { getPlayerCampFromRole } from '../../utils/gameUtils';
 import { FullscreenChart } from '../common/FullscreenChart';

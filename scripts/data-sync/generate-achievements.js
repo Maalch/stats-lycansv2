@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { DeathTypeCode, codifyDeathType } from '../../src/utils/deathTypeConstants.js';
 
 // Data directory relative to project root
 const DATA_DIR = '../../data';
@@ -409,7 +410,7 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
       achievements.push(createAchievement(
         `village-winrate-${suffix ? 'modded' : 'all'}`,
         `🏘️ Top ${villageWinRateRank.rank} Village${suffix}`,
-        `${villageWinRateRank.rank}${villageWinRateRank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire sur Village: ${villageWinRateRank.value.toFixed(1)}% (${villageWinRateRank.games} parties)`,
+        `${villageWinRateRank.rank}${villageWinRateRank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire sur Village: ${villageWinRateRank.value.toFixed(1)}% (${villageWinRateRank.games} parties, min. 10)`,
         'good',
         villageWinRateRank.rank,
         villageWinRateRank.value,
@@ -431,7 +432,7 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
       achievements.push(createAchievement(
         `chateau-winrate-${suffix ? 'modded' : 'all'}`,
         `🏰 Top ${chateauWinRateRank.rank} Château${suffix}`,
-        `${chateauWinRateRank.rank}${chateauWinRateRank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire sur Château: ${chateauWinRateRank.value.toFixed(1)}% (${chateauWinRateRank.games} parties)`,
+        `${chateauWinRateRank.rank}${chateauWinRateRank.rank === 1 ? 'er' : 'ème'} meilleur taux de victoire sur Château: ${chateauWinRateRank.value.toFixed(1)}% (${chateauWinRateRank.games} parties, min. 10)`,
         'good',
         chateauWinRateRank.rank,
         chateauWinRateRank.value,
@@ -642,7 +643,7 @@ function processComparisonAchievements(playerStatsData, rawGameData, playerName,
     achievements.push(createComparisonAchievement(
       `best-mate-${suffix ? 'modded' : 'all'}`,
       `🤝 Meilleur Coéquipier${suffix}`,
-      `Meilleur duo avec ${bestMate.otherPlayerName}: ${bestMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${bestMate.sameCampWins}/${bestMate.sameCampGames} parties)`,
+      `Meilleur duo avec ${bestMate.otherPlayerName}: ${bestMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${bestMate.sameCampWins}/${bestMate.sameCampGames} parties, min. 10)`,
       'good',
       bestMate.sameCampWinRate,
       {
@@ -668,7 +669,7 @@ function processComparisonAchievements(playerStatsData, rawGameData, playerName,
       achievements.push(createComparisonAchievement(
         `worst-mate-${suffix ? 'modded' : 'all'}`,
         `💔 Pire Coéquipier${suffix}`,
-        `Duo le moins efficace avec ${worstMate.otherPlayerName}: ${worstMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${worstMate.sameCampWins}/${worstMate.sameCampGames} parties)`,
+        `Duo le moins efficace avec ${worstMate.otherPlayerName}: ${worstMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${worstMate.sameCampWins}/${worstMate.sameCampGames} parties, min. 10)`,
         'bad',
         worstMate.sameCampWinRate,
         {
@@ -690,7 +691,7 @@ function processComparisonAchievements(playerStatsData, rawGameData, playerName,
     achievements.push(createComparisonAchievement(
       `best-matchup-${suffix ? 'modded' : 'all'}`,
       `⚔️ Meilleur Face-à-Face${suffix}`,
-      `Domination contre ${bestMatchup.otherPlayerName}: ${bestMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${bestMatchup.opposingWins}/${bestMatchup.opposingCampGames} parties)`,
+      `Domination contre ${bestMatchup.otherPlayerName}: ${bestMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${bestMatchup.opposingWins}/${bestMatchup.opposingCampGames} parties, min. 10)`,
       'good',
       bestMatchup.opposingWinRate,
       {
@@ -716,7 +717,7 @@ function processComparisonAchievements(playerStatsData, rawGameData, playerName,
       achievements.push(createComparisonAchievement(
         `worst-matchup-${suffix ? 'modded' : 'all'}`,
         `💀 Pire Face-à-Face${suffix}`,
-        `Faiblesse contre ${worstMatchup.otherPlayerName}: ${worstMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${worstMatchup.opposingWins}/${worstMatchup.opposingCampGames} parties)`,
+        `Faiblesse contre ${worstMatchup.otherPlayerName}: ${worstMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${worstMatchup.opposingWins}/${worstMatchup.opposingCampGames} parties, min. 10)`,
         'bad',
         worstMatchup.opposingWinRate,
         {
@@ -729,131 +730,6 @@ function processComparisonAchievements(playerStatsData, rawGameData, playerName,
   }
 
   return achievements;
-}
-
-/**
- * Death type codes for consistent processing
- */
-const DeathTypeCode = {
-  SURVIVOR: 'SURVIVOR',
-  VOTE: 'VOTE',
-  WEREWOLF_KILL: 'WEREWOLF_KILL',
-  HUNTER_SHOT: 'HUNTER_SHOT',
-  BOUNTY_HUNTER: 'BOUNTY_HUNTER',
-  LOVER_DEATH: 'LOVER_DEATH',
-  LOVER_WEREWOLF: 'LOVER_WEREWOLF',
-  BEAST_KILL: 'BEAST_KILL',
-  ASSASSIN_POTION: 'ASSASSIN_POTION',
-  HAUNTED_POTION: 'HAUNTED_POTION',
-  ZOMBIE_KILL: 'ZOMBIE_KILL',
-  RESURRECTED_WEREWOLF: 'RESURRECTED_WEREWOLF',
-  AVENGER_KILL: 'AVENGER_KILL',
-  AGENT_KILL: 'AGENT_KILL',
-  SHERIFF_KILL: 'SHERIFF_KILL',
-  EXPLOSION: 'EXPLOSION',
-  CRUSHED: 'CRUSHED',
-  STARVATION: 'STARVATION',
-  FALL_DEATH: 'FALL_DEATH',
-  BESTIAL_DEATH: 'BESTIAL_DEATH',
-  AVATAR_DEATH: 'AVATAR_DEATH',
-  DISCONNECT: 'DISCONNECT',
-  UNKNOWN: 'UNKNOWN'
-};
-
-/**
- * Codify death type for consistent grouping
- * @param {string|null} deathType - Death type string
- * @returns {string} - Standardized death type code
- */
-function codifyDeathType(deathType) {
-  if (!deathType || deathType === 'N/A') {
-    return DeathTypeCode.SURVIVOR;
-  }
-  
-  const normalized = deathType.trim().toLowerCase();
-  
-  // Vote-related deaths
-  if (normalized.includes('vote')) {
-    return DeathTypeCode.VOTE;
-  }
-  
-  // Werewolf kills (various forms)
-  if (normalized === 'tué par loup' || 
-      normalized.includes('tué par un loup') ||
-      normalized.includes('tué par loup ressuscité')) {
-    if (normalized.includes('ressuscité')) {
-      return DeathTypeCode.RESURRECTED_WEREWOLF;
-    }
-    return DeathTypeCode.WEREWOLF_KILL;
-  }
-  
-  // Lover-related deaths
-  if (normalized.includes('amoureux') || normalized.includes('son amoureux')) {
-    if (normalized.includes('tué par loup amoureux')) {
-      return DeathTypeCode.LOVER_WEREWOLF;
-    }
-    return DeathTypeCode.LOVER_DEATH;
-  }
-  
-  // Hunter-related deaths
-  if (normalized.includes('chasseur') || normalized.includes('balle')) {
-    if (normalized.includes('primes')) {
-      return DeathTypeCode.BOUNTY_HUNTER;
-    }
-    return DeathTypeCode.HUNTER_SHOT;
-  }
-  
-  // Potion deaths
-  if (normalized.includes('potion')) {
-    if (normalized.includes('assassin')) {
-      return DeathTypeCode.ASSASSIN_POTION;
-    }
-    if (normalized.includes('hanté')) {
-      return DeathTypeCode.HAUNTED_POTION;
-    }
-  }
-  
-  // Specific killers
-  if (normalized.includes('la bête')) {
-    return DeathTypeCode.BEAST_KILL;
-  }
-  if (normalized.includes('zombie')) {
-    return DeathTypeCode.ZOMBIE_KILL;
-  }
-  if (normalized.includes('vengeur')) {
-    return DeathTypeCode.AVENGER_KILL;
-  }
-  if (normalized.includes("l'agent")) {
-    return DeathTypeCode.AGENT_KILL;
-  }
-  if (normalized.includes('shérif')) {
-    return DeathTypeCode.SHERIFF_KILL;
-  }
-  
-  // Environmental/other deaths
-  if (normalized.includes('explosé')) {
-    return DeathTypeCode.EXPLOSION;
-  }
-  if (normalized.includes('écrasé')) {
-    return DeathTypeCode.CRUSHED;
-  }
-  if (normalized.includes('faim')) {
-    return DeathTypeCode.STARVATION;
-  }
-  if (normalized.includes('chute')) {
-    return DeathTypeCode.FALL_DEATH;
-  }
-  if (normalized.includes('bestiale')) {
-    return DeathTypeCode.BESTIAL_DEATH;
-  }
-  if (normalized.includes('avatar')) {
-    return DeathTypeCode.AVATAR_DEATH;
-  }
-  if (normalized.includes('déco')) {
-    return DeathTypeCode.DISCONNECT;
-  }
-  
-  return DeathTypeCode.UNKNOWN;
 }
 
 /**
@@ -1164,7 +1040,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
     achievements.push(createKillsAchievement(
       `top-killer-average-${suffix ? 'modded' : 'all'}`,
       `🎯 Top ${killerAverageRank.rank} Tueur Efficace${suffix}`,
-      `${killerAverageRank.rank}${killerAverageRank.rank === 1 ? 'er' : 'ème'} meilleur ratio d'éliminations: ${killerAverageRank.stats.averageKillsPerGame.toFixed(2)} par partie (${killerAverageRank.stats.gamesPlayed} parties)`,
+      `${killerAverageRank.rank}${killerAverageRank.rank === 1 ? 'er' : 'ème'} meilleur ratio d'éliminations: ${killerAverageRank.stats.averageKillsPerGame.toFixed(2)} par partie (${killerAverageRank.stats.gamesPlayed} parties, min. 20)`,
       'good',
       killerAverageRank.rank,
       parseFloat(killerAverageRank.stats.averageKillsPerGame.toFixed(2)),
@@ -1530,7 +1406,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     achievements.push(createPerformanceAchievement(
       `hall-of-fame-${suffix ? 'modded' : 'all'}`,
       `🏆 Top ${overallPerformanceRank.rank} Hall of Fame${suffix}`,
-      `${overallPerformanceRank.rank}${overallPerformanceRank.rank === 1 ? 'er' : 'ème'} meilleur overperformer: +${overallPerformanceRank.performance.toFixed(1)}% (${overallPerformanceRank.games} parties)`,
+      `${overallPerformanceRank.rank}${overallPerformanceRank.rank === 1 ? 'er' : 'ème'} meilleur overperformer: +${overallPerformanceRank.performance.toFixed(1)}% (${overallPerformanceRank.games} parties, min. 25)`,
       'good',
       overallPerformanceRank.rank,
       overallPerformanceRank.performance,
@@ -1550,7 +1426,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     achievements.push(createPerformanceAchievement(
       `villageois-performance-${suffix ? 'modded' : 'all'}`,
       `🏘️ Top ${villageoisRank.rank} Villageois${suffix}`,
-      `${villageoisRank.rank}${villageoisRank.rank === 1 ? 'er' : 'ème'} meilleur Villageois: ${villageoisRank.value.toFixed(1)}% (+${villageoisRank.performance.toFixed(1)}%) (${villageoisRank.games} parties)`,
+      `${villageoisRank.rank}${villageoisRank.rank === 1 ? 'er' : 'ème'} meilleur Villageois: ${villageoisRank.value.toFixed(1)}% (+${villageoisRank.performance.toFixed(1)}%) (${villageoisRank.games} parties, min. 25)`,
       'good',
       villageoisRank.rank,
       villageoisRank.value,
@@ -1570,7 +1446,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     achievements.push(createPerformanceAchievement(
       `loup-performance-${suffix ? 'modded' : 'all'}`,
       `🐺 Top ${loupRank.rank} Loup${suffix}`,
-      `${loupRank.rank}${loupRank.rank === 1 ? 'er' : 'ème'} meilleur Loup: ${loupRank.value.toFixed(1)}% (+${loupRank.performance.toFixed(1)}%) (${loupRank.games} parties)`,
+      `${loupRank.rank}${loupRank.rank === 1 ? 'er' : 'ème'} meilleur Loup: ${loupRank.value.toFixed(1)}% (+${loupRank.performance.toFixed(1)}%) (${loupRank.games} parties, min. 10)`,
       'good',
       loupRank.rank,
       loupRank.value,
@@ -1590,7 +1466,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     achievements.push(createPerformanceAchievement(
       `idiot-performance-${suffix ? 'modded' : 'all'}`,
       `🤡 Top ${idiotRank.rank} Idiot du Village${suffix}`,
-      `${idiotRank.rank}${idiotRank.rank === 1 ? 'er' : 'ème'} meilleur Idiot du Village: ${idiotRank.value.toFixed(1)}% (+${idiotRank.performance.toFixed(1)}%) (${idiotRank.games} parties)`,
+      `${idiotRank.rank}${idiotRank.rank === 1 ? 'er' : 'ème'} meilleur Idiot du Village: ${idiotRank.value.toFixed(1)}% (+${idiotRank.performance.toFixed(1)}%) (${idiotRank.games} parties, min. 5)`,
       'good',
       idiotRank.rank,
       idiotRank.value,
@@ -1610,7 +1486,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     achievements.push(createPerformanceAchievement(
       `amoureux-performance-${suffix ? 'modded' : 'all'}`,
       `💕 Top ${amoureuxRank.rank} Amoureux${suffix}`,
-      `${amoureuxRank.rank}${amoureuxRank.rank === 1 ? 'er' : 'ème'} meilleur Amoureux: ${amoureuxRank.value.toFixed(1)}% (+${amoureuxRank.performance.toFixed(1)}%) (${amoureuxRank.games} parties)`,
+      `${amoureuxRank.rank}${amoureuxRank.rank === 1 ? 'er' : 'ème'} meilleur Amoureux: ${amoureuxRank.value.toFixed(1)}% (+${amoureuxRank.performance.toFixed(1)}%) (${amoureuxRank.games} parties, min. 5)`,
       'good',
       amoureuxRank.rank,
       amoureuxRank.value,
@@ -1630,7 +1506,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     achievements.push(createPerformanceAchievement(
       `solo-performance-${suffix ? 'modded' : 'all'}`,
       `⭐ Top ${soloRank.rank} Rôles Solo${suffix}`,
-      `${soloRank.rank}${soloRank.rank === 1 ? 'er' : 'ème'} meilleur joueur solo: ${soloRank.value.toFixed(1)}% (+${soloRank.performance.toFixed(1)}%) (${soloRank.games} parties)`,
+      `${soloRank.rank}${soloRank.rank === 1 ? 'er' : 'ème'} meilleur joueur solo: ${soloRank.value.toFixed(1)}% (+${soloRank.performance.toFixed(1)}%) (${soloRank.games} parties, min. 10)`,
       'good',
       soloRank.rank,
       soloRank.value,
@@ -2133,7 +2009,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
     achievements.push(createSeriesAchievement(
       `villageois-series-${suffix ? 'modded' : 'all'}`,
       `🏘️ Top ${villageoisRank.rank} Série Villageois${suffix}`,
-      `${villageoisRank.rank}${villageoisRank.rank === 1 ? 'ère' : 'ème'} plus longue série Villageois: ${villageoisRank.value} parties consécutives`,
+      `${villageoisRank.rank}${villageoisRank.rank === 1 ? 'ère' : 'ème'} plus longue série Villageois: ${villageoisRank.value} parties consécutives (min. 3)`,
       'good',
       villageoisRank.rank,
       villageoisRank.value,
@@ -2152,7 +2028,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
     achievements.push(createSeriesAchievement(
       `loup-series-${suffix ? 'modded' : 'all'}`,
       `🐺 Top ${loupRank.rank} Série Loup${suffix}`,
-      `${loupRank.rank}${loupRank.rank === 1 ? 'ère' : 'ème'} plus longue série Loup: ${loupRank.value} parties consécutives`,
+      `${loupRank.rank}${loupRank.rank === 1 ? 'ère' : 'ème'} plus longue série Loup: ${loupRank.value} parties consécutives (min. 2)`,
       'good',
       loupRank.rank,
       loupRank.value,
@@ -2171,7 +2047,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
     achievements.push(createSeriesAchievement(
       `win-series-${suffix ? 'modded' : 'all'}`,
       `🏆 Top ${winRank.rank} Série de Victoires${suffix}`,
-      `${winRank.rank}${winRank.rank === 1 ? 'ère' : 'ème'} plus longue série de victoires: ${winRank.value} parties consécutives`,
+      `${winRank.rank}${winRank.rank === 1 ? 'ère' : 'ème'} plus longue série de victoires: ${winRank.value} parties consécutives (min. 3)`,
       'good',
       winRank.rank,
       winRank.value,
@@ -2190,7 +2066,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
     achievements.push(createSeriesAchievement(
       `loss-series-${suffix ? 'modded' : 'all'}`,
       `💀 Top ${lossRank.rank} Série de Défaites${suffix}`,
-      `${lossRank.rank}${lossRank.rank === 1 ? 'ère' : 'ème'} plus longue série de défaites: ${lossRank.value} parties consécutives`,
+      `${lossRank.rank}${lossRank.rank === 1 ? 'ère' : 'ème'} plus longue série de défaites: ${lossRank.value} parties consécutives (min. 3)`,
       'bad',
       lossRank.rank,
       lossRank.value,
