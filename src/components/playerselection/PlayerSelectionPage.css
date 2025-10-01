@@ -537,3 +537,46 @@
     font-size: 0.9rem;
   }
 }
+
+/* Achievements Loading and Error States */
+.achievements-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.achievements-loading .loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--border-color);
+  border-top: 3px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.achievements-error {
+  padding: 1.5rem;
+  background: var(--error-background, #fee);
+  border: 1px solid var(--error-border, #fcc);
+  border-radius: 8px;
+  color: var(--error-text, #c33);
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.achievements-empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

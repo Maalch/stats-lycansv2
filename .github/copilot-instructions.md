@@ -2,27 +2,30 @@
 
 # Copilot Instructions for `stats-lycansv2`
 
-A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Recently migrated from multiple JSON files to a unified `gameLog.json` structure while maintaining backward compatibility.
+A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Recently migrated from multiple JSON files to a unified `gameLog.json` structure while maintaining backward compatibility. Features a sophisticated achievements system with server-side pre-calculation.
 
 ## Architecture Overview
 
 **Frontend:** React 19 + TypeScript, Vite, Recharts for charts, triple context system (`SettingsContext` + `FullscreenContext` + `NavigationContext`)  
-**Data Pipeline:** Unified `gameLog.json` with transformation layer for backward compatibility  
+**Data Pipeline:** Unified `gameLog.json` with transformation layer for backward compatibility + server-side achievements pre-calculation  
 **Build System:** Vite outputs to `docs/` for GitHub Pages, inline Node.js scripts copy data files  
-**Data Processing:** Client-side calculations using optimized base hook pattern (`useBaseStats` → `useGameStatsBase` → `usePlayerStatsBase` → `useFullStatsBase`) with pure computation functions  
+**Data Processing:** Hybrid approach - optimized base hook pattern for real-time stats + pre-calculated achievements JSON for performance  
 **URL Sharing:** Settings persist via localStorage + URL parameters for shareable dashboard states
+**Achievements System:** Server-side generation in `scripts/data-sync/` creates `playerAchievements.json` consumed by client
 
 ## Critical Workflows
 
 ```bash
-npm run dev          # Dev server + copy data to public/data/
-npm run build        # TypeScript check + Vite build + copy data to docs/data/
-npm run sync-data    # Fetch fresh data from Apps Script to /data
+npm run dev                    # Dev server + copy data to public/data/
+npm run build                  # TypeScript check + Vite build + copy data to docs/data/
+npm run sync-data              # Full data sync: fetch from APIs + generate achievements
+npm run generate-achievements  # Standalone achievements generation + copy to public/
 ```
 
 **Build Pipeline:** Inline Node.js scripts in `package.json` copy `/data` → `public/data/` (dev) or `docs/data/` (prod)  
-**Data Sync:** GitHub Actions runs weekly (Mon/Tue 4AM UTC), manually triggerable via workflow_dispatch  
-**Environment:** No env vars needed locally - all data from static files. `LYCANS_API_BASE` + `STATS_LIST_URL` secrets on GitHub only.
+**Data Sync:** GitHub Actions runs daily (4AM UTC), manually triggerable via workflow_dispatch, includes achievements generation  
+**Environment:** No env vars needed locally - all data from static files. `LYCANS_API_BASE` + `STATS_LIST_URL` secrets on GitHub only.  
+**Achievement Generation:** `scripts/data-sync/generate-achievements.js` processes all players, creates ranked lists, integrates with `fetch-data.js`
 
 ## Data Architecture Migration (RECENT CHANGE)
 
@@ -141,6 +144,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 3. **Navigation:** Integrate with `NavigationContext` for chart drill-downs
 4. **Settings:** Add to `SettingsState` interface → ensure localStorage persistence
 5. **Player Highlighting:** Extend chart data types with `isHighlightedAddition` for special inclusion logic
+6. **Achievements:** Add processor in `src/hooks/utils/achievementProcessors/` → integrate in `scripts/data-sync/generate-achievements.js` → client consumes pre-calculated JSON
 
 ### Base Hook Template
 ```typescript
@@ -236,3 +240,31 @@ Complete settings serialization via `generateUrlWithSettings()` enables shareabl
 
 ### Theme System
 Uses CSS custom properties (`--accent-primary`, `--chart-primary`) with theme-adjusted colors via `useThemeAdjusted*Color()` hooks for consistent chart styling across light/dark themes.
+
+## Achievements System Architecture
+
+**Server-Side Generation:** `scripts/data-sync/generate-achievements.js` processes `gameLog.json` → creates `playerAchievements.json`  
+**Client-Side Consumption:** `usePlayerAchievements()` hook loads pre-calculated achievements, falling back to real-time calculation for missing data  
+**Achievement Structure:** Each player has `allGamesAchievements` + `moddedOnlyAchievements` arrays with rank, value, and navigation metadata  
+**Performance:** Pre-calculation eliminates client-side ranking computation for 70+ players across 500+ games
+
+### Achievement Processor Pattern
+```typescript
+// Server-side JavaScript (in data-sync/)
+export function processNewAchievements(playerStats, playerName, suffix) {
+  const achievements = [];
+  // Ranking logic here
+  return achievements;
+}
+
+// Client-side TypeScript (in src/hooks/utils/achievementProcessors/)  
+export function processNewAchievements(playerStats: PlayerStat[], playerName: string, suffix: string): Achievement[] {
+  // Same logic, TypeScript types
+}
+```
+
+**Integration:** Add new processors to both `generate-achievements.js` and `usePlayerAchievements.tsx` → achievements auto-generate during data sync
+
+### Achievement Categories Implemented
+- **General:** Participations, win rates (good/bad achievements)
+- **History:** Map-specific performance (Village 🏘️, Château 🏰 achievements)
