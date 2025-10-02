@@ -1525,8 +1525,8 @@ function getPlayerMainCampFromRole(roleName) {
   // Use existing camp logic
   const camp = getPlayerCampFromRole(roleName);
 
-  // Loups camp
-  if (['Loup', 'Traître'].includes(camp)) {
+  // Loups camp (note: getPlayerCampFromRole returns 'Loups' for Loup and Traître)
+  if (['Loups'].includes(camp)) {
     return 'Loup';
   }
   else if (camp === 'Villageois') {
