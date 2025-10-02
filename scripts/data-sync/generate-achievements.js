@@ -1834,6 +1834,64 @@ function collectSeriesResults(playerSeriesState) {
 }
 
 /**
+ * Parse game ID to extract timestamp and trailing number
+ * @param {string} gameId - Game ID like "Ponce-20231013000000-1"
+ * @returns {Object} - Parsed timestamp and trailing number
+ */
+function parseGameId(gameId) {
+  const parts = gameId.split('-');
+  
+  if (parts.length === 3) {
+    // Legacy format: "Ponce-20231013000000-1"
+    return { 
+      timestamp: parts[1], 
+      trailingNumber: parseInt(parts[2]) || 0 
+    };
+  } else if (parts.length === 2) {
+    // New format: "Nales-20250912210715"
+    return { 
+      timestamp: parts[1], 
+      trailingNumber: 0 
+    };
+  }
+  
+  // Fallback
+  return { timestamp: '0', trailingNumber: 0 };
+}
+
+/**
+ * Generate DisplayedId values for all games based on global chronological order
+ * @param {Array} games - Array of game entries
+ * @returns {Map} - Map from original ID to DisplayedId
+ */
+function generateDisplayedIds(games) {
+  const displayedIdMap = new Map();
+  
+  // Sort all games globally by timestamp, then by trailing number
+  const sortedGames = [...games].sort((a, b) => {
+    const parsedA = parseGameId(a.Id);
+    const parsedB = parseGameId(b.Id);
+    
+    // First compare by timestamp
+    const timestampCompare = parsedA.timestamp.localeCompare(parsedB.timestamp);
+    if (timestampCompare !== 0) {
+      return timestampCompare;
+    }
+    
+    // If timestamps are equal, compare by trailing number
+    return parsedA.trailingNumber - parsedB.trailingNumber;
+  });
+  
+  // Assign sequential global numbers
+  sortedGames.forEach((game, index) => {
+    const globalNumber = index + 1;
+    displayedIdMap.set(game.Id, globalNumber.toString());
+  });
+  
+  return displayedIdMap;
+}
+
+/**
  * Compute player series statistics from game data
  * @param {Array} gameData - Array of game log entries
  * @returns {Object|null} - Player series data or null
@@ -1843,8 +1901,15 @@ function computePlayerSeriesData(gameData) {
     return null;
   }
 
-  // Sort games by DisplayedId to ensure chronological order
-  const sortedGames = [...gameData].sort((a, b) => parseInt(a.DisplayedId) - parseInt(b.DisplayedId));
+  // Generate DisplayedId mapping like the client-side does
+  const displayedIdMap = generateDisplayedIds(gameData);
+
+  // Sort games by DisplayedId to ensure chronological order (client-side compatible)
+  const sortedGames = [...gameData].sort((a, b) => {
+    const displayedIdA = parseInt(displayedIdMap.get(a.Id) || '0');
+    const displayedIdB = parseInt(displayedIdMap.get(b.Id) || '0');
+    return displayedIdA - displayedIdB;
+  });
 
   // Get all unique players
   const allPlayers = getAllPlayersFromGames(sortedGames);
@@ -1854,7 +1919,7 @@ function computePlayerSeriesData(gameData) {
 
   // Process each game chronologically
   sortedGames.forEach(game => {
-    const gameDisplayedId = game.DisplayedId;
+    const gameDisplayedId = displayedIdMap.get(game.Id) || game.Id;
     const date = new Date(game.StartDate).toLocaleDateString('fr-FR', {
       day: '2-digit',
       month: '2-digit', 
