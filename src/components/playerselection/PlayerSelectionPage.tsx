@@ -246,6 +246,7 @@ export function PlayerSelectionPage() {
                           : 'Classements - Parties moddées'
                         }
                         emptyMessage="Aucun classement dans cette catégorie"
+                        achievementType={achievementFilter}
                       />
                     ) : (
                       <div className="achievements-empty">

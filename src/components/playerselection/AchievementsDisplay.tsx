@@ -8,11 +8,12 @@ interface AchievementsDisplayProps {
   achievements: Achievement[];
   title: string;
   emptyMessage?: string;
+  achievementType?: 'all' | 'modded'; // Track which type of achievements are displayed
 }
 
-export function AchievementsDisplay({ achievements, title, emptyMessage }: AchievementsDisplayProps) {
-  const { navigateToTab, updateNavigationState } = useNavigation();
-  const { settings } = useSettings();
+export function AchievementsDisplay({ achievements, title, emptyMessage, achievementType = 'all' }: AchievementsDisplayProps) {
+  const { navigateToTab, updateNavigationState, clearNavigation } = useNavigation();
+  const { settings, updateSettings } = useSettings();
   const playersColor = useThemeAdjustedPlayersColor();
 
   const handleAchievementClick = (achievement: Achievement, event: React.MouseEvent) => {
@@ -20,6 +21,56 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
     event.stopPropagation();
     
     if (!achievement.redirectTo) return;
+
+    // Clear any existing navigation context and settings filters
+    clearNavigation();
+    
+    // Reset all settings to defaults while preserving the highlighted player
+    const currentHighlightedPlayer = settings.highlightedPlayer;
+    
+    if (achievementType === 'modded') {
+      // Set modded games filter if we're viewing modded achievements
+      updateSettings({
+        // Reset legacy fields
+        gameFilter: 'modded',
+        dateRange: { start: null, end: null },
+        mapNameFilter: 'all',
+        playerFilter: { mode: 'none', players: [] },
+        highlightedPlayer: currentHighlightedPlayer,
+        // Use independent filters system with modded games enabled
+        useIndependentFilters: true,
+        independentFilters: {
+          gameTypeEnabled: true,
+          gameFilter: 'modded',
+          dateRangeEnabled: false,
+          dateRange: { start: null, end: null },
+          mapNameEnabled: false,
+          mapNameFilter: 'all',
+          playerFilter: { mode: 'none', players: [] },
+        }
+      });
+    } else {
+      // For 'all' achievements, reset everything to defaults but preserve highlighted player
+      updateSettings({
+        // Reset legacy fields
+        gameFilter: 'all',
+        dateRange: { start: null, end: null },
+        mapNameFilter: 'all',
+        playerFilter: { mode: 'none', players: [] },
+        highlightedPlayer: currentHighlightedPlayer,
+        // Use independent filters system with everything disabled
+        useIndependentFilters: true,
+        independentFilters: {
+          gameTypeEnabled: false,
+          gameFilter: 'all',
+          dateRangeEnabled: false,
+          dateRange: { start: null, end: null },
+          mapNameEnabled: false,
+          mapNameFilter: 'all',
+          playerFilter: { mode: 'none', players: [] },
+        }
+      });
+    }
 
     // Handle special navigation cases based on achievement category and chart section
     if (achievement.category === 'comparison' && achievement.redirectTo.subTab === 'comparison') {
@@ -247,12 +298,16 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
           const minGames = minGamesMatch ? parseInt(minGamesMatch[1], 10) : 10;
           
           const titleLower = achievement.title.toLowerCase();
+          const filterInfo = achievementType === 'modded' 
+            ? " (Filtre parties moddées activé)" 
+            : " (Filtres réinitialisés)";
+            
           if (titleLower.includes('taux de victoire')) {
-            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les taux de victoire (min. ${minGames} parties)`;
+            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les taux de victoire (min. ${minGames} parties)${filterInfo}`;
           } else if (titleLower.includes('participation')) {
-            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les participations`;
+            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les participations${filterInfo}`;
           }
-          return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le classement général des joueurs`;
+          return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le classement général des joueurs${filterInfo}`;
         }
         break;
       case 'history':
@@ -315,25 +370,35 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
         if (achievement.redirectTo.subTab === 'campPerformance') {
           // Extract camp from chartSection for a more specific tooltip
           const chartSection = (achievement.redirectTo as any).chartSection;
+          const filterInfo = achievementType === 'modded' 
+            ? " (Filtre parties moddées activé)" 
+            : " (Filtres réinitialisés)";
+          
           if (chartSection === 'camp-loup') {
-            return "Cliquez pour voir les performances camp Loup";
+            return `Cliquez pour voir les performances camp Loup${filterInfo}`;
           } else if (chartSection === 'camp-villageois') {
-            return "Cliquez pour voir les performances camp Villageois";
+            return `Cliquez pour voir les performances camp Villageois${filterInfo}`;
           } else if (chartSection === 'camp-idiot') {
-            return "Cliquez pour voir les performances camp Idiot du Village";
+            return `Cliquez pour voir les performances camp Idiot du Village${filterInfo}`;
           } else if (chartSection === 'camp-amoureux') {
-            return "Cliquez pour voir les performances camp Amoureux";
+            return `Cliquez pour voir les performances camp Amoureux${filterInfo}`;
           } else if (chartSection === 'solo-roles') {
-            return "Cliquez pour voir le Hall of Fame (tous rôles solo)";
+            return `Cliquez pour voir le Hall of Fame (tous rôles solo)${filterInfo}`;
           } else if (chartSection === 'hall-of-fame') {
-            return "Cliquez pour voir le Hall of Fame (toutes performances)";
+            return `Cliquez pour voir le Hall of Fame (toutes performances)${filterInfo}`;
           }
-          return "Cliquez pour voir les performances par camp";
+          return `Cliquez pour voir les performances par camp${filterInfo}`;
         }
         break;
     }
     
-    return `Cliquez pour voir ${achievement.redirectTo.subTab}`;
+    // Add filter reset information to all tooltips
+    const baseTooltip = `Cliquez pour voir ${achievement.redirectTo.subTab}`;
+    const filterInfo = achievementType === 'modded' 
+      ? " (Filtre parties moddées activé)" 
+      : " (Filtres réinitialisés)";
+    
+    return baseTooltip + filterInfo;
   };
 
   // Helper function to get player color
