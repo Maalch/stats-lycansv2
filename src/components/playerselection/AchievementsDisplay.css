@@ -51,6 +51,18 @@
   border-color: var(--accent-secondary);
 }
 
+/* Add visual feedback for clickable cards */
+.achievement-card:hover::after {
+  content: "🔗 Cliquez pour naviguer";
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  font-size: 0.7rem;
+  color: var(--accent-primary);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
 /* Good achievements styling */
 .achievement-card.good {
   border-left: 4px solid var(--success-color, #4caf50);
