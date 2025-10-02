@@ -1090,8 +1090,7 @@ const SOLO_ROLES = [
   'Scientifique',
   'La Bête',
   'Chasseur de primes',
-  'Vaudou',
-  'Traître'
+  'Vaudou'
 ];
 
 /**
@@ -1209,13 +1208,12 @@ function computePlayerCampPerformance(gameData) {
  * @param {string} targetCamp - Camp to filter by
  * @param {number} minGames - Minimum games required
  * @param {string} sortBy - Sort by 'winRate' or 'performance'
- * @returns {Array} - Top 10 performers for the camp
+ * @returns {Array} - All performers for the camp
  */
 function findTopCampPerformers(campStats, targetCamp, minGames, sortBy = 'performance') {
   return campStats
     .filter(stat => stat.camp === targetCamp && stat.games >= minGames)
-    .sort((a, b) => b[sortBy] - a[sortBy])
-    .slice(0, 10);
+    .sort((a, b) => b[sortBy] - a[sortBy]);
 }
 
 /**
@@ -1404,7 +1402,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     ));
   }
 
-  // 2. Top 10 in best Villageois (min. 25 games)
+  // 2. Best Villageois (min. 25 games)
   const topVillageoisPerformers = findTopCampPerformers(campStats, 'Villageois', 25, 'performance');
   const villageoisRank = findPlayerCampRank(topVillageoisPerformers, playerName);
   if (villageoisRank) {
@@ -1425,7 +1423,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     ));
   }
 
-  // 3. Top 10 in best Loup (min. 10 games)
+  // 3. Best Loup (min. 10 games)
   const topLoupPerformers = findTopCampPerformers(campStats, 'Loup', 10, 'performance');
   const loupRank = findPlayerCampRank(topLoupPerformers, playerName);
   if (loupRank) {
@@ -1446,7 +1444,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     ));
   }
 
-  // 4. Top 10 in best Idiot du Village (min. 5 games)
+  // 4. Best Idiot du Village (min. 5 games)
   const topIdiotPerformers = findTopCampPerformers(campStats, 'Idiot du Village', 5, 'performance');
   const idiotRank = findPlayerCampRank(topIdiotPerformers, playerName);
   if (idiotRank) {
@@ -1467,7 +1465,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     ));
   }
 
-  // 5. Top 10 in best Amoureux (min. 5 games)
+  // 5. Best Amoureux (min. 5 games)
   const topAmoureuxPerformers = findTopCampPerformers(campStats, 'Amoureux', 5, 'performance');
   const amoureuxRank = findPlayerCampRank(topAmoureuxPerformers, playerName);
   if (amoureuxRank) {
@@ -1488,7 +1486,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     ));
   }
 
-  // 6. Top 10 in best solo role (min. 10 games)
+  // 6. Best solo role (min. 10 games)
   const topSoloPerformers = findTopSoloRolePerformers(campStats, 10);
   const soloRank = findPlayerCampRank(topSoloPerformers, playerName);
   if (soloRank) {
@@ -1926,16 +1924,15 @@ function computePlayerSeriesData(gameData) {
 }
 
 /**
- * Helper function to find top performers for a specific series type
+ * Helper function to find all performers for a specific series type
  * @param {Array} seriesData - Array of series data
  * @param {number} minLength - Minimum series length
- * @returns {Array} - Top 10 performers
+ * @returns {Array} - All performers meeting minimum requirements
  */
 function findTopSeriesPerformers(seriesData, minLength = 2) {
   return seriesData
     .filter(series => series.seriesLength >= minLength)
-    .sort((a, b) => b.seriesLength - a.seriesLength)
-    .slice(0, 10);
+    .sort((a, b) => b.seriesLength - a.seriesLength);
 }
 
 /**
@@ -1994,7 +1991,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
 
   const achievements = [];
 
-  // 1. Top 10 in longest Villageois series
+  // 1. Longest Villageois series
   const topVillageoisSeries = findTopSeriesPerformers(seriesData.allVillageoisSeries, 3);
   const villageoisRank = findPlayerSeriesRank(topVillageoisSeries, playerName);
   if (villageoisRank) {
@@ -2014,7 +2011,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
     ));
   }
 
-  // 2. Top 10 in longest Loup series
+  // 2. Longest Loup series
   const topLoupSeries = findTopSeriesPerformers(seriesData.allLoupsSeries, 2);
   const loupRank = findPlayerSeriesRank(topLoupSeries, playerName);
   if (loupRank) {
@@ -2034,7 +2031,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
     ));
   }
 
-  // 3. Top 10 in longest win series
+  // 3. Longest win series
   const topWinSeries = findTopSeriesPerformers(seriesData.allWinSeries, 3);
   const winRank = findPlayerSeriesRank(topWinSeries, playerName);
   if (winRank) {
@@ -2054,7 +2051,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
     ));
   }
 
-  // 4. Top 10 in longest loss series (bad achievement)
+  // 4. Longest loss series (bad achievement)
   const topLossSeries = findTopSeriesPerformers(seriesData.allLossSeries, 3);
   const lossRank = findPlayerSeriesRank(topLossSeries, playerName);
   if (lossRank) {
