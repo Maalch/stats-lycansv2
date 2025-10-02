@@ -57,6 +57,38 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
           deathStatsSelectedCamp: campMatch[1]
         });
       }
+      
+      // Extract minimum games from achievement description (e.g., "min. 25 parties")
+      let minGames = 10; // default
+      const minGamesMatch = achievement.description.match(/min\.\s*(\d+)/);
+      if (minGamesMatch) {
+        minGames = parseInt(minGamesMatch[1], 10);
+      }
+      
+      // Determine focus chart based on chartSection
+      let focusChart: 'totalKills' | 'averageKills' | 'totalDeaths' | 'survivalRate' = 'totalKills'; // default
+      const chartSection = (achievement.redirectTo as any).chartSection;
+      
+      if (chartSection) {
+        if (chartSection === 'killers-total') {
+          focusChart = 'totalKills';
+        } else if (chartSection === 'killers-average') {
+          focusChart = 'averageKills';
+        } else if (chartSection === 'deaths-total') {
+          focusChart = 'totalDeaths';
+        } else if (chartSection === 'survivors-average') {
+          focusChart = 'survivalRate';
+        }
+      }
+      
+      // Set the death statistics chart state
+      updateNavigationState({
+        deathStatisticsState: {
+          selectedCamp: campMatch?.[1] || 'Tous les camps',
+          minGamesForAverage: minGames,
+          focusChart: focusChart
+        }
+      });
     }
     
     // Handle player history achievements that should highlight specific maps
@@ -89,6 +121,89 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
       // Set the series type for the chart
       updateNavigationState({
         selectedSeriesType: seriesType
+      });
+    }
+
+    // Handle general achievements with specific minGames and focus
+    if (achievement.category === 'general' && achievement.redirectTo.subTab === 'playersGeneral') {
+      // Extract minimum games from achievement description (e.g., "min. 50 parties")
+      let minGames = 10; // default
+      const minGamesMatch = achievement.description.match(/min\.\s*(\d+)/);
+      if (minGamesMatch) {
+        minGames = parseInt(minGamesMatch[1], 10);
+      }
+      
+      // Determine focus chart and win rate order based on achievement title/description
+      let focusChart: 'participation' | 'winRate' = 'winRate'; // default for most achievements
+      let winRateOrder: 'best' | 'worst' = 'best'; // default
+      
+      const titleLower = achievement.title.toLowerCase();
+      const descriptionLower = achievement.description.toLowerCase();
+      
+      if (titleLower.includes('participation') || descriptionLower.includes('participation')) {
+        focusChart = 'participation';
+      } else if (titleLower.includes('taux de victoire') || descriptionLower.includes('taux de victoire')) {
+        focusChart = 'winRate';
+        // Determine if it's a "worst" achievement or "best" achievement
+        if (titleLower.includes('moins bon') || titleLower.includes('mauvais') || 
+            descriptionLower.includes('moins bon') || descriptionLower.includes('mauvais')) {
+          winRateOrder = 'worst';
+        }
+      }
+      
+      // Set the players general chart state
+      updateNavigationState({
+        playersGeneralState: {
+          minGamesForWinRate: minGames,
+          winRateOrder: winRateOrder,
+          focusChart: focusChart
+        }
+      });
+    }
+
+    // Handle performance achievements with specific camp and minGames filters
+    if (achievement.category === 'performance' && achievement.redirectTo.subTab === 'campPerformance') {
+      // Extract camp from chartSection (e.g., 'camp-loup' → 'Loup')
+      const chartSection = (achievement.redirectTo as any).chartSection;
+      let selectedCamp = 'Villageois'; // default
+      let minGames = 1; // default
+      
+      if (chartSection) {
+        if (chartSection === 'camp-loup') {
+          selectedCamp = 'Loup';
+        } else if (chartSection === 'camp-villageois') {
+          selectedCamp = 'Villageois';
+        } else if (chartSection === 'camp-idiot') {
+          selectedCamp = 'Idiot du Village';
+        } else if (chartSection === 'camp-amoureux') {
+          selectedCamp = 'Amoureux';
+        } else if (chartSection === 'solo-roles') {
+          // For solo roles, we'll show all data in top performers view
+          selectedCamp = 'Villageois'; // will be overridden by view mode
+        } else if (chartSection === 'hall-of-fame') {
+          selectedCamp = 'Villageois'; // will be overridden by view mode
+        }
+      }
+      
+      // Extract minimum games from achievement description (e.g., "min. 10")
+      const minGamesMatch = achievement.description.match(/min\.\s*(\d+)/);
+      if (minGamesMatch) {
+        minGames = parseInt(minGamesMatch[1], 10);
+      }
+      
+      // Determine view mode based on chart section
+      let viewMode: 'player-performance' | 'top-performers' = 'player-performance';
+      if (chartSection === 'solo-roles' || chartSection === 'hall-of-fame') {
+        viewMode = 'top-performers';
+      }
+      
+      // Set the camp performance chart state
+      updateNavigationState({
+        campPerformanceState: {
+          selectedCampPerformanceView: viewMode,
+          selectedCampPerformanceCamp: selectedCamp,
+          selectedCampPerformanceMinGames: minGames
+        }
       });
     }
 
@@ -127,6 +242,16 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
     switch (achievement.category) {
       case 'general':
         if (achievement.redirectTo.subTab === 'playersGeneral') {
+          // Extract minimum games for a more specific tooltip
+          const minGamesMatch = achievement.description.match(/min\.\s*(\d+)/);
+          const minGames = minGamesMatch ? parseInt(minGamesMatch[1], 10) : 10;
+          
+          const titleLower = achievement.title.toLowerCase();
+          if (titleLower.includes('taux de victoire')) {
+            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les taux de victoire (min. ${minGames} parties)`;
+          } else if (titleLower.includes('participation')) {
+            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les participations`;
+          }
           return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le classement général des joueurs`;
         }
         break;
@@ -146,7 +271,26 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
         break;
       case 'kills':
         if (achievement.redirectTo.subTab === 'deathStats') {
-          return "Cliquez pour voir les statistiques de morts et kills";
+          // Extract camp and minimum games for a more specific tooltip
+          const campMatch = achievement.description.match(/(Villageois|Loups|Autres)/i);
+          const minGamesMatch = achievement.description.match(/min\.\s*(\d+)/);
+          const minGames = minGamesMatch ? parseInt(minGamesMatch[1], 10) : 10;
+          const camp = campMatch?.[1] || 'Tous les camps';
+          
+          const chartSection = (achievement.redirectTo as any).chartSection;
+          let chartType = 'kills et morts';
+          
+          if (chartSection === 'killers-total') {
+            chartType = 'total des kills';
+          } else if (chartSection === 'killers-average') {
+            chartType = `moyenne des kills (min. ${minGames} parties)`;
+          } else if (chartSection === 'deaths-total') {
+            chartType = 'total des morts';
+          } else if (chartSection === 'survivors-average') {
+            chartType = `taux de survie (min. ${minGames} parties)`;
+          }
+          
+          return `Cliquez pour voir les statistiques de ${chartType} ${camp !== 'Tous les camps' ? `en ${camp}` : ''}`;
         }
         break;
       case 'series':
@@ -169,6 +313,21 @@ export function AchievementsDisplay({ achievements, title, emptyMessage }: Achie
         break;
       case 'performance':
         if (achievement.redirectTo.subTab === 'campPerformance') {
+          // Extract camp from chartSection for a more specific tooltip
+          const chartSection = (achievement.redirectTo as any).chartSection;
+          if (chartSection === 'camp-loup') {
+            return "Cliquez pour voir les performances camp Loup";
+          } else if (chartSection === 'camp-villageois') {
+            return "Cliquez pour voir les performances camp Villageois";
+          } else if (chartSection === 'camp-idiot') {
+            return "Cliquez pour voir les performances camp Idiot du Village";
+          } else if (chartSection === 'camp-amoureux') {
+            return "Cliquez pour voir les performances camp Amoureux";
+          } else if (chartSection === 'solo-roles') {
+            return "Cliquez pour voir le Hall of Fame (tous rôles solo)";
+          } else if (chartSection === 'hall-of-fame') {
+            return "Cliquez pour voir le Hall of Fame (toutes performances)";
+          }
           return "Cliquez pour voir les performances par camp";
         }
         break;

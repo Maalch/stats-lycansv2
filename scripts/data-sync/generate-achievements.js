@@ -1426,7 +1426,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       topOverallPerformers.length,
       {
         tab: 'players',
-        subTab: 'performances',
+        subTab: 'campPerformance',
         chartSection: 'hall-of-fame'
       },
       'performance'
@@ -1447,7 +1447,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       topVillageoisPerformers.length,
       {
         tab: 'players',
-        subTab: 'performances',
+        subTab: 'campPerformance',
         chartSection: 'camp-villageois'
       },
       'performance'
@@ -1468,7 +1468,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       topLoupPerformers.length,
       {
         tab: 'players',
-        subTab: 'performances',
+        subTab: 'campPerformance',
         chartSection: 'camp-loup'
       },
       'performance'
@@ -1489,7 +1489,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       topIdiotPerformers.length,
       {
         tab: 'players',
-        subTab: 'performances',
+        subTab: 'campPerformance',
         chartSection: 'camp-idiot'
       },
       'performance'
@@ -1510,7 +1510,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       topAmoureuxPerformers.length,
       {
         tab: 'players',
-        subTab: 'performances',
+        subTab: 'campPerformance',
         chartSection: 'camp-amoureux'
       },
       'performance'
@@ -1531,7 +1531,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       topSoloPerformers.length,
       {
         tab: 'players',
-        subTab: 'performances',
+        subTab: 'campPerformance',
         chartSection: 'solo-roles'
       },
       'performance'

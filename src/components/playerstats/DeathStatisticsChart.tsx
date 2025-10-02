@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
 import { getAllDeathTypes, getKillDescription, getDeathDescription } from '../../hooks/utils/deathStatisticsUtils';
@@ -41,14 +41,34 @@ type ChartPlayerDeathData = {
 export function DeathStatisticsChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const [selectedCamp, setSelectedCamp] = useState<string>(
-    navigationState.deathStatsSelectedCamp || 'Tous les camps'
+    navigationState.deathStatisticsState?.selectedCamp || 
+    navigationState.deathStatsSelectedCamp || 
+    'Tous les camps'
   );
-  const [minGamesForAverage, setMinGamesForAverage] = useState<number>(10);
+  const [minGamesForAverage, setMinGamesForAverage] = useState<number>(
+    navigationState.deathStatisticsState?.minGamesForAverage || 10
+  );
   const { data: availableCamps } = useAvailableCampsFromRaw();
   const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp);
   const { data: gameLogData } = useFilteredGameLogData();
   const { settings } = useSettings();
   const lycansColors = useThemeAdjustedLycansColorScheme();
+
+  // Save state to navigation context when it changes (for back/forward navigation persistence)
+  useEffect(() => {
+    // Only update if state differs from navigation state
+    if (!navigationState.deathStatisticsState || 
+        navigationState.deathStatisticsState.selectedCamp !== selectedCamp ||
+        navigationState.deathStatisticsState.minGamesForAverage !== minGamesForAverage) {
+      updateNavigationState({
+        deathStatisticsState: {
+          selectedCamp,
+          minGamesForAverage,
+          focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart from achievement navigation
+        }
+      });
+    }
+  }, [selectedCamp, minGamesForAverage, navigationState.deathStatisticsState, updateNavigationState]);
 
   // Get all unique death types for chart configuration
   const availableDeathTypes = useMemo(() => {
@@ -104,7 +124,26 @@ export function DeathStatisticsChart() {
   // Function to handle camp selection change with persistence
   const handleCampChange = (newCamp: string) => {
     setSelectedCamp(newCamp);
-    updateNavigationState({ deathStatsSelectedCamp: newCamp });
+    updateNavigationState({ 
+      deathStatsSelectedCamp: newCamp,
+      deathStatisticsState: {
+        selectedCamp: newCamp,
+        minGamesForAverage,
+        focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
+      }
+    });
+  };
+
+  // Function to handle minimum games change with persistence
+  const handleMinGamesChange = (newMinGames: number) => {
+    setMinGamesForAverage(newMinGames);
+    updateNavigationState({
+      deathStatisticsState: {
+        selectedCamp,
+        minGamesForAverage: newMinGames,
+        focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
+      }
+    });
   };
 
   // Process killer data for both total and average charts
@@ -1109,7 +1148,7 @@ export function DeathStatisticsChart() {
             <select
               id="min-games-average-select"
               value={minGamesForAverage}
-              onChange={(e) => setMinGamesForAverage(Number(e.target.value))}
+              onChange={(e) => handleMinGamesChange(Number(e.target.value))}
               style={{
                 background: 'var(--bg-tertiary)',
                 color: 'var(--text-primary)',
@@ -1303,7 +1342,7 @@ export function DeathStatisticsChart() {
             <select
               id="min-games-survival-select"
               value={minGamesForAverage}
-              onChange={(e) => setMinGamesForAverage(Number(e.target.value))}
+              onChange={(e) => handleMinGamesChange(Number(e.target.value))}
               style={{
                 background: 'var(--bg-tertiary)',
                 color: 'var(--text-primary)',
