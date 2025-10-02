@@ -960,10 +960,11 @@ function findPlayerDeathRank(topDeaths, playerName, valueType = 'totalDeaths') {
  * @param {'good'|'bad'} type - Achievement type
  * @param {number} rank - Player rank
  * @param {number} value - Achievement value
+ * @param {number} totalRanked - Total number of players ranked in this category
  * @param {Object} redirectTo - Navigation target
  * @returns {Object} - Achievement object
  */
-function createKillsAchievement(id, title, description, type, rank, value, redirectTo) {
+function createKillsAchievement(id, title, description, type, rank, value, totalRanked, redirectTo) {
   return {
     id,
     title,
@@ -972,7 +973,7 @@ function createKillsAchievement(id, title, description, type, rank, value, redir
     category: 'kills',
     rank,
     value,
-    totalRanked: null, // Will be updated when we enhance this function
+    totalRanked,
     redirectTo
   };
 }
@@ -1002,6 +1003,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
       'good',
       killerRank.rank,
       killerRank.value,
+      topKillers.length,
       {
         tab: 'players',
         subTab: 'deathStats',
@@ -1021,6 +1023,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
       'good',
       killerAverageRank.rank,
       parseFloat(killerAverageRank.stats.averageKillsPerGame.toFixed(2)),
+      topKillersAverage.length,
       {
         tab: 'players',
         subTab: 'deathStats',
@@ -1042,6 +1045,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
       'bad',
       deathRank.rank,
       deathRank.value,
+      topDeaths.length,
       {
         tab: 'players',
         subTab: 'deathStats',
@@ -1061,6 +1065,7 @@ function processKillsAchievements(deathStats, playerName, suffix) {
       'bad',
       deathAverageRank.rank,
       parseFloat(deathAverageRank.value.toFixed(2)),
+      topDeathsAverage.length,
       {
         tab: 'players',
         subTab: 'deathStats',
@@ -1344,11 +1349,12 @@ function findPlayerCampRank(sortedPlayers, playerName) {
  * @param {'good'|'bad'} type - Achievement type
  * @param {number} rank - Player rank
  * @param {number} value - Achievement value
+ * @param {number} totalRanked - Total number of players ranked in this category
  * @param {Object} redirectTo - Navigation target
  * @param {string} category - Achievement category
  * @returns {Object} - Achievement object
  */
-function createPerformanceAchievement(id, title, description, type, rank, value, redirectTo, category = 'performance') {
+function createPerformanceAchievement(id, title, description, type, rank, value, totalRanked, redirectTo, category = 'performance') {
   return {
     id,
     title,
@@ -1357,7 +1363,7 @@ function createPerformanceAchievement(id, title, description, type, rank, value,
     category,
     rank,
     value,
-    totalRanked: null, // Will be updated when we enhance this function
+    totalRanked,
     redirectTo: redirectTo || {
       tab: 'players',
       subTab: 'playersGeneral'
@@ -1388,6 +1394,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       'good',
       overallPerformanceRank.rank,
       overallPerformanceRank.performance,
+      topOverallPerformers.length,
       {
         tab: 'players',
         subTab: 'performances',
@@ -1408,6 +1415,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       'good',
       villageoisRank.rank,
       villageoisRank.value,
+      topVillageoisPerformers.length,
       {
         tab: 'players',
         subTab: 'performances',
@@ -1428,6 +1436,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       'good',
       loupRank.rank,
       loupRank.value,
+      topLoupPerformers.length,
       {
         tab: 'players',
         subTab: 'performances',
@@ -1448,6 +1457,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       'good',
       idiotRank.rank,
       idiotRank.value,
+      topIdiotPerformers.length,
       {
         tab: 'players',
         subTab: 'performances',
@@ -1468,6 +1478,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       'good',
       amoureuxRank.rank,
       amoureuxRank.value,
+      topAmoureuxPerformers.length,
       {
         tab: 'players',
         subTab: 'performances',
@@ -1488,6 +1499,7 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
       'good',
       soloRank.rank,
       soloRank.value,
+      topSoloPerformers.length,
       {
         tab: 'players',
         subTab: 'performances',
@@ -1952,10 +1964,11 @@ function findPlayerSeriesRank(topSeries, playerName) {
  * @param {'good'|'bad'} type - Achievement type
  * @param {number} rank - Player rank
  * @param {number} value - Achievement value
+ * @param {number} totalRanked - Total number of players ranked in this category
  * @param {Object} redirectTo - Navigation target
  * @returns {Object} - Achievement object
  */
-function createSeriesAchievement(id, title, description, type, rank, value, redirectTo) {
+function createSeriesAchievement(id, title, description, type, rank, value, totalRanked, redirectTo) {
   return {
     id,
     title,
@@ -1964,7 +1977,7 @@ function createSeriesAchievement(id, title, description, type, rank, value, redi
     category: 'series',
     rank,
     value,
-    totalRanked: null, // Will be updated when we enhance this function
+    totalRanked,
     redirectTo
   };
 }
@@ -1992,6 +2005,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
       'good',
       villageoisRank.rank,
       villageoisRank.value,
+      topVillageoisSeries.length,
       {
         tab: 'players',
         subTab: 'series',
@@ -2011,6 +2025,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
       'good',
       loupRank.rank,
       loupRank.value,
+      topLoupSeries.length,
       {
         tab: 'players',
         subTab: 'series',
@@ -2030,6 +2045,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
       'good',
       winRank.rank,
       winRank.value,
+      topWinSeries.length,
       {
         tab: 'players',
         subTab: 'series',
@@ -2049,6 +2065,7 @@ function processSeriesAchievements(seriesData, playerName, suffix) {
       'bad',
       lossRank.rank,
       lossRank.value,
+      topLossSeries.length,
       {
         tab: 'players',
         subTab: 'series',
