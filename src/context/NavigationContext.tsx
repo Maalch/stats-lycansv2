@@ -49,6 +49,18 @@ export interface PlayerComparisonState {
   showDetailedStats: boolean;
 }
 
+export interface PlayersGeneralState {
+  minGamesForWinRate: number;
+  winRateOrder: 'best' | 'worst';
+  focusChart?: 'participation' | 'winRate'; // Which chart to focus on when navigating
+}
+
+export interface DeathStatisticsState {
+  selectedCamp: string;
+  minGamesForAverage: number;
+  focusChart?: 'totalKills' | 'averageKills' | 'totalDeaths' | 'survivalRate'; // Which chart to focus on when navigating
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -63,6 +75,8 @@ export interface NavigationState {
   // Grouped state - all properties in each group must be provided together
   campPerformanceState?: CampPerformanceState;
   playerComparisonState?: PlayerComparisonState;
+  playersGeneralState?: PlayersGeneralState;
+  deathStatisticsState?: DeathStatisticsState;
 }
 
 interface NavigationContextType {
