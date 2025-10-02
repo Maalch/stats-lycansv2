@@ -869,6 +869,7 @@ function computeDeathStatistics(gameData) {
     totalDeaths: data.totalDeaths,
     deathsByType: data.deathsByType,
     killedBy: data.killedBy,
+    gamesPlayed: playerGameCounts[playerName] || 0,
     deathRate: (playerGameCounts[playerName] || 0) > 0 ? 
       data.totalDeaths / (playerGameCounts[playerName] || 1) : 0
   })).sort((a, b) => b.totalDeaths - a.totalDeaths);
@@ -916,6 +917,18 @@ function findTopDeaths(playerDeathStats, sortBy = 'totalDeaths', minGames = 1) {
 }
 
 /**
+ * Helper function to find top survivors (lowest death rates)
+ * @param {Array} playerDeathStats - Array of player death statistics
+ * @param {number} minGames - Minimum games required
+ * @returns {Array} - All players sorted by survival rate (lowest death rate first)
+ */
+function findTopSurvivors(playerDeathStats, minGames = 1) {
+  return playerDeathStats
+    .filter(player => player.gamesPlayed >= minGames)
+    .sort((a, b) => a.deathRate - b.deathRate); // Sort by lowest death rate first
+}
+
+/**
  * Helper function to check if a player is in top 10 of killers
  * @param {Array} topKillers - Top killers array
  * @param {string} playerName - Player name to find
@@ -948,6 +961,24 @@ function findPlayerDeathRank(topDeaths, playerName, valueType = 'totalDeaths') {
   return {
     rank: index + 1,
     value: valueType === 'totalDeaths' ? playerStats.totalDeaths : playerStats.deathRate,
+    stats: playerStats
+  };
+}
+
+/**
+ * Helper function to check if a player is in top survivors
+ * @param {Array} topSurvivors - Top survivors array (sorted by lowest death rate)
+ * @param {string} playerName - Player name to find
+ * @returns {Object|null} - Rank info or null
+ */
+function findPlayerSurvivalRank(topSurvivors, playerName) {
+  const index = topSurvivors.findIndex(survivor => survivor.playerName === playerName);
+  if (index === -1) return null;
+  
+  const playerStats = topSurvivors[index];
+  return {
+    rank: index + 1,
+    value: playerStats.deathRate,
     stats: playerStats
   };
 }
@@ -1054,22 +1085,22 @@ function processKillsAchievements(deathStats, playerName, suffix) {
     ));
   }
 
-  // 4. Most killed ranking (average per game, min. 25 games)
-  const topDeathsAverage = findTopDeaths(deathStats.playerDeathStats, 'deathRate', 25);
-  const deathAverageRank = findPlayerDeathRank(topDeathsAverage, playerName, 'deathRate');
-  if (deathAverageRank) {
+  // 4. Less killed ranking (lowest death rate, min. 25 games)
+  const topSurvivors = findTopSurvivors(deathStats.playerDeathStats, 25);
+  const survivalRank = findPlayerSurvivalRank(topSurvivors, playerName);
+  if (survivalRank) {
     achievements.push(createKillsAchievement(
-      `top-killed-average-${suffix ? 'modded' : 'all'}`,
-      `☠️ Top ${deathAverageRank.rank} Victime Récurrente${suffix}`,
-      `${deathAverageRank.rank}${deathAverageRank.rank === 1 ? 'ère' : 'ème'} plus haut taux de mortalité: ${deathAverageRank.value.toFixed(2)} morts par partie (min. 25 parties)`,
-      'bad',
-      deathAverageRank.rank,
-      parseFloat(deathAverageRank.value.toFixed(2)),
-      topDeathsAverage.length,
+      `top-survivor-${suffix ? 'modded' : 'all'}`,
+      `🛡️ Top ${survivalRank.rank} Survivant${suffix}`,
+      `${survivalRank.rank}${survivalRank.rank === 1 ? 'er' : 'ème'} meilleur taux de survie: ${survivalRank.value.toFixed(2)} morts par partie (min. 25 parties)`,
+      'good',
+      survivalRank.rank,
+      parseFloat(survivalRank.value.toFixed(2)),
+      topSurvivors.length,
       {
         tab: 'players',
         subTab: 'deathStats',
-        chartSection: 'deaths-average'
+        chartSection: 'survivors-average'
       }
     ));
   }
