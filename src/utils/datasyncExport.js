@@ -1,6 +1,9 @@
+
 /**
  * Standardized death type codes for consistent processing across server and client
  * This file is shared between generate-achievements.js and TypeScript utilities
+ * 
+ * @type {Record<string, string>}
  */
 export const DeathTypeCode = {
   SURVIVOR: 'SURVIVOR',           // N/A - Player survived
@@ -29,9 +32,21 @@ export const DeathTypeCode = {
 };
 
 /**
+ * @typedef {keyof typeof DeathTypeCode} DeathTypeCodeType
+ */
+
+/**
+ * Group options for camp classification
+ * @typedef {Object} CampGroupOptions
+ * @property {boolean} [regroupLovers] - Whether to regroup lovers
+ * @property {boolean} [regroupVillagers] - Whether to regroup villagers  
+ * @property {boolean} [regroupTraitor] - Whether to regroup traitor with wolves
+ */
+
+/**
  * Codify death type for consistent grouping
  * @param {string|null} deathType - Death type string
- * @returns {string} - Standardized death type code
+ * @returns {string} Standardized death type code
  */
 export function codifyDeathType(deathType) {
   if (!deathType || deathType === 'N/A') {
@@ -128,7 +143,7 @@ export function codifyDeathType(deathType) {
  * Helper function to calculate game duration in seconds
  * @param {string} startDate - Start date string
  * @param {string} endDate - End date string
- * @returns {number|null} - Duration in seconds or null
+ * @returns {number|null} Duration in seconds or null
  */
 export function calculateGameDuration(startDate, endDate) {
   if (!startDate || !endDate) return null;
@@ -148,21 +163,13 @@ export function calculateGameDuration(startDate, endDate) {
  * Helper function to get player's camp from role name
  * 
  * @param {string} roleName - The role name to get the camp for
- * @param {Object} groupOptions - An options object with grouping settings
- * @param {boolean} [groupOptions.regroupLovers]
- * @param {boolean} [groupOptions.regroupVillagers]
- * @param {boolean} [groupOptions.regroupTraitor]
+ * @param {CampGroupOptions} [groupOptions] - An options object with grouping settings
  * @returns {string} The camp name for the role
  */
-export function getPlayerCampFromRole(
-  roleName, 
-  groupOptions
-) {
+export function getPlayerCampFromRole(roleName, groupOptions) {
   if (!roleName) return 'Villageois';
   
-  let options;
-  // New options object format
-  options = groupOptions || {};
+  const options = groupOptions || {};
 
   //by default: regroup lovers, villagers, but not traitor 
   const { regroupLovers = true, regroupVillagers = true, regroupTraitor = false } = options;

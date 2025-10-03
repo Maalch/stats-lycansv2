@@ -1,5 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import { DeathTypeCode, codifyDeathType, getPlayerCampFromRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
+import { mainCampOrder } from '../../types/api';
 
 /**
  * Get all available camps from game data (camps that have at least one killer)
@@ -28,10 +29,9 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
   const camps = Array.from(campsSet);
   
   // Sort camps to put main camps first
-  const mainCamps = ['Villageois', 'Loup', 'Amoureux'];
   const sortedCamps = [
-    ...mainCamps.filter(camp => camps.includes(camp)),
-    ...camps.filter(camp => !mainCamps.includes(camp)).sort()
+    ...mainCampOrder.filter(camp => camps.includes(camp)),
+    ...camps.filter(camp => !mainCampOrder.includes(camp)).sort()
   ];
 
 
