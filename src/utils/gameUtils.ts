@@ -80,58 +80,6 @@ export function splitAndTrim(str: string | null | undefined): string[] {
 }
 
 /**
- * Helper function to get player's camp from role name
- * 
- * @param roleName - The role name to get the camp for
- * @param groupOptions - An options object with grouping settings
- * @returns The camp name for the role
- */
-export function getPlayerCampFromRole(
-  roleName?: string, 
-  groupOptions?: {
-    regroupLovers?: boolean;
-    regroupVillagers?: boolean;
-    regroupTraitor?: boolean;
-  }
-): string {
-  if (!roleName) return 'Villageois';
-  
-  let options: {
-    regroupLovers?: boolean;
-    regroupVillagers?: boolean;
-    regroupTraitor?: boolean;
-  };
-  
-  // New options object format
-  options = groupOptions || {};
-
-  //by default: regroup lovers, villagers, but not traitor 
-  const { regroupLovers = true, regroupVillagers = true, regroupTraitor = false } = options;
-  
-  // Handle Amoureux roles
-  if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
-    return regroupLovers ? 'Amoureux' : roleName;
-  }
-  
-  // Handle Villager-type roles
-  if (roleName === 'Chasseur' || roleName === 'Alchimiste') {
-    return regroupVillagers ? 'Villageois' : roleName;
-  }
-
-  if (roleName === 'Zombie') {
-    return 'Vaudou';
-  }
-  
-  // Handle Traitor role
-  if (roleName === 'Traître') {
-    return regroupTraitor ? 'Loup' : roleName;
-  }
-  
-  // Special roles keep their role name as camp
-  return roleName;
-}
-
-/**
  * Helper function to get the winner camp for a specific game
  * 
  * @param game - The game log entry to analyze

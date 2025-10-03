@@ -1,7 +1,7 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
-import { getWinnerCampFromGame, getPlayerCampFromRole } from '../../utils/gameUtils';
-import { calculateGameDuration } from '../../utils/datasyncExport';
+import { getWinnerCampFromGame } from '../../utils/gameUtils';
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 
 
 // Role entry interface for the new unified structure
@@ -79,6 +79,37 @@ function createYouTubeEmbedUrl(start: string | null, end: string | null): string
     return embedUrl;
   } catch (error) {
     console.warn('Failed to create YouTube embed URL:', start, error);
+    return null;
+  }
+}
+
+/**
+ * Calculate game duration from ISO date strings
+ */
+function calculateGameDuration(start: string | null, end: string | null): number | null {
+  if (!start || !end) return null;
+  
+  try {
+    // Parse ISO date strings
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    
+    // Validate that the dates are valid
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.warn('Invalid date format:', start, end);
+      return null;
+    }
+    
+    // Calculate duration in milliseconds, then convert to seconds
+    const durationMs = endDate.getTime() - startDate.getTime();
+    
+    if (durationMs > 0) {
+      return Math.round(durationMs / 1000); // Duration in seconds
+    }
+    
+    return null;
+  } catch (error) {
+    console.warn('Failed to calculate game duration:', start, end, error);
     return null;
   }
 }

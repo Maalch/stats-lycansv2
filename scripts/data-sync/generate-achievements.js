@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { DeathTypeCode, codifyDeathType } from '../../src/utils/datasyncExport.js';
+import { DeathTypeCode, codifyDeathType, getPlayerCampFromRole } from '../../src/utils/datasyncExport.js';
 
 // Data directory relative to project root
 const DATA_DIR = '../../data';
@@ -211,38 +211,6 @@ function computePlayerStats(gameData) {
 }
 
 /**
- * Get player camp from role name
- * @param {string} roleName - Role name to categorize
- * @returns {string} - Camp name
- */
-function getPlayerCampFromRole(roleName) {
-  if (!roleName) return 'Villageois';
-  
-  // Handle Amoureux roles
-  if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
-    return 'Amoureux';
-  }
-  
-  // Handle Villager-type roles
-  if (roleName === 'Villageois' || roleName === 'Chasseur' || roleName === 'Alchimiste') {
-    return 'Villageois';
-  }
-  
-  // Handle Loup-type roles
-  if (roleName === 'Loup') {
-    return 'Loups';
-  }
-  
-  // Handle Traître (can be grouped with Loups or standalone)
-  if (roleName === 'Traître') {
-    return 'Loups'; // Group with Loups by default
-  }
-  
-  // All other roles are solo
-  return roleName;
-}
-
-/**
  * Compute player game history from game data
  * @param {string} playerName - Name of the player
  * @param {Array} gameData - Array of game entries
@@ -450,8 +418,9 @@ function generatePlayerComparison(player1Name, player2Name, rawGameData) {
     
     commonGames.push(game);
     
-    const player1Camp = getPlayerCampFromRole(player1Stat.MainRoleFinal);
-    const player2Camp = getPlayerCampFromRole(player2Stat.MainRoleFinal);
+    // Use regroupTraitor: true to automatically group Traître with Loup
+    const player1Camp = getPlayerCampFromRole(player1Stat.MainRoleFinal, { regroupTraitor: true });
+    const player2Camp = getPlayerCampFromRole(player2Stat.MainRoleFinal, { regroupTraitor: true });
     
     // Count wins in common games
     const player1Won = player1Stat.Victorious;
@@ -460,28 +429,15 @@ function generatePlayerComparison(player1Name, player2Name, rawGameData) {
     if (player1Won) player1CommonWins++;
     if (player2Won) player2CommonWins++;
     
-    // Helper function to determine the main camp affiliation based on werewolf game rules
-    const getMainCampAffiliation = (camp) => {
-      if (camp === 'Loups' || camp === 'Traître') {
-        return 'Loups'; // Wolves team: Loups + Traître (only exception)
-      } else {
-        // Every other role works alone and is its own camp
-        return camp;
-      }
-    };
-    
-    const player1MainCamp = getMainCampAffiliation(player1Camp);
-    const player2MainCamp = getMainCampAffiliation(player2Camp);
-    
     // Players are in opposing camps if they have different camp affiliations
-    const isOpposingCamps = player1MainCamp !== player2MainCamp;
+    const isOpposingCamps = player1Camp !== player2Camp;
     
     if (isOpposingCamps) {
       opposingCampGames.push(game);
       
       if (player1Won) player1OpposingWins++;
       if (player2Won) player2OpposingWins++;
-    } else if (player1MainCamp === player2MainCamp) {
+    } else if (player1Camp === player2Camp) {
       // Same camp affiliation
       sameCampGames.push(game);
       
@@ -1534,10 +1490,10 @@ function getPlayerMainCampFromRole(roleName) {
   if (!roleName) return 'Villageois';
   
   // Use existing camp logic
-  const camp = getPlayerCampFromRole(roleName);
+  const camp = getPlayerCampFromRole(roleName, { regroupTraitor: true });
 
-  // Loups camp (note: getPlayerCampFromRole returns 'Loups' for Loup and Traître)
-  if (['Loups'].includes(camp)) {
+  // Loups camp (note: getPlayerCampFromRole returns 'Loup' for Loup and Traître)
+  if (camp === 'Loup') {
     return 'Loup';
   }
   else if (camp === 'Villageois') {

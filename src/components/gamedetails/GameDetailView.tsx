@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
-import { getPlayerCampFromRole } from '../../utils/gameUtils';
 import { formatDeathTiming } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {

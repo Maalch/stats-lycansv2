@@ -1,5 +1,5 @@
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
-import { getPlayerCampFromRole } from '../../utils/gameUtils';
 
 /**
  * Helper function to get player's main camp from role name
@@ -7,10 +7,10 @@ import { getPlayerCampFromRole } from '../../utils/gameUtils';
 function getPlayerMainCampFromRole(roleName: string): 'Villageois' | 'Loup' | 'Autres' {
   if (!roleName) return 'Villageois';
   
-  roleName = getPlayerCampFromRole(roleName);
+  roleName = getPlayerCampFromRole(roleName, { regroupTraitor: true });
 
-  // Loups camp
-  if (['Loup', 'Traître'].includes(roleName)) {
+  // Loups camp (now includes Traître automatically)
+  if (roleName === 'Loup') {
     return 'Loup';
   }
   else if (roleName === 'Villageois') {
