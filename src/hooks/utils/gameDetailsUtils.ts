@@ -1,6 +1,7 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
-import { getWinnerCampFromGame, getPlayerCampFromRole } from '../../utils/gameUtils';
+import { getWinnerCampFromGame } from '../../utils/gameUtils';
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 
 
 // Role entry interface for the new unified structure
@@ -603,7 +604,7 @@ export function filterByPlayerPairFromGameLog(
           const playerStat = game.PlayerStats.find(p => 
             p.Username.toLowerCase() === player.toLowerCase()
           );
-          return getPlayerCampFromRole(playerStat?.MainRoleFinal) === 'Loup';
+          return getPlayerCampFromRole(playerStat?.MainRoleFinal || '') === 'Loup';
         });
 
       case 'lovers':
@@ -612,7 +613,7 @@ export function filterByPlayerPairFromGameLog(
           const playerStat = game.PlayerStats.find(p => 
             p.Username.toLowerCase() === player.toLowerCase()
           );
-          return getPlayerCampFromRole(playerStat?.MainRoleFinal) === 'Amoureux';
+          return getPlayerCampFromRole(playerStat?.MainRoleFinal || '') === 'Amoureux';
         });
 
       default:

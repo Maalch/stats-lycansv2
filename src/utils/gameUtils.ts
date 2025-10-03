@@ -2,6 +2,7 @@
  * Utility functions for processing YouTube URLs and game duration calculations
  */
 import type { GameLogEntry } from '../hooks/useCombinedRawData';
+import { getPlayerCampFromRole } from './datasyncExport';
 
 // Helper function to extract YouTube video ID and timestamp from a YouTube URL
 export function extractYouTubeInfo(url: string | null): { videoId: string | null; timestamp: number | null } {
@@ -67,40 +68,6 @@ export function createYouTubeEmbedUrl(startUrl: string | null, endUrl: string | 
   return `https://www.youtube.com/embed/${videoId}${queryString ? '?' + queryString : ''}`;
 }
 
-// Helper function to calculate game duration from start and end URLs or ISO date strings
-export function calculateGameDuration(start: string | null, end: string | null): number | null {
-  if (!start || !end) return null;
-  
-  try {
-    // First, try to parse as ISO date strings (new format)
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-    
-    // Check if both dates are valid ISO dates
-    if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-      const durationMs = endDate.getTime() - startDate.getTime();
-      return durationMs > 0 ? Math.round(durationMs / 1000) : null;
-    }
-  } catch (error) {
-    // If ISO date parsing fails, try YouTube URL format (legacy format)
-  }
-  
-  // Fallback to YouTube URL parsing for backward compatibility
-  const startInfo = extractYouTubeInfo(start);
-  const endInfo = extractYouTubeInfo(end);
-  
-  // We need both timestamps to calculate duration
-  if (startInfo.timestamp === null || endInfo.timestamp === null) {
-    return null;
-  }
-
-  // Calculate duration in seconds
-  const duration = endInfo.timestamp - startInfo.timestamp;
-  
-  // Return null if duration is negative or zero (invalid)
-  return duration > 0 ? duration : null;
-}
-
 // Helper function to format duration in seconds to MM:SS format
 export function formatDuration(durationInSeconds: number): string {
   const minutes = Math.floor(durationInSeconds / 60);
@@ -114,95 +81,34 @@ export function splitAndTrim(str: string | null | undefined): string[] {
 }
 
 /**
- * Helper function to get player's camp from role name
- * 
- * @param roleName - The role name to get the camp for
- * @param groupOptions - An options object with grouping settings
- * @returns The camp name for the role
- */
-export function getPlayerCampFromRole(
-  roleName?: string, 
-  groupOptions?: {
-    regroupLovers?: boolean;
-    regroupVillagers?: boolean;
-    regroupTraitor?: boolean;
-  }
-): string {
-  if (!roleName) return 'Villageois';
-  
-  let options: {
-    regroupLovers?: boolean;
-    regroupVillagers?: boolean;
-    regroupTraitor?: boolean;
-  };
-  
-  // New options object format
-  options = groupOptions || {};
-
-  //by default: regroup lovers, villagers, but not traitor 
-  const { regroupLovers = true, regroupVillagers = true, regroupTraitor = false } = options;
-  
-  // Handle Amoureux roles
-  if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
-    return regroupLovers ? 'Amoureux' : roleName;
-  }
-  
-  // Handle Villager-type roles
-  if (roleName === 'Chasseur' || roleName === 'Alchimiste') {
-    return regroupVillagers ? 'Villageois' : roleName;
-  }
-
-  if (roleName === 'Zombie') {
-    return 'Vaudou';
-  }
-  
-  // Handle Traitor role
-  if (roleName === 'Traître') {
-    return regroupTraitor ? 'Loup' : roleName;
-  }
-  
-  // Special roles keep their role name as camp
-  return roleName;
-}
-
-/**
  * Helper function to get the winner camp for a specific game
  * 
  * @param game - The game log entry to analyze
  * @returns The winner camp name
  */
 export function getWinnerCampFromGame(game: GameLogEntry): string {
- // Determine winner camp from PlayerStats
+  // Determine winner camp from PlayerStats
   const winners = game.PlayerStats.filter(p => p.Victorious);
-  let winnerCamp = '';
   
-  if (winners.length > 0) {
-    const winnerRoles = winners.map(w => w.MainRoleFinal);
-    
-    // Check for wolf/traitor victory
-    if (winnerRoles.includes('Loup') || winnerRoles.includes('Traître')) {
-      winnerCamp = 'Loup';
-    }
-    // Check for Amoureux camp victory
-    else if (winnerRoles.includes('Amoureux Loup') || winnerRoles.includes('Amoureux Villageois') || winnerRoles.includes('Amoureux')) {
-      winnerCamp = 'Amoureux';
-    }
-    // Check for Villageois camp victory (Villageois, Chasseur, or Alchmiste)
-    else if (winnerRoles.includes('Villageois') || winnerRoles.includes('Chasseur') || winnerRoles.includes('Alchimiste')) {
-      winnerCamp = 'Villageois';
-    }
-    // Check for solo role victory
-    else {
-      const soloWinnerRoles = winnerRoles.filter(role => !['Villageois', 'Loup', 'Traître', 'Chasseur', 'Alchimiste', 'Amoureux Loup', 'Amoureux Villageois'].includes(role));
-      if (soloWinnerRoles.length > 0) {
-        winnerCamp = soloWinnerRoles[0]; // Use the first solo role as camp name
-      } else {
-        winnerCamp = 'Villageois'; // Fallback
-      }
-    }
-    return winnerCamp;
+  if (winners.length === 0) {
+    return 'Villageois'; // Default fallback
   }
-  return 'Villageois';
+  
+  // Use getPlayerCampFromRole with regroupTraitor: true to handle Traître->Loup grouping
+  // This matches the logic used in the achievements generation
+  const winnerCamps = winners.map(w => 
+    getPlayerCampFromRole(w.MainRoleFinal, { regroupTraitor: true })
+  );
+  
+  // Find the most common camp among winners
+  const campCounts = winnerCamps.reduce((acc, camp) => {
+    acc[camp] = (acc[camp] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  
+  // Return the camp with the most winners, or the first one if tied
+  const sortedCamps = Object.entries(campCounts).sort((a, b) => b[1] - a[1]);
+  return sortedCamps[0][0];
 }
 
 // Helper function to format death timing from abbreviated format to readable French

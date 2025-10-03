@@ -9,6 +9,7 @@
     "copy-data": "node -e \"const fs = require('fs'); const path = require('path'); function copyDir(src, dest) { if (!fs.existsSync(dest)) fs.mkdirSync(dest, {recursive: true}); const files = fs.readdirSync(src); files.forEach(file => { const srcPath = path.join(src, file); const destPath = path.join(dest, file); if (fs.statSync(srcPath).isDirectory()) { copyDir(srcPath, destPath); } else { fs.copyFileSync(srcPath, destPath); } }); } copyDir('data', 'docs/data');\"",
     "copy-data-dev": "node -e \"const fs = require('fs'); const path = require('path'); function copyDir(src, dest) { if (!fs.existsSync(dest)) fs.mkdirSync(dest, {recursive: true}); const files = fs.readdirSync(src); files.forEach(file => { const srcPath = path.join(src, file); const destPath = path.join(dest, file); if (fs.statSync(srcPath).isDirectory()) { copyDir(srcPath, destPath); } else { fs.copyFileSync(srcPath, destPath); } }); } copyDir('data', 'public/data');\"",
     "sync-data": "cd scripts/data-sync && npm install && node fetch-data.js",
+    "generate-achievements": "cd scripts/data-sync && node generate-achievements.js && cd ../.. && npm run copy-data-dev",
     "lint": "eslint .",
     "preview": "vite preview"
   },

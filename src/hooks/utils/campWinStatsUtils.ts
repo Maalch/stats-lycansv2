@@ -4,8 +4,8 @@ import {
   didCampWin 
 } from './dataUtils';
 import type { GameLogEntry } from '../useCombinedRawData';
-import { getPlayerCampFromRole } from '../../utils/gameUtils';
 import type { CampWinStatsResponse, CampStat, SoloCamp, CampAverage } from '../../types/api';
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 
 /**
  * Build game-player-camp mapping from GameLogEntry data

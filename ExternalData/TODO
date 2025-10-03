@@ -1,56 +1,20 @@
 New home page
 
 Player selection page: chose what player will be highlighted by default on all web site pages
-Display Achievement for that player.
+Display Achievements and individual card for that player.
 
 Here is the list of possible achievements:
-- From Player general stats:
-   - Top X in participations
-   - Top X in best win rate (min. 10 games)
-   - Top X in best win rate (min. 50 games)
-- From Player history:
-   - Top X in best win rate (Village map)
-   - Top X in best win rate (Château map)
-- From Player Performances:
-   - Top X in best "overperformer" (min. 25 games) --> from "Hall of fame"
-   - Top X in best Villageois (min. 25 games)
-   - Top X in best Loup (min. 10 games)
-   - Top X in best Idiot du Village (min. 5 games)
-   - Top X in best Amoureux (min. 5 games)
-   - Top X in best solo rôle (min. 10 games) --> need a new "solo role" group here
-- From Player series:
-   - Top X in longest Villageois serie 
-   - Top X in longest Loup serie 
-   - Top X in longest win serie 
-- From Morts & Kill
-TODO!!!!
+- Première victoire (total) + déclinée en chaque camp (Villageois, Loup, Idiot du Village, etc...)
+- 10 victoires (total) + déclinée en chaque camp
+- 50 victoires (total) + déclinée en chaque camp
+- 100 victoires (total) + déclinée en chaque camp
+
+- Tuer un villageois en étant villageois (potion)
+- Tuer un villageois en étant villageois (tir de chasseur)
+- Tuer un loup/camp solo en étant villageois (par potion)
+- Tuer un loup/camp solo en étant villageois (par tir de chasseur)
 
 
-Here is a list of "anti" achievements:
-- From Player general stats:
-   - Top X in lowest win rate (min. 10 games)
-   - Top X in lowest win rate (min. 50 games)
-- From Player series:
-   - Top X in longest lose serie
-
-Here is a list of inidivual cards:
-- From "Face à face"
-   - Best mate (min. 10 games together)
-   - Worst mate (min. 10 games toegher)
-   - Best matchup (min. 10 games against)
-   - Worst matchup (min. 10 games against)
-
-For all these achievement, there shoul be a version for "all games - modded or not" and "modded games only"
-
-New Statistics Components
-
-FunnelChart - for:  Players alive at different game phases Or: Role survival rates through game progression
-
-Each would integrate with the existing navigation system and follow the established patterns:
-
-Use useNavigation() for drill-downs to GameDetailsChart
-Respect SettingsContext filters
-Follow the lazy loading pattern
-Maintain French language consistency
 
 
+Each achievements should redirect on click to the corresponding chart or to the game details list.

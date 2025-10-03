@@ -1,6 +1,7 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { GameDurationAnalysisResponse, DurationDistribution, CampDurationData } from '../../types/api';
-import { calculateGameDuration,getWinnerCampFromGame } from '../../utils/gameUtils';
+import { getWinnerCampFromGame } from '../../utils/gameUtils';
+import { calculateGameDuration } from '../../utils/datasyncExport';
 
 /**
  * Format duration in seconds to a human-readable string

@@ -124,8 +124,11 @@ const playersColor: Record<string, string> = Object.fromEntries(
 );
 
 
+export const mainCampOrder = ['Villageois', 'Loup', 'Amoureux', 'Idiot du Village', 'Vaudou'];
+
+
   // Options pour le nombre minimum de parties
-export const minGamesOptions = [3, 5, 10, 25, 50, 75, 100, 150, 200];
+export const minGamesOptions = [3, 5, 10, 20, 25, 50, 75, 100, 150, 200];
 
 // Types pour les statistiques des joueurs
 // Dynamic interface that adapts to the camps found in the game data

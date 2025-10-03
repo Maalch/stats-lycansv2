@@ -1,6 +1,6 @@
 // This file is auto-generated - do not edit manually
 // Run 'npm run sync-version' to update from package.json
-export const APP_VERSION = '1.2.2';
+export const APP_VERSION = '1.3.0';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -10,6 +10,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.0',
+    date: '03/10/2025',
+    description: 'Nouvelle page d\'accueil avec classement globaux !\nRaccourci vers les différents graphiques depuis la page d\'accueil.',
+  },
   {
     version: 'v1.2.2',
     date: '01/10/2025',

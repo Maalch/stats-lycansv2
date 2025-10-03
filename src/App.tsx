@@ -17,15 +17,12 @@ const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeri
 
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
-//const PlayerDeathStatsChart = lazy(() => import('./components/playerstats/PlayerDeathStatsChart').then(m => ({ default: m.PlayerDeathStatsChart })));
-//const DeathTimingAnalysisChart = lazy(() => import('./components/playerstats/DeathTimingAnalysisChart').then(m => ({ default: m.DeathTimingAnalysisChart })));
 
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
-//const GeneralDeathStatisticsChart = lazy(() => import('./components/generalstats/GeneralDeathStatisticsChart').then(m => ({ default: m.GeneralDeathStatisticsChart })));
 
 const BRGeneralStatsChart = lazy(() => import('./components/brstats/BRGeneralStatsChart').then(m => ({ default: m.BRGeneralStatsChart })));
 
@@ -34,11 +31,20 @@ const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetails
 // Add settings import
 const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').then(m => ({ default: m.SettingsPanel })));
 
+// Player selection page
+const PlayerSelectionPage = lazy(() => import('./components/playerselection/PlayerSelectionPage').then(m => ({ default: m.PlayerSelectionPage })));
+
 // Import VersionDisplay component
 import { VersionDisplay } from './components/common/VersionDisplay';
 import { ChangelogPage } from './components/common/ChangelogPage';
 
 const MAIN_TABS = [
+  { 
+    key: 'playerSelection', 
+    label: 'Sélection Joueur', 
+    icon: '🏆',
+    description: 'Choisir un joueur et voir ses succès'
+  },
   { 
     key: 'players', 
     label: 'Joueurs', 
@@ -115,19 +121,6 @@ const PLAYER_STATS_MENU = [
     component: DeathStatisticsChart,
     description: 'Analyse des morts des joueurs'
   },
-  /*
-  { 
-    key: 'playerDeaths', 
-    label: 'Morts par Joueur', 
-    component: PlayerDeathStatsChart,
-    description: 'Analyse détaillée des morts de chaque joueur'
-  },
-  { 
-    key: 'deathTiming', 
-    label: 'Analyse Temporelle', 
-    component: DeathTimingAnalysisChart,
-    description: 'Évolution des morts dans le temps'
-  },*/
 ];
 
 const GENERAL_STATS_MENU = [
@@ -155,12 +148,6 @@ const GENERAL_STATS_MENU = [
     component: GameDurationInsights,
     description: 'Statistiques sur la durée des parties (en jours de jeu)'
   },
-  /*{ 
-    key: 'generalDeathStats', 
-    label: 'Statistiques de Mort', 
-    component: GeneralDeathStatisticsChart,
-    description: 'Analyse générale des morts: timing et types'
-  },*/
 ];
 
 export default function App() {
@@ -176,9 +163,9 @@ export default function App() {
 }
 
 function MainApp() {
-  const { currentView } = useNavigation();
+  const { currentView, requestedTab, clearTabNavigation } = useNavigation();
   const { lastRecordedGameDate, isLoading: dateLoading } = useLastRecordedGameDate();
-  const [selectedMainTab, setSelectedMainTab] = useState('players');
+  const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
@@ -203,6 +190,21 @@ function MainApp() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  // Handle tab navigation requests
+  useEffect(() => {
+    if (requestedTab) {
+      setSelectedMainTab(requestedTab.mainTab);
+      if (requestedTab.subTab) {
+        if (requestedTab.mainTab === 'players') {
+          setSelectedPlayerStat(requestedTab.subTab);
+        } else if (requestedTab.mainTab === 'general') {
+          setSelectedGeneralStat(requestedTab.subTab);
+        }
+      }
+      clearTabNavigation();
+    }
+  }, [requestedTab, clearTabNavigation]);
 
   // Check if we're in TestZone route (hash-based)
   const isTestZone = currentHash === '#/TestZone';
@@ -279,6 +281,16 @@ function MainApp() {
 
   const renderContent = () => {
     switch (selectedMainTab) {
+      
+      case 'playerSelection': {
+        return (
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <PlayerSelectionPage />
+            </Suspense>
+          </div>
+        );
+      }
     
       case 'players': {
         const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayerGameHistoryChart;
@@ -375,8 +387,8 @@ function MainApp() {
               <header className="lycans-dashboard-header">
                 <div className="lycans-header-content">
                   <div className="lycans-header-main">
-                    <h1>Statistiques Lycans</h1>
-                    <p>{getSubtitleText()}</p>
+                <h1>Statistiques Lycans</h1>
+                <p>{getSubtitleText()}</p>
                   </div>
                   <VersionDisplay onVersionClick={() => setShowChangelog(true)} />
                 </div>
