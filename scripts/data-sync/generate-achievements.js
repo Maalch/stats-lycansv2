@@ -138,10 +138,10 @@ function computePlayerStats(gameData) {
     // Count victories by camp
     game.PlayerStats.forEach(player => {
       if (player.Victorious) {
-        const role = player.MainRoleInitial;
-        if (role === 'Villageois' || role === 'Chasseur' || role === 'Alchimiste') {
+        const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial);
+        if (mainCamp === 'Villageois') {
           campCounts.Villageois++;
-        } else if (role === 'Loup' || role === 'Traître') {
+        } else if (mainCamp === 'Loup') {
           campCounts.Loups++;
         } else {
           campCounts.Solo++;
@@ -182,12 +182,12 @@ function computePlayerStats(gameData) {
         stats.wins++;
       }
 
-      // Categorize by camp
-      const role = player.MainRoleInitial;
-      if (role === 'Villageois' || role === 'Chasseur' || role === 'Alchimiste') {
+      // Categorize by camp using the centralized logic
+      const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial);
+      if (mainCamp === 'Villageois') {
         stats.camps.villageois.played++;
         if (player.Victorious) stats.camps.villageois.won++;
-      } else if (role === 'Loup' || role === 'Traître') {
+      } else if (mainCamp === 'Loup') {
         stats.camps.loups.played++;
         if (player.Victorious) stats.camps.loups.won++;
       } else {
