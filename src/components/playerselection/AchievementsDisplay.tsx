@@ -242,8 +242,10 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         minGames = parseInt(minGamesMatch[1], 10);
       }
       
-      // For solo-roles and hall-of-fame, use "Tous les camps" instead of specific camp
-      if (chartSection === 'solo-roles' || chartSection === 'hall-of-fame') {
+      // For solo-roles, use "Rôles spéciaux" instead of specific camp
+      if (chartSection === 'solo-roles') {
+        selectedCamp = 'Rôles spéciaux';
+      } else if (chartSection === 'hall-of-fame') {
         selectedCamp = 'Tous les camps';
       }
       
@@ -381,7 +383,7 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
           } else if (chartSection === 'camp-amoureux') {
             return `Cliquez pour voir les performances camp Amoureux${filterInfo}`;
           } else if (chartSection === 'solo-roles') {
-            return `Cliquez pour voir le Hall of Fame (tous rôles solo)${filterInfo}`;
+            return `Cliquez pour voir le classement (rôles spéciaux)${filterInfo}`;
           } else if (chartSection === 'hall-of-fame') {
             return `Cliquez pour voir le Hall of Fame (toutes performances)${filterInfo}`;
           }

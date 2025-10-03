@@ -61,3 +61,6 @@ export declare function getPlayerCampFromRole(
     regroupTraitor?: boolean;
   }
 ): string;
+
+
+export declare function getPlayerMainCampFromRole(roleName: string): 'Villageois' | 'Loup' | 'Autres';
