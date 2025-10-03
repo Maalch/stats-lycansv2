@@ -23,13 +23,23 @@ type ChartSeriesData = {
 
 export function PlayerSeriesChart() {
   const { data: seriesData, isLoading: dataLoading, error: fetchError } = usePlayerSeriesFromRaw();
-  const { navigateToGameDetails } = useNavigation();
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'wins' | 'losses'>('villageois');
+  
+  // Use navigationState to restore series type selection, fallback to 'villageois'
+  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'wins' | 'losses'>(
+    navigationState.selectedSeriesType || 'villageois'
+  );
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
   const chartRef = useRef<HTMLDivElement>(null);
 
   const playersColor = useThemeAdjustedPlayersColor();
+
+  // Helper function to handle series type changes
+  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'wins' | 'losses') => {
+    setSelectedSeriesType(newSeriesType);
+    updateNavigationState({ selectedSeriesType: newSeriesType });
+  };
 
   // Get current data based on selected type with highlighted player logic
   const { currentData, highlightedPlayerAdded } = useMemo(() => {
@@ -362,25 +372,25 @@ export function PlayerSeriesChart() {
       <div className="lycans-categories-selection">
         <button
           className={`lycans-categorie-btn ${selectedSeriesType === 'villageois' ? 'active' : ''}`}
-          onClick={() => setSelectedSeriesType('villageois')}
+          onClick={() => handleSeriesTypeChange('villageois')}
         >
           Séries Villageois
         </button>
         <button
           className={`lycans-categorie-btn ${selectedSeriesType === 'loup' ? 'active' : ''}`}
-          onClick={() => setSelectedSeriesType('loup')}
+          onClick={() => handleSeriesTypeChange('loup')}
         >
           Séries Loups
         </button>
         <button
           className={`lycans-categorie-btn ${selectedSeriesType === 'wins' ? 'active' : ''}`}
-          onClick={() => setSelectedSeriesType('wins')}
+          onClick={() => handleSeriesTypeChange('wins')}
         >
           Séries de Victoires
         </button>
         <button
           className={`lycans-categorie-btn ${selectedSeriesType === 'losses' ? 'active' : ''}`}
-          onClick={() => setSelectedSeriesType('losses')}
+          onClick={() => handleSeriesTypeChange('losses')}
         >
           Séries de Défaites
         </button>

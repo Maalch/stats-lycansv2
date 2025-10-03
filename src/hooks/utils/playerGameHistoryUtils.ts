@@ -4,7 +4,8 @@
 
 import type { GameLogEntry } from '../useCombinedRawData';
 import { formatLycanDate} from './dataUtils';
-import { getWinnerCampFromGame, getPlayerCampFromRole } from '../../utils/gameUtils';
+import { getWinnerCampFromGame } from '../../utils/gameUtils';
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 
 export interface PlayerGame {
   gameId: string;

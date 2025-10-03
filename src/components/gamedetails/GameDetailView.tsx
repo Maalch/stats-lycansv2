@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
-import { getPlayerCampFromRole } from '../../utils/gameUtils';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping, mainCampOrder } from '../../types/api';
 import { formatDeathTiming } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {
@@ -25,10 +25,9 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
   }, {} as Record<string, any[]>);
 
   // Sort camps by size (largest first) and put main camps first
-  const mainCamps = ['Villageois', 'Loup', 'Amoureux'];
   const sortedCamps = Object.entries(campGroups).sort(([campA, playersA], [campB, playersB]) => {
-    const aIsMain = mainCamps.includes(campA);
-    const bIsMain = mainCamps.includes(campB);
+    const aIsMain = mainCampOrder.includes(campA);
+    const bIsMain = mainCampOrder.includes(campB);
     
     if (aIsMain && !bIsMain) return -1;
     if (!aIsMain && bIsMain) return 1;
@@ -231,10 +230,9 @@ export function GameDetailView({ game }: { game: any }) {
                 const campA = getPlayerCampFromRole(a.MainRoleFinal);
                 const campB = getPlayerCampFromRole(b.MainRoleFinal);
 
-                // Define camp priority order
-                const campPriority = ['Villageois', 'Loup', 'Amoureux'];
-                const priorityA = campPriority.indexOf(campA);
-                const priorityB = campPriority.indexOf(campB);
+                // Use main camp priority order from datasyncExport
+                const priorityA = mainCampOrder.indexOf(campA);
+                const priorityB = mainCampOrder.indexOf(campB);
                 
                 // If both camps are in priority list, sort by priority
                 if (priorityA !== -1 && priorityB !== -1) {

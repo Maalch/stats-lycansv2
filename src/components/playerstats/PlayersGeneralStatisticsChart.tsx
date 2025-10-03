@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
@@ -15,13 +15,35 @@ type ChartPlayerStat = PlayerStat & {
 
 export function PlayersGeneralStatisticsChart() {
   const { data: playerStatsData, isLoading: dataLoading, error: fetchError } = usePlayerStatsFromRaw();
-  const { navigateToGameDetails } = useNavigation();
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
-  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(10);
-  const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>('best');
+  
+  // Use navigationState to restore state from achievement navigation, with fallbacks to defaults
+  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(
+    navigationState.playersGeneralState?.minGamesForWinRate || 10
+  );
+  const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>(
+    navigationState.playersGeneralState?.winRateOrder || 'best'
+  );
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
 
   const playersColor = useThemeAdjustedPlayersColor();
+
+  // Save state to navigation context when it changes (for back/forward navigation persistence)
+  useEffect(() => {
+    // Only update if state differs from navigation state
+    if (!navigationState.playersGeneralState || 
+        navigationState.playersGeneralState.minGamesForWinRate !== minGamesForWinRate ||
+        navigationState.playersGeneralState.winRateOrder !== winRateOrder) {
+      updateNavigationState({
+        playersGeneralState: {
+          minGamesForWinRate,
+          winRateOrder,
+          focusChart: navigationState.playersGeneralState?.focusChart // Preserve focus chart from achievement navigation
+        }
+      });
+    }
+  }, [minGamesForWinRate, winRateOrder, navigationState.playersGeneralState, updateNavigationState]);
 
   // Optimized data processing - combine multiple operations to reduce iterations
   const { participationData, winRateData, averageWinRate, totalEligiblePlayers, highlightedPlayerInParticipation, highlightedPlayerInWinRate } = useMemo(() => {

@@ -7,9 +7,9 @@ const path = require('path');
  * Validates the consistency of victory conditions in the gameLog.json file
  * 
  * Rules:
- * 1. If a player with MainRoleInitial "Villageois" wins, all players with 
- *    MainRoleInitial "Villageois", "Alchimiste", or "Chasseur" should also win
- * 2. For other MainRoleInitial values, if one player wins with a specific role,
+ * 1. If a player with MainRoleFinal "Villageois" wins, all players with 
+ *    MainRoleFinal "Villageois", "Alchimiste", or "Chasseur" should also win
+ * 2. For other MainRoleFinal values, if one player wins with a specific role,
  *    all players with that role should win too
  * 3. Exception: For "Agent" role, only one of the two players can win
  */
@@ -39,10 +39,10 @@ function validateGame(game, gameIndex) {
         return [{ type: 'error', message: `Game ${gameIndex + 1} (${game.Id}) has no player data` }];
     }
     
-    // Group players by MainRoleInitial
+    // Group players by MainRoleFinal
     const roleGroups = {};
     players.forEach(player => {
-        const role = player.MainRoleInitial;
+        const role = player.MainRoleFinal;
         if (!roleGroups[role]) {
             roleGroups[role] = [];
         }
@@ -51,7 +51,7 @@ function validateGame(game, gameIndex) {
     
     // Check Villageois camp consistency
     const villageoisCampRoles = ['Villageois', 'Alchimiste', 'Chasseur'];
-    const villageoisCampPlayers = players.filter(p => villageoisCampRoles.includes(p.MainRoleInitial));
+    const villageoisCampPlayers = players.filter(p => villageoisCampRoles.includes(p.MainRoleFinal));
     
     if (villageoisCampPlayers.length > 0) {
         const villageoisWinners = villageoisCampPlayers.filter(p => p.Victorious);
@@ -62,8 +62,8 @@ function validateGame(game, gameIndex) {
             issues.push({
                 type: 'villageois_inconsistency',
                 message: `Game ${gameIndex + 1} (${game.Id}): Villageois camp inconsistency - ${villageoisWinners.length} winners but ${villageoisLosers.length} losers`,
-                winners: villageoisWinners.map(p => `${p.Username} (${p.MainRoleInitial})`),
-                losers: villageoisLosers.map(p => `${p.Username} (${p.MainRoleInitial})`)
+                winners: villageoisWinners.map(p => `${p.Username} (${p.MainRoleFinal})`),
+                losers: villageoisLosers.map(p => `${p.Username} (${p.MainRoleFinal})`)
             });
         }
     }

@@ -7,7 +7,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 
-type ViewMode =  'player-performance' | 'top-performers';
+
 
 // Extended interface for chart display with highlighting support
 interface ChartPlayerCampPerformance {
@@ -32,9 +32,6 @@ export function PlayerCampPerformanceChart() {
   const playersColor = useThemeAdjustedPlayersColor();
   
   // Use navigationState to restore state, with fallbacks
-  const [viewMode, setViewMode] = useState<ViewMode>(
-    navigationState.campPerformanceState?.selectedCampPerformanceView || 'player-performance'
-  );
   const [selectedCamp, setSelectedCamp] = useState<string>(
     navigationState.campPerformanceState?.selectedCampPerformanceCamp || 'Villageois'
   );
@@ -49,20 +46,57 @@ export function PlayerCampPerformanceChart() {
     if (!navigationState.campPerformanceState) {
       updateNavigationState({
         campPerformanceState: {
-          selectedCampPerformanceView: viewMode,
           selectedCampPerformanceCamp: selectedCamp,
           selectedCampPerformanceMinGames: minGames
         }
       });
     }
-  }, [viewMode, selectedCamp, minGames, navigationState.campPerformanceState, updateNavigationState]);
+  }, [selectedCamp, minGames, navigationState.campPerformanceState, updateNavigationState]);
 
-  // Get available camps from camp averages
+  // Get available camps from camp averages, ordered by mainCampOrder
   const availableCamps = useMemo(() => {
-    if (!playerCampPerformance?.campAverages) return [];
-    return playerCampPerformance.campAverages
-      .map(camp => camp.camp)
-      .sort();
+    if (!playerCampPerformance?.campAverages) return ['Tous les camps'];
+    
+    const availableCampNames = playerCampPerformance.campAverages.map(camp => camp.camp);
+    
+    // Define the specific order we want with separators
+    const orderedCamps = ['Tous les camps'];
+    
+    // Add Villageois if available
+    if (availableCampNames.includes('Villageois')) {
+      orderedCamps.push('Villageois');
+    }
+    
+    // Add Loup & Traître if available
+    if (availableCampNames.includes('Loup & Traître')) {
+      orderedCamps.push('Loup & Traître');
+    }
+    
+    // Add Loup if available
+    if (availableCampNames.includes('Loup')) {
+      orderedCamps.push('Loup');
+    }
+    
+    // Add Traître if available
+    if (availableCampNames.includes('Traître')) {
+      orderedCamps.push('Traître');
+    }
+    
+    // Add Rôles spéciaux if available
+    if (availableCampNames.includes('Rôles spéciaux')) {
+      orderedCamps.push('Rôles spéciaux');
+    }
+    
+    // Add remaining camps (solo/special roles) alphabetically
+    const specialCamps = ['Loup & Traître', 'Rôles spéciaux'];
+    const mainCamps = ['Villageois', 'Loup', 'Traître'];
+    const excludedCamps = [...mainCamps, ...specialCamps];
+    
+    const otherCamps = availableCampNames
+      .filter(camp => !excludedCamps.includes(camp))
+      .sort(); // Sort other camps alphabetically
+    
+    return [...orderedCamps, ...otherCamps];
   }, [playerCampPerformance]);
 
   // Optimize data processing by combining operations and reducing redundant calculations
@@ -96,8 +130,8 @@ export function PlayerCampPerformanceChart() {
           // Add to all performances for top performers view
           allPerformances.push(performanceData);
           
-          // Add to camp-specific data if it matches selected camp
-          if (cp.camp === selectedCamp) {
+          // Add to camp-specific data if it matches selected camp (skip for 'Tous les camps')
+          if (selectedCamp !== 'Tous les camps' && cp.camp === selectedCamp) {
             campPlayers.push({
               player: player.player,
               ...cp,
@@ -160,8 +194,10 @@ export function PlayerCampPerformanceChart() {
       return [...dataArray, ...highlightedAdditions];
     };
 
-    // Add highlighted player to camp-specific data
-    const campPlayersWithHighlighted = addHighlightedPlayer(campPlayers, selectedCamp);
+    // Add highlighted player to camp-specific data (only if not 'Tous les camps')
+    const campPlayersWithHighlighted = selectedCamp !== 'Tous les camps' 
+      ? addHighlightedPlayer(campPlayers, selectedCamp)
+      : [];
     
     // Add highlighted player to top performers data  
     const topPerformersWithHighlighted = addHighlightedPlayer(allPerformances);
@@ -196,39 +232,77 @@ export function PlayerCampPerformanceChart() {
     
     return {
       campPlayerData: getTopPlayersWithHighlighted(sortedCampPlayers, 15),
-      topPerformersData: getTopPlayersWithHighlighted(sortedTopPerformers, 20)
+      topPerformersData: getTopPlayersWithHighlighted(sortedTopPerformers, 15)
     };
   }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer]);
 
   // Handler for bar chart clicks - navigate to game details
   const handleBarClick = (data: any) => {
     if (data && data.player) {
-      navigateToGameDetails({
-        selectedPlayer: data.player,
-        campFilter: {
-          selectedCamp: selectedCamp,
-          campFilterMode: 'wins-only',
-          excludeTraitor: selectedCamp === 'Traître' // Exclude traitor from Loups filtering
-        },
-        fromComponent: `Performance des Joueurs - ${selectedCamp}`
-      });
+      // For specific camp view, use the selected camp
+      if (selectedCamp !== 'Tous les camps') {
+        // Handle special case for "Loup & Traître"
+        if (selectedCamp === 'Loup & Traître') {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: 'Loup',
+              campFilterMode: 'wins-only',
+              excludeTraitor: false // Include traitor when showing Loup & Traître
+            },
+            fromComponent: `Performance des Joueurs - ${selectedCamp}`
+          });
+        } else if (selectedCamp === 'Rôles spéciaux') {
+          // For special roles, don't use camp filter - just show all games for the player
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            fromComponent: `Performance des Joueurs - ${selectedCamp}`
+          });
+        } else {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: selectedCamp,
+              campFilterMode: 'wins-only',
+              excludeTraitor: selectedCamp === 'Traître' // Exclude traitor from Loups filtering
+            },
+            fromComponent: `Performance des Joueurs - ${selectedCamp}`
+          });
+        }
+      } else {
+        // For 'Tous les camps' view, use the camp from the data point
+        if (data.camp === 'Loup & Traître') {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: 'Loup',
+              campFilterMode: 'wins-only',
+              excludeTraitor: false
+            },
+            fromComponent: `Performance des Joueurs - Tous les camps`
+          });
+        } else if (data.camp === 'Rôles spéciaux') {
+          // For special roles, don't use camp filter
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            fromComponent: `Performance des Joueurs - Tous les camps`
+          });
+        } else {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: data.camp,
+              campFilterMode: 'wins-only',
+              excludeTraitor: data.camp === 'Traître'
+            },
+            fromComponent: `Performance des Joueurs - Tous les camps`
+          });
+        }
+      }
     }
   };
 
-  // Handler for Hall of Fame bar chart clicks - navigate to game details
-  const handleHallOfFameBarClick = (data: any) => {
-    if (data && data.player && data.camp) {
-      navigateToGameDetails({
-        selectedPlayer: data.player,
-        campFilter: {
-          selectedCamp: data.camp,
-          campFilterMode: 'wins-only',
-          excludeTraitor: data.camp === 'Traître' // Exclude traitor from Loups filtering
-        },
-        fromComponent: `Top 20 des Performances (Min. ${minGames} parties dans ce camp)`
-      });
-    }
-  };
+
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de performance par camp...</div>;
@@ -255,19 +329,18 @@ export function PlayerCampPerformanceChart() {
         flexWrap: 'wrap'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="view-mode-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Vue:
+          <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            Camp:
           </label>
           <select
-            id="view-mode-select"
-            value={viewMode}
+            id="camp-select"
+            value={selectedCamp}
             onChange={(e) => {
-              const newViewMode = e.target.value as ViewMode;
-              setViewMode(newViewMode);
+              const newCamp = e.target.value;
+              setSelectedCamp(newCamp);
               updateNavigationState({ 
                 campPerformanceState: {
-                  selectedCampPerformanceView: newViewMode,
-                  selectedCampPerformanceCamp: selectedCamp,
+                  selectedCampPerformanceCamp: newCamp,
                   selectedCampPerformanceMinGames: minGames
                 }
               });
@@ -279,89 +352,106 @@ export function PlayerCampPerformanceChart() {
               borderRadius: '4px',
               padding: '0.5rem',
               fontSize: '0.9rem',
-              minWidth: '150px'
+              minWidth: '200px'
             }}
           >
-            <option value="player-performance">Camp</option>
-            <option value="top-performers">Hall of Fame</option>
+            {availableCamps.map((camp) => {
+              // Determine visual styling based on camp type
+              let optionText = camp;
+              let isIndented = false;
+              let isSubGroup = false;
+              
+              if (camp === 'Tous les camps') {
+                optionText = '📊 Tous les camps';
+              } else if (camp === 'Villageois') {
+                optionText = '   Villageois';
+                isIndented = true;
+              } else if (camp === 'Loup & Traître') {
+                optionText = '   🐺 Loup & Traître';
+                isIndented = true;
+                isSubGroup = true;
+              } else if (camp === 'Loup') {
+                optionText = '     Loup';
+                isIndented = true;
+              } else if (camp === 'Traître') {
+                optionText = '     Traître';
+                isIndented = true;
+              } else if (camp === 'Rôles spéciaux') {
+                optionText = '   ⭐ Rôles spéciaux';
+                isIndented = true;
+                isSubGroup = true;
+              } else {
+                // Individual special roles
+                optionText = `     ${camp}`;
+                isIndented = true;
+              }
+              
+              return (
+                <option 
+                  key={camp} 
+                  value={camp}
+                  style={{
+                    fontFamily: 'monospace',
+                    fontSize: isIndented ? '0.85rem' : '0.9rem',
+                    fontWeight: isSubGroup ? 'bold' : 'normal',
+                    color: isSubGroup ? 'var(--accent-primary)' : 'inherit'
+                  }}
+                >
+                  {optionText}
+                </option>
+              );
+            })}
           </select>
         </div>
 
-        {viewMode === 'player-performance' && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-              Camp:
-            </label>
-            <select
-              id="camp-select"
-              value={selectedCamp}
-              onChange={(e) => {
-                const newCamp = e.target.value;
-                setSelectedCamp(newCamp);
-                updateNavigationState({ 
-                  campPerformanceState: {
-                    selectedCampPerformanceView: viewMode,
-                    selectedCampPerformanceCamp: newCamp,
-                    selectedCampPerformanceMinGames: minGames
-                  }
-                });
-              }}
-              style={{
-                background: 'var(--bg-tertiary)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '4px',
-                padding: '0.5rem',
-                fontSize: '0.9rem',
-                minWidth: '120px'
-              }}
-            >
-              {availableCamps.map(camp => (
-                <option key={camp} value={camp}>
-                  {camp}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            Min. parties:
+          </label>
+          <select
+            id="min-games-select"
+            value={minGames}
+            onChange={(e) => {
+              const newMinGames = Number(e.target.value);
+              setMinGames(newMinGames);
+              updateNavigationState({ 
+                campPerformanceState: {
+                  selectedCampPerformanceCamp: selectedCamp,
+                  selectedCampPerformanceMinGames: newMinGames
+                }
+              });
+            }}
+            style={{
+              background: 'var(--bg-tertiary)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '4px',
+              padding: '0.5rem',
+              fontSize: '0.9rem',
+              width: '90px'
+            }}
+          >
+          {minGamesOptions.map(option => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+          </select>
+        </div>
+      </div>
 
-        {(viewMode === 'player-performance' || viewMode === 'top-performers') && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-              Min. parties:
-            </label>
-            <select
-              id="min-games-select"
-              value={minGames}
-              onChange={(e) => {
-                const newMinGames = Number(e.target.value);
-                setMinGames(newMinGames);
-                updateNavigationState({ 
-                  campPerformanceState: {
-                    selectedCampPerformanceView: viewMode,
-                    selectedCampPerformanceCamp: selectedCamp,
-                    selectedCampPerformanceMinGames: newMinGames
-                  }
-                });
-              }}
-              style={{
-                background: 'var(--bg-tertiary)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '4px',
-                padding: '0.5rem',
-                fontSize: '0.9rem',
-                width: '90px'
-              }}
-            >
-            {minGamesOptions.map(option => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-            </select>
-          </div>
-        )}
+      {/* Visual explanation of grouping */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        marginBottom: '1rem',
+        fontSize: '0.75rem',
+        color: 'var(--text-secondary)',
+        fontStyle: 'italic'
+      }}>
+        <span>
+          📊 = Tous les camps • 🐺 = Loups groupés • ⭐ = Rôles spéciaux groupés
+        </span>
       </div>
 
       {/* Summary Cards */}
@@ -379,328 +469,296 @@ export function PlayerCampPerformanceChart() {
       </div>
 
       <div className="lycans-graphiques-groupe">
-        {/* Player Performance by Camp View */}
-        {viewMode === 'player-performance' && (
-          <>
-            <div className="lycans-graphique-section">
-              <h3>Meilleurs joueurs en {selectedCamp}</h3>
-              <FullscreenChart title={`Meilleurs Joueurs - ${selectedCamp}`}>
-              <div style={{ height: 500 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={campPlayerData} 
-                    margin={{ top: 20, right: 30, left: 20, bottom: 0 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="player"
-                      angle={-45}
+        {/* Unified Player Performance View */}
+        <div className="lycans-graphique-section">
+          <h3>
+            {selectedCamp === 'Tous les camps' 
+              ? 'Meilleurs performances - Tous les camps'
+              : `Meilleurs joueurs en ${selectedCamp}`
+            }
+          </h3>
+          <FullscreenChart title={
+            selectedCamp === 'Tous les camps' 
+              ? 'Meilleurs Performances - Tous les camps'
+              : `Meilleurs Joueurs - ${selectedCamp}`
+          }>
+          <div style={{ height: selectedCamp === 'Tous les camps' ? 600 : 500 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData} 
+                margin={{ top: 20, right: 30, left: 20, bottom: selectedCamp === 'Tous les camps' ? 20 : 0 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="player"
+                  angle={-45}
+                  textAnchor="end"
+                  height={110}
+                  interval={0}
+                  fontSize={15}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
                       textAnchor="end"
-                      height={110}
-                      interval={0}
-                      fontSize={15}
-                      tick={({ x, y, payload }) => (
-                        <text
-                          x={x}
-                          y={y}
-                          dy={16}
-                          textAnchor="end"
-                          fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
-                          fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
-                          fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
-                          transform={`rotate(-45 ${x} ${y})`}
-                        >
-                          {payload.value}
-                        </text>
-                      )}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
+                />
+                <YAxis 
+                  label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}                 
+                />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const dataPoint = payload[0].payload;
+                      return (
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: 12, 
+                          borderRadius: 8,
+                          border: '1px solid var(--border-color)'
+                        }}>
+                          <div><strong>{dataPoint.player}</strong></div>
+                          {selectedCamp === 'Tous les camps' && <div>Camp: {dataPoint.camp}</div>}
+                          <div>Parties: {dataPoint.games}</div>
+                          <div>Victoires: {dataPoint.wins}</div>
+                          <div>Taux personnel: {dataPoint.winRate}%</div>
+                          {selectedCamp !== 'Tous les camps' && <div>Moyenne camp: {dataPoint.campAvgWinRate}%</div>}
+                          <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
+                          <div style={{ 
+                            fontSize: '0.8rem', 
+                            color: 'var(--accent-primary)', 
+                            marginTop: '0.5rem',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            animation: 'pulse 1.5s infinite'
+                          }}>
+                            🖱️ Cliquez pour voir les parties
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                 <Bar 
+                   dataKey="performanceNum" 
+                   style={{ cursor: 'pointer' }}
+                   onClick={handleBarClick}
+                 >
+                 {(selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData).map((entry, index) => {
+                   const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
+                   const isHighlightedAddition = entry.isHighlightedAddition;
+                   
+                   return (
+                    <Cell
+                       key={`cell-${index}`}
+                       fill={
+                         selectedCamp === 'Tous les camps'
+                           ? lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
+                           : playersColor[entry.player] || (entry.performanceNum >= 0 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
+                       }
+                       stroke={
+                         isHighlightedFromSettings 
+                           ? 'var(--accent-primary)' 
+                           : 'transparent'
+                       }
+                       strokeWidth={
+                         isHighlightedFromSettings 
+                           ? 3 
+                           : 0
+                       }
+                       strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                       opacity={isHighlightedAddition ? 0.8 : 1}
                     />
-                    <YAxis 
-                      label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}                 
-                    />
-                    <Tooltip
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length > 0) {
-                          const dataPoint = payload[0].payload;
-                          return (
-                            <div style={{ 
-                              background: 'var(--bg-secondary)', 
-                              color: 'var(--text-primary)', 
-                              padding: 12, 
-                              borderRadius: 8,
-                              border: '1px solid var(--border-color)'
-                            }}>
-                              <div><strong>{dataPoint.player}</strong></div>
-                              <div>Parties: {dataPoint.games}</div>
-                              <div>Victoires: {dataPoint.wins}</div>
-                              <div>Taux personnel: {dataPoint.winRate}%</div>
-                              <div>Moyenne camp: {dataPoint.campAvgWinRate}%</div>
-                              <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
-                              <div style={{ 
-                                fontSize: '0.8rem', 
-                                color: 'var(--accent-primary)', 
-                                marginTop: '0.5rem',
-                                fontWeight: 'bold',
-                                textAlign: 'center',
-                                animation: 'pulse 1.5s infinite'
-                              }}>
-                                🖱️ Cliquez pour voir les parties
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                     <Bar 
-                       dataKey="performanceNum" 
-                       style={{ cursor: 'pointer' }}
-                       onClick={handleBarClick}
-                     >
-                     {campPlayerData.map((entry, index) => {
-                       const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
-                       const isHighlightedAddition = entry.isHighlightedAddition;
-                       
-                       return (
-                        <Cell
-                           key={`cell-${index}`}
-                           fill={
-                             playersColor[entry.player] ||
-                               (entry.performanceNum >= 0 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
-                           }
-                           stroke={
-                             isHighlightedFromSettings 
-                               ? 'var(--accent-primary)' 
-                               : 'transparent'
-                           }
-                           strokeWidth={
-                             isHighlightedFromSettings 
-                               ? 3 
-                               : 0
-                           }
-                           strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
-                           opacity={isHighlightedAddition ? 0.8 : 1}
-                        />
-                       );
-                     })}
-                     </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-              </FullscreenChart>
-            </div>
+                   );
+                 })}
+                 </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          </FullscreenChart>
+        </div>
 
-            <div className="lycans-graphique-section">
-              <h3>Performances en {selectedCamp} sur nombre de parties jouées</h3>
-              <FullscreenChart title={`Performances vs Parties Jouées - ${selectedCamp}`}>
-                <div style={{ height: 400 }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                  <ScatterChart
-                     data={campPlayerData}
-                     margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                  >
-                     <CartesianGrid strokeDasharray="3 3" />
-                     <XAxis 
-                        dataKey="games"
-                        type="number"
-                        label={{ value: 'Parties jouées', position: 'insideBottom', offset: -10 }}
-                     />
-                     <YAxis 
-                        dataKey="performanceNum"
-                        type="number"
-                        label={{ value: 'Performance (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
-                     />
-                     <Tooltip
-                        content={({ active, payload }) => {
-                        if (active && payload && payload.length > 0) {
-                           const dataPoint = payload[0].payload;
-                           return (
-                              <div style={{ 
-                              background: 'var(--bg-secondary)', 
-                              color: 'var(--text-primary)', 
-                              padding: 12, 
-                              borderRadius: 8,
-                              border: '1px solid var(--border-color)'
-                              }}>
-                              <div><strong>{dataPoint.player}</strong></div>
-                              <div>Parties: {dataPoint.games}</div>
-                              <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
-                              <div style={{ 
-                                fontSize: '0.8rem', 
-                                color: 'var(--accent-primary)', 
-                                marginTop: '0.5rem',
-                                fontWeight: 'bold',
-                                textAlign: 'center',
-                                animation: 'pulse 1.5s infinite'
-                              }}>
-                                🖱️ Cliquez pour voir les parties
-                              </div>
-                              </div>
-                           );
+        {/* Scatter chart - show for all selections */}
+        <div className="lycans-graphique-section">
+          <h3>
+            {selectedCamp === 'Tous les camps' 
+              ? 'Performances sur nombre de parties jouées - Tous les camps'
+              : `Performances en ${selectedCamp} sur nombre de parties jouées`
+            }
+          </h3>
+          <FullscreenChart title={
+            selectedCamp === 'Tous les camps' 
+              ? 'Performances vs Parties Jouées - Tous les camps'
+              : `Performances vs Parties Jouées - ${selectedCamp}`
+          }>
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart
+                 data={selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData}
+                 margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+              >
+                 <CartesianGrid strokeDasharray="3 3" />
+                 <XAxis 
+                    dataKey="games"
+                    type="number"
+                    label={{ value: 'Parties jouées', position: 'insideBottom', offset: -10 }}
+                 />
+                 <YAxis 
+                    dataKey="performanceNum"
+                    type="number"
+                    label={{ value: 'Performance (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                 />
+                 <Tooltip
+                    content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                       const dataPoint = payload[0].payload;
+                       return (
+                          <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: 12, 
+                          borderRadius: 8,
+                          border: '1px solid var(--border-color)'
+                          }}>
+                          <div><strong>{dataPoint.player}</strong></div>
+                          {selectedCamp === 'Tous les camps' && <div>Camp: {dataPoint.camp}</div>}
+                          <div>Parties: {dataPoint.games}</div>
+                          <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
+                          <div style={{ 
+                            fontSize: '0.8rem', 
+                            color: 'var(--accent-primary)', 
+                            marginTop: '0.5rem',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            animation: 'pulse 1.5s infinite'
+                          }}>
+                            🖱️ Cliquez pour voir les parties
+                          </div>
+                          </div>
+                       );
+                    }
+                    return null;
+                    }}
+                 />
+                <Scatter
+                  dataKey="performanceNum"
+                  name="Performance"
+                  onClick={(data: any) => {
+                    if (data && data.player) {
+                      // For "Tous les camps", use the camp from the data point
+                      // For specific camp, use the selected camp
+                      if (selectedCamp === 'Tous les camps') {
+                        if (data.camp === 'Loup & Traître') {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            campFilter: {
+                              selectedCamp: 'Loup',
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: false
+                            },
+                            fromComponent: 'Relation Parties Jouées vs Performance - Tous les camps'
+                          });
+                        } else if (data.camp === 'Rôles spéciaux') {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            fromComponent: 'Relation Parties Jouées vs Performance - Tous les camps'
+                          });
+                        } else {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            campFilter: {
+                              selectedCamp: data.camp,
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: data.camp === 'Traître'
+                            },
+                            fromComponent: 'Relation Parties Jouées vs Performance - Tous les camps'
+                          });
                         }
-                        return null;
-                        }}
-                     />
-                    <Scatter
-                      dataKey="performanceNum"
-                      name="Performance"
-                      onClick={(data: any) => {
-                        if (data && data.player) {
+                      } else {
+                        if (selectedCamp === 'Loup & Traître') {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            campFilter: {
+                              selectedCamp: 'Loup',
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: false
+                            },
+                            fromComponent: `Relation Parties Jouées vs Performance - ${selectedCamp}`
+                          });
+                        } else if (selectedCamp === 'Rôles spéciaux') {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            fromComponent: `Relation Parties Jouées vs Performance - ${selectedCamp}`
+                          });
+                        } else {
                           navigateToGameDetails({
                             selectedPlayer: data.player,
                             campFilter: {
                               selectedCamp: selectedCamp,
-                              campFilterMode: 'wins-only'
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: selectedCamp === 'Traître'
                             },
                             fromComponent: `Relation Parties Jouées vs Performance - ${selectedCamp}`
                           });
                         }
-                      }}
-                      shape={(props: { cx?: number; cy?: number; payload?: any }) => {
-                        const isHighlighted = settings.highlightedPlayer === props.payload?.player;
-                        const isHighlightedAddition = props.payload?.isHighlightedAddition;
-                        
-                        return (
-                        <g style={{ cursor: 'pointer' }}>
-                          <circle
-                            cx={props.cx}
-                            cy={props.cy}
-                            r={isHighlighted ? 15 : 12}
-                            fill={playersColor[props.payload?.player] || 'var(--accent-primary)'}
-                            stroke={
-                              isHighlighted
-                                ? 'var(--accent-primary)'
-                                : '#222'
-                            }
-                            strokeWidth={isHighlighted ? 3 : 1}
-                            strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
-                            opacity={isHighlightedAddition ? 0.8 : 1}
-                          />
-                          <text
-                            x={props.cx}
-                            y={props.cy}
-                            textAnchor="middle"
-                            dominantBaseline="middle"
-                            fill="#fff"
-                            fontSize={isHighlighted ? "12" : "10"}
-                            fontWeight="bold"
-                            pointerEvents="none"
-                          >
-                            {props.payload?.player?.charAt(0).toUpperCase()}
-                          </text>
-                        </g>
-                      )}}
-                    />
-                  </ScatterChart>
-                  </ResponsiveContainer>
-              </div>
-              </FullscreenChart>
-            </div>
-          </>
-        )}
-
-        {/* Top Performers View */}
-        {viewMode === 'top-performers' && (
-          <div className="lycans-graphique-section">
-            <h3>{`Top 20 des Performances (Min. ${minGames} parties dans ce camp)`}</h3>
-            <div style={{ height: 600 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={topPerformersData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="player"
-                    angle={-45}
-                    textAnchor="end"
-                    height={110}
-                    interval={0}
-                    fontSize={15}
-                    tick={({ x, y, payload }) => (
-                      <text
-                        x={x}
-                        y={y}
-                        dy={16}
-                        textAnchor="end"
-                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
-                        fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
-                        fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
-                        transform={`rotate(-45 ${x} ${y})`}
-                      >
-                        {payload.value}
-                      </text>
-                    )}
-                  />
-                  <YAxis 
-                    label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
-                  />
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length > 0) {
-                        const dataPoint = payload[0].payload;
-                        return (
-                          <div style={{ 
-                            background: 'var(--bg-secondary)', 
-                            color: 'var(--text-primary)', 
-                            padding: 12, 
-                            borderRadius: 8,
-                            border: '1px solid var(--border-color)'
-                          }}>
-                            <div><strong>{dataPoint.player}</strong></div>
-                            <div>Camp: {dataPoint.camp}</div>
-                            <div>Parties: {dataPoint.games}</div>
-                            <div>Taux personnel: {dataPoint.winRate}%</div>
-                            <div>Performance: +{dataPoint.performance}</div>
-                            <div style={{ 
-                              fontSize: '0.8rem', 
-                              color: 'var(--accent-primary)', 
-                              marginTop: '0.5rem',
-                              fontWeight: 'bold',
-                              textAlign: 'center',
-                              animation: 'pulse 1.5s infinite'
-                            }}>
-                              🖱️ Cliquez pour voir les parties
-                            </div>
-                          </div>
-                        );
                       }
-                      return null;
-                    }}
-                  />
-                  <Bar 
-                    dataKey="performanceNum"
-                    style={{ cursor: 'pointer' }}
-                    onClick={handleHallOfFameBarClick}
-                  >
-                    {topPerformersData.map((entry, index) => {
-                      const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
-                      const isHighlightedAddition = entry.isHighlightedAddition;
-                      
-                      return (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
+                    }
+                  }}
+                  shape={(props: { cx?: number; cy?: number; payload?: any }) => {
+                    const isHighlighted = settings.highlightedPlayer === props.payload?.player;
+                    const isHighlightedAddition = props.payload?.isHighlightedAddition;
+                    
+                    return (
+                    <g style={{ cursor: 'pointer' }}>
+                      <circle
+                        cx={props.cx}
+                        cy={props.cy}
+                        r={isHighlighted ? 15 : 12}
+                        fill={
+                          selectedCamp === 'Tous les camps'
+                            ? lycansColorScheme[props.payload?.camp as keyof typeof lycansColorScheme] || 'var(--accent-primary)'
+                            : playersColor[props.payload?.player] || 'var(--accent-primary)'
+                        }
                         stroke={
-                          isHighlightedFromSettings 
-                            ? 'var(--accent-primary)' 
-                            : 'transparent'
+                          isHighlighted
+                            ? 'var(--accent-primary)'
+                            : '#222'
                         }
-                        strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : 0
-                        }
+                        strokeWidth={isHighlighted ? 3 : 1}
                         strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                       />
-                      );
-                    })}
-                  </Bar>
-                </BarChart>
+                      <text
+                        x={props.cx}
+                        y={props.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        fill="#fff"
+                        fontSize={isHighlighted ? "12" : "10"}
+                        fontWeight="bold"
+                        pointerEvents="none"
+                      >
+                        {props.payload?.player?.charAt(0).toUpperCase()}
+                      </text>
+                    </g>
+                  )}}
+                />
+              </ScatterChart>
               </ResponsiveContainer>
-            </div>
           </div>
-        )}
+          </FullscreenChart>
+        </div>
+
       </div>
     </div>
   );

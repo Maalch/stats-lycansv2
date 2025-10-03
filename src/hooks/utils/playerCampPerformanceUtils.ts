@@ -1,13 +1,14 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, PlayerCampPerformance } from '../../types/api';
-import { getPlayerCampFromRole } from '../../utils/gameUtils';
+import { getPlayerCampFromRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 
 
 /**
  * Calculate overall camp statistics
  */
 function calculateCampStatistics(
-  gameData: GameLogEntry[]
+  gameData: GameLogEntry[],
+  regroupTraitor: boolean = false
 ): Record<string, {
   totalGames: number;
   wins: number;
@@ -27,7 +28,7 @@ function calculateCampStatistics(
     const campsInGame = new Set<string>();
     
     game.PlayerStats.forEach(playerStat => {
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupTraitor });
       campsInGame.add(playerCamp);
     });
 
@@ -48,7 +49,7 @@ function calculateCampStatistics(
     const winningCamps = new Set<string>();
     game.PlayerStats.forEach(playerStat => {
       if (playerStat.Victorious) {
-        const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
+        const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupTraitor });
         winningCamps.add(playerCamp);
       }
     });
@@ -74,7 +75,8 @@ function analyzePlayerPerformance(
     wins: number;
     winRate: number;
     players: Record<string, { games: number; wins: number; winRate: number }>;
-  }>
+  }>,
+  regroupTraitor: boolean = false
 ): Record<string, {
   totalGames: number;
   camps: Record<string, {
@@ -100,7 +102,7 @@ function analyzePlayerPerformance(
       if (!player) return;
 
       // Determine player's camp using helper function
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupTraitor });
 
       // Track player performance in this camp
       if (!campStats[playerCamp].players[player]) {
@@ -140,6 +142,139 @@ function analyzePlayerPerformance(
 
       if (playerStat.Victorious) {
         playerCampPerformance[player].camps[playerCamp].wins++;
+      }
+    });
+  });
+
+  return playerCampPerformance;
+}
+
+/**
+ * Calculate camp statistics for special roles grouping
+ */
+function calculateSpecialRolesCampStatistics(
+  gameData: GameLogEntry[]
+): Record<string, {
+  totalGames: number;
+  wins: number;
+  winRate: number;
+  players: Record<string, { games: number; wins: number; winRate: number }>;
+}> {
+  const campStats: Record<string, {
+    totalGames: number;
+    wins: number;
+    winRate: number;
+    players: Record<string, { games: number; wins: number; winRate: number }>;
+  }> = {};
+
+  // Initialize "Rôles spéciaux" category
+  campStats['Rôles spéciaux'] = {
+    totalGames: 0,
+    wins: 0,
+    winRate: 0,
+    players: {}
+  };
+
+  // Process each game - count individual player participations, not game occurrences
+  gameData.forEach(game => {
+    game.PlayerStats.forEach(playerStat => {
+      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
+      
+      // Count each player participation in special roles
+      if (mainCamp === 'Autres') {
+        campStats['Rôles spéciaux'].totalGames++;
+        
+        // Count each player win in special roles
+        if (playerStat.Victorious) {
+          campStats['Rôles spéciaux'].wins++;
+        }
+      }
+    });
+  });
+
+  return campStats;
+}
+
+/**
+ * Analyze player performance for special roles grouping
+ */
+function analyzeSpecialRolesPlayerPerformance(
+  gameData: GameLogEntry[],
+  campStats: Record<string, {
+    totalGames: number;
+    wins: number;
+    winRate: number;
+    players: Record<string, { games: number; wins: number; winRate: number }>;
+  }>
+): Record<string, {
+  totalGames: number;
+  camps: Record<string, {
+    games: number;
+    wins: number;
+    winRate: number;
+    performance: number;
+  }>;
+}> {
+  const playerCampPerformance: Record<string, {
+    totalGames: number;
+    camps: Record<string, {
+      games: number;
+      wins: number;
+      winRate: number;
+      performance: number;
+    }>;
+  }> = {};
+
+  gameData.forEach(game => {
+    game.PlayerStats.forEach(playerStat => {
+      const player = playerStat.Username.trim();
+      if (!player) return;
+
+      // Check if this player is playing a special role
+      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
+      
+      if (mainCamp === 'Autres') {
+        const playerCamp = 'Rôles spéciaux';
+
+        // Track player performance in special roles camp
+        if (!campStats[playerCamp].players[player]) {
+          campStats[playerCamp].players[player] = {
+            games: 0,
+            wins: 0,
+            winRate: 0
+          };
+        }
+        campStats[playerCamp].players[player].games++;
+
+        // Check if player won using Victorious boolean
+        if (playerStat.Victorious) {
+          campStats[playerCamp].players[player].wins++;
+        }
+
+        // Initialize player statistics
+        if (!playerCampPerformance[player]) {
+          playerCampPerformance[player] = {
+            totalGames: 0,
+            camps: {}
+          };
+        }
+
+        // Add camp data for this player
+        if (!playerCampPerformance[player].camps[playerCamp]) {
+          playerCampPerformance[player].camps[playerCamp] = {
+            games: 0,
+            wins: 0,
+            winRate: 0,
+            performance: 0
+          };
+        }
+
+        playerCampPerformance[player].totalGames++;
+        playerCampPerformance[player].camps[playerCamp].games++;
+
+        if (playerStat.Victorious) {
+          playerCampPerformance[player].camps[playerCamp].wins++;
+        }
       }
     });
   });
@@ -297,22 +432,72 @@ export function computePlayerCampPerformance(
   }
 
   // Calculate overall camp statistics (both participations and wins)
-  const campStats = calculateCampStatistics(gameData);
+  const campStats = calculateCampStatistics(gameData, false);
+  
+  // Also calculate with regrouped traitor for "Loup & Traître" option
+  const campStatsWithTraitor = calculateCampStatistics(gameData, true);
+
+  // Calculate special roles grouping
+  const campStatsSpecialRoles = calculateSpecialRolesCampStatistics(gameData);
 
   // Analyze player performance by camp
-  const playerCampPerformance = analyzePlayerPerformance(gameData, campStats);
+  const playerCampPerformance = analyzePlayerPerformance(gameData, campStats, false);
+  const playerCampPerformanceWithTraitor = analyzePlayerPerformance(gameData, campStatsWithTraitor, true);
+  const playerCampPerformanceSpecialRoles = analyzeSpecialRolesPlayerPerformance(gameData, campStatsSpecialRoles);
 
   // Calculate win rates for camps and players
   calculateWinRates(campStats);
+  calculateWinRates(campStatsWithTraitor);
+  calculateWinRates(campStatsSpecialRoles);
 
   // Calculate performance differential (player win rate - camp average win rate)
   calculatePerformanceDifferentials(playerCampPerformance, campStats);
+  calculatePerformanceDifferentials(playerCampPerformanceWithTraitor, campStatsWithTraitor);
+  calculatePerformanceDifferentials(playerCampPerformanceSpecialRoles, campStatsSpecialRoles);
+
+  // Merge both datasets - add "Loup & Traître" as a virtual camp
+  const mergedCampStats = { ...campStats };
+  const mergedPlayerPerformance = { ...playerCampPerformance };
+  
+  // Add "Loup & Traître" camp if it exists in regrouped data
+  if (campStatsWithTraitor['Loup']) {
+    mergedCampStats['Loup & Traître'] = campStatsWithTraitor['Loup'];
+    
+    // Add "Loup & Traître" performance for each player
+    Object.keys(playerCampPerformanceWithTraitor).forEach(player => {
+      if (!mergedPlayerPerformance[player]) {
+        mergedPlayerPerformance[player] = playerCampPerformanceWithTraitor[player];
+      }
+      
+      if (playerCampPerformanceWithTraitor[player].camps['Loup']) {
+        mergedPlayerPerformance[player].camps['Loup & Traître'] = 
+          playerCampPerformanceWithTraitor[player].camps['Loup'];
+      }
+    });
+  }
+
+  // Add "Rôles spéciaux" camp if it exists in special roles data
+  if (campStatsSpecialRoles['Rôles spéciaux']) {
+    mergedCampStats['Rôles spéciaux'] = campStatsSpecialRoles['Rôles spéciaux'];
+    
+    // Add "Rôles spéciaux" performance for each player
+    Object.keys(playerCampPerformanceSpecialRoles).forEach(player => {
+      if (!mergedPlayerPerformance[player]) {
+        mergedPlayerPerformance[player] = playerCampPerformanceSpecialRoles[player];
+      }
+      
+      if (playerCampPerformanceSpecialRoles[player].camps['Rôles spéciaux']) {
+        mergedPlayerPerformance[player].camps['Rôles spéciaux'] = 
+          playerCampPerformanceSpecialRoles[player].camps['Rôles spéciaux'];
+      }
+    });
+  }
 
   // Format results with minimum game threshold
   const minGamesToInclude = 3; // Minimum games required in a camp to be included
   const { campAverages, playerPerformanceArray } = formatResults(
-    playerCampPerformance, 
-    campStats, 
+    mergedPlayerPerformance, 
+    mergedCampStats, 
     minGamesToInclude
   );
 
