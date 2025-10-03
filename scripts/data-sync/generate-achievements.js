@@ -2152,7 +2152,6 @@ function generateAllPlayerAchievements(gameLogData) {
   });
 
   return {
-    generatedAt: new Date().toISOString(),
     totalPlayers: allPlayers.size,
     totalGames: allGames.length,
     totalModdedGames: moddedGames.length,

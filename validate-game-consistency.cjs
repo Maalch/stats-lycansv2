@@ -90,16 +90,16 @@ function validateGame(game, gameIndex) {
         }
     });
     
-    // Check Agent special case
-    if (roleGroups['Agent']) {
-        const agentPlayers = roleGroups['Agent'];
+    // Check Agent special case (based on MainRoleInitial)
+    const agentPlayers = players.filter(p => p.MainRoleInitial === 'Agent');
+    if (agentPlayers.length > 0) {
         const agentWinners = agentPlayers.filter(p => p.Victorious);
         
-        // Agent should have exactly 2 players
+        // Agent should have exactly 2 players at the start
         if (agentPlayers.length !== 2) {
             issues.push({
                 type: 'agent_count_error',
-                message: `Game ${gameIndex + 1} (${game.Id}): Agent role should have exactly 2 players, found ${agentPlayers.length}`,
+                message: `Game ${gameIndex + 1} (${game.Id}): Agent role should have exactly 2 players at start, found ${agentPlayers.length}`,
                 players: agentPlayers.map(p => p.Username)
             });
         }
