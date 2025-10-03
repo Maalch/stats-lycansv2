@@ -175,38 +175,21 @@ function calculateSpecialRolesCampStatistics(
     players: {}
   };
 
-  // Process each game
+  // Process each game - count individual player participations, not game occurrences
   gameData.forEach(game => {
-    // Check if there are any special roles in this game
-    let hasSpecialRoles = false;
-    
     game.PlayerStats.forEach(playerStat => {
       const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
+      
+      // Count each player participation in special roles
       if (mainCamp === 'Autres') {
-        hasSpecialRoles = true;
-      }
-    });
-
-    // Count participation for special roles camp if present
-    if (hasSpecialRoles) {
-      campStats['Rôles spéciaux'].totalGames++;
-    }
-
-    // Count wins for special roles based on victorious players
-    let specialRolesWon = false;
-    game.PlayerStats.forEach(playerStat => {
-      if (playerStat.Victorious) {
-        const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
-        if (mainCamp === 'Autres') {
-          specialRolesWon = true;
+        campStats['Rôles spéciaux'].totalGames++;
+        
+        // Count each player win in special roles
+        if (playerStat.Victorious) {
+          campStats['Rôles spéciaux'].wins++;
         }
       }
     });
-
-    // Increment wins for special roles camp
-    if (specialRolesWon) {
-      campStats['Rôles spéciaux'].wins++;
-    }
   });
 
   return campStats;

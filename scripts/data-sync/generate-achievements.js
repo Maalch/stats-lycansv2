@@ -1048,8 +1048,10 @@ function processKillsAchievements(deathStats, playerName, suffix) {
 // PERFORMANCE ACHIEVEMENTS
 // ========================================
 
-// Solo roles are camps that are not Villageois, Loup, or Amoureux
-const SOLO_ROLES = [
+// Special roles are camps that are not Villageois or Loup (matches getPlayerMainCampFromRole logic)
+// This includes Amoureux and all solo roles
+const SPECIAL_ROLES = [
+  'Amoureux', // Included to match chart calculation
   'Idiot du Village',
   'Agent', 
   'Espion',
@@ -1184,17 +1186,17 @@ function findTopCampPerformers(campStats, targetCamp, minGames, sortBy = 'perfor
 }
 
 /**
- * Find top solo role performers
+ * Find top special role performers (includes Amoureux and solo roles)
  * @param {Array} campStats - Array of player camp statistics
- * @param {number} minGames - Minimum total solo games required
- * @returns {Array} - All solo role performers sorted by performance
+ * @param {number} minGames - Minimum total special role games required
+ * @returns {Array} - All special role performers sorted by performance
  */
 function findTopSoloRolePerformers(campStats, minGames) {
-  // Get all solo role performances for each player
+  // Get all special role performances for each player
   const playerSoloPerformance = new Map();
 
   campStats
-    .filter(stat => SOLO_ROLES.includes(stat.camp) && stat.games >= 3) // Min 3 games per solo role
+    .filter(stat => SPECIAL_ROLES.includes(stat.camp) && stat.games >= 3) // Min 3 games per special role
     .forEach(stat => {
       if (!playerSoloPerformance.has(stat.player)) {
         playerSoloPerformance.set(stat.player, {
@@ -1225,7 +1227,7 @@ function findTopSoloRolePerformers(campStats, minGames) {
 
       eligiblePlayers.push({
         player: playerName,
-        camp: 'Solo', // Virtual camp for display
+        camp: 'Rôles spéciaux', // Virtual camp for display (matches chart naming)
         games: data.totalSoloGames,
         wins: data.totalSoloWins,
         winRate: winRate,
@@ -1453,14 +1455,14 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
     ));
   }
 
-  // 6. Best solo role (min. 10 games)
+  // 6. Best special roles performance (includes Amoureux and solo roles, min. 10 games)
   const topSoloPerformers = findTopSoloRolePerformers(campStats, 10);
   const soloRank = findPlayerCampRank(topSoloPerformers, playerName);
   if (soloRank) {
     achievements.push(createPerformanceAchievement(
       `solo-performance-${suffix ? 'modded' : 'all'}`,
-      `⭐ Top ${soloRank.rank} Rôles Solo${suffix}`,
-      `${soloRank.rank}${soloRank.rank === 1 ? 'er' : 'ème'} meilleur joueur solo: ${soloRank.value.toFixed(1)}% (+${soloRank.performance.toFixed(1)}%) (${soloRank.games} parties, min. 10)`,
+      `⭐ Top ${soloRank.rank} Rôles Spéciaux${suffix}`,
+      `${soloRank.rank}${soloRank.rank === 1 ? 'er' : 'ème'} meilleur joueur rôles spéciaux: ${soloRank.value.toFixed(1)}% (+${soloRank.performance.toFixed(1)}%) (${soloRank.games} parties, min. 10)`,
       'good',
       soloRank.rank,
       soloRank.value,
