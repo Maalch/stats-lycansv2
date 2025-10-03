@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
 import { getAllDeathTypes, getKillDescription, getDeathDescription } from '../../hooks/utils/deathStatisticsUtils';
-import { codifyDeathType, type DeathTypeCodeType } from '../../utils/deathTypeConstants';
+import { codifyDeathType, type DeathTypeCodeType } from '../../utils/datasyncExport';
 import { useFilteredGameLogData } from '../../hooks/useCombinedRawData';
 import { getPlayerCampFromRole } from '../../utils/gameUtils';
 import { FullscreenChart } from '../common/FullscreenChart';

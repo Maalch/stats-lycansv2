@@ -1,6 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerCampFromRole } from '../../utils/gameUtils';
-import { DeathTypeCode, codifyDeathType, type DeathTypeCodeType } from '../../utils/deathTypeConstants';
+import { DeathTypeCode, codifyDeathType, type DeathTypeCodeType } from '../../utils/datasyncExport';
 
 /**
  * Get all available camps from game data (camps that have at least one killer)
