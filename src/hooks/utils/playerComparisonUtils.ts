@@ -4,7 +4,8 @@
 
 import type { PlayerStat } from '../../types/api';
 import type { GameLogEntry } from '../useCombinedRawData';
-import { calculateGameDuration, formatDuration, getPlayerCampFromRole } from '../../utils/gameUtils';
+import { formatDuration, getPlayerCampFromRole } from '../../utils/gameUtils';
+import { calculateGameDuration } from '../../utils/datasyncExport';
 
 
 export interface PlayerComparisonMetrics {

@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { DeathTypeCode, codifyDeathType } from '../../src/utils/deathTypeConstants.js';
+import { DeathTypeCode, codifyDeathType } from '../../src/utils/datasyncExport.js';
 
 // Data directory relative to project root
 const DATA_DIR = '../../data';
@@ -423,26 +423,6 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
   }
 
   return achievements;
-}
-
-/**
- * Helper function to calculate game duration in seconds
- * @param {string} startDate - Start date string
- * @param {string} endDate - End date string
- * @returns {number|null} - Duration in seconds or null
- */
-function calculateGameDuration(startDate, endDate) {
-  if (!startDate || !endDate) return null;
-  
-  try {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    if (isNaN(start.getTime()) || isNaN(end.getTime())) return null;
-    
-    return Math.max(0, (end.getTime() - start.getTime()) / 1000);
-  } catch (error) {
-    return null;
-  }
 }
 
 /**

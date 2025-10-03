@@ -67,40 +67,6 @@ export function createYouTubeEmbedUrl(startUrl: string | null, endUrl: string | 
   return `https://www.youtube.com/embed/${videoId}${queryString ? '?' + queryString : ''}`;
 }
 
-// Helper function to calculate game duration from start and end URLs or ISO date strings
-export function calculateGameDuration(start: string | null, end: string | null): number | null {
-  if (!start || !end) return null;
-  
-  try {
-    // First, try to parse as ISO date strings (new format)
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-    
-    // Check if both dates are valid ISO dates
-    if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-      const durationMs = endDate.getTime() - startDate.getTime();
-      return durationMs > 0 ? Math.round(durationMs / 1000) : null;
-    }
-  } catch (error) {
-    // If ISO date parsing fails, try YouTube URL format (legacy format)
-  }
-  
-  // Fallback to YouTube URL parsing for backward compatibility
-  const startInfo = extractYouTubeInfo(start);
-  const endInfo = extractYouTubeInfo(end);
-  
-  // We need both timestamps to calculate duration
-  if (startInfo.timestamp === null || endInfo.timestamp === null) {
-    return null;
-  }
-
-  // Calculate duration in seconds
-  const duration = endInfo.timestamp - startInfo.timestamp;
-  
-  // Return null if duration is negative or zero (invalid)
-  return duration > 0 ? duration : null;
-}
-
 // Helper function to format duration in seconds to MM:SS format
 export function formatDuration(durationInSeconds: number): string {
   const minutes = Math.floor(durationInSeconds / 60);
