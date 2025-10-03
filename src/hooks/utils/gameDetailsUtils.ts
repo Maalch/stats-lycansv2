@@ -604,7 +604,7 @@ export function filterByPlayerPairFromGameLog(
           const playerStat = game.PlayerStats.find(p => 
             p.Username.toLowerCase() === player.toLowerCase()
           );
-          return getPlayerCampFromRole(playerStat?.MainRoleFinal) === 'Loup';
+          return getPlayerCampFromRole(playerStat?.MainRoleFinal || '') === 'Loup';
         });
 
       case 'lovers':
@@ -613,7 +613,7 @@ export function filterByPlayerPairFromGameLog(
           const playerStat = game.PlayerStats.find(p => 
             p.Username.toLowerCase() === player.toLowerCase()
           );
-          return getPlayerCampFromRole(playerStat?.MainRoleFinal) === 'Amoureux';
+          return getPlayerCampFromRole(playerStat?.MainRoleFinal || '') === 'Amoureux';
         });
 
       default:

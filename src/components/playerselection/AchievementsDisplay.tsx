@@ -242,16 +242,14 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         minGames = parseInt(minGamesMatch[1], 10);
       }
       
-      // Determine view mode based on chart section
-      let viewMode: 'player-performance' | 'top-performers' = 'player-performance';
+      // For solo-roles and hall-of-fame, use "Tous les camps" instead of specific camp
       if (chartSection === 'solo-roles' || chartSection === 'hall-of-fame') {
-        viewMode = 'top-performers';
+        selectedCamp = 'Tous les camps';
       }
       
       // Set the camp performance chart state
       updateNavigationState({
         campPerformanceState: {
-          selectedCampPerformanceView: viewMode,
           selectedCampPerformanceCamp: selectedCamp,
           selectedCampPerformanceMinGames: minGames
         }

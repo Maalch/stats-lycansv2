@@ -38,7 +38,6 @@ export interface NavigationFilters {
 }
 
 export interface CampPerformanceState {
-  selectedCampPerformanceView: 'player-performance' | 'top-performers';
   selectedCampPerformanceCamp: string;
   selectedCampPerformanceMinGames: number;
 }
