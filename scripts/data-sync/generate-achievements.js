@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { DeathTypeCode, codifyDeathType, getPlayerCampFromRole } from '../../src/utils/datasyncExport.js';
+import { DeathTypeCode, codifyDeathType, getPlayerCampFromRole, getPlayerMainCampFromRole } from '../../src/utils/datasyncExport.js';
 
 // Data directory relative to project root
 const DATA_DIR = '../../data';
@@ -1480,29 +1480,6 @@ function processPerformanceAchievements(campStats, playerName, suffix) {
 // ========================================
 // SERIES ACHIEVEMENTS
 // ========================================
-
-/**
- * Helper function to get player's main camp from role name
- * @param {string} roleName - Role name to categorize
- * @returns {'Villageois'|'Loup'|'Autres'} - Main camp category
- */
-function getPlayerMainCampFromRole(roleName) {
-  if (!roleName) return 'Villageois';
-  
-  // Use existing camp logic
-  const camp = getPlayerCampFromRole(roleName, { regroupTraitor: true });
-
-  // Loups camp (note: getPlayerCampFromRole returns 'Loup' for Loup and Traître)
-  if (camp === 'Loup') {
-    return 'Loup';
-  }
-  else if (camp === 'Villageois') {
-    return 'Villageois';
-  }
-  else {
-    return 'Autres';
-  }
-}
 
 /**
  * Get all unique players from game data

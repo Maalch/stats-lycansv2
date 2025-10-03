@@ -196,3 +196,23 @@ export function getPlayerCampFromRole(roleName, groupOptions) {
   // Special roles keep their role name as camp
   return roleName;
 }
+
+/**
+ * Helper function to get player's main camp from role name
+ */
+export function getPlayerMainCampFromRole(roleName) {
+  if (!roleName) return 'Villageois';
+  
+  roleName = getPlayerCampFromRole(roleName, { regroupTraitor: true });
+
+  // Loups camp (now includes Traître automatically)
+  if (roleName === 'Loup') {
+    return 'Loup';
+  }
+  else if (roleName === 'Villageois') {
+    return 'Villageois';
+  }
+  else {
+    return 'Autres';
+  }
+}

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ScatterChart, Scatter } from 'recharts';
 import { usePlayerCampPerformanceFromRaw } from '../../hooks/usePlayerCampPerformanceFromRaw';
-import { useThemeAdjustedLycansColorScheme, useThemeAdjustedPlayersColor, mainCampOrder } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedPlayersColor } from '../../types/api';
 import { minGamesOptions} from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
@@ -59,13 +59,44 @@ export function PlayerCampPerformanceChart() {
     
     const availableCampNames = playerCampPerformance.campAverages.map(camp => camp.camp);
     
-    // Separate camps into main camps (in order) and other camps
-    const mainCamps = mainCampOrder.filter(camp => availableCampNames.includes(camp));
+    // Define the specific order we want with separators
+    const orderedCamps = ['Tous les camps'];
+    
+    // Add Villageois if available
+    if (availableCampNames.includes('Villageois')) {
+      orderedCamps.push('Villageois');
+    }
+    
+    // Add Loup & Traître if available
+    if (availableCampNames.includes('Loup & Traître')) {
+      orderedCamps.push('Loup & Traître');
+    }
+    
+    // Add Loup if available
+    if (availableCampNames.includes('Loup')) {
+      orderedCamps.push('Loup');
+    }
+    
+    // Add Traître if available
+    if (availableCampNames.includes('Traître')) {
+      orderedCamps.push('Traître');
+    }
+    
+    // Add Rôles spéciaux if available
+    if (availableCampNames.includes('Rôles spéciaux')) {
+      orderedCamps.push('Rôles spéciaux');
+    }
+    
+    // Add remaining camps (solo/special roles) alphabetically
+    const specialCamps = ['Loup & Traître', 'Rôles spéciaux'];
+    const mainCamps = ['Villageois', 'Loup', 'Traître'];
+    const excludedCamps = [...mainCamps, ...specialCamps];
+    
     const otherCamps = availableCampNames
-      .filter(camp => !mainCampOrder.includes(camp))
+      .filter(camp => !excludedCamps.includes(camp))
       .sort(); // Sort other camps alphabetically
     
-    return ['Tous les camps', ...mainCamps, ...otherCamps];
+    return [...orderedCamps, ...otherCamps];
   }, [playerCampPerformance]);
 
   // Optimize data processing by combining operations and reducing redundant calculations
@@ -210,26 +241,63 @@ export function PlayerCampPerformanceChart() {
     if (data && data.player) {
       // For specific camp view, use the selected camp
       if (selectedCamp !== 'Tous les camps') {
-        navigateToGameDetails({
-          selectedPlayer: data.player,
-          campFilter: {
-            selectedCamp: selectedCamp,
-            campFilterMode: 'wins-only',
-            excludeTraitor: selectedCamp === 'Traître' // Exclude traitor from Loups filtering
-          },
-          fromComponent: `Performance des Joueurs - ${selectedCamp}`
-        });
+        // Handle special case for "Loup & Traître"
+        if (selectedCamp === 'Loup & Traître') {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: 'Loup',
+              campFilterMode: 'wins-only',
+              excludeTraitor: false // Include traitor when showing Loup & Traître
+            },
+            fromComponent: `Performance des Joueurs - ${selectedCamp}`
+          });
+        } else if (selectedCamp === 'Rôles spéciaux') {
+          // For special roles, don't use camp filter - just show all games for the player
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            fromComponent: `Performance des Joueurs - ${selectedCamp}`
+          });
+        } else {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: selectedCamp,
+              campFilterMode: 'wins-only',
+              excludeTraitor: selectedCamp === 'Traître' // Exclude traitor from Loups filtering
+            },
+            fromComponent: `Performance des Joueurs - ${selectedCamp}`
+          });
+        }
       } else {
         // For 'Tous les camps' view, use the camp from the data point
-        navigateToGameDetails({
-          selectedPlayer: data.player,
-          campFilter: {
-            selectedCamp: data.camp,
-            campFilterMode: 'wins-only',
-            excludeTraitor: data.camp === 'Traître' // Exclude traitor from Loups filtering
-          },
-          fromComponent: `Performance des Joueurs - Tous les camps`
-        });
+        if (data.camp === 'Loup & Traître') {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: 'Loup',
+              campFilterMode: 'wins-only',
+              excludeTraitor: false
+            },
+            fromComponent: `Performance des Joueurs - Tous les camps`
+          });
+        } else if (data.camp === 'Rôles spéciaux') {
+          // For special roles, don't use camp filter
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            fromComponent: `Performance des Joueurs - Tous les camps`
+          });
+        } else {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: data.camp,
+              campFilterMode: 'wins-only',
+              excludeTraitor: data.camp === 'Traître'
+            },
+            fromComponent: `Performance des Joueurs - Tous les camps`
+          });
+        }
       }
     }
   };
@@ -284,14 +352,55 @@ export function PlayerCampPerformanceChart() {
               borderRadius: '4px',
               padding: '0.5rem',
               fontSize: '0.9rem',
-              minWidth: '150px'
+              minWidth: '200px'
             }}
           >
-            {availableCamps.map(camp => (
-              <option key={camp} value={camp}>
-                {camp}
-              </option>
-            ))}
+            {availableCamps.map((camp) => {
+              // Determine visual styling based on camp type
+              let optionText = camp;
+              let isIndented = false;
+              let isSubGroup = false;
+              
+              if (camp === 'Tous les camps') {
+                optionText = '📊 Tous les camps';
+              } else if (camp === 'Villageois') {
+                optionText = '   Villageois';
+                isIndented = true;
+              } else if (camp === 'Loup & Traître') {
+                optionText = '   🐺 Loup & Traître';
+                isIndented = true;
+                isSubGroup = true;
+              } else if (camp === 'Loup') {
+                optionText = '     Loup';
+                isIndented = true;
+              } else if (camp === 'Traître') {
+                optionText = '     Traître';
+                isIndented = true;
+              } else if (camp === 'Rôles spéciaux') {
+                optionText = '   ⭐ Rôles spéciaux';
+                isIndented = true;
+                isSubGroup = true;
+              } else {
+                // Individual special roles
+                optionText = `     ${camp}`;
+                isIndented = true;
+              }
+              
+              return (
+                <option 
+                  key={camp} 
+                  value={camp}
+                  style={{
+                    fontFamily: 'monospace',
+                    fontSize: isIndented ? '0.85rem' : '0.9rem',
+                    fontWeight: isSubGroup ? 'bold' : 'normal',
+                    color: isSubGroup ? 'var(--accent-primary)' : 'inherit'
+                  }}
+                >
+                  {optionText}
+                </option>
+              );
+            })}
           </select>
         </div>
 
@@ -329,6 +438,20 @@ export function PlayerCampPerformanceChart() {
           ))}
           </select>
         </div>
+      </div>
+
+      {/* Visual explanation of grouping */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        marginBottom: '1rem',
+        fontSize: '0.75rem',
+        color: 'var(--text-secondary)',
+        fontStyle: 'italic'
+      }}>
+        <span>
+          📊 = Tous les camps • 🐺 = Loups groupés • ⭐ = Rôles spéciaux groupés
+        </span>
       </div>
 
       {/* Summary Cards */}
@@ -534,18 +657,61 @@ export function PlayerCampPerformanceChart() {
                     if (data && data.player) {
                       // For "Tous les camps", use the camp from the data point
                       // For specific camp, use the selected camp
-                      const targetCamp = selectedCamp === 'Tous les camps' ? data.camp : selectedCamp;
-                      navigateToGameDetails({
-                        selectedPlayer: data.player,
-                        campFilter: {
-                          selectedCamp: targetCamp,
-                          campFilterMode: 'wins-only',
-                          excludeTraitor: targetCamp === 'Traître'
-                        },
-                        fromComponent: selectedCamp === 'Tous les camps' 
-                          ? 'Relation Parties Jouées vs Performance - Tous les camps'
-                          : `Relation Parties Jouées vs Performance - ${selectedCamp}`
-                      });
+                      if (selectedCamp === 'Tous les camps') {
+                        if (data.camp === 'Loup & Traître') {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            campFilter: {
+                              selectedCamp: 'Loup',
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: false
+                            },
+                            fromComponent: 'Relation Parties Jouées vs Performance - Tous les camps'
+                          });
+                        } else if (data.camp === 'Rôles spéciaux') {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            fromComponent: 'Relation Parties Jouées vs Performance - Tous les camps'
+                          });
+                        } else {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            campFilter: {
+                              selectedCamp: data.camp,
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: data.camp === 'Traître'
+                            },
+                            fromComponent: 'Relation Parties Jouées vs Performance - Tous les camps'
+                          });
+                        }
+                      } else {
+                        if (selectedCamp === 'Loup & Traître') {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            campFilter: {
+                              selectedCamp: 'Loup',
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: false
+                            },
+                            fromComponent: `Relation Parties Jouées vs Performance - ${selectedCamp}`
+                          });
+                        } else if (selectedCamp === 'Rôles spéciaux') {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            fromComponent: `Relation Parties Jouées vs Performance - ${selectedCamp}`
+                          });
+                        } else {
+                          navigateToGameDetails({
+                            selectedPlayer: data.player,
+                            campFilter: {
+                              selectedCamp: selectedCamp,
+                              campFilterMode: 'wins-only',
+                              excludeTraitor: selectedCamp === 'Traître'
+                            },
+                            fromComponent: `Relation Parties Jouées vs Performance - ${selectedCamp}`
+                          });
+                        }
+                      }
                     }
                   }}
                   shape={(props: { cx?: number; cy?: number; payload?: any }) => {
