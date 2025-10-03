@@ -3,8 +3,8 @@
  */
 
 import type { PlayerPairingStatsData, PlayerPairStat } from '../../types/api';
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
-import { getPlayerCampFromRole } from '../../utils/gameUtils';
 
 /**
  * Extended interface for chart display with highlighting support

@@ -1,6 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, PlayerCampPerformance } from '../../types/api';
-import { getPlayerCampFromRole } from '../../utils/gameUtils';
+import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 
 
 /**
