@@ -360,9 +360,10 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
         byVillageWinRate.length,
         {
           tab: 'players',
-          subTab: 'history'
+          subTab: 'playersGeneral',
+          mapFilter: 'village'
         },
-        'history'
+        'map'
       ));
     }
   }
@@ -383,9 +384,10 @@ function processHistoryAchievements(mapStats, playerName, suffix) {
         byChateauWinRate.length,
         {
           tab: 'players',
-          subTab: 'history'
+          subTab: 'playersGeneral',
+          mapFilter: 'chateau'
         },
-        'history'
+        'map'
       ));
     }
   }
