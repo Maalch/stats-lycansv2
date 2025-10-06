@@ -290,24 +290,7 @@ export function PlayerSelectionPage() {
           <div className="player-selection-prompt">
             <div className="selection-prompt-content">
               <h2>Sélectionnez un joueur</h2>
-              <p>Utilisez la recherche ci-dessus pour trouver et sélectionner un joueur à mettre en évidence.</p>
-              
-              {filteredPlayers.length > 0 && (
-                <div className="suggested-players">
-                  <h3>Joueurs suggérés:</h3>
-                  <div className="suggestion-list">
-                    {sortedFilteredPlayers.slice(0, 5).map((player) => (
-                      <button
-                        key={player.name}
-                        className="suggestion-btn"
-                        onClick={() => handlePlayerSelect(player.name)}
-                      >
-                        {player.name} ({player.totalGames} parties)
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+              <p>Utilisez la recherche ci-dessus pour trouver et sélectionner un joueur à mettre en évidence.</p>      
             </div>
           </div>
         )}
