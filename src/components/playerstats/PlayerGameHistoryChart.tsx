@@ -940,17 +940,13 @@ export function PlayerGameHistoryChart() {
                       {mapPerformanceData.map((entry, index) => {
                         // Define colors for specific maps with enhanced contrast
                         let fillColor;
-                        let strokeColor = 'transparent';
                         
                         if (entry.name === 'Village') {
                           fillColor = 'var(--accent-secondary)';
-                          strokeColor = 'var(--accent-primary)';
                         } else if (entry.name === 'Château') {
                           fillColor = 'var(--accent-tertiary)';
-                          strokeColor = 'var(--accent-primary)';
                         } else if (entry.name === 'Autres') {
                           fillColor = lycansOtherCategoryColor;
-                          strokeColor = 'var(--text-secondary)';
                         } else {
                           fillColor = `var(--chart-color-${(index % 6) + 1})`;
                         }
@@ -967,7 +963,7 @@ export function PlayerGameHistoryChart() {
                                 ? `${fillColor}30`  // More dimmed for 0% win rate
                                 : fillColor
                             }
-                            stroke={isHighest ? 'var(--accent-primary)' : strokeColor}
+                            stroke='transparent'
                             strokeWidth={isHighest ? 3 : 1}
                             style={{ cursor: 'pointer' }}
                           />
