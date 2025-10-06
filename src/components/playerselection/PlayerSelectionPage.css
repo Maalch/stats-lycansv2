@@ -89,16 +89,9 @@
   border-radius: 16px;
   padding: 2rem;
   transition: all 0.3s ease;
-  cursor: pointer;
   position: relative;
   overflow: hidden;
   width: 100%;
-}
-
-.single-player-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px var(--shadow-color);
-  border-color: var(--accent-secondary);
 }
 
 .single-player-card.highlighted {
