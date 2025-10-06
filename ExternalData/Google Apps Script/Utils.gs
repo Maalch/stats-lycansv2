@@ -18,7 +18,7 @@ const LYCAN_SCHEMA = {
       SOLO: 'Rôles solo',  //name of the solo roles. If several, separated with comma
       WINNERCAMP: 'Camp victorieux', //name of the winner camp ("Loup", "Villageois"...)
       VICTORYTYPE: 'Type de victoire', //Type of victory for the winning camp ("Vote", "Récolte", "Domination"...)
-      NBDAYS: 'Nombre de journées', //number of days in the game
+      NBDAYS: 'Nombre de journées', //number of days in the game. Could be either just an integer X, or a letter J/N/M + an integer (like J1 for Journée day 1, M3 for Meeting day 3)
       SURVIVINGPLAYERS: 'Survivants', //list of players alive at the end of the game
       WINNERLIST: 'Liste des gagnants', //list of players that won this game, separated with comma if several winners
       HARVEST: 'Récolte', //haverst at the end of the game
@@ -88,7 +88,7 @@ const LYCAN_SCHEMA = {
       FINALCAMP: 'Camp final', //Name of the camp at the end of the game, only if different from start camp
       FINALROLE: 'Rôle final', //Name of the rôle at the end of the game, only if different from start role 
       FINALPOWER: 'Métier final', //Name of the power at the end of the game, only if different from start power
-      DAYOFDEATH: 'Jour de mort', //Day of the death for that player (integer)
+      DAYOFDEATH: 'Jour de mort', //Day of the death for that player. Could be either just an integer X, or a letter J/N/M + an integer (like J1 for Journée day 1, M3 for Meeting day 3)
       TYPEOFDEATH: 'Type de mort', //Type of death for that player (Tué par Loup, Mort aux votes, etc...). 'N/A' is not killed
       KILLEDPLAYERS: 'Personnes tuées', //List of player(s) killed by that player. If empty, killed no one
       KILLERPLAYERS: 'Joueurs tueurs', //List of player(s) that killed that player. Empty if not killed.

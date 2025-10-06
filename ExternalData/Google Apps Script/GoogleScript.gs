@@ -525,7 +525,7 @@ function getRawGameDataInNewFormat() {
         MapName: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)],
         HarvestGoal: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST)],
         HarvestDone: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.HARVEST)],
-        EndTiming: "U" + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)],
+        EndTiming: determinateTiming(gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)]),
         Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         LegacyData: {
@@ -728,16 +728,25 @@ function determineDeathTiming(playerDetails) {
   if (playerDetails.dayOfDeath !== '' && playerDetails.dayOfDeath !== null) {
     var dayValue = playerDetails.dayOfDeath.toString();
     
-    // If the value already starts with a letter, return it as is
-    if (dayValue.length > 0 && /^[A-Za-z]/.test(dayValue)) {
-      return dayValue;
-    }
-    
-    // Otherwise, it's an integer, so add "U" prefix
-    return "U" + dayValue;
+    return determinateTiming(dayValue);
   }
   
   return null;
+}
+
+/**
+ * Helper function to determine timing
+ */
+function determinateTiming(timing) {
+  if (!timing) return null;
+
+    // If the value already starts with a letter, return it as is
+    if (timing.length > 0 && /^[A-Za-z]/.test(timing)) {
+      return timing;
+    }
+    
+    // Otherwise, it's an integer, so add "U" prefix
+    return "U" + timing;  
 }
 
 /**
