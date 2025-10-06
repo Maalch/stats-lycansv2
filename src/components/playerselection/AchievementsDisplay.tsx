@@ -514,6 +514,23 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
     );
   }
 
+  // Helper function to get medal emoji for top 3 rankings
+  const getMedalEmoji = (rank: number | undefined): string => {
+    if (rank === 1) return '🥇';
+    if (rank === 2) return '🥈';
+    if (rank === 3) return '🥉';
+    return '';
+  };
+
+  // Helper function to get rank class name
+  const getRankClassName = (rank: number | undefined): string => {
+    if (rank === 1) return 'rank-1';
+    if (rank === 2) return 'rank-2';
+    if (rank === 3) return 'rank-3';
+    if (rank && rank <= 10) return 'rank-top-10';
+    return '';
+  };
+
   // Separate achievements by category and sort by rank
   const goodAchievements = achievements
     .filter(a => a.category !== 'comparison' && a.type === 'good')
@@ -523,23 +540,67 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
     .sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
   const comparisonAchievements = achievements.filter(a => a.category === 'comparison');
 
+  // Count top 3 achievements
+  const top3Count = goodAchievements.filter(a => a.rank && a.rank <= 3).length;
+
   return (
     <div className="achievements-container">
       <h4>{title}</h4>
+      
+      {/* Top 3 Showcase Section */}
+      {top3Count > 0 && (
+        <div className="top3-showcase">
+          <h5 className="top3-title">✨ Podium d'Excellence ✨</h5>
+          <div className="top3-grid">
+            {goodAchievements
+              .filter(a => a.rank && a.rank <= 3)
+              .map((achievement, index) => (
+                <div
+                  key={achievement.id}
+                  className={`top3-card ${getRankClassName(achievement.rank)} animate-slide-in`}
+                  style={{ animationDelay: `${index * 0.15}s` }}
+                  onClick={(e) => handleAchievementClick(achievement, e)}
+                  title={getAchievementTooltip(achievement)}
+                >
+                  <div className="top3-medal-container">
+                    <span className="top3-medal">{getMedalEmoji(achievement.rank)}</span>
+                  </div>
+                  <div className="top3-content">
+                    <div className="top3-rank-badge">
+                      #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
+                    </div>
+                    <h6 className="top3-achievement-title">{achievement.title}</h6>
+                    <p className="top3-achievement-description">{achievement.description}</p>
+                  </div>
+                  <div className="top3-sparkles">
+                    <span className="sparkle sparkle-1">✨</span>
+                    <span className="sparkle sparkle-2">⭐</span>
+                    <span className="sparkle sparkle-3">✨</span>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
       
       {goodAchievements.length > 0 && (
         <div className="achievements-section good-achievements">
           <h5>🏆 Classements</h5>
           <div className="achievements-grid">
-            {goodAchievements.map((achievement) => (
+            {goodAchievements
+              .filter(a => !a.rank || a.rank > 3) // Exclude top 3 from this section
+              .map((achievement, index) => (
               <div
                 key={achievement.id}
-                className={`achievement-card good rank-${achievement.rank}`}
+                className={`achievement-card good ${getRankClassName(achievement.rank)}`}
                 onClick={(e) => handleAchievementClick(achievement, e)}
                 title={getAchievementTooltip(achievement)}
+                style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <div className="achievement-header">
-                  <span className="achievement-title">{achievement.title}</span>
+                  <span className="achievement-title">
+                    {achievement.title}
+                  </span>
                   <span className="achievement-rank">
                     #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
                   </span>
