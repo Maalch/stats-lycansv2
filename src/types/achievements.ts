@@ -3,7 +3,7 @@ export interface Achievement {
   title: string;
   description: string;
   type: 'good' | 'bad';
-  category: 'general' | 'performance' | 'series' | 'kills' | 'history' | 'comparison';
+  category: 'general' | 'performance' | 'series' | 'kills' | 'history' | 'comparison' | 'map';
   rank?: number; // Position in the ranking (1, 2, 3, ...)
   value?: number; // The actual value (games, win rate, etc.)
   totalRanked?: number; // Total number of players ranked in this category
@@ -11,6 +11,7 @@ export interface Achievement {
     tab: string;
     subTab?: string;
     chartSection?: string;
+    mapFilter?: string; // For map-specific achievements
   };
 }
 

@@ -142,6 +142,71 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
       });
     }
     
+    // Handle map achievements (Village 🏘️ and Château 🏰)
+    if (achievement.category === 'map' && achievement.redirectTo.subTab === 'playersGeneral') {
+      // Extract map filter from server-side achievement
+      const mapFilter = (achievement.redirectTo as any).mapFilter || 'all';
+      
+      // Extract minimum games from achievement description (e.g., "min. 10 parties")
+      let minGames = 10; // default for map achievements
+      const minGamesMatch = achievement.description.match(/min\.\s*(\d+)/);
+      if (minGamesMatch) {
+        minGames = parseInt(minGamesMatch[1]);
+      }
+      
+      // Set up map filter in settings
+      if (achievementType === 'modded') {
+        updateSettings({
+          gameFilter: 'modded',
+          dateRange: { start: null, end: null },
+          mapNameFilter: mapFilter,
+          playerFilter: { mode: 'none', players: [] },
+          highlightedPlayer: currentHighlightedPlayer,
+          useIndependentFilters: true,
+          independentFilters: {
+            gameTypeEnabled: true,
+            gameFilter: 'modded',
+            dateRangeEnabled: false,
+            dateRange: { start: null, end: null },
+            mapNameEnabled: true,
+            mapNameFilter: mapFilter,
+            playerFilter: { mode: 'none', players: [] },
+          }
+        });
+      } else {
+        updateSettings({
+          gameFilter: 'all',
+          dateRange: { start: null, end: null },
+          mapNameFilter: mapFilter,
+          playerFilter: { mode: 'none', players: [] },
+          highlightedPlayer: currentHighlightedPlayer,
+          useIndependentFilters: true,
+          independentFilters: {
+            gameTypeEnabled: false,
+            gameFilter: 'all',
+            dateRangeEnabled: false,
+            dateRange: { start: null, end: null },
+            mapNameEnabled: true,
+            mapNameFilter: mapFilter,
+            playerFilter: { mode: 'none', players: [] },
+          }
+        });
+      }
+      
+      // Set up navigation to general statistics with appropriate state
+      updateNavigationState({
+        playersGeneralState: {
+          minGamesForWinRate: minGames,
+          winRateOrder: 'best', // Map achievements are always about good performance
+          focusChart: 'winRate' // Focus on win rate chart for map achievements
+        }
+      });
+      
+      // Navigate to general statistics
+      navigateToTab('players', 'playersGeneral');
+      return; // Early return to skip the default navigation
+    }
+
     // Handle player history achievements that should highlight specific maps
     if (achievement.category === 'history' && achievement.redirectTo.subTab === 'history') {
       // Set the player name for the history chart
@@ -308,6 +373,16 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
             return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les participations${filterInfo}`;
           }
           return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le classement général des joueurs${filterInfo}`;
+        }
+        break;
+      case 'map':
+        if (achievement.redirectTo.subTab === 'playersGeneral') {
+          const mapFilter = (achievement.redirectTo as any).mapFilter;
+          const mapName = mapFilter === 'village' ? 'Village' : mapFilter === 'chateau' ? 'Château' : 'map';
+          const filterInfo = achievementType === 'modded' 
+            ? " (Filtres parties moddées + map activés)" 
+            : " (Filtre map activé)";
+          return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les statistiques générales filtrées sur ${mapName}${filterInfo}`;
         }
         break;
       case 'history':
