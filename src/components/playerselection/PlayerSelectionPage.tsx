@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { useSettings } from '../../context/SettingsContext';
-import { useNavigation } from '../../context/NavigationContext';
 import { useGameLogData } from '../../hooks/useCombinedRawData';
 import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculatedPlayerAchievements';
 import { getPlayerNameMapping } from '../../utils/playerNameMapping';
@@ -20,7 +19,6 @@ interface PlayerBasicStats {
 
 export function PlayerSelectionPage() {
   const { settings, updateSettings } = useSettings();
-  const { navigateToTab } = useNavigation();
   const { data: gameLogData, isLoading, error } = useGameLogData();
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
   const [searchQuery, setSearchQuery] = useState('');
@@ -96,12 +94,6 @@ export function PlayerSelectionPage() {
   const handlePlayerSelect = (playerName: string) => {
     updateSettings({ highlightedPlayer: playerName });
     setSearchQuery(''); // Clear search to show the selected player's card
-  };
-
-  const handlePlayerCardClick = (playerName: string) => {
-    // Navigate to player history tab with this player highlighted
-    updateSettings({ highlightedPlayer: playerName });
-    navigateToTab('players', 'history');
   };
 
   if (isLoading) {
@@ -215,7 +207,7 @@ export function PlayerSelectionPage() {
             }
             
             return (
-              <div className="single-player-card highlighted" onClick={() => handlePlayerCardClick(highlightedPlayerStats.name)}>
+              <div className="single-player-card highlighted">
                 <div className="player-card-header">
                   <h3 className="player-name">{highlightedPlayerStats.name}</h3>
                   <span className="highlight-badge">★ Mis en évidence</span>
