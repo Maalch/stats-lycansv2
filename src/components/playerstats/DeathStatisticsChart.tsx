@@ -100,12 +100,6 @@ export function DeathStatisticsChart() {
         colorMap[deathTypeCode] = 'var(--chart-color-4)';
       } else if (deathTypeCode === DeathTypeCode.SHERIF) {
         colorMap[deathTypeCode] = 'var(--chart-color-5)';
-      } else if (deathTypeCode === DeathTypeCode.OTHER_AGENT) {
-        colorMap[deathTypeCode] = 'var(--chart-color-6)';
-      } else if (deathTypeCode === DeathTypeCode.SEER) {
-        colorMap[deathTypeCode] = 'var(--chart-color-7)';
-      } else if (deathTypeCode === DeathTypeCode.BOMB) {
-        colorMap[deathTypeCode] = 'var(--chart-color-8)';
       }
     });
     

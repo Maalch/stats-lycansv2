@@ -818,6 +818,8 @@ function determineDeathType(playerDetails) {
     return "VOTED";
   else if (playerDetails.typeOfDeath === 'Inconnu')
     return "UNKNOWN";
+  else if (playerDetails.typeOfDeath === 'N/A')
+    return 'SURVIVOR'
   // Return death type only if death type is not "Déco" 
   else if (playerDetails.typeOfDeath !== 'Déco' && 
       playerDetails.typeOfDeath !== '' && 
