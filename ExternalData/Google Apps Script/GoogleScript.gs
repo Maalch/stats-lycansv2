@@ -803,6 +803,10 @@ function determineDeathType(playerDetails) {
     return "LOVER_DEATH_OWN"; //SPECIFIC TO GDOC!
   else if (deathType === 'tué par chasseur')
     return "BULLET"; //LESS SPECIFIC THAN OFFICIAL LOG!
+  else if (deathType === 'tué par chasseur en humain')
+    return "BULLET_HUMAN"; 
+  else if (deathType === 'tué par chasseur en loup')
+    return "BULLET_WOLF"; 
   else if (deathType === 'tué par chasseur de primes')
     return "BULLET_BOUNTYHUNTER"; //SPECIFIC TO GDOC!
   else if (deathType === 'tué par shérif')
