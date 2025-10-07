@@ -181,7 +181,7 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
     case DeathTypeCode.AVENGER:
       return 'Kill en Vengeur';
     case DeathTypeCode.SEER:
-      return 'Devinement de rôle';
+      return 'Kill en Devin';
     case DeathTypeCode.ASSASSIN:
       return 'Kill avec Potion (Assassin)';
     case DeathTypeCode.LOVER_DEATH:
@@ -213,7 +213,7 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
   
   gameData.forEach(game => {
     game.PlayerStats.forEach(player => {
-      if (player.DeathType && player.DeathType !== DeathTypeCode.SURVIVOR) {
+      if (player.DeathType && player.DeathType !== DeathTypeCode.SURVIVOR && player.DeathType !== '') {
         deathTypesSet.add(player.DeathType as DeathTypeCodeType);
       }
     });
@@ -251,7 +251,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
   return game.PlayerStats
     .filter(player => {
       // Only include players who actually died (not survivors)
-      return player.DeathType && player.DeathType !== DeathTypeCode.SURVIVOR && (player.DeathTiming || player.DeathType);
+      return player.DeathType && player.DeathType !== DeathTypeCode.SURVIVOR && player.DeathType !== '' && (player.DeathTiming || player.DeathType);
     })
     .map(player => {
       // Find the killer's camp if killer exists
@@ -327,7 +327,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
       // Skip non-kill deaths (survivors, votes, environmental deaths)
       if (player.DeathType === DeathTypeCode.SURVIVOR || player.DeathType === DeathTypeCode.VOTED || 
           player.DeathType === DeathTypeCode.STARVATION || player.DeathType === DeathTypeCode.FALL || 
-          player.DeathType === DeathTypeCode.BY_AVATAR_CHAIN) {
+          player.DeathType === DeathTypeCode.BY_AVATAR_CHAIN || player.DeathType === '') {
         return;
       }
       
