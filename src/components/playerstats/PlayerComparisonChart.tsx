@@ -77,21 +77,12 @@ export function PlayerComparisonChart() {
   };
 
   // Generate comparison data when both players are selected
-  const comparisonData = useMemo(() => {
-    console.log('PlayerComparison Debug:', {
-      selectedPlayer1,
-      selectedPlayer2,
-      hasGenerateComparison: !!generateComparison,
-      availablePlayersCount: availablePlayers.length
-    });
-    
+  const comparisonData = useMemo(() => {    
     if (!selectedPlayer1 || !selectedPlayer2 || selectedPlayer1 === selectedPlayer2) {
-      console.log('PlayerComparison: No valid player selection');
       return null;
     }
     
     const result = generateComparison(selectedPlayer1, selectedPlayer2);
-    console.log('PlayerComparison: Generated data:', result);
     return result;
   }, [selectedPlayer1, selectedPlayer2, generateComparison, availablePlayers.length]);
 

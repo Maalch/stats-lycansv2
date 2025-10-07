@@ -11,9 +11,14 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: 'v1.3.1',
+    date: '07/10/2025',
+    description: 'Détails des bons et mauvais chasseurs (dans Joueurs / Morts & Kills)',
+  },
+  {
     version: 'v1.3.0',
     date: '03/10/2025',
-    description: 'Nouvelle page d\'accueil avec classement globaux !\nRaccourci vers les différents graphiques depuis la page d\'accueil.',
+    description: 'Nouvelle page d\'accueil avec classement globaux !\nRaccourci vers les différents graphiques depuis la page d\'accueil',
   },
   {
     version: 'v1.2.2',

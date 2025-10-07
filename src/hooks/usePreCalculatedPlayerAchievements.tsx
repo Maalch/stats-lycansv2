@@ -47,17 +47,10 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
         
         if (mounted) {
           setAchievementsData(data);
-          console.log('✅ Pre-calculated achievements loaded:', {
-            totalPlayers: data.totalPlayers,
-            totalGames: data.totalGames,
-            generatedAt: data.generatedAt,
-            playersWithAchievements: Object.keys(data.achievements).length
-          });
         }
       } catch (err) {
         if (mounted) {
           setError(err instanceof Error ? err.message : 'Failed to load achievements');
-          console.error('Error loading pre-calculated achievements:', err);
         }
       } finally {
         if (mounted) {
