@@ -774,57 +774,62 @@ function determineKillerName(playerDetails) {
 function determineDeathType(playerDetails) {
   if (!playerDetails || !playerDetails.typeOfDeath) return null;
   
-  if (playerDetails.typeOfDeath === 'Mort de faim')
+  // Normalize the death type to lowercase for case-insensitive comparison
+  var deathType = playerDetails.typeOfDeath.toLowerCase().trim();
+  
+  if (deathType === 'mort de faim')
     return "STARVATION";
-  else if (playerDetails.typeOfDeath === 'Tué par Loup')
+  else if (deathType === 'tué par loup')
     return "BY_WOLF";
-  else if (playerDetails.typeOfDeath === 'Tué par Loup ressuscité')
+  else if (deathType === 'tué par loup ressuscité')
     return "BY_WOLF_REZ"; //SPECIFIC TO GDOC!
-  else if (playerDetails.typeOfDeath === 'Tué par Loup amoureux')
+  else if (deathType === 'tué par loup amoureux')
     return "BY_WOLF_LOVER"; //SPECIFIC TO GDOC!
-  else if (playerDetails.typeOfDeath === 'Tué par Zombie')
+  else if (deathType === 'tué par zombie')
     return "BY_ZOMBIE";
-  else if (playerDetails.typeOfDeath === 'Tué par La Bête')
+  else if (deathType === 'tué par la bête')
     return "BY_BEAST";
-  else if (playerDetails.typeOfDeath === 'A été écrasé')
+  else if (deathType === 'a été écrasé')
     return "CRUSHED";
-  else if (playerDetails.typeOfDeath === 'Mort bestiale')
+  else if (deathType === 'mort bestiale')
     return "STARVATION_AS_BEAST";
-  else if (playerDetails.typeOfDeath === 'Mort de chute')
+  else if (deathType === 'mort de chute')
     return "FALL";
-  else if (playerDetails.typeOfDeath === 'Mort liée à l\'Avatar')
+  else if (deathType === 'mort liée à l\'avatar')
     return "BY_AVATAR_CHAIN";
-  else if (playerDetails.typeOfDeath === 'Amoureux mort') 
+  else if (deathType === 'amoureux mort') 
     return "LOVER_DEATH";
-  else if (playerDetails.typeOfDeath === 'A tué son amoureux' || playerDetails.typeOfDeath === 'Tué par son amoureux')
+  else if (deathType === 'a tué son amoureux' || deathType === 'tué par son amoureux')
     return "LOVER_DEATH_OWN"; //SPECIFIC TO GDOC!
-  else if (playerDetails.typeOfDeath === 'Tué par Chasseur')
+  else if (deathType === 'tué par chasseur')
     return "BULLET"; //LESS SPECIFIC THAN OFFICIAL LOG!
-  else if (playerDetails.typeOfDeath === 'Tué par Chasseur de primes')
+  else if (deathType === 'tué par chasseur de primes')
     return "BULLET_BOUNTYHUNTER"; //SPECIFIC TO GDOC!
-  else if (playerDetails.typeOfDeath === 'Tué par Shérif')
+  else if (deathType === 'tué par shérif')
     return "SHERIF"; //LESS SPECIFIC THAN OFFICIAL LOG!
-  else if (playerDetails.typeOfDeath === 'Tué par l\'Agent')
+  else if (deathType === 'tué par l\'agent')
     return "OTHER_AGENT";
-  else if (playerDetails.typeOfDeath === 'Tué par Vengeur')
+  else if (deathType === 'tué par vengeur')
     return "AVENGER";
-  else if (playerDetails.typeOfDeath === 'Rôle deviné par loup')
+  else if (deathType === 'rôle deviné par loup')
     return "SEER";
-  else if (playerDetails.typeOfDeath === 'Tué par potion assassin')
+  else if (deathType === 'tué par potion assassin')
     return "ASSASSIN";
-  else if (playerDetails.typeOfDeath === 'A explosé')
+  else if (deathType === 'a explosé')
     return "BOMB";
-  else if (playerDetails.typeOfDeath === 'Mort aux votes')
+  else if (deathType === 'mort aux votes')
     return "VOTED";
-  else if (playerDetails.typeOfDeath === 'Inconnu')
+  else if (deathType === 'tué par potion hanté')
+    return "HANTED"; //SPECIFIC TO GDOC!
+  else if (deathType === 'inconnu')
     return "UNKNOWN";
-  else if (playerDetails.typeOfDeath === 'N/A')
+  else if (deathType === 'n/a')
     return 'SURVIVOR'
   // Return death type only if death type is not "Déco" 
-  else if (playerDetails.typeOfDeath !== 'Déco' && 
-      playerDetails.typeOfDeath !== '' && 
-      playerDetails.typeOfDeath !== null) {
-    return playerDetails.typeOfDeath;
+  else if (deathType !== 'déco' && 
+      deathType !== '' && 
+      deathType !== null) {
+    return playerDetails.typeOfDeath; // Return original case for unrecognized types
   }
   
   return null;

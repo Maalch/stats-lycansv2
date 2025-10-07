@@ -127,6 +127,8 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
       return 'Tué par un vengeur';
     case DeathTypeCode.SEER:
       return 'Rôle deviné par un loup';
+    case DeathTypeCode.HANTED:
+      return 'Tué par une potion hantée';
     case DeathTypeCode.ASSASSIN:
       return 'Tué par une potion (Assassin)';
     case DeathTypeCode.LOVER_DEATH:
@@ -182,6 +184,8 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
       return 'Kill en Vengeur';
     case DeathTypeCode.SEER:
       return 'Kill en Devin';
+    case DeathTypeCode.HANTED:
+      return 'Kill avec Potion hantée';
     case DeathTypeCode.ASSASSIN:
       return 'Kill avec Potion (Assassin)';
     case DeathTypeCode.LOVER_DEATH:

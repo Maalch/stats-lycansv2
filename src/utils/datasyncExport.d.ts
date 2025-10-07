@@ -16,6 +16,7 @@ export declare const DeathTypeCode: {
   readonly OTHER_AGENT: 'OTHER_AGENT';
   readonly AVENGER: 'AVENGER';
   readonly SEER: 'SEER';
+  readonly HANTED: 'HANTED';
   readonly ASSASSIN: 'ASSASSIN';
   readonly LOVER_DEATH: 'LOVER_DEATH';
   readonly LOVER_DEATH_OWN: 'LOVER_DEATH_OWN';

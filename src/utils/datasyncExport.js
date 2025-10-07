@@ -21,6 +21,7 @@ export const DeathTypeCode = {
   OTHER_AGENT: 'OTHER_AGENT',    // Tué par l'Agent
   AVENGER: 'AVENGER',            // Tué par Vengeur
   SEER: 'SEER',                  // Rôle deviné par loup
+  HANTED: 'HANTED',              // Tué par potion hantée (GDOC specific)
   ASSASSIN: 'ASSASSIN',          // Tué par potion assassin
   LOVER_DEATH: 'LOVER_DEATH',    // Amoureux mort
   LOVER_DEATH_OWN: 'LOVER_DEATH_OWN', // A tué son amoureux / Tué par son amoureux (GDOC specific)
