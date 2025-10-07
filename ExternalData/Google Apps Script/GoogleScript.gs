@@ -820,8 +820,8 @@ function determineDeathType(playerDetails) {
     return "UNKNOWN";
   // Return death type only if death type is not "Déco" 
   else if (playerDetails.typeOfDeath !== 'Déco' && 
-      playerDetails.killerPlayers !== '' && 
-      playerDetails.killerPlayers !== null) {
+      playerDetails.typeOfDeath !== '' && 
+      playerDetails.typeOfDeath !== null) {
     return playerDetails.typeOfDeath;
   }
   
