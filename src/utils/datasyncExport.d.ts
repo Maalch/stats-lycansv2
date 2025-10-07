@@ -11,6 +11,8 @@ export declare const DeathTypeCode: {
   readonly BY_BEAST: 'BY_BEAST';
   readonly BY_AVATAR_CHAIN: 'BY_AVATAR_CHAIN';
   readonly BULLET: 'BULLET';
+  readonly BULLET_HUMAN: 'BULLET_HUMAN';
+  readonly BULLET_WOLF: 'BULLET_WOLF';
   readonly BULLET_BOUNTYHUNTER: 'BULLET_BOUNTYHUNTER';
   readonly SHERIF: 'SHERIF';
   readonly OTHER_AGENT: 'OTHER_AGENT';

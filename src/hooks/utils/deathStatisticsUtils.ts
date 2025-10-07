@@ -117,6 +117,10 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
       return 'Mort liée à l\'Avatar';
     case DeathTypeCode.BULLET:
       return 'Abattu par un chasseur';
+    case DeathTypeCode.BULLET_HUMAN:
+      return 'Tué par un chasseur en humain';
+    case DeathTypeCode.BULLET_WOLF:
+      return 'Tué par un chasseur en loup';
     case DeathTypeCode.BULLET_BOUNTYHUNTER:
       return 'Tué par un chasseur de primes';
     case DeathTypeCode.SHERIF:
@@ -174,6 +178,10 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
       return 'Mort d\'Avatar';
     case DeathTypeCode.BULLET:
       return 'Tir de Chasseur';
+    case DeathTypeCode.BULLET_HUMAN:
+      return 'Kill en Chasseur (sur humain)';
+    case DeathTypeCode.BULLET_WOLF:
+      return 'Kill en Chasseur (sur loup)';
     case DeathTypeCode.BULLET_BOUNTYHUNTER:
       return 'Kill en Chasseur de primes';
     case DeathTypeCode.SHERIF:
@@ -230,6 +238,8 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
     DeathTypeCode.BY_WOLF,
     DeathTypeCode.VOTED, 
     DeathTypeCode.BULLET,
+    DeathTypeCode.BULLET_HUMAN,
+    DeathTypeCode.BULLET_WOLF,
     DeathTypeCode.BY_ZOMBIE,
     DeathTypeCode.ASSASSIN,
     DeathTypeCode.AVENGER,

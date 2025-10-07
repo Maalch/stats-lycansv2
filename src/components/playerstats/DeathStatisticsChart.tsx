@@ -84,7 +84,7 @@ export function DeathStatisticsChart() {
         colorMap[deathTypeCode] = lycansColors['Loup'];
       } else if (deathTypeCode === DeathTypeCode.VOTED) {
         colorMap[deathTypeCode] = 'var(--chart-color-1)';
-      } else if (deathTypeCode === DeathTypeCode.BULLET || deathTypeCode === DeathTypeCode.BULLET_BOUNTYHUNTER) {
+      } else if (deathTypeCode === DeathTypeCode.BULLET || deathTypeCode === DeathTypeCode.BULLET_BOUNTYHUNTER || deathTypeCode === DeathTypeCode.BULLET_HUMAN || deathTypeCode === DeathTypeCode.BULLET_WOLF) {
         colorMap[deathTypeCode] = lycansColors['Chasseur'];
       } else if (deathTypeCode === DeathTypeCode.BY_ZOMBIE) {
         colorMap[deathTypeCode] = lycansColors['Vaudou'];
