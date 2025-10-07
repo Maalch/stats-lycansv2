@@ -16,6 +16,8 @@ export const DeathTypeCode = {
   BY_BEAST: 'BY_BEAST',          // Tué par La Bête
   BY_AVATAR_CHAIN: 'BY_AVATAR_CHAIN', // Mort liée à l'Avatar
   BULLET: 'BULLET',              // Tué par Chasseur (less specific than official log)
+  BULLET_HUMAN: 'BULLET_HUMAN',  // Tué par Chasseur en humain (official log specific)
+  BULLET_WOLF: 'BULLET_WOLF',    // Tué par Chasseur en loup (official log specific)
   BULLET_BOUNTYHUNTER: 'BULLET_BOUNTYHUNTER', // Tué par Chasseur de primes (GDOC specific)
   SHERIF: 'SHERIF',              // Tué par Shérif (less specific than official log)
   OTHER_AGENT: 'OTHER_AGENT',    // Tué par l'Agent
