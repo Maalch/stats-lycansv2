@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { DeathTypeCode, codifyDeathType, getPlayerCampFromRole, getPlayerMainCampFromRole } from '../../src/utils/datasyncExport.js';
+import { DeathTypeCode, getPlayerCampFromRole, getPlayerMainCampFromRole } from '../../src/utils/datasyncExport.js';
 
 // Data directory relative to project root
 const DATA_DIR = '../../data';
@@ -658,7 +658,7 @@ function extractDeathsFromGame(game) {
   
   game.PlayerStats.forEach(player => {
     if (player.DeathType && player.DeathType !== 'N/A') {
-      const deathTypeCode = codifyDeathType(player.DeathType);
+      const deathTypeCode = player.DeathType;
       
       deaths.push({
         playerName: player.Username,
@@ -683,11 +683,10 @@ function extractKillsFromGame(game) {
   // Derive kills from death information (DeathType + KillerName)
   game.PlayerStats.forEach(player => {
     if (player.DeathType && player.DeathType !== 'N/A' && player.KillerName) {
-      const deathType = codifyDeathType(player.DeathType);
+      const deathType = player.DeathType;
       
-      // Only count direct kills (not votes, disconnects, environmental deaths)
-      if (deathType !== DeathTypeCode.VOTE && 
-          deathType !== DeathTypeCode.DISCONNECT && 
+      // Only count direct kills (not votes, environmental deaths)
+      if (deathType !== DeathTypeCode.VOTED && 
           deathType !== DeathTypeCode.SURVIVOR &&
           deathType !== DeathTypeCode.UNKNOWN) {
         kills.push({

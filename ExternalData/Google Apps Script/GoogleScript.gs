@@ -588,7 +588,7 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
     DeathDateIrl: null, // Not available in legacy data
     DeathTiming: determineDeathTiming(playerDetails),
     DeathPosition: null, // Not available in legacy data
-    DeathType: playerDetails && playerDetails.typeOfDeath ? playerDetails.typeOfDeath : null,
+    DeathType: determineDeathType(playerDetails),
     KillerName: determineKillerName(playerDetails),
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
   };
@@ -762,6 +762,68 @@ function determineKillerName(playerDetails) {
       playerDetails.killerPlayers !== '' && 
       playerDetails.killerPlayers !== null) {
     return playerDetails.killerPlayers;
+  }
+  
+  return null;
+}
+
+
+/**
+ * Helper function to determine death type
+ */
+function determineDeathType(playerDetails) {
+  if (!playerDetails || !playerDetails.typeOfDeath) return null;
+  
+  if (playerDetails.typeOfDeath === 'Mort de faim')
+    return "STARVATION";
+  else if (playerDetails.typeOfDeath === 'Tué par Loup')
+    return "BY_WOLF";
+  else if (playerDetails.typeOfDeath === 'Tué par Loup ressuscité')
+    return "BY_WOLF_REZ"; //SPECIFIC TO GDOC!
+  else if (playerDetails.typeOfDeath === 'Tué par Loup amoureux')
+    return "BY_WOLF_LOVER"; //SPECIFIC TO GDOC!
+  else if (playerDetails.typeOfDeath === 'Tué par Zombie')
+    return "BY_ZOMBIE";
+  else if (playerDetails.typeOfDeath === 'Tué par La Bête')
+    return "BY_BEAST";
+  else if (playerDetails.typeOfDeath === 'A été écrasé')
+    return "CRUSHED";
+  else if (playerDetails.typeOfDeath === 'Mort bestiale')
+    return "STARVATION_AS_BEAST";
+  else if (playerDetails.typeOfDeath === 'Mort de chute')
+    return "FALL";
+  else if (playerDetails.typeOfDeath === 'Mort liée à l\'Avatar')
+    return "BY_AVATAR_CHAIN";
+  else if (playerDetails.typeOfDeath === 'Amoureux mort') 
+    return "LOVER_DEATH";
+  else if (playerDetails.typeOfDeath === 'A tué son amoureux' || playerDetails.typeOfDeath === 'Tué par son amoureux')
+    return "LOVER_DEATH_OWN"; //SPECIFIC TO GDOC!
+  else if (playerDetails.typeOfDeath === 'Tué par Chasseur')
+    return "BULLET"; //LESS SPECIFIC THAN OFFICIAL LOG!
+  else if (playerDetails.typeOfDeath === 'Tué par Chasseur de primes')
+    return "BULLET_BOUNTYHUNTER"; //SPECIFIC TO GDOC!
+  else if (playerDetails.typeOfDeath === 'Tué par Shérif')
+    return "SHERIF"; //LESS SPECIFIC THAN OFFICIAL LOG!
+  else if (playerDetails.typeOfDeath === 'Tué par l\'Agent')
+    return "OTHER_AGENT";
+  else if (playerDetails.typeOfDeath === 'Tué par Vengeur')
+    return "AVENGER";
+  else if (playerDetails.typeOfDeath === 'Rôle deviné par loup')
+    return "SEER";
+  else if (playerDetails.typeOfDeath === 'Tué par potion assassin')
+    return "ASSASSIN";
+  else if (playerDetails.typeOfDeath === 'A explosé')
+    return "BOMB";
+  else if (playerDetails.typeOfDeath === 'Mort aux votes')
+    return "VOTED";
+  else if (playerDetails.typeOfDeath === 'Inconnu')
+    return "UNKNOWN";
+  // Return death type only if death type is not "Déco" or "N/A"
+  else if (playerDetails.typeOfDeath !== 'Déco' && 
+      playerDetails.typeOfDeath !== 'N/A' && 
+      playerDetails.killerPlayers !== '' && 
+      playerDetails.killerPlayers !== null) {
+    return playerDetails.typeOfDeath;
   }
   
   return null;
