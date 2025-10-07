@@ -1,5 +1,5 @@
 import type { GameLogEntry } from '../useCombinedRawData';
-import { DeathTypeCode, codifyDeathType, getPlayerCampFromRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
+import { DeathTypeCode, getPlayerCampFromRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
 import { mainCampOrder } from '../../types/api';
 
 /**
@@ -101,48 +101,48 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
   switch (deathTypeCode) {
     case DeathTypeCode.SURVIVOR:
       return 'Survivant';
-    case DeathTypeCode.VOTE:
+    case DeathTypeCode.VOTED:
       return 'Mort aux votes';
-    case DeathTypeCode.WEREWOLF_KILL:
+    case DeathTypeCode.BY_WOLF:
       return 'Tué par un loup';
-    case DeathTypeCode.HUNTER_SHOT:
+    case DeathTypeCode.BY_WOLF_REZ:
+      return 'Tué par un loup ressuscité';
+    case DeathTypeCode.BY_WOLF_LOVER:
+      return 'Tué par un loup amoureux';
+    case DeathTypeCode.BY_ZOMBIE:
+      return 'Tué par un zombie';
+    case DeathTypeCode.BY_BEAST:
+      return 'Dévoré par la Bête';
+    case DeathTypeCode.BY_AVATAR_CHAIN:
+      return 'Mort liée à l\'Avatar';
+    case DeathTypeCode.BULLET:
       return 'Abattu par un chasseur';
-    case DeathTypeCode.BOUNTY_HUNTER:
+    case DeathTypeCode.BULLET_BOUNTYHUNTER:
       return 'Tué par un chasseur de primes';
+    case DeathTypeCode.SHERIF:
+      return 'Abattu par le Shérif';
+    case DeathTypeCode.OTHER_AGENT:
+      return 'Éliminé par l\'Agent';
+    case DeathTypeCode.AVENGER:
+      return 'Tué par un vengeur';
+    case DeathTypeCode.SEER:
+      return 'Rôle deviné par un loup';
+    case DeathTypeCode.ASSASSIN:
+      return 'Tué par une potion (Assassin)';
     case DeathTypeCode.LOVER_DEATH:
       return 'Mort par amoureux';
-    case DeathTypeCode.LOVER_WEREWOLF:
-      return 'Tué par un loup amoureux';
-    case DeathTypeCode.BEAST_KILL:
-      return 'Dévoré par la Bête';
-    case DeathTypeCode.ASSASSIN_POTION:
-      return 'Tué par une potion (Assassin)';
-    case DeathTypeCode.HAUNTED_POTION:
-      return 'Tué par une potion (Hanté)';
-    case DeathTypeCode.ZOMBIE_KILL:
-      return 'Tué par un zombie';
-    case DeathTypeCode.RESURRECTED_WEREWOLF:
-      return 'Tué par un loup ressuscité';
-    case DeathTypeCode.AVENGER_KILL:
-      return 'Tué par un vengeur';
-    case DeathTypeCode.AGENT_KILL:
-      return 'Éliminé par l\'Agent';
-    case DeathTypeCode.SHERIFF_KILL:
-      return 'Abattu par le Shérif';
-    case DeathTypeCode.EXPLOSION:
+    case DeathTypeCode.LOVER_DEATH_OWN:
+      return 'Tué par son amoureux';
+    case DeathTypeCode.BOMB:
       return 'Mort dans une explosion';
     case DeathTypeCode.CRUSHED:
       return 'Écrasé';
     case DeathTypeCode.STARVATION:
       return 'Mort de faim';
-    case DeathTypeCode.FALL_DEATH:
-      return 'Mort de chute';
-    case DeathTypeCode.BESTIAL_DEATH:
+    case DeathTypeCode.STARVATION_AS_BEAST:
       return 'Mort bestiale';
-    case DeathTypeCode.AVATAR_DEATH:
-      return 'Mort liée à l\'Avatar';
-    case DeathTypeCode.DISCONNECT:
-      return 'Déconnexion';
+    case DeathTypeCode.FALL:
+      return 'Mort de chute';
     case DeathTypeCode.UNKNOWN:
     default:
       return 'Mort inconnue';
@@ -156,48 +156,48 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
   switch (deathTypeCode) {
     case DeathTypeCode.SURVIVOR:
       return 'Survivant';
-    case DeathTypeCode.VOTE:
+    case DeathTypeCode.VOTED:
       return 'Mort aux votes';
-    case DeathTypeCode.WEREWOLF_KILL:
+    case DeathTypeCode.BY_WOLF:
       return 'Kill en Loup';
-    case DeathTypeCode.HUNTER_SHOT:
+    case DeathTypeCode.BY_WOLF_REZ:
+      return 'Kill en Loup ressuscité';
+    case DeathTypeCode.BY_WOLF_LOVER:
+      return 'Kill en Loup amoureux';
+    case DeathTypeCode.BY_ZOMBIE:
+      return 'Kill en Zombie';
+    case DeathTypeCode.BY_BEAST:
+      return 'Kill en Bête';
+    case DeathTypeCode.BY_AVATAR_CHAIN:
+      return 'Mort d\'Avatar';
+    case DeathTypeCode.BULLET:
       return 'Tir de Chasseur';
-    case DeathTypeCode.BOUNTY_HUNTER:
+    case DeathTypeCode.BULLET_BOUNTYHUNTER:
       return 'Kill en Chasseur de primes';
+    case DeathTypeCode.SHERIF:
+      return 'Kill en Shérif';
+    case DeathTypeCode.OTHER_AGENT:
+      return 'Kill en Agent';
+    case DeathTypeCode.AVENGER:
+      return 'Kill en Vengeur';
+    case DeathTypeCode.SEER:
+      return 'Devinement de rôle';
+    case DeathTypeCode.ASSASSIN:
+      return 'Kill avec Potion (Assassin)';
     case DeathTypeCode.LOVER_DEATH:
       return 'Kill de son amoureux';
-    case DeathTypeCode.LOVER_WEREWOLF:
-      return 'Kill en Loup amoureux';
-    case DeathTypeCode.BEAST_KILL:
-      return 'Kill en Bête';
-    case DeathTypeCode.ASSASSIN_POTION:
-      return 'Kill avec Potion (Assassin)';
-    case DeathTypeCode.HAUNTED_POTION:
-      return 'Kill avec Potion (Hanté)';
-    case DeathTypeCode.ZOMBIE_KILL:
-      return 'Kill en Zombie';
-    case DeathTypeCode.RESURRECTED_WEREWOLF:
-      return 'Kill en Loup ressuscité';
-    case DeathTypeCode.AVENGER_KILL:
-      return 'Kill en Vengeur';
-    case DeathTypeCode.AGENT_KILL:
-      return 'Kill en Agent';
-    case DeathTypeCode.SHERIFF_KILL:
-      return 'Kill en Shérif';
-    case DeathTypeCode.EXPLOSION:
+    case DeathTypeCode.LOVER_DEATH_OWN:
+      return 'Kill de son propre amoureux';
+    case DeathTypeCode.BOMB:
       return 'Explosion';
     case DeathTypeCode.CRUSHED:
       return 'Écrasement';
     case DeathTypeCode.STARVATION:
       return 'Famine';
-    case DeathTypeCode.FALL_DEATH:
-      return 'Chute mortelle';
-    case DeathTypeCode.BESTIAL_DEATH:
+    case DeathTypeCode.STARVATION_AS_BEAST:
       return 'Tuerie bestiale';
-    case DeathTypeCode.AVATAR_DEATH:
-      return 'Mort d\'Avatar';
-    case DeathTypeCode.DISCONNECT:
-      return 'Déconnexion';
+    case DeathTypeCode.FALL:
+      return 'Chute mortelle';
     case DeathTypeCode.UNKNOWN:
     default:
       return 'Kill inconnu';
@@ -213,9 +213,8 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
   
   gameData.forEach(game => {
     game.PlayerStats.forEach(player => {
-      if (player.DeathType) {
-        const deathCode = codifyDeathType(player.DeathType);
-        deathTypesSet.add(deathCode);
+      if (player.DeathType && player.DeathType !== DeathTypeCode.SURVIVOR) {
+        deathTypesSet.add(player.DeathType as DeathTypeCodeType);
       }
     });
   });
@@ -224,13 +223,12 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
   
   // Sort death types to put common ones first
   const commonTypeCodes = [
-    DeathTypeCode.WEREWOLF_KILL,
-    DeathTypeCode.VOTE, 
-    DeathTypeCode.HUNTER_SHOT,
-    DeathTypeCode.ZOMBIE_KILL,
-    DeathTypeCode.ASSASSIN_POTION,
-    DeathTypeCode.HAUNTED_POTION,
-    DeathTypeCode.AVENGER_KILL,
+    DeathTypeCode.BY_WOLF,
+    DeathTypeCode.VOTED, 
+    DeathTypeCode.BULLET,
+    DeathTypeCode.BY_ZOMBIE,
+    DeathTypeCode.ASSASSIN,
+    DeathTypeCode.AVENGER,
     DeathTypeCode.LOVER_DEATH,
     DeathTypeCode.SURVIVOR
   ];
@@ -253,8 +251,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
   return game.PlayerStats
     .filter(player => {
       // Only include players who actually died (not survivors)
-      const deathCode = codifyDeathType(player.DeathType);
-      return deathCode !== 'SURVIVOR' && (player.DeathTiming || player.DeathType);
+      return player.DeathType && player.DeathType !== DeathTypeCode.SURVIVOR && (player.DeathTiming || player.DeathType);
     })
     .map(player => {
       // Find the killer's camp if killer exists
@@ -282,10 +279,9 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
         }
       }
       
-      const deathCode = codifyDeathType(player.DeathType);
       return {
         playerName: player.Username,
-        deathType: deathCode,
+        deathType: player.DeathType as DeathTypeCodeType,
         killerName: player.KillerName,
         killerCamp
       };
@@ -328,12 +324,10 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
   game.PlayerStats.forEach(player => {
     // Only process players who were killed by someone (not environmental deaths or votes)
     if (player.KillerName && player.DeathType) {
-      const deathCode = codifyDeathType(player.DeathType);
-      
       // Skip non-kill deaths (survivors, votes, environmental deaths)
-      if (deathCode === 'SURVIVOR' || deathCode === 'VOTE' || 
-          deathCode === 'DISCONNECT' || deathCode === 'STARVATION' || 
-          deathCode === 'FALL_DEATH' || deathCode === 'AVATAR_DEATH') {
+      if (player.DeathType === DeathTypeCode.SURVIVOR || player.DeathType === DeathTypeCode.VOTED || 
+          player.DeathType === DeathTypeCode.STARVATION || player.DeathType === DeathTypeCode.FALL || 
+          player.DeathType === DeathTypeCode.BY_AVATAR_CHAIN) {
         return;
       }
       
@@ -364,7 +358,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
       kills.push({
         killerName: player.KillerName,
         victimName: player.Username,
-        deathType: deathCode,
+        deathType: player.DeathType as DeathTypeCodeType,
         killerCamp
       });
     }

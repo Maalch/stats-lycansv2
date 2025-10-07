@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
 import { getAllDeathTypes, getKillDescription, getDeathDescription } from '../../hooks/utils/deathStatisticsUtils';
-import { codifyDeathType, getPlayerCampFromRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
+import { DeathTypeCode, getPlayerCampFromRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
 import { useFilteredGameLogData } from '../../hooks/useCombinedRawData';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useSettings } from '../../context/SettingsContext';
@@ -80,24 +80,32 @@ export function DeathStatisticsChart() {
     
     // Map death type codes to colors directly
     availableDeathTypes.forEach(deathTypeCode => {
-      if (deathTypeCode === 'WEREWOLF_KILL') {
+      if (deathTypeCode === DeathTypeCode.BY_WOLF || deathTypeCode === DeathTypeCode.BY_WOLF_REZ || deathTypeCode === DeathTypeCode.BY_WOLF_LOVER) {
         colorMap[deathTypeCode] = lycansColors['Loup'];
-      } else if (deathTypeCode === 'VOTE') {
+      } else if (deathTypeCode === DeathTypeCode.VOTED) {
         colorMap[deathTypeCode] = 'var(--chart-color-1)';
-      } else if (deathTypeCode === 'HUNTER_SHOT') {
+      } else if (deathTypeCode === DeathTypeCode.BULLET || deathTypeCode === DeathTypeCode.BULLET_BOUNTYHUNTER) {
         colorMap[deathTypeCode] = lycansColors['Chasseur'];
-      } else if (deathTypeCode === 'ZOMBIE_KILL') {
+      } else if (deathTypeCode === DeathTypeCode.BY_ZOMBIE) {
         colorMap[deathTypeCode] = lycansColors['Vaudou'];
-      } else if (deathTypeCode === 'ASSASSIN_POTION' || deathTypeCode === 'HAUNTED_POTION') {
+      } else if (deathTypeCode === DeathTypeCode.ASSASSIN) {
         colorMap[deathTypeCode] = lycansColors['Alchimiste'];
-      } else if (deathTypeCode === 'AVENGER_KILL') {
+      } else if (deathTypeCode === DeathTypeCode.AVENGER) {
         colorMap[deathTypeCode] = 'var(--chart-color-2)';
-      } else if (deathTypeCode === 'LOVER_DEATH' || deathTypeCode === 'LOVER_WEREWOLF') {
+      } else if (deathTypeCode === DeathTypeCode.LOVER_DEATH || deathTypeCode === DeathTypeCode.LOVER_DEATH_OWN) {
         colorMap[deathTypeCode] = lycansColors['Amoureux'];
-      } else if (deathTypeCode === 'DISCONNECT') {
+      } else if (deathTypeCode === DeathTypeCode.BY_BEAST) {
         colorMap[deathTypeCode] = 'var(--chart-color-3)';
-      } else if (deathTypeCode === 'SURVIVOR') {
+      } else if (deathTypeCode === DeathTypeCode.SURVIVOR) {
         colorMap[deathTypeCode] = 'var(--chart-color-4)';
+      } else if (deathTypeCode === DeathTypeCode.SHERIF) {
+        colorMap[deathTypeCode] = 'var(--chart-color-5)';
+      } else if (deathTypeCode === DeathTypeCode.OTHER_AGENT) {
+        colorMap[deathTypeCode] = 'var(--chart-color-6)';
+      } else if (deathTypeCode === DeathTypeCode.SEER) {
+        colorMap[deathTypeCode] = 'var(--chart-color-7)';
+      } else if (deathTypeCode === DeathTypeCode.BOMB) {
+        colorMap[deathTypeCode] = 'var(--chart-color-8)';
       }
     });
     
@@ -407,8 +415,8 @@ export function DeathStatisticsChart() {
           
           actualPlayerDeaths[playerName].totalDeaths++;
           
-          // Use proper death type codification
-          const deathTypeCode = codifyDeathType(player.DeathType);
+          // Use the death type directly since it's already standardized
+          const deathTypeCode = player.DeathType as DeathTypeCodeType;
           
           actualPlayerDeaths[playerName].deathsByType[deathTypeCode] = 
             (actualPlayerDeaths[playerName].deathsByType[deathTypeCode] || 0) + 1;
