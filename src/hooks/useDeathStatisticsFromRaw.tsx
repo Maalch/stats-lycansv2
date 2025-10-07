@@ -1,5 +1,5 @@
 import { usePlayerStatsBase } from './utils/baseStatsHook';
-import { computeDeathStatistics, getAvailableCamps } from './utils/deathStatisticsUtils';
+import { computeDeathStatistics, getAvailableCamps, computeHunterStatistics } from './utils/deathStatisticsUtils';
 
 /**
  * Hook to compute comprehensive death statistics from game data
@@ -47,5 +47,14 @@ export function usePlayerDeathStats() {
       playerDeathStats: stats.playerDeathStats,
       totalGames: stats.totalGames
     } : null;
+  });
+}
+/**
+ * Hook to compute hunter-specific statistics from game data
+ * Tracks kills made by Chasseur role players
+ */
+export function useHunterStatisticsFromRaw(campFilter?: string) {
+  return usePlayerStatsBase((gameData) => {
+    return computeHunterStatistics(gameData, campFilter);
   });
 }

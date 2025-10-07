@@ -1,13 +1,13 @@
 import { useMemo, useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw, useHunterStatisticsFromRaw } from '../../hooks/useDeathStatisticsFromRaw';
 import { getAllDeathTypes, getKillDescription, getDeathDescription } from '../../hooks/utils/deathStatisticsUtils';
 import { DeathTypeCode, getPlayerCampFromRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
 import { useFilteredGameLogData } from '../../hooks/useCombinedRawData';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
-import { minGamesOptions, useThemeAdjustedLycansColorScheme } from '../../types/api';
+import { minGamesOptions, useThemeAdjustedLycansColorScheme, useThemeAdjustedPlayersColor } from '../../types/api';
 
 // Extended type for chart data with highlighting info and death type breakdown
 type ChartKillerData = {
@@ -47,27 +47,36 @@ export function DeathStatisticsChart() {
   const [minGamesForAverage, setMinGamesForAverage] = useState<number>(
     navigationState.deathStatisticsState?.minGamesForAverage || 10
   );
+  const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter'>(
+    navigationState.deathStatisticsState?.selectedView || 'killers'
+  );
   const { data: availableCamps } = useAvailableCampsFromRaw();
   const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp);
+  // Hunter stats always use all camps data (no camp filter)
+  const { data: hunterStats, isLoading: hunterLoading, error: hunterError } = useHunterStatisticsFromRaw();
   const { data: gameLogData } = useFilteredGameLogData();
   const { settings } = useSettings();
   const lycansColors = useThemeAdjustedLycansColorScheme();
+  const playersColor = useThemeAdjustedPlayersColor();
+  const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
 
   // Save state to navigation context when it changes (for back/forward navigation persistence)
   useEffect(() => {
     // Only update if state differs from navigation state
     if (!navigationState.deathStatisticsState || 
         navigationState.deathStatisticsState.selectedCamp !== selectedCamp ||
-        navigationState.deathStatisticsState.minGamesForAverage !== minGamesForAverage) {
+        navigationState.deathStatisticsState.minGamesForAverage !== minGamesForAverage ||
+        navigationState.deathStatisticsState.selectedView !== selectedView) {
       updateNavigationState({
         deathStatisticsState: {
           selectedCamp,
           minGamesForAverage,
+          selectedView,
           focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart from achievement navigation
         }
       });
     }
-  }, [selectedCamp, minGamesForAverage, navigationState.deathStatisticsState, updateNavigationState]);
+  }, [selectedCamp, minGamesForAverage, selectedView, navigationState.deathStatisticsState, updateNavigationState]);
 
   // Get all unique death types for chart configuration
   const availableDeathTypes = useMemo(() => {
@@ -130,6 +139,7 @@ export function DeathStatisticsChart() {
       deathStatisticsState: {
         selectedCamp: newCamp,
         minGamesForAverage,
+        selectedView,
         focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
       }
     });
@@ -142,6 +152,20 @@ export function DeathStatisticsChart() {
       deathStatisticsState: {
         selectedCamp,
         minGamesForAverage: newMinGames,
+        selectedView,
+        focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
+      }
+    });
+  };
+
+  // Function to handle view change with persistence
+  const handleViewChange = (newView: 'killers' | 'deaths' | 'hunter') => {
+    setSelectedView(newView);
+    updateNavigationState({
+      deathStatisticsState: {
+        selectedCamp,
+        minGamesForAverage,
+        selectedView: newView,
         focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
       }
     });
@@ -991,57 +1015,85 @@ export function DeathStatisticsChart() {
     <div className="lycans-players-stats">
       <h2>Statistiques de Tueurs</h2>
 
-      {/* Camp Filter */}
-      <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-          Camp :
-        </label>
-        <select
-          id="camp-select"
-          value={selectedCamp}
-          onChange={(e) => handleCampChange(e.target.value)}
-          style={{
-            background: 'var(--bg-tertiary)',
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border-color)',
-            borderRadius: '4px',
-            padding: '0.5rem',
-            fontSize: '0.9rem',
-            minWidth: '150px'
-          }}
+      {/* View Selection */}
+      <div className="lycans-categories-selection">
+        <button
+          className={`lycans-categorie-btn ${selectedView === 'killers' ? 'active' : ''}`}
+          onClick={() => handleViewChange('killers')}
         >
-          <option value="Tous les camps">Tous les camps</option>
-          {availableCamps?.map(camp => (
-            <option key={camp} value={camp}>
-              {camp}
-            </option>
-          ))}
-        </select>
+          Tueurs
+        </button>
+        <button
+          className={`lycans-categorie-btn ${selectedView === 'deaths' ? 'active' : ''}`}
+          onClick={() => handleViewChange('deaths')}
+        >
+          Morts
+        </button>
+        <button
+          className={`lycans-categorie-btn ${selectedView === 'hunter' ? 'active' : ''}`}
+          onClick={() => handleViewChange('hunter')}
+        >
+          Chasseur
+        </button>
       </div>
 
-      {/* Summary statistics using lycans styling */}
-      <div className="lycans-resume-conteneur" style={{ marginBottom: '2rem' }}>
-        <div className="lycans-stat-carte">
-          <h3>Total des morts</h3>
-          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-secondary)' }}>
-            {deathStats.totalDeaths}
-          </div>
+      {/* Camp Filter - Only visible for Tueurs and Morts views */}
+      {(selectedView === 'killers' || selectedView === 'deaths') && (
+        <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+            Camp :
+          </label>
+          <select
+            id="camp-select"
+            value={selectedCamp}
+            onChange={(e) => handleCampChange(e.target.value)}
+            style={{
+              background: 'var(--bg-tertiary)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '4px',
+              padding: '0.5rem',
+              fontSize: '0.9rem',
+              minWidth: '150px'
+            }}
+          >
+            <option value="Tous les camps">Tous les camps</option>
+            {availableCamps?.map(camp => (
+              <option key={camp} value={camp}>
+                {camp}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="lycans-stat-carte">
-          <h3>Tueurs identifiés</h3>
-          <div className="lycans-valeur-principale" style={{ color: 'var(--chart-color-1)' }}>
-            {deathStats.killerStats.length}
-          </div>
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Nombre de parties enregistrées</h3>
-          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
-            {gamesWithKillers}
-          </div>
-        </div>
-      </div>
+      )}
 
-      <div className="lycans-graphiques-groupe">
+      {/* Summary statistics using lycans styling - Only visible for Tueurs and Morts views */}
+      {(selectedView === 'killers' || selectedView === 'deaths') && (
+        <div className="lycans-resume-conteneur" style={{ marginBottom: '2rem' }}>
+          <div className="lycans-stat-carte">
+            <h3>Total des morts</h3>
+            <div className="lycans-valeur-principale" style={{ color: 'var(--accent-secondary)' }}>
+              {deathStats.totalDeaths}
+            </div>
+          </div>
+          <div className="lycans-stat-carte">
+            <h3>Tueurs identifiés</h3>
+            <div className="lycans-valeur-principale" style={{ color: 'var(--chart-color-1)' }}>
+              {deathStats.killerStats.length}
+            </div>
+          </div>
+          <div className="lycans-stat-carte">
+            <h3>Nombre de parties enregistrées</h3>
+            <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
+              {gamesWithKillers}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Killers View */}
+      {selectedView === 'killers' && (
+        <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           <div>
             <h3>{selectedCamp === 'Tous les camps' ? 'Top Tueurs (Total)' : `Top Tueurs en ${selectedCamp} (Total)`}</h3>
@@ -1235,7 +1287,12 @@ export function DeathStatisticsChart() {
             Top {Math.min(15, averageKillsData.filter(k => !k.isHighlightedAddition).length)} des tueurs les plus efficaces (sur {totalEligibleForAverage} ayant au moins {minGamesForAverage} partie{minGamesForAverage > 1 ? 's' : ''})
           </p>
         </div>
+      </div>
+      )}
 
+      {/* Deaths View */}
+      {selectedView === 'deaths' && (
+        <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           <div>
             <h3>{selectedCamp === 'Tous les camps' ? 'Morts (Total)' : `Morts en ${selectedCamp} (Total)`}</h3>
@@ -1430,6 +1487,372 @@ export function DeathStatisticsChart() {
           </p>
         </div>
       </div>
+      )}
+
+      {/* Hunter View */}
+      {selectedView === 'hunter' && (
+        <>
+          {hunterLoading && <div className="donnees-attente">Chargement des statistiques chasseurs...</div>}
+          {hunterError && <div className="donnees-probleme">Erreur: {hunterError}</div>}
+          {!hunterLoading && !hunterError && hunterStats && (
+            <div className="lycans-graphiques-groupe">
+              <div className="lycans-graphique-section">
+                <div>
+                  <h3>Meilleurs Chasseurs (Tueurs de Non-Villageois)</h3>
+                  <p style={{ 
+                    fontSize: '0.8rem', 
+                    color: 'var(--text-secondary)', 
+                    fontStyle: 'italic',
+                    marginTop: '0.25rem',
+                    marginBottom: '0.5rem'
+                  }}>
+                    Classement basé sur la moyenne de kills de joueurs non-Villageois (minimum 5 parties jouées en Chasseur)
+                  </p>
+                </div>
+                <FullscreenChart title="Meilleurs Chasseurs">
+                  <div style={{ height: 500 }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        data={hunterStats.hunterStats
+                          .filter(h => h.gamesPlayedAsHunter >= 5)
+                          .sort((a, b) => b.averageNonVillageoisKillsPerGame - a.averageNonVillageoisKillsPerGame)
+                          .slice(0, 15)
+                          .map(hunter => ({
+                            name: hunter.hunterName,
+                            averageNonVillageoisKills: Number(hunter.averageNonVillageoisKillsPerGame.toFixed(2)),
+                            totalNonVillageoisKills: hunter.nonVillageoisKills,
+                            totalKills: hunter.totalKills,
+                            gamesPlayed: hunter.gamesPlayedAsHunter,
+                            villageoisKills: hunter.villageoisKills,
+                            victimsByCamp: hunter.victimsByCamp
+                          }))}
+                        margin={{ top: 20, right: 30, left: 20, bottom: 120 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis
+                          dataKey="name"
+                          angle={-45}
+                          textAnchor="end"
+                          height={120}
+                          interval={0}
+                          tick={({ x, y, payload }) => (
+                            <text
+                              x={x}
+                              y={y}
+                              dy={16}
+                              textAnchor="end"
+                              fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                              fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
+                              fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
+                              transform={`rotate(-45 ${x} ${y})`}
+                            >
+                              {payload.value}
+                            </text>
+                          )}
+                        />
+                        <YAxis 
+                          label={{ 
+                            value: 'Kills moyens (Non-Villageois)', 
+                            angle: 270, 
+                            position: 'insideLeft',
+                            style: { textAnchor: 'middle' } 
+                          }} 
+                        />
+                        <Tooltip 
+                          content={({ active, payload }) => {
+                            if (!active || !payload || payload.length === 0) return null;
+                            const data = payload[0].payload;
+                            const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
+                            
+                            return (
+                              <div style={{
+                                background: 'var(--bg-secondary)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '8px',
+                                padding: '12px',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                                color: 'var(--text-primary)',
+                                fontSize: '0.9rem'
+                              }}>
+                                <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>{data.name}</p>
+                                <p style={{ color: 'var(--accent-primary)', margin: '4px 0' }}>
+                                  Moyenne kills non-Villageois : <strong>{data.averageNonVillageoisKills}</strong>
+                                </p>
+                                <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+                                  Total kills non-Villageois : {data.totalNonVillageoisKills}
+                                </p>
+                                <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+                                  Total kills Villageois : {data.villageoisKills}
+                                </p>
+                                <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+                                  Total kills : {data.totalKills}
+                                </p>
+                                <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+                                  Parties jouées : {data.gamesPlayed}
+                                </p>
+                                
+                                {/* Victims by camp breakdown */}
+                                {data.victimsByCamp && Object.keys(data.victimsByCamp).length > 0 && (
+                                  <div style={{ margin: '8px 0', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+                                    <p style={{ fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '4px' }}>Kills par camp :</p>
+                                    {Object.entries(data.victimsByCamp).map(([camp, count]: [string, any]) => (
+                                      <p key={camp} style={{ fontSize: '0.8rem', margin: '2px 0', paddingLeft: '8px' }}>
+                                        • {camp} : {count}
+                                      </p>
+                                    ))}
+                                  </div>
+                                )}
+
+                                {isHighlightedFromSettings && (
+                                  <div style={{ 
+                                    fontSize: '0.75rem', 
+                                    color: 'var(--accent-primary)', 
+                                    marginTop: '0.5rem',
+                                    fontStyle: 'italic',
+                                    textAlign: 'center'
+                                  }}>
+                                    🎯 Joueur sélectionné
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          }}
+                        />
+                        <Bar
+                          dataKey="averageNonVillageoisKills"
+                          name="Kills moyens (Non-Villageois)"
+                          fill={lycansColors['Chasseur'] || '#8884d8'}
+                        >
+                          {hunterStats.hunterStats
+                            .filter(h => h.gamesPlayedAsHunter >= 5)
+                            .sort((a, b) => b.averageNonVillageoisKillsPerGame - a.averageNonVillageoisKillsPerGame)
+                            .slice(0, 15)
+                            .map((hunter, index) => {
+                              const isHighlightedFromSettings = settings.highlightedPlayer === hunter.hunterName;
+                              const isHoveredPlayer = hoveredPlayer === hunter.hunterName;
+                              
+                              return (
+                                <Cell
+                                  key={`cell-best-hunter-${index}`}
+                                  fill={playersColor[hunter.hunterName] || lycansColors['Chasseur'] || '#8884d8'}
+                                  stroke={
+                                    isHighlightedFromSettings 
+                                      ? "var(--accent-primary)" 
+                                      : isHoveredPlayer 
+                                        ? "var(--text-primary)" 
+                                        : "none"
+                                  }
+                                  strokeWidth={
+                                    isHighlightedFromSettings 
+                                      ? 3 
+                                      : isHoveredPlayer 
+                                        ? 2 
+                                        : 0
+                                  }
+                                  onMouseEnter={() => setHoveredPlayer(hunter.hunterName)}
+                                  onMouseLeave={() => setHoveredPlayer(null)}
+                                  style={{ cursor: 'pointer' }}
+                                />
+                              );
+                            })}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </FullscreenChart>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+                  Top {Math.min(15, hunterStats.hunterStats.filter(h => h.gamesPlayedAsHunter >= 5).length)} des chasseurs les plus efficaces contre les non-Villageois (minimum 5 parties en Chasseur)
+                </p>
+              </div>
+
+              {/* Bad Hunters Chart */}
+              <div className="lycans-graphique-section">
+                <div>
+                  <h3>Mauvais Chasseurs (Tueurs de Villageois)</h3>
+                  <p style={{ 
+                    fontSize: '0.8rem', 
+                    color: 'var(--text-secondary)', 
+                    fontStyle: 'italic',
+                    marginTop: '0.25rem',
+                    marginBottom: '0.5rem'
+                  }}>
+                    Classement basé sur la moyenne de kills de joueurs Villageois (minimum 5 parties jouées en Chasseur)
+                  </p>
+                </div>
+                <FullscreenChart title="Mauvais Chasseurs">
+                  <div style={{ height: 500 }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        data={hunterStats.hunterStats
+                          .filter(h => h.gamesPlayedAsHunter >= 5)
+                          .map(hunter => ({
+                            name: hunter.hunterName,
+                            averageVillageoisKills: Number((hunter.villageoisKills / hunter.gamesPlayedAsHunter).toFixed(2)),
+                            totalVillageoisKills: hunter.villageoisKills,
+                            totalNonVillageoisKills: hunter.nonVillageoisKills,
+                            totalKills: hunter.totalKills,
+                            gamesPlayed: hunter.gamesPlayedAsHunter,
+                            victimsByCamp: hunter.victimsByCamp
+                          }))
+                          .sort((a, b) => b.averageVillageoisKills - a.averageVillageoisKills)
+                          .slice(0, 15)}
+                        margin={{ top: 20, right: 30, left: 20, bottom: 120 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis
+                          dataKey="name"
+                          angle={-45}
+                          textAnchor="end"
+                          height={120}
+                          interval={0}
+                          tick={({ x, y, payload }) => (
+                            <text
+                              x={x}
+                              y={y}
+                              dy={16}
+                              textAnchor="end"
+                              fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                              fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
+                              fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
+                              transform={`rotate(-45 ${x} ${y})`}
+                            >
+                              {payload.value}
+                            </text>
+                          )}
+                        />
+                        <YAxis 
+                          label={{ 
+                            value: 'Kills moyens (Villageois)', 
+                            angle: 270, 
+                            position: 'insideLeft',
+                            style: { textAnchor: 'middle' } 
+                          }} 
+                        />
+                        <Tooltip 
+                          content={({ active, payload }) => {
+                            if (!active || !payload || payload.length === 0) return null;
+                            const data = payload[0].payload;
+                            const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
+                            
+                            return (
+                              <div style={{
+                                background: 'var(--bg-secondary)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: '8px',
+                                padding: '12px',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                                color: 'var(--text-primary)',
+                                fontSize: '0.9rem'
+                              }}>
+                                <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>{data.name}</p>
+                                <p style={{ color: '#dc3545', margin: '4px 0' }}>
+                                  Moyenne kills Villageois : <strong>{data.averageVillageoisKills}</strong>
+                                </p>
+                                <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+                                  Total kills Villageois : {data.totalVillageoisKills}
+                                </p>
+                                <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+                                  Total kills non-Villageois : {data.totalNonVillageoisKills}
+                                </p>
+                                <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+                                  Total kills : {data.totalKills}
+                                </p>
+                                <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+                                  Parties jouées : {data.gamesPlayed}
+                                </p>
+                                
+                                {/* Victims by camp breakdown */}
+                                {data.victimsByCamp && Object.keys(data.victimsByCamp).length > 0 && (
+                                  <div style={{ margin: '8px 0', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+                                    <p style={{ fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '4px' }}>Kills par camp :</p>
+                                    {Object.entries(data.victimsByCamp).map(([camp, count]: [string, any]) => (
+                                      <p key={camp} style={{ fontSize: '0.8rem', margin: '2px 0', paddingLeft: '8px' }}>
+                                        • {camp} : {count}
+                                      </p>
+                                    ))}
+                                  </div>
+                                )}
+
+                                {isHighlightedFromSettings && (
+                                  <div style={{ 
+                                    fontSize: '0.75rem', 
+                                    color: 'var(--accent-primary)', 
+                                    marginTop: '0.5rem',
+                                    fontStyle: 'italic',
+                                    textAlign: 'center'
+                                  }}>
+                                    🎯 Joueur sélectionné
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          }}
+                        />
+                        <Bar
+                          dataKey="averageVillageoisKills"
+                          name="Kills moyens (Villageois)"
+                          fill="#dc3545"
+                        >
+                          {hunterStats.hunterStats
+                            .filter(h => h.gamesPlayedAsHunter >= 5)
+                            .map(hunter => ({
+                              name: hunter.hunterName,
+                              averageVillageoisKills: Number((hunter.villageoisKills / hunter.gamesPlayedAsHunter).toFixed(2)),
+                              totalVillageoisKills: hunter.villageoisKills,
+                              totalNonVillageoisKills: hunter.nonVillageoisKills,
+                              totalKills: hunter.totalKills,
+                              gamesPlayed: hunter.gamesPlayedAsHunter,
+                              victimsByCamp: hunter.victimsByCamp
+                            }))
+                            .sort((a, b) => b.averageVillageoisKills - a.averageVillageoisKills)
+                            .slice(0, 15)
+                            .map((hunter, index) => {
+                              const isHighlightedFromSettings = settings.highlightedPlayer === hunter.name;
+                              const isHoveredPlayer = hoveredPlayer === hunter.name;
+                              
+                              return (
+                                <Cell
+                                  key={`cell-bad-hunter-${index}`}
+                                  fill={playersColor[hunter.name] || '#dc3545'}
+                                  stroke={
+                                    isHighlightedFromSettings 
+                                      ? "var(--accent-primary)" 
+                                      : isHoveredPlayer 
+                                        ? "var(--text-primary)" 
+                                        : "none"
+                                  }
+                                  strokeWidth={
+                                    isHighlightedFromSettings 
+                                      ? 3 
+                                      : isHoveredPlayer 
+                                        ? 2 
+                                        : 0
+                                  }
+                                  onMouseEnter={() => setHoveredPlayer(hunter.name)}
+                                  onMouseLeave={() => setHoveredPlayer(null)}
+                                  style={{ cursor: 'pointer' }}
+                                />
+                              );
+                            })}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </FullscreenChart>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+                  Top {Math.min(15, hunterStats.hunterStats.filter(h => h.gamesPlayedAsHunter >= 5).length)} des chasseurs ayant le plus tué de Villageois (minimum 5 parties en Chasseur)
+                </p>
+              </div>
+            </div>
+          )}
+          {!hunterLoading && !hunterError && (!hunterStats || hunterStats.hunterStats.length === 0) && (
+            <div className="lycans-empty-section">
+              <h3>Aucune donnée Chasseur</h3>
+              <p>Aucune statistique de chasseur disponible avec les filtres actuels.</p>
+            </div>
+          )}
+        </>
+      )}
 
       {/* Insights section using lycans styling */}
       <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>

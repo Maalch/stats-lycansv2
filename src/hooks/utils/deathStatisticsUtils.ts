@@ -559,3 +559,153 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     mostDeadlyKiller
   };
 }
+
+/**
+ * Hunter statistics
+ */
+export interface HunterStats {
+  hunterName: string;
+  totalKills: number;
+  nonVillageoisKills: number;
+  villageoisKills: number;
+  gamesPlayedAsHunter: number;
+  averageKillsPerGame: number;
+  averageNonVillageoisKillsPerGame: number;
+  killsByDeathType: Record<DeathTypeCodeType, number>;
+  victimsByCamp: Record<string, number>;
+}
+
+/**
+ * Comprehensive hunter statistics
+ */
+export interface HunterStatistics {
+  totalHunters: number;
+  totalGames: number;
+  hunterStats: HunterStats[];
+  bestHunter: string | null;
+  bestAverageHunter: string | null;
+}
+
+/**
+ * Compute hunter-specific statistics
+ * Tracks kills made by hunters (Chasseur role) and categorizes them
+ */
+export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?: string): HunterStatistics {
+  // Filter games to only include those with complete death information
+  const filteredGameData = gameData.filter(game => 
+    !game.LegacyData || game.LegacyData.deathInformationFilled === true
+  );
+
+  const hunterKillsMap: Record<string, {
+    kills: DeathTypeCodeType[];
+    gamesPlayed: number;
+    victimsCamps: string[];
+  }> = {};
+
+  const totalGames = filteredGameData.length;
+
+  // Hunter-related death types
+  const hunterDeathTypes: DeathTypeCodeType[] = [
+    DeathTypeCode.BULLET,
+    DeathTypeCode.BULLET_HUMAN,
+    DeathTypeCode.BULLET_WOLF,
+    DeathTypeCode.BULLET_BOUNTYHUNTER
+  ];
+
+  // Process each game
+  filteredGameData.forEach(game => {
+    // Track which players were hunters in this game
+    const huntersInGame = new Set<string>();
+    
+    game.PlayerStats.forEach(player => {
+      // Check if player was Chasseur (using MainRoleInitial for initial role)
+      const playerRole = player.MainRoleInitial;
+      if (playerRole === 'Chasseur') {
+        huntersInGame.add(player.Username);
+        
+        // Initialize hunter if not exists
+        if (!hunterKillsMap[player.Username]) {
+          hunterKillsMap[player.Username] = {
+            kills: [],
+            gamesPlayed: 0,
+            victimsCamps: []
+          };
+        }
+        hunterKillsMap[player.Username].gamesPlayed++;
+      }
+    });
+
+    // Process deaths caused by hunters
+    game.PlayerStats.forEach(victim => {
+      const deathType = victim.DeathType as DeathTypeCodeType;
+      const killerName = victim.KillerName;
+      
+      // Check if death was caused by a hunter
+      if (deathType && hunterDeathTypes.includes(deathType) && killerName && huntersInGame.has(killerName)) {
+        // Get victim's camp
+        const victimCamp = getPlayerCampFromRole(victim.MainRoleInitial, {
+          regroupLovers: true,
+          regroupVillagers: true,
+          regroupTraitor: false
+        });
+        
+        // Apply camp filter if specified
+        if (!selectedCamp || selectedCamp === 'Tous les camps' || victimCamp === selectedCamp) {
+          hunterKillsMap[killerName].kills.push(deathType);
+          hunterKillsMap[killerName].victimsCamps.push(victimCamp);
+        }
+      }
+    });
+  });
+
+  // Process hunter statistics
+  const hunterStats: HunterStats[] = Object.entries(hunterKillsMap)
+    .map(([hunterName, data]) => {
+      const totalKills = data.kills.length;
+      
+      // Count kills by death type
+      const killsByDeathType: Record<DeathTypeCodeType, number> = {} as Record<DeathTypeCodeType, number>;
+      data.kills.forEach(deathType => {
+        killsByDeathType[deathType] = (killsByDeathType[deathType] || 0) + 1;
+      });
+      
+      // Count kills by victim camp
+      const victimsByCamp: Record<string, number> = {};
+      data.victimsCamps.forEach(camp => {
+        victimsByCamp[camp] = (victimsByCamp[camp] || 0) + 1;
+      });
+      
+      // Calculate non-Villageois kills
+      const nonVillageoisKills = data.victimsCamps.filter(camp => camp !== 'Villageois').length;
+      const villageoisKills = data.victimsCamps.filter(camp => camp === 'Villageois').length;
+      
+      const averageKillsPerGame = data.gamesPlayed > 0 ? totalKills / data.gamesPlayed : 0;
+      const averageNonVillageoisKillsPerGame = data.gamesPlayed > 0 ? nonVillageoisKills / data.gamesPlayed : 0;
+      
+      return {
+        hunterName,
+        totalKills,
+        nonVillageoisKills,
+        villageoisKills,
+        gamesPlayedAsHunter: data.gamesPlayed,
+        averageKillsPerGame,
+        averageNonVillageoisKillsPerGame,
+        killsByDeathType,
+        victimsByCamp
+      };
+    })
+    .sort((a, b) => b.totalKills - a.totalKills);
+
+  const bestHunter = hunterStats.length > 0 ? hunterStats[0].hunterName : null;
+  const bestAverageHunter = hunterStats.length > 0 
+    ? hunterStats.sort((a, b) => b.averageNonVillageoisKillsPerGame - a.averageNonVillageoisKillsPerGame)[0].hunterName 
+    : null;
+
+  return {
+    totalHunters: hunterStats.length,
+    totalGames,
+    hunterStats,
+    bestHunter,
+    bestAverageHunter
+  };
+}

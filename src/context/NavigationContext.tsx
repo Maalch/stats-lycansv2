@@ -57,6 +57,7 @@ export interface PlayersGeneralState {
 export interface DeathStatisticsState {
   selectedCamp: string;
   minGamesForAverage: number;
+  selectedView?: 'killers' | 'deaths' | 'hunter'; // Which view is currently displayed
   focusChart?: 'totalKills' | 'averageKills' | 'totalDeaths' | 'survivalRate'; // Which chart to focus on when navigating
 }
 

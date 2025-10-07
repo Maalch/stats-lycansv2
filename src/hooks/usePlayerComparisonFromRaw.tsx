@@ -23,17 +23,8 @@ export function usePlayerComparisonFromRaw() {
 
   const generateComparison = useMemo(() => {
     return (player1Name: string, player2Name: string): PlayerComparisonData | null => {
-      console.log('Hook Debug:', {
-        player1Name,
-        player2Name,
-        hasPlayerStats: !!playerStatsData?.playerStats,
-        playerStatsCount: playerStatsData?.playerStats?.length || 0,
-        hasGameData: !!rawGameData,
-        gameDataCount: rawGameData?.length || 0
-      });
       
       if (!playerStatsData?.playerStats || !rawGameData) {
-        console.log('Hook: Missing required data');
         return null;
       }
       
@@ -44,10 +35,8 @@ export function usePlayerComparisonFromRaw() {
           playerStatsData, 
           rawGameData
         );
-        console.log('Hook: Generated comparison result:', result);
         return result;
       } catch (error) {
-        console.error('Hook: Error generating comparison:', error);
         return null;
       }
     };
