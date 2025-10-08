@@ -141,30 +141,33 @@ export function PlayerSelectionPage() {
 
   return (
     <div className="player-selection-container">
-      <div className="player-selection-header">
-        <h2>Sélection de Joueur</h2>
-        <p className="header-description">
-          Choisissez un joueur pour le mettre en évidence dans tous les graphiques. 
-        </p>
-        
-        <div className="search-controls">
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="Rechercher un joueur..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input"
-            />
-            <span className="search-icon">🔍</span>
+      {/* Always visible search controls */}
+      {!settings.highlightedPlayer && (
+        <div className="search-controls-header">
+          <div className="selection-prompt-content">
+            <h2>Sélectionnez un joueur</h2>
+            <p>Choisissez un joueur pour le mettre en évidence dans tous les graphiques.</p>
           </div>
           
-          <div className="player-count">
-            {filteredPlayers.length} joueur{filteredPlayers.length !== 1 ? 's' : ''} 
-            {searchQuery && ` (filtré${filteredPlayers.length !== 1 ? 's' : ''} de ${playerStats.length})`}
+          <div className="search-controls">
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="Rechercher un joueur..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+              />
+              <span className="search-icon">🔍</span>
+            </div>
+            
+            <div className="player-count">
+              {filteredPlayers.length} joueur{filteredPlayers.length !== 1 ? 's' : ''} 
+              {searchQuery && ` (filtré${filteredPlayers.length !== 1 ? 's' : ''} de ${playerStats.length})`}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="player-display">
         {searchQuery ? (
@@ -371,28 +374,9 @@ export function PlayerSelectionPage() {
         ) : (
           // Show character selection grid when no player is highlighted
           <div className="player-selection-prompt">
-            <div className="selection-prompt-content">
-              <h2>Sélectionnez un joueur</h2>
-              <p>Cliquez sur un personnage pour le mettre en évidence dans tous les graphiques.</p>
-            </div>
-            
-            <div className="selection-grid-stats">
-              <div className="grid-stats-item">
-                <div className="grid-stats-label">Total Joueurs</div>
-                <div className="grid-stats-value">{playerStats.length}</div>
-              </div>
-              <div className="grid-stats-item">
-                <div className="grid-stats-label">Réseaux Sociaux</div>
-                <div className="grid-stats-value">
-                  {playerStats.filter(p => p.twitch || p.youtube).length}
-                </div>
-              </div>
-            </div>
             
             <div className="character-selection-grid">
-              {playerStats
-                .sort((a, b) => b.totalGames - a.totalGames) // Sort by participation
-                .map((player) => (
+              {sortedFilteredPlayers.map((player) => (
                   <div
                     key={player.name}
                     className={`character-card ${player.isHighlighted ? 'highlighted' : ''}`}
@@ -440,6 +424,18 @@ export function PlayerSelectionPage() {
             </div>
           </div>
         )}
+      </div>
+      <div className="selection-grid-stats">
+        <div className="grid-stats-item">
+          <div className="grid-stats-label">Total Joueurs</div>
+          <div className="grid-stats-value">{playerStats.length}</div>
+        </div>
+        <div className="grid-stats-item">
+          <div className="grid-stats-label">Réseaux Sociaux</div>
+          <div className="grid-stats-value">
+            {playerStats.filter(p => p.twitch || p.youtube).length}
+          </div>
+        </div>
       </div>
     </div>
   );
