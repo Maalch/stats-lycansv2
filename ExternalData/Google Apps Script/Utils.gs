@@ -40,20 +40,13 @@ const LYCAN_SCHEMA = {
       DURATION: 'Temps game' //Duration of the game
     }
   },
-  PONCE: {
-    SHEET: 'Ponce v2', //Data specific to player Ponce per game - secondary role, wolf role, players killed ... are only avaialble for him
+  PLAYERS: {
+    SHEET: 'Joueurs', //Players-specific infos
     COLS: {
-      GAMEID: 'Game', //Game ID (unique)
-      MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
-      CAMP: 'Camp', //Camp of Ponce ("Villageois", "Loup", "Idiot du village" ...)
-      TRAITOR: 'Traître', //Checkbox: true / false if Ponce was the traitor in that game
-      SECONDARYROLE: 'Rôle secondaire', //Name of the secondary role of Ponce
-      WOLFROLE: 'Pouvoir de loup', //Name of the wolf role (if Ponce was wolf)
-      VILLAGEROLE: 'Métier villageois', //Name of the villager role (if Ponce was Villager)
-      PLAYERSKILLED: 'Joueurs tués', //List of players killed by Ponce, separated with comma
-      DAYOFDEATH: 'Jour de mort', //Day of death (1, 2, 3, etc...) 
-      TYPEOFDEATH: 'Type de mort',	//Type of death ("Tué par loup", "Mort de faim", "Mort aux votes"...)
-      KILLERPLAYERS: 'Joueurs tueurs' //list of players involved in Ponce death (usually one, but several for "Vote" for example)
+      PLAYER: 'Joueur', //Name of the player
+      IMAGEURL: 'Image', //URL of the image of that player
+      TWITCHURL: 'Twitch', //URL of the twitch page of that player
+      YOUTUBEURL: 'Youtube', //URL of the youtube page of that player
     }
   },
   ROLES: {
