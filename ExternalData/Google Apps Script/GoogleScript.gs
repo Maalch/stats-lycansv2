@@ -4,6 +4,7 @@ function doGet(e) {
     'gameLog': { baseKey: 'gameLog', fn: getRawGameDataInNewFormat, noCache: true },
   // Raw data endpoints for client-side processing - do NOT cache these (too large)
   'rawBRData': { baseKey: 'rawBRData', fn: getRawBRDataRaw, noCache: true },
+  'joueurs': { baseKey: 'joueurs', fn: getRawJoueursData, noCache: false },
   };
   
   var action = e.parameter.action;
@@ -837,6 +838,96 @@ function determineDeathType(playerDetails) {
   }
   
   return null;
+}
+
+/**
+ * Returns all raw data from the Joueurs sheet as JSON
+ * This contains player information including names, image URLs, and social media links
+ * @return {string} JSON string with all player data
+ */
+function getRawJoueursData() {
+  try {
+    // Get data from the Joueurs sheet using schema constants
+    var joueursData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
+    var joueursValues = joueursData.values;
+    
+    if (!joueursValues || joueursValues.length === 0) {
+      return JSON.stringify({ error: 'No player data found' });
+    }
+    
+    var joueursHeaders = joueursValues[0];
+    var joueursDataRows = joueursValues.slice(1);
+    
+    var joueursRecords = [];
+    
+    // Process Joueurs data
+    joueursDataRows.forEach(function(row) {
+      var record = {};
+      
+      joueursHeaders.forEach(function(header, index) {
+        var value = row[index];
+        
+        // Convert empty strings to null for consistency
+        if (value === '' || value === undefined) {
+          value = null;
+        }
+        
+        record[header] = value;
+      });
+      
+      // Only add records that have a player name (mandatory field)
+      var playerName = record[LYCAN_SCHEMA.PLAYERS.COLS.PLAYER];
+      if (playerName && playerName.trim() !== '') {
+        joueursRecords.push(record);
+      }
+    });
+    
+    return JSON.stringify({
+      TotalRecords: joueursRecords.length,
+      Players: joueursRecords
+    });
+    
+  } catch (error) {
+    Logger.log('Error in getRawJoueursData: ' + error.message);
+    return JSON.stringify({ error: error.message });
+  }
+}
+
+/**
+ * Test function for raw Joueurs data export
+ */
+function test_getRawJoueursData() {
+  var cache = CacheService.getScriptCache();
+  
+  // Clear the cache for this endpoint
+  var cacheKey = generateCacheKey('joueurs', null, { parameter: {} });
+  cache.remove(cacheKey);
+  
+  var e = { 
+    parameter: { 
+      action: 'joueurs'
+    } 
+  };
+  
+  var result = doGet(e);
+  Logger.log("Test joueurs");
+  Logger.log("Cache key used: " + cacheKey);
+  
+  // Parse the result to check record count
+  try {
+    var data = JSON.parse(result.getContent());
+    
+    if (data.error) {
+      Logger.log("Error: " + data.error);
+    } else {
+      Logger.log("Joueurs records: " + (data.TotalRecords || 'unknown'));
+      Logger.log("Sample Joueurs record: " + JSON.stringify(data.Players && data.Players[0] ? data.Players[0] : 'none'));
+    }
+  } catch (e) {
+    Logger.log("Raw result: " + result.getContent());
+  }
+  
+  return result;
 }
 
 

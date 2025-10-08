@@ -6,7 +6,8 @@ import { generateAllPlayerAchievements } from './generate-achievements.js';
 // Data sources
 const LEGACY_DATA_ENDPOINTS = [
   'gameLog',
-  'rawBRData'
+  'rawBRData',
+  'joueurs'
 ];
 
 // Data directory relative to project root
@@ -231,6 +232,7 @@ async function main() {
     console.log('\n📊 Fetching Legacy data from Google Sheets API...');
     let legacyGameLogData = null;
     let legacyBRData = null;
+    let legacyJoueursData = null;
     
     for (const endpoint of LEGACY_DATA_ENDPOINTS) {
       try {
@@ -242,6 +244,9 @@ async function main() {
           } else if (endpoint === 'rawBRData') {
             legacyBRData = data;
             await saveDataToFile('rawBRData.json', data);
+          } else if (endpoint === 'joueurs') {
+            legacyJoueursData = data;
+            await saveDataToFile('joueurs.json', data);
           }
         } else {
           console.warn(`⚠️  No valid data received for ${endpoint} - existing file will not be overwritten`);
@@ -320,6 +325,16 @@ async function main() {
       await saveDataToFile('rawBRData.json', emptyBRData);
     }
     
+    // Create placeholder Joueurs data if not fetched from legacy
+    if (!legacyJoueursData) {
+      const emptyJoueursData = {
+        TotalRecords: 0,
+        Players: [],
+        description: "Player data not available from current sources"
+      };
+      await saveDataToFile('joueurs.json', emptyJoueursData);
+    }
+    
     await createDataIndex(!!legacyGameLogData, awsGameLogs.length, mergedGameLog.TotalRecords);
     
     // === GENERATE ACHIEVEMENTS ===
@@ -337,6 +352,14 @@ async function main() {
     console.log(`📊 Total games processed: ${mergedGameLog.TotalRecords}`);
     console.log(`   - Legacy: ${mergedGameLog.Sources.Legacy} games`);
     console.log(`   - AWS: ${mergedGameLog.Sources.AWS} games (temporarily disabled)`);
+    if (legacyJoueursData) {
+      console.log(`👥 Player data: ${legacyJoueursData.TotalRecords || 0} players exported`);
+    }
+    if (legacyBRData) {
+      const brParticipants = legacyBRData.BRParties?.totalRecords || 0;
+      const brGames = legacyBRData.BRRefParties?.totalRecords || 0;
+      console.log(`🎯 Battle Royale data: ${brParticipants} participants across ${brGames} games`);
+    }
   } catch (error) {
     console.error('❌ Data sync failed:', error.message);
     process.exit(1);

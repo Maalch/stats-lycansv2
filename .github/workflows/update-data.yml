@@ -67,6 +67,15 @@ jobs:
             exit 1
           fi
           
+          # Check for required data files
+          REQUIRED_FILES=("data/index.json" "data/gameLog.json" "data/rawBRData.json" "data/joueurs.json" "data/playerAchievements.json")
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Required file $file not found!"
+              exit 1
+            fi
+          done
+          
           # Check if data files are valid JSON
           for file in data/*.json; do
             if [ -f "$file" ]; then
@@ -86,6 +95,15 @@ jobs:
               exit 1
             fi
           done
+          
+          # Additional validation for joueurs.json structure
+          if jq -e '.Players | type == "array"' data/joueurs.json > /dev/null; then
+            PLAYER_COUNT=$(jq '.TotalRecords' data/joueurs.json)
+            echo "✅ joueurs.json contains $PLAYER_COUNT players"
+          else
+            echo "❌ joueurs.json missing expected Players array"
+            exit 1
+          fi
           
           echo "✅ All data files validated successfully"
 
@@ -115,4 +133,5 @@ jobs:
           echo "- Files updated: $(git diff --name-only HEAD~1 2>/dev/null | grep '^data/' | wc -l || echo '0')"
           echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
           echo "- Sources: Legacy Google Sheets API + AWS S3 Lycans Stats bucket"
+          echo "- Data types: Game logs, Battle Royale data, Player information, Achievements"
           ls -la data/ || echo "No data directory found"
