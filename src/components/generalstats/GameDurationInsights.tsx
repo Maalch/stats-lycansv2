@@ -18,6 +18,23 @@ export function GameDurationInsights() {
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
 
+  // Utility function to convert abbreviated timing to full French format
+  const formatTiming = (timing: string): string => {
+    if (!timing) return timing;
+    
+    const match = timing.match(/^([JNM])(\d+)$/);
+    if (!match) return timing;
+    
+    const [, phase, dayNumber] = match;
+    const phaseLabels = {
+      'J': 'Jour',
+      'N': 'Nuit',
+      'M': 'Meeting'
+    };
+    
+    return `${phaseLabels[phase as keyof typeof phaseLabels] || phase} ${dayNumber}`;
+  };
+
   if (telechargementActif || tempsJeuChargement) {
     return <div className="statistiques-attente">Analyse des durées de partie en cours...</div>;
   }
@@ -360,8 +377,7 @@ export function GameDurationInsights() {
             <p>
               <strong>Analyse du temps de jeu :</strong> Ces graphiques montrent à quels moments les parties se terminent en fonction du cycle jour/nuit/meeting.
               <br/>
-              <strong>J</strong> = Jour, <strong>N</strong> = Nuit, <strong>M</strong> = Meeting.
-              Le chiffre indique le numéro du jour (J3 = 3ème jour, N2 = 2ème nuit, M4 = 4ème meeting).
+              Le chiffre indique le numéro du jour (Jour 3 = Phase "Jour" de la 3ème journée, Nuit 2 = Phase "Nuit" de la 2ème journée, Meeting 4 = 4ème meeting).
               <br/>
               Basé sur {tempsJeuDonnees.gamesWithEndTiming} parties avec données de timing sur {tempsJeuDonnees.totalGames} parties totales.
             </p>
@@ -403,7 +419,7 @@ export function GameDurationInsights() {
             >
               <h3>Partie Plus Courte</h3>
               <p className="lycans-valeur-principale">
-                {tempsJeuDonnees.shortestGame ? tempsJeuDonnees.shortestGame.endTiming : 'N/A'}
+                {tempsJeuDonnees.shortestGame ? formatTiming(tempsJeuDonnees.shortestGame.endTiming) : 'N/A'}
               </p>
               {tempsJeuDonnees.shortestGame && (
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
@@ -442,7 +458,7 @@ export function GameDurationInsights() {
             >
               <h3>Partie Plus Longue</h3>
               <p className="lycans-valeur-principale">
-                {tempsJeuDonnees.longestGame ? tempsJeuDonnees.longestGame.endTiming : 'N/A'}
+                {tempsJeuDonnees.longestGame ? formatTiming(tempsJeuDonnees.longestGame.endTiming) : 'N/A'}
               </p>
               {tempsJeuDonnees.longestGame && (
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
@@ -581,6 +597,7 @@ export function GameDurationInsights() {
                         textAnchor="end"
                         height={80}
                         interval={0}
+                        tickFormatter={(value) => formatTiming(value)}
                         label={{ value: 'Timing de Fin', position: 'insideBottom', offset: -40 }}
                       />
                       <YAxis 
@@ -592,7 +609,7 @@ export function GameDurationInsights() {
                             const data = payload[0].payload;
                             return (
                               <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
-                                <div><strong>{data.timing}</strong></div>
+                                <div><strong>{formatTiming(data.timing)}</strong></div>
                                 <div>Phase: {data.phase}</div>
                                 <div>Jour: {data.dayNumber}</div>
                                 <div>{data.count} parties ({data.percentage.toFixed(1)}%)</div>
@@ -618,7 +635,7 @@ export function GameDurationInsights() {
                         onClick={(data: any) => {
                           // Navigate to games that ended with this specific timing
                           navigateToGameDetails({
-                            fromComponent: `Analyse des Temps de Jeu - Timing ${data.timing}`
+                            fromComponent: `Analyse des Temps de Jeu - Timing ${formatTiming(data.timing)}`
                           });
                         }}
                         style={{ cursor: 'pointer' }}
