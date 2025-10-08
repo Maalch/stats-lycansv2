@@ -2,7 +2,9 @@ import { useState, useMemo } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { useGameLogData } from '../../hooks/useCombinedRawData';
 import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculatedPlayerAchievements';
+import { useJoueursData } from '../../hooks/useJoueursData';
 import { getPlayerNameMapping } from '../../utils/playerNameMapping';
+import { findPlayerByName } from '../../utils/playersUtils';
 import { AchievementsDisplay } from './AchievementsDisplay';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import './PlayerSelectionPage.css';
@@ -15,11 +17,15 @@ interface PlayerBasicStats {
   firstGameDate: string;
   lastGameDate: string;
   isHighlighted: boolean;
+  image?: string | null;
+  twitch?: string | null;
+  youtube?: string | null;
 }
 
 export function PlayerSelectionPage() {
   const { settings, updateSettings } = useSettings();
   const { data: gameLogData, isLoading, error } = useGameLogData();
+  const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
   const [searchQuery, setSearchQuery] = useState('');
   const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
@@ -65,16 +71,24 @@ export function PlayerSelectionPage() {
       });
     });
 
-    return Array.from(playerMap.entries()).map(([name, stats]): PlayerBasicStats => ({
-      name,
-      totalGames: stats.games,
-      totalWins: stats.wins,
-      winRate: stats.games > 0 ? (stats.wins / stats.games) * 100 : 0,
-      firstGameDate: stats.firstDate.toLocaleDateString('fr-FR'),
-      lastGameDate: stats.lastDate.toLocaleDateString('fr-FR'),
-      isHighlighted: name === settings.highlightedPlayer,
-    }));
-  }, [gameLogData, settings.highlightedPlayer]);
+    return Array.from(playerMap.entries()).map(([name, stats]): PlayerBasicStats => {
+      // Find player data from joueurs.json
+      const playerInfo = joueursData?.Players ? findPlayerByName(joueursData.Players, name) : null;
+      
+      return {
+        name,
+        totalGames: stats.games,
+        totalWins: stats.wins,
+        winRate: stats.games > 0 ? (stats.wins / stats.games) * 100 : 0,
+        firstGameDate: stats.firstDate.toLocaleDateString('fr-FR'),
+        lastGameDate: stats.lastDate.toLocaleDateString('fr-FR'),
+        isHighlighted: name === settings.highlightedPlayer,
+        image: playerInfo?.Image || null,
+        twitch: playerInfo?.Twitch || null,
+        youtube: playerInfo?.Youtube || null,
+      };
+    });
+  }, [gameLogData, settings.highlightedPlayer, joueursData]);
 
   // Filter players based on search query
   const filteredPlayers = useMemo(() => {
@@ -96,7 +110,7 @@ export function PlayerSelectionPage() {
     setSearchQuery(''); // Clear search to show the selected player's card
   };
 
-  if (isLoading) {
+  if (isLoading || joueursLoading) {
     return (
       <div className="player-selection-loading">
         <div className="loading-spinner"></div>
@@ -171,8 +185,26 @@ export function PlayerSelectionPage() {
                     className={`suggestion-btn ${player.isHighlighted ? 'highlighted' : ''}`}
                     onClick={() => handlePlayerSelect(player.name)}
                   >
-                    {player.name} ({player.totalGames} parties, {player.winRate.toFixed(1)}% victoires)
-                    {player.isHighlighted && <span className="highlight-indicator"> ★</span>}
+                    {player.image ? (
+                      <img 
+                        src={player.image} 
+                        alt={player.name}
+                        className="player-avatar"
+                      />
+                    ) : (
+                      <div className="player-avatar-placeholder">
+                        {player.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <div className="suggestion-btn-content">
+                      <div className="suggestion-btn-name">
+                        {player.name}
+                        {player.isHighlighted && <span className="highlight-indicator"> ★</span>}
+                      </div>
+                      <div className="suggestion-btn-stats">
+                        {player.totalGames} parties • {player.winRate.toFixed(1)}% victoires
+                      </div>
+                    </div>
                   </button>
                 ))}
               </div>
@@ -211,6 +243,49 @@ export function PlayerSelectionPage() {
                 <div className="player-card-header">
                   <h3 className="player-name">{highlightedPlayerStats.name}</h3>
                   <span className="highlight-badge">★ Mis en évidence</span>
+                </div>
+                
+                <div className="player-info-row">
+                  {highlightedPlayerStats.image ? (
+                    <img 
+                      src={highlightedPlayerStats.image} 
+                      alt={highlightedPlayerStats.name}
+                      className="player-avatar large"
+                    />
+                  ) : (
+                    <div className="player-avatar-placeholder large">
+                      {highlightedPlayerStats.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <div className="player-info-text">
+                    <div className="player-stats-summary">
+                      {highlightedPlayerStats.totalGames} parties • {highlightedPlayerStats.totalWins} victoires • {highlightedPlayerStats.winRate.toFixed(1)}% taux de victoire
+                    </div>
+                    {(highlightedPlayerStats.twitch || highlightedPlayerStats.youtube) && (
+                      <div className="social-links">
+                        {highlightedPlayerStats.twitch && (
+                          <a 
+                            href={highlightedPlayerStats.twitch} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="social-link twitch"
+                          >
+                            📺 Twitch
+                          </a>
+                        )}
+                        {highlightedPlayerStats.youtube && (
+                          <a 
+                            href={highlightedPlayerStats.youtube} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="social-link youtube"
+                          >
+                            🎬 YouTube
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
                                              
                 <div className="player-actions">                  
