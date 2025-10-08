@@ -11,6 +11,11 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: 'v1.3.2',
+    date: '08/10/2025',
+    description: 'Ajout de statistiques sur la durée en "temps de jeu" (dans "Parties" / "Durée des Parties")',
+  },
+  {
     version: 'v1.3.1',
     date: '07/10/2025',
     description: 'Détails des bons et mauvais chasseurs (dans Joueurs / Morts & Kills)',
