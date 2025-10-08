@@ -16,7 +16,7 @@ const PlayerComparisonChart = lazy(() => import('./components/playerstats/Player
 const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
 
 // Death statistics components
-const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
+const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsAndKills/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
 
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
