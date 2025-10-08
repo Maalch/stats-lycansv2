@@ -4,15 +4,23 @@ import { usePlayerComparisonFromRaw } from '../../hooks/usePlayerComparisonFromR
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
+import { useJoueursData } from '../../hooks/useJoueursData';
+import { findPlayerByName } from '../../utils/playersUtils';
 
 export function PlayerComparisonChart() {
   const { availablePlayers, generateComparison, isLoading, error } = usePlayerComparisonFromRaw();
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
+  const { joueursData } = useJoueursData();
   
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
   const playersColor = useThemeAdjustedFrenchColorMapping();
+
+  // Helper function to get player info including image
+  const getPlayerInfo = (playerName: string) => {
+    return joueursData?.Players ? findPlayerByName(joueursData.Players, playerName) : null;
+  };
 
   // Use persistent navigation state instead of local state
   // If no player1 is selected, default to highlighted player if available and valid
@@ -313,9 +321,17 @@ export function PlayerComparisonChart() {
                 title={`Cliquer pour voir les victoires de ${selectedPlayer1} contre ${selectedPlayer2}`}
               >
                 <div className="lycans-player-avatar">
-                  <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer1] || '#0076FF' }}>
-                    {selectedPlayer1.substring(0, 2).toUpperCase()}
-                  </div>
+                  {getPlayerInfo(selectedPlayer1)?.Image ? (
+                    <img 
+                      src={getPlayerInfo(selectedPlayer1)!.Image!} 
+                      alt={selectedPlayer1}
+                      className="lycans-player-image"
+                    />
+                  ) : (
+                    <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer1] || '#0076FF' }}>
+                      {selectedPlayer1.substring(0, 2).toUpperCase()}
+                    </div>
+                  )}
                 </div>
                 <h4 className="lycans-player-name" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
                   {selectedPlayer1}
@@ -402,9 +418,17 @@ export function PlayerComparisonChart() {
                 title={`Cliquer pour voir les victoires de ${selectedPlayer2} contre ${selectedPlayer1}`}
               >
                 <div className="lycans-player-avatar">
-                  <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer2] || '#FF0000' }}>
-                    {selectedPlayer2.substring(0, 2).toUpperCase()}
-                  </div>
+                  {getPlayerInfo(selectedPlayer2)?.Image ? (
+                    <img 
+                      src={getPlayerInfo(selectedPlayer2)!.Image!} 
+                      alt={selectedPlayer2}
+                      className="lycans-player-image"
+                    />
+                  ) : (
+                    <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer2] || '#FF0000' }}>
+                      {selectedPlayer2.substring(0, 2).toUpperCase()}
+                    </div>
+                  )}
                 </div>
                 <h4 className="lycans-player-name" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
                   {selectedPlayer2}
