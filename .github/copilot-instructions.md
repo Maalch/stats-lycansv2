@@ -2,7 +2,7 @@
 
 # Copilot Instructions for `stats-lycansv2`
 
-A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Recently migrated from multiple JSON files to a unified `gameLog.json` structure while maintaining backward compatibility. Features a sophisticated achievements system with server-side pre-calculation.
+A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Recently migrated from multiple JSON files to a unified `gameLog.json` structure while maintaining backward compatibility. Features a sophisticated achievements system with server-side pre-calculation and comprehensive player highlighting across all charts.
 
 ## Architecture Overview
 
@@ -10,8 +10,9 @@ A Vite-based React + TypeScript dashboard for visualizing werewolf game statisti
 **Data Pipeline:** Unified `gameLog.json` with transformation layer for backward compatibility + server-side achievements pre-calculation  
 **Build System:** Vite outputs to `docs/` for GitHub Pages, inline Node.js scripts copy data files  
 **Data Processing:** Hybrid approach - optimized base hook pattern for real-time stats + pre-calculated achievements JSON for performance  
-**URL Sharing:** Settings persist via localStorage + URL parameters for shareable dashboard states
+**URL Sharing:** Settings persist via localStorage + URL parameters for shareable dashboard states (see `URL_FILTERS.md`)
 **Achievements System:** Server-side generation in `scripts/data-sync/` creates `playerAchievements.json` consumed by client
+**Player Selection:** Dedicated page for player search, selection, and achievement display with interactive navigation
 
 ## Critical Workflows
 
@@ -32,7 +33,7 @@ npm run generate-achievements  # Standalone achievements generation + copy to pu
 **New Primary Source:** `gameLog.json` - unified structure with nested `PlayerStats` arrays  
 **Backward Compatibility:** `useCombinedRawData.tsx` transforms new structure to legacy interfaces  
 **Legacy Interfaces:** `RawGameData`, `RawRoleData`, `RawPonceData` still work unchanged  
-**Data Evolution:** Recent format includes detailed vote tracking, color assignments, and enhanced death metadata  
+**Data Evolution:** Recent format includes detailed vote tracking, color assignments, enhanced death metadata, and comprehensive player stats per game
 
 ### Key Data Interfaces
 ```typescript
@@ -45,10 +46,13 @@ interface GameLogEntry {
 interface PlayerStat {
   Username: string; Color?: string; MainRoleInitial: string; MainRoleFinal: string | null;
   Power: string | null; SecondaryRole: string | null; 
-  Victorious: boolean; DeathTiming: string | null;
+  Victorious: boolean; DeathTiming: string | null; DeathDateIrl: string | null;
   DeathPosition: {x: number; y: number; z: number} | null;
   DeathType: string | null; KillerName: string | null;
-  Votes: Array<{Target: string; Date: string}>; // New voting data
+  Votes: Vote[]; // Array of votes with Target and Date
+}
+interface Vote {
+  Target: string; Date: string; // ISO date string when vote was cast
 }
 
 // Legacy interfaces (auto-transformed from gameLog)
@@ -132,8 +136,8 @@ import { FullscreenChart } from '../common/FullscreenChart';
 
 ## Project-Specific Conventions
 
-**Component Structure:** Domain-based folders (`generalstats/`, `playerstats/`, `gamedetails/`, `settings/`)  
-**Menu System:** Hierarchical tabs (`MAIN_TABS` → `*_STATS_MENU`) in `App.tsx`  
+**Component Structure:** Domain-based folders (`generalstats/`, `playerstats/`, `gamedetails/`, `settings/`, `playerselection/`)  
+**Menu System:** Hierarchical tabs (`MAIN_TABS` → `*_STATS_MENU`) in `App.tsx` with Player Selection as primary tab  
 **Testing:** Visual testing via dev server only - no automated test suite  
 **Language:** All UI and data labels in French ("Villageois", "Loups", "Camp victorieux")
 
@@ -241,6 +245,33 @@ Complete settings serialization via `generateUrlWithSettings()` enables shareabl
 ### Theme System
 Uses CSS custom properties (`--accent-primary`, `--chart-primary`) with theme-adjusted colors via `useThemeAdjusted*Color()` hooks for consistent chart styling across light/dark themes.
 
+## Critical Debugging & Data Consistency
+
+### Data Source Consistency Pattern
+**IMPORTANT:** Always use the same data source for related calculations to avoid mismatched statistics. Example from `DeathsView.tsx`:
+
+```typescript
+// ❌ WRONG: Using different data sources creates inconsistencies
+const deathsFromDeathStats = deathStats.playerDeathStats; // Pre-calculated
+const gamesFromRawData = calculateGamesFromGameLog(gameLogData); // Manual calculation
+
+// ✅ CORRECT: Use consistent data source
+const allPlayersWithStats = {};
+deathStats.playerDeathStats.forEach((player) => {
+  const gamesPlayed = playerGameCounts[player.playerName] || 0;
+  allPlayersWithStats[player.playerName] = {
+    totalDeaths: player.totalDeaths,    // From same source
+    gamesPlayed: gamesPlayed,           // From consistent game count
+    survivalRate: (gamesPlayed - player.totalDeaths) / gamesPlayed * 100
+  };
+});
+```
+
+### Common Data Filtering Pitfalls
+1. **Camp Filtering:** Use `getPlayerCampFromRole(player.MainRoleInitial)` consistently - not `SecondaryRole`
+2. **Death Information:** Filter games with `!game.LegacyData || game.LegacyData.deathInformationFilled === true` before processing death stats
+3. **Game Counting:** Apply the same camp filter logic for both death counting and game counting to avoid rate calculation errors
+
 ## Achievements System Architecture
 
 **Server-Side Generation:** `scripts/data-sync/generate-achievements.js` processes `gameLog.json` → creates `playerAchievements.json`  
@@ -266,5 +297,44 @@ export function processNewAchievements(playerStats: PlayerStat[], playerName: st
 **Integration:** Add new processors to both `generate-achievements.js` and `usePlayerAchievements.tsx` → achievements auto-generate during data sync
 
 ### Achievement Categories Implemented
-- **General:** Participations, win rates (good/bad achievements)
+- **General:** Participations, win rates (good/bad achievements)  
 - **History:** Map-specific performance (Village 🏘️, Château 🏰 achievements)
+- **Comparison:** Player relationship stats, wolf/lover pairing performance
+- **Kills:** Death statistics, survival rates, kill counts by role
+- **Series:** Consecutive wins, camp streaks, role performance chains
+
+## Player Selection System
+
+**New Feature (2024):** Centralized player search and selection interface with integrated achievements display
+
+### Player Selection Architecture
+```typescript
+// Located in: src/components/playerselection/
+PlayerSelectionPage.tsx     // Main interface with search and player cards
+AchievementsDisplay.tsx     // Interactive achievement cards with navigation
+PlayerSelectionPage.css     // Styled components with animations
+```
+
+**Key Features:** Real-time player search, achievement filtering (all games vs. modded), clickable achievements that navigate to relevant statistics with proper filter states, player highlighting persistence across all charts.
+
+**Data Source:** `usePreCalculatedPlayerAchievements()` loads from `/data/playerAchievements.json`
+
+### Achievement Navigation Pattern
+```typescript
+// Achievements are clickable and automatically set appropriate filters
+const handleAchievementClick = (achievement: Achievement, event: React.MouseEvent) => {
+  // Reset filters, preserve highlighted player, navigate to specific chart
+  clearNavigation();
+  updateSettings({ /* appropriate filters for achievement */ });
+  navigateToTab(achievement.redirectTo.tab);
+}
+```
+
+**Critical:** Achievements automatically configure filters (modded games, map filters, minimum games) based on the achievement context when clicked.
+
+## Integration Points
+
+**GitHub Actions:** `.github/workflows/update-data.yml` for weekly data sync  
+**Apps Script:** `scripts/data-sync/fetch-data.js` fetches from Google Sheets  
+**Build Output:** GitHub Pages serves from `/docs` with custom domain (base path `/`)  
+**Error Handling:** Static file loading only, graceful degradation for missing data
