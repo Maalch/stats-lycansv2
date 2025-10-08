@@ -1,6 +1,6 @@
 // This file is auto-generated - do not edit manually
 // Run 'npm run sync-version' to update from package.json
-export const APP_VERSION = '1.3.0';
+export const APP_VERSION = '1.3.3';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -10,6 +10,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.3',
+    date: '08/10/2025',
+    description: 'Nouveau look pour la page de sélection des joueurs ! Affichage des vignettes des joueurs, avec lien Twitch et Youtube si disponibles.',
+  },
   {
     version: 'v1.3.2',
     date: '08/10/2025',
