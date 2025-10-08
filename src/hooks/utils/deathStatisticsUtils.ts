@@ -618,9 +618,10 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
     const huntersInGame = new Set<string>();
     
     game.PlayerStats.forEach(player => {
-      // Check if player was Chasseur (using MainRoleInitial for initial role)
-      const playerRole = player.MainRoleInitial;
-      if (playerRole === 'Chasseur') {
+      // Check if player was Chasseur (using MainRoleInitial OR MainRoleFinal)
+      const initialRole = player.MainRoleInitial;
+      const finalRole = player.MainRoleFinal;
+      if (initialRole === 'Chasseur' || finalRole === 'Chasseur') {
         huntersInGame.add(player.Username);
         
         // Initialize hunter if not exists
