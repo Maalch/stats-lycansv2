@@ -69,6 +69,7 @@ export interface PlayerDeathStats {
   deathsByType: Record<DeathTypeCodeType, number>;
   killedBy: Record<string, number>;
   deathRate: number; // Deaths per game played
+  gamesPlayed: number; // Total games played by this player
 }
 
 /**
@@ -530,20 +531,38 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     }
   });
 
-  const playerDeathStats: PlayerDeathStats[] = Object.entries(playerDeathCounts)
-    .map(([playerName, data]) => ({
+  // Create playerDeathStats for all players who played games, including those with zero deaths
+  const allPlayerStats: PlayerDeathStats[] = [];
+  
+  // First add players who died
+  Object.entries(playerDeathCounts).forEach(([playerName, data]) => {
+    allPlayerStats.push({
       playerName,
       totalDeaths: data.totalDeaths,
       deathsByType: data.deathsByType,
       killedBy: data.killedBy,
-      averageDeathDay: data.deathDays.length > 0 
-        ? data.deathDays.reduce((sum, day) => sum + day, 0) / data.deathDays.length 
-        : null,
       deathRate: playerGameCounts[playerName] > 0 
         ? data.totalDeaths / playerGameCounts[playerName] 
-        : 0
-    }))
-    .sort((a, b) => b.totalDeaths - a.totalDeaths);
+        : 0,
+      gamesPlayed: playerGameCounts[playerName] || 0
+    });
+  });
+
+  // Then add players who played games but never died
+  Object.entries(playerGameCounts).forEach(([playerName, gamesPlayed]) => {
+    if (!playerDeathCounts[playerName]) {
+      allPlayerStats.push({
+        playerName,
+        totalDeaths: 0,
+        deathsByType: {} as Record<DeathTypeCodeType, number>,
+        killedBy: {},
+        deathRate: 0,
+        gamesPlayed
+      });
+    }
+  });
+
+  const playerDeathStats = allPlayerStats.sort((a, b) => b.totalDeaths - a.totalDeaths);
 
   const mostCommonDeathType = deathsByType.length > 0 ? deathsByType[0].type : null;
   const mostDeadlyKiller = killerStats.length > 0 ? killerStats[0].killerName : null;
