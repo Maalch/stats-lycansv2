@@ -5,6 +5,7 @@ import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculated
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { getPlayerNameMapping } from '../../utils/playerNameMapping';
 import { findPlayerByName } from '../../utils/playersUtils';
+import { useThemeAdjustedPlayersColor } from '../../types/api';
 import { AchievementsDisplay } from './AchievementsDisplay';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import './PlayerSelectionPage.css';
@@ -27,6 +28,7 @@ export function PlayerSelectionPage() {
   const { data: gameLogData, isLoading, error } = useGameLogData();
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
+  const playersColor = useThemeAdjustedPlayersColor();
   const [searchQuery, setSearchQuery] = useState('');
   const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
 
@@ -192,7 +194,10 @@ export function PlayerSelectionPage() {
                         className="player-avatar"
                       />
                     ) : (
-                      <div className="player-avatar-placeholder">
+                      <div 
+                        className="player-avatar-placeholder"
+                        style={{ backgroundColor: playersColor[player.name] || 'var(--accent-primary)' }}
+                      >
                         {player.name.charAt(0).toUpperCase()}
                       </div>
                     )}
@@ -253,7 +258,10 @@ export function PlayerSelectionPage() {
                       className="player-avatar large"
                     />
                   ) : (
-                    <div className="player-avatar-placeholder large">
+                    <div 
+                      className="player-avatar-placeholder large"
+                      style={{ backgroundColor: playersColor[highlightedPlayerStats.name] || 'var(--accent-primary)' }}
+                    >
                       {highlightedPlayerStats.name.charAt(0).toUpperCase()}
                     </div>
                   )}
@@ -361,11 +369,74 @@ export function PlayerSelectionPage() {
             );
           })()
         ) : (
-          // Show player selection interface when no player is highlighted
+          // Show character selection grid when no player is highlighted
           <div className="player-selection-prompt">
             <div className="selection-prompt-content">
               <h2>Sélectionnez un joueur</h2>
-              <p>Utilisez la recherche ci-dessus pour trouver et sélectionner un joueur à mettre en évidence.</p>      
+              <p>Cliquez sur un personnage pour le mettre en évidence dans tous les graphiques.</p>
+            </div>
+            
+            <div className="selection-grid-stats">
+              <div className="grid-stats-item">
+                <div className="grid-stats-label">Total Joueurs</div>
+                <div className="grid-stats-value">{playerStats.length}</div>
+              </div>
+              <div className="grid-stats-item">
+                <div className="grid-stats-label">Réseaux Sociaux</div>
+                <div className="grid-stats-value">
+                  {playerStats.filter(p => p.twitch || p.youtube).length}
+                </div>
+              </div>
+            </div>
+            
+            <div className="character-selection-grid">
+              {playerStats
+                .sort((a, b) => b.totalGames - a.totalGames) // Sort by participation
+                .map((player) => (
+                  <div
+                    key={player.name}
+                    className={`character-card ${player.isHighlighted ? 'highlighted' : ''}`}
+                    onClick={() => handlePlayerSelect(player.name)}
+                    title={`${player.name} - ${player.totalGames} parties, ${player.winRate.toFixed(1)}% victoires`}
+                  >
+                    <div className="character-avatar-container">
+                      {player.image ? (
+                        <img 
+                          src={player.image} 
+                          alt={player.name}
+                          className="character-avatar"
+                        />
+                      ) : (
+                        <div 
+                          className="character-avatar-placeholder"
+                          style={{ backgroundColor: playersColor[player.name] || 'var(--accent-primary)' }}
+                        >
+                          {player.name.charAt(0).toUpperCase()}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="character-name">
+                      {player.name}
+                    </div>
+                    
+                    {(player.twitch || player.youtube) && (
+                      <div className="character-social-indicators">
+                        {player.twitch && (
+                          <div className="social-indicator twitch" title="Twitch">
+                            T
+                          </div>
+                        )}
+                        {player.youtube && (
+                          <div className="social-indicator youtube" title="YouTube">
+                            Y
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))
+              }
             </div>
           </div>
         )}

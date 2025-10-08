@@ -150,25 +150,64 @@ These new hooks and utilities can be integrated with the existing:
 
 ## PlayerSelectionPage Integration
 
-The PlayerSelectionPage has been updated to include:
+The PlayerSelectionPage has been completely redesigned with a **fighting game-style character selection screen**:
 
-### Visual Features
-- **Player Avatars**: Profile images from Twitch/YouTube displayed for each player
-- **Fallback Placeholders**: First letter of player name in colored circle when no image available
-- **Social Media Links**: Direct links to Twitch and YouTube channels
-- **Large Player Cards**: Enhanced display for highlighted players with bigger avatars
+### 🎮 Character Selection Grid
+- **Fighting Game UI**: Grid layout inspired by character selection screens in fighting games
+- **All Players Display**: Shows all 75+ players simultaneously in an organized grid
+- **Visual Hierarchy**: Players sorted by participation (most active players first)
+- **Interactive Cards**: Hover effects with scaling and glow animations
 
-### Search Results
+### 🖼️ Visual Features
+- **Player Avatars**: 70x70px profile images from Twitch/YouTube in each card
+- **Theme-Adjusted Placeholders**: Colored circles with player initials using consistent player colors from `useThemeAdjustedPlayersColor()`
+- **Color Consistency**: Placeholder backgrounds match the same colors used throughout the application for each player
+- **Social Media Indicators**: Small "T" and "Y" badges for Twitch and YouTube presence
+- **Highlight States**: Special styling for currently highlighted players with star indicator
+
+### 📊 Grid Statistics Bar
+- **Total Players**: Shows complete player count
+- **With Images**: Count of players who have profile pictures
+- **Social Media**: Count of players with Twitch/YouTube links
+
+### 🔍 Search Results (Redesigned)
 - Each suggestion now shows:
-  - Player profile image or initial placeholder
+  - Player profile image (50x50px) or initial placeholder
   - Player name with highlighting indicator
   - Game statistics (games played, win rate)
-  - Social media links (when available)
+  - Structured layout with proper spacing
 
-### Enhanced Player Display
+### ✨ Enhanced Player Display (When Selected)
 - **Large Avatar**: 80x80px image for highlighted player
-- **Social Links**: Clickable Twitch and YouTube buttons with platform colors
-- **Statistics Summary**: Games, wins, and win rate in a clean format
+- **Social Links**: Clickable Twitch and YouTube buttons with platform-specific colors
+- **Statistics Summary**: Comprehensive stats display with activity period
+- **Achievement Integration**: Full achievements system with filtering
+
+### 📱 Responsive Design
+- **Desktop**: 6-8 characters per row in wide grid
+- **Tablet**: 4-6 characters per row with smaller avatars
+- **Mobile**: 3-4 characters per row with optimized touch targets
+- **Dynamic Grid**: Auto-adjusting columns based on screen size
+
+### 🎨 Design Inspiration
+
+The character selection interface is inspired by classic fighting games like Street Fighter, Tekken, and Mortal Kombat:
+
+- **Grid Layout**: Organized character portraits in a symmetrical grid
+- **Hover Effects**: Interactive feedback with scaling and glow effects
+- **Visual Hierarchy**: Most active players prominently displayed
+- **Quick Selection**: Single-click character selection with immediate feedback
+- **Status Indicators**: Visual badges for social media presence and current selection
+
+### 🚀 Technical Implementation
+
+The implementation follows all project conventions and integrates seamlessly with:
+- **Player Color System**: Uses `useThemeAdjustedPlayersColor()` for consistent color theming across all placeholder avatars
+- **Dynamic Styling**: Background colors applied via inline styles to maintain theme consistency
+- **Existing achievement system** and player highlighting functionality
+- **Settings context** for persistent player selection across sessions  
+- **URL sharing system** for shareable player-highlighted dashboard states
+- **Responsive design system** with consistent theming variables
 
 ## Data Source
 

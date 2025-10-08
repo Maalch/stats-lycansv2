@@ -111,26 +111,208 @@
 
 /* Player Selection Prompt */
 .player-selection-prompt {
-  text-align: center;
-  padding: 3rem 2rem;
-  background: var(--background-secondary);
-  border: 2px dashed var(--border-color);
-  border-radius: 16px;
-  max-width: 500px;
   width: 100%;
+  max-width: 1200px;
+  background: linear-gradient(135deg, var(--background-secondary) 0%, var(--background-primary) 100%);
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.player-selection-prompt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-primary));
+  opacity: 0.7;
+}
+
+.selection-prompt-content {
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .selection-prompt-content h2 {
   color: var(--text-primary);
   margin-bottom: 1rem;
   font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .selection-prompt-content p {
   color: var(--text-secondary);
-  margin-bottom: 2rem;
   font-size: 1.1rem;
   line-height: 1.5;
+  margin-bottom: 0;
+}
+
+/* Character Selection Grid */
+.character-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.character-card {
+  position: relative;
+  background: var(--background-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  overflow: hidden;
+}
+
+.character-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  background: var(--accent-primary-transparent);
+  z-index: 10;
+}
+
+.character-card:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.character-card.highlighted {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary-transparent);
+  box-shadow: 0 0 0 3px var(--accent-primary-transparent);
+}
+
+.character-card.highlighted::before {
+  content: '★';
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  color: var(--accent-primary);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.character-avatar-container {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.character-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+  display: block;
+}
+
+.character-card:hover .character-avatar {
+  border-color: var(--accent-primary);
+  transform: scale(1.05);
+}
+
+.character-avatar-placeholder {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  /* background color set dynamically via style attribute based on player colors */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 1.5rem;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+.character-card:hover .character-avatar-placeholder {
+  border-color: var(--accent-primary);
+  /* Keep the original background color on hover, just add the border */
+  transform: scale(1.05);
+}
+
+.character-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.character-stats {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  line-height: 1.1;
+}
+
+.character-social-indicators {
+  position: absolute;
+  bottom: 0.25rem;
+  right: 0.25rem;
+  display: flex;
+  gap: 0.125rem;
+}
+
+.social-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-indicator.twitch {
+  background: #9146ff;
+  color: white;
+}
+
+.social-indicator.youtube {
+  background: #ff0000;
+  color: white;
+}
+
+/* Selection Grid Statistics */
+.selection-grid-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--background-primary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.grid-stats-item {
+  text-align: center;
+}
+
+.grid-stats-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.grid-stats-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 /* Suggested Players */
@@ -251,7 +433,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--accent-primary);
+  /* background color set dynamically via style attribute based on player colors */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -558,6 +740,31 @@
   }
 }
 
+@media (max-width: 768px) {
+  .character-selection-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  .character-avatar,
+  .character-avatar-placeholder {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .character-avatar-placeholder {
+    font-size: 1.3rem;
+  }
+  
+  .character-name {
+    font-size: 0.8rem;
+  }
+  
+  .character-stats {
+    font-size: 0.65rem;
+  }
+}
+
 @media (max-width: 480px) {
   .search-controls {
     padding: 0 0.5rem;
@@ -602,6 +809,51 @@
   
   .social-links {
     justify-content: center;
+  }
+  
+  .character-selection-grid {
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .character-card {
+    padding: 0.5rem;
+  }
+  
+  .character-avatar,
+  .character-avatar-placeholder {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .character-avatar-placeholder {
+    font-size: 1.1rem;
+  }
+  
+  .character-name {
+    font-size: 0.75rem;
+  }
+  
+  .character-stats {
+    font-size: 0.6rem;
+  }
+  
+  .grid-stats-item {
+    font-size: 0.8rem;
+  }
+  
+  .grid-stats-label {
+    font-size: 0.65rem;
+  }
+  
+  .grid-stats-value {
+    font-size: 0.95rem;
+  }
+  
+  .selection-grid-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
   }
 }
 
