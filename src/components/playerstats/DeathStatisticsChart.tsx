@@ -425,7 +425,12 @@ export function DeathStatisticsChart() {
             regroupTraitor: false
           }) === selectedCamp;
           
-        if (shouldCountThisPlayer && player.DeathType && player.DeathType !== 'N/A') {
+        // Only count actual deaths, exclude survivors and empty death types
+        if (shouldCountThisPlayer && player.DeathType && 
+            player.DeathType !== 'N/A' && 
+            player.DeathType !== '' && 
+            player.DeathType !== null &&
+            player.DeathType !== DeathTypeCode.SURVIVOR) {
           // This player died in this game
           if (!actualPlayerDeaths[playerName]) {
             actualPlayerDeaths[playerName] = { totalDeaths: 0, deathsByType: {} };
