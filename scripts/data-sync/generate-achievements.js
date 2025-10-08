@@ -657,7 +657,14 @@ function extractDeathsFromGame(game) {
   const deaths = [];
   
   game.PlayerStats.forEach(player => {
-    if (player.DeathType && player.DeathType !== 'N/A') {
+    // Only include players who actually died (not survivors or unknowns)
+    if (
+      player.DeathType &&
+      player.DeathType !== 'N/A' &&
+      player.DeathType !== DeathTypeCode.SURVIVOR &&
+      player.DeathType !== '' &&
+      (player.DeathTiming || player.DeathType)
+    ) {
       const deathTypeCode = player.DeathType;
       
       deaths.push({
@@ -686,9 +693,12 @@ function extractKillsFromGame(game) {
       const deathType = player.DeathType;
       
       // Only count direct kills (not votes, environmental deaths)
-      if (deathType !== DeathTypeCode.VOTED && 
-          deathType !== DeathTypeCode.SURVIVOR &&
-          deathType !== DeathTypeCode.UNKNOWN) {
+      if (
+        deathType !== DeathTypeCode.VOTED &&
+        deathType !== DeathTypeCode.SURVIVOR &&
+        deathType !== '' &&
+        deathType !== DeathTypeCode.UNKNOWN
+      ) {
         kills.push({
           killerName: player.KillerName,
           victimName: player.Username,
