@@ -69,7 +69,7 @@ function generateAllPlayerAchievements(gameLogData) {
       ...processHistoryAchievements(allGamesMapStats, playerName, ''),
       ...processComparisonAchievements(allGamesStats.playerStats, allGames, playerName, ''),
       ...processKillsAchievements(allGamesDeathStats, playerName, ''),
-      ...processPerformanceAchievements(allGamesCampStats, playerName, ''),
+      ...processPerformanceAchievements(allGamesCampStats, allGames, playerName, ''),
       ...processSeriesAchievements(allGamesSeriesData, playerName, '')
     ];
     
@@ -78,7 +78,7 @@ function generateAllPlayerAchievements(gameLogData) {
       ...processHistoryAchievements(moddedOnlyMapStats, playerName, ' (Parties Moddées)'),
       ...processComparisonAchievements(moddedOnlyStats.playerStats, moddedGames, playerName, ' (Parties Moddées)'),
       ...processKillsAchievements(moddedOnlyDeathStats, playerName, ' (Parties Moddées)'),
-      ...processPerformanceAchievements(moddedOnlyCampStats, playerName, ' (Parties Moddées)'),
+      ...processPerformanceAchievements(moddedOnlyCampStats, moddedGames, playerName, ' (Parties Moddées)'),
       ...processSeriesAchievements(moddedOnlySeriesData, playerName, ' (Parties Moddées)')
     ];
 

@@ -3,14 +3,16 @@
  */
 
 import { findPlayerCampRank } from '../helpers.js';
+import { getPlayerCampFromRole } from '../../../src/utils/datasyncExport.js';
 
-// Special roles are all camps except Villageois and Loup (exclusion list approach)
+// Special roles are all camps except Villageois, Loup, and Traître (exclusion list approach)
 // This dynamically includes any special role that appears in the game data:
 // - Amoureux (and all solo roles)
 // - All solo roles: Idiot du Village, Agent, Espion, Cannibale, Scientifique, La Bête, Chasseur de primes, Vaudou, etc.
 // - Any new roles added to the game will automatically be included
+// Note: Traître is grouped with Loup, not with special roles
 const isSpecialRole = (camp) => {
-  return camp !== 'Villageois' && camp !== 'Loup';
+  return camp !== 'Villageois' && camp !== 'Loup' && camp !== 'Traître';
 };
 
 /**
@@ -29,52 +31,79 @@ function findTopCampPerformers(campStats, targetCamp, minGames, sortBy = 'perfor
 
 /**
  * Find top special role performers (includes Amoureux and solo roles)
- * @param {Array} campStats - Array of player camp statistics
+ * Matches client-side logic: treats "Rôles spéciaux" as a single unified camp
+ * Calculates directly from game data to avoid 3-game per-camp filtering
+ * @param {Array} gameData - Array of game entries
  * @param {number} minGames - Minimum total special role games required
  * @returns {Array} - All special role performers sorted by performance
  */
-function findTopSoloRolePerformers(campStats, minGames) {
-  // Get all special role performances for each player
+function findTopSoloRolePerformers(gameData, minGames) {
+  // Calculate player special role performance directly from game data
   const playerSoloPerformance = new Map();
+  const playerTotalGames = new Map();
+  
+  // Calculate overall camp average for all special roles combined
+  let totalSpecialRoleGames = 0;
+  let totalSpecialRoleWins = 0;
 
-  campStats
-    .filter(stat => isSpecialRole(stat.camp) && stat.games >= 3) // Min 3 games per special role
-    .forEach(stat => {
-      if (!playerSoloPerformance.has(stat.player)) {
-        playerSoloPerformance.set(stat.player, {
-          totalSoloGames: 0,
-          totalSoloWins: 0,
-          avgPerformance: 0,
-          camps: []
-        });
+  // Process each game to count special role performance and total games
+  gameData.forEach(game => {
+    if (!game.PlayerStats) return;
+
+    game.PlayerStats.forEach(player => {
+      const roleName = player.MainRoleFinal || player.MainRoleInitial;
+      const camp = getPlayerCampFromRole(roleName);
+      const playerName = player.Username;
+      const won = player.Victorious;
+
+      // Track total games for each player
+      playerTotalGames.set(playerName, (playerTotalGames.get(playerName) || 0) + 1);
+
+      // Only process special roles
+      if (isSpecialRole(camp)) {
+        // Track individual player stats
+        if (!playerSoloPerformance.has(playerName)) {
+          playerSoloPerformance.set(playerName, {
+            totalSoloGames: 0,
+            totalSoloWins: 0
+          });
+        }
+        
+        const playerData = playerSoloPerformance.get(playerName);
+        playerData.totalSoloGames++;
+        if (won) playerData.totalSoloWins++;
+
+        // Track overall special roles stats for camp average
+        totalSpecialRoleGames++;
+        if (won) totalSpecialRoleWins++;
       }
-      
-      const playerData = playerSoloPerformance.get(stat.player);
-      playerData.totalSoloGames += stat.games;
-      playerData.totalSoloWins += stat.wins;
-      playerData.camps.push(stat);
     });
+  });
 
-  // Calculate average performance and filter by minimum games
+  // Calculate camp average win rate for special roles
+  const campAverageWinRate = totalSpecialRoleGames > 0 
+    ? (totalSpecialRoleWins / totalSpecialRoleGames) * 100 
+    : 0;
+
+  // Calculate player performance vs camp average (matching client-side logic)
   const eligiblePlayers = [];
   
   playerSoloPerformance.forEach((data, playerName) => {
     if (data.totalSoloGames >= minGames) {
-      // Calculate weighted average performance based on games played in each role
-      const totalWeightedPerformance = data.camps.reduce((sum, camp) => 
-        sum + (camp.performance * camp.games), 0
-      );
-      const avgPerformance = totalWeightedPerformance / data.totalSoloGames;
-      const winRate = (data.totalSoloWins / data.totalSoloGames) * 100;
+      // Calculate player's win rate in special roles
+      const playerWinRate = (data.totalSoloWins / data.totalSoloGames) * 100;
+      
+      // Performance = player win rate - camp average win rate (matches client-side)
+      const performance = playerWinRate - campAverageWinRate;
 
       eligiblePlayers.push({
         player: playerName,
         camp: 'Rôles spéciaux', // Virtual camp for display (matches chart naming)
         games: data.totalSoloGames,
         wins: data.totalSoloWins,
-        winRate: winRate,
-        performance: avgPerformance,
-        totalGames: data.camps[0]?.totalGames || 0 // Use total games from first camp stat
+        winRate: playerWinRate,
+        performance: performance,
+        totalGames: playerTotalGames.get(playerName) || 0
       });
     }
   });
@@ -164,11 +193,12 @@ function createPerformanceAchievement(id, title, description, type, rank, value,
 /**
  * Process camp performance achievements for a player
  * @param {Array} campStats - Array of player camp statistics
+ * @param {Array} gameData - Array of game entries (for special roles calculation)
  * @param {string} playerName - Player name
  * @param {string} suffix - Suffix for achievement titles
  * @returns {Array} - Array of achievements
  */
-export function processPerformanceAchievements(campStats, playerName, suffix) {
+export function processPerformanceAchievements(campStats, gameData, playerName, suffix) {
   const achievements = [];
 
   if (!campStats || campStats.length === 0) return achievements;
@@ -279,7 +309,7 @@ export function processPerformanceAchievements(campStats, playerName, suffix) {
   }
 
   // 6. Best special roles performance (includes Amoureux and solo roles, min. 10 games)
-  const topSoloPerformers = findTopSoloRolePerformers(campStats, 10);
+  const topSoloPerformers = findTopSoloRolePerformers(gameData, 10);
   const soloRank = findPlayerCampRank(topSoloPerformers, playerName);
   if (soloRank) {
     achievements.push(createPerformanceAchievement(
