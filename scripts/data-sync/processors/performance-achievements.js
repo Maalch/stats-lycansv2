@@ -4,19 +4,14 @@
 
 import { findPlayerCampRank } from '../helpers.js';
 
-// Special roles are camps that are not Villageois or Loup (matches getPlayerMainCampFromRole logic)
-// This includes Amoureux and all solo roles
-const SPECIAL_ROLES = [
-  'Amoureux', // Included to match chart calculation
-  'Idiot du Village',
-  'Agent', 
-  'Espion',
-  'Cannibale',
-  'Scientifique',
-  'La Bête',
-  'Chasseur de primes',
-  'Vaudou'
-];
+// Special roles are all camps except Villageois and Loup (exclusion list approach)
+// This dynamically includes any special role that appears in the game data:
+// - Amoureux (and all solo roles)
+// - All solo roles: Idiot du Village, Agent, Espion, Cannibale, Scientifique, La Bête, Chasseur de primes, Vaudou, etc.
+// - Any new roles added to the game will automatically be included
+const isSpecialRole = (camp) => {
+  return camp !== 'Villageois' && camp !== 'Loup';
+};
 
 /**
  * Find top performers for a specific camp
@@ -43,7 +38,7 @@ function findTopSoloRolePerformers(campStats, minGames) {
   const playerSoloPerformance = new Map();
 
   campStats
-    .filter(stat => SPECIAL_ROLES.includes(stat.camp) && stat.games >= 3) // Min 3 games per special role
+    .filter(stat => isSpecialRole(stat.camp) && stat.games >= 3) // Min 3 games per special role
     .forEach(stat => {
       if (!playerSoloPerformance.has(stat.player)) {
         playerSoloPerformance.set(stat.player, {
