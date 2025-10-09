@@ -299,37 +299,6 @@
   color: white;
 }
 
-/* Selection Grid Statistics */
-.selection-grid-stats {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  background: var(--background-primary);
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-}
-
-.grid-stats-item {
-  text-align: center;
-}
-
-.grid-stats-label {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.25rem;
-}
-
-.grid-stats-value {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
 /* Suggested Players */
 .suggestion-list {
   display: flex;
@@ -852,24 +821,10 @@
   .character-stats {
     font-size: 0.6rem;
   }
+
   
-  .grid-stats-item {
-    font-size: 0.8rem;
-  }
+
   
-  .grid-stats-label {
-    font-size: 0.65rem;
-  }
-  
-  .grid-stats-value {
-    font-size: 0.95rem;
-  }
-  
-  .selection-grid-stats {
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
-  }
 }
 
 /* Achievements Loading and Error States */
