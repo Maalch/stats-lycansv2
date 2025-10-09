@@ -20,7 +20,7 @@ import {
 } from './compute-stats.js';
 
 // Data directory relative to project root
-const DATA_DIR = 'data';
+const DATA_DIR = '../../data';
 const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
 
 /**
