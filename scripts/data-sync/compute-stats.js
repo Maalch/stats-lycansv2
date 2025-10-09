@@ -889,17 +889,16 @@ export function computePlayerSeriesData(gameData) {
         
         if (playerStats) {
           const playerWon = playerStat.Victorious;
-          const actualCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
           const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
           
           // Process camp series
           processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date);
           
           // Process win series
-          processWinSeries(playerStats, player, playerWon, actualCamp, gameDisplayedId, date);
+          processWinSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
           
           // Process loss series
-          processLossSeries(playerStats, player, playerWon, actualCamp, gameDisplayedId, date);
+          processLossSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
         }
       });
     }
