@@ -425,18 +425,6 @@ export function PlayerSelectionPage() {
           </div>
         )}
       </div>
-      <div className="selection-grid-stats">
-        <div className="grid-stats-item">
-          <div className="grid-stats-label">Total Joueurs</div>
-          <div className="grid-stats-value">{playerStats.length}</div>
-        </div>
-        <div className="grid-stats-item">
-          <div className="grid-stats-label">Réseaux Sociaux</div>
-          <div className="grid-stats-value">
-            {playerStats.filter(p => p.twitch || p.youtube).length}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
