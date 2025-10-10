@@ -112,46 +112,54 @@ function findTopSoloRolePerformers(gameData, minGames) {
 
 /**
  * Find top overall performers (Hall of Fame)
+ * Ranks players by their BEST single camp performance (highest +% in any category)
  * @param {Array} campStats - Array of player camp statistics
- * @param {number} minGames - Minimum total games required
- * @returns {Array} - All overall performers sorted by performance
+ * @param {number} minTotalGames - Minimum total games required overall
+ * @param {number} minCampGames - Minimum games required in the specific camp for Hall of Fame eligibility
+ * @returns {Array} - All overall performers sorted by their best camp performance
  */
-function findTopOverallPerformers(campStats, minGames) {
-  // Group by player and calculate overall weighted performance
-  const playerOverallPerformance = new Map();
+function findTopOverallPerformers(campStats, minTotalGames, minCampGames = 25) {
+  // Group by player and find their best camp performance
+  const playerBestPerformance = new Map();
 
   campStats.forEach(stat => {
-    if (!playerOverallPerformance.has(stat.player)) {
-      playerOverallPerformance.set(stat.player, {
+    // Only consider camps where player has enough games for Hall of Fame eligibility
+    if (stat.games < minCampGames) return;
+
+    if (!playerBestPerformance.has(stat.player)) {
+      playerBestPerformance.set(stat.player, {
         totalGames: stat.totalGames,
-        totalWeightedPerformance: 0,
-        overallPerformance: 0
+        bestPerformance: stat.performance,
+        bestCamp: stat.camp,
+        bestCampGames: stat.games,
+        bestCampWinRate: stat.winRate
       });
+    } else {
+      const current = playerBestPerformance.get(stat.player);
+      // Update if this camp performance is better
+      if (stat.performance > current.bestPerformance) {
+        current.bestPerformance = stat.performance;
+        current.bestCamp = stat.camp;
+        current.bestCampGames = stat.games;
+        current.bestCampWinRate = stat.winRate;
+      }
     }
-    
-    const playerData = playerOverallPerformance.get(stat.player);
-    playerData.totalWeightedPerformance += stat.performance * stat.games;
   });
 
-  // Calculate overall performance and filter by minimum games
+  // Filter by minimum total games and convert to array
   const eligiblePlayers = [];
   
-  playerOverallPerformance.forEach((data, playerName) => {
-    if (data.totalGames >= minGames) {
-      const totalCampGames = campStats
-        .filter(stat => stat.player === playerName)
-        .reduce((sum, stat) => sum + stat.games, 0);
-      
-      const overallPerformance = data.totalWeightedPerformance / totalCampGames;
-
+  playerBestPerformance.forEach((data, playerName) => {
+    if (data.totalGames >= minTotalGames) {
       eligiblePlayers.push({
         player: playerName,
-        camp: 'Overall', // Virtual camp for display
+        camp: data.bestCamp, // Show the camp where they performed best
         games: data.totalGames,
-        wins: 0, // Not directly applicable for overall performance
-        winRate: 0, // Not directly applicable for overall performance
-        performance: overallPerformance,
-        totalGames: data.totalGames
+        wins: 0, // Not directly applicable for best performance
+        winRate: data.bestCampWinRate, // Win rate in their best camp
+        performance: data.bestPerformance, // Their best camp performance
+        totalGames: data.totalGames,
+        bestCampGames: data.bestCampGames // Games in their best camp
       });
     }
   });
@@ -202,14 +210,15 @@ export function processPerformanceAchievements(campStats, gameData, playerName, 
 
   if (!campStats || campStats.length === 0) return achievements;
 
-  // 1. Best "overperformer" ranking (min. 25 games) - Hall of Fame
-  const topOverallPerformers = findTopOverallPerformers(campStats, 25);
+  // 1. Best "overperformer" ranking (min. 25 games in specific camp) - Hall of Fame
+  const topOverallPerformers = findTopOverallPerformers(campStats, 25, 25);
   const overallPerformanceRank = findPlayerCampRank(topOverallPerformers, playerName);
   if (overallPerformanceRank) {
+    const playerData = topOverallPerformers.find(p => p.player === playerName);
     achievements.push(createPerformanceAchievement(
       `hall-of-fame-${suffix ? 'modded' : 'all'}`,
       `🏆 Top ${overallPerformanceRank.rank} Hall of Fame${suffix}`,
-      `${overallPerformanceRank.rank}${overallPerformanceRank.rank === 1 ? 'er' : 'ème'} meilleur overperformer: +${overallPerformanceRank.performance.toFixed(1)}% (${overallPerformanceRank.games} parties, min. 25)`,
+      `${overallPerformanceRank.rank}${overallPerformanceRank.rank === 1 ? 'er' : 'ème'} meilleur overperformer: +${overallPerformanceRank.performance.toFixed(1)}% en ${playerData.camp} (${playerData.bestCampGames} parties, min. 25)`,
       'good',
       overallPerformanceRank.rank,
       overallPerformanceRank.performance,
