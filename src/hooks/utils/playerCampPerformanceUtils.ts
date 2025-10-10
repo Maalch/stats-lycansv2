@@ -50,7 +50,7 @@ function calculateCampStatistics(
     const winningCamps = new Set<string>();
     game.PlayerStats.forEach(playerStat => {
       if (playerStat.Victorious) {
-        const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles });
+        const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles, regroupVillagers });
         winningCamps.add(playerCamp);
       }
     });
@@ -339,8 +339,11 @@ function calculatePerformanceDifferentials(
         playerCampStat.winRate = parseFloat((playerCampStat.wins / playerCampStat.games * 100).toFixed(2));
 
         // Calculate performance vs camp average
-        if (campStats[camp] && campStats[camp].winRate) {
+        if (campStats[camp] && campStats[camp].winRate !== undefined) {
           playerCampStat.performance = parseFloat((playerCampStat.winRate - campStats[camp].winRate).toFixed(2));
+        } else {
+          // If camp stats don't exist, set performance to 0 
+          playerCampStat.performance = 0;
         }
       }
     });
@@ -383,12 +386,17 @@ function formatResults(
 
       // Only include if player has played this camp multiple times
       if (campData.games >= minGamesToInclude) {
+        // Ensure camp statistics exist before accessing them
+        const campAvgWinRate = campStats[camp] && campStats[camp].winRate !== undefined 
+          ? campStats[camp].winRate.toFixed(2) 
+          : '0.00';
+        
         campPerformanceArray.push({
           camp: camp,
           games: campData.games,
           wins: campData.wins,
           winRate: campData.winRate.toFixed(2),
-          campAvgWinRate: campStats[camp].winRate.toFixed(2),
+          campAvgWinRate: campAvgWinRate,
           performance: campData.performance.toFixed(2)
         });
       }
@@ -442,7 +450,6 @@ export function computePlayerCampPerformance(
 
   // Calculate special roles grouping
   const campStatsSpecialRoles = calculateSpecialRolesCampStatistics(gameData);
-
 
   // Analyze player performance by camp
   const playerCampPerformance = analyzePlayerPerformance(gameData, campStats, false, false);
