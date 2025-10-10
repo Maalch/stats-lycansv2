@@ -44,7 +44,7 @@ export const DeathTypeCode = {
  * @typedef {Object} CampGroupOptions
  * @property {boolean} [regroupLovers] - Whether to regroup lovers
  * @property {boolean} [regroupVillagers] - Whether to regroup villagers  
- * @property {boolean} [regroupTraitor] - Whether to regroup traitor with wolves
+ * @property {boolean} [regroupWolfSubRoles] - Whether to regroup wolves sub roles (Traitor, wolf cub...) with wolves
  */
 
 
@@ -81,8 +81,8 @@ export function getPlayerCampFromRole(roleName, groupOptions) {
   
   const options = groupOptions || {};
 
-  //by default: regroup lovers, villagers, but not traitor 
-  const { regroupLovers = true, regroupVillagers = true, regroupTraitor = false } = options;
+  //by default: regroup lovers, villagers, but not wolf sub roles
+  const { regroupLovers = true, regroupVillagers = true, regroupWolfSubRoles = false } = options;
   
   // Handle Amoureux roles
   if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
@@ -99,8 +99,8 @@ export function getPlayerCampFromRole(roleName, groupOptions) {
   }
   
   // Handle Traitor role
-  if (roleName === 'Traître') {
-    return regroupTraitor ? 'Loup' : roleName;
+  if (roleName === 'Traître' || roleName === 'Louveteau') {
+    return regroupWolfSubRoles ? 'Loup' : roleName;
   }
   
   // Special roles keep their role name as camp
@@ -113,7 +113,7 @@ export function getPlayerCampFromRole(roleName, groupOptions) {
 export function getPlayerMainCampFromRole(roleName) {
   if (!roleName) return 'Villageois';
   
-  roleName = getPlayerCampFromRole(roleName, { regroupTraitor: true });
+  roleName = getPlayerCampFromRole(roleName, { regroupWolfSubRoles: true });
 
   // Loups camp (now includes Traître automatically)
   if (roleName === 'Loup') {

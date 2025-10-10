@@ -20,7 +20,7 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
         const camp = getPlayerCampFromRole(player.MainRoleInitial, {
           regroupLovers: true,
           regroupVillagers: true,
-          regroupTraitor: false
+          regroupWolfSubRoles: false
         });
         campsSet.add(camp);
     });
@@ -279,7 +279,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
           killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
             regroupLovers: true,
             regroupVillagers: true,
-            regroupTraitor: false
+            regroupWolfSubRoles: false
           });
           
           // Special case: if MainRoleFinal is Loup or Zombie and different from MainRoleInitial,
@@ -312,7 +312,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       const victimCamp = getPlayerCampFromRole(victimPlayer.MainRoleInitial, {
         regroupLovers: true,
         regroupVillagers: true,
-        regroupTraitor: false
+        regroupWolfSubRoles: false
       });
       
       // Only include deaths where the victim is from the selected camp
@@ -357,7 +357,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
       let killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
         regroupLovers: true,
         regroupVillagers: true,
-        regroupTraitor: false
+        regroupWolfSubRoles: false
       });
       
       // Special case: if MainRoleFinal is Loup or Zombie and different from MainRoleInitial,
@@ -439,7 +439,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
         const playerCamp = getPlayerCampFromRole(player.MainRoleInitial, {
           regroupLovers: true,
           regroupVillagers: true,
-          regroupTraitor: false
+          regroupWolfSubRoles: false
         });
         
         if (playerCamp === campFilter) {
@@ -666,7 +666,7 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
         const victimCamp = getPlayerCampFromRole(victim.MainRoleInitial, {
           regroupLovers: true,
           regroupVillagers: true,
-          regroupTraitor: false
+          regroupWolfSubRoles: false
         });
         
         // Apply camp filter if specified

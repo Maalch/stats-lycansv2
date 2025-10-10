@@ -565,25 +565,25 @@ export function PlayerGameHistoryChart() {
                             },
                             fromComponent: 'Distribution par Camps'
                           });
-                        } else if (entry.name === 'Traître') {
-                          // Special handling for Traître camp, add excludeTraitor flag
+                        } else if (entry.name === 'Traître' || entry.name === 'Louveteau') {
+                          // Special handling for wolf sub roles, add excludeSubRoles flag
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
                             campFilter: {
-                              selectedCamp: 'Traître',
+                              selectedCamp: entry.name,
                               campFilterMode: 'all-assignments',
-                              excludeTraitor: true
+                              excludeWolfSubRoles: true
                             },
                             fromComponent: 'Distribution par Camps'
                           });
                         } else if (entry.name === 'Loup') {
-                          // When clicking on Loups, exclude traitor games to show only regular wolf games
+                          // When clicking on Loups, exclude sub roles games to show only regular wolf games
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
                             campFilter: {
                               selectedCamp: 'Loup',
                               campFilterMode: 'all-assignments',
-                              excludeTraitor: true
+                              excludeWolfSubRoles: true
                             },
                             fromComponent: 'Distribution par Camps'
                           });
@@ -735,14 +735,14 @@ export function PlayerGameHistoryChart() {
                             : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
                         }
                         onClick={() => {
-                          // Special handling for Traître and Loups camps
-                          if (entry.name === 'Traître') {
+                          // Special handling for Wolf sub roles and Loups camps
+                          if (entry.name === 'Traître' || entry.name === 'Louveteau') {
                             navigateToGameDetails({
                               selectedPlayer: selectedPlayerName,
                               campFilter: {
                                 selectedCamp: entry.name,
                                 campFilterMode: 'all-assignments',
-                                excludeTraitor: true
+                                excludeWolfSubRoles: true
                               },
                               fromComponent: 'Performance par Camp'
                             });
@@ -753,7 +753,7 @@ export function PlayerGameHistoryChart() {
                               campFilter: {
                                 selectedCamp: entry.name,
                                 campFilterMode: 'all-assignments',
-                                excludeTraitor: true
+                                excludeWolfSubRoles: true
                               },
                               fromComponent: 'Performance par Camp'
                             });

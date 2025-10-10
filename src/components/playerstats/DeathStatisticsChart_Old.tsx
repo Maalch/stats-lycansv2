@@ -331,7 +331,7 @@ export function DeathStatisticsChart() {
           const playerCamp = getPlayerCampFromRole(player.MainRoleInitial, {
             regroupLovers: true,
             regroupVillagers: true,
-            regroupTraitor: false
+            regroupWolfSubRoles: false
           });
           
           if (playerCamp === selectedCamp) {
@@ -422,7 +422,7 @@ export function DeathStatisticsChart() {
           getPlayerCampFromRole(player.MainRoleInitial, {
             regroupLovers: true,
             regroupVillagers: true,
-            regroupTraitor: false
+            regroupWolfSubRoles: false
           }) === selectedCamp;
           
         // Only count actual deaths, exclude survivors and empty death types
