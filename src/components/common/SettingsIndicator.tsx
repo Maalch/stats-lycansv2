@@ -1,8 +1,14 @@
 import { useSettings } from '../../context/SettingsContext';
 import './SettingsIndicator.css';
 
+interface FilterInfo {
+  id: string;
+  label: string;
+  type: 'gameType' | 'dateRange' | 'mapName' | 'playerFilter' | 'highlightedPlayer';
+}
+
 export function SettingsIndicator() {
-  const { settings } = useSettings();
+  const { settings, updateSettings } = useSettings();
 
   // Check if any non-default settings are active
   const hasActiveFilters = (() => {
@@ -23,17 +29,19 @@ export function SettingsIndicator() {
     return null; // Don't show indicator when no filters are active
   }
 
-  const getFilterSummary = () => {
-    const filters = [];
+  const getFilterSummary = (): FilterInfo[] => {
+    const filters: FilterInfo[] = [];
 
     if (settings.independentFilters) {
       const independentFilters = settings.independentFilters;
 
       // Game type filter
       if (independentFilters.gameTypeEnabled && independentFilters.gameFilter !== 'all') {
-        filters.push(
-          independentFilters.gameFilter === 'modded' ? 'Parties moddées' : 'Parties non-moddées'
-        );
+        filters.push({
+          id: 'gameType',
+          label: independentFilters.gameFilter === 'modded' ? 'Parties moddées' : 'Parties non-moddées',
+          type: 'gameType'
+        });
       }
 
       // Date range filter
@@ -42,15 +50,26 @@ export function SettingsIndicator() {
           const start = independentFilters.dateRange.start ? new Date(independentFilters.dateRange.start).toLocaleDateString('fr-FR') : '';
           const end = independentFilters.dateRange.end ? new Date(independentFilters.dateRange.end).toLocaleDateString('fr-FR') : '';
           
+          let label = '';
           if (start && end) {
-            filters.push(`Période: ${start} - ${end}`);
+            label = `Période: ${start} - ${end}`;
           } else if (start) {
-            filters.push(`Depuis: ${start}`);
+            label = `Depuis: ${start}`;
           } else if (end) {
-            filters.push(`Jusqu'à: ${end}`);
+            label = `Jusqu'à: ${end}`;
           }
+          
+          filters.push({
+            id: 'dateRange',
+            label,
+            type: 'dateRange'
+          });
         } else {
-          filters.push('Filtre par date (aucune date sélectionnée)');
+          filters.push({
+            id: 'dateRange',
+            label: 'Filtre par date (aucune date sélectionnée)',
+            type: 'dateRange'
+          });
         }
       }
 
@@ -61,7 +80,11 @@ export function SettingsIndicator() {
           'chateau': 'Carte: Château',
           'others': 'Carte: Autres'
         };
-        filters.push(mapLabels[independentFilters.mapNameFilter] || 'Carte: Inconnue');
+        filters.push({
+          id: 'mapName',
+          label: mapLabels[independentFilters.mapNameFilter] || 'Carte: Inconnue',
+          type: 'mapName'
+        });
       }
 
       // Player filter
@@ -69,23 +92,63 @@ export function SettingsIndicator() {
         const playerCount = independentFilters.playerFilter.players.length;
         const modeText = independentFilters.playerFilter.mode === 'include' ? 'Inclure' : 'Exclure';
         
+        let label = '';
         if (playerCount === 1) {
           // Show player name for single player
-          filters.push(`${modeText} ${independentFilters.playerFilter.players[0]}`);
+          label = `${modeText} ${independentFilters.playerFilter.players[0]}`;
         } else {
           // Show count for multiple players
           const playerText = 'joueurs';
-          filters.push(`${modeText} ${playerCount} ${playerText}`);
+          label = `${modeText} ${playerCount} ${playerText}`;
         }
+        
+        filters.push({
+          id: 'playerFilter',
+          label,
+          type: 'playerFilter'
+        });
       }
     }
 
     // Highlighted player (same for both systems)
     if (settings.highlightedPlayer) {
-      filters.push(`🎯 Mettre en évidence ${settings.highlightedPlayer}`);
+      filters.push({
+        id: 'highlightedPlayer',
+        label: `🎯 Mettre en évidence ${settings.highlightedPlayer}`,
+        type: 'highlightedPlayer'
+      });
     }
 
     return filters;
+  };
+
+  const removeFilter = (filterType: FilterInfo['type']) => {
+    if (!settings.independentFilters) return;
+
+    const updatedFilters = { ...settings.independentFilters };
+
+    switch (filterType) {
+      case 'gameType':
+        updatedFilters.gameTypeEnabled = false;
+        updatedFilters.gameFilter = 'all';
+        break;
+      case 'dateRange':
+        updatedFilters.dateRangeEnabled = false;
+        updatedFilters.dateRange = { start: null, end: null };
+        break;
+      case 'mapName':
+        updatedFilters.mapNameEnabled = false;
+        updatedFilters.mapNameFilter = 'all';
+        break;
+      case 'playerFilter':
+        updatedFilters.playerFilter = { mode: 'none', players: [] };
+        break;
+      case 'highlightedPlayer':
+        updateSettings({ highlightedPlayer: null });
+        return; // Early return since we're not updating independentFilters
+    }
+
+    updateSettings({ independentFilters: updatedFilters });
   };
 
   const filters = getFilterSummary();
@@ -100,9 +163,21 @@ export function SettingsIndicator() {
       <div className="settings-indicator-content">
         <span className="settings-indicator-label">Filtres actifs:</span>
         <div className="settings-indicator-filters">
-          {filters.map((filter, index) => (
-            <span key={index} className="settings-indicator-filter">
-              {filter}
+          {filters.map((filter) => (
+            <span key={filter.id} className="settings-indicator-filter">
+              <span className="settings-indicator-filter-text">
+                {filter.label}
+              </span>
+              <button
+                className="settings-indicator-filter-remove"
+                onClick={() => removeFilter(filter.type)}
+                title={`Supprimer le filtre: ${filter.label}`}
+                aria-label={`Supprimer le filtre: ${filter.label}`}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+              </button>
             </span>
           ))}
         </div>
