@@ -4,7 +4,7 @@ import type { GameLogEntry } from '../useCombinedRawData';
 
 export interface CampSeries {
   player: string;
-  camp: 'Villageois' | 'Loups';
+  camp: 'Villageois' | 'Loups' | 'Sans Loups';
   seriesLength: number;
   startGame: string;    // Global chronological game number (e.g., "123")
   endGame: string;      // Global chronological game number (e.g., "127")
@@ -42,27 +42,32 @@ export interface PlayerSeriesData {
   // Full datasets for all players with series data
   allVillageoisSeries: CampSeries[];
   allLoupsSeries: CampSeries[];
+  allNoWolfSeries: CampSeries[];
   allWinSeries: WinSeries[];
   allLossSeries: LossSeries[];
   totalGamesAnalyzed: number;
   // Statistics for all players
   averageVillageoisSeries: number;
   averageLoupsSeries: number;
+  averageNoWolfSeries: number;
   averageWinSeries: number;
   averageLossSeries: number;
   eliteVillageoisCount: number; // Players with 5+ Villageois series
   eliteLoupsCount: number; // Players with 3+ Loups series
+  eliteNoWolfCount: number; // Players with 5+ NoWolf series
   eliteWinCount: number; // Players with 5+ win series
   eliteLossCount: number; // Players with 5+ loss series
   totalPlayersCount: number;
   // Active series counts (all players currently on a streak, not just top 20)
   activeVillageoisCount: number; // Players currently on a Villageois streak
   activeLoupsCount: number; // Players currently on a Loups streak
+  activeNoWolfCount: number; // Players currently on a NoWolf streak
   activeWinCount: number; // Players currently on a win streak
   activeLossCount: number; // Players currently on a loss streak
   // Record ongoing counts (players currently in their personal best streak)
   ongoingVillageoisCount: number;
   ongoingLoupsCount: number;
+  ongoingNoWolfCount: number;
   ongoingWinCount: number;
   ongoingLossCount: number;
 }
@@ -70,8 +75,10 @@ export interface PlayerSeriesData {
 interface PlayerSeriesState {
   currentVillageoisSeries: number;
   currentLoupsSeries: number;
+  currentNoWolfSeries: number;
   longestVillageoisSeries: CampSeries | null;
   longestLoupsSeries: CampSeries | null;
+  longestNoWolfSeries: CampSeries | null;
   currentWinSeries: number;
   longestWinSeries: WinSeries | null;
   currentWinCamps: string[];
@@ -82,11 +89,13 @@ interface PlayerSeriesState {
   lastWon: boolean;
   villageoisSeriesStart: { game: string; date: string } | null;    // Changed to string
   loupsSeriesStart: { game: string; date: string } | null;          // Changed to string
+  noWolfSeriesStart: { game: string; date: string } | null;         // New NoWolf series start
   winSeriesStart: { game: string; date: string } | null;            // Changed to string
   lossSeriesStart: { game: string; date: string } | null;           // Changed to string
   // Track game IDs for current series - now DisplayedIds
   currentVillageoisGameIds: string[];
   currentLoupsGameIds: string[];
+  currentNoWolfGameIds: string[];
   currentWinGameIds: string[];
   currentLossGameIds: string[];
 }
@@ -116,8 +125,10 @@ function initializePlayerSeries(allPlayers: Set<string>): Record<string, PlayerS
     playerCampSeries[player] = {
       currentVillageoisSeries: 0,
       currentLoupsSeries: 0,
+      currentNoWolfSeries: 0,
       longestVillageoisSeries: null,
       longestLoupsSeries: null,
+      longestNoWolfSeries: null,
       currentWinSeries: 0,
       longestWinSeries: null,
       currentWinCamps: [],
@@ -128,10 +139,12 @@ function initializePlayerSeries(allPlayers: Set<string>): Record<string, PlayerS
       lastWon: false,
       villageoisSeriesStart: null,
       loupsSeriesStart: null,
+      noWolfSeriesStart: null,
       winSeriesStart: null,
       lossSeriesStart: null,
       currentVillageoisGameIds: [],
       currentLoupsGameIds: [],
+      currentNoWolfGameIds: [],
       currentWinGameIds: [],
       currentLossGameIds: []
     };
@@ -215,6 +228,11 @@ function processCampSeries(
       playerStats.currentVillageoisSeries = 0;
       playerStats.villageoisSeriesStart = null;
       playerStats.currentVillageoisGameIds = [];
+      
+      // Reset NoWolf series (playing as Loup breaks NoWolf streak)
+      playerStats.currentNoWolfSeries = 0;
+      playerStats.noWolfSeriesStart = null;
+      playerStats.currentNoWolfGameIds = [];
     }
     
     playerStats.lastCamp = mainCamp;
@@ -227,6 +245,35 @@ function processCampSeries(
     playerStats.currentVillageoisGameIds = [];
     playerStats.currentLoupsGameIds = [];
     playerStats.lastCamp = 'Autres';
+  }
+
+  // Process NoWolf series (any camp that is NOT 'Loup')
+  if (mainCamp !== 'Loup') {
+    // Continue or start NoWolf series
+    if (playerStats.currentNoWolfSeries > 0) {
+      playerStats.currentNoWolfSeries++;
+      playerStats.currentNoWolfGameIds.push(gameDisplayedId);
+    } else {
+      playerStats.currentNoWolfSeries = 1;
+      playerStats.noWolfSeriesStart = { game: gameDisplayedId, date };
+      playerStats.currentNoWolfGameIds = [gameDisplayedId];
+    }
+    
+    // Update longest if current is longer or equal (keep most recent in case of ties)
+    if (!playerStats.longestNoWolfSeries || 
+        playerStats.currentNoWolfSeries >= playerStats.longestNoWolfSeries.seriesLength) {
+      playerStats.longestNoWolfSeries = {
+        player,
+        camp: 'Sans Loups', // Display name for NoWolf series
+        seriesLength: playerStats.currentNoWolfSeries,
+        startGame: playerStats.noWolfSeriesStart?.game || gameDisplayedId,
+        endGame: gameDisplayedId,
+        startDate: playerStats.noWolfSeriesStart?.date || date,
+        endDate: date,
+        isOngoing: false, // Will be updated at the end
+        gameIds: [...playerStats.currentNoWolfGameIds]
+      };
+    }
   }
 }
 
@@ -350,11 +397,13 @@ function processLossSeries(
 function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState>): {
   allVillageoisSeries: CampSeries[];
   allLoupsSeries: CampSeries[];
+  allNoWolfSeries: CampSeries[];
   allWinSeries: WinSeries[];
   allLossSeries: LossSeries[];
 } {
   const allVillageoisSeries: CampSeries[] = [];
   const allLoupsSeries: CampSeries[] = [];
+  const allNoWolfSeries: CampSeries[] = [];
   const allWinSeries: WinSeries[] = [];
   const allLossSeries: LossSeries[] = [];
 
@@ -364,6 +413,9 @@ function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState
     }
     if (stats.longestLoupsSeries) {
       allLoupsSeries.push(stats.longestLoupsSeries);
+    }
+    if (stats.longestNoWolfSeries) {
+      allNoWolfSeries.push(stats.longestNoWolfSeries);
     }
     if (stats.longestWinSeries) {
       allWinSeries.push(stats.longestWinSeries);
@@ -376,12 +428,14 @@ function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState
   // Sort by series length (descending) - no slicing here
   allVillageoisSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   allLoupsSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  allNoWolfSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   allWinSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   allLossSeries.sort((a, b) => b.seriesLength - a.seriesLength);
 
   return {
     allVillageoisSeries,
     allLoupsSeries,
+    allNoWolfSeries,
     allWinSeries,
     allLossSeries
   };
@@ -396,16 +450,19 @@ function calculatePlayerStatistics(
 ): {
   averageVillageoisSeries: number;
   averageLoupsSeries: number;
+  averageNoWolfSeries: number;
   averageWinSeries: number;
   averageLossSeries: number;
   eliteVillageoisCount: number;
   eliteLoupsCount: number;
+  eliteNoWolfCount: number;
   eliteWinCount: number;
   eliteLossCount: number;
 } {
   // Collect ALL players' best series lengths (including 0 for those who never had a series)
   const allVillageoisSeries: number[] = [];
   const allLoupsSeries: number[] = [];
+  const allNoWolfSeries: number[] = [];
   const allWinSeries: number[] = [];
   const allLossSeries: number[] = [];
   
@@ -413,6 +470,7 @@ function calculatePlayerStatistics(
     // For averages, include the best series length for each player (0 if they never had one)
     allVillageoisSeries.push(stats.longestVillageoisSeries?.seriesLength || 0);
     allLoupsSeries.push(stats.longestLoupsSeries?.seriesLength || 0);
+    allNoWolfSeries.push(stats.longestNoWolfSeries?.seriesLength || 0);
     allWinSeries.push(stats.longestWinSeries?.seriesLength || 0);
     allLossSeries.push(stats.longestLossSeries?.seriesLength || 0);
   });
@@ -426,6 +484,10 @@ function calculatePlayerStatistics(
     ? allLoupsSeries.reduce((sum, length) => sum + length, 0) / totalPlayers
     : 0;
   
+  const averageNoWolfSeries = totalPlayers > 0 
+    ? allNoWolfSeries.reduce((sum, length) => sum + length, 0) / totalPlayers
+    : 0;
+  
   const averageWinSeries = totalPlayers > 0 
     ? allWinSeries.reduce((sum, length) => sum + length, 0) / totalPlayers
     : 0;
@@ -434,19 +496,22 @@ function calculatePlayerStatistics(
     ? allLossSeries.reduce((sum, length) => sum + length, 0) / totalPlayers
     : 0;
 
-  // Count elite players (with thresholds: Villageois 5+, Loups 3+, Wins 5+, Losses 5+)
+  // Count elite players (with thresholds: Villageois 5+, Loups 3+, NoWolf 5+, Wins 5+, Losses 5+)
   const eliteVillageoisCount = allVillageoisSeries.filter(length => length >= 5).length;
   const eliteLoupsCount = allLoupsSeries.filter(length => length >= 3).length;
+  const eliteNoWolfCount = allNoWolfSeries.filter(length => length >= 5).length;
   const eliteWinCount = allWinSeries.filter(length => length >= 5).length;
   const eliteLossCount = allLossSeries.filter(length => length >= 5).length;
 
   return {
     averageVillageoisSeries: Math.round(averageVillageoisSeries * 10) / 10, // Round to 1 decimal
     averageLoupsSeries: Math.round(averageLoupsSeries * 10) / 10,
+    averageNoWolfSeries: Math.round(averageNoWolfSeries * 10) / 10,
     averageWinSeries: Math.round(averageWinSeries * 10) / 10,
     averageLossSeries: Math.round(averageLossSeries * 10) / 10,
     eliteVillageoisCount,
     eliteLoupsCount,
+    eliteNoWolfCount,
     eliteWinCount,
     eliteLossCount
   };
@@ -491,13 +556,13 @@ export function computePlayerSeries(
       const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
       const playerWon = playerStat.Victorious;
 
-      // Process camp series - now using DisplayedId
+      // Process camp series 
       processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date);
 
-      // Process win series - now using DisplayedId
+      // Process win series 
       processWinSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
       
-      // Process loss series - now using DisplayedId
+      // Process loss series 
       processLossSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
     });
   });
@@ -506,6 +571,7 @@ export function computePlayerSeries(
   const { 
     allVillageoisSeries,
     allLoupsSeries,
+    allNoWolfSeries,
     allWinSeries,
     allLossSeries
   } = collectSeriesResults(playerCampSeries);
@@ -527,6 +593,13 @@ export function computePlayerSeries(
         stats.currentLoupsSeries === stats.longestLoupsSeries.seriesLength &&
         stats.currentLoupsSeries > 0) {
       stats.longestLoupsSeries.isOngoing = true;
+    }
+
+    // Check NoWolf series
+    if (stats.longestNoWolfSeries && 
+        stats.currentNoWolfSeries === stats.longestNoWolfSeries.seriesLength &&
+        stats.currentNoWolfSeries > 0) {
+      stats.longestNoWolfSeries.isOngoing = true;
     }
 
     // Check Win series
@@ -553,10 +626,12 @@ export function computePlayerSeries(
   // Count active and ongoing series from ALL players
   let activeVillageoisCount = 0;   // Players currently on a Villageois streak
   let activeLoupsCount = 0;        // Players currently on a Loups streak  
+  let activeNoWolfCount = 0;       // Players currently on a NoWolf streak
   let activeWinCount = 0;          // Players currently on a win streak
   let activeLossCount = 0;         // Players currently on a loss streak
   let ongoingVillageoisCount = 0;  // Players currently in their personal best Villageois streak
   let ongoingLoupsCount = 0;       // Players currently in their personal best Loups streak
+  let ongoingNoWolfCount = 0;      // Players currently in their personal best NoWolf streak
   let ongoingWinCount = 0;         // Players currently in their personal best win streak
   let ongoingLossCount = 0;        // Players currently in their personal best loss streak
 
@@ -567,6 +642,9 @@ export function computePlayerSeries(
     }
     if (stats.currentLoupsSeries > 0) {
       activeLoupsCount++;
+    }
+    if (stats.currentNoWolfSeries > 0) {
+      activeNoWolfCount++;
     }
     if (stats.currentWinSeries > 0) {
       activeWinCount++;
@@ -582,6 +660,9 @@ export function computePlayerSeries(
     if (stats.longestLoupsSeries?.isOngoing) {
       ongoingLoupsCount++;
     }
+    if (stats.longestNoWolfSeries?.isOngoing) {
+      ongoingNoWolfCount++;
+    }
     if (stats.longestWinSeries?.isOngoing) {
       ongoingWinCount++;
     }
@@ -593,16 +674,19 @@ export function computePlayerSeries(
   return {
     allVillageoisSeries,
     allLoupsSeries,
+    allNoWolfSeries,
     allWinSeries,
     allLossSeries,
     totalGamesAnalyzed: sortedGames.length,
     totalPlayersCount: allPlayers.size,
     activeVillageoisCount,
     activeLoupsCount,
+    activeNoWolfCount,
     activeWinCount,
     activeLossCount,
     ongoingVillageoisCount,
     ongoingLoupsCount,
+    ongoingNoWolfCount,
     ongoingWinCount,
     ongoingLossCount,
     ...statistics
