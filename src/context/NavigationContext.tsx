@@ -17,6 +17,7 @@ export interface CampFilter {
   campFilterMode: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
   _smallCamps?: string[]; // List of small camps for "Autres" category
   excludeWolfSubRoles?: boolean; // When true, excludes wolf sub roles from main camp filtering (example: "Loups sans Traître/Louveteau")
+  excludeVillagers?: boolean; // When true, excludes villager sub roles from main camp filtering (example: "Villageois sans Chasseur/Alchimiste")
 }
 
 export interface NavigationFilters {

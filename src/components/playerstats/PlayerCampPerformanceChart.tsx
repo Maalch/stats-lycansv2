@@ -33,7 +33,7 @@ export function PlayerCampPerformanceChart() {
   
   // Use navigationState to restore state, with fallbacks
   const [selectedCamp, setSelectedCamp] = useState<string>(
-    navigationState.campPerformanceState?.selectedCampPerformanceCamp || 'Villageois'
+    navigationState.campPerformanceState?.selectedCampPerformanceCamp || 'Camp Villageois'
   );
   const [minGames, setMinGames] = useState<number>(
     navigationState.campPerformanceState?.selectedCampPerformanceMinGames || 3
@@ -62,7 +62,21 @@ export function PlayerCampPerformanceChart() {
     // Define the specific order we want with separators
     const orderedCamps = ['Tous les camps'];
     
-    // Add Villageois if available
+    // Add Camp Villageois if available
+    if (availableCampNames.includes('Camp Villageois')) {
+      orderedCamps.push('Camp Villageois');
+    }
+    
+    // Add individual villager roles if available
+    if (availableCampNames.includes('Chasseur')) {
+      orderedCamps.push('Chasseur');
+    }
+    
+    if (availableCampNames.includes('Alchimiste')) {
+      orderedCamps.push('Alchimiste');
+    }
+    
+    // Add original Villageois if available (for backward compatibility)
     if (availableCampNames.includes('Villageois')) {
       orderedCamps.push('Villageois');
     }
@@ -93,8 +107,8 @@ export function PlayerCampPerformanceChart() {
     }
     
     // Add remaining camps (solo/special roles) alphabetically
-    const specialCamps = ['Camp Loup', 'Rôles spéciaux'];
-    const mainCamps = ['Villageois', 'Camp Loup', 'Traître', 'Louveteau']; 
+    const specialCamps = ['Camp Villageois', 'Camp Loup', 'Rôles spéciaux'];
+    const mainCamps = ['Camp Villageois', 'Villageois', 'Chasseur', 'Alchimiste', 'Camp Loup', 'Loup', 'Traître', 'Louveteau']; 
     const excludedCamps = [...mainCamps, ...specialCamps];
     
     const otherCamps = availableCampNames
@@ -257,6 +271,16 @@ export function PlayerCampPerformanceChart() {
             },
             fromComponent: `Performance des Joueurs - ${selectedCamp}`
           });
+        } else if (selectedCamp === 'Camp Villageois') {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: 'Villageois',
+              campFilterMode: 'wins-only',
+              excludeVillagers: false // Include all villager roles
+            },
+            fromComponent: `Performance des Joueurs - ${selectedCamp}`
+          });
         } else if (selectedCamp === 'Rôles spéciaux') {
           // For special roles, don't use camp filter - just show all games for the player
           navigateToGameDetails({
@@ -270,19 +294,30 @@ export function PlayerCampPerformanceChart() {
               selectedCamp: selectedCamp,
               campFilterMode: 'wins-only',
               excludeWolfSubRoles: selectedCamp === 'Traître' || selectedCamp === 'Louveteau', // Exclude traitor and Louveteau from Loups filtering
+              excludeVillagers: selectedCamp === 'Chasseur' || selectedCamp === 'Alchimiste' // Exclude Chasseur and Alchimiste from Villagers filtering
             },
             fromComponent: `Performance des Joueurs - ${selectedCamp}`
           });
         }
       } else {
         // For 'Tous les camps' view, use the camp from the data point
-        if (data.camp === 'Camp') {
+        if (data.camp === 'Camp Loup') {
           navigateToGameDetails({
             selectedPlayer: data.player,
             campFilter: {
               selectedCamp: 'Loup',
               campFilterMode: 'wins-only',
               excludeWolfSubRoles: false
+            },
+            fromComponent: `Performance des Joueurs - Tous les camps`
+          });
+        } else if (data.camp === 'Camp Villageois') {
+          navigateToGameDetails({
+            selectedPlayer: data.player,
+            campFilter: {
+              selectedCamp: 'Villageois',
+              campFilterMode: 'wins-only',
+              excludeWolfSubRoles: true
             },
             fromComponent: `Performance des Joueurs - Tous les camps`
           });
@@ -298,7 +333,8 @@ export function PlayerCampPerformanceChart() {
             campFilter: {
               selectedCamp: data.camp,
               campFilterMode: 'wins-only',
-              excludeWolfSubRoles: data.camp === 'Traître' || data.camp === 'Louveteau'
+              excludeWolfSubRoles: data.camp === 'Traître' || data.camp === 'Louveteau',
+              excludeVillagers: data.camp === 'Chasseur' || data.camp === 'Alchimiste' 
             },
             fromComponent: `Performance des Joueurs - Tous les camps`
           });
@@ -306,8 +342,6 @@ export function PlayerCampPerformanceChart() {
       }
     }
   };
-
-
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de performance par camp...</div>;
@@ -368,8 +402,19 @@ export function PlayerCampPerformanceChart() {
               
               if (camp === 'Tous les camps') {
                 optionText = '📊 Tous les camps';
+                isSubGroup = true;
+              } else if (camp === 'Camp Villageois') {
+                optionText = '   🏘️ Camp Villageois';
+                isIndented = true;
+                isSubGroup = true;              
               } else if (camp === 'Villageois') {
                 optionText = '   Villageois';
+                isIndented = true;
+              } else if (camp === 'Chasseur') {
+                optionText = '     Chasseur';
+                isIndented = true;
+              } else if (camp === 'Alchimiste') {
+                optionText = '     Alchimiste';
                 isIndented = true;
               } else if (camp === 'Camp Loup') {
                 optionText = '   🐺 Camp Loup';
@@ -458,7 +503,7 @@ export function PlayerCampPerformanceChart() {
         fontStyle: 'italic'
       }}>
         <span>
-          📊 = Tous les camps • 🐺 = Loups groupés • ⭐ = Rôles spéciaux groupés
+          📊 = Tous les camps • 🏘️ = Villageois groupés • 🐺 = Loups groupés • ⭐ = Rôles spéciaux groupés
         </span>
       </div>
 

@@ -8,7 +8,8 @@ import { getPlayerCampFromRole, getPlayerMainCampFromRole } from '../../utils/da
  */
 function calculateCampStatistics(
   gameData: GameLogEntry[],
-  regroupWolfSubRoles: boolean = false
+  regroupWolfSubRoles: boolean = false,
+  regroupVillagers: boolean = false
 ): Record<string, {
   totalGames: number;
   wins: number;
@@ -28,7 +29,7 @@ function calculateCampStatistics(
     const campsInGame = new Set<string>();
     
     game.PlayerStats.forEach(playerStat => {
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles });
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles, regroupVillagers });
       campsInGame.add(playerCamp);
     });
 
@@ -76,7 +77,8 @@ function analyzePlayerPerformance(
     winRate: number;
     players: Record<string, { games: number; wins: number; winRate: number }>;
   }>,
-  regroupWolfSubRoles: boolean = false
+  regroupWolfSubRoles: boolean = false,
+  regroupVillagers: boolean = false
 ): Record<string, {
   totalGames: number;
   camps: Record<string, {
@@ -102,7 +104,8 @@ function analyzePlayerPerformance(
       if (!player) return;
 
       // Determine player's camp using helper function
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles });
+      const mainCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles, regroupVillagers });
+      const playerCamp = mainCamp === 'Autres' ? 'Rôles spéciaux' : mainCamp;
 
       // Track player performance in this camp
       if (!campStats[playerCamp].players[player]) {
@@ -432,46 +435,64 @@ export function computePlayerCampPerformance(
   }
 
   // Calculate overall camp statistics (both participations and wins)
-  const campStats = calculateCampStatistics(gameData, false);
+  const campStats = calculateCampStatistics(gameData, false, false);
   
-  // Also calculate with regrouped wolf sub roles for "Camp Loup" option
-  const campStatsWithWolfSubRoles = calculateCampStatistics(gameData, true);
+  // Also calculate with regrouped wolf sub roles for "Camp Loup" and "Camp Villageois" option
+  const campStatsWithSubRoles = calculateCampStatistics(gameData, true, true);
 
   // Calculate special roles grouping
   const campStatsSpecialRoles = calculateSpecialRolesCampStatistics(gameData);
 
+
   // Analyze player performance by camp
-  const playerCampPerformance = analyzePlayerPerformance(gameData, campStats, false);
-  const playerCampPerformanceWithWolfSubRoles = analyzePlayerPerformance(gameData, campStatsWithWolfSubRoles, true);
+  const playerCampPerformance = analyzePlayerPerformance(gameData, campStats, false, false);
+  const playerCampPerformanceWithSubRoles = analyzePlayerPerformance(gameData, campStatsWithSubRoles, true, true);
   const playerCampPerformanceSpecialRoles = analyzeSpecialRolesPlayerPerformance(gameData, campStatsSpecialRoles);
 
   // Calculate win rates for camps and players
   calculateWinRates(campStats);
-  calculateWinRates(campStatsWithWolfSubRoles);
+  calculateWinRates(campStatsWithSubRoles);
   calculateWinRates(campStatsSpecialRoles);
 
   // Calculate performance differential (player win rate - camp average win rate)
   calculatePerformanceDifferentials(playerCampPerformance, campStats);
-  calculatePerformanceDifferentials(playerCampPerformanceWithWolfSubRoles, campStatsWithWolfSubRoles);
+  calculatePerformanceDifferentials(playerCampPerformanceWithSubRoles, campStatsWithSubRoles);
   calculatePerformanceDifferentials(playerCampPerformanceSpecialRoles, campStatsSpecialRoles);
 
-  // Merge both datasets - add "Camp Loup" as a virtual camp
+  // Merge both datasets - add "Camp Loup" and "Camp Villageois" as a virtual camp
   const mergedCampStats = { ...campStats };
   const mergedPlayerPerformance = { ...playerCampPerformance };
   
   // Add "Camp Loup" camp if it exists in regrouped data
-  if (campStatsWithWolfSubRoles['Loup']) {
-    mergedCampStats['Camp Loup'] = campStatsWithWolfSubRoles['Loup'];
+  if (campStatsWithSubRoles['Loup']) {
+    mergedCampStats['Camp Loup'] = campStatsWithSubRoles['Loup'];
 
     // Add "Camp Loup" performance for each player
-    Object.keys(playerCampPerformanceWithWolfSubRoles).forEach(player => {
+    Object.keys(playerCampPerformanceWithSubRoles).forEach(player => {
       if (!mergedPlayerPerformance[player]) {
-        mergedPlayerPerformance[player] = playerCampPerformanceWithWolfSubRoles[player];
+        mergedPlayerPerformance[player] = playerCampPerformanceWithSubRoles[player];
       }
 
-      if (playerCampPerformanceWithWolfSubRoles[player].camps['Loup']) {
+      if (playerCampPerformanceWithSubRoles[player].camps['Loup']) {
         mergedPlayerPerformance[player].camps['Camp Loup'] = 
-          playerCampPerformanceWithWolfSubRoles[player].camps['Loup'];
+          playerCampPerformanceWithSubRoles[player].camps['Loup'];
+      }
+    });
+  }
+
+  // Add "Camp Villageois" camp if it exists in villagers data
+  if (campStatsWithSubRoles['Villageois']) {
+    mergedCampStats['Camp Villageois'] = campStatsWithSubRoles['Villageois'];
+
+    // Add "Camp Villageois" performance for each player
+    Object.keys(playerCampPerformanceWithSubRoles).forEach(player => {
+      if (!mergedPlayerPerformance[player]) {
+        mergedPlayerPerformance[player] = playerCampPerformanceWithSubRoles[player];
+      }
+      
+      if (playerCampPerformanceWithSubRoles[player].camps['Villageois']) {
+        mergedPlayerPerformance[player].camps['Camp Villageois'] = 
+          playerCampPerformanceWithSubRoles[player].camps['Villageois'];
       }
     });
   }
