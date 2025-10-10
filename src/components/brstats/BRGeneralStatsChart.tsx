@@ -2,8 +2,9 @@ import { useMemo, useState } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useFilteredRawBRData, useFilteredRawBRGlobalData } from '../../hooks/useRawBRData';
 import { FullscreenChart } from '../common/FullscreenChart';
-import { useThemeAdjustedPlayersColor, getRandomColor } from '../../types/api';
+import { useThemeAdjustedDynamicPlayersColor, getRandomColor } from '../../types/api';
 import { useSettings } from '../../context/SettingsContext';
+import { useJoueursData } from '../../hooks/useJoueursData';
 
 // Extended type for chart data with highlighting info
 interface ChartPlayerStat {
@@ -20,10 +21,11 @@ export function BRGeneralStatsChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredRawBRData();
   const { data: globalData, isLoading: globalLoading, error: globalError } = useFilteredRawBRGlobalData();
   const { settings } = useSettings();
+  const { joueursData } = useJoueursData();
   
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
 
-  const playersColor = useThemeAdjustedPlayersColor();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Chart colors using CSS custom properties
   const chartColors = [

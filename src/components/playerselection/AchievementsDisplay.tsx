@@ -1,6 +1,7 @@
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
-import { useThemeAdjustedPlayersColor, getRandomColor } from '../../types/api';
+import { useThemeAdjustedDynamicPlayersColor, getRandomColor } from '../../types/api';
+import { useJoueursData } from '../../hooks/useJoueursData';
 import type { Achievement } from '../../types/achievements';
 import './AchievementsDisplay.css';
 
@@ -14,7 +15,8 @@ interface AchievementsDisplayProps {
 export function AchievementsDisplay({ achievements, title, emptyMessage, achievementType = 'all' }: AchievementsDisplayProps) {
   const { navigateToTab, updateNavigationState, clearNavigation } = useNavigation();
   const { settings, updateSettings } = useSettings();
-  const playersColor = useThemeAdjustedPlayersColor();
+  const { joueursData } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   const handleAchievementClick = (achievement: Achievement, event: React.MouseEvent) => {
     // Prevent the click from bubbling up to parent elements (like the player card)

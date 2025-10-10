@@ -3,7 +3,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
-import { useThemeAdjustedLycansColorScheme, useThemeAdjustedPlayersColor } from '../../../types/api';
+import { useJoueursData } from '../../../hooks/useJoueursData';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 
 interface HunterViewProps {
   hunterStats: any;
@@ -19,7 +20,8 @@ export function HunterView({
   const { navigateToGameDetails } = useNavigation();
   const { settings } = useSettings();
   const lycansColors = useThemeAdjustedLycansColorScheme();
-  const playersColor = useThemeAdjustedPlayersColor();
+  const { joueursData } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
 
   if (isLoading) return <div className="donnees-attente">Chargement des statistiques chasseurs...</div>;

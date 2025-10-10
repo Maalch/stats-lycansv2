@@ -3,7 +3,7 @@ import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Responsi
 import { usePlayerComparisonFromRaw } from '../../hooks/usePlayerComparisonFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
-import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { findPlayerByName } from '../../utils/playersUtils';
 
@@ -15,7 +15,7 @@ export function PlayerComparisonChart() {
   
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
-  const playersColor = useThemeAdjustedFrenchColorMapping();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Helper function to get player info including image
   const getPlayerInfo = (playerName: string) => {
