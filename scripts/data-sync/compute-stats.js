@@ -401,7 +401,7 @@ export function computePlayerCampPerformance(gameData) {
 
     game.PlayerStats.forEach(player => {
       const roleName = player.MainRoleFinal || player.MainRoleInitial;
-      const camp = getPlayerCampFromRole(roleName);
+      const camp = getPlayerCampFromRole(roleName, { regroupVillagers: false, regroupWolfSubRoles: false });
       const playerName = player.Username;
       const won = player.Victorious;
 
