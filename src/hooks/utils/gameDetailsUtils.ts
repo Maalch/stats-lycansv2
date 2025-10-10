@@ -120,13 +120,15 @@ function calculateGameDuration(start: string | null, end: string | null): number
  * @param playerName - The name of the player to check
  * @param game - The GameLogEntry to check within  
  * @param excludeWolfSubRoles - If true, return the name of the subrole instead of 'Loup' for wolf sub-roles (Traître, Louveteau)
+ * @param excludeVillagers - If true, return the specific villager role instead of 'Villageois' for villager sub-roles (Chasseur, Alchimiste, etc.)
  * @returns The player's camp/role from MainRoleFinal, or 'Villageois' if not found
  * 
  */
 export function getPlayerCampFromGameLog(
   playerName: string, 
   game: GameLogEntry,
-  excludeWolfSubRoles: boolean = false
+  excludeWolfSubRoles: boolean = false,
+  excludeVillagers: boolean = false
 ): string {
   const playerStat = game.PlayerStats.find(
     player => player.Username.toLowerCase() === playerName.toLowerCase()
@@ -137,7 +139,7 @@ export function getPlayerCampFromGameLog(
   // Use the improved getPlayerCampFromRole with regroupTraitor option based on excludeTraitor
   const playerRole = getPlayerCampFromRole(playerStat.MainRoleFinal, {
     regroupLovers: true,
-    regroupVillagers: true,
+    regroupVillagers: !excludeVillagers, // If excludeVillagers is true, don't regroup villagers (keep as 'Villageois' or specific villager role)
     regroupWolfSubRoles: !excludeWolfSubRoles // If excludeWolfSubRoles is true, don't regroup wolf sub-roles (keep as 'Traître' or 'Louveteau')
   });
   

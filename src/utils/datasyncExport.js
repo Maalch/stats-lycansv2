@@ -36,20 +36,6 @@ export const DeathTypeCode = {
 };
 
 /**
- * @typedef {keyof typeof DeathTypeCode} DeathTypeCodeType
- */
-
-/**
- * Group options for camp classification
- * @typedef {Object} CampGroupOptions
- * @property {boolean} [regroupLovers] - Whether to regroup lovers
- * @property {boolean} [regroupVillagers] - Whether to regroup villagers  
- * @property {boolean} [regroupWolfSubRoles] - Whether to regroup wolves sub roles (Traitor, wolf cub...) with wolves
- */
-
-
-
-/**
  * Helper function to calculate game duration in seconds
  * @param {string} startDate - Start date string
  * @param {string} endDate - End date string
@@ -68,6 +54,14 @@ export function calculateGameDuration(startDate, endDate) {
     return null;
   }
 }
+
+/**
+ * Group options for camp classification
+ * @typedef {Object} CampGroupOptions
+ * @property {boolean} [regroupLovers] - Whether to regroup lovers
+ * @property {boolean} [regroupVillagers] - Whether to regroup villagers  
+ * @property {boolean} [regroupWolfSubRoles] - Whether to regroup wolves sub roles (Traitor, wolf cub...) with wolves
+ */
 
 /**
  * Helper function to get player's camp from role name
