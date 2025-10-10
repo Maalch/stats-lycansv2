@@ -23,11 +23,11 @@ type ChartSeriesData = {
 
 export function PlayerSeriesChart() {
   const { data: seriesData, isLoading: dataLoading, error: fetchError } = usePlayerSeriesFromRaw();
-  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+    const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
   
   // Use navigationState to restore series type selection, fallback to 'villageois'
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'wins' | 'losses'>(
+  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'wins' | 'losses'>(
     navigationState.selectedSeriesType || 'villageois'
   );
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
@@ -36,7 +36,7 @@ export function PlayerSeriesChart() {
   const playersColor = useThemeAdjustedPlayersColor();
 
   // Helper function to handle series type changes
-  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'wins' | 'losses') => {
+  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'wins' | 'losses') => {
     setSelectedSeriesType(newSeriesType);
     updateNavigationState({ selectedSeriesType: newSeriesType });
   };
@@ -55,6 +55,9 @@ export function PlayerSeriesChart() {
         break;
       case 'loup':
         fullDataset = seriesData.allLoupsSeries;
+        break;
+      case 'nowolf':
+        fullDataset = seriesData.allNoWolfSeries;
         break;
       case 'wins':
         fullDataset = seriesData.allWinSeries;
@@ -118,6 +121,8 @@ export function PlayerSeriesChart() {
         return 'Plus Longues Séries Villageois Consécutives';
       case 'loup':
         return 'Plus Longues Séries Loups Consécutives';
+      case 'nowolf':
+        return 'Plus Longues Séries Sans Rôle Loup';
       case 'wins':
         return 'Plus Longues Séries de Victoires';
       case 'losses':
@@ -335,6 +340,12 @@ export function PlayerSeriesChart() {
         selectedGameIds: data.gameIds,
         fromComponent: 'Séries de Défaites'
       });
+    } else if (selectedSeriesType === 'nowolf') {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
+        fromComponent: 'Séries Sans Loups'
+      });
     } else {
       const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loup';
       navigateToGameDetails({
@@ -360,6 +371,8 @@ export function PlayerSeriesChart() {
         <p>
           <strong>Séries de camps :</strong> Parties consécutives dans le même camp principal (Villageois ou Loups). 
           Jouer dans n'importe quel autre camp brise la série.<br/>
+          <strong>Séries sans Loups :</strong> Parties consécutives où le joueur n'a PAS joué de rôle Loup. 
+          Jouer un rôle Loup brise la série.<br/>
           <strong>Séries de victoires :</strong> Victoires consécutives dans n'importe quel camp. 
           Une défaite brise la série.<br/>
           <strong>Séries de défaites :</strong> Défaites consécutives dans n'importe quel camp. 
@@ -381,6 +394,12 @@ export function PlayerSeriesChart() {
           onClick={() => handleSeriesTypeChange('loup')}
         >
           Séries Loups
+        </button>
+        <button
+          className={`lycans-categorie-btn ${selectedSeriesType === 'nowolf' ? 'active' : ''}`}
+          onClick={() => handleSeriesTypeChange('nowolf')}
+        >
+          Séries Sans Loups
         </button>
         <button
           className={`lycans-categorie-btn ${selectedSeriesType === 'wins' ? 'active' : ''}`}
@@ -443,7 +462,8 @@ export function PlayerSeriesChart() {
                 <YAxis 
                   label={{ 
                     value: selectedSeriesType === 'wins' ? 'Victoires consécutives' : 
-                           selectedSeriesType === 'losses' ? 'Défaites consécutives' : 
+                           selectedSeriesType === 'losses' ? 'Défaites consécutives' :
+                           selectedSeriesType === 'nowolf' ? 'Parties sans Loups consécutives' :
                            'Parties consécutives', 
                     angle: 270, 
                     position: 'insideLeft',
@@ -458,6 +478,7 @@ export function PlayerSeriesChart() {
                        'Parties consécutives'}
                   fill={selectedSeriesType === 'villageois' ? '#82ca9d' : 
                        selectedSeriesType === 'loup' ? '#FF8042' : 
+                       selectedSeriesType === 'nowolf' ? '#FFA500' : 
                        selectedSeriesType === 'wins' ? '#8884d8' : 
                        '#dc3545'}
                 >
@@ -470,6 +491,7 @@ export function PlayerSeriesChart() {
                     const baseColor = playersColor[entry.player] || 
                       (selectedSeriesType === 'villageois' ? '#82ca9d' : 
                        selectedSeriesType === 'loup' ? '#FF8042' : 
+                       selectedSeriesType === 'nowolf' ? '#FFA500' : 
                        selectedSeriesType === 'wins' ? '#8884d8' : 
                        '#dc3545');
                     
@@ -535,6 +557,7 @@ export function PlayerSeriesChart() {
               <div className="lycans-stat-value">
                 {selectedSeriesType === 'villageois' ? seriesData.averageVillageoisSeries :
                  selectedSeriesType === 'loup' ? seriesData.averageLoupsSeries :
+                 selectedSeriesType === 'nowolf' ? seriesData.averageNoWolfSeries :
                  selectedSeriesType === 'wins' ? seriesData.averageWinSeries :
                  seriesData.averageLossSeries}
               </div>
@@ -549,6 +572,7 @@ export function PlayerSeriesChart() {
               <div className="lycans-stat-value">
                 {selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
                  selectedSeriesType === 'loup' ? seriesData.activeLoupsCount :
+                 selectedSeriesType === 'nowolf' ? seriesData.activeNoWolfCount :
                  selectedSeriesType === 'wins' ? seriesData.activeWinCount :
                  seriesData.activeLossCount}
               </div>
@@ -556,6 +580,7 @@ export function PlayerSeriesChart() {
               <p className="lycans-h2h-description">
                 {(selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
                   selectedSeriesType === 'loup' ? seriesData.activeLoupsCount :
+                  selectedSeriesType === 'nowolf' ? seriesData.activeNoWolfCount :
                   selectedSeriesType === 'wins' ? seriesData.activeWinCount :
                   seriesData.activeLossCount) > 0 ? 
                   'Joueurs actuellement dans une série de ce type' : 

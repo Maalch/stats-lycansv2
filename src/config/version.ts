@@ -1,6 +1,4 @@
-// This file is auto-generated - do not edit manually
-// Run 'npm run sync-version' to update from package.json
-export const APP_VERSION = '1.3.3';
+export const APP_VERSION = '1.3.4';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -10,6 +8,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.4',
+    date: '10/10/2025',
+    description: 'Ajout du graphique "Série de games sans être Loup" (dans "Joueurs" / "Séries").',
+  },
   {
     version: 'v1.3.3',
     date: '08/10/2025',

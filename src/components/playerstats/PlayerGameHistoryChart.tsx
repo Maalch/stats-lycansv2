@@ -566,7 +566,7 @@ export function PlayerGameHistoryChart() {
                             fromComponent: 'Distribution par Camps'
                           });
                         } else if (entry.name === 'Traître' || entry.name === 'Louveteau') {
-                          // Special handling for wolf sub roles, add excludeSubRoles flag
+                          // Special handling for wolf sub roles, add excludeWolfSubRoles flag
                           navigateToGameDetails({
                             selectedPlayer: selectedPlayerName,
                             campFilter: {
