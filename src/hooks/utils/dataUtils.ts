@@ -61,8 +61,8 @@ export function formatLycanDate(date: any): string {
 // Helper to determine if a camp won based on camp name and winner camp
 export function didCampWin(camp: string, winnerCamp: string): boolean {
   if (camp === winnerCamp) return true;
-  // Special case: Traitor wins if Wolves win, Amoureux can be disambiguous and chasseur/alchimiste count as villageois
-  if (camp === "Traître" && winnerCamp === "Loup") return true;
+  // Special case: Traitor/WolfCub wins if Wolves win, Amoureux can be disambiguous and chasseur/alchimiste count as villageois
+  if ((camp === "Traître" || camp === "Louveteau") && winnerCamp === "Loup") return true;
   if ((camp === "Amoureux Villageois" || camp === "Amoureux Loup") && winnerCamp === "Amoureux") return true;
   if ((camp === "Chasseur" || camp === "Alchimiste") && winnerCamp === "Villageois") return true;
   return false;

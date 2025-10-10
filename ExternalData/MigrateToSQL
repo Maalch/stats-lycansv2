@@ -394,7 +394,7 @@ function determineWinnerCamp(playerStats) {
   
   const winnerRole = victoriousPlayers[0].MainRoleInitial;
   
-  if (winnerRole === 'Loup' || winnerRole === 'Traître') {
+  if (winnerRole === 'Loup' || winnerRole === 'Traître' || winnerRole === 'Louveteau') {
     return 'Loup';
   } else if (winnerRole === 'Amoureux Villageois' || winnerRole === 'Amoureux Loup') {
     return 'Amoureux';
@@ -556,7 +556,7 @@ function getCampStats({ startDate, endDate, excludedPlayers, includedPlayers }) 
         g.id,
         g.winnerCamp,
         CASE 
-          WHEN ps.mainRoleInitial IN ('Loup', 'Traître') THEN 'Loup'
+          WHEN ps.mainRoleInitial IN ('Loup', 'Traître', 'Louveteau') THEN 'Loup'
           WHEN ps.mainRoleInitial LIKE 'Amoureux%' THEN 'Amoureux'
           WHEN ps.mainRoleInitial IN ('Chasseur', 'Alchimiste') THEN 'Villageois'
           ELSE ps.mainRoleInitial

@@ -48,7 +48,7 @@ export declare function calculateGameDuration(startDate: string, endDate: string
  * @param groupOptions - An options object with grouping settings
  * @param groupOptions.regroupLovers - Whether to group lover roles
  * @param groupOptions.regroupVillagers - Whether to group villager-type roles
- * @param groupOptions.regroupTraitor - Whether to group traitor with werewolves
+ * @param groupOptions.regroupWolfSubRoles - Whether to group wolf sub-roles
  * @returns The camp name for the role
  */
 export declare function getPlayerCampFromRole(
@@ -56,7 +56,7 @@ export declare function getPlayerCampFromRole(
   groupOptions?: {
     regroupLovers?: boolean;
     regroupVillagers?: boolean;
-    regroupTraitor?: boolean;
+    regroupWolfSubRoles?: boolean;
   }
 ): string;
 

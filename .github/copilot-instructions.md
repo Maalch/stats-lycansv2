@@ -131,7 +131,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 
 ### Game Domain Rules
 **Camps:** Villageois, Loups, solo roles (`Amoureux`, `Idiot du Village`, `Agent`, etc.)  
-**Special Cases:** `Traître` works with Loups, `Amoureux` always 2 players (win/lose together)  
+**Special Cases:** `Traître` and `Louveteau` works with Loups, `Amoureux` always 2 players (win/lose together)  
 **Victory Logic:** Pure role-based - solo roles win as their role name, not grouped into Villageois
 
 ## Project-Specific Conventions

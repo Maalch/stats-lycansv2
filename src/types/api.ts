@@ -14,6 +14,7 @@ const lycansColorScheme: Record<string, string> = {
   'Traître': '#FF8000',
   'Amoureux': '#FF80FF',
   'Loup': '#FF0000',
+  'Louveteau': '#FF0000',
   'Villageois': '#0096FF',
   'Chasseur': '#fbff00',
   'Alchimiste': '#ff00d4',
