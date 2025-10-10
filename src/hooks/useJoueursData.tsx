@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { JoueursData } from '../types/joueurs';
+import { useThemeAdjustedDynamicPlayersColor } from '../types/api';
 
 export function useJoueursData() {
   const [joueursData, setJoueursData] = useState<JoueursData | null>(null);
@@ -40,6 +41,19 @@ export function usePlayersList() {
   const players = joueursData?.Players || null;
   
   return { players, isLoading, error };
+}
+
+// Convenience hook that combines joueurs data with dynamic player colors
+export function useJoueursDataWithColors() {
+  const { joueursData, isLoading, error } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
+  
+  return { 
+    joueursData, 
+    playersColor, 
+    isLoading, 
+    error 
+  };
 }
 
 // Hook to find a specific player by name

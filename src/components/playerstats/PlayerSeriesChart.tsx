@@ -2,7 +2,8 @@ import { useState, useRef, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerSeriesFromRaw } from '../../hooks/usePlayerSeriesFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
-import { useThemeAdjustedPlayersColor } from '../../types/api';
+import { useJoueursData } from '../../hooks/useJoueursData';
+import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { useSettings } from '../../context/SettingsContext';
 import { FullscreenChart } from '../common/FullscreenChart';
 
@@ -33,7 +34,8 @@ export function PlayerSeriesChart() {
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
   const chartRef = useRef<HTMLDivElement>(null);
 
-  const playersColor = useThemeAdjustedPlayersColor();
+  const { joueursData } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Helper function to handle series type changes
   const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'wins' | 'losses') => {

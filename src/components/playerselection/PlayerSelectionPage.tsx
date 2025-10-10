@@ -5,7 +5,7 @@ import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculated
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { getPlayerNameMapping } from '../../utils/playerNameMapping';
 import { findPlayerByName } from '../../utils/playersUtils';
-import { useThemeAdjustedPlayersColor } from '../../types/api';
+import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { AchievementsDisplay } from './AchievementsDisplay';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import './PlayerSelectionPage.css';
@@ -28,7 +28,7 @@ export function PlayerSelectionPage() {
   const { data: gameLogData, isLoading, error } = useGameLogData();
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
-  const playersColor = useThemeAdjustedPlayersColor();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
   const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
 
