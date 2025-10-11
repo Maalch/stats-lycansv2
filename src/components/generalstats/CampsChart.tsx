@@ -476,6 +476,17 @@ export function CampsChart() {
           </>
         )}
       </div>
+      
+      <div className="lycans-stats-note" style={{ 
+        marginTop: '2rem', 
+        padding: '1rem', 
+        textAlign: 'center', 
+        color: 'var(--text-secondary)', 
+        fontSize: '0.9rem',
+        fontStyle: 'italic'
+      }}>
+        Statistiques basées sur les rôles effectifs des joueurs à la fin des parties.
+      </div>
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import { getThemeAdjustedColor, useThemeAdjustedColors } from '../utils/themeColors';
+import { useMemo } from 'react';
+import type { JoueursData } from './joueurs';
 
 // Custom color palette for camps
 const lycansColorScheme: Record<string, string> = {
@@ -14,6 +16,7 @@ const lycansColorScheme: Record<string, string> = {
   'Traître': '#FF8000',
   'Amoureux': '#FF80FF',
   'Loup': '#FF0000',
+  'Louveteau': '#FF0000',
   'Villageois': '#0096FF',
   'Chasseur': '#fbff00',
   'Alchimiste': '#ff00d4',
@@ -37,91 +40,50 @@ const frenchColorMapping: Record<string, string> = {
 
 export const lycansOtherCategoryColor = '#808080ff';
 
-const playerFrenchColorNames: Record<string, keyof typeof frenchColorMapping> = {
-  "Ponce": "Bleu royal",
-  "Khalen": "Bleu foncé",
-  "Monodie": "Bleu royal",
-  "Kao": "Gris",
-  "Arkantors": "Rose",
-  "Bytell": "Vert pomme",
-  "Kyria": "Violet",
-  "Fukano": "Orange",
-  "Brybry": "Vert foncé",
-  "Baout": "Vert pomme",
-  "Lutti": "Turquoise",
-  "Miraaaaaah": "Violet",
-  "Tsuna": "Marron",
-  "Noamouille": "Orange",
-  "Craco": "Marron",
-  "ClydeCreator": "Rouge",
-  "Ketchopi": "Jaune",
-  "BoccA": "Gris",
-  "Koka": "Vert foncé",
-  "Anaee": "Violet",
-  "Flonflon": "Vert pomme",
-  "Lydiaam": "Jaune",
-  "Heimdalle": "Turquoise",
-  "Drakony": "Gris",
-  "Tone": "Jaune",
-  "Mathy": "Jaune",
-  "Poachimpa": "Marron",
-  "Cyldhur": "Gris",
-  "Reivil": "Orange",
-  "Zarcross": "Orange",
-  "Shaunz": "Bleu royal",
-  "Aayley": "Vert foncé",
-  "RomainJacques": "Jaune",
-  "DevGirl_": "Rose",
-  "CHLOE": "Turquoise",
-  "Yoona": "Rose",
-  "Mickalow": "Vert foncé",
-  "PeoBran": "Turquoise",
-  "Tovi": "Gris",
-  "Kissiffrote": "Bleu royal",
-  "Pelerine": "Gris",
-  "MaMaPaprika": "Orange",
-  "Xari": "Vert foncé",
-  "Sakor": "Orange",
-  "HortyUnderscore": "Turquoise",
-  "LittleBigWhale": "Rose",
-  "Gom4rt": "Jaune",
-  "Ultia": "Violet",
-  "Onutrem": "Bleu royal",
-  "DFG": "Marron",
-  "Crocodyle": "Gris",
-  "GoB": "Rouge",
-  "Wingo": "Violet",
-  "Nahomay": "Rose",
-  "Naka": "Jaune",
-  "Covfefe": "Violet",
-  "LyeGaia": "Vert foncé",
-  "Maechi": "Vert foncé",
-  "TPK": "Vert foncé",
-  "Clem_mlrt": "Violet",
-  "Bidji": "Orange",
-  "AfterNoune": "Orange",
-  "JimmyBoyyy": "Marron",
-  "Mimosa_etoilee": "Rouge",
-  "Leaprima": "Jaune",
-  "Riri et son ptit Ricard": "Rose",
-  "Berlu": "Vert foncé",
-  "Antoine": "Rouge",
-  "AvaMind": "Turquoise",
-  "Skyyart": "Violet",
-  "Pressea": "Marron",
-  "Etoiles": "Vert pomme",
-  "Areliann": "Jaune",
-  "SpicY": "Rose"
-};
+/**
+ * Build player color mapping from joueurs data
+ * Handles cases where a player has multiple colors (takes the first one)
+ * @param joueursData - The joueurs data from API
+ * @returns Record mapping player names to French color names
+ */
+export function buildPlayerFrenchColorNames(joueursData: JoueursData | null): Record<string, keyof typeof frenchColorMapping> {
+  if (!joueursData?.Players) {
+    return {};
+  }
 
+  const playerColorMapping: Record<string, keyof typeof frenchColorMapping> = {};
+  
+  joueursData.Players.forEach((player) => {
+    if (player.Joueur && player.Couleur) {
+      // Handle cases where player has multiple colors (e.g., "Jaune, Rouge, Bleu foncé")
+      // Take the first color in the list
+      const firstColor = player.Couleur.split(',')[0].trim();
+      
+      // Validate that the color exists in our mapping
+      if (frenchColorMapping[firstColor as keyof typeof frenchColorMapping]) {
+        playerColorMapping[player.Joueur] = firstColor as keyof typeof frenchColorMapping;
+      }
+    }
+  });
 
+  return playerColorMapping;
+}
 
-const playersColor: Record<string, string> = Object.fromEntries(
-  Object.entries(playerFrenchColorNames).map(([player, colorName]) => [
-    player,
-    frenchColorMapping[colorName]
-  ])
-);
+/**
+ * Build player color mapping with hex values from joueurs data
+ * @param joueursData - The joueurs data from API
+ * @returns Record mapping player names to hex color values
+ */
+export function buildPlayersColor(joueursData: JoueursData | null): Record<string, string> {
+  const playerFrenchNames = buildPlayerFrenchColorNames(joueursData);
+  
+  return Object.fromEntries(
+    Object.entries(playerFrenchNames).map(([player, colorName]) => [
+      player,
+      frenchColorMapping[colorName]
+    ])
+  );
+}
 
 
 export const mainCampOrder = ['Villageois', 'Loup', 'Amoureux', 'Idiot du Village', 'Vaudou'];
@@ -312,9 +274,13 @@ export function useThemeAdjustedFrenchColorMapping(): Record<string, string> {
 }
 
 /**
- * React hook to get theme-adjusted players color that updates on theme change
+ * React hook to get dynamic theme-adjusted players color from joueurs data
+ * @param joueursData - The joueurs data, usually from useJoueursData hook
  * @returns Reactive players color mapping with theme-appropriate colors
  */
-export function useThemeAdjustedPlayersColor(): Record<string, string> {
-  return useThemeAdjustedColors(playersColor);
+export function useThemeAdjustedDynamicPlayersColor(joueursData: JoueursData | null): Record<string, string> {
+  const dynamicPlayersColor = useMemo(() => buildPlayersColor(joueursData), [joueursData]);
+  
+  return useThemeAdjustedColors(dynamicPlayersColor);
 }
+

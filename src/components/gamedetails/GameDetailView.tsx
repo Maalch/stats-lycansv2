@@ -142,6 +142,10 @@ export function GameDetailView({ game }: { game: any }) {
               <span className="value">{game.hasTraitor ? 'Oui' : 'Non'}</span>
             </div>
             <div className="lycans-stat-item">
+              <span className="label">Louveteau:</span>
+              <span className="value">{game.hasWolfCub ? 'Oui' : 'Non'}</span>
+            </div>
+            <div className="lycans-stat-item">
               <span className="label">Amoureux:</span>
               <span className="value">{game.hasLovers ? 'Oui' : 'Non'}</span>
             </div>

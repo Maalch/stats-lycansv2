@@ -253,9 +253,15 @@ export function GameDetailsChart() {
     const filters = [];
     if (navigationFilters.selectedPlayer && navigationFilters.campFilter) {
       const playerWinModeText = navigationFilters.selectedPlayerWinMode === 'wins-only' ? ' (victoires uniquement)' : '';
-      const campDisplayName = navigationFilters.campFilter.excludeTraitor && navigationFilters.campFilter.selectedCamp === 'Loup' 
-        ? 'Loups sans Traître' 
-        : navigationFilters.campFilter.selectedCamp;
+      let campDisplayName = navigationFilters.campFilter.selectedCamp;
+      // Handle Camp Loup subgroup
+      if (navigationFilters.campFilter.selectedCamp === 'Loup' && navigationFilters.campFilter.excludeWolfSubRoles) {
+        campDisplayName = 'Loups sans Traître/Louveteau';
+      }
+      // Handle Camp Villageois and subroles
+      else if (navigationFilters.campFilter.selectedCamp === 'Villageois' && navigationFilters.campFilter.excludeVillagers) {
+        campDisplayName = 'Villageois sans Chasseur/Alchimiste';
+      }
       filters.push(`${navigationFilters.selectedPlayer} jouant ${campDisplayName}${playerWinModeText}`);
     } else {
       if (navigationFilters.selectedPlayer) {
@@ -264,8 +270,16 @@ export function GameDetailsChart() {
         filters.push(`Joueur: ${navigationFilters.selectedPlayer}${playerWinModeText}`);
       }
       if (navigationFilters.campFilter) {
-        const { selectedCamp, campFilterMode, excludeTraitor } = navigationFilters.campFilter;
-        const campDisplayName = excludeTraitor && selectedCamp === 'Loup' ? 'Loups sans Traître' : selectedCamp;
+        const { campFilterMode } = navigationFilters.campFilter;
+        let campDisplayName = navigationFilters.campFilter.selectedCamp;
+        // Handle Camp Loup subgroup
+        if (navigationFilters.campFilter.selectedCamp === 'Loup' && navigationFilters.campFilter.excludeWolfSubRoles) {
+          campDisplayName = 'Loups sans Traître/Louveteau';
+        }
+        // Handle Camp Villageois and subroles
+        else if (navigationFilters.campFilter.selectedCamp === 'Villageois' && navigationFilters.campFilter.excludeVillagers) {
+          campDisplayName = 'Villageois sans Chasseur/Alchimiste';
+        }
         const campFilterText = `Camp: ${campDisplayName}`;
         const modeText = campFilterMode === 'wins-only' ? ' (victoires uniquement)' : 
                          campFilterMode === 'all-assignments' ? ' (toutes assignations)' : '';

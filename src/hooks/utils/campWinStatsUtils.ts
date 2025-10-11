@@ -50,7 +50,7 @@ function getPlayerCamp(
 function extractSoloRoles(game: GameLogEntry): string[] {
   const soloRoles: string[] = [];
   // Solo roles are roles that aren't standard village/wolf camps
-  const standardRoles = ['Villageois', 'Loup', 'Traître'];
+  const standardRoles = ['Villageois', 'Loup'];
   game.PlayerStats.forEach(playerStat => {
     let role = getPlayerCampFromRole(playerStat.MainRoleFinal);
 
@@ -76,7 +76,7 @@ function getWinnerCamp(game: GameLogEntry): string | null {
   const winnerRole = getPlayerCampFromRole(victoriousPlayers[0].MainRoleFinal, {
     regroupLovers: true,
     regroupVillagers: true,
-    regroupTraitor: true
+    regroupWolfSubRoles: true
   });
   
   // Return the grouped camp directly (no additional grouping needed since getPlayerCampFromRole handles it)

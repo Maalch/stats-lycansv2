@@ -47,6 +47,7 @@ const LYCAN_SCHEMA = {
       IMAGEURL: 'Image', //URL of the image of that player
       TWITCHURL: 'Twitch', //URL of the twitch page of that player
       YOUTUBEURL: 'Youtube', //URL of the youtube page of that player
+      COLOR:  'Couleur' //Most used color for this player
     }
   },
 

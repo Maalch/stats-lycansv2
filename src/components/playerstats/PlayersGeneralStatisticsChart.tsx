@@ -3,7 +3,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
-import { useThemeAdjustedPlayersColor } from '../../types/api';
+import { useJoueursData } from '../../hooks/useJoueursData';
+import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { minGamesOptions } from '../../types/api';
 import type { PlayerStat } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -27,7 +28,8 @@ export function PlayersGeneralStatisticsChart() {
   );
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
 
-  const playersColor = useThemeAdjustedPlayersColor();
+  const { joueursData } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Save state to navigation context when it changes (for back/forward navigation persistence)
   useEffect(() => {

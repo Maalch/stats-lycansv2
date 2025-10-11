@@ -3,6 +3,7 @@ export interface Player {
   Image: string | null;
   Twitch: string | null;
   Youtube: string | null;
+  Couleur: string | null;
 }
 
 export interface JoueursData {
