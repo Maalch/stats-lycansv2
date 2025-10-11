@@ -43,6 +43,38 @@
   font-size: 0.8rem;
   font-weight: 500;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.settings-indicator-filter-text {
+  flex: 1;
+}
+
+.settings-indicator-filter-remove {
+  background: none;
+  border: none;
+  color: white;
+  padding: 2px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.settings-indicator-filter-remove:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.settings-indicator-filter-remove:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 1px;
 }
 
 /* Responsive design */
@@ -59,6 +91,12 @@
   
   .settings-indicator-filter {
     align-self: flex-start;
+    max-width: 100%;
+  }
+  
+  .settings-indicator-filter-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

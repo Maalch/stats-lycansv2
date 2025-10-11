@@ -16,7 +16,8 @@ export interface CampFilter {
   selectedCamp: string; // The camp to filter by
   campFilterMode: 'wins-only' | 'all-assignments'; // How to filter by camp: only wins or all assignments
   _smallCamps?: string[]; // List of small camps for "Autres" category
-  excludeTraitor?: boolean; // When true, excludes traitor from Loups filtering (for "Loups sans Traître")
+  excludeWolfSubRoles?: boolean; // When true, excludes wolf sub roles from main camp filtering (example: "Loups sans Traître/Louveteau")
+  excludeVillagers?: boolean; // When true, excludes villager sub roles from main camp filtering (example: "Villageois sans Chasseur/Alchimiste")
 }
 
 export interface NavigationFilters {
@@ -70,7 +71,7 @@ export interface NavigationState {
   // DeathStatisticsChart state
   deathStatsSelectedCamp?: string;
   // PlayerSeriesChart state
-  selectedSeriesType?: 'villageois' | 'loup' | 'wins' | 'losses';
+  selectedSeriesType?: 'villageois' | 'loup' | 'nowolf' | 'wins' | 'losses';
   
   // Grouped state - all properties in each group must be provided together
   campPerformanceState?: CampPerformanceState;

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerPairingStatsFromRaw } from '../../hooks/usePlayerPairingStatsFromRaw';
-import { useThemeAdjustedPlayersColor } from '../../types/api';
+import { useJoueursData } from '../../hooks/useJoueursData';
+import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
@@ -12,7 +13,8 @@ export function PlayerPairingStatsChart() {
   const { data, isLoading, error } = usePlayerPairingStatsFromRaw();
   const { settings } = useSettings();
   
-  const playersColor = useThemeAdjustedPlayersColor();
+  const { joueursData } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Use navigationState to restore tab selection, fallback to 'wolves'
   const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers'>(

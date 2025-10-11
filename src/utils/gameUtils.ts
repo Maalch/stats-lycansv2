@@ -94,10 +94,10 @@ export function getWinnerCampFromGame(game: GameLogEntry): string {
     return 'Villageois'; // Default fallback
   }
   
-  // Use getPlayerCampFromRole with regroupTraitor: true to handle Traître->Loup grouping
+  // Use getPlayerCampFromRole with regroupWolfSubRoles: true to handle Traître/Louveteau->Loup grouping
   // This matches the logic used in the achievements generation
   const winnerCamps = winners.map(w => 
-    getPlayerCampFromRole(w.MainRoleFinal, { regroupTraitor: true })
+    getPlayerCampFromRole(w.MainRoleFinal, { regroupWolfSubRoles: true })
   );
   
   // Find the most common camp among winners

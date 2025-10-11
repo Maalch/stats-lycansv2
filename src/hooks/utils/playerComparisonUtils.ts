@@ -359,8 +359,8 @@ export function generatePlayerComparison(
       // Check if they were in opposing camps
       // Helper function to determine the main camp affiliation based on werewolf game rules
       const getMainCampAffiliation = (camp: string): string => {
-        if (camp === 'Loup' || camp === 'Traître') {
-          return 'Loup'; // Wolves team: Loups + Traître (only exception)
+        if (camp === 'Loup' || camp === 'Traître' || camp === 'Louveteau') {
+          return 'Loup'; // Wolves team: Loups + Traître + Louveteau (only exception)
         } else {
           // Every other role works alone and is its own camp
           return camp;
@@ -387,7 +387,7 @@ export function generatePlayerComparison(
           }
         }
       } else if (player1MainCamp === player2MainCamp) {
-        // Same camp affiliation (only possible for Loups+Traître or same exact role)
+        // Same camp affiliation (only possible for Loups+Traître+Louveteau or same exact role)
         sameCampGames.push(game);
         
         // Check if both are specifically in the Loups team

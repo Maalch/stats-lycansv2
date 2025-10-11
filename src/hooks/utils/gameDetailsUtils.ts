@@ -119,14 +119,16 @@ function calculateGameDuration(start: string | null, end: string | null): number
  * 
  * @param playerName - The name of the player to check
  * @param game - The GameLogEntry to check within  
- * @param excludeTraitor - If true, return 'Traître' instead of 'Loup' for traitors
+ * @param excludeWolfSubRoles - If true, return the name of the subrole instead of 'Loup' for wolf sub-roles (Traître, Louveteau)
+ * @param excludeVillagers - If true, return the specific villager role instead of 'Villageois' for villager sub-roles (Chasseur, Alchimiste, etc.)
  * @returns The player's camp/role from MainRoleFinal, or 'Villageois' if not found
  * 
  */
 export function getPlayerCampFromGameLog(
   playerName: string, 
   game: GameLogEntry,
-  excludeTraitor: boolean = false
+  excludeWolfSubRoles: boolean = false,
+  excludeVillagers: boolean = false
 ): string {
   const playerStat = game.PlayerStats.find(
     player => player.Username.toLowerCase() === playerName.toLowerCase()
@@ -137,8 +139,8 @@ export function getPlayerCampFromGameLog(
   // Use the improved getPlayerCampFromRole with regroupTraitor option based on excludeTraitor
   const playerRole = getPlayerCampFromRole(playerStat.MainRoleFinal, {
     regroupLovers: true,
-    regroupVillagers: true,
-    regroupTraitor: !excludeTraitor // If excludeTraitor is true, don't regroup traitor (keep as 'Traître')
+    regroupVillagers: !excludeVillagers, // If excludeVillagers is true, don't regroup villagers (keep as 'Villageois' or specific villager role)
+    regroupWolfSubRoles: !excludeWolfSubRoles // If excludeWolfSubRoles is true, don't regroup wolf sub-roles (keep as 'Traître' or 'Louveteau')
   });
   
   return playerRole;
@@ -373,7 +375,7 @@ export function filterByCampFromGameLog(
   campFilter: CampFilter,
   selectedPlayer?: string
 ): GameLogEntry[] {
-  const { selectedCamp, campFilterMode, _smallCamps: smallCamps, excludeTraitor } = campFilter;
+  const { selectedCamp, campFilterMode, _smallCamps: smallCamps, excludeWolfSubRoles } = campFilter;
   
   return games.filter(game => {
     if (selectedPlayer) {
@@ -397,18 +399,18 @@ export function filterByCampFromGameLog(
       }
 
       // Check specific camp for specific player
-      const playerCamp = getPlayerCampFromGameLog(selectedPlayer, game, excludeTraitor);
+      const playerCamp = getPlayerCampFromGameLog(selectedPlayer, game, excludeWolfSubRoles);
       
       // First check if player is in the selected camp
       let isInSelectedCamp = false;
-      
-      // Special handling for "Loup" with excludeTraitor flag
-      if (selectedCamp === 'Loup' && excludeTraitor) {
-        // Only include games where player was a regular wolf (not traitor)
+
+      // Special handling for "Loup" with excludeWolfSubRoles flag
+      if (selectedCamp === 'Loup' && excludeWolfSubRoles) {
+        // Only include games where player was a regular wolf 
         isInSelectedCamp = playerCamp === 'Loup' && 
                !game.PlayerStats.some(p => 
                  p.Username.toLowerCase() === selectedPlayer.toLowerCase() && 
-                 p.MainRoleFinal === 'Traître'
+                 (p.MainRoleFinal === 'Traître' || p.MainRoleFinal === 'Louveteau')
                );
       } else {
         isInSelectedCamp = playerCamp === selectedCamp;
@@ -481,9 +483,9 @@ export function filterByMultiplePlayersFromGameLog(
 
     if (!hasAllPlayers) return false;
 
-    // Get camps for each selected player. Exclude traitor from wolf camp if specified
+    // Get camps for each selected player. Exclude wolf sub-roles from wolf camp if specified
     const playerCamps = selectedPlayers.map(player => 
-      getPlayerCampFromGameLog(player, game, campFilter?.excludeTraitor || false)
+      getPlayerCampFromGameLog(player, game, campFilter?.excludeWolfSubRoles || false)
     );
 
     // Apply filtering based on mode
@@ -778,11 +780,12 @@ export function computeGameDetailsFromGameLog(
     const playerCount = game.PlayerStats.length;
     const wolves = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleFinal) === 'Loup');
     const traitors = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleFinal) === 'Traître');
+    const wolfCubs = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleFinal) === 'Louveteau');
     const lovers = game.PlayerStats.filter(p => getPlayerCampFromRole(p.MainRoleFinal) === 'Amoureux');
     const victoriousPlayers = game.PlayerStats.filter(p => p.Victorious);
     
-    // Calculate wolf count (includes traitors)
-    const wolfCount = wolves.length + traitors.length;
+    // Calculate wolf count (includes traitors and wolf cubs)
+    const wolfCount = wolves.length + traitors.length + wolfCubs.length;
     
     // Determine winning camp
     const winningCamp = getWinnerCampFromGame(game);
@@ -822,6 +825,7 @@ export function computeGameDetailsFromGameLog(
       playerCount,
       wolfCount,
       hasTraitor: traitors.length > 0,
+      hasWolfCub: wolfCubs.length > 0,
       hasLovers: lovers.length > 0,
       soloRoles,
       winningCamp,

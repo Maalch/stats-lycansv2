@@ -29,11 +29,11 @@ function generatePlayerComparison(player1Name, player2Name, rawGameData) {
     if (!player1Stat || !player2Stat) return;
     
     commonGames.push(game);
-    
-    // Use regroupTraitor: true to automatically group Traître with Loup
-    const player1Camp = getPlayerCampFromRole(player1Stat.MainRoleFinal, { regroupTraitor: true });
-    const player2Camp = getPlayerCampFromRole(player2Stat.MainRoleFinal, { regroupTraitor: true });
-    
+
+    // Use regroupWolfSubRoles: true to automatically group Traître and Louveteau with Loup
+    const player1Camp = getPlayerCampFromRole(player1Stat.MainRoleFinal, { regroupWolfSubRoles: true });
+    const player2Camp = getPlayerCampFromRole(player2Stat.MainRoleFinal, { regroupWolfSubRoles: true });
+
     // Count wins in common games
     const player1Won = player1Stat.Victorious;
     const player2Won = player2Stat.Victorious;
