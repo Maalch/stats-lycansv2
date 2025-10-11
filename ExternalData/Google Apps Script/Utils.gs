@@ -49,24 +49,7 @@ const LYCAN_SCHEMA = {
       YOUTUBEURL: 'Youtube', //URL of the youtube page of that player
     }
   },
-  ROLES: {
-    SHEET: 'Loups et solo v2', //Data specific about the roles per game
-    COLS: {
-      GAMEID: 'Game', //Game ID (unique)
-      MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
-      WOLFS: 'Loup', //Name of the wolves in the game, separated by comma
-      TRAITOR: 'Traître', //name of the traitor in the game (if any)
-      IDIOT: 'Idiot du village', //name of the idiot in the game, if any
-      CANNIBAL: 'Cannibale', //name of the cannibal in the game, if any
-      AGENTS: 'Agent', //name of the agents in the game, if any
-      SPY: 'Espion', //name if the spy un the game, if any
-      SCIENTIST: 'Scientifique', //name of the scientist in the game, if any
-      LOVERS: 'Amoureux', //name of the lovers in the game, if any
-      THEBEAST: 'La Bête', //name of the beast in the game, if any
-      BOUNTYHUNTER: 'Chasseur de primes', //name of the bounty hunter in the game, if any
-      VOODOO: 'Vaudou'	//name of the voodoo in the game, if any																				
-    }
-  },
+
   DETAILSV2: {
     SHEET: 'Détails v2', //Details data about each player each game in the new format
     COLS: {

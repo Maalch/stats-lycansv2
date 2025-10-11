@@ -104,10 +104,6 @@ function debug_getRawGameDataForSpecificGame() {
     var gameData2 = getLycanSheetData(LYCAN_SCHEMA.GAMES2.SHEET);
     var gameValues2 = gameData2.values;
     
-    // Get role data
-    var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
-    var roleValues = roleData.values;
-    
     // Get details data
     var detailsData = getLycanSheetData(LYCAN_SCHEMA.DETAILSV2.SHEET);
     var detailsValues = detailsData.values;
@@ -134,15 +130,11 @@ function debug_getRawGameDataForSpecificGame() {
       });
     }
     
-    var roleHeaders = roleValues ? roleValues[0] : [];
-    var roleDataRows = roleValues ? roleValues.slice(1) : [];
-    
     var detailsHeaders = detailsValues ? detailsValues[0] : [];
     var detailsDataRows = detailsValues ? detailsValues.slice(1) : [];
     
     Logger.log("Game headers: " + JSON.stringify(gameHeaders));
     Logger.log("Game2 headers: " + JSON.stringify(gameHeaders2));
-    Logger.log("Role headers: " + JSON.stringify(roleHeaders));
     Logger.log("Details headers: " + JSON.stringify(detailsHeaders));
     
     // Find the specific game row
@@ -178,15 +170,12 @@ function debug_getRawGameDataForSpecificGame() {
         var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
         Logger.log("Players: " + JSON.stringify(players));
         
-        var roleAssignments = getRoleAssignmentsForGame(gameId, roleHeaders, roleDataRows);
-        Logger.log("Role assignments: " + JSON.stringify(roleAssignments));
-        
         // Check details for each player
         players.forEach(function(playerName) {
           var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
           Logger.log("Player " + playerName + " details: " + JSON.stringify(playerDetails));
           
-          var playerStats = buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders, detailsHeaders, detailsDataRows);
+          var playerStats = buildPlayerStats(playerName, gameId, gameRow, gameHeaders, detailsHeaders, detailsDataRows);
           Logger.log("Player " + playerName + " stats: " + JSON.stringify(playerStats));
         });
       }
@@ -450,10 +439,6 @@ function getRawGameDataInNewFormat() {
     var gameData2 = getLycanSheetData(LYCAN_SCHEMA.GAMES2.SHEET);
     var gameValues2 = gameData2.values;
     
-    // Get role data
-    var roleData = getLycanSheetData(LYCAN_SCHEMA.ROLES.SHEET);
-    var roleValues = roleData.values;
-    
     // Get details data
     var detailsData = getLycanSheetData(LYCAN_SCHEMA.DETAILSV2.SHEET);
     var detailsValues = detailsData.values;
@@ -478,9 +463,6 @@ function getRawGameDataInNewFormat() {
         }
       });
     }
-    
-    var roleHeaders = roleValues ? roleValues[0] : [];
-    var roleDataRows = roleValues ? roleValues.slice(1) : [];
     
     var detailsHeaders = detailsValues ? detailsValues[0] : [];
     var detailsDataRows = detailsValues ? detailsValues.slice(1) : [];
@@ -540,10 +522,8 @@ function getRawGameDataInNewFormat() {
       var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
       var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
       
-      var roleAssignments = getRoleAssignmentsForGame(gameId, roleHeaders, roleDataRows);
-      
       gameRecord.PlayerStats = players.map(function(playerName) {
-        return buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders, detailsHeaders, detailsDataRows);
+        return buildPlayerStats(playerName, gameId, gameRow, gameHeaders, detailsHeaders, detailsDataRows);
       });
       
       // Check if death information is filled for all players
@@ -575,13 +555,13 @@ function getRawGameDataInNewFormat() {
 /**
  * Helper function to build player stats from legacy data
  */
-function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHeaders, detailsHeaders, detailsDataRows) {
+function buildPlayerStats(playerName, gameId, gameRow, gameHeaders, detailsHeaders, detailsDataRows) {
   // Get player details from the Details sheet
   var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
   
   var playerStats = {
     Username: playerName,
-    MainRoleInitial: determineMainRoleInitialWithDetails(playerName, roleAssignments, playerDetails),
+    MainRoleInitial: determineMainRoleInitialWithDetails(playerDetails),
     MainRoleFinal: null,
     Color: playerDetails && playerDetails.color ? playerDetails.color : null,
     Power: playerDetails && playerDetails.power && playerDetails.power !== 'N/A' && playerDetails.power !== 'Inconnu' ? playerDetails.power : null,
@@ -597,53 +577,6 @@ function buildPlayerStats(playerName, gameId, roleAssignments, gameRow, gameHead
   playerStats.MainRoleFinal = determineMainRoleFinalWithDetails(playerDetails, playerStats);
   
   return playerStats;
-}
-
-/**
- * Helper function to determine main role from role assignments
- */
-function determineMainRole(playerName, roleAssignments) {
-
-  // Check all special roles
-  if (roleAssignments.wolves && roleAssignments.wolves.includes(playerName)) return "Loup";
-  if (roleAssignments.traitor === playerName) return "Traître";
-  if (roleAssignments.idiot === playerName) return "Idiot du Village";
-  if (roleAssignments.cannibal === playerName) return "Cannibale";
-  if (roleAssignments.agents && roleAssignments.agents.includes(playerName)) return "Agent";
-  if (roleAssignments.spy === playerName) return "Espion";
-  if (roleAssignments.scientist === playerName) return "Scientifique";
-  if (roleAssignments.lovers && roleAssignments.lovers.includes(playerName)) return "Amoureux";
-  if (roleAssignments.theBeast === playerName) return "La Bête";
-  if (roleAssignments.bountyHunter === playerName) return "Chasseur de primes";
-  if (roleAssignments.voodoo === playerName) return "Vaudou";
-  
-  // Default to villager
-  return "Villageois";
-}
-
-/**
- * Helper function to get role assignments for a specific game
- */
-function getRoleAssignmentsForGame(gameId, roleHeaders, roleDataRows) {
-  var roleRow = roleDataRows.find(function(row) {
-    return row[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.GAMEID)] == gameId;
-  });
-  
-  if (!roleRow) return {};
-  
-  return {
-    wolves: parsePlayerList(roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.WOLFS)]),
-    traitor: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.TRAITOR)] || null,
-    idiot: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.IDIOT)] || null,
-    cannibal: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.CANNIBAL)] || null,
-    agents: parsePlayerList(roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.AGENTS)]),
-    spy: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SPY)] || null,
-    scientist: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.SCIENTIST)] || null,
-    lovers: parsePlayerList(roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.LOVERS)]),
-    theBeast: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.THEBEAST)] || null,
-    bountyHunter: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.BOUNTYHUNTER)] || null,
-    voodoo: roleRow[findColumnIndex(roleHeaders, LYCAN_SCHEMA.ROLES.COLS.VOODOO)] || null
-  };
 }
 
 /**
@@ -678,24 +611,20 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
 /**
  * Helper function to determine main role with details data priority
  */
-function determineMainRoleInitialWithDetails(playerName, roleAssignments, playerDetails) {
-  
-  // Check if playerDetails is null first
-  if (!playerDetails) {
-    // Fall back to the original method if no details available
-    return determineMainRole(playerName, roleAssignments);
-  }
-  
+function determineMainRoleInitialWithDetails(playerDetails) {
+    
   // Determine which camp to use based on type (initial)
   if (playerDetails.mainRole && playerDetails.mainRole !== 'Inconnu') {
       return playerDetails.mainRole;
   }
   else if (playerDetails.mainRole && playerDetails.mainRole === 'Inconnu') {
+    return playerDetails.camp || "Villageois";
+  }
+  else if (playerDetails.camp) {
     return playerDetails.camp;
   }
   else {
-    // Otherwise, fall back to the original method
-    return determineMainRole(playerName, roleAssignments);
+    return null;
   }
 }
 
