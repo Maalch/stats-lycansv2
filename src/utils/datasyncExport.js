@@ -7,7 +7,6 @@
  * @type {Record<string, string>}
  */
 export const DeathTypeCode = {
-  SURVIVOR: 'SURVIVOR',           // N/A - Player survived
   VOTED: 'VOTED',                 // Mort aux votes
   BY_WOLF: 'BY_WOLF',            // Tué par Loup
   BY_WOLF_REZ: 'BY_WOLF_REZ',    // Tué par Loup ressuscité (GDOC specific)

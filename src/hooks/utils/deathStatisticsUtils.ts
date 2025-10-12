@@ -100,8 +100,6 @@ export interface DeathStatistics {
  */
 export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
   switch (deathTypeCode) {
-    case DeathTypeCode.SURVIVOR:
-      return 'Survivant';
     case DeathTypeCode.VOTED:
       return 'Mort aux votes';
     case DeathTypeCode.BY_WOLF:
@@ -151,8 +149,9 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
     case DeathTypeCode.FALL:
       return 'Mort de chute';
     case DeathTypeCode.UNKNOWN:
-    default:
       return 'Mort inconnue';
+    default:
+      return '';
   }
 }
 
@@ -161,8 +160,6 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
  */
 export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
   switch (deathTypeCode) {
-    case DeathTypeCode.SURVIVOR:
-      return 'Survivant';
     case DeathTypeCode.VOTED:
       return 'Mort aux votes';
     case DeathTypeCode.BY_WOLF:
@@ -212,8 +209,9 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
     case DeathTypeCode.FALL:
       return 'Chute mortelle';
     case DeathTypeCode.UNKNOWN:
-    default:
       return 'Kill inconnu';
+    default:
+      return '';
   }
 }
 
@@ -226,7 +224,7 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
   
   gameData.forEach(game => {
     game.PlayerStats.forEach(player => {
-      if (player.DeathType && player.DeathType !== DeathTypeCode.SURVIVOR && player.DeathType !== '') {
+      if (player.DeathType && player.DeathType !== '') {
         deathTypesSet.add(player.DeathType as DeathTypeCodeType);
       }
     });
@@ -244,8 +242,7 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
     DeathTypeCode.BY_ZOMBIE,
     DeathTypeCode.ASSASSIN,
     DeathTypeCode.AVENGER,
-    DeathTypeCode.LOVER_DEATH,
-    DeathTypeCode.SURVIVOR
+    DeathTypeCode.LOVER_DEATH
   ];
   
   return [
@@ -266,7 +263,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
   return game.PlayerStats
     .filter(player => {
       // Only include players who actually died (not survivors)
-      return player.DeathType && player.DeathType !== DeathTypeCode.SURVIVOR && player.DeathType !== '' && (player.DeathTiming || player.DeathType);
+      return player.DeathType && player.DeathType !== '' && (player.DeathTiming || player.DeathType);
     })
     .map(player => {
       // Find the killer's camp if killer exists
@@ -340,7 +337,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
     // Only process players who were killed by someone (not environmental deaths or votes)
     if (player.KillerName && player.DeathType) {
       // Skip non-kill deaths (survivors, votes, environmental deaths)
-      if (player.DeathType === DeathTypeCode.SURVIVOR || player.DeathType === DeathTypeCode.VOTED || 
+      if (player.DeathType === DeathTypeCode.VOTED || 
           player.DeathType === DeathTypeCode.STARVATION || player.DeathType === DeathTypeCode.FALL || 
           player.DeathType === DeathTypeCode.BY_AVATAR_CHAIN || player.DeathType === '') {
         return;

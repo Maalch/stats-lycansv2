@@ -76,10 +76,8 @@ export function DeathStatisticsChart() {
         colorMap[deathTypeCode] = lycansColors['Amoureux'];
       } else if (deathTypeCode === DeathTypeCode.BY_BEAST) {
         colorMap[deathTypeCode] = 'var(--chart-color-3)';
-      } else if (deathTypeCode === DeathTypeCode.SURVIVOR) {
-        colorMap[deathTypeCode] = 'var(--chart-color-4)';
       } else if (deathTypeCode === DeathTypeCode.SHERIF) {
-        colorMap[deathTypeCode] = 'var(--chart-color-5)';
+        colorMap[deathTypeCode] = 'var(--chart-color-4)';
       }
     });
     
