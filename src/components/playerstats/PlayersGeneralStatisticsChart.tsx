@@ -34,18 +34,19 @@ export function PlayersGeneralStatisticsChart() {
   // Save state to navigation context when it changes (for back/forward navigation persistence)
   useEffect(() => {
     // Only update if state differs from navigation state
-    if (!navigationState.playersGeneralState || 
-        navigationState.playersGeneralState.minGamesForWinRate !== minGamesForWinRate ||
-        navigationState.playersGeneralState.winRateOrder !== winRateOrder) {
+    const currentNavState = navigationState.playersGeneralState;
+    if (!currentNavState || 
+        currentNavState.minGamesForWinRate !== minGamesForWinRate ||
+        currentNavState.winRateOrder !== winRateOrder) {
       updateNavigationState({
         playersGeneralState: {
           minGamesForWinRate,
           winRateOrder,
-          focusChart: navigationState.playersGeneralState?.focusChart // Preserve focus chart from achievement navigation
+          focusChart: currentNavState?.focusChart // Preserve focus chart from achievement navigation
         }
       });
     }
-  }, [minGamesForWinRate, winRateOrder, navigationState.playersGeneralState, updateNavigationState]);
+  }, [minGamesForWinRate, winRateOrder, updateNavigationState]);
 
   // Optimized data processing - combine multiple operations to reduce iterations
   const { participationData, winRateData, averageWinRate, totalEligiblePlayers, highlightedPlayerInParticipation, highlightedPlayerInWinRate } = useMemo(() => {
