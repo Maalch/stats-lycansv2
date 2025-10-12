@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 
 export interface PlayerPairFilter {
@@ -102,33 +102,33 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const [navigationState, setNavigationState] = useState<NavigationState>({});
   const [requestedTab, setRequestedTab] = useState<{ mainTab: string; subTab?: string } | undefined>();
 
-  const navigateToGameDetails = (filters: NavigationFilters = {}) => {
+  const navigateToGameDetails = useCallback((filters: NavigationFilters = {}) => {
     setNavigationFilters(filters);
     setCurrentView('gameDetails');
-  };
+  }, []);
 
-  const navigateBack = () => {
+  const navigateBack = useCallback(() => {
     setCurrentView('');
     setNavigationFilters({});
-  };
+  }, []);
 
-  const clearNavigation = () => {
+  const clearNavigation = useCallback(() => {
     setCurrentView('');
     setNavigationFilters({});
     setNavigationState({});
-  };
+  }, []);
 
-  const updateNavigationState = (state: Partial<NavigationState>) => {
+  const updateNavigationState = useCallback((state: Partial<NavigationState>) => {
     setNavigationState(prev => ({ ...prev, ...state }));
-  };
+  }, []);
 
-  const navigateToTab = (mainTab: string, subTab?: string) => {
+  const navigateToTab = useCallback((mainTab: string, subTab?: string) => {
     setRequestedTab({ mainTab, subTab });
-  };
+  }, []);
 
-  const clearTabNavigation = () => {
+  const clearTabNavigation = useCallback(() => {
     setRequestedTab(undefined);
-  };
+  }, []);
 
   return (
     <NavigationContext.Provider value={{
