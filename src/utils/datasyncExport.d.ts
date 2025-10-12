@@ -2,7 +2,6 @@
  * TypeScript declarations for deathTypeConstants.js
  */
 export declare const DeathTypeCode: {
-  readonly SURVIVOR: 'SURVIVOR';
   readonly VOTED: 'VOTED';
   readonly BY_WOLF: 'BY_WOLF';
   readonly BY_WOLF_REZ: 'BY_WOLF_REZ';

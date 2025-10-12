@@ -87,121 +87,6 @@ function test_getRawGameDataInNewFormat() {
 }
 
 /**
- * Debug function for specific game ID: Ponce-20250805000000-492
- */
-function debug_getRawGameDataForSpecificGame() {
-  var targetGameId = 492; // The gameId part from Ponce-20250805000000-492
-  var targetDate = "20250805000000"; // The date part
-  
-  try {
-    Logger.log("=== DEBUGGING GAME ID: Ponce-20250805000000-492 ===");
-    
-    // Get main game data
-    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
-    var gameValues = gameData.values;
-
-    // Get secondary game data
-    var gameData2 = getLycanSheetData(LYCAN_SCHEMA.GAMES2.SHEET);
-    var gameValues2 = gameData2.values;
-    
-    // Get details data
-    var detailsData = getLycanSheetData(LYCAN_SCHEMA.DETAILSV2.SHEET);
-    var detailsValues = detailsData.values;
-    
-    if (!gameValues || gameValues.length === 0) {
-      Logger.log("ERROR: No game data found");
-      return JSON.stringify({ error: 'No game data found' });
-    }
-    
-    var gameHeaders = gameValues[0];
-    var gameDataRows = gameValues.slice(1);
-
-    var gameHeaders2 = gameValues2[0];
-    var gameDataRows2 = gameValues2.slice(1);
-    
-    // Create a map of game2 data by Game ID for efficient lookup
-    var game2DataMap = {};
-    if (gameDataRows2 && gameDataRows2.length > 0) {
-      gameDataRows2.forEach(function(row) {
-        var gameId = row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEID)];
-        if (gameId) {
-          game2DataMap[gameId] = row;
-        }
-      });
-    }
-    
-    var detailsHeaders = detailsValues ? detailsValues[0] : [];
-    var detailsDataRows = detailsValues ? detailsValues.slice(1) : [];
-    
-    Logger.log("Game headers: " + JSON.stringify(gameHeaders));
-    Logger.log("Game2 headers: " + JSON.stringify(gameHeaders2));
-    Logger.log("Details headers: " + JSON.stringify(detailsHeaders));
-    
-    // Find the specific game row
-    var targetGameRow = null;
-    var targetGame2Row = null;
-    
-    gameDataRows.forEach(function(gameRow, index) {
-      var gameId = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID)];
-      var rawDateCell = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.DATE)];
-      var legacyDateFragment = formatDateForLegacyId(rawDateCell);
-      var constructedId = "Ponce-" + legacyDateFragment + "-" + gameId;
-      
-      Logger.log("Row " + index + " - Game ID: " + gameId + ", Date Fragment: " + legacyDateFragment + ", Constructed ID: " + constructedId);
-      
-      if (gameId == targetGameId) {
-        Logger.log("FOUND TARGET GAME! Row index: " + index + ", Game ID: " + gameId);
-        targetGameRow = gameRow;
-        targetGame2Row = game2DataMap[gameId];
-        
-        // Debug the raw date and formatting
-        Logger.log("Raw date cell: " + rawDateCell + " (type: " + typeof rawDateCell + ")");
-        Logger.log("ISO start: " + convertDateToISO(rawDateCell));
-        Logger.log("Legacy date fragment: " + legacyDateFragment);
-        Logger.log("Expected date fragment: " + targetDate);
-        Logger.log("Date fragments match: " + (legacyDateFragment === targetDate));
-        
-        // Log all data for this game
-        Logger.log("Game row data: " + JSON.stringify(gameRow));
-        Logger.log("Game2 row data: " + JSON.stringify(targetGame2Row));
-        
-        // Get player list and role assignments
-        var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
-        var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
-        Logger.log("Players: " + JSON.stringify(players));
-        
-        // Check details for each player
-        players.forEach(function(playerName) {
-          var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
-          Logger.log("Player " + playerName + " details: " + JSON.stringify(playerDetails));
-          
-          var playerStats = buildPlayerStats(playerName, gameId, gameRow, gameHeaders, detailsHeaders, detailsDataRows);
-          Logger.log("Player " + playerName + " stats: " + JSON.stringify(playerStats));
-        });
-      }
-    });
-    
-    if (!targetGameRow) {
-      Logger.log("ERROR: Could not find game with ID " + targetGameId);
-      return JSON.stringify({ error: 'Could not find target game' });
-    }
-    
-    Logger.log("=== DEBUG COMPLETE ===");
-    
-    return JSON.stringify({ 
-      success: true, 
-      message: "Debug completed - check logs for details",
-      targetGameFound: !!targetGameRow
-    });
-    
-  } catch (error) {
-    Logger.log('Error in debug function: ' + error.message);
-    Logger.log('Stack trace: ' + error.stack);
-    return JSON.stringify({ error: error.message, stack: error.stack });
-  }
-}
-
-/**
  * Test function for raw BR data export
  */
 function test_getRawBRData() {
@@ -522,13 +407,20 @@ function getRawGameDataInNewFormat() {
       var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
       var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
       
+      // Collect player details for reuse in deathInformationFilled check
+      var allPlayerDetails = [];
+      
       gameRecord.PlayerStats = players.map(function(playerName) {
-        return buildPlayerStats(playerName, gameId, gameRow, gameHeaders, detailsHeaders, detailsDataRows);
+        var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
+        allPlayerDetails.push(playerDetails); // Store for later use
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails);
       });
       
-      // Check if death information is filled for all players
-      var allPlayersHaveDeathInfo = gameRecord.PlayerStats.every(function(playerStat) {
-        return playerStat.DeathType !== null && playerStat.DeathType !== '';
+      // Check if death information is filled for all players using collected playerDetails
+      var allPlayersHaveDeathInfo = allPlayerDetails.every(function(playerDetails) {
+        return playerDetails && playerDetails.typeOfDeath && 
+               playerDetails.typeOfDeath !== '' && 
+               playerDetails.typeOfDeath !== null;
       });
       
       // Add deathInformationFilled to LegacyData
@@ -553,12 +445,10 @@ function getRawGameDataInNewFormat() {
 
 
 /**
- * Helper function to build player stats from legacy data
+ * Helper function to build player stats from legacy data using pre-fetched player details
+ * This version avoids duplicate calls to getPlayerDetailsForGame
  */
-function buildPlayerStats(playerName, gameId, gameRow, gameHeaders, detailsHeaders, detailsDataRows) {
-  // Get player details from the Details sheet
-  var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
-  
+function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails) {
   var playerStats = {
     Username: playerName,
     MainRoleInitial: determineMainRoleInitialWithDetails(playerDetails),
@@ -758,7 +648,7 @@ function determineDeathType(playerDetails) {
   else if (deathType === 'inconnu')
     return "UNKNOWN";
   else if (deathType === 'n/a')
-    return 'SURVIVOR'
+    return null
   // Return death type only if death type is not "Déco" 
   else if (deathType !== 'déco' && 
       deathType !== '' && 
