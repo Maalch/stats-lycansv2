@@ -134,8 +134,9 @@ function test_getRawBRData() {
  * 
  * Usage: Run debug_getGameById(50) in the Script Editor
  */
-function debug_getGameById(testGameId) {
+function debug_getGameById() {
   try {
+    var testGameId = 538;
     Logger.log("=== DEBUG: Testing Game ID " + testGameId + " ===");
     
     // Get all required data
@@ -150,6 +151,9 @@ function debug_getGameById(testGameId) {
     
     var roleChangesData = getLycanSheetData(LYCAN_SCHEMA.ROLECHANGES.SHEET);
     var roleChangesValues = roleChangesData.values;
+    
+    var votesData = getLycanSheetData(LYCAN_SCHEMA.VOTES.SHEET);
+    var votesValues = votesData.values;
     
     if (!gameValues || gameValues.length === 0) {
       Logger.log("ERROR: No game data found");
@@ -167,6 +171,9 @@ function debug_getGameById(testGameId) {
     
     var roleChangesHeaders = roleChangesValues ? roleChangesValues[0] : [];
     var roleChangesDataRows = roleChangesValues ? roleChangesValues.slice(1) : [];
+    
+    var votesHeaders = votesValues ? votesValues[0] : [];
+    var votesDataRows = votesValues ? votesValues.slice(1) : [];
     
     // Find the specific game
     var gameRow = gameDataRows.find(function(row) {
@@ -226,7 +233,7 @@ function debug_getGameById(testGameId) {
     Logger.log("\n--- PLAYER STATS WITH ROLE CHANGES ---");
     players.forEach(function(playerName) {
       var playerDetails = getPlayerDetailsForGame(playerName, testGameId, detailsHeaders, detailsDataRows);
-      var playerStats = buildPlayerStatsFromDetails(playerName, testGameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows);
+      var playerStats = buildPlayerStatsFromDetails(playerName, testGameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows);
       
       Logger.log("\nPlayer: " + playerName);
       Logger.log("  MainRoleInitial: " + playerStats.MainRoleInitial);
@@ -238,6 +245,7 @@ function debug_getGameById(testGameId) {
       Logger.log("  DeathType: " + playerStats.DeathType);
       Logger.log("  KillerName: " + playerStats.KillerName);
       Logger.log("  Victorious: " + playerStats.Victorious);
+      Logger.log("  Votes: " + JSON.stringify(playerStats.Votes));
     });
     
     Logger.log("\n=== DEBUG COMPLETE ===");
@@ -455,6 +463,10 @@ function getRawGameDataInNewFormat() {
     var roleChangesData = getLycanSheetData(LYCAN_SCHEMA.ROLECHANGES.SHEET);
     var roleChangesValues = roleChangesData.values;
     
+    // Get votes data
+    var votesData = getLycanSheetData(LYCAN_SCHEMA.VOTES.SHEET);
+    var votesValues = votesData.values;
+    
     if (!gameValues || gameValues.length === 0) {
       return JSON.stringify({ error: 'No game data found' });
     }
@@ -481,6 +493,9 @@ function getRawGameDataInNewFormat() {
     
     var roleChangesHeaders = roleChangesValues ? roleChangesValues[0] : [];
     var roleChangesDataRows = roleChangesValues ? roleChangesValues.slice(1) : [];
+    
+    var votesHeaders = votesValues ? votesValues[0] : [];
+    var votesDataRows = votesValues ? votesValues.slice(1) : [];
     
     // Create game stats array
     var gameStats = gameDataRows.map(function(gameRow) {
@@ -543,7 +558,7 @@ function getRawGameDataInNewFormat() {
       gameRecord.PlayerStats = players.map(function(playerName) {
         var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
         allPlayerDetails.push(playerDetails); // Store for later use
-        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows);
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows);
       });
       
       // Check if death information is filled for all players using collected playerDetails
@@ -578,7 +593,7 @@ function getRawGameDataInNewFormat() {
  * Helper function to build player stats from legacy data using pre-fetched player details
  * This version avoids duplicate calls to getPlayerDetailsForGame
  */
-function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows) {
+function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows) {
   var playerStats = {
     Username: playerName,
     MainRoleInitial: determineMainRoleInitialWithDetails(playerDetails),
@@ -591,7 +606,8 @@ function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, p
     DeathPosition: null, // Not available in legacy data
     DeathType: determineDeathType(playerDetails),
     KillerName: determineKillerName(playerDetails),
-    Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
+    Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders),
+    Votes: getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows)
   };
   
   return playerStats;
@@ -652,6 +668,58 @@ function getRoleChangesForPlayer(playerName, gameId, roleChangesHeaders, roleCha
   });
   
   return changes;
+}
+
+/**
+ * Helper function to get votes for a specific game and player
+ * Returns an array of votes ordered by meeting number
+ * Each vote includes the Target and Date (if available)
+ */
+function getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows) {
+  if (!votesDataRows || votesDataRows.length === 0) {
+    return [];
+  }
+  
+  var votes = [];
+  
+  // Find all vote rows matching this game
+  var gameVotes = votesDataRows.filter(function(row) {
+    var rowGameId = row[findColumnIndex(votesHeaders, LYCAN_SCHEMA.VOTES.COLS.GAMEID)];
+    return rowGameId == gameId;
+  });
+  
+  // Sort by meeting number
+  gameVotes.sort(function(a, b) {
+    var meetingA = a[findColumnIndex(votesHeaders, LYCAN_SCHEMA.VOTES.COLS.MEETING)] || 0;
+    var meetingB = b[findColumnIndex(votesHeaders, LYCAN_SCHEMA.VOTES.COLS.MEETING)] || 0;
+    return meetingA - meetingB;
+  });
+  
+  // Extract votes for this player
+  gameVotes.forEach(function(row) {
+    var playersStr = row[findColumnIndex(votesHeaders, LYCAN_SCHEMA.VOTES.COLS.PLAYERS)];
+    var voteTarget = row[findColumnIndex(votesHeaders, LYCAN_SCHEMA.VOTES.COLS.VOTE)];
+    var meetingNr = row[findColumnIndex(votesHeaders, LYCAN_SCHEMA.VOTES.COLS.MEETING)];
+    var isSelected = row[findColumnIndex(votesHeaders, LYCAN_SCHEMA.VOTES.COLS.SELECTEDVOTE)];
+    
+    if (!playersStr) return;
+    
+    // Split the players list and check if this player is in it
+    var players = playersStr.split(',').map(function(p) { return p.trim(); });
+    
+    if (players.indexOf(playerName) !== -1) {
+      // Only add votes that have a target (not blank)
+      if (voteTarget && voteTarget.trim() !== '') {
+        votes.push({
+          MeetingNr: meetingNr,
+          Target: voteTarget.trim(),
+          Date: null // Date is not available in legacy data
+        });
+      }
+    }
+  });
+  
+  return votes;
 }
 
 /**
