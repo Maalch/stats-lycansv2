@@ -71,9 +71,6 @@ const LYCAN_SCHEMA = {
       MAINROLE: 'Rôle principal', //Main role of that player in the game, following the game logic (Villageois, Chasseur, Traître ...)
       POWER: 'Métier & Pouvoir', //Power of the player (any camp)
       SECONDARYROLE: 'Rôle secondaire', //Name of the secondary role for that player. Empty or 'N/A' if no secondary role
-      FINALCAMP: 'Camp final', //Name of the camp at the end of the game, only if different from start camp
-      FINALROLE: 'Rôle final', //Name of the rôle at the end of the game, only if different from start role 
-      FINALPOWER: 'Métier final', //Name of the power at the end of the game, only if different from start power
       DAYOFDEATH: 'Jour de mort', //Day of the death for that player. Could be either just an integer X, or a letter J/N/M + an integer (like J1 for Journée day 1, M3 for Meeting day 3)
       TYPEOFDEATH: 'Type de mort', //Type of death for that player (Tué par Loup, Mort aux votes, etc...). 'N/A' is not killed
       KILLEDPLAYERS: 'Personnes tuées', //List of player(s) killed by that player. If empty, killed no one

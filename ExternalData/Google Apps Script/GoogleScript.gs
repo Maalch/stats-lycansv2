@@ -615,10 +615,6 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
     power: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.POWER)] || null,
     secondaryRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.SECONDARYROLE)] || null,
     
-    finalCamp: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.FINALCAMP)] || null,
-    finalRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.FINALROLE)] || null,
-    finalPower: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.FINALPOWER)] || null,
-    
     dayOfDeath: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.DAYOFDEATH)] || null,
     typeOfDeath: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.TYPEOFDEATH)] || null,
     killerPlayers: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.KILLERPLAYERS)] || null,
