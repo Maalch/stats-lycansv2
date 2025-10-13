@@ -44,7 +44,7 @@ interface GameLogEntry {
   Version: string; Modded: boolean; PlayerStats: PlayerStat[];
 }
 interface PlayerStat {
-  Username: string; Color?: string; MainRoleInitial: string; MainRoleFinal: string | null;
+  Username: string; Color?: string; MainRoleInitial: string; MainRoleChanges: RoleChange[];
   Power: string | null; SecondaryRole: string | null; 
   Victorious: boolean; DeathTiming: string | null; DeathDateIrl: string | null;
   DeathPosition: {x: number; y: number; z: number} | null;
@@ -53,6 +53,11 @@ interface PlayerStat {
 }
 interface Vote {
   Target: string; Date: string; // ISO date string when vote was cast
+}
+
+interface RoleChange {
+  NewMainRole: string; // New main role after change
+  RoleChangeDateIrl: string; // Date of role change
 }
 
 // Legacy interfaces (auto-transformed from gameLog)

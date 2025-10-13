@@ -1,6 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, PlayerCampPerformance } from '../../types/api';
-import { getPlayerCampFromRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 
 
 /**
@@ -29,7 +29,7 @@ function calculateCampStatistics(
     const campsInGame = new Set<string>();
     
     game.PlayerStats.forEach(playerStat => {
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles, regroupVillagers });
+      const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), { regroupWolfSubRoles, regroupVillagers });
       campsInGame.add(playerCamp);
     });
 
@@ -50,7 +50,7 @@ function calculateCampStatistics(
     const winningCamps = new Set<string>();
     game.PlayerStats.forEach(playerStat => {
       if (playerStat.Victorious) {
-        const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles, regroupVillagers });
+        const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), { regroupWolfSubRoles, regroupVillagers });
         winningCamps.add(playerCamp);
       }
     });
@@ -104,7 +104,7 @@ function analyzePlayerPerformance(
       if (!player) return;
 
       // Determine player's camp using helper function
-      const mainCamp = getPlayerCampFromRole(playerStat.MainRoleFinal, { regroupWolfSubRoles, regroupVillagers });
+      const mainCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), { regroupWolfSubRoles, regroupVillagers });
       const playerCamp = mainCamp === 'Autres' ? 'Rôles spéciaux' : mainCamp;
 
       // Track player performance in this camp
@@ -181,7 +181,7 @@ function calculateSpecialRolesCampStatistics(
   // Process each game - count individual player participations, not game occurrences
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
-      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
+      const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
       
       // Count each player participation in special roles
       if (mainCamp === 'Autres') {
@@ -234,7 +234,7 @@ function analyzeSpecialRolesPlayerPerformance(
       if (!player) return;
 
       // Check if this player is playing a special role
-      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
+      const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
       
       if (mainCamp === 'Autres') {
         const playerCamp = 'Rôles spéciaux';

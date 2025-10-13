@@ -1,5 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerStatsData, PlayerStat, PlayerCamps } from '../../types/api';
+import { getPlayerFinalRole } from '../../utils/datasyncExport';
 
 /**
  * Compute player statistics from GameLogEntry data
@@ -46,8 +47,8 @@ export function computePlayerStats(
           // Increment games played
           allPlayers[player].gamesPlayed++;
 
-          // Get player's camp from their MainRoleFinal
-          const playerCamp = playerStat.MainRoleFinal;
+          // Get player's camp from their final role
+          const playerCamp = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
 
           // Increment camp count - create the camp if it doesn't exist
           if (playerCamp) {

@@ -119,3 +119,22 @@ export function getPlayerMainCampFromRole(roleName) {
     return 'Autres';
   }
 }
+
+/**
+* Help function to get the player's final role if changed during the game
+* 
+* @param {string} mainRoleInitial - The player's initial main role
+* @param {RoleChange[]} roleChanges - Array of role change objects
+* @returns {string} The player's final role 
+*/
+export function getPlayerFinalRole(mainRoleInitial, roleChanges) {
+  let currentRole = mainRoleInitial;
+
+  for (const change of roleChanges) {
+    if (change.NewMainRole) {
+      currentRole = change.NewMainRole;
+    }
+  }
+
+  return currentRole;
+}

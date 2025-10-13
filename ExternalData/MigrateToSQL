@@ -262,7 +262,6 @@ export async function buildDatabase() {
       username TEXT NOT NULL,
       color TEXT,
       mainRoleInitial TEXT NOT NULL,
-      mainRoleFinal TEXT,
       power TEXT,
       secondaryRole TEXT,
       victorious BOOLEAN DEFAULT 0,
@@ -274,6 +273,16 @@ export async function buildDatabase() {
       deathPositionZ REAL,
       FOREIGN KEY (gameId) REFERENCES games (id)
     );
+
+    --TODO
+    CREATE TABLE IF NOT EXISTS player_stats_rolechange (
+       player_stats_id INTEGER,
+       rolechangeid INTEGER
+    )
+
+    --TODO
+    CREATE TABLE IF NOT EXISTS rolechange(
+    )
     
     -- Votes table - from your vote tracking
     CREATE TABLE IF NOT EXISTS votes (
@@ -310,7 +319,7 @@ export async function buildDatabase() {
 
   const insertPlayerStat = db.prepare(`
     INSERT INTO player_stats 
-    (gameId, username, color, mainRoleInitial, mainRoleFinal, power, secondaryRole, victorious, deathTiming, deathType, killerName, deathPositionX, deathPositionY, deathPositionZ)
+    (gameId, username, color, mainRoleInitial, power, secondaryRole, victorious, deathTiming, deathType, killerName, deathPositionX, deathPositionY, deathPositionZ)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
@@ -347,7 +356,6 @@ export async function buildDatabase() {
           playerStat.Username,
           playerStat.Color,
           playerStat.MainRoleInitial,
-          playerStat.MainRoleFinal,
           playerStat.Power,
           playerStat.SecondaryRole,
           playerStat.Victorious ? 1 : 0,

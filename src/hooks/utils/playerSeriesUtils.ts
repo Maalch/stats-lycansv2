@@ -1,4 +1,4 @@
-import { getPlayerMainCampFromRole } from '../../utils/datasyncExport';
+import { getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
 
 
@@ -553,7 +553,7 @@ export function computePlayerSeries(
       if (!player) return;
 
       const playerStats = playerCampSeries[player];
-      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleFinal);
+      const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
       const playerWon = playerStat.Victorious;
 
       // Process camp series 

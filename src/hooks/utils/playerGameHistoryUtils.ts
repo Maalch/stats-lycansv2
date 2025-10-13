@@ -5,7 +5,7 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import { formatLycanDate} from './dataUtils';
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
-import { getPlayerCampFromRole } from '../../utils/datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 
 export interface PlayerGame {
   gameId: string;
@@ -61,9 +61,9 @@ export function computePlayerGameHistory(
     );
 
     if (playerStat) {
-      // Get player's camp from their MainRoleFinal (which contains the full role name)
-      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
-      
+      // Get player's camp from their final role (which contains the full role name)
+      const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+
       // Get the winning camp
       const winnerCamp = getWinnerCampFromGame(game);
       

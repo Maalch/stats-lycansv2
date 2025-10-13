@@ -5,7 +5,7 @@ import {
 } from './dataUtils';
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { CampWinStatsResponse, CampStat, SoloCamp, CampAverage } from '../../types/api';
-import { getPlayerCampFromRole } from '../../utils/datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 
 /**
  * Build game-player-camp mapping from GameLogEntry data
@@ -22,7 +22,7 @@ function buildGamePlayerCampMapFromGameLog(gameData: GameLogEntry[]): Record<str
 
     game.PlayerStats.forEach(playerStat => {
       const playerName = playerStat.Username;
-      let playerRole = getPlayerCampFromRole(playerStat.MainRoleFinal);
+      let playerRole = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
 
       if (playerName && playerRole) {
         gamePlayerCampMap[gameId][playerName] = playerRole;
@@ -52,7 +52,7 @@ function extractSoloRoles(game: GameLogEntry): string[] {
   // Solo roles are roles that aren't standard village/wolf camps
   const standardRoles = ['Villageois', 'Loup'];
   game.PlayerStats.forEach(playerStat => {
-    let role = getPlayerCampFromRole(playerStat.MainRoleFinal);
+    let role = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
 
     if (role && !standardRoles.includes(role)) {
       soloRoles.push(role);
@@ -73,7 +73,7 @@ function getWinnerCamp(game: GameLogEntry): string | null {
   }
   
   // Get the role of the first victorious player with all grouping options enabled
-  const winnerRole = getPlayerCampFromRole(victoriousPlayers[0].MainRoleFinal, {
+  const winnerRole = getPlayerCampFromRole(getPlayerFinalRole(victoriousPlayers[0].MainRoleInitial, victoriousPlayers[0].MainRoleChanges || []), {
     regroupLovers: true,
     regroupVillagers: true,
     regroupWolfSubRoles: true
