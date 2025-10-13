@@ -328,6 +328,10 @@ function getRawGameDataInNewFormat() {
     var detailsData = getLycanSheetData(LYCAN_SCHEMA.DETAILSV2.SHEET);
     var detailsValues = detailsData.values;
     
+    // Get role changes data
+    var roleChangesData = getLycanSheetData(LYCAN_SCHEMA.ROLECHANGES.SHEET);
+    var roleChangesValues = roleChangesData.values;
+    
     if (!gameValues || gameValues.length === 0) {
       return JSON.stringify({ error: 'No game data found' });
     }
@@ -351,6 +355,9 @@ function getRawGameDataInNewFormat() {
     
     var detailsHeaders = detailsValues ? detailsValues[0] : [];
     var detailsDataRows = detailsValues ? detailsValues.slice(1) : [];
+    
+    var roleChangesHeaders = roleChangesValues ? roleChangesValues[0] : [];
+    var roleChangesDataRows = roleChangesValues ? roleChangesValues.slice(1) : [];
     
     // Create game stats array
     var gameStats = gameDataRows.map(function(gameRow) {
@@ -413,7 +420,7 @@ function getRawGameDataInNewFormat() {
       gameRecord.PlayerStats = players.map(function(playerName) {
         var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
         allPlayerDetails.push(playerDetails); // Store for later use
-        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails);
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows);
       });
       
       // Check if death information is filled for all players using collected playerDetails
@@ -448,11 +455,11 @@ function getRawGameDataInNewFormat() {
  * Helper function to build player stats from legacy data using pre-fetched player details
  * This version avoids duplicate calls to getPlayerDetailsForGame
  */
-function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails) {
+function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows) {
   var playerStats = {
     Username: playerName,
     MainRoleInitial: determineMainRoleInitialWithDetails(playerDetails),
-    MainRoleFinal: null,
+    MainRoleChanges: getRoleChangesForPlayer(playerName, gameId, roleChangesHeaders, roleChangesDataRows),
     Color: playerDetails && playerDetails.color ? playerDetails.color : null,
     Power: playerDetails && playerDetails.power && playerDetails.power !== 'N/A' && playerDetails.power !== 'Inconnu' ? playerDetails.power : null,
     SecondaryRole: playerDetails && playerDetails.secondaryRole && playerDetails.secondaryRole !== 'N/A' && playerDetails.secondaryRole !== 'Inconnu' ? playerDetails.secondaryRole : null,
@@ -463,8 +470,6 @@ function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, p
     KillerName: determineKillerName(playerDetails),
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders)
   };
-
-  playerStats.MainRoleFinal = determineMainRoleFinalWithDetails(playerDetails, playerStats);
   
   return playerStats;
 }
@@ -499,6 +504,38 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
 }
 
 /**
+ * Helper function to get role changes for a specific game and player
+ * Returns an array of role changes in the order they appear in the sheet
+ */
+function getRoleChangesForPlayer(playerName, gameId, roleChangesHeaders, roleChangesDataRows) {
+  if (!roleChangesDataRows || roleChangesDataRows.length === 0) {
+    return [];
+  }
+  
+  var changes = [];
+  
+  // Find all rows matching this player and game
+  roleChangesDataRows.forEach(function(row) {
+    var rowGameId = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.GAMEID)];
+    var rowPlayer = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.PLAYER)];
+    
+    if (rowGameId == gameId && rowPlayer === playerName) {
+      var newMainRole = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.NEWMAINROLE)];
+      
+      // Only add if the new main role is not empty
+      if (newMainRole && newMainRole.trim() !== '') {
+
+        changes.push({
+          NewMainRole: newMainRole
+        });
+      }
+    }
+  });
+  
+  return changes;
+}
+
+/**
  * Helper function to determine main role with details data priority
  */
 function determineMainRoleInitialWithDetails(playerDetails) {
@@ -515,27 +552,6 @@ function determineMainRoleInitialWithDetails(playerDetails) {
   }
   else {
     return null;
-  }
-}
-
-/**
- * Helper function to determine main role with details data priority
- */
-function determineMainRoleFinalWithDetails(playerDetails, playerStats) {
-  
-  // Check if playerDetails is null first
-  if (!playerDetails) {
-    // Fall back to the main role initial if no details available
-    return playerStats.MainRoleInitial;
-  }
-  
-  // Determine which camp to use based on type (final)
-  if (playerDetails.finalRole) {
-    return playerDetails.finalRole;
-  }
-  else { 
-    // Otherwise, fall back to the main role initial
-    return playerStats.MainRoleInitial;
   }
 }
 

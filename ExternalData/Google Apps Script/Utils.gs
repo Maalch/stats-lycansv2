@@ -50,6 +50,15 @@ const LYCAN_SCHEMA = {
       COLOR:  'Couleur' //Most used color for this player
     }
   },
+  ROLECHANGES: {
+    SHEET: 'Changements', //Camp, role and power changes during the games
+    COLS: {
+      GAMEID: 'Game', //Game ID (unique), same as Game v2 sheet
+      PLAYER: 'Joueur', //Name of the player
+      NEWCAMP: 'Camp', //New camp for that player (Villageois, Loup ...)	
+      NEWMAINROLE: 'Rôle principal', //New main role of that player in the game, following the game logic (Villageois, Chasseur, Traître ...)
+    }
+  },
 
   DETAILSV2: {
     SHEET: 'Détails v2', //Details data about each player each game in the new format
