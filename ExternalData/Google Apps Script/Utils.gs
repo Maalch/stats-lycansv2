@@ -59,6 +59,16 @@ const LYCAN_SCHEMA = {
       NEWMAINROLE: 'Rôle principal', //New main role of that player in the game, following the game logic (Villageois, Chasseur, Traître ...)
     }
   },
+  VOTES: {
+    SHEET: 'Conseils', //list of votes during meetings
+    COLS: {
+      GAMEID: 'Games', //Game ID (unique), same as Game v2 sheet
+      MEETING: 'Conseils', //Number of the meeting in that day (1 for the first meeting, and so on)
+      PLAYERS: 'Votants', //List of players for that specific VOTE category
+      VOTE: 'Votes', //Target player of the vote, or "Passé" for Skip-vote / blank if no vote at all
+      SELECTEDVOTE: 'Choix', //True/false if the VOTE is the selected vote type or not for that meeting
+    }
+  },
 
   DETAILSV2: {
     SHEET: 'Détails v2', //Details data about each player each game in the new format
