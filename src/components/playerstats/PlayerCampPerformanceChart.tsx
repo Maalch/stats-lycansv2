@@ -22,6 +22,8 @@ interface ChartPlayerCampPerformance {
   performanceNum: number;
   campAvgWinRateNum: number;
   isHighlightedAddition?: boolean;
+  uniqueKey?: string;
+  playerCamp?: string;
 }
 
 export function PlayerCampPerformanceChart() {
@@ -135,6 +137,7 @@ export function PlayerCampPerformanceChart() {
     for (const player of playerPerformance) {
       for (const cp of player.campPerformance) {
         if (cp.games >= minGames) {
+          const uniqueKey = `${player.player}-${cp.camp}`;
           const performanceData: ChartPlayerCampPerformance = {
             player: player.player,
             camp: cp.camp,
@@ -145,7 +148,9 @@ export function PlayerCampPerformanceChart() {
             winRateNum: parseFloat(cp.winRate),
             performanceNum: parseFloat(cp.performance),
             campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
-            isHighlightedAddition: false
+            isHighlightedAddition: false,
+            uniqueKey: uniqueKey,
+            playerCamp: uniqueKey // Add this for chart dataKey when "Tous les camps"
           };
           
           // Add to all performances for top performers view
@@ -159,7 +164,9 @@ export function PlayerCampPerformanceChart() {
               winRateNum: parseFloat(cp.winRate),
               performanceNum: parseFloat(cp.performance),
               campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
-              isHighlightedAddition: false
+              isHighlightedAddition: false,
+              uniqueKey: uniqueKey,
+              playerCamp: uniqueKey
             });
           }
         }
@@ -197,6 +204,7 @@ export function PlayerCampPerformanceChart() {
         // For camp-specific view, only add if it matches the selected camp
         // For top performers view, add all camps (no campFilter)
         if ((!campFilter || cp.camp === campFilter) && cp.games >= 1) { // Lower minimum for highlighted player
+          const uniqueKey = `${highlightedPlayerData.player}-${cp.camp}`;
           highlightedAdditions.push({
             player: highlightedPlayerData.player,
             camp: cp.camp,
@@ -207,7 +215,9 @@ export function PlayerCampPerformanceChart() {
             winRateNum: parseFloat(cp.winRate),
             performanceNum: parseFloat(cp.performance),
             campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
-            isHighlightedAddition: true
+            isHighlightedAddition: true,
+            uniqueKey: uniqueKey,
+            playerCamp: uniqueKey
           });
         }
       }
@@ -545,26 +555,35 @@ export function PlayerCampPerformanceChart() {
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
-                  dataKey="player"
+                  dataKey={selectedCamp === 'Tous les camps' ? 'playerCamp' : 'player'}
                   angle={-45}
                   textAnchor="end"
                   height={110}
                   interval={0}
                   fontSize={15}
-                  tick={({ x, y, payload }) => (
-                    <text
-                      x={x}
-                      y={y}
-                      dy={16}
-                      textAnchor="end"
-                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
-                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
-                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
-                      transform={`rotate(-45 ${x} ${y})`}
-                    >
-                      {payload.value}
-                    </text>
-                  )}
+                  tick={({ x, y, payload, index }) => {
+                    const dataArray = selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData;
+                    const dataPoint = dataArray[index];
+                    const displayText = selectedCamp === 'Tous les camps' && dataPoint
+                      ? `${dataPoint.player} - ${dataPoint.camp}`
+                      : payload.value;
+                    const isHighlighted = settings.highlightedPlayer === (dataPoint?.player || payload.value);
+                    
+                    return (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill={isHighlighted ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                        fontSize={isHighlighted ? 14 : 13}
+                        fontWeight={isHighlighted ? 'bold' : 'italic'}
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {displayText}
+                      </text>
+                    );
+                  }}
                 />
                 <YAxis 
                   label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}                 
@@ -573,6 +592,7 @@ export function PlayerCampPerformanceChart() {
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0) {
                       const dataPoint = payload[0].payload;
+                      
                       return (
                         <div style={{ 
                           background: 'var(--bg-secondary)', 
@@ -581,8 +601,14 @@ export function PlayerCampPerformanceChart() {
                           borderRadius: 8,
                           border: '1px solid var(--border-color)'
                         }}>
-                          <div><strong>{dataPoint.player}</strong></div>
-                          {selectedCamp === 'Tous les camps' && <div>Camp: {dataPoint.camp}</div>}
+                          <div>
+                            <strong>
+                              {selectedCamp === 'Tous les camps' 
+                                ? `${dataPoint.player} - ${dataPoint.camp}`
+                                : dataPoint.player
+                              }
+                            </strong>
+                          </div>
                           <div>Parties: {dataPoint.games}</div>
                           <div>Victoires: {dataPoint.wins}</div>
                           <div>Taux personnel: {dataPoint.winRate}%</div>
