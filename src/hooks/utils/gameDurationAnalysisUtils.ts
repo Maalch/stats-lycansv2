@@ -1,7 +1,7 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { GameDurationAnalysisResponse, DurationDistribution, CampDurationData } from '../../types/api';
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
-import { calculateGameDuration } from '../../utils/datasyncExport';
+import { calculateGameDuration, getPlayerFinalRole } from '../../utils/datasyncExport';
 
 /**
  * Format duration in seconds to a human-readable string
@@ -172,7 +172,7 @@ function processGameDuration(
 ): void {
   // Extract data from GameLogEntry structure
   const nbPlayers = game.PlayerStats.length;
-  const nbWolves = game.PlayerStats.filter(p => p.MainRoleFinal === 'Loup').length;
+  const nbWolves = game.PlayerStats.filter(p => getPlayerFinalRole(p.MainRoleInitial, p.MainRoleChanges || []) === 'Loup').length;
   
   // Determine winner camp from PlayerStats
   let winnerCamp = getWinnerCampFromGame(game);

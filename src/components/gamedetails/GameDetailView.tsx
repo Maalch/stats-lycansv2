@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping, mainCampOrder } from '../../types/api';
 import { formatDeathTiming } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
-import { getPlayerCampFromRole } from '../../utils/datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {
@@ -16,7 +16,7 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
   
   // Group players by their camps
   const campGroups = playerData.reduce((groups, player) => {
-    const camp = getPlayerCampFromRole(player.MainRoleFinal);
+    const camp = getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []));
     if (!groups[camp]) {
       groups[camp] = [];
     }
@@ -78,8 +78,8 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
                       style={{ 
                         borderColor: playerColor
                       }}
-                        title={`${player.Username} - ${getPlayerCampFromRole(player.MainRoleInitial) !== getPlayerCampFromRole(player.MainRoleFinal)
-                          ? `${getPlayerCampFromRole(player.MainRoleInitial)} puis ${getPlayerCampFromRole(player.MainRoleFinal)}`
+                        title={`${player.Username} - ${getPlayerCampFromRole(player.MainRoleInitial) !== getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []))
+                          ? `${getPlayerCampFromRole(player.MainRoleInitial)} puis ${getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []))}`
                           : getPlayerCampFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${formatDeathTiming(player.DeathTiming)})` : ''}`}
                     >
                       <span className="player-name">{player.Username}</span>
@@ -231,8 +231,8 @@ export function GameDetailView({ game }: { game: any }) {
             {game.playerData
               .sort((a: any, b: any) => {
                 // Get camps for both players
-                const campA = getPlayerCampFromRole(a.MainRoleFinal);
-                const campB = getPlayerCampFromRole(b.MainRoleFinal);
+                const campA = getPlayerCampFromRole(getPlayerFinalRole(a.MainRoleInitial, a.MainRoleChanges || []));
+                const campB = getPlayerCampFromRole(getPlayerFinalRole(b.MainRoleInitial, b.MainRoleChanges || []));
 
                 // Use main camp priority order from datasyncExport
                 const priorityA = mainCampOrder.indexOf(campA);
@@ -259,8 +259,8 @@ export function GameDetailView({ game }: { game: any }) {
               // Get role and camp information from MainRoleInitial
               const camp = getPlayerCampFromRole(playerStat.MainRoleInitial);          
               const originalRole = playerStat.MainRoleInitial;
-              const finalcamp = getPlayerCampFromRole(playerStat.MainRoleFinal);
-              const finalRole = playerStat.MainRoleFinal;
+              const finalcamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+              const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
               const power = playerStat.Power;
               const secondaryRole = playerStat.SecondaryRole;
               
@@ -287,7 +287,7 @@ export function GameDetailView({ game }: { game: any }) {
               }
 
               // Get the camp border color
-              let campTextColor = lycansColorScheme[playerStat.MainRoleFinal as keyof typeof lycansColorScheme] || '#666';
+              let campTextColor = lycansColorScheme[getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []) as keyof typeof lycansColorScheme] || '#666';
               if (campTextColor === '#666') {
                  campTextColor = lycansColorScheme[finalcamp as keyof typeof lycansColorScheme] || '#666';
               }

@@ -3,7 +3,7 @@
  */
 
 import type { PlayerPairingStatsData, PlayerPairStat } from '../../types/api';
-import { getPlayerCampFromRole } from '../../utils/datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
 
 /**
@@ -107,12 +107,12 @@ export function computePlayerPairingStats(
   gameData.forEach(game => {
     // Find all wolves in this game (exclude traitors by default with regroupWolfSubRoles: false, only pure wolves)
     const wolves = game.PlayerStats.filter(player => 
-      getPlayerCampFromRole(player.MainRoleFinal, { regroupWolfSubRoles: false }) === 'Loup'
+      getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []), { regroupWolfSubRoles: false }) === 'Loup'
     );
 
     // Find all lovers in this game (using regroupLovers: true to group them as 'Amoureux')
     const lovers = game.PlayerStats.filter(player => 
-      getPlayerCampFromRole(player.MainRoleFinal, { regroupLovers: true }) === 'Amoureux'
+      getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []), { regroupLovers: true }) === 'Amoureux'
     );
 
     // Process wolf pairs

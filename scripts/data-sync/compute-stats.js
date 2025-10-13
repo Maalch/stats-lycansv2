@@ -2,6 +2,7 @@
  * Statistics computation functions for achievement generation
  */
 
+import { getPlayerFinalRole } from '../../src/utils/datasyncExport.js';
 import { DeathTypeCode, getPlayerCampFromRole, getPlayerMainCampFromRole } from '../../src/utils/datasyncExport.js';
 
 /**
@@ -117,8 +118,8 @@ export function computePlayerGameHistory(playerName, gameData) {
     );
 
     if (playerStat) {
-      // Get player's camp from their MainRoleFinal or MainRoleInitial
-      const roleName = playerStat.MainRoleFinal || playerStat.MainRoleInitial;
+      // Get player's camp from their final role in the game
+      const roleName = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
       const playerCamp = getPlayerCampFromRole(roleName);
       
       // Player won if they are marked as Victorious
@@ -400,7 +401,7 @@ export function computePlayerCampPerformance(gameData) {
     if (!game.PlayerStats) return;
 
     game.PlayerStats.forEach(player => {
-      const roleName = player.MainRoleFinal || player.MainRoleInitial;
+      const roleName = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
       const camp = getPlayerCampFromRole(roleName, { regroupVillagers: false, regroupWolfSubRoles: false });
       const playerName = player.Username;
       const won = player.Victorious;

@@ -2,7 +2,7 @@
  * Utility functions for processing YouTube URLs and game duration calculations
  */
 import type { GameLogEntry } from '../hooks/useCombinedRawData';
-import { getPlayerCampFromRole } from './datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole } from './datasyncExport';
 
 // Helper function to extract YouTube video ID and timestamp from a YouTube URL
 export function extractYouTubeInfo(url: string | null): { videoId: string | null; timestamp: number | null } {
@@ -97,7 +97,7 @@ export function getWinnerCampFromGame(game: GameLogEntry): string {
   // Use getPlayerCampFromRole with regroupWolfSubRoles: true to handle Traître/Louveteau->Loup grouping
   // This matches the logic used in the achievements generation
   const winnerCamps = winners.map(w => 
-    getPlayerCampFromRole(w.MainRoleFinal, { regroupWolfSubRoles: true })
+    getPlayerCampFromRole(getPlayerFinalRole(w.MainRoleInitial, w.MainRoleChanges || []), { regroupWolfSubRoles: true })
   );
   
   // Find the most common camp among winners

@@ -31,7 +31,10 @@ export declare const DeathTypeCode: {
 
 export type DeathTypeCodeType = typeof DeathTypeCode[keyof typeof DeathTypeCode];
 
-
+export interface RoleChange {
+  NewMainRole: string;            // New main role after change
+  RoleChangeDateIrl: string;     // Date of role change
+}
 
 /**
  * Helper function to calculate game duration in seconds
@@ -59,5 +62,17 @@ export declare function getPlayerCampFromRole(
   }
 ): string;
 
-
+/**
+  * Helper function to get player's main camp from initial role name
+  * @param roleName - The initial role name to get the main camp for
+  * @returns The main camp name: 'Villageois', 'Loup', or 'Autres' 
+*/
 export declare function getPlayerMainCampFromRole(roleName: string): 'Villageois' | 'Loup' | 'Autres';
+
+/**
+ * Helper function to determine the final role of a player after role changes
+ * @param mainRoleInitial - The player's initial main role
+ * @param roleChanges - An array of role change objects
+ * @returns The player's final main role after applying all role changes
+ */
+export declare function getPlayerFinalRole(mainRoleInitial: string, roleChanges: RoleChange[]): string;

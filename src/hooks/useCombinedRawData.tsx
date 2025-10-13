@@ -9,11 +9,16 @@ export interface Vote {
   Date: string;                   // ISO date string when the vote was cast
 }
 
+export interface RoleChange {
+  NewMainRole: string;            // New main role after change
+  RoleChangeDateIrl: string;     // Date of role change
+}
+
 export interface PlayerStat {
   Username: string;
   Color?: string;                 // Player color assigned in game
   MainRoleInitial: string;        // Original role at game start
-  MainRoleFinal: string;    // Final role if changed (e.g., by role swap)
+  MainRoleChanges: RoleChange[];      // List of role changes (if any)
   Power: string | null;           // Special power (linked to the role), if any
   SecondaryRole: string | null;     // Secondary role if any
   DeathDateIrl: string | null;    // Real-life date of death in game

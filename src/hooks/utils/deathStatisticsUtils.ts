@@ -1,5 +1,5 @@
 import type { GameLogEntry } from '../useCombinedRawData';
-import { DeathTypeCode, getPlayerCampFromRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
+import { DeathTypeCode, getPlayerCampFromRole, getPlayerFinalRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
 import { mainCampOrder } from '../../types/api';
 
 /**
@@ -271,20 +271,21 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       if (player.KillerName) {
         const killerPlayer = game.PlayerStats.find(p => p.Username === player.KillerName);
         if (killerPlayer) {
+          const finalKillerRole = getPlayerFinalRole(killerPlayer.MainRoleInitial, killerPlayer.MainRoleChanges || []);
           // For killer statistics: use MainRoleInitial as base camp
-          // But add special logic for kills when MainRoleFinal differs from MainRoleInitial
-          killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
+          // But add special logic for kills when final role differs from MainRoleInitial
+          killerCamp = getPlayerCampFromRole(finalKillerRole, {
             regroupLovers: true,
             regroupVillagers: true,
             regroupWolfSubRoles: false
           });
           
-          // Special case: if MainRoleFinal is Loup or Zombie and different from MainRoleInitial,
+          // Special case: if final role is Loup or Zombie and different from MainRoleInitial,
           // categorize these kills under the final role
-          if (killerPlayer.MainRoleFinal && killerPlayer.MainRoleFinal !== killerPlayer.MainRoleInitial) {
-            if (killerPlayer.MainRoleFinal === 'Loup') {
+          if (finalKillerRole && finalKillerRole !== killerPlayer.MainRoleInitial) {
+            if (finalKillerRole === 'Loup') {
               killerCamp = 'Loup';
-            } else if (killerPlayer.MainRoleFinal === 'Zombie') {
+            } else if (finalKillerRole === 'Zombie') {
               killerCamp = 'Vaudou';
             }
           }
@@ -350,19 +351,20 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
       }
       
       // For killer statistics: use MainRoleInitial as base camp
-      // But add special logic for kills when MainRoleFinal differs from MainRoleInitial
+      // But add special logic for kills when final role differs from MainRoleInitial
       let killerCamp = getPlayerCampFromRole(killerPlayer.MainRoleInitial, {
         regroupLovers: true,
         regroupVillagers: true,
         regroupWolfSubRoles: false
       });
       
-      // Special case: if MainRoleFinal is Loup or Zombie and different from MainRoleInitial,
+      // Special case: if final role is Loup or Zombie and different from MainRoleInitial,
       // categorize these kills under the final role
-      if (killerPlayer.MainRoleFinal && killerPlayer.MainRoleFinal !== killerPlayer.MainRoleInitial) {
-        if (killerPlayer.MainRoleFinal === 'Loup') {
+      const finalKillerRole = getPlayerFinalRole(killerPlayer.MainRoleInitial, killerPlayer.MainRoleChanges || []);
+      if (finalKillerRole && finalKillerRole !== killerPlayer.MainRoleInitial) {
+        if (finalKillerRole === 'Loup') {
           killerCamp = 'Loup';
-        } else if (killerPlayer.MainRoleFinal === 'Zombie') {
+        } else if (finalKillerRole === 'Zombie') {
           killerCamp = 'Vaudou';
         }
       }
@@ -634,9 +636,9 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
     const huntersInGame = new Set<string>();
     
     game.PlayerStats.forEach(player => {
-      // Check if player was Chasseur (using MainRoleInitial OR MainRoleFinal)
+      // Check if player was Chasseur (using MainRoleInitial OR final role)
       const initialRole = player.MainRoleInitial;
-      const finalRole = player.MainRoleFinal;
+      const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
       if (initialRole === 'Chasseur' || finalRole === 'Chasseur') {
         huntersInGame.add(player.Username);
         
