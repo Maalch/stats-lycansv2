@@ -18,7 +18,7 @@ export function VotingStatisticsChart() {
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
 
   const [selectedView, setSelectedView] = useState<'behavior' | 'accuracy' | 'targets' | 'overview'>('overview');
-  const [minMeetings, setMinMeetings] = useState<number>(5);
+  const [minMeetings, setMinMeetings] = useState<number>(25);
   
   const { data: allVotingStats, isLoading, error } = useVotingStatisticsFromRaw();
   const { data: filteredVotingStats } = useFilteredVotingStatistics(minMeetings);
@@ -82,7 +82,7 @@ export function VotingStatisticsChart() {
     return <div className="donnees-manquantes">Aucune donnée de vote disponible</div>;
   }
 
-  const minMeetingsOptions = [3, 5, 8, 10, 15];
+  const minMeetingsOptions = [5, 10, 25, 50, 100, 200];
 
   return (
     <div className="lycans-voting-statistics">
@@ -123,7 +123,7 @@ export function VotingStatisticsChart() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <label htmlFor="min-meetings-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Min. réunions:
+            Min. conseils:
           </label>
           <select
             id="min-meetings-select"
