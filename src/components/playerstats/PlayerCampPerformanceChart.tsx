@@ -150,7 +150,7 @@ export function PlayerCampPerformanceChart() {
             campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
             isHighlightedAddition: false,
             uniqueKey: uniqueKey,
-            playerCamp: uniqueKey // Add this for chart dataKey when "Tous les camps"
+            playerCamp: uniqueKey // Keep this for unique identification when needed
           };
           
           // Add to all performances for top performers view
@@ -411,10 +411,11 @@ export function PlayerCampPerformanceChart() {
               let optionText = camp;
               let isIndented = false;
               let isSubGroup = false;
+              let isMainText = false;
               
               if (camp === 'Tous les camps') {
-                optionText = '📊 Tous les camps';
-                isSubGroup = true;
+                optionText = '📊 Hall of Fame';
+                isMainText = true;
               } else if (camp === 'Camp Villageois') {
                 optionText = '   🏘️ Camp Villageois';
                 isIndented = true;
@@ -459,7 +460,7 @@ export function PlayerCampPerformanceChart() {
                     fontFamily: 'monospace',
                     fontSize: isIndented ? '0.85rem' : '0.9rem',
                     fontWeight: isSubGroup ? 'bold' : 'normal',
-                    color: isSubGroup ? 'var(--accent-primary)' : 'inherit'
+                    color: isSubGroup ? 'var(--accent-primary)' : isMainText ? 'var(--accent-secondary)' : 'inherit'
                   }}
                 >
                   {optionText}
@@ -555,7 +556,7 @@ export function PlayerCampPerformanceChart() {
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
-                  dataKey={selectedCamp === 'Tous les camps' ? 'playerCamp' : 'player'}
+                  dataKey={selectedCamp === 'Tous les camps' ? 'uniqueKey' : 'player'}
                   angle={-45}
                   textAnchor="end"
                   height={110}
@@ -564,9 +565,7 @@ export function PlayerCampPerformanceChart() {
                   tick={({ x, y, payload, index }) => {
                     const dataArray = selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData;
                     const dataPoint = dataArray[index];
-                    const displayText = selectedCamp === 'Tous les camps' && dataPoint
-                      ? `${dataPoint.player} - ${dataPoint.camp}`
-                      : payload.value;
+                    const displayText = dataPoint?.player || payload.value;
                     const isHighlighted = settings.highlightedPlayer === (dataPoint?.player || payload.value);
                     
                     return (
