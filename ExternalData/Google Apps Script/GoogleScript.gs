@@ -125,6 +125,129 @@ function test_getRawBRData() {
   return result;
 }
 
+/**
+ * Debug function to test a specific game ID
+ * This function fetches and displays detailed information about a single game
+ * including all player stats and role changes
+ * 
+ * @param {number|string} testGameId - The game ID to test (e.g., 50, "50")
+ * 
+ * Usage: Run debug_getGameById(50) in the Script Editor
+ */
+function debug_getGameById(testGameId) {
+  try {
+    Logger.log("=== DEBUG: Testing Game ID " + testGameId + " ===");
+    
+    // Get all required data
+    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
+    var gameValues = gameData.values;
+    
+    var gameData2 = getLycanSheetData(LYCAN_SCHEMA.GAMES2.SHEET);
+    var gameValues2 = gameData2.values;
+    
+    var detailsData = getLycanSheetData(LYCAN_SCHEMA.DETAILSV2.SHEET);
+    var detailsValues = detailsData.values;
+    
+    var roleChangesData = getLycanSheetData(LYCAN_SCHEMA.ROLECHANGES.SHEET);
+    var roleChangesValues = roleChangesData.values;
+    
+    if (!gameValues || gameValues.length === 0) {
+      Logger.log("ERROR: No game data found");
+      return;
+    }
+    
+    var gameHeaders = gameValues[0];
+    var gameDataRows = gameValues.slice(1);
+    
+    var gameHeaders2 = gameValues2[0];
+    var gameDataRows2 = gameValues2.slice(1);
+    
+    var detailsHeaders = detailsValues ? detailsValues[0] : [];
+    var detailsDataRows = detailsValues ? detailsValues.slice(1) : [];
+    
+    var roleChangesHeaders = roleChangesValues ? roleChangesValues[0] : [];
+    var roleChangesDataRows = roleChangesValues ? roleChangesValues.slice(1) : [];
+    
+    // Find the specific game
+    var gameRow = gameDataRows.find(function(row) {
+      return row[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID)] == testGameId;
+    });
+    
+    if (!gameRow) {
+      Logger.log("ERROR: Game ID " + testGameId + " not found");
+      return;
+    }
+    
+    // Create a map of game2 data
+    var game2DataMap = {};
+    gameDataRows2.forEach(function(row) {
+      var gameId = row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEID)];
+      if (gameId) {
+        game2DataMap[gameId] = row;
+      }
+    });
+    
+    var game2Row = game2DataMap[testGameId];
+    
+    // Log basic game info
+    Logger.log("\n--- GAME INFORMATION ---");
+    Logger.log("Game ID: " + testGameId);
+    Logger.log("Date: " + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.DATE)]);
+    Logger.log("Map: " + (game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)] : 'N/A'));
+    Logger.log("Modded: " + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)]);
+    Logger.log("Winner Camp: " + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP)]);
+    
+    // Get player list
+    var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
+    var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
+    
+    Logger.log("Number of players: " + players.length);
+    Logger.log("Players: " + players.join(', '));
+    
+    // Log role changes for this game
+    Logger.log("\n--- ROLE CHANGES IN CHANGEMENTS SHEET ---");
+    var gameRoleChanges = roleChangesDataRows.filter(function(row) {
+      return row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.GAMEID)] == testGameId;
+    });
+    
+    if (gameRoleChanges.length === 0) {
+      Logger.log("No role changes found for this game in Changements sheet");
+    } else {
+      Logger.log("Found " + gameRoleChanges.length + " role change entries:");
+      gameRoleChanges.forEach(function(row, index) {
+        var player = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.PLAYER)];
+        var newCamp = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.NEWCAMP)];
+        var newMainRole = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.NEWMAINROLE)];
+        Logger.log("  [" + (index + 1) + "] Player: " + player + " | New Camp: " + newCamp + " | New Main Role: " + newMainRole);
+      });
+    }
+    
+    // Build and log player stats
+    Logger.log("\n--- PLAYER STATS WITH ROLE CHANGES ---");
+    players.forEach(function(playerName) {
+      var playerDetails = getPlayerDetailsForGame(playerName, testGameId, detailsHeaders, detailsDataRows);
+      var playerStats = buildPlayerStatsFromDetails(playerName, testGameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows);
+      
+      Logger.log("\nPlayer: " + playerName);
+      Logger.log("  MainRoleInitial: " + playerStats.MainRoleInitial);
+      Logger.log("  MainRoleChanges: " + JSON.stringify(playerStats.MainRoleChanges));
+      Logger.log("  Color: " + playerStats.Color);
+      Logger.log("  Power: " + playerStats.Power);
+      Logger.log("  SecondaryRole: " + playerStats.SecondaryRole);
+      Logger.log("  DeathTiming: " + playerStats.DeathTiming);
+      Logger.log("  DeathType: " + playerStats.DeathType);
+      Logger.log("  KillerName: " + playerStats.KillerName);
+      Logger.log("  Victorious: " + playerStats.Victorious);
+    });
+    
+    Logger.log("\n=== DEBUG COMPLETE ===");
+    
+  } catch (error) {
+    Logger.log("ERROR in debug_getGameById: " + error.message);
+    Logger.log("Stack trace: " + error.stack);
+  }
+}
+
 
 //Caching data
 function getCachedData(cacheKey, generatorFn, cacheSeconds, e) {
