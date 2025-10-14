@@ -125,7 +125,7 @@ const PLAYER_STATS_MENU = [
   },
   { 
     key: 'votingStats', 
-    label: 'Statistiques de Vote', 
+    label: 'Votes', 
     component: VotingStatisticsChart,
     description: 'Comportements et précision de vote des joueurs'
   },

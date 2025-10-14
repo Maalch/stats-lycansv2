@@ -1,23 +1,22 @@
 import { useState, useMemo } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  Cell, PieChart, Pie
+  Cell
 } from 'recharts';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useVotingStatisticsFromRaw, useFilteredVotingStatistics } from '../../hooks/useVotingStatisticsFromRaw';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
-import { useThemeAdjustedDynamicPlayersColor, useThemeAdjustedLycansColorScheme } from '../../types/api';
+import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 
 export function VotingStatisticsChart() {
   const { settings } = useSettings();
   const { navigateToGameDetails } = useNavigation();
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
-  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
 
-  const [selectedView, setSelectedView] = useState<'behavior' | 'accuracy' | 'targets' | 'overview'>('overview');
+  const [selectedView, setSelectedView] = useState<'behavior' | 'accuracy' | 'targets'>('behavior');
   const [minMeetings, setMinMeetings] = useState<number>(25);
   
   const { data: allVotingStats, isLoading, error } = useVotingStatisticsFromRaw();
@@ -114,7 +113,6 @@ export function VotingStatisticsChart() {
               minWidth: '180px'
             }}
           >
-            <option value="overview">📊 Vue d'ensemble</option>
             <option value="behavior">🗳️ Comportements de vote</option>
             <option value="accuracy">🎯 Précision des votes</option>
             <option value="targets">🔻 Joueurs ciblés</option>
@@ -147,32 +145,6 @@ export function VotingStatisticsChart() {
           </select>
         </div>
       </div>
-
-      {/* Overview Cards */}
-      {selectedView === 'overview' && (
-        <div className="lycans-resume-conteneur">
-          <div className="lycans-stat-carte">
-            <h3>Total Réunions</h3>
-            <div className="lycans-valeur-principale">{allVotingStats.overallMeetingStats.totalMeetings}</div>
-            <p>réunions de vote</p>
-          </div>
-          <div className="lycans-stat-carte">
-            <h3>Participation Moyenne</h3>
-            <div className="lycans-valeur-principale">{allVotingStats.overallMeetingStats.averageParticipationRate.toFixed(1)}%</div>
-            <p>des joueurs participent</p>
-          </div>
-          <div className="lycans-stat-carte">
-            <h3>Total Votes</h3>
-            <div className="lycans-valeur-principale">{allVotingStats.overallMeetingStats.totalVotes}</div>
-            <p>votes effectifs</p>
-          </div>
-          <div className="lycans-stat-carte">
-            <h3>Abstentions</h3>
-            <div className="lycans-valeur-principale">{allVotingStats.overallMeetingStats.totalSkips + allVotingStats.overallMeetingStats.totalAbstentions}</div>
-            <p>passés + absents</p>
-          </div>
-        </div>
-      )}
 
       <div className="lycans-graphiques-groupe">
         {/* Voting Behavior Chart */}
@@ -363,7 +335,6 @@ export function VotingStatisticsChart() {
                               <div>Total votes: {dataPoint.totalVotes}</div>
                               <div>Votes justes: {dataPoint.votesForEnemyCamp} ({dataPoint.accuracyRate.toFixed(1)}%)</div>
                               <div>Feu ami: {dataPoint.votesForOwnCamp} ({dataPoint.friendlyFireRate.toFixed(1)}%)</div>
-                              <div>Auto-votes: {dataPoint.votesForSelf}</div>
                               <div style={{ 
                                 fontSize: '0.8rem', 
                                 color: 'var(--accent-primary)', 
@@ -528,110 +499,6 @@ export function VotingStatisticsChart() {
           </div>
         )}
 
-        {/* Overview - Multiple charts */}
-        {selectedView === 'overview' && (
-          <>
-            {/* Participation Overview Pie Chart */}
-            <div className="lycans-graphique-section">
-              <h3>📊 Répartition des Actions de Vote</h3>
-              <FullscreenChart title="Répartition des Actions de Vote">
-                <div style={{ height: 400 }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        dataKey="value"
-                        data={[
-                          { 
-                            name: 'Votes Effectifs', 
-                            value: allVotingStats.overallMeetingStats.totalVotes,
-                            fill: lycansColorScheme['Villageois'] 
-                          },
-                          { 
-                            name: 'Passés', 
-                            value: allVotingStats.overallMeetingStats.totalSkips,
-                            fill: lycansColorScheme['Loup'] 
-                          },
-                          { 
-                            name: 'Abstentions', 
-                            value: allVotingStats.overallMeetingStats.totalAbstentions,
-                            fill: 'var(--accent-danger)' 
-                          }
-                        ]}
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={120}
-                        label={({ name, percent }) => `${name} (${((percent || 0) * 100).toFixed(1)}%)`}
-                      />
-                      <Tooltip 
-                        formatter={(value: number) => [value.toLocaleString(), '']}
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-              </FullscreenChart>
-            </div>
-
-            {/* Top Aggressive Voters */}
-            <div className="lycans-graphique-section">
-              <h3>🔥 Voteurs les Plus Agressifs</h3>
-              <FullscreenChart title="Voteurs les Plus Agressifs (Top 10)">
-                <div style={{ height: 400 }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={behaviorChartData.slice(0, 10)}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis 
-                        dataKey="playerName"
-                        angle={-45}
-                        textAnchor="end"
-                        height={80}
-                        interval={0}
-                        fontSize={12}
-                      />
-                      <YAxis />
-                      <Tooltip
-                        formatter={(value: number) => [`${value.toFixed(1)}%`, 'Score d\'Agressivité']}
-                      />
-                      <Bar dataKey="aggressivenessScore" fill="var(--accent-tertiary)" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </FullscreenChart>
-            </div>
-
-            {/* Most Accurate Voters */}
-            <div className="lycans-graphique-section">
-              <h3>🎯 Voteurs les Plus Précis</h3>
-              <FullscreenChart title="Voteurs les Plus Précis (Top 10)">
-                <div style={{ height: 400 }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={accuracyChartData.slice(0, 10)}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis 
-                        dataKey="playerName"
-                        angle={-45}
-                        textAnchor="end"
-                        height={80}
-                        interval={0}
-                        fontSize={12}
-                      />
-                      <YAxis />
-                      <Tooltip
-                        formatter={(value: number) => [`${value.toFixed(1)}%`, 'Taux de Précision']}
-                      />
-                      <Bar dataKey="accuracyRate" fill="var(--accent-secondary)" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </FullscreenChart>
-            </div>
-          </>
-        )}
       </div>
     </div>
   );
