@@ -18,6 +18,8 @@ const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeri
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsAndKills/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
 
+// Voting statistics components
+const VotingStatisticsChart = lazy(() => import('./components/playerstats/VotingStatisticsChart').then(m => ({ default: m.VotingStatisticsChart })));
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
@@ -120,6 +122,12 @@ const PLAYER_STATS_MENU = [
     label: 'Morts & Kills', 
     component: DeathStatisticsChart,
     description: 'Analyse des morts des joueurs'
+  },
+  { 
+    key: 'votingStats', 
+    label: 'Votes', 
+    component: VotingStatisticsChart,
+    description: 'Comportements et précision de vote des joueurs'
   },
 ];
 
