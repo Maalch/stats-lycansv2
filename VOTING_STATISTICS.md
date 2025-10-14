@@ -3,9 +3,9 @@
 ## Overview
 Comprehensive voting behavior analysis system for the Lycans werewolf game, analyzing voting patterns, accuracy, and special role mechanics during meeting phases.
 
-## ✨ New Features Implemented
+## ✨ Features Implemented
 
-### 1. **VotingStatisticsChart** - Main Voting Dashboard
+### VotingStatisticsChart - Voting Dashboard
 **Path:** `src/components/playerstats/VotingStatisticsChart.tsx`
 
 **Features:**
@@ -20,48 +20,18 @@ Comprehensive voting behavior analysis system for the Lycans werewolf game, anal
 - **Accuracy Rate**: `(votesForEnemyCamp / totalVotes) * 100`
 - **Survival Rate**: `((totalTimesTargeted - eliminationsByVote) / totalTimesTargeted) * 100`
 
-### 2. **VotingAnalysisChart** - Advanced Analysis
-**Path:** `src/components/playerstats/VotingAnalysisChart.tsx`
-
-**Features:**
-- **📈 Tendances par Réunion**: Meeting-by-meeting participation trends and elimination rates
-- **🎯 Consistance des Joueurs**: Voting behavior consistency across games
-- **🗳️ Patterns de Vote**: Relationship between aggressiveness and accuracy
-- **🎮 Détails par Partie**: Individual game voting breakdowns
-
-**Advanced Analytics:**
-- Meeting participation evolution throughout games
-- Player consistency scoring based on behavioral variance
-- Scatter plot analysis of voting patterns
-- Reference lines for optimal voting rates (70% participation, 50% accuracy)
-
-### 3. **VotingInsightsChart** - Special Role Analysis
-**Path:** `src/components/playerstats/VotingInsightsChart.tsx`
-
-**Features:**
-- **🎭 Succès Idiot du Village**: Analysis of "Idiot du Village" strategy success rates
-- **🔥 Feu Ami par Camp**: Friendly fire rates by camp (voting own teammates)
-- **⏰ Patterns de Timing**: Early vs late game voting consistency
-- **🎯 Précision par Camp**: Average accuracy rates by player camp affiliation
-
-**Special Insights:**
-- Idiot du Village win condition analysis (needs to be voted out to win)
-- Camp-based friendly fire statistics
-- Voting timing consistency metrics
-- Role-specific voting behavior patterns
-
 ## 🔧 Technical Implementation
 
 ### Core Utilities
 **File:** `src/utils/votingStatsUtils.ts`
 
 **Key Functions:**
-- `calculateGameVotingAnalysis()`: Per-game voting analysis
-- `calculateAggregatedVotingStats()`: Cross-game statistics aggregation
-- `wasPlayerAliveAtMeeting()`: Meeting participation validation
-- `wasVoteSuccessful()`: Vote outcome determination
+- `calculateAggregatedVotingStats()`: Cross-game statistics aggregation (exported)
+- `calculateGameVotingAnalysis()`: Per-game voting analysis (internal use only)
+- `wasPlayerAliveAtMeeting()`: Meeting participation validation (internal)
+- `wasVoteSuccessful()`: Vote outcome determination (internal)
 
-**Data Structures:**
+**Exported Data Structures:**
 ```typescript
 interface VotingBehaviorStats {
   playerName: string;
@@ -94,6 +64,8 @@ interface VotingTargetStats {
   survivalRate: number;
 }
 ```
+
+**Note:** `MeetingAnalytics` and `GameVotingAnalysis` interfaces are internal and not exported.
 
 ### Hooks Architecture
 **File:** `src/hooks/useVotingStatisticsFromRaw.tsx`
@@ -152,9 +124,7 @@ interface Vote {
 
 ### Menu Structure
 Added to **Joueurs** tab:
-- **Statistiques de Vote**: Main voting dashboard
-- **Analyse des Votes**: Advanced meeting-by-meeting analysis  
-- **Insights des Votes**: Special role and pattern insights
+- **Statistiques de Vote**: Main voting dashboard with multiple views and filtering options
 
 ### Navigation Integration
 - Full integration with `NavigationContext` for drill-down navigation
@@ -183,12 +153,11 @@ Added to **Joueurs** tab:
 ### Interactive Features
 - **Clickable Charts**: Navigate to player game details
 - **Dynamic Filtering**: Adjust minimum participation thresholds
-- **Multi-View Dashboard**: Switch between different analysis perspectives
+- **Multi-View Dashboard**: Switch between overview, behavior, accuracy, and target analysis
 - **Detailed Tooltips**: Rich contextual information on hover
 
 ### Visual Design
 - **Color Coding**: Camp-specific colors, player-specific colors
-- **Reference Lines**: Ideal performance thresholds
 - **Progress Indicators**: Loading states and error handling
 - **Highlighting System**: Selected player emphasis across all charts
 
