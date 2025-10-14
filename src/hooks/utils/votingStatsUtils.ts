@@ -249,13 +249,15 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
           accuracy.totalVotes++;
           
           const voterCamp = getPlayerCampFromRole(
-            getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || [])
+            getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []),
+            { regroupWolfSubRoles: true }
           );
           const targetPlayer = game.PlayerStats.find(p => p.Username === playerVote.vote.Target);
           
           if (targetPlayer) {
             const targetCamp = getPlayerCampFromRole(
-              getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || [])
+              getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || []),
+              { regroupWolfSubRoles: true }
             );
             
             if (voterCamp === targetCamp) {
@@ -276,7 +278,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
             
             // Track target role context
             const targetRole = getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || []);
-            const targetRoleCamp = getPlayerCampFromRole(targetRole);
+            const targetRoleCamp = getPlayerCampFromRole(targetRole, { regroupWolfSubRoles: true });
             
             if (targetRoleCamp === 'Villageois') {
               targetStats.timesTargetedAsVillager++;
@@ -363,6 +365,194 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     playerBehaviors,
     playerAccuracies,
     playerTargetStats
+  };
+}
+
+/**
+ * Statistics for a single meeting day across all games
+ */
+export interface MeetingDayStats {
+  meetingDay: number;
+  totalMeetings: number;         // How many games reached this meeting day
+  averageVotingRate: number;     // Average % of players who voted (not skipped/abstained)
+  averageSkipRate: number;       // Average % of players who skipped
+  averageAbstentionRate: number; // Average % of players who didn't participate
+}
+
+/**
+ * Camp-based voting accuracy statistics
+ */
+export interface CampVotingStats {
+  campName: string;
+  totalVotes: number;
+  votesForOppositeCamp: number;
+  votesForOwnCamp: number;
+  accuracyRate: number;          // % of votes targeting opposite camp
+  friendlyFireRate: number;      // % of votes targeting own camp
+}
+
+/**
+ * Global voting statistics across all games
+ */
+export interface GlobalVotingStats {
+  totalMeetings: number;
+  totalVotes: number;
+  totalSkips: number;
+  totalAbstentions: number;
+  averageVotingRate: number;
+  averageSkipRate: number;
+  averageAbstentionRate: number;
+  meetingDayStats: MeetingDayStats[];
+  campVotingStats: CampVotingStats[];
+}
+
+/**
+ * Calculates global voting statistics including per-meeting-day analysis and camp accuracy
+ */
+export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingStats {
+  const meetingDayMap = new Map<number, {
+    meetings: number;
+    totalVotingRates: number;
+    totalSkipRates: number;
+    totalAbstentionRates: number;
+  }>();
+
+  const campVotingMap = new Map<string, {
+    totalVotes: number;
+    votesForOppositeCamp: number;
+    votesForOwnCamp: number;
+  }>();
+
+  let totalMeetings = 0;
+  let totalVotes = 0;
+  let totalSkips = 0;
+  let totalAbstentions = 0;
+  let totalVotingRateSum = 0;
+  let totalSkipRateSum = 0;
+  let totalAbstentionRateSum = 0;
+  let meetingCount = 0;
+
+  games.forEach(game => {
+    // Get max meeting number for this game
+    const maxMeetingNumber = Math.max(
+      ...game.PlayerStats.flatMap(player => 
+        player.Votes.map(vote => vote.MeetingNr)
+      ),
+      0
+    );
+
+    if (maxMeetingNumber === 0) return; // No voting data for this game
+
+    // Process each meeting in this game
+    for (let meetingNum = 1; meetingNum <= maxMeetingNumber; meetingNum++) {
+      const alivePlayersAtMeeting = getAlivePlayersAtMeeting(game, meetingNum);
+      const votesInMeeting = game.PlayerStats.flatMap(player => 
+        player.Votes
+          .filter(vote => vote.MeetingNr === meetingNum)
+          .map(vote => ({ voter: player.Username, vote, voterStats: player }))
+      );
+
+      const meetingVoteCount = votesInMeeting.filter(v => v.vote.Target !== 'Passé').length;
+      const meetingSkipCount = votesInMeeting.filter(v => v.vote.Target === 'Passé').length;
+      const meetingAbstentionCount = alivePlayersAtMeeting.length - votesInMeeting.length;
+
+      totalMeetings++;
+      totalVotes += meetingVoteCount;
+      totalSkips += meetingSkipCount;
+      totalAbstentions += meetingAbstentionCount;
+
+      const meetingVotingRate = alivePlayersAtMeeting.length > 0 
+        ? (meetingVoteCount / alivePlayersAtMeeting.length) * 100 
+        : 0;
+      const meetingSkipRate = alivePlayersAtMeeting.length > 0 
+        ? (meetingSkipCount / alivePlayersAtMeeting.length) * 100 
+        : 0;
+      const meetingAbstentionRate = alivePlayersAtMeeting.length > 0 
+        ? (meetingAbstentionCount / alivePlayersAtMeeting.length) * 100 
+        : 0;
+
+      totalVotingRateSum += meetingVotingRate;
+      totalSkipRateSum += meetingSkipRate;
+      totalAbstentionRateSum += meetingAbstentionRate;
+      meetingCount++;
+
+      // Aggregate by meeting day
+      const dayStats = meetingDayMap.get(meetingNum) || {
+        meetings: 0,
+        totalVotingRates: 0,
+        totalSkipRates: 0,
+        totalAbstentionRates: 0
+      };
+      dayStats.meetings++;
+      dayStats.totalVotingRates += meetingVotingRate;
+      dayStats.totalSkipRates += meetingSkipRate;
+      dayStats.totalAbstentionRates += meetingAbstentionRate;
+      meetingDayMap.set(meetingNum, dayStats);
+
+      // Process camp-based voting accuracy
+      votesInMeeting
+        .filter(v => v.vote.Target !== 'Passé')
+        .forEach(({ voterStats, vote }) => {
+          const voterRole = getPlayerFinalRole(voterStats.MainRoleInitial, voterStats.MainRoleChanges || []);
+          const voterCamp = getPlayerCampFromRole(voterRole, { regroupWolfSubRoles: true });
+
+          const targetPlayer = game.PlayerStats.find(p => p.Username === vote.Target);
+          if (!targetPlayer) return;
+
+          const targetRole = getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || []);
+          const targetCamp = getPlayerCampFromRole(targetRole, { regroupWolfSubRoles: true });
+
+          const campStats = campVotingMap.get(voterCamp) || {
+            totalVotes: 0,
+            votesForOppositeCamp: 0,
+            votesForOwnCamp: 0
+          };
+
+          campStats.totalVotes++;
+          if (voterCamp === targetCamp) {
+            campStats.votesForOwnCamp++;
+          } else {
+            campStats.votesForOppositeCamp++;
+          }
+
+          campVotingMap.set(voterCamp, campStats);
+        });
+    }
+  });
+
+  // Convert meeting day map to sorted array
+  const meetingDayStats: MeetingDayStats[] = Array.from(meetingDayMap.entries())
+    .map(([day, stats]) => ({
+      meetingDay: day,
+      totalMeetings: stats.meetings,
+      averageVotingRate: stats.meetings > 0 ? stats.totalVotingRates / stats.meetings : 0,
+      averageSkipRate: stats.meetings > 0 ? stats.totalSkipRates / stats.meetings : 0,
+      averageAbstentionRate: stats.meetings > 0 ? stats.totalAbstentionRates / stats.meetings : 0
+    }))
+    .sort((a, b) => a.meetingDay - b.meetingDay);
+
+  // Convert camp voting map to array
+  const campVotingStats: CampVotingStats[] = Array.from(campVotingMap.entries())
+    .map(([campName, stats]) => ({
+      campName,
+      totalVotes: stats.totalVotes,
+      votesForOppositeCamp: stats.votesForOppositeCamp,
+      votesForOwnCamp: stats.votesForOwnCamp,
+      accuracyRate: stats.totalVotes > 0 ? (stats.votesForOppositeCamp / stats.totalVotes) * 100 : 0,
+      friendlyFireRate: stats.totalVotes > 0 ? (stats.votesForOwnCamp / stats.totalVotes) * 100 : 0
+    }))
+    .sort((a, b) => b.accuracyRate - a.accuracyRate);
+
+  return {
+    totalMeetings,
+    totalVotes,
+    totalSkips,
+    totalAbstentions,
+    averageVotingRate: meetingCount > 0 ? totalVotingRateSum / meetingCount : 0,
+    averageSkipRate: meetingCount > 0 ? totalSkipRateSum / meetingCount : 0,
+    averageAbstentionRate: meetingCount > 0 ? totalAbstentionRateSum / meetingCount : 0,
+    meetingDayStats,
+    campVotingStats
   };
 }
 
