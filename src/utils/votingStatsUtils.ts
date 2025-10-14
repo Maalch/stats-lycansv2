@@ -38,7 +38,11 @@ export interface VotingTargetStats {
   survivalRate: number;          // Survived votes / total times targeted
 }
 
-export interface MeetingAnalytics {
+/**
+ * Internal interfaces used by calculateGameVotingAnalysis
+ * Not exported as they're only used for intermediate calculations
+ */
+interface MeetingAnalytics {
   meetingNumber: number;
   totalParticipants: number;
   totalVotes: number;
@@ -50,7 +54,7 @@ export interface MeetingAnalytics {
   eliminatedPlayer: string | null;
 }
 
-export interface GameVotingAnalysis {
+interface GameVotingAnalysis {
   gameId: string;
   totalMeetings: number;
   meetingAnalytics: MeetingAnalytics[];
@@ -111,8 +115,9 @@ function wasVoteSuccessful(game: GameLogEntry, meetingNumber: number, targetPlay
 
 /**
  * Calculates voting behavior statistics for a single game
+ * Internal function used by calculateAggregatedVotingStats
  */
-export function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
+function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
   const meetingAnalytics: MeetingAnalytics[] = [];
   const playerBehaviorMap = new Map<string, {
     totalMeetings: number;
