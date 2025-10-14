@@ -121,7 +121,7 @@ export function VotingStatisticsChart() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <label htmlFor="min-meetings-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Min. conseils:
+            Min. meetings:
           </label>
           <select
             id="min-meetings-select"
@@ -332,7 +332,8 @@ export function VotingStatisticsChart() {
                               border: '1px solid var(--border-color)'
                             }}>
                               <div><strong>{dataPoint.playerName}</strong></div>
-                              <div>Total votes: {dataPoint.totalVotes}</div>
+                              <div>Nombre de meetings: {dataPoint.totalMeetings}</div>
+                              <div>Total de votes: {dataPoint.totalVotes}</div>
                               <div>Votes justes: {dataPoint.votesForEnemyCamp} ({dataPoint.accuracyRate.toFixed(1)}%)</div>
                               <div>Feu ami: {dataPoint.votesForOwnCamp} ({dataPoint.friendlyFireRate.toFixed(1)}%)</div>
                               <div style={{ 
@@ -391,7 +392,7 @@ export function VotingStatisticsChart() {
               textAlign: 'center', 
               marginBottom: '1rem' 
             }}>
-              Pourcentage de fois où le joueur a survécu après avoir été ciblé par des votes.
+              Pourcentage de fois où le joueur a survécu après avoir été ciblé par au moins un vote.
             </p>
             <FullscreenChart title="Joueurs Ciblés - Taux de Survie aux Votes">
               <div style={{ height: 500 }}>
