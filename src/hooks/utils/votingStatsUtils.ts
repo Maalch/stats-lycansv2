@@ -18,6 +18,7 @@ export interface VotingBehaviorStats {
 
 export interface VotingAccuracyStats {
   playerName: string;
+  totalMeetings: number;         // Total meetings attended
   totalVotes: number;
   votesForEnemyCamp: number;     // Votes targeting opposite camp
   votesForOwnCamp: number;       // Votes targeting same camp (friendly fire)
@@ -329,6 +330,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     
     playerAccuracies.push({
       playerName: player.Username,
+      totalMeetings: behavior.totalMeetings,
       totalVotes: accuracy.totalVotes,
       votesForEnemyCamp: accuracy.votesForEnemyCamp,
       votesForOwnCamp: accuracy.votesForOwnCamp,
@@ -389,6 +391,7 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
   }>();
   
   const aggregatedAccuracy = new Map<string, {
+    totalMeetings: number;
     totalVotes: number;
     votesForEnemyCamp: number;
     votesForOwnCamp: number;
@@ -441,12 +444,14 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
 
     analysis.playerAccuracies.forEach(accuracy => {
       const existing = aggregatedAccuracy.get(accuracy.playerName) || {
+        totalMeetings: 0,
         totalVotes: 0,
         votesForEnemyCamp: 0,
         votesForOwnCamp: 0,
       };
       
       aggregatedAccuracy.set(accuracy.playerName, {
+        totalMeetings: existing.totalMeetings + accuracy.totalMeetings,
         totalVotes: existing.totalVotes + accuracy.totalVotes,
         votesForEnemyCamp: existing.votesForEnemyCamp + accuracy.votesForEnemyCamp,
         votesForOwnCamp: existing.votesForOwnCamp + accuracy.votesForOwnCamp
@@ -496,12 +501,13 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
     };
   });
 
-  const playerAccuracyStats: VotingAccuracyStats[] = Array.from(aggregatedAccuracy.entries()).map(([playerName, data]) => {
+    const playerAccuracyStats: VotingAccuracyStats[] = Array.from(aggregatedAccuracy.entries()).map(([playerName, data]) => {
     const accuracyRate = data.totalVotes > 0 ? (data.votesForEnemyCamp / data.totalVotes) * 100 : 0;
     const friendlyFireRate = data.totalVotes > 0 ? (data.votesForOwnCamp / data.totalVotes) * 100 : 0;
     
     return {
       playerName,
+      totalMeetings: data.totalMeetings,
       totalVotes: data.totalVotes,
       votesForEnemyCamp: data.votesForEnemyCamp,
       votesForOwnCamp: data.votesForOwnCamp,
