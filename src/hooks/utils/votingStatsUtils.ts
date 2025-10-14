@@ -1,8 +1,8 @@
 /**
  * Utility functions for processing voting behavior statistics
  */
-import type { GameLogEntry, PlayerStat } from '../hooks/useCombinedRawData';
-import { getPlayerCampFromRole, getPlayerFinalRole } from './datasyncExport';
+import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 
 export interface VotingBehaviorStats {
   playerName: string;
@@ -21,7 +21,6 @@ export interface VotingAccuracyStats {
   totalVotes: number;
   votesForEnemyCamp: number;     // Votes targeting opposite camp
   votesForOwnCamp: number;       // Votes targeting same camp (friendly fire)
-  votesForSelf: number;          // Self votes (unusual but possible)
   accuracyRate: number;          // (votesForEnemyCamp / totalVotes) * 100
   friendlyFireRate: number;      // (votesForOwnCamp / totalVotes) * 100
 }
@@ -130,7 +129,6 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     totalVotes: number;
     votesForEnemyCamp: number;
     votesForOwnCamp: number;
-    votesForSelf: number;
   }>();
   
   const playerTargetMap = new Map<string, {
@@ -155,8 +153,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     playerAccuracyMap.set(player.Username, {
       totalVotes: 0,
       votesForEnemyCamp: 0,
-      votesForOwnCamp: 0,
-      votesForSelf: 0
+      votesForOwnCamp: 0
     });
     
     playerTargetMap.set(player.Username, {
@@ -260,9 +257,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
               getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || [])
             );
             
-            if (playerVote.vote.Target === player.Username) {
-              accuracy.votesForSelf++;
-            } else if (voterCamp === targetCamp) {
+            if (voterCamp === targetCamp) {
               accuracy.votesForOwnCamp++;
             } else {
               accuracy.votesForEnemyCamp++;
@@ -337,7 +332,6 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
       totalVotes: accuracy.totalVotes,
       votesForEnemyCamp: accuracy.votesForEnemyCamp,
       votesForOwnCamp: accuracy.votesForOwnCamp,
-      votesForSelf: accuracy.votesForSelf,
       accuracyRate,
       friendlyFireRate
     });
@@ -398,7 +392,6 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
     totalVotes: number;
     votesForEnemyCamp: number;
     votesForOwnCamp: number;
-    votesForSelf: number;
   }>();
   
   const aggregatedTargets = new Map<string, {
@@ -451,14 +444,12 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
         totalVotes: 0,
         votesForEnemyCamp: 0,
         votesForOwnCamp: 0,
-        votesForSelf: 0
       };
       
       aggregatedAccuracy.set(accuracy.playerName, {
         totalVotes: existing.totalVotes + accuracy.totalVotes,
         votesForEnemyCamp: existing.votesForEnemyCamp + accuracy.votesForEnemyCamp,
-        votesForOwnCamp: existing.votesForOwnCamp + accuracy.votesForOwnCamp,
-        votesForSelf: existing.votesForSelf + accuracy.votesForSelf
+        votesForOwnCamp: existing.votesForOwnCamp + accuracy.votesForOwnCamp
       });
     });
 
@@ -514,7 +505,6 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
       totalVotes: data.totalVotes,
       votesForEnemyCamp: data.votesForEnemyCamp,
       votesForOwnCamp: data.votesForOwnCamp,
-      votesForSelf: data.votesForSelf,
       accuracyRate,
       friendlyFireRate
     };

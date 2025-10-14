@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { usePlayerStatsBase } from './utils/baseStatsHook';
-import { calculateAggregatedVotingStats } from '../utils/votingStatsUtils';
+import { calculateAggregatedVotingStats } from './utils/votingStatsUtils';
 import type { 
   VotingBehaviorStats,
   VotingAccuracyStats, 
   VotingTargetStats
-} from '../utils/votingStatsUtils';
+} from './utils/votingStatsUtils';
 
 export interface VotingStatisticsResult {
   playerBehaviorStats: VotingBehaviorStats[];
