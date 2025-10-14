@@ -25,6 +25,7 @@ const CampsChart = lazy(() => import('./components/generalstats/CampsChart').the
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
+const GlobalVotingStatsChart = lazy(() => import('./components/generalstats/GlobalVotingStatsChart').then(m => ({ default: m.GlobalVotingStatsChart })));
 
 const BRGeneralStatsChart = lazy(() => import('./components/brstats/BRGeneralStatsChart').then(m => ({ default: m.BRGeneralStatsChart })));
 
@@ -155,6 +156,12 @@ const GENERAL_STATS_MENU = [
     label: 'Durée des Parties', 
     component: GameDurationInsights,
     description: 'Statistiques sur la durée des parties (en jours de jeu)'
+  },
+  { 
+    key: 'globalVoting', 
+    label: 'Votes', 
+    component: GlobalVotingStatsChart,
+    description: 'Analyse globale des comportements de vote en réunion'
   },
 ];
 

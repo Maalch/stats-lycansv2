@@ -11,7 +11,7 @@ export const CHANGELOG: ChangelogEntry[] = [
   {
     version: 'v1.3.5',
     date: '14/10/2025',
-    description: 'Ajout de stats sur les votes (dans "Joueurs" / "Votes").',
+    description: 'Ajout de stats sur les votes (dans "Joueurs" / "Votes" et "Parties" / "Votes").',
   },
   {
     version: 'v1.3.4',
