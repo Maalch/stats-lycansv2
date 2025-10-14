@@ -10,6 +10,13 @@ import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 
+// Extended type for chart data with highlighting info
+type ChartPlayerStat = {
+  playerName: string;
+  isHighlightedAddition?: boolean;
+  [key: string]: any;
+};
+
 export function VotingStatisticsChart() {
   const { settings } = useSettings();
   const { navigateToGameDetails } = useNavigation();
@@ -18,6 +25,7 @@ export function VotingStatisticsChart() {
 
   const [selectedView, setSelectedView] = useState<'behavior' | 'accuracy' | 'targets'>('behavior');
   const [minMeetings, setMinMeetings] = useState<number>(25);
+  const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
   
   const { data: allVotingStats, isLoading, error } = useVotingStatisticsFromRaw();
   const { data: filteredVotingStats } = useFilteredVotingStatistics(minMeetings);
@@ -32,41 +40,98 @@ export function VotingStatisticsChart() {
     }
   };
 
-  // Prepare data for different views
-  const behaviorChartData = useMemo(() => {
-    if (!filteredVotingStats) return [];
-    return filteredVotingStats.playerBehaviorStats
-      .map(player => ({
-        ...player,
-        isHighlightedAddition: settings.highlightedPlayer === player.playerName &&
-          !filteredVotingStats.playerBehaviorStats.slice(0, 15).some(p => p.playerName === player.playerName)
-      }))
+  // Prepare data for different views with proper highlighted player handling
+  const { behaviorChartData, highlightedPlayerInBehavior } = useMemo(() => {
+    if (!filteredVotingStats) return { behaviorChartData: [], highlightedPlayerInBehavior: false };
+    
+    const sortedData = [...filteredVotingStats.playerBehaviorStats]
       .sort((a, b) => b.aggressivenessScore - a.aggressivenessScore)
-      .slice(0, settings.highlightedPlayer ? 16 : 15);
+      .slice(0, 15);
+    
+    // Check if highlighted player is in top 15
+    const highlightedInTop = settings.highlightedPlayer && 
+      sortedData.some(p => p.playerName === settings.highlightedPlayer);
+    
+    let finalData: ChartPlayerStat[] = [...sortedData];
+    let highlightedAdded = false;
+    
+    // Add highlighted player if not in top 15
+    if (settings.highlightedPlayer && !highlightedInTop) {
+      const highlightedPlayerData = filteredVotingStats.playerBehaviorStats.find(
+        p => p.playerName === settings.highlightedPlayer
+      );
+      if (highlightedPlayerData) {
+        finalData.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        });
+        highlightedAdded = true;
+      }
+    }
+    
+    return { behaviorChartData: finalData, highlightedPlayerInBehavior: highlightedAdded };
   }, [filteredVotingStats, settings.highlightedPlayer]);
 
-  const accuracyChartData = useMemo(() => {
-    if (!filteredVotingStats) return [];
-    return filteredVotingStats.playerAccuracyStats
-      .map(player => ({
-        ...player,
-        isHighlightedAddition: settings.highlightedPlayer === player.playerName &&
-          !filteredVotingStats.playerAccuracyStats.slice(0, 15).some(p => p.playerName === player.playerName)
-      }))
+  const { accuracyChartData, highlightedPlayerInAccuracy } = useMemo(() => {
+    if (!filteredVotingStats) return { accuracyChartData: [], highlightedPlayerInAccuracy: false };
+    
+    const sortedData = [...filteredVotingStats.playerAccuracyStats]
       .sort((a, b) => b.accuracyRate - a.accuracyRate)
-      .slice(0, settings.highlightedPlayer ? 16 : 15);
+      .slice(0, 15);
+    
+    // Check if highlighted player is in top 15
+    const highlightedInTop = settings.highlightedPlayer && 
+      sortedData.some(p => p.playerName === settings.highlightedPlayer);
+    
+    let finalData: ChartPlayerStat[] = [...sortedData];
+    let highlightedAdded = false;
+    
+    // Add highlighted player if not in top 15
+    if (settings.highlightedPlayer && !highlightedInTop) {
+      const highlightedPlayerData = filteredVotingStats.playerAccuracyStats.find(
+        p => p.playerName === settings.highlightedPlayer
+      );
+      if (highlightedPlayerData) {
+        finalData.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        });
+        highlightedAdded = true;
+      }
+    }
+    
+    return { accuracyChartData: finalData, highlightedPlayerInAccuracy: highlightedAdded };
   }, [filteredVotingStats, settings.highlightedPlayer]);
 
-  const targetChartData = useMemo(() => {
-    if (!filteredVotingStats) return [];
-    return filteredVotingStats.playerTargetStats
-      .map(player => ({
-        ...player,
-        isHighlightedAddition: settings.highlightedPlayer === player.playerName &&
-          !filteredVotingStats.playerTargetStats.slice(0, 15).some(p => p.playerName === player.playerName)
-      }))
+  const { targetChartData, highlightedPlayerInTargets } = useMemo(() => {
+    if (!filteredVotingStats) return { targetChartData: [], highlightedPlayerInTargets: false };
+    
+    const sortedData = [...filteredVotingStats.playerTargetStats]
       .sort((a, b) => b.survivalRate - a.survivalRate)
-      .slice(0, settings.highlightedPlayer ? 16 : 15);
+      .slice(0, 15);
+    
+    // Check if highlighted player is in top 15
+    const highlightedInTop = settings.highlightedPlayer && 
+      sortedData.some(p => p.playerName === settings.highlightedPlayer);
+    
+    let finalData: ChartPlayerStat[] = [...sortedData];
+    let highlightedAdded = false;
+    
+    // Add highlighted player if not in top 15
+    if (settings.highlightedPlayer && !highlightedInTop) {
+      const highlightedPlayerData = filteredVotingStats.playerTargetStats.find(
+        p => p.playerName === settings.highlightedPlayer
+      );
+      if (highlightedPlayerData) {
+        finalData.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        });
+        highlightedAdded = true;
+      }
+    }
+    
+    return { targetChartData: finalData, highlightedPlayerInTargets: highlightedAdded };
   }, [filteredVotingStats, settings.highlightedPlayer]);
 
   if (isLoading) {
@@ -150,7 +215,20 @@ export function VotingStatisticsChart() {
         {/* Voting Behavior Chart */}
         {selectedView === 'behavior' && (
           <div className="lycans-graphique-section">
-            <h3>🗳️ Comportements de Vote - Score d'Agressivité</h3>
+            <div>
+              <h3>🗳️ Comportements de Vote - Score d'Agressivité</h3>
+              {highlightedPlayerInBehavior && settings.highlightedPlayer && (
+                <p style={{ 
+                  fontSize: '0.8rem', 
+                  color: 'var(--accent-primary)', 
+                  fontStyle: 'italic',
+                  marginTop: '0.25rem',
+                  marginBottom: '0.5rem'
+                }}>
+                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+                </p>
+              )}
+            </div>
             <p style={{ 
               fontSize: '0.85rem', 
               color: 'var(--text-secondary)', 
@@ -205,6 +283,9 @@ export function VotingStatisticsChart() {
                       content={({ active, payload }) => {
                         if (active && payload && payload.length > 0) {
                           const dataPoint = payload[0].payload;
+                          const isHighlightedAddition = (dataPoint as ChartPlayerStat).isHighlightedAddition;
+                          const isHighlightedFromSettings = settings.highlightedPlayer === dataPoint.playerName;
+                          
                           return (
                             <div style={{ 
                               background: 'var(--bg-secondary)', 
@@ -214,11 +295,31 @@ export function VotingStatisticsChart() {
                               border: '1px solid var(--border-color)'
                             }}>
                               <div><strong>{dataPoint.playerName}</strong></div>
-                              <div>Réunions: {dataPoint.totalMeetings}</div>
+                              <div>Meetings: {dataPoint.totalMeetings}</div>
                               <div>Votes: {dataPoint.totalVotes} ({dataPoint.votingRate.toFixed(1)}%)</div>
                               <div>Passés: {dataPoint.totalSkips} ({dataPoint.skippingRate.toFixed(1)}%)</div>
                               <div>Absents: {dataPoint.totalAbstentions} ({dataPoint.abstentionRate.toFixed(1)}%)</div>
                               <div><strong>Score: {dataPoint.aggressivenessScore.toFixed(1)}%</strong></div>
+                              {isHighlightedAddition && (
+                                <div style={{ 
+                                  fontSize: '0.75rem', 
+                                  color: 'var(--accent-primary)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  🎯 Affiché via sélection personnelle
+                                </div>
+                              )}
+                              {isHighlightedFromSettings && !isHighlightedAddition && (
+                                <div style={{ 
+                                  fontSize: '0.75rem', 
+                                  color: 'var(--accent-primary)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  🎯 Joueur sélectionné
+                                </div>
+                              )}
                               <div style={{ 
                                 fontSize: '0.8rem', 
                                 color: 'var(--accent-primary)', 
@@ -240,20 +341,36 @@ export function VotingStatisticsChart() {
                       onClick={handlePlayerClick}
                     >
                       {behaviorChartData.map((entry, index) => {
-                        const isHighlighted = settings.highlightedPlayer === entry.playerName;
+                        const isHighlightedFromSettings = settings.highlightedPlayer === entry.playerName;
+                        const isHoveredPlayer = highlightedPlayer === entry.playerName;
                         const isHighlightedAddition = entry.isHighlightedAddition;
                         
                         return (
                           <Cell
-                            key={`cell-${index}`}
+                            key={`cell-behavior-${index}`}
                             fill={
                               playersColor[entry.playerName] || 
                               (entry.aggressivenessScore >= 0 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
                             }
-                            stroke={isHighlighted ? 'var(--accent-primary)' : 'transparent'}
-                            strokeWidth={isHighlighted ? 3 : 0}
+                            stroke={
+                              isHighlightedFromSettings 
+                                ? 'var(--accent-primary)' 
+                                : isHoveredPlayer 
+                                  ? 'var(--text-primary)' 
+                                  : 'transparent'
+                            }
+                            strokeWidth={
+                              isHighlightedFromSettings 
+                                ? 3 
+                                : isHoveredPlayer 
+                                  ? 2 
+                                  : 0
+                            }
                             strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                             opacity={isHighlightedAddition ? 0.8 : 1}
+                            onMouseEnter={() => setHighlightedPlayer(entry.playerName)}
+                            onMouseLeave={() => setHighlightedPlayer(null)}
+                            style={{ cursor: 'pointer' }}
                           />
                         );
                       })}
@@ -268,7 +385,20 @@ export function VotingStatisticsChart() {
         {/* Voting Accuracy Chart */}
         {selectedView === 'accuracy' && (
           <div className="lycans-graphique-section">
-            <h3>🎯 Précision des Votes - Taux de Votes Justes</h3>
+            <div>
+              <h3>🎯 Précision des Votes - Taux de Votes Justes</h3>
+              {highlightedPlayerInAccuracy && settings.highlightedPlayer && (
+                <p style={{ 
+                  fontSize: '0.8rem', 
+                  color: 'var(--accent-primary)', 
+                  fontStyle: 'italic',
+                  marginTop: '0.25rem',
+                  marginBottom: '0.5rem'
+                }}>
+                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+                </p>
+              )}
+            </div>
             <p style={{ 
               fontSize: '0.85rem', 
               color: 'var(--text-secondary)', 
@@ -323,6 +453,9 @@ export function VotingStatisticsChart() {
                       content={({ active, payload }) => {
                         if (active && payload && payload.length > 0) {
                           const dataPoint = payload[0].payload;
+                          const isHighlightedAddition = (dataPoint as ChartPlayerStat).isHighlightedAddition;
+                          const isHighlightedFromSettings = settings.highlightedPlayer === dataPoint.playerName;
+                          
                           return (
                             <div style={{ 
                               background: 'var(--bg-secondary)', 
@@ -336,6 +469,26 @@ export function VotingStatisticsChart() {
                               <div>Total de votes: {dataPoint.totalVotes}</div>
                               <div>Votes justes: {dataPoint.votesForEnemyCamp} ({dataPoint.accuracyRate.toFixed(1)}%)</div>
                               <div>Feu ami: {dataPoint.votesForOwnCamp} ({dataPoint.friendlyFireRate.toFixed(1)}%)</div>
+                              {isHighlightedAddition && (
+                                <div style={{ 
+                                  fontSize: '0.75rem', 
+                                  color: 'var(--accent-primary)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  🎯 Affiché via sélection personnelle
+                                </div>
+                              )}
+                              {isHighlightedFromSettings && !isHighlightedAddition && (
+                                <div style={{ 
+                                  fontSize: '0.75rem', 
+                                  color: 'var(--accent-primary)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  🎯 Joueur sélectionné
+                                </div>
+                              )}
                               <div style={{ 
                                 fontSize: '0.8rem', 
                                 color: 'var(--accent-primary)', 
@@ -357,20 +510,36 @@ export function VotingStatisticsChart() {
                       onClick={handlePlayerClick}
                     >
                       {accuracyChartData.map((entry, index) => {
-                        const isHighlighted = settings.highlightedPlayer === entry.playerName;
+                        const isHighlightedFromSettings = settings.highlightedPlayer === entry.playerName;
+                        const isHoveredPlayer = highlightedPlayer === entry.playerName;
                         const isHighlightedAddition = entry.isHighlightedAddition;
                         
                         return (
                           <Cell
-                            key={`cell-${index}`}
+                            key={`cell-accuracy-${index}`}
                             fill={
                               playersColor[entry.playerName] || 
                               (entry.accuracyRate >= 50 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
                             }
-                            stroke={isHighlighted ? 'var(--accent-primary)' : 'transparent'}
-                            strokeWidth={isHighlighted ? 3 : 0}
+                            stroke={
+                              isHighlightedFromSettings 
+                                ? 'var(--accent-primary)' 
+                                : isHoveredPlayer 
+                                  ? 'var(--text-primary)' 
+                                  : 'transparent'
+                            }
+                            strokeWidth={
+                              isHighlightedFromSettings 
+                                ? 3 
+                                : isHoveredPlayer 
+                                  ? 2 
+                                  : 0
+                            }
                             strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                             opacity={isHighlightedAddition ? 0.8 : 1}
+                            onMouseEnter={() => setHighlightedPlayer(entry.playerName)}
+                            onMouseLeave={() => setHighlightedPlayer(null)}
+                            style={{ cursor: 'pointer' }}
                           />
                         );
                       })}
@@ -385,7 +554,20 @@ export function VotingStatisticsChart() {
         {/* Target Survival Chart */}
         {selectedView === 'targets' && (
           <div className="lycans-graphique-section">
-            <h3>🔻 Joueurs Ciblés - Taux de Survie aux Votes</h3>
+            <div>
+              <h3>🔻 Joueurs Ciblés - Taux de Survie aux Votes</h3>
+              {highlightedPlayerInTargets && settings.highlightedPlayer && (
+                <p style={{ 
+                  fontSize: '0.8rem', 
+                  color: 'var(--accent-primary)', 
+                  fontStyle: 'italic',
+                  marginTop: '0.25rem',
+                  marginBottom: '0.5rem'
+                }}>
+                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+                </p>
+              )}
+            </div>
             <p style={{ 
               fontSize: '0.85rem', 
               color: 'var(--text-secondary)', 
@@ -440,6 +622,9 @@ export function VotingStatisticsChart() {
                       content={({ active, payload }) => {
                         if (active && payload && payload.length > 0) {
                           const dataPoint = payload[0].payload;
+                          const isHighlightedAddition = (dataPoint as ChartPlayerStat).isHighlightedAddition;
+                          const isHighlightedFromSettings = settings.highlightedPlayer === dataPoint.playerName;
+                          
                           return (
                             <div style={{ 
                               background: 'var(--bg-secondary)', 
@@ -454,6 +639,26 @@ export function VotingStatisticsChart() {
                               <div>Taux de survie: {dataPoint.survivalRate.toFixed(1)}%</div>
                               <div>Par camp ennemi: {dataPoint.timesTargetedByEnemyCamp}</div>
                               <div>Par propre camp: {dataPoint.timesTargetedByOwnCamp}</div>
+                              {isHighlightedAddition && (
+                                <div style={{ 
+                                  fontSize: '0.75rem', 
+                                  color: 'var(--accent-primary)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  🎯 Affiché via sélection personnelle
+                                </div>
+                              )}
+                              {isHighlightedFromSettings && !isHighlightedAddition && (
+                                <div style={{ 
+                                  fontSize: '0.75rem', 
+                                  color: 'var(--accent-primary)', 
+                                  marginTop: '0.25rem',
+                                  fontStyle: 'italic'
+                                }}>
+                                  🎯 Joueur sélectionné
+                                </div>
+                              )}
                               <div style={{ 
                                 fontSize: '0.8rem', 
                                 color: 'var(--accent-primary)', 
@@ -475,20 +680,36 @@ export function VotingStatisticsChart() {
                       onClick={handlePlayerClick}
                     >
                       {targetChartData.map((entry, index) => {
-                        const isHighlighted = settings.highlightedPlayer === entry.playerName;
+                        const isHighlightedFromSettings = settings.highlightedPlayer === entry.playerName;
+                        const isHoveredPlayer = highlightedPlayer === entry.playerName;
                         const isHighlightedAddition = entry.isHighlightedAddition;
                         
                         return (
                           <Cell
-                            key={`cell-${index}`}
+                            key={`cell-targets-${index}`}
                             fill={
                               playersColor[entry.playerName] || 
                               (entry.survivalRate >= 50 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
                             }
-                            stroke={isHighlighted ? 'var(--accent-primary)' : 'transparent'}
-                            strokeWidth={isHighlighted ? 3 : 0}
+                            stroke={
+                              isHighlightedFromSettings 
+                                ? 'var(--accent-primary)' 
+                                : isHoveredPlayer 
+                                  ? 'var(--text-primary)' 
+                                  : 'transparent'
+                            }
+                            strokeWidth={
+                              isHighlightedFromSettings 
+                                ? 3 
+                                : isHoveredPlayer 
+                                  ? 2 
+                                  : 0
+                            }
                             strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                             opacity={isHighlightedAddition ? 0.8 : 1}
+                            onMouseEnter={() => setHighlightedPlayer(entry.playerName)}
+                            onMouseLeave={() => setHighlightedPlayer(null)}
+                            style={{ cursor: 'pointer' }}
                           />
                         );
                       })}
