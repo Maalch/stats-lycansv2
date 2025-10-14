@@ -23,6 +23,7 @@ export function VotingStatisticsChart() {
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
+  const [selectedCategory, setSelectedCategory] = useState<'overview' | 'behavior'>('overview');
   const [selectedView, setSelectedView] = useState<'behavior' | 'accuracy' | 'targets' | 'voteRate' | 'skipRate' | 'abstentionRate'>('behavior');
   const [minMeetings, setMinMeetings] = useState<number>(25);
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
@@ -245,62 +246,198 @@ export function VotingStatisticsChart() {
       {/* Controls */}
       <div className="lycans-controls-section" style={{ 
         display: 'flex', 
-        gap: '2rem', 
+        flexDirection: 'column',
+        gap: '1.5rem', 
         marginBottom: '2rem', 
-        justifyContent: 'center',
-        flexWrap: 'wrap'
+        alignItems: 'center'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="view-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Vue:
-          </label>
-          <select
-            id="view-select"
-            value={selectedView}
-            onChange={(e) => setSelectedView(e.target.value as any)}
+        {/* Category Selection - Main Tabs */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '1rem', 
+          justifyContent: 'center',
+          flexWrap: 'wrap'
+        }}>
+          <button
+            onClick={() => {
+              setSelectedCategory('overview');
+              setSelectedView('behavior');
+            }}
             style={{
-              background: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
+              background: selectedCategory === 'overview' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
+              color: selectedCategory === 'overview' ? 'var(--bg-primary)' : 'var(--text-primary)',
               border: '1px solid var(--border-color)',
-              borderRadius: '4px',
-              padding: '0.5rem',
-              fontSize: '0.9rem',
-              minWidth: '180px'
+              borderRadius: '8px',
+              padding: '0.75rem 1.5rem',
+              fontSize: '0.95rem',
+              fontWeight: selectedCategory === 'overview' ? 'bold' : 'normal',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
             }}
           >
-            <option value="behavior">🗳️ Comportements de vote</option>
-            <option value="accuracy">🎯 Précision des votes</option>
-            <option value="targets">🔻 Joueurs ciblés</option>
-            <option value="voteRate">📊 Taux de vote</option>
-            <option value="skipRate">⏭️ Taux de "Passé"</option>
-            <option value="abstentionRate">🚫 Taux d'abstention</option>
-          </select>
+            📊 Vue d'Ensemble
+          </button>
+          <button
+            onClick={() => {
+              setSelectedCategory('behavior');
+              setSelectedView('voteRate');
+            }}
+            style={{
+              background: selectedCategory === 'behavior' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
+              color: selectedCategory === 'behavior' ? 'var(--bg-primary)' : 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '8px',
+              padding: '0.75rem 1.5rem',
+              fontSize: '0.95rem',
+              fontWeight: selectedCategory === 'behavior' ? 'bold' : 'normal',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            🗳️ Comportements de Vote
+          </button>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="min-meetings-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Min. meetings:
-          </label>
-          <select
-            id="min-meetings-select"
-            value={minMeetings}
-            onChange={(e) => setMinMeetings(Number(e.target.value))}
-            style={{
-              background: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '4px',
-              padding: '0.5rem',
-              fontSize: '0.9rem',
-              width: '90px'
-            }}
-          >
-            {minMeetingsOptions.map(option => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+        {/* Sub-category Selection */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '1.5rem', 
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          alignItems: 'center'
+        }}>
+          {selectedCategory === 'overview' && (
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button
+                onClick={() => setSelectedView('behavior')}
+                style={{
+                  background: selectedView === 'behavior' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '6px',
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  fontWeight: selectedView === 'behavior' ? 'bold' : 'normal'
+                }}
+              >
+                Score d'Agressivité
+              </button>
+              <button
+                onClick={() => setSelectedView('accuracy')}
+                style={{
+                  background: selectedView === 'accuracy' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '6px',
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  fontWeight: selectedView === 'accuracy' ? 'bold' : 'normal'
+                }}
+              >
+                Précision des Votes
+              </button>
+              <button
+                onClick={() => setSelectedView('targets')}
+                style={{
+                  background: selectedView === 'targets' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '6px',
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  fontWeight: selectedView === 'targets' ? 'bold' : 'normal'
+                }}
+              >
+                Joueurs Ciblés
+              </button>
+            </div>
+          )}
+
+          {selectedCategory === 'behavior' && (
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button
+                onClick={() => setSelectedView('voteRate')}
+                style={{
+                  background: selectedView === 'voteRate' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '6px',
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  fontWeight: selectedView === 'voteRate' ? 'bold' : 'normal'
+                }}
+              >
+                Taux de Vote
+              </button>
+              <button
+                onClick={() => setSelectedView('skipRate')}
+                style={{
+                  background: selectedView === 'skipRate' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '6px',
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  fontWeight: selectedView === 'skipRate' ? 'bold' : 'normal'
+                }}
+              >
+                Taux de "Passé"
+              </button>
+              <button
+                onClick={() => setSelectedView('abstentionRate')}
+                style={{
+                  background: selectedView === 'abstentionRate' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '6px',
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  fontWeight: selectedView === 'abstentionRate' ? 'bold' : 'normal'
+                }}
+              >
+                Taux d'Abstention
+              </button>
+            </div>
+          )}
+
+          {/* Min Meetings filter - always visible */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem',
+            padding: '0.5rem 1rem',
+            background: 'var(--bg-secondary)',
+          }}>
+            <label htmlFor="min-meetings-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Min. meetings:
+            </label>
+            <select
+              id="min-meetings-select"
+              value={minMeetings}
+              onChange={(e) => setMinMeetings(Number(e.target.value))}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.5rem',
+                fontSize: '0.9rem',
+                width: '90px'
+              }}
+            >
+              {minMeetingsOptions.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -309,7 +446,7 @@ export function VotingStatisticsChart() {
         {selectedView === 'behavior' && (
           <div className="lycans-graphique-section">
             <div>
-              <h3>🗳️ Comportements de Vote - Score d'Agressivité</h3>
+              <h3>🗳️ Score d'Agressivité</h3>
               {highlightedPlayerInBehavior && settings.highlightedPlayer && (
                 <p style={{ 
                   fontSize: '0.8rem', 
@@ -330,7 +467,7 @@ export function VotingStatisticsChart() {
             }}>
               Score basé sur le taux de vote, les abstentions et les "passés". Plus c'est haut, plus le joueur vote activement.
             </p>
-            <FullscreenChart title="Comportements de Vote - Score d'Agressivité">
+            <FullscreenChart title="Score d'Agressivité">
               <div style={{ height: 500 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
