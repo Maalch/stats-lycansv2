@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.4';
+export const APP_VERSION = '1.3.5';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -8,6 +8,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.5',
+    date: '14/10/2025',
+    description: 'Ajout de stats sur les votes (dans "Joueurs" / "Votes").',
+  },
   {
     version: 'v1.3.4',
     date: '10/10/2025',

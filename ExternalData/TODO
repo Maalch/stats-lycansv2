@@ -1,20 +1,10 @@
-New home page
+The Vote have been added to the game json files.
 
-Player selection page: chose what player will be highlighted by default on all web site pages
-Display Achievements and individual card for that player.
+I would like to do some cool statistics about the voting data.
 
-Here is the list of possible achievements:
-- Première victoire (total) + déclinée en chaque camp (Villageois, Loup, Idiot du Village, etc...)
-- 10 victoires (total) + déclinée en chaque camp
-- 50 victoires (total) + déclinée en chaque camp
-- 100 victoires (total) + déclinée en chaque camp
+Please notice the game rule:
 
-- Tuer un villageois en étant villageois (potion)
-- Tuer un villageois en étant villageois (tir de chasseur)
-- Tuer un loup/camp solo en étant villageois (par potion)
-- Tuer un loup/camp solo en étant villageois (par tir de chasseur)
-
-
-
-
-Each achievements should redirect on click to the corresponding chart or to the game details list.
+- Vote only take place during the Meeting phase of the game
+- A player can vote another player, or skip ("Passé" in the log data), or do nothing during a meeting. Voting partern are interesting to check (what players are skipping the most, what players are voting aggressively, what players are not voting at all even if they are alive at that step)
+- If a player has the majority of the votes, it is eliminated from the game. The goal of the "Idiot du Village" role is to be eliminated by vote (if that's the case, he wons instantly)
+the players don't know the other player camps/roles, so it's interesting to know what players are able to spot and vote for others camps (and what players are not and are voting their own mates, especially as camp Villageois)
