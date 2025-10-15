@@ -24,10 +24,10 @@ const lycansColorScheme: Record<string, string> = {
 
 // Mapping for French color names to hex codes 
 const frenchColorMapping: Record<string, string> = {
-  "Bleu foncé": "#0012A6",      
+  "Bleu royal": "#0012A6",      
   "Orange": "#FF9500",          
   "Turquoise": "#00FFFF",       
-  "Bleu royal": "#0076FF",      
+  "Bleu foncé": "#0076FF",      
   "Rouge": "#FF0000",           
   "Jaune": "#FFED00",           
   "Vert foncé": "#009A13",      
