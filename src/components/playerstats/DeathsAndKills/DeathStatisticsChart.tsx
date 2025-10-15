@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useDeathStatisticsFromRaw, useAvailableCampsFromRaw, useHunterStatisticsFromRaw } from '../../../hooks/useDeathStatisticsFromRaw';
+import { useSurvivalStatisticsFromRaw } from '../../../hooks/useSurvivalStatisticsFromRaw';
 import { getAllDeathTypes } from '../../../hooks/utils/deathStatisticsUtils';
 import { DeathTypeCode, type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { useFilteredGameLogData } from '../../../hooks/useCombinedRawData';
@@ -9,6 +10,7 @@ import { useThemeAdjustedLycansColorScheme } from '../../../types/api';
 import { KillersView } from './KillersView';
 import { DeathsView } from './DeathsView';
 import { HunterView } from './HunterView';
+import { SurvivalView } from './SurvivalView';
 
 export function DeathStatisticsChart() {
   const { navigationState, updateNavigationState } = useNavigation();
@@ -20,13 +22,15 @@ export function DeathStatisticsChart() {
   const [minGamesForAverage, setMinGamesForAverage] = useState<number>(
     navigationState.deathStatisticsState?.minGamesForAverage || 10
   );
-  const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter'>(
+  const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter' | 'survival'>(
     navigationState.deathStatisticsState?.selectedView || 'killers'
   );
   const { data: availableCamps } = useAvailableCampsFromRaw();
   const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp);
   // Hunter stats always use all camps data (no camp filter)
   const { data: hunterStats, isLoading: hunterLoading, error: hunterError } = useHunterStatisticsFromRaw();
+  // Survival stats use camp filter
+  const { data: survivalStats, isLoading: survivalLoading, error: survivalError } = useSurvivalStatisticsFromRaw(selectedCamp);
   const { data: gameLogData } = useFilteredGameLogData();
 
   const lycansColors = useThemeAdjustedLycansColorScheme();
@@ -128,7 +132,7 @@ export function DeathStatisticsChart() {
   };
 
   // Function to handle view change with persistence
-  const handleViewChange = (newView: 'killers' | 'deaths' | 'hunter') => {
+  const handleViewChange = (newView: 'killers' | 'deaths' | 'hunter' | 'survival') => {
     setSelectedView(newView);
     updateNavigationState({
       deathStatisticsState: {
@@ -178,6 +182,12 @@ export function DeathStatisticsChart() {
           Morts
         </button>
         <button
+          className={`lycans-categorie-btn ${selectedView === 'survival' ? 'active' : ''}`}
+          onClick={() => handleViewChange('survival')}
+        >
+          Survie
+        </button>
+        <button
           className={`lycans-categorie-btn ${selectedView === 'hunter' ? 'active' : ''}`}
           onClick={() => handleViewChange('hunter')}
         >
@@ -185,8 +195,8 @@ export function DeathStatisticsChart() {
         </button>
       </div>
 
-      {/* Camp Filter - Only visible for Tueurs and Morts views */}
-      {(selectedView === 'killers' || selectedView === 'deaths') && (
+      {/* Camp Filter - Only visible for Tueurs, Morts, and Survie views */}
+      {(selectedView === 'killers' || selectedView === 'deaths' || selectedView === 'survival') && (
         <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
             Camp :
@@ -270,6 +280,18 @@ export function DeathStatisticsChart() {
           hunterStats={hunterStats}
           isLoading={hunterLoading}
           error={hunterError}
+        />
+      )}
+
+      {/* Survival View */}
+      {selectedView === 'survival' && (
+        <SurvivalView
+          survivalStats={survivalStats}
+          selectedCamp={selectedCamp}
+          minGamesForAverage={minGamesForAverage}
+          onMinGamesChange={handleMinGamesChange}
+          isLoading={survivalLoading}
+          error={survivalError}
         />
       )}
 
