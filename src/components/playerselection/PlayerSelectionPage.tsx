@@ -198,10 +198,12 @@ export function PlayerSelectionPage() {
                       />
                     ) : (
                       <div 
-                        className="player-avatar-placeholder"
-                        style={{ backgroundColor: playersColor[player.name] || 'var(--accent-primary)' }}
+                        className="player-avatar-default"
+                        style={{ 
+                          '--player-color': playersColor[player.name] || 'var(--accent-primary)'
+                        } as React.CSSProperties}
                       >
-                        {player.name.charAt(0).toUpperCase()}
+                        <div className="player-avatar-overlay"></div>
                       </div>
                     )}
                     <div className="suggestion-btn-content">
@@ -262,10 +264,12 @@ export function PlayerSelectionPage() {
                     />
                   ) : (
                     <div 
-                      className="player-avatar-placeholder large"
-                      style={{ backgroundColor: playersColor[highlightedPlayerStats.name] || 'var(--accent-primary)' }}
+                      className="player-avatar-default large"
+                      style={{ 
+                        '--player-color': playersColor[highlightedPlayerStats.name] || 'var(--accent-primary)'
+                      } as React.CSSProperties}
                     >
-                      {highlightedPlayerStats.name.charAt(0).toUpperCase()}
+                      <div className="player-avatar-overlay"></div>
                     </div>
                   )}
                   <div className="player-info-text">
@@ -392,10 +396,12 @@ export function PlayerSelectionPage() {
                         />
                       ) : (
                         <div 
-                          className="character-avatar-placeholder"
-                          style={{ backgroundColor: playersColor[player.name] || 'var(--accent-primary)' }}
+                          className="character-avatar-default"
+                          style={{ 
+                            '--player-color': playersColor[player.name] || 'var(--accent-primary)'
+                          } as React.CSSProperties}
                         >
-                          {player.name.charAt(0).toUpperCase()}
+                          <div className="character-avatar-overlay"></div>
                         </div>
                       )}
                     </div>

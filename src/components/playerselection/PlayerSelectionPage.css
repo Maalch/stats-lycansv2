@@ -257,6 +257,32 @@
   transform: scale(1.05);
 }
 
+/* Character Avatar with Default WebP Image */
+.character-avatar-default {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  position: relative;
+  background-color: var(--player-color);
+  background-image: url('/playerCard.webp');
+  background-size: cover;
+  background-position: center;
+  border: 2px solid ;
+  border-color: var(--player-color);
+  transition: all 0.3s ease;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.character-card:hover .character-avatar-default {
+  border-color: var(--accent-primary);
+  transform: scale(1.05);
+}
+
+.character-avatar-overlay {
+  display: none;
+}
+
 .character-name {
   font-size: 0.85rem;
   font-weight: 600;
@@ -432,6 +458,31 @@
   height: 80px;
   font-size: 1.8rem;
   border: 3px solid var(--accent-primary);
+}
+
+/* Player Avatar with Default WebP Image */
+.player-avatar-default {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: relative;
+  background-color: var(--player-color);
+  background-image: url('/playerCard.webp');
+  background-size: cover;
+  background-position: center;
+  border: 2px solid var(--border-color);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.player-avatar-default.large {
+  width: 80px;
+  height: 80px;
+  border: 3px solid var(--accent-primary);
+}
+
+.player-avatar-overlay {
+  display: none;
 }
 
 /* Player Info Row */
@@ -731,7 +782,8 @@
   }
   
   .character-avatar,
-  .character-avatar-placeholder {
+  .character-avatar-placeholder,
+  .character-avatar-default {
     width: 60px;
     height: 60px;
   }
@@ -786,7 +838,8 @@
   }
   
   .player-avatar.large,
-  .player-avatar-placeholder.large {
+  .player-avatar-placeholder.large,
+  .player-avatar-default.large {
     width: 60px;
     height: 60px;
   }
@@ -805,7 +858,8 @@
   }
   
   .character-avatar,
-  .character-avatar-placeholder {
+  .character-avatar-placeholder,
+  .character-avatar-default {
     width: 50px;
     height: 50px;
   }

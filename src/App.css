@@ -1027,6 +1027,25 @@ body {
   border: 2px solid var(--border-color);
 }
 
+/* Player Comparison Avatar with Default WebP Image */
+.lycans-player-avatar-default {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: relative;
+  background-color: var(--player-color);
+  background-image: url('/playerCard.webp');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border: 2px solid var(--border-color);
+  overflow: hidden;
+}
+
+.lycans-player-avatar-overlay {
+  display: none;
+}
+
 .lycans-player-name {
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
