@@ -20,7 +20,8 @@
 export const PLAYER_NAME_MAPPING: Record<string, string> = {
   // Lutti variations
   'LuttiLutti': 'Lutti',
-  'TL areliaNNNN': 'Areliann'
+  'TL areliaNNNN': 'Areliann',
+  'khalen': 'Khalen'
   
   // Add more player name mappings here as you discover them:
   // 'OldName1': 'NewName1',

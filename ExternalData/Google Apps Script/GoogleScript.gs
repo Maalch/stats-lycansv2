@@ -596,9 +596,9 @@ function getRawGameDataInNewFormat() {
 function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows) {
   var playerStats = {
     Username: playerName,
+    Color: playerDetails && playerDetails.color ? playerDetails.color : null,
     MainRoleInitial: determineMainRoleInitialWithDetails(playerDetails),
     MainRoleChanges: getRoleChangesForPlayer(playerName, gameId, roleChangesHeaders, roleChangesDataRows),
-    Color: playerDetails && playerDetails.color ? playerDetails.color : null,
     Power: playerDetails && playerDetails.power && playerDetails.power !== 'N/A' && playerDetails.power !== 'Inconnu' ? playerDetails.power : null,
     SecondaryRole: playerDetails && playerDetails.secondaryRole && playerDetails.secondaryRole !== 'N/A' && playerDetails.secondaryRole !== 'Inconnu' ? playerDetails.secondaryRole : null,
     DeathDateIrl: null, // Not available in legacy data
