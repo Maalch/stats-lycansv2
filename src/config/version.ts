@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.5';
+export const APP_VERSION = '1.3.6';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -8,6 +8,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.6',
+    date: '15/10/2025',
+    description: 'Ajout de tant attendu "Taux de Survie par Jour" (dans "Joueurs" / "Mort & Kills" / "Survie"). Et non, Ponce est loin d\'être le pire...',
+  },
   {
     version: 'v1.3.5',
     date: '14/10/2025',
