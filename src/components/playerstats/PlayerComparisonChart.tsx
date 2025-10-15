@@ -328,8 +328,13 @@ export function PlayerComparisonChart() {
                       className="lycans-player-image"
                     />
                   ) : (
-                    <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer1] || '#0076FF' }}>
-                      {selectedPlayer1.substring(0, 2).toUpperCase()}
+                    <div 
+                      className="lycans-player-avatar-default"
+                      style={{ 
+                        '--player-color': playersColor[selectedPlayer1] || '#0076FF'
+                      } as React.CSSProperties}
+                    >
+                      <div className="lycans-player-avatar-overlay"></div>
                     </div>
                   )}
                 </div>
@@ -425,8 +430,13 @@ export function PlayerComparisonChart() {
                       className="lycans-player-image"
                     />
                   ) : (
-                    <div className="lycans-player-initials" style={{ backgroundColor: playersColor[selectedPlayer2] || '#FF0000' }}>
-                      {selectedPlayer2.substring(0, 2).toUpperCase()}
+                    <div 
+                      className="lycans-player-avatar-default"
+                      style={{ 
+                        '--player-color': playersColor[selectedPlayer2] || '#FF0000'
+                      } as React.CSSProperties}
+                    >
+                      <div className="lycans-player-avatar-overlay"></div>
                     </div>
                   )}
                 </div>
