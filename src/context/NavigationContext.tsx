@@ -62,6 +62,11 @@ export interface DeathStatisticsState {
   focusChart?: 'totalKills' | 'averageKills' | 'totalDeaths' | 'survivalRate'; // Which chart to focus on when navigating
 }
 
+export interface VotingStatsState {
+  selectedCategory: 'overview' | 'behavior';
+  selectedView: 'behavior' | 'accuracy' | 'targets' | 'voteRate' | 'skipRate' | 'abstentionRate';
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -78,6 +83,7 @@ export interface NavigationState {
   playerComparisonState?: PlayerComparisonState;
   playersGeneralState?: PlayersGeneralState;
   deathStatisticsState?: DeathStatisticsState;
+  votingStatsState?: VotingStatsState;
 }
 
 interface NavigationContextType {

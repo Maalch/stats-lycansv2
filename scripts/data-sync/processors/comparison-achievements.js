@@ -3,7 +3,7 @@
  */
 
 import { createComparisonAchievement } from '../helpers.js';
-import { getPlayerCampFromRole } from '../../../src/utils/datasyncExport.js';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';
 
 /**
  * Generate player comparison data for head-to-head statistics

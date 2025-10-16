@@ -2,8 +2,8 @@ export interface Achievement {
   id: string;
   title: string;
   description: string;
-  type: 'good' | 'bad';
-  category: 'general' | 'performance' | 'series' | 'kills' | 'history' | 'comparison' | 'map';
+  type: 'good' | 'bad' | 'neutral';
+  category: 'general' | 'performance' | 'series' | 'kills' | 'history' | 'comparison' | 'map' | 'voting';
   rank?: number; // Position in the ranking (1, 2, 3, ...)
   value?: number; // The actual value (games, win rate, etc.)
   totalRanked?: number; // Total number of players ranked in this category

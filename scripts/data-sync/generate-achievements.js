@@ -8,6 +8,7 @@ import { processComparisonAchievements } from './processors/comparison-achieveme
 import { processKillsAchievements } from './processors/kills-achievements.js';
 import { processPerformanceAchievements } from './processors/performance-achievements.js';
 import { processSeriesAchievements } from './processors/series-achievements.js';
+import { processVotingAchievements } from './processors/voting-achievements.js';
 
 // Import compute functions
 import {
@@ -16,7 +17,8 @@ import {
   computePlayerGameHistory,
   computeDeathStatistics,
   computePlayerCampPerformance,
-  computePlayerSeriesData
+  computePlayerSeriesData,
+  computeVotingStatistics
 } from './compute-stats.js';
 
 // Data directory relative to project root
@@ -52,6 +54,10 @@ function generateAllPlayerAchievements(gameLogData) {
   const allGamesSeriesData = computePlayerSeriesData(allGames);
   const moddedOnlySeriesData = computePlayerSeriesData(moddedGames);
 
+  // Compute voting statistics
+  const allGamesVotingStats = computeVotingStatistics(allGames);
+  const moddedOnlyVotingStats = computeVotingStatistics(moddedGames);
+
   // Get all unique players
   const allPlayers = new Set();
   allGames.forEach(game => {
@@ -70,7 +76,8 @@ function generateAllPlayerAchievements(gameLogData) {
       ...processComparisonAchievements(allGamesStats.playerStats, allGames, playerName, ''),
       ...processKillsAchievements(allGamesDeathStats, playerName, ''),
       ...processPerformanceAchievements(allGamesCampStats, allGames, playerName, ''),
-      ...processSeriesAchievements(allGamesSeriesData, playerName, '')
+      ...processSeriesAchievements(allGamesSeriesData, playerName, ''),
+      ...processVotingAchievements(allGamesVotingStats, playerName, '')
     ];
     
     const moddedOnlyAchievements = [
@@ -79,7 +86,8 @@ function generateAllPlayerAchievements(gameLogData) {
       ...processComparisonAchievements(moddedOnlyStats.playerStats, moddedGames, playerName, ' (Parties Moddées)'),
       ...processKillsAchievements(moddedOnlyDeathStats, playerName, ' (Parties Moddées)'),
       ...processPerformanceAchievements(moddedOnlyCampStats, moddedGames, playerName, ' (Parties Moddées)'),
-      ...processSeriesAchievements(moddedOnlySeriesData, playerName, ' (Parties Moddées)')
+      ...processSeriesAchievements(moddedOnlySeriesData, playerName, ' (Parties Moddées)'),
+      ...processVotingAchievements(moddedOnlyVotingStats, playerName, ' (Parties Moddées)')
     ];
 
     playerAchievements[playerName] = {
