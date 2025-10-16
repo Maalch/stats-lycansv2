@@ -30,7 +30,7 @@ export function processVotingAchievements(votingStats, playerName, suffix) {
       const isTopRank = aggressivenessRank.rank <= 3;
       achievements.push(createAchievement(
         `aggressiveness-${suffix ? 'modded' : 'all'}`,
-        `🗳️ Rang ${aggressivenessRank.rank} Score d'Agressivité aux votes${suffix}`,
+        `🚨 Rang ${aggressivenessRank.rank} Score d'Agressivité aux votes${suffix}`,
         `${aggressivenessRank.rank}${aggressivenessRank.rank === 1 ? 'er' : 'ème'} score d'agressivité: ${aggressivenessRank.value.toFixed(1)} (min. 25 meetings)`,
         isTopRank ? 'good' : 'neutral',
         aggressivenessRank.rank,
@@ -55,7 +55,7 @@ export function processVotingAchievements(votingStats, playerName, suffix) {
       const isTopRank = votingRateRank.rank <= 3;
       achievements.push(createAchievement(
         `voting-rate-${suffix ? 'modded' : 'all'}`,
-        `✅ Rang ${votingRateRank.rank} Taux de Vote${suffix}`,
+        `🙋 Rang ${votingRateRank.rank} Taux de Vote${suffix}`,
         `${votingRateRank.rank}${votingRateRank.rank === 1 ? 'er' : 'ème'} taux de participation aux votes: ${votingRateRank.value.toFixed(1)}% (min. 25 meetings)`,
         isTopRank ? 'good' : 'neutral',
         votingRateRank.rank,
@@ -70,10 +70,17 @@ export function processVotingAchievements(votingStats, playerName, suffix) {
     }
   }
 
-  // 3. Voting Accuracy ranking (min. 50 votes) - Most strategic voters
-  const eligibleForAccuracy = playerAccuracyStats.filter(p => p.totalVotes >= 50);
+  // 3. Voting Accuracy ranking (min. 25 meetings) - Most strategic voters
+  const eligibleForAccuracy = playerAccuracyStats.filter(p => p.totalMeetings >= 25);
   if (eligibleForAccuracy.length > 0) {
-    const byAccuracy = [...eligibleForAccuracy].sort((a, b) => b.accuracyRate - a.accuracyRate);
+    const byAccuracy = [...eligibleForAccuracy].sort((a, b) => {
+      // Primary sort: accuracy rate (descending)
+      if (b.accuracyRate !== a.accuracyRate) {
+        return b.accuracyRate - a.accuracyRate;
+      }
+      // Tiebreaker: total votes (descending - more votes = better)
+      return b.totalVotes - a.totalVotes;
+    });
     const accuracyRank = findPlayerRank(byAccuracy, playerName, p => p.accuracyRate);
     
     if (accuracyRank) {
@@ -81,7 +88,7 @@ export function processVotingAchievements(votingStats, playerName, suffix) {
       achievements.push(createAchievement(
         `voting-accuracy-${suffix ? 'modded' : 'all'}`,
         `🎯 Rang ${accuracyRank.rank} Précision des Votes${suffix}`,
-        `${accuracyRank.rank}${accuracyRank.rank === 1 ? 'er' : 'ème'} précision des votes contre le camp adverse: ${accuracyRank.value.toFixed(1)}% (min. 50 votes)`,
+        `${accuracyRank.rank}${accuracyRank.rank === 1 ? 'er' : 'ème'} précision des votes contre le camp adverse: ${accuracyRank.value.toFixed(1)}% (min. 25 meetings)`,
         isTopRank ? 'good' : 'neutral',
         accuracyRank.rank,
         accuracyRank.value,

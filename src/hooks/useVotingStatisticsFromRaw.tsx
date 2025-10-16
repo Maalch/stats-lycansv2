@@ -57,10 +57,10 @@ export function useFilteredVotingStatistics(minMeetings: number = 5) {
         player => player.totalMeetings >= minMeetings
       ),
       playerAccuracyStats: allVotingStats.playerAccuracyStats.filter(
-        player => player.totalVotes >= Math.ceil(minMeetings * 0.6) // At least 60% voting rate
+        player => player.totalMeetings >= minMeetings
       ),
       playerTargetStats: allVotingStats.playerTargetStats.filter(
-        player => player.totalTimesTargeted >= Math.ceil(minMeetings * 0.3) // Targeted at least 30% of the time
+        player => player.totalTimesTargeted >= minMeetings
       )
     };
   }, [allVotingStats, minMeetings]);

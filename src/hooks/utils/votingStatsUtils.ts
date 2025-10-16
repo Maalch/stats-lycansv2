@@ -28,6 +28,7 @@ export interface VotingAccuracyStats {
 
 export interface VotingTargetStats {
   playerName: string;
+  totalMeetings: number;         // Total meetings attended (alive)
   totalTimesTargeted: number;
   timesTargetedByEnemyCamp: number;
   timesTargetedByOwnCamp: number;
@@ -347,6 +348,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     
     playerTargetStats.push({
       playerName: player.Username,
+      totalMeetings: behavior.totalMeetings,
       totalTimesTargeted: targetStats.totalTimesTargeted,
       timesTargetedByEnemyCamp: targetStats.timesTargetedByEnemyCamp,
       timesTargetedByOwnCamp: targetStats.timesTargetedByOwnCamp,
@@ -588,6 +590,7 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
   }>();
   
   const aggregatedTargets = new Map<string, {
+    totalMeetings: number;
     totalTimesTargeted: number;
     timesTargetedByEnemyCamp: number;
     timesTargetedByOwnCamp: number;
@@ -650,6 +653,7 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
 
     analysis.playerTargetStats.forEach(target => {
       const existing = aggregatedTargets.get(target.playerName) || {
+        totalMeetings: 0,
         totalTimesTargeted: 0,
         timesTargetedByEnemyCamp: 0,
         timesTargetedByOwnCamp: 0,
@@ -660,6 +664,7 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
       };
       
       aggregatedTargets.set(target.playerName, {
+        totalMeetings: existing.totalMeetings + target.totalMeetings,
         totalTimesTargeted: existing.totalTimesTargeted + target.totalTimesTargeted,
         timesTargetedByEnemyCamp: existing.timesTargetedByEnemyCamp + target.timesTargetedByEnemyCamp,
         timesTargetedByOwnCamp: existing.timesTargetedByOwnCamp + target.timesTargetedByOwnCamp,
@@ -713,6 +718,7 @@ export function calculateAggregatedVotingStats(games: GameLogEntry[]): {
     
     return {
       playerName,
+      totalMeetings: data.totalMeetings,
       totalTimesTargeted: data.totalTimesTargeted,
       timesTargetedByEnemyCamp: data.timesTargetedByEnemyCamp,
       timesTargetedByOwnCamp: data.timesTargetedByOwnCamp,

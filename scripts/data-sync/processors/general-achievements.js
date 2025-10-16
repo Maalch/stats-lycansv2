@@ -22,7 +22,7 @@ export function processGeneralAchievements(playerStats, playerName, suffix) {
   if (participationRank) {
     achievements.push(createAchievement(
       `participation-${suffix ? 'modded' : 'all'}`,
-      `🎯 Rang ${participationRank.rank} Participations${suffix}`,
+      `📊 Rang ${participationRank.rank} Participations${suffix}`,
       `${participationRank.rank}${participationRank.rank === 1 ? 'er' : 'ème'} joueur le plus actif avec ${participationRank.value} parties`,
       'good',
       participationRank.rank,

@@ -21,8 +21,8 @@ import {
   computeVotingStatistics
 } from './compute-stats.js';
 
-// Data directory relative to project root
-const DATA_DIR = 'data';
+// Data directory relative to project root (two levels up from scripts/data-sync/)
+const DATA_DIR = '../../data';
 const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
 
 /**
