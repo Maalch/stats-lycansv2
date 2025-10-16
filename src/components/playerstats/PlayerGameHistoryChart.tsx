@@ -9,6 +9,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 import { getGroupedMapStats } from '../../hooks/utils/playerGameHistoryUtils';
 
 type GroupByMethod = 'session' | 'month';
+type ViewType = 'performance' | 'camp' | 'map';
 
 export function PlayerGameHistoryChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
@@ -60,6 +61,7 @@ export function PlayerGameHistoryChart() {
 
   const selectedPlayerName = getDefaultSelectedPlayer();
   const groupingMethod = navigationState.groupingMethod || 'session';
+  const selectedViewType = navigationState.selectedViewType || 'performance';
   
   // Update functions that also update the navigation state
   const setSelectedPlayerName = (playerName: string) => {
@@ -68,6 +70,10 @@ export function PlayerGameHistoryChart() {
   
   const setGroupingMethod = (method: GroupByMethod) => {
     updateNavigationState({ groupingMethod: method });
+  };
+
+  const setSelectedViewType = (viewType: ViewType) => {
+    updateNavigationState({ selectedViewType: viewType });
   };
 
   const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
@@ -243,7 +249,7 @@ export function PlayerGameHistoryChart() {
     <div className="lycans-player-history">
       <h2>Historique Détaillé d'un Joueur</h2>
       
-      {/* Controls */}
+      {/* Player Selection Control */}
       <div className="lycans-controls-section" style={{ 
         display: 'flex', 
         gap: '2rem', 
@@ -276,29 +282,28 @@ export function PlayerGameHistoryChart() {
             ))}
           </select>
         </div>
+      </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="grouping-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Groupement:
-          </label>
-          <select
-            id="grouping-select"
-            value={groupingMethod}
-            onChange={(e) => setGroupingMethod(e.target.value as GroupByMethod)}
-            style={{
-              background: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '4px',
-              padding: '0.5rem',
-              fontSize: '0.9rem',
-              minWidth: '120px'
-            }}
-          >
-            <option value="session">Par session</option>
-            <option value="month">Par mois</option>
-          </select>
-        </div>
+      {/* View Type Selection */}
+      <div className="lycans-categories-selection">
+        <button
+          className={`lycans-categorie-btn ${selectedViewType === 'performance' ? 'active' : ''}`}
+          onClick={() => setSelectedViewType('performance')}
+        >
+          Évolution
+        </button>
+        <button
+          className={`lycans-categorie-btn ${selectedViewType === 'camp' ? 'active' : ''}`}
+          onClick={() => setSelectedViewType('camp')}
+        >
+          Camp
+        </button>
+        <button
+          className={`lycans-categorie-btn ${selectedViewType === 'map' ? 'active' : ''}`}
+          onClick={() => setSelectedViewType('map')}
+        >
+          Map
+        </button>
       </div>
 
       {/* Summary Cards */}
@@ -343,10 +348,45 @@ export function PlayerGameHistoryChart() {
         </div>
       </div>
 
-      <div className="lycans-graphiques-groupe">
-        {/* Performance over time */}
-        <div className="lycans-graphique-section">
-          <h3>Évolution des Performances {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
+      {/* Performance View */}
+      {selectedViewType === 'performance' && (
+        <>
+          {/* Grouping Control - Only for Performance View */}
+          <div className="lycans-controls-section" style={{ 
+            display: 'flex', 
+            gap: '2rem', 
+            marginBottom: '2rem', 
+            justifyContent: 'center',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="grouping-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                Groupement:
+              </label>
+              <select
+                id="grouping-select"
+                value={groupingMethod}
+                onChange={(e) => setGroupingMethod(e.target.value as GroupByMethod)}
+                style={{
+                  background: 'var(--bg-tertiary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  padding: '0.5rem',
+                  fontSize: '0.9rem',
+                  minWidth: '120px'
+                }}
+              >
+                <option value="session">Par session</option>
+                <option value="month">Par mois</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="lycans-graphiques-groupe">
+            {/* Performance over time */}
+            <div className="lycans-graphique-section">
+            <h3>Évolution des Performances {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
           <FullscreenChart title={`Évolution des Performances ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`}>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -519,10 +559,13 @@ export function PlayerGameHistoryChart() {
           </div>
           </FullscreenChart>
         </div>
-      </div>
+          </div>
+        </>
+      )}
 
-      {/* Camp Distribution */}
-      <div className="lycans-graphiques-groupe">
+      {/* Camp View */}
+      {selectedViewType === 'camp' && (
+        <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           <h3>Distribution par Camps</h3>
           <div style={{ height: 400 }}>
@@ -777,9 +820,12 @@ export function PlayerGameHistoryChart() {
             </div>
           </FullscreenChart>
         </div>
+        </div>
+      )}
 
-        {/* Map Performance */}
-        {mapPerformanceData.length > 0 && (
+      {/* Map View */}
+      {selectedViewType === 'map' && mapPerformanceData.length > 0 && (
+        <div className="lycans-graphiques-groupe">
           <div className="lycans-graphique-section">
             <h3>Performance par Carte</h3>
                      
@@ -975,8 +1021,15 @@ export function PlayerGameHistoryChart() {
               </div>
             </FullscreenChart>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {selectedViewType === 'map' && mapPerformanceData.length === 0 && (
+        <div className="lycans-empty-section">
+          <h3>Aucune donnée de carte disponible</h3>
+          <p>Aucune statistique de carte n'est disponible pour ce joueur.</p>
+        </div>
+      )}
     </div>
   );
 }
