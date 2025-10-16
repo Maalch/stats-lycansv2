@@ -172,7 +172,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
   // Determine the maximum meeting number across all players
   const maxMeetingNumber = Math.max(
     ...game.PlayerStats.flatMap(player => 
-      player.Votes.map(vote => vote.MeetingNr)
+      player.Votes.map(vote => vote.Day || 0)
     ),
     0
   );
@@ -182,7 +182,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     const alivePlayersAtMeeting = getAlivePlayersAtMeeting(game, meetingNum);
     const votesInMeeting = game.PlayerStats.flatMap(player => 
       player.Votes
-        .filter(vote => vote.MeetingNr === meetingNum)
+        .filter(vote => vote.Day === meetingNum)
         .map(vote => ({ voter: player.Username, vote, voterRole: player.MainRoleInitial }))
     );
 
@@ -438,7 +438,7 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
     // Get max meeting number for this game
     const maxMeetingNumber = Math.max(
       ...game.PlayerStats.flatMap(player => 
-        player.Votes.map(vote => vote.MeetingNr)
+        player.Votes.map(vote => vote.Day)
       ),
       0
     );
@@ -450,7 +450,7 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
       const alivePlayersAtMeeting = getAlivePlayersAtMeeting(game, meetingNum);
       const votesInMeeting = game.PlayerStats.flatMap(player => 
         player.Votes
-          .filter(vote => vote.MeetingNr === meetingNum)
+          .filter(vote => vote.Day === meetingNum)
           .map(vote => ({ voter: player.Username, vote, voterStats: player }))
       );
 

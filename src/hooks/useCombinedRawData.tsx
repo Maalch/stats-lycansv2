@@ -5,7 +5,7 @@ import { PLAYER_NAME_MAPPING } from '../utils/playerNameMapping';
 
 // New GameLog interfaces
 export interface Vote {
-  MeetingNr: number;              // Meeting number (1, 2, 3, etc.)
+  Day: number;              // Meeting number (1, 2, 3, etc.)
   Target: string;                 // Player name targeted by the vote or "Passé" for abstention
   Date: string | null;            // ISO date string when the vote was cast (may be null for legacy data)
 }

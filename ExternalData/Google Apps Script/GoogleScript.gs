@@ -711,7 +711,7 @@ function getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows) {
       // Only add votes that have a target (not blank)
       if (voteTarget && voteTarget.trim() !== '') {
         votes.push({
-          MeetingNr: meetingNr,
+          Day: meetingNr,
           Target: voteTarget.trim(),
           Date: null // Date is not available in legacy data
         });

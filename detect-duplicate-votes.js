@@ -1,5 +1,5 @@
 /**
- * Script to detect cases where the same player has multiple votes for the same MeetingNr
+ * Script to detect cases where the same player has multiple votes for the same Day
  * in the gameLog.json file
  */
 
@@ -39,29 +39,29 @@ function detectDuplicateVotes() {
                     return; // Skip players without votes
                 }
                 
-                // Group votes by MeetingNr
-                const votesByMeeting = {};
+                // Group votes by Day
+                const votesByDay = {};
                 player.Votes.forEach((vote, voteIndex) => {
-                    const meetingNr = vote.MeetingNr;
-                    if (!votesByMeeting[meetingNr]) {
-                        votesByMeeting[meetingNr] = [];
+                    const day = vote.Day;
+                    if (!votesByDay[day]) {
+                        votesByDay[day] = [];
                     }
-                    votesByMeeting[meetingNr].push({
+                    votesByDay[day].push({
                         target: vote.Target,
                         date: vote.Date,
                         voteIndex: voteIndex
                     });
                 });
                 
-                // Check for duplicates (multiple votes for same MeetingNr)
-                Object.entries(votesByMeeting).forEach(([meetingNr, votes]) => {
+                // Check for duplicates (multiple votes for same Day)
+                Object.entries(votesByDay).forEach(([day, votes]) => {
                     if (votes.length > 1) {
                         gameDuplicates.push({
                             gameId: game.Id,
                             gameIndex: gameIndex,
                             playerName: player.Username,
                             playerIndex: playerIndex,
-                            meetingNr: parseInt(meetingNr),
+                            day: parseInt(day),
                             duplicateVotes: votes,
                             totalVotesForMeeting: votes.length
                         });
@@ -100,8 +100,8 @@ function detectDuplicateVotes() {
                 
                 gameData.duplicates.forEach((duplicate, dupIndex) => {
                     console.log(`     ${dupIndex + 1}. Player: ${duplicate.playerName}`);
-                    console.log(`        Meeting Nr: ${duplicate.meetingNr}`);
-                    console.log(`        Number of votes: ${duplicate.totalVotesForMeeting}`);
+                    console.log(`        Day: ${duplicate.day}`);
+                    console.log(`        Number of votes: ${duplicate.totalVotesForDay}`);
                     console.log(`        Votes:`);
                     duplicate.duplicateVotes.forEach((vote, voteIndex) => {
                         console.log(`          - Vote ${voteIndex + 1}: Target="${vote.target}", Date="${vote.date}"`);
@@ -124,7 +124,7 @@ function detectDuplicateVotes() {
                     playerSummary[duplicate.playerName].totalOccurrences++;
                     playerSummary[duplicate.playerName].games.push({
                         gameId: gameData.gameId,
-                        meetingNr: duplicate.meetingNr,
+                        day: duplicate.day,
                         votes: duplicate.duplicateVotes.length
                     });
                 });
@@ -136,12 +136,12 @@ function detectDuplicateVotes() {
                 .forEach(([playerName, data]) => {
                     console.log(`${playerName}: ${data.totalOccurrences} duplicate vote cases`);
                     data.games.forEach(game => {
-                        console.log(`  - Game ${game.gameId}, Meeting ${game.meetingNr}: ${game.votes} votes`);
+                        console.log(`  - Game ${game.gameId}, Day ${game.day}: ${game.votes} votes`);
                     });
                     console.log('');
                 });
         } else {
-            console.log(`✅ No duplicate votes found! All players have at most one vote per meeting.`);
+            console.log(`✅ No duplicate votes found! All players have at most one vote per day.`);
         }
         
         // Save results to file
