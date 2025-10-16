@@ -68475,7 +68475,7 @@
         "VODLink": "https://youtu.be/K2uk5ReBgKY?si=lxozJ0za6HKl_ESd&t=719",
         "VODLinkEnd": "https://youtu.be/K2uk5ReBgKY?t=1388",
         "VictoryType": "Votes",
-        "deathInformationFilled": false
+        "deathInformationFilled": true
       },
       "PlayerStats": [
         {
@@ -68511,6 +68511,11 @@
               "MeetingNr": 1,
               "Target": "Passé",
               "Date": null
+            },
+            {
+              "MeetingNr": 2,
+              "Target": "Bytell",
+              "Date": null
             }
           ]
         },
@@ -68532,6 +68537,11 @@
               "MeetingNr": 1,
               "Target": "Passé",
               "Date": null
+            },
+            {
+              "MeetingNr": 2,
+              "Target": "Bytell",
+              "Date": null
             }
           ]
         },
@@ -68551,6 +68561,11 @@
           "Votes": [
             {
               "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            },
+            {
+              "MeetingNr": 2,
               "Target": "Passé",
               "Date": null
             }
@@ -68574,6 +68589,11 @@
               "MeetingNr": 1,
               "Target": "Passé",
               "Date": null
+            },
+            {
+              "MeetingNr": 2,
+              "Target": "Bytell",
+              "Date": null
             }
           ]
         },
@@ -68585,15 +68605,20 @@
           "Power": "Saboteur",
           "SecondaryRole": null,
           "DeathDateIrl": null,
-          "DeathTiming": null,
+          "DeathTiming": "M2",
           "DeathPosition": null,
-          "DeathType": null,
+          "DeathType": "VOTED",
           "KillerName": null,
           "Victorious": false,
           "Votes": [
             {
               "MeetingNr": 1,
               "Target": "Passé",
+              "Date": null
+            },
+            {
+              "MeetingNr": 2,
+              "Target": "Arkantors",
               "Date": null
             }
           ]
@@ -68615,6 +68640,11 @@
             {
               "MeetingNr": 1,
               "Target": "Passé",
+              "Date": null
+            },
+            {
+              "MeetingNr": 2,
+              "Target": "Bytell",
               "Date": null
             }
           ]
@@ -68677,7 +68707,7 @@
         "VODLink": "https://youtu.be/K2uk5ReBgKY?si=Q9NVK_xOUh8DL5Z4&t=1682",
         "VODLinkEnd": "https://youtu.be/K2uk5ReBgKY?t=2676",
         "VictoryType": "Domination",
-        "deathInformationFilled": false
+        "deathInformationFilled": true
       },
       "PlayerStats": [
         {
@@ -68688,49 +68718,67 @@
           "Power": "Paysan",
           "SecondaryRole": null,
           "DeathDateIrl": null,
-          "DeathTiming": null,
+          "DeathTiming": "N3",
           "DeathPosition": null,
           "DeathType": "BY_WOLF",
           "KillerName": "Fukano",
           "Victorious": false,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         },
         {
           "Username": "Khalen",
           "Color": "Bleu foncé",
-          "MainRoleInitial": "Villageois",
+          "MainRoleInitial": "Alchimiste",
           "MainRoleChanges": [],
           "Power": null,
           "SecondaryRole": null,
           "DeathDateIrl": null,
-          "DeathTiming": null,
+          "DeathTiming": "N4",
           "DeathPosition": null,
-          "DeathType": null,
+          "DeathType": "STARVATION",
           "KillerName": null,
           "Victorious": false,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         },
         {
           "Username": "Monodie",
           "Color": "Vert foncé",
           "MainRoleInitial": "Villageois",
           "MainRoleChanges": [],
-          "Power": null,
+          "Power": "Paysan",
           "SecondaryRole": null,
           "DeathDateIrl": null,
-          "DeathTiming": null,
+          "DeathTiming": "N3",
           "DeathPosition": null,
-          "DeathType": null,
-          "KillerName": null,
+          "DeathType": "BULLET_HUMAN",
+          "KillerName": "Bytell",
           "Victorious": false,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         },
         {
           "Username": "Kao",
           "Color": "Jaune",
           "MainRoleInitial": "Villageois",
           "MainRoleChanges": [],
-          "Power": null,
+          "Power": "Exorciste",
           "SecondaryRole": null,
           "DeathDateIrl": null,
           "DeathTiming": null,
@@ -68738,14 +68786,20 @@
           "DeathType": null,
           "KillerName": null,
           "Victorious": false,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         },
         {
           "Username": "Arkantors",
           "Color": "Rouge",
           "MainRoleInitial": "Traître",
           "MainRoleChanges": [],
-          "Power": null,
+          "Power": "Saboteur",
           "SecondaryRole": null,
           "DeathDateIrl": null,
           "DeathTiming": null,
@@ -68753,37 +68807,55 @@
           "DeathType": null,
           "KillerName": null,
           "Victorious": true,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         },
         {
           "Username": "Bytell",
           "Color": "Turquoise",
-          "MainRoleInitial": "Villageois",
+          "MainRoleInitial": "Chasseur",
           "MainRoleChanges": [],
           "Power": null,
           "SecondaryRole": null,
           "DeathDateIrl": null,
-          "DeathTiming": null,
+          "DeathTiming": "N4",
           "DeathPosition": null,
-          "DeathType": null,
-          "KillerName": null,
+          "DeathType": "BY_WOLF",
+          "KillerName": "Fukano",
           "Victorious": false,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         },
         {
           "Username": "Kyria",
           "Color": "Orange",
           "MainRoleInitial": "Villageois",
           "MainRoleChanges": [],
-          "Power": null,
+          "Power": "Paysan",
           "SecondaryRole": null,
           "DeathDateIrl": null,
-          "DeathTiming": null,
+          "DeathTiming": "N4",
           "DeathPosition": null,
-          "DeathType": null,
-          "KillerName": null,
+          "DeathType": "BY_WOLF",
+          "KillerName": "Fukano",
           "Victorious": false,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         },
         {
           "Username": "Fukano",
@@ -68798,7 +68870,13 @@
           "DeathType": null,
           "KillerName": null,
           "Victorious": true,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         },
         {
           "Username": "Brybry",
@@ -68813,7 +68891,13 @@
           "DeathType": null,
           "KillerName": null,
           "Victorious": false,
-          "Votes": []
+          "Votes": [
+            {
+              "MeetingNr": 1,
+              "Target": "Passé",
+              "Date": null
+            }
+          ]
         }
       ]
     },
