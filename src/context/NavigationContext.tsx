@@ -71,6 +71,7 @@ export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
   groupingMethod?: 'session' | 'month';
+  selectedViewType?: 'performance' | 'camp' | 'map';
   // PlayerPairingStatsChart state
   selectedPairingTab?: 'wolves' | 'lovers';
   // DeathStatisticsChart state
