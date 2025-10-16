@@ -30,7 +30,7 @@ function parseDeathTiming(deathTiming) {
     };
 }
 
-function canPlayerVoteInMeeting(deathTiming, meetingNr) {
+function canPlayerVoteInMeeting(deathTiming, day) {
     const death = parseDeathTiming(deathTiming);
     
     // If no death timing, player is alive and can vote
@@ -42,12 +42,12 @@ function canPlayerVoteInMeeting(deathTiming, meetingNr) {
         case 'J': // Day phase death
         case 'N': // Night phase death
             // Cannot vote in the meeting of the same number
-            return meetingNr < number;
+            return day < number;
         
         case 'M': // Meeting phase death (voted out)
             // Cannot vote in the next meeting or later
-            return meetingNr <= number;
-        
+            return day <= number;
+
         default:
             console.warn(`Unknown death phase: ${phase}`);
             return true;
@@ -85,11 +85,11 @@ function detectInvalidVotes() {
                 
                 // Check each vote
                 player.Votes.forEach((vote, voteIndex) => {
-                    const meetingNr = vote.MeetingNr;
-                    
-                    if (!canPlayerVoteInMeeting(deathTiming, meetingNr)) {
+                    const day = vote.Day;
+
+                    if (!canPlayerVoteInMeeting(deathTiming, day)) {
                         playerInvalidVotes.push({
-                            meetingNr: meetingNr,
+                            day: day,
                             target: vote.Target,
                             date: vote.Date,
                             voteIndex: voteIndex
@@ -146,8 +146,8 @@ function detectInvalidVotes() {
                     console.log(`        Death Timing: ${invalidCase.deathTiming}`);
                     console.log(`        Invalid votes (${invalidCase.totalInvalidVotes}):`);
                     invalidCase.invalidVotes.forEach((vote, voteIndex) => {
-                        console.log(`          - Meeting ${vote.meetingNr}: Target="${vote.target}", Date="${vote.date}"`);
-                        
+                        console.log(`          - Day ${vote.day}: Target="${vote.target}", Date="${vote.date}"`);
+
                         // Explain why this vote is invalid
                         const death = parseDeathTiming(invalidCase.deathTiming);
                         if (death) {
@@ -158,7 +158,7 @@ function detectInvalidVotes() {
                                     explanation = `(Died in ${death.phase}${death.number}, cannot vote in M${death.number})`;
                                     break;
                                 case 'M':
-                                    explanation = `(Voted out in M${death.number}, cannot vote in M${vote.meetingNr})`;
+                                    explanation = `(Voted out in M${death.number}, cannot vote in M${vote.day})`;
                                     break;
                             }
                             console.log(`            ${explanation}`);
@@ -199,7 +199,7 @@ function detectInvalidVotes() {
                     data.games.forEach(game => {
                         console.log(`  - Game ${game.gameId}: Death=${game.deathTiming}, Invalid votes=${game.invalidVoteCount}`);
                         game.invalidVotes.forEach(vote => {
-                            console.log(`    * Meeting ${vote.meetingNr} → ${vote.target}`);
+                            console.log(`    * Day ${vote.day} → ${vote.target}`);
                         });
                     });
                     console.log('');

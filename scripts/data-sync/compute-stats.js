@@ -1020,7 +1020,7 @@ export function computeVotingStatistics(gameData) {
     // Find max meeting number
     const maxMeetingNumber = Math.max(
       ...game.PlayerStats.flatMap(player => 
-        (player.Votes || []).map(vote => vote.MeetingNr || 0)
+        (player.Votes || []).map(vote => vote.Day || 0)
       ),
       0
     );
@@ -1030,7 +1030,7 @@ export function computeVotingStatistics(gameData) {
       const alivePlayersAtMeeting = getAlivePlayersAtMeeting(game, meetingNum);
       const votesInMeeting = game.PlayerStats.flatMap(player => 
         (player.Votes || [])
-          .filter(vote => vote.MeetingNr === meetingNum)
+          .filter(vote => vote.Day === meetingNum)
           .map(vote => ({ 
             voter: player.Username, 
             vote, 
