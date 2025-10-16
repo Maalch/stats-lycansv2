@@ -82,7 +82,14 @@ export function VotingStatisticsChart() {
     if (!filteredVotingStats) return { accuracyChartData: [], highlightedPlayerInAccuracy: false };
     
     const sortedData = [...filteredVotingStats.playerAccuracyStats]
-      .sort((a, b) => b.accuracyRate - a.accuracyRate)
+      .sort((a, b) => {
+        // Primary sort: accuracy rate (descending)
+        if (b.accuracyRate !== a.accuracyRate) {
+          return b.accuracyRate - a.accuracyRate;
+        }
+        // Tiebreaker: total votes (descending - more votes = better)
+        return b.totalVotes - a.totalVotes;
+      })
       .slice(0, 15);
     
     // Check if highlighted player is in top 15
