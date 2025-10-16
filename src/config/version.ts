@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.6';
+export const APP_VERSION = '1.3.7';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -8,6 +8,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+    {
+    version: 'v1.3.7',
+    date: '16/10/2025',
+    description: 'Ajout des joueurs les plus tués et des joueurs qui vous ont le plus tué dans l\'historique des parties d\'un joueur (dans "Joueurs" / "Historique Joueur").',
+  },
   {
     version: 'v1.3.6',
     date: '15/10/2025',
