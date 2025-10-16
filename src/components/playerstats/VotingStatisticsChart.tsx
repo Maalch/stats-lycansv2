@@ -19,12 +19,17 @@ type ChartPlayerStat = {
 
 export function VotingStatisticsChart() {
   const { settings } = useSettings();
-  const { navigateToGameDetails } = useNavigation();
+  const { navigateToGameDetails, navigationState } = useNavigation();
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
-  const [selectedCategory, setSelectedCategory] = useState<'overview' | 'behavior'>('overview');
-  const [selectedView, setSelectedView] = useState<'behavior' | 'accuracy' | 'targets' | 'voteRate' | 'skipRate' | 'abstentionRate'>('behavior');
+  // Initialize state from navigation state or use defaults
+  const [selectedCategory, setSelectedCategory] = useState<'overview' | 'behavior'>(
+    navigationState.votingStatsState?.selectedCategory || 'overview'
+  );
+  const [selectedView, setSelectedView] = useState<'behavior' | 'accuracy' | 'targets' | 'voteRate' | 'skipRate' | 'abstentionRate'>(
+    navigationState.votingStatsState?.selectedView || 'behavior'
+  );
   const [minMeetings, setMinMeetings] = useState<number>(25);
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
   

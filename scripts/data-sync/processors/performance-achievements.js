@@ -3,7 +3,7 @@
  */
 
 import { findPlayerCampRank } from '../helpers.js';
-import { getPlayerCampFromRole } from '../../../src/utils/datasyncExport.js';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';
 
 // Special roles are all camps except Villageois and Loup camps (exclusion list approach)
 // This dynamically includes any special role that appears in the game data:

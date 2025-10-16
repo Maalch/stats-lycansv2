@@ -325,6 +325,33 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
       });
     }
 
+    // Handle voting achievements with specific category and view
+    if (achievement.category === 'voting' && achievement.redirectTo.subTab === 'votingStats') {
+      const titleLower = achievement.title.toLowerCase();
+      let selectedCategory: 'overview' | 'behavior' = 'overview';
+      let selectedView: 'behavior' | 'accuracy' | 'targets' | 'voteRate' | 'skipRate' | 'abstentionRate' = 'behavior';
+      
+      // Determine category and view based on achievement title
+      if (titleLower.includes('agressivité')) {
+        selectedCategory = 'overview';
+        selectedView = 'behavior';
+      } else if (titleLower.includes('taux de vote')) {
+        selectedCategory = 'behavior';
+        selectedView = 'voteRate';
+      } else if (titleLower.includes('précision')) {
+        selectedCategory = 'overview';
+        selectedView = 'accuracy';
+      }
+
+      // Set the voting stats chart state
+      updateNavigationState({
+        votingStatsState: {
+          selectedCategory,
+          selectedView
+        }
+      });
+    }
+
     // Navigate to the specified tab and subTab
     navigateToTab(achievement.redirectTo.tab, achievement.redirectTo.subTab);
   };
@@ -467,6 +494,27 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
           return `Cliquez pour voir les performances par camp${filterInfo}`;
         }
         break;
+      case 'voting':
+        if (achievement.redirectTo.subTab === 'votingStats') {
+          const minMeetingsMatch = achievement.description.match(/min\.\s*(\d+)/);
+          const minMeetings = minMeetingsMatch ? parseInt(minMeetingsMatch[1], 10) : 25;
+          
+          const filterInfo = achievementType === 'modded' 
+            ? " (Filtre parties moddées activé)" 
+            : " (Filtres réinitialisés)";
+          
+          const titleLower = achievement.title.toLowerCase();
+          
+          if (titleLower.includes('agressivité')) {
+            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le score d'agressivité (min. ${minMeetings} meetings)${filterInfo}`;
+          } else if (titleLower.includes('taux de vote')) {
+            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le taux de vote (min. ${minMeetings} meetings)${filterInfo}`;
+          } else if (titleLower.includes('précision')) {
+            return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir la précision des votes${filterInfo}`;
+          }
+          return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les statistiques de vote${filterInfo}`;
+        }
+        break;
     }
     
     // Add filter reset information to all tooltips
@@ -535,7 +583,7 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
 
   // Separate achievements by category and sort by rank
   const goodAchievements = achievements
-    .filter(a => a.category !== 'comparison' && a.type === 'good')
+    .filter(a => a.category !== 'comparison' && (a.type === 'good' || a.type === 'neutral'))
     .sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
   const badAchievements = achievements
     .filter(a => a.category !== 'comparison' && a.type === 'bad')

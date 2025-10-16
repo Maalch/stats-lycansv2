@@ -945,3 +945,234 @@ export function computePlayerSeriesData(gameData) {
     totalPlayersCount: allPlayers.size
   };
 }
+
+/**
+ * Compute voting behavior statistics for all players
+ * @param {Array} gameData - Array of game entries
+ * @returns {Object} - Object with voting behavior, accuracy, and target statistics
+ */
+export function computeVotingStatistics(gameData) {
+  const playerBehaviorMap = new Map();
+  const playerAccuracyMap = new Map();
+  const playerTargetMap = new Map();
+
+  // Helper to determine if a player was alive at a meeting
+  function wasPlayerAliveAtMeeting(player, meetingNumber) {
+    if (!player.DeathTiming) return true;
+    
+    const deathTiming = player.DeathTiming.toUpperCase();
+    
+    if (deathTiming.startsWith('M')) {
+      const deathMeeting = parseInt(deathTiming.substring(1));
+      return meetingNumber < deathMeeting;
+    }
+    
+    if (deathTiming.startsWith('N') || deathTiming.startsWith('J')) {
+      const deathDay = parseInt(deathTiming.substring(1));
+      return meetingNumber <= deathDay;
+    }
+    
+    return true;
+  }
+
+  // Helper to get alive players at a meeting
+  function getAlivePlayersAtMeeting(game, meetingNumber) {
+    return game.PlayerStats.filter(player => wasPlayerAliveAtMeeting(player, meetingNumber));
+  }
+
+  // Process each game
+  gameData.forEach(game => {
+    if (!game.PlayerStats) return;
+
+    // Initialize maps for players in this game
+    game.PlayerStats.forEach(player => {
+      if (!playerBehaviorMap.has(player.Username)) {
+        playerBehaviorMap.set(player.Username, {
+          totalMeetings: 0,
+          totalVotes: 0,
+          totalSkips: 0,
+          totalAbstentions: 0
+        });
+      }
+      
+      if (!playerAccuracyMap.has(player.Username)) {
+        playerAccuracyMap.set(player.Username, {
+          totalMeetings: 0,
+          totalVotes: 0,
+          votesForEnemyCamp: 0,
+          votesForOwnCamp: 0
+        });
+      }
+      
+      if (!playerTargetMap.has(player.Username)) {
+        playerTargetMap.set(player.Username, {
+          totalTimesTargeted: 0,
+          timesTargetedByEnemyCamp: 0,
+          timesTargetedByOwnCamp: 0,
+          timesTargetedAsVillager: 0,
+          timesTargetedAsWolf: 0,
+          timesTargetedAsSpecial: 0,
+          eliminationsByVote: 0
+        });
+      }
+    });
+
+    // Find max meeting number
+    const maxMeetingNumber = Math.max(
+      ...game.PlayerStats.flatMap(player => 
+        (player.Votes || []).map(vote => vote.MeetingNr || 0)
+      ),
+      0
+    );
+
+    // Process each meeting
+    for (let meetingNum = 1; meetingNum <= maxMeetingNumber; meetingNum++) {
+      const alivePlayersAtMeeting = getAlivePlayersAtMeeting(game, meetingNum);
+      const votesInMeeting = game.PlayerStats.flatMap(player => 
+        (player.Votes || [])
+          .filter(vote => vote.MeetingNr === meetingNum)
+          .map(vote => ({ 
+            voter: player.Username, 
+            vote, 
+            voterRole: getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || [])
+          }))
+      );
+
+      // Process each alive player
+      alivePlayersAtMeeting.forEach(player => {
+        const behavior = playerBehaviorMap.get(player.Username);
+        const accuracy = playerAccuracyMap.get(player.Username);
+        behavior.totalMeetings++;
+        accuracy.totalMeetings++;
+
+        // Find player's vote in this meeting
+        const playerVote = votesInMeeting.find(v => v.voter === player.Username);
+        
+        if (!playerVote) {
+          // No vote = abstention
+          behavior.totalAbstentions++;
+        } else if (playerVote.vote.Target === 'Passé') {
+          // Skip vote
+          behavior.totalSkips++;
+        } else {
+          // Real vote
+          behavior.totalVotes++;
+          accuracy.totalVotes++;
+
+          // Check accuracy (voting for enemy camp vs own camp)
+          const voterCamp = getPlayerCampFromRole(playerVote.voterRole);
+          const targetPlayer = game.PlayerStats.find(p => p.Username === playerVote.vote.Target);
+          
+          if (targetPlayer) {
+            const targetRole = getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || []);
+            const targetCamp = getPlayerCampFromRole(targetRole);
+            
+            if (voterCamp !== targetCamp) {
+              accuracy.votesForEnemyCamp++;
+            } else {
+              accuracy.votesForOwnCamp++;
+            }
+          }
+        }
+      });
+
+      // Process target statistics
+      votesInMeeting
+        .filter(v => v.vote.Target !== 'Passé')
+        .forEach(v => {
+          const targetPlayer = game.PlayerStats.find(p => p.Username === v.vote.Target);
+          if (!targetPlayer) return;
+
+          const targetStats = playerTargetMap.get(v.vote.Target);
+          targetStats.totalTimesTargeted++;
+
+          // Determine voter and target camps
+          const voterCamp = getPlayerCampFromRole(v.voterRole);
+          const targetRole = getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || []);
+          const targetCamp = getPlayerCampFromRole(targetRole);
+
+          if (voterCamp !== targetCamp) {
+            targetStats.timesTargetedByEnemyCamp++;
+          } else {
+            targetStats.timesTargetedByOwnCamp++;
+          }
+
+          // Track role-specific targeting
+          if (targetCamp === 'Villageois') {
+            targetStats.timesTargetedAsVillager++;
+          } else if (targetCamp === 'Loup') {
+            targetStats.timesTargetedAsWolf++;
+          } else {
+            targetStats.timesTargetedAsSpecial++;
+          }
+
+          // Check if this vote led to elimination
+          if (targetPlayer.DeathType === 'VOTED' && targetPlayer.DeathTiming === `M${meetingNum}`) {
+            targetStats.eliminationsByVote++;
+          }
+        });
+    }
+  });
+
+  // Convert maps to final arrays with calculated rates
+  const playerBehaviorStats = Array.from(playerBehaviorMap.entries()).map(([playerName, data]) => {
+    const votingRate = data.totalMeetings > 0 ? (data.totalVotes / data.totalMeetings) * 100 : 0;
+    const skippingRate = data.totalMeetings > 0 ? (data.totalSkips / data.totalMeetings) * 100 : 0;
+    const abstentionRate = data.totalMeetings > 0 ? (data.totalAbstentions / data.totalMeetings) * 100 : 0;
+    const aggressivenessScore = votingRate - (skippingRate * 0.5) - (abstentionRate * 0.7);
+
+    return {
+      player: playerName,
+      playerName,
+      totalMeetings: data.totalMeetings,
+      totalVotes: data.totalVotes,
+      totalSkips: data.totalSkips,
+      totalAbstentions: data.totalAbstentions,
+      votingRate,
+      skippingRate,
+      abstentionRate,
+      aggressivenessScore
+    };
+  });
+
+  const playerAccuracyStats = Array.from(playerAccuracyMap.entries()).map(([playerName, data]) => {
+    const accuracyRate = data.totalVotes > 0 ? (data.votesForEnemyCamp / data.totalVotes) * 100 : 0;
+    const friendlyFireRate = data.totalVotes > 0 ? (data.votesForOwnCamp / data.totalVotes) * 100 : 0;
+
+    return {
+      player: playerName,
+      playerName,
+      totalMeetings: data.totalMeetings,
+      totalVotes: data.totalVotes,
+      votesForEnemyCamp: data.votesForEnemyCamp,
+      votesForOwnCamp: data.votesForOwnCamp,
+      accuracyRate,
+      friendlyFireRate
+    };
+  });
+
+  const playerTargetStats = Array.from(playerTargetMap.entries()).map(([playerName, data]) => {
+    const survivalRate = data.totalTimesTargeted > 0 
+      ? ((data.totalTimesTargeted - data.eliminationsByVote) / data.totalTimesTargeted) * 100 
+      : 100;
+
+    return {
+      player: playerName,
+      playerName,
+      totalTimesTargeted: data.totalTimesTargeted,
+      timesTargetedByEnemyCamp: data.timesTargetedByEnemyCamp,
+      timesTargetedByOwnCamp: data.timesTargetedByOwnCamp,
+      timesTargetedAsVillager: data.timesTargetedAsVillager,
+      timesTargetedAsWolf: data.timesTargetedAsWolf,
+      timesTargetedAsSpecial: data.timesTargetedAsSpecial,
+      eliminationsByVote: data.eliminationsByVote,
+      survivalRate
+    };
+  });
+
+  return {
+    playerBehaviorStats,
+    playerAccuracyStats,
+    playerTargetStats
+  };
+}
