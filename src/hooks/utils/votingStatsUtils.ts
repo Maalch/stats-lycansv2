@@ -3,6 +3,7 @@
  */
 import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { DEATH_TYPES } from '../../types/deathTypes';
 
 export interface VotingBehaviorStats {
   playerName: string;
@@ -107,7 +108,7 @@ function wasVoteSuccessful(game: GameLogEntry, meetingNumber: number, targetPlay
   if (!target) return false;
   
   // Check if they died by vote at the corresponding timing
-  if (target.DeathType === 'VOTED' && target.DeathTiming === `M${meetingNumber}`) {
+  if (target.DeathType === DEATH_TYPES.VOTED && target.DeathTiming === `M${meetingNumber}`) {
     return true;
   }
   
