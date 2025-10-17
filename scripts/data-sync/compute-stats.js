@@ -1060,12 +1060,12 @@ export function computeVotingStatistics(gameData) {
           accuracy.totalVotes++;
 
           // Check accuracy (voting for enemy camp vs own camp)
-          const voterCamp = getPlayerCampFromRole(playerVote.voterRole);
+          const voterCamp = getPlayerCampFromRole(playerVote.voterRole, { regroupWolfSubRoles: true });
           const targetPlayer = game.PlayerStats.find(p => p.Username === playerVote.vote.Target);
           
           if (targetPlayer) {
             const targetRole = getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || []);
-            const targetCamp = getPlayerCampFromRole(targetRole);
+            const targetCamp = getPlayerCampFromRole(targetRole, { regroupWolfSubRoles: true });
             
             if (voterCamp !== targetCamp) {
               accuracy.votesForEnemyCamp++;
@@ -1087,9 +1087,9 @@ export function computeVotingStatistics(gameData) {
           targetStats.totalTimesTargeted++;
 
           // Determine voter and target camps
-          const voterCamp = getPlayerCampFromRole(v.voterRole);
+          const voterCamp = getPlayerCampFromRole(v.voterRole, { regroupWolfSubRoles: true });
           const targetRole = getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || []);
-          const targetCamp = getPlayerCampFromRole(targetRole);
+          const targetCamp = getPlayerCampFromRole(targetRole, { regroupWolfSubRoles: true });
 
           if (voterCamp !== targetCamp) {
             targetStats.timesTargetedByEnemyCamp++;
