@@ -67,7 +67,7 @@ export function HarvestProgressChart() {
                     cx="50%"
                     cy="50%"
                     labelLine={true}
-                    label={({ nom, percent }) => `${nom}: ${((percent ?? 0) * 100).toFixed(0)}%`}
+                    label={(entry: any) => `${entry.nom}: ${((entry.percent ?? 0) * 100).toFixed(0)}%`}
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="valeur"
