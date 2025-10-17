@@ -394,63 +394,68 @@ export function computePlayerCampPerformance(gameData) {
 
   // Calculate overall camp statistics (both participations and wins)
   const campStats = {};
+  const campStatsGrouped = {};  // For "Camp Villageois" and "Camp Loup"
   const playerCampPerformance = {};
+  const playerCampPerformanceGrouped = {};
 
-  // First pass: count games and wins by camp
+  // First pass: count games and wins by camp (both individual and grouped)
   gameData.forEach(game => {
     if (!game.PlayerStats) return;
 
     game.PlayerStats.forEach(player => {
       const roleName = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
       const camp = getPlayerCampFromRole(roleName, { regroupVillagers: false, regroupWolfSubRoles: false });
+      const campGrouped = getPlayerCampFromRole(roleName, { regroupVillagers: true, regroupWolfSubRoles: true });
       const playerName = player.Username;
       const won = player.Victorious;
 
-      // Initialize camp stats
+      // Process individual camps
       if (!campStats[camp]) {
-        campStats[camp] = {
-          totalGames: 0,
-          wins: 0,
-          winRate: 0,
-          players: {}
-        };
+        campStats[camp] = { totalGames: 0, wins: 0, winRate: 0, players: {} };
       }
-
-      // Initialize player camp performance
       if (!playerCampPerformance[playerName]) {
-        playerCampPerformance[playerName] = {
-          totalGames: 0,
-          camps: {}
-        };
+        playerCampPerformance[playerName] = { totalGames: 0, camps: {} };
       }
-
       if (!playerCampPerformance[playerName].camps[camp]) {
-        playerCampPerformance[playerName].camps[camp] = {
-          games: 0,
-          wins: 0,
-          winRate: 0,
-          performance: 0
-        };
+        playerCampPerformance[playerName].camps[camp] = { games: 0, wins: 0, winRate: 0, performance: 0 };
       }
-
-      // Update counts
       campStats[camp].totalGames++;
       if (won) campStats[camp].wins++;
-
       playerCampPerformance[playerName].totalGames++;
       playerCampPerformance[playerName].camps[camp].games++;
       if (won) playerCampPerformance[playerName].camps[camp].wins++;
+
+      // Process grouped camps ("Camp Villageois", "Camp Loup")
+      if (!campStatsGrouped[campGrouped]) {
+        campStatsGrouped[campGrouped] = { totalGames: 0, wins: 0, winRate: 0, players: {} };
+      }
+      if (!playerCampPerformanceGrouped[playerName]) {
+        playerCampPerformanceGrouped[playerName] = { totalGames: 0, camps: {} };
+      }
+      if (!playerCampPerformanceGrouped[playerName].camps[campGrouped]) {
+        playerCampPerformanceGrouped[playerName].camps[campGrouped] = { games: 0, wins: 0, winRate: 0, performance: 0 };
+      }
+      campStatsGrouped[campGrouped].totalGames++;
+      if (won) campStatsGrouped[campGrouped].wins++;
+      playerCampPerformanceGrouped[playerName].totalGames++;
+      playerCampPerformanceGrouped[playerName].camps[campGrouped].games++;
+      if (won) playerCampPerformanceGrouped[playerName].camps[campGrouped].wins++;
     });
   });
 
-  // Calculate camp win rates
+  // Calculate camp win rates (both individual and grouped)
   Object.keys(campStats).forEach(camp => {
     if (campStats[camp].totalGames > 0) {
       campStats[camp].winRate = (campStats[camp].wins / campStats[camp].totalGames) * 100;
     }
   });
+  Object.keys(campStatsGrouped).forEach(camp => {
+    if (campStatsGrouped[camp].totalGames > 0) {
+      campStatsGrouped[camp].winRate = (campStatsGrouped[camp].wins / campStatsGrouped[camp].totalGames) * 100;
+    }
+  });
 
-  // Calculate player win rates and performance vs camp average
+  // Calculate player win rates and performance vs camp average (individual)
   Object.keys(playerCampPerformance).forEach(playerName => {
     Object.keys(playerCampPerformance[playerName].camps).forEach(camp => {
       const playerCampStat = playerCampPerformance[playerName].camps[camp];
@@ -466,10 +471,27 @@ export function computePlayerCampPerformance(gameData) {
     });
   });
 
+  // Calculate player win rates and performance vs camp average (grouped)
+  Object.keys(playerCampPerformanceGrouped).forEach(playerName => {
+    Object.keys(playerCampPerformanceGrouped[playerName].camps).forEach(camp => {
+      const playerCampStat = playerCampPerformanceGrouped[playerName].camps[camp];
+      
+      if (playerCampStat.games > 0) {
+        playerCampStat.winRate = (playerCampStat.wins / playerCampStat.games) * 100;
+
+        // Calculate performance vs camp average
+        if (campStatsGrouped[camp] && campStatsGrouped[camp].winRate) {
+          playerCampStat.performance = playerCampStat.winRate - campStatsGrouped[camp].winRate;
+        }
+      }
+    });
+  });
+
   // Convert to flat array format with minimum game threshold
   const allPlayerCampStats = [];
   const minGamesToInclude = 3;
 
+  // Add individual camp stats
   Object.keys(playerCampPerformance).forEach(playerName => {
     const playerData = playerCampPerformance[playerName];
     
@@ -481,6 +503,29 @@ export function computePlayerCampPerformance(gameData) {
         allPlayerCampStats.push({
           player: playerName,
           camp: camp,
+          games: campData.games,
+          wins: campData.wins,
+          winRate: campData.winRate,
+          performance: campData.performance,
+          totalGames: playerData.totalGames
+        });
+      }
+    });
+  });
+
+  // Add grouped camp stats ("Camp Villageois", "Camp Loup")
+  Object.keys(playerCampPerformanceGrouped).forEach(playerName => {
+    const playerData = playerCampPerformanceGrouped[playerName];
+    
+    Object.keys(playerData.camps).forEach(camp => {
+      const campData = playerData.camps[camp];
+      
+      // Only add grouped camps (Villageois and Loup) with renamed labels
+      if ((camp === 'Villageois' || camp === 'Loup') && campData.games >= minGamesToInclude) {
+        const campLabel = camp === 'Villageois' ? 'Camp Villageois' : 'Camp Loup';
+        allPlayerCampStats.push({
+          player: playerName,
+          camp: campLabel,
           games: campData.games,
           wins: campData.wins,
           winRate: campData.winRate,

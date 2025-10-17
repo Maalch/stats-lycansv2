@@ -4,6 +4,7 @@
 
 /**
  * Helper function to find a player's rank in a sorted list
+ * Handles ties properly - players with the same value get the same rank
  * @param {Array} sortedPlayers - Array of player stats sorted by the metric
  * @param {string} playerName - Name of the player to find
  * @param {Function} valueExtractor - Function to extract the value from player stat
@@ -13,15 +14,28 @@ export function findPlayerRank(sortedPlayers, playerName, valueExtractor) {
   const index = sortedPlayers.findIndex(p => p.player === playerName);
   if (index === -1) return null;
   
+  const playerValue = valueExtractor(sortedPlayers[index]);
+  
+  // Find the rank by counting how many players have a BETTER value
+  // Players with the same value get the same rank
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    const currentValue = valueExtractor(sortedPlayers[i]);
+    if (currentValue > playerValue) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
-    value: valueExtractor(sortedPlayers[index])
+    rank: rank,
+    value: playerValue
   };
 }
 
 
 /**
  * Helper to find player's camp performance rank
+ * Handles ties properly - players with the same performance get the same rank
  * @param {Array} sortedPlayers - Array of sorted camp stats
  * @param {string} playerName - Name of the player to find
  * @returns {Object|null} - Object with rank, wins, games, and percentage
@@ -31,8 +45,20 @@ export function findPlayerCampRank(sortedPlayers, playerName) {
   if (index === -1) return null;
 
   const playerData = sortedPlayers[index];
+  const playerPerformance = playerData.performance || playerData.winRate || 0;
+  
+  // Find the rank by counting how many players have a BETTER performance
+  // Players with the same performance get the same rank
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    const currentPerformance = sortedPlayers[i].performance || sortedPlayers[i].winRate || 0;
+    if (currentPerformance > playerPerformance) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
+    rank: rank,
     wins: playerData.wins,
     games: playerData.games,
     percentage: playerData.percentage || playerData.winRate || 0,
@@ -74,6 +100,7 @@ export function createAchievement(id, title, description, type, rank, value, tot
 
 /**
  * Helper function to find a player's rank in a map-based sorted list
+ * Handles ties properly - players with the same win rate get the same rank
  * @param {Array} sortedPlayers - Array of player map stats sorted by the metric
  * @param {string} playerName - Name of the player to find
  * @param {string} mapType - 'village' or 'chateau'
@@ -84,9 +111,20 @@ export function findPlayerMapRank(sortedPlayers, playerName, mapType) {
   if (index === -1) return null;
   
   const playerData = sortedPlayers[index];
+  const playerValue = mapType === 'village' ? playerData.villageWinRate : playerData.chateauWinRate;
+  
+  // Find the rank by counting how many players have a BETTER value
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    const currentValue = mapType === 'village' ? sortedPlayers[i].villageWinRate : sortedPlayers[i].chateauWinRate;
+    if (currentValue > playerValue) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
-    value: mapType === 'village' ? playerData.villageWinRate : playerData.chateauWinRate,
+    rank: rank,
+    value: playerValue,
     games: mapType === 'village' ? playerData.villageGames : playerData.chateauGames
   };
 }
