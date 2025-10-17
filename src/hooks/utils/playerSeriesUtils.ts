@@ -10,6 +10,7 @@ export interface CampSeries {
   endGame: string;      // Global chronological game number (e.g., "127")
   startDate: string;
   endDate: string;
+  campCounts?: Record<string, number>; // Count of times each camp was played (optional, mainly for NoWolf series)
   isOngoing: boolean; // True if the series is still active (player hasn't played since)
   gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
 }
@@ -85,6 +86,7 @@ interface PlayerSeriesState {
   currentLossSeries: number;
   longestLossSeries: LossSeries | null;
   currentLossCamps: string[];
+  currentNoWolfCamps: string[]; // Track camps during NoWolf series
   lastCamp: 'Villageois' | 'Loup' | 'Autres' | null;
   lastWon: boolean;
   villageoisSeriesStart: { game: string; date: string } | null;    // Changed to string
@@ -135,6 +137,7 @@ function initializePlayerSeries(allPlayers: Set<string>): Record<string, PlayerS
       currentLossSeries: 0,
       longestLossSeries: null,
       currentLossCamps: [],
+      currentNoWolfCamps: [],
       lastCamp: null,
       lastWon: false,
       villageoisSeriesStart: null,
@@ -233,6 +236,7 @@ function processCampSeries(
       playerStats.currentNoWolfSeries = 0;
       playerStats.noWolfSeriesStart = null;
       playerStats.currentNoWolfGameIds = [];
+      playerStats.currentNoWolfCamps = [];
     }
     
     playerStats.lastCamp = mainCamp;
@@ -253,11 +257,19 @@ function processCampSeries(
     if (playerStats.currentNoWolfSeries > 0) {
       playerStats.currentNoWolfSeries++;
       playerStats.currentNoWolfGameIds.push(gameDisplayedId);
+      playerStats.currentNoWolfCamps.push(mainCamp);
     } else {
       playerStats.currentNoWolfSeries = 1;
       playerStats.noWolfSeriesStart = { game: gameDisplayedId, date };
       playerStats.currentNoWolfGameIds = [gameDisplayedId];
+      playerStats.currentNoWolfCamps = [mainCamp];
     }
+    
+    // Create camp counts from currentNoWolfCamps
+    const campCounts: Record<string, number> = {};
+    playerStats.currentNoWolfCamps.forEach(camp => {
+      campCounts[camp] = (campCounts[camp] || 0) + 1;
+    });
     
     // Update longest if current is longer or equal (keep most recent in case of ties)
     if (!playerStats.longestNoWolfSeries || 
@@ -270,6 +282,7 @@ function processCampSeries(
         endGame: gameDisplayedId,
         startDate: playerStats.noWolfSeriesStart?.date || date,
         endDate: date,
+        campCounts: campCounts,
         isOngoing: false, // Will be updated at the end
         gameIds: [...playerStats.currentNoWolfGameIds]
       };

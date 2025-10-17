@@ -281,6 +281,7 @@ export function PlayerSeriesChart() {
           <div>Série {data.camp} : {data.seriesLength} parties consécutives {data.isOngoing ? '(En cours)' : ''}</div>
           <div>Du {data.startGame} au {data.endGame}</div>
           <div>Du {data.startDate} au {data.endDate}</div>
+          {data.campCounts && <div>Camps joués : {formatCampCounts(data.campCounts)}</div>}
           {isHighlightedAddition && (
             <div style={{ 
               fontSize: '0.75rem', 
@@ -543,9 +544,9 @@ export function PlayerSeriesChart() {
                 par <strong>{currentData[0].player}</strong>
                 {currentData[0].isOngoing && <span style={{ color: '#FF8C00', fontWeight: 'bold' }}> (En cours)</span>}
               </p>
-              {selectedSeriesType === 'wins' || selectedSeriesType === 'losses' ? (
+              {(currentData[0] as any).campCounts ? (
                 <p className="lycans-h2h-description">
-                  Camps : {formatCampCounts((currentData[0] as any).campCounts || {})}
+                  Camps joués : {formatCampCounts((currentData[0] as any).campCounts)}
                 </p>
               ) : (
                 <p className="lycans-h2h-description">
