@@ -637,11 +637,11 @@ export function PlayerGameHistoryChart() {
                   outerRadius={120}
                   fill="#8884d8"
                   dataKey="value"
-                  label={({ name, value, percent }) => {
-                    const pct = percent !== undefined ? percent : 0;
-                    return name === 'Autres' 
-                      ? `Autres : ${value} (${(pct * 100).toFixed(1)}%)`  
-                      : `${name}: ${value} (${(pct * 100).toFixed(1)}%)`;
+                  label={(entry: any) => {
+                    const pct = entry.percent !== undefined ? entry.percent : 0;
+                    return entry.name === 'Autres' 
+                      ? `Autres : ${entry.value} (${(pct * 100).toFixed(1)}%)`  
+                      : `${entry.name}: ${entry.value} (${(pct * 100).toFixed(1)}%)`;
                   }}
                 >
                   {groupedCampDistributionData.map((entry, index) => (
@@ -1147,13 +1147,15 @@ export function PlayerGameHistoryChart() {
                     />
                     <Bar 
                       dataKey="winRateDisplay"
-                      label={({ name, x, y, width }) => {
+                      label={(props: any) => {
                         // Add percentage labels on top of bars
+                        const { name, x, y, width } = props;
+                        if (x === undefined || y === undefined || width === undefined) return null;
                         const percentage = mapPerformanceData.find(d => d.name === name)?.winRate || '0';
                         return (
                           <text 
-                            x={x + width / 2} 
-                            y={y - 5} 
+                            x={(x as number) + (width as number) / 2} 
+                            y={(y as number) - 5} 
                             fill="var(--text-primary)" 
                             textAnchor="middle" 
                             fontSize="12"
