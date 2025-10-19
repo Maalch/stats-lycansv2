@@ -1,0 +1,139 @@
+name: Update Discord Team Stats Data
+
+on:
+  schedule:
+    # Run every day at 5 AM UTC (1 hour after main data sync)
+    - cron: '0 5 * * *'
+  workflow_dispatch: # Allow manual triggering
+  push:
+    paths:
+      - 'scripts/data-sync/fetch-data-discord.js'
+      - '.github/workflows/update-discorddata.yml'
+
+jobs:
+  update-discord-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Install dependencies
+        run: |
+          cd scripts/data-sync
+          npm install
+
+      - name: Fetch and process Discord Team data
+        env:
+          # Discord Team AWS S3 URL
+          STATS_LIST_URL: ${{ secrets.STATS_LIST_URL }}
+        run: |
+          cd scripts/data-sync
+          echo "🚀 Starting Discord Team data fetch from AWS S3..."
+          echo "📡 AWS S3: ${STATS_LIST_URL:0:30}..." # Show partial URL for debugging
+          node fetch-data-discord.js
+          echo "✅ Discord Team data fetch completed"
+          
+      - name: Validate Discord Team data files
+        run: |
+          echo "🔍 Validating Discord Team data files..."
+          
+          # Check for required Discord Team data files
+          REQUIRED_FILES=(
+            "data/gameLog_TeamDiscord.json" 
+            "data/index_TeamDiscord.json" 
+            "data/playerAchievements_TeamDiscord.json"
+            "data/rawBRData_TeamDiscord.json"
+            "data/joueurs_TeamDiscord.json"
+            "data/gameLog-Legacy_TeamDiscord.json"
+          )
+          
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "❌ Required file $file not found!"
+              exit 1
+            else
+              echo "✅ Found $file"
+            fi
+          done
+          
+          # Check if main data file is valid JSON
+          if ! jq empty "data/gameLog_TeamDiscord.json" 2>/dev/null; then
+            echo "❌ Invalid JSON in gameLog_TeamDiscord.json"
+            exit 1
+          else
+            echo "✅ gameLog_TeamDiscord.json is valid JSON"
+          fi
+          
+          # Check file size (should not be empty)
+          if [ ! -s "data/gameLog_TeamDiscord.json" ]; then
+            echo "❌ gameLog_TeamDiscord.json is empty"
+            exit 1
+          fi
+          
+          # Extract and display stats
+          TOTAL_GAMES=$(jq '.TotalRecords' data/gameLog_TeamDiscord.json)
+          AWS_GAMES=$(jq '.Sources.AWS' data/gameLog_TeamDiscord.json)
+          echo "📊 Discord Team Stats:"
+          echo "   - Total games: $TOTAL_GAMES"
+          echo "   - AWS games: $AWS_GAMES"
+          
+          # Validate achievements file
+          if [ -f "data/playerAchievements_TeamDiscord.json" ]; then
+            if jq -e '.totalPlayers' data/playerAchievements_TeamDiscord.json > /dev/null; then
+              TOTAL_PLAYERS=$(jq '.totalPlayers' data/playerAchievements_TeamDiscord.json)
+              echo "   - Total players: $TOTAL_PLAYERS"
+            fi
+          fi
+          
+          echo "✅ All Discord Team data files validated successfully"
+
+      - name: Copy Discord Team data to docs folder
+        run: |
+          mkdir -p docs/data
+          cp data/gameLog_TeamDiscord.json docs/data/
+          cp data/index_TeamDiscord.json docs/data/
+          cp data/playerAchievements_TeamDiscord.json docs/data/
+          cp data/rawBRData_TeamDiscord.json docs/data/
+          cp data/joueurs_TeamDiscord.json docs/data/
+          cp data/gameLog-Legacy_TeamDiscord.json docs/data/
+          echo "✅ Discord Team data copied to docs/data/"
+
+      - name: Commit and push if changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/*TeamDiscord* data/*_TeamDiscord* docs/data/*TeamDiscord* docs/data/*_TeamDiscord*
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update Discord Team stats data from AWS S3 $(date '+%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "✅ Discord Team data updated and pushed successfully"
+          else
+            echo "ℹ️  No Discord Team data changes detected - skipping commit"
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "🔍 Discord Team Workflow Summary:"
+          echo "- Data sync completed from AWS S3 (Discord Team)"
+          echo "- Files updated: $(git diff --name-only HEAD~1 2>/dev/null | grep 'TeamDiscord' | wc -l || echo '0')"
+          echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "- Source: AWS S3 Discord Team bucket"
+          echo "- Output file: gameLog_TeamDiscord.json"
+          echo "- Data types: Game logs, Achievements, Placeholder files"
+          ls -la data/*TeamDiscord* data/*_TeamDiscord* 2>/dev/null || echo "No Discord Team data files found"

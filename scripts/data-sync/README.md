@@ -4,17 +4,19 @@ This folder contains scripts for syncing and processing Lycans game data and gen
 
 ## Files
 
-- **`fetch-data.js`** - Main data synchronization script that fetches game data from external sources and generates achievements
+- **`fetch-data.js`** - Legacy-only data synchronization script (Google Sheets API)
+- **`fetch-data-aws.js`** - AWS-only data synchronization script (S3 bucket)
+- **`fetch-data-discord.js`** - Discord Team AWS-only data synchronization script (S3 bucket → gameLog_TeamDiscord.json)
 - **`generate-achievements.js`** - Standalone script for generating player achievements from game data
 - **`package.json`** - Node.js dependencies for the scripts
 
 ## Scripts
 
-### fetch-data.js
+### fetch-data.js (Legacy-Only)
 
-The main data sync script that:
-1. Fetches legacy data from Google Sheets API (if available)
-2. Merges data into unified `gameLog.json` format
+The legacy data sync script that:
+1. Fetches legacy data from Google Sheets API only
+2. Creates unified `gameLog.json` format
 3. Generates player achievements automatically
 4. Creates data index and metadata files
 
@@ -22,11 +24,74 @@ The main data sync script that:
 ```bash
 cd scripts/data-sync
 node fetch-data.js
+# or from project root:
+npm run sync-data
 ```
 
 **Environment Variables:**
 - `LYCANS_API_BASE` - Base URL for the legacy Google Sheets API
-- `STATS_LIST_URL` - URL for AWS S3 bucket stats list (currently disabled)
+
+### fetch-data-aws.js (AWS-Only)
+
+The AWS-only data sync script that:
+1. Fetches game data from AWS S3 bucket only
+2. Processes multiple mod version files from S3
+3. Creates unified `gameLog.json` format
+4. Generates player achievements automatically
+5. Creates placeholder files for legacy data sources
+
+**Usage:**
+```bash
+cd scripts/data-sync
+node fetch-data-aws.js
+# or from project root:
+npm run sync-data-aws
+```
+
+**Environment Variables:**
+- `STATS_LIST_URL` - URL for AWS S3 bucket stats list
+
+**Features:**
+- Fetches game logs from multiple AWS S3 files
+- Deduplicates games by ID (keeps first occurrence)
+- Adds mod version metadata to each game
+- Sorts games chronologically by StartDate
+- Creates placeholder files for legacy data compatibility
+
+### fetch-data-discord.js (Discord Team - AWS-Only)
+
+The Discord Team AWS-only data sync script that:
+1. Fetches game data from Discord Team's AWS S3 bucket only
+2. Processes multiple mod version files from S3
+3. Creates unified `gameLog_TeamDiscord.json` format
+4. Generates player achievements automatically
+5. Creates placeholder files for legacy data sources
+
+**Usage:**
+```bash
+cd scripts/data-sync
+node fetch-data-discord.js
+# or from project root:
+npm run sync-data-discord
+```
+
+**Environment Variables:**
+- `STATS_LIST_URL` - URL for Discord Team's AWS S3 bucket stats list
+
+**Output Files:**
+- `gameLog_TeamDiscord.json` - Main game data file for Discord Team
+- `playerAchievements_TeamDiscord.json` - Achievements for Discord Team
+- `index_TeamDiscord.json` - Metadata for Discord Team
+- `rawBRData_TeamDiscord.json` - Placeholder BR data
+- `joueurs_TeamDiscord.json` - Placeholder player data
+- `gameLog-Legacy_TeamDiscord.json` - Placeholder legacy data
+
+**Features:**
+- Fetches game logs from Discord Team's AWS S3 files
+- Deduplicates games by ID (keeps first occurrence)
+- Adds mod version metadata to each game
+- Sorts games chronologically by StartDate
+- Separate output files to avoid conflicts with main data
 
 ### generate-achievements.js
 
