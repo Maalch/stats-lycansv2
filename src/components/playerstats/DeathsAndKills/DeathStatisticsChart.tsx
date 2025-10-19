@@ -20,7 +20,7 @@ export function DeathStatisticsChart() {
     'Tous les camps'
   );
   const [minGamesForAverage, setMinGamesForAverage] = useState<number>(
-    navigationState.deathStatisticsState?.minGamesForAverage || 10
+    navigationState.deathStatisticsState?.minGamesForAverage || 25
   );
   const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter' | 'survival'>(
     navigationState.deathStatisticsState?.selectedView || 'killers'

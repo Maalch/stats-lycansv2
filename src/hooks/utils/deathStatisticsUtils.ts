@@ -1,5 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
-import { DeathTypeCode, getPlayerCampFromRole, getPlayerFinalRole, type DeathTypeCodeType } from '../../utils/datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { DEATH_TYPES, type DeathType, isValidDeathType, getDeathTypeLabel } from '../../types/deathTypes';
 import { mainCampOrder } from '../../types/api';
 
 /**
@@ -42,7 +43,7 @@ export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
  * Death statistics by type
  */
 export interface DeathTypeStats {
-  type: DeathTypeCodeType;
+  type: DeathType;
   count: number;
   percentage: number;
 }
@@ -57,7 +58,7 @@ export interface KillerStats {
   percentage: number;
   gamesPlayed: number;
   averageKillsPerGame: number;
-  killsByDeathType: Record<DeathTypeCodeType, number>; // New field for death type breakdown
+  killsByDeathType: Record<DeathType, number>; // New field for death type breakdown
 }
 
 /**
@@ -66,7 +67,7 @@ export interface KillerStats {
 export interface PlayerDeathStats {
   playerName: string;
   totalDeaths: number;
-  deathsByType: Record<DeathTypeCodeType, number>;
+  deathsByType: Record<DeathType, number>;
   killedBy: Record<string, number>;
   deathRate: number; // Deaths per game played
   gamesPlayed: number; // Total games played by this player
@@ -90,109 +91,75 @@ export interface DeathStatistics {
   playerDeathStats: PlayerDeathStats[];
   
   // Most dangerous phases/times
-  mostCommonDeathType: DeathTypeCodeType | null;
+  mostCommonDeathType: DeathType | null;
   mostDeadlyKiller: string | null;
 }
 
 
 /**
  * Convert death type code to death description (from victim's perspective)
+ * 
+ * @deprecated Use getDeathTypeLabel from deathTypes.ts instead
  */
-export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
-  switch (deathTypeCode) {
-    case DeathTypeCode.VOTED:
-      return 'Mort aux votes';
-    case DeathTypeCode.BY_WOLF:
-      return 'Tué par un loup';
-    case DeathTypeCode.BY_ZOMBIE:
-      return 'Tué par un zombie';
-    case DeathTypeCode.BY_BEAST:
-      return 'Dévoré par la Bête';
-    case DeathTypeCode.BY_AVATAR_CHAIN:
-      return 'Mort liée à l\'Avatar';
-    case DeathTypeCode.BULLET:
-      return 'Abattu par une balle';
-    case DeathTypeCode.BULLET_HUMAN:
-      return 'Tué par une balle en humain';
-    case DeathTypeCode.BULLET_WOLF:
-      return 'Tué par une balle en loup';
-    case DeathTypeCode.SHERIF_SUCCESS:
-      return 'Abattu par le Shérif';
-    case DeathTypeCode.OTHER_AGENT:
-      return 'Éliminé par l\'Agent';
-    case DeathTypeCode.AVENGER:
-      return 'Tué par un vengeur';
-    case DeathTypeCode.SEER:
-      return 'Rôle deviné par un loup';
-    case DeathTypeCode.HANTED:
-      return 'Tué par une potion hantée';
-    case DeathTypeCode.ASSASSIN:
-      return 'Tué par une potion (Assassin)';
-    case DeathTypeCode.LOVER_DEATH:
-      return 'Mort par amoureux';
-    case DeathTypeCode.BOMB:
-      return 'Mort dans une explosion';
-    case DeathTypeCode.CRUSHED:
-      return 'Écrasé';
-    case DeathTypeCode.STARVATION:
-      return 'Mort de faim';
-    case DeathTypeCode.STARVATION_AS_BEAST:
-      return 'Mort bestiale';
-    case DeathTypeCode.FALL:
-      return 'Mort de chute';
-    case DeathTypeCode.UNKNOWN:
-      return 'Mort inconnue';
-    default:
-      return '';
-  }
+export function getDeathDescription(deathTypeCode: DeathType): string {
+  // Use centralized label function
+  return getDeathTypeLabel(deathTypeCode);
 }
 
 /**
  * Convert death type code to kill description (from killer's perspective)
  */
-export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
+export function getKillDescription(deathTypeCode: DeathType): string {
   switch (deathTypeCode) {
-    case DeathTypeCode.VOTED:
+    case DEATH_TYPES.VOTED:
       return 'Mort aux votes';
-    case DeathTypeCode.BY_WOLF:
+    case DEATH_TYPES.BY_WOLF:
       return 'Kill en Loup';
-    case DeathTypeCode.BY_ZOMBIE:
+    case DEATH_TYPES.BY_WOLF_REZ:
+      return 'Kill en Loup ressuscité';
+    case DEATH_TYPES.BY_WOLF_LOVER:
+      return 'Kill en Loup amoureux';
+    case DEATH_TYPES.BY_ZOMBIE:
       return 'Kill en Zombie';
-    case DeathTypeCode.BY_BEAST:
+    case DEATH_TYPES.BY_BEAST:
       return 'Kill en Bête';
-    case DeathTypeCode.BY_AVATAR_CHAIN:
+    case DEATH_TYPES.BY_AVATAR_CHAIN:
       return 'Mort d\'Avatar';
-    case DeathTypeCode.BULLET:
+    case DEATH_TYPES.BULLET:
       return 'Tir de Chasseur';
-    case DeathTypeCode.BULLET_HUMAN:
-      return 'Kill par balle (sur humain)';
-    case DeathTypeCode.BULLET_WOLF:
-      return 'Kill par balle (sur loup)';
-    case DeathTypeCode.SHERIF_SUCCESS:
+    case DEATH_TYPES.BULLET_HUMAN:
+      return 'Kill en Chasseur (sur humain)';
+    case DEATH_TYPES.BULLET_WOLF:
+      return 'Kill en Chasseur (sur loup)';
+    case DEATH_TYPES.BULLET_BOUNTYHUNTER:
+      return 'Kill en Chasseur de primes';
+    case DEATH_TYPES.SHERIF:
       return 'Kill en Shérif';
-    case DeathTypeCode.OTHER_AGENT:
+    case DEATH_TYPES.OTHER_AGENT:
       return 'Kill en Agent';
-    case DeathTypeCode.AVENGER:
+    case DEATH_TYPES.AVENGER:
       return 'Kill en Vengeur';
-    case DeathTypeCode.SEER:
+    case DEATH_TYPES.SEER:
       return 'Kill en Devin';
-    case DeathTypeCode.HANTED:
+    case DEATH_TYPES.HANTED:
       return 'Kill avec Potion hantée';
-    case DeathTypeCode.ASSASSIN:
+    case DEATH_TYPES.ASSASSIN:
       return 'Kill avec Potion (Assassin)';
-    case DeathTypeCode.LOVER_DEATH:
+    case DEATH_TYPES.LOVER_DEATH:
       return 'Kill de son amoureux';
-    case DeathTypeCode.BOMB:
+    case DEATH_TYPES.LOVER_DEATH_OWN:
+      return 'Kill de son propre amoureux';
+    case DEATH_TYPES.BOMB:
       return 'Explosion';
-    case DeathTypeCode.CRUSHED:
+    case DEATH_TYPES.CRUSHED:
       return 'Écrasement';
-    case DeathTypeCode.STARVATION:
+    case DEATH_TYPES.STARVATION:
       return 'Famine';
-    case DeathTypeCode.STARVATION_AS_BEAST:
+    case DEATH_TYPES.STARVATION_AS_BEAST:
       return 'Tuerie bestiale';
-    case DeathTypeCode.FALL:
+    case DEATH_TYPES.FALL:
       return 'Chute mortelle';
-    case DeathTypeCode.UNKNOWN:
+    case DEATH_TYPES.UNKNOWN:
       return 'Kill inconnu';
     default:
       return '';
@@ -203,13 +170,13 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
 /**
  * Get all unique death types from game data for chart configuration
  */
-export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] {
-  const deathTypesSet = new Set<DeathTypeCodeType>();
+export function getAllDeathTypes(gameData: GameLogEntry[]): DeathType[] {
+  const deathTypesSet = new Set<DeathType>();
   
   gameData.forEach(game => {
     game.PlayerStats.forEach(player => {
-      if (player.DeathType && player.DeathType !== '') {
-        deathTypesSet.add(player.DeathType as DeathTypeCodeType);
+      if (player.DeathType && isValidDeathType(player.DeathType)) {
+        deathTypesSet.add(player.DeathType);
       }
     });
   });
@@ -217,21 +184,21 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
   const deathTypes = Array.from(deathTypesSet);
   
   // Sort death types to put common ones first
-  const commonTypeCodes = [
-    DeathTypeCode.BY_WOLF,
-    DeathTypeCode.VOTED, 
-    DeathTypeCode.BULLET,
-    DeathTypeCode.BULLET_HUMAN,
-    DeathTypeCode.BULLET_WOLF,
-    DeathTypeCode.BY_ZOMBIE,
-    DeathTypeCode.ASSASSIN,
-    DeathTypeCode.AVENGER,
-    DeathTypeCode.LOVER_DEATH
+  const commonTypeCodes: DeathType[] = [
+    DEATH_TYPES.BY_WOLF,
+    DEATH_TYPES.VOTED, 
+    DEATH_TYPES.BULLET,
+    DEATH_TYPES.BULLET_HUMAN,
+    DEATH_TYPES.BULLET_WOLF,
+    DEATH_TYPES.BY_ZOMBIE,
+    DEATH_TYPES.ASSASSIN,
+    DEATH_TYPES.AVENGER,
+    DEATH_TYPES.LOVER_DEATH
   ];
   
   return [
     ...commonTypeCodes.filter(type => deathTypes.includes(type)),
-    ...deathTypes.filter(type => !(commonTypeCodes as readonly DeathTypeCodeType[]).includes(type)).sort()
+    ...deathTypes.filter(type => !commonTypeCodes.includes(type)).sort()
   ];
 }
 
@@ -240,14 +207,14 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathTypeCodeType[] 
  */
 export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): Array<{
   playerName: string;
-  deathType: DeathTypeCodeType;
+  deathType: DeathType;
   killerName: string | null;
   killerCamp: string | null;
 }> {
   return game.PlayerStats
     .filter(player => {
       // Only include players who actually died (not survivors)
-      return player.DeathType && player.DeathType !== '' && (player.DeathTiming || player.DeathType);
+      return player.DeathType && isValidDeathType(player.DeathType) && (player.DeathTiming || player.DeathType);
     })
     .map(player => {
       // Find the killer's camp if killer exists
@@ -278,7 +245,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       
       return {
         playerName: player.Username,
-        deathType: player.DeathType as DeathTypeCodeType,
+        deathType: player.DeathType!,
         killerName: player.KillerName,
         killerCamp
       };
@@ -308,13 +275,13 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
 export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): Array<{
   killerName: string;
   victimName: string;
-  deathType: DeathTypeCodeType;
+  deathType: DeathType;
   killerCamp: string;
 }> {
   const kills: Array<{
     killerName: string;
     victimName: string;
-    deathType: DeathTypeCodeType;
+    deathType: DeathType;
     killerCamp: string;
   }> = [];
   
@@ -322,9 +289,10 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
     // Only process players who were killed by someone (not environmental deaths or votes)
     if (player.KillerName && player.DeathType) {
       // Skip non-kill deaths (survivors, votes, environmental deaths)
-      if (player.DeathType === DeathTypeCode.VOTED || 
-          player.DeathType === DeathTypeCode.STARVATION || player.DeathType === DeathTypeCode.FALL || 
-          player.DeathType === DeathTypeCode.BY_AVATAR_CHAIN || player.DeathType === '') {
+      if (player.DeathType === DEATH_TYPES.VOTED || 
+          player.DeathType === DEATH_TYPES.STARVATION || 
+          player.DeathType === DEATH_TYPES.FALL || 
+          player.DeathType === DEATH_TYPES.BY_AVATAR_CHAIN) {
         return;
       }
       
@@ -356,7 +324,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
       kills.push({
         killerName: player.KillerName,
         victimName: player.Username,
-        deathType: player.DeathType as DeathTypeCodeType,
+        deathType: player.DeathType,
         killerCamp
       });
     }
@@ -391,7 +359,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   // Extract all deaths
   const allDeaths: Array<{
     playerName: string;
-    deathType: DeathTypeCodeType;
+    deathType: DeathType;
     killerName: string | null;
     killerCamp: string | null;
     gameId: string;
@@ -438,28 +406,28 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
 
 
   // Calculate death type statistics
-  const typeCounts: Partial<Record<DeathTypeCodeType, number>> = {};
+  const typeCounts: Partial<Record<DeathType, number>> = {};
   allDeaths.forEach(death => {
     typeCounts[death.deathType] = (typeCounts[death.deathType] || 0) + 1;
   });
 
   const deathsByType: DeathTypeStats[] = Object.entries(typeCounts)
     .map(([type, count]) => ({
-      type: type as DeathTypeCodeType,
+      type: type as DeathType,
       count: count || 0,
       percentage: totalDeaths > 0 ? ((count || 0) / totalDeaths) * 100 : 0
     }))
     .sort((a, b) => b.count - a.count);
 
   // Calculate killer statistics using PlayersKilled arrays
-  const killerCounts: Record<string, { kills: number; victims: Set<string>; killsByDeathType: Record<DeathTypeCodeType, number> }> = {};
+  const killerCounts: Record<string, { kills: number; victims: Set<string>; killsByDeathType: Record<DeathType, number> }> = {};
   
   // Extract all kills from PlayersKilled arrays
   filteredGameData.forEach(game => {
     const kills = extractKillsFromGame(game, campFilter);
     kills.forEach(kill => {
       if (!killerCounts[kill.killerName]) {
-        killerCounts[kill.killerName] = { kills: 0, victims: new Set(), killsByDeathType: {} as Record<DeathTypeCodeType, number> };
+        killerCounts[kill.killerName] = { kills: 0, victims: new Set(), killsByDeathType: {} as Record<DeathType, number> };
       }
       killerCounts[kill.killerName].kills++;
       killerCounts[kill.killerName].victims.add(kill.victimName);
@@ -489,7 +457,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   // Calculate player-specific death statistics
   const playerDeathCounts: Record<string, {
     totalDeaths: number;
-    deathsByType: Record<DeathTypeCodeType, number>;
+    deathsByType: Record<DeathType, number>;
     killedBy: Record<string, number>;
     deathDays: number[];
   }> = {};
@@ -498,7 +466,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     if (!playerDeathCounts[death.playerName]) {
       playerDeathCounts[death.playerName] = {
         totalDeaths: 0,
-        deathsByType: {} as Record<DeathTypeCodeType, number>,
+        deathsByType: {} as Record<DeathType, number>,
         killedBy: {},
         deathDays: []
       };
@@ -537,7 +505,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
       allPlayerStats.push({
         playerName,
         totalDeaths: 0,
-        deathsByType: {} as Record<DeathTypeCodeType, number>,
+        deathsByType: {} as Record<DeathType, number>,
         killedBy: {},
         deathRate: 0,
         gamesPlayed
@@ -573,7 +541,7 @@ export interface HunterStats {
   gamesPlayedAsHunter: number;
   averageKillsPerGame: number;
   averageNonVillageoisKillsPerGame: number;
-  killsByDeathType: Record<DeathTypeCodeType, number>;
+  killsByDeathType: Record<DeathType, number>;
   victimsByCamp: Record<string, number>;
 }
 
@@ -599,7 +567,7 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
   );
 
   const hunterKillsMap: Record<string, {
-    kills: DeathTypeCodeType[];
+    kills: DeathType[];
     gamesPlayed: number;
     victimsCamps: string[];
   }> = {};
@@ -607,10 +575,11 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
   const totalGames = filteredGameData.length;
 
   // Hunter-related death types
-  const hunterDeathTypes: DeathTypeCodeType[] = [
-    DeathTypeCode.BULLET,
-    DeathTypeCode.BULLET_HUMAN,
-    DeathTypeCode.BULLET_WOLF
+  const hunterDeathTypes: DeathType[] = [
+    DEATH_TYPES.BULLET,
+    DEATH_TYPES.BULLET_HUMAN,
+    DEATH_TYPES.BULLET_WOLF,
+    DEATH_TYPES.BULLET_BOUNTYHUNTER
   ];
 
   // Process each game
@@ -639,7 +608,7 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
 
     // Process deaths caused by hunters
     game.PlayerStats.forEach(victim => {
-      const deathType = victim.DeathType as DeathTypeCodeType;
+      const deathType = victim.DeathType as DeathType;
       const killerName = victim.KillerName;
       
       // Check if death was caused by a hunter
@@ -666,7 +635,7 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
       const totalKills = data.kills.length;
       
       // Count kills by death type
-      const killsByDeathType: Record<DeathTypeCodeType, number> = {} as Record<DeathTypeCodeType, number>;
+      const killsByDeathType: Record<DeathType, number> = {} as Record<DeathType, number>;
       data.kills.forEach(deathType => {
         killsByDeathType[deathType] = (killsByDeathType[deathType] || 0) + 1;
       });
@@ -711,3 +680,4 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
     bestAverageHunter
   };
 }
+

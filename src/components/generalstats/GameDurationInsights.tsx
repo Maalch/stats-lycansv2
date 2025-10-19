@@ -476,11 +476,11 @@ export function GameDurationInsights() {
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
-                        data={tempsJeuDonnees.phaseDistribution}
+                        data={tempsJeuDonnees.phaseDistribution as any}
                         cx="50%"
                         cy="50%"
                         labelLine={false}
-                        label={({ phase, percentage }) => `${phase} (${percentage.toFixed(1)}%)`}
+                        label={(entry: any) => `${entry.phase} (${entry.percentage.toFixed(1)}%)`}
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="count"
