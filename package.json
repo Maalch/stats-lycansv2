@@ -11,6 +11,7 @@
     "sync-data": "cd scripts/data-sync && npm install && node fetch-data.js",
     "sync-data-aws": "cd scripts/data-sync && npm install && node fetch-data-aws.js",
     "sync-data-discord": "cd scripts/data-sync && npm install && node fetch-data-discord.js",
+    "generate-discord-joueurs": "cd scripts/data-sync && node generate-discord-joueurs.js && cd ../.. && npm run copy-data-dev",
     "generate-achievements": "cd scripts/data-sync && node generate-achievements.js && cd ../.. && npm run copy-data-dev",
     "lint": "eslint .",
     "preview": "vite preview"
