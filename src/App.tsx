@@ -1,6 +1,6 @@
 import { Suspense, lazy, useState, useEffect } from 'react';
 import { FullscreenProvider } from './context/FullscreenContext';
-import { SettingsProvider } from './context/SettingsContext';
+import { SettingsProvider, useSettings } from './context/SettingsContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { SettingsIndicator } from './components/common/SettingsIndicator';
 import { SettingsBadge } from './components/common/SettingsBadge';
@@ -178,6 +178,7 @@ export default function App() {
 }
 
 function MainApp() {
+  const { settings } = useSettings();
   const { currentView, requestedTab, clearTabNavigation } = useNavigation();
   const { lastRecordedGameDate, isLoading: dateLoading } = useLastRecordedGameDate();
   const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
@@ -333,11 +334,20 @@ function MainApp() {
         );
       }
       case 'general': {
+        // Filter menu items based on data source
+        const filteredGeneralMenu = GENERAL_STATS_MENU.filter(item => {
+          // Hide "Types de Victoire" when dataSource is 'discord'
+          if (item.key === 'victoryTypes' && settings.dataSource === 'discord') {
+            return false;
+          }
+          return true;
+        });
+        
         const SelectedGeneralComponent = GENERAL_STATS_MENU.find(m => m.key === selectedGeneralStat)?.component ?? CampsChart;
          return (
           <div>
             <nav className="lycans-submenu">
-              {GENERAL_STATS_MENU.map(item => (
+              {filteredGeneralMenu.map(item => (
                 <button
                   key={item.key}
                   className={`lycans-submenu-btn${selectedGeneralStat === item.key ? ' active' : ''}`}
