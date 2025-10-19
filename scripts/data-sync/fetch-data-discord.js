@@ -3,8 +3,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import { generateAllPlayerAchievements } from './generate-achievements.js';
 
-// Data directory relative to project root
-const DATA_DIR = '../../data';
+// Data directory relative to project root - Discord Team gets its own folder
+const DATA_DIR = '../../data/discord';
 const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
 
 async function ensureDataDirectory() {
@@ -133,13 +133,13 @@ async function createDataIndex(awsFilesCount, totalGames) {
     sources: {
       legacy: "Not available (AWS-only sync for Discord Team)",
       aws: `${awsFilesCount} files from S3 bucket`,
-      unified: "gameLog_TeamDiscord.json (AWS sources only)"
+      unified: "gameLog.json (AWS sources only)"
     },
     description: "Game logs from AWS S3 bucket for Discord Team. Updated periodically via GitHub Actions.",
     totalGames: totalGames
   };
 
-  const indexPath = path.join(ABSOLUTE_DATA_DIR, 'index_TeamDiscord.json');
+  const indexPath = path.join(ABSOLUTE_DATA_DIR, 'index.json');
   await fs.writeFile(indexPath, JSON.stringify(indexData, null, 2), 'utf8');
   console.log('✓ Created data index (Discord Team)');
 }
@@ -147,32 +147,15 @@ async function createDataIndex(awsFilesCount, totalGames) {
 async function createPlaceholderFiles() {
   console.log('Creating placeholder files for legacy data (Discord Team)...');
   
-  // Create placeholder Legacy gameLog
-  const emptyLegacyGameLog = {
-    ModVersion: "No Legacy Data",
-    TotalRecords: 0,
-    Sources: { Legacy: 0, AWS: 0, Merged: 0 },
-    GameStats: [],
-    description: "Legacy data not available in AWS-only sync mode (Discord Team)"
-  };
-  await saveDataToFile('gameLog-Legacy_TeamDiscord.json', emptyLegacyGameLog);
-  
-  // Create placeholder BR data
-  const emptyBRData = {
-    description: "Battle Royale data not available in AWS-only sync mode (Discord Team)",
-    data: []
-  };
-  await saveDataToFile('rawBRData_TeamDiscord.json', emptyBRData);
-  
-  // Create placeholder Joueurs data
+  // Only create placeholder Joueurs data (needed for player list)
   const emptyJoueursData = {
     TotalRecords: 0,
     Players: [],
     description: "Player data not available in AWS-only sync mode (Discord Team)"
   };
-  await saveDataToFile('joueurs_TeamDiscord.json', emptyJoueursData);
+  await saveDataToFile('joueurs.json', emptyJoueursData);
   
-  console.log('✓ Created placeholder files (Discord Team)');
+  console.log('✓ Created placeholder joueurs file (Discord Team)');
 }
 
 async function main() {
@@ -216,8 +199,8 @@ async function main() {
     console.log('\n🔄 Creating unified dataset from AWS sources (Discord Team)...');
     const unifiedGameLog = await mergeAWSGameLogs(awsGameLogs);
     
-    // Save to gameLog_TeamDiscord.json instead of gameLog.json
-    await saveDataToFile('gameLog_TeamDiscord.json', unifiedGameLog);
+    // Save to gameLog.json in the discord folder
+    await saveDataToFile('gameLog.json', unifiedGameLog);
     
     // Create placeholder files for legacy data sources
     await createPlaceholderFiles();
@@ -229,7 +212,7 @@ async function main() {
     console.log('\n🏆 Generating player achievements (Discord Team)...');
     try {
       const achievementsData = generateAllPlayerAchievements(unifiedGameLog);
-      await saveDataToFile('playerAchievements_TeamDiscord.json', achievementsData);
+      await saveDataToFile('playerAchievements.json', achievementsData);
       console.log(`✓ Generated achievements for ${achievementsData.totalPlayers} players`);
     } catch (error) {
       console.error('❌ Failed to generate achievements:', error.message);
@@ -239,8 +222,8 @@ async function main() {
     console.log('\n✅ Discord Team data sync completed successfully!');
     console.log(`📊 Total games processed: ${unifiedGameLog.TotalRecords}`);
     console.log(`   - AWS: ${unifiedGameLog.Sources.AWS} games from ${awsGameLogs.length} files`);
-    console.log(`📝 Output file: gameLog_TeamDiscord.json`);
-    console.log(`📝 Placeholder files created for legacy data sources`);
+    console.log(`� Output folder: data/discord/`);
+    console.log(`📝 Files created: gameLog.json, playerAchievements.json, joueurs.json, index.json`);
   } catch (error) {
     console.error('❌ Discord Team data sync failed:', error.message);
     process.exit(1);
