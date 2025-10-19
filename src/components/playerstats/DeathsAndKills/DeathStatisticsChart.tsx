@@ -64,11 +64,11 @@ export function DeathStatisticsChart() {
     
     // Map death type codes to colors directly
     availableDeathTypes.forEach(deathTypeCode => {
-      if (deathTypeCode === DeathTypeCode.BY_WOLF || deathTypeCode === DeathTypeCode.BY_WOLF_REZ || deathTypeCode === DeathTypeCode.BY_WOLF_LOVER) {
+      if (deathTypeCode === DeathTypeCode.BY_WOLF) {
         colorMap[deathTypeCode] = lycansColors['Loup'];
       } else if (deathTypeCode === DeathTypeCode.VOTED) {
         colorMap[deathTypeCode] = 'var(--chart-color-1)';
-      } else if (deathTypeCode === DeathTypeCode.BULLET || deathTypeCode === DeathTypeCode.BULLET_BOUNTYHUNTER || deathTypeCode === DeathTypeCode.BULLET_HUMAN || deathTypeCode === DeathTypeCode.BULLET_WOLF) {
+      } else if (deathTypeCode === DeathTypeCode.BULLET || deathTypeCode === DeathTypeCode.BULLET_HUMAN || deathTypeCode === DeathTypeCode.BULLET_WOLF) {
         colorMap[deathTypeCode] = lycansColors['Chasseur'];
       } else if (deathTypeCode === DeathTypeCode.BY_ZOMBIE) {
         colorMap[deathTypeCode] = lycansColors['Vaudou'];
@@ -76,11 +76,11 @@ export function DeathStatisticsChart() {
         colorMap[deathTypeCode] = lycansColors['Alchimiste'];
       } else if (deathTypeCode === DeathTypeCode.AVENGER) {
         colorMap[deathTypeCode] = 'var(--chart-color-2)';
-      } else if (deathTypeCode === DeathTypeCode.LOVER_DEATH || deathTypeCode === DeathTypeCode.LOVER_DEATH_OWN) {
+      } else if (deathTypeCode === DeathTypeCode.LOVER_DEATH) {
         colorMap[deathTypeCode] = lycansColors['Amoureux'];
       } else if (deathTypeCode === DeathTypeCode.BY_BEAST) {
         colorMap[deathTypeCode] = 'var(--chart-color-3)';
-      } else if (deathTypeCode === DeathTypeCode.SHERIF) {
+      } else if (deathTypeCode === DeathTypeCode.SHERIF_SUCCESS) {
         colorMap[deathTypeCode] = 'var(--chart-color-4)';
       }
     });

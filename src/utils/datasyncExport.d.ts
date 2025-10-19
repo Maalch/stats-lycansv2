@@ -4,23 +4,19 @@
 export declare const DeathTypeCode: {
   readonly VOTED: 'VOTED';
   readonly BY_WOLF: 'BY_WOLF';
-  readonly BY_WOLF_REZ: 'BY_WOLF_REZ';
-  readonly BY_WOLF_LOVER: 'BY_WOLF_LOVER';
   readonly BY_ZOMBIE: 'BY_ZOMBIE';
   readonly BY_BEAST: 'BY_BEAST';
   readonly BY_AVATAR_CHAIN: 'BY_AVATAR_CHAIN';
   readonly BULLET: 'BULLET';
   readonly BULLET_HUMAN: 'BULLET_HUMAN';
   readonly BULLET_WOLF: 'BULLET_WOLF';
-  readonly BULLET_BOUNTYHUNTER: 'BULLET_BOUNTYHUNTER';
-  readonly SHERIF: 'SHERIF';
+  readonly SHERIF_SUCCESS: 'SHERIF_SUCCESS';
   readonly OTHER_AGENT: 'OTHER_AGENT';
   readonly AVENGER: 'AVENGER';
   readonly SEER: 'SEER';
   readonly HANTED: 'HANTED';
   readonly ASSASSIN: 'ASSASSIN';
   readonly LOVER_DEATH: 'LOVER_DEATH';
-  readonly LOVER_DEATH_OWN: 'LOVER_DEATH_OWN';
   readonly BOMB: 'BOMB';
   readonly CRUSHED: 'CRUSHED';
   readonly STARVATION: 'STARVATION';
