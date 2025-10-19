@@ -115,10 +115,6 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Mort aux votes';
     case DEATH_TYPES.BY_WOLF:
       return 'Kill en Loup';
-    case DEATH_TYPES.BY_WOLF_REZ:
-      return 'Kill en Loup ressuscité';
-    case DEATH_TYPES.BY_WOLF_LOVER:
-      return 'Kill en Loup amoureux';
     case DEATH_TYPES.BY_ZOMBIE:
       return 'Kill en Zombie';
     case DEATH_TYPES.BY_BEAST:
@@ -131,9 +127,7 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Kill en Chasseur (sur humain)';
     case DEATH_TYPES.BULLET_WOLF:
       return 'Kill en Chasseur (sur loup)';
-    case DEATH_TYPES.BULLET_BOUNTYHUNTER:
-      return 'Kill en Chasseur de primes';
-    case DEATH_TYPES.SHERIF:
+    case DEATH_TYPES.SHERIF_SUCCESS :
       return 'Kill en Shérif';
     case DEATH_TYPES.OTHER_AGENT:
       return 'Kill en Agent';
@@ -147,8 +141,6 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Kill avec Potion (Assassin)';
     case DEATH_TYPES.LOVER_DEATH:
       return 'Kill de son amoureux';
-    case DEATH_TYPES.LOVER_DEATH_OWN:
-      return 'Kill de son propre amoureux';
     case DEATH_TYPES.BOMB:
       return 'Explosion';
     case DEATH_TYPES.CRUSHED:
@@ -578,8 +570,7 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
   const hunterDeathTypes: DeathType[] = [
     DEATH_TYPES.BULLET,
     DEATH_TYPES.BULLET_HUMAN,
-    DEATH_TYPES.BULLET_WOLF,
-    DEATH_TYPES.BULLET_BOUNTYHUNTER
+    DEATH_TYPES.BULLET_WOLF
   ];
 
   // Process each game
