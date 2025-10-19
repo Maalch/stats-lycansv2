@@ -800,6 +800,13 @@ function determineDeathType(playerDetails) {
   // Normalize the death type to lowercase for case-insensitive comparison
   var deathType = playerDetails.typeOfDeath.toLowerCase().trim();
   
+  // Special case: Survivaliste killed by wolf (power not saved)
+  if (deathType === 'tué par loup' && 
+      playerDetails.power && 
+      playerDetails.power.toLowerCase().trim() === 'survivaliste') {
+    return "SURVIVALIST_NOT_SAVED";
+  }
+
   if (deathType === 'mort de faim')
     return "STARVATION";
   else if ((deathType === 'tué par loup') || (deathType === 'tué par loup ressuscité') || (deathType === 'tué par loup amoureux'))
