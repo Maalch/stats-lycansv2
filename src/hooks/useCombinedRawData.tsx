@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
 import { PLAYER_NAME_MAPPING } from '../utils/playerNameMapping';
+import type { DeathType } from '../types/deathTypes';
 
 // New GameLog interfaces
 export interface Vote {
-  MeetingNr: number;              // Meeting number (1, 2, 3, etc.)
+  Day: number;              // Meeting number (1, 2, 3, etc.)
   Target: string;                 // Player name targeted by the vote or "Passé" for abstention
   Date: string | null;            // ISO date string when the vote was cast (may be null for legacy data)
 }
@@ -29,7 +30,7 @@ export interface PlayerStat {
     y: number;
     z: number;
   } | null;
-  DeathType: string | null;       // Type of death (e.g., "Tué par un loup")
+  DeathType: DeathType | null;    // Type-safe death type from centralized constants
   KillerName: string | null;      // Name of the killer if applicable
   Victorious: boolean;            // Whether the player was on the winning side
   Votes: Vote[];                  // Array of votes cast by this player during meetings

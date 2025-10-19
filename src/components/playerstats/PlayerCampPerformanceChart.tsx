@@ -134,6 +134,9 @@ export function PlayerCampPerformanceChart() {
     const campPlayers = [];
     const allPerformances = [];
     
+    // For Hall of Fame (top performers), we need to track BEST performance per player
+    const playerBestPerformance = new Map<string, ChartPlayerCampPerformance>();
+    
     for (const player of playerPerformance) {
       for (const cp of player.campPerformance) {
         if (cp.games >= minGames) {
@@ -153,8 +156,11 @@ export function PlayerCampPerformanceChart() {
             playerCamp: uniqueKey // Keep this for unique identification when needed
           };
           
-          // Add to all performances for top performers view
-          allPerformances.push(performanceData);
+          // For Hall of Fame, track only the BEST performance per player (matching achievement logic)
+          const currentBest = playerBestPerformance.get(player.player);
+          if (!currentBest || performanceData.performanceNum > currentBest.performanceNum) {
+            playerBestPerformance.set(player.player, performanceData);
+          }
           
           // Add to camp-specific data if it matches selected camp (skip for 'Tous les camps')
           if (selectedCamp !== 'Tous les camps' && cp.camp === selectedCamp) {
@@ -172,11 +178,15 @@ export function PlayerCampPerformanceChart() {
         }
       }
     }
+    
+    // Convert best performances map to array for Hall of Fame
+    allPerformances.push(...playerBestPerformance.values());
 
     // Helper function to add highlighted player if not already included
     const addHighlightedPlayer = (
       dataArray: ChartPlayerCampPerformance[],
-      campFilter?: string
+      campFilter?: string,
+      isHallOfFame: boolean = false
     ): ChartPlayerCampPerformance[] => {
       if (!settings.highlightedPlayer) return dataArray;
 
@@ -197,12 +207,42 @@ export function PlayerCampPerformanceChart() {
 
       if (!highlightedPlayerData) return dataArray;
 
-      // Add highlighted player's camp performance(s)
+      // For Hall of Fame, add only the BEST performance (matching achievement logic)
+      if (isHallOfFame) {
+        let bestPerformance: ChartPlayerCampPerformance | null = null;
+        
+        for (const cp of highlightedPlayerData.campPerformance) {
+          if (cp.games >= 1) { // Lower minimum for highlighted player
+            const uniqueKey = `${highlightedPlayerData.player}-${cp.camp}`;
+            const performanceData: ChartPlayerCampPerformance = {
+              player: highlightedPlayerData.player,
+              camp: cp.camp,
+              games: cp.games,
+              wins: cp.wins,
+              winRate: cp.winRate,
+              performance: cp.performance,
+              winRateNum: parseFloat(cp.winRate),
+              performanceNum: parseFloat(cp.performance),
+              campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
+              isHighlightedAddition: true,
+              uniqueKey: uniqueKey,
+              playerCamp: uniqueKey
+            };
+            
+            if (!bestPerformance || performanceData.performanceNum > bestPerformance.performanceNum) {
+              bestPerformance = performanceData;
+            }
+          }
+        }
+        
+        return bestPerformance ? [...dataArray, bestPerformance] : dataArray;
+      }
+
+      // For camp-specific view, add all matching performances
       const highlightedAdditions: ChartPlayerCampPerformance[] = [];
       
       for (const cp of highlightedPlayerData.campPerformance) {
         // For camp-specific view, only add if it matches the selected camp
-        // For top performers view, add all camps (no campFilter)
         if ((!campFilter || cp.camp === campFilter) && cp.games >= 1) { // Lower minimum for highlighted player
           const uniqueKey = `${highlightedPlayerData.player}-${cp.camp}`;
           highlightedAdditions.push({
@@ -227,11 +267,11 @@ export function PlayerCampPerformanceChart() {
 
     // Add highlighted player to camp-specific data (only if not 'Tous les camps')
     const campPlayersWithHighlighted = selectedCamp !== 'Tous les camps' 
-      ? addHighlightedPlayer(campPlayers, selectedCamp)
+      ? addHighlightedPlayer(campPlayers, selectedCamp, false)
       : [];
     
-    // Add highlighted player to top performers data  
-    const topPerformersWithHighlighted = addHighlightedPlayer(allPerformances);
+    // Add highlighted player to top performers data (Hall of Fame mode - best performance only)
+    const topPerformersWithHighlighted = addHighlightedPlayer(allPerformances, undefined, true);
     
     // Sort once for each dataset
     const sortedCampPlayers = campPlayersWithHighlighted.sort((a, b) => b.performanceNum - a.performanceNum);

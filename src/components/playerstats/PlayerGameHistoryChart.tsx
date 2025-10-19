@@ -4,11 +4,14 @@ import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFro
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
-import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
+import { useJoueursData } from '../../hooks/useJoueursData';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { getGroupedMapStats } from '../../hooks/utils/playerGameHistoryUtils';
+import { useCombinedFilteredRawData } from '../../hooks/useCombinedRawData';
 
 type GroupByMethod = 'session' | 'month';
+type ViewType = 'performance' | 'camp' | 'map' | 'kills';
 
 export function PlayerGameHistoryChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
@@ -16,6 +19,8 @@ export function PlayerGameHistoryChart() {
   
 // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  const { joueursData } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Get available players from the player stats hook
   const { data: playerStatsData } = usePlayerStatsFromRaw();
@@ -60,6 +65,7 @@ export function PlayerGameHistoryChart() {
 
   const selectedPlayerName = getDefaultSelectedPlayer();
   const groupingMethod = navigationState.groupingMethod || 'session';
+  const selectedViewType = navigationState.selectedViewType || 'performance';
   
   // Update functions that also update the navigation state
   const setSelectedPlayerName = (playerName: string) => {
@@ -68,6 +74,10 @@ export function PlayerGameHistoryChart() {
   
   const setGroupingMethod = (method: GroupByMethod) => {
     updateNavigationState({ groupingMethod: method });
+  };
+
+  const setSelectedViewType = (viewType: ViewType) => {
+    updateNavigationState({ selectedViewType: viewType });
   };
 
   const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
@@ -215,6 +225,54 @@ export function PlayerGameHistoryChart() {
     }));
   }, [data]);
 
+  // Get filtered game data to calculate kill statistics
+  const { gameData: filteredGameData } = useCombinedFilteredRawData();
+
+  // Calculate kill statistics for the selected player from raw game data
+  const killStatistics = useMemo(() => {
+    if (!filteredGameData || !selectedPlayerName) {
+      return { playersKilled: [], killedBy: [] };
+    }
+
+    // Maps to track kills
+    const playersKilledMap: Record<string, number> = {};
+    const killedByMap: Record<string, number> = {};
+
+    // Process each game
+    filteredGameData.forEach(game => {
+      const selectedPlayerStat = game.PlayerStats.find(
+        p => p.Username.toLowerCase() === selectedPlayerName.toLowerCase()
+      );
+
+      if (!selectedPlayerStat) return; // Player not in this game
+
+      // Track players killed BY the selected player
+      game.PlayerStats.forEach(victim => {
+        if (victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase()) {
+          playersKilledMap[victim.Username] = (playersKilledMap[victim.Username] || 0) + 1;
+        }
+      });
+
+      // Track players who killed the selected player
+      if (selectedPlayerStat.KillerName) {
+        killedByMap[selectedPlayerStat.KillerName] = (killedByMap[selectedPlayerStat.KillerName] || 0) + 1;
+      }
+    });
+
+    // Convert to arrays and sort by count
+    const playersKilled = Object.entries(playersKilledMap)
+      .map(([player, count]) => ({ player, kills: count }))
+      .sort((a, b) => b.kills - a.kills)
+      .slice(0, 10); // Top 10
+
+    const killedBy = Object.entries(killedByMap)
+      .map(([player, count]) => ({ player, kills: count }))
+      .sort((a, b) => b.kills - a.kills)
+      .slice(0, 10); // Top 10
+
+    return { playersKilled, killedBy };
+  }, [filteredGameData, selectedPlayerName]);
+
   // Helper functions when there are too much data
   const getResponsiveXAxisSettings = (dataLength: number) => {
     if (dataLength <= 15) return { fontSize: 12, angle: -45, height: 80, interval: 0 };
@@ -243,7 +301,7 @@ export function PlayerGameHistoryChart() {
     <div className="lycans-player-history">
       <h2>Historique Détaillé d'un Joueur</h2>
       
-      {/* Controls */}
+      {/* Player Selection Control */}
       <div className="lycans-controls-section" style={{ 
         display: 'flex', 
         gap: '2rem', 
@@ -276,29 +334,34 @@ export function PlayerGameHistoryChart() {
             ))}
           </select>
         </div>
+      </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="grouping-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Groupement:
-          </label>
-          <select
-            id="grouping-select"
-            value={groupingMethod}
-            onChange={(e) => setGroupingMethod(e.target.value as GroupByMethod)}
-            style={{
-              background: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '4px',
-              padding: '0.5rem',
-              fontSize: '0.9rem',
-              minWidth: '120px'
-            }}
-          >
-            <option value="session">Par session</option>
-            <option value="month">Par mois</option>
-          </select>
-        </div>
+      {/* View Type Selection */}
+      <div className="lycans-categories-selection">
+        <button
+          className={`lycans-categorie-btn ${selectedViewType === 'performance' ? 'active' : ''}`}
+          onClick={() => setSelectedViewType('performance')}
+        >
+          Évolution
+        </button>
+        <button
+          className={`lycans-categorie-btn ${selectedViewType === 'camp' ? 'active' : ''}`}
+          onClick={() => setSelectedViewType('camp')}
+        >
+          Camp
+        </button>
+        <button
+          className={`lycans-categorie-btn ${selectedViewType === 'map' ? 'active' : ''}`}
+          onClick={() => setSelectedViewType('map')}
+        >
+          Map
+        </button>
+        <button
+          className={`lycans-categorie-btn ${selectedViewType === 'kills' ? 'active' : ''}`}
+          onClick={() => setSelectedViewType('kills')}
+        >
+          Kills
+        </button>
       </div>
 
       {/* Summary Cards */}
@@ -343,10 +406,45 @@ export function PlayerGameHistoryChart() {
         </div>
       </div>
 
-      <div className="lycans-graphiques-groupe">
-        {/* Performance over time */}
-        <div className="lycans-graphique-section">
-          <h3>Évolution des Performances {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
+      {/* Performance View */}
+      {selectedViewType === 'performance' && (
+        <>
+          {/* Grouping Control - Only for Performance View */}
+          <div className="lycans-controls-section" style={{ 
+            display: 'flex', 
+            gap: '2rem', 
+            marginBottom: '2rem', 
+            justifyContent: 'center',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="grouping-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                Groupement:
+              </label>
+              <select
+                id="grouping-select"
+                value={groupingMethod}
+                onChange={(e) => setGroupingMethod(e.target.value as GroupByMethod)}
+                style={{
+                  background: 'var(--bg-tertiary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  padding: '0.5rem',
+                  fontSize: '0.9rem',
+                  minWidth: '120px'
+                }}
+              >
+                <option value="session">Par session</option>
+                <option value="month">Par mois</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="lycans-graphiques-groupe">
+            {/* Performance over time */}
+            <div className="lycans-graphique-section">
+            <h3>Évolution des Performances {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
           <FullscreenChart title={`Évolution des Performances ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`}>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -519,10 +617,13 @@ export function PlayerGameHistoryChart() {
           </div>
           </FullscreenChart>
         </div>
-      </div>
+          </div>
+        </>
+      )}
 
-      {/* Camp Distribution */}
-      <div className="lycans-graphiques-groupe">
+      {/* Camp View */}
+      {selectedViewType === 'camp' && (
+        <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
           <h3>Distribution par Camps</h3>
           <div style={{ height: 400 }}>
@@ -536,11 +637,11 @@ export function PlayerGameHistoryChart() {
                   outerRadius={120}
                   fill="#8884d8"
                   dataKey="value"
-                  label={({ name, value, percent }) => {
-                    const pct = percent !== undefined ? percent : 0;
-                    return name === 'Autres' 
-                      ? `Autres : ${value} (${(pct * 100).toFixed(1)}%)`  
-                      : `${name}: ${value} (${(pct * 100).toFixed(1)}%)`;
+                  label={(entry: any) => {
+                    const pct = entry.percent !== undefined ? entry.percent : 0;
+                    return entry.name === 'Autres' 
+                      ? `Autres : ${entry.value} (${(pct * 100).toFixed(1)}%)`  
+                      : `${entry.name}: ${entry.value} (${(pct * 100).toFixed(1)}%)`;
                   }}
                 >
                   {groupedCampDistributionData.map((entry, index) => (
@@ -777,9 +878,145 @@ export function PlayerGameHistoryChart() {
             </div>
           </FullscreenChart>
         </div>
+        </div>
+      )}
 
-        {/* Map Performance */}
-        {mapPerformanceData.length > 0 && (
+      {/* Kills View */}
+      {selectedViewType === 'kills' && (
+        <div className="lycans-graphiques-groupe">
+          {/* Players Most Killed */}
+          {killStatistics.playersKilled.length > 0 ? (
+            <div className="lycans-graphique-section">
+              <h3>Joueurs les plus souvent tués</h3>
+              <FullscreenChart title="Joueurs les plus souvent tués">
+                <div style={{ height: 400 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={killStatistics.playersKilled}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis 
+                        dataKey="player"
+                        angle={-45}
+                        textAnchor="end"
+                        height={90}
+                        interval={0}
+                        fontSize={14}
+                      />
+                      <YAxis 
+                        label={{ value: 'Nombre de kills', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                        allowDecimals={false}
+                      />
+                      <Tooltip
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length > 0) {
+                            const dataPoint = payload[0].payload;
+                            return (
+                              <div style={{ 
+                                background: 'var(--bg-secondary)', 
+                                color: 'var(--text-primary)', 
+                                padding: 12, 
+                                borderRadius: 8,
+                                border: '1px solid var(--border-color)'
+                              }}>
+                                <div><strong>{dataPoint.player}</strong></div>
+                                <div>Tué {dataPoint.kills} fois par {selectedPlayerName}</div>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Bar dataKey="kills">
+                        {killStatistics.playersKilled.map((entry, index) => (
+                          <Cell 
+                            key={`cell-killed-${index}`} 
+                            fill={playersColor[entry.player] || "var(--chart-color-3)"}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </FullscreenChart>
+            </div>
+          ) : (
+            <div className="lycans-empty-section">
+              <h3>Aucun kill enregistré</h3>
+              <p>{selectedPlayerName} n'a tué aucun joueur dans les parties enregistrées.</p>
+            </div>
+          )}
+
+          {/* Players Killed By Most */}
+          {killStatistics.killedBy.length > 0 ? (
+            <div className="lycans-graphique-section">
+              <h3>Le plus souvent tué par</h3>
+              <FullscreenChart title="Le plus souvent tué par">
+                <div style={{ height: 400 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={killStatistics.killedBy}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis 
+                        dataKey="player"
+                        angle={-45}
+                        textAnchor="end"
+                        height={90}
+                        interval={0}
+                        fontSize={14}
+                      />
+                      <YAxis 
+                        label={{ value: 'Nombre de kills', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                        allowDecimals={false}
+                      />
+                      <Tooltip
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length > 0) {
+                            const dataPoint = payload[0].payload;
+                            return (
+                              <div style={{ 
+                                background: 'var(--bg-secondary)', 
+                                color: 'var(--text-primary)', 
+                                padding: 12, 
+                                borderRadius: 8,
+                                border: '1px solid var(--border-color)'
+                              }}>
+                                <div><strong>{dataPoint.player}</strong></div>
+                                <div>A tué {selectedPlayerName} {dataPoint.kills} fois</div>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Bar dataKey="kills">
+                        {killStatistics.killedBy.map((entry, index) => (
+                          <Cell 
+                            key={`cell-killer-${index}`} 
+                            fill={playersColor[entry.player] || "var(--chart-color-4)"}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </FullscreenChart>
+            </div>
+          ) : (
+            <div className="lycans-empty-section">
+              <h3>Aucune mort par kill</h3>
+              <p>{selectedPlayerName} n'a jamais été tué par un autre joueur dans les parties enregistrées.</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Map View */}
+      {selectedViewType === 'map' && mapPerformanceData.length > 0 && (
+        <div className="lycans-graphiques-groupe">
           <div className="lycans-graphique-section">
             <h3>Performance par Carte</h3>
                      
@@ -910,13 +1147,15 @@ export function PlayerGameHistoryChart() {
                     />
                     <Bar 
                       dataKey="winRateDisplay"
-                      label={({ name, x, y, width }) => {
+                      label={(props: any) => {
                         // Add percentage labels on top of bars
+                        const { name, x, y, width } = props;
+                        if (x === undefined || y === undefined || width === undefined) return null;
                         const percentage = mapPerformanceData.find(d => d.name === name)?.winRate || '0';
                         return (
                           <text 
-                            x={x + width / 2} 
-                            y={y - 5} 
+                            x={(x as number) + (width as number) / 2} 
+                            y={(y as number) - 5} 
                             fill="var(--text-primary)" 
                             textAnchor="middle" 
                             fontSize="12"
@@ -975,8 +1214,15 @@ export function PlayerGameHistoryChart() {
               </div>
             </FullscreenChart>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {selectedViewType === 'map' && mapPerformanceData.length === 0 && (
+        <div className="lycans-empty-section">
+          <h3>Aucune donnée de carte disponible</h3>
+          <p>Aucune statistique de carte n'est disponible pour ce joueur.</p>
+        </div>
+      )}
     </div>
   );
 }
