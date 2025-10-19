@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import type { JoueursData } from '../types/joueurs';
 import { useThemeAdjustedDynamicPlayersColor } from '../types/api';
+import { useSettings } from '../context/SettingsContext';
+import { fetchDataFile, DATA_FILES } from '../utils/dataPath';
+import type { DataSource } from '../utils/dataPath';
 
 export function useJoueursData() {
+  const { settings } = useSettings();
   const [joueursData, setJoueursData] = useState<JoueursData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -13,12 +17,8 @@ export function useJoueursData() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${import.meta.env.BASE_URL}data/joueurs.json`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch joueurs data');
-        }
-
-        const result: JoueursData = await response.json();
+        const dataSource = settings.dataSource as DataSource;
+        const result = await fetchDataFile<JoueursData>(dataSource, DATA_FILES.JOUEURS);
         setJoueursData(result);
       } catch (err) {
         console.error('Error fetching joueurs data:', err);
@@ -29,7 +29,7 @@ export function useJoueursData() {
     };
 
     fetchJoueursData();
-  }, []);
+  }, [settings.dataSource]); // Re-fetch when dataSource changes
 
   return { joueursData, isLoading, error };
 }

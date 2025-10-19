@@ -3,6 +3,8 @@ import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
 import { PLAYER_NAME_MAPPING } from '../utils/playerNameMapping';
 import type { DeathType } from '../types/deathTypes';
+import { fetchDataFile, fetchOptionalDataFile, DATA_FILES } from '../utils/dataPath';
+import type { DataSource } from '../utils/dataPath';
 
 // New GameLog interfaces
 export interface Vote {
@@ -109,12 +111,14 @@ interface CombinedFilteredData {
 /**
  * Centralized hook to fetch all raw data with a single loading state
  * Now loads from gameLog.json directly without legacy transformations
+ * Supports switching between main and Discord data sources via settings
  */
 function useCombinedRawData(): {
   data: CombinedRawData | null;
   isLoading: boolean;
   error: string | null;
 } {
+  const { settings } = useSettings();
   const [data, setData] = useState<CombinedRawData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -125,21 +129,16 @@ function useCombinedRawData(): {
         setIsLoading(true);
         setError(null);
 
-        // Fetch the new gameLog.json and legacy BR data
-        const [gameLogResponse, brResponse] = await Promise.all([
-          fetch(`${import.meta.env.BASE_URL}data/gameLog.json`),
-          fetch(`${import.meta.env.BASE_URL}data/rawBRData.json`)
-        ]);
-
-        // Check if responses are ok
-        if (!gameLogResponse.ok) throw new Error('Failed to fetch game log data');
-        if (!brResponse.ok) throw new Error('Failed to fetch BR data');
-
-        // Parse responses
-        const [gameLogResult, brResult] = await Promise.all([
-          gameLogResponse.json() as Promise<GameLogData>,
-          brResponse.json() as Promise<RawBRResponse>
-        ]);
+        const dataSource = settings.dataSource as DataSource;
+        
+        // Fetch the game log data
+        const gameLogResult = await fetchDataFile<GameLogData>(dataSource, DATA_FILES.GAME_LOG);
+        
+        // Try to fetch BR data, but don't fail if it doesn't exist (Discord data doesn't have BR data)
+        const brResult = await fetchOptionalDataFile<RawBRResponse>(dataSource, DATA_FILES.RAW_BR_DATA) || { 
+          BRParties: { totalRecords: 0, data: [] }, 
+          BRRefParties: { totalRecords: 0, data: [] } 
+        };
 
         // Generate DisplayedId values for all games
         const displayedIdMap = generateDisplayedIds(gameLogResult.GameStats);
@@ -169,7 +168,7 @@ function useCombinedRawData(): {
     };
 
     fetchAllRawData();
-  }, []);
+  }, [settings.dataSource]); // Re-fetch when dataSource changes
 
   return { data, isLoading, error };
 }
@@ -238,9 +237,9 @@ function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean;
  */
 function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
   return data.filter(game => {
-    //for now: hard filter on only Ponce game
-    if (!game.Id.toLowerCase().includes('ponce')) return false;
-
+    // Remove the hard-coded Ponce filter - let all games through based on dataSource
+    // The dataSource is already determined in the data fetching layer
+    
     const filters = settings.independentFilters;
     if (!filters) {
       // If no independent filters, don't filter
@@ -408,12 +407,14 @@ export function useFilteredRawBRGlobalData() {
 /**
  * New hook to work directly with GameLog structure
  * Use this for new features that can benefit from the richer data structure
+ * Supports switching between main and Discord data sources via settings
  */
 export function useGameLogData(): {
   data: GameLogData | null;
   isLoading: boolean;
   error: string | null;
 } {
+  const { settings } = useSettings();
   const [data, setData] = useState<GameLogData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -424,10 +425,8 @@ export function useGameLogData(): {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${import.meta.env.BASE_URL}data/gameLog.json`);
-        if (!response.ok) throw new Error('Failed to fetch game log data');
-
-        const result = await response.json() as GameLogData;
+        const dataSource = settings.dataSource as DataSource;
+        const result = await fetchDataFile<GameLogData>(dataSource, DATA_FILES.GAME_LOG);
         
         // Normalize player names in the GameLog data
         const normalizedResult = {
@@ -445,7 +444,7 @@ export function useGameLogData(): {
     };
 
     fetchGameLogData();
-  }, []);
+  }, [settings.dataSource]); // Re-fetch when dataSource changes
 
   return { data, isLoading, error };
 }
