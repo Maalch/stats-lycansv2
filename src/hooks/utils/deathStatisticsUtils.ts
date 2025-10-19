@@ -104,10 +104,6 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
       return 'Mort aux votes';
     case DeathTypeCode.BY_WOLF:
       return 'Tué par un loup';
-    case DeathTypeCode.BY_WOLF_REZ:
-      return 'Tué par un loup ressuscité';
-    case DeathTypeCode.BY_WOLF_LOVER:
-      return 'Tué par un loup amoureux';
     case DeathTypeCode.BY_ZOMBIE:
       return 'Tué par un zombie';
     case DeathTypeCode.BY_BEAST:
@@ -115,14 +111,12 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
     case DeathTypeCode.BY_AVATAR_CHAIN:
       return 'Mort liée à l\'Avatar';
     case DeathTypeCode.BULLET:
-      return 'Abattu par un chasseur';
+      return 'Abattu par une balle';
     case DeathTypeCode.BULLET_HUMAN:
-      return 'Tué par un chasseur en humain';
+      return 'Tué par une balle en humain';
     case DeathTypeCode.BULLET_WOLF:
-      return 'Tué par un chasseur en loup';
-    case DeathTypeCode.BULLET_BOUNTYHUNTER:
-      return 'Tué par un chasseur de primes';
-    case DeathTypeCode.SHERIF:
+      return 'Tué par une balle en loup';
+    case DeathTypeCode.SHERIF_SUCCESS:
       return 'Abattu par le Shérif';
     case DeathTypeCode.OTHER_AGENT:
       return 'Éliminé par l\'Agent';
@@ -136,8 +130,6 @@ export function getDeathDescription(deathTypeCode: DeathTypeCodeType): string {
       return 'Tué par une potion (Assassin)';
     case DeathTypeCode.LOVER_DEATH:
       return 'Mort par amoureux';
-    case DeathTypeCode.LOVER_DEATH_OWN:
-      return 'Tué par son amoureux';
     case DeathTypeCode.BOMB:
       return 'Mort dans une explosion';
     case DeathTypeCode.CRUSHED:
@@ -164,10 +156,6 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
       return 'Mort aux votes';
     case DeathTypeCode.BY_WOLF:
       return 'Kill en Loup';
-    case DeathTypeCode.BY_WOLF_REZ:
-      return 'Kill en Loup ressuscité';
-    case DeathTypeCode.BY_WOLF_LOVER:
-      return 'Kill en Loup amoureux';
     case DeathTypeCode.BY_ZOMBIE:
       return 'Kill en Zombie';
     case DeathTypeCode.BY_BEAST:
@@ -177,12 +165,10 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
     case DeathTypeCode.BULLET:
       return 'Tir de Chasseur';
     case DeathTypeCode.BULLET_HUMAN:
-      return 'Kill en Chasseur (sur humain)';
+      return 'Kill par balle (sur humain)';
     case DeathTypeCode.BULLET_WOLF:
-      return 'Kill en Chasseur (sur loup)';
-    case DeathTypeCode.BULLET_BOUNTYHUNTER:
-      return 'Kill en Chasseur de primes';
-    case DeathTypeCode.SHERIF:
+      return 'Kill par balle (sur loup)';
+    case DeathTypeCode.SHERIF_SUCCESS:
       return 'Kill en Shérif';
     case DeathTypeCode.OTHER_AGENT:
       return 'Kill en Agent';
@@ -196,8 +182,6 @@ export function getKillDescription(deathTypeCode: DeathTypeCodeType): string {
       return 'Kill avec Potion (Assassin)';
     case DeathTypeCode.LOVER_DEATH:
       return 'Kill de son amoureux';
-    case DeathTypeCode.LOVER_DEATH_OWN:
-      return 'Kill de son propre amoureux';
     case DeathTypeCode.BOMB:
       return 'Explosion';
     case DeathTypeCode.CRUSHED:
@@ -626,8 +610,7 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
   const hunterDeathTypes: DeathTypeCodeType[] = [
     DeathTypeCode.BULLET,
     DeathTypeCode.BULLET_HUMAN,
-    DeathTypeCode.BULLET_WOLF,
-    DeathTypeCode.BULLET_BOUNTYHUNTER
+    DeathTypeCode.BULLET_WOLF
   ];
 
   // Process each game

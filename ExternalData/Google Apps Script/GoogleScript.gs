@@ -711,7 +711,7 @@ function getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows) {
       // Only add votes that have a target (not blank)
       if (voteTarget && voteTarget.trim() !== '') {
         votes.push({
-          MeetingNr: meetingNr,
+          Day: meetingNr,
           Target: voteTarget.trim(),
           Date: null // Date is not available in legacy data
         });
@@ -802,12 +802,8 @@ function determineDeathType(playerDetails) {
   
   if (deathType === 'mort de faim')
     return "STARVATION";
-  else if (deathType === 'tué par loup')
+  else if ((deathType === 'tué par loup') || (deathType === 'tué par loup ressuscité') || (deathType === 'tué par loup ressuscité'))
     return "BY_WOLF";
-  else if (deathType === 'tué par loup ressuscité')
-    return "BY_WOLF_REZ"; //SPECIFIC TO GDOC!
-  else if (deathType === 'tué par loup amoureux')
-    return "BY_WOLF_LOVER"; //SPECIFIC TO GDOC!
   else if (deathType === 'tué par zombie')
     return "BY_ZOMBIE";
   else if (deathType === 'tué par la bête')
@@ -820,20 +816,16 @@ function determineDeathType(playerDetails) {
     return "FALL";
   else if (deathType === 'mort liée à l\'avatar')
     return "BY_AVATAR_CHAIN";
-  else if (deathType === 'amoureux mort') 
+  else if ((deathType === 'amoureux mort') || (deathType === 'a tué son amoureux' || deathType === 'tué par son amoureux'))
     return "LOVER_DEATH";
-  else if (deathType === 'a tué son amoureux' || deathType === 'tué par son amoureux')
-    return "LOVER_DEATH_OWN"; //SPECIFIC TO GDOC!
   else if (deathType === 'tué par chasseur')
     return "BULLET"; //LESS SPECIFIC THAN OFFICIAL LOG!
-  else if (deathType === 'tué par chasseur en humain')
+  else if ((deathType === 'tué par chasseur en humain') || (deathType === 'tué par chasseur de primes'))
     return "BULLET_HUMAN"; 
   else if (deathType === 'tué par chasseur en loup')
     return "BULLET_WOLF"; 
-  else if (deathType === 'tué par chasseur de primes')
-    return "BULLET_BOUNTYHUNTER"; //SPECIFIC TO GDOC!
   else if (deathType === 'tué par shérif')
-    return "SHERIF"; //LESS SPECIFIC THAN OFFICIAL LOG!
+    return "SHERIF_SUCCESS"; //LESS SPECIFIC THAN OFFICIAL LOG!
   else if (deathType === 'tué par l\'agent')
     return "OTHER_AGENT";
   else if (deathType === 'tué par vengeur')
