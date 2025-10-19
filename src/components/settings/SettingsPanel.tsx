@@ -5,6 +5,8 @@ import type { GameFilter, MapNameFilter, PlayerFilterMode } from '../../context/
 import { ShareableUrl } from '../common/ShareableUrl';
 import './SettingsPanel.css';
 import { getPlayerNameMapping } from '../../utils/playerNameMapping';
+import { getDataFileUrl, DATA_FILES } from '../../utils/dataPath';
+import type { DataSource } from '../../utils/dataPath';
 
 export function SettingsPanel() {
   const { settings, updateSettings, resetSettings } = useSettings();
@@ -35,7 +37,9 @@ export function SettingsPanel() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.BASE_URL}data/gameLog.json`);
+        const dataSource = settings.dataSource as DataSource;
+        const url = getDataFileUrl(dataSource, DATA_FILES.GAME_LOG);
+        const response = await fetch(url);
         const result = await response.json();
         setGameLogData(result.GameStats || []);
       } catch (error) {
@@ -43,7 +47,7 @@ export function SettingsPanel() {
       }
     };
     fetchData();
-  }, []);
+  }, [settings.dataSource]); // Re-fetch when dataSource changes
 
   // Helper to parse ISO date string to Date
   const parseISODate = (dateStr: string): Date | null => {
@@ -314,6 +318,10 @@ export function SettingsPanel() {
   const handleHighlightedPlayerChange = (playerName: string) => {
     updateSettings({ highlightedPlayer: playerName || null });
   };
+  /*
+  const handleDataSourceChange = (dataSource: 'main' | 'discord') => {
+    updateSettings({ dataSource });
+  };*/
 
   const handleResetFilters = () => {
     resetSettings();
@@ -361,6 +369,47 @@ export function SettingsPanel() {
           </button>
         </div>
       </div>
+
+{/* Data Source Selection Section : not active for now
+
+      <div className="settings-section">
+        <div className="settings-section-header">
+          <h3>🎲 Source de Données</h3>
+        </div>
+        <div className="settings-group">
+          <p className="settings-explanation">
+            Sélectionnez la source de données à afficher : équipe principale (Ponce) ou équipe Discord (Nales).
+          </p>
+          <div className="settings-radio-group-inline" style={{ marginTop: '1rem' }}>
+            <label className="settings-radio-inline">
+              <input
+                type="radio"
+                name="dataSource"
+                value="main"
+                checked={settings.dataSource === 'main'}
+                onChange={() => handleDataSourceChange('main')}
+              />
+              <span>Équipe Principale (Ponce)</span>
+            </label>
+            <label className="settings-radio-inline">
+              <input
+                type="radio"
+                name="dataSource"
+                value="discord"
+                checked={settings.dataSource === 'discord'}
+                onChange={() => handleDataSourceChange('discord')}
+              />
+              <span>Équipe Discord (Nales)</span>
+            </label>
+          </div>
+          {settings.dataSource === 'discord' && (
+            <p className="settings-info-text" style={{ marginTop: '0.5rem' }}>
+              ℹ️ Affichage des données de l'équipe Discord. Les jeux commencent par "Nales-".
+            </p>
+          )}
+        </div>
+      </div>
+}
 
       {/* Highlighted Player Section (always visible) */}
       <div className="settings-section">
@@ -692,6 +741,7 @@ export function SettingsPanel() {
           <strong>Résumé:</strong> {filteredGames.length} partie{filteredGames.length > 1 ? 's' : ''} 
           {activeFilterCount > 0 ? ` (avec ${activeFilterCount} filtre${activeFilterCount > 1 ? 's' : ''} actif${activeFilterCount > 1 ? 's' : ''})` : ' (aucun filtre actif)'}
           {settings.highlightedPlayer && ` • "${settings.highlightedPlayer}" mis en évidence`}
+          {settings.dataSource === 'discord' && ` • 📊 Équipe Discord`}
         </p>
       </div>
       

@@ -38,6 +38,9 @@ export interface SettingsState {
   // Independent filters system (now the default)
   useIndependentFilters: boolean;
   independentFilters: IndependentFilters;
+  
+  // Data source selection (main team vs Discord team)
+  dataSource: 'main' | 'discord';
 }
 
 interface SettingsContextType {
@@ -65,6 +68,7 @@ const defaultSettings: SettingsState = {
     mapNameFilter: 'all',
     playerFilter: { mode: 'none', players: [] },
   },
+  dataSource: 'main',
 };
 
 // Helper functions for URL parameters
@@ -146,6 +150,14 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
   if (highlightedPlayer) {
     settings.highlightedPlayer = decodeURIComponent(highlightedPlayer);
   }
+  
+  // Parse data source
+  const dataSource = urlParams.get('dataSource');
+  if (dataSource === 'discord') {
+    settings.dataSource = 'discord';
+  } else {
+    settings.dataSource = 'main';
+  }
 
   return settings;
 }
@@ -189,6 +201,11 @@ function updateUrlFromSettings(settings: SettingsState) {
   // Highlighted player
   if (settings.highlightedPlayer && settings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
     urlParams.set('highlightedPlayer', encodeURIComponent(settings.highlightedPlayer));
+  }
+  
+  // Data source
+  if (settings.dataSource && settings.dataSource !== defaultSettings.dataSource) {
+    urlParams.set('dataSource', settings.dataSource);
   }
   
   // Update URL without triggering page reload
