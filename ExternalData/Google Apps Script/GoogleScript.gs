@@ -802,7 +802,7 @@ function determineDeathType(playerDetails) {
   
   if (deathType === 'mort de faim')
     return "STARVATION";
-  else if ((deathType === 'tué par loup') || (deathType === 'tué par loup ressuscité') || (deathType === 'tué par loup ressuscité'))
+  else if ((deathType === 'tué par loup') || (deathType === 'tué par loup ressuscité') || (deathType === 'tué par loup amoureux'))
     return "BY_WOLF";
   else if (deathType === 'tué par zombie')
     return "BY_ZOMBIE";
