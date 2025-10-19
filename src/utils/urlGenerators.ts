@@ -6,6 +6,7 @@ import type { SettingsState } from '../context/SettingsContext';
 
 const defaultSettings: SettingsState = {
   gameFilter: 'all',
+  dataSource: 'main',
   dateRange: { start: null, end: null },
   mapNameFilter: 'all',
   playerFilter: { mode: 'none', players: [] },
