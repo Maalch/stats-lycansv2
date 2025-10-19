@@ -133,7 +133,7 @@ export function GameDurationInsights() {
           title={jeuDonnees.minDurationGameId ? 'Cliquez pour voir cette partie' : 'Aucune partie trouvée'}
         >
           <h3>Durée Minimum</h3>
-          <p className="lycans-valeur-principale">{Math.floor(jeuDonnees.minDuration / 60)}min {jeuDonnees.minDuration % 60}s</p>
+          <p className="lycans-valeur-principale">{Math.floor(jeuDonnees.minDuration / 60)}min {Math.floor(jeuDonnees.minDuration % 60)}s</p>
           {jeuDonnees.minDurationGameId && (
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
               🖱️ Partie #{jeuDonnees.minDurationGameId}
@@ -170,7 +170,7 @@ export function GameDurationInsights() {
           title={jeuDonnees.maxDurationGameId ? 'Cliquez pour voir cette partie' : 'Aucune partie trouvée'}
         >
           <h3>Durée Maximum</h3>
-          <p className="lycans-valeur-principale">{Math.floor(jeuDonnees.maxDuration / 60)}min {jeuDonnees.maxDuration % 60}s</p>
+          <p className="lycans-valeur-principale">{Math.floor(jeuDonnees.maxDuration / 60)}min {Math.floor(jeuDonnees.maxDuration % 60)}s</p>
           {jeuDonnees.maxDurationGameId && (
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
               🖱️ Partie #{jeuDonnees.maxDurationGameId}
