@@ -66,15 +66,23 @@ async function fetchGameLogData(url) {
 
 async function mergeAWSGameLogs(awsGameLogs) {
   console.log('Processing AWS game logs into unified structure (Discord Team)...');
+  console.log('🔍 Filtering for games starting with "Nales-"...');
   
   const gamesByIdMap = new Map();
   let totalGamesProcessed = 0;
+  let filteredGamesCount = 0;
   
   // Process all AWS game logs
   for (const gameLog of awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(awsGame => {
         const gameId = awsGame.Id;
+        
+        // Filter: Only process games that start with "Nales-"
+        if (!gameId.startsWith('Nales-')) {
+          filteredGamesCount++;
+          return; // Skip this game
+        }
         
         // Check if game already exists (from another mod version file)
         if (gamesByIdMap.has(gameId)) {
@@ -92,6 +100,8 @@ async function mergeAWSGameLogs(awsGameLogs) {
       });
     }
   }
+  
+  console.log(`✓ Filtered out ${filteredGamesCount} games not starting with "Nales-"`);
   
   console.log(`✓ Processed ${totalGamesProcessed} unique games from ${awsGameLogs.length} AWS files`);
   
@@ -144,18 +154,74 @@ async function createDataIndex(awsFilesCount, totalGames) {
   console.log('✓ Created data index (Discord Team)');
 }
 
-async function createPlaceholderFiles() {
-  console.log('Creating placeholder files for legacy data (Discord Team)...');
+async function generateJoueursFromGameLog(gameLog) {
+  console.log('📋 Generating joueurs.json from Discord Team game log...');
   
-  // Only create placeholder Joueurs data (needed for player list)
-  const emptyJoueursData = {
-    TotalRecords: 0,
-    Players: [],
-    description: "Player data not available in AWS-only sync mode (Discord Team)"
+  // Map to track players and their color occurrences
+  const playerColorMap = new Map();
+  
+  // Iterate through all games and player stats
+  gameLog.GameStats.forEach(game => {
+    if (game.PlayerStats && Array.isArray(game.PlayerStats)) {
+      game.PlayerStats.forEach(playerStat => {
+        const username = playerStat.Username;
+        const color = playerStat.Color;
+        
+        if (!username) return; // Skip if no username
+        
+        if (!playerColorMap.has(username)) {
+          playerColorMap.set(username, {
+            colors: {},
+            gamesPlayed: 0
+          });
+        }
+        
+        const playerData = playerColorMap.get(username);
+        playerData.gamesPlayed++;
+        
+        if (color) {
+          playerData.colors[color] = (playerData.colors[color] || 0) + 1;
+        }
+      });
+    }
+  });
+  
+  // Create players array with most common color
+  const players = [];
+  
+  for (const [username, data] of playerColorMap.entries()) {
+    // Find the most common color for this player
+    let mostCommonColor = null;
+    let maxCount = 0;
+    
+    for (const [color, count] of Object.entries(data.colors)) {
+      if (count > maxCount) {
+        maxCount = count;
+        mostCommonColor = color;
+      }
+    }
+    
+    players.push({
+      Joueur: username,
+      Image: null, // No image data available from game log
+      Twitch: null, // No Twitch data available from game log
+      Youtube: null, // No Youtube data available from game log
+      Couleur: mostCommonColor || "Gris" // Default to Gris if no color found
+    });
+  }
+  
+  // Sort players alphabetically by username
+  players.sort((a, b) => a.Joueur.localeCompare(b.Joueur));
+  
+  // Create the joueurs data structure
+  const joueursData = {
+    TotalRecords: players.length,
+    Players: players,
+    description: "Player data extracted from Discord Team game logs. Social media links not available."
   };
-  await saveDataToFile('joueurs.json', emptyJoueursData);
   
-  console.log('✓ Created placeholder joueurs file (Discord Team)');
+  await saveDataToFile('joueurs.json', joueursData);
+  console.log(`✓ Generated joueurs.json with ${joueursData.TotalRecords} players`);
 }
 
 async function main() {
@@ -202,8 +268,8 @@ async function main() {
     // Save to gameLog.json in the discord folder
     await saveDataToFile('gameLog.json', unifiedGameLog);
     
-    // Create placeholder files for legacy data sources
-    await createPlaceholderFiles();
+    // Generate joueurs.json from game log player stats
+    await generateJoueursFromGameLog(unifiedGameLog);
     
     // Create data index
     await createDataIndex(awsGameLogs.length, unifiedGameLog.TotalRecords);
