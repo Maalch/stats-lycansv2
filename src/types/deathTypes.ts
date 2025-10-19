@@ -19,8 +19,6 @@ export const DEATH_TYPES = {
   
   // Wolf Kills
   BY_WOLF: 'BY_WOLF',                       // Tué par Loup
-  BY_WOLF_REZ: 'BY_WOLF_REZ',              // Tué par Loup ressuscité (GDOC specific)
-  BY_WOLF_LOVER: 'BY_WOLF_LOVER',          // Tué par Loup amoureux (GDOC specific)
   
   // Other Creature Kills
   BY_ZOMBIE: 'BY_ZOMBIE',                   // Tué par Zombie
@@ -30,8 +28,7 @@ export const DEATH_TYPES = {
   BULLET: 'BULLET',                         // Tué par Chasseur (less specific than official log)
   BULLET_HUMAN: 'BULLET_HUMAN',            // Tué par Chasseur en humain (official log specific)
   BULLET_WOLF: 'BULLET_WOLF',              // Tué par Chasseur en loup (official log specific)
-  BULLET_BOUNTYHUNTER: 'BULLET_BOUNTYHUNTER', // Tué par Chasseur de primes (GDOC specific)
-  SHERIF: 'SHERIF',                         // Tué par Shérif (less specific than official log)
+  SHERIF_SUCCESS: 'SHERIF_SUCCESS',                         // Tué par Shérif (less specific than official log)
   
   // Role-Based Kills
   OTHER_AGENT: 'OTHER_AGENT',               // Tué par l'Agent
@@ -44,7 +41,6 @@ export const DEATH_TYPES = {
   
   // Lovers
   LOVER_DEATH: 'LOVER_DEATH',               // Amoureux mort
-  LOVER_DEATH_OWN: 'LOVER_DEATH_OWN',      // A tué son amoureux / Tué par son amoureux (GDOC specific)
   
   // Environmental
   BOMB: 'BOMB',                             // A explosé
@@ -70,9 +66,7 @@ export const DEATH_TYPE_CATEGORIES = {
   VOTING: [DEATH_TYPES.VOTED],
   
   WOLF_KILLS: [
-    DEATH_TYPES.BY_WOLF,
-    DEATH_TYPES.BY_WOLF_REZ,
-    DEATH_TYPES.BY_WOLF_LOVER,
+    DEATH_TYPES.BY_WOLF
   ],
   
   CREATURE_KILLS: [
@@ -83,9 +77,7 @@ export const DEATH_TYPE_CATEGORIES = {
   HUNTER_KILLS: [
     DEATH_TYPES.BULLET,
     DEATH_TYPES.BULLET_HUMAN,
-    DEATH_TYPES.BULLET_WOLF,
-    DEATH_TYPES.BULLET_BOUNTYHUNTER,
-    DEATH_TYPES.SHERIF,
+    DEATH_TYPES.BULLET_WOLF
   ],
   
   ROLE_KILLS: [
@@ -100,8 +92,7 @@ export const DEATH_TYPE_CATEGORIES = {
   ],
   
   LOVER_DEATHS: [
-    DEATH_TYPES.LOVER_DEATH,
-    DEATH_TYPES.LOVER_DEATH_OWN,
+    DEATH_TYPES.LOVER_DEATH
   ],
   
   ENVIRONMENTAL: [
@@ -131,22 +122,18 @@ export const SYSTEM_DEATH_TYPES: readonly DeathType[] = [
  */
 export const KILLER_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.BY_WOLF,
-  DEATH_TYPES.BY_WOLF_REZ,
-  DEATH_TYPES.BY_WOLF_LOVER,
   DEATH_TYPES.BY_ZOMBIE,
   DEATH_TYPES.BY_BEAST,
   DEATH_TYPES.BULLET,
   DEATH_TYPES.BULLET_HUMAN,
   DEATH_TYPES.BULLET_WOLF,
-  DEATH_TYPES.BULLET_BOUNTYHUNTER,
-  DEATH_TYPES.SHERIF,
+  DEATH_TYPES.SHERIF_SUCCESS,
   DEATH_TYPES.OTHER_AGENT,
   DEATH_TYPES.AVENGER,
   DEATH_TYPES.SEER,
   DEATH_TYPES.HANTED,
   DEATH_TYPES.ASSASSIN,
   DEATH_TYPES.LOVER_DEATH,
-  DEATH_TYPES.LOVER_DEATH_OWN,
   DEATH_TYPES.BOMB,
   DEATH_TYPES.CRUSHED,
 ] as const;
@@ -157,23 +144,19 @@ export const KILLER_DEATH_TYPES: readonly DeathType[] = [
 export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.VOTED]: 'Mort aux votes',
   [DEATH_TYPES.BY_WOLF]: 'Tué par Loup',
-  [DEATH_TYPES.BY_WOLF_REZ]: 'Tué par Loup ressuscité',
-  [DEATH_TYPES.BY_WOLF_LOVER]: 'Tué par Loup amoureux',
   [DEATH_TYPES.BY_ZOMBIE]: 'Tué par Zombie',
   [DEATH_TYPES.BY_BEAST]: 'Tué par La Bête',
   [DEATH_TYPES.BY_AVATAR_CHAIN]: 'Mort liée à l\'Avatar',
   [DEATH_TYPES.BULLET]: 'Tué par Chasseur',
   [DEATH_TYPES.BULLET_HUMAN]: 'Tué par Chasseur (humain)',
   [DEATH_TYPES.BULLET_WOLF]: 'Tué par Chasseur (loup)',
-  [DEATH_TYPES.BULLET_BOUNTYHUNTER]: 'Tué par Chasseur de primes',
-  [DEATH_TYPES.SHERIF]: 'Tué par Shérif',
+  [DEATH_TYPES.SHERIF_SUCCESS]: 'Tué par Shérif',
   [DEATH_TYPES.OTHER_AGENT]: 'Tué par l\'Agent',
   [DEATH_TYPES.AVENGER]: 'Tué par Vengeur',
   [DEATH_TYPES.SEER]: 'Rôle deviné par loup',
   [DEATH_TYPES.HANTED]: 'Tué par potion hantée',
   [DEATH_TYPES.ASSASSIN]: 'Tué par potion assassin',
   [DEATH_TYPES.LOVER_DEATH]: 'Amoureux mort',
-  [DEATH_TYPES.LOVER_DEATH_OWN]: 'A tué son amoureux',
   [DEATH_TYPES.BOMB]: 'A explosé',
   [DEATH_TYPES.CRUSHED]: 'A été écrasé',
   [DEATH_TYPES.STARVATION]: 'Mort de faim',
