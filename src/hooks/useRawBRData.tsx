@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
+import { fetchOptionalDataFile, DATA_FILES } from '../utils/dataPath';
+import type { DataSource } from '../utils/dataPath';
 
 export interface RawBRData {
   Game: number;
@@ -31,6 +33,7 @@ interface RawBRResponse {
 
 // Updated hook to fetch BR data from the new structure
 function useRawBRData() {
+  const { settings } = useSettings();
   const [brPartiesData, setBRPartiesData] = useState<RawBRData[] | null>(null);
   const [brRefPartiesData, setBRRefPartiesData] = useState<RawBRGlobalData[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,14 +45,19 @@ function useRawBRData() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${import.meta.env.BASE_URL}data/rawBRData.json`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch rawBRData');
+        const dataSource = settings.dataSource as DataSource;
+        
+        // Try to fetch BR data, but don't fail if it doesn't exist (Discord data doesn't have BR data)
+        const result = await fetchOptionalDataFile<RawBRResponse>(dataSource, DATA_FILES.RAW_BR_DATA);
+        
+        if (result) {
+          setBRPartiesData(result.BRParties?.data || []);
+          setBRRefPartiesData(result.BRRefParties?.data || []);
+        } else {
+          // No BR data available (expected for Discord)
+          setBRPartiesData([]);
+          setBRRefPartiesData([]);
         }
-
-        const result: RawBRResponse = await response.json();
-        setBRPartiesData(result.BRParties?.data || []);
-        setBRRefPartiesData(result.BRRefParties?.data || []);
       } catch (err) {
         console.error('Error fetching raw BR data:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
@@ -59,7 +67,7 @@ function useRawBRData() {
     };
 
     fetchRawBRData();
-  }, []);
+  }, [settings.dataSource]); // Re-fetch when dataSource changes
 
   return { brPartiesData, brRefPartiesData, isLoading, error };
 }
