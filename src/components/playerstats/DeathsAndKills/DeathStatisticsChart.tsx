@@ -63,8 +63,9 @@ export function DeathStatisticsChart() {
     const colorMap: Record<DeathTypeCodeType, string> = {} as Record<DeathTypeCodeType, string>;
     
     // Map death type codes to colors directly
+    // Note: SURVIVALIST_NOT_SAVED is now merged with BY_WOLF, so it won't appear separately
     availableDeathTypes.forEach(deathTypeCode => {
-      if (deathTypeCode === DeathTypeCode.BY_WOLF || deathTypeCode === DeathTypeCode.SURVIVALIST_NOT_SAVED) {
+      if (deathTypeCode === DeathTypeCode.BY_WOLF) {
         colorMap[deathTypeCode] = lycansColors['Loup'];
       } else if (deathTypeCode === DeathTypeCode.VOTED) {
         colorMap[deathTypeCode] = 'var(--chart-color-1)';
