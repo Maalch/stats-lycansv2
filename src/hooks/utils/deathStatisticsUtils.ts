@@ -4,6 +4,17 @@ import { DEATH_TYPES, type DeathType, isValidDeathType, getDeathTypeLabel } from
 import { mainCampOrder } from '../../types/api';
 
 /**
+ * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
+ * This ensures both death types are treated as "Tué par Loup" in all statistics
+ */
+function normalizeDeathTypeForStats(deathType: DeathType | null): DeathType | null {
+  if (deathType === DEATH_TYPES.SURVIVALIST_NOT_SAVED) {
+    return DEATH_TYPES.BY_WOLF;
+  }
+  return deathType;
+}
+
+/**
  * Get all available camps from game data (camps that have at least one killer)
  */
 export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
@@ -108,13 +119,13 @@ export function getDeathDescription(deathTypeCode: DeathType): string {
 
 /**
  * Convert death type code to kill description (from killer's perspective)
+ * Note: SURVIVALIST_NOT_SAVED is merged with BY_WOLF
  */
 export function getKillDescription(deathTypeCode: DeathType): string {
   switch (deathTypeCode) {
     case DEATH_TYPES.VOTED:
       return 'Mort aux votes';
     case DEATH_TYPES.BY_WOLF:
-      return 'Kill en Loup';
     case DEATH_TYPES.SURVIVALIST_NOT_SAVED:
       return 'Kill en Loup';
     case DEATH_TYPES.BY_ZOMBIE:
@@ -163,6 +174,7 @@ export function getKillDescription(deathTypeCode: DeathType): string {
 
 /**
  * Get all unique death types from game data for chart configuration
+ * Note: SURVIVALIST_NOT_SAVED is normalized to BY_WOLF, so it won't appear separately
  */
 export function getAllDeathTypes(gameData: GameLogEntry[]): DeathType[] {
   const deathTypesSet = new Set<DeathType>();
@@ -170,7 +182,11 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathType[] {
   gameData.forEach(game => {
     game.PlayerStats.forEach(player => {
       if (player.DeathType && isValidDeathType(player.DeathType)) {
-        deathTypesSet.add(player.DeathType);
+        // Normalize death type before adding to set
+        const normalizedType = normalizeDeathTypeForStats(player.DeathType);
+        if (normalizedType) {
+          deathTypesSet.add(normalizedType);
+        }
       }
     });
   });
@@ -239,7 +255,7 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
       
       return {
         playerName: player.Username,
-        deathType: player.DeathType!,
+        deathType: normalizeDeathTypeForStats(player.DeathType!)!,
         killerName: player.KillerName,
         killerCamp
       };
@@ -318,7 +334,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
       kills.push({
         killerName: player.KillerName,
         victimName: player.Username,
-        deathType: player.DeathType,
+        deathType: normalizeDeathTypeForStats(player.DeathType)!,
         killerCamp
       });
     }
