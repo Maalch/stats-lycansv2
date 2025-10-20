@@ -142,7 +142,7 @@ export function getKillDescription(deathTypeCode: DeathType): string {
     case DEATH_TYPES.ASSASSIN:
       return 'Kill avec Potion (Assassin)';
     case DEATH_TYPES.LOVER_DEATH:
-      return 'Kill de son amoureux';
+      return 'Kill d\'amoureux';
     case DEATH_TYPES.BOMB:
       return 'Explosion';
     case DEATH_TYPES.CRUSHED:
