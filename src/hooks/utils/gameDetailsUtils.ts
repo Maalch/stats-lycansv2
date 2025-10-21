@@ -2,6 +2,7 @@ import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { getPlayerNameMapping } from '../../utils/playerNameMapping';
 // playerIdentification not directly needed here since we compare both Username and ID inline
 
 
@@ -131,8 +132,9 @@ export function getPlayerCampFromGameLog(
   excludeWolfSubRoles: boolean = false,
   excludeVillagers: boolean = false
 ): string {
+  const normalizedTarget = getPlayerNameMapping(playerName).toLowerCase();
   const playerStat = game.PlayerStats.find(
-    player => player.Username.toLowerCase() === playerName.toLowerCase()
+    player => getPlayerNameMapping(player.Username).toLowerCase() === normalizedTarget
   );
   
   if (!playerStat) return 'Villageois';
