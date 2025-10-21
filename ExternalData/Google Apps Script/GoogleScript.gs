@@ -467,6 +467,10 @@ function getRawGameDataInNewFormat() {
     var votesData = getLycanSheetData(LYCAN_SCHEMA.VOTES.SHEET);
     var votesValues = votesData.values;
     
+    // Get players data for Steam IDs
+    var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
+    var playersValues = playersData.values;
+    
     if (!gameValues || gameValues.length === 0) {
       return JSON.stringify({ error: 'No game data found' });
     }
@@ -496,6 +500,21 @@ function getRawGameDataInNewFormat() {
     
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
+    
+    // Create a map of player names to Steam IDs for efficient lookup
+    var playerIdMap = {};
+    if (playersValues && playersValues.length > 0) {
+      var playersHeaders = playersValues[0];
+      var playersDataRows = playersValues.slice(1);
+      
+      playersDataRows.forEach(function(row) {
+        var playerName = row[findColumnIndex(playersHeaders, LYCAN_SCHEMA.PLAYERS.COLS.PLAYER)];
+        var steamId = row[findColumnIndex(playersHeaders, LYCAN_SCHEMA.PLAYERS.COLS.ID)];
+        if (playerName && steamId) {
+          playerIdMap[playerName] = steamId;
+        }
+      });
+    }
     
     // Create game stats array
     var gameStats = gameDataRows.map(function(gameRow) {
@@ -558,7 +577,7 @@ function getRawGameDataInNewFormat() {
       gameRecord.PlayerStats = players.map(function(playerName) {
         var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
         allPlayerDetails.push(playerDetails); // Store for later use
-        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows);
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap);
       });
       
       // Check if death information is filled for all players using collected playerDetails
@@ -593,8 +612,9 @@ function getRawGameDataInNewFormat() {
  * Helper function to build player stats from legacy data using pre-fetched player details
  * This version avoids duplicate calls to getPlayerDetailsForGame
  */
-function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows) {
+function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap) {
   var playerStats = {
+    ID: playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null,
     Username: playerName,
     Color: playerDetails && playerDetails.color ? playerDetails.color : null,
     MainRoleInitial: determineMainRoleInitialWithDetails(playerDetails),
