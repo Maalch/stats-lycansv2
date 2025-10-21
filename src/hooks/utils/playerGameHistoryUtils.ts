@@ -6,6 +6,7 @@ import type { GameLogEntry } from '../useCombinedRawData';
 import { formatLycanDate} from './dataUtils';
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
 
 export interface PlayerGame {
   gameId: string;
@@ -42,25 +43,31 @@ export interface PlayerGameHistoryData {
 
 /**
  * Compute player game history from GameLogEntry data
+ * @param playerIdentifier - Player name or ID to find
  */
 export function computePlayerGameHistory(
-  playerName: string,
+  playerIdentifier: string,
   gameData: GameLogEntry[]
 ): PlayerGameHistoryData | null {
-  if (!playerName || playerName.trim() === '' || gameData.length === 0) {
+  if (!playerIdentifier || playerIdentifier.trim() === '' || gameData.length === 0) {
     return null;
   }
 
   // Find games where the player participated
   const playerGames: PlayerGame[] = [];
+  let playerDisplayName = playerIdentifier; // Will be updated to latest display name
 
   gameData.forEach((game) => {
-    // Find the player in this game's PlayerStats
+    // Find the player in this game's PlayerStats by ID or username
     const playerStat = game.PlayerStats.find(
-      player => player.Username.toLowerCase() === playerName.toLowerCase()
+      player => getPlayerId(player) === playerIdentifier || 
+                player.Username.toLowerCase() === playerIdentifier.toLowerCase()
     );
 
     if (playerStat) {
+      // Update to latest display name
+      playerDisplayName = getPlayerDisplayName(playerStat);
+      
       // Get player's camp from their final role (which contains the full role name)
       const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
 
@@ -149,7 +156,7 @@ export function computePlayerGameHistory(
   });
 
   return {
-    playerName: playerName,
+    playerName: playerDisplayName, // Use latest display name
     totalGames: totalGames,
     totalWins: totalWins,
     winRate: winRate,
