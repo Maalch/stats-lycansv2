@@ -1149,9 +1149,9 @@ export function PlayerGameHistoryChart() {
                       dataKey="winRateDisplay"
                       label={(props: any) => {
                         // Add percentage labels on top of bars
-                        const { name, x, y, width } = props;
-                        if (x === undefined || y === undefined || width === undefined) return null;
-                        const percentage = mapPerformanceData.find(d => d.name === name)?.winRate || '0';
+                        const { x, y, width, payload } = props;
+                        if (x === undefined || y === undefined || width === undefined || !payload) return null;
+                        const percentage = payload.winRate || '0';
                         return (
                           <text 
                             x={(x as number) + (width as number) / 2} 
