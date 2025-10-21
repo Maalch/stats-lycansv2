@@ -1,9 +1,11 @@
 /**
  * Utility functions for processing voting behavior statistics
+ * Uses ID-based player identification to merge stats for players with username changes
  */
 import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { DEATH_TYPES } from '../../types/deathTypes';
+import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
 
 export interface VotingBehaviorStats {
   playerName: string;
@@ -102,9 +104,9 @@ function getAlivePlayersAtMeeting(game: GameLogEntry, meetingNumber: number): Pl
 /**
  * Determines if a vote was successful (led to elimination)
  */
-function wasVoteSuccessful(game: GameLogEntry, meetingNumber: number, targetPlayer: string): boolean {
-  // Find the player who was targeted
-  const target = game.PlayerStats.find(p => p.Username === targetPlayer);
+function wasVoteSuccessful(game: GameLogEntry, meetingNumber: number, targetPlayerId: string): boolean {
+  // Find the player who was targeted by their ID
+  const target = game.PlayerStats.find(p => getPlayerId(p) === targetPlayerId);
   if (!target) return false;
   
   // Check if they died by vote at the corresponding timing
@@ -118,6 +120,7 @@ function wasVoteSuccessful(game: GameLogEntry, meetingNumber: number, targetPlay
 /**
  * Calculates voting behavior statistics for a single game
  * Internal function used by calculateAggregatedVotingStats
+ * Uses ID-based player identification
  */
 function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
   const meetingAnalytics: MeetingAnalytics[] = [];
@@ -126,6 +129,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     totalVotes: number;
     totalSkips: number;
     totalAbstentions: number;
+    displayName: string; // Track most recent username
   }>();
   
   const playerAccuracyMap = new Map<string, {
@@ -144,22 +148,26 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     eliminationsByVote: number;
   }>();
 
-  // Initialize maps for all players
+  // Initialize maps for all players using ID as key
   game.PlayerStats.forEach(player => {
-    playerBehaviorMap.set(player.Username, {
+    const playerId = getPlayerId(player);
+    const displayName = getPlayerDisplayName(player);
+    
+    playerBehaviorMap.set(playerId, {
       totalMeetings: 0,
       totalVotes: 0,
       totalSkips: 0,
-      totalAbstentions: 0
+      totalAbstentions: 0,
+      displayName: displayName
     });
     
-    playerAccuracyMap.set(player.Username, {
+    playerAccuracyMap.set(playerId, {
       totalVotes: 0,
       votesForEnemyCamp: 0,
       votesForOwnCamp: 0
     });
     
-    playerTargetMap.set(player.Username, {
+    playerTargetMap.set(playerId, {
       totalTimesTargeted: 0,
       timesTargetedByEnemyCamp: 0,
       timesTargetedByOwnCamp: 0,
@@ -181,19 +189,25 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
   // Process each meeting
   for (let meetingNum = 1; meetingNum <= maxMeetingNumber; meetingNum++) {
     const alivePlayersAtMeeting = getAlivePlayersAtMeeting(game, meetingNum);
-    const votesInMeeting = game.PlayerStats.flatMap(player => 
-      player.Votes
+    const votesInMeeting = game.PlayerStats.flatMap(player => {
+      const playerId = getPlayerId(player);
+      return player.Votes
         .filter(vote => vote.Day === meetingNum)
-        .map(vote => ({ voter: player.Username, vote, voterRole: player.MainRoleInitial }))
-    );
+        .map(vote => ({ 
+          voterId: playerId, 
+          voterName: getPlayerDisplayName(player),
+          vote, 
+          voterRole: player.MainRoleInitial 
+        }));
+    });
 
     // Track meeting analytics
     const totalVotes = votesInMeeting.filter(v => v.vote.Target !== 'Passé').length;
     const totalSkips = votesInMeeting.filter(v => v.vote.Target === 'Passé').length;
     const totalAbstentions = alivePlayersAtMeeting.length - votesInMeeting.length;
     
-    // Find most targeted player
-    const targetCounts = new Map<string, number>();
+    // Find most targeted player (by username in vote data, convert to ID for tracking)
+    const targetCounts = new Map<string, number>(); // Maps username to count for display
     votesInMeeting
       .filter(v => v.vote.Target !== 'Passé')
       .forEach(v => {
@@ -201,20 +215,24 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
         targetCounts.set(v.vote.Target, current + 1);
       });
     
-    let mostTargetedPlayer: string | null = null;
+    let mostTargetedPlayerName: string | null = null;
     let mostTargetedCount = 0;
-    for (const [player, count] of targetCounts.entries()) {
+    for (const [playerName, count] of targetCounts.entries()) {
       if (count > mostTargetedCount) {
-        mostTargetedPlayer = player;
+        mostTargetedPlayerName = playerName;
         mostTargetedCount = count;
       }
     }
 
-    // Find eliminated player
-    let eliminatedPlayer: string | null = null;
-    if (mostTargetedPlayer && mostTargetedCount > 0) {
-      if (wasVoteSuccessful(game, meetingNum, mostTargetedPlayer)) {
-        eliminatedPlayer = mostTargetedPlayer;
+    // Find eliminated player and convert to ID for consistency
+    let eliminatedPlayerName: string | null = null;
+    if (mostTargetedPlayerName && mostTargetedCount > 0) {
+      const targetPlayerStat = game.PlayerStats.find(p => p.Username === mostTargetedPlayerName);
+      if (targetPlayerStat) {
+        const targetPlayerId = getPlayerId(targetPlayerStat);
+        if (wasVoteSuccessful(game, meetingNum, targetPlayerId)) {
+          eliminatedPlayerName = getPlayerDisplayName(targetPlayerStat);
+        }
       }
     }
 
@@ -227,18 +245,20 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
       participationRate: alivePlayersAtMeeting.length > 0 
         ? ((totalVotes + totalSkips) / alivePlayersAtMeeting.length) * 100 
         : 0,
-      mostTargetedPlayer,
+      mostTargetedPlayer: mostTargetedPlayerName,
       mostTargetedCount,
-      eliminatedPlayer
+      eliminatedPlayer: eliminatedPlayerName
     });
 
     // Process each alive player for behavior stats
     alivePlayersAtMeeting.forEach(player => {
-      const behavior = playerBehaviorMap.get(player.Username)!;
+      const playerId = getPlayerId(player);
+      const behavior = playerBehaviorMap.get(playerId)!;
       behavior.totalMeetings++;
+      behavior.displayName = getPlayerDisplayName(player); // Update to most recent
       
       // Check if this player voted in this meeting
-      const playerVote = votesInMeeting.find(v => v.voter === player.Username);
+      const playerVote = votesInMeeting.find(v => v.voterId === playerId);
       
       if (playerVote) {
         if (playerVote.vote.Target === 'Passé') {
@@ -247,16 +267,18 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
           behavior.totalVotes++;
           
           // Process accuracy stats
-          const accuracy = playerAccuracyMap.get(player.Username)!;
+          const accuracy = playerAccuracyMap.get(playerId)!;
           accuracy.totalVotes++;
           
           const voterCamp = getPlayerCampFromRole(
             getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []),
             { regroupWolfSubRoles: true }
           );
+          // Find target player by username (as stored in vote data)
           const targetPlayer = game.PlayerStats.find(p => p.Username === playerVote.vote.Target);
           
           if (targetPlayer) {
+            const targetPlayerId = getPlayerId(targetPlayer);
             const targetCamp = getPlayerCampFromRole(
               getPlayerFinalRole(targetPlayer.MainRoleInitial, targetPlayer.MainRoleChanges || []),
               { regroupWolfSubRoles: true }
@@ -268,8 +290,8 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
               accuracy.votesForEnemyCamp++;
             }
             
-            // Process target stats
-            const targetStats = playerTargetMap.get(playerVote.vote.Target)!;
+            // Process target stats using target player ID
+            const targetStats = playerTargetMap.get(targetPlayerId)!;
             targetStats.totalTimesTargeted++;
             
             if (voterCamp === targetCamp) {
@@ -291,7 +313,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
             }
             
             // Check if this vote led to elimination
-            if (wasVoteSuccessful(game, meetingNum, playerVote.vote.Target)) {
+            if (wasVoteSuccessful(game, meetingNum, targetPlayerId)) {
               targetStats.eliminationsByVote++;
             }
           }
@@ -302,13 +324,16 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     });
   }
 
-  // Convert maps to final stats arrays
+  // Convert maps to final stats arrays using display names
   const playerBehaviors: VotingBehaviorStats[] = [];
   const playerAccuracies: VotingAccuracyStats[] = [];
   const playerTargetStats: VotingTargetStats[] = [];
 
   game.PlayerStats.forEach(player => {
-    const behavior = playerBehaviorMap.get(player.Username)!;
+    const playerId = getPlayerId(player);
+    const displayName = getPlayerDisplayName(player);
+    
+    const behavior = playerBehaviorMap.get(playerId)!;
     const votingRate = behavior.totalMeetings > 0 ? (behavior.totalVotes / behavior.totalMeetings) * 100 : 0;
     const skippingRate = behavior.totalMeetings > 0 ? (behavior.totalSkips / behavior.totalMeetings) * 100 : 0;
     const abstentionRate = behavior.totalMeetings > 0 ? (behavior.totalAbstentions / behavior.totalMeetings) * 100 : 0;
@@ -317,7 +342,7 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     const aggressivenessScore = votingRate - (skippingRate * 0.5) - (abstentionRate * 0.7);
     
     playerBehaviors.push({
-      playerName: player.Username,
+      playerName: displayName, // Use display name for UI
       totalMeetings: behavior.totalMeetings,
       totalVotes: behavior.totalVotes,
       totalSkips: behavior.totalSkips,
@@ -328,12 +353,12 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
       aggressivenessScore
     });
 
-    const accuracy = playerAccuracyMap.get(player.Username)!;
+    const accuracy = playerAccuracyMap.get(playerId)!;
     const accuracyRate = accuracy.totalVotes > 0 ? (accuracy.votesForEnemyCamp / accuracy.totalVotes) * 100 : 0;
     const friendlyFireRate = accuracy.totalVotes > 0 ? (accuracy.votesForOwnCamp / accuracy.totalVotes) * 100 : 0;
     
     playerAccuracies.push({
-      playerName: player.Username,
+      playerName: displayName, // Use display name for UI
       totalMeetings: behavior.totalMeetings,
       totalVotes: accuracy.totalVotes,
       votesForEnemyCamp: accuracy.votesForEnemyCamp,
@@ -342,13 +367,13 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
       friendlyFireRate
     });
 
-    const targetStats = playerTargetMap.get(player.Username)!;
+    const targetStats = playerTargetMap.get(playerId)!;
     const survivalRate = targetStats.totalTimesTargeted > 0 
       ? ((targetStats.totalTimesTargeted - targetStats.eliminationsByVote) / targetStats.totalTimesTargeted) * 100 
       : 100;
     
     playerTargetStats.push({
-      playerName: player.Username,
+      playerName: displayName, // Use display name for UI
       totalMeetings: behavior.totalMeetings,
       totalTimesTargeted: targetStats.totalTimesTargeted,
       timesTargetedByEnemyCamp: targetStats.timesTargetedByEnemyCamp,

@@ -5,6 +5,7 @@ import { PLAYER_NAME_MAPPING } from '../utils/playerNameMapping';
 import type { DeathType } from '../types/deathTypes';
 import { fetchDataFile, fetchOptionalDataFile, DATA_FILES } from '../utils/dataPath';
 import type { DataSource } from '../utils/dataPath';
+import { getPlayerId } from '../utils/playerIdentification';
 
 // New GameLog interfaces
 export interface Vote {
@@ -19,6 +20,7 @@ export interface RoleChange {
 }
 
 export interface PlayerStat {
+  ID?: string | null;             // Steam ID - unique identifier (may be null for legacy data)
   Username: string;
   Color?: string;                 // Player color assigned in game
   MainRoleInitial: string;        // Original role at game start
@@ -274,19 +276,22 @@ function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): Ga
       if (filters.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
     }
 
-    // Apply player filter
+    // Apply player filter (supports both IDs and names for backward compatibility)
     if (filters.playerFilter.mode !== 'none' && filters.playerFilter.players.length > 0) {
-      const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
-      
+      const gamePlayerNames = game.PlayerStats.map(p => p.Username.toLowerCase());
+      const gamePlayerIds = game.PlayerStats.map(p => getPlayerId(p).toLowerCase());
+
       if (filters.playerFilter.mode === 'include') {
-        const hasAllPlayers = filters.playerFilter.players.every((player: string) => 
-          gamePlayersList.includes(player.toLowerCase())
-        );
+        const hasAllPlayers = filters.playerFilter.players.every((player: string) => {
+          const term = String(player).toLowerCase();
+          return gamePlayerIds.includes(term) || gamePlayerNames.includes(term);
+        });
         if (!hasAllPlayers) return false;
       } else if (filters.playerFilter.mode === 'exclude') {
-        const hasAnyPlayer = filters.playerFilter.players.some((player: string) => 
-          gamePlayersList.includes(player.toLowerCase())
-        );
+        const hasAnyPlayer = filters.playerFilter.players.some((player: string) => {
+          const term = String(player).toLowerCase();
+          return gamePlayerIds.includes(term) || gamePlayerNames.includes(term);
+        });
         if (hasAnyPlayer) return false;
       }
     }
