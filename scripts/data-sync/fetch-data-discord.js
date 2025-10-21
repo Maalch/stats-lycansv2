@@ -157,26 +157,32 @@ async function createDataIndex(awsFilesCount, totalGames) {
 async function generateJoueursFromGameLog(gameLog) {
   console.log('📋 Generating joueurs.json from Discord Team game log...');
   
-  // Map to track players and their color occurrences
-  const playerColorMap = new Map();
+  // Map to track players by ID (not username) - keeps only the last username per ID
+  const playerIdMap = new Map();
   
-  // Iterate through all games and player stats
+  // Iterate through all games and player stats chronologically
   gameLog.GameStats.forEach(game => {
     if (game.PlayerStats && Array.isArray(game.PlayerStats)) {
       game.PlayerStats.forEach(playerStat => {
         const username = playerStat.Username;
+        const id = playerStat.ID || playerStat.Id;
         const color = playerStat.Color;
         
-        if (!username) return; // Skip if no username
+        if (!username || !id) return; // Skip if no username or ID
         
-        if (!playerColorMap.has(username)) {
-          playerColorMap.set(username, {
+        // Use ID as the key - this will overwrite with the latest username if it changes
+        if (!playerIdMap.has(id)) {
+          playerIdMap.set(id, {
+            username: username, // Store current username (will be updated if it changes)
             colors: {},
             gamesPlayed: 0
           });
         }
         
-        const playerData = playerColorMap.get(username);
+        const playerData = playerIdMap.get(id);
+        
+        // Update to the latest username for this ID
+        playerData.username = username;
         playerData.gamesPlayed++;
         
         if (color) {
@@ -189,7 +195,7 @@ async function generateJoueursFromGameLog(gameLog) {
   // Create players array with most common color
   const players = [];
   
-  for (const [username, data] of playerColorMap.entries()) {
+  for (const [id, data] of playerIdMap.entries()) {
     // Find the most common color for this player
     let mostCommonColor = null;
     let maxCount = 0;
@@ -202,7 +208,8 @@ async function generateJoueursFromGameLog(gameLog) {
     }
     
     players.push({
-      Joueur: username,
+      Joueur: data.username, // Use the latest username for this ID
+      ID: id, // Include the player's Steam ID
       Image: null, // No image data available from game log
       Twitch: null, // No Twitch data available from game log
       Youtube: null, // No Youtube data available from game log
