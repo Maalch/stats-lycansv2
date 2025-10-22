@@ -2,6 +2,8 @@ import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { getPlayerNameMapping } from '../../utils/playerNameMapping';
+// playerIdentification not directly needed here since we compare both Username and ID inline
 
 
 // Role entry interface for the new unified structure
@@ -130,8 +132,9 @@ export function getPlayerCampFromGameLog(
   excludeWolfSubRoles: boolean = false,
   excludeVillagers: boolean = false
 ): string {
+  const normalizedTarget = getPlayerNameMapping(playerName).toLowerCase();
   const playerStat = game.PlayerStats.find(
-    player => player.Username.toLowerCase() === playerName.toLowerCase()
+    player => getPlayerNameMapping(player.Username).toLowerCase() === normalizedTarget
   );
   
   if (!playerStat) return 'Villageois';
@@ -476,7 +479,8 @@ export function filterByMultiplePlayersFromGameLog(
 
   return games.filter(game => {
     // First check if all selected players are in this game
-    const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
+    const gamePlayersList = game.PlayerStats
+      .flatMap(p => [p.Username.toLowerCase(), (p.ID ?? p.Username).toLowerCase()]);
     const hasAllPlayers = selectedPlayers.every(player => 
       gamePlayersList.includes(player.toLowerCase())
     );
@@ -484,9 +488,15 @@ export function filterByMultiplePlayersFromGameLog(
     if (!hasAllPlayers) return false;
 
     // Get camps for each selected player. Exclude wolf sub-roles from wolf camp if specified
-    const playerCamps = selectedPlayers.map(player => 
-      getPlayerCampFromGameLog(player, game, campFilter?.excludeWolfSubRoles || false)
-    );
+    const playerCamps = selectedPlayers.map(player => {
+      const term = player.toLowerCase();
+      const ps = game.PlayerStats.find(p => {
+        const id = (p.ID ?? p.Username).toLowerCase();
+        return p.Username.toLowerCase() === term || id === term;
+      });
+      const role = getPlayerFinalRole(ps?.MainRoleInitial || '', ps?.MainRoleChanges || []);
+      return getPlayerCampFromRole(role, { regroupWolfSubRoles: campFilter?.excludeWolfSubRoles || false });
+    });
 
     // Apply filtering based on mode
     switch (playersFilterMode) {
@@ -494,9 +504,11 @@ export function filterByMultiplePlayersFromGameLog(
         // Include all games where these players participated together
         // If winnerPlayer is specified, filter by games where that player won
         if (winnerPlayer) {
-          const winnerPlayerStat = game.PlayerStats.find(p => 
-            p.Username.toLowerCase() === winnerPlayer.toLowerCase()
-          );
+          const winTerm = winnerPlayer.toLowerCase();
+          const winnerPlayerStat = game.PlayerStats.find(p => {
+            const id = (p.ID ?? p.Username).toLowerCase();
+            return p.Username.toLowerCase() === winTerm || id === winTerm;
+          });
           return winnerPlayerStat?.Victorious === true;
         }
         return true;
@@ -592,7 +604,8 @@ export function filterByPlayerPairFromGameLog(
 
   return games.filter(game => {
     // Check if both players are in this game
-    const gamePlayersList = game.PlayerStats.map(p => p.Username.toLowerCase());
+    const gamePlayersList = game.PlayerStats
+      .flatMap(p => [p.Username.toLowerCase(), (p.ID ?? p.Username).toLowerCase()]);
     const hasBothPlayers = selectedPlayerPair.every(player => 
       gamePlayersList.includes(player.toLowerCase())
     );
@@ -603,18 +616,22 @@ export function filterByPlayerPairFromGameLog(
       case 'wolves':
         // Check if both players are wolves in this game
         return selectedPlayerPair.every(player => {
-          const playerStat = game.PlayerStats.find(p => 
-            p.Username.toLowerCase() === player.toLowerCase()
-          );
+          const term = player.toLowerCase();
+          const playerStat = game.PlayerStats.find(p => {
+            const id = (p.ID ?? p.Username).toLowerCase();
+            return p.Username.toLowerCase() === term || id === term;
+          });
           return getPlayerCampFromRole(getPlayerFinalRole(playerStat?.MainRoleInitial || '', playerStat?.MainRoleChanges || [])) === 'Loup';
         });
 
       case 'lovers':
         // Check if both players are lovers in this game
         return selectedPlayerPair.every(player => {
-          const playerStat = game.PlayerStats.find(p => 
-            p.Username.toLowerCase() === player.toLowerCase()
-          );
+          const term = player.toLowerCase();
+          const playerStat = game.PlayerStats.find(p => {
+            const id = (p.ID ?? p.Username).toLowerCase();
+            return p.Username.toLowerCase() === term || id === term;
+          });
           return getPlayerCampFromRole(getPlayerFinalRole(playerStat?.MainRoleInitial || '', playerStat?.MainRoleChanges || [])) === 'Amoureux';
         });
 

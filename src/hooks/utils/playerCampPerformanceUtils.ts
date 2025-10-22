@@ -1,10 +1,12 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, PlayerCampPerformance } from '../../types/api';
 import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
+import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
 
 
 /**
  * Calculate overall camp statistics
+ * Uses ID-based player tracking with display name mapping
  */
 function calculateCampStatistics(
   gameData: GameLogEntry[],
@@ -14,13 +16,13 @@ function calculateCampStatistics(
   totalGames: number;
   wins: number;
   winRate: number;
-  players: Record<string, { games: number; wins: number; winRate: number }>;
+  players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
 }> {
   const campStats: Record<string, {
     totalGames: number;
     wins: number;
     winRate: number;
-    players: Record<string, { games: number; wins: number; winRate: number }>;
+    players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
   }> = {};
 
   // Process each game
@@ -68,6 +70,7 @@ function calculateCampStatistics(
 
 /**
  * Analyze player performance by camp
+ * Uses ID-based player tracking with display name mapping
  */
 function analyzePlayerPerformance(
   gameData: GameLogEntry[],
@@ -75,7 +78,7 @@ function analyzePlayerPerformance(
     totalGames: number;
     wins: number;
     winRate: number;
-    players: Record<string, { games: number; wins: number; winRate: number }>;
+    players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
   }>,
   regroupWolfSubRoles: boolean = false,
   regroupVillagers: boolean = false
@@ -87,6 +90,7 @@ function analyzePlayerPerformance(
     winRate: number;
     performance: number;
   }>;
+  displayName: string;
 }> {
   const playerCampPerformance: Record<string, {
     totalGames: number;
@@ -96,43 +100,48 @@ function analyzePlayerPerformance(
       winRate: number;
       performance: number;
     }>;
+    displayName: string;
   }> = {};
 
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
-      const player = playerStat.Username.trim();
-      if (!player) return;
+      const playerId = getPlayerId(playerStat);
+      const displayName = getPlayerDisplayName(playerStat);
 
       // Determine player's camp using helper function
       const mainCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), { regroupWolfSubRoles, regroupVillagers });
       const playerCamp = mainCamp === 'Autres' ? 'Rôles spéciaux' : mainCamp;
 
       // Track player performance in this camp
-      if (!campStats[playerCamp].players[player]) {
-        campStats[playerCamp].players[player] = {
+      if (!campStats[playerCamp].players[playerId]) {
+        campStats[playerCamp].players[playerId] = {
           games: 0,
           wins: 0,
-          winRate: 0
+          winRate: 0,
+          displayName: displayName
         };
       }
-      campStats[playerCamp].players[player].games++;
+      campStats[playerCamp].players[playerId].games++;
+      campStats[playerCamp].players[playerId].displayName = displayName; // Update to latest
 
       // Check if player won using Victorious boolean
       if (playerStat.Victorious) {
-        campStats[playerCamp].players[player].wins++;
+        campStats[playerCamp].players[playerId].wins++;
       }
 
       // Initialize player statistics
-      if (!playerCampPerformance[player]) {
-        playerCampPerformance[player] = {
+      if (!playerCampPerformance[playerId]) {
+        playerCampPerformance[playerId] = {
           totalGames: 0,
-          camps: {}
+          camps: {},
+          displayName: displayName
         };
       }
+      playerCampPerformance[playerId].displayName = displayName; // Update to latest
 
       // Add camp data for this player
-      if (!playerCampPerformance[player].camps[playerCamp]) {
-        playerCampPerformance[player].camps[playerCamp] = {
+      if (!playerCampPerformance[playerId].camps[playerCamp]) {
+        playerCampPerformance[playerId].camps[playerCamp] = {
           games: 0,
           wins: 0,
           winRate: 0,
@@ -140,11 +149,11 @@ function analyzePlayerPerformance(
         };
       }
 
-      playerCampPerformance[player].totalGames++;
-      playerCampPerformance[player].camps[playerCamp].games++;
+      playerCampPerformance[playerId].totalGames++;
+      playerCampPerformance[playerId].camps[playerCamp].games++;
 
       if (playerStat.Victorious) {
-        playerCampPerformance[player].camps[playerCamp].wins++;
+        playerCampPerformance[playerId].camps[playerCamp].wins++;
       }
     });
   });
@@ -154,6 +163,7 @@ function analyzePlayerPerformance(
 
 /**
  * Calculate camp statistics for special roles grouping
+ * Uses ID-based player tracking with display name mapping
  */
 function calculateSpecialRolesCampStatistics(
   gameData: GameLogEntry[]
@@ -161,13 +171,13 @@ function calculateSpecialRolesCampStatistics(
   totalGames: number;
   wins: number;
   winRate: number;
-  players: Record<string, { games: number; wins: number; winRate: number }>;
+  players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
 }> {
   const campStats: Record<string, {
     totalGames: number;
     wins: number;
     winRate: number;
-    players: Record<string, { games: number; wins: number; winRate: number }>;
+    players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
   }> = {};
 
   // Initialize "Rôles spéciaux" category
@@ -200,6 +210,7 @@ function calculateSpecialRolesCampStatistics(
 
 /**
  * Analyze player performance for special roles grouping
+ * Uses ID-based player tracking with display name mapping
  */
 function analyzeSpecialRolesPlayerPerformance(
   gameData: GameLogEntry[],
@@ -207,7 +218,7 @@ function analyzeSpecialRolesPlayerPerformance(
     totalGames: number;
     wins: number;
     winRate: number;
-    players: Record<string, { games: number; wins: number; winRate: number }>;
+    players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
   }>
 ): Record<string, {
   totalGames: number;
@@ -217,6 +228,7 @@ function analyzeSpecialRolesPlayerPerformance(
     winRate: number;
     performance: number;
   }>;
+  displayName: string;
 }> {
   const playerCampPerformance: Record<string, {
     totalGames: number;
@@ -226,12 +238,13 @@ function analyzeSpecialRolesPlayerPerformance(
       winRate: number;
       performance: number;
     }>;
+    displayName: string;
   }> = {};
 
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
-      const player = playerStat.Username.trim();
-      if (!player) return;
+      const playerId = getPlayerId(playerStat);
+      const displayName = getPlayerDisplayName(playerStat);
 
       // Check if this player is playing a special role
       const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
@@ -240,31 +253,35 @@ function analyzeSpecialRolesPlayerPerformance(
         const playerCamp = 'Rôles spéciaux';
 
         // Track player performance in special roles camp
-        if (!campStats[playerCamp].players[player]) {
-          campStats[playerCamp].players[player] = {
+        if (!campStats[playerCamp].players[playerId]) {
+          campStats[playerCamp].players[playerId] = {
             games: 0,
             wins: 0,
-            winRate: 0
+            winRate: 0,
+            displayName: displayName
           };
         }
-        campStats[playerCamp].players[player].games++;
+        campStats[playerCamp].players[playerId].games++;
+        campStats[playerCamp].players[playerId].displayName = displayName; // Update to latest
 
         // Check if player won using Victorious boolean
         if (playerStat.Victorious) {
-          campStats[playerCamp].players[player].wins++;
+          campStats[playerCamp].players[playerId].wins++;
         }
 
         // Initialize player statistics
-        if (!playerCampPerformance[player]) {
-          playerCampPerformance[player] = {
+        if (!playerCampPerformance[playerId]) {
+          playerCampPerformance[playerId] = {
             totalGames: 0,
-            camps: {}
+            camps: {},
+            displayName: displayName
           };
         }
+        playerCampPerformance[playerId].displayName = displayName; // Update to latest
 
         // Add camp data for this player
-        if (!playerCampPerformance[player].camps[playerCamp]) {
-          playerCampPerformance[player].camps[playerCamp] = {
+        if (!playerCampPerformance[playerId].camps[playerCamp]) {
+          playerCampPerformance[playerId].camps[playerCamp] = {
             games: 0,
             wins: 0,
             winRate: 0,
@@ -272,11 +289,11 @@ function analyzeSpecialRolesPlayerPerformance(
           };
         }
 
-        playerCampPerformance[player].totalGames++;
-        playerCampPerformance[player].camps[playerCamp].games++;
+        playerCampPerformance[playerId].totalGames++;
+        playerCampPerformance[playerId].camps[playerCamp].games++;
 
         if (playerStat.Victorious) {
-          playerCampPerformance[player].camps[playerCamp].wins++;
+          playerCampPerformance[playerId].camps[playerCamp].wins++;
         }
       }
     });
@@ -293,7 +310,7 @@ function calculateWinRates(
     totalGames: number;
     wins: number;
     winRate: number;
-    players: Record<string, { games: number; wins: number; winRate: number }>;
+    players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
   }>
 ): void {
   Object.keys(campStats).forEach(camp => {
@@ -302,8 +319,8 @@ function calculateWinRates(
     }
 
     // Calculate each player's win rate in this camp
-    Object.keys(campStats[camp].players).forEach(player => {
-      const playerStat = campStats[camp].players[player];
+    Object.keys(campStats[camp].players).forEach(playerId => {
+      const playerStat = campStats[camp].players[playerId];
       if (playerStat.games > 0) {
         playerStat.winRate = parseFloat((playerStat.wins / playerStat.games * 100).toFixed(2));
       }
@@ -323,17 +340,18 @@ function calculatePerformanceDifferentials(
       winRate: number;
       performance: number;
     }>;
+    displayName: string;
   }>,
   campStats: Record<string, {
     totalGames: number;
     wins: number;
     winRate: number;
-    players: Record<string, { games: number; wins: number; winRate: number }>;
+    players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
   }>
 ): void {
-  Object.keys(playerCampPerformance).forEach(player => {
-    Object.keys(playerCampPerformance[player].camps).forEach(camp => {
-      const playerCampStat = playerCampPerformance[player].camps[camp];
+  Object.keys(playerCampPerformance).forEach(playerId => {
+    Object.keys(playerCampPerformance[playerId].camps).forEach(camp => {
+      const playerCampStat = playerCampPerformance[playerId].camps[camp];
 
       if (playerCampStat.games > 0) {
         playerCampStat.winRate = parseFloat((playerCampStat.wins / playerCampStat.games * 100).toFixed(2));
@@ -352,6 +370,7 @@ function calculatePerformanceDifferentials(
 
 /**
  * Format results for output
+ * Converts ID-based internal tracking to display names for UI
  */
 function formatResults(
   playerCampPerformance: Record<string, {
@@ -362,12 +381,13 @@ function formatResults(
       winRate: number;
       performance: number;
     }>;
+    displayName: string;
   }>,
   campStats: Record<string, {
     totalGames: number;
     wins: number;
     winRate: number;
-    players: Record<string, { games: number; wins: number; winRate: number }>;
+    players: Record<string, { games: number; wins: number; winRate: number; displayName: string }>;
   }>,
   minGamesToInclude: number
 ): {
@@ -377,8 +397,8 @@ function formatResults(
   // Convert player camp performance to array with minimum game threshold
   const playerPerformanceArray: PlayerPerformance[] = [];
 
-  Object.keys(playerCampPerformance).forEach(player => {
-    const playerData = playerCampPerformance[player];
+  Object.keys(playerCampPerformance).forEach(playerId => {
+    const playerData = playerCampPerformance[playerId];
     const campPerformanceArray: PlayerCampPerformance[] = [];
 
     Object.keys(playerData.camps).forEach(camp => {
@@ -408,7 +428,7 @@ function formatResults(
     // Only include player if they have qualifying camp data
     if (campPerformanceArray.length > 0) {
       playerPerformanceArray.push({
-        player: player,
+        player: playerData.displayName, // Use display name for UI
         totalGames: playerData.totalGames,
         campPerformance: campPerformanceArray
       });
@@ -475,14 +495,14 @@ export function computePlayerCampPerformance(
     mergedCampStats['Camp Loup'] = campStatsWithSubRoles['Loup'];
 
     // Add "Camp Loup" performance for each player
-    Object.keys(playerCampPerformanceWithSubRoles).forEach(player => {
-      if (!mergedPlayerPerformance[player]) {
-        mergedPlayerPerformance[player] = playerCampPerformanceWithSubRoles[player];
+    Object.keys(playerCampPerformanceWithSubRoles).forEach(playerId => {
+      if (!mergedPlayerPerformance[playerId]) {
+        mergedPlayerPerformance[playerId] = playerCampPerformanceWithSubRoles[playerId];
       }
 
-      if (playerCampPerformanceWithSubRoles[player].camps['Loup']) {
-        mergedPlayerPerformance[player].camps['Camp Loup'] = 
-          playerCampPerformanceWithSubRoles[player].camps['Loup'];
+      if (playerCampPerformanceWithSubRoles[playerId].camps['Loup']) {
+        mergedPlayerPerformance[playerId].camps['Camp Loup'] = 
+          playerCampPerformanceWithSubRoles[playerId].camps['Loup'];
       }
     });
   }
@@ -492,14 +512,14 @@ export function computePlayerCampPerformance(
     mergedCampStats['Camp Villageois'] = campStatsWithSubRoles['Villageois'];
 
     // Add "Camp Villageois" performance for each player
-    Object.keys(playerCampPerformanceWithSubRoles).forEach(player => {
-      if (!mergedPlayerPerformance[player]) {
-        mergedPlayerPerformance[player] = playerCampPerformanceWithSubRoles[player];
+    Object.keys(playerCampPerformanceWithSubRoles).forEach(playerId => {
+      if (!mergedPlayerPerformance[playerId]) {
+        mergedPlayerPerformance[playerId] = playerCampPerformanceWithSubRoles[playerId];
       }
       
-      if (playerCampPerformanceWithSubRoles[player].camps['Villageois']) {
-        mergedPlayerPerformance[player].camps['Camp Villageois'] = 
-          playerCampPerformanceWithSubRoles[player].camps['Villageois'];
+      if (playerCampPerformanceWithSubRoles[playerId].camps['Villageois']) {
+        mergedPlayerPerformance[playerId].camps['Camp Villageois'] = 
+          playerCampPerformanceWithSubRoles[playerId].camps['Villageois'];
       }
     });
   }
@@ -509,14 +529,14 @@ export function computePlayerCampPerformance(
     mergedCampStats['Rôles spéciaux'] = campStatsSpecialRoles['Rôles spéciaux'];
     
     // Add "Rôles spéciaux" performance for each player
-    Object.keys(playerCampPerformanceSpecialRoles).forEach(player => {
-      if (!mergedPlayerPerformance[player]) {
-        mergedPlayerPerformance[player] = playerCampPerformanceSpecialRoles[player];
+    Object.keys(playerCampPerformanceSpecialRoles).forEach(playerId => {
+      if (!mergedPlayerPerformance[playerId]) {
+        mergedPlayerPerformance[playerId] = playerCampPerformanceSpecialRoles[playerId];
       }
       
-      if (playerCampPerformanceSpecialRoles[player].camps['Rôles spéciaux']) {
-        mergedPlayerPerformance[player].camps['Rôles spéciaux'] = 
-          playerCampPerformanceSpecialRoles[player].camps['Rôles spéciaux'];
+      if (playerCampPerformanceSpecialRoles[playerId].camps['Rôles spéciaux']) {
+        mergedPlayerPerformance[playerId].camps['Rôles spéciaux'] = 
+          playerCampPerformanceSpecialRoles[playerId].camps['Rôles spéciaux'];
       }
     });
   }

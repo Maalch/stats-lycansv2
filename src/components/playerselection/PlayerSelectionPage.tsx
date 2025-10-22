@@ -3,8 +3,7 @@ import { useSettings } from '../../context/SettingsContext';
 import { useGameLogData } from '../../hooks/useCombinedRawData';
 import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculatedPlayerAchievements';
 import { useJoueursData } from '../../hooks/useJoueursData';
-import { getPlayerNameMapping } from '../../utils/playerNameMapping';
-import { findPlayerByName } from '../../utils/playersUtils';
+import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { AchievementsDisplay } from './AchievementsDisplay';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
@@ -36,29 +35,37 @@ export function PlayerSelectionPage() {
   const playerStats = useMemo(() => {
     if (!gameLogData || !gameLogData.GameStats) return [];
 
+    // Group by unique player ID (Steam ID or Username fallback)
     const playerMap = new Map<string, {
       games: number;
       wins: number;
       firstDate: Date;
       lastDate: Date;
+      displayName: string; // Store the canonical display name
     }>();
 
     gameLogData.GameStats.forEach((game: GameLogEntry) => {
       const gameDate = new Date(game.StartDate);
       
       game.PlayerStats.forEach((playerStat) => {
-        const playerName = getPlayerNameMapping(playerStat.Username);
+        // Use the playerIdentification utility to get unique ID
+        const playerId = getPlayerId(playerStat);
         
-        if (!playerMap.has(playerName)) {
-          playerMap.set(playerName, {
+        // Find canonical player name from joueurs.json
+        const playerInfo = joueursData?.Players?.find(p => p.ID === playerId);
+        const canonicalName = playerInfo?.Joueur || getPlayerDisplayName(playerStat);
+        
+        if (!playerMap.has(playerId)) {
+          playerMap.set(playerId, {
             games: 0,
             wins: 0,
             firstDate: gameDate,
             lastDate: gameDate,
+            displayName: canonicalName,
           });
         }
         
-        const stats = playerMap.get(playerName)!;
+        const stats = playerMap.get(playerId)!;
         stats.games++;
         if (playerStat.Victorious) {
           stats.wins++;
@@ -73,18 +80,23 @@ export function PlayerSelectionPage() {
       });
     });
 
-    return Array.from(playerMap.entries()).map(([name, stats]): PlayerBasicStats => {
-      // Find player data from joueurs.json
-      const playerInfo = joueursData?.Players ? findPlayerByName(joueursData.Players, name) : null;
+    return Array.from(playerMap.entries()).map(([playerId, stats]): PlayerBasicStats => {
+      // Find player data from joueurs.json by ID first, then fall back to name matching
+      let playerInfo = joueursData?.Players?.find(p => p.ID === playerId);
+      
+      // If not found by ID, try matching by name (for main joueurs.json which uses SteamID field)
+      if (!playerInfo) {
+        playerInfo = joueursData?.Players?.find(p => p.Joueur === stats.displayName);
+      }
       
       return {
-        name,
+        name: stats.displayName,
         totalGames: stats.games,
         totalWins: stats.wins,
         winRate: stats.games > 0 ? (stats.wins / stats.games) * 100 : 0,
         firstGameDate: stats.firstDate.toLocaleDateString('fr-FR'),
         lastGameDate: stats.lastDate.toLocaleDateString('fr-FR'),
-        isHighlighted: name === settings.highlightedPlayer,
+        isHighlighted: stats.displayName === settings.highlightedPlayer,
         image: playerInfo?.Image || null,
         twitch: playerInfo?.Twitch || null,
         youtube: playerInfo?.Youtube || null,
