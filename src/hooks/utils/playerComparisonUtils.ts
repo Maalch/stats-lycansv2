@@ -6,6 +6,7 @@ import type { PlayerStat } from '../../types/api';
 import type { GameLogEntry } from '../useCombinedRawData';
 import { formatDuration } from '../../utils/gameUtils';
 import { calculateGameDuration, getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { getPlayerId } from '../../utils/playerIdentification';
 
 
 export interface PlayerComparisonMetrics {
@@ -54,17 +55,24 @@ export interface PlayerComparisonData {
 
 /**
  * Calculate camp-specific performance for a player
+ * @param playerIdentifier - Player name or ID to find
  */
 export function calculateCampSpecificPerformance(
-  playerName: string,
+  playerIdentifier: string,
   rawGameData: GameLogEntry[]
 ) {
   const playerGameHistory = rawGameData
     .filter(game => {
-      return game.PlayerStats.some(p => p.Username.toLowerCase() === playerName.toLowerCase());
+      return game.PlayerStats.some(p => 
+        getPlayerId(p) === playerIdentifier || 
+        p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+      );
     })
     .map(game => {
-      const playerStat = game.PlayerStats.find(p => p.Username.toLowerCase() === playerName.toLowerCase());
+      const playerStat = game.PlayerStats.find(p => 
+        getPlayerId(p) === playerIdentifier || 
+        p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+      );
       if (!playerStat) return null;
 
       const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
@@ -107,18 +115,25 @@ export function calculateCampSpecificPerformance(
 
 /**
  * Calculate advanced consistency score for a player
+ * @param playerIdentifier - Player name or ID to find
  */
 export function calculateAdvancedConsistency(
-  playerName: string,
+  playerIdentifier: string,
   rawGameData: GameLogEntry[]
 ): number {
   // Get player's game history with enhanced context
   const playerGameHistory = rawGameData
     .filter(game => {
-      return game.PlayerStats.some(p => p.Username.toLowerCase() === playerName.toLowerCase());
+      return game.PlayerStats.some(p => 
+        getPlayerId(p) === playerIdentifier || 
+        p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+      );
     })
     .map(game => {
-      const playerStat = game.PlayerStats.find(p => p.Username.toLowerCase() === playerName.toLowerCase());
+      const playerStat = game.PlayerStats.find(p => 
+        getPlayerId(p) === playerIdentifier || 
+        p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+      );
       if (!playerStat) return null;
       const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
       const playerWon = playerStat.Victorious ? 1 : 0;
@@ -243,15 +258,24 @@ export function createSpecialRoleScaler(values: number[]) {
 
 /**
  * Generate player comparison data
+ * @param player1Identifier - Player 1 name or ID
+ * @param player2Identifier - Player 2 name or ID
  */
 export function generatePlayerComparison(
-  player1Name: string,
-  player2Name: string,
+  player1Identifier: string,
+  player2Identifier: string,
   playerStatsData: { playerStats: PlayerStat[] },
   rawGameData: GameLogEntry[]
 ): PlayerComparisonData | null {
-  const player1Stats = playerStatsData.playerStats.find(p => p.player === player1Name);
-  const player2Stats = playerStatsData.playerStats.find(p => p.player === player2Name);
+  // Find players by ID or name
+  const player1Stats = playerStatsData.playerStats.find(p => 
+    p.player === player1Identifier || 
+    (p.player as any).id === player1Identifier // Support ID-based lookup if PlayerStat has id
+  );
+  const player2Stats = playerStatsData.playerStats.find(p => 
+    p.player === player2Identifier || 
+    (p.player as any).id === player2Identifier
+  );
   
   if (!player1Stats || !player2Stats) return null;
 
@@ -269,19 +293,28 @@ export function generatePlayerComparison(
       rawLoupsEfficiency: campPerformance.loupsWinRate,
       rawSpecialRoleAdaptability: campPerformance.specialRoleWinRate,
       villageoisGames: rawGameData.filter(game => {
-        const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === playerStat.player.toLowerCase());
+        const playerInGame = game.PlayerStats.find(p => 
+          getPlayerId(p) === getPlayerId({ Username: playerStat.player, ID: null } as any) || 
+          p.Username.toLowerCase() === playerStat.player.toLowerCase()
+        );
         if (!playerInGame) return false;
         const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
         return playerCamp === 'Villageois';
       }).length,
       loupsGames: rawGameData.filter(game => {
-        const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === playerStat.player.toLowerCase());
+        const playerInGame = game.PlayerStats.find(p => 
+          getPlayerId(p) === getPlayerId({ Username: playerStat.player, ID: null } as any) || 
+          p.Username.toLowerCase() === playerStat.player.toLowerCase()
+        );
         if (!playerInGame) return false;
         const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
         return playerCamp === 'Loup';
       }).length,
       specialRoleGames: rawGameData.filter(game => {
-        const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === playerStat.player.toLowerCase());
+        const playerInGame = game.PlayerStats.find(p => 
+          getPlayerId(p) === getPlayerId({ Username: playerStat.player, ID: null } as any) || 
+          p.Username.toLowerCase() === playerStat.player.toLowerCase()
+        );
         if (!playerInGame) return false;
         const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
         return !['Villageois', 'Loup'].includes(playerCamp);
@@ -326,14 +359,26 @@ export function generatePlayerComparison(
   let sameLoupsGamesWithDuration = 0;
 
   rawGameData.forEach(game => {
-    const hasPlayer1 = game.PlayerStats.some(p => p.Username.toLowerCase() === player1Name.toLowerCase());
-    const hasPlayer2 = game.PlayerStats.some(p => p.Username.toLowerCase() === player2Name.toLowerCase());
+    const hasPlayer1 = game.PlayerStats.some(p => 
+      getPlayerId(p) === player1Identifier || 
+      p.Username.toLowerCase() === player1Identifier.toLowerCase()
+    );
+    const hasPlayer2 = game.PlayerStats.some(p => 
+      getPlayerId(p) === player2Identifier || 
+      p.Username.toLowerCase() === player2Identifier.toLowerCase()
+    );
     
     if (hasPlayer1 && hasPlayer2) {
       commonGames.push(game);
       
-      const player1Stat = game.PlayerStats.find(p => p.Username.toLowerCase() === player1Name.toLowerCase());
-      const player2Stat = game.PlayerStats.find(p => p.Username.toLowerCase() === player2Name.toLowerCase());
+      const player1Stat = game.PlayerStats.find(p => 
+        getPlayerId(p) === player1Identifier || 
+        p.Username.toLowerCase() === player1Identifier.toLowerCase()
+      );
+      const player2Stat = game.PlayerStats.find(p => 
+        getPlayerId(p) === player2Identifier || 
+        p.Username.toLowerCase() === player2Identifier.toLowerCase()
+      );
       
       if (!player1Stat || !player2Stat) return;
 
@@ -420,27 +465,36 @@ export function generatePlayerComparison(
   });
 
   // Calculate metrics for both players using dynamic scaling
-  const calculateMetrics = (stats: PlayerStat): PlayerComparisonMetrics => {
+  const calculateMetrics = (stats: PlayerStat, playerIdentifier: string): PlayerComparisonMetrics => {
     const campPerformance = calculateCampSpecificPerformance(stats.player, rawGameData);
     const consistencyScore = calculateAdvancedConsistency(stats.player, rawGameData);
     
     // Count games in each category for the player
     const playerVillageoisGames = rawGameData.filter(game => {
-      const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === stats.player.toLowerCase());
+      const playerInGame = game.PlayerStats.find(p => 
+        getPlayerId(p) === playerIdentifier || 
+        p.Username.toLowerCase() === stats.player.toLowerCase()
+      );
       if (!playerInGame) return false;
       const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
       return playerCamp === 'Villageois';
     }).length;
     
     const playerLoupsGames = rawGameData.filter(game => {
-      const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === stats.player.toLowerCase());
+      const playerInGame = game.PlayerStats.find(p => 
+        getPlayerId(p) === playerIdentifier || 
+        p.Username.toLowerCase() === stats.player.toLowerCase()
+      );
       if (!playerInGame) return false;
       const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
       return playerCamp === 'Loup';
     }).length;
     
     const playerSpecialRoleGames = rawGameData.filter(game => {
-      const playerInGame = game.PlayerStats.find(p => p.Username.toLowerCase() === stats.player.toLowerCase());
+      const playerInGame = game.PlayerStats.find(p => 
+        getPlayerId(p) === playerIdentifier || 
+        p.Username.toLowerCase() === stats.player.toLowerCase()
+      );
       if (!playerInGame) return false;
       const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
       return !['Villageois', 'Loup'].includes(playerCamp);
@@ -459,13 +513,13 @@ export function generatePlayerComparison(
       avgGameDuration: 0, // Could be calculated if needed
       commonGames: commonGames.length,
       winRateVsOpponent: commonGames.length > 0 
-        ? (stats.player === player1Name ? player1CommonWins : player2CommonWins) / commonGames.length * 100 
+        ? (playerIdentifier === player1Identifier ? player1CommonWins : player2CommonWins) / commonGames.length * 100 
         : 0
     };
   };
 
-  const player1Metrics = calculateMetrics(player1Stats);
-  const player2Metrics = calculateMetrics(player2Stats);
+  const player1Metrics = calculateMetrics(player1Stats, player1Identifier);
+  const player2Metrics = calculateMetrics(player2Stats, player2Identifier);
 
   return {
     player1: player1Metrics,

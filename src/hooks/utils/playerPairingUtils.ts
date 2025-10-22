@@ -5,6 +5,7 @@
 import type { PlayerPairingStatsData, PlayerPairStat } from '../../types/api';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
+import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
 
 /**
  * Extended interface for chart display with highlighting support
@@ -122,17 +123,22 @@ export function computePlayerPairingStats(
       // Generate all possible wolf pairs
       for (let i = 0; i < wolves.length; i++) {
         for (let j = i + 1; j < wolves.length; j++) {
-          const wolf1 = wolves[i].Username;
-          const wolf2 = wolves[j].Username;
-          // Create a consistent key for the pair (alphabetical order)
-          const pairKey = [wolf1, wolf2].sort().join(" & ");
+          const wolf1Id = getPlayerId(wolves[i]);
+          const wolf2Id = getPlayerId(wolves[j]);
+          const wolf1Name = getPlayerDisplayName(wolves[i]);
+          const wolf2Name = getPlayerDisplayName(wolves[j]);
+          // Create a consistent key for the pair using IDs (alphabetical order)
+          const pairKey = [wolf1Id, wolf2Id].sort().join(" & ");
           
           if (!wolfPairStats[pairKey]) {
             wolfPairStats[pairKey] = {
               appearances: 0,
               wins: 0,
-              players: [wolf1, wolf2]
+              players: [wolf1Name, wolf2Name]
             };
+          } else {
+            // Update to latest display names
+            wolfPairStats[pairKey].players = [wolf1Name, wolf2Name];
           }
           
           wolfPairStats[pairKey].appearances++;
@@ -153,18 +159,23 @@ export function computePlayerPairingStats(
       for (let i = 0; i < lovers.length; i += 2) {
         // Make sure we have both lovers of the pair
         if (i + 1 < lovers.length) {
-          const lover1 = lovers[i].Username;
-          const lover2 = lovers[i + 1].Username;
+          const lover1Id = getPlayerId(lovers[i]);
+          const lover2Id = getPlayerId(lovers[i + 1]);
+          const lover1Name = getPlayerDisplayName(lovers[i]);
+          const lover2Name = getPlayerDisplayName(lovers[i + 1]);
 
-          // Create a consistent key for the pair (alphabetical order)
-          const pairKey = [lover1, lover2].sort().join(" & ");
+          // Create a consistent key for the pair by IDs (alphabetical order)
+          const pairKey = [lover1Id, lover2Id].sort().join(" & ");
 
           if (!loverPairStats[pairKey]) {
             loverPairStats[pairKey] = {
               appearances: 0,
               wins: 0,
-              players: [lover1, lover2]
+              players: [lover1Name, lover2Name]
             };
+          } else {
+            // Update to latest display names
+            loverPairStats[pairKey].players = [lover1Name, lover2Name];
           }
 
           loverPairStats[pairKey].appearances++;

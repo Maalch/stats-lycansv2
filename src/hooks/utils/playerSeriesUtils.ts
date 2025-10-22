@@ -1,5 +1,6 @@
 import { getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
+import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
 
 
 export interface CampSeries {
@@ -103,28 +104,33 @@ interface PlayerSeriesState {
 }
 
 /**
- * Get all unique players from game data
+ * Get all unique players from game data (by ID)
+ * Returns a Map of player IDs to their latest display names
  */
-function getAllPlayers(gameData: GameLogEntry[]): Set<string> {
-  const allPlayers = new Set<string>();
+function getAllPlayers(gameData: GameLogEntry[]): Map<string, string> {
+  const playerMap = new Map<string, string>();
   
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
-      allPlayers.add(playerStat.Username.trim());
+      const playerId = getPlayerId(playerStat);
+      const displayName = getPlayerDisplayName(playerStat);
+      // Update to latest seen display name
+      playerMap.set(playerId, displayName);
     });
   });
   
-  return allPlayers;
+  return playerMap;
 }
 
 /**
  * Initialize player series tracking state
+ * @param playerMap - Map of player IDs to display names
  */
-function initializePlayerSeries(allPlayers: Set<string>): Record<string, PlayerSeriesState> {
+function initializePlayerSeries(playerMap: Map<string, string>): Record<string, PlayerSeriesState> {
   const playerCampSeries: Record<string, PlayerSeriesState> = {};
   
-  allPlayers.forEach(player => {
-    playerCampSeries[player] = {
+  playerMap.forEach((_displayName, playerId) => {
+    playerCampSeries[playerId] = {
       currentVillageoisSeries: 0,
       currentLoupsSeries: 0,
       currentNoWolfSeries: 0,
@@ -158,10 +164,11 @@ function initializePlayerSeries(allPlayers: Set<string>): Record<string, PlayerS
 
 /**
  * Process camp series for a player
+ * @param displayName - Display name for the player (used in output)
  */
 function processCampSeries(
   playerStats: PlayerSeriesState,
-  player: string,
+  displayName: string,
   mainCamp: 'Villageois' | 'Loup' | 'Autres',
   gameDisplayedId: string,
   date: string
@@ -182,7 +189,7 @@ function processCampSeries(
       if (!playerStats.longestVillageoisSeries || 
           playerStats.currentVillageoisSeries >= playerStats.longestVillageoisSeries.seriesLength) {
         playerStats.longestVillageoisSeries = {
-          player,
+          player: displayName,
           camp: 'Villageois',
           seriesLength: playerStats.currentVillageoisSeries,
           startGame: playerStats.villageoisSeriesStart?.game || gameDisplayedId,
@@ -215,7 +222,7 @@ function processCampSeries(
       if (!playerStats.longestLoupsSeries || 
           playerStats.currentLoupsSeries >= playerStats.longestLoupsSeries.seriesLength) {
         playerStats.longestLoupsSeries = {
-          player,
+          player: displayName,
           camp: 'Loups',
           seriesLength: playerStats.currentLoupsSeries,
           startGame: playerStats.loupsSeriesStart?.game || gameDisplayedId,
@@ -275,7 +282,7 @@ function processCampSeries(
     if (!playerStats.longestNoWolfSeries || 
         playerStats.currentNoWolfSeries >= playerStats.longestNoWolfSeries.seriesLength) {
       playerStats.longestNoWolfSeries = {
-        player,
+        player: displayName,
         camp: 'Sans Loups', // Display name for NoWolf series
         seriesLength: playerStats.currentNoWolfSeries,
         startGame: playerStats.noWolfSeriesStart?.game || gameDisplayedId,
@@ -292,10 +299,11 @@ function processCampSeries(
 
 /**
  * Process win series for a player
+ * @param displayName - Display name for the player (used in output)
  */
 function processWinSeries(
   playerStats: PlayerSeriesState,
-  player: string,
+  displayName: string,
   playerWon: boolean,
   actualCamp: string,
   gameDisplayedId: string,
@@ -324,7 +332,7 @@ function processWinSeries(
       });
       
       playerStats.longestWinSeries = {
-        player,
+        player: displayName,
         seriesLength: playerStats.currentWinSeries,
         startGame: playerStats.winSeriesStart?.game || gameDisplayedId,
         endGame: gameDisplayedId,
@@ -349,10 +357,11 @@ function processWinSeries(
 
 /**
  * Process loss series for a player
+ * @param displayName - Display name for the player (used in output)
  */
 function processLossSeries(
   playerStats: PlayerSeriesState,
-  player: string,
+  displayName: string,
   playerWon: boolean,
   actualCamp: string,
   gameDisplayedId: string,
@@ -384,7 +393,7 @@ function processLossSeries(
       });
       
       playerStats.longestLossSeries = {
-        player,
+        player: displayName,
         seriesLength: playerStats.currentLossSeries,
         startGame: playerStats.lossSeriesStart?.game || gameDisplayedId,
         endGame: gameDisplayedId,
@@ -546,10 +555,10 @@ export function computePlayerSeries(
   // Sort games by ID to ensure chronological order
   const sortedGames = [...gameData].sort((a, b) => parseInt(a.DisplayedId) - parseInt(b.DisplayedId));
 
-  // Get all unique players
+  // Get all unique players (returns Map of IDs to display names)
   const allPlayers = getAllPlayers(sortedGames);
 
-  // Initialize tracking for all players
+  // Initialize tracking for all players (using IDs as keys)
   const playerCampSeries = initializePlayerSeries(allPlayers);
 
   // Process each game chronologically
@@ -562,21 +571,26 @@ export function computePlayerSeries(
     });
 
     game.PlayerStats.forEach(playerStat => {
-      const player = playerStat.Username.trim();
-      if (!player) return;
+      const playerId = getPlayerId(playerStat);
+      const displayName = getPlayerDisplayName(playerStat);
+      
+      // Update the player map with latest display name
+      allPlayers.set(playerId, displayName);
 
-      const playerStats = playerCampSeries[player];
+      const playerStats = playerCampSeries[playerId];
+      if (!playerStats) return; // Skip if player not initialized
+      
       const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
       const playerWon = playerStat.Victorious;
 
-      // Process camp series 
-      processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date);
+      // Process camp series (pass display name for output)
+      processCampSeries(playerStats, displayName, mainCamp, gameDisplayedId, date);
 
-      // Process win series 
-      processWinSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
+      // Process win series (pass display name for output)
+      processWinSeries(playerStats, displayName, playerWon, mainCamp, gameDisplayedId, date);
       
-      // Process loss series 
-      processLossSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
+      // Process loss series (pass display name for output)
+      processLossSeries(playerStats, displayName, playerWon, mainCamp, gameDisplayedId, date);
     });
   });
 

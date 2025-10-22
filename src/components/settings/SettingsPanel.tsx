@@ -163,7 +163,8 @@ export function SettingsPanel() {
           selectable.add(player);
         } else {
           const hasGamesWithoutExcluded = filteredGames.some(game => {
-            const gamePlayers = game.PlayerStats.map(p => p.Username.toLowerCase());
+            const gamePlayers = game.PlayerStats
+              .flatMap(p => [p.Username.toLowerCase(), (p.ID ?? p.Username).toLowerCase()]);
             const playerInGame = gamePlayers.includes(player.toLowerCase());
             if (!playerInGame) return false;
             
