@@ -44,7 +44,9 @@ interface GameLogEntry {
   Version: string; Modded: boolean; PlayerStats: PlayerStat[];
 }
 interface PlayerStat {
-  Username: string; Color?: string; MainRoleInitial: string; MainRoleChanges: RoleChange[];
+  ID?: string | null;         // Steam ID - unique identifier (CRITICAL for player identification)
+  Username: string;           // Display name (can vary: "Johnny" vs "[S.P.Q.R] Johnny Guitouze")
+  Color?: string; MainRoleInitial: string; MainRoleChanges: RoleChange[];
   Power: string | null; SecondaryRole: string | null; 
   Victorious: boolean; DeathTiming: string | null; DeathDateIrl: string | null;
   DeathPosition: {x: number; y: number; z: number} | null;
@@ -67,6 +69,26 @@ interface RawGameData {
 ```
 
 **Critical:** `Amoureux` is `MainRoleInitial`, not `SecondaryRole`. Solo roles win as their role name, not "Villageois". Recent data includes detailed vote tracking and death metadata.
+
+### Player Identification System (CRITICAL)
+**ALWAYS use `playerIdentification.ts` utilities** - never compare players by username alone:
+```typescript
+import { getPlayerId, getPlayerDisplayName } from '../utils/playerIdentification';
+
+// ✅ CORRECT: Group by unique ID
+const playerId = getPlayerId(player); // Returns ID if available, falls back to Username
+const displayName = getPlayerDisplayName(player); // Always returns Username
+
+// ❌ WRONG: Grouping by username creates duplicates
+const playerMap = new Map<string, Stats>();
+playerMap.set(player.Username, stats); // "Johnny" and "[S.P.Q.R] Johnny Guitouze" = 2 entries
+
+// ✅ CORRECT: Grouping by ID prevents duplicates  
+const playerMap = new Map<string, Stats>();
+playerMap.set(getPlayerId(player), stats); // Same Steam ID = 1 entry
+```
+
+**Why this matters:** Same player can have different usernames across games. Always use Steam ID (`player.ID`) as unique identifier, fallback to `Username` only when ID is null/undefined.
 
 ## Key Architectural Patterns
 
@@ -133,6 +155,31 @@ import { FullscreenChart } from '../common/FullscreenChart';
 **Filter Application:** All hooks automatically respect `SettingsContext` filters (game type, date range, player inclusion/exclusion)  
 **French Date Parsing:** Uses `parseFrenchDate()` for DD/MM/YYYY format compatibility  
 **URL Sharing:** Complete settings state serialized to URL parameters (see `URL_PARAMETERS.md`) with localStorage fallback
+
+### Dual Data Source System
+**Main Source:** `/data/gameLog.json` + `/data/joueurs.json` (with player images, Twitch, YouTube links)  
+**Discord Source:** `/data/discord/gameLog.json` + `/data/discord/joueurs.json` (with Steam IDs but no social media)
+
+```typescript
+// Data source switching via SettingsContext
+const { settings } = useSettings();
+// settings.dataSource: 'main' | 'discord'
+
+// All data hooks automatically respect dataSource
+const { data: gameLogData } = useGameLogData(); // Fetches from correct source
+const { joueursData } = useJoueursData(); // Fetches matching joueurs.json
+```
+
+**Key Difference:** Main `joueurs.json` uses `SteamID` field (often null) + has social media. Discord `joueurs.json` uses `ID` field (always populated) + no social media.
+
+**Pattern for Player Lookup:**
+```typescript
+// Try Steam ID first, fall back to name matching
+let playerInfo = joueursData?.Players?.find(p => p.ID === playerId);
+if (!playerInfo) {
+  playerInfo = joueursData?.Players?.find(p => p.Joueur === displayName);
+}
+```
 
 ### Game Domain Rules
 **Camps:** Villageois, Loups, solo roles (`Amoureux`, `Idiot du Village`, `Agent`, etc.)  
@@ -252,6 +299,29 @@ Uses CSS custom properties (`--accent-primary`, `--chart-primary`) with theme-ad
 
 ## Critical Debugging & Data Consistency
 
+### Player Identification Pitfalls
+**CRITICAL:** Never group or compare players by `Username` alone - use `playerIdentification.ts`:
+
+```typescript
+// ❌ WRONG: Creates duplicate entries for same player
+gameData.forEach(game => {
+  game.PlayerStats.forEach(player => {
+    const key = player.Username; // "Johnny" vs "[S.P.Q.R] Johnny Guitouze" = 2 keys
+    playerMap.set(key, stats);
+  });
+});
+
+// ✅ CORRECT: Single entry per player using Steam ID
+import { getPlayerId, getPlayerDisplayName } from '../utils/playerIdentification';
+gameData.forEach(game => {
+  game.PlayerStats.forEach(player => {
+    const key = getPlayerId(player); // Same Steam ID = 1 key
+    const name = getPlayerDisplayName(player); // For display only
+    playerMap.set(key, { ...stats, displayName: name });
+  });
+});
+```
+
 ### Data Source Consistency Pattern
 **IMPORTANT:** Always use the same data source for related calculations to avoid mismatched statistics. Example from `DeathsView.tsx`:
 
@@ -276,6 +346,7 @@ deathStats.playerDeathStats.forEach((player) => {
 1. **Camp Filtering:** Use `getPlayerCampFromRole(player.MainRoleInitial)` consistently - not `SecondaryRole`
 2. **Death Information:** Filter games with `!game.LegacyData || game.LegacyData.deathInformationFilled === true` before processing death stats
 3. **Game Counting:** Apply the same camp filter logic for both death counting and game counting to avoid rate calculation errors
+4. **Player Lookup:** Always try Steam ID lookup first, then fall back to name matching for compatibility with both data sources
 
 ## Achievements System Architecture
 
