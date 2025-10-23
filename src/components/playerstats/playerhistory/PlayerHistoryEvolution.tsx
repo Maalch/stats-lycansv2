@@ -3,14 +3,15 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { usePlayerGameHistoryFromRaw } from '../../../hooks/usePlayerGameHistoryFromRaw';
 import { useNavigation } from '../../../context/NavigationContext';
 import { FullscreenChart } from '../../common/FullscreenChart';
-import type { GroupByMethod } from './types';
+import type { GroupByMethod, CampFilterOption } from './types';
 
 interface PlayerHistoryEvolutionProps {
   selectedPlayerName: string;
   groupingMethod: GroupByMethod;
+  campFilter?: CampFilterOption;
 }
 
-export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: PlayerHistoryEvolutionProps) {
+export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod, campFilter = 'all' }: PlayerHistoryEvolutionProps) {
   const { navigateToGameDetails } = useNavigation();
   const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
 
@@ -53,6 +54,18 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
     const grouped: Record<string, { games: any[], wins: number, total: number }> = {};
 
     data.games.forEach(game => {
+      // Apply camp filter
+      if (campFilter !== 'all') {
+        if (campFilter === 'solo') {
+          // Solo camps include all camps except Villageois and Loup
+          if (game.camp === 'Villageois' || game.camp === 'Loup') {
+            return; // Skip this game
+          }
+        } else if (game.camp !== campFilter) {
+          return; // Skip this game
+        }
+      }
+
       let groupKey: string;
 
       const dateParts = game.date.split('/');
@@ -136,7 +149,7 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
           return timeA - timeB;
         }
       });
-  }, [data, groupingMethod, parsedDataCache]);
+  }, [data, groupingMethod, parsedDataCache, campFilter]);
 
   // Helper functions when there are too much data
   const getResponsiveXAxisSettings = (dataLength: number) => {
