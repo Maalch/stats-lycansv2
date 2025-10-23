@@ -127,7 +127,7 @@ export function computePlayerPairingStats(
           const wolf2Id = getPlayerId(wolves[j]);
           const wolf1Name = getPlayerDisplayName(wolves[i]);
           const wolf2Name = getPlayerDisplayName(wolves[j]);
-          // Create a consistent key for the pair using IDs (alphabetical order)
+          // Create a consistent key for the pair using IDs (alphabetical order for internal tracking)
           const pairKey = [wolf1Id, wolf2Id].sort().join(" & ");
           
           if (!wolfPairStats[pairKey]) {
@@ -164,7 +164,7 @@ export function computePlayerPairingStats(
           const lover1Name = getPlayerDisplayName(lovers[i]);
           const lover2Name = getPlayerDisplayName(lovers[i + 1]);
 
-          // Create a consistent key for the pair by IDs (alphabetical order)
+          // Create a consistent key for the pair by IDs (alphabetical order for internal tracking)
           const pairKey = [lover1Id, lover2Id].sort().join(" & ");
 
           if (!loverPairStats[pairKey]) {
@@ -193,8 +193,10 @@ export function computePlayerPairingStats(
   const wolfPairArray: PlayerPairStat[] = Object.keys(wolfPairStats).map(key => {
     const stats = wolfPairStats[key];
     const winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
+    // Use player display names for the pair label, not the ID-based key
+    const pairLabel = stats.players.join(" & ");
     return {
-      pair: key,
+      pair: pairLabel,
       appearances: stats.appearances,
       wins: stats.wins,
       winRate: winRate,
@@ -205,8 +207,10 @@ export function computePlayerPairingStats(
   const loverPairArray: PlayerPairStat[] = Object.keys(loverPairStats).map(key => {
     const stats = loverPairStats[key];
     const winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
+    // Use player display names for the pair label, not the ID-based key
+    const pairLabel = stats.players.join(" & ");
     return {
-      pair: key,
+      pair: pairLabel,
       appearances: stats.appearances,
       wins: stats.wins,
       winRate: winRate,
