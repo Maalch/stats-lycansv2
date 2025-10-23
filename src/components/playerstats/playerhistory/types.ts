@@ -1,4 +1,4 @@
-export type GroupByMethod = 'session' | 'month';
+export type GroupByMethod = 'session' | 'month' | 'quarter' | 'year';
 
 export interface GroupedDataPoint {
   period: string;
