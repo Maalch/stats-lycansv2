@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { PlayerAchievements } from '../types/achievements';
+import { useSettings } from '../context/SettingsContext';
 
 interface PreCalculatedAchievementsData {
   generatedAt: string;
@@ -25,6 +26,7 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
     totalModdedGames: number;
   };
 } {
+  const { settings } = useSettings();
   const [achievementsData, setAchievementsData] = useState<PreCalculatedAchievementsData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +40,12 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch('/data/playerAchievements.json');
+        // Use the appropriate data source path
+        const dataPath = settings.dataSource === 'discord' 
+          ? '/data/discord/playerAchievements.json'
+          : '/data/playerAchievements.json';
+
+        const response = await fetch(dataPath);
         if (!response.ok) {
           throw new Error(`Failed to load achievements: ${response.status} ${response.statusText}`);
         }
@@ -64,7 +71,7 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [settings.dataSource]); // Reload when data source changes
 
   // Extract player-specific achievements
   const playerAchievements = playerName && achievementsData?.achievements[playerName] || null;
@@ -74,7 +81,7 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
     if (playerName && achievementsData) {
       const achievements = achievementsData.achievements[playerName];
       if (achievements) {
-        console.log(`🏆 Achievements for ${playerName}:`, {
+        console.log(`🏆 Achievements for ${playerName} (${settings.dataSource}):`, {
           allGames: achievements.allGamesAchievements.length,
           moddedOnly: achievements.moddedOnlyAchievements.length,
           categories: [...new Set([
@@ -83,10 +90,10 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
           ])]
         });
       } else {
-        console.log(`❌ No achievements found for ${playerName}`);
+        console.log(`❌ No achievements found for ${playerName} in ${settings.dataSource} data source`);
       }
     }
-  }, [playerName, achievementsData]);
+  }, [playerName, achievementsData, settings.dataSource]);
 
   return {
     data: playerAchievements,
