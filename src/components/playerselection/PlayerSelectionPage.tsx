@@ -488,11 +488,13 @@ export function PlayerSelectionPage() {
                               borderRadius: '4px',
                               padding: '0.5rem',
                               fontSize: '0.9rem',
-                              minWidth: '120px'
+                              minWidth: '160px'
                             }}
                           >
                             <option value="session">Par session</option>
                             <option value="month">Par mois</option>
+                            <option value="quarter">Par trimestre</option>
+                            <option value="year">Par année</option>
                           </select>
                         </div>
                       </div>

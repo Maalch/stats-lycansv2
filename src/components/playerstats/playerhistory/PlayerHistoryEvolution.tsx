@@ -14,6 +14,20 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
   const { navigateToGameDetails } = useNavigation();
   const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
 
+  // Helper to localize the grouping label for titles and navigation
+  const groupingLabel = useMemo(() => {
+    switch (groupingMethod) {
+      case 'month':
+        return 'par Mois';
+      case 'quarter':
+        return 'par Trimestre';
+      case 'year':
+        return 'par Année';
+      default:
+        return 'par Session';
+    }
+  }, [groupingMethod]);
+
   // Optimized date parsing - cache parsed dates to avoid repeated parsing
   const parsedDataCache = useMemo(() => {
     if (!data?.games) return new Map();
@@ -40,14 +54,34 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
 
     data.games.forEach(game => {
       let groupKey: string;
-      
+
+      const dateParts = game.date.split('/');
+      // Determine grouping key based on the selected method
       if (groupingMethod === 'month') {
-        // Extract month/year from DD/MM/YYYY format
-        const dateParts = game.date.split('/');
         if (dateParts.length === 3) {
-          groupKey = `${dateParts[1]}/${dateParts[2]}`; // MM/YYYY
+          const mm = dateParts[1].padStart(2, '0');
+          groupKey = `${mm}/${dateParts[2]}`; // MM/YYYY
         } else {
-          groupKey = game.date;
+          const d = new Date(game.date);
+          const mm = String(d.getMonth() + 1).padStart(2, '0');
+          groupKey = `${mm}/${d.getFullYear()}`;
+        }
+      } else if (groupingMethod === 'quarter') {
+        if (dateParts.length === 3) {
+          const monthNum = parseInt(dateParts[1], 10);
+          const quarter = Math.floor((monthNum - 1) / 3) + 1; // 1..4
+          groupKey = `T${quarter}/${dateParts[2]}`; // Tn/YYYY
+        } else {
+          const d = new Date(game.date);
+          const quarter = Math.floor(d.getMonth() / 3) + 1;
+          groupKey = `T${quarter}/${d.getFullYear()}`; // Tn/YYYY
+        }
+      } else if (groupingMethod === 'year') {
+        if (dateParts.length === 3) {
+          groupKey = `${dateParts[2]}`; // YYYY
+        } else {
+          const d = new Date(game.date);
+          groupKey = `${d.getFullYear()}`;
         }
       } else {
         // Group by session (by date)
@@ -83,6 +117,18 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
           const dateA = new Date(parseInt(yearA), parseInt(monthA) - 1, 1);
           const dateB = new Date(parseInt(yearB), parseInt(monthB) - 1, 1);
           return dateA.getTime() - dateB.getTime();
+        } else if (groupingMethod === 'quarter') {
+          const [qa, ya] = a.period.split('/');
+          const [qb, yb] = b.period.split('/');
+          const qaNum = parseInt(qa.replace(/\D/g, ''), 10) || 1; // Extract 1..4
+          const qbNum = parseInt(qb.replace(/\D/g, ''), 10) || 1;
+          const dateA = new Date(parseInt(ya, 10), (qaNum - 1) * 3, 1);
+          const dateB = new Date(parseInt(yb, 10), (qbNum - 1) * 3, 1);
+          return dateA.getTime() - dateB.getTime();
+        } else if (groupingMethod === 'year') {
+          const ya = parseInt(a.period, 10);
+          const yb = parseInt(b.period, 10);
+          return ya - yb;
         } else {
           // Use cached parsed dates for session sorting
           const timeA = parsedDataCache.get(a.period) || 0;
@@ -118,8 +164,8 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
     <div className="lycans-graphiques-groupe">
       {/* Performance over time */}
       <div className="lycans-graphique-section">
-        <h3>Évolution des Performances {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
-        <FullscreenChart title={`Évolution des Performances ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`}>
+        <h3>Évolution des Performances {groupingLabel}</h3>
+        <FullscreenChart title={`Évolution des Performances ${groupingLabel}`}>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
@@ -133,7 +179,7 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
                       navigateToGameDetails({
                         selectedPlayer: selectedPlayerName,
                         selectedDate: dataPoint.period,
-                        fromComponent: `Évolution des Performances ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`
+                        fromComponent: `Évolution des Performances ${groupingLabel}`
                       });
                     }
                   }
@@ -200,8 +246,8 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
 
       {/* Games per period */}
       <div className="lycans-graphique-section">
-        <h3>Répartition Victoires/Défaites {groupingMethod === 'month' ? 'par Mois' : 'par Session'}</h3>
-        <FullscreenChart title={`Répartition Victoires/Défaites ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`}>
+        <h3>Répartition Victoires/Défaites {groupingLabel}</h3>
+        <FullscreenChart title={`Répartition Victoires/Défaites ${groupingLabel}`}>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -263,7 +309,7 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
                         navigateToGameDetails({
                           selectedPlayer: selectedPlayerName,
                           selectedDate: entry.period,
-                          fromComponent: `Historique Joueur - Victoires ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`
+                          fromComponent: `Historique Joueur - Victoires ${groupingLabel}`
                         });
                       }}
                       style={{ cursor: 'pointer' }}
@@ -279,7 +325,7 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod }: P
                         navigateToGameDetails({
                           selectedPlayer: selectedPlayerName,
                           selectedDate: entry.period,
-                          fromComponent: `Historique Joueur - Défaites ${groupingMethod === 'month' ? 'par Mois' : 'par Session'}`
+                          fromComponent: `Historique Joueur - Défaites ${groupingLabel}`
                         });
                       }}
                       style={{ cursor: 'pointer' }}
