@@ -6,6 +6,13 @@ import { useJoueursData } from '../../hooks/useJoueursData';
 import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { AchievementsDisplay } from './AchievementsDisplay';
+import { 
+  PlayerHistoryEvolution, 
+  PlayerHistoryCamp, 
+  PlayerHistoryMap, 
+  PlayerHistoryKills,
+  type GroupByMethod
+} from '../playerstats/playerhistory';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import './PlayerSelectionPage.css';
 
@@ -30,6 +37,8 @@ export function PlayerSelectionPage() {
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
   const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
+  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills'>('achievements');
+  const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
 
   // Calculate basic stats for all players
   const playerStats = useMemo(() => {
@@ -316,57 +325,155 @@ export function PlayerSelectionPage() {
                 </div>
                                              
                 <div className="player-actions">                  
-                  {/* Achievements Display */}
-                  <div className="achievements-section">
+                  {/* View Type Selection */}
+                  <div className="lycans-categories-selection" style={{ marginBottom: '1rem' }}>
+                    <button
+                      className={`lycans-categorie-btn ${selectedView === 'achievements' ? 'active' : ''}`}
+                      onClick={() => setSelectedView('achievements')}
+                    >
+                      Classement
+                    </button>
+                    <button
+                      className={`lycans-categorie-btn ${selectedView === 'evolution' ? 'active' : ''}`}
+                      onClick={() => setSelectedView('evolution')}
+                    >
+                      Évolution
+                    </button>
+                    <button
+                      className={`lycans-categorie-btn ${selectedView === 'camps' ? 'active' : ''}`}
+                      onClick={() => setSelectedView('camps')}
+                    >
+                      Camps
+                    </button>
+                    <button
+                      className={`lycans-categorie-btn ${selectedView === 'maps' ? 'active' : ''}`}
+                      onClick={() => setSelectedView('maps')}
+                    >
+                      Maps
+                    </button>
+                    <button
+                      className={`lycans-categorie-btn ${selectedView === 'kills' ? 'active' : ''}`}
+                      onClick={() => setSelectedView('kills')}
+                    >
+                      Kills
+                    </button>
+                  </div>
 
-                    
-                    {achievementsLoading ? (
-                      <div className="achievements-loading">
-                        <div className="loading-spinner"></div>
-                        <p>Chargement des classements...</p>
+                  {/* Achievements Display */}
+                  {selectedView === 'achievements' && (
+                    <div className="achievements-section">
+                      {achievementsLoading ? (
+                        <div className="achievements-loading">
+                          <div className="loading-spinner"></div>
+                          <p>Chargement des classements...</p>
+                        </div>
+                      ) : achievementsError ? (
+                        <div className="achievements-error">
+                          <p>❌ Erreur lors du chargement des classements: {achievementsError}</p>
+                        </div>
+                      ) : playerAchievements ? (
+                        <AchievementsDisplay
+                          achievements={achievementFilter === 'all' 
+                            ? playerAchievements.allGamesAchievements 
+                            : playerAchievements.moddedOnlyAchievements
+                          }
+                          title={achievementFilter === 'all' 
+                            ? 'Classements - Toutes les parties' 
+                            : 'Classements - Parties moddées'
+                          }
+                          emptyMessage="Aucun classement dans cette catégorie"
+                          achievementType={achievementFilter}
+                        />
+                      ) : (
+                        <div className="achievements-empty">
+                          <p>Aucun classement disponible pour ce joueur</p>
+                        </div>
+                      )}
+                      <div className="achievements-filter">
+                        <button
+                          className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setAchievementFilter('all');
+                          }}
+                        >
+                          Toutes les parties
+                        </button>
+                        <button
+                          className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setAchievementFilter('modded');
+                          }}
+                        >
+                          Parties moddées
+                        </button>
                       </div>
-                    ) : achievementsError ? (
-                      <div className="achievements-error">
-                        <p>❌ Erreur lors du chargement des classements: {achievementsError}</p>
-                      </div>
-                    ) : playerAchievements ? (
-                      <AchievementsDisplay
-                        achievements={achievementFilter === 'all' 
-                          ? playerAchievements.allGamesAchievements 
-                          : playerAchievements.moddedOnlyAchievements
-                        }
-                        title={achievementFilter === 'all' 
-                          ? 'Classements - Toutes les parties' 
-                          : 'Classements - Parties moddées'
-                        }
-                        emptyMessage="Aucun classement dans cette catégorie"
-                        achievementType={achievementFilter}
-                      />
-                    ) : (
-                      <div className="achievements-empty">
-                        <p>Aucun classement disponible pour ce joueur</p>
-                      </div>
-                    )}
-                    <div className="achievements-filter">
-                      <button
-                        className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setAchievementFilter('all');
-                        }}
-                      >
-                        Toutes les parties
-                      </button>
-                      <button
-                        className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setAchievementFilter('modded');
-                        }}
-                      >
-                        Parties moddées
-                      </button>
                     </div>
+                  )}
+
+                  {/* Evolution View */}
+                  {selectedView === 'evolution' && (
+                    <div className="player-history-section">
+                      {/* Grouping Control - Only for Evolution View */}
+                      <div className="lycans-controls-section" style={{ 
+                        display: 'flex', 
+                        gap: '2rem', 
+                        marginBottom: '2rem', 
+                        justifyContent: 'center',
+                        flexWrap: 'wrap'
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label htmlFor="grouping-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                            Groupement:
+                          </label>
+                          <select
+                            id="grouping-select"
+                            value={groupingMethod}
+                            onChange={(e) => setGroupingMethod(e.target.value as GroupByMethod)}
+                            style={{
+                              background: 'var(--bg-tertiary)',
+                              color: 'var(--text-primary)',
+                              border: '1px solid var(--border-color)',
+                              borderRadius: '4px',
+                              padding: '0.5rem',
+                              fontSize: '0.9rem',
+                              minWidth: '120px'
+                            }}
+                          >
+                            <option value="session">Par session</option>
+                            <option value="month">Par mois</option>
+                          </select>
+                        </div>
+                      </div>
+                      <PlayerHistoryEvolution 
+                        selectedPlayerName={highlightedPlayerStats.name}
+                        groupingMethod={groupingMethod}
+                      />
+                    </div>
+                  )}
+
+                  {/* Camp View */}
+                  {selectedView === 'camps' && (
+                    <div className="player-history-section">
+                      <PlayerHistoryCamp selectedPlayerName={highlightedPlayerStats.name} />
+                    </div>
+                  )}
+
+                  {/* Map View */}
+                  {selectedView === 'maps' && (
+                    <div className="player-history-section">
+                      <PlayerHistoryMap selectedPlayerName={highlightedPlayerStats.name} />
+                    </div>
+                  )}
+
+                  {/* Kills View */}
+                  {selectedView === 'kills' && (
+                    <div className="player-history-section">
+                      <PlayerHistoryKills selectedPlayerName={highlightedPlayerStats.name} />
+                    </div>
+                  )}
+
                   <button
                     className="highlight-btn active"
                     onClick={(e) => {
@@ -377,6 +484,7 @@ export function PlayerSelectionPage() {
                     ★ Retirer la mise en évidence
                   </button>
                 </div>
+                
                 <div className="player-period">
                   <span className="period-label">Période d'activité:</span>
                   <span className="period-range">
@@ -384,7 +492,6 @@ export function PlayerSelectionPage() {
                   </span>
                 </div>
               </div>
-            </div>
             );
           })()
         ) : (

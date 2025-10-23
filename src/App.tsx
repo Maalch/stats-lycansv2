@@ -9,7 +9,6 @@ import './App.css';
 
 // Lazy load each dashboard section
 const PlayersGeneralStatisticsChart = lazy(() => import('./components/playerstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
-const PlayerGameHistoryChart = lazy(() => import('./components/playerstats/PlayerGameHistoryChart').then(m => ({ default: m.PlayerGameHistoryChart })));
 const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
 const PlayerComparisonChart = lazy(() => import('./components/playerstats/PlayerComparisonChart').then(m => ({ default: m.PlayerComparisonChart })));
@@ -87,12 +86,6 @@ const PLAYER_STATS_MENU = [
     label: 'Joueurs', 
     component: PlayersGeneralStatisticsChart,
     description: 'Classement par participations et victoires'
-  },
-  { 
-    key: 'history', 
-    label: 'Historique Joueur', 
-    component: PlayerGameHistoryChart,
-    description: 'Détails par joueur'
   },
   { 
     key: 'series', 
@@ -309,7 +302,7 @@ function MainApp() {
       }
     
       case 'players': {
-        const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayerGameHistoryChart;
+        const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayersGeneralStatisticsChart;
         return (
           <div>
             <nav className="lycans-submenu">
