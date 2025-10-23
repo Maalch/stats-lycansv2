@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { useGameLogData } from '../../hooks/useCombinedRawData';
 import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculatedPlayerAchievements';
+import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
+import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
@@ -31,6 +33,7 @@ interface PlayerBasicStats {
 
 export function PlayerSelectionPage() {
   const { settings, updateSettings } = useSettings();
+  const { navigateToGameDetails } = useNavigation();
   const { data: gameLogData, isLoading, error } = useGameLogData();
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
@@ -39,6 +42,9 @@ export function PlayerSelectionPage() {
   const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
   const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills'>('achievements');
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
+
+  // Get player history data for summary cards (only when a player is highlighted)
+  const { data: playerHistoryData } = usePlayerGameHistoryFromRaw(settings.highlightedPlayer || '');
 
   // Calculate basic stats for all players
   const playerStats = useMemo(() => {
@@ -415,6 +421,50 @@ export function PlayerSelectionPage() {
                   {/* Evolution View */}
                   {selectedView === 'evolution' && (
                     <div className="player-history-section">
+                      {/* Summary Cards */}
+                      {playerHistoryData && (
+                        <div className="lycans-resume-conteneur">
+                          <div className="lycans-stat-carte">
+                            <h3>Total Parties</h3>
+                            <div 
+                              className="lycans-valeur-principale lycans-clickable" 
+                              onClick={() => {
+                                navigateToGameDetails({
+                                  selectedPlayer: highlightedPlayerStats.name,
+                                  fromComponent: 'Historique Joueur - Total Parties'
+                                });
+                              }}
+                              title={`Cliquer pour voir toutes les parties de ${highlightedPlayerStats.name}`}
+                            >
+                              {playerHistoryData.totalGames}
+                            </div>
+                            <p>parties jouées</p>
+                          </div>
+                          <div className="lycans-stat-carte">
+                            <h3>Victoires</h3>
+                            <div 
+                              className="lycans-valeur-principale lycans-clickable" 
+                              onClick={() => {
+                                navigateToGameDetails({
+                                  selectedPlayer: highlightedPlayerStats.name,
+                                  selectedPlayerWinMode: 'wins-only',
+                                  fromComponent: 'Historique Joueur - Victoires'
+                                });
+                              }}
+                              title={`Cliquer pour voir toutes les victoires de ${highlightedPlayerStats.name}`}
+                            >
+                              {playerHistoryData.totalWins}
+                            </div>
+                            <p>parties gagnées</p>
+                          </div>
+                          <div className="lycans-stat-carte">
+                            <h3>Taux de Victoire</h3>
+                            <div className="lycans-valeur-principale">{playerHistoryData.winRate}%</div>
+                            <p>pourcentage global</p>
+                          </div>
+                        </div>
+                      )}
+
                       {/* Grouping Control - Only for Evolution View */}
                       <div className="lycans-controls-section" style={{ 
                         display: 'flex', 
