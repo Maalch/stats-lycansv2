@@ -13,7 +13,8 @@ import {
   PlayerHistoryCamp, 
   PlayerHistoryMap, 
   PlayerHistoryKills,
-  type GroupByMethod
+  type GroupByMethod,
+  type CampFilterOption
 } from '../playerstats/playerhistory';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import './PlayerSelectionPage.css';
@@ -42,6 +43,7 @@ export function PlayerSelectionPage() {
   const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
   const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills'>('achievements');
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
+  const [campFilter, setCampFilter] = useState<CampFilterOption>('all');
 
   // Get player history data for summary cards (only when a player is highlighted)
   const { data: playerHistoryData } = usePlayerGameHistoryFromRaw(settings.highlightedPlayer || '');
@@ -497,10 +499,36 @@ export function PlayerSelectionPage() {
                             <option value="year">Par année</option>
                           </select>
                         </div>
+                        
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <label htmlFor="camp-filter-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                            Camp:
+                          </label>
+                          <select
+                            id="camp-filter-select"
+                            value={campFilter}
+                            onChange={(e) => setCampFilter(e.target.value as CampFilterOption)}
+                            style={{
+                              background: 'var(--bg-tertiary)',
+                              color: 'var(--text-primary)',
+                              border: '1px solid var(--border-color)',
+                              borderRadius: '4px',
+                              padding: '0.5rem',
+                              fontSize: '0.9rem',
+                              minWidth: '160px'
+                            }}
+                          >
+                            <option value="all">Tous les camps</option>
+                            <option value="Villageois">Villageois</option>
+                            <option value="Loup">Loups</option>
+                            <option value="solo">Rôles solo</option>
+                          </select>
+                        </div>
                       </div>
                       <PlayerHistoryEvolution 
                         selectedPlayerName={highlightedPlayerStats.name}
                         groupingMethod={groupingMethod}
+                        campFilter={campFilter}
                       />
                     </div>
                   )}
