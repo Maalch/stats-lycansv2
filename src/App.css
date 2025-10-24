@@ -952,7 +952,7 @@ body {
 .lycans-versus-arena {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  gap: 2rem;
+  gap: 0rem;
   align-items: center;
   margin: 2rem 0;
   padding: 2rem;
@@ -1121,9 +1121,9 @@ body {
 }
 
 .lycans-winner-announcement {
-  flex: 1 1 100%;
+  grid-column: 1 / -1;
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: 0rem;
   padding: 0.75rem;
   background: var(--bg-tertiary);
   border-radius: 8px;
