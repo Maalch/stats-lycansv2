@@ -18,7 +18,7 @@ export function processVotingAchievements(votingStats, playerName, suffix) {
     return achievements;
   }
 
-  const { playerBehaviorStats, playerAccuracyStats, playerTargetStats } = votingStats;
+  const { playerBehaviorStats, playerAccuracyStats } = votingStats;
 
   // 1. Aggressiveness Score ranking (min. 25 meetings)
   const eligibleForAggressiveness = playerBehaviorStats.filter(p => p.totalMeetings >= 25);
@@ -45,32 +45,7 @@ export function processVotingAchievements(votingStats, playerName, suffix) {
     }
   }
 
-  // 2. Voting Rate ranking (min. 25 meetings) - Most consistent voters
-  const eligibleForVotingRate = playerBehaviorStats.filter(p => p.totalMeetings >= 25);
-  if (eligibleForVotingRate.length > 0) {
-    const byVotingRate = [...eligibleForVotingRate].sort((a, b) => b.votingRate - a.votingRate);
-    const votingRateRank = findPlayerRank(byVotingRate, playerName, p => p.votingRate);
-    
-    if (votingRateRank) {
-      const isTopRank = votingRateRank.rank <= 3;
-      achievements.push(createAchievement(
-        `voting-rate-${suffix ? 'modded' : 'all'}`,
-        `🙋 Rang ${votingRateRank.rank} Taux de Vote${suffix}`,
-        `${votingRateRank.rank}${votingRateRank.rank === 1 ? 'er' : 'ème'} taux de participation aux votes: ${votingRateRank.value.toFixed(1)}% (min. 25 meetings)`,
-        isTopRank ? 'good' : 'neutral',
-        votingRateRank.rank,
-        votingRateRank.value,
-        byVotingRate.length,
-        {
-          tab: 'players',
-          subTab: 'votingStats'
-        },
-        'voting'
-      ));
-    }
-  }
-
-  // 3. Voting Accuracy ranking (min. 25 meetings) - Most strategic voters
+  // 2. Voting Accuracy ranking (min. 25 meetings) - Most strategic voters
   const eligibleForAccuracy = playerAccuracyStats.filter(p => p.totalMeetings >= 25);
   if (eligibleForAccuracy.length > 0) {
     const byAccuracy = [...eligibleForAccuracy].sort((a, b) => {
