@@ -312,19 +312,6 @@ export function PlayerComparisonChart() {
                   <span className="lycans-battle-label">⏱️ Durée moyenne:</span>
                   <span className="lycans-battle-value">{comparisonData.headToHeadStats.averageOpposingGameDuration}</span>
                 </div>
-                {comparisonData.headToHeadStats.player1WinsAsOpponent > comparisonData.headToHeadStats.player2WinsAsOpponent ? (
-                      <div className="lycans-winner-announcement">
-                        🏆 Victoire: <span style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>{selectedPlayer1}</span> 
-                  </div>
-                ) : comparisonData.headToHeadStats.player2WinsAsOpponent > comparisonData.headToHeadStats.player1WinsAsOpponent ? (
-                  <div className="lycans-winner-announcement">
-                    🏆 Victoire: <span style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>{selectedPlayer2}</span>
-                  </div>
-                ) : (
-                  <div className="lycans-winner-announcement">
-                    ⚖️ Égalité parfaite dans les résultats !
-                  </div>
-                )}
               </div>
             )}
 
@@ -398,6 +385,15 @@ export function PlayerComparisonChart() {
                           tick={{ fill: 'var(--text-secondary)', fontSize: 10 }}
                           tickCount={6}
                         />
+                        <Legend 
+                          verticalAlign="top"
+                          wrapperStyle={{ 
+                            paddingBottom: '20px',
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                          }}
+                          iconType="line"
+                        />
                         <Radar
                           name={selectedPlayer1}
                           dataKey={selectedPlayer1}
@@ -415,14 +411,6 @@ export function PlayerComparisonChart() {
                           fillOpacity={0.1}
                           strokeWidth={3}
                           dot={{ fill: playersColor[selectedPlayer2] || '#FF0000', strokeWidth: 2, r: 4 }}
-                        />
-                        <Legend 
-                          wrapperStyle={{ 
-                            paddingTop: '20px',
-                            fontSize: '14px',
-                            fontWeight: 'bold'
-                          }}
-                          iconType="line"
                         />
                         <Tooltip 
                           formatter={(value: any, name: string) => [
@@ -481,6 +469,25 @@ export function PlayerComparisonChart() {
                   </div>
                 )}
               </div>
+
+              {/* Winner Announcement - Inside Arena, Below Chart */}
+              {comparisonData.headToHeadStats.opposingCampGames > 0 && (
+                <>
+                  {comparisonData.headToHeadStats.player1WinsAsOpponent > comparisonData.headToHeadStats.player2WinsAsOpponent ? (
+                    <div className="lycans-winner-announcement">
+                      🏆 Victoire: <span style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>{selectedPlayer1}</span> 
+                    </div>
+                  ) : comparisonData.headToHeadStats.player2WinsAsOpponent > comparisonData.headToHeadStats.player1WinsAsOpponent ? (
+                    <div className="lycans-winner-announcement">
+                      🏆 Victoire: <span style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>{selectedPlayer2}</span>
+                    </div>
+                  ) : (
+                    <div className="lycans-winner-announcement">
+                      ⚖️ Égalité parfaite dans les résultats !
+                    </div>
+                  )}
+                </>
+              )}
             </div>
 
             {/* Metrics Explanation - Moved below radar */}
