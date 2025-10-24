@@ -21,7 +21,10 @@ import {
   computeVotingStatistics
 } from './compute-stats.js';
 
-// Data directory relative to project root (two levels up from scripts/data-sync/)
+// Import data source configuration
+import { DATA_SOURCES } from './shared/data-sources.js';
+
+// Default data directory relative to project root (two levels up from scripts/data-sync/)
 const DATA_DIR = '../../data';
 const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
 
@@ -107,13 +110,23 @@ function generateAllPlayerAchievements(gameLogData) {
 
 /**
  * Main function to generate achievements
+ * @param {string} sourceKey - Data source key (e.g., 'main', 'discord')
  */
-async function main() {
+async function main(sourceKey = 'main') {
   try {
-    console.log('🏆 Starting achievements generation...');
+    // Get configuration for the specified data source
+    const config = DATA_SOURCES[sourceKey];
+    if (!config) {
+      throw new Error(`Unknown data source: ${sourceKey}. Available sources: ${Object.keys(DATA_SOURCES).join(', ')}`);
+    }
+
+    // Resolve path - works from project root (GitHub Actions) or script directory
+    const dataDir = path.resolve(process.cwd(), config.outputDir);
+
+    console.log(`🏆 Starting achievements generation for ${config.name}...`);
 
     // Read game log data
-    const gameLogPath = path.join(ABSOLUTE_DATA_DIR, 'gameLog.json');
+    const gameLogPath = path.join(dataDir, 'gameLog.json');
     console.log(`📖 Reading game log from: ${gameLogPath}`);
     
     const gameLogContent = await fs.readFile(gameLogPath, 'utf-8');
@@ -125,7 +138,7 @@ async function main() {
     const achievementsData = generateAllPlayerAchievements(gameLogData);
 
     // Save achievements data
-    const achievementsPath = path.join(ABSOLUTE_DATA_DIR, 'playerAchievements.json');
+    const achievementsPath = path.join(dataDir, 'playerAchievements.json');
     await fs.writeFile(achievementsPath, JSON.stringify(achievementsData, null, 2));
 
     console.log(`✅ Achievements generated successfully!`);
@@ -156,7 +169,9 @@ async function main() {
 
 // Run if this script is executed directly (not imported)
 if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith('generate-achievements.js')) {
-  main();
+  // Get data source from command line argument (default: 'main')
+  const sourceKey = process.argv[2] || 'main';
+  main(sourceKey);
 }
 
 export { 
