@@ -200,9 +200,7 @@ export function PlayerHistoryCamp({ selectedPlayerName }: PlayerHistoryCampProps
                         borderRadius: 8,
                         border: '1px solid var(--border-color)'
                       }}>
-                        <div><strong>{dataPoint.name} ({dataPoint.percentage}%)</strong></div>
-                        <div>Apparitions: {dataPoint.value}</div>
-                        <div>Victoires: {dataPoint.wins} ({dataPoint.winRate}%)</div>
+                        <div><strong>{dataPoint.name} - {dataPoint.value} parties ({dataPoint.percentage}%)</strong></div>
                         <div style={{ 
                           fontSize: '0.8rem', 
                           color: 'var(--accent-primary)', 
