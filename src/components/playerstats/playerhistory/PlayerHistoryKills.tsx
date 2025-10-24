@@ -64,8 +64,8 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
       {/* Players Most Killed */}
       {killStatistics.playersKilled.length > 0 ? (
         <div className="lycans-graphique-section">
-          <h3>Joueurs les plus souvent tués</h3>
-          <FullscreenChart title="Joueurs les plus souvent tués">
+          <h3>A tué le plus souvent</h3>
+          <FullscreenChart title="A tué le plus souvent">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -128,8 +128,8 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
       {/* Players Killed By Most */}
       {killStatistics.killedBy.length > 0 ? (
         <div className="lycans-graphique-section">
-          <h3>Le plus souvent tué par</h3>
-          <FullscreenChart title="Le plus souvent tué par">
+          <h3>A été tué le plus souvent</h3>
+          <FullscreenChart title="A été tué le plus souvent">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
