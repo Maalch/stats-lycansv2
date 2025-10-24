@@ -74,16 +74,6 @@ export function PlayerComparisonChart() {
     });
   };
 
-  const setShowDetailedStats = (show: boolean) => {
-    updateNavigationState({ 
-      playerComparisonState: { 
-        selectedPlayer1: selectedPlayer1,
-        selectedPlayer2: selectedPlayer2,
-        showDetailedStats: show
-      }
-    });
-  };
-
   // Generate comparison data when both players are selected
   const comparisonData = useMemo(() => {    
     if (!selectedPlayer1 || !selectedPlayer2 || selectedPlayer1 === selectedPlayer2) {
@@ -137,13 +127,6 @@ export function PlayerComparisonChart() {
       }
     ];
   }, [comparisonData, selectedPlayer1, selectedPlayer2]);
-
-  const handlePlayerDetailsClick = (playerName: string) => {
-    navigateToGameDetails({ 
-      selectedPlayer: playerName,
-      fromComponent: 'Comparaison de Joueurs'
-    });
-  };
 
   const handleCommonGamesClick = () => {
     if (selectedPlayer1 && selectedPlayer2) {
@@ -312,6 +295,49 @@ export function PlayerComparisonChart() {
           <div className="lycans-graphique-section">
             <h3>⚔️ FACE A FACE ⚔️</h3>
             
+            {/* Battle Summary */}
+            {comparisonData.headToHeadStats.opposingCampGames > 0 && (
+              <div className="lycans-battle-summary">
+                <div className="lycans-battle-stat">
+                  <span className="lycans-battle-label">🗡️ Affrontements:</span>
+                  <span 
+                    className="lycans-battle-value lycans-clickable" 
+                    onClick={handleOpposingGamesClick}
+                    title="Cliquer pour voir les détails des affrontements"
+                  >
+                    {comparisonData.headToHeadStats.opposingCampGames}
+                  </span>
+                </div>
+                <div className="lycans-battle-stat">
+                  <span className="lycans-battle-label">⏱️ Durée moyenne:</span>
+                  <span className="lycans-battle-value">{comparisonData.headToHeadStats.averageOpposingGameDuration}</span>
+                </div>
+                {comparisonData.headToHeadStats.player1WinsAsOpponent > comparisonData.headToHeadStats.player2WinsAsOpponent ? (
+                      <div className="lycans-winner-announcement">
+                        🏆 Victoire: <span style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>{selectedPlayer1}</span> 
+                  </div>
+                ) : comparisonData.headToHeadStats.player2WinsAsOpponent > comparisonData.headToHeadStats.player1WinsAsOpponent ? (
+                  <div className="lycans-winner-announcement">
+                    🏆 Victoire: <span style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>{selectedPlayer2}</span>
+                  </div>
+                ) : (
+                  <div className="lycans-winner-announcement">
+                    ⚖️ Égalité parfaite dans les résultats !
+                  </div>
+                )}
+              </div>
+            )}
+
+            {comparisonData.headToHeadStats.opposingCampGames === 0 && (
+              <div className="lycans-no-battles">
+                <div className="lycans-no-battles-icon">🤝</div>
+                <div className="lycans-no-battles-text">
+                  Aucune partie trouvée entre ces deux joueurs.<br />
+                  Ils n'ont jamais été dans des camps opposés !
+                </div>
+              </div>
+            )}
+
             {/* Versus Arena with Score Display */}
             <div className="lycans-versus-arena">
               {/* Player 1 Score Card */}
@@ -456,49 +482,6 @@ export function PlayerComparisonChart() {
                 )}
               </div>
             </div>
-
-            {/* Battle Summary */}
-            {comparisonData.headToHeadStats.opposingCampGames > 0 && (
-              <div className="lycans-battle-summary">
-                <div className="lycans-battle-stat">
-                  <span className="lycans-battle-label">🗡️ Affrontements:</span>
-                  <span 
-                    className="lycans-battle-value lycans-clickable" 
-                    onClick={handleOpposingGamesClick}
-                    title="Cliquer pour voir les détails des affrontements"
-                  >
-                    {comparisonData.headToHeadStats.opposingCampGames}
-                  </span>
-                </div>
-                <div className="lycans-battle-stat">
-                  <span className="lycans-battle-label">⏱️ Durée moyenne:</span>
-                  <span className="lycans-battle-value">{comparisonData.headToHeadStats.averageOpposingGameDuration}</span>
-                </div>
-                {comparisonData.headToHeadStats.player1WinsAsOpponent > comparisonData.headToHeadStats.player2WinsAsOpponent ? (
-                      <div className="lycans-winner-announcement">
-                        🏆 Victoire: <span style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>{selectedPlayer1}</span> 
-                  </div>
-                ) : comparisonData.headToHeadStats.player2WinsAsOpponent > comparisonData.headToHeadStats.player1WinsAsOpponent ? (
-                  <div className="lycans-winner-announcement">
-                    🏆 Victoire: <span style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>{selectedPlayer2}</span>
-                  </div>
-                ) : (
-                  <div className="lycans-winner-announcement">
-                    ⚖️ Égalité parfaite dans les résultats !
-                  </div>
-                )}
-              </div>
-            )}
-
-            {comparisonData.headToHeadStats.opposingCampGames === 0 && (
-              <div className="lycans-no-battles">
-                <div className="lycans-no-battles-icon">🤝</div>
-                <div className="lycans-no-battles-text">
-                  Aucune partie trouvée entre ces deux joueurs.<br />
-                  Ils n'ont jamais été dans des camps opposés !
-                </div>
-              </div>
-            )}
 
             {/* Metrics Explanation - Moved below radar */}
             <div className="lycans-radar-explanation">
@@ -659,81 +642,6 @@ export function PlayerComparisonChart() {
                     <span className="lycans-h2h-value">{comparisonData.headToHeadStats.averageSameLoupsDuration}</span>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-
-          {/* Detailed Statistics Table */}
-          <div className="lycans-detailed-stats">
-            <div className="lycans-stats-toggle">
-              <button
-                className={`lycans-toggle-btn ${showDetailedStats ? 'active' : ''}`}
-                onClick={() => setShowDetailedStats(!showDetailedStats)}
-              >
-                {showDetailedStats ? 'Masquer' : 'Afficher'} les Statistiques Détaillées
-              </button>
-            </div>
-
-            {showDetailedStats && (
-              <div className="lycans-stats-table">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Métrique</th>
-                      <th 
-                        style={{ color: playersColor[selectedPlayer1] || '#0076FF', cursor: 'pointer' }}
-                        onClick={() => handlePlayerDetailsClick(selectedPlayer1)}
-                        title="Cliquer pour voir les détails"
-                      >
-                        {selectedPlayer1}
-                      </th>
-                      <th 
-                        style={{ color: playersColor[selectedPlayer2] || '#FF0000', cursor: 'pointer' }}
-                        onClick={() => handlePlayerDetailsClick(selectedPlayer2)}
-                        title="Cliquer pour voir les détails"
-                      >
-                        {selectedPlayer2}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Parties Jouées</td>
-                      <td>{comparisonData.player1.gamesPlayed}</td>
-                      <td>{comparisonData.player2.gamesPlayed}</td>
-                    </tr>
-                    <tr>
-                      <td>Score de Victoire (/100)</td>
-                      <td>{comparisonData.player1.winRateScore.toFixed(0)}</td>
-                      <td>{comparisonData.player2.winRateScore.toFixed(0)}</td>
-                    </tr>
-                    <tr>
-                      <td>Score de Participation (/100)</td>
-                      <td>{Math.round(comparisonData.player1.participationScore)}</td>
-                      <td>{Math.round(comparisonData.player2.participationScore)}</td>
-                    </tr>
-                    <tr>
-                      <td>Score de Régularité (/100)</td>
-                      <td>{Math.round(comparisonData.player1.consistencyScore)}</td>
-                      <td>{Math.round(comparisonData.player2.consistencyScore)}</td>
-                    </tr>
-                    <tr>
-                      <td>Maîtrise Villageois (/100)</td>
-                      <td>{Math.round(comparisonData.player1.villageoisMastery)}</td>
-                      <td>{Math.round(comparisonData.player2.villageoisMastery)}</td>
-                    </tr>
-                    <tr>
-                      <td>Efficacité Loups (/100)</td>
-                      <td>{Math.round(comparisonData.player1.loupsEfficiency)}</td>
-                      <td>{Math.round(comparisonData.player2.loupsEfficiency)}</td>
-                    </tr>
-                    <tr>
-                      <td>Adaptabilité des rôles (/100)</td>
-                      <td>{Math.round(comparisonData.player1.specialRoleAdaptability)}</td>
-                      <td>{Math.round(comparisonData.player2.specialRoleAdaptability)}</td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             )}
           </div>
