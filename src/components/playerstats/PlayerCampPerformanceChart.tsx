@@ -123,9 +123,9 @@ export function PlayerCampPerformanceChart() {
   }, [playerCampPerformance]);
 
   // Optimize data processing by combining operations and reducing redundant calculations
-  const { campPlayerData, topPerformersData } = useMemo(() => {
+  const { campPlayerData, topPerformersData, totalMatchingPlayers } = useMemo(() => {
     if (!playerCampPerformance?.playerPerformance) {
-      return { campPlayerData: [], topPerformersData: [] };
+      return { campPlayerData: [], topPerformersData: [], totalMatchingPlayers: 0 };
     }
 
     const { playerPerformance } = playerCampPerformance;
@@ -134,7 +134,7 @@ export function PlayerCampPerformanceChart() {
     const campPlayers = [];
     const allPerformances = [];
     
-    // For Hall of Fame (top performers), we need to track BEST performance per player
+    // For Tous les Camps (top performers), we need to track BEST performance per player
     const playerBestPerformance = new Map<string, ChartPlayerCampPerformance>();
     
     for (const player of playerPerformance) {
@@ -156,7 +156,7 @@ export function PlayerCampPerformanceChart() {
             playerCamp: uniqueKey // Keep this for unique identification when needed
           };
           
-          // For Hall of Fame, track only the BEST performance per player (matching achievement logic)
+          // For Tous les Camps, track only the BEST performance per player (matching achievement logic)
           const currentBest = playerBestPerformance.get(player.player);
           if (!currentBest || performanceData.performanceNum > currentBest.performanceNum) {
             playerBestPerformance.set(player.player, performanceData);
@@ -179,14 +179,14 @@ export function PlayerCampPerformanceChart() {
       }
     }
     
-    // Convert best performances map to array for Hall of Fame
+    // Convert best performances map to array for Tous les Camps
     allPerformances.push(...playerBestPerformance.values());
 
     // Helper function to add highlighted player if not already included
     const addHighlightedPlayer = (
       dataArray: ChartPlayerCampPerformance[],
       campFilter?: string,
-      isHallOfFame: boolean = false
+      isTousLesCamps: boolean = false
     ): ChartPlayerCampPerformance[] => {
       if (!settings.highlightedPlayer) return dataArray;
 
@@ -207,8 +207,8 @@ export function PlayerCampPerformanceChart() {
 
       if (!highlightedPlayerData) return dataArray;
 
-      // For Hall of Fame, add only the BEST performance (matching achievement logic)
-      if (isHallOfFame) {
+      // For Tous les Camps, add only the BEST performance (matching achievement logic)
+      if (isTousLesCamps) {
         let bestPerformance: ChartPlayerCampPerformance | null = null;
         
         for (const cp of highlightedPlayerData.campPerformance) {
@@ -270,7 +270,7 @@ export function PlayerCampPerformanceChart() {
       ? addHighlightedPlayer(campPlayers, selectedCamp, false)
       : [];
     
-    // Add highlighted player to top performers data (Hall of Fame mode - best performance only)
+    // Add highlighted player to top performers data (Tous les Camps mode - best performance only)
     const topPerformersWithHighlighted = addHighlightedPlayer(allPerformances, undefined, true);
     
     // Sort once for each dataset
@@ -301,9 +301,20 @@ export function PlayerCampPerformanceChart() {
       return topPlayers;
     };
     
+    // Calculate total number of players matching the criteria
+    let totalPlayers = 0;
+    if (selectedCamp === 'Tous les camps') {
+      // For "Tous les camps", count unique players (not player-camp combinations)
+      totalPlayers = playerBestPerformance.size;
+    } else {
+      // For specific camp, count players in that camp
+      totalPlayers = campPlayers.length;
+    }
+    
     return {
       campPlayerData: getTopPlayersWithHighlighted(sortedCampPlayers, 15),
-      topPerformersData: getTopPlayersWithHighlighted(sortedTopPerformers, 15)
+      topPerformersData: getTopPlayersWithHighlighted(sortedTopPerformers, 15),
+      totalMatchingPlayers: totalPlayers
     };
   }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer]);
 
@@ -454,7 +465,7 @@ export function PlayerCampPerformanceChart() {
               let isMainText = false;
               
               if (camp === 'Tous les camps') {
-                optionText = '📊 Hall of Fame';
+                optionText = '📊 Tous les camps';
                 isMainText = true;
               } else if (camp === 'Camp Villageois') {
                 optionText = '   🏘️ Camp Villageois';
@@ -546,32 +557,22 @@ export function PlayerCampPerformanceChart() {
         </div>
       </div>
 
-      {/* Visual explanation of grouping */}
+      {/* Display total matching players count */}
       <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        marginBottom: '1rem',
-        fontSize: '0.75rem',
-        color: 'var(--text-secondary)',
-        fontStyle: 'italic'
+        textAlign: 'center', 
+        marginBottom: '1.5rem',
+        padding: '0.75rem',
+        background: 'var(--bg-secondary)',
+        borderRadius: '8px',
+        border: '1px solid var(--border-color)'
       }}>
-        <span>
-          📊 = Tous les camps • 🏘️ = Villageois groupés • 🐺 = Loups groupés • ⭐ = Rôles spéciaux groupés
+        <span style={{ 
+          color: 'var(--text-secondary)', 
+          fontSize: '0.95rem',
+          fontWeight: '500'
+        }}>
+          {totalMatchingPlayers} joueur{totalMatchingPlayers !== 1 ? 's' : ''} {totalMatchingPlayers !== 1 ? 'correspondent' : 'correspond'} aux critères
         </span>
-      </div>
-
-      {/* Summary Cards */}
-      <div className="lycans-resume-conteneur">
-        <div className="lycans-stat-carte">
-          <h3>Camps Analysés</h3>
-          <div className="lycans-valeur-principale">{playerCampPerformance.campAverages.length}</div>
-          <p>camps différents</p>
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Joueurs Évalués</h3>
-          <div className="lycans-valeur-principale">{playerCampPerformance.playerPerformance.length}</div>
-          <p>joueurs analysés</p>
-        </div>
       </div>
 
       <div className="lycans-graphiques-groupe">
