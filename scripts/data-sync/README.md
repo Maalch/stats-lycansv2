@@ -4,94 +4,80 @@ This folder contains scripts for syncing and processing Lycans game data and gen
 
 ## Files
 
+- **`fetch-data-unified.js`** - Unified AWS data synchronization script (supports multiple teams)
 - **`fetch-data.js`** - Legacy-only data synchronization script (Google Sheets API)
-- **`fetch-data-aws.js`** - AWS-only data synchronization script (S3 bucket)
-- **`fetch-data-discord.js`** - Discord Team AWS-only data synchronization script (S3 bucket → gameLog_TeamDiscord.json)
 - **`generate-achievements.js`** - Standalone script for generating player achievements from game data
+- **`shared/data-sources.js`** - Configuration for different data sources/teams
+- **`shared/sync-utils.js`** - Shared utility functions for data syncing
 - **`package.json`** - Node.js dependencies for the scripts
 
-## Scripts
+## Quick Start
 
-### fetch-data.js (Legacy-Only)
-
-The legacy data sync script that:
-1. Fetches legacy data from Google Sheets API only
-2. Creates unified `gameLog.json` format
-3. Generates player achievements automatically
-4. Creates data index and metadata files
-
-**Usage:**
+### Sync Main Team Data (AWS)
 ```bash
-cd scripts/data-sync
-node fetch-data.js
-# or from project root:
+npm run sync-data-aws
+```
+
+### Sync Discord Team Data (AWS)
+```bash
+npm run sync-data-discord
+```
+
+### Sync Legacy Data (Google Sheets)
+```bash
 npm run sync-data
 ```
 
-**Environment Variables:**
-- `LYCANS_API_BASE` - Base URL for the legacy Google Sheets API
+## Scripts
 
-### fetch-data-aws.js (AWS-Only)
+### fetch-data-unified.js (AWS-Only - Recommended)
 
-The AWS-only data sync script that:
-1. Fetches game data from AWS S3 bucket only
-2. Processes multiple mod version files from S3
-3. Creates unified `gameLog.json` format
-4. Generates player achievements automatically
-5. Creates placeholder files for legacy data sources
+**NEW:** Unified AWS data sync script that supports multiple teams through configuration.
 
 **Usage:**
 ```bash
+# Main team
 cd scripts/data-sync
-node fetch-data-aws.js
+node fetch-data-unified.js main
 # or from project root:
 npm run sync-data-aws
+
+# Discord team
+cd scripts/data-sync
+node fetch-data-unified.js discord
+# or from project root:
+npm run sync-data-discord
 ```
 
 **Environment Variables:**
 - `STATS_LIST_URL` - URL for AWS S3 bucket stats list
 
 **Features:**
-- Fetches game logs from multiple AWS S3 files
-- Deduplicates games by ID (keeps first occurrence)
-- Adds mod version metadata to each game
-- Sorts games chronologically by StartDate
-- Creates placeholder files for legacy data compatibility
+- Single codebase for all AWS syncs
+- Configuration-based team support
+- Automatic game filtering per team
+- Auto-generates joueurs.json for teams (when configured)
+- Generates player achievements automatically
+- Creates unified `gameLog.json` format
+- Outputs to team-specific directories
 
-### fetch-data-discord.js (Discord Team - AWS-Only)
+**Adding New Teams:**
 
-The Discord Team AWS-only data sync script that:
-1. Fetches game data from Discord Team's AWS S3 bucket only
-2. Processes multiple mod version files from S3
-3. Creates unified `gameLog_TeamDiscord.json` format
-4. Generates player achievements automatically
-5. Creates placeholder files for legacy data sources
-
-**Usage:**
-```bash
-cd scripts/data-sync
-node fetch-data-discord.js
-# or from project root:
-npm run sync-data-discord
+Edit `shared/data-sources.js`:
+```javascript
+export const DATA_SOURCES = {
+  newTeam: {
+    name: 'New Team',
+    outputDir: '../../data/newteam',
+    gameFilter: (gameId) => gameId.startsWith('NewTeam-'),
+    generateJoueurs: true,
+    modVersionLabel: 'New Team - Multiple AWS Versions',
+    indexDescription: 'Game logs for New Team.'
+  }
+};
 ```
 
-**Environment Variables:**
-- `STATS_LIST_URL` - URL for Discord Team's AWS S3 bucket stats list
-
-**Output Files:**
-- `gameLog_TeamDiscord.json` - Main game data file for Discord Team
-- `playerAchievements_TeamDiscord.json` - Achievements for Discord Team
-- `index_TeamDiscord.json` - Metadata for Discord Team
-- `rawBRData_TeamDiscord.json` - Placeholder BR data
-- `joueurs_TeamDiscord.json` - Placeholder player data
-- `gameLog-Legacy_TeamDiscord.json` - Placeholder legacy data
-
-**Features:**
-- Fetches game logs from Discord Team's AWS S3 files
-- Deduplicates games by ID (keeps first occurrence)
-- Adds mod version metadata to each game
-- Sorts games chronologically by StartDate
-- Separate output files to avoid conflicts with main data
+Then run: `node fetch-data-unified.js newTeam`
 
 ### generate-achievements.js
 
