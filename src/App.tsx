@@ -100,18 +100,6 @@ const PLAYER_STATS_MENU = [
     description: 'Paires de loups et d\'amoureux'
   },
   { 
-    key: 'campPerformance', 
-    label: 'Performances', 
-    component: PlayerCampPerformanceChart,
-    description: 'Meilleurs performances (par rapport à la moyenne), par camp'
-  },
-  { 
-    key: 'comparison', 
-    label: 'Face à Face', 
-    component: PlayerComparisonChart,
-    description: 'Comparaison détaillée entre deux joueurs'
-  },
-  { 
     key: 'deathStats', 
     label: 'Morts & Kills', 
     component: DeathStatisticsChart,
@@ -123,6 +111,20 @@ const PLAYER_STATS_MENU = [
     component: VotingStatisticsChart,
     description: 'Comportements et précision de vote des joueurs'
   },
+  { 
+    key: 'campPerformance', 
+    label: 'Performances', 
+    component: PlayerCampPerformanceChart,
+    description: 'Meilleurs performances (par rapport à la moyenne), par camp'
+  },
+  { 
+    key: 'comparison', 
+    label: 'Face à Face', 
+    component: PlayerComparisonChart,
+    description: 'Comparaison détaillée entre deux joueurs'
+  },
+
+
 ];
 
 const GENERAL_STATS_MENU = [
