@@ -532,28 +532,54 @@ export function PlayerSeriesChart() {
           </div>
         </FullscreenChart>
 
-        {currentData.length > 0 && (
-          <div className="lycans-stats-grid" style={{ marginTop: '0rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-            <div className="lycans-stat-card">
-              <h3>🏆 Record Absolu</h3>
-              <div className="lycans-stat-value">
-                {currentData[0].seriesLength}
-                {currentData[0].isOngoing && <span style={{ fontSize: '0.6em', marginLeft: '5px' }}>🔥</span>}
+        {currentData.length > 0 && (() => {
+          // Find all players tied for the record
+          const maxSeriesLength = currentData[0].seriesLength;
+          const tiedPlayers = currentData.filter(entry => entry.seriesLength === maxSeriesLength);
+          const hasOngoingSeries = tiedPlayers.some(p => p.isOngoing);
+          
+          return (
+            <div className="lycans-stats-grid" style={{ marginTop: '0rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+              <div className="lycans-stat-card">
+                <h3>🏆 Record Absolu</h3>
+                <div className="lycans-stat-value">
+                  {maxSeriesLength}
+                  {hasOngoingSeries && <span style={{ fontSize: '0.6em', marginLeft: '5px' }}>🔥</span>}
+                </div>
+                {tiedPlayers.length === 1 ? (
+                  <>
+                    <p>
+                      par <strong>{tiedPlayers[0].player}</strong>
+                      {tiedPlayers[0].isOngoing && <span style={{ color: '#FF8C00', fontWeight: 'bold' }}> (En cours)</span>}
+                    </p>
+                    {(tiedPlayers[0] as any).campCounts ? (
+                      <p className="lycans-h2h-description">
+                        Camps joués : {formatCampCounts((tiedPlayers[0] as any).campCounts)}
+                      </p>
+                    ) : (
+                      <p className="lycans-h2h-description">
+                        Camp : {(tiedPlayers[0] as any).camp}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      par <strong>{tiedPlayers.length} joueurs</strong>
+                      {hasOngoingSeries && <span style={{ color: '#FF8C00', fontWeight: 'bold' }}> (dont série{tiedPlayers.filter(p => p.isOngoing).length > 1 ? 's' : ''} en cours)</span>}
+                    </p>
+                    <p className="lycans-h2h-description" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                      {tiedPlayers.map((player, idx) => (
+                        <span key={player.player}>
+                          <strong>{player.player}</strong>
+                          {player.isOngoing && <span style={{ fontSize: '0.9em' }}>🔥</span>}
+                          {idx < tiedPlayers.length - 1 && ', '}
+                        </span>
+                      ))}
+                    </p>
+                  </>
+                )}
               </div>
-              <p>
-                par <strong>{currentData[0].player}</strong>
-                {currentData[0].isOngoing && <span style={{ color: '#FF8C00', fontWeight: 'bold' }}> (En cours)</span>}
-              </p>
-              {(currentData[0] as any).campCounts ? (
-                <p className="lycans-h2h-description">
-                  Camps joués : {formatCampCounts((currentData[0] as any).campCounts)}
-                </p>
-              ) : (
-                <p className="lycans-h2h-description">
-                  Camp : {(currentData[0] as any).camp}
-                </p>
-              )}
-            </div>
             
             <div className="lycans-stat-card">
               <h3>📊 Meilleure série moyenne (tous les joueurs)</h3>
@@ -591,7 +617,8 @@ export function PlayerSeriesChart() {
               </p>
             </div>
           </div>
-        )}
+          );
+        })()}
 
         {currentData.length === 0 && (
           <div className="lycans-empty-section">
