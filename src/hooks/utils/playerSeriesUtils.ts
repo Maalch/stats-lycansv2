@@ -47,6 +47,12 @@ export interface PlayerSeriesData {
   allNoWolfSeries: CampSeries[];
   allWinSeries: WinSeries[];
   allLossSeries: LossSeries[];
+  // Current ongoing series for ALL players (not just their best)
+  currentVillageoisSeries: CampSeries[];
+  currentLoupsSeries: CampSeries[];
+  currentNoWolfSeries: CampSeries[];
+  currentWinSeries: WinSeries[];
+  currentLossSeries: LossSeries[];
   totalGamesAnalyzed: number;
   // Statistics for all players
   averageVillageoisSeries: number;
@@ -662,22 +668,108 @@ export function computePlayerSeries(
   let ongoingWinCount = 0;         // Players currently in their personal best win streak
   let ongoingLossCount = 0;        // Players currently in their personal best loss streak
 
-  Object.values(playerCampSeries).forEach(stats => {
+  // Collect current ongoing series for ALL players
+  const currentVillageoisSeries: CampSeries[] = [];
+  const currentLoupsSeries: CampSeries[] = [];
+  const currentNoWolfSeries: CampSeries[] = [];
+  const currentWinSeries: WinSeries[] = [];
+  const currentLossSeries: LossSeries[] = [];
+
+  Object.entries(playerCampSeries).forEach(([playerId, stats]) => {
+    const displayName = stats.longestVillageoisSeries?.player || 
+                       stats.longestLoupsSeries?.player || 
+                       stats.longestNoWolfSeries?.player || 
+                       stats.longestWinSeries?.player || 
+                       stats.longestLossSeries?.player || 
+                       playerId;
+
     // Count active series (any current streak > 0)
     if (stats.currentVillageoisSeries > 0) {
       activeVillageoisCount++;
+      // Add to current series array
+      currentVillageoisSeries.push({
+        player: displayName,
+        camp: 'Villageois',
+        seriesLength: stats.currentVillageoisSeries,
+        startGame: stats.villageoisSeriesStart?.game || '',
+        endGame: stats.currentVillageoisGameIds[stats.currentVillageoisGameIds.length - 1] || '',
+        startDate: stats.villageoisSeriesStart?.date || '',
+        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        isOngoing: true,
+        gameIds: [...stats.currentVillageoisGameIds]
+      });
     }
     if (stats.currentLoupsSeries > 0) {
       activeLoupsCount++;
+      currentLoupsSeries.push({
+        player: displayName,
+        camp: 'Loups',
+        seriesLength: stats.currentLoupsSeries,
+        startGame: stats.loupsSeriesStart?.game || '',
+        endGame: stats.currentLoupsGameIds[stats.currentLoupsGameIds.length - 1] || '',
+        startDate: stats.loupsSeriesStart?.date || '',
+        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        isOngoing: true,
+        gameIds: [...stats.currentLoupsGameIds]
+      });
     }
     if (stats.currentNoWolfSeries > 0) {
       activeNoWolfCount++;
+      // Create camp counts from currentNoWolfCamps
+      const campCounts: Record<string, number> = {};
+      stats.currentNoWolfCamps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+      currentNoWolfSeries.push({
+        player: displayName,
+        camp: 'Sans Loups',
+        seriesLength: stats.currentNoWolfSeries,
+        startGame: stats.noWolfSeriesStart?.game || '',
+        endGame: stats.currentNoWolfGameIds[stats.currentNoWolfGameIds.length - 1] || '',
+        startDate: stats.noWolfSeriesStart?.date || '',
+        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        campCounts: campCounts,
+        isOngoing: true,
+        gameIds: [...stats.currentNoWolfGameIds]
+      });
     }
     if (stats.currentWinSeries > 0) {
       activeWinCount++;
+      // Create camp counts from currentWinCamps
+      const campCounts: Record<string, number> = {};
+      stats.currentWinCamps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+      currentWinSeries.push({
+        player: displayName,
+        seriesLength: stats.currentWinSeries,
+        startGame: stats.winSeriesStart?.game || '',
+        endGame: stats.currentWinGameIds[stats.currentWinGameIds.length - 1] || '',
+        startDate: stats.winSeriesStart?.date || '',
+        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        campCounts: campCounts,
+        isOngoing: true,
+        gameIds: [...stats.currentWinGameIds]
+      });
     }
     if (stats.currentLossSeries > 0) {
       activeLossCount++;
+      // Create camp counts from currentLossCamps
+      const campCounts: Record<string, number> = {};
+      stats.currentLossCamps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+      currentLossSeries.push({
+        player: displayName,
+        seriesLength: stats.currentLossSeries,
+        startGame: stats.lossSeriesStart?.game || '',
+        endGame: stats.currentLossGameIds[stats.currentLossGameIds.length - 1] || '',
+        startDate: stats.lossSeriesStart?.date || '',
+        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        campCounts: campCounts,
+        isOngoing: true,
+        gameIds: [...stats.currentLossGameIds]
+      });
     }
 
     // Count ongoing record series (current streak equals personal best)
@@ -698,12 +790,24 @@ export function computePlayerSeries(
     }
   });
 
+  // Sort current series by length (descending)
+  currentVillageoisSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  currentLoupsSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  currentNoWolfSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  currentWinSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  currentLossSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+
   return {
     allVillageoisSeries,
     allLoupsSeries,
     allNoWolfSeries,
     allWinSeries,
     allLossSeries,
+    currentVillageoisSeries,
+    currentLoupsSeries,
+    currentNoWolfSeries,
+    currentWinSeries,
+    currentLossSeries,
     totalGamesAnalyzed: sortedGames.length,
     totalPlayersCount: allPlayers.size,
     activeVillageoisCount,

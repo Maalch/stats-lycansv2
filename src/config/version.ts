@@ -11,7 +11,7 @@ export const CHANGELOG: ChangelogEntry[] = [
   {
     version: 'v1.3.9',
     date: '24/10/2025',
-    description: 'Dans "Evolution", ajout de la possibilité de trier par Trimestre/année et par camp',
+    description: 'Dans "Evolution", ajout de la possibilité de trier par Trimestre/année et par camp.\n Dans "Joueurs" / "Séries", ajout d\'un bouton pour voir uniquement les séries actives ou non.',
   },
   {
     version: 'v1.3.8',
