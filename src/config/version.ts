@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.7';
+export const APP_VERSION = '1.3.9';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -8,6 +8,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.9',
+    date: '24/10/2025',
+    description: 'Dans "Evolution", ajout de la possibilité de trier par Trimestre/année et par camp',
+  },
+  {
+    version: 'v1.3.8',
+    date: '23/10/2025',
+    description: 'Réorganisation des pages du joueurs : les données précédemment disponibles dans "Historique Joueur" sont maintenant disponible dans la "Sélection Joueur".\n+ Beaucoup de petites clarifications sur des titres et descriptions des graphiques.',
+  },
     {
     version: 'v1.3.7',
     date: '16/10/2025',
