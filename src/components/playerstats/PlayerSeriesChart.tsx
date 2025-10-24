@@ -413,10 +413,6 @@ export function PlayerSeriesChart() {
   return (
     <div className="lycans-players-series">
       <h2>Séries des Joueurs</h2>
-      <p className="lycans-stats-info">
-        Basé sur {seriesData.totalGamesAnalyzed} parties analysées
-      </p>
-      
       <div className="lycans-section-description">
         <p>
           <strong>Mode Meilleurs Records :</strong> Affiche les meilleures séries de tous les temps pour chaque joueur.<br/>
