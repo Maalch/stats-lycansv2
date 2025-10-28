@@ -63,7 +63,7 @@ const LYCAN_SCHEMA = {
   VOTES: {
     SHEET: 'Conseils', //list of votes during meetings
     COLS: {
-      GAMEID: 'Games', //Game ID (unique), same as Game v2 sheet
+      GAMEID: 'Game', //Game ID (unique), same as Game v2 sheet
       MEETING: 'Conseils', //Number of the meeting in that day (1 for the first meeting, and so on)
       PLAYERS: 'Votants', //List of players for that specific VOTE category
       VOTE: 'Votes', //Target player of the vote, or "Passé" for Skip-vote / blank if no vote at all
