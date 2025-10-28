@@ -5,6 +5,7 @@ import type { GameFilter, MapNameFilter, PlayerFilterMode } from '../../context/
 import { ShareableUrl } from '../common/ShareableUrl';
 import './SettingsPanel.css';
 import { getPlayerNameMapping } from '../../utils/playerNameMapping';
+import { getPlayerId } from '../../utils/playerIdentification';
 import { getDataFileUrl, DATA_FILES } from '../../utils/dataPath';
 import type { DataSource } from '../../utils/dataPath';
 
@@ -92,6 +93,26 @@ export function SettingsPanel() {
         if (filters.mapNameFilter === 'village' && mapName !== 'Village') return false;
         if (filters.mapNameFilter === 'chateau' && mapName !== 'Château') return false;
         if (filters.mapNameFilter === 'others' && (mapName === 'Village' || mapName === 'Château')) return false;
+      }
+
+      // Apply player filter (supports both IDs and names for backward compatibility)
+      if (filters.playerFilter.mode !== 'none' && filters.playerFilter.players.length > 0) {
+        const gamePlayerNames = game.PlayerStats.map(p => p.Username.toLowerCase());
+        const gamePlayerIds = game.PlayerStats.map(p => getPlayerId(p).toLowerCase());
+
+        if (filters.playerFilter.mode === 'include') {
+          const hasAllPlayers = filters.playerFilter.players.every((player: string) => {
+            const term = String(player).toLowerCase();
+            return gamePlayerIds.includes(term) || gamePlayerNames.includes(term);
+          });
+          if (!hasAllPlayers) return false;
+        } else if (filters.playerFilter.mode === 'exclude') {
+          const hasAnyPlayer = filters.playerFilter.players.some((player: string) => {
+            const term = String(player).toLowerCase();
+            return gamePlayerIds.includes(term) || gamePlayerNames.includes(term);
+          });
+          if (hasAnyPlayer) return false;
+        }
       }
       
       return true;
