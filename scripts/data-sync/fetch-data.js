@@ -184,10 +184,15 @@ async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
   const newPlayersMap = new Map();
   const newPlayerStats = new Map(); // Track stats for color determination
   
-  // Scan all AWS game logs for players
+  // Scan all AWS game logs for players (only Main Team games)
   awsGameLogs.forEach(gameLog => {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(game => {
+        // Filter: Only process Main Team games (Ponce- prefix)
+        if (!game.Id || !game.Id.startsWith('Ponce-')) {
+          return; // Skip non-Main Team games
+        }
+        
         if (game.PlayerStats && Array.isArray(game.PlayerStats)) {
           game.PlayerStats.forEach(playerStat => {
             const steamID = playerStat.ID || playerStat.Id;
