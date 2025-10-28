@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import fs from 'fs/promises';
 import path from 'path';
 import { generateAllPlayerAchievements } from './generate-achievements.js';
+import { fetchStatsListUrls, fetchGameLogData } from './shared/sync-utils.js';
 
 // Data sources
 const LEGACY_DATA_ENDPOINTS = [
@@ -68,52 +69,6 @@ async function fetchLegacyEndpointData(endpoint) {
   }
 }
 
-/* TEMPORARILY DISABLED - AWS SYNC
-async function fetchStatsListUrls() {
-  console.log('Fetching stats list from AWS S3...');
-  
-  try {
-    const response = await fetch(process.env.STATS_LIST_URL);
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-    
-    const urls = await response.json();
-    console.log(`✓ Found ${urls.length} files in stats list`);
-    
-    // Filter out the StatsList.json itself to get only game log files
-    const gameLogUrls = urls.filter(url => !url.includes('StatsList.json'));
-    console.log(`✓ Found ${gameLogUrls.length} game log files to process`);
-    
-    return gameLogUrls;
-  } catch (error) {
-    console.error('Failed to fetch stats list:', error.message);
-    throw error;
-  }
-}
-*/
-
-/* TEMPORARILY DISABLED - AWS SYNC
-async function fetchGameLogData(url) {
-  console.log(`Fetching game log: ${path.basename(url)}`);
-  
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    console.log(`✓ Fetched game log with ${data.GameStats?.length || 0} games`);
-    
-    return data;
-  } catch (error) {
-    console.error(`Failed to fetch game log ${url}:`, error.message);
-    throw error;
-  }
-}
-*/
-
 async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   console.log('Merging legacy and AWS game logs into unified structure...');
   
@@ -133,7 +88,7 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
     legacyCount = legacyGameLog.GameStats.length;
     console.log(`✓ Added ${legacyCount} legacy games to map`);
   }
-  /* FOR NOW, REMOVE
+  
   // Add AWS games, merging with legacy if same ID exists
   for (const gameLog of awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
@@ -167,7 +122,7 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
       });
     }
   }
-  */
+  
   // Convert map back to array and remove source tracking
   const allGameStats = Array.from(gamesByIdMap.values()).map(game => {
     const { source, ...gameWithoutSource } = game;
@@ -178,12 +133,12 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   allGameStats.sort((a, b) => new Date(a.StartDate) - new Date(b.StartDate));
   
   const mergedGameLog = {
-    ModVersion: "Legacy Only",
+    ModVersion: awsCount > 0 ? "Legacy + AWS Merged" : "Legacy Only",
     TotalRecords: allGameStats.length,
     Sources: {
       Legacy: legacyCount,
-      AWS: 0, // Temporarily disabled
-      Merged: 0 // Temporarily disabled
+      AWS: awsCount,
+      Merged: mergedCount
     },
     GameStats: allGameStats
   };
@@ -203,6 +158,109 @@ async function saveDataToFile(filename, data) {
     console.error(`Failed to save ${filename}:`, error.message);
     throw error;
   }
+}
+
+async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
+  console.log('\n📋 Merging joueurs data with AWS game log players...');
+  
+  // Start with legacy joueurs data or empty structure
+  const joueursData = legacyJoueursData ? JSON.parse(JSON.stringify(legacyJoueursData)) : {
+    TotalRecords: 0,
+    Players: []
+  };
+  
+  // Create a map of existing players by Steam ID and username for quick lookup
+  const existingPlayersBySteamID = new Map();
+  const existingPlayersByUsername = new Map();
+  
+  joueursData.Players.forEach(player => {
+    if (player.SteamID) {
+      existingPlayersBySteamID.set(player.SteamID, player);
+    }
+    existingPlayersByUsername.set(player.Joueur, player);
+  });
+  
+  // Track new players found in AWS data
+  const newPlayersMap = new Map();
+  const newPlayerStats = new Map(); // Track stats for color determination
+  
+  // Scan all AWS game logs for players
+  awsGameLogs.forEach(gameLog => {
+    if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
+      gameLog.GameStats.forEach(game => {
+        if (game.PlayerStats && Array.isArray(game.PlayerStats)) {
+          game.PlayerStats.forEach(playerStat => {
+            const steamID = playerStat.ID || playerStat.Id;
+            const username = playerStat.Username;
+            const color = playerStat.Color;
+            
+            if (!steamID || !username) return;
+            
+            // Check if player exists in legacy data by Steam ID
+            const existsByID = existingPlayersBySteamID.has(steamID);
+            const existsByUsername = existingPlayersByUsername.has(username);
+            
+            if (!existsByID && !existsByUsername) {
+              // New player not in legacy data
+              if (!newPlayersMap.has(steamID)) {
+                newPlayersMap.set(steamID, {
+                  Joueur: username,
+                  SteamID: steamID,
+                  Image: null,
+                  Twitch: null,
+                  Youtube: null,
+                  Couleur: "Gris" // Default, will be updated
+                });
+                newPlayerStats.set(steamID, { username, colors: {} });
+              }
+              
+              // Track color usage for this new player
+              const stats = newPlayerStats.get(steamID);
+              stats.username = username; // Update to latest username
+              if (color) {
+                stats.colors[color] = (stats.colors[color] || 0) + 1;
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+  
+  // Add new players with their most common color
+  let addedCount = 0;
+  for (const [steamID, playerData] of newPlayersMap.entries()) {
+    const stats = newPlayerStats.get(steamID);
+    
+    // Find most common color
+    let mostCommonColor = "Gris";
+    let maxCount = 0;
+    for (const [color, count] of Object.entries(stats.colors)) {
+      if (count > maxCount) {
+        maxCount = count;
+        mostCommonColor = color;
+      }
+    }
+    
+    playerData.Couleur = mostCommonColor;
+    playerData.Joueur = stats.username; // Use latest username
+    joueursData.Players.push(playerData);
+    addedCount++;
+  }
+  
+  // Sort players alphabetically
+  joueursData.Players.sort((a, b) => a.Joueur.localeCompare(b.Joueur));
+  
+  // Update total count
+  joueursData.TotalRecords = joueursData.Players.length;
+  
+  if (addedCount > 0) {
+    console.log(`✓ Added ${addedCount} new players from AWS game logs`);
+  } else {
+    console.log('✓ No new players to add from AWS game logs');
+  }
+  
+  return joueursData;
 }
 
 async function createDataIndex(legacyAvailable, awsFilesCount, totalGames) {
@@ -259,7 +317,6 @@ async function main() {
     }
 
     // === FETCH AWS DATA ===
-    /*
     console.log('\n📦 Fetching AWS data from S3 bucket...');
     const gameLogUrls = await fetchStatsListUrls();
     
@@ -284,11 +341,9 @@ async function main() {
     } else {
       console.log('⚠️  No AWS game log files found');
     }
-      */
 
     // === MERGE AND SAVE UNIFIED DATA ===
     console.log('\n🔄 Creating unified dataset...');
-    const awsGameLogs = []; // Temporarily disabled AWS sync
     
     let mergedGameLog;
     if (legacyGameLogData) {
@@ -325,15 +380,9 @@ async function main() {
       await saveDataToFile('rawBRData.json', emptyBRData);
     }
     
-    // Create placeholder Joueurs data if not fetched from legacy
-    if (!legacyJoueursData) {
-      const emptyJoueursData = {
-        TotalRecords: 0,
-        Players: [],
-        description: "Player data not available from current sources"
-      };
-      await saveDataToFile('joueurs.json', emptyJoueursData);
-    }
+    // Merge joueurs data with AWS players
+    const mergedJoueursData = await mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs);
+    await saveDataToFile('joueurs.json', mergedJoueursData);
     
     await createDataIndex(!!legacyGameLogData, awsGameLogs.length, mergedGameLog.TotalRecords);
     
@@ -348,12 +397,20 @@ async function main() {
       // Don't fail the entire sync for achievements generation failure
     }
     
-    console.log('\n✅ Legacy-only data sync completed successfully!');
+    console.log('\n✅ Data sync completed successfully!');
     console.log(`📊 Total games processed: ${mergedGameLog.TotalRecords}`);
     console.log(`   - Legacy: ${mergedGameLog.Sources.Legacy} games`);
-    console.log(`   - AWS: ${mergedGameLog.Sources.AWS} games (temporarily disabled)`);
+    console.log(`   - AWS: ${mergedGameLog.Sources.AWS} games`);
+    console.log(`   - Merged: ${mergedGameLog.Sources.Merged} games`);
+    console.log(`👥 Player data: ${mergedJoueursData.TotalRecords} players`);
     if (legacyJoueursData) {
-      console.log(`👥 Player data: ${legacyJoueursData.TotalRecords || 0} players exported`);
+      const legacyCount = legacyJoueursData.TotalRecords || 0;
+      const newPlayersCount = mergedJoueursData.TotalRecords - legacyCount;
+      if (newPlayersCount > 0) {
+        console.log(`   - ${legacyCount} from legacy data, ${newPlayersCount} new from AWS`);
+      } else {
+        console.log(`   - All from legacy data`);
+      }
     }
     if (legacyBRData) {
       const brParticipants = legacyBRData.BRParties?.totalRecords || 0;

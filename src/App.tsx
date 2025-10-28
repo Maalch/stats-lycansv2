@@ -415,19 +415,27 @@ function MainApp() {
               </header>
 
               <nav className="lycans-main-menu">
-                {MAIN_TABS.map(tab => (
-                  <button
-                    key={tab.key}
-                    className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
-                    onClick={() => setSelectedMainTab(tab.key)}
-                    type="button"
-                    title={tab.description}
-                  >
-                    <span className="tab-icon">{tab.icon}</span>
-                    <span className="tab-label">{tab.label}</span>
-                    {tab.key === 'settings' && <SettingsBadge />}
-                  </button>
-                ))}
+                {MAIN_TABS
+                  .filter(tab => {
+                    // Hide "Battle Royale" when dataSource is 'discord'
+                    if (tab.key === 'br' && settings.dataSource === 'discord') {
+                      return false;
+                    }
+                    return true;
+                  })
+                  .map(tab => (
+                    <button
+                      key={tab.key}
+                      className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
+                      onClick={() => setSelectedMainTab(tab.key)}
+                      type="button"
+                      title={tab.description}
+                    >
+                      <span className="tab-icon">{tab.icon}</span>
+                      <span className="tab-label">{tab.label}</span>
+                      {tab.key === 'settings' && <SettingsBadge />}
+                    </button>
+                  ))}
               </nav>
 
               <div className="lycans-dashboard-section">
