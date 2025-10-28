@@ -94,6 +94,12 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(awsGame => {
         const gameId = awsGame.Id;
+        
+        // Filter: Only process Main Team games (Ponce- prefix)
+        if (!gameId || !gameId.startsWith('Ponce-')) {
+          return; // Skip non-Main Team games
+        }
+        
         const existingLegacyGame = gamesByIdMap.get(gameId);
         
         if (existingLegacyGame && existingLegacyGame.source === 'legacy') {
