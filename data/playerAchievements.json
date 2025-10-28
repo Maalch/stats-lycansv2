@@ -148,7 +148,7 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 18 Tueur Efficace",
-          "description": "18ème meilleur ratio d'éliminations: 0.48 par partie (468 parties, min. 20)",
+          "description": "18ème meilleur ratio d'éliminations: 0.48 par partie (469 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 18,
@@ -163,11 +163,11 @@
         {
           "id": "top-killed-all",
           "title": "💀 Top 1 Victime",
-          "description": "1ère joueur le plus éliminé avec 277 morts",
+          "description": "1ère joueur le plus éliminé avec 278 morts",
           "type": "bad",
           "category": "kills",
           "rank": 1,
-          "value": 277,
+          "value": 278,
           "totalRanked": 77,
           "redirectTo": {
             "tab": "players",
@@ -193,11 +193,11 @@
         {
           "id": "hall-of-fame-all",
           "title": "🏆 Top 1 Hall of Fame",
-          "description": "1er meilleur overperformer: +18.4 en Chasseur (42 parties, min. 25)",
+          "description": "1er meilleur overperformer: +18.2 en Chasseur (42 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 1,
-          "value": 18.35149313962873,
+          "value": 18.173598553345386,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -338,6 +338,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 19 Score d'Agressivité aux votes",
+          "description": "19ème score d'agressivité: -6.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 19,
+          "value": -6.204217536071027,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 31 Précision des Votes",
+          "description": "31ème précision des votes contre le camp adverse: 77.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 31,
+          "value": 77.33333333333333,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -484,7 +512,7 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 19 Tueur Efficace (Parties Moddées)",
-          "description": "19ème meilleur ratio d'éliminations: 0.41 par partie (188 parties, min. 20)",
+          "description": "19ème meilleur ratio d'éliminations: 0.41 par partie (189 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 19,
@@ -499,11 +527,11 @@
         {
           "id": "top-killed-modded",
           "title": "💀 Top 2 Victime (Parties Moddées)",
-          "description": "2ème joueur le plus éliminé avec 112 morts",
+          "description": "2ème joueur le plus éliminé avec 113 morts",
           "type": "bad",
           "category": "kills",
           "rank": 2,
-          "value": 112,
+          "value": 113,
           "totalRanked": 51,
           "redirectTo": {
             "tab": "players",
@@ -513,11 +541,11 @@
         },
         {
           "id": "top-survivor-modded",
-          "title": "🛡️ Top 7 Survivant (Parties Moddées)",
-          "description": "7ème meilleur taux de survie: 0.60 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 8 Survivant (Parties Moddées)",
+          "description": "8ème meilleur taux de survie: 0.60 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 7,
+          "rank": 8,
           "value": 0.6,
           "totalRanked": 28,
           "redirectTo": {
@@ -674,6 +702,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 13 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "13ème score d'agressivité: -10.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 13,
+          "value": -10.771144278606965,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 18 Précision des Votes (Parties Moddées)",
+          "description": "18ème précision des votes contre le camp adverse: 84.9% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 18,
+          "value": 84.87394957983193,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -934,11 +990,11 @@
         },
         {
           "id": "top-survivor-all",
-          "title": "🛡️ Top 19 Survivant",
-          "description": "19ème meilleur taux de survie: 0.64 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 20 Survivant",
+          "description": "20ème meilleur taux de survie: 0.64 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 19,
+          "rank": 20,
           "value": 0.64,
           "totalRanked": 40,
           "redirectTo": {
@@ -1020,6 +1076,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 4 Score d'Agressivité aux votes",
+          "description": "4ème score d'agressivité: 11.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 4,
+          "value": 11.75438596491228,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 47 Précision des Votes",
+          "description": "47ème précision des votes contre le camp adverse: 61.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 47,
+          "value": 61.53846153846154,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -1129,6 +1213,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 27 Score d'Agressivité aux votes",
+          "description": "27ème score d'agressivité: -9.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 27,
+          "value": -9.642857142857135,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 49 Précision des Votes",
+          "description": "49ème précision des votes contre le camp adverse: 33.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 49,
+          "value": 33.33333333333333,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -1447,6 +1559,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 33 Score d'Agressivité aux votes",
+          "description": "33ème score d'agressivité: -15.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 33,
+          "value": -15.753424657534243,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 43 Précision des Votes",
+          "description": "43ème précision des votes contre le camp adverse: 70.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 43,
+          "value": 70,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -1522,6 +1662,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 11 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "11ème score d'agressivité: -8.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 11,
+          "value": -8.46153846153846,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 31 Précision des Votes (Parties Moddées)",
+          "description": "31ème précision des votes contre le camp adverse: 75.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 31,
+          "value": 75,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -1829,7 +1997,7 @@
           "type": "good",
           "category": "performance",
           "rank": 7,
-          "value": 10.510106382978726,
+          "value": 10.531329494534504,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -1925,6 +2093,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 6 Score d'Agressivité aux votes",
+          "description": "6ème score d'agressivité: 8.0 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 6,
+          "value": 7.960784313725494,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 23 Précision des Votes",
+          "description": "23ème précision des votes contre le camp adverse: 83.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 23,
+          "value": 83.01886792452831,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -2249,7 +2445,7 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 15 Tueur Efficace",
-          "description": "15ème meilleur ratio d'éliminations: 0.50 par partie (395 parties, min. 20)",
+          "description": "15ème meilleur ratio d'éliminations: 0.50 par partie (396 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 15,
@@ -2264,11 +2460,11 @@
         {
           "id": "top-killed-all",
           "title": "💀 Top 2 Victime",
-          "description": "2ème joueur le plus éliminé avec 243 morts",
+          "description": "2ème joueur le plus éliminé avec 244 morts",
           "type": "bad",
           "category": "kills",
           "rank": 2,
-          "value": 243,
+          "value": 244,
           "totalRanked": 77,
           "redirectTo": {
             "tab": "players",
@@ -2440,6 +2636,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 23 Score d'Agressivité aux votes",
+          "description": "23ème score d'agressivité: -8.1 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 23,
+          "value": -8.08310991957104,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 15 Précision des Votes",
+          "description": "15ème précision des votes contre le camp adverse: 85.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 15,
+          "value": 85.3061224489796,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -2585,11 +2809,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 11 Tueur Efficace (Parties Moddées)",
-          "description": "11ème meilleur ratio d'éliminations: 0.56 par partie (183 parties, min. 20)",
+          "description": "11ème meilleur ratio d'éliminations: 0.55 par partie (184 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 11,
-          "value": 0.56,
+          "value": 0.55,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -2600,11 +2824,11 @@
         {
           "id": "top-killed-modded",
           "title": "💀 Top 1 Victime (Parties Moddées)",
-          "description": "1ère joueur le plus éliminé avec 119 morts",
+          "description": "1ère joueur le plus éliminé avec 120 morts",
           "type": "bad",
           "category": "kills",
           "rank": 1,
-          "value": 119,
+          "value": 120,
           "totalRanked": 51,
           "redirectTo": {
             "tab": "players",
@@ -2629,11 +2853,11 @@
         },
         {
           "id": "hall-of-fame-modded",
-          "title": "🏆 Top 13 Hall of Fame (Parties Moddées)",
-          "description": "13ème meilleur overperformer: +0.9 en Camp Loup (43 parties, min. 25)",
+          "title": "🏆 Top 14 Hall of Fame (Parties Moddées)",
+          "description": "14ème meilleur overperformer: +0.9 en Camp Loup (43 parties, min. 25)",
           "type": "good",
           "category": "performance",
-          "rank": 13,
+          "rank": 14,
           "value": 0.9415443989752781,
           "totalRanked": 26,
           "redirectTo": {
@@ -2645,7 +2869,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 13 Villageois (Parties Moddées)",
-          "description": "13ème meilleur Villageois: 51.6% (+0.1) (128 parties, min. 25)",
+          "description": "13ème meilleur Villageois: 51.6% (+0.2) (128 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 13,
@@ -2775,6 +2999,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 20 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "20ème score d'agressivité: -16.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 20,
+          "value": -16.545454545454547,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 23 Précision des Votes (Parties Moddées)",
+          "description": "23ème précision des votes contre le camp adverse: 81.7% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 23,
+          "value": 81.73076923076923,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -2927,6 +3179,34 @@
             "subTab": "series",
             "chartSection": "win-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 20 Score d'Agressivité aux votes",
+          "description": "20ème score d'agressivité: -7.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 20,
+          "value": -7.241379310344826,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 8 Précision des Votes",
+          "description": "8ème précision des votes contre le camp adverse: 90.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 8,
+          "value": 90,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": []
@@ -3076,7 +3356,7 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 1 Tueur Efficace",
-          "description": "1er meilleur ratio d'éliminations: 0.82 par partie (360 parties, min. 20)",
+          "description": "1er meilleur ratio d'éliminations: 0.82 par partie (361 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 1,
@@ -3091,11 +3371,11 @@
         {
           "id": "top-killed-all",
           "title": "💀 Top 4 Victime",
-          "description": "4ème joueur le plus éliminé avec 214 morts",
+          "description": "4ème joueur le plus éliminé avec 215 morts",
           "type": "bad",
           "category": "kills",
           "rank": 4,
-          "value": 214,
+          "value": 215,
           "totalRanked": 77,
           "redirectTo": {
             "tab": "players",
@@ -3106,11 +3386,11 @@
         {
           "id": "top-survivor-all",
           "title": "🛡️ Top 10 Survivant",
-          "description": "10ème meilleur taux de survie: 0.59 morts par partie (min. 25 parties)",
+          "description": "10ème meilleur taux de survie: 0.60 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
           "rank": 10,
-          "value": 0.59,
+          "value": 0.6,
           "totalRanked": 40,
           "redirectTo": {
             "tab": "players",
@@ -3120,12 +3400,12 @@
         },
         {
           "id": "hall-of-fame-all",
-          "title": "🏆 Top 4 Hall of Fame",
-          "description": "4ème meilleur overperformer: +13.8 en Camp Loup (94 parties, min. 25)",
+          "title": "🏆 Top 3 Hall of Fame",
+          "description": "3ème meilleur overperformer: +13.9 en Chasseur (32 parties, min. 25)",
           "type": "good",
           "category": "performance",
-          "rank": 4,
-          "value": 13.845841853548073,
+          "rank": 3,
+          "value": 13.858122362869196,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -3136,11 +3416,11 @@
         {
           "id": "villageois-performance-all",
           "title": "🏘️ Top 11 Villageois",
-          "description": "11ème meilleur Villageois: 61.6% (+4.0) (250 parties, min. 25)",
+          "description": "11ème meilleur Villageois: 61.4% (+3.9) (249 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 11,
-          "value": 61.6,
+          "value": 61.44578313253012,
           "totalRanked": 32,
           "redirectTo": {
             "tab": "players",
@@ -3266,6 +3546,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 8 Score d'Agressivité aux votes",
+          "description": "8ème score d'agressivité: 4.3 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 8,
+          "value": 4.327666151468314,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 22 Précision des Votes",
+          "description": "22ème précision des votes contre le camp adverse: 83.4% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 22,
+          "value": 83.3976833976834,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -3412,11 +3720,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 2 Tueur Efficace (Parties Moddées)",
-          "description": "2ème meilleur ratio d'éliminations: 0.91 par partie (135 parties, min. 20)",
+          "description": "2ème meilleur ratio d'éliminations: 0.90 par partie (136 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 2,
-          "value": 0.91,
+          "value": 0.9,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -3427,11 +3735,11 @@
         {
           "id": "top-killed-modded",
           "title": "💀 Top 8 Victime (Parties Moddées)",
-          "description": "8ème joueur le plus éliminé avec 81 morts",
+          "description": "8ème joueur le plus éliminé avec 82 morts",
           "type": "bad",
           "category": "kills",
           "rank": 8,
-          "value": 81,
+          "value": 82,
           "totalRanked": 51,
           "redirectTo": {
             "tab": "players",
@@ -3441,11 +3749,11 @@
         },
         {
           "id": "top-survivor-modded",
-          "title": "🛡️ Top 8 Survivant (Parties Moddées)",
-          "description": "8ème meilleur taux de survie: 0.60 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 10 Survivant (Parties Moddées)",
+          "description": "10ème meilleur taux de survie: 0.60 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 8,
+          "rank": 10,
           "value": 0.6,
           "totalRanked": 28,
           "redirectTo": {
@@ -3472,11 +3780,11 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 14 Villageois (Parties Moddées)",
-          "description": "14ème meilleur Villageois: 51.3% (+-0.2) (119 parties, min. 25)",
+          "description": "14ème meilleur Villageois: 50.8% (+-0.5) (118 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 14,
-          "value": 51.26050420168067,
+          "value": 50.847457627118644,
           "totalRanked": 25,
           "redirectTo": {
             "tab": "players",
@@ -3602,6 +3910,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 6 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "6ème score d'agressivité: 0.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 6,
+          "value": 0.20408163265306456,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 14 Précision des Votes (Parties Moddées)",
+          "description": "14ème précision des votes contre le camp adverse: 86.1% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 14,
+          "value": 86.11111111111111,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -3751,7 +4087,7 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 22 Tueur Efficace",
-          "description": "22ème meilleur ratio d'éliminations: 0.44 par partie (403 parties, min. 20)",
+          "description": "22ème meilleur ratio d'éliminations: 0.44 par partie (404 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 22,
@@ -3796,11 +4132,11 @@
         {
           "id": "hall-of-fame-all",
           "title": "🏆 Top 3 Hall of Fame",
-          "description": "3ème meilleur overperformer: +14.0 en Chasseur (32 parties, min. 25)",
+          "description": "3ème meilleur overperformer: +13.9 en Chasseur (32 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 3,
-          "value": 14.03601694915254,
+          "value": 13.858122362869196,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -3941,6 +4277,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 25 Score d'Agressivité aux votes",
+          "description": "25ème score d'agressivité: -8.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 25,
+          "value": -8.69220607661823,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 10 Précision des Votes",
+          "description": "10ème précision des votes contre le camp adverse: 88.8% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 10,
+          "value": 88.79668049792531,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -4086,11 +4450,11 @@
         },
         {
           "id": "top-killer-average-modded",
-          "title": "🎯 Top 10 Tueur Efficace (Parties Moddées)",
-          "description": "10ème meilleur ratio d'éliminations: 0.57 par partie (167 parties, min. 20)",
+          "title": "🎯 Top 9 Tueur Efficace (Parties Moddées)",
+          "description": "9ème meilleur ratio d'éliminations: 0.57 par partie (168 parties, min. 20)",
           "type": "good",
           "category": "kills",
-          "rank": 10,
+          "rank": 9,
           "value": 0.57,
           "totalRanked": 29,
           "redirectTo": {
@@ -4147,7 +4511,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 19 Villageois (Parties Moddées)",
-          "description": "19ème meilleur Villageois: 48.9% (+-2.5) (141 parties, min. 25)",
+          "description": "19ème meilleur Villageois: 48.9% (+-2.4) (141 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 19,
@@ -4277,6 +4641,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 14 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "14ème score d'agressivité: -11.3 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 14,
+          "value": -11.319261213720313,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 11 Précision des Votes (Parties Moddées)",
+          "description": "11ème précision des votes contre le camp adverse: 89.1% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 11,
+          "value": 89.0909090909091,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -4471,7 +4863,7 @@
         {
           "id": "villageois-performance-all",
           "title": "🏘️ Top 5 Villageois",
-          "description": "5ème meilleur Villageois: 63.9% (+6.3) (97 parties, min. 25)",
+          "description": "5ème meilleur Villageois: 63.9% (+6.4) (97 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 5,
@@ -4556,6 +4948,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 7 Score d'Agressivité aux votes",
+          "description": "7ème score d'agressivité: 6.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 7,
+          "value": 6.200000000000003,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 19 Précision des Votes",
+          "description": "19ème précision des votes contre le camp adverse: 84.8% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 19,
+          "value": 84.76190476190476,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -4714,6 +5134,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 17 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "17ème score d'agressivité: -12.4 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 17,
+          "value": -12.432432432432432,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 22 Précision des Votes (Parties Moddées)",
+          "description": "22ème précision des votes contre le camp adverse: 81.8% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 22,
+          "value": 81.81818181818183,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ]
     },
@@ -4846,11 +5294,11 @@
         },
         {
           "id": "top-killer-all",
-          "title": "⚔️ Top 16 Tueur",
-          "description": "16ème plus grand tueur avec 39 éliminations",
+          "title": "⚔️ Top 17 Tueur",
+          "description": "17ème plus grand tueur avec 39 éliminations",
           "type": "good",
           "category": "kills",
-          "rank": 16,
+          "rank": 17,
           "value": 39,
           "totalRanked": 65,
           "redirectTo": {
@@ -4891,11 +5339,11 @@
         },
         {
           "id": "top-survivor-all",
-          "title": "🛡️ Top 20 Survivant",
-          "description": "20ème meilleur taux de survie: 0.64 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 21 Survivant",
+          "description": "21ème meilleur taux de survie: 0.64 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 20,
+          "rank": 21,
           "value": 0.64,
           "totalRanked": 40,
           "redirectTo": {
@@ -4911,7 +5359,7 @@
           "type": "good",
           "category": "performance",
           "rank": 14,
-          "value": 6.280421686746983,
+          "value": 6.30164479830276,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -5007,6 +5455,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 24 Score d'Agressivité aux votes",
+          "description": "24ème score d'agressivité: -8.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 24,
+          "value": -8.60360360360361,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 32 Précision des Votes",
+          "description": "32ème précision des votes contre le camp adverse: 76.1% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 32,
+          "value": 76.05633802816901,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -5171,11 +5647,11 @@
         },
         {
           "id": "top-survivor-all",
-          "title": "🛡️ Top 17 Survivant",
-          "description": "17ème meilleur taux de survie: 0.62 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 18 Survivant",
+          "description": "18ème meilleur taux de survie: 0.62 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 17,
+          "rank": 18,
           "value": 0.62,
           "totalRanked": 40,
           "redirectTo": {
@@ -5287,6 +5763,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 2 Score d'Agressivité aux votes",
+          "description": "2ème score d'agressivité: 15.0 (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 2,
+          "value": 14.954954954954964,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 42 Précision des Votes",
+          "description": "42ème précision des votes contre le camp adverse: 71.7% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 42,
+          "value": 71.69811320754717,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -5471,7 +5975,7 @@
           "type": "good",
           "category": "performance",
           "rank": 16,
-          "value": 4.689150943396228,
+          "value": 4.7103740549520055,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -5612,6 +6116,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 45 Score d'Agressivité aux votes",
+          "description": "45ème score d'agressivité: -30.9 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 45,
+          "value": -30.857142857142854,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 48 Précision des Votes",
+          "description": "48ème précision des votes contre le camp adverse: 57.1% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 48,
+          "value": 57.14285714285714,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -5777,7 +6309,7 @@
           "type": "good",
           "category": "performance",
           "rank": 3,
-          "value": 13.793984164718367,
+          "value": 13.837924999508388,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -6187,7 +6719,7 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 2 Tueur Efficace",
-          "description": "2ème meilleur ratio d'éliminations: 0.81 par partie (319 parties, min. 20)",
+          "description": "2ème meilleur ratio d'éliminations: 0.81 par partie (320 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 2,
@@ -6202,11 +6734,11 @@
         {
           "id": "top-killed-all",
           "title": "💀 Top 6 Victime",
-          "description": "6ème joueur le plus éliminé avec 146 morts",
+          "description": "6ème joueur le plus éliminé avec 147 morts",
           "type": "bad",
           "category": "kills",
           "rank": 6,
-          "value": 146,
+          "value": 147,
           "totalRanked": 77,
           "redirectTo": {
             "tab": "players",
@@ -6247,7 +6779,7 @@
         {
           "id": "villageois-performance-all",
           "title": "🏘️ Top 13 Villageois",
-          "description": "13ème meilleur Villageois: 59.8% (+2.2) (219 parties, min. 25)",
+          "description": "13ème meilleur Villageois: 59.8% (+2.3) (219 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 13,
@@ -6377,6 +6909,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 5 Score d'Agressivité aux votes",
+          "description": "5ème score d'agressivité: 8.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 5,
+          "value": 8.526148969889064,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 20 Précision des Votes",
+          "description": "20ème précision des votes contre le camp adverse: 84.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 20,
+          "value": 84.52830188679246,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -6523,11 +7083,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 1 Tueur Efficace (Parties Moddées)",
-          "description": "1er meilleur ratio d'éliminations: 0.93 par partie (157 parties, min. 20)",
+          "description": "1er meilleur ratio d'éliminations: 0.92 par partie (158 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 1,
-          "value": 0.93,
+          "value": 0.92,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -6538,11 +7098,11 @@
         {
           "id": "top-killed-modded",
           "title": "💀 Top 10 Victime (Parties Moddées)",
-          "description": "10ème joueur le plus éliminé avec 69 morts",
+          "description": "10ème joueur le plus éliminé avec 70 morts",
           "type": "bad",
           "category": "kills",
           "rank": 10,
-          "value": 69,
+          "value": 70,
           "totalRanked": 51,
           "redirectTo": {
             "tab": "players",
@@ -6583,7 +7143,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 6 Villageois (Parties Moddées)",
-          "description": "6ème meilleur Villageois: 55.8% (+4.4) (120 parties, min. 25)",
+          "description": "6ème meilleur Villageois: 55.8% (+4.5) (120 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 6,
@@ -6713,6 +7273,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 2 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "2ème score d'agressivité: 6.8 (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 2,
+          "value": 6.751412429378529,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 15 Précision des Votes (Parties Moddées)",
+          "description": "15ème précision des votes contre le camp adverse: 85.8% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 15,
+          "value": 85.81560283687944,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -6907,11 +7495,11 @@
         {
           "id": "hall-of-fame-all",
           "title": "🏆 Top 17 Hall of Fame",
-          "description": "17ème meilleur overperformer: +4.6 en Villageois (45 parties, min. 25)",
+          "description": "17ème meilleur overperformer: +4.7 en Villageois (45 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 17,
-          "value": 4.647222222222226,
+          "value": 4.668445333778003,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -6922,7 +7510,7 @@
         {
           "id": "villageois-performance-all",
           "title": "🏘️ Top 10 Villageois",
-          "description": "10ème meilleur Villageois: 62.2% (+4.6) (45 parties, min. 25)",
+          "description": "10ème meilleur Villageois: 62.2% (+4.7) (45 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 10,
@@ -7007,6 +7595,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 30 Score d'Agressivité aux votes",
+          "description": "30ème score d'agressivité: -14.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 30,
+          "value": -14.673913043478258,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 16 Précision des Votes",
+          "description": "16ème précision des votes contre le camp adverse: 85.2% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 16,
+          "value": 85.18518518518519,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -7157,7 +7773,7 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 14 Tueur Efficace",
-          "description": "14ème meilleur ratio d'éliminations: 0.51 par partie (237 parties, min. 20)",
+          "description": "14ème meilleur ratio d'éliminations: 0.51 par partie (238 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 14,
@@ -7172,11 +7788,11 @@
         {
           "id": "top-killed-all",
           "title": "💀 Top 7 Victime",
-          "description": "7ème joueur le plus éliminé avec 144 morts",
+          "description": "7ème joueur le plus éliminé avec 145 morts",
           "type": "bad",
           "category": "kills",
           "rank": 7,
-          "value": 144,
+          "value": 145,
           "totalRanked": 77,
           "redirectTo": {
             "tab": "players",
@@ -7202,11 +7818,11 @@
         {
           "id": "hall-of-fame-all",
           "title": "🏆 Top 5 Hall of Fame",
-          "description": "5ème meilleur overperformer: +11.1 en Villageois (163 parties, min. 25)",
+          "description": "5ème meilleur overperformer: +11.2 en Villageois (163 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 5,
-          "value": 11.136656441717797,
+          "value": 11.157879553273574,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -7217,7 +7833,7 @@
         {
           "id": "villageois-performance-all",
           "title": "🏘️ Top 1 Villageois",
-          "description": "1er meilleur Villageois: 68.7% (+11.1) (163 parties, min. 25)",
+          "description": "1er meilleur Villageois: 68.7% (+11.2) (163 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 1,
@@ -7348,6 +7964,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 14 Score d'Agressivité aux votes",
+          "description": "14ème score d'agressivité: -2.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 14,
+          "value": -2.227378190255223,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 12 Précision des Votes",
+          "description": "12ème précision des votes contre le camp adverse: 87.6% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 12,
+          "value": 87.58169934640523,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -7477,11 +8121,11 @@
         },
         {
           "id": "top-killer-modded",
-          "title": "⚔️ Top 7 Tueur (Parties Moddées)",
-          "description": "7ème plus grand tueur avec 70 éliminations",
+          "title": "⚔️ Top 8 Tueur (Parties Moddées)",
+          "description": "8ème plus grand tueur avec 70 éliminations",
           "type": "good",
           "category": "kills",
-          "rank": 7,
+          "rank": 8,
           "value": 70,
           "totalRanked": 44,
           "redirectTo": {
@@ -7493,11 +8137,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 3 Tueur Efficace (Parties Moddées)",
-          "description": "3ème meilleur ratio d'éliminations: 0.73 par partie (96 parties, min. 20)",
+          "description": "3ème meilleur ratio d'éliminations: 0.72 par partie (97 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 3,
-          "value": 0.73,
+          "value": 0.72,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -7508,11 +8152,11 @@
         {
           "id": "top-killed-modded",
           "title": "💀 Top 12 Victime (Parties Moddées)",
-          "description": "12ème joueur le plus éliminé avec 59 morts",
+          "description": "12ème joueur le plus éliminé avec 60 morts",
           "type": "bad",
           "category": "kills",
           "rank": 12,
-          "value": 59,
+          "value": 60,
           "totalRanked": 51,
           "redirectTo": {
             "tab": "players",
@@ -7523,11 +8167,11 @@
         {
           "id": "top-survivor-modded",
           "title": "🛡️ Top 11 Survivant (Parties Moddées)",
-          "description": "11ème meilleur taux de survie: 0.61 morts par partie (min. 25 parties)",
+          "description": "11ème meilleur taux de survie: 0.62 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
           "rank": 11,
-          "value": 0.61,
+          "value": 0.62,
           "totalRanked": 28,
           "redirectTo": {
             "tab": "players",
@@ -7542,7 +8186,7 @@
           "type": "good",
           "category": "performance",
           "rank": 4,
-          "value": 12.679156962934641,
+          "value": 12.723097797724662,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -7683,6 +8327,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 5 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "5ème score d'agressivité: 0.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 5,
+          "value": 0.7075471698113169,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 19 Précision des Votes (Parties Moddées)",
+          "description": "19ème précision des votes contre le camp adverse: 84.4% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 19,
+          "value": 84.4155844155844,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -7832,7 +8504,7 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 12 Tueur Efficace",
-          "description": "12ème meilleur ratio d'éliminations: 0.53 par partie (202 parties, min. 20)",
+          "description": "12ème meilleur ratio d'éliminations: 0.53 par partie (203 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 12,
@@ -7861,11 +8533,11 @@
         },
         {
           "id": "top-survivor-all",
-          "title": "🛡️ Top 18 Survivant",
-          "description": "18ème meilleur taux de survie: 0.62 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 17 Survivant",
+          "description": "17ème meilleur taux de survie: 0.62 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 18,
+          "rank": 17,
           "value": 0.62,
           "totalRanked": 40,
           "redirectTo": {
@@ -7881,7 +8553,7 @@
           "type": "good",
           "category": "performance",
           "rank": 20,
-          "value": 0.8757042253521163,
+          "value": 0.8969273369078934,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -8007,6 +8679,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 18 Score d'Agressivité aux votes",
+          "description": "18ème score d'agressivité: -4.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 18,
+          "value": -4.593023255813954,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 27 Précision des Votes",
+          "description": "27ème précision des votes contre le camp adverse: 81.1% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 27,
+          "value": 81.14754098360656,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -8153,11 +8853,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 5 Tueur Efficace (Parties Moddées)",
-          "description": "5ème meilleur ratio d'éliminations: 0.72 par partie (74 parties, min. 20)",
+          "description": "5ème meilleur ratio d'éliminations: 0.71 par partie (75 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 5,
-          "value": 0.72,
+          "value": 0.71,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -8182,12 +8882,12 @@
         },
         {
           "id": "top-survivor-modded",
-          "title": "🛡️ Top 10 Survivant (Parties Moddées)",
-          "description": "10ème meilleur taux de survie: 0.61 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 9 Survivant (Parties Moddées)",
+          "description": "9ème meilleur taux de survie: 0.60 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 10,
-          "value": 0.61,
+          "rank": 9,
+          "value": 0.6,
           "totalRanked": 28,
           "redirectTo": {
             "tab": "players",
@@ -8202,7 +8902,7 @@
           "type": "good",
           "category": "performance",
           "rank": 17,
-          "value": 0.300730791405023,
+          "value": 0.3446716261950442,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -8328,6 +9028,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 22 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "22ème score d'agressivité: -17.3 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 22,
+          "value": -17.279411764705884,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 8 Précision des Votes (Parties Moddées)",
+          "description": "8ème précision des votes contre le camp adverse: 91.9% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 8,
+          "value": 91.8918918918919,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -8584,11 +9312,11 @@
         {
           "id": "top-killer-all",
           "title": "⚔️ Top 7 Tueur",
-          "description": "7ème plus grand tueur avec 131 éliminations",
+          "description": "7ème plus grand tueur avec 134 éliminations",
           "type": "good",
           "category": "kills",
           "rank": 7,
-          "value": 131,
+          "value": 134,
           "totalRanked": 65,
           "redirectTo": {
             "tab": "players",
@@ -8599,11 +9327,11 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 7 Tueur Efficace",
-          "description": "7ème meilleur ratio d'éliminations: 0.63 par partie (207 parties, min. 20)",
+          "description": "7ème meilleur ratio d'éliminations: 0.64 par partie (208 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 7,
-          "value": 0.63,
+          "value": 0.64,
           "totalRanked": 43,
           "redirectTo": {
             "tab": "players",
@@ -8790,6 +9518,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 15 Score d'Agressivité aux votes",
+          "description": "15ème score d'agressivité: -3.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 15,
+          "value": -3.1658291457286403,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 24 Précision des Votes",
+          "description": "24ème précision des votes contre le camp adverse: 82.9% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 24,
+          "value": 82.85714285714286,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -8919,12 +9675,12 @@
         },
         {
           "id": "top-killer-modded",
-          "title": "⚔️ Top 8 Tueur (Parties Moddées)",
-          "description": "8ème plus grand tueur avec 68 éliminations",
+          "title": "⚔️ Top 7 Tueur (Parties Moddées)",
+          "description": "7ème plus grand tueur avec 71 éliminations",
           "type": "good",
           "category": "kills",
-          "rank": 8,
-          "value": 68,
+          "rank": 7,
+          "value": 71,
           "totalRanked": 44,
           "redirectTo": {
             "tab": "players",
@@ -8935,11 +9691,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 8 Tueur Efficace (Parties Moddées)",
-          "description": "8ème meilleur ratio d'éliminations: 0.58 par partie (117 parties, min. 20)",
+          "description": "8ème meilleur ratio d'éliminations: 0.60 par partie (118 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 8,
-          "value": 0.58,
+          "value": 0.6,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -8980,11 +9736,11 @@
         {
           "id": "hall-of-fame-modded",
           "title": "🏆 Top 9 Hall of Fame (Parties Moddées)",
-          "description": "9ème meilleur overperformer: +5.4 en Villageois (95 parties, min. 25)",
+          "description": "9ème meilleur overperformer: +5.5 en Villageois (95 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 9,
-          "value": 5.418698123528429,
+          "value": 5.4626389583184505,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -8995,7 +9751,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 5 Villageois (Parties Moddées)",
-          "description": "5ème meilleur Villageois: 56.8% (+5.4) (95 parties, min. 25)",
+          "description": "5ème meilleur Villageois: 56.8% (+5.5) (95 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 5,
@@ -9125,6 +9881,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 8 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "8ème score d'agressivité: -5.9 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 8,
+          "value": -5.934959349593502,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 17 Précision des Votes (Parties Moddées)",
+          "description": "17ème précision des votes contre le camp adverse: 85.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 17,
+          "value": 85,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -9450,6 +10234,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 26 Score d'Agressivité aux votes",
+          "description": "26ème score d'agressivité: -9.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 26,
+          "value": -9.604395604395602,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 41 Précision des Votes",
+          "description": "41ème précision des votes contre le camp adverse: 71.8% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 41,
+          "value": 71.83098591549296,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -9624,11 +10436,11 @@
         },
         {
           "id": "top-survivor-modded",
-          "title": "🛡️ Top 18 Survivant (Parties Moddées)",
-          "description": "18ème meilleur taux de survie: 0.72 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 19 Survivant (Parties Moddées)",
+          "description": "19ème meilleur taux de survie: 0.72 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 18,
+          "rank": 19,
           "value": 0.72,
           "totalRanked": 28,
           "redirectTo": {
@@ -9770,6 +10582,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 16 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "16ème score d'agressivité: -12.4 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 16,
+          "value": -12.387543252595158,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 34 Précision des Votes (Parties Moddées)",
+          "description": "34ème précision des votes contre le camp adverse: 74.7% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 34,
+          "value": 74.69879518072288,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -10021,6 +10861,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 16 Score d'Agressivité aux votes",
+          "description": "16ème score d'agressivité: -3.4 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 16,
+          "value": -3.448275862068961,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 18 Précision des Votes",
+          "description": "18ème précision des votes contre le camp adverse: 85.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 18,
+          "value": 85,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -10192,6 +11060,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 32 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "32ème score d'agressivité: -28.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 32,
+          "value": -28.823529411764707,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 1 Précision des Votes (Parties Moddées)",
+          "description": "1er précision des votes contre le camp adverse: 100.0% (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 1,
+          "value": 100,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -10414,6 +11310,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 9 Score d'Agressivité aux votes",
+          "description": "9ème score d'agressivité: 3.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 9,
+          "value": 3.8333333333333393,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 45 Précision des Votes",
+          "description": "45ème précision des votes contre le camp adverse: 64.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 45,
+          "value": 64,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -10740,6 +11664,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 10 Score d'Agressivité aux votes",
+          "description": "10ème score d'agressivité: 3.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 10,
+          "value": 3.5377358490566095,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 11 Précision des Votes",
+          "description": "11ème précision des votes contre le camp adverse: 88.4% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 11,
+          "value": 88.41463414634147,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -11061,6 +12013,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 26 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "26ème score d'agressivité: -20.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 26,
+          "value": -20.649350649350648,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 3 Précision des Votes (Parties Moddées)",
+          "description": "3ème précision des votes contre le camp adverse: 97.2% (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 3,
+          "value": 97.22222222222221,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ]
     },
@@ -11258,7 +12238,7 @@
           "type": "good",
           "category": "performance",
           "rank": 12,
-          "value": 7.008333333333347,
+          "value": 7.029556444889124,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -11354,6 +12334,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 13 Score d'Agressivité aux votes",
+          "description": "13ème score d'agressivité: 1.1 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 13,
+          "value": 1.1290322580645196,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 36 Précision des Votes",
+          "description": "36ème précision des votes contre le camp adverse: 75.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 36,
+          "value": 75,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -11720,6 +12728,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 36 Score d'Agressivité aux votes",
+          "description": "36ème score d'agressivité: -18.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 36,
+          "value": -18.666666666666664,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 36 Précision des Votes",
+          "description": "36ème précision des votes contre le camp adverse: 75.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 36,
+          "value": 75,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -12363,7 +13399,7 @@
           "type": "good",
           "category": "performance",
           "rank": 26,
-          "value": -3.5749999999999957,
+          "value": -3.5537768884442187,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -12474,6 +13510,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 17 Score d'Agressivité aux votes",
+          "description": "17ème score d'agressivité: -4.3 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 17,
+          "value": -4.297520661157023,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 6 Précision des Votes",
+          "description": "6ème précision des votes contre le camp adverse: 92.7% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 6,
+          "value": 92.6829268292683,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -12669,7 +13733,7 @@
           "type": "good",
           "category": "performance",
           "rank": 20,
-          "value": -1.423407139629461,
+          "value": -1.3794663048394398,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -12780,6 +13844,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 7 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "7ème score d'agressivité: -5.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 7,
+          "value": -5.833333333333325,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 12 Précision des Votes (Parties Moddées)",
+          "description": "12ème précision des votes contre le camp adverse: 88.9% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 12,
+          "value": 88.88888888888889,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -13001,6 +14093,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 35 Score d'Agressivité aux votes",
+          "description": "35ème score d'agressivité: -16.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 35,
+          "value": -16.666666666666664,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 13 Précision des Votes",
+          "description": "13ème précision des votes contre le camp adverse: 87.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 13,
+          "value": 87.5,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": []
@@ -13150,7 +14270,7 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 4 Tueur Efficace",
-          "description": "4ème meilleur ratio d'éliminations: 0.69 par partie (217 parties, min. 20)",
+          "description": "4ème meilleur ratio d'éliminations: 0.69 par partie (218 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 4,
@@ -13341,6 +14461,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 32 Score d'Agressivité aux votes",
+          "description": "32ème score d'agressivité: -15.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 32,
+          "value": -15.584415584415584,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 17 Précision des Votes",
+          "description": "17ème précision des votes contre le camp adverse: 85.2% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 17,
+          "value": 85.15625,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -13486,7 +14634,7 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 4 Tueur Efficace (Parties Moddées)",
-          "description": "4ème meilleur ratio d'éliminations: 0.72 par partie (178 parties, min. 20)",
+          "description": "4ème meilleur ratio d'éliminations: 0.72 par partie (179 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 4,
@@ -13515,11 +14663,11 @@
         },
         {
           "id": "top-survivor-modded",
-          "title": "🛡️ Top 9 Survivant (Parties Moddées)",
-          "description": "9ème meilleur taux de survie: 0.60 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 7 Survivant (Parties Moddées)",
+          "description": "7ème meilleur taux de survie: 0.60 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 9,
+          "rank": 7,
           "value": 0.6,
           "totalRanked": 28,
           "redirectTo": {
@@ -13676,6 +14824,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 19 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "19ème score d'agressivité: -15.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 19,
+          "value": -15.82901554404145,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 16 Précision des Votes (Parties Moddées)",
+          "description": "16ème précision des votes contre le camp adverse: 85.7% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 16,
+          "value": 85.71428571428571,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -13874,7 +15050,7 @@
           "type": "good",
           "category": "performance",
           "rank": 22,
-          "value": -0.7328947368421055,
+          "value": -0.7116716252863284,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -14000,6 +15176,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 46 Score d'Agressivité aux votes",
+          "description": "46ème score d'agressivité: -31.0 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 46,
+          "value": -31.02739726027397,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 33 Précision des Votes",
+          "description": "33ème précision des votes contre le camp adverse: 75.9% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 33,
+          "value": 75.92592592592592,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -14191,11 +15395,11 @@
         {
           "id": "hall-of-fame-modded",
           "title": "🏆 Top 15 Hall of Fame (Parties Moddées)",
-          "description": "15ème meilleur overperformer: +0.6 en Villageois (73 parties, min. 25)",
+          "description": "15ème meilleur overperformer: +0.7 en Villageois (73 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 15,
-          "value": 0.6313873809184827,
+          "value": 0.6753282157085039,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -14206,7 +15410,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 10 Villageois (Parties Moddées)",
-          "description": "10ème meilleur Villageois: 52.1% (+0.6) (73 parties, min. 25)",
+          "description": "10ème meilleur Villageois: 52.1% (+0.7) (73 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 10,
@@ -14321,6 +15525,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 33 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "33ème score d'agressivité: -34.9 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 33,
+          "value": -34.909909909909906,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 25 Précision des Votes (Parties Moddées)",
+          "description": "25ème précision des votes contre le camp adverse: 80.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 25,
+          "value": 80,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -14631,6 +15863,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 3 Score d'Agressivité aux votes",
+          "description": "3ème score d'agressivité: 12.2 (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 3,
+          "value": 12.222222222222225,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 36 Précision des Votes",
+          "description": "36ème précision des votes contre le camp adverse: 75.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 36,
+          "value": 75,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -15327,11 +16587,11 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 8 Tueur Efficace",
-          "description": "8ème meilleur ratio d'éliminations: 0.57 par partie (56 parties, min. 20)",
+          "description": "8ème meilleur ratio d'éliminations: 0.56 par partie (57 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 8,
-          "value": 0.57,
+          "value": 0.56,
           "totalRanked": 43,
           "redirectTo": {
             "tab": "players",
@@ -15342,11 +16602,11 @@
         {
           "id": "top-killed-all",
           "title": "💀 Top 30 Victime",
-          "description": "30ème joueur le plus éliminé avec 29 morts",
+          "description": "30ème joueur le plus éliminé avec 30 morts",
           "type": "bad",
           "category": "kills",
           "rank": 30,
-          "value": 29,
+          "value": 30,
           "totalRanked": 77,
           "redirectTo": {
             "tab": "players",
@@ -15357,11 +16617,11 @@
         {
           "id": "top-survivor-all",
           "title": "🛡️ Top 4 Survivant",
-          "description": "4ème meilleur taux de survie: 0.52 morts par partie (min. 25 parties)",
+          "description": "4ème meilleur taux de survie: 0.53 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
           "rank": 4,
-          "value": 0.52,
+          "value": 0.53,
           "totalRanked": 40,
           "redirectTo": {
             "tab": "players",
@@ -15518,6 +16778,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 12 Score d'Agressivité aux votes",
+          "description": "12ème score d'agressivité: 1.3 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 12,
+          "value": 1.3076923076923066,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 34 Précision des Votes",
+          "description": "34ème précision des votes contre le camp adverse: 75.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 34,
+          "value": 75.51020408163265,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -15662,12 +16950,12 @@
         },
         {
           "id": "top-killer-average-modded",
-          "title": "🎯 Top 9 Tueur Efficace (Parties Moddées)",
-          "description": "9ème meilleur ratio d'éliminations: 0.57 par partie (56 parties, min. 20)",
+          "title": "🎯 Top 10 Tueur Efficace (Parties Moddées)",
+          "description": "10ème meilleur ratio d'éliminations: 0.56 par partie (57 parties, min. 20)",
           "type": "good",
           "category": "kills",
-          "rank": 9,
-          "value": 0.57,
+          "rank": 10,
+          "value": 0.56,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -15678,11 +16966,11 @@
         {
           "id": "top-killed-modded",
           "title": "💀 Top 23 Victime (Parties Moddées)",
-          "description": "23ème joueur le plus éliminé avec 29 morts",
+          "description": "23ème joueur le plus éliminé avec 30 morts",
           "type": "bad",
           "category": "kills",
           "rank": 23,
-          "value": 29,
+          "value": 30,
           "totalRanked": 51,
           "redirectTo": {
             "tab": "players",
@@ -15693,11 +16981,11 @@
         {
           "id": "top-survivor-modded",
           "title": "🛡️ Top 3 Survivant (Parties Moddées)",
-          "description": "3ème meilleur taux de survie: 0.52 morts par partie (min. 25 parties)",
+          "description": "3ème meilleur taux de survie: 0.53 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
           "rank": 3,
-          "value": 0.52,
+          "value": 0.53,
           "totalRanked": 28,
           "redirectTo": {
             "tab": "players",
@@ -15723,7 +17011,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 4 Villageois (Parties Moddées)",
-          "description": "4ème meilleur Villageois: 56.9% (+5.5) (72 parties, min. 25)",
+          "description": "4ème meilleur Villageois: 56.9% (+5.6) (72 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 4,
@@ -15853,6 +17141,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 4 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "4ème score d'agressivité: 1.3 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 4,
+          "value": 1.3076923076923066,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 29 Précision des Votes (Parties Moddées)",
+          "description": "29ème précision des votes contre le camp adverse: 75.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 29,
+          "value": 75.51020408163265,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -16002,11 +17318,11 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 42 Tueur Efficace",
-          "description": "42ème meilleur ratio d'éliminations: 0.13 par partie (48 parties, min. 20)",
+          "description": "42ème meilleur ratio d'éliminations: 0.12 par partie (49 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 42,
-          "value": 0.13,
+          "value": 0.12,
           "totalRanked": 43,
           "redirectTo": {
             "tab": "players",
@@ -16031,12 +17347,12 @@
         },
         {
           "id": "top-survivor-all",
-          "title": "🛡️ Top 21 Survivant",
-          "description": "21ème meilleur taux de survie: 0.65 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 19 Survivant",
+          "description": "19ème meilleur taux de survie: 0.63 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 21,
-          "value": 0.65,
+          "rank": 19,
+          "value": 0.63,
           "totalRanked": 40,
           "redirectTo": {
             "tab": "players",
@@ -16193,6 +17509,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 40 Score d'Agressivité aux votes",
+          "description": "40ème score d'agressivité: -21.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 40,
+          "value": -21.224489795918366,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 30 Précision des Votes",
+          "description": "30ème précision des votes contre le camp adverse: 79.2% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 30,
+          "value": 79.16666666666666,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -16338,11 +17682,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 28 Tueur Efficace (Parties Moddées)",
-          "description": "28ème meilleur ratio d'éliminations: 0.13 par partie (48 parties, min. 20)",
+          "description": "28ème meilleur ratio d'éliminations: 0.12 par partie (49 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 28,
-          "value": 0.13,
+          "value": 0.12,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -16368,11 +17712,11 @@
         {
           "id": "top-survivor-modded",
           "title": "🛡️ Top 13 Survivant (Parties Moddées)",
-          "description": "13ème meilleur taux de survie: 0.65 morts par partie (min. 25 parties)",
+          "description": "13ème meilleur taux de survie: 0.63 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
           "rank": 13,
-          "value": 0.65,
+          "value": 0.63,
           "totalRanked": 28,
           "redirectTo": {
             "tab": "players",
@@ -16398,7 +17742,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 18 Villageois (Parties Moddées)",
-          "description": "18ème meilleur Villageois: 49.2% (+-2.2) (65 parties, min. 25)",
+          "description": "18ème meilleur Villageois: 49.2% (+-2.1) (65 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 18,
@@ -16528,6 +17872,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 27 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "27ème score d'agressivité: -21.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 27,
+          "value": -21.224489795918366,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 28 Précision des Votes (Parties Moddées)",
+          "description": "28ème précision des votes contre le camp adverse: 79.2% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 28,
+          "value": 79.16666666666666,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -17204,6 +18576,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 34 Score d'Agressivité aux votes",
+          "description": "34ème score d'agressivité: -16.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 34,
+          "value": -16.603773584905657,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 9 Précision des Votes",
+          "description": "9ème précision des votes contre le camp adverse: 89.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 9,
+          "value": 89.28571428571429,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -17495,6 +18895,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 21 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "21ème score d'agressivité: -16.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 21,
+          "value": -16.603773584905657,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 10 Précision des Votes (Parties Moddées)",
+          "description": "10ème précision des votes contre le camp adverse: 89.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 10,
+          "value": 89.28571428571429,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ]
     },
@@ -17627,12 +19055,12 @@
         },
         {
           "id": "top-killer-all",
-          "title": "⚔️ Top 17 Tueur",
-          "description": "17ème plus grand tueur avec 39 éliminations",
+          "title": "⚔️ Top 16 Tueur",
+          "description": "16ème plus grand tueur avec 41 éliminations",
           "type": "good",
           "category": "kills",
-          "rank": 17,
-          "value": 39,
+          "rank": 16,
+          "value": 41,
           "totalRanked": 65,
           "redirectTo": {
             "tab": "players",
@@ -17643,11 +19071,11 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 29 Tueur Efficace",
-          "description": "29ème meilleur ratio d'éliminations: 0.33 par partie (117 parties, min. 20)",
+          "description": "29ème meilleur ratio d'éliminations: 0.35 par partie (118 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 29,
-          "value": 0.33,
+          "value": 0.35,
           "totalRanked": 43,
           "redirectTo": {
             "tab": "players",
@@ -17672,12 +19100,12 @@
         },
         {
           "id": "top-survivor-all",
-          "title": "🛡️ Top 29 Survivant",
-          "description": "29ème meilleur taux de survie: 0.72 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 28 Survivant",
+          "description": "28ème meilleur taux de survie: 0.71 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 29,
-          "value": 0.72,
+          "rank": 28,
+          "value": 0.71,
           "totalRanked": 40,
           "redirectTo": {
             "tab": "players",
@@ -17692,7 +19120,7 @@
           "type": "good",
           "category": "performance",
           "rank": 27,
-          "value": -5.2385514018691595,
+          "value": -5.217328290313382,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -17834,6 +19262,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 37 Score d'Agressivité aux votes",
+          "description": "37ème score d'agressivité: -18.9 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 37,
+          "value": -18.862745098039213,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 21 Précision des Votes",
+          "description": "21ème précision des votes contre le camp adverse: 84.4% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 21,
+          "value": 84.375,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -17964,11 +19420,11 @@
         {
           "id": "top-killer-modded",
           "title": "⚔️ Top 14 Tueur (Parties Moddées)",
-          "description": "14ème plus grand tueur avec 39 éliminations",
+          "description": "14ème plus grand tueur avec 41 éliminations",
           "type": "good",
           "category": "kills",
           "rank": 14,
-          "value": 39,
+          "value": 41,
           "totalRanked": 44,
           "redirectTo": {
             "tab": "players",
@@ -17979,11 +19435,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 20 Tueur Efficace (Parties Moddées)",
-          "description": "20ème meilleur ratio d'éliminations: 0.33 par partie (117 parties, min. 20)",
+          "description": "20ème meilleur ratio d'éliminations: 0.35 par partie (118 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 20,
-          "value": 0.33,
+          "value": 0.35,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -18008,12 +19464,12 @@
         },
         {
           "id": "top-survivor-modded",
-          "title": "🛡️ Top 19 Survivant (Parties Moddées)",
-          "description": "19ème meilleur taux de survie: 0.72 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 17 Survivant (Parties Moddées)",
+          "description": "17ème meilleur taux de survie: 0.71 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 19,
-          "value": 0.72,
+          "rank": 17,
+          "value": 0.71,
           "totalRanked": 28,
           "redirectTo": {
             "tab": "players",
@@ -18023,12 +19479,12 @@
         },
         {
           "id": "hall-of-fame-modded",
-          "title": "🏆 Top 14 Hall of Fame (Parties Moddées)",
-          "description": "14ème meilleur overperformer: +0.9 en Villageois (107 parties, min. 25)",
+          "title": "🏆 Top 13 Hall of Fame (Parties Moddées)",
+          "description": "13ème meilleur overperformer: +1.0 en Villageois (107 parties, min. 25)",
           "type": "good",
           "category": "performance",
-          "rank": 14,
-          "value": 0.9130414585013753,
+          "rank": 13,
+          "value": 0.9569822932913965,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -18039,7 +19495,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 9 Villageois (Parties Moddées)",
-          "description": "9ème meilleur Villageois: 52.3% (+0.9) (107 parties, min. 25)",
+          "description": "9ème meilleur Villageois: 52.3% (+1.0) (107 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 9,
@@ -18169,6 +19625,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 23 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "23ème score d'agressivité: -18.9 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 23,
+          "value": -18.862745098039213,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 20 Précision des Votes (Parties Moddées)",
+          "description": "20ème précision des votes contre le camp adverse: 84.4% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 20,
+          "value": 84.375,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -18720,11 +20204,11 @@
         },
         {
           "id": "top-survivor-all",
-          "title": "🛡️ Top 28 Survivant",
-          "description": "28ème meilleur taux de survie: 0.71 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 29 Survivant",
+          "description": "29ème meilleur taux de survie: 0.71 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 28,
+          "rank": 29,
           "value": 0.71,
           "totalRanked": 40,
           "redirectTo": {
@@ -18740,7 +20224,7 @@
           "type": "good",
           "category": "performance",
           "rank": 19,
-          "value": 1.1206521739130508,
+          "value": 1.1418752854688279,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -18851,6 +20335,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 41 Score d'Agressivité aux votes",
+          "description": "41ème score d'agressivité: -23.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 41,
+          "value": -23.666666666666664,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 5 Précision des Votes",
+          "description": "5ème précision des votes contre le camp adverse: 92.9% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 5,
+          "value": 92.85714285714286,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -19026,11 +20538,11 @@
         },
         {
           "id": "top-survivor-modded",
-          "title": "🛡️ Top 17 Survivant (Parties Moddées)",
-          "description": "17ème meilleur taux de survie: 0.71 morts par partie (min. 25 parties)",
+          "title": "🛡️ Top 18 Survivant (Parties Moddées)",
+          "description": "18ème meilleur taux de survie: 0.71 morts par partie (min. 25 parties)",
           "type": "good",
           "category": "kills",
-          "rank": 17,
+          "rank": 18,
           "value": 0.71,
           "totalRanked": 28,
           "redirectTo": {
@@ -19157,6 +20669,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 28 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "28ème score d'agressivité: -23.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 28,
+          "value": -23.666666666666664,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 7 Précision des Votes (Parties Moddées)",
+          "description": "7ème précision des votes contre le camp adverse: 92.9% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 7,
+          "value": 92.85714285714286,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -19305,6 +20845,34 @@
             "subTab": "series",
             "chartSection": "loup-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 49 Score d'Agressivité aux votes",
+          "description": "49ème score d'agressivité: -42.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 49,
+          "value": -42.69230769230769,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 44 Précision des Votes",
+          "description": "44ème précision des votes contre le camp adverse: 66.7% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 44,
+          "value": 66.66666666666666,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -19448,6 +21016,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loup-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 36 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "36ème score d'agressivité: -42.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 36,
+          "value": -42.69230769230769,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 35 Précision des Votes (Parties Moddées)",
+          "description": "35ème précision des votes contre le camp adverse: 66.7% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 35,
+          "value": 66.66666666666666,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -19597,11 +21193,11 @@
         {
           "id": "top-killer-average-all",
           "title": "🎯 Top 6 Tueur Efficace",
-          "description": "6ème meilleur ratio d'éliminations: 0.66 par partie (102 parties, min. 20)",
+          "description": "6ème meilleur ratio d'éliminations: 0.65 par partie (103 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 6,
-          "value": 0.66,
+          "value": 0.65,
           "totalRanked": 43,
           "redirectTo": {
             "tab": "players",
@@ -19612,11 +21208,11 @@
         {
           "id": "top-killed-all",
           "title": "💀 Top 17 Victime",
-          "description": "17ème joueur le plus éliminé avec 60 morts",
+          "description": "17ème joueur le plus éliminé avec 61 morts",
           "type": "bad",
           "category": "kills",
           "rank": 17,
-          "value": 60,
+          "value": 61,
           "totalRanked": 77,
           "redirectTo": {
             "tab": "players",
@@ -19646,7 +21242,7 @@
           "type": "good",
           "category": "performance",
           "rank": 30,
-          "value": -7.574999999999996,
+          "value": -7.553776888444219,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -19787,6 +21383,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 11 Score d'Agressivité aux votes",
+          "description": "11ème score d'agressivité: 1.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 11,
+          "value": 1.4977973568281975,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 7 Précision des Votes",
+          "description": "7ème précision des votes contre le camp adverse: 91.8% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 7,
+          "value": 91.76470588235294,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -19933,11 +21557,11 @@
         {
           "id": "top-killer-average-modded",
           "title": "🎯 Top 6 Tueur Efficace (Parties Moddées)",
-          "description": "6ème meilleur ratio d'éliminations: 0.66 par partie (102 parties, min. 20)",
+          "description": "6ème meilleur ratio d'éliminations: 0.65 par partie (103 parties, min. 20)",
           "type": "good",
           "category": "kills",
           "rank": 6,
-          "value": 0.66,
+          "value": 0.65,
           "totalRanked": 29,
           "redirectTo": {
             "tab": "players",
@@ -19948,11 +21572,11 @@
         {
           "id": "top-killed-modded",
           "title": "💀 Top 11 Victime (Parties Moddées)",
-          "description": "11ème joueur le plus éliminé avec 60 morts",
+          "description": "11ème joueur le plus éliminé avec 61 morts",
           "type": "bad",
           "category": "kills",
           "rank": 11,
-          "value": 60,
+          "value": 61,
           "totalRanked": 51,
           "redirectTo": {
             "tab": "players",
@@ -19982,7 +21606,7 @@
           "type": "good",
           "category": "performance",
           "rank": 20,
-          "value": -1.423407139629461,
+          "value": -1.3794663048394398,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -20123,6 +21747,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 3 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "3ème score d'agressivité: 1.5 (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 3,
+          "value": 1.4977973568281975,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 9 Précision des Votes (Parties Moddées)",
+          "description": "9ème précision des votes contre le camp adverse: 91.8% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 9,
+          "value": 91.76470588235294,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -20463,6 +22115,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 42 Score d'Agressivité aux votes",
+          "description": "42ème score d'agressivité: -23.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 42,
+          "value": -23.785714285714285,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 29 Précision des Votes",
+          "description": "29ème précision des votes contre le camp adverse: 79.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 29,
+          "value": 79.3103448275862,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -20798,6 +22478,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 29 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "29ème score d'agressivité: -23.8 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 29,
+          "value": -23.785714285714285,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 27 Précision des Votes (Parties Moddées)",
+          "description": "27ème précision des votes contre le camp adverse: 79.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 27,
+          "value": 79.3103448275862,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -21781,7 +23489,7 @@
           "type": "good",
           "category": "performance",
           "rank": 24,
-          "value": -1.8057692307692221,
+          "value": -1.784546119213445,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -21922,6 +23630,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 44 Score d'Agressivité aux votes",
+          "description": "44ème score d'agressivité: -25.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 44,
+          "value": -25.510204081632654,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 36 Précision des Votes",
+          "description": "36ème précision des votes contre le camp adverse: 75.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 36,
+          "value": 75,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -22098,11 +23834,11 @@
         {
           "id": "hall-of-fame-modded",
           "title": "🏆 Top 10 Hall of Fame (Parties Moddées)",
-          "description": "10ème meilleur overperformer: +4.3 en Villageois (52 parties, min. 25)",
+          "description": "10ème meilleur overperformer: +4.4 en Villageois (52 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 10,
-          "value": 4.345823629601313,
+          "value": 4.389764464391334,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -22113,7 +23849,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 7 Villageois (Parties Moddées)",
-          "description": "7ème meilleur Villageois: 55.8% (+4.3) (52 parties, min. 25)",
+          "description": "7ème meilleur Villageois: 55.8% (+4.4) (52 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 7,
@@ -22243,6 +23979,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 31 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "31ème score d'agressivité: -25.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 31,
+          "value": -25.510204081632654,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 31 Précision des Votes (Parties Moddées)",
+          "description": "31ème précision des votes contre le camp adverse: 75.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 31,
+          "value": 75,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -22521,7 +24285,7 @@
           "type": "good",
           "category": "performance",
           "rank": 32,
-          "value": -10.908333333333331,
+          "value": -10.887110221777554,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -22647,6 +24411,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 31 Score d'Agressivité aux votes",
+          "description": "31ème score d'agressivité: -15.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 31,
+          "value": -15.21505376344086,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 34 Précision des Votes",
+          "description": "34ème précision des votes contre le camp adverse: 75.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 34,
+          "value": 75.51020408163265,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -22823,11 +24615,11 @@
         {
           "id": "hall-of-fame-modded",
           "title": "🏆 Top 22 Hall of Fame (Parties Moddées)",
-          "description": "22ème meilleur overperformer: +-4.8 en Villageois (45 parties, min. 25)",
+          "description": "22ème meilleur overperformer: +-4.7 en Villageois (45 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 22,
-          "value": -4.756740472962797,
+          "value": -4.7127996381727755,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -22838,7 +24630,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 21 Villageois (Parties Moddées)",
-          "description": "21ème meilleur Villageois: 46.7% (+-4.8) (45 parties, min. 25)",
+          "description": "21ème meilleur Villageois: 46.7% (+-4.7) (45 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 21,
@@ -22953,6 +24745,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 18 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "18ème score d'agressivité: -15.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 18,
+          "value": -15.21505376344086,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 29 Précision des Votes (Parties Moddées)",
+          "description": "29ème précision des votes contre le camp adverse: 75.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 29,
+          "value": 75.51020408163265,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -23144,6 +24964,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 28 Score d'Agressivité aux votes",
+          "description": "28ème score d'agressivité: -10.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 28,
+          "value": -10.74074074074074,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 46 Précision des Votes",
+          "description": "46ème précision des votes contre le camp adverse: 62.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 46,
+          "value": 62.5,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -23330,6 +25178,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 12 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "12ème score d'agressivité: -10.7 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 12,
+          "value": -10.74074074074074,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 36 Précision des Votes (Parties Moddées)",
+          "description": "36ème précision des votes contre le camp adverse: 62.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 36,
+          "value": 62.5,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -23786,6 +25662,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 29 Score d'Agressivité aux votes",
+          "description": "29ème score d'agressivité: -12.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 29,
+          "value": -12.20338983050847,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 4 Précision des Votes",
+          "description": "4ème précision des votes contre le camp adverse: 94.1% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 4,
+          "value": 94.11764705882352,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -23972,6 +25876,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 15 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "15ème score d'agressivité: -12.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 15,
+          "value": -12.20338983050847,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 6 Précision des Votes (Parties Moddées)",
+          "description": "6ème précision des votes contre le camp adverse: 94.1% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 6,
+          "value": 94.11764705882352,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -24178,6 +26110,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 22 Score d'Agressivité aux votes",
+          "description": "22ème score d'agressivité: -7.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 22,
+          "value": -7.638888888888889,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 25 Précision des Votes",
+          "description": "25ème précision des votes contre le camp adverse: 82.6% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 25,
+          "value": 82.6086956521739,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -24379,6 +26339,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 10 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "10ème score d'agressivité: -7.6 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 10,
+          "value": -7.638888888888889,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 21 Précision des Votes (Parties Moddées)",
+          "description": "21ème précision des votes contre le camp adverse: 82.6% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 21,
+          "value": 82.6086956521739,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -24585,6 +26573,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 21 Score d'Agressivité aux votes",
+          "description": "21ème score d'agressivité: -7.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 21,
+          "value": -7.500000000000007,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 36 Précision des Votes",
+          "description": "36ème précision des votes contre le camp adverse: 75.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 36,
+          "value": 75,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -24786,6 +26802,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 9 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "9ème score d'agressivité: -7.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 9,
+          "value": -7.500000000000007,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 31 Précision des Votes (Parties Moddées)",
+          "description": "31ème précision des votes contre le camp adverse: 75.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 31,
+          "value": 75,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -25042,6 +27086,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 47 Score d'Agressivité aux votes",
+          "description": "47ème score d'agressivité: -36.4 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 47,
+          "value": -36.388888888888886,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 28 Précision des Votes",
+          "description": "28ème précision des votes contre le camp adverse: 80.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 28,
+          "value": 80,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -25229,6 +27301,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 34 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "34ème score d'agressivité: -36.4 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 34,
+          "value": -36.388888888888886,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 25 Précision des Votes (Parties Moddées)",
+          "description": "25ème précision des votes contre le camp adverse: 80.0% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 25,
+          "value": 80,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ]
     },
@@ -25397,7 +27497,7 @@
           "type": "good",
           "category": "performance",
           "rank": 28,
-          "value": -5.574999999999996,
+          "value": -5.553776888444219,
           "totalRanked": 35,
           "redirectTo": {
             "tab": "players",
@@ -25478,6 +27578,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 39 Score d'Agressivité aux votes",
+          "description": "39ème score d'agressivité: -20.1 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 39,
+          "value": -20.108695652173914,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 2 Précision des Votes",
+          "description": "2ème précision des votes contre le camp adverse: 95.7% (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 2,
+          "value": 95.65217391304348,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ],
@@ -25644,7 +27772,7 @@
           "type": "good",
           "category": "performance",
           "rank": 16,
-          "value": 0.576592860370539,
+          "value": 0.6205336951605602,
           "totalRanked": 26,
           "redirectTo": {
             "tab": "players",
@@ -25725,6 +27853,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 25 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "25ème score d'agressivité: -20.1 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 25,
+          "value": -20.108695652173914,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 4 Précision des Votes (Parties Moddées)",
+          "description": "4ème précision des votes contre le camp adverse: 95.7% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 4,
+          "value": 95.65217391304348,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -26005,6 +28161,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 38 Score d'Agressivité aux votes",
+          "description": "38ème score d'agressivité: -19.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 38,
+          "value": -19.457364341085267,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 26 Précision des Votes",
+          "description": "26ème précision des votes contre le camp adverse: 81.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 26,
+          "value": 81.25,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -26210,7 +28394,7 @@
         {
           "id": "villageois-performance-modded",
           "title": "🏘️ Top 25 Villageois (Parties Moddées)",
-          "description": "25ème meilleur Villageois: 33.3% (+-18.1) (33 parties, min. 25)",
+          "description": "25ème meilleur Villageois: 33.3% (+-18.0) (33 parties, min. 25)",
           "type": "good",
           "category": "performance",
           "rank": 25,
@@ -26280,6 +28464,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "loss-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 24 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "24ème score d'agressivité: -19.5 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 24,
+          "value": -19.457364341085267,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 24 Précision des Votes (Parties Moddées)",
+          "description": "24ème précision des votes contre le camp adverse: 81.3% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 24,
+          "value": 81.25,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
@@ -26596,6 +28808,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 48 Score d'Agressivité aux votes",
+          "description": "48ème score d'agressivité: -41.9 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 48,
+          "value": -41.86440677966101,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 1 Précision des Votes",
+          "description": "1er précision des votes contre le camp adverse: 100.0% (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 1,
+          "value": 100,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -26813,6 +29053,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 35 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "35ème score d'agressivité: -41.9 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 35,
+          "value": -41.86440677966101,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 1 Précision des Votes (Parties Moddées)",
+          "description": "1er précision des votes contre le camp adverse: 100.0% (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 1,
+          "value": 100,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ]
     },
@@ -26947,6 +29215,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 43 Score d'Agressivité aux votes",
+          "description": "43ème score d'agressivité: -24.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 43,
+          "value": -24.210526315789476,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 13 Précision des Votes",
+          "description": "13ème précision des votes contre le camp adverse: 87.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 13,
+          "value": 87.5,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -27078,6 +29374,34 @@
             "subTab": "series",
             "chartSection": "loss-series"
           }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 30 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "30ème score d'agressivité: -24.2 (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 30,
+          "value": -24.210526315789476,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 13 Précision des Votes (Parties Moddées)",
+          "description": "13ème précision des votes contre le camp adverse: 87.5% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 13,
+          "value": 87.5,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ]
     },
@@ -27142,6 +29466,34 @@
             "subTab": "series",
             "chartSection": "villageois-series"
           }
+        },
+        {
+          "id": "aggressiveness-all",
+          "title": "🚨 Rang 1 Score d'Agressivité aux votes",
+          "description": "1er score d'agressivité: 47.8 (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 1,
+          "value": 47.777777777777764,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-all",
+          "title": "🎯 Rang 3 Précision des Votes",
+          "description": "3ème précision des votes contre le camp adverse: 94.4% (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 3,
+          "value": 94.44444444444444,
+          "totalRanked": 49,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -27202,6 +29554,34 @@
             "tab": "players",
             "subTab": "series",
             "chartSection": "villageois-series"
+          }
+        },
+        {
+          "id": "aggressiveness-modded",
+          "title": "🚨 Rang 1 Score d'Agressivité aux votes (Parties Moddées)",
+          "description": "1er score d'agressivité: 47.8 (min. 25 meetings)",
+          "type": "good",
+          "category": "voting",
+          "rank": 1,
+          "value": 47.777777777777764,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "voting-accuracy-modded",
+          "title": "🎯 Rang 5 Précision des Votes (Parties Moddées)",
+          "description": "5ème précision des votes contre le camp adverse: 94.4% (min. 25 meetings)",
+          "type": "neutral",
+          "category": "voting",
+          "rank": 5,
+          "value": 94.44444444444444,
+          "totalRanked": 36,
+          "redirectTo": {
+            "tab": "players",
+            "subTab": "votingStats"
           }
         }
       ]
