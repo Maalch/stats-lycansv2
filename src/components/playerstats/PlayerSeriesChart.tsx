@@ -551,6 +551,7 @@ export function PlayerSeriesChart() {
                   )}
                 />
                 <YAxis 
+                  allowDecimals={false}
                   label={{ 
                     value: selectedSeriesType === 'wins' ? 'Victoires consécutives' : 
                            selectedSeriesType === 'losses' ? 'Défaites consécutives' :
