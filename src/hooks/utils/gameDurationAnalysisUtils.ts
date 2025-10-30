@@ -41,6 +41,8 @@ function initializeDurationStats(): {
   durationsByWinnerCamp: Record<string, { totalDuration: number; count: number; average: string }>;
   durationsByPlayerCount: Record<string, { totalDuration: number; count: number; average: string }>;
   durationsByWolfRatio: Record<string, { totalDuration: number; count: number; average: string }>;
+  totalGameTime: string;
+  totalPlayerTime: string;
 } {
   return {
     averageDuration: '0s',
@@ -51,7 +53,9 @@ function initializeDurationStats(): {
     durationDistribution: {},
     durationsByWinnerCamp: {},
     durationsByPlayerCount: {},
-    durationsByWolfRatio: {}
+    durationsByWolfRatio: {},
+    totalGameTime: '0s',
+    totalPlayerTime: '0s'
   };
 }
 
@@ -168,7 +172,7 @@ function updateDurationsByWolfRatio(
 function processGameDuration(
   game: GameLogEntry,
   durationStats: ReturnType<typeof initializeDurationStats>,
-  totals: { totalDuration: number; gamesWithDuration: number }
+  totals: { totalDuration: number; gamesWithDuration: number; totalPlayerTime: number }
 ): void {
   // Extract data from GameLogEntry structure
   const nbPlayers = game.PlayerStats.length;
@@ -183,6 +187,9 @@ function processGameDuration(
   if (gameDuration && !isNaN(gameDuration) && gameDuration > 0) {
     totals.gamesWithDuration++;
     totals.totalDuration += gameDuration;
+    
+    // Calculate total player time (game duration × number of players)
+    totals.totalPlayerTime += gameDuration * nbPlayers;
 
     // Update min/max using DisplayedId
     updateMinMaxDuration(gameDuration, game.DisplayedId, durationStats);
@@ -206,11 +213,15 @@ function processGameDuration(
  */
 function calculateDurationAverages(
   durationStats: ReturnType<typeof initializeDurationStats>,
-  totals: { totalDuration: number; gamesWithDuration: number }
+  totals: { totalDuration: number; gamesWithDuration: number; totalPlayerTime: number }
 ): void {
   if (totals.gamesWithDuration > 0) {
     const averageDurationSeconds = totals.totalDuration / totals.gamesWithDuration;
     durationStats.averageDuration = formatDuration(Math.round(averageDurationSeconds));
+    
+    // Set total game time and total player time
+    durationStats.totalGameTime = formatDuration(Math.round(totals.totalDuration));
+    durationStats.totalPlayerTime = formatDuration(Math.round(totals.totalPlayerTime));
 
     // Calculate averages for each category
     Object.keys(durationStats.durationsByWinnerCamp).forEach(camp => {
@@ -267,7 +278,7 @@ export function computeGameDurationAnalysis(rawGameData: GameLogEntry[]): GameDu
 
   // Initialize statistics object
   const durationStats = initializeDurationStats();
-  const totals = { totalDuration: 0, gamesWithDuration: 0 };
+  const totals = { totalDuration: 0, gamesWithDuration: 0, totalPlayerTime: 0 };
 
   // Process each game
   rawGameData.forEach((game) => {
@@ -290,6 +301,8 @@ export function computeGameDurationAnalysis(rawGameData: GameLogEntry[]): GameDu
     durationDistribution: durationDistributionArray,
     durationsByWinnerCamp: durationStats.durationsByWinnerCamp as Record<string, CampDurationData>,
     durationsByPlayerCount: durationStats.durationsByPlayerCount as Record<string, CampDurationData>,
-    durationsByWolfRatio: durationStats.durationsByWolfRatio as Record<string, CampDurationData>
+    durationsByWolfRatio: durationStats.durationsByWolfRatio as Record<string, CampDurationData>,
+    totalGameTime: durationStats.totalGameTime,
+    totalPlayerTime: durationStats.totalPlayerTime
   };
 }

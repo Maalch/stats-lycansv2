@@ -4,6 +4,7 @@ import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
 import { GameDetailView } from './GameDetailView';
+import { formatDuration } from '../../utils/durationFormatters';
 import './GameDetailsChart.css';
 
 type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp'  | 'winner';
@@ -564,24 +565,6 @@ export function GameDetailsChart() {
       )}
     </div>
   );
-}
-
-// Helper function to format duration from seconds to minutes and seconds
-function formatDuration(durationInSeconds: number | null): string {
-  if (durationInSeconds === null || durationInSeconds <= 0) {
-    return 'N/A';
-  }
-
-  const minutes = Math.floor(durationInSeconds / 60);
-  const seconds = durationInSeconds % 60;
-
-  if (minutes === 0) {
-    return `${seconds}s`;
-  } else if (seconds === 0) {
-    return `${minutes}m`;
-  } else {
-    return `${minutes}m ${seconds}s`;
-  }
 }
 
 

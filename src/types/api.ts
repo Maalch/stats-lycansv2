@@ -164,6 +164,8 @@ export interface GameDurationAnalysisResponse {
   durationsByWinnerCamp: Record<string, CampDurationData>;
   durationsByPlayerCount: Record<string, CampDurationData>;
   durationsByWolfRatio: Record<string, CampDurationData>;
+  totalGameTime: string; // Total time of all games combined (formatted)
+  totalPlayerTime: string; // Total time of all players across all games (formatted)
   error?: string;
 }
 

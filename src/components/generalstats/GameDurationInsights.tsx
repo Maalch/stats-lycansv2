@@ -6,6 +6,7 @@ import { useGameTimeAnalysisFromRaw } from '../../hooks/useGameTimeAnalysisFromR
 import { useNavigation } from '../../context/NavigationContext';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
+import { formatDurationToMinutesSeconds, formatSecondsToMinutesSeconds, formatDurationWithDays } from '../../utils/durationFormatters';
 
 export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysisFromRaw();
@@ -101,83 +102,94 @@ export function GameDurationInsights() {
           <div className="lycans-resume-conteneur">
             <div className="lycans-stat-carte">
               <h3>Durée Moyenne</h3>
-              <p className="lycans-valeur-principale">{jeuDonnees.averageDuration || 'N/A'}</p>
+              <p className="lycans-valeur-principale">{formatDurationToMinutesSeconds(jeuDonnees.averageDuration) || 'N/A'}</p>
             </div>
-        <div 
-          className="lycans-stat-carte" 
-          onClick={() => {
-            if (jeuDonnees.minDurationGameId) {
-              navigateToGameDetails({
-                selectedGame: jeuDonnees.minDurationGameId,
-                fromComponent: 'Analyse des Durées'
-              });
-            }
-          }}
-          style={{ 
-            cursor: jeuDonnees.minDurationGameId ? 'pointer' : 'default',
-            opacity: jeuDonnees.minDurationGameId ? 1 : 0.7,
-            transition: 'transform 0.2s ease, box-shadow 0.2s ease'
-          }}
-          onMouseEnter={(e) => {
-            if (jeuDonnees.minDurationGameId) {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (jeuDonnees.minDurationGameId) {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '';
-            }
-          }}
-          title={jeuDonnees.minDurationGameId ? 'Cliquez pour voir cette partie' : 'Aucune partie trouvée'}
-        >
-          <h3>Durée Minimum</h3>
-          <p className="lycans-valeur-principale">{Math.floor(jeuDonnees.minDuration / 60)}min {Math.floor(jeuDonnees.minDuration % 60)}s</p>
-          {jeuDonnees.minDurationGameId && (
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
-              🖱️ Partie #{jeuDonnees.minDurationGameId}
-            </p>
-          )}
-        </div>
-        <div 
-          className="lycans-stat-carte" 
-          onClick={() => {
-            if (jeuDonnees.maxDurationGameId) {
-              navigateToGameDetails({
-                selectedGame: jeuDonnees.maxDurationGameId,
-                fromComponent: 'Analyse des Duréee'
-              });
-            }
-          }}
-          style={{ 
-            cursor: jeuDonnees.maxDurationGameId ? 'pointer' : 'default',
-            opacity: jeuDonnees.maxDurationGameId ? 1 : 0.7,
-            transition: 'transform 0.2s ease, box-shadow 0.2s ease'
-          }}
-          onMouseEnter={(e) => {
-            if (jeuDonnees.maxDurationGameId) {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (jeuDonnees.maxDurationGameId) {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '';
-            }
-          }}
-          title={jeuDonnees.maxDurationGameId ? 'Cliquez pour voir cette partie' : 'Aucune partie trouvée'}
-        >
-          <h3>Durée Maximum</h3>
-          <p className="lycans-valeur-principale">{Math.floor(jeuDonnees.maxDuration / 60)}min {Math.floor(jeuDonnees.maxDuration % 60)}s</p>
-          {jeuDonnees.maxDurationGameId && (
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
-              🖱️ Partie #{jeuDonnees.maxDurationGameId}
-            </p>
-          )}
-        </div>
-      </div>
+            <div className="lycans-stat-carte">
+              <h3>Temps de jeu total</h3>
+              <p className="lycans-valeur-principale">{formatDurationWithDays(jeuDonnees.totalGameTime) || 'N/A'}</p>
+            </div>
+            <div className="lycans-stat-carte">
+              <h3>Temps de jeu joueurs total</h3>
+              <p className="lycans-valeur-principale">{formatDurationWithDays(jeuDonnees.totalPlayerTime) || 'N/A'}</p>
+            </div>
+          </div>
+
+          <div className="lycans-resume-conteneur">
+            <div 
+              className="lycans-stat-carte" 
+              onClick={() => {
+                if (jeuDonnees.minDurationGameId) {
+                  navigateToGameDetails({
+                    selectedGame: jeuDonnees.minDurationGameId,
+                    fromComponent: 'Analyse des Durées'
+                  });
+                }
+              }}
+              style={{ 
+                cursor: jeuDonnees.minDurationGameId ? 'pointer' : 'default',
+                opacity: jeuDonnees.minDurationGameId ? 1 : 0.7,
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                if (jeuDonnees.minDurationGameId) {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (jeuDonnees.minDurationGameId) {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '';
+                }
+              }}
+              title={jeuDonnees.minDurationGameId ? 'Cliquez pour voir cette partie' : 'Aucune partie trouvée'}
+            >
+              <h3>Partie la plus courte</h3>
+              <p className="lycans-valeur-principale">{formatSecondsToMinutesSeconds(jeuDonnees.minDuration)}</p>
+              {jeuDonnees.minDurationGameId && (
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                  🖱️ Partie #{jeuDonnees.minDurationGameId}
+                </p>
+              )}
+            </div>
+            <div 
+              className="lycans-stat-carte" 
+              onClick={() => {
+                if (jeuDonnees.maxDurationGameId) {
+                  navigateToGameDetails({
+                    selectedGame: jeuDonnees.maxDurationGameId,
+                    fromComponent: 'Analyse des Duréee'
+                  });
+                }
+              }}
+              style={{ 
+                cursor: jeuDonnees.maxDurationGameId ? 'pointer' : 'default',
+                opacity: jeuDonnees.maxDurationGameId ? 1 : 0.7,
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                if (jeuDonnees.maxDurationGameId) {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (jeuDonnees.maxDurationGameId) {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '';
+                }
+              }}
+              title={jeuDonnees.maxDurationGameId ? 'Cliquez pour voir cette partie' : 'Aucune partie trouvée'}
+            >
+              <h3>Partie la plus longue</h3>
+              <p className="lycans-valeur-principale">{formatSecondsToMinutesSeconds(jeuDonnees.maxDuration)}</p>
+              {jeuDonnees.maxDurationGameId && (
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                  🖱️ Partie #{jeuDonnees.maxDurationGameId}
+                </p>
+              )}
+            </div>
+          </div>
 
       <div className="lycans-graphiques-section">
         <div className="lycans-graphique-element">
