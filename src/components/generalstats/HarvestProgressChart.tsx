@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { useHarvestStatsFromRaw } from '../../hooks/useHarvestStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
@@ -110,7 +110,6 @@ export function HarvestProgressChart() {
                       return null;
                     }}
                   />
-                  <Legend />
                 </PieChart>
               </ResponsiveContainer>
             </div>
