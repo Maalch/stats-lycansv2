@@ -84,6 +84,16 @@ export function PlayerComparisonChart() {
     return result;
   }, [selectedPlayer1, selectedPlayer2, generateComparison, availablePlayers.length]);
 
+  // Metric descriptions for tooltip
+  const metricDescriptions: Record<string, string> = {
+    'Participation': 'Nombre de parties jouées par rapport au joueur le plus actif',
+    'Score de Victoire': 'Score de victoires, comparé à la moyenne générale',
+    'Régularité': 'Stabilité des performances au fil du temps (analyse des variations entre périodes de jeu)',
+    'Maîtrise Villageois': 'Efficacité estimée en tant que Villageois',
+    'Efficacité Loups': 'Efficacité estimée en tant que Loup',
+    'Adaptabilité Rôles': 'Performance avec les rôles solo'
+  };
+
   // Transform data for radar chart
   const radarData = useMemo(() => {
     if (!comparisonData) return [];
@@ -127,6 +137,66 @@ export function PlayerComparisonChart() {
       }
     ];
   }, [comparisonData, selectedPlayer1, selectedPlayer2]);
+
+  // Custom tooltip component
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const metricName = label as string;
+      const description = metricDescriptions[metricName];
+      
+      return (
+        <div style={{
+          backgroundColor: 'var(--bg-secondary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '6px',
+          padding: '12px',
+          color: 'var(--text-primary)',
+          maxWidth: '300px'
+        }}>
+          <p style={{ 
+            fontWeight: 'bold', 
+            marginBottom: '8px',
+            fontSize: '14px',
+            borderBottom: '1px solid var(--border-color)',
+            paddingBottom: '6px'
+          }}>
+            {metricName}
+          </p>
+          {description && (
+            <p style={{ 
+              fontSize: '12px', 
+              color: 'var(--text-secondary)',
+              marginBottom: '8px',
+              fontStyle: 'italic',
+              lineHeight: '1.4'
+            }}>
+              {description}
+            </p>
+          )}
+          {payload.map((entry: any, index: number) => (
+            <div key={index} style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              marginTop: '4px'
+            }}>
+              <span style={{ 
+                color: entry.color,
+                fontWeight: 'bold',
+                marginRight: '12px'
+              }}>
+                {entry.name}:
+              </span>
+              <span style={{ fontWeight: 'bold' }}>
+                {entry.value}/100
+              </span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
 
   const handleCommonGamesClick = () => {
     if (selectedPlayer1 && selectedPlayer2) {
@@ -412,19 +482,7 @@ export function PlayerComparisonChart() {
                           strokeWidth={3}
                           dot={{ fill: playersColor[selectedPlayer2] || '#FF0000', strokeWidth: 2, r: 4 }}
                         />
-                        <Tooltip 
-                          formatter={(value: any, name: string) => [
-                            `${value}/100`,
-                            name
-                          ]}
-                          labelFormatter={(label) => `${label}`}
-                          contentStyle={{
-                            backgroundColor: 'var(--bg-secondary)',
-                            border: '1px solid var(--border-color)',
-                            borderRadius: '6px',
-                            color: 'var(--text-primary)'
-                          }}
-                        />
+                        <Tooltip content={<CustomTooltip />} />
                       </RadarChart>
                     </ResponsiveContainer>
                   </div>
