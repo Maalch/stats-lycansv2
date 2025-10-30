@@ -166,7 +166,7 @@ export function DeathStatisticsChart() {
 
   return (
     <div className="lycans-players-stats">
-      <h2>Statistiques de Tueurs</h2>
+      <h2>💀 Statistiques de Morts & Kills</h2>
 
       {/* View Selection */}
       <div className="lycans-categories-selection">
