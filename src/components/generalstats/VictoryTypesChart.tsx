@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useVictoryTypesFromRaw } from '../../hooks/useVictoryTypesFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
@@ -87,7 +87,7 @@ export function VictoryTypesChart() {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={mainVictoryTypes}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                    margin={{ top: 50, right: 30, left: 20, bottom: 60 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis 
@@ -156,7 +156,6 @@ export function VictoryTypesChart() {
                         return null;
                       }}
                     />
-                    <Legend />
                     {/* Create stacked bars for each winning camp */}
                     {victoriesDonnees?.winningCamps?.map((camp, index) => (
                       <Bar 
@@ -195,7 +194,7 @@ export function VictoryTypesChart() {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={rareVictoryTypes}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 120 }}
+                    margin={{ top: 50, right: 30, left: 20, bottom: 120 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis 
@@ -264,7 +263,6 @@ export function VictoryTypesChart() {
                         return null;
                       }}
                     />
-                    <Legend />
                     {/* Create stacked bars for each winning camp */}
                     {victoriesDonnees?.winningCamps?.map((camp, index) => (
                       <Bar 
