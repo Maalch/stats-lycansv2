@@ -48,7 +48,6 @@ export function formatDurationWithDays(durationStr: string): string {
   
   // Parse the duration string (format: "XXhYYmZZs")
   const hourMatch = durationStr.match(/(\d+)h/);
-  const minuteMatch = durationStr.match(/(\d+)m/);
   
   const totalHours = hourMatch ? parseInt(hourMatch[1]) : 0;
   
