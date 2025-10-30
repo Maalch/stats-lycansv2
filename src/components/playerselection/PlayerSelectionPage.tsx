@@ -7,6 +7,7 @@ import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
+import { formatCumulativeDuration } from '../../utils/durationFormatters';
 import { AchievementsDisplay } from './AchievementsDisplay';
 import { 
   PlayerHistoryEvolution, 
@@ -442,6 +443,13 @@ export function PlayerSelectionPage() {
                               {playerHistoryData.totalGames}
                             </div>
                             <p>parties jouées</p>
+                          </div>
+                          <div className="lycans-stat-carte">
+                            <h3>Temps de jeu cumulés</h3>
+                            <div className="lycans-valeur-principale" style={{ fontSize: '1.2rem' }}>
+                              {formatCumulativeDuration(playerHistoryData.totalPlayTime)}
+                            </div>
+                            <p>temps total de jeu</p>
                           </div>
                           <div className="lycans-stat-carte">
                             <h3>Victoires</h3>

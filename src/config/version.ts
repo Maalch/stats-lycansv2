@@ -11,7 +11,7 @@ export const CHANGELOG: ChangelogEntry[] = [
   {
     version: 'v1.3.10',
     date: '30/10/2025',
-    description: 'Ajout d\'un graphique "Types de Mort les Plus Fréquents".',
+    description: 'Ajout d\'un graphique "Types de Mort les Plus Fréquents" dans "Sélection Joueurs" / "Kills".\nAjout du total du temps de jeu dans "Statistiques Générales" / "Durée des Parties" et dans par joueur "Evolution".',
   },
   {
     version: 'v1.3.9',

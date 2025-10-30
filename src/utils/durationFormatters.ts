@@ -94,3 +94,34 @@ export function formatDuration(durationInSeconds: number | null): string {
     return `${minutes}m ${seconds}s`;
   }
 }
+
+/**
+ * Format cumulative duration from seconds to "X Jours Y Heures Z Minutes" format
+ * Used for large cumulative play times
+ * @param totalSeconds - Duration in seconds
+ * @returns Formatted string like "5 Jours 7 Heures" (>= 1 day) or "3 Heures 45 Minutes" (< 1 day)
+ */
+export function formatCumulativeDuration(totalSeconds: number): string {
+  if (!totalSeconds || totalSeconds <= 0) {
+    return '0 Minute';
+  }
+
+  const days = Math.floor(totalSeconds / 86400); // 86400 seconds in a day
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+  const parts = [];
+  
+  if (days > 0) {
+    parts.push(`${days} Jour${days > 1 ? 's' : ''}`);
+  }
+  if (hours > 0) {
+    parts.push(`${hours} Heure${hours > 1 ? 's' : ''}`);
+  }
+  // Only show minutes if duration is less than 1 day
+  if (days === 0 && minutes > 0) {
+    parts.push(`${minutes} Minute${minutes > 1 ? 's' : ''}`);
+  }
+
+  return parts.length > 0 ? parts.join(' ') : '0 Minute';
+}

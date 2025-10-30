@@ -5,7 +5,7 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import { formatLycanDate} from './dataUtils';
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
-import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole, calculateGameDuration } from '../../utils/datasyncExport';
 import { getPlayerId } from '../../utils/playerIdentification';
 // Note: Player names are already normalized during data loading, so we can use Username directly
 
@@ -17,6 +17,7 @@ export interface PlayerGame {
   winnerCamp: string;
   playersInGame: number;
   mapName: string;
+  duration: number; // Duration in seconds
 }
 
 export interface CampStats {
@@ -36,6 +37,7 @@ export interface PlayerGameHistoryData {
   totalGames: number;
   totalWins: number;
   winRate: string;
+  totalPlayTime: number; // Total play time in seconds
   games: PlayerGame[];
   campStats: Record<string, CampStats>;
   mapStats: Record<string, MapStats>;
@@ -81,6 +83,9 @@ export function computePlayerGameHistory(
       // Format date consistently
       const formattedDate = formatLycanDate(new Date(game.StartDate));
 
+      // Calculate game duration in seconds
+      const gameDuration = calculateGameDuration(game.StartDate, game.EndDate) || 0;
+
       playerGames.push({
         gameId: game.Id,
         date: formattedDate,
@@ -88,7 +93,8 @@ export function computePlayerGameHistory(
         won: playerWon,
         winnerCamp: winnerCamp,
         playersInGame: game.PlayerStats.length,
-        mapName: game.MapName
+        mapName: game.MapName,
+        duration: gameDuration
       });
     }
   });
@@ -156,11 +162,15 @@ export function computePlayerGameHistory(
     stats.winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
   });
 
+  // Calculate total play time
+  const totalPlayTime = playerGames.reduce((sum, game) => sum + game.duration, 0);
+
   return {
     playerName: playerDisplayName, // Use latest display name
     totalGames: totalGames,
     totalWins: totalWins,
     winRate: winRate,
+    totalPlayTime: totalPlayTime,
     games: playerGames,
     campStats: campStats,
     mapStats: mapStats
