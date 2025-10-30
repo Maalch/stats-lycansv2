@@ -105,11 +105,11 @@ export function GameDurationInsights() {
               <p className="lycans-valeur-principale">{formatDurationToMinutesSeconds(jeuDonnees.averageDuration) || 'N/A'}</p>
             </div>
             <div className="lycans-stat-carte">
-              <h3>Temps de jeu total</h3>
+              <h3>Temps de jeu cumulés des parties</h3>
               <p className="lycans-valeur-principale">{formatDurationWithDays(jeuDonnees.totalGameTime) || 'N/A'}</p>
             </div>
             <div className="lycans-stat-carte">
-              <h3>Temps de jeu joueurs total</h3>
+              <h3>Temps de jeu cumulés par les joueurs</h3>
               <p className="lycans-valeur-principale">{formatDurationWithDays(jeuDonnees.totalPlayerTime) || 'N/A'}</p>
             </div>
           </div>
