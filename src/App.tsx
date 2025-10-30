@@ -148,9 +148,9 @@ const GENERAL_STATS_MENU = [
   },
   { 
     key: 'duration', 
-    label: 'Durée des Parties', 
+    label: 'Durée', 
     component: GameDurationInsights,
-    description: 'Statistiques sur la durée des parties (en jours de jeu)'
+    description: 'Statistiques sur la durée des parties'
   },
   { 
     key: 'globalVoting', 

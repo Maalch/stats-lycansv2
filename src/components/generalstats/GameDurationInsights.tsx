@@ -36,7 +36,7 @@ export function GameDurationInsights() {
   };
 
   if (telechargementActif || tempsJeuChargement) {
-    return <div className="statistiques-attente">Analyse des durées de partie en cours...</div>;
+    return <div className="statistiques-attente">Analyse des durées en cours...</div>;
   }
 
   if (erreurApi || tempsJeuErreur) {
@@ -78,7 +78,7 @@ export function GameDurationInsights() {
 
   return (
     <div className="lycans-duree-analyse">
-      <h2>Analyse des Durées de Partie</h2>
+      <h2>Analyse des Durées</h2>
       
       {/* Duration Type Selection */}
       <div className="lycans-categories-selection">
@@ -86,7 +86,7 @@ export function GameDurationInsights() {
           className={`lycans-categorie-btn ${selectedDurationType === 'real' ? 'active' : ''}`}
           onClick={() => setSelectedDurationType('real')}
         >
-          Durée réelle
+          Durée en jeu
         </button>
         <button
           className={`lycans-categorie-btn ${selectedDurationType === 'gametime' ? 'active' : ''}`}
@@ -109,7 +109,7 @@ export function GameDurationInsights() {
             if (jeuDonnees.minDurationGameId) {
               navigateToGameDetails({
                 selectedGame: jeuDonnees.minDurationGameId,
-                fromComponent: 'Analyse des Durées de Partie'
+                fromComponent: 'Analyse des Durées'
               });
             }
           }}
@@ -146,7 +146,7 @@ export function GameDurationInsights() {
             if (jeuDonnees.maxDurationGameId) {
               navigateToGameDetails({
                 selectedGame: jeuDonnees.maxDurationGameId,
-                fromComponent: 'Analyse des Durées de Partie'
+                fromComponent: 'Analyse des Duréee'
               });
             }
           }}
@@ -181,8 +181,8 @@ export function GameDurationInsights() {
 
       <div className="lycans-graphiques-section">
         <div className="lycans-graphique-element">
-          <h3>Distribution des Durées de Partie</h3>
-          <FullscreenChart title="Distribution des Durées de Partie">
+          <h3>Distribution des Durées</h3>
+          <FullscreenChart title="Distribution des Durées">
             <div style={{ height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
