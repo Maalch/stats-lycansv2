@@ -5,7 +5,7 @@
 import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { DEATH_TYPES } from '../../types/deathTypes';
-import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
+import { getPlayerId } from '../../utils/playerIdentification';
 
 export interface VotingBehaviorStats {
   playerName: string;
@@ -151,7 +151,8 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
   // Initialize maps for all players using ID as key
   game.PlayerStats.forEach(player => {
     const playerId = getPlayerId(player);
-    const displayName = getPlayerDisplayName(player);
+    // Player names are already normalized during data loading
+    const displayName = player.Username;
     
     playerBehaviorMap.set(playerId, {
       totalMeetings: 0,
@@ -194,8 +195,9 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
       return player.Votes
         .filter(vote => vote.Day === meetingNum)
         .map(vote => ({ 
-          voterId: playerId, 
-          voterName: getPlayerDisplayName(player),
+          voterId: playerId,
+          // Player names are already normalized during data loading
+          voterName: player.Username,
           vote, 
           voterRole: player.MainRoleInitial 
         }));
@@ -231,7 +233,8 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
       if (targetPlayerStat) {
         const targetPlayerId = getPlayerId(targetPlayerStat);
         if (wasVoteSuccessful(game, meetingNum, targetPlayerId)) {
-          eliminatedPlayerName = getPlayerDisplayName(targetPlayerStat);
+          // Player names are already normalized during data loading
+          eliminatedPlayerName = targetPlayerStat.Username;
         }
       }
     }
@@ -255,7 +258,8 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
       const playerId = getPlayerId(player);
       const behavior = playerBehaviorMap.get(playerId)!;
       behavior.totalMeetings++;
-      behavior.displayName = getPlayerDisplayName(player); // Update to most recent
+      // Player names are already normalized during data loading
+      behavior.displayName = player.Username; // Update to most recent
       
       // Check if this player voted in this meeting
       const playerVote = votesInMeeting.find(v => v.voterId === playerId);
@@ -331,7 +335,8 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
 
   game.PlayerStats.forEach(player => {
     const playerId = getPlayerId(player);
-    const displayName = getPlayerDisplayName(player);
+    // Player names are already normalized during data loading
+    const displayName = player.Username;
     
     const behavior = playerBehaviorMap.get(playerId)!;
     const votingRate = behavior.totalMeetings > 0 ? (behavior.totalVotes / behavior.totalMeetings) * 100 : 0;

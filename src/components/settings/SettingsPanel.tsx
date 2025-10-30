@@ -4,7 +4,6 @@ import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import type { GameFilter, MapNameFilter, PlayerFilterMode } from '../../context/SettingsContext';
 import { ShareableUrl } from '../common/ShareableUrl';
 import './SettingsPanel.css';
-import { getPlayerNameMapping } from '../../utils/playerNameMapping';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { getDataFileUrl, DATA_FILES } from '../../utils/dataPath';
 import type { DataSource } from '../../utils/dataPath';
@@ -124,7 +123,8 @@ export function SettingsPanel() {
     const allPlayers = new Set<string>();
     filteredGames.forEach((game: GameLogEntry) => {
       game.PlayerStats.forEach((playerStat) => {
-        allPlayers.add(getPlayerNameMapping(playerStat.Username));
+        // Player names are already normalized during data loading
+        allPlayers.add(playerStat.Username);
       });
     });
     return Array.from(allPlayers).sort();
@@ -135,7 +135,8 @@ export function SettingsPanel() {
     const compatibility: Record<string, Set<string>> = {};
     
     filteredGames.forEach((game: GameLogEntry) => {
-      const players = game.PlayerStats.map(p => getPlayerNameMapping(p.Username));
+      // Player names are already normalized during data loading
+      const players = game.PlayerStats.map(p => p.Username);
       
       players.forEach((player: string) => {
         if (!compatibility[player]) {

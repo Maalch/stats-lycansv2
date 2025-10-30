@@ -1,7 +1,8 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, PlayerCampPerformance } from '../../types/api';
 import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
-import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
+import { getPlayerId } from '../../utils/playerIdentification';
+// Note: Player names are already normalized during data loading, so we can use Username directly
 
 
 /**
@@ -106,7 +107,8 @@ function analyzePlayerPerformance(
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
       const playerId = getPlayerId(playerStat);
-      const displayName = getPlayerDisplayName(playerStat);
+      // Player names are already normalized during data loading
+      const displayName = playerStat.Username;
 
       // Determine player's camp using helper function
       const mainCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), { regroupWolfSubRoles, regroupVillagers });
@@ -244,7 +246,8 @@ function analyzeSpecialRolesPlayerPerformance(
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
       const playerId = getPlayerId(playerStat);
-      const displayName = getPlayerDisplayName(playerStat);
+      // Player names are already normalized during data loading
+      const displayName = playerStat.Username;
 
       // Check if this player is playing a special role
       const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));

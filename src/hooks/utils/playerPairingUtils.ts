@@ -5,7 +5,7 @@
 import type { PlayerPairingStatsData, PlayerPairStat } from '../../types/api';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
-import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
+import { getPlayerId } from '../../utils/playerIdentification';
 
 /**
  * Extended interface for chart display with highlighting support
@@ -125,8 +125,9 @@ export function computePlayerPairingStats(
         for (let j = i + 1; j < wolves.length; j++) {
           const wolf1Id = getPlayerId(wolves[i]);
           const wolf2Id = getPlayerId(wolves[j]);
-          const wolf1Name = getPlayerDisplayName(wolves[i]);
-          const wolf2Name = getPlayerDisplayName(wolves[j]);
+          // Player names are already normalized during data loading
+          const wolf1Name = wolves[i].Username;
+          const wolf2Name = wolves[j].Username;
           // Create a consistent key for the pair using IDs (alphabetical order for internal tracking)
           const pairKey = [wolf1Id, wolf2Id].sort().join(" & ");
           
@@ -161,8 +162,9 @@ export function computePlayerPairingStats(
         if (i + 1 < lovers.length) {
           const lover1Id = getPlayerId(lovers[i]);
           const lover2Id = getPlayerId(lovers[i + 1]);
-          const lover1Name = getPlayerDisplayName(lovers[i]);
-          const lover2Name = getPlayerDisplayName(lovers[i + 1]);
+          // Player names are already normalized during data loading
+          const lover1Name = lovers[i].Username;
+          const lover2Name = lovers[i + 1].Username;
 
           // Create a consistent key for the pair by IDs (alphabetical order for internal tracking)
           const pairKey = [lover1Id, lover2Id].sort().join(" & ");

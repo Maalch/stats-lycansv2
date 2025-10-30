@@ -1,6 +1,6 @@
 export interface Player {
   Joueur: string;
-  ID: string; // Steam ID
+  SteamID: string | null; 
   Image: string | null;
   Twitch: string | null;
   Youtube: string | null;

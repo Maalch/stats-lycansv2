@@ -239,7 +239,7 @@ export async function generateJoueursFromGameLog(absoluteDataDir, gameLog, teamN
     
     players.push({
       Joueur: data.username,
-      ID: id,
+      SteamID: id,
       Image: null,
       Twitch: null,
       Youtube: null,

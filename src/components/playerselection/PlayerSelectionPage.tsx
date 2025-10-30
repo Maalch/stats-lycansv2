@@ -5,7 +5,7 @@ import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculated
 import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
-import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
+import { getPlayerId } from '../../utils/playerIdentification';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { AchievementsDisplay } from './AchievementsDisplay';
 import { 
@@ -69,8 +69,9 @@ export function PlayerSelectionPage() {
         const playerId = getPlayerId(playerStat);
         
         // Find canonical player name from joueurs.json
-        const playerInfo = joueursData?.Players?.find(p => p.ID === playerId);
-        const canonicalName = playerInfo?.Joueur || getPlayerDisplayName(playerStat);
+        const playerInfo = joueursData?.Players?.find(p => p.SteamID === playerId);
+        // Player names are already normalized during data loading, but prefer joueurs.json if available
+        const canonicalName = playerInfo?.Joueur || playerStat.Username;
         
         if (!playerMap.has(playerId)) {
           playerMap.set(playerId, {
@@ -98,10 +99,10 @@ export function PlayerSelectionPage() {
     });
 
     return Array.from(playerMap.entries()).map(([playerId, stats]): PlayerBasicStats => {
-      // Find player data from joueurs.json by ID first, then fall back to name matching
-      let playerInfo = joueursData?.Players?.find(p => p.ID === playerId);
+      // Find player data from joueurs.json by SteamID first, then fall back to name matching
+      let playerInfo = joueursData?.Players?.find(p => p.SteamID === playerId);
       
-      // If not found by ID, try matching by name (for main joueurs.json which uses SteamID field)
+      // If not found by SteamID, try matching by name
       if (!playerInfo) {
         playerInfo = joueursData?.Players?.find(p => p.Joueur === stats.displayName);
       }

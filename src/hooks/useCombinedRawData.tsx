@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
-import { PLAYER_NAME_MAPPING } from '../utils/playerNameMapping';
+import { getCanonicalPlayerName, initializePlayerIdentification } from '../utils/playerIdentification';
 import type { DeathType } from '../types/deathTypes';
 import { fetchDataFile, fetchOptionalDataFile, DATA_FILES } from '../utils/dataPath';
 import type { DataSource } from '../utils/dataPath';
@@ -114,6 +114,7 @@ interface CombinedFilteredData {
  * Centralized hook to fetch all raw data with a single loading state
  * Now loads from gameLog.json directly without legacy transformations
  * Supports switching between main and Discord data sources via settings
+ * Integrates with joueurs.json for canonical player name resolution
  */
 function useCombinedRawData(): {
   data: CombinedRawData | null;
@@ -133,6 +134,12 @@ function useCombinedRawData(): {
 
         const dataSource = settings.dataSource as DataSource;
         
+        // Fetch joueurs data first for canonical name resolution
+        const joueursData = await fetchDataFile<any>(dataSource, DATA_FILES.JOUEURS);
+        
+        // Initialize the player identification system with joueurs data
+        initializePlayerIdentification(joueursData);
+        
         // Fetch the game log data
         const gameLogResult = await fetchDataFile<GameLogData>(dataSource, DATA_FILES.GAME_LOG);
         
@@ -145,15 +152,15 @@ function useCombinedRawData(): {
         // Generate DisplayedId values for all games
         const displayedIdMap = generateDisplayedIds(gameLogResult.GameStats);
 
-        // Add DisplayedId to each game and normalize player names
+        // Add DisplayedId to each game and normalize player names using joueurs data
         const gameDataWithDisplayedIds = gameLogResult.GameStats.map(game => {
           const gameWithDisplayedId = {
             ...game,
             DisplayedId: displayedIdMap.get(game.Id) || game.Id // Fallback to original ID
           };
           
-          // Normalize all player names in the game
-          return normalizeGameLogEntry(gameWithDisplayedId);
+          // Normalize all player names in the game using canonical name resolution
+          return normalizeGameLogEntry(gameWithDisplayedId, joueursData);
         });
 
         setData({
@@ -531,37 +538,16 @@ function generateDisplayedIds(games: GameLogEntry[]): Map<string, string> {
 }
 
 /**
- * Normalize a player name using the mapping configuration
- * Performs case-insensitive matching and returns the canonical name
- * 
- * @param playerName - The original player name from the data
- * @returns The normalized/canonical player name
- */
-function normalizePlayerName(playerName: string): string {
-  if (!playerName) return playerName;
-  
-  // Try exact match first
-  if (PLAYER_NAME_MAPPING[playerName]) {
-    return PLAYER_NAME_MAPPING[playerName];
-  }
-  
-  // Try case-insensitive match
-  const lowerPlayerName = playerName.toLowerCase();
-  for (const [variant, canonical] of Object.entries(PLAYER_NAME_MAPPING)) {
-    if (variant.toLowerCase() === lowerPlayerName) {
-      return canonical;
-    }
-  }
-  
-  // Return original name if no mapping found
-  return playerName;
-}
-
-/**
- * Normalize all player names in a PlayerStat object
+ * Normalize all player names in a PlayerStat object using canonical name resolution
  * Handles Username, KillerName, and Vote targets
+ * 
+ * Since all players now have Steam IDs, this function resolves names via
+ * Steam ID lookup in joueurs.json.
+ * 
+ * @param playerStat - The player stat to normalize
+ * @param joueursData - Optional joueurs data for canonical name resolution
  */
-function normalizePlayerStat(playerStat: PlayerStat): PlayerStat {
+function normalizePlayerStat(playerStat: PlayerStat, joueursData?: any): PlayerStat {
   if (!playerStat) {
     console.warn('normalizePlayerStat: received null/undefined playerStat');
     return playerStat;
@@ -572,24 +558,27 @@ function normalizePlayerStat(playerStat: PlayerStat): PlayerStat {
     console.warn('normalizePlayerStat: Votes is not an array for player', playerStat.Username, playerStat.Votes);
   }
   
+  // Resolve canonical name using Steam ID lookup in joueurs.json
+  const canonicalName = getCanonicalPlayerName(playerStat, joueursData);
+  
   return {
     ...playerStat,
-    Username: normalizePlayerName(playerStat.Username),
-    KillerName: playerStat.KillerName ? normalizePlayerName(playerStat.KillerName) : playerStat.KillerName,
-    Votes: (playerStat.Votes || []).map(vote => {
-      if (!vote) return vote;
-      return {
-        ...vote,
-        Target: vote.Target === 'Passé' ? vote.Target : normalizePlayerName(vote.Target)
-      };
-    })
+    Username: canonicalName,
+    // KillerName and Vote targets will be resolved in the second pass of normalizeGameLogEntry
+    // using the name mapping built from all players in the game
+    KillerName: playerStat.KillerName,
+    Votes: playerStat.Votes || []
   };
 }
 
 /**
  * Normalize all player names in a GameLogEntry
+ * This includes a second pass to fix KillerName and Vote targets using the normalized PlayerStats
+ * 
+ * @param game - The game to normalize
+ * @param joueursData - Optional joueurs data for canonical name resolution
  */
-function normalizeGameLogEntry(game: GameLogEntry): GameLogEntry {
+function normalizeGameLogEntry(game: GameLogEntry, joueursData?: any): GameLogEntry {
   if (!game) {
     console.warn('normalizeGameLogEntry: received null/undefined game');
     return game;
@@ -600,19 +589,55 @@ function normalizeGameLogEntry(game: GameLogEntry): GameLogEntry {
     console.warn('normalizeGameLogEntry: PlayerStats is not an array for game', game.Id, game.PlayerStats);
   }
   
+  // First pass: normalize all player usernames
+  const normalizedPlayers = (game.PlayerStats || []).map(player => normalizePlayerStat(player, joueursData));
+  
+  // Create a map of original names to canonical names for fixing references
+  const nameMap = new Map<string, string>();
+  (game.PlayerStats || []).forEach((originalPlayer, index) => {
+    const normalizedPlayer = normalizedPlayers[index];
+    if (originalPlayer.Username !== normalizedPlayer.Username) {
+      nameMap.set(originalPlayer.Username.toLowerCase(), normalizedPlayer.Username);
+    }
+  });
+  
+  // Second pass: fix KillerName and Vote targets using the name map
+  const fullyNormalizedPlayers = normalizedPlayers.map(player => {
+    let killerName = player.KillerName;
+    if (killerName && nameMap.has(killerName.toLowerCase())) {
+      killerName = nameMap.get(killerName.toLowerCase())!;
+    }
+    
+    const normalizedVotes = player.Votes.map(vote => {
+      if (!vote || vote.Target === 'Passé') return vote;
+      
+      const lowerTarget = vote.Target.toLowerCase();
+      if (nameMap.has(lowerTarget)) {
+        return { ...vote, Target: nameMap.get(lowerTarget)! };
+      }
+      return vote;
+    });
+    
+    return {
+      ...player,
+      KillerName: killerName,
+      Votes: normalizedVotes
+    };
+  });
+  
   return {
     ...game,
-    PlayerStats: (game.PlayerStats || []).map(normalizePlayerStat)
+    PlayerStats: fullyNormalizedPlayers
   };
 }
 
 /**
  * Normalize player names in BR data
- * BR data has player names in the "Participants" field
+ * BR data has player names in the "Participants" field as a string
+ * Since BR data doesn't have Steam IDs, we keep the names as-is
  */
 function normalizeBRData(brData: RawBRData): RawBRData {
-  return {
-    ...brData,
-    Participants: normalizePlayerName(brData.Participants)
-  };
+  // BR participants are already strings, no normalization needed
+  // All actual player statistics come from gameLog which has proper Steam IDs
+  return brData;
 }

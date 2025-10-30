@@ -6,7 +6,8 @@ import type { GameLogEntry } from '../useCombinedRawData';
 import { formatLycanDate} from './dataUtils';
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
-import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
+import { getPlayerId } from '../../utils/playerIdentification';
+// Note: Player names are already normalized during data loading, so we can use Username directly
 
 export interface PlayerGame {
   gameId: string;
@@ -65,8 +66,8 @@ export function computePlayerGameHistory(
     );
 
     if (playerStat) {
-      // Update to latest display name
-      playerDisplayName = getPlayerDisplayName(playerStat);
+      // Player names are already normalized during data loading
+      playerDisplayName = playerStat.Username;
       
       // Get player's camp from their final role (which contains the full role name)
       const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));

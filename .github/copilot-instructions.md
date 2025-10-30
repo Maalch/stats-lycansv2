@@ -70,25 +70,43 @@ interface RawGameData {
 
 **Critical:** `Amoureux` is `MainRoleInitial`, not `SecondaryRole`. Solo roles win as their role name, not "Villageois". Recent data includes detailed vote tracking and death metadata.
 
-### Player Identification System (CRITICAL)
-**ALWAYS use `playerIdentification.ts` utilities** - never compare players by username alone:
+### Player Identification & Name Resolution System (CRITICAL)
+
+**ALWAYS use `playerIdentification.ts` utilities** - never compare players by username alone or display raw usernames.
+
+#### Canonical Name Resolution (NEW SYSTEM)
+All player names are **automatically normalized during data loading** using this hierarchy:
+1. **Steam ID → joueurs.json** (PREFERRED) - canonical name from master player registry
+2. **Legacy PLAYER_NAME_MAPPING** (fallback for players without Steam IDs)
+3. **Original Username** (last resort)
+
 ```typescript
-import { getPlayerId, getPlayerDisplayName } from '../utils/playerIdentification';
+import { getPlayerId, getCanonicalPlayerName } from '../utils/playerIdentification';
+
+// ✅ CORRECT: Use canonical names for display
+const displayName = getCanonicalPlayerName(player); 
+// Returns "Lutti" even if gameLog.json has "LuttiLutti", "[TAG] Lutti", etc.
 
 // ✅ CORRECT: Group by unique ID
-const playerId = getPlayerId(player); // Returns ID if available, falls back to Username
-const displayName = getPlayerDisplayName(player); // Always returns Username
-
-// ❌ WRONG: Grouping by username creates duplicates
+const playerId = getPlayerId(player); // Returns Steam ID if available, falls back to Username
 const playerMap = new Map<string, Stats>();
-playerMap.set(player.Username, stats); // "Johnny" and "[S.P.Q.R] Johnny Guitouze" = 2 entries
+playerMap.set(getPlayerId(player), stats); // Same Steam ID = 1 entry, prevents duplicates
 
-// ✅ CORRECT: Grouping by ID prevents duplicates  
+// ❌ WRONG: Never use raw Username for display or grouping
 const playerMap = new Map<string, Stats>();
-playerMap.set(getPlayerId(player), stats); // Same Steam ID = 1 entry
+playerMap.set(player.Username, stats); // Creates duplicates! ("Johnny" vs "[S.P.Q.R] Johnny")
+
+// ❌ WRONG: Don't use getPlayerDisplayName (deprecated)
+const name = getPlayerDisplayName(player); // Deprecated, use getCanonicalPlayerName() instead
 ```
 
-**Why this matters:** Same player can have different usernames across games. Always use Steam ID (`player.ID`) as unique identifier, fallback to `Username` only when ID is null/undefined.
+#### Key Points
+- **Names are pre-normalized**: By the time data reaches components, all `Username` fields already contain canonical names
+- **Steam IDs are unique identifiers**: Use `getPlayerId()` for grouping, filtering, comparing
+- **joueurs.json is the source of truth**: Master registry maps Steam IDs to canonical names
+- **Automatic normalization**: Applied to `Username`, `KillerName`, and `Vote.Target` fields during data loading
+
+See `PLAYER_NAME_RESOLUTION.md` for complete documentation.
 
 ## Key Architectural Patterns
 
@@ -312,11 +330,11 @@ gameData.forEach(game => {
 });
 
 // ✅ CORRECT: Single entry per player using Steam ID
-import { getPlayerId, getPlayerDisplayName } from '../utils/playerIdentification';
+import { getPlayerId, getCanonicalPlayerName } from '../utils/playerIdentification';
 gameData.forEach(game => {
   game.PlayerStats.forEach(player => {
     const key = getPlayerId(player); // Same Steam ID = 1 key
-    const name = getPlayerDisplayName(player); // For display only
+    const name = getCanonicalPlayerName(player); // Canonical name for display
     playerMap.set(key, { ...stats, displayName: name });
   });
 });

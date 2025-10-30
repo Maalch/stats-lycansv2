@@ -5,8 +5,8 @@ import {
 } from './dataUtils';
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { CampWinStatsResponse, CampStat, SoloCamp, CampAverage } from '../../types/api';
-import { getPlayerNameMapping } from '../../utils/playerNameMapping';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+// Note: Player names are already normalized during data loading, so we can use Username directly
 
 /**
  * Build game-player-camp mapping from GameLogEntry data
@@ -88,18 +88,18 @@ function getWinnerCamp(game: GameLogEntry): string | null {
  * Get list of all players in a game
  */
 function getPlayerList(game: GameLogEntry): string {
-  // Normalize display names to avoid raw Username usage
-  return game.PlayerStats.map(player => getPlayerNameMapping(player.Username)).join(', ');
+  // Player names are already normalized during data loading
+  return game.PlayerStats.map(player => player.Username).join(', ');
 }
 
 /**
  * Get list of victorious players in a game
  */
 function getWinnerList(game: GameLogEntry): string {
-  // Normalize display names for winners list as well
+  // Player names are already normalized during data loading
   return game.PlayerStats
     .filter(player => player.Victorious)
-    .map(player => getPlayerNameMapping(player.Username))
+    .map(player => player.Username)
     .join(', ');
 }
 

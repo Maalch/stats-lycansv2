@@ -1,6 +1,7 @@
 import { getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
-import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
+import { getPlayerId } from '../../utils/playerIdentification';
+// Note: Player names are already normalized during data loading, so we can use Username directly
 
 
 export interface CampSeries {
@@ -119,7 +120,8 @@ function getAllPlayers(gameData: GameLogEntry[]): Map<string, string> {
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
       const playerId = getPlayerId(playerStat);
-      const displayName = getPlayerDisplayName(playerStat);
+      // Player names are already normalized during data loading
+      const displayName = playerStat.Username;
       // Update to latest seen display name
       playerMap.set(playerId, displayName);
     });
@@ -578,7 +580,8 @@ export function computePlayerSeries(
 
     game.PlayerStats.forEach(playerStat => {
       const playerId = getPlayerId(playerStat);
-      const displayName = getPlayerDisplayName(playerStat);
+      // Player names are already normalized during data loading
+      const displayName = playerStat.Username;
       
       // Update the player map with latest display name
       allPlayers.set(playerId, displayName);

@@ -1,7 +1,8 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import type { PlayerStatsData, PlayerStat, PlayerCamps } from '../../types/api';
 import { getPlayerFinalRole } from '../../utils/datasyncExport';
-import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
+import { getPlayerId } from '../../utils/playerIdentification';
+// Note: Player names are already normalized during data loading, so we can use Username directly
 
 /**
  * Compute player statistics from GameLogEntry data
@@ -36,7 +37,8 @@ export function computePlayerStats(
       players.forEach(playerStat => {
         // Use ID for grouping, fallback to Username for legacy data
         const playerId = getPlayerId(playerStat);
-        const displayName = getPlayerDisplayName(playerStat);
+        // Player names are already normalized during data loading
+        const displayName = playerStat.Username;
         
         if (playerId) {
           // Initialize player if not seen before

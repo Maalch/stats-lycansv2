@@ -2,7 +2,7 @@ import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { DEATH_TYPES, type DeathType, isValidDeathType, getDeathTypeLabel } from '../../types/deathTypes';
 import { mainCampOrder } from '../../types/api';
-import { getPlayerId, getPlayerDisplayName } from '../../utils/playerIdentification';
+import { getPlayerId } from '../../utils/playerIdentification';
 
 /**
  * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
@@ -407,7 +407,8 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     // When filtering by camp, only count games where the player was in that camp
     game.PlayerStats.forEach(player => {
       const playerId = getPlayerId(player);
-      const displayName = getPlayerDisplayName(player);
+      // Player names are already normalized during data loading
+      const displayName = player.Username;
       displayNameById[playerId] = displayName; // Update latest
       
       if (!campFilter || campFilter === 'Tous les camps') {
