@@ -428,7 +428,7 @@ export function PlayerSelectionPage() {
                       {/* Summary Cards */}
                       {playerHistoryData && (
                         <div className="lycans-resume-conteneur">
-                          <div className="lycans-stat-carte">
+                          <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
                             <h3>Total Parties</h3>
                             <div 
                               className="lycans-valeur-principale lycans-clickable" 
@@ -436,22 +436,24 @@ export function PlayerSelectionPage() {
                                 navigateToGameDetails({
                                   selectedPlayer: highlightedPlayerStats.name,
                                   fromComponent: 'Historique Joueur - Total Parties'
-                                });
+                                }
+                              );
                               }}
                               title={`Cliquer pour voir toutes les parties de ${highlightedPlayerStats.name}`}
+                              style={{ fontSize: '1.3rem' }}
                             >
                               {playerHistoryData.totalGames}
                             </div>
                             <p>parties jouées</p>
                           </div>
-                          <div className="lycans-stat-carte">
+                          <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
                             <h3>Temps de jeu cumulés</h3>
-                            <div className="lycans-valeur-principale" style={{ fontSize: '1.2rem' }}>
+                            <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem' }}>
                               {formatCumulativeDuration(playerHistoryData.totalPlayTime)}
                             </div>
                             <p>temps total de jeu</p>
                           </div>
-                          <div className="lycans-stat-carte">
+                          <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
                             <h3>Victoires</h3>
                             <div 
                               className="lycans-valeur-principale lycans-clickable" 
@@ -463,14 +465,15 @@ export function PlayerSelectionPage() {
                                 });
                               }}
                               title={`Cliquer pour voir toutes les victoires de ${highlightedPlayerStats.name}`}
+                              style={{ fontSize: '1.3rem' }}
                             >
                               {playerHistoryData.totalWins}
                             </div>
                             <p>parties gagnées</p>
                           </div>
-                          <div className="lycans-stat-carte">
+                          <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
                             <h3>Taux de Victoire</h3>
-                            <div className="lycans-valeur-principale">{playerHistoryData.winRate}%</div>
+                            <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem' }}>{playerHistoryData.winRate}%</div>
                             <p>pourcentage global</p>
                           </div>
                         </div>
