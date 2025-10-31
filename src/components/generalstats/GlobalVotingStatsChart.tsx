@@ -81,7 +81,7 @@ export function GlobalVotingStatsChart() {
           color="#FF9800"
         />
         <SummaryCard
-          title="Abstentions Totales"
+          title="Non-Votes Totaux"
           value={data.totalAbstentions}
           color="#9E9E9E"
         />
@@ -105,7 +105,7 @@ export function GlobalVotingStatsChart() {
           subtitle="% de joueurs passant"
         />
         <SummaryCard
-          title="Taux d'Abstention Moyen"
+          title="Taux de Non-Vote Moyen"
           value={`${data.averageAbstentionRate.toFixed(1)}%`}
           color="#9E9E9E"
           subtitle="% de joueurs ne participant pas"
@@ -113,7 +113,19 @@ export function GlobalVotingStatsChart() {
       </div>
 
       {/* Meeting Day Evolution */}
-      <FullscreenChart title="Évolution des Comportements par Jour de Meeting">
+      <div className="lycans-graphique-section">
+        <div>
+          <h3>📅 Évolution des Comportements par Jour de Meeting</h3>
+        </div>
+        <p style={{ 
+          fontSize: '0.85rem', 
+          color: 'var(--text-secondary)', 
+          textAlign: 'center', 
+          marginBottom: '1rem' 
+        }}>
+          Tendance moyenne des comportements de vote au fil des meetings successifs d'une partie: activité de vote, passes et non-votes.
+        </p>
+        <FullscreenChart title="Évolution des Comportements par Jour de Meeting">
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={meetingDayData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
@@ -165,7 +177,7 @@ export function GlobalVotingStatsChart() {
             <Line 
               type="monotone" 
               dataKey="abstentionRate" 
-              name="Taux d'Abstention"
+              name="Taux de Non-Vote"
               stroke="#9E9E9E"
               strokeWidth={2}
               dot={{ r: 4 }}
@@ -173,10 +185,23 @@ export function GlobalVotingStatsChart() {
             />
           </LineChart>
         </ResponsiveContainer>
-      </FullscreenChart>
+        </FullscreenChart>
+      </div>
 
       {/* Camp Accuracy */}
-      <FullscreenChart title="Précision de Vote par Camp">
+      <div className="lycans-graphique-section">
+        <div>
+          <h3>🛡️ Précision de Vote par Camp</h3>
+        </div>
+        <p style={{ 
+          fontSize: '0.85rem', 
+          color: 'var(--text-secondary)', 
+          textAlign: 'center', 
+          marginBottom: '1rem' 
+        }}>
+          Pourcentage moyen de votes dirigés contre un camp adverse comparé au taux de "tir allié" (votes contre son propre camp) pour chaque camp.
+        </p>
+        <FullscreenChart title="Précision de Vote par Camp">
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={campAccuracyData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
@@ -228,7 +253,8 @@ export function GlobalVotingStatsChart() {
             />
           </BarChart>
         </ResponsiveContainer>
-      </FullscreenChart>
+        </FullscreenChart>
+      </div>
     </div>
   );
 }
