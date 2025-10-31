@@ -159,7 +159,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
           textAlign: 'center', 
           marginBottom: '1rem' 
         }}>
-          Pourcentage de meetings où le joueur a voté activement (hors "Passé").
+          Pourcentage de meetings où le joueur a voté activement (hors non-votes).
         </p>
         <FullscreenChart title="Taux de Vote - Top 15">
           <div style={{ height: 500 }}>
@@ -472,7 +472,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
       {/* Abstention Rate Chart */}
       <div className="lycans-graphique-section">
         <div>
-          <h3>🚫 Taux d'Abstention - Top 15</h3>
+          <h3>🚫 Taux de Non-Vote - Top 15</h3>
           {highlightedPlayerInAbstentionRate && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
@@ -493,7 +493,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
         }}>
           Pourcentage de meetings où le joueur n'a pas voté du tout.
         </p>
-        <FullscreenChart title="Taux d'Abstention - Top 15">
+        <FullscreenChart title="Taux de Non-Vote - Top 15">
           <div style={{ height: 500 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -529,7 +529,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
                 />
                 <YAxis 
                   label={{ 
-                    value: 'Taux d\'Abstention (%)', 
+                    value: 'Taux de Non-Vote (%)', 
                     angle: 270, 
                     position: 'left', 
                     style: { textAnchor: 'middle' } 
@@ -553,8 +553,8 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
                         }}>
                           <div><strong>{dataPoint.playerName}</strong></div>
                           <div>Total meetings: {dataPoint.totalMeetings}</div>
-                          <div>Abstentions: {dataPoint.totalAbstentions}</div>
-                          <div><strong>Taux d'abstention: {dataPoint.abstentionRate.toFixed(1)}%</strong></div>
+                          <div>Non-votes: {dataPoint.totalAbstentions}</div>
+                          <div><strong>Taux de non-vote: {dataPoint.abstentionRate.toFixed(1)}%</strong></div>
                           {isHighlightedAddition && (
                             <div style={{ 
                               fontSize: '0.75rem', 
