@@ -62,13 +62,18 @@ export function DeathStatisticsChart() {
   const deathTypeColors = useMemo(() => {
     const colorMap: Record<DeathTypeCodeType, string> = {} as Record<DeathTypeCodeType, string>;
     
+    
     // Map death type codes to colors directly
-    // Note: SURVIVALIST_NOT_SAVED is now merged with BY_WOLF, so it won't appear separately
+    // IMPORTANT: Check specific types BEFORE generic ones to avoid early matches
     availableDeathTypes.forEach(deathTypeCode => {
       if (deathTypeCode === DeathTypeCode.BY_WOLF) {
         colorMap[deathTypeCode] = lycansColors['Loup'];
       } else if (deathTypeCode === DeathTypeCode.VOTED) {
         colorMap[deathTypeCode] = 'var(--chart-color-1)';
+      } else if (deathTypeCode === DeathTypeCode.BULLET_HUMAN_ON_WOLF) {
+        colorMap[deathTypeCode] = '#FF8C42'; // Orange for non-transformed wolf kills
+      } else if (deathTypeCode === DeathTypeCode.BULLET_HUMAN_ON_HUMAN) {
+        colorMap[deathTypeCode] = '#95C623'; // Yellow-green for human kills
       } else if (deathTypeCode === DeathTypeCode.BULLET || deathTypeCode === DeathTypeCode.BULLET_HUMAN || deathTypeCode === DeathTypeCode.BULLET_WOLF) {
         colorMap[deathTypeCode] = lycansColors['Chasseur'];
       } else if (deathTypeCode === DeathTypeCode.BY_ZOMBIE) {
@@ -101,6 +106,7 @@ export function DeathStatisticsChart() {
         colorIndex++;
       }
     });
+  
     
     return colorMap;
   }, [availableDeathTypes, lycansColors]);

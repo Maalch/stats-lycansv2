@@ -27,6 +27,8 @@ export const DeathTypeCode = {
   // Hunters and Sheriffs
   BULLET: 'BULLET',                         // Tué par Chasseur (less specific than official log)
   BULLET_HUMAN: 'BULLET_HUMAN',            // Tué par Chasseur en humain (official log specific)
+  BULLET_HUMAN_ON_WOLF: 'BULLET_HUMAN_ON_WOLF',  // Tué par Chasseur en humain (sur loup non-transformé)
+  BULLET_HUMAN_ON_HUMAN: 'BULLET_HUMAN_ON_HUMAN', // Tué par Chasseur en humain (sur humain)
   BULLET_WOLF: 'BULLET_WOLF',              // Tué par Chasseur en loup (official log specific)
   BULLET_BOUNTYHUNTER: 'BULLET_BOUNTYHUNTER', // Tué par Chasseur de primes (GDOC specific)
   SHERIF: 'SHERIF',                         // Tué par Shérif (less specific than official log)

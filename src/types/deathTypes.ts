@@ -28,6 +28,8 @@ export const DEATH_TYPES = {
   // Hunters and Sheriffs
   BULLET: 'BULLET',                         // Tué par Chasseur (less specific than official log)
   BULLET_HUMAN: 'BULLET_HUMAN',            // Tué par Chasseur en humain (official log specific)
+  BULLET_HUMAN_ON_WOLF: 'BULLET_HUMAN_ON_WOLF',  // Tué par Chasseur en humain (sur loup non-transformé)
+  BULLET_HUMAN_ON_HUMAN: 'BULLET_HUMAN_ON_HUMAN', // Tué par Chasseur en humain (sur humain)
   BULLET_WOLF: 'BULLET_WOLF',              // Tué par Chasseur en loup (official log specific)
   SHERIF_SUCCESS: 'SHERIF_SUCCESS',                         // Tué par Shérif (less specific than official log)
   
@@ -78,6 +80,8 @@ export const DEATH_TYPE_CATEGORIES = {
   HUNTER_KILLS: [
     DEATH_TYPES.BULLET,
     DEATH_TYPES.BULLET_HUMAN,
+    DEATH_TYPES.BULLET_HUMAN_ON_WOLF,
+    DEATH_TYPES.BULLET_HUMAN_ON_HUMAN,
     DEATH_TYPES.BULLET_WOLF
   ],
   
@@ -128,6 +132,8 @@ export const KILLER_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.BY_BEAST,
   DEATH_TYPES.BULLET,
   DEATH_TYPES.BULLET_HUMAN,
+  DEATH_TYPES.BULLET_HUMAN_ON_WOLF,
+  DEATH_TYPES.BULLET_HUMAN_ON_HUMAN,
   DEATH_TYPES.BULLET_WOLF,
   DEATH_TYPES.SHERIF_SUCCESS,
   DEATH_TYPES.OTHER_AGENT,
@@ -152,6 +158,8 @@ export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.BY_AVATAR_CHAIN]: 'Mort liée à l\'Avatar',
   [DEATH_TYPES.BULLET]: 'Tué par Chasseur',
   [DEATH_TYPES.BULLET_HUMAN]: 'Tué par Chasseur (humain)',
+  [DEATH_TYPES.BULLET_HUMAN_ON_WOLF]: 'Tué par Chasseur (loup non-transformé)',
+  [DEATH_TYPES.BULLET_HUMAN_ON_HUMAN]: 'Tué par Chasseur (sur humain)',
   [DEATH_TYPES.BULLET_WOLF]: 'Tué par Chasseur (loup)',
   [DEATH_TYPES.SHERIF_SUCCESS]: 'Tué par Shérif',
   [DEATH_TYPES.OTHER_AGENT]: 'Tué par l\'Agent',

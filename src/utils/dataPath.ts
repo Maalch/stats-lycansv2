@@ -22,7 +22,6 @@ export function getDataPath(dataSource: DataSource): string {
 export function getDataFileUrl(dataSource: DataSource, filename: string): string {
   const basePath = getDataPath(dataSource);
   const url = `${import.meta.env.BASE_URL}${basePath}${filename}`;
-  console.log(`[dataPath] Constructing URL for ${filename} (source: ${dataSource}): ${url}`);
   return url;
 }
 

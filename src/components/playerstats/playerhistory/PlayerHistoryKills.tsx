@@ -109,7 +109,12 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
       } else if (deathTypeLabel === 'Mort aux votes') {
         colorMap[deathTypeLabel] = 'var(--chart-color-1)';
       } else if (deathTypeLabel.includes('Chasseur')) {
-        colorMap[deathTypeLabel] = lycansColors['Chasseur'];
+        // Specific colors for refined hunter kills
+        if (deathTypeLabel === 'Tué par Chasseur (loup non-transformé)') {
+          colorMap[deathTypeLabel] = '#FF6B35'; // Orange-red for wolf kills
+        } else {
+          colorMap[deathTypeLabel] = lycansColors['Chasseur'];
+        }
       } else if (deathTypeLabel === 'Tué par Zombie') {
         colorMap[deathTypeLabel] = lycansColors['Vaudou'];
       } else if (deathTypeLabel === 'Tué par potion assassin') {

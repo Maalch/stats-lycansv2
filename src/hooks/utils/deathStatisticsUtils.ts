@@ -139,6 +139,10 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Tir de Chasseur';
     case DEATH_TYPES.BULLET_HUMAN:
       return 'Kill en Chasseur (sur humain)';
+    case DEATH_TYPES.BULLET_HUMAN_ON_WOLF:
+      return 'Kill en Chasseur (loup non-transformé)';
+    case DEATH_TYPES.BULLET_HUMAN_ON_HUMAN:
+      return 'Kill en Chasseur (sur humain)';
     case DEATH_TYPES.BULLET_WOLF:
       return 'Kill en Chasseur (sur loup)';
     case DEATH_TYPES.SHERIF_SUCCESS :
@@ -176,6 +180,7 @@ export function getKillDescription(deathTypeCode: DeathType): string {
 /**
  * Get all unique death types from game data for chart configuration
  * Note: SURVIVALIST_NOT_SAVED is normalized to BY_WOLF, so it won't appear separately
+ * Note: BULLET_HUMAN is refined into BULLET_HUMAN_ON_WOLF and BULLET_HUMAN_ON_HUMAN based on victim role
  */
 export function getAllDeathTypes(gameData: GameLogEntry[]): DeathType[] {
   const deathTypesSet = new Set<DeathType>();
@@ -184,7 +189,21 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathType[] {
     game.PlayerStats.forEach(player => {
       if (player.DeathType && isValidDeathType(player.DeathType)) {
         // Normalize death type before adding to set
-        const normalizedType = normalizeDeathTypeForStats(player.DeathType);
+        let normalizedType = normalizeDeathTypeForStats(player.DeathType);
+        
+        // Apply BULLET_HUMAN refinement based on victim's role
+        if (normalizedType === DEATH_TYPES.BULLET_HUMAN) {
+          const victimRole = player.MainRoleInitial;
+          const isWolf = victimRole === 'Loup';
+          const isWolfLover = victimRole === 'Amoureux Loup';
+          
+          if (isWolf || isWolfLover) {
+            normalizedType = DEATH_TYPES.BULLET_HUMAN_ON_WOLF;
+          } else {
+            normalizedType = DEATH_TYPES.BULLET_HUMAN_ON_HUMAN;
+          }
+        }
+        
         if (normalizedType) {
           deathTypesSet.add(normalizedType);
         }
@@ -200,6 +219,8 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathType[] {
     DEATH_TYPES.VOTED, 
     DEATH_TYPES.BULLET,
     DEATH_TYPES.BULLET_HUMAN,
+    DEATH_TYPES.BULLET_HUMAN_ON_WOLF,
+    DEATH_TYPES.BULLET_HUMAN_ON_HUMAN,
     DEATH_TYPES.BULLET_WOLF,
     DEATH_TYPES.BY_ZOMBIE,
     DEATH_TYPES.ASSASSIN,
@@ -258,10 +279,25 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
         }
       }
       
+      // Refine BULLET_HUMAN death type based on victim's role
+      let refinedDeathType = normalizeDeathTypeForStats(player.DeathType!)!;
+      if (refinedDeathType === DEATH_TYPES.BULLET_HUMAN) {
+        // Check if victim is a wolf or wolf lover
+        const victimRole = player.MainRoleInitial;
+        const isWolf = victimRole === 'Loup';
+        const isWolfLover = victimRole === 'Amoureux Loup';
+        
+        if (isWolf || isWolfLover) {
+          refinedDeathType = DEATH_TYPES.BULLET_HUMAN_ON_WOLF;
+        } else {
+          refinedDeathType = DEATH_TYPES.BULLET_HUMAN_ON_HUMAN;
+        }
+      }
+      
       return {
         playerId: getPlayerId(player),
         playerName: player.Username,
-        deathType: normalizeDeathTypeForStats(player.DeathType!)!,
+        deathType: refinedDeathType,
         killerId,
         killerName: player.KillerName,
         killerCamp
@@ -342,12 +378,27 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
         }
       }
       
+      // Refine BULLET_HUMAN death type based on victim's role
+      let refinedDeathType = normalizeDeathTypeForStats(player.DeathType)!;
+      if (refinedDeathType === DEATH_TYPES.BULLET_HUMAN) {
+        // Check if victim is a wolf or wolf lover (from initial role)
+        const victimRole = player.MainRoleInitial;
+        const isWolf = victimRole === 'Loup';
+        const isWolfLover = victimRole === 'Amoureux Loup';
+        
+        if (isWolf || isWolfLover) {
+          refinedDeathType = DEATH_TYPES.BULLET_HUMAN_ON_WOLF;
+        } else {
+          refinedDeathType = DEATH_TYPES.BULLET_HUMAN_ON_HUMAN;
+        }
+      }
+      
       kills.push({
         killerId: getPlayerId(killerPlayer),
         killerName: killerPlayer.Username,
         victimId: getPlayerId(player),
         victimName: player.Username,
-        deathType: normalizeDeathTypeForStats(player.DeathType)!,
+        deathType: refinedDeathType,
         killerCamp
       });
     }
