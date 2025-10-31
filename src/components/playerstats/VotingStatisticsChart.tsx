@@ -27,9 +27,6 @@ export function VotingStatisticsChart() {
   const [selectedCategory, setSelectedCategory] = useState<'overview' | 'behavior'>(
     navigationState.votingStatsState?.selectedCategory || 'overview'
   );
-  const [selectedView, setSelectedView] = useState<'behavior' | 'accuracy' | 'targets' | 'voteRate' | 'skipRate' | 'abstentionRate'>(
-    navigationState.votingStatsState?.selectedView || 'behavior'
-  );
   const [minMeetings, setMinMeetings] = useState<number>(25);
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
   
@@ -41,7 +38,7 @@ export function VotingStatisticsChart() {
     if (data && data.playerName) {
       navigateToGameDetails({
         selectedPlayer: data.playerName,
-        fromComponent: 'Statistiques de Vote'
+        fromComponent: 'Statistiques de Votes'
       });
     }
   };
@@ -238,7 +235,7 @@ export function VotingStatisticsChart() {
   }, [filteredVotingStats, settings.highlightedPlayer]);
 
   if (isLoading) {
-    return <div className="donnees-attente">Chargement des statistiques de vote...</div>;
+    return <div className="donnees-attente">Chargement des statistiques de votes...</div>;
   }
 
   if (error) {
@@ -253,7 +250,7 @@ export function VotingStatisticsChart() {
 
   return (
     <div className="lycans-voting-statistics">
-      <h2>📊 Statistiques de Vote</h2>
+      <h2>📊 Statistiques de Votes</h2>
       
       {/* Controls */}
       <div className="lycans-controls-section" style={{ 
@@ -273,7 +270,6 @@ export function VotingStatisticsChart() {
           <button
             onClick={() => {
               setSelectedCategory('overview');
-              setSelectedView('behavior');
             }}
             style={{
               background: selectedCategory === 'overview' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
@@ -292,7 +288,6 @@ export function VotingStatisticsChart() {
           <button
             onClick={() => {
               setSelectedCategory('behavior');
-              setSelectedView('voteRate');
             }}
             style={{
               background: selectedCategory === 'behavior' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
@@ -310,7 +305,7 @@ export function VotingStatisticsChart() {
           </button>
         </div>
 
-        {/* Sub-category Selection */}
+        {/* Min Meetings filter */}
         <div style={{ 
           display: 'flex', 
           gap: '1.5rem', 
@@ -318,107 +313,6 @@ export function VotingStatisticsChart() {
           flexWrap: 'wrap',
           alignItems: 'center'
         }}>
-          {selectedCategory === 'overview' && (
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button
-                onClick={() => setSelectedView('behavior')}
-                style={{
-                  background: selectedView === 'behavior' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
-                  color: 'var(--text-primary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '6px',
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  fontWeight: selectedView === 'behavior' ? 'bold' : 'normal'
-                }}
-              >
-                Score d'Agressivité
-              </button>
-              <button
-                onClick={() => setSelectedView('accuracy')}
-                style={{
-                  background: selectedView === 'accuracy' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
-                  color: 'var(--text-primary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '6px',
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  fontWeight: selectedView === 'accuracy' ? 'bold' : 'normal'
-                }}
-              >
-                Précision des Votes
-              </button>
-              <button
-                onClick={() => setSelectedView('targets')}
-                style={{
-                  background: selectedView === 'targets' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
-                  color: 'var(--text-primary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '6px',
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  fontWeight: selectedView === 'targets' ? 'bold' : 'normal'
-                }}
-              >
-                Joueurs Ciblés
-              </button>
-            </div>
-          )}
-
-          {selectedCategory === 'behavior' && (
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button
-                onClick={() => setSelectedView('voteRate')}
-                style={{
-                  background: selectedView === 'voteRate' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
-                  color: 'var(--text-primary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '6px',
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  fontWeight: selectedView === 'voteRate' ? 'bold' : 'normal'
-                }}
-              >
-                Taux de Vote
-              </button>
-              <button
-                onClick={() => setSelectedView('skipRate')}
-                style={{
-                  background: selectedView === 'skipRate' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
-                  color: 'var(--text-primary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '6px',
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  fontWeight: selectedView === 'skipRate' ? 'bold' : 'normal'
-                }}
-              >
-                Taux de "Passé"
-              </button>
-              <button
-                onClick={() => setSelectedView('abstentionRate')}
-                style={{
-                  background: selectedView === 'abstentionRate' ? 'var(--accent-secondary)' : 'var(--bg-secondary)',
-                  color: 'var(--text-primary)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '6px',
-                  padding: '0.5rem 1rem',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  fontWeight: selectedView === 'abstentionRate' ? 'bold' : 'normal'
-                }}
-              >
-                Taux d'Abstention
-              </button>
-            </div>
-          )}
-
-          {/* Min Meetings filter - always visible */}
           <div style={{ 
             display: 'flex', 
             alignItems: 'center', 
@@ -454,31 +348,33 @@ export function VotingStatisticsChart() {
       </div>
 
       <div className="lycans-graphiques-groupe">
-        {/* Voting Behavior Chart */}
-        {selectedView === 'behavior' && (
-          <div className="lycans-graphique-section">
-            <div>
-              <h3>🗳️ Score d'Agressivité</h3>
-              {highlightedPlayerInBehavior && settings.highlightedPlayer && (
-                <p style={{ 
-                  fontSize: '0.8rem', 
-                  color: 'var(--accent-primary)', 
-                  fontStyle: 'italic',
-                  marginTop: '0.25rem',
-                  marginBottom: '0.5rem'
-                }}>
-                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
-                </p>
-              )}
-            </div>
-            <p style={{ 
-              fontSize: '0.85rem', 
-              color: 'var(--text-secondary)', 
-              textAlign: 'center', 
-              marginBottom: '1rem' 
-            }}>
-              Score basé sur le taux de vote, les abstentions et les "passés". Plus c'est haut, plus le joueur vote activement.
-            </p>
+        {/* Vue d'Ensemble - All 3 charts together */}
+        {selectedCategory === 'overview' && (
+          <>
+            {/* Voting Behavior Chart */}
+            <div className="lycans-graphique-section">
+              <div>
+                <h3>🗳️ Score d'Agressivité</h3>
+                {highlightedPlayerInBehavior && settings.highlightedPlayer && (
+                  <p style={{ 
+                    fontSize: '0.8rem', 
+                    color: 'var(--accent-primary)', 
+                    fontStyle: 'italic',
+                    marginTop: '0.25rem',
+                    marginBottom: '0.5rem'
+                  }}>
+                    🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+                  </p>
+                )}
+              </div>
+              <p style={{ 
+                fontSize: '0.85rem', 
+                color: 'var(--text-secondary)', 
+                textAlign: 'center', 
+                marginBottom: '1rem' 
+              }}>
+                Score basé sur le taux de vote, les abstentions et les "passés". Plus c'est haut, plus le joueur vote activement.
+              </p>
             <FullscreenChart title="Score d'Agressivité">
               <div style={{ height: 500 }}>
                 <ResponsiveContainer width="100%" height="100%">
@@ -622,31 +518,29 @@ export function VotingStatisticsChart() {
               </div>
             </FullscreenChart>
           </div>
-        )}
 
-        {/* Voting Accuracy Chart */}
-        {selectedView === 'accuracy' && (
-          <div className="lycans-graphique-section">
-            <div>
-              <h3>🎯 Précision des Votes - Taux de Votes Justes</h3>
-              {highlightedPlayerInAccuracy && settings.highlightedPlayer && (
-                <p style={{ 
-                  fontSize: '0.8rem', 
-                  color: 'var(--accent-primary)', 
-                  fontStyle: 'italic',
-                  marginTop: '0.25rem',
-                  marginBottom: '0.5rem'
-                }}>
-                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
-                </p>
-              )}
-            </div>
-            <p style={{ 
-              fontSize: '0.85rem', 
-              color: 'var(--text-secondary)', 
-              textAlign: 'center', 
-              marginBottom: '1rem' 
-            }}>
+            {/* Voting Accuracy Chart */}
+            <div className="lycans-graphique-section">
+              <div>
+                <h3>🎯 Précision des Votes - Taux de Votes Justes</h3>
+                {highlightedPlayerInAccuracy && settings.highlightedPlayer && (
+                  <p style={{ 
+                    fontSize: '0.8rem', 
+                    color: 'var(--accent-primary)', 
+                    fontStyle: 'italic',
+                    marginTop: '0.25rem',
+                    marginBottom: '0.5rem'
+                  }}>
+                    🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+                  </p>
+                )}
+              </div>
+              <p style={{ 
+                fontSize: '0.85rem', 
+                color: 'var(--text-secondary)', 
+                textAlign: 'center', 
+                marginBottom: '1rem' 
+              }}>
               Pourcentage de votes dirigés contre le camp adverse (et non contre son propre camp).
             </p>
             <FullscreenChart title="Précision des Votes - Taux de Votes Justes">
@@ -791,14 +685,12 @@ export function VotingStatisticsChart() {
               </div>
             </FullscreenChart>
           </div>
-        )}
 
-        {/* Target Survival Chart */}
-        {selectedView === 'targets' && (
-          <div className="lycans-graphique-section">
-            <div>
-              <h3>🔻 Joueurs Ciblés - Taux de Survie aux Votes</h3>
-              {highlightedPlayerInTargets && settings.highlightedPlayer && (
+            {/* Target Survival Chart */}
+            <div className="lycans-graphique-section">
+              <div>
+                <h3>🔻 Joueurs Ciblés - Taux de Survie aux Votes</h3>
+                {highlightedPlayerInTargets && settings.highlightedPlayer && (
                 <p style={{ 
                   fontSize: '0.8rem', 
                   color: 'var(--accent-primary)', 
@@ -961,26 +853,29 @@ export function VotingStatisticsChart() {
               </div>
             </FullscreenChart>
           </div>
+          </>
         )}
 
-        {/* Vote Rate Chart */}
-        {selectedView === 'voteRate' && (
-          <div className="lycans-graphique-section">
-            <div>
-              <h3>📊 Taux de Vote - Top 15</h3>
-              {highlightedPlayerInVoteRate && settings.highlightedPlayer && (
-                <p style={{ 
-                  fontSize: '0.8rem', 
-                  color: 'var(--accent-primary)', 
-                  fontStyle: 'italic',
-                  marginTop: '0.25rem',
-                  marginBottom: '0.5rem'
-                }}>
-                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
-                </p>
-              )}
-            </div>
-            <p style={{ 
+        {/* Comportements de Vote - All 3 charts together */}
+        {selectedCategory === 'behavior' && (
+          <>
+            {/* Vote Rate Chart */}
+            <div className="lycans-graphique-section">
+              <div>
+                <h3>📊 Taux de Vote - Top 15</h3>
+                {highlightedPlayerInVoteRate && settings.highlightedPlayer && (
+                  <p style={{ 
+                    fontSize: '0.8rem', 
+                    color: 'var(--accent-primary)', 
+                    fontStyle: 'italic',
+                    marginTop: '0.25rem',
+                    marginBottom: '0.5rem'
+                  }}>
+                    🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+                  </p>
+                )}
+              </div>
+              <p style={{ 
               fontSize: '0.85rem', 
               color: 'var(--text-secondary)', 
               textAlign: 'center', 
@@ -1127,18 +1022,16 @@ export function VotingStatisticsChart() {
               </div>
             </FullscreenChart>
           </div>
-        )}
 
-        {/* Skip Rate Chart */}
-        {selectedView === 'skipRate' && (
-          <div className="lycans-graphique-section">
-            <div>
-              <h3>⏭️ Taux de "Passé" - Top 15</h3>
-              {highlightedPlayerInSkipRate && settings.highlightedPlayer && (
-                <p style={{ 
-                  fontSize: '0.8rem', 
-                  color: 'var(--accent-primary)', 
-                  fontStyle: 'italic',
+            {/* Skip Rate Chart */}
+            <div className="lycans-graphique-section">
+              <div>
+                <h3>⏭️ Taux de "Passé" - Top 15</h3>
+                {highlightedPlayerInSkipRate && settings.highlightedPlayer && (
+                  <p style={{ 
+                    fontSize: '0.8rem', 
+                    color: 'var(--accent-primary)', 
+                    fontStyle: 'italic',
                   marginTop: '0.25rem',
                   marginBottom: '0.5rem'
                 }}>
@@ -1293,19 +1186,17 @@ export function VotingStatisticsChart() {
               </div>
             </FullscreenChart>
           </div>
-        )}
 
-        {/* Abstention Rate Chart */}
-        {selectedView === 'abstentionRate' && (
-          <div className="lycans-graphique-section">
-            <div>
-              <h3>🚫 Taux d'Abstention - Top 15</h3>
-              {highlightedPlayerInAbstentionRate && settings.highlightedPlayer && (
-                <p style={{ 
-                  fontSize: '0.8rem', 
-                  color: 'var(--accent-primary)', 
-                  fontStyle: 'italic',
-                  marginTop: '0.25rem',
+            {/* Abstention Rate Chart */}
+            <div className="lycans-graphique-section">
+              <div>
+                <h3>🚫 Taux d'Abstention - Top 15</h3>
+                {highlightedPlayerInAbstentionRate && settings.highlightedPlayer && (
+                  <p style={{ 
+                    fontSize: '0.8rem', 
+                    color: 'var(--accent-primary)', 
+                    fontStyle: 'italic',
+                    marginTop: '0.25rem',
                   marginBottom: '0.5rem'
                 }}>
                   🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
@@ -1459,6 +1350,7 @@ export function VotingStatisticsChart() {
               </div>
             </FullscreenChart>
           </div>
+          </>
         )}
 
       </div>
