@@ -310,7 +310,7 @@ export function HunterView({
     <div className="lycans-graphiques-groupe">
       <div className="lycans-graphique-section">
         <div>
-          <h3>Meilleurs Chasseurs</h3>
+          <h3>Bons Chasseurs</h3>
           {highlightedPlayerAddedToBest && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
@@ -323,7 +323,7 @@ export function HunterView({
             </p>
           )}
         </div>
-        <FullscreenChart title="Meilleurs Chasseurs">
+        <FullscreenChart title="Bons Chasseurs">
           <div style={{ height: 440 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -367,7 +367,7 @@ export function HunterView({
                       navigateToGameDetails({
                         selectedPlayer: data.hunterName,
                         campFilter: { selectedCamp: 'Chasseur', campFilterMode: 'all-assignments' },
-                        fromComponent: 'Statistiques de Mort - Meilleurs Chasseurs'
+                        fromComponent: 'Statistiques de Mort - Bons Chasseurs'
                       });
                     }
                   }}
