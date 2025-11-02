@@ -193,7 +193,7 @@ export function SurvivalView({
             </span>
           </div>
           <div>Parties atteignant le Jour {validSelectedDay}: {data.timesReachedDay}</div>
-          <div>Survies au Jour {validSelectedDay}: {data.timesSurvivedDay}</div>
+          <div>A survécu au Jour {validSelectedDay}: {data.timesSurvivedDay}</div>
           <div>Total de parties: {data.gamesPlayed}</div>
           {isHighlightedAddition && !meetsMinGames && (
             <div style={{ 
