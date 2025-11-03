@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.10';
+export const APP_VERSION = '1.3.11';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -8,6 +8,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.11',
+    date: '03/11/2025',
+    description: 'Ajout de VODs de différents joueurs dans "Détails des Parties".',
+  },
   {
     version: 'v1.3.10',
     date: '30/10/2025',

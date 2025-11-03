@@ -3,6 +3,7 @@ import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping, 
 import { formatDeathTiming } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { useSettings } from '../../context/SettingsContext';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {
@@ -122,11 +123,14 @@ export function GameDetailView({ game }: { game: any }) {
   
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  
+  // Get highlighted player from settings
+  const { settings } = useSettings();
 
   // Extract available VODs from the game data
   // game.playerVODs contains per-player VOD URLs mapped by player Steam ID
   const availableVODs = useMemo(() => {
-    const vods: { label: string; url: string; playerId: string }[] = [];
+    const vods: { label: string; url: string; playerId: string; borderColor: string; textColor: string }[] = [];
     
     // Add player-specific VODs if available
     if (game.playerVODs && typeof game.playerVODs === 'object') {
@@ -136,24 +140,55 @@ export function GameDetailView({ game }: { game: any }) {
           const player = game.playerData?.find((p: any) => p.ID === playerId);
           const playerName = player?.Username || playerId;
           
+          // Get the player's camp colors (same logic as "Rôles des Joueurs")
+          let campBorderColor = '#666';
+          let campTextColor = '#666';
+          if (player) {
+            const finalcamp = getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []));
+            const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+            
+            campBorderColor = lycansColorScheme[finalcamp as keyof typeof lycansColorScheme] || '#666';
+            campTextColor = lycansColorScheme[finalRole as keyof typeof lycansColorScheme] || '#666';
+            if (campTextColor === '#666') {
+              campTextColor = lycansColorScheme[finalcamp as keyof typeof lycansColorScheme] || '#666';
+            }
+          }
+          
           vods.push({
             label: `${playerName}`,
             url: vodUrl,
-            playerId
+            playerId,
+            borderColor: campBorderColor,
+            textColor: campTextColor
           });
         }
       });
     }
     
     return vods;
-  }, [game.playerVODs, game.playerData]);
+  }, [game.playerVODs, game.playerData, lycansColorScheme]);
 
   // Set default selected VOD when video is shown
   useEffect(() => {
     if (showVideo && availableVODs.length > 0 && !selectedVOD) {
-      setSelectedVOD(availableVODs[0].url);
+      // Only set a default VOD if there's exactly one VOD, 
+      // OR if there's a highlighted player with a VOD
+      if (availableVODs.length === 1) {
+        // Single VOD: select it by default
+        setSelectedVOD(availableVODs[0].url);
+      } else if (settings.highlightedPlayer) {
+        // Multiple VODs: check if highlighted player has a VOD
+        const highlightedPlayerVOD = availableVODs.find(
+          vod => vod.label.toLowerCase() === settings.highlightedPlayer?.toLowerCase()
+        );
+        if (highlightedPlayerVOD) {
+          setSelectedVOD(highlightedPlayerVOD.url);
+        }
+        // If highlighted player doesn't have a VOD, don't select any by default
+      }
+      // If multiple VODs and no highlighted player, don't select any by default
     }
-  }, [showVideo, availableVODs, selectedVOD]);
+  }, [showVideo, availableVODs, selectedVOD, settings.highlightedPlayer]);
 
   // Determine if we should show video section
   const hasAnyVOD = availableVODs.length > 0;
@@ -394,6 +429,10 @@ export function GameDetailView({ game }: { game: any }) {
                     onClick={() => setSelectedVOD(vod.url)}
                     type="button"
                     title={vod.label}
+                    style={{
+                      borderColor: vod.borderColor,
+                      color: selectedVOD === vod.url ? 'white' : vod.textColor
+                    }}
                   >
                     {vod.label}
                   </button>
@@ -402,13 +441,19 @@ export function GameDetailView({ game }: { game: any }) {
             )}
             
             <div className="lycans-youtube-container">
-              <iframe
-                src={selectedVOD || availableVODs[0]?.url || ''}
-                title={`Partie Lycans #${game.gameId}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="lycans-youtube-iframe"
-              />
+              {selectedVOD ? (
+                <iframe
+                  src={selectedVOD}
+                  title={`Partie Lycans #${game.gameId}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="lycans-youtube-iframe"
+                />
+              ) : (
+                <div className="lycans-vod-placeholder">
+                  <p>Sélectionnez une VOD de joueur pour commencer</p>
+                </div>
+              )}
             </div>
           </div>
         )}

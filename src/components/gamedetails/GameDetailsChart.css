@@ -663,7 +663,8 @@
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .lycans-vod-btn:hover {
@@ -675,4 +676,26 @@
   background: var(--chart-color-1);
   color: white;
   border-color: var(--chart-color-1);
+}
+
+/* VOD Placeholder when no video is selected */
+.lycans-vod-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--border-color);
+}
+
+.lycans-vod-placeholder p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-style: italic;
+  margin: 0;
 }
