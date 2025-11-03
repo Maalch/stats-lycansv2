@@ -19,6 +19,9 @@ export function DeathStatisticsChart() {
     navigationState.deathStatsSelectedCamp || 
     'Tous les camps'
   );
+  const [victimCampFilter, setVictimCampFilter] = useState<string>(
+    navigationState.deathStatisticsState?.victimCampFilter || 'Tous les camps'
+  );
   const [minGamesForAverage, setMinGamesForAverage] = useState<number>(
     navigationState.deathStatisticsState?.minGamesForAverage || 25
   );
@@ -26,7 +29,7 @@ export function DeathStatisticsChart() {
     navigationState.deathStatisticsState?.selectedView || 'killers'
   );
   const { data: availableCamps } = useAvailableCampsFromRaw();
-  const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp);
+  const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp, victimCampFilter);
   // Hunter stats always use all camps data (no camp filter)
   const { data: hunterStats, isLoading: hunterLoading, error: hunterError } = useHunterStatisticsFromRaw();
   // Survival stats use camp filter
@@ -40,18 +43,20 @@ export function DeathStatisticsChart() {
     // Only update if state differs from navigation state
     if (!navigationState.deathStatisticsState || 
         navigationState.deathStatisticsState.selectedCamp !== selectedCamp ||
+        navigationState.deathStatisticsState.victimCampFilter !== victimCampFilter ||
         navigationState.deathStatisticsState.minGamesForAverage !== minGamesForAverage ||
         navigationState.deathStatisticsState.selectedView !== selectedView) {
       updateNavigationState({
         deathStatisticsState: {
           selectedCamp,
+          victimCampFilter,
           minGamesForAverage,
           selectedView,
           focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart from achievement navigation
         }
       });
     }
-  }, [selectedCamp, minGamesForAverage, selectedView, navigationState.deathStatisticsState, updateNavigationState]);
+  }, [selectedCamp, victimCampFilter, minGamesForAverage, selectedView, navigationState.deathStatisticsState, updateNavigationState]);
 
   // Get all unique death types for chart configuration
   const availableDeathTypes = useMemo(() => {
@@ -112,6 +117,21 @@ export function DeathStatisticsChart() {
       deathStatsSelectedCamp: newCamp,
       deathStatisticsState: {
         selectedCamp: newCamp,
+        victimCampFilter,
+        minGamesForAverage,
+        selectedView,
+        focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
+      }
+    });
+  };
+
+  // Function to handle victim camp filter change with persistence
+  const handleVictimCampChange = (newVictimCamp: string) => {
+    setVictimCampFilter(newVictimCamp);
+    updateNavigationState({
+      deathStatisticsState: {
+        selectedCamp,
+        victimCampFilter: newVictimCamp,
         minGamesForAverage,
         selectedView,
         focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
@@ -125,6 +145,7 @@ export function DeathStatisticsChart() {
     updateNavigationState({
       deathStatisticsState: {
         selectedCamp,
+        victimCampFilter,
         minGamesForAverage: newMinGames,
         selectedView,
         focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
@@ -138,6 +159,7 @@ export function DeathStatisticsChart() {
     updateNavigationState({
       deathStatisticsState: {
         selectedCamp,
+        victimCampFilter,
         minGamesForAverage,
         selectedView: newView,
         focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
@@ -198,31 +220,61 @@ export function DeathStatisticsChart() {
 
       {/* Camp Filter - Only visible for Tueurs, Morts, and Survie views */}
       {(selectedView === 'killers' || selectedView === 'deaths' || selectedView === 'survival') && (
-        <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-            Camp :
-          </label>
-          <select
-            id="camp-select"
-            value={selectedCamp}
-            onChange={(e) => handleCampChange(e.target.value)}
-            style={{
-              background: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '4px',
-              padding: '0.5rem',
-              fontSize: '0.9rem',
-              minWidth: '150px'
-            }}
-          >
-            <option value="Tous les camps">Tous les camps</option>
-            {availableCamps?.map(camp => (
-              <option key={camp} value={camp}>
-                {camp}
-              </option>
-            ))}
-          </select>
+        <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+              Camp :
+            </label>
+            <select
+              id="camp-select"
+              value={selectedCamp}
+              onChange={(e) => handleCampChange(e.target.value)}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.5rem',
+                fontSize: '0.9rem',
+                minWidth: '150px'
+              }}
+            >
+              <option value="Tous les camps">Tous les camps</option>
+              {availableCamps?.map(camp => (
+                <option key={camp} value={camp}>
+                  {camp}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Victim Camp Filter - Only visible for Killers view */}
+          {selectedView === 'killers' && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="victim-camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+                Camp de la victime :
+              </label>
+              <select
+                id="victim-camp-select"
+                value={victimCampFilter}
+                onChange={(e) => handleVictimCampChange(e.target.value)}
+                style={{
+                  background: 'var(--bg-tertiary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '4px',
+                  padding: '0.5rem',
+                  fontSize: '0.9rem',
+                  minWidth: '150px'
+                }}
+              >
+                <option value="Tous les camps">Tous les camps</option>
+                <option value="Villageois">Villageois</option>
+                <option value="Loup">Loup</option>
+                <option value="Roles solo">Roles solo</option>
+              </select>
+            </div>
+          )}
         </div>
       )}
 
@@ -255,6 +307,7 @@ export function DeathStatisticsChart() {
         <KillersView
           deathStats={deathStats}
           selectedCamp={selectedCamp}
+          victimCampFilter={victimCampFilter}
           minGamesForAverage={minGamesForAverage}
           onMinGamesChange={handleMinGamesChange}
           availableDeathTypes={availableDeathTypes}

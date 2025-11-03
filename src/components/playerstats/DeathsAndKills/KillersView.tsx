@@ -24,6 +24,7 @@ type ChartKillerData = {
 interface KillersViewProps {
   deathStats: any;
   selectedCamp: string;
+  victimCampFilter: string;
   minGamesForAverage: number;
   onMinGamesChange: (value: number) => void;
   availableDeathTypes: DeathTypeCodeType[];
@@ -34,6 +35,7 @@ interface KillersViewProps {
 export function KillersView({
   deathStats,
   selectedCamp,
+  victimCampFilter,
   minGamesForAverage,
   onMinGamesChange,
   availableDeathTypes,
@@ -43,6 +45,33 @@ export function KillersView({
   const { navigateToGameDetails } = useNavigation();
   const { settings } = useSettings();
 
+  // Helper function to generate chart titles based on filters
+  const getChartTitle = (chartType: 'total' | 'average') => {
+    let title = 'Top Tueurs';
+    
+    // Add killer camp filter
+    if (selectedCamp !== 'Tous les camps') {
+      title += ` en ${selectedCamp}`;
+    }
+    
+    // Add victim camp filter
+    if (victimCampFilter !== 'Tous les camps') {
+      if (victimCampFilter === 'Roles solo') {
+        title += ` (victimes: Roles solo)`;
+      } else {
+        title += ` (victimes: ${victimCampFilter})`;
+      }
+    }
+    
+    // Add chart type
+    if (chartType === 'total') {
+      title += ' (Total)';
+    } else {
+      title += ' (Moyenne par Partie)';
+    }
+    
+    return title;
+  };
 
   // Process killer data for both total and average charts
   const { totalKillsData, averageKillsData, highlightedPlayerAddedToTotal, highlightedPlayerAddedToAverage } = useMemo(() => {
@@ -387,7 +416,7 @@ export function KillersView({
     <div className="lycans-graphiques-groupe">
       <div className="lycans-graphique-section">
         <div>
-          <h3>{selectedCamp === 'Tous les camps' ? 'Top Tueurs (Total)' : `Top Tueurs en ${selectedCamp} (Total)`}</h3>
+          <h3>{getChartTitle('total')}</h3>
           {highlightedPlayerAddedToTotal && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
@@ -400,7 +429,7 @@ export function KillersView({
             </p>
           )}
         </div>
-        <FullscreenChart title={selectedCamp === 'Tous les camps' ? 'Top Tueurs (Total)' : `Top Tueurs en ${selectedCamp} (Total)`}>
+        <FullscreenChart title={getChartTitle('total')}>
           <div style={{ height: 440 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -472,7 +501,7 @@ export function KillersView({
 
       <div className="lycans-graphique-section">
         <div>
-          <h3>{selectedCamp === 'Tous les camps' ? 'Top Tueurs (Moyenne par Partie)' : `Top Tueurs en ${selectedCamp} (Moyenne par partie)`}</h3>
+          <h3>{getChartTitle('average')}</h3>
           {highlightedPlayerAddedToAverage && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
@@ -509,7 +538,7 @@ export function KillersView({
             ))}
           </select>
         </div>
-        <FullscreenChart title={selectedCamp === 'Tous les camps' ? 'Top Tueurs (Moyenne par Partie)' : `Top Tueurs en ${selectedCamp} (Moyenne par partie)`}>
+        <FullscreenChart title={getChartTitle('average')}>
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart

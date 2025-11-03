@@ -138,17 +138,17 @@ export function getKillDescription(deathTypeCode: DeathType): string {
     case DEATH_TYPES.BULLET:
       return 'Tir de Chasseur';
     case DEATH_TYPES.BULLET_HUMAN:
-      return 'Kill en Chasseur (sur humain)';
+      return 'Kill de Chasseur (sur humain)';
     case DEATH_TYPES.BULLET_WOLF:
-      return 'Kill en Chasseur (sur loup)';
+      return 'Kill de Chasseur (sur loup)';
     case DEATH_TYPES.SHERIF_SUCCESS :
-      return 'Kill en Shérif';
+      return 'Kill de Shérif';
     case DEATH_TYPES.OTHER_AGENT:
-      return 'Kill en Agent';
+      return 'Kill d\'Agent';
     case DEATH_TYPES.AVENGER:
-      return 'Kill en Vengeur';
+      return 'Kill de Vengeur';
     case DEATH_TYPES.SEER:
-      return 'Kill en Devin';
+      return 'Kill de Devin';
     case DEATH_TYPES.HANTED:
       return 'Kill avec Potion hantée';
     case DEATH_TYPES.ASSASSIN:
@@ -289,13 +289,14 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
 /**
  * Extract all kills from a game by analyzing the KillerName field from victim perspectives
  */
-export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): Array<{
+export function extractKillsFromGame(game: GameLogEntry, campFilter?: string, victimCampFilter?: string): Array<{
   killerId: string;       // Unique identifier
   killerName: string;     // Display name
   victimId: string;       // Unique identifier
   victimName: string;     // Display name
   deathType: DeathType;
   killerCamp: string;
+  victimCamp: string;
 }> {
   const kills: Array<{
     killerId: string;
@@ -304,6 +305,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
     victimName: string;
     deathType: DeathType;
     killerCamp: string;
+    victimCamp: string;
   }> = [];
   
   game.PlayerStats.forEach(player => {
@@ -342,29 +344,50 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string): A
         }
       }
       
+      // Get victim's camp from their initial role
+      const victimCamp = getPlayerCampFromRole(player.MainRoleInitial, {
+        regroupLovers: true,
+        regroupVillagers: true,
+        regroupWolfSubRoles: true
+      });
+      
       kills.push({
         killerId: getPlayerId(killerPlayer),
         killerName: killerPlayer.Username,
         victimId: getPlayerId(player),
         victimName: player.Username,
         deathType: normalizeDeathTypeForStats(player.DeathType)!,
-        killerCamp
+        killerCamp,
+        victimCamp
       });
     }
   });
   
-  // Filter by camp if specified - for killer statistics, filter by killer's camp
+  // Filter by killer camp if specified
+  let filteredKills = kills;
   if (campFilter && campFilter !== 'Tous les camps') {
-    return kills.filter(kill => kill.killerCamp === campFilter);
+    filteredKills = filteredKills.filter(kill => kill.killerCamp === campFilter);
   }
   
-  return kills;
+  // Filter by victim camp if specified
+  if (victimCampFilter && victimCampFilter !== 'Tous les camps') {
+    filteredKills = filteredKills.filter(kill => {
+      // Map filter option to actual camp
+      if (victimCampFilter === 'Roles solo') {
+        // Solo roles are camps that are not Villageois or Loup
+        return kill.victimCamp !== 'Villageois' && kill.victimCamp !== 'Loup';
+      }
+      return kill.victimCamp === victimCampFilter;
+    });
+  }
+  
+  return filteredKills;
 }
 
 /**
  * Calculate comprehensive death statistics from game data
  */
-export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: string): DeathStatistics | null {
+export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: string, victimCampFilter?: string): DeathStatistics | null {
   if (gameData.length === 0) {
     return null;
   }
@@ -454,7 +477,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   
   // Extract all kills from PlayersKilled arrays
   filteredGameData.forEach(game => {
-    const kills = extractKillsFromGame(game, campFilter);
+    const kills = extractKillsFromGame(game, campFilter, victimCampFilter);
     kills.forEach(kill => {
       displayNameById[kill.killerId] = kill.killerName; // Update latest
       displayNameById[kill.victimId] = kill.victimName; // Update latest

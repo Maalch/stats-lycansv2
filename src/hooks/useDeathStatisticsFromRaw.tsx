@@ -5,9 +5,9 @@ import { computeDeathStatistics, getAvailableCamps, computeHunterStatistics } fr
  * Hook to compute comprehensive death statistics from game data
  * Uses the base stats hook pattern for consistent loading/error handling
  */
-export function useDeathStatisticsFromRaw(campFilter?: string) {
+export function useDeathStatisticsFromRaw(campFilter?: string, victimCampFilter?: string) {
   return usePlayerStatsBase((gameData) => {
-    return computeDeathStatistics(gameData, campFilter);
+    return computeDeathStatistics(gameData, campFilter, victimCampFilter);
   });
 }
 
