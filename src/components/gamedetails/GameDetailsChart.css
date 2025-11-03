@@ -452,9 +452,8 @@
 .lycans-youtube-container {
   position: relative;
   width: 100%;
-  max-width: 1200px; /* Limit maximum width */
   height: 0;
-  padding-bottom: 67.5%; /* 16:9 aspect ratio at max 1200px width (1200 * 9/16 = 675) */
+  padding-bottom: 56.25%; /* Standard 16:9 aspect ratio (9/16 = 0.5625) */
   margin: 0.5rem auto 0; /* Center the video */
 }
 
