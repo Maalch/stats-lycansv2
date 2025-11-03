@@ -321,10 +321,14 @@ export function KillersView({
             <p style={{ fontWeight: 'bold', fontSize: '0.85rem', marginBottom: '4px' }}>
               Répartition par type de kill:
             </p>
-            {displayDeathTypes.map(deathType => {
-              const count = data[deathType] || 0;
-              if (count === 0) return null;
-              return (
+            {displayDeathTypes
+              .map(deathType => ({
+                deathType,
+                count: data[deathType] || 0
+              }))
+              .filter(item => item.count > 0)
+              .sort((a, b) => b.count - a.count)
+              .map(({ deathType, count }) => (
                 <p key={deathType} style={{ 
                   color: displayDeathTypeColors[deathType], 
                   margin: '2px 0', 
@@ -332,8 +336,7 @@ export function KillersView({
                 }}>
                   <strong>{getKillDescription(deathType)}:</strong> {count}
                 </p>
-              );
-            })}
+              ))}
           </div>
 
           {isHighlightedAddition && (
@@ -423,16 +426,17 @@ export function KillersView({
             <p style={{ fontWeight: 'bold', fontSize: '0.85rem', marginBottom: '4px' }}>
               Répartition par type de kill (moyenne):
             </p>
-            {displayDeathTypes.map(deathType => {
-              const avgCount = data[deathType] || 0;
-              if (avgCount === 0) return null;
-              
-              // Get total kills for this death type from processed original
-              const totalKillsForDeathType = processedOriginal ? 
-                (processedOriginal.killsByDeathType[deathType] || 0) : 
-                Math.round(avgCount * data.gamesPlayed);
-              
-              return (
+            {displayDeathTypes
+              .map(deathType => ({
+                deathType,
+                avgCount: data[deathType] || 0,
+                totalKillsForDeathType: processedOriginal ? 
+                  (processedOriginal.killsByDeathType[deathType] || 0) : 
+                  Math.round((data[deathType] || 0) * data.gamesPlayed)
+              }))
+              .filter(item => item.avgCount > 0)
+              .sort((a, b) => b.avgCount - a.avgCount)
+              .map(({ deathType, avgCount, totalKillsForDeathType }) => (
                 <p key={deathType} style={{ 
                   color: displayDeathTypeColors[deathType], 
                   margin: '2px 0', 
@@ -440,8 +444,7 @@ export function KillersView({
                 }}>
                   <strong>{getKillDescription(deathType)}:</strong> {avgCount.toFixed(2)} ({totalKillsForDeathType} kills /{data.gamesPlayed} games)
                 </p>
-              );
-            })}
+              ))}
           </div>
 
           {isHighlightedAddition && !meetsMinGames && (
