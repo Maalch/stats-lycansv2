@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { getKillDescription } from '../../../hooks/utils/deathStatisticsUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
+import { DEATH_TYPES } from '../../../types/deathTypes';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
@@ -44,6 +45,70 @@ export function KillersView({
 }: KillersViewProps) {
   const { navigateToGameDetails } = useNavigation();
   const { settings } = useSettings();
+
+  // Helper function to merge hunter kill types when victim camp filter is "Tous les camps"
+  const processDeathTypesForDisplay = (deathTypes: DeathTypeCodeType[]): DeathTypeCodeType[] => {
+    if (victimCampFilter === 'Tous les camps') {
+      // Remove BULLET_HUMAN and BULLET_WOLF, add BULLET if not present
+      const filtered = deathTypes.filter(dt => 
+        dt !== DEATH_TYPES.BULLET_HUMAN && dt !== DEATH_TYPES.BULLET_WOLF
+      );
+      
+      // Add BULLET if we have either BULLET_HUMAN or BULLET_WOLF in original data
+      if ((deathTypes.includes(DEATH_TYPES.BULLET_HUMAN) || deathTypes.includes(DEATH_TYPES.BULLET_WOLF)) &&
+          !filtered.includes(DEATH_TYPES.BULLET)) {
+        filtered.push(DEATH_TYPES.BULLET);
+      }
+      
+      return filtered;
+    }
+    return deathTypes;
+  };
+
+  // Get processed death types for display
+  const displayDeathTypes = useMemo(() => {
+    return processDeathTypesForDisplay(availableDeathTypes);
+  }, [availableDeathTypes, victimCampFilter]);
+
+  // Get processed color map to ensure BULLET has the same color as BULLET_HUMAN/BULLET_WOLF
+  const displayDeathTypeColors = useMemo(() => {
+    const processedColors = { ...deathTypeColors };
+    
+    // When merging hunter kills, ensure BULLET has the hunter color
+    if (victimCampFilter === 'Tous les camps') {
+      // Get the hunter color from BULLET_HUMAN or BULLET_WOLF if BULLET doesn't have one
+      if (!processedColors[DEATH_TYPES.BULLET]) {
+        const hunterColor = deathTypeColors[DEATH_TYPES.BULLET_HUMAN] || 
+                           deathTypeColors[DEATH_TYPES.BULLET_WOLF];
+        if (hunterColor) {
+          processedColors[DEATH_TYPES.BULLET] = hunterColor;
+        }
+      }
+    }
+    
+    return processedColors;
+  }, [deathTypeColors, victimCampFilter]);
+
+  // Helper function to merge hunter kills in killer data
+  const mergeHunterKills = (killerData: any) => {
+    if (victimCampFilter === 'Tous les camps') {
+      const bulletHumanKills = killerData.killsByDeathType[DEATH_TYPES.BULLET_HUMAN] || 0;
+      const bulletWolfKills = killerData.killsByDeathType[DEATH_TYPES.BULLET_WOLF] || 0;
+      const bulletKills = killerData.killsByDeathType[DEATH_TYPES.BULLET] || 0;
+      
+      // Merge all hunter kills into BULLET
+      const mergedKillsByDeathType = { ...killerData.killsByDeathType };
+      mergedKillsByDeathType[DEATH_TYPES.BULLET] = bulletHumanKills + bulletWolfKills + bulletKills;
+      delete mergedKillsByDeathType[DEATH_TYPES.BULLET_HUMAN];
+      delete mergedKillsByDeathType[DEATH_TYPES.BULLET_WOLF];
+      
+      return {
+        ...killerData,
+        killsByDeathType: mergedKillsByDeathType
+      };
+    }
+    return killerData;
+  };
 
   // Helper function to generate chart titles based on filters
   const getChartTitle = (chartType: 'total' | 'average') => {
@@ -91,19 +156,22 @@ export function KillersView({
       sortedByTotal.some((k: any) => k.killerName === settings.highlightedPlayer);
     
     const totalBaseData: ChartKillerData[] = sortedByTotal.map((killer: any) => {
+      // Merge hunter kills if needed
+      const processedKiller = mergeHunterKills(killer);
+      
       const chartData: ChartKillerData = {
-        name: killer.killerName,
-        value: killer.kills,
-        victims: killer.victims.length,
-        percentage: killer.percentage,
-        gamesPlayed: killer.gamesPlayed,
-        averageKillsPerGame: killer.averageKillsPerGame,
+        name: processedKiller.killerName,
+        value: processedKiller.kills,
+        victims: processedKiller.victims.length,
+        percentage: processedKiller.percentage,
+        gamesPlayed: processedKiller.gamesPlayed,
+        averageKillsPerGame: processedKiller.averageKillsPerGame,
         isHighlightedAddition: false
       };
       
-      // Add death type breakdown for stacked bars
-      availableDeathTypes.forEach(deathTypeCode => {
-        chartData[deathTypeCode] = killer.killsByDeathType[deathTypeCode] || 0;
+      // Add death type breakdown for stacked bars using display death types
+      displayDeathTypes.forEach(deathTypeCode => {
+        chartData[deathTypeCode] = processedKiller.killsByDeathType[deathTypeCode] || 0;
       });
       
       return chartData;
@@ -114,19 +182,22 @@ export function KillersView({
     if (settings.highlightedPlayer && !highlightedPlayerInTotalTop15) {
       const highlightedKiller = deathStats.killerStats.find((k: any) => k.killerName === settings.highlightedPlayer);
       if (highlightedKiller) {
+        // Merge hunter kills if needed
+        const processedKiller = mergeHunterKills(highlightedKiller);
+        
         const highlightedData: ChartKillerData = {
-          name: highlightedKiller.killerName,
-          value: highlightedKiller.kills,
-          victims: highlightedKiller.victims.length,
-          percentage: highlightedKiller.percentage,
-          gamesPlayed: highlightedKiller.gamesPlayed,
-          averageKillsPerGame: highlightedKiller.averageKillsPerGame,
+          name: processedKiller.killerName,
+          value: processedKiller.kills,
+          victims: processedKiller.victims.length,
+          percentage: processedKiller.percentage,
+          gamesPlayed: processedKiller.gamesPlayed,
+          averageKillsPerGame: processedKiller.averageKillsPerGame,
           isHighlightedAddition: true
         };
         
-        // Add death type breakdown for stacked bars
-        availableDeathTypes.forEach(deathTypeCode => {
-          highlightedData[deathTypeCode] = highlightedKiller.killsByDeathType[deathTypeCode] || 0;
+        // Add death type breakdown for stacked bars using display death types
+        displayDeathTypes.forEach(deathTypeCode => {
+          highlightedData[deathTypeCode] = processedKiller.killsByDeathType[deathTypeCode] || 0;
         });
         
         totalBaseData.push(highlightedData);
@@ -144,20 +215,23 @@ export function KillersView({
       sortedByAverage.some((k: any) => k.killerName === settings.highlightedPlayer);
     
     const averageBaseData: ChartKillerData[] = sortedByAverage.map((killer: any) => {
+      // Merge hunter kills if needed
+      const processedKiller = mergeHunterKills(killer);
+      
       const chartData: ChartKillerData = {
-        name: killer.killerName,
-        value: killer.averageKillsPerGame,
-        victims: killer.victims.length,
-        percentage: killer.percentage,
-        gamesPlayed: killer.gamesPlayed,
-        averageKillsPerGame: killer.averageKillsPerGame,
+        name: processedKiller.killerName,
+        value: processedKiller.averageKillsPerGame,
+        victims: processedKiller.victims.length,
+        percentage: processedKiller.percentage,
+        gamesPlayed: processedKiller.gamesPlayed,
+        averageKillsPerGame: processedKiller.averageKillsPerGame,
         isHighlightedAddition: false
       };
       
-      // Add death type breakdown for stacked bars (scaled for averages)
-      availableDeathTypes.forEach(deathTypeCode => {
-        const totalKills = killer.killsByDeathType[deathTypeCode] || 0;
-        chartData[deathTypeCode] = killer.gamesPlayed > 0 ? totalKills / killer.gamesPlayed : 0;
+      // Add death type breakdown for stacked bars (scaled for averages) using display death types
+      displayDeathTypes.forEach(deathTypeCode => {
+        const totalKills = processedKiller.killsByDeathType[deathTypeCode] || 0;
+        chartData[deathTypeCode] = processedKiller.gamesPlayed > 0 ? totalKills / processedKiller.gamesPlayed : 0;
       });
       
       return chartData;
@@ -169,20 +243,23 @@ export function KillersView({
       // Search for highlighted player in all stats (not just eligible)
       const highlightedKiller = deathStats.killerStats.find((k: any) => k.killerName === settings.highlightedPlayer);
       if (highlightedKiller) {
+        // Merge hunter kills if needed
+        const processedKiller = mergeHunterKills(highlightedKiller);
+        
         const highlightedData: ChartKillerData = {
-          name: highlightedKiller.killerName,
-          value: highlightedKiller.averageKillsPerGame,
-          victims: highlightedKiller.victims.length,
-          percentage: highlightedKiller.percentage,
-          gamesPlayed: highlightedKiller.gamesPlayed,
-          averageKillsPerGame: highlightedKiller.averageKillsPerGame,
+          name: processedKiller.killerName,
+          value: processedKiller.averageKillsPerGame,
+          victims: processedKiller.victims.length,
+          percentage: processedKiller.percentage,
+          gamesPlayed: processedKiller.gamesPlayed,
+          averageKillsPerGame: processedKiller.averageKillsPerGame,
           isHighlightedAddition: true
         };
         
-        // Add death type breakdown for stacked bars (scaled for averages)
-        availableDeathTypes.forEach(deathTypeCode => {
-          const totalKills = highlightedKiller.killsByDeathType[deathTypeCode] || 0;
-          highlightedData[deathTypeCode] = highlightedKiller.gamesPlayed > 0 ? totalKills / highlightedKiller.gamesPlayed : 0;
+        // Add death type breakdown for stacked bars (scaled for averages) using display death types
+        displayDeathTypes.forEach(deathTypeCode => {
+          const totalKills = processedKiller.killsByDeathType[deathTypeCode] || 0;
+          highlightedData[deathTypeCode] = processedKiller.gamesPlayed > 0 ? totalKills / processedKiller.gamesPlayed : 0;
         });
         
         averageBaseData.push(highlightedData);
@@ -196,7 +273,7 @@ export function KillersView({
       highlightedPlayerAddedToTotal: highlightedPlayerAddedTotal,
       highlightedPlayerAddedToAverage: highlightedPlayerAddedAverage
     };
-  }, [deathStats, settings.highlightedPlayer, minGamesForAverage, availableDeathTypes]);
+  }, [deathStats, settings.highlightedPlayer, minGamesForAverage, displayDeathTypes, victimCampFilter]);
 
   const TotalKillsTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -204,8 +281,8 @@ export function KillersView({
       const isHighlightedAddition = data.isHighlightedAddition;
       const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
       
-      // Calculate total kills from all death types
-      const totalKills = availableDeathTypes.reduce((sum, deathTypeCode) => sum + (data[deathTypeCode] || 0), 0);
+      // Calculate total kills from all death types (using display death types)
+      const totalKills = displayDeathTypes.reduce((sum, deathTypeCode) => sum + (data[deathTypeCode] || 0), 0);
       
       return (
         <div style={{
@@ -244,12 +321,12 @@ export function KillersView({
             <p style={{ fontWeight: 'bold', fontSize: '0.85rem', marginBottom: '4px' }}>
               Répartition par type de kill:
             </p>
-            {availableDeathTypes.map(deathType => {
+            {displayDeathTypes.map(deathType => {
               const count = data[deathType] || 0;
               if (count === 0) return null;
               return (
                 <p key={deathType} style={{ 
-                  color: deathTypeColors[deathType], 
+                  color: displayDeathTypeColors[deathType], 
                   margin: '2px 0', 
                   fontSize: '0.8rem' 
                 }}>
@@ -304,10 +381,11 @@ export function KillersView({
       
       // Find the original killer stats for total kill counts
       const originalKiller = deathStats?.killerStats.find((k: any) => k.killerName === data.name);
+      const processedOriginal = originalKiller ? mergeHunterKills(originalKiller) : null;
       
-      // Calculate total average kills from all death types
-      const totalAverageKills = availableDeathTypes.reduce((sum, deathTypeCode) => sum + (data[deathTypeCode] || 0), 0);
-      const totalKills = originalKiller ? originalKiller.kills : Math.round(totalAverageKills * data.gamesPlayed);
+      // Calculate total average kills from all death types (using display death types)
+      const totalAverageKills = displayDeathTypes.reduce((sum, deathTypeCode) => sum + (data[deathTypeCode] || 0), 0);
+      const totalKills = processedOriginal ? processedOriginal.kills : Math.round(totalAverageKills * data.gamesPlayed);
       
       return (
         <div style={{
@@ -345,18 +423,18 @@ export function KillersView({
             <p style={{ fontWeight: 'bold', fontSize: '0.85rem', marginBottom: '4px' }}>
               Répartition par type de kill (moyenne):
             </p>
-            {availableDeathTypes.map(deathType => {
+            {displayDeathTypes.map(deathType => {
               const avgCount = data[deathType] || 0;
               if (avgCount === 0) return null;
               
-              // Get total kills for this death type
-              const totalKillsForDeathType = originalKiller ? 
-                (originalKiller.killsByDeathType[deathType] || 0) : 
+              // Get total kills for this death type from processed original
+              const totalKillsForDeathType = processedOriginal ? 
+                (processedOriginal.killsByDeathType[deathType] || 0) : 
                 Math.round(avgCount * data.gamesPlayed);
               
               return (
                 <p key={deathType} style={{ 
-                  color: deathTypeColors[deathType], 
+                  color: displayDeathTypeColors[deathType], 
                   margin: '2px 0', 
                   fontSize: '0.8rem' 
                 }}>
@@ -465,13 +543,13 @@ export function KillersView({
                   style: { textAnchor: 'middle' } 
                 }} />
                 <Tooltip content={<TotalKillsTooltip />} />
-                {availableDeathTypes.map((deathType) => (
+                {displayDeathTypes.map((deathType) => (
                   <Bar
                     key={deathType}
                     dataKey={deathType}
                     name={deathType}
                     stackId="kills"
-                    fill={deathTypeColors[deathType]}
+                    fill={displayDeathTypeColors[deathType]}
                     onClick={(data) => {
                       const navigationFilters: any = {
                         selectedPlayer: data?.name,
@@ -574,13 +652,13 @@ export function KillersView({
                   style: { textAnchor: 'middle' } 
                 }} />
                 <Tooltip content={<AverageKillsTooltip />} />
-                {availableDeathTypes.map((deathType) => (
+                {displayDeathTypes.map((deathType) => (
                   <Bar
                     key={deathType}
                     dataKey={deathType}
                     name={deathType}
                     stackId="averageKills"
-                    fill={deathTypeColors[deathType]}
+                    fill={displayDeathTypeColors[deathType]}
                     onClick={(data) => {
                       const navigationFilters: any = {
                         selectedPlayer: data?.name,
