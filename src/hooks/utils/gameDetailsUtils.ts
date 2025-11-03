@@ -85,6 +85,28 @@ function createYouTubeEmbedUrl(start: string | null, end: string | null): string
 }
 
 /**
+ * Convert PlayerVODs object to embed URLs
+ * Maps Steam IDs to YouTube embed URLs
+ */
+function convertPlayerVODsToEmbedUrls(playerVODs?: { [playerId: string]: string }): { [playerId: string]: string } | null {
+  if (!playerVODs || Object.keys(playerVODs).length === 0) return null;
+  
+  const embedUrls: { [playerId: string]: string } = {};
+  
+  Object.entries(playerVODs).forEach(([playerId, vodUrl]) => {
+    if (vodUrl && typeof vodUrl === 'string' && vodUrl.trim()) {
+      // Convert the VOD URL to embed format (no end time for player VODs)
+      const embedUrl = createYouTubeEmbedUrl(vodUrl, null);
+      if (embedUrl) {
+        embedUrls[playerId] = embedUrl;
+      }
+    }
+  });
+  
+  return Object.keys(embedUrls).length > 0 ? embedUrls : null;
+}
+
+/**
  * Calculate game duration from ISO date strings
  */
 function calculateGameDuration(start: string | null, end: string | null): number | null {
@@ -856,6 +878,7 @@ export function computeGameDetailsFromGameLog(
       map: game.MapName,
       victoryType: game.LegacyData?.VictoryType || null,
       youtubeEmbedUrl: createYouTubeEmbedUrl(game.LegacyData?.VODLink || null, game.LegacyData?.VODLinkEnd || null),
+      playerVODs: convertPlayerVODsToEmbedUrls(game.LegacyData?.PlayerVODs),
       gameDuration: calculateGameDuration(game.StartDate, game.EndDate),
       playerData : game.PlayerStats,
     };

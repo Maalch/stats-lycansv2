@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedFrenchColorMapping, mainCampOrder } from '../../types/api';
 import { formatDeathTiming } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
@@ -118,9 +118,46 @@ function formatDuration(durationInSeconds: number | null): string {
 // Component to display detailed view of a single game
 export function GameDetailView({ game }: { game: any }) {
   const [showVideo, setShowVideo] = useState(false);
+  const [selectedVOD, setSelectedVOD] = useState<string | null>(null);
   
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+
+  // Extract available VODs from the game data
+  // game.playerVODs contains per-player VOD URLs mapped by player Steam ID
+  const availableVODs = useMemo(() => {
+    const vods: { label: string; url: string; playerId: string }[] = [];
+    
+    // Add player-specific VODs if available
+    if (game.playerVODs && typeof game.playerVODs === 'object') {
+      Object.entries(game.playerVODs).forEach(([playerId, vodUrl]) => {
+        if (typeof vodUrl === 'string' && vodUrl.trim()) {
+          // Find the player name from playerData using Steam ID
+          const player = game.playerData?.find((p: any) => p.ID === playerId);
+          const playerName = player?.Username || playerId;
+          
+          vods.push({
+            label: `${playerName}`,
+            url: vodUrl,
+            playerId
+          });
+        }
+      });
+    }
+    
+    return vods;
+  }, [game.playerVODs, game.playerData]);
+
+  // Set default selected VOD when video is shown
+  useEffect(() => {
+    if (showVideo && availableVODs.length > 0 && !selectedVOD) {
+      setSelectedVOD(availableVODs[0].url);
+    }
+  }, [showVideo, availableVODs, selectedVOD]);
+
+  // Determine if we should show video section
+  const hasAnyVOD = availableVODs.length > 0;
+  const showMultipleVODSelector = availableVODs.length > 1;
 
   return (
     <div className="lycans-game-detail-view">
@@ -331,7 +368,7 @@ export function GameDetailView({ game }: { game: any }) {
 
 
         {/* Video Toggle Button */}
-        {game.youtubeEmbedUrl && (
+        {hasAnyVOD && (
           <div className="lycans-game-detail-section full-width">
             <button
               onClick={() => setShowVideo(!showVideo)}
@@ -342,13 +379,31 @@ export function GameDetailView({ game }: { game: any }) {
           </div>
         )}
 
-        {/* YouTube Video */}
-        {game.youtubeEmbedUrl && showVideo && (
+        {/* YouTube Video with Player Selection */}
+        {hasAnyVOD && showVideo && (
           <div className="lycans-game-detail-section full-width">
             <h4>Vidéo de la Partie</h4>
+            
+            {/* Player VOD Selection Buttons */}
+            {showMultipleVODSelector && (
+              <nav className="lycans-vod-menu">
+                {availableVODs.map((vod, index) => (
+                  <button
+                    key={index}
+                    className={`lycans-vod-btn${selectedVOD === vod.url ? ' active' : ''}`}
+                    onClick={() => setSelectedVOD(vod.url)}
+                    type="button"
+                    title={vod.label}
+                  >
+                    {vod.label}
+                  </button>
+                ))}
+              </nav>
+            )}
+            
             <div className="lycans-youtube-container">
               <iframe
-                src={game.youtubeEmbedUrl}
+                src={selectedVOD || availableVODs[0]?.url || ''}
                 title={`Partie Lycans #${game.gameId}`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

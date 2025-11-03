@@ -645,3 +645,34 @@
     font-size: 0.8rem;
   }
 }
+
+/* VOD Selection Menu (styled like player stats submenu) */
+.lycans-vod-menu {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lycans-vod-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.lycans-vod-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.lycans-vod-btn.active {
+  background: var(--chart-color-1);
+  color: white;
+  border-color: var(--chart-color-1);
+}
