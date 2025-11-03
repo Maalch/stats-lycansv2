@@ -37,7 +37,7 @@ const LYCAN_SCHEMA = {
       MAP: 'Map', //Map name of this game
       VODSTART: 'Début', //Youtube link to the start of the game. Format: https://www.youtube.com/watch?v=XXXXXXX&t=YYYs
       VODEND: 'Fin', //Youtube link to the end of the game. Format: https://www.youtube.com/watch?v=XXXXXXX&t=YYYs
-      DURATION: 'Temps game' //Duration of the game
+      DURATION: 'Temps game' //Duration of the game, in mm:ss format (minutes/seconds)
     }
   },
   PLAYERS: {

@@ -563,7 +563,8 @@ function getRawGameDataInNewFormat() {
         LegacyData: {
           VODLink: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODSTART)],
           VODLinkEnd: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VODEND)],
-          VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)]
+          VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
+          PlayerVODs: {}
         },
         PlayerStats: []
       };
@@ -577,6 +578,15 @@ function getRawGameDataInNewFormat() {
       gameRecord.PlayerStats = players.map(function(playerName) {
         var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
         allPlayerDetails.push(playerDetails); // Store for later use
+        
+        // Get player ID for VOD mapping
+        var playerId = playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null;
+        
+        // Add player VOD to LegacyData.PlayerVODs if available
+        if (playerId && playerDetails && playerDetails.vod && playerDetails.vod !== '') {
+          gameRecord.LegacyData.PlayerVODs[playerId] = playerDetails.vod;
+        }
+        
         return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap);
       });
       
@@ -650,6 +660,7 @@ function getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsData
     mainRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.MAINROLE)] || null,
     power: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.POWER)] || null,
     secondaryRole: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.SECONDARYROLE)] || null,
+    vod: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.VOD)] || null,
     
     dayOfDeath: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.DAYOFDEATH)] || null,
     typeOfDeath: detailsRow[findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.TYPEOFDEATH)] || null,
