@@ -21,6 +21,7 @@ import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 import './PlayerSelectionPage.css';
 
 interface PlayerBasicStats {
+  id: string; // Unique player ID (Steam ID or Username fallback)
   name: string;
   totalGames: number;
   totalWins: number;
@@ -109,6 +110,7 @@ export function PlayerSelectionPage() {
       }
       
       return {
+        id: playerId, // Use the unique player ID as the identifier
         name: stats.displayName,
         totalGames: stats.games,
         totalWins: stats.wins,
@@ -217,7 +219,7 @@ export function PlayerSelectionPage() {
               <div className="suggestion-list">
                 {sortedFilteredPlayers.map((player) => (
                   <button
-                    key={player.name}
+                    key={player.id}
                     className={`suggestion-btn ${player.isHighlighted ? 'highlighted' : ''}`}
                     onClick={() => handlePlayerSelect(player.name)}
                   >
@@ -593,7 +595,7 @@ export function PlayerSelectionPage() {
             <div className="character-selection-grid">
               {sortedFilteredPlayers.map((player) => (
                   <div
-                    key={player.name}
+                    key={player.id}
                     className={`character-card ${player.isHighlighted ? 'highlighted' : ''}`}
                     onClick={() => handlePlayerSelect(player.name)}
                     title={`${player.name} - ${player.totalGames} parties, ${player.winRate.toFixed(1)}% victoires`}
