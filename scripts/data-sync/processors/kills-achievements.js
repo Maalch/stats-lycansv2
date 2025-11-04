@@ -160,9 +160,29 @@ export function processKillsAchievements(deathStats, playerId, suffix) {
     ));
   }
 
+  // 3. Less killed ranking (lowest death rate, min. 25 games)
+  const topSurvivors = findTopSurvivors(deathStats.playerDeathStats, 25);
+  const survivalRank = findPlayerSurvivalRank(topSurvivors, playerId);
+  if (survivalRank) {
+    achievements.push(createKillsAchievement(
+      `top-survivor-${suffix ? 'modded' : 'all'}`,
+      `🛡️ Top ${survivalRank.rank} Survivant${suffix}`,
+      `${survivalRank.rank}${survivalRank.rank === 1 ? 'er' : 'ème'} meilleur taux de survie: ${survivalRank.value.toFixed(2)} morts par partie (min. 25 parties)`,
+      'good',
+      survivalRank.rank,
+      parseFloat(survivalRank.value.toFixed(2)),
+      topSurvivors.length,
+      {
+        tab: 'players',
+        subTab: 'deathStats',
+        chartSection: 'survivors-average'
+      }
+    ));
+  }
+
   // BAD ACHIEVEMENTS (Death achievements)
 
-  // 3. Most killed ranking (total deaths)
+  // 4. Most killed ranking (total deaths)
   const topDeaths = findTopDeaths(deathStats.playerDeathStats, 'totalDeaths', 1);
   const deathRank = findPlayerDeathRank(topDeaths, playerId, 'totalDeaths');
   if (deathRank) {
@@ -182,25 +202,7 @@ export function processKillsAchievements(deathStats, playerId, suffix) {
     ));
   }
 
-  // 4. Less killed ranking (lowest death rate, min. 25 games)
-  const topSurvivors = findTopSurvivors(deathStats.playerDeathStats, 25);
-  const survivalRank = findPlayerSurvivalRank(topSurvivors, playerId);
-  if (survivalRank) {
-    achievements.push(createKillsAchievement(
-      `top-survivor-${suffix ? 'modded' : 'all'}`,
-      `🛡️ Top ${survivalRank.rank} Survivant${suffix}`,
-      `${survivalRank.rank}${survivalRank.rank === 1 ? 'er' : 'ème'} meilleur taux de survie: ${survivalRank.value.toFixed(2)} morts par partie (min. 25 parties)`,
-      'good',
-      survivalRank.rank,
-      parseFloat(survivalRank.value.toFixed(2)),
-      topSurvivors.length,
-      {
-        tab: 'players',
-        subTab: 'deathStats',
-        chartSection: 'survivors-average'
-      }
-    ));
-  }
+
 
   return achievements;
 }
