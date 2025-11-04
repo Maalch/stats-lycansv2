@@ -639,12 +639,13 @@ function initializePlayerSeriesState(allPlayersMap) {
 /**
  * Process camp series for a player
  * @param {Object} playerStats - Player series state
- * @param {string} player - Player name
+ * @param {string} playerId - Player ID (Steam ID)
+ * @param {string} playerName - Player display name
  * @param {'Villageois'|'Loup'|'Autres'} mainCamp - Main camp category
  * @param {string} gameDisplayedId - Game displayed ID
  * @param {string} date - Game date
  */
-function processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date) {
+function processCampSeries(playerStats, playerId, playerName, mainCamp, gameDisplayedId, date) {
   if (mainCamp === 'Villageois' || mainCamp === 'Loup') {
     // Check Villageois series
     if (mainCamp === 'Villageois') {
@@ -661,7 +662,8 @@ function processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date)
       if (!playerStats.longestVillageoisSeries || 
           playerStats.currentVillageoisSeries >= playerStats.longestVillageoisSeries.seriesLength) {
         playerStats.longestVillageoisSeries = {
-          player,
+          player: playerId,
+          playerName: playerName,
           camp: 'Villageois',
           seriesLength: playerStats.currentVillageoisSeries,
           startGame: playerStats.villageoisSeriesStart?.game || gameDisplayedId,
@@ -694,7 +696,8 @@ function processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date)
       if (!playerStats.longestLoupsSeries || 
           playerStats.currentLoupsSeries >= playerStats.longestLoupsSeries.seriesLength) {
         playerStats.longestLoupsSeries = {
-          player,
+          player: playerId,
+          playerName: playerName,
           camp: 'Loups',
           seriesLength: playerStats.currentLoupsSeries,
           startGame: playerStats.loupsSeriesStart?.game || gameDisplayedId,
@@ -728,13 +731,14 @@ function processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date)
 /**
  * Process win series for a player
  * @param {Object} playerStats - Player series state
- * @param {string} player - Player name
+ * @param {string} playerId - Player ID (Steam ID)
+ * @param {string} playerName - Player display name
  * @param {boolean} playerWon - Whether player won
  * @param {string} actualCamp - Actual camp played
  * @param {string} gameDisplayedId - Game displayed ID
  * @param {string} date - Game date
  */
-function processWinSeries(playerStats, player, playerWon, actualCamp, gameDisplayedId, date) {
+function processWinSeries(playerStats, playerId, playerName, playerWon, actualCamp, gameDisplayedId, date) {
   if (playerWon) {
     if (playerStats.lastWon) {
       playerStats.currentWinSeries++;
@@ -758,7 +762,8 @@ function processWinSeries(playerStats, player, playerWon, actualCamp, gameDispla
       });
       
       playerStats.longestWinSeries = {
-        player,
+        player: playerId,
+        playerName: playerName,
         seriesLength: playerStats.currentWinSeries,
         startGame: playerStats.winSeriesStart?.game || gameDisplayedId,
         endGame: gameDisplayedId,
@@ -784,13 +789,14 @@ function processWinSeries(playerStats, player, playerWon, actualCamp, gameDispla
 /**
  * Process loss series for a player
  * @param {Object} playerStats - Player series state
- * @param {string} player - Player name
+ * @param {string} playerId - Player ID (Steam ID)
+ * @param {string} playerName - Player display name
  * @param {boolean} playerWon - Whether player won
  * @param {string} actualCamp - Actual camp played
  * @param {string} gameDisplayedId - Game displayed ID
  * @param {string} date - Game date
  */
-function processLossSeries(playerStats, player, playerWon, actualCamp, gameDisplayedId, date) {
+function processLossSeries(playerStats, playerId, playerName, playerWon, actualCamp, gameDisplayedId, date) {
   if (!playerWon) {
     // Player lost this game
     if (playerStats.currentLossSeries > 0) {
@@ -817,7 +823,8 @@ function processLossSeries(playerStats, player, playerWon, actualCamp, gameDispl
       });
       
       playerStats.longestLossSeries = {
-        player,
+        player: playerId,
+        playerName: playerName,
         seriesLength: playerStats.currentLossSeries,
         startGame: playerStats.lossSeriesStart?.game || gameDisplayedId,
         endGame: gameDisplayedId,
@@ -981,13 +988,13 @@ export function computePlayerSeriesData(gameData) {
           const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
           
           // Process camp series
-          processCampSeries(playerStats, playerName, mainCamp, gameDisplayedId, date);
+          processCampSeries(playerStats, playerId, playerName, mainCamp, gameDisplayedId, date);
           
           // Process win series
-          processWinSeries(playerStats, playerName, playerWon, mainCamp, gameDisplayedId, date);
+          processWinSeries(playerStats, playerId, playerName, playerWon, mainCamp, gameDisplayedId, date);
           
           // Process loss series
-          processLossSeries(playerStats, playerName, playerWon, mainCamp, gameDisplayedId, date);
+          processLossSeries(playerStats, playerId, playerName, playerWon, mainCamp, gameDisplayedId, date);
         }
       });
     }

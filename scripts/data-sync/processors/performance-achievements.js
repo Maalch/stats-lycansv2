@@ -3,7 +3,7 @@
  */
 
 import { findPlayerCampRank } from '../helpers.js';
-import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';
+import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerId } from '../../../src/utils/datasyncExport.js';
 
 // Special roles are all camps except Villageois and Loup camps (exclusion list approach)
 // This dynamically includes any special role that appears in the game data:
@@ -52,23 +52,25 @@ function findTopSoloRolePerformers(gameData, minGames) {
     game.PlayerStats.forEach(player => {
       const roleName = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
       const camp = getPlayerCampFromRole(roleName);
+      const playerId = getPlayerId(player);
       const playerName = player.Username;
       const won = player.Victorious;
 
       // Track total games for each player
-      playerTotalGames.set(playerName, (playerTotalGames.get(playerName) || 0) + 1);
+      playerTotalGames.set(playerId, (playerTotalGames.get(playerId) || 0) + 1);
 
       // Only process special roles
       if (isSpecialRole(camp)) {
         // Track individual player stats
-        if (!playerSoloPerformance.has(playerName)) {
-          playerSoloPerformance.set(playerName, {
+        if (!playerSoloPerformance.has(playerId)) {
+          playerSoloPerformance.set(playerId, {
+            playerName: playerName,
             totalSoloGames: 0,
             totalSoloWins: 0
           });
         }
         
-        const playerData = playerSoloPerformance.get(playerName);
+        const playerData = playerSoloPerformance.get(playerId);
         playerData.totalSoloGames++;
         if (won) playerData.totalSoloWins++;
 
@@ -87,7 +89,7 @@ function findTopSoloRolePerformers(gameData, minGames) {
   // Calculate player performance vs camp average (matching client-side logic)
   const eligiblePlayers = [];
   
-  playerSoloPerformance.forEach((data, playerName) => {
+  playerSoloPerformance.forEach((data, playerId) => {
     if (data.totalSoloGames >= minGames) {
       // Calculate player's win rate in special roles
       const playerWinRate = (data.totalSoloWins / data.totalSoloGames) * 100;
@@ -96,13 +98,14 @@ function findTopSoloRolePerformers(gameData, minGames) {
       const performance = playerWinRate - campAverageWinRate;
 
       eligiblePlayers.push({
-        player: playerName,
+        player: playerId, // Use playerId for consistency with other achievements
+        playerName: data.playerName,
         camp: 'Rôles spéciaux', // Virtual camp for display (matches chart naming)
         games: data.totalSoloGames,
         wins: data.totalSoloWins,
         winRate: playerWinRate,
         performance: performance,
-        totalGames: playerTotalGames.get(playerName) || 0
+        totalGames: playerTotalGames.get(playerId) || 0
       });
     }
   });
