@@ -202,21 +202,19 @@ export function BRPlayersStatsChart() {
       <div className="lycans-graphiques-groupe">
         {/* Top joueurs par participations */}
         <div className="lycans-graphique-section">
-          <h3>Top Joueurs - Participations</h3>
+          <h3>Participations</h3>
           {stats.highlightedPlayerInParticipations && settings.highlightedPlayer && (
             <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
               🎯 {settings.highlightedPlayer} affiché en plus du top 15
             </p>
           )}
           <FullscreenChart
-            title="Top Joueurs par Participations - Battle Royale"
+            title="Participations - Battle Royale"
             className="lycans-chart-wrapper"
           >
             <ResponsiveContainer width="100%" height={400}>
               <BarChart 
                 data={stats.topPlayersByParticipations}
-                onMouseEnter={(data) => setHoveredPlayer(data?.activeLabel || null)}
-                onMouseLeave={() => setHoveredPlayer(null)}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
@@ -250,15 +248,35 @@ export function BRPlayersStatsChart() {
                       const isHighlightedFromSettings = settings.highlightedPlayer === d.name;
                       
                       return (
-                        <div className="custom-tooltip">
-                          <p className="label">
-                            <strong>{d.name}</strong>
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: '12px', 
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                        }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: '8px', fontSize: '1rem' }}>
+                            {d.name}
                             {isHighlightedFromSettings && ' 🎯'}
-                            {isHighlightedAddition && !isHighlightedFromSettings && ' (hors top 15)'}
-                          </p>
-                          <p className="desc">Participations: {d.participations}</p>
-                          <p className="desc">Victoires: {d.wins}</p>
-                          <p className="desc">Taux de victoire: {d.winRate.toFixed(1)}%</p>
+                          </div>
+                          <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                            <div>Participations: <strong>{d.participations}</strong></div>
+                            <div>Victoires: <strong>{d.wins}</strong></div>
+                            <div>Taux de victoire: <strong>{d.winRate.toFixed(1)}%</strong></div>
+                          </div>
+                          {isHighlightedAddition && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '8px',
+                              fontStyle: 'italic',
+                              paddingTop: '8px',
+                              borderTop: '1px solid var(--border-color)'
+                            }}>
+                              🎯 Affiché via sélection (hors top 15)
+                            </div>
+                          )}
                         </div>
                       );
                     }
@@ -268,6 +286,7 @@ export function BRPlayersStatsChart() {
                 <Bar dataKey="participations" name="Participations">
                   {stats.topPlayersByParticipations.map((entry, index) => {
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                    const isHoveredPlayer = hoveredPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     
                     return (
@@ -276,13 +295,27 @@ export function BRPlayersStatsChart() {
                         fill={
                           isHighlightedFromSettings ? 'var(--accent-primary)' :
                           isHighlightedAddition ? 'var(--accent-secondary)' :
-                          hoveredPlayer === entry.name ? 'var(--accent-hover)' : 
                           getPlayerColor(entry.name)
                         }
-                        stroke={isHighlightedFromSettings ? "var(--accent-primary)" : "none"}
-                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
                         strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onMouseEnter={() => setHoveredPlayer(entry.name)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
                       />
                     );
                   })}
@@ -290,6 +323,7 @@ export function BRPlayersStatsChart() {
                 <Bar dataKey="wins" fill="var(--chart-color-2)" name="Victoires">
                   {stats.topPlayersByParticipations.map((entry, index) => {
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                    const isHoveredPlayer = hoveredPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     
                     return (
@@ -298,13 +332,27 @@ export function BRPlayersStatsChart() {
                         fill={
                           isHighlightedFromSettings ? 'var(--accent-primary)' :
                           isHighlightedAddition ? 'var(--accent-secondary)' :
-                          hoveredPlayer === entry.name ? 'var(--accent-hover)' : 
                           'var(--chart-color-2)'
                         }
-                        stroke={isHighlightedFromSettings ? "var(--accent-primary)" : "none"}
-                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
                         strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onMouseEnter={() => setHoveredPlayer(entry.name)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
                       />
                     );
                   })}
@@ -316,21 +364,19 @@ export function BRPlayersStatsChart() {
 
         {/* Top joueurs par taux de victoire */}
         <div className="lycans-graphique-section">
-          <h3>Top Joueurs - Taux de Victoire (min. 3 parties)</h3>
+          <h3>Taux de Victoire (min. 3 parties)</h3>
           {stats.highlightedPlayerInWinRate && settings.highlightedPlayer && (
             <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
               🎯 {settings.highlightedPlayer} affiché en plus du top 15
             </p>
           )}
           <FullscreenChart
-            title="Top Joueurs par Taux de Victoire - Battle Royale"
+            title="Taux de Victoire - Battle Royale"
             className="lycans-chart-wrapper"
           >
             <ResponsiveContainer width="100%" height={400}>
               <BarChart 
                 data={stats.topPlayersByWins}
-                onMouseEnter={(data) => setHoveredPlayer(data?.activeLabel || null)}
-                onMouseLeave={() => setHoveredPlayer(null)}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
@@ -362,17 +408,49 @@ export function BRPlayersStatsChart() {
                       const d = payload[0].payload as ChartPlayerStat;
                       const isHighlightedAddition = d.isHighlightedAddition;
                       const isHighlightedFromSettings = settings.highlightedPlayer === d.name;
+                      const meetsMinParticipations = d.participations >= 3;
                       
                       return (
-                        <div className="custom-tooltip">
-                          <p className="label">
-                            <strong>{d.name}</strong>
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: '12px', 
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                        }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: '8px', fontSize: '1rem' }}>
+                            {d.name}
                             {isHighlightedFromSettings && ' 🎯'}
-                            {isHighlightedAddition && !isHighlightedFromSettings && ' (hors top 15)'}
-                          </p>
-                          <p className="desc">Participations: {d.participations}</p>
-                          <p className="desc">Victoires: {d.wins}</p>
-                          <p className="desc">Taux de victoire: {d.winRate.toFixed(1)}%</p>
+                          </div>
+                          <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                            <div>Taux de victoire: <strong>{d.winRate.toFixed(1)}%</strong></div>
+                            <div>Victoires: <strong>{d.wins}</strong> / {d.participations}</div>
+                          </div>
+                          {isHighlightedAddition && !meetsMinParticipations && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '8px',
+                              fontStyle: 'italic',
+                              paddingTop: '8px',
+                              borderTop: '1px solid var(--border-color)'
+                            }}>
+                              🎯 Affiché via sélection (&lt; 3 parties)
+                            </div>
+                          )}
+                          {isHighlightedAddition && meetsMinParticipations && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '8px',
+                              fontStyle: 'italic',
+                              paddingTop: '8px',
+                              borderTop: '1px solid var(--border-color)'
+                            }}>
+                              🎯 Affiché via sélection (hors top 15)
+                            </div>
+                          )}
                         </div>
                       );
                     }
@@ -382,6 +460,7 @@ export function BRPlayersStatsChart() {
                 <Bar dataKey="winRate" name="Taux de victoire (%)">
                   {stats.topPlayersByWins.map((entry, index) => {
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                    const isHoveredPlayer = hoveredPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     
                     return (
@@ -390,13 +469,27 @@ export function BRPlayersStatsChart() {
                         fill={
                           isHighlightedFromSettings ? 'var(--accent-primary)' :
                           isHighlightedAddition ? 'var(--accent-secondary)' :
-                          hoveredPlayer === entry.name ? 'var(--accent-hover)' : 
                           chartColors[index % chartColors.length]
                         }
-                        stroke={isHighlightedFromSettings ? "var(--accent-primary)" : "none"}
-                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
                         strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onMouseEnter={() => setHoveredPlayer(entry.name)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
                       />
                     );
                   })}

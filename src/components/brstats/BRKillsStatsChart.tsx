@@ -156,23 +156,21 @@ export function BRKillsStatsChart() {
       </div>
 
       <div className="lycans-graphiques-groupe">
-        {/* Top joueurs par score moyen */}
+        {/* Top joueurs par kill moyen */}
         <div className="lycans-graphique-section">
-          <h3>Top Joueurs - Score Moyen par Partie (min. 3 parties)</h3>
+          <h3>Kill Moyen par Partie (min. 3 parties)</h3>
           {stats.highlightedPlayerInAverageScore && settings.highlightedPlayer && (
             <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
               🎯 {settings.highlightedPlayer} affiché en plus du top 15
             </p>
           )}
           <FullscreenChart
-            title="Top Joueurs par Score Moyen - Battle Royale"
+            title="Kill Moyen par Partie - Battle Royale"
             className="lycans-chart-wrapper"
           >
             <ResponsiveContainer width="100%" height={400}>
               <BarChart 
                 data={stats.topPlayersByAverageScore}
-                onMouseEnter={(data) => setHoveredPlayer(data?.activeLabel || null)}
-                onMouseLeave={() => setHoveredPlayer(null)}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
@@ -204,27 +202,61 @@ export function BRKillsStatsChart() {
                       const d = payload[0].payload as ChartPlayerStat;
                       const isHighlightedAddition = d.isHighlightedAddition;
                       const isHighlightedFromSettings = settings.highlightedPlayer === d.name;
+                      const meetsMinParticipations = d.participations >= 3;
                       
                       return (
-                        <div className="custom-tooltip">
-                          <p className="label">
-                            <strong>{d.name}</strong>
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: '12px', 
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                        }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: '8px', fontSize: '1rem' }}>
+                            {d.name}
                             {isHighlightedFromSettings && ' 🎯'}
-                            {isHighlightedAddition && !isHighlightedFromSettings && ' (hors top 15)'}
-                          </p>
-                          <p className="desc">Participations: {d.participations}</p>
-                          <p className="desc">Score total: {d.totalScore}</p>
-                          <p className="desc">Score moyen: {d.averageScore.toFixed(2)}</p>
-                          <p className="desc">Taux de victoire: {d.winRate.toFixed(1)}%</p>
+                          </div>
+                          <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                            <div>Participations: <strong>{d.participations}</strong></div>
+                            <div>Kill total: <strong>{d.totalScore}</strong></div>
+                            <div>Kill moyen: <strong>{d.averageScore.toFixed(2)}</strong></div>
+                            <div>Taux de victoire: <strong>{d.winRate.toFixed(1)}%</strong></div>
+                          </div>
+                          {isHighlightedAddition && !meetsMinParticipations && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '8px',
+                              fontStyle: 'italic',
+                              paddingTop: '8px',
+                              borderTop: '1px solid var(--border-color)'
+                            }}>
+                              🎯 Affiché via sélection (&lt; 3 parties)
+                            </div>
+                          )}
+                          {isHighlightedAddition && meetsMinParticipations && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '8px',
+                              fontStyle: 'italic',
+                              paddingTop: '8px',
+                              borderTop: '1px solid var(--border-color)'
+                            }}>
+                              🎯 Affiché via sélection (hors top 15)
+                            </div>
+                          )}
                         </div>
                       );
                     }
                     return null;
                   }}
                 />
-                <Bar dataKey="averageScore" name="Score moyen par partie">
+                <Bar dataKey="averageScore" name="Kill moyen par partie">
                   {stats.topPlayersByAverageScore.map((entry, index) => {
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                    const isHoveredPlayer = hoveredPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     
                     return (
@@ -233,13 +265,27 @@ export function BRKillsStatsChart() {
                         fill={
                           isHighlightedFromSettings ? 'var(--accent-primary)' :
                           isHighlightedAddition ? 'var(--accent-secondary)' :
-                          hoveredPlayer === entry.name ? 'var(--accent-hover)' : 
                           getPlayerColor(entry.name)
                         }
-                        stroke={isHighlightedFromSettings ? "var(--accent-primary)" : "none"}
-                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
                         strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onMouseEnter={() => setHoveredPlayer(entry.name)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
                       />
                     );
                   })}
@@ -249,11 +295,11 @@ export function BRKillsStatsChart() {
           </FullscreenChart>
         </div>
 
-        {/* Distribution des scores */}
+        {/* Distribution des kills */}
         <div className="lycans-graphique-section">
-          <h3>Distribution des Scores</h3>
+          <h3>Distribution des Kills</h3>
           <FullscreenChart
-            title="Distribution des Scores - Battle Royale"
+            title="Distribution des Kills"
             className="lycans-chart-wrapper"
           >
             <ResponsiveContainer width="100%" height={400}>
