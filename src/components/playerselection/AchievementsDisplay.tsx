@@ -118,19 +118,24 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         minGames = parseInt(minGamesMatch[1], 10);
       }
       
-      // Determine focus chart based on chartSection
+      // Determine focus chart and view based on chartSection
       let focusChart: 'totalKills' | 'averageKills' | 'totalDeaths' | 'survivalRate' = 'totalKills'; // default
+      let selectedView: 'killers' | 'deaths' | 'hunter' | 'survival' = 'killers'; // default
       const chartSection = (achievement.redirectTo as any).chartSection;
       
       if (chartSection) {
         if (chartSection === 'killers-total') {
           focusChart = 'totalKills';
+          selectedView = 'killers';
         } else if (chartSection === 'killers-average') {
           focusChart = 'averageKills';
+          selectedView = 'killers';
         } else if (chartSection === 'deaths-total') {
           focusChart = 'totalDeaths';
+          selectedView = 'deaths';
         } else if (chartSection === 'survivors-average') {
           focusChart = 'survivalRate';
+          selectedView = 'deaths';
         }
       }
       
@@ -139,6 +144,7 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         deathStatisticsState: {
           selectedCamp: campMatch?.[1] || 'Tous les camps',
           minGamesForAverage: minGames,
+          selectedView: selectedView,
           focusChart: focusChart
         }
       });
