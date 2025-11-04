@@ -26,7 +26,8 @@ const GameDurationInsights = lazy(() => import('./components/generalstats/GameDu
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
 const GlobalVotingStatsChart = lazy(() => import('./components/generalstats/GlobalVotingStatsChart').then(m => ({ default: m.GlobalVotingStatsChart })));
 
-const BRGeneralStatsChart = lazy(() => import('./components/brstats/BRGeneralStatsChart').then(m => ({ default: m.BRGeneralStatsChart })));
+const BRPlayersStatsChart = lazy(() => import('./components/brstats/BRPlayersStatsChart').then(m => ({ default: m.BRPlayersStatsChart })));
+const BRKillsStatsChart = lazy(() => import('./components/brstats/BRKillsStatsChart').then(m => ({ default: m.BRKillsStatsChart })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
 
@@ -160,6 +161,21 @@ const GENERAL_STATS_MENU = [
   },
 ];
 
+const BR_STATS_MENU = [
+  { 
+    key: 'brPlayers', 
+    label: 'Joueurs', 
+    component: BRPlayersStatsChart,
+    description: 'Classement et participations Battle Royale'
+  },
+  { 
+    key: 'brKills', 
+    label: 'Kills', 
+    component: BRKillsStatsChart,
+    description: 'Statistiques de score et kills'
+  },
+];
+
 export default function App() {
   return (
     <SettingsProvider>
@@ -179,6 +195,7 @@ function MainApp() {
   const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
+  const [selectedBRStat, setSelectedBRStat] = useState('brPlayers');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
   const [showChangelog, setShowChangelog] = useState(false);
 
@@ -211,6 +228,8 @@ function MainApp() {
           setSelectedPlayerStat(requestedTab.subTab);
         } else if (requestedTab.mainTab === 'general') {
           setSelectedGeneralStat(requestedTab.subTab);
+        } else if (requestedTab.mainTab === 'br') {
+          setSelectedBRStat(requestedTab.subTab);
         }
       }
       clearTabNavigation();
@@ -363,11 +382,27 @@ function MainApp() {
         );
       }
       case 'br': {
+        const SelectedBRComponent = BR_STATS_MENU.find(m => m.key === selectedBRStat)?.component ?? BRPlayersStatsChart;
         return (
-          <div className="lycans-dashboard-content">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <BRGeneralStatsChart />
-            </Suspense>
+          <div>
+            <nav className="lycans-submenu">
+              {BR_STATS_MENU.map(item => (
+                <button
+                  key={item.key}
+                  className={`lycans-submenu-btn${selectedBRStat === item.key ? ' active' : ''}`}
+                  onClick={() => setSelectedBRStat(item.key)}
+                  type="button"
+                  title={item.description}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div className="lycans-dashboard-content">
+              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+                <SelectedBRComponent />
+              </Suspense>
+            </div>
           </div>
         );
       }
