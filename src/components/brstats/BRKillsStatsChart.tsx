@@ -118,16 +118,21 @@ export function BRKillsStatsChart() {
                         score <= 6 ? '5-6' : '7+';
       
       if (!acc[scoreRange]) {
-        acc[scoreRange] = 0;
+        acc[scoreRange] = { count: 0, wins: 0 };
       }
-      acc[scoreRange]++;
+      acc[scoreRange].count++;
+      if (participation.Gagnant) {
+        acc[scoreRange].wins++;
+      }
       return acc;
-    }, {} as Record<string, number>);
+    }, {} as Record<string, { count: number; wins: number }>);
 
-    const scoreData = Object.entries(scoreDistribution).map(([range, count]) => ({
+    const scoreData = Object.entries(scoreDistribution).map(([range, data]) => ({
       range,
-      count,
-      percentage: ((count / totalParticipations) * 100).toFixed(1)
+      count: data.count,
+      wins: data.wins,
+      percentage: ((data.count / totalParticipations) * 100).toFixed(1),
+      winRate: data.count > 0 ? ((data.wins / data.count) * 100).toFixed(1) : '0.0'
     }));
 
     return {
@@ -309,7 +314,28 @@ export function BRKillsStatsChart() {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ range, percentage }) => `${range}: ${percentage}%`}
+                  label={(props: any) => {
+                    const { cx, cy, midAngle, outerRadius, range, percentage, fill } = props;
+                    const RADIAN = Math.PI / 180;
+                    const radius = outerRadius + 30;
+                    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                    
+                    // Offset the 7+ label upward to avoid overlap with 5-6
+                    const yOffset = range === '7+' ? -12 : 0;
+                    
+                    return (
+                      <text
+                        x={x}
+                        y={y + yOffset}
+                        fill={fill}
+                        textAnchor={x > cx ? 'start' : 'end'}
+                        dominantBaseline="central"
+                      >
+                        {`${range}: ${percentage}%`}
+                      </text>
+                    );
+                  }}
                   outerRadius={140}
                   fill="#8884d8"
                   dataKey="count"
@@ -318,7 +344,36 @@ export function BRKillsStatsChart() {
                     <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value: any) => [value, 'Participations']} />
+                <Tooltip 
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const data = payload[0].payload;
+                      return (
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: '12px', 
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                        }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: '8px', fontSize: '1rem' }}>
+                            {data.range} {data.range === '1' ? 'kill' : 'kills'}
+                          </div>
+                          <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                            <div>Nombre de parties: <strong>{data.count}</strong></div>
+                            <div>Pourcentage: <strong>{data.percentage}%</strong></div>
+                            <div>Taux de victoire: <strong>{data.winRate}%</strong></div>
+                            <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                              ({data.wins} victoire{data.wins !== 1 ? 's' : ''})
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
               </PieChart>
             </ResponsiveContainer>
           </FullscreenChart>
