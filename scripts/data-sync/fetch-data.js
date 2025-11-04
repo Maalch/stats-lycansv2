@@ -169,11 +169,25 @@ async function saveDataToFile(filename, data) {
 async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
   console.log('\n📋 Merging joueurs data with AWS game log players...');
   
-  // Start with legacy joueurs data or empty structure
-  const joueursData = legacyJoueursData ? JSON.parse(JSON.stringify(legacyJoueursData)) : {
-    TotalRecords: 0,
-    Players: []
-  };
+  // Start with legacy joueurs data, or try to read existing file if API failed
+  let joueursData;
+  if (legacyJoueursData) {
+    joueursData = JSON.parse(JSON.stringify(legacyJoueursData));
+  } else {
+    // API failed - try to read existing joueurs.json to preserve data
+    try {
+      const existingJoueursPath = path.join(ABSOLUTE_DATA_DIR, 'joueurs.json');
+      const existingJoueursContent = await fs.readFile(existingJoueursPath, 'utf-8');
+      joueursData = JSON.parse(existingJoueursContent);
+      console.log(`⚠️  Legacy API unavailable - using existing joueurs.json with ${joueursData.TotalRecords} players`);
+    } catch (error) {
+      console.log('⚠️  No existing joueurs.json found - starting with empty player list');
+      joueursData = {
+        TotalRecords: 0,
+        Players: []
+      };
+    }
+  }
   
   // Create a map of existing players by Steam ID and username for quick lookup
   const existingPlayersBySteamID = new Map();
@@ -315,7 +329,8 @@ async function main() {
             await saveDataToFile('rawBRData.json', data);
           } else if (endpoint === 'joueurs') {
             legacyJoueursData = data;
-            await saveDataToFile('joueurs.json', data);
+            // Don't save directly - will be merged with AWS players later
+            console.log(`✓ Fetched ${data.TotalRecords || data.Players?.length || 0} players from legacy API`);
           }
         } else {
           console.warn(`⚠️  No valid data received for ${endpoint} - existing file will not be overwritten`);
