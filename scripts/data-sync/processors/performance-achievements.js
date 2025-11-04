@@ -220,7 +220,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
     const playerData = topOverallPerformers.find(p => p.player === playerId);
     achievements.push(createPerformanceAchievement(
       `hall-of-fame-${suffix ? 'modded' : 'all'}`,
-      `🏆 Top ${overallPerformanceRank.rank} Hall of Fame${suffix}`,
+      `🏆 Top ${overallPerformanceRank.rank} Hall of Fame${suffix} (en ${playerData.camp})`,
       `${overallPerformanceRank.rank}${overallPerformanceRank.rank === 1 ? 'er' : 'ème'} meilleur overperformer: +${overallPerformanceRank.performance.toFixed(1)} en ${playerData.camp} (${playerData.bestCampGames} parties, min. 25)`,
       'good',
       overallPerformanceRank.rank,
