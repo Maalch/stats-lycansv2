@@ -6,12 +6,12 @@
  * Helper function to find a player's rank in a sorted list
  * Handles ties properly - players with the same value get the same rank
  * @param {Array} sortedPlayers - Array of player stats sorted by the metric
- * @param {string} playerName - Name of the player to find
+ * @param {string} playerId - Steam ID or unique identifier of the player to find
  * @param {Function} valueExtractor - Function to extract the value from player stat
  * @returns {Object|null} - Object with rank and value, or null if not found
  */
-export function findPlayerRank(sortedPlayers, playerName, valueExtractor) {
-  const index = sortedPlayers.findIndex(p => p.player === playerName);
+export function findPlayerRank(sortedPlayers, playerId, valueExtractor) {
+  const index = sortedPlayers.findIndex(p => p.player === playerId);
   if (index === -1) return null;
   
   const playerValue = valueExtractor(sortedPlayers[index]);
@@ -37,11 +37,11 @@ export function findPlayerRank(sortedPlayers, playerName, valueExtractor) {
  * Helper to find player's camp performance rank
  * Handles ties properly - players with the same performance get the same rank
  * @param {Array} sortedPlayers - Array of sorted camp stats
- * @param {string} playerName - Name of the player to find
+ * @param {string} playerId - Steam ID or unique identifier of the player to find
  * @returns {Object|null} - Object with rank, wins, games, and percentage
  */
-export function findPlayerCampRank(sortedPlayers, playerName) {
-  const index = sortedPlayers.findIndex(p => p.player === playerName);
+export function findPlayerCampRank(sortedPlayers, playerId) {
+  const index = sortedPlayers.findIndex(p => p.player === playerId);
   if (index === -1) return null;
 
   const playerData = sortedPlayers[index];
@@ -102,12 +102,12 @@ export function createAchievement(id, title, description, type, rank, value, tot
  * Helper function to find a player's rank in a map-based sorted list
  * Handles ties properly - players with the same win rate get the same rank
  * @param {Array} sortedPlayers - Array of player map stats sorted by the metric
- * @param {string} playerName - Name of the player to find
+ * @param {string} playerId - Steam ID or unique identifier of the player to find
  * @param {string} mapType - 'village' or 'chateau'
  * @returns {Object|null} - Object with rank, value, and games, or null if not found
  */
-export function findPlayerMapRank(sortedPlayers, playerName, mapType) {
-  const index = sortedPlayers.findIndex(p => p.player === playerName);
+export function findPlayerMapRank(sortedPlayers, playerId, mapType) {
+  const index = sortedPlayers.findIndex(p => p.player === playerId);
   if (index === -1) return null;
   
   const playerData = sortedPlayers[index];

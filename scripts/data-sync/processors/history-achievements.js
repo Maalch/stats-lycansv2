@@ -7,11 +7,11 @@ import { findPlayerMapRank, createAchievement } from '../helpers.js';
 /**
  * Process history/map-based achievements for a player
  * @param {Array} mapStats - Array of player map statistics
- * @param {string} playerName - Name of the player
+ * @param {string} playerId - Steam ID or unique identifier of the player
  * @param {string} suffix - Suffix for achievement titles (e.g., ' (Parties Moddées)')
  * @returns {Array} - Array of achievements
  */
-export function processHistoryAchievements(mapStats, playerName, suffix) {
+export function processHistoryAchievements(mapStats, playerId, suffix) {
   const achievements = [];
 
   if (!mapStats || mapStats.length === 0) return achievements;
@@ -20,7 +20,7 @@ export function processHistoryAchievements(mapStats, playerName, suffix) {
   const eligibleForVillage = mapStats.filter(p => p.villageGames >= 10);
   if (eligibleForVillage.length > 0) {
     const byVillageWinRate = [...eligibleForVillage].sort((a, b) => b.villageWinRate - a.villageWinRate);
-    const villageWinRateRank = findPlayerMapRank(byVillageWinRate, playerName, 'village');
+    const villageWinRateRank = findPlayerMapRank(byVillageWinRate, playerId, 'village');
     if (villageWinRateRank) {
       achievements.push(createAchievement(
         `village-winrate-${suffix ? 'modded' : 'all'}`,
@@ -44,7 +44,7 @@ export function processHistoryAchievements(mapStats, playerName, suffix) {
   const eligibleForChateau = mapStats.filter(p => p.chateauGames >= 10);
   if (eligibleForChateau.length > 0) {
     const byChateauWinRate = [...eligibleForChateau].sort((a, b) => b.chateauWinRate - a.chateauWinRate);
-    const chateauWinRateRank = findPlayerMapRank(byChateauWinRate, playerName, 'chateau');
+    const chateauWinRateRank = findPlayerMapRank(byChateauWinRate, playerId, 'chateau');
     if (chateauWinRateRank) {
       achievements.push(createAchievement(
         `chateau-winrate-${suffix ? 'modded' : 'all'}`,

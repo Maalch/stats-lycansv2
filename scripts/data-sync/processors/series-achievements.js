@@ -17,11 +17,11 @@ function findTopSeriesPerformers(seriesData, minLength = 2) {
 /**
  * Helper function to check a player's rank in series
  * @param {Array} topSeries - Top series array
- * @param {string} playerName - Player name to find
+ * @param {string} playerId - Player ID (Steam ID) to find
  * @returns {Object|null} - Rank info or null
  */
-function findPlayerSeriesRank(topSeries, playerName) {
-  const index = topSeries.findIndex(series => series.player === playerName);
+function findPlayerSeriesRank(topSeries, playerId) {
+  const index = topSeries.findIndex(series => series.player === playerId);
   if (index === -1) return null;
   
   const playerSeries = topSeries[index];
@@ -61,18 +61,18 @@ function createSeriesAchievement(id, title, description, type, rank, value, tota
 /**
  * Process series achievements for a specific player
  * @param {Object} seriesData - Player series data
- * @param {string} playerName - Player name
+ * @param {string} playerId - Player ID (Steam ID)
  * @param {string} suffix - Suffix for achievement titles
  * @returns {Array} - Array of achievements
  */
-export function processSeriesAchievements(seriesData, playerName, suffix) {
+export function processSeriesAchievements(seriesData, playerId, suffix) {
   if (!seriesData) return [];
 
   const achievements = [];
 
   // 1. Longest Villageois series
   const topVillageoisSeries = findTopSeriesPerformers(seriesData.allVillageoisSeries, 3);
-  const villageoisRank = findPlayerSeriesRank(topVillageoisSeries, playerName);
+  const villageoisRank = findPlayerSeriesRank(topVillageoisSeries, playerId);
   if (villageoisRank) {
     achievements.push(createSeriesAchievement(
       `villageois-series-${suffix ? 'modded' : 'all'}`,
@@ -92,7 +92,7 @@ export function processSeriesAchievements(seriesData, playerName, suffix) {
 
   // 2. Longest Loup series
   const topLoupSeries = findTopSeriesPerformers(seriesData.allLoupsSeries, 2);
-  const loupRank = findPlayerSeriesRank(topLoupSeries, playerName);
+  const loupRank = findPlayerSeriesRank(topLoupSeries, playerId);
   if (loupRank) {
     achievements.push(createSeriesAchievement(
       `loup-series-${suffix ? 'modded' : 'all'}`,
@@ -112,7 +112,7 @@ export function processSeriesAchievements(seriesData, playerName, suffix) {
 
   // 3. Longest win series
   const topWinSeries = findTopSeriesPerformers(seriesData.allWinSeries, 3);
-  const winRank = findPlayerSeriesRank(topWinSeries, playerName);
+  const winRank = findPlayerSeriesRank(topWinSeries, playerId);
   if (winRank) {
     achievements.push(createSeriesAchievement(
       `win-series-${suffix ? 'modded' : 'all'}`,
@@ -132,7 +132,7 @@ export function processSeriesAchievements(seriesData, playerName, suffix) {
 
   // 4. Longest loss series (bad achievement)
   const topLossSeries = findTopSeriesPerformers(seriesData.allLossSeries, 3);
-  const lossRank = findPlayerSeriesRank(topLossSeries, playerName);
+  const lossRank = findPlayerSeriesRank(topLossSeries, playerId);
   if (lossRank) {
     achievements.push(createSeriesAchievement(
       `loss-series-${suffix ? 'modded' : 'all'}`,

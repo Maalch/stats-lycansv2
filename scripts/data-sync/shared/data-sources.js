@@ -5,7 +5,7 @@
 export const DATA_SOURCES = {
   main: {
     name: 'Main Team',
-    outputDir: '../../data',
+    outputDir: 'data',
     gameFilter: (gameId) => gameId.startsWith('Ponce-'), // Only Ponce- games
     generateJoueurs: true, // Generate from game log
     modVersionLabel: 'Multiple AWS Versions',
@@ -14,7 +14,7 @@ export const DATA_SOURCES = {
   
   discord: {
     name: 'Discord Team',
-    outputDir: '../../data/discord',
+    outputDir: 'data/discord',
     gameFilter: (gameId) => gameId.startsWith('Nales-'), // Only Nales- games
     generateJoueurs: true, // Generate from game log
     modVersionLabel: 'Discord Team - Multiple AWS Versions',

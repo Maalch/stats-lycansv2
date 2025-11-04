@@ -159,3 +159,36 @@ export function getPlayerFinalRole(mainRoleInitial, roleChanges) {
 
   return currentRole;
 }
+
+/**
+ * Get the unique identifier for a player
+ * Uses Steam ID if available, otherwise falls back to Username
+ * 
+ * @param {Object} player - Player object with ID and Username
+ * @returns {string} - The unique identifier (Steam ID or Username)
+ */
+export function getPlayerId(player) {
+  return player.ID || player.Username;
+}
+
+/**
+ * Get the canonical display name for a player
+ * 
+ * Looks up the player's canonical name from joueurs.json using their Steam ID.
+ * 
+ * @param {Object} player - Player object with ID and Username
+ * @param {Object|null} joueursData - Optional joueurs data
+ * @returns {string} - The canonical display name
+ */
+export function getCanonicalPlayerName(player, joueursData = null) {
+  // Look up canonical name from joueurs.json using Steam ID
+  if (player.ID && joueursData?.Players) {
+    const joueurEntry = joueursData.Players.find(p => p.SteamID === player.ID || p.ID === player.ID);
+    if (joueurEntry) {
+      return joueurEntry.Joueur;
+    }
+  }
+  
+  // Fallback to username (shouldn't happen if all players have Steam IDs)
+  return player.Username;
+}

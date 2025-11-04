@@ -7,18 +7,18 @@ import { findPlayerRank, createAchievement } from '../helpers.js';
 /**
  * Process general statistics achievements for a player
  * @param {Array} playerStats - Array of player statistics
- * @param {string} playerName - Name of the player
+ * @param {string} playerId - Steam ID or unique identifier of the player
  * @param {string} suffix - Suffix for achievement titles (e.g., ' (Parties Moddées)')
  * @returns {Array} - Array of achievements
  */
-export function processGeneralAchievements(playerStats, playerName, suffix) {
+export function processGeneralAchievements(playerStats, playerId, suffix) {
   const achievements = [];
 
   if (!playerStats || playerStats.length === 0) return achievements;
 
   // 1. Participations ranking
   const byParticipations = [...playerStats].sort((a, b) => b.gamesPlayed - a.gamesPlayed);
-  const participationRank = findPlayerRank(byParticipations, playerName, p => p.gamesPlayed);
+  const participationRank = findPlayerRank(byParticipations, playerId, p => p.gamesPlayed);
   if (participationRank) {
     achievements.push(createAchievement(
       `participation-${suffix ? 'modded' : 'all'}`,
@@ -34,7 +34,7 @@ export function processGeneralAchievements(playerStats, playerName, suffix) {
   // 2. Best win rate ranking (min. 10 games)
   const eligibleFor10Games = playerStats.filter(p => p.gamesPlayed >= 10);
   const byWinRate10 = [...eligibleFor10Games].sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent));
-  const winRate10Rank = findPlayerRank(byWinRate10, playerName, p => parseFloat(p.winPercent));
+  const winRate10Rank = findPlayerRank(byWinRate10, playerId, p => parseFloat(p.winPercent));
   if (winRate10Rank) {
     achievements.push(createAchievement(
       `winrate-10-${suffix ? 'modded' : 'all'}`,
@@ -51,7 +51,7 @@ export function processGeneralAchievements(playerStats, playerName, suffix) {
   const eligibleFor50Games = playerStats.filter(p => p.gamesPlayed >= 50);
   if (eligibleFor50Games.length > 0) {
     const byWinRate50 = [...eligibleFor50Games].sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent));
-    const winRate50Rank = findPlayerRank(byWinRate50, playerName, p => parseFloat(p.winPercent));
+    const winRate50Rank = findPlayerRank(byWinRate50, playerId, p => parseFloat(p.winPercent));
     if (winRate50Rank) {
       achievements.push(createAchievement(
         `winrate-50-${suffix ? 'modded' : 'all'}`,

@@ -2,7 +2,7 @@
  * Statistics computation functions for achievement generation
  */
 
-import { getPlayerFinalRole } from '../../src/utils/datasyncExport.js';
+import { getPlayerFinalRole, getPlayerId } from '../../src/utils/datasyncExport.js';
 import { DeathTypeCode, getPlayerCampFromRole, getPlayerMainCampFromRole } from '../../src/utils/datasyncExport.js';
 
 /**
@@ -48,11 +48,13 @@ export function computePlayerStats(gameData) {
 
     // Process each player in the game
     game.PlayerStats.forEach(player => {
+      const playerId = getPlayerId(player);
       const playerName = player.Username;
       
-      if (!playerStatsMap.has(playerName)) {
-        playerStatsMap.set(playerName, {
-          player: playerName,
+      if (!playerStatsMap.has(playerId)) {
+        playerStatsMap.set(playerId, {
+          playerName: playerName,
+          playerId: playerId,
           gamesPlayed: 0,
           wins: 0,
           camps: {
@@ -63,7 +65,7 @@ export function computePlayerStats(gameData) {
         });
       }
 
-      const stats = playerStatsMap.get(playerName);
+      const stats = playerStatsMap.get(playerId);
       stats.gamesPlayed++;
 
       if (player.Victorious) {
@@ -88,6 +90,8 @@ export function computePlayerStats(gameData) {
   // Convert to array and calculate percentages
   const playerStats = Array.from(playerStatsMap.values()).map(stats => ({
     ...stats,
+    player: stats.playerId, // Use playerId as the main player identifier
+    playerName: stats.playerName, // Keep playerName for reference
     gamesPlayedPercent: ((stats.gamesPlayed / gameData.length) * 100).toFixed(1),
     winPercent: stats.gamesPlayed > 0 ? ((stats.wins / stats.gamesPlayed) * 100).toFixed(1) : '0.0'
   }));
@@ -100,24 +104,31 @@ export function computePlayerStats(gameData) {
 
 /**
  * Compute player game history from game data
- * @param {string} playerName - Name of the player
+ * @param {string} playerIdentifier - Player ID (Steam ID) or username
  * @param {Array} gameData - Array of game entries
  * @returns {Object|null} - Player history data or null
  */
-export function computePlayerGameHistory(playerName, gameData) {
-  if (!playerName || playerName.trim() === '' || gameData.length === 0) {
+export function computePlayerGameHistory(playerIdentifier, gameData) {
+  if (!playerIdentifier || playerIdentifier.trim() === '' || gameData.length === 0) {
     return null;
   }
 
   const playerGames = [];
+  let playerName = playerIdentifier; // Will be updated when we find the player
 
   gameData.forEach(game => {
-    // Find the player in this game's PlayerStats
+    // Find the player in this game's PlayerStats by ID or username
     const playerStat = game.PlayerStats.find(
-      player => player.Username.toLowerCase() === playerName.toLowerCase()
+      player => getPlayerId(player) === playerIdentifier || 
+                player.Username.toLowerCase() === playerIdentifier.toLowerCase()
     );
 
     if (playerStat) {
+      // Update playerName to use the actual username from the first found game
+      if (playerName === playerIdentifier) {
+        playerName = playerStat.Username;
+      }
+      
       // Get player's camp from their final role in the game
       const roleName = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
       const playerCamp = getPlayerCampFromRole(roleName);
@@ -172,24 +183,29 @@ export function computePlayerGameHistory(playerName, gameData) {
  * @returns {Array} - Array of player map statistics
  */
 export function computeMapStats(gameData) {
-  // Get all unique players
-  const allPlayers = new Set();
+  // Get all unique players by ID
+  const allPlayersMap = new Map();
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
-      allPlayers.add(playerStat.Username);
+      const playerId = getPlayerId(playerStat);
+      if (!allPlayersMap.has(playerId)) {
+        allPlayersMap.set(playerId, playerStat.Username);
+      }
     });
   });
 
   // Calculate stats for each player
   const playerMapStats = [];
-  allPlayers.forEach(playerName => {
-    const playerHistory = computePlayerGameHistory(playerName, gameData);
+  allPlayersMap.forEach((playerName, playerId) => {
+    const playerHistory = computePlayerGameHistory(playerId, gameData);
     if (playerHistory && playerHistory.mapStats) {
       const villageStats = playerHistory.mapStats['Village'] || { appearances: 0, wins: 0, winRate: 0 };
       const chateauStats = playerHistory.mapStats['Château'] || { appearances: 0, wins: 0, winRate: 0 };
       
       playerMapStats.push({
-        player: playerName,
+        player: playerId, // Use playerId as the main player identifier
+        playerName: playerName, // Keep playerName for reference
+        playerId: playerId,
         villageWinRate: villageStats.winRate,
         villageGames: villageStats.appearances,
         chateauWinRate: chateauStats.winRate,
@@ -221,6 +237,7 @@ function extractDeathsFromGame(game) {
       const deathTypeCode = player.DeathType;
       
       deaths.push({
+        playerId: getPlayerId(player),
         playerName: player.Username,
         deathType: deathTypeCode,
         killerName: player.KillerName || null,
@@ -254,6 +271,7 @@ function extractKillsFromGame(game) {
       ) {
         kills.push({
           killerName: player.KillerName,
+          victimId: getPlayerId(player),
           victimName: player.Username,
           deathType: deathType,
           gameId: game.Id
@@ -297,10 +315,10 @@ export function computeDeathStatistics(gameData) {
       });
     });
     
-    // Count total games per player
+    // Count total games per player using their ID
     game.PlayerStats.forEach(player => {
-      const playerName = player.Username;
-      playerGameCounts[playerName] = (playerGameCounts[playerName] || 0) + 1;
+      const playerId = getPlayerId(player);
+      playerGameCounts[playerId] = (playerGameCounts[playerId] || 0) + 1;
     });
   });
 
@@ -330,48 +348,63 @@ export function computeDeathStatistics(gameData) {
     });
   });
 
+  // Map killer names to player IDs for game count lookup
+  const killerNameToId = new Map();
+  filteredGameData.forEach(game => {
+    game.PlayerStats.forEach(player => {
+      killerNameToId.set(player.Username, getPlayerId(player));
+    });
+  });
+
   // Convert to array and calculate percentages and averages
-  const killerStats = Object.entries(killerCounts).map(([killerName, data]) => ({
-    killerName,
-    kills: data.kills,
-    victims: Array.from(data.victims),
-    percentage: totalDeaths > 0 ? (data.kills / totalDeaths) * 100 : 0,
-    gamesPlayed: playerGameCounts[killerName] || 0,
-    averageKillsPerGame: (playerGameCounts[killerName] || 0) > 0 ? 
-      data.kills / (playerGameCounts[killerName] || 1) : 0,
-    killsByDeathType: data.killsByDeathType
-  })).sort((a, b) => b.kills - a.kills);
+  const killerStats = Object.entries(killerCounts).map(([killerName, data]) => {
+    const killerId = killerNameToId.get(killerName) || killerName;
+    return {
+      killerId,  // Add Steam ID as primary identifier
+      killerName,
+      kills: data.kills,
+      victims: Array.from(data.victims),
+      percentage: totalDeaths > 0 ? (data.kills / totalDeaths) * 100 : 0,
+      gamesPlayed: playerGameCounts[killerId] || 0,
+      averageKillsPerGame: (playerGameCounts[killerId] || 0) > 0 ? 
+        data.kills / (playerGameCounts[killerId] || 1) : 0,
+      killsByDeathType: data.killsByDeathType
+    };
+  }).sort((a, b) => b.kills - a.kills);
 
   // Calculate player death statistics
   const playerDeathCounts = {};
   
   allDeaths.forEach(death => {
-    if (!playerDeathCounts[death.playerName]) {
-      playerDeathCounts[death.playerName] = {
+    const playerId = death.playerId;
+    if (!playerDeathCounts[playerId]) {
+      playerDeathCounts[playerId] = {
+        playerName: death.playerName,
         totalDeaths: 0,
         deathsByType: {},
         killedBy: {}
       };
     }
     
-    playerDeathCounts[death.playerName].totalDeaths++;
-    playerDeathCounts[death.playerName].deathsByType[death.deathType] = 
-      (playerDeathCounts[death.playerName].deathsByType[death.deathType] || 0) + 1;
+    playerDeathCounts[playerId].totalDeaths++;
+    playerDeathCounts[playerId].deathsByType[death.deathType] = 
+      (playerDeathCounts[playerId].deathsByType[death.deathType] || 0) + 1;
     
     if (death.killerName) {
-      playerDeathCounts[death.playerName].killedBy[death.killerName] = 
-        (playerDeathCounts[death.playerName].killedBy[death.killerName] || 0) + 1;
+      playerDeathCounts[playerId].killedBy[death.killerName] = 
+        (playerDeathCounts[playerId].killedBy[death.killerName] || 0) + 1;
     }
   });
 
-  const playerDeathStats = Object.entries(playerDeathCounts).map(([playerName, data]) => ({
-    playerName,
+  const playerDeathStats = Object.entries(playerDeathCounts).map(([playerId, data]) => ({
+    player: playerId, // Use playerId as the main player identifier
+    playerName: data.playerName,
     totalDeaths: data.totalDeaths,
     deathsByType: data.deathsByType,
     killedBy: data.killedBy,
-    gamesPlayed: playerGameCounts[playerName] || 0,
-    deathRate: (playerGameCounts[playerName] || 0) > 0 ? 
-      data.totalDeaths / (playerGameCounts[playerName] || 1) : 0
+    gamesPlayed: playerGameCounts[playerId] || 0,
+    deathRate: (playerGameCounts[playerId] || 0) > 0 ? 
+      data.totalDeaths / (playerGameCounts[playerId] || 1) : 0
   })).sort((a, b) => b.totalDeaths - a.totalDeaths);
 
   return {
@@ -406,6 +439,7 @@ export function computePlayerCampPerformance(gameData) {
       const roleName = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
       const camp = getPlayerCampFromRole(roleName, { regroupVillagers: false, regroupWolfSubRoles: false });
       const campGrouped = getPlayerCampFromRole(roleName, { regroupVillagers: true, regroupWolfSubRoles: true });
+      const playerId = getPlayerId(player);
       const playerName = player.Username;
       const won = player.Victorious;
 
@@ -413,33 +447,33 @@ export function computePlayerCampPerformance(gameData) {
       if (!campStats[camp]) {
         campStats[camp] = { totalGames: 0, wins: 0, winRate: 0, players: {} };
       }
-      if (!playerCampPerformance[playerName]) {
-        playerCampPerformance[playerName] = { totalGames: 0, camps: {} };
+      if (!playerCampPerformance[playerId]) {
+        playerCampPerformance[playerId] = { playerName: playerName, totalGames: 0, camps: {} };
       }
-      if (!playerCampPerformance[playerName].camps[camp]) {
-        playerCampPerformance[playerName].camps[camp] = { games: 0, wins: 0, winRate: 0, performance: 0 };
+      if (!playerCampPerformance[playerId].camps[camp]) {
+        playerCampPerformance[playerId].camps[camp] = { games: 0, wins: 0, winRate: 0, performance: 0 };
       }
       campStats[camp].totalGames++;
       if (won) campStats[camp].wins++;
-      playerCampPerformance[playerName].totalGames++;
-      playerCampPerformance[playerName].camps[camp].games++;
-      if (won) playerCampPerformance[playerName].camps[camp].wins++;
+      playerCampPerformance[playerId].totalGames++;
+      playerCampPerformance[playerId].camps[camp].games++;
+      if (won) playerCampPerformance[playerId].camps[camp].wins++;
 
       // Process grouped camps ("Camp Villageois", "Camp Loup")
       if (!campStatsGrouped[campGrouped]) {
         campStatsGrouped[campGrouped] = { totalGames: 0, wins: 0, winRate: 0, players: {} };
       }
-      if (!playerCampPerformanceGrouped[playerName]) {
-        playerCampPerformanceGrouped[playerName] = { totalGames: 0, camps: {} };
+      if (!playerCampPerformanceGrouped[playerId]) {
+        playerCampPerformanceGrouped[playerId] = { playerName: playerName, totalGames: 0, camps: {} };
       }
-      if (!playerCampPerformanceGrouped[playerName].camps[campGrouped]) {
-        playerCampPerformanceGrouped[playerName].camps[campGrouped] = { games: 0, wins: 0, winRate: 0, performance: 0 };
+      if (!playerCampPerformanceGrouped[playerId].camps[campGrouped]) {
+        playerCampPerformanceGrouped[playerId].camps[campGrouped] = { games: 0, wins: 0, winRate: 0, performance: 0 };
       }
       campStatsGrouped[campGrouped].totalGames++;
       if (won) campStatsGrouped[campGrouped].wins++;
-      playerCampPerformanceGrouped[playerName].totalGames++;
-      playerCampPerformanceGrouped[playerName].camps[campGrouped].games++;
-      if (won) playerCampPerformanceGrouped[playerName].camps[campGrouped].wins++;
+      playerCampPerformanceGrouped[playerId].totalGames++;
+      playerCampPerformanceGrouped[playerId].camps[campGrouped].games++;
+      if (won) playerCampPerformanceGrouped[playerId].camps[campGrouped].wins++;
     });
   });
 
@@ -456,9 +490,9 @@ export function computePlayerCampPerformance(gameData) {
   });
 
   // Calculate player win rates and performance vs camp average (individual)
-  Object.keys(playerCampPerformance).forEach(playerName => {
-    Object.keys(playerCampPerformance[playerName].camps).forEach(camp => {
-      const playerCampStat = playerCampPerformance[playerName].camps[camp];
+  Object.keys(playerCampPerformance).forEach(playerId => {
+    Object.keys(playerCampPerformance[playerId].camps).forEach(camp => {
+      const playerCampStat = playerCampPerformance[playerId].camps[camp];
       
       if (playerCampStat.games > 0) {
         playerCampStat.winRate = (playerCampStat.wins / playerCampStat.games) * 100;
@@ -472,9 +506,9 @@ export function computePlayerCampPerformance(gameData) {
   });
 
   // Calculate player win rates and performance vs camp average (grouped)
-  Object.keys(playerCampPerformanceGrouped).forEach(playerName => {
-    Object.keys(playerCampPerformanceGrouped[playerName].camps).forEach(camp => {
-      const playerCampStat = playerCampPerformanceGrouped[playerName].camps[camp];
+  Object.keys(playerCampPerformanceGrouped).forEach(playerId => {
+    Object.keys(playerCampPerformanceGrouped[playerId].camps).forEach(camp => {
+      const playerCampStat = playerCampPerformanceGrouped[playerId].camps[camp];
       
       if (playerCampStat.games > 0) {
         playerCampStat.winRate = (playerCampStat.wins / playerCampStat.games) * 100;
@@ -492,8 +526,8 @@ export function computePlayerCampPerformance(gameData) {
   const minGamesToInclude = 3;
 
   // Add individual camp stats
-  Object.keys(playerCampPerformance).forEach(playerName => {
-    const playerData = playerCampPerformance[playerName];
+  Object.keys(playerCampPerformance).forEach(playerId => {
+    const playerData = playerCampPerformance[playerId];
     
     Object.keys(playerData.camps).forEach(camp => {
       const campData = playerData.camps[camp];
@@ -501,7 +535,9 @@ export function computePlayerCampPerformance(gameData) {
       // Only include if player has played this camp multiple times
       if (campData.games >= minGamesToInclude) {
         allPlayerCampStats.push({
-          player: playerName,
+          player: playerId, // Use playerId as the main player identifier
+          playerName: playerData.playerName,
+          playerId: playerId,
           camp: camp,
           games: campData.games,
           wins: campData.wins,
@@ -514,8 +550,8 @@ export function computePlayerCampPerformance(gameData) {
   });
 
   // Add grouped camp stats ("Camp Villageois", "Camp Loup")
-  Object.keys(playerCampPerformanceGrouped).forEach(playerName => {
-    const playerData = playerCampPerformanceGrouped[playerName];
+  Object.keys(playerCampPerformanceGrouped).forEach(playerId => {
+    const playerData = playerCampPerformanceGrouped[playerId];
     
     Object.keys(playerData.camps).forEach(camp => {
       const campData = playerData.camps[camp];
@@ -524,7 +560,9 @@ export function computePlayerCampPerformance(gameData) {
       if ((camp === 'Villageois' || camp === 'Loup') && campData.games >= minGamesToInclude) {
         const campLabel = camp === 'Villageois' ? 'Camp Villageois' : 'Camp Loup';
         allPlayerCampStats.push({
-          player: playerName,
+          player: playerId, // Use playerId as the main player identifier
+          playerName: playerData.playerName,
+          playerId: playerId,
           camp: campLabel,
           games: campData.games,
           wins: campData.wins,
@@ -542,32 +580,36 @@ export function computePlayerCampPerformance(gameData) {
 /**
  * Get all unique players from game data
  * @param {Array} gameData - Array of game log entries
- * @returns {Set} - Set of player names
+ * @returns {Map} - Map of player ID to player name
  */
 function getAllPlayersFromGames(gameData) {
-  const allPlayers = new Set();
+  const allPlayersMap = new Map();
   
   gameData.forEach(game => {
     if (game.PlayerStats) {
       game.PlayerStats.forEach(playerStat => {
-        allPlayers.add(playerStat.Username.trim());
+        const playerId = getPlayerId(playerStat);
+        if (!allPlayersMap.has(playerId)) {
+          allPlayersMap.set(playerId, playerStat.Username.trim());
+        }
       });
     }
   });
   
-  return allPlayers;
+  return allPlayersMap;
 }
 
 /**
  * Initialize player series tracking state
- * @param {Set} allPlayers - Set of all player names
+ * @param {Map} allPlayersMap - Map of player ID to player name
  * @returns {Object} - Player series state mapping
  */
-function initializePlayerSeriesState(allPlayers) {
+function initializePlayerSeriesState(allPlayersMap) {
   const playerSeriesState = {};
   
-  allPlayers.forEach(player => {
-    playerSeriesState[player] = {
+  allPlayersMap.forEach((playerName, playerId) => {
+    playerSeriesState[playerId] = {
+      playerName: playerName,
       currentVillageoisSeries: 0,
       currentLoupsSeries: 0,
       longestVillageoisSeries: null,
@@ -930,21 +972,22 @@ export function computePlayerSeriesData(gameData) {
 
     if (game.PlayerStats) {
       game.PlayerStats.forEach(playerStat => {
-        const player = playerStat.Username.trim();
-        const playerStats = playerSeriesState[player];
+        const playerId = getPlayerId(playerStat);
+        const playerName = playerStat.Username.trim();
+        const playerStats = playerSeriesState[playerId];
         
         if (playerStats) {
           const playerWon = playerStat.Victorious;
           const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
           
           // Process camp series
-          processCampSeries(playerStats, player, mainCamp, gameDisplayedId, date);
+          processCampSeries(playerStats, playerName, mainCamp, gameDisplayedId, date);
           
           // Process win series
-          processWinSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
+          processWinSeries(playerStats, playerName, playerWon, mainCamp, gameDisplayedId, date);
           
           // Process loss series
-          processLossSeries(playerStats, player, playerWon, mainCamp, gameDisplayedId, date);
+          processLossSeries(playerStats, playerName, playerWon, mainCamp, gameDisplayedId, date);
         }
       });
     }
@@ -1031,8 +1074,12 @@ export function computeVotingStatistics(gameData) {
 
     // Initialize maps for players in this game
     game.PlayerStats.forEach(player => {
-      if (!playerBehaviorMap.has(player.Username)) {
-        playerBehaviorMap.set(player.Username, {
+      const playerId = getPlayerId(player);
+      const playerName = player.Username;
+      
+      if (!playerBehaviorMap.has(playerId)) {
+        playerBehaviorMap.set(playerId, {
+          playerName: playerName,
           totalMeetings: 0,
           totalVotes: 0,
           totalSkips: 0,
@@ -1040,8 +1087,9 @@ export function computeVotingStatistics(gameData) {
         });
       }
       
-      if (!playerAccuracyMap.has(player.Username)) {
-        playerAccuracyMap.set(player.Username, {
+      if (!playerAccuracyMap.has(playerId)) {
+        playerAccuracyMap.set(playerId, {
+          playerName: playerName,
           totalMeetings: 0,
           totalVotes: 0,
           votesForEnemyCamp: 0,
@@ -1049,8 +1097,9 @@ export function computeVotingStatistics(gameData) {
         });
       }
       
-      if (!playerTargetMap.has(player.Username)) {
-        playerTargetMap.set(player.Username, {
+      if (!playerTargetMap.has(playerId)) {
+        playerTargetMap.set(playerId, {
+          playerName: playerName,
           totalTimesTargeted: 0,
           timesTargetedByEnemyCamp: 0,
           timesTargetedByOwnCamp: 0,
@@ -1077,6 +1126,7 @@ export function computeVotingStatistics(gameData) {
         (player.Votes || [])
           .filter(vote => vote.Day === meetingNum)
           .map(vote => ({ 
+            voterId: getPlayerId(player),
             voter: player.Username, 
             vote, 
             voterRole: getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || [])
@@ -1085,13 +1135,14 @@ export function computeVotingStatistics(gameData) {
 
       // Process each alive player
       alivePlayersAtMeeting.forEach(player => {
-        const behavior = playerBehaviorMap.get(player.Username);
-        const accuracy = playerAccuracyMap.get(player.Username);
+        const playerId = getPlayerId(player);
+        const behavior = playerBehaviorMap.get(playerId);
+        const accuracy = playerAccuracyMap.get(playerId);
         behavior.totalMeetings++;
         accuracy.totalMeetings++;
 
         // Find player's vote in this meeting
-        const playerVote = votesInMeeting.find(v => v.voter === player.Username);
+        const playerVote = votesInMeeting.find(v => v.voterId === playerId);
         
         if (!playerVote) {
           // No vote = abstention
@@ -1128,7 +1179,8 @@ export function computeVotingStatistics(gameData) {
           const targetPlayer = game.PlayerStats.find(p => p.Username === v.vote.Target);
           if (!targetPlayer) return;
 
-          const targetStats = playerTargetMap.get(v.vote.Target);
+          const targetPlayerId = getPlayerId(targetPlayer);
+          const targetStats = playerTargetMap.get(targetPlayerId);
           targetStats.totalTimesTargeted++;
 
           // Determine voter and target camps
@@ -1160,15 +1212,15 @@ export function computeVotingStatistics(gameData) {
   });
 
   // Convert maps to final arrays with calculated rates
-  const playerBehaviorStats = Array.from(playerBehaviorMap.entries()).map(([playerName, data]) => {
+  const playerBehaviorStats = Array.from(playerBehaviorMap.entries()).map(([playerId, data]) => {
     const votingRate = data.totalMeetings > 0 ? (data.totalVotes / data.totalMeetings) * 100 : 0;
     const skippingRate = data.totalMeetings > 0 ? (data.totalSkips / data.totalMeetings) * 100 : 0;
     const abstentionRate = data.totalMeetings > 0 ? (data.totalAbstentions / data.totalMeetings) * 100 : 0;
     const aggressivenessScore = votingRate - (skippingRate * 0.5) - (abstentionRate * 0.7);
 
     return {
-      player: playerName,
-      playerName,
+      player: playerId, // Use playerId as the main player identifier
+      playerName: data.playerName,
       totalMeetings: data.totalMeetings,
       totalVotes: data.totalVotes,
       totalSkips: data.totalSkips,
@@ -1180,13 +1232,13 @@ export function computeVotingStatistics(gameData) {
     };
   });
 
-  const playerAccuracyStats = Array.from(playerAccuracyMap.entries()).map(([playerName, data]) => {
+  const playerAccuracyStats = Array.from(playerAccuracyMap.entries()).map(([playerId, data]) => {
     const accuracyRate = data.totalVotes > 0 ? (data.votesForEnemyCamp / data.totalVotes) * 100 : 0;
     const friendlyFireRate = data.totalVotes > 0 ? (data.votesForOwnCamp / data.totalVotes) * 100 : 0;
 
     return {
-      player: playerName,
-      playerName,
+      player: playerId, // Use playerId as the main player identifier
+      playerName: data.playerName,
       totalMeetings: data.totalMeetings,
       totalVotes: data.totalVotes,
       votesForEnemyCamp: data.votesForEnemyCamp,
@@ -1196,14 +1248,14 @@ export function computeVotingStatistics(gameData) {
     };
   });
 
-  const playerTargetStats = Array.from(playerTargetMap.entries()).map(([playerName, data]) => {
+  const playerTargetStats = Array.from(playerTargetMap.entries()).map(([playerId, data]) => {
     const survivalRate = data.totalTimesTargeted > 0 
       ? ((data.totalTimesTargeted - data.eliminationsByVote) / data.totalTimesTargeted) * 100 
       : 100;
 
     return {
-      player: playerName,
-      playerName,
+      player: playerId, // Use playerId as the main player identifier
+      playerName: data.playerName,
       totalTimesTargeted: data.totalTimesTargeted,
       timesTargetedByEnemyCamp: data.timesTargetedByEnemyCamp,
       timesTargetedByOwnCamp: data.timesTargetedByOwnCamp,

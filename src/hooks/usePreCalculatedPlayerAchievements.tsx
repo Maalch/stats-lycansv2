@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { PlayerAchievements } from '../types/achievements';
 import { useSettings } from '../context/SettingsContext';
+import { useJoueursData } from './useJoueursData';
 
 interface PreCalculatedAchievementsData {
   generatedAt: string;
@@ -27,6 +28,7 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
   };
 } {
   const { settings } = useSettings();
+  const { joueursData } = useJoueursData();
   const [achievementsData, setAchievementsData] = useState<PreCalculatedAchievementsData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -73,15 +75,38 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
     };
   }, [settings.dataSource]); // Reload when data source changes
 
-  // Extract player-specific achievements
-  const playerAchievements = playerName && achievementsData?.achievements[playerName] || null;
+  // Extract player-specific achievements by mapping player name → Steam ID → achievements
+  // Achievements are now keyed by Steam ID, so we need to find the player's ID first
+  const playerAchievements = (() => {
+    if (!playerName || !achievementsData) return null;
+    
+    // Find player's Steam ID from joueurs.json
+    const playerInfo = joueursData?.Players?.find(p => p.Joueur === playerName);
+    const steamId = playerInfo?.SteamID;
+    
+    if (!steamId) {
+      console.warn(`⚠️ No Steam ID found for player: ${playerName}`);
+      return null;
+    }
+    
+    // Lookup achievements by Steam ID
+    return achievementsData.achievements[steamId] || null;
+  })();
 
   // Debug logging when a player is selected
   useEffect(() => {
-    if (playerName && achievementsData) {
-      const achievements = achievementsData.achievements[playerName];
+    if (playerName && achievementsData && joueursData) {
+      const playerInfo = joueursData.Players?.find(p => p.Joueur === playerName);
+      const steamId = playerInfo?.SteamID;
+      
+      if (!steamId) {
+        console.log(`❌ No Steam ID found for player: ${playerName}`);
+        return;
+      }
+      
+      const achievements = achievementsData.achievements[steamId];
       if (achievements) {
-        console.log(`🏆 Achievements for ${playerName} (${settings.dataSource}):`, {
+        console.log(`🏆 Achievements for ${playerName} [ID: ${steamId}] (${settings.dataSource}):`, {
           allGames: achievements.allGamesAchievements.length,
           moddedOnly: achievements.moddedOnlyAchievements.length,
           categories: [...new Set([
@@ -90,10 +115,10 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
           ])]
         });
       } else {
-        console.log(`❌ No achievements found for ${playerName} in ${settings.dataSource} data source`);
+        console.log(`❌ No achievements found for ${playerName} [ID: ${steamId}] in ${settings.dataSource} data source`);
       }
     }
-  }, [playerName, achievementsData, settings.dataSource]);
+  }, [playerName, achievementsData, joueursData, settings.dataSource]);
 
   return {
     data: playerAchievements,

@@ -7,11 +7,11 @@ import { findPlayerRank, createAchievement } from '../helpers.js';
 /**
  * Process voting statistics achievements for a player
  * @param {Object} votingStats - Aggregated voting statistics
- * @param {string} playerName - Name of the player
+ * @param {string} playerId - Player ID (Steam ID)
  * @param {string} suffix - Suffix for achievement titles (e.g., ' (Parties Moddées)')
  * @returns {Array} - Array of achievements
  */
-export function processVotingAchievements(votingStats, playerName, suffix) {
+export function processVotingAchievements(votingStats, playerId, suffix) {
   const achievements = [];
 
   if (!votingStats || !votingStats.playerBehaviorStats || votingStats.playerBehaviorStats.length === 0) {
@@ -24,7 +24,7 @@ export function processVotingAchievements(votingStats, playerName, suffix) {
   const eligibleForAggressiveness = playerBehaviorStats.filter(p => p.totalMeetings >= 25);
   if (eligibleForAggressiveness.length > 0) {
     const byAggressiveness = [...eligibleForAggressiveness].sort((a, b) => b.aggressivenessScore - a.aggressivenessScore);
-    const aggressivenessRank = findPlayerRank(byAggressiveness, playerName, p => p.aggressivenessScore);
+    const aggressivenessRank = findPlayerRank(byAggressiveness, playerId, p => p.aggressivenessScore);
     
     if (aggressivenessRank) {
       const isTopRank = aggressivenessRank.rank <= 3;
@@ -56,7 +56,7 @@ export function processVotingAchievements(votingStats, playerName, suffix) {
       // Tiebreaker: total votes (descending - more votes = better)
       return b.totalVotes - a.totalVotes;
     });
-    const accuracyRank = findPlayerRank(byAccuracy, playerName, p => p.accuracyRate);
+    const accuracyRank = findPlayerRank(byAccuracy, playerId, p => p.accuracyRate);
     
     if (accuracyRank) {
       const isTopRank = accuracyRank.rank <= 3;

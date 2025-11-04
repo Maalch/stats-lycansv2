@@ -21,6 +21,9 @@ import {
   computeVotingStatistics
 } from './compute-stats.js';
 
+// Import player identification utilities
+import { getPlayerId } from '../../src/utils/datasyncExport.js';
+
 // Import data source configuration
 import { DATA_SOURCES } from './shared/data-sources.js';
 
@@ -61,47 +64,52 @@ function generateAllPlayerAchievements(gameLogData) {
   const allGamesVotingStats = computeVotingStatistics(allGames);
   const moddedOnlyVotingStats = computeVotingStatistics(moddedGames);
 
-  // Get all unique players
-  const allPlayers = new Set();
+  // Get all unique players by ID
+  const allPlayersMap = new Map();
   allGames.forEach(game => {
     game.PlayerStats.forEach(player => {
-      allPlayers.add(player.Username);
+      const playerId = getPlayerId(player);
+      if (!allPlayersMap.has(playerId)) {
+        allPlayersMap.set(playerId, player.Username);
+      }
     });
   });
 
   // Generate achievements for each player
   const playerAchievements = {};
 
-  allPlayers.forEach(playerName => {
+  allPlayersMap.forEach((playerName, playerId) => {
     const allGamesAchievements = [
-      ...processGeneralAchievements(allGamesStats.playerStats, playerName, ''),
-      ...processHistoryAchievements(allGamesMapStats, playerName, ''),
-      ...processComparisonAchievements(allGamesStats.playerStats, allGames, playerName, ''),
-      ...processKillsAchievements(allGamesDeathStats, playerName, ''),
-      ...processPerformanceAchievements(allGamesCampStats, allGames, playerName, ''),
-      ...processSeriesAchievements(allGamesSeriesData, playerName, ''),
-      ...processVotingAchievements(allGamesVotingStats, playerName, '')
+      ...processGeneralAchievements(allGamesStats.playerStats, playerId, ''),
+      ...processHistoryAchievements(allGamesMapStats, playerId, ''),
+      ...processComparisonAchievements(allGamesStats.playerStats, allGames, playerId, ''),
+      ...processKillsAchievements(allGamesDeathStats, playerId, ''),
+      ...processPerformanceAchievements(allGamesCampStats, allGames, playerId, ''),
+      ...processSeriesAchievements(allGamesSeriesData, playerId, ''),
+      ...processVotingAchievements(allGamesVotingStats, playerId, '')
     ];
     
     const moddedOnlyAchievements = [
-      ...processGeneralAchievements(moddedOnlyStats.playerStats, playerName, ' (Parties Moddées)'),
-      ...processHistoryAchievements(moddedOnlyMapStats, playerName, ' (Parties Moddées)'),
-      ...processComparisonAchievements(moddedOnlyStats.playerStats, moddedGames, playerName, ' (Parties Moddées)'),
-      ...processKillsAchievements(moddedOnlyDeathStats, playerName, ' (Parties Moddées)'),
-      ...processPerformanceAchievements(moddedOnlyCampStats, moddedGames, playerName, ' (Parties Moddées)'),
-      ...processSeriesAchievements(moddedOnlySeriesData, playerName, ' (Parties Moddées)'),
-      ...processVotingAchievements(moddedOnlyVotingStats, playerName, ' (Parties Moddées)')
+      ...processGeneralAchievements(moddedOnlyStats.playerStats, playerId, ' (Parties Moddées)'),
+      ...processHistoryAchievements(moddedOnlyMapStats, playerId, ' (Parties Moddées)'),
+      ...processComparisonAchievements(moddedOnlyStats.playerStats, moddedGames, playerId, ' (Parties Moddées)'),
+      ...processKillsAchievements(moddedOnlyDeathStats, playerId, ' (Parties Moddées)'),
+      ...processPerformanceAchievements(moddedOnlyCampStats, moddedGames, playerId, ' (Parties Moddées)'),
+      ...processSeriesAchievements(moddedOnlySeriesData, playerId, ' (Parties Moddées)'),
+      ...processVotingAchievements(moddedOnlyVotingStats, playerId, ' (Parties Moddées)')
     ];
 
-    playerAchievements[playerName] = {
-      playerId: playerName,
+    // Use playerId as the key in achievements object
+    playerAchievements[playerId] = {
+      playerId: playerId,
+      playerName: playerName, // Keep playerName for reference
       allGamesAchievements,
       moddedOnlyAchievements
     };
   });
 
   return {
-    totalPlayers: allPlayers.size,
+    totalPlayers: allPlayersMap.size,
     totalGames: allGames.length,
     totalModdedGames: moddedGames.length,
     achievements: playerAchievements

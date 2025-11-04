@@ -201,20 +201,20 @@ function createPerformanceAchievement(id, title, description, type, rank, value,
  * Process camp performance achievements for a player
  * @param {Array} campStats - Array of player camp statistics
  * @param {Array} gameData - Array of game entries (for special roles calculation)
- * @param {string} playerName - Player name
+ * @param {string} playerId - Player ID (Steam ID)
  * @param {string} suffix - Suffix for achievement titles
  * @returns {Array} - Array of achievements
  */
-export function processPerformanceAchievements(campStats, gameData, playerName, suffix) {
+export function processPerformanceAchievements(campStats, gameData, playerId, suffix) {
   const achievements = [];
 
   if (!campStats || campStats.length === 0) return achievements;
 
   // 1. Best "overperformer" ranking (min. 25 games in specific camp) - Hall of Fame
   const topOverallPerformers = findTopOverallPerformers(campStats, 25, 25);
-  const overallPerformanceRank = findPlayerCampRank(topOverallPerformers, playerName);
+  const overallPerformanceRank = findPlayerCampRank(topOverallPerformers, playerId);
   if (overallPerformanceRank) {
-    const playerData = topOverallPerformers.find(p => p.player === playerName);
+    const playerData = topOverallPerformers.find(p => p.player === playerId);
     achievements.push(createPerformanceAchievement(
       `hall-of-fame-${suffix ? 'modded' : 'all'}`,
       `🏆 Top ${overallPerformanceRank.rank} Hall of Fame${suffix}`,
@@ -234,7 +234,7 @@ export function processPerformanceAchievements(campStats, gameData, playerName, 
 
   // 2. Best Villageois (min. 25 games)
   const topVillageoisPerformers = findTopCampPerformers(campStats, 'Villageois', 25, 'performance');
-  const villageoisRank = findPlayerCampRank(topVillageoisPerformers, playerName);
+  const villageoisRank = findPlayerCampRank(topVillageoisPerformers, playerId);
   if (villageoisRank) {
     achievements.push(createPerformanceAchievement(
       `villageois-performance-${suffix ? 'modded' : 'all'}`,
@@ -255,7 +255,7 @@ export function processPerformanceAchievements(campStats, gameData, playerName, 
 
   // 3. Best Loup (min. 10 games)
   const topLoupPerformers = findTopCampPerformers(campStats, 'Loup', 10, 'performance');
-  const loupRank = findPlayerCampRank(topLoupPerformers, playerName);
+  const loupRank = findPlayerCampRank(topLoupPerformers, playerId);
   if (loupRank) {
     achievements.push(createPerformanceAchievement(
       `loup-performance-${suffix ? 'modded' : 'all'}`,
@@ -276,7 +276,7 @@ export function processPerformanceAchievements(campStats, gameData, playerName, 
 
   // 4. Best Idiot du Village (min. 5 games)
   const topIdiotPerformers = findTopCampPerformers(campStats, 'Idiot du Village', 5, 'performance');
-  const idiotRank = findPlayerCampRank(topIdiotPerformers, playerName);
+  const idiotRank = findPlayerCampRank(topIdiotPerformers, playerId);
   if (idiotRank) {
     achievements.push(createPerformanceAchievement(
       `idiot-performance-${suffix ? 'modded' : 'all'}`,
@@ -297,7 +297,7 @@ export function processPerformanceAchievements(campStats, gameData, playerName, 
 
   // 5. Best Amoureux (min. 5 games)
   const topAmoureuxPerformers = findTopCampPerformers(campStats, 'Amoureux', 5, 'performance');
-  const amoureuxRank = findPlayerCampRank(topAmoureuxPerformers, playerName);
+  const amoureuxRank = findPlayerCampRank(topAmoureuxPerformers, playerId);
   if (amoureuxRank) {
     achievements.push(createPerformanceAchievement(
       `amoureux-performance-${suffix ? 'modded' : 'all'}`,
@@ -318,7 +318,7 @@ export function processPerformanceAchievements(campStats, gameData, playerName, 
 
   // 6. Best special roles performance (includes Amoureux and solo roles, min. 10 games)
   const topSoloPerformers = findTopSoloRolePerformers(gameData, 10);
-  const soloRank = findPlayerCampRank(topSoloPerformers, playerName);
+  const soloRank = findPlayerCampRank(topSoloPerformers, playerId);
   if (soloRank) {
     achievements.push(createPerformanceAchievement(
       `solo-performance-${suffix ? 'modded' : 'all'}`,

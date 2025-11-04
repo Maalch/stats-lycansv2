@@ -79,23 +79,29 @@ function generatePlayerComparison(player1Name, player2Name, rawGameData) {
 
 /**
  * Compute all player relationships for a specific player
- * @param {string} targetPlayer - Target player name
+ * @param {string} targetPlayerId - Target player ID (Steam ID)
  * @param {Array} playerStatsData - Array of player statistics
  * @param {Array} rawGameData - Array of game log entries
  * @param {number} minGames - Minimum games required for relationship
  * @returns {Array} - Array of player relationships
  */
-function computePlayerRelationships(targetPlayer, playerStatsData, rawGameData, minGames = 10) {
+function computePlayerRelationships(targetPlayerId, playerStatsData, rawGameData, minGames = 10) {
   const relationships = [];
+  
+  // Find the target player's name from stats
+  const targetPlayerStats = playerStatsData.find(p => p.player === targetPlayerId);
+  if (!targetPlayerStats) return relationships;
+  
+  const targetPlayerName = targetPlayerStats.playerName;
   
   // Get all other players who have enough games
   const otherPlayers = playerStatsData
-    .filter(p => p.player !== targetPlayer && p.gamesPlayed >= 30) // Only consider players with meaningful participation
-    .map(p => p.player);
+    .filter(p => p.player !== targetPlayerId && p.gamesPlayed >= 30) // Only consider players with meaningful participation
+    .map(p => ({ id: p.player, name: p.playerName }));
 
   otherPlayers.forEach(otherPlayer => {
-    // Generate comparison data to get head-to-head stats
-    const comparisonData = generatePlayerComparison(targetPlayer, otherPlayer, rawGameData);
+    // Generate comparison data to get head-to-head stats (use names for game searching)
+    const comparisonData = generatePlayerComparison(targetPlayerName, otherPlayer.name, rawGameData);
 
     if (!comparisonData) return;
 
@@ -108,8 +114,8 @@ function computePlayerRelationships(targetPlayer, playerStatsData, rawGameData, 
       const opposingWins = comparisonData.headToHeadStats.player1WinsAsOpponent; // Wins when target player faces opponent
 
       relationships.push({
-        playerName: targetPlayer,
-        otherPlayerName: otherPlayer,
+        playerName: targetPlayerName,
+        otherPlayerName: otherPlayer.name,
         sameCampGames,
         sameCampWins,
         sameCampWinRate: sameCampGames > 0 ? (sameCampWins / sameCampGames) * 100 : 0,
@@ -127,15 +133,15 @@ function computePlayerRelationships(targetPlayer, playerStatsData, rawGameData, 
  * Process face-to-face achievements for a specific player
  * @param {Array} playerStatsData - Array of player statistics
  * @param {Array} rawGameData - Array of game log entries
- * @param {string} playerName - Player name
+ * @param {string} playerId - Player ID (Steam ID)
  * @param {string} suffix - Suffix for achievement titles
  * @returns {Array} - Array of achievements
  */
-export function processComparisonAchievements(playerStatsData, rawGameData, playerName, suffix) {
+export function processComparisonAchievements(playerStatsData, rawGameData, playerId, suffix) {
   if (!playerStatsData || !rawGameData) return [];
 
   const achievements = [];
-  const relationships = computePlayerRelationships(playerName, playerStatsData, rawGameData, 10);
+  const relationships = computePlayerRelationships(playerId, playerStatsData, rawGameData, 10);
 
   if (relationships.length === 0) return achievements;
 

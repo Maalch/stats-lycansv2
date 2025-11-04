@@ -49,13 +49,16 @@ function findTopSurvivors(playerDeathStats, minGames = 1) {
 }
 
 /**
- * Helper function to check if a player is in top 10 of killers
+ * Helper function to check if a player is in top killers
  * @param {Array} topKillers - Top killers array
- * @param {string} playerName - Player name to find
+ * @param {string} playerId - Player ID (Steam ID) to find
  * @returns {Object|null} - Rank info or null
  */
-function findPlayerKillerRank(topKillers, playerName) {
-  const index = topKillers.findIndex(killer => killer.killerName === playerName);
+function findPlayerKillerRank(topKillers, playerId) {
+  // Note: killerStats don't have a 'player' field, only 'killerName'
+  // We need to match by killer name, but we're receiving playerId
+  // The killerStats should have been updated to include killerId field
+  const index = topKillers.findIndex(killer => killer.killerId === playerId);
   if (index === -1) return null;
   
   const playerStats = topKillers[index];
@@ -67,14 +70,14 @@ function findPlayerKillerRank(topKillers, playerName) {
 }
 
 /**
- * Helper function to check if a player is in top 10 of deaths
+ * Helper function to check if a player is in top deaths
  * @param {Array} topDeaths - Top deaths array
- * @param {string} playerName - Player name to find
+ * @param {string} playerId - Player ID (Steam ID) to find
  * @param {string} valueType - Value type ('totalDeaths' or 'deathRate')
  * @returns {Object|null} - Rank info or null
  */
-function findPlayerDeathRank(topDeaths, playerName, valueType = 'totalDeaths') {
-  const index = topDeaths.findIndex(death => death.playerName === playerName);
+function findPlayerDeathRank(topDeaths, playerId, valueType = 'totalDeaths') {
+  const index = topDeaths.findIndex(death => death.player === playerId);
   if (index === -1) return null;
   
   const playerStats = topDeaths[index];
@@ -88,11 +91,11 @@ function findPlayerDeathRank(topDeaths, playerName, valueType = 'totalDeaths') {
 /**
  * Helper function to check if a player is in top survivors
  * @param {Array} topSurvivors - Top survivors array (sorted by lowest death rate)
- * @param {string} playerName - Player name to find
+ * @param {string} playerId - Player ID (Steam ID) to find
  * @returns {Object|null} - Rank info or null
  */
-function findPlayerSurvivalRank(topSurvivors, playerName) {
-  const index = topSurvivors.findIndex(survivor => survivor.playerName === playerName);
+function findPlayerSurvivalRank(topSurvivors, playerId) {
+  const index = topSurvivors.findIndex(survivor => survivor.player === playerId);
   if (index === -1) return null;
   
   const playerStats = topSurvivors[index];
@@ -106,11 +109,11 @@ function findPlayerSurvivalRank(topSurvivors, playerName) {
 /**
  * Process kills and deaths achievements for a specific player
  * @param {Object} deathStats - Death statistics object
- * @param {string} playerName - Player name
+ * @param {string} playerId - Player ID (Steam ID)
  * @param {string} suffix - Suffix for achievement titles
  * @returns {Array} - Array of achievements
  */
-export function processKillsAchievements(deathStats, playerName, suffix) {
+export function processKillsAchievements(deathStats, playerId, suffix) {
   if (!deathStats) return [];
 
   const achievements = [];
@@ -119,7 +122,7 @@ export function processKillsAchievements(deathStats, playerName, suffix) {
 
   // 1. Killers ranking (total kills)
   const topKillers = findTopKillers(deathStats.killerStats, 1, 'kills');
-  const killerRank = findPlayerKillerRank(topKillers, playerName);
+  const killerRank = findPlayerKillerRank(topKillers, playerId);
   if (killerRank) {
     achievements.push(createKillsAchievement(
       `top-killer-${suffix ? 'modded' : 'all'}`,
@@ -139,7 +142,7 @@ export function processKillsAchievements(deathStats, playerName, suffix) {
 
   // 2. Killers ranking (average per game, min. 20 games)
   const topKillersAverage = findTopKillers(deathStats.killerStats, 20, 'averageKillsPerGame');
-  const killerAverageRank = findPlayerKillerRank(topKillersAverage, playerName);
+  const killerAverageRank = findPlayerKillerRank(topKillersAverage, playerId);
   if (killerAverageRank) {
     achievements.push(createKillsAchievement(
       `top-killer-average-${suffix ? 'modded' : 'all'}`,
@@ -161,7 +164,7 @@ export function processKillsAchievements(deathStats, playerName, suffix) {
 
   // 3. Most killed ranking (total deaths)
   const topDeaths = findTopDeaths(deathStats.playerDeathStats, 'totalDeaths', 1);
-  const deathRank = findPlayerDeathRank(topDeaths, playerName, 'totalDeaths');
+  const deathRank = findPlayerDeathRank(topDeaths, playerId, 'totalDeaths');
   if (deathRank) {
     achievements.push(createKillsAchievement(
       `top-killed-${suffix ? 'modded' : 'all'}`,
@@ -181,7 +184,7 @@ export function processKillsAchievements(deathStats, playerName, suffix) {
 
   // 4. Less killed ranking (lowest death rate, min. 25 games)
   const topSurvivors = findTopSurvivors(deathStats.playerDeathStats, 25);
-  const survivalRank = findPlayerSurvivalRank(topSurvivors, playerName);
+  const survivalRank = findPlayerSurvivalRank(topSurvivors, playerId);
   if (survivalRank) {
     achievements.push(createKillsAchievement(
       `top-survivor-${suffix ? 'modded' : 'all'}`,
