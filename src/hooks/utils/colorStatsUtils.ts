@@ -14,6 +14,9 @@ export interface ColorStats {
  * Returns statistics for each player color including win rate and average usage per game
  */
 export function computeColorStats(gameData: GameLogEntry[]): ColorStats[] {
+  // Total number of games (used for avgPlayersPerGame calculation)
+  const totalGamesCount = gameData.length;
+
   // Map to track statistics per color
   const colorMap = new Map<string, {
     gamesWithColor: Set<string>;
@@ -67,8 +70,9 @@ export function computeColorStats(gameData: GameLogEntry[]): ColorStats[] {
     const winRate = stats.totalPlayerInstances > 0 
       ? (stats.totalWins / stats.totalPlayerInstances) * 100 
       : 0;
-    const avgPlayersPerGame = totalGames > 0 
-      ? stats.totalPlayerInstances / totalGames 
+    // avgPlayersPerGame now uses total games count, not just games where color appears
+    const avgPlayersPerGame = totalGamesCount > 0 
+      ? stats.totalPlayerInstances / totalGamesCount 
       : 0;
 
     return {

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.13';
+export const APP_VERSION = '1.3.14';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -8,6 +8,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.14',
+    date: '05/11/2025',
+    description: 'Ajouts de graphiques sur les Couleurs, dans "Parties" / "Couleurs".',
+  },
   {
     version: 'v1.3.13',
     date: '05/11/2025',

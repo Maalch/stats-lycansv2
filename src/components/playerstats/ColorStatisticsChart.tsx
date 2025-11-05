@@ -1,17 +1,24 @@
 import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useColorStatsFromRaw } from '../../hooks/useColorStatsFromRaw';
+import { useCombinedFilteredRawData } from '../../hooks/useCombinedRawData';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useThemeAdjustedFrenchColorMapping } from '../../types/api';
 
 export function ColorStatisticsChart() {
   const { data: colorStats, isLoading, error } = useColorStatsFromRaw();
+  const { gameData } = useCombinedFilteredRawData();
   
   // Get theme-adjusted color mapping
   const frenchColorMapping = useThemeAdjustedFrenchColorMapping();
   
   // State for hover interaction
   const [hoveredColor, setHoveredColor] = useState<string | null>(null);
+  
+  // Calculate total games count
+  const totalGamesCount = useMemo(() => {
+    return gameData?.length || 0;
+  }, [gameData]);
 
   // Prepare chart data
   const { winRateChartData, usageChartData } = useMemo(() => {
@@ -171,8 +178,8 @@ export function ColorStatisticsChart() {
                     <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
                       <div><strong>{data.color}</strong></div>
                       <div>Moyenne: <strong>{data.avgPlayersPerGame.toFixed(2)} joueurs/partie</strong></div>
-                      <div>Total joueurs: {data.totalPlayers}</div>
-                      <div>Parties: {data.totalGames}</div>
+                      <div>Calcul: {data.totalPlayers} joueurs ÷ {totalGamesCount} parties totales</div>
+                      <div>Parties avec cette couleur: {data.totalGames}</div>
                     </div>
                   );
                 }
