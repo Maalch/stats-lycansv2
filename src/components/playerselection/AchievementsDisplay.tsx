@@ -136,6 +136,10 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         } else if (chartSection === 'survivors-average') {
           focusChart = 'survivalRate';
           selectedView = 'deaths';
+        } else if (chartSection === 'hunters-good' || chartSection === 'hunters-bad') {
+          // Both good and bad hunter achievements should navigate to hunter view
+          selectedView = 'hunter';
+          focusChart = 'averageKills'; // Hunter stats use average kills
         }
       }
       

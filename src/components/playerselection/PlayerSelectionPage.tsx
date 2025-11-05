@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { useGameLogData } from '../../hooks/useCombinedRawData';
 import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculatedPlayerAchievements';
@@ -42,10 +42,33 @@ export function PlayerSelectionPage() {
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
-  const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>('all');
+  
+  // Initialize achievementFilter based on global gameFilter setting
+  const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>(() => {
+    // Check if independent filters are enabled and gameTypeEnabled is true
+    if (settings.useIndependentFilters && settings.independentFilters?.gameTypeEnabled) {
+      return settings.independentFilters.gameFilter === 'modded' ? 'modded' : 'all';
+    }
+    // Fallback to legacy gameFilter
+    return settings.gameFilter === 'modded' ? 'modded' : 'all';
+  });
+  
   const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills'>('achievements');
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
   const [campFilter, setCampFilter] = useState<CampFilterOption>('all');
+
+  // Sync achievementFilter with global gameFilter when it changes
+  useEffect(() => {
+    // Check if independent filters are enabled and gameTypeEnabled is true
+    if (settings.useIndependentFilters && settings.independentFilters?.gameTypeEnabled) {
+      const newFilter = settings.independentFilters.gameFilter === 'modded' ? 'modded' : 'all';
+      setAchievementFilter(newFilter);
+    } else if (!settings.useIndependentFilters) {
+      // Fallback to legacy gameFilter
+      const newFilter = settings.gameFilter === 'modded' ? 'modded' : 'all';
+      setAchievementFilter(newFilter);
+    }
+  }, [settings.gameFilter, settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter]);
 
   // Get player history data for summary cards (only when a player is highlighted)
   const { data: playerHistoryData } = usePlayerGameHistoryFromRaw(settings.highlightedPlayer || '');
