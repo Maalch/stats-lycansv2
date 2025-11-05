@@ -135,9 +135,30 @@ export function BRKillsStatsChart() {
       winRate: data.count > 0 ? ((data.wins / data.count) * 100).toFixed(1) : '0.0'
     }));
 
+    // Distribution des kills des gagnants
+    const winnerScoreDistribution = brData
+      .filter(participation => participation.Gagnant)
+      .reduce((acc, participation) => {
+        const score = participation.Score;
+        if (!acc[score]) {
+          acc[score] = 0;
+        }
+        acc[score]++;
+        return acc;
+      }, {} as Record<number, number>);
+
+    const winnerScoreData = Object.entries(winnerScoreDistribution)
+      .map(([score, count]) => ({
+        score: parseInt(score),
+        count: count,
+        percentage: ((count / Object.values(winnerScoreDistribution).reduce((a, b) => a + b, 0)) * 100).toFixed(1)
+      }))
+      .sort((a, b) => a.score - b.score);
+
     return {
       topPlayersByAverageScore,
       scoreData,
+      winnerScoreData,
       highlightedPlayerInAverageScore: highlightedPlayerAddedToAverageScore
     };
   }, [brData, settings.highlightedPlayer]);
@@ -375,6 +396,65 @@ export function BRKillsStatsChart() {
                   }}
                 />
               </PieChart>
+            </ResponsiveContainer>
+          </FullscreenChart>
+        </div>
+
+        {/* Distribution des kills des gagnants */}
+        <div className="lycans-graphique-section">
+          <h3>Distribution des Kills des Gagnants</h3>
+          <FullscreenChart
+            title="Distribution des Kills des Gagnants"
+            className="lycans-chart-wrapper"
+          >
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart 
+                data={stats.winnerScoreData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="score" 
+                  label={{ value: 'Nombre de kills', position: 'insideBottom', offset: -5 }}
+                />
+                <YAxis 
+                  label={{ value: 'Nombre de victoires', angle: -90, position: 'insideLeft' }}
+                />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const data = payload[0].payload;
+                      return (
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: '12px', 
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                        }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: '8px', fontSize: '1rem' }}>
+                            {data.score} {data.score === 1 ? 'kill' : 'kills'}
+                          </div>
+                          <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                            <div>Victoires: <strong>{data.count}</strong></div>
+                            <div>Pourcentage: <strong>{data.percentage}%</strong></div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Bar dataKey="count" name="Victoires">
+                  {stats.winnerScoreData.map((_entry, index) => (
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={chartColors[index % chartColors.length]} 
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
             </ResponsiveContainer>
           </FullscreenChart>
         </div>

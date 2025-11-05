@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useFilteredRawBRData, useFilteredRawBRGlobalData } from '../../hooks/useRawBRData';
 import { useSettings } from '../../context/SettingsContext';
@@ -508,9 +508,9 @@ export function BRPlayersStatsChart() {
           className="lycans-chart-wrapper"
         >
           <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={stats.participantData}>
+            <BarChart data={stats.participantData} margin={{ bottom: 15 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="participants" />
+              <XAxis dataKey="participants" label={{ value: 'Nombre de parties', position: 'insideBottom', offset: -5 }} />
               <YAxis />
               <Tooltip 
                 formatter={(value: any, name: string) => [
@@ -518,8 +518,14 @@ export function BRPlayersStatsChart() {
                   name === 'games' ? 'Parties' : name
                 ]}
               />
-              <Legend />
-              <Bar dataKey="games" fill="var(--chart-color-4)" name="Nombre de parties" />
+              <Bar dataKey="games" name="Nombre de parties">
+                {stats.participantData.map((_entry, index) => (
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={chartColors[index % chartColors.length]} 
+                  />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </FullscreenChart>
