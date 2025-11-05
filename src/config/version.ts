@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.11';
+export const APP_VERSION = '1.3.12';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -8,6 +8,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.12',
+    date: '05/11/2025',
+    description: 'Ajout d\'une médaille "Bon Chasseur" et d\'un classement "Mauvais Chasseur". Gestion des kills en Chasseur sur "Idiot du Village" après la 0.202 comme "Mauvais Chasseur".',
+  },
   {
     version: 'v1.3.11',
     date: '03/11/2025',

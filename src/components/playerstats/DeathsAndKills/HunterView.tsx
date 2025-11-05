@@ -75,6 +75,8 @@ export function HunterView({
         totalKills: hunter.totalKills,
         gamesPlayed: hunter.gamesPlayedAsHunter,
         victimsByCamp: hunter.victimsByCamp,
+        goodVictimsByCamp: hunter.goodVictimsByCamp,
+        badVictimsByCamp: hunter.badVictimsByCamp,
         hunterName: hunter.hunterName
       }));
     
@@ -152,12 +154,12 @@ export function HunterView({
           </p>
 
           {/* Camp breakdown */}
-          {data.victimsByCamp && Object.keys(data.victimsByCamp).length > 0 && (
+          {data.goodVictimsByCamp && Object.keys(data.goodVictimsByCamp).length > 0 && (
             <div style={{ margin: '8px 0', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
               <p style={{ fontWeight: 'bold', fontSize: '0.85rem', marginBottom: '4px' }}>
-                Victimes par camp:
+                Bonnes victimes:
               </p>
-              {Object.entries(data.victimsByCamp).map(([camp, count]: [string, any]) => (
+              {Object.entries(data.goodVictimsByCamp).map(([camp, count]: [string, any]) => (
                 <p key={camp} style={{ 
                   color: lycansColors[camp as keyof typeof lycansColors] || 'var(--text-secondary)', 
                   margin: '2px 0', 
@@ -253,12 +255,12 @@ export function HunterView({
           </p>
 
           {/* Camp breakdown */}
-          {data.victimsByCamp && Object.keys(data.victimsByCamp).length > 0 && (
+          {data.badVictimsByCamp && Object.keys(data.badVictimsByCamp).length > 0 && (
             <div style={{ margin: '8px 0', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
               <p style={{ fontWeight: 'bold', fontSize: '0.85rem', marginBottom: '4px' }}>
-                Victimes par camp:
+                Mauvaises victimes:
               </p>
-              {Object.entries(data.victimsByCamp).map(([camp, count]: [string, any]) => (
+              {Object.entries(data.badVictimsByCamp).map(([camp, count]: [string, any]) => (
                 <p key={camp} style={{ 
                   color: lycansColors[camp as keyof typeof lycansColors] || 'var(--text-secondary)', 
                   margin: '2px 0', 

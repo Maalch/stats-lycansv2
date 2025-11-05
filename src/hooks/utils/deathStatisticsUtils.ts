@@ -5,6 +5,29 @@ import { mainCampOrder } from '../../types/api';
 import { getPlayerId } from '../../utils/playerIdentification';
 
 /**
+ * Compare two version strings (e.g., "0.207" >= "0.202")
+ * @param version - Version string to compare (e.g., "0.207")
+ * @param targetVersion - Target version to compare against (e.g., "0.202")
+ * @returns true if version >= targetVersion
+ */
+function compareVersion(version: string, targetVersion: string): boolean {
+  if (!version || !targetVersion) return false;
+  
+  const versionParts = version.split('.').map(Number);
+  const targetParts = targetVersion.split('.').map(Number);
+  
+  for (let i = 0; i < Math.max(versionParts.length, targetParts.length); i++) {
+    const v = versionParts[i] || 0;
+    const t = targetParts[i] || 0;
+    
+    if (v > t) return true;
+    if (v < t) return false;
+  }
+  
+  return true; // Equal versions
+}
+
+/**
  * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
  * This ensures both death types are treated as "Tué par Loup" in all statistics
  */
@@ -605,6 +628,8 @@ export interface HunterStats {
   averageNonVillageoisKillsPerGame: number;
   killsByDeathType: Record<DeathType, number>;
   victimsByCamp: Record<string, number>;
+  goodVictimsByCamp: Record<string, number>; // Non-Villageois + pre-0.202 Idiot du Village
+  badVictimsByCamp: Record<string, number>;  // Villageois + post-0.202 Idiot du Village
 }
 
 /**
@@ -632,6 +657,8 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
     kills: DeathType[];
     gamesPlayed: number;
     victimsCamps: string[];
+    gameVersions: string[]; // Track game versions for special rule handling
+    gameModded: boolean[]; // Track if game was modded for special rule handling
   }> = {};
 
   // Track latest display names for hunter IDs
@@ -665,7 +692,9 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
           hunterKillsMap[hunterId] = {
             kills: [],
             gamesPlayed: 0,
-            victimsCamps: []
+            victimsCamps: [],
+            gameVersions: [],
+            gameModded: []
           };
         }
         hunterKillsMap[hunterId].gamesPlayed++;
@@ -697,6 +726,8 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
         if (!selectedCamp || selectedCamp === 'Tous les camps' || victimCamp === selectedCamp) {
           hunterKillsMap[killerId].kills.push(deathType);
           hunterKillsMap[killerId].victimsCamps.push(victimCamp);
+          hunterKillsMap[killerId].gameVersions.push(game.Version);
+          hunterKillsMap[killerId].gameModded.push(game.Modded);
         }
       }
     });
@@ -719,9 +750,41 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
         victimsByCamp[camp] = (victimsByCamp[camp] || 0) + 1;
       });
       
-      // Calculate non-Villageois kills
-      const nonVillageoisKills = data.victimsCamps.filter(camp => camp !== 'Villageois').length;
-      const villageoisKills = data.victimsCamps.filter(camp => camp === 'Villageois').length;
+      // Calculate non-Villageois kills with special rule for Idiot du Village
+      // Rule: In modded games with version >= 0.202, killing "Idiot du Village" 
+      // counts as a bad kill (the Idiot wins), otherwise it's a good kill
+      let nonVillageoisKills = 0;
+      let villageoisKills = 0;
+      const goodVictimsByCamp: Record<string, number> = {};
+      const badVictimsByCamp: Record<string, number> = {};
+      
+      data.victimsCamps.forEach((camp, index) => {
+        const gameVersion = data.gameVersions[index];
+        const gameModded = data.gameModded[index];
+        
+        // Special rule for Idiot du Village
+        if (camp === 'Idiot du Village') {
+          // If modded AND version >= 0.202, the Idiot wins when killed by hunter
+          // So this counts as a bad kill (villageoisKills)
+          if (gameModded && compareVersion(gameVersion, '0.202')) {
+            villageoisKills++;
+            badVictimsByCamp[camp] = (badVictimsByCamp[camp] || 0) + 1;
+          } else {
+            // Before 0.202 or not modded: killing Idiot is a good kill
+            nonVillageoisKills++;
+            goodVictimsByCamp[camp] = (goodVictimsByCamp[camp] || 0) + 1;
+          }
+        } else {
+          // Normal camp-based classification
+          if (camp === 'Villageois') {
+            villageoisKills++;
+            badVictimsByCamp[camp] = (badVictimsByCamp[camp] || 0) + 1;
+          } else {
+            nonVillageoisKills++;
+            goodVictimsByCamp[camp] = (goodVictimsByCamp[camp] || 0) + 1;
+          }
+        }
+      });
       
       const averageKillsPerGame = data.gamesPlayed > 0 ? totalKills / data.gamesPlayed : 0;
       const averageNonVillageoisKillsPerGame = data.gamesPlayed > 0 ? nonVillageoisKills / data.gamesPlayed : 0;
@@ -735,7 +798,9 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
         averageKillsPerGame,
         averageNonVillageoisKillsPerGame,
         killsByDeathType,
-        victimsByCamp
+        victimsByCamp,
+        goodVictimsByCamp,
+        badVictimsByCamp
       };
     })
     .sort((a, b) => b.totalKills - a.totalKills);
