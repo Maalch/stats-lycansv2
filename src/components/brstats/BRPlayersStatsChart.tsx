@@ -513,10 +513,30 @@ export function BRPlayersStatsChart() {
               <XAxis dataKey="participants" label={{ value: 'Nombre de parties', position: 'insideBottom', offset: -5 }} />
               <YAxis />
               <Tooltip 
-                formatter={(value: any, name: string) => [
-                  value,
-                  name === 'games' ? 'Parties' : name
-                ]}
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length > 0) {
+                    const data = payload[0].payload;
+                    return (
+                      <div style={{ 
+                        background: 'var(--bg-secondary)', 
+                        color: 'var(--text-primary)', 
+                        padding: '12px', 
+                        borderRadius: '8px',
+                        border: '1px solid var(--border-color)',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                      }}>
+                        <div style={{ fontWeight: 'bold', marginBottom: '8px', fontSize: '1rem' }}>
+                          {data.participants} {data.participants === 1 ? 'participant' : 'participants'}
+                        </div>
+                        <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                          <div>Nombre de parties: <strong>{data.games}</strong></div>
+                          <div>Pourcentage: <strong>{data.percentage}%</strong></div>
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
               />
               <Bar dataKey="games" name="Nombre de parties">
                 {stats.participantData.map((_entry, index) => (
