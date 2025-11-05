@@ -18,7 +18,8 @@ import {
   computeDeathStatistics,
   computePlayerCampPerformance,
   computePlayerSeriesData,
-  computeVotingStatistics
+  computeVotingStatistics,
+  computeHunterStatistics
 } from './compute-stats.js';
 
 // Import player identification utilities
@@ -52,6 +53,10 @@ function generateAllPlayerAchievements(gameLogData) {
   const allGamesDeathStats = computeDeathStatistics(allGames);
   const moddedOnlyDeathStats = computeDeathStatistics(moddedGames);
 
+  // Compute hunter statistics
+  const allGamesHunterStats = computeHunterStatistics(allGames);
+  const moddedOnlyHunterStats = computeHunterStatistics(moddedGames);
+
   // Compute camp performance statistics
   const allGamesCampStats = computePlayerCampPerformance(allGames);
   const moddedOnlyCampStats = computePlayerCampPerformance(moddedGames);
@@ -83,7 +88,7 @@ function generateAllPlayerAchievements(gameLogData) {
       ...processGeneralAchievements(allGamesStats.playerStats, playerId, ''),
       ...processHistoryAchievements(allGamesMapStats, playerId, ''),
       ...processComparisonAchievements(allGamesStats.playerStats, allGames, playerId, ''),
-      ...processKillsAchievements(allGamesDeathStats, playerId, ''),
+      ...processKillsAchievements(allGamesDeathStats, allGamesHunterStats, playerId, ''),
       ...processPerformanceAchievements(allGamesCampStats, allGames, playerId, ''),
       ...processSeriesAchievements(allGamesSeriesData, playerId, ''),
       ...processVotingAchievements(allGamesVotingStats, playerId, '')
@@ -93,7 +98,7 @@ function generateAllPlayerAchievements(gameLogData) {
       ...processGeneralAchievements(moddedOnlyStats.playerStats, playerId, ' (Parties Moddées)'),
       ...processHistoryAchievements(moddedOnlyMapStats, playerId, ' (Parties Moddées)'),
       ...processComparisonAchievements(moddedOnlyStats.playerStats, moddedGames, playerId, ' (Parties Moddées)'),
-      ...processKillsAchievements(moddedOnlyDeathStats, playerId, ' (Parties Moddées)'),
+      ...processKillsAchievements(moddedOnlyDeathStats, moddedOnlyHunterStats, playerId, ' (Parties Moddées)'),
       ...processPerformanceAchievements(moddedOnlyCampStats, moddedGames, playerId, ' (Parties Moddées)'),
       ...processSeriesAchievements(moddedOnlySeriesData, playerId, ' (Parties Moddées)'),
       ...processVotingAchievements(moddedOnlyVotingStats, playerId, ' (Parties Moddées)')

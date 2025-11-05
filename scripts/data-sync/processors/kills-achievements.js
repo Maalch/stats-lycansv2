@@ -55,9 +55,6 @@ function findTopSurvivors(playerDeathStats, minGames = 1) {
  * @returns {Object|null} - Rank info or null
  */
 function findPlayerKillerRank(topKillers, playerId) {
-  // Note: killerStats don't have a 'player' field, only 'killerName'
-  // We need to match by killer name, but we're receiving playerId
-  // The killerStats should have been updated to include killerId field
   const index = topKillers.findIndex(killer => killer.killerId === playerId);
   if (index === -1) return null;
   
@@ -107,13 +104,80 @@ function findPlayerSurvivalRank(topSurvivors, playerId) {
 }
 
 /**
+ * Helper function to find top hunters (good hunters - non-Villageois kills)
+ * @param {Array} hunterStats - Array of hunter statistics
+ * @param {number} minGames - Minimum games required
+ * @returns {Array} - All hunters sorted by averageNonVillageoisKillsPerGame
+ */
+function findTopGoodHunters(hunterStats, minGames = 5) {
+  return hunterStats
+    .filter(hunter => hunter.gamesPlayedAsHunter >= minGames)
+    .sort((a, b) => b.averageNonVillageoisKillsPerGame - a.averageNonVillageoisKillsPerGame);
+}
+
+/**
+ * Helper function to find top bad hunters (Villageois kills)
+ * @param {Array} hunterStats - Array of hunter statistics
+ * @param {number} minGames - Minimum games required
+ * @returns {Array} - All hunters sorted by averageVillageoisKills
+ */
+function findTopBadHunters(hunterStats, minGames = 5) {
+  return hunterStats
+    .filter(hunter => hunter.gamesPlayedAsHunter >= minGames)
+    .map(hunter => ({
+      ...hunter,
+      averageVillageoisKills: hunter.gamesPlayedAsHunter > 0 
+        ? hunter.villageoisKills / hunter.gamesPlayedAsHunter 
+        : 0
+    }))
+    .sort((a, b) => b.averageVillageoisKills - a.averageVillageoisKills);
+}
+
+/**
+ * Helper function to find player's rank in good hunters
+ * @param {Array} topGoodHunters - Top good hunters array
+ * @param {string} playerId - Player ID (Steam ID) to find
+ * @returns {Object|null} - Rank info or null
+ */
+function findPlayerGoodHunterRank(topGoodHunters, playerId) {
+  const index = topGoodHunters.findIndex(hunter => hunter.hunterId === playerId);
+  if (index === -1) return null;
+  
+  const playerStats = topGoodHunters[index];
+  return {
+    rank: index + 1,
+    value: playerStats.averageNonVillageoisKillsPerGame,
+    stats: playerStats
+  };
+}
+
+/**
+ * Helper function to find player's rank in bad hunters
+ * @param {Array} topBadHunters - Top bad hunters array
+ * @param {string} playerId - Player ID (Steam ID) to find
+ * @returns {Object|null} - Rank info or null
+ */
+function findPlayerBadHunterRank(topBadHunters, playerId) {
+  const index = topBadHunters.findIndex(hunter => hunter.hunterId === playerId);
+  if (index === -1) return null;
+  
+  const playerStats = topBadHunters[index];
+  return {
+    rank: index + 1,
+    value: playerStats.averageVillageoisKills,
+    stats: playerStats
+  };
+}
+
+/**
  * Process kills and deaths achievements for a specific player
  * @param {Object} deathStats - Death statistics object
+ * @param {Object} hunterStats - Hunter statistics object
  * @param {string} playerId - Player ID (Steam ID)
  * @param {string} suffix - Suffix for achievement titles
  * @returns {Array} - Array of achievements
  */
-export function processKillsAchievements(deathStats, playerId, suffix) {
+export function processKillsAchievements(deathStats, hunterStats, playerId, suffix) {
   if (!deathStats) return [];
 
   const achievements = [];
@@ -180,9 +244,31 @@ export function processKillsAchievements(deathStats, playerId, suffix) {
     ));
   }
 
+  // 4. Good hunters ranking (average non-Villageois kills per game, min. 5 games as hunter)
+  if (hunterStats && hunterStats.hunterStats) {
+    const topGoodHunters = findTopGoodHunters(hunterStats.hunterStats, 5);
+    const goodHunterRank = findPlayerGoodHunterRank(topGoodHunters, playerId);
+    if (goodHunterRank) {
+      achievements.push(createKillsAchievement(
+        `top-good-hunter-${suffix ? 'modded' : 'all'}`,
+        `🎯 Top ${goodHunterRank.rank} Bon Chasseur${suffix}`,
+        `${goodHunterRank.rank}${goodHunterRank.rank === 1 ? 'er' : 'ème'} meilleur chasseur: ${goodHunterRank.value.toFixed(2)} éliminations non-Villageois par partie en Chasseur (${goodHunterRank.stats.gamesPlayedAsHunter} parties, min. 5)`,
+        'good',
+        goodHunterRank.rank,
+        parseFloat(goodHunterRank.value.toFixed(2)),
+        topGoodHunters.length,
+        {
+          tab: 'players',
+          subTab: 'deathStats',
+          chartSection: 'hunters-good'
+        }
+      ));
+    }
+  }
+
   // BAD ACHIEVEMENTS (Death achievements)
 
-  // 4. Most killed ranking (total deaths)
+  // 5. Most killed ranking (total deaths)
   const topDeaths = findTopDeaths(deathStats.playerDeathStats, 'totalDeaths', 1);
   const deathRank = findPlayerDeathRank(topDeaths, playerId, 'totalDeaths');
   if (deathRank) {
@@ -200,6 +286,28 @@ export function processKillsAchievements(deathStats, playerId, suffix) {
         chartSection: 'deaths'
       }
     ));
+  }
+
+  // 6. Bad hunters ranking (average Villageois kills per game, min. 5 games as hunter)
+  if (hunterStats && hunterStats.hunterStats) {
+    const topBadHunters = findTopBadHunters(hunterStats.hunterStats, 5);
+    const badHunterRank = findPlayerBadHunterRank(topBadHunters, playerId);
+    if (badHunterRank) {
+      achievements.push(createKillsAchievement(
+        `top-bad-hunter-${suffix ? 'modded' : 'all'}`,
+        `😱 Top ${badHunterRank.rank} Mauvais Chasseur${suffix}`,
+        `${badHunterRank.rank}${badHunterRank.rank === 1 ? 'er' : 'ème'} pire chasseur: ${badHunterRank.value.toFixed(2)} éliminations Villageois par partie en Chasseur (${badHunterRank.stats.gamesPlayedAsHunter} parties, min. 5)`,
+        'bad',
+        badHunterRank.rank,
+        parseFloat(badHunterRank.value.toFixed(2)),
+        topBadHunters.length,
+        {
+          tab: 'players',
+          subTab: 'deathStats',
+          chartSection: 'hunters-bad'
+        }
+      ));
+    }
   }
 
 
