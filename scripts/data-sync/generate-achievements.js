@@ -10,17 +10,15 @@ import { processPerformanceAchievements } from './processors/performance-achieve
 import { processSeriesAchievements } from './processors/series-achievements.js';
 import { processVotingAchievements } from './processors/voting-achievements.js';
 
-// Import compute functions
-import {
-  computePlayerStats,
-  computeMapStats,
-  computePlayerGameHistory,
-  computeDeathStatistics,
-  computePlayerCampPerformance,
-  computePlayerSeriesData,
-  computeVotingStatistics,
-  computeHunterStatistics
-} from './compute-stats.js';
+// Import compute functions from modular files
+import { computePlayerStats } from './compute/compute-player-stats.js';
+import { computeMapStats } from './compute/compute-map-stats.js';
+import { computePlayerGameHistory } from './compute/compute-player-history.js';
+import { computeDeathStatistics } from './compute/compute-death-stats.js';
+import { computePlayerCampPerformance } from './compute/compute-camp-performance.js';
+import { computePlayerSeriesData } from './compute/compute-series-data.js';
+import { computeVotingStatistics } from './compute/compute-voting-stats.js';
+import { computeHunterStatistics } from './compute/compute-hunter-stats.js';
 
 // Import player identification utilities
 import { getPlayerId } from '../../src/utils/datasyncExport.js';
