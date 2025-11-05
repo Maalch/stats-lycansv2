@@ -26,7 +26,8 @@ const GameDurationInsights = lazy(() => import('./components/generalstats/GameDu
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
 const GlobalVotingStatsChart = lazy(() => import('./components/generalstats/GlobalVotingStatsChart').then(m => ({ default: m.GlobalVotingStatsChart })));
 
-const BRPlayersStatsChart = lazy(() => import('./components/brstats/BRPlayersStatsChart').then(m => ({ default: m.BRPlayersStatsChart })));
+const BRParticipationsChart = lazy(() => import('./components/brstats/BRParticipationsChart').then(m => ({ default: m.BRParticipationsChart })));
+const BRWinRateChart = lazy(() => import('./components/brstats/BRWinRateChart').then(m => ({ default: m.BRWinRateChart })));
 const BRKillsStatsChart = lazy(() => import('./components/brstats/BRKillsStatsChart').then(m => ({ default: m.BRKillsStatsChart })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
@@ -163,10 +164,16 @@ const GENERAL_STATS_MENU = [
 
 const BR_STATS_MENU = [
   { 
-    key: 'brPlayers', 
-    label: 'Joueurs', 
-    component: BRPlayersStatsChart,
-    description: 'Classement et participations Battle Royale'
+    key: 'brParticipations', 
+    label: 'Participations', 
+    component: BRParticipationsChart,
+    description: 'Participations Battle Royale'
+  },
+  { 
+    key: 'brWinRate', 
+    label: 'Victoires', 
+    component: BRWinRateChart,
+    description: 'Taux de victoire Battle Royale'
   },
   { 
     key: 'brKills', 
@@ -195,7 +202,7 @@ function MainApp() {
   const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
-  const [selectedBRStat, setSelectedBRStat] = useState('brPlayers');
+  const [selectedBRStat, setSelectedBRStat] = useState('brParticipations');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
   const [showChangelog, setShowChangelog] = useState(false);
 
@@ -382,7 +389,7 @@ function MainApp() {
         );
       }
       case 'br': {
-        const SelectedBRComponent = BR_STATS_MENU.find(m => m.key === selectedBRStat)?.component ?? BRPlayersStatsChart;
+        const SelectedBRComponent = BR_STATS_MENU.find(m => m.key === selectedBRStat)?.component ?? BRParticipationsChart;
         return (
           <div>
             <nav className="lycans-submenu">
