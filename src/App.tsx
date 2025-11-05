@@ -20,6 +20,9 @@ const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsA
 // Voting statistics components
 const VotingStatisticsChart = lazy(() => import('./components/playerstats/Voting/VotingStatisticsChart').then(m => ({ default: m.VotingStatisticsChart })));
 
+// Color statistics components
+const ColorStatisticsChart = lazy(() => import('./components/playerstats/ColorStatisticsChart').then(m => ({ default: m.ColorStatisticsChart })));
+
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
@@ -141,6 +144,12 @@ const GENERAL_STATS_MENU = [
     label: 'Types de Victoire',
     component: VictoryTypesChart,
     description: 'Répartition des types de victoire par camp'
+  },
+  { 
+    key: 'colorStats', 
+    label: 'Couleurs', 
+    component: ColorStatisticsChart,
+    description: 'Statistiques sur les couleurs des joueurs'
   },
   { 
     key: 'harvest', 
