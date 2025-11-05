@@ -877,7 +877,6 @@ export function computeGameDetailsFromGameLog(
       versions: game.Version || null,
       map: game.MapName,
       victoryType: game.LegacyData?.VictoryType || null,
-      youtubeEmbedUrl: createYouTubeEmbedUrl(game.LegacyData?.VODLink || null, game.LegacyData?.VODLinkEnd || null),
       playerVODs: convertPlayerVODsToEmbedUrls(game.LegacyData?.PlayerVODs),
       gameDuration: calculateGameDuration(game.StartDate, game.EndDate),
       playerData : game.PlayerStats,

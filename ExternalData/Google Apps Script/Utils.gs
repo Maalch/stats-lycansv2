@@ -35,8 +35,6 @@ const LYCAN_SCHEMA = {
       VERSION: 'Versions', //Version of this game
       GAMEMODID: 'Mod Game ID', //Name of the game in the original game mod log file
       MAP: 'Map', //Map name of this game
-      VODSTART: 'Début', //Youtube link to the start of the game. Format: https://www.youtube.com/watch?v=XXXXXXX&t=YYYs
-      VODEND: 'Fin', //Youtube link to the end of the game. Format: https://www.youtube.com/watch?v=XXXXXXX&t=YYYs
       DURATION: 'Temps game' //Duration of the game, in mm:ss format (minutes/seconds)
     }
   },

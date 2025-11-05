@@ -41,8 +41,6 @@ export interface PlayerStat {
 }
 
 export interface LegacyData {
-  VODLink: string | null;
-  VODLinkEnd: string | null;
   VictoryType: string | null; // E.g., "Votes", "Tous les loups tués", "Domination loups" etc.
   deathInformationFilled?: boolean; // Whether death information is complete for all players in this game
   PlayerVODs?: { [playerId: string]: string }; // Per-player VOD links mapped by Steam ID
