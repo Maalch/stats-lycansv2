@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.12';
+export const APP_VERSION = '1.3.13';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -8,6 +8,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.3.13',
+    date: '05/11/2025',
+    description: 'Amélioration de la partie Battle Royale: ajout du classement par victoire et répartition par nombre de kills du gagnant',
+  },
   {
     version: 'v1.3.12',
     date: '05/11/2025',

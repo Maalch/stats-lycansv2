@@ -231,8 +231,6 @@ export function BRParticipationsChart() {
                           </div>
                           <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
                             <div>Participations: <strong>{d.participations}</strong></div>
-                            <div>Victoires: <strong>{d.wins}</strong></div>
-                            <div>Taux de victoire: <strong>{d.winRate.toFixed(1)}%</strong></div>
                           </div>
                           {isHighlightedAddition && (
                             <div style={{ 
@@ -265,43 +263,6 @@ export function BRParticipationsChart() {
                           isHighlightedFromSettings ? 'var(--accent-primary)' :
                           isHighlightedAddition ? 'var(--accent-secondary)' :
                           getPlayerColor(entry.name)
-                        }
-                        stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : isHoveredPlayer 
-                              ? "var(--text-primary)" 
-                              : "none"
-                        }
-                        strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
-                              : 0
-                        }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
-                        opacity={isHighlightedAddition ? 0.8 : 1}
-                        onMouseEnter={() => setHoveredPlayer(entry.name)}
-                        onMouseLeave={() => setHoveredPlayer(null)}
-                        style={{ cursor: 'pointer' }}
-                      />
-                    );
-                  })}
-                </Bar>
-                <Bar dataKey="wins" fill="var(--chart-color-2)" name="Victoires">
-                  {stats.topPlayersByParticipations.map((entry, index) => {
-                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
-                    const isHoveredPlayer = hoveredPlayer === entry.name;
-                    const isHighlightedAddition = entry.isHighlightedAddition;
-                    
-                    return (
-                      <Cell 
-                        key={`cell-${index}`}
-                        fill={
-                          isHighlightedFromSettings ? 'var(--accent-primary)' :
-                          isHighlightedAddition ? 'var(--accent-secondary)' :
-                          'var(--chart-color-2)'
                         }
                         stroke={
                           isHighlightedFromSettings 

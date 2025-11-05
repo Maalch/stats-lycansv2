@@ -3,6 +3,8 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveCo
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useFilteredRawBRData, useFilteredRawBRGlobalData } from '../../hooks/useRawBRData';
 import { useSettings } from '../../context/SettingsContext';
+import { useJoueursData } from '../../hooks/useJoueursData';
+import { useThemeAdjustedDynamicPlayersColor, getRandomColor } from '../../types/api';
 
 // Extended type for chart data with highlighting info
 interface ChartPlayerStat {
@@ -22,9 +24,17 @@ export function BRWinRateChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredRawBRData();
   const { data: globalData, isLoading: globalLoading, error: globalError } = useFilteredRawBRGlobalData();
   const { settings } = useSettings();
+  const { joueursData } = useJoueursData();
   
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(3);
+
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
+
+  // Helper function to get player color
+  const getPlayerColor = (playerName: string) => {
+    return playersColor[playerName] || getRandomColor(playerName);
+  };
 
   // Chart colors using CSS custom properties
   const chartColors = [
@@ -72,6 +82,30 @@ export function BRWinRateChart() {
     const sortedByParticipations = Object.values(playerStats)
       .sort((a: any, b: any) => b.participations - a.participations);
 
+    // Top joueurs par victoires (sort by wins, not participations)
+    const sortedByWins = Object.values(playerStats)
+      .sort((a: any, b: any) => b.wins - a.wins);
+    const top15ByWins = sortedByWins.slice(0, 15);
+    
+    // Check if highlighted player is in top 15 by wins
+    const highlightedPlayerInTop15Wins = settings.highlightedPlayer && 
+      top15ByWins.some(p => p.name === settings.highlightedPlayer);
+    
+    // If highlighted player is not in top 15 but exists in all stats, add them
+    let highlightedPlayerAddedToWins = false;
+    let topPlayersByWins: ChartPlayerStat[] = [...top15ByWins];
+
+    if (settings.highlightedPlayer && !highlightedPlayerInTop15Wins) {
+      const highlightedPlayerData = sortedByWins.find(p => p.name === settings.highlightedPlayer);
+      if (highlightedPlayerData) {
+        topPlayersByWins.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        });
+        highlightedPlayerAddedToWins = true;
+      }
+    }
+
     // Top joueurs par victoires - use minGamesForWinRate state
     const eligibleForWinRate = Object.values(playerStats)
       .filter((p: any) => p.participations >= minGamesForWinRate);
@@ -87,13 +121,13 @@ export function BRWinRateChart() {
 
     // If highlighted player is not in top 15 but exists in all stats, add them
     let highlightedPlayerAddedToWinRate = false;
-    let topPlayersByWins: ChartPlayerStat[] = [...top15WinRate];
+    let topPlayersByWinRate: ChartPlayerStat[] = [...top15WinRate];
 
     if (settings.highlightedPlayer && !highlightedPlayerInTop15WinRate) {
       // Search in all player stats, not just eligible ones
       const highlightedPlayerData = sortedByParticipations.find(p => p.name === settings.highlightedPlayer);
       if (highlightedPlayerData) {
-        topPlayersByWins.push({
+        topPlayersByWinRate.push({
           ...highlightedPlayerData,
           isHighlightedAddition: true
         });
@@ -103,6 +137,8 @@ export function BRWinRateChart() {
 
     return {
       topPlayersByWins,
+      highlightedPlayerInWins: highlightedPlayerAddedToWins,
+      topPlayersByWinRate,
       highlightedPlayerInWinRate: highlightedPlayerAddedToWinRate,
       totalEligiblePlayers: eligibleForWinRate.length
     };
@@ -126,8 +162,134 @@ export function BRWinRateChart() {
         <h2>Taux de Victoire - Battle Royale</h2>
       </div>
 
-      {/* Top joueurs par taux de victoire */}
-      <div className="lycans-chart-section">
+      <div className="lycans-graphiques-groupe">
+        {/* Victoires chart */}
+        <div className="lycans-graphique-section">
+          <h3>Victoires</h3>
+          {stats.highlightedPlayerInWins && settings.highlightedPlayer && (
+            <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
+              🎯 {settings.highlightedPlayer} affiché en plus du top 15
+            </p>
+          )}
+          <FullscreenChart
+            title="Victoires - Battle Royale"
+            className="lycans-chart-wrapper"
+          >
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart 
+                data={stats.topPlayersByWins}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="name" 
+                  angle={-45} 
+                  textAnchor="end" 
+                  height={80}
+                  fontSize={12}
+                  interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
+                />
+                <YAxis />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const d = payload[0].payload as ChartPlayerStat;
+                      const isHighlightedAddition = d.isHighlightedAddition;
+                      const isHighlightedFromSettings = settings.highlightedPlayer === d.name;
+                      
+                      return (
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: '12px', 
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                        }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: '8px', fontSize: '1rem' }}>
+                            {d.name}
+                            {isHighlightedFromSettings && ' 🎯'}
+                          </div>
+                          <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+                            <div>Victoires: <strong>{d.wins}</strong></div>
+                            <div>Participations: <strong>{d.participations}</strong></div>
+                            <div>Taux de victoire: <strong>{d.winRate.toFixed(1)}%</strong></div>
+                          </div>
+                          {isHighlightedAddition && (
+                            <div style={{ 
+                              fontSize: '0.75rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '8px',
+                              fontStyle: 'italic',
+                              paddingTop: '8px',
+                              borderTop: '1px solid var(--border-color)'
+                            }}>
+                              🎯 Affiché via sélection (hors top 15)
+                            </div>
+                          )}
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Bar dataKey="wins" name="Victoires" fill="var(--chart-color-2)">
+                  {stats.topPlayersByWins.map((entry, index) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                    const isHoveredPlayer = hoveredPlayer === entry.name;
+                    const isHighlightedAddition = entry.isHighlightedAddition;
+                    
+                    return (
+                      <Cell 
+                        key={`cell-wins-${index}`}
+                        fill={
+                          isHighlightedFromSettings ? 'var(--accent-primary)' :
+                          isHighlightedAddition ? 'var(--accent-secondary)' :
+                          getPlayerColor(entry.name)
+                        }
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : isHoveredPlayer 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : isHoveredPlayer 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                        onMouseEnter={() => setHoveredPlayer(entry.name)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  })}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </FullscreenChart>
+        </div>
+
+        {/* Win Rate chart */}
+        <div className="lycans-graphique-section">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
           <div>
             <h3>Taux de Victoire</h3>
@@ -168,7 +330,7 @@ export function BRWinRateChart() {
         >
           <ResponsiveContainer width="100%" height={400}>
             <BarChart 
-              data={stats.topPlayersByWins}
+              data={stats.topPlayersByWinRate}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis 
@@ -250,14 +412,14 @@ export function BRWinRateChart() {
                 }}
               />
               <Bar dataKey="winRate" name="Taux de victoire (%)">
-                {stats.topPlayersByWins.map((entry, index) => {
+                {stats.topPlayersByWinRate.map((entry, index) => {
                   const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                   const isHoveredPlayer = hoveredPlayer === entry.name;
                   const isHighlightedAddition = entry.isHighlightedAddition;
                   
                   return (
                     <Cell 
-                      key={`cell-${index}`}
+                      key={`cell-winrate-${index}`}
                       fill={
                         isHighlightedFromSettings ? 'var(--accent-primary)' :
                         isHighlightedAddition ? 'var(--accent-secondary)' :
@@ -290,8 +452,9 @@ export function BRWinRateChart() {
           </ResponsiveContainer>
         </FullscreenChart>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-          Top {stats.topPlayersByWins.length} des joueurs (sur {stats.totalEligiblePlayers} ayant au moins {minGamesForWinRate} partie{minGamesForWinRate > 1 ? 's' : ''})
+          Top {stats.topPlayersByWinRate.length} des joueurs (sur {stats.totalEligiblePlayers} ayant au moins {minGamesForWinRate} partie{minGamesForWinRate > 1 ? 's' : ''})
         </p>
+      </div>
       </div>
     </div>
   );
