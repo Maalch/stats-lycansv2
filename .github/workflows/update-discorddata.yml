@@ -43,10 +43,9 @@ jobs:
           # Discord Team AWS S3 URL
           STATS_LIST_URL: ${{ secrets.STATS_LIST_URL }}
         run: |
-          cd scripts/data-sync
           echo "🚀 Starting Discord Team data fetch from AWS S3..."
           echo "📡 AWS S3: ${STATS_LIST_URL:0:30}..." # Show partial URL for debugging
-          node fetch-data-unified.js discord
+          node scripts/data-sync/fetch-data-unified.js discord
           echo "✅ Discord Team data fetch completed"
           
       - name: Validate Discord Team data files
