@@ -47,10 +47,13 @@ export interface PlayerGameHistoryData {
 /**
  * Compute player game history from GameLogEntry data
  * @param playerIdentifier - Player name or ID to find
+ * @param gameData - Array of game log entries
+ * @param campFilter - Optional camp filter to only include games where player was in specific camp
  */
 export function computePlayerGameHistory(
   playerIdentifier: string,
-  gameData: GameLogEntry[]
+  gameData: GameLogEntry[],
+  campFilter?: string
 ): PlayerGameHistoryData | null {
   if (!playerIdentifier || playerIdentifier.trim() === '' || gameData.length === 0) {
     return null;
@@ -73,6 +76,11 @@ export function computePlayerGameHistory(
       
       // Get player's camp from their final role (which contains the full role name)
       const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+
+      // Apply camp filter if specified
+      if (campFilter && campFilter !== 'Tous les camps' && playerCamp !== campFilter) {
+        return; // Skip this game if it doesn't match the camp filter
+      }
 
       // Get the winning camp
       const winnerCamp = getWinnerCampFromGame(game);

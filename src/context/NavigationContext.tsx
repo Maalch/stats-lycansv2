@@ -68,6 +68,10 @@ export interface VotingStatsState {
   selectedView: 'behavior' | 'accuracy' | 'targets' | 'voteRate' | 'skipRate' | 'abstentionRate';
 }
 
+export interface PlayerHistoryMapState {
+  selectedCamp: string;
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -87,6 +91,7 @@ export interface NavigationState {
   playersGeneralState?: PlayersGeneralState;
   deathStatisticsState?: DeathStatisticsState;
   votingStatsState?: VotingStatsState;
+  playerHistoryMapState?: PlayerHistoryMapState;
 }
 
 interface NavigationContextType {

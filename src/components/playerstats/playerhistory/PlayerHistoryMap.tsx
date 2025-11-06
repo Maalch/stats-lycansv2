@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
 import { usePlayerGameHistoryFromRaw } from '../../../hooks/usePlayerGameHistoryFromRaw';
+import { useAvailableCampsFromRaw } from '../../../hooks/useDeathStatisticsFromRaw';
 import { useNavigation } from '../../../context/NavigationContext';
 import { lycansOtherCategoryColor } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
@@ -11,8 +12,35 @@ interface PlayerHistoryMapProps {
 }
 
 export function PlayerHistoryMap({ selectedPlayerName }: PlayerHistoryMapProps) {
-  const { navigateToGameDetails } = useNavigation();
-  const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+  const [selectedCamp, setSelectedCamp] = useState<string>(
+    navigationState.playerHistoryMapState?.selectedCamp || 'Tous les camps'
+  );
+  
+  const { data: availableCamps } = useAvailableCampsFromRaw();
+  const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName, selectedCamp);
+
+  // Save state to navigation context when it changes
+  useEffect(() => {
+    if (!navigationState.playerHistoryMapState || 
+        navigationState.playerHistoryMapState.selectedCamp !== selectedCamp) {
+      updateNavigationState({
+        playerHistoryMapState: {
+          selectedCamp
+        }
+      });
+    }
+  }, [selectedCamp, navigationState.playerHistoryMapState, updateNavigationState]);
+
+  // Function to handle camp selection change with persistence
+  const handleCampChange = (newCamp: string) => {
+    setSelectedCamp(newCamp);
+    updateNavigationState({
+      playerHistoryMapState: {
+        selectedCamp: newCamp
+      }
+    });
+  };
 
   // Prepare map performance data
   const mapPerformanceData = useMemo(() => {
@@ -55,7 +83,36 @@ export function PlayerHistoryMap({ selectedPlayerName }: PlayerHistoryMapProps) 
   return (
     <div className="lycans-graphiques-groupe">
       <div className="lycans-graphique-section">
-        <h3>Performance par Carte</h3>
+        <h3>Performance par Carte{selectedCamp !== 'Tous les camps' ? ` (${selectedCamp})` : ''}</h3>
+        
+        {/* Camp Filter */}
+        <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <label htmlFor="camp-select-map" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+            Camp :
+          </label>
+          <select
+            id="camp-select-map"
+            value={selectedCamp}
+            onChange={(e) => handleCampChange(e.target.value)}
+            style={{
+              background: 'var(--bg-tertiary)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '4px',
+              padding: '0.5rem',
+              fontSize: '0.9rem',
+              minWidth: '150px'
+            }}
+          >
+            <option value="Tous les camps">Tous les camps</option>
+            {availableCamps?.map(camp => (
+              <option key={camp} value={camp}>
+                {camp}
+              </option>
+            ))}
+          </select>
+        </div>
+        
         <FullscreenChart title="Performance par Carte">
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -204,11 +261,21 @@ export function PlayerHistoryMap({ selectedPlayerName }: PlayerHistoryMapProps) 
                   onClick={(data) => {
                     // Handle click on the entire bar - get the map name from the clicked data
                     if (data && data.name) {
-                      navigateToGameDetails({
+                      const navigationFilters: any = {
                         selectedPlayer: selectedPlayerName,
                         selectedMapName: data.name,
                         fromComponent: 'Performance par Carte'
-                      });
+                      };
+                      
+                      // If a specific camp is selected, add camp filter
+                      if (selectedCamp !== 'Tous les camps') {
+                        navigationFilters.campFilter = {
+                          selectedCamp: selectedCamp,
+                          campFilterMode: 'all-assignments'
+                        };
+                      }
+                      
+                      navigateToGameDetails(navigationFilters);
                     }
                   }}
                 >
