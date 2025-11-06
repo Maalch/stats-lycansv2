@@ -28,7 +28,7 @@ export function PlayerSeriesChart() {
   const { settings } = useSettings();
   
   // Use navigationState to restore series type selection, fallback to 'villageois'
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'wins' | 'losses'>(
+  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses'>(
     navigationState.selectedSeriesType || 'villageois'
   );
   // New state for view mode: 'best' (all-time best series) or 'ongoing' (current ongoing series)
@@ -42,7 +42,7 @@ export function PlayerSeriesChart() {
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Helper function to handle series type changes
-  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'wins' | 'losses') => {
+  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses') => {
     setSelectedSeriesType(newSeriesType);
     updateNavigationState({ selectedSeriesType: newSeriesType });
   };
@@ -74,6 +74,9 @@ export function PlayerSeriesChart() {
         case 'nowolf':
           fullDataset = seriesData.currentNoWolfSeries;
           break;
+        case 'solo':
+          fullDataset = seriesData.currentSoloSeries;
+          break;
         case 'wins':
           fullDataset = seriesData.currentWinSeries;
           break;
@@ -94,6 +97,9 @@ export function PlayerSeriesChart() {
           break;
         case 'nowolf':
           fullDataset = seriesData.allNoWolfSeries;
+          break;
+        case 'solo':
+          fullDataset = seriesData.allSoloSeries;
           break;
         case 'wins':
           fullDataset = seriesData.allWinSeries;
@@ -167,6 +173,10 @@ export function PlayerSeriesChart() {
         return viewMode === 'ongoing'
           ? 'Séries Sans Rôle Loup En Cours'
           : 'Plus Longues Séries Sans Rôle Loup';
+      case 'solo':
+        return viewMode === 'ongoing'
+          ? 'Séries Rôles Solos En Cours'
+          : 'Plus Longues Séries Rôles Solos';
       case 'wins':
         return viewMode === 'ongoing'
           ? 'Séries de Victoires En Cours'
@@ -188,7 +198,83 @@ export function PlayerSeriesChart() {
     const isHighlightedFromSettings = settings.highlightedPlayer === data.player;
     const showOngoingIndicator = viewMode === 'best' && data.isOngoing;
     
-    if (selectedSeriesType === 'wins') {
+    if (selectedSeriesType === 'solo') {
+      return (
+        <div style={{ 
+          background: 'var(--bg-secondary)', 
+          color: 'var(--text-primary)', 
+          padding: 12, 
+          borderRadius: 6,
+          border: '1px solid var(--border-color)'
+        }}>
+          <div>
+            <strong>{data.player}</strong>
+            {showOngoingIndicator && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
+          </div>
+          <div>Série {data.camp} : {data.seriesLength} parties consécutives {showOngoingIndicator ? '(En cours)' : ''}</div>
+          <div>Du {data.startGame} au {data.endGame}</div>
+          <div>Du {data.startDate} au {data.endDate}</div>
+          {data.campCounts && (
+            <div>
+              <strong>Rôles joués :</strong>
+              <div style={{ marginTop: '4px', fontSize: '0.9em' }}>
+                {Object.entries(data.campCounts)
+                  .sort(([, a]: any, [, b]: any) => b - a)
+                  .map(([role, count]: [string, any]) => (
+                    <div key={role} style={{ marginLeft: '8px' }}>
+                      • {role} ({count} {count > 1 ? 'fois' : 'fois'})
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          )}
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence (hors top 20)
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence
+            </div>
+          )}
+          {showOngoingIndicator && (
+            <div style={{ 
+              fontSize: '0.8rem', 
+              color: '#FF8C00', 
+              marginTop: '0.5rem',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+              🔥 Série en cours - Aucun jeu depuis !
+            </div>
+          )}
+          <div style={{ 
+            fontSize: '0.8rem', 
+            color: 'var(--accent-primary)', 
+            marginTop: '0.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'pulse 1.5s infinite'
+          }}>
+            🖱️ Cliquez pour voir les parties
+          </div>
+        </div>
+      );
+    } else if (selectedSeriesType === 'wins') {
       return (
         <div style={{ 
           background: 'var(--bg-secondary)', 
@@ -396,6 +482,12 @@ export function PlayerSeriesChart() {
         selectedGameIds: data.gameIds,
         fromComponent: 'Séries Sans Loups'
       });
+    } else if (selectedSeriesType === 'solo') {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
+        fromComponent: 'Séries Rôles Solos'
+      });
     } else {
       const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loup';
       navigateToGameDetails({
@@ -434,6 +526,12 @@ export function PlayerSeriesChart() {
             <>
               <strong>Séries sans Loups :</strong> Parties consécutives où le joueur n'a PAS joué de rôle Loup. 
               Jouer un rôle Loup brise la série.
+            </>
+          )}
+          {selectedSeriesType === 'solo' && (
+            <>
+              <strong>Séries Rôles Solos :</strong> Parties consécutives où le joueur a joué un rôle solo (ni Villageois ni Loup). 
+              Jouer un rôle Villageois ou Loup brise la série.
             </>
           )}
           {selectedSeriesType === 'wins' && (
@@ -476,6 +574,12 @@ export function PlayerSeriesChart() {
             onClick={() => handleSeriesTypeChange('nowolf')}
           >
             Séries Sans Loups
+          </button>
+          <button
+            className={`lycans-categorie-btn ${selectedSeriesType === 'solo' ? 'active' : ''}`}
+            onClick={() => handleSeriesTypeChange('solo')}
+          >
+            Séries Rôles Solos
           </button>
           <button
             className={`lycans-categorie-btn ${selectedSeriesType === 'wins' ? 'active' : ''}`}
@@ -556,6 +660,7 @@ export function PlayerSeriesChart() {
                     value: selectedSeriesType === 'wins' ? 'Victoires consécutives' : 
                            selectedSeriesType === 'losses' ? 'Défaites consécutives' :
                            selectedSeriesType === 'nowolf' ? 'Parties sans Loups consécutives' :
+                           selectedSeriesType === 'solo' ? 'Parties rôles solos consécutives' :
                            'Parties consécutives', 
                     angle: 270, 
                     position: 'insideLeft',
@@ -566,11 +671,13 @@ export function PlayerSeriesChart() {
                 <Bar
                   dataKey="seriesLength"
                   name={selectedSeriesType === 'wins' ? 'Victoires consécutives' : 
-                       selectedSeriesType === 'losses' ? 'Défaites consécutives' : 
+                       selectedSeriesType === 'losses' ? 'Défaites consécutives' :
+                       selectedSeriesType === 'solo' ? 'Parties rôles solos consécutives' : 
                        'Parties consécutives'}
                   fill={selectedSeriesType === 'villageois' ? '#82ca9d' : 
                        selectedSeriesType === 'loup' ? '#FF8042' : 
-                       selectedSeriesType === 'nowolf' ? '#FFA500' : 
+                       selectedSeriesType === 'nowolf' ? '#FFA500' :
+                       selectedSeriesType === 'solo' ? '#9C27B0' : 
                        selectedSeriesType === 'wins' ? '#8884d8' : 
                        '#dc3545'}
                 >
@@ -583,7 +690,8 @@ export function PlayerSeriesChart() {
                     const baseColor = playersColor[entry.player] || 
                       (selectedSeriesType === 'villageois' ? '#82ca9d' : 
                        selectedSeriesType === 'loup' ? '#FF8042' : 
-                       selectedSeriesType === 'nowolf' ? '#FFA500' : 
+                       selectedSeriesType === 'nowolf' ? '#FFA500' :
+                       selectedSeriesType === 'solo' ? '#9C27B0' : 
                        selectedSeriesType === 'wins' ? '#8884d8' : 
                        '#dc3545');
                     
@@ -679,6 +787,7 @@ export function PlayerSeriesChart() {
                     {selectedSeriesType === 'villageois' ? seriesData.averageVillageoisSeries :
                      selectedSeriesType === 'loup' ? seriesData.averageLoupsSeries :
                      selectedSeriesType === 'nowolf' ? seriesData.averageNoWolfSeries :
+                     selectedSeriesType === 'solo' ? seriesData.averageSoloSeries :
                      selectedSeriesType === 'wins' ? seriesData.averageWinSeries :
                      seriesData.averageLossSeries}
                   </div>
@@ -694,6 +803,7 @@ export function PlayerSeriesChart() {
                     {selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
                      selectedSeriesType === 'loup' ? seriesData.activeLoupsCount :
                      selectedSeriesType === 'nowolf' ? seriesData.activeNoWolfCount :
+                     selectedSeriesType === 'solo' ? seriesData.activeSoloCount :
                      selectedSeriesType === 'wins' ? seriesData.activeWinCount :
                      seriesData.activeLossCount}
                   </div>
@@ -702,6 +812,7 @@ export function PlayerSeriesChart() {
                     {(selectedSeriesType === 'villageois' ? seriesData.activeVillageoisCount :
                       selectedSeriesType === 'loup' ? seriesData.activeLoupsCount :
                       selectedSeriesType === 'nowolf' ? seriesData.activeNoWolfCount :
+                      selectedSeriesType === 'solo' ? seriesData.activeSoloCount :
                       selectedSeriesType === 'wins' ? seriesData.activeWinCount :
                       seriesData.activeLossCount) > 0 ? 
                       'Joueurs actuellement dans une série de ce type' : 

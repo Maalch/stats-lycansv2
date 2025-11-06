@@ -82,7 +82,7 @@ export interface NavigationState {
   // DeathStatisticsChart state
   deathStatsSelectedCamp?: string;
   // PlayerSeriesChart state
-  selectedSeriesType?: 'villageois' | 'loup' | 'nowolf' | 'wins' | 'losses';
+  selectedSeriesType?: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses';
   seriesViewMode?: 'best' | 'ongoing';
   
   // Grouped state - all properties in each group must be provided together
