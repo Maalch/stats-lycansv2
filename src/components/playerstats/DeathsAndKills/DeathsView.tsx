@@ -139,6 +139,11 @@ export function DeathsView({
         isHighlightedAddition: false
       };
       
+      // Add death type breakdown for tooltip
+      availableDeathTypes.forEach(deathType => {
+        chartData[deathType] = player.deathsByType[deathType] || 0;
+      });
+      
       return chartData;
     });
     
@@ -161,6 +166,11 @@ export function DeathsView({
           survivalRate: survivalRate,
           isHighlightedAddition: true
         };
+        
+        // Add death type breakdown for tooltip
+        availableDeathTypes.forEach(deathType => {
+          highlightedData[deathType] = highlightedPlayerStats.deathsByType[deathType] || 0;
+        });
         
         survivalRateBaseData.push(highlightedData);
         highlightedPlayerAddedSurvival = true;
@@ -316,6 +326,26 @@ export function DeathsView({
           <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
             <strong>Parties jouées:</strong> {data.gamesPlayed}
           </p>
+          
+          {/* Death type breakdown */}
+          <div style={{ margin: '8px 0', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+            <p style={{ fontWeight: 'bold', fontSize: '0.85rem', marginBottom: '4px' }}>
+              Répartition par type de mort:
+            </p>
+            {availableDeathTypes.map(deathType => {
+              const count = data[deathType] || 0;
+              if (count === 0) return null;
+              return (
+                <p key={deathType} style={{ 
+                  color: deathTypeColors[deathType], 
+                  margin: '2px 0', 
+                  fontSize: '0.8rem' 
+                }}>
+                  <strong>{getDeathDescription(deathType)}:</strong> {count}
+                </p>
+              );
+            })}
+          </div>
 
           {isHighlightedAddition && !meetsMinGames && (
             <div style={{ 
