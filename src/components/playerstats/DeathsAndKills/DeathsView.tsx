@@ -1,11 +1,12 @@
-import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useMemo, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { getDeathDescription } from '../../../hooks/utils/deathStatisticsUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
-import { minGamesOptions } from '../../../types/api';
+import { useJoueursData } from '../../../hooks/useJoueursData';
+import { minGamesOptions, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 
 // Type for player death statistics charts
 type ChartPlayerDeathData = {
@@ -40,6 +41,9 @@ export function DeathsView({
 }: DeathsViewProps) {
   const { navigateToGameDetails } = useNavigation();
   const { settings } = useSettings();
+  const { joueursData } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
+  const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
 
   // Process player death data for both total deaths and survival rate charts
   const { totalDeathsData, survivalRateData, highlightedPlayerAddedToDeaths, highlightedPlayerAddedToSurvival } = useMemo(() => {
@@ -135,12 +139,6 @@ export function DeathsView({
         isHighlightedAddition: false
       };
       
-      // Add death type breakdown for stacked bars (scaled by games played for rate)
-      availableDeathTypes.forEach(deathType => {
-        const totalDeathsOfThisType = player.deathsByType[deathType] || 0;
-        chartData[deathType] = player.gamesPlayed > 0 ? (totalDeathsOfThisType / player.gamesPlayed) * 100 : 0;
-      });
-      
       return chartData;
     });
     
@@ -163,12 +161,6 @@ export function DeathsView({
           survivalRate: survivalRate,
           isHighlightedAddition: true
         };
-        
-        // Add death type breakdown for stacked bars (scaled by games played for rate)
-        availableDeathTypes.forEach(deathType => {
-          const totalDeathsOfThisType = highlightedPlayerStats.deathsByType[deathType] || 0;
-          highlightedData[deathType] = highlightedPlayerStats.gamesPlayed > 0 ? (totalDeathsOfThisType / highlightedPlayerStats.gamesPlayed) * 100 : 0;
-        });
         
         survivalRateBaseData.push(highlightedData);
         highlightedPlayerAddedSurvival = true;
@@ -324,27 +316,6 @@ export function DeathsView({
           <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
             <strong>Parties jouées:</strong> {data.gamesPlayed}
           </p>
-          
-          {/* Death rate breakdown */}
-          <div style={{ margin: '8px 0', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
-            <p style={{ fontWeight: 'bold', fontSize: '0.85rem', marginBottom: '4px' }}>
-              Répartition par type de mort (taux %):
-            </p>
-            {availableDeathTypes.map(deathType => {
-              const rate = data[deathType] || 0;
-              if (rate === 0) return null;
-              
-              return (
-                <p key={deathType} style={{ 
-                  color: deathTypeColors[deathType], 
-                  margin: '2px 0', 
-                  fontSize: '0.8rem' 
-                }}>
-                  <strong>{getDeathDescription(deathType)}:</strong> {rate.toFixed(1)}%
-                </p>
-              );
-            })}
-          </div>
 
           {isHighlightedAddition && !meetsMinGames && (
             <div style={{ 
@@ -554,31 +525,56 @@ export function DeathsView({
                   style: { textAnchor: 'middle' } 
                 }} />
                 <Tooltip content={<SurvivalRateTooltip />} />
-                {availableDeathTypes.map((deathType) => (
-                  <Bar
-                    key={deathType}
-                    dataKey={deathType}
-                    name={deathType}
-                    stackId="survivalRate"
-                    fill={deathTypeColors[deathType]}
-                    onClick={(data) => {
-                      const navigationFilters: any = {
-                        selectedPlayer: data?.name,
-                        fromComponent: 'Statistiques de Mort'
+                <Bar
+                  dataKey="value"
+                  onClick={(data) => {
+                    const navigationFilters: any = {
+                      selectedPlayer: data?.name,
+                      fromComponent: 'Statistiques de Mort'
+                    };
+                    
+                    // If a specific camp is selected, add camp filter
+                    if (selectedCamp !== 'Tous les camps') {
+                      navigationFilters.campFilter = {
+                        selectedCamp: selectedCamp,
+                        campFilterMode: 'all-assignments'
                       };
-                      
-                      // If a specific camp is selected, add camp filter
-                      if (selectedCamp !== 'Tous les camps') {
-                        navigationFilters.campFilter = {
-                          selectedCamp: selectedCamp,
-                          campFilterMode: 'all-assignments'
-                        };
-                      }
-                      
-                      navigateToGameDetails(navigationFilters);
-                    }}
-                  />
-                ))}
+                    }
+                    
+                    navigateToGameDetails(navigationFilters);
+                  }}
+                  onMouseEnter={(data: any) => setHoveredPlayer(data?.name || null)}
+                  onMouseLeave={() => setHoveredPlayer(null)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {survivalRateData.map((entry, index) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                    const isHighlightedAddition = entry.isHighlightedAddition;
+                    
+                    return (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={playersColor[entry.name] || 'var(--chart-primary)'}
+                        stroke={
+                          isHighlightedFromSettings 
+                            ? "var(--accent-primary)" 
+                            : hoveredPlayer === entry.name 
+                              ? "var(--text-primary)" 
+                              : "none"
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings 
+                            ? 3 
+                            : hoveredPlayer === entry.name 
+                              ? 2 
+                              : 0
+                        }
+                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                      />
+                    );
+                  })}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
