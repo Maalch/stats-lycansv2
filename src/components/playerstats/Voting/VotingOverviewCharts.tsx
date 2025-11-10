@@ -393,8 +393,8 @@ export function VotingOverviewCharts({ minMeetings }: VotingOverviewChartsProps)
                         }}>
                           <div><strong>{dataPoint.playerName}</strong></div>
                           <div>Total meetings: {dataPoint.totalMeetings}</div>
-                          <div>Votes justes: {dataPoint.correctVotes}</div>
-                          <div>Votes incorrects: {dataPoint.incorrectVotes}</div>
+                          <div>Votes justes: {dataPoint.votesForEnemyCamp}</div>
+                          <div>Votes incorrects: {dataPoint.votesForOwnCamp}</div>
                           <div><strong>Précision: {dataPoint.accuracyRate.toFixed(1)}%</strong></div>
                           {isHighlightedAddition && (
                             <div style={{ 
@@ -548,7 +548,6 @@ export function VotingOverviewCharts({ minMeetings }: VotingOverviewChartsProps)
                       const dataPoint = payload[0].payload;
                       const isHighlightedAddition = (dataPoint as ChartPlayerStat).isHighlightedAddition;
                       const isHighlightedFromSettings = settings.highlightedPlayer === dataPoint.playerName;
-                      
                       return (
                         <div style={{ 
                           background: 'var(--bg-secondary)', 
@@ -559,8 +558,10 @@ export function VotingOverviewCharts({ minMeetings }: VotingOverviewChartsProps)
                         }}>
                           <div><strong>{dataPoint.playerName}</strong></div>
                           <div>Total meetings: {dataPoint.totalMeetings}</div>
-                          <div>Fois ciblé: {dataPoint.timesTargeted}</div>
-                          <div>Survivances: {dataPoint.timesSurvived}</div>
+                          <div>Fois ciblé: {dataPoint.totalTimesTargeted}</div>
+                          <div>Ciblé par camp adverse: {dataPoint.timesTargetedByEnemyCamp}</div>
+                          <div>Ciblé par son camp: {dataPoint.timesTargetedByOwnCamp}</div>
+                          <div>Éliminations par vote: {dataPoint.eliminationsByVote}</div>
                           <div><strong>Taux de survie: {dataPoint.survivalRate.toFixed(1)}%</strong></div>
                           {isHighlightedAddition && (
                             <div style={{ 
