@@ -30,7 +30,12 @@ export const CHANGELOG: ChangelogEntry[] = [
   {
     version: 'v1.3.14',
     date: '05/11/2025',
-    description: 'Ajouts de graphiques sur les Couleurs, dans "Parties" / "Couleurs".',
+    description: 'Ajouts de graphiques sur les Couleurs, dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'colorStats',
+      text: 'Parties / Couleurs'
+    }
   },
   {
     version: 'v1.3.13',

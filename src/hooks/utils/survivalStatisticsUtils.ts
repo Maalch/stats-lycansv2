@@ -215,7 +215,7 @@ export function computeSurvivalStatistics(gameData: GameLogEntry[], campFilter?:
  * Get players with highest survival rate for a specific day
  * @param survivalStats - Survival statistics data
  * @param dayNumber - Day number to analyze
- * @param minGames - Minimum number of games required
+ * @param minGames - Minimum number of total games required
  * @returns Array of players sorted by survival rate (highest first)
  */
 export function getTopSurvivorsForDay(
@@ -230,7 +230,10 @@ export function getTopSurvivorsForDay(
   timesSurvivedDay: number;
 }> {
   return survivalStats.playerSurvivalStats
-    .filter(player => (player.gamesPlayedByDay[dayNumber] || 0) >= minGames)
+    .filter(player => 
+      player.totalGames >= minGames && 
+      (player.gamesPlayedByDay[dayNumber] || 0) > 0
+    )
     .map(player => ({
       playerName: player.playerName,
       survivalRate: player.survivalRatesByDay[dayNumber] || 0,
@@ -246,7 +249,7 @@ export function getTopSurvivorsForDay(
  * Get players with lowest survival rate for a specific day
  * @param survivalStats - Survival statistics data
  * @param dayNumber - Day number to analyze
- * @param minGames - Minimum number of games required
+ * @param minGames - Minimum number of total games required
  * @returns Array of players sorted by survival rate (lowest first)
  */
 export function getWorstSurvivorsForDay(
@@ -261,7 +264,10 @@ export function getWorstSurvivorsForDay(
   timesSurvivedDay: number;
 }> {
   return survivalStats.playerSurvivalStats
-    .filter(player => (player.gamesPlayedByDay[dayNumber] || 0) >= minGames)
+    .filter(player => 
+      player.totalGames >= minGames && 
+      (player.gamesPlayedByDay[dayNumber] || 0) > 0
+    )
     .map(player => ({
       playerName: player.playerName,
       survivalRate: player.survivalRatesByDay[dayNumber] || 0,

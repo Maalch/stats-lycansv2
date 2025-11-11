@@ -94,7 +94,8 @@ export function SurvivalView({
       );
       
       if (highlightedPlayerStats && 
-          (highlightedPlayerStats.gamesPlayedByDay[validSelectedDay] || 0) >= 1) {
+          highlightedPlayerStats.totalGames >= minGamesForAverage &&
+          (highlightedPlayerStats.gamesPlayedByDay[validSelectedDay] || 0) > 0) {
         const highlightedSurvivalRate = highlightedPlayerStats.survivalRatesByDay[validSelectedDay] || 0;
         
         baseData.push({
@@ -146,7 +147,8 @@ export function SurvivalView({
       );
       
       if (highlightedPlayerStats && 
-          (highlightedPlayerStats.gamesPlayedByDay[validSelectedDay] || 0) >= 1) {
+          highlightedPlayerStats.totalGames >= minGamesForAverage &&
+          (highlightedPlayerStats.gamesPlayedByDay[validSelectedDay] || 0) > 0) {
         const highlightedSurvivalRate = highlightedPlayerStats.survivalRatesByDay[validSelectedDay] || 0;
         
         baseData.push({
@@ -182,7 +184,7 @@ export function SurvivalView({
       const data = payload[0].payload;
       const isHighlightedAddition = (data as ChartSurvivalData).isHighlightedAddition;
       const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
-      const meetsMinGames = data.timesReachedDay >= minGamesForAverage;
+      const meetsMinGames = data.gamesPlayed >= minGamesForAverage;
       
       return (
         <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
@@ -202,7 +204,7 @@ export function SurvivalView({
               marginTop: '0.25rem',
               fontStyle: 'italic'
             }}>
-              🎯 Affiché via sélection (&lt; {minGamesForAverage} parties ce jour)
+              🎯 Affiché via sélection (&lt; {minGamesForAverage} parties au total)
             </div>
           )}
           {isHighlightedAddition && meetsMinGames && (
@@ -310,7 +312,7 @@ export function SurvivalView({
       {validSelectedDay && survivalStats.dayStats.find(d => d.dayNumber === validSelectedDay) && (
         <div className="lycans-resume-conteneur" style={{ marginBottom: '2rem' }}>
           <div className="lycans-stat-carte">
-            <h3>Parties atteignant le Jour {validSelectedDay}</h3>
+            <h3>{validSelectedDay === 1 ? 'Total des parties enregistrées' : `Parties atteignant le Jour ${validSelectedDay}`}</h3>
             <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
               {survivalStats.dayStats.find(d => d.dayNumber === validSelectedDay)?.totalGamesReachingDay || 0}
             </div>
@@ -324,7 +326,10 @@ export function SurvivalView({
           <div className="lycans-stat-carte">
             <h3>Joueurs éligibles (min. {minGamesForAverage} parties)</h3>
             <div className="lycans-valeur-principale" style={{ color: 'var(--chart-color-1)' }}>
-              {survivalStats.playerSurvivalStats.filter(p => (p.gamesPlayedByDay[validSelectedDay] || 0) >= minGamesForAverage).length}
+              {survivalStats.playerSurvivalStats.filter(p => 
+                p.totalGames >= minGamesForAverage && 
+                (p.gamesPlayedByDay[validSelectedDay] || 0) > 0
+              ).length}
             </div>
           </div>
         </div>
@@ -521,7 +526,10 @@ export function SurvivalView({
       {/* Explanation */}
       <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>
         <p>
-          <strong>Note :</strong> Les statistiques de survie montrent le pourcentage de fois qu'un joueur survit au Jour {validSelectedDay} parmi toutes les parties qu'il a jouées et qui ont atteint ce jour. {highlightedPlayerAddedToHighest || highlightedPlayerAddedToLowest ?
+          Un "Jour" représente un cycle complet composé d'une phase de jour, d'une phase de nuit, et d'une réunion. Par exemple, le Jour 2 signifie que le joueur a survécu au deuxième cycle jour/nuit/réunion.
+        </p>
+        <p>
+          Les statistiques de survie montrent le pourcentage de fois qu'un joueur survit au Jour {validSelectedDay} parmi toutes les parties qu'il a jouées et qui ont atteint ce jour. {highlightedPlayerAddedToHighest || highlightedPlayerAddedToLowest ?
           'Les joueurs mis en évidence apparaissent même s\'ils ne sont pas dans le top 15.' : ''}
         </p>
       </div>
