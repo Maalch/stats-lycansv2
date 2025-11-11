@@ -208,7 +208,7 @@ export function DeathStatisticsChart() {
           className={`lycans-categorie-btn ${selectedView === 'survival' ? 'active' : ''}`}
           onClick={() => handleViewChange('survival')}
         >
-          Survie
+          Survie par Jour
         </button>
         <button
           className={`lycans-categorie-btn ${selectedView === 'hunter' ? 'active' : ''}`}
