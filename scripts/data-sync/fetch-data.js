@@ -95,8 +95,8 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
       gameLog.GameStats.forEach(awsGame => {
         const gameId = awsGame.Id;
         
-        // Filter: Only process Main Team games (Ponce- prefix)
-        if (!gameId || !gameId.startsWith('Ponce-')) {
+        // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
+        if (!gameId || (!gameId.startsWith('Ponce-') && !gameId.startsWith('Tsuna-'))) {
           return; // Skip non-Main Team games
         }
         
@@ -208,8 +208,8 @@ async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
   awsGameLogs.forEach(gameLog => {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(game => {
-        // Filter: Only process Main Team games (Ponce- prefix)
-        if (!game.Id || !game.Id.startsWith('Ponce-')) {
+        // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
+        if (!game.Id || (!game.Id.startsWith('Ponce-') && !game.Id.startsWith('Tsuna-'))) {
           return; // Skip non-Main Team games
         }
         

@@ -6,7 +6,7 @@ export const DATA_SOURCES = {
   main: {
     name: 'Main Team',
     outputDir: 'data',
-    gameFilter: (gameId) => gameId.startsWith('Ponce-'), // Only Ponce- games
+  gameFilter: (gameId) => gameId.startsWith('Ponce-') || gameId.startsWith('Tsuna-'), // Ponce- and Tsuna- games
     generateJoueurs: true, // Generate from game log
     modVersionLabel: 'Multiple AWS Versions',
     indexDescription: 'Game logs from AWS S3 bucket only. Updated periodically via GitHub Actions.'
