@@ -185,6 +185,7 @@ export function SurvivalView({
       const isHighlightedAddition = (data as ChartSurvivalData).isHighlightedAddition;
       const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
       const meetsMinGames = data.gamesPlayed >= minGamesForAverage;
+      const timesNotSurvived = data.timesReachedDay - data.timesSurvivedDay;
       
       return (
         <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 8, borderRadius: 6 }}>
@@ -196,6 +197,7 @@ export function SurvivalView({
           </div>
           <div>Parties atteignant le Jour {validSelectedDay}: {data.timesReachedDay}</div>
           <div>A survécu au Jour {validSelectedDay}: {data.timesSurvivedDay}</div>
+          <div>N'a pas survécu au Jour {validSelectedDay}: {timesNotSurvived}</div>
           <div>Total de parties: {data.gamesPlayed}</div>
           {isHighlightedAddition && !meetsMinGames && (
             <div style={{ 
