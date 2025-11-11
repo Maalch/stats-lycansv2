@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { generateAllPlayerAchievements } from './generate-achievements.js';
 import { fetchStatsListUrls, fetchGameLogData } from './shared/sync-utils.js';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../src/utils/datasyncExport.js';
 
 // Data sources
 const LEGACY_DATA_ENDPOINTS = [
@@ -67,6 +68,90 @@ async function fetchLegacyEndpointData(endpoint) {
     }
     return null;
   }
+}
+
+/**
+ * Correct Victorious status for disconnected players
+ * When a player disconnects, they are incorrectly marked as Victorious:false
+ * even if their camp won. This function fixes that by checking the winning camp.
+ * 
+ * Logic:
+ * 1. For each game, identify which camps won by checking Victorious:true players
+ * 2. For each player in the game, check if their camp is in the winning camps
+ * 3. If their camp won but they're marked as not victorious, correct it to true
+ * 
+ * This handles main camps (Villageois, Loup) as well as special roles (Amoureux, etc.)
+ * using the same camp grouping logic as the rest of the application.
+ * 
+ * EXCEPTION: Agent camp is excluded - there are always 2 Agents but only 1 wins.
+ * 
+ * @param {Object} gameLog - The game log object with GameStats array
+ * @returns {Object} - The corrected game log object
+ */
+function correctVictoriousStatusForDisconnectedPlayers(gameLog) {
+  if (!gameLog || !gameLog.GameStats || !Array.isArray(gameLog.GameStats)) {
+    return gameLog;
+  }
+
+  let totalCorrections = 0;
+
+  gameLog.GameStats.forEach(game => {
+    if (!game.PlayerStats || !Array.isArray(game.PlayerStats)) {
+      return;
+    }
+
+    // Find which camps won this game by checking Victorious players
+    // EXCEPTION: Exclude "Agent" camp as only 1 of 2 Agents wins
+    const victoriousCamps = new Set();
+    game.PlayerStats.forEach(player => {
+      if (player.Victorious) {
+        const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+        const camp = getPlayerCampFromRole(finalRole, { 
+          regroupWolfSubRoles: true, // Group Traître/Louveteau with Loup
+          regroupVillagers: true,     // Group villager roles together
+          regroupLovers: true         // Group lovers together
+        });
+        
+        // Skip Agent camp - only 1 of 2 Agents wins, so we can't auto-correct
+        if (camp !== 'Agent') {
+          victoriousCamps.add(camp);
+        }
+      }
+    });
+
+    // If no victorious camps found, skip this game
+    if (victoriousCamps.size === 0) {
+      return;
+    }
+
+    // Now check all players and correct those who should be victorious but aren't
+    game.PlayerStats.forEach(player => {
+      const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+      const playerCamp = getPlayerCampFromRole(finalRole, { 
+        regroupWolfSubRoles: true,
+        regroupVillagers: true,
+        regroupLovers: true
+      });
+
+      // Skip Agent camp - can't auto-correct as only 1 of 2 wins
+      if (playerCamp === 'Agent') {
+        return;
+      }
+
+      // If this player's camp won but they're marked as not victorious, correct it
+      if (victoriousCamps.has(playerCamp) && !player.Victorious) {
+        player.Victorious = true;
+        totalCorrections++;
+        console.log(`  ✓ Corrected ${player.Username} in game ${game.Id}: ${playerCamp} won`);
+      }
+    });
+  });
+
+  if (totalCorrections > 0) {
+    console.log(`✓ Corrected ${totalCorrections} disconnected player victory statuses`);
+  }
+
+  return gameLog;
 }
 
 async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
@@ -349,11 +434,15 @@ async function main() {
     const awsGameLogs = [];
     if (gameLogUrls.length > 0) {
       console.log(`📦 Fetching ${gameLogUrls.length} AWS game log files...`);
+      console.log('🔧 Correcting victorious status for disconnected players...');
       
       for (const url of gameLogUrls) {
         try {
           const gameLog = await fetchGameLogData(url);
-          awsGameLogs.push(gameLog);
+          
+          // Correct victorious status for disconnected players
+          const correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog);
+          awsGameLogs.push(correctedGameLog);
           
           // Small delay between requests to be respectful to S3
           await new Promise(resolve => setTimeout(resolve, 500));
