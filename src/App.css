@@ -429,6 +429,25 @@ body {
   white-space: pre-line;
 }
 
+.lycans-changelog-link {
+  color: var(--accent-primary);
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-bottom: 1px dashed var(--accent-primary);
+}
+
+.lycans-changelog-link:hover {
+  color: var(--accent-secondary);
+  border-bottom-color: var(--accent-secondary);
+  text-decoration: none;
+}
+
 .lycans-changelog-footer {
   padding: 1.5rem;
   background: var(--bg-secondary);

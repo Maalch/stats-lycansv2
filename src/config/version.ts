@@ -5,13 +5,27 @@ export interface ChangelogEntry {
   version: string;
   date: string;
   description: string;
+  link?: {
+    mainTab: string;
+    subTab?: string;
+    text: string; // The text to make clickable (e.g., "Joueurs / Séries")
+    navigationState?: Record<string, any>; // Additional navigation state to set
+  };
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
     version: 'v1.3.15',
     date: '06/11/2025',
-    description: 'Ajouts d\'une série "Rôles solo" dans "Joueurs" / "Séries".',
+    description: 'Ajouts d\'une série "Rôles solo" dans',
+    link: {
+      mainTab: 'players',
+      subTab: 'series',
+      text: 'Joueurs / Séries / Rôles solo',
+      navigationState: {
+        selectedSeriesType: 'solo'
+      }
+    }
   },
   {
     version: 'v1.3.14',

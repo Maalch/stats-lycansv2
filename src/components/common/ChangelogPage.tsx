@@ -1,11 +1,24 @@
 import { CHANGELOG } from '../../config/version';
 import type { ChangelogEntry } from '../../config/version';
+import { useNavigation } from '../../context/NavigationContext';
 
 interface ChangelogPageProps {
   onClose: () => void;
 }
 
 export function ChangelogPage({ onClose }: ChangelogPageProps) {
+  const { navigateToTab, updateNavigationState } = useNavigation();
+
+  const handleLinkClick = (mainTab: string, subTab?: string, navigationState?: Record<string, any>) => {
+    // Set navigation state first if provided
+    if (navigationState) {
+      updateNavigationState(navigationState);
+    }
+    // Then navigate to the tab
+    navigateToTab(mainTab, subTab);
+    onClose(); // Close the changelog after navigation
+  };
+
   return (
     <div className="lycans-changelog-overlay">
       <div className="lycans-changelog-container">
@@ -22,7 +35,12 @@ export function ChangelogPage({ onClose }: ChangelogPageProps) {
         
         <div className="lycans-changelog-content">
           {CHANGELOG.map((entry, index) => (
-            <ChangelogItem key={entry.version} entry={entry} isLatest={index === 0} />
+            <ChangelogItem 
+              key={entry.version} 
+              entry={entry} 
+              isLatest={index === 0}
+              onLinkClick={handleLinkClick}
+            />
           ))}
         </div>
         
@@ -46,9 +64,10 @@ export function ChangelogPage({ onClose }: ChangelogPageProps) {
 interface ChangelogItemProps {
   entry: ChangelogEntry;
   isLatest: boolean;
+  onLinkClick: (mainTab: string, subTab?: string, navigationState?: Record<string, any>) => void;
 }
 
-function ChangelogItem({ entry, isLatest }: ChangelogItemProps) {
+function ChangelogItem({ entry, isLatest, onLinkClick }: ChangelogItemProps) {
   return (
     <div className={`lycans-changelog-item ${isLatest ? 'latest' : ''}`}>
       <div className="lycans-changelog-item-header">
@@ -60,6 +79,19 @@ function ChangelogItem({ entry, isLatest }: ChangelogItemProps) {
       </div>
       <div className="lycans-changelog-description">
         {entry.description}
+        {entry.link && (
+          <>
+            {' '}
+            <button
+              className="lycans-changelog-link"
+              onClick={() => onLinkClick(entry.link!.mainTab, entry.link!.subTab, entry.link!.navigationState)}
+              title={`Naviguer vers ${entry.link.text}`}
+            >
+              {entry.link.text}
+            </button>
+            .
+          </>
+        )}
       </div>
     </div>
   );
