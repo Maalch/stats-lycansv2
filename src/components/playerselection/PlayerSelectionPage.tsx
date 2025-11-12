@@ -381,7 +381,7 @@ export function PlayerSelectionPage() {
                     >
                       Camps
                     </button>
-                    {/* WIP, disable for now
+                    {/*}
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'roles' ? 'active' : ''}`}
                       onClick={() => setSelectedView('roles')}

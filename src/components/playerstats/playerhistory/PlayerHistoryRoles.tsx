@@ -4,7 +4,7 @@ import { usePlayerStatsBase } from '../../../hooks/utils/baseStatsHook';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useSettings } from '../../../context/SettingsContext';
 import { FullscreenChart } from '../../common/FullscreenChart';
-import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../utils/datasyncExport';
+import { getPlayerCampFromRole } from '../../../utils/datasyncExport';
 import { getPlayerId } from '../../../utils/playerIdentification';
 import type { GameLogEntry } from '../../../hooks/useCombinedRawData';
 
@@ -56,8 +56,7 @@ function computePlayerRoleStats(
       const playerWon = playerStat.Victorious;
       
       // Get player's final role and camp
-      const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
-      const playerCamp = getPlayerCampFromRole(finalRole);
+      const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
 
       // Process Power (only for Villageois and Loup camps)
       if (playerStat.Power && playerStat.Power.trim() !== '') {
@@ -242,7 +241,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     <div className="lycans-graphiques-groupe">
       {hasVillageoisPowers && renderRoleChart(
         chartData.villageoisPowers,
-        'Pouvoirs Villageois',
+        'Camp Villageois',
         'var(--chart-color-1)',
         (powerName) => {
           // Navigate to game details showing all games with this power in Villageois camp
@@ -259,7 +258,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
 
       {hasLoupPowers && renderRoleChart(
         chartData.loupPowers,
-        'Pouvoirs Loups',
+        'Camp Loups',
         'var(--chart-color-2)',
         (powerName) => {
           // Navigate to game details showing all games with this power in Loup camp
