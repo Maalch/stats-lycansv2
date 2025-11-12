@@ -1,6 +1,7 @@
 import { getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerId } from '../../utils/playerIdentification';
+import { formatLycanDate } from './dataUtils';
 // Note: Player names are already normalized during data loading, so we can use Username directly
 
 
@@ -804,7 +805,7 @@ export function computePlayerSeries(
         startGame: stats.villageoisSeriesStart?.game || '',
         endGame: stats.currentVillageoisGameIds[stats.currentVillageoisGameIds.length - 1] || '',
         startDate: stats.villageoisSeriesStart?.date || '',
-        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
         isOngoing: true,
         gameIds: [...stats.currentVillageoisGameIds]
       });
@@ -818,7 +819,7 @@ export function computePlayerSeries(
         startGame: stats.loupsSeriesStart?.game || '',
         endGame: stats.currentLoupsGameIds[stats.currentLoupsGameIds.length - 1] || '',
         startDate: stats.loupsSeriesStart?.date || '',
-        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
         isOngoing: true,
         gameIds: [...stats.currentLoupsGameIds]
       });
@@ -837,7 +838,7 @@ export function computePlayerSeries(
         startGame: stats.noWolfSeriesStart?.game || '',
         endGame: stats.currentNoWolfGameIds[stats.currentNoWolfGameIds.length - 1] || '',
         startDate: stats.noWolfSeriesStart?.date || '',
-        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
         campCounts: campCounts,
         isOngoing: true,
         gameIds: [...stats.currentNoWolfGameIds]
@@ -857,7 +858,7 @@ export function computePlayerSeries(
         startGame: stats.soloSeriesStart?.game || '',
         endGame: stats.currentSoloGameIds[stats.currentSoloGameIds.length - 1] || '',
         startDate: stats.soloSeriesStart?.date || '',
-        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
         campCounts: campCounts,
         isOngoing: true,
         gameIds: [...stats.currentSoloGameIds]
@@ -876,7 +877,7 @@ export function computePlayerSeries(
         startGame: stats.winSeriesStart?.game || '',
         endGame: stats.currentWinGameIds[stats.currentWinGameIds.length - 1] || '',
         startDate: stats.winSeriesStart?.date || '',
-        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
         campCounts: campCounts,
         isOngoing: true,
         gameIds: [...stats.currentWinGameIds]
@@ -895,7 +896,7 @@ export function computePlayerSeries(
         startGame: stats.lossSeriesStart?.game || '',
         endGame: stats.currentLossGameIds[stats.currentLossGameIds.length - 1] || '',
         startDate: stats.lossSeriesStart?.date || '',
-        endDate: sortedGames[sortedGames.length - 1]?.EndDate || '',
+        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
         campCounts: campCounts,
         isOngoing: true,
         gameIds: [...stats.currentLossGameIds]
