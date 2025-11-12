@@ -154,6 +154,34 @@ function correctVictoriousStatusForDisconnectedPlayers(gameLog) {
   return gameLog;
 }
 
+/**
+ * Correct Lover secondary role in game Logs
+ * In old game logs entries, Lovers can have their secondary role incorrectly set to "Télépathe"
+ * "Télépathe" is always a capacity of Lovers, and should not be listed as a secondary role.
+ * 
+ * @param {Object} gameLog - The game log object with GameStats array
+ * @returns {Object} - The corrected game log object
+ */
+function correctLoverSecondaryRole(gameLog) {
+  if (!gameLog || !gameLog.GameStats || !Array.isArray(gameLog.GameStats)) {
+    return gameLog;
+  }
+
+  gameLog.GameStats.forEach(game => {
+    if (!game.PlayerStats || !Array.isArray(game.PlayerStats)) {
+      return;
+    }
+
+    game.PlayerStats.forEach(player => {
+      if (player.SecondaryRole === "Télépathe" && (player.MainRoleInitial === "Amoureux" || player.MainRoleInitial === "Amoureux Loup" || player.MainRoleInitial === "Amoureux Villageois")) {
+        player.SecondaryRole = null;
+      }
+    });
+  });
+
+  return gameLog;
+}
+
 async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   console.log('Merging legacy and AWS game logs into unified structure...');
   
@@ -440,8 +468,9 @@ async function main() {
         try {
           const gameLog = await fetchGameLogData(url);
           
-          // Correct victorious status for disconnected players
-          const correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog);
+          // Correct victorious status for disconnected players and Lover secondary role
+          let correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog);
+          correctedGameLog = correctLoverSecondaryRole(correctedGameLog);
           awsGameLogs.push(correctedGameLog);
           
           // Small delay between requests to be respectful to S3
