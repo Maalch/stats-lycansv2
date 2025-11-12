@@ -14,6 +14,7 @@ import {
   PlayerHistoryCamp, 
   PlayerHistoryMap, 
   PlayerHistoryKills,
+  PlayerHistoryRoles,
   type GroupByMethod,
   type CampFilterOption
 } from '../playerstats/playerhistory';
@@ -53,7 +54,7 @@ export function PlayerSelectionPage() {
     return settings.gameFilter === 'modded' ? 'modded' : 'all';
   });
   
-  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills'>('achievements');
+  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles'>('achievements');
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
   const [campFilter, setCampFilter] = useState<CampFilterOption>('all');
 
@@ -380,12 +381,21 @@ export function PlayerSelectionPage() {
                     >
                       Camps
                     </button>
+                    {/* WIP, disable for now
+                    <button
+                      className={`lycans-categorie-btn ${selectedView === 'roles' ? 'active' : ''}`}
+                      onClick={() => setSelectedView('roles')}
+                    >
+                      Rôles
+                    </button>
+                    */}
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'maps' ? 'active' : ''}`}
                       onClick={() => setSelectedView('maps')}
                     >
                       Maps
                     </button>
+
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'kills' ? 'active' : ''}`}
                       onClick={() => setSelectedView('kills')}
@@ -581,6 +591,13 @@ export function PlayerSelectionPage() {
                   {selectedView === 'maps' && (
                     <div className="player-history-section">
                       <PlayerHistoryMap selectedPlayerName={highlightedPlayerStats.name} />
+                    </div>
+                  )}
+
+                  {/* Roles View */}
+                  {selectedView === 'roles' && (
+                    <div className="player-history-section">
+                      <PlayerHistoryRoles selectedPlayerName={highlightedPlayerStats.name} />
                     </div>
                   )}
 
