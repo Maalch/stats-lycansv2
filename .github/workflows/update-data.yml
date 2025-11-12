@@ -2,8 +2,8 @@ name: Update Lycans Stats Data
 
 on:
   schedule:
-    # Run every day at 4 AM UTC
-    - cron: '0 4 * * *'
+    # Run only on Monday (before usual game day), Tuesday (game day), and Thursday (alternate game day) at 8 PM UTC (after game time)
+    - cron: '0 20 * * 1,2,4'
   workflow_dispatch: # Allow manual triggering
   push:
     paths:
