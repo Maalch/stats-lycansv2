@@ -6,6 +6,7 @@ import { useSettings } from '../../../context/SettingsContext';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { getPlayerCampFromRole } from '../../../utils/datasyncExport';
 import { getPlayerId } from '../../../utils/playerIdentification';
+import { useThemeAdjustedLycansColorScheme } from '../../../types/api';
 import type { GameLogEntry } from '../../../hooks/useCombinedRawData';
 
 interface PlayerHistoryRolesProps {
@@ -46,6 +47,16 @@ function computePlayerRoleStats(
   const secondaryRolesMap = new Map<string, { appearances: number; wins: number }>();
 
   gameData.forEach((game) => {
+    // Only consider modded games for power statistics
+    if (!game.Modded) {
+      return;
+    }
+
+    // Skip games where death information is not filled
+    if (!game.LegacyData || game.LegacyData.deathInformationFilled !== true) {
+      return;
+    }
+
     // Find the player in this game's PlayerStats by ID or username
     const playerStat = game.PlayerStats.find(
       player => getPlayerId(player) === playerIdentifier || 
@@ -53,13 +64,27 @@ function computePlayerRoleStats(
     );
 
     if (playerStat) {
+      // Skip games where the player's role is "Inconnu"
+      if (playerStat.MainRoleInitial === 'Inconnu') {
+        return;
+      }
+
       const playerWon = playerStat.Victorious;
       
       // Get player's final role and camp
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
 
+      // Special handling for Chasseur and Alchimiste - they are roles that cannot have other powers
+      if (playerCamp === 'Villageois' && 
+          (playerStat.MainRoleInitial === 'Chasseur' || playerStat.MainRoleInitial === 'Alchimiste')) {
+        const currentStats = villageoisPowersMap.get(playerStat.MainRoleInitial) || { appearances: 0, wins: 0 };
+        villageoisPowersMap.set(playerStat.MainRoleInitial, {
+          appearances: currentStats.appearances + 1,
+          wins: currentStats.wins + (playerWon ? 1 : 0)
+        });
+      }
       // Process Power (only for Villageois and Loup camps)
-      if (playerStat.Power && playerStat.Power.trim() !== '') {
+      else if (playerStat.Power && playerStat.Power.trim() !== '') {
         if (playerCamp === 'Villageois') {
           const currentStats = villageoisPowersMap.get(playerStat.Power) || { appearances: 0, wins: 0 };
           villageoisPowersMap.set(playerStat.Power, {
@@ -74,9 +99,22 @@ function computePlayerRoleStats(
           });
         }
       }
+      // No power - add to "Aucun pouvoir" category for Villageois or Loup camps
+      else if (playerCamp === 'Villageois' || playerCamp === 'Loup') {
+        const targetMap = playerCamp === 'Villageois' ? villageoisPowersMap : loupPowersMap;
+        const currentStats = targetMap.get('Aucun pouvoir') || { appearances: 0, wins: 0 };
+        targetMap.set('Aucun pouvoir', {
+          appearances: currentStats.appearances + 1,
+          wins: currentStats.wins + (playerWon ? 1 : 0)
+        });
+      }
 
       // Process Secondary Role (for all camps)
       if (playerStat.SecondaryRole && playerStat.SecondaryRole.trim() !== '') {
+        // Skip "Inconnu" secondary role
+        if (playerStat.SecondaryRole === 'Inconnu') {
+          return;
+        }
         const currentStats = secondaryRolesMap.get(playerStat.SecondaryRole) || { appearances: 0, wins: 0 };
         secondaryRolesMap.set(playerStat.SecondaryRole, {
           appearances: currentStats.appearances + 1,
@@ -109,6 +147,7 @@ function computePlayerRoleStats(
 export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesProps) {
   const { navigateToGameDetails } = useNavigation();
   const { settings } = useSettings();
+  const lycansColorScheme = useThemeAdjustedLycansColorScheme();
   const { data, isLoading, error } = usePlayerStatsBase((gameData) => 
     computePlayerRoleStats(selectedPlayerName, gameData)
   );
@@ -117,13 +156,23 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
   const chartData = useMemo(() => {
     if (!data) return { villageoisPowers: [], loupPowers: [], secondaryRoles: [] };
 
-    // Only show roles with at least 2 appearances for cleaner visualization
-    const MIN_APPEARANCES = 2;
+    // Only show roles with at least 1 appearance
+    const MIN_APPEARANCES = 1;
+    // For secondary roles, show all if there are any (even with 1 appearance) since they're rarer
+    const MIN_SECONDARY_APPEARANCES = 1;
+    // Limit all charts to top 15 entries
+    const MAX_ENTRIES = 15;
 
     return {
-      villageoisPowers: data.villageoisPowers.filter(r => r.appearances >= MIN_APPEARANCES),
-      loupPowers: data.loupPowers.filter(r => r.appearances >= MIN_APPEARANCES),
-      secondaryRoles: data.secondaryRoles.filter(r => r.appearances >= MIN_APPEARANCES)
+      villageoisPowers: data.villageoisPowers
+        .filter(r => r.appearances >= MIN_APPEARANCES)
+        .slice(0, MAX_ENTRIES),
+      loupPowers: data.loupPowers
+        .filter(r => r.appearances >= MIN_APPEARANCES)
+        .slice(0, MAX_ENTRIES),
+      secondaryRoles: data.secondaryRoles
+        .filter(r => r.appearances >= MIN_SECONDARY_APPEARANCES)
+        .slice(0, MAX_ENTRIES)
     };
   }, [data]);
 
@@ -184,7 +233,8 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     chartDataArray: RoleStats[],
     title: string,
     barColor: string,
-    onBarClick: (roleName: string) => void
+    onBarClick: (roleName: string) => void,
+    getBarColor?: (roleName: string, index: number) => string
   ) => (
     <div className="lycans-graphique-section">
       <h3>{title}</h3>
@@ -224,7 +274,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
                 {chartDataArray.map((entry, index) => (
                   <Cell 
                     key={`cell-${index}`} 
-                    fill={barColor}
+                    fill={getBarColor ? getBarColor(entry.name, index) : barColor}
                     onClick={() => onBarClick(entry.name)}
                     style={{ cursor: 'pointer' }}
                   />
@@ -253,6 +303,17 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
             },
             fromComponent: `Historique des Rôles - Pouvoir: ${powerName}`
           });
+        },
+        (roleName) => {
+          // Use lycans color scheme for Chasseur and Alchimiste
+          if (roleName === 'Chasseur' && lycansColorScheme['Chasseur']) {
+            return lycansColorScheme['Chasseur'];
+          }
+          if (roleName === 'Alchimiste' && lycansColorScheme['Alchimiste']) {
+            return lycansColorScheme['Alchimiste'];
+          }
+          // Default color for other powers
+          return 'var(--chart-color-1)';
         }
       )}
 
@@ -270,6 +331,10 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
             },
             fromComponent: `Historique des Rôles - Pouvoir: ${powerName}`
           });
+        },
+        () => {
+          // Use lycans "Loup" color for all bars in this chart
+          return lycansColorScheme['Loup'] || 'var(--chart-color-2)';
         }
       )}
 

@@ -626,8 +626,8 @@ function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, p
     Color: playerDetails && playerDetails.color ? playerDetails.color : null,
     MainRoleInitial: determineMainRoleInitialWithDetails(playerDetails),
     MainRoleChanges: getRoleChangesForPlayer(playerName, gameId, roleChangesHeaders, roleChangesDataRows),
-    Power: playerDetails && playerDetails.power && playerDetails.power !== 'N/A' && playerDetails.power !== 'Inconnu' ? playerDetails.power : null,
-    SecondaryRole: playerDetails && playerDetails.secondaryRole && playerDetails.secondaryRole !== 'N/A' && playerDetails.secondaryRole !== 'Inconnu' ? playerDetails.secondaryRole : null,
+    Power: playerDetails && playerDetails.power && playerDetails.power !== 'N/A' ? playerDetails.power : null,
+    SecondaryRole: playerDetails && playerDetails.secondaryRole && playerDetails.secondaryRole !== 'N/A' ? playerDetails.secondaryRole : null,
     DeathDateIrl: null, // Not available in legacy data
     DeathTiming: determineDeathTiming(playerDetails),
     DeathPosition: null, // Not available in legacy data
