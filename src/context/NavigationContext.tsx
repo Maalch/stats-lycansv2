@@ -84,6 +84,8 @@ export interface NavigationState {
   // PlayerSeriesChart state
   selectedSeriesType?: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses';
   seriesViewMode?: 'best' | 'ongoing';
+  // PlayerSelectionPage state
+  selectedPlayerSelectionView?: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles';
   
   // Grouped state - all properties in each group must be provided together
   campPerformanceState?: CampPerformanceState;

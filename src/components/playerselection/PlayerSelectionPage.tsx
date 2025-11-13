@@ -37,7 +37,7 @@ interface PlayerBasicStats {
 
 export function PlayerSelectionPage() {
   const { settings, updateSettings } = useSettings();
-  const { navigateToGameDetails } = useNavigation();
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { data: gameLogData, isLoading, error } = useGameLogData();
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
@@ -54,7 +54,10 @@ export function PlayerSelectionPage() {
     return settings.gameFilter === 'modded' ? 'modded' : 'all';
   });
   
-  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles'>('achievements');
+  // Use navigationState to restore view selection, fallback to 'achievements'
+  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles'>(
+    navigationState.selectedPlayerSelectionView || 'achievements'
+  );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
   const [campFilter, setCampFilter] = useState<CampFilterOption>('all');
 
@@ -70,6 +73,13 @@ export function PlayerSelectionPage() {
       setAchievementFilter(newFilter);
     }
   }, [settings.gameFilter, settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter]);
+
+  // Sync selectedView with navigationState when it changes (for external navigation like changelog links)
+  useEffect(() => {
+    if (navigationState.selectedPlayerSelectionView) {
+      setSelectedView(navigationState.selectedPlayerSelectionView);
+    }
+  }, [navigationState.selectedPlayerSelectionView]);
 
   // Get player history data for summary cards (only when a player is highlighted)
   const { data: playerHistoryData } = usePlayerGameHistoryFromRaw(settings.highlightedPlayer || '');
@@ -167,6 +177,12 @@ export function PlayerSelectionPage() {
   const handlePlayerSelect = (playerName: string) => {
     updateSettings({ highlightedPlayer: playerName });
     setSearchQuery(''); // Clear search to show the selected player's card
+  };
+
+  // Helper function to handle view changes and sync with navigation state
+  const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles') => {
+    setSelectedView(newView);
+    updateNavigationState({ selectedPlayerSelectionView: newView });
   };
 
   if (isLoading || joueursLoading) {
@@ -365,40 +381,38 @@ export function PlayerSelectionPage() {
                   <div className="lycans-categories-selection" style={{ marginBottom: '1rem' }}>
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'achievements' ? 'active' : ''}`}
-                      onClick={() => setSelectedView('achievements')}
+                      onClick={() => handleViewChange('achievements')}
                     >
                       Classement
                     </button>
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'evolution' ? 'active' : ''}`}
-                      onClick={() => setSelectedView('evolution')}
+                      onClick={() => handleViewChange('evolution')}
                     >
                       Évolution
                     </button>
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'camps' ? 'active' : ''}`}
-                      onClick={() => setSelectedView('camps')}
+                      onClick={() => handleViewChange('camps')}
                     >
                       Camps
                     </button>
-                    {/*
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'roles' ? 'active' : ''}`}
-                      onClick={() => setSelectedView('roles')}
+                      onClick={() => handleViewChange('roles')}
                     >
                       Rôles
                     </button>
-                    */}
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'maps' ? 'active' : ''}`}
-                      onClick={() => setSelectedView('maps')}
+                      onClick={() => handleViewChange('maps')}
                     >
                       Maps
                     </button>
 
                     <button
                       className={`lycans-categorie-btn ${selectedView === 'kills' ? 'active' : ''}`}
-                      onClick={() => setSelectedView('kills')}
+                      onClick={() => handleViewChange('kills')}
                     >
                       Kills
                     </button>

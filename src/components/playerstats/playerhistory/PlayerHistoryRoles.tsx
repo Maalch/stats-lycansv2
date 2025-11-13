@@ -4,7 +4,7 @@ import { usePlayerStatsBase } from '../../../hooks/utils/baseStatsHook';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useSettings } from '../../../context/SettingsContext';
 import { FullscreenChart } from '../../common/FullscreenChart';
-import { getPlayerCampFromRole } from '../../../utils/datasyncExport';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../utils/datasyncExport';
 import { getPlayerId } from '../../../utils/playerIdentification';
 import { useThemeAdjustedLycansColorScheme } from '../../../types/api';
 import type { GameLogEntry } from '../../../hooks/useCombinedRawData';
@@ -17,6 +17,8 @@ interface RoleStats {
   name: string;
   appearances: number;
   wins: number;
+  winsWithoutRoleChange: number; // Wins where the role didn't change
+  gamesWithoutRoleChange: number; // Games where the role didn't change
   winRate: string;
   camp?: 'Villageois' | 'Loup'; // Only for Powers
   totalGamesAllModes?: number; // Total games including non-modded (for Chasseur/Alchimiste)
@@ -44,9 +46,9 @@ function computePlayerRoleStats(
     return null;
   }
 
-  const villageoisPowersMap = new Map<string, { appearances: number; wins: number }>();
-  const loupPowersMap = new Map<string, { appearances: number; wins: number; roleBreakdown: Map<string, number> }>();
-  const secondaryRolesMap = new Map<string, { appearances: number; wins: number }>();
+  const villageoisPowersMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>();
+  const loupPowersMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number; roleBreakdown: Map<string, number> }>();
+  const secondaryRolesMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>();
 
   gameData.forEach((game) => {
     // Only consider modded games for power statistics
@@ -73,6 +75,10 @@ function computePlayerRoleStats(
 
       const playerWon = playerStat.Victorious;
       
+      // Check if the player's role changed during the game
+      const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+      const roleChanged = finalRole !== playerStat.MainRoleInitial;
+      
       // Get player's camp - check for wolf family (Loup, Traître, Louveteau)
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
       const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
@@ -80,24 +86,40 @@ function computePlayerRoleStats(
       // Special handling for Chasseur and Alchimiste - they are roles that cannot have other powers
       if (playerCamp === 'Villageois' && 
           (playerStat.MainRoleInitial === 'Chasseur' || playerStat.MainRoleInitial === 'Alchimiste')) {
-        const currentStats = villageoisPowersMap.get(playerStat.MainRoleInitial) || { appearances: 0, wins: 0 };
+        const currentStats = villageoisPowersMap.get(playerStat.MainRoleInitial) || { 
+          appearances: 0, 
+          wins: 0, 
+          winsWithoutRoleChange: 0, 
+          gamesWithoutRoleChange: 0 
+        };
         villageoisPowersMap.set(playerStat.MainRoleInitial, {
           appearances: currentStats.appearances + 1,
-          wins: currentStats.wins + (playerWon ? 1 : 0)
+          wins: currentStats.wins + (playerWon ? 1 : 0),
+          winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+          gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
         });
       }
       // Process Power (only for Villageois and Loup camps)
       else if (playerStat.Power && playerStat.Power.trim() !== '') {
         if (playerCamp === 'Villageois') {
-          const currentStats = villageoisPowersMap.get(playerStat.Power) || { appearances: 0, wins: 0 };
+          const currentStats = villageoisPowersMap.get(playerStat.Power) || { 
+            appearances: 0, 
+            wins: 0, 
+            winsWithoutRoleChange: 0, 
+            gamesWithoutRoleChange: 0 
+          };
           villageoisPowersMap.set(playerStat.Power, {
             appearances: currentStats.appearances + 1,
-            wins: currentStats.wins + (playerWon ? 1 : 0)
+            wins: currentStats.wins + (playerWon ? 1 : 0),
+            winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+            gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
           });
         } else if (isWolfFamily) {
           const currentStats = loupPowersMap.get(playerStat.Power) || { 
             appearances: 0, 
             wins: 0, 
+            winsWithoutRoleChange: 0, 
+            gamesWithoutRoleChange: 0,
             roleBreakdown: new Map<string, number>() 
           };
           // Track the main role (Loup, Traître, Louveteau)
@@ -109,6 +131,8 @@ function computePlayerRoleStats(
           loupPowersMap.set(playerStat.Power, {
             appearances: currentStats.appearances + 1,
             wins: currentStats.wins + (playerWon ? 1 : 0),
+            winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+            gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0),
             roleBreakdown: roleBreakdown
           });
         }
@@ -116,15 +140,24 @@ function computePlayerRoleStats(
       // No power - add to "Aucun pouvoir" category for Villageois or Loup camps
       else if (playerCamp === 'Villageois' || isWolfFamily) {
         if (playerCamp === 'Villageois') {
-          const currentStats = villageoisPowersMap.get('Aucun pouvoir') || { appearances: 0, wins: 0 };
+          const currentStats = villageoisPowersMap.get('Aucun pouvoir') || { 
+            appearances: 0, 
+            wins: 0, 
+            winsWithoutRoleChange: 0, 
+            gamesWithoutRoleChange: 0 
+          };
           villageoisPowersMap.set('Aucun pouvoir', {
             appearances: currentStats.appearances + 1,
-            wins: currentStats.wins + (playerWon ? 1 : 0)
+            wins: currentStats.wins + (playerWon ? 1 : 0),
+            winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+            gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
           });
         } else {
           const currentStats = loupPowersMap.get('Aucun pouvoir') || { 
             appearances: 0, 
             wins: 0, 
+            winsWithoutRoleChange: 0, 
+            gamesWithoutRoleChange: 0,
             roleBreakdown: new Map<string, number>() 
           };
           const roleBreakdown = currentStats.roleBreakdown;
@@ -135,6 +168,8 @@ function computePlayerRoleStats(
           loupPowersMap.set('Aucun pouvoir', {
             appearances: currentStats.appearances + 1,
             wins: currentStats.wins + (playerWon ? 1 : 0),
+            winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+            gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0),
             roleBreakdown: roleBreakdown
           });
         }
@@ -146,14 +181,22 @@ function computePlayerRoleStats(
         if (playerStat.SecondaryRole === 'Inconnu') {
           return;
         }
-        const currentStats = secondaryRolesMap.get(playerStat.SecondaryRole) || { appearances: 0, wins: 0 };
+        const currentStats = secondaryRolesMap.get(playerStat.SecondaryRole) || { 
+          appearances: 0, 
+          wins: 0, 
+          winsWithoutRoleChange: 0, 
+          gamesWithoutRoleChange: 0 
+        };
         secondaryRolesMap.set(playerStat.SecondaryRole, {
           appearances: currentStats.appearances + 1,
-          wins: currentStats.wins + (playerWon ? 1 : 0)
+          wins: currentStats.wins + (playerWon ? 1 : 0),
+          winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+          gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
         });
       }
     }
   });
+
 
   // Count total games (including non-modded) for Chasseur and Alchimiste
   // But still respect deathInformationFilled filter for consistency
@@ -177,13 +220,16 @@ function computePlayerRoleStats(
   });
 
   // Convert maps to sorted arrays
-  const mapToArrayVillageois = (map: Map<string, { appearances: number; wins: number }>): RoleStats[] => {
+  const mapToArrayVillageois = (map: Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>): RoleStats[] => {
     return Array.from(map.entries())
       .map(([name, stats]) => ({
         name,
         appearances: stats.appearances,
         wins: stats.wins,
-        winRate: stats.appearances > 0 ? ((stats.wins / stats.appearances) * 100).toFixed(1) : '0.0',
+        winsWithoutRoleChange: stats.winsWithoutRoleChange,
+        gamesWithoutRoleChange: stats.gamesWithoutRoleChange,
+        // Win rate is calculated only from games where the role didn't change
+        winRate: stats.gamesWithoutRoleChange > 0 ? ((stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100).toFixed(1) : '0.0',
         camp: 'Villageois' as const,
         // Add total games for Chasseur and Alchimiste
         ...(chasseurAlchimisteTotal.has(name) && { totalGamesAllModes: chasseurAlchimisteTotal.get(name) })
@@ -191,13 +237,16 @@ function computePlayerRoleStats(
       .sort((a, b) => b.appearances - a.appearances);
   };
 
-  const mapToArrayLoup = (map: Map<string, { appearances: number; wins: number; roleBreakdown: Map<string, number> }>): RoleStats[] => {
+  const mapToArrayLoup = (map: Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number; roleBreakdown: Map<string, number> }>): RoleStats[] => {
     return Array.from(map.entries())
       .map(([name, stats]) => ({
         name,
         appearances: stats.appearances,
         wins: stats.wins,
-        winRate: stats.appearances > 0 ? ((stats.wins / stats.appearances) * 100).toFixed(1) : '0.0',
+        winsWithoutRoleChange: stats.winsWithoutRoleChange,
+        gamesWithoutRoleChange: stats.gamesWithoutRoleChange,
+        // Win rate is calculated only from games where the role didn't change
+        winRate: stats.gamesWithoutRoleChange > 0 ? ((stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100).toFixed(1) : '0.0',
         camp: 'Loup' as const,
         // Convert Map to array for role breakdown
         roleBreakdown: Array.from(stats.roleBreakdown.entries())
@@ -207,13 +256,16 @@ function computePlayerRoleStats(
       .sort((a, b) => b.appearances - a.appearances);
   };
 
-  const mapToArraySecondary = (map: Map<string, { appearances: number; wins: number }>): RoleStats[] => {
+  const mapToArraySecondary = (map: Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>): RoleStats[] => {
     return Array.from(map.entries())
       .map(([name, stats]) => ({
         name,
         appearances: stats.appearances,
         wins: stats.wins,
-        winRate: stats.appearances > 0 ? ((stats.wins / stats.appearances) * 100).toFixed(1) : '0.0'
+        winsWithoutRoleChange: stats.winsWithoutRoleChange,
+        gamesWithoutRoleChange: stats.gamesWithoutRoleChange,
+        // Win rate is calculated only from games where the role didn't change
+        winRate: stats.gamesWithoutRoleChange > 0 ? ((stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100).toFixed(1) : '0.0'
       }))
       .sort((a, b) => b.appearances - a.appearances);
   };
@@ -281,6 +333,8 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length > 0) {
       const dataPoint = payload[0].payload;
+      const hasRoleChanges = dataPoint.gamesWithoutRoleChange < dataPoint.appearances;
+      
       return (
         <div style={{ 
           background: 'var(--bg-secondary)', 
@@ -291,6 +345,11 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
         }}>
           <div><strong>{dataPoint.name}</strong></div>
           <div>Apparitions: {dataPoint.appearances}</div>
+          {hasRoleChanges && (
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: '0.25rem' }}>
+              dont {dataPoint.appearances - dataPoint.gamesWithoutRoleChange} avec changement de rôle
+            </div>
+          )}
           {dataPoint.totalGamesAllModes && dataPoint.totalGamesAllModes !== dataPoint.appearances && (
             <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
               (Total avec parties non moddées: {dataPoint.totalGamesAllModes})
@@ -306,8 +365,6 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
               ))}
             </div>
           )}
-          <div>Victoires: {dataPoint.wins}</div>
-          <div>Taux de victoire: {dataPoint.winRate}%</div>
           <div style={{ 
             fontSize: '0.8rem', 
             color: 'var(--accent-primary)', 
@@ -331,57 +388,60 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     barColor: string,
     onBarClick: (roleName: string) => void,
     getBarColor?: (roleName: string, index: number) => string
-  ) => (
-    <div className="lycans-graphique-section">
-      <h3>{title}</h3>
-      <FullscreenChart title={title}>
-        <div style={{ height: 400 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={chartDataArray}
-              margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis 
-                dataKey="name"
-                angle={-45}
-                textAnchor="end"
-                height={90}
-                interval={0}
-                fontSize={12}
-                tick={({ x, y, payload }) => (
-                  <text
-                    x={x}
-                    y={y}
-                    textAnchor="end"
-                    transform={`rotate(-45, ${x}, ${y})`}
-                    fill={settings.highlightedPlayer === selectedPlayerName ? 'var(--text-primary)' : 'var(--text-secondary)'}
-                    fontSize={12}
-                  >
-                    {payload.value}
-                  </text>
-                )}
-              />
-              <YAxis 
-                label={{ value: 'Nombre d\'apparitions', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="appearances">
-                {chartDataArray.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={getBarColor ? getBarColor(entry.name, index) : barColor}
-                    onClick={() => onBarClick(entry.name)}
-                    style={{ cursor: 'pointer' }}
-                  />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </FullscreenChart>
-    </div>
-  );
+  ) => {
+
+    return (
+      <div className="lycans-graphique-section">
+        <h3>{title}</h3>
+        <FullscreenChart title={title}>
+          <div style={{ height: 400 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={chartDataArray}
+                margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="name"
+                  angle={-45}
+                  textAnchor="end"
+                  height={90}
+                  interval={0}
+                  fontSize={12}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      textAnchor="end"
+                      transform={`rotate(-45, ${x}, ${y})`}
+                      fill={settings.highlightedPlayer === selectedPlayerName ? 'var(--text-primary)' : 'var(--text-secondary)'}
+                      fontSize={12}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
+                />
+                <YAxis 
+                  label={{ value: 'Nombre d\'apparitions', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Bar dataKey="appearances">
+                  {chartDataArray.map((entry, index) => (
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={getBarColor ? getBarColor(entry.name, index) : barColor}
+                      onClick={() => onBarClick(entry.name)}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </FullscreenChart>
+      </div>
+    );
+  };
 
   return (
     <div className="lycans-graphiques-groupe">

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.3.15';
+export const APP_VERSION = '1.4.1';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,18 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.4.1',
+    date: '13/11/2025',
+    description: 'Ajouts de statistiques sur les métiers, pouvoirs et rôles secondaires dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Sélection Joueur / Rôles',
+      navigationState: {
+        selectedPlayerSelectionView: 'roles'
+      }
+    }
+  },
   {
     version: 'v1.3.15',
     date: '06/11/2025',
