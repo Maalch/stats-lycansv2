@@ -145,7 +145,12 @@ const GENERAL_STATS_MENU = [
     component: VictoryTypesChart,
     description: 'Répartition des types de victoire par camp'
   },
-
+  { 
+    key: 'globalVoting', 
+    label: 'Votes', 
+    component: GlobalVotingStatsChart,
+    description: 'Analyse globale des comportements de vote en réunion'
+  },
   { 
     key: 'harvest', 
     label: 'Récolte', 
@@ -158,12 +163,7 @@ const GENERAL_STATS_MENU = [
     component: GameDurationInsights,
     description: 'Statistiques sur la durée des parties'
   },
-  { 
-    key: 'globalVoting', 
-    label: 'Votes', 
-    component: GlobalVotingStatsChart,
-    description: 'Analyse globale des comportements de vote en réunion'
-  },
+
   { 
     key: 'colorStats', 
     label: 'Couleurs', 
