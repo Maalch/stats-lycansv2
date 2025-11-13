@@ -19,6 +19,8 @@ interface RoleStats {
   wins: number;
   winRate: string;
   camp?: 'Villageois' | 'Loup'; // Only for Powers
+  totalGamesAllModes?: number; // Total games including non-modded (for Chasseur/Alchimiste)
+  roleBreakdown?: { role: string; count: number }[]; // Breakdown by main role (for Loup powers)
 }
 
 interface PowerStats extends RoleStats {
@@ -43,7 +45,7 @@ function computePlayerRoleStats(
   }
 
   const villageoisPowersMap = new Map<string, { appearances: number; wins: number }>();
-  const loupPowersMap = new Map<string, { appearances: number; wins: number }>();
+  const loupPowersMap = new Map<string, { appearances: number; wins: number; roleBreakdown: Map<string, number> }>();
   const secondaryRolesMap = new Map<string, { appearances: number; wins: number }>();
 
   gameData.forEach((game) => {
@@ -71,8 +73,9 @@ function computePlayerRoleStats(
 
       const playerWon = playerStat.Victorious;
       
-      // Get player's final role and camp
+      // Get player's camp - check for wolf family (Loup, Traître, Louveteau)
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
+      const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
 
       // Special handling for Chasseur and Alchimiste - they are roles that cannot have other powers
       if (playerCamp === 'Villageois' && 
@@ -91,22 +94,50 @@ function computePlayerRoleStats(
             appearances: currentStats.appearances + 1,
             wins: currentStats.wins + (playerWon ? 1 : 0)
           });
-        } else if (playerCamp === 'Loup') {
-          const currentStats = loupPowersMap.get(playerStat.Power) || { appearances: 0, wins: 0 };
+        } else if (isWolfFamily) {
+          const currentStats = loupPowersMap.get(playerStat.Power) || { 
+            appearances: 0, 
+            wins: 0, 
+            roleBreakdown: new Map<string, number>() 
+          };
+          // Track the main role (Loup, Traître, Louveteau)
+          const roleBreakdown = currentStats.roleBreakdown;
+          roleBreakdown.set(
+            playerStat.MainRoleInitial, 
+            (roleBreakdown.get(playerStat.MainRoleInitial) || 0) + 1
+          );
           loupPowersMap.set(playerStat.Power, {
             appearances: currentStats.appearances + 1,
-            wins: currentStats.wins + (playerWon ? 1 : 0)
+            wins: currentStats.wins + (playerWon ? 1 : 0),
+            roleBreakdown: roleBreakdown
           });
         }
       }
       // No power - add to "Aucun pouvoir" category for Villageois or Loup camps
-      else if (playerCamp === 'Villageois' || playerCamp === 'Loup') {
-        const targetMap = playerCamp === 'Villageois' ? villageoisPowersMap : loupPowersMap;
-        const currentStats = targetMap.get('Aucun pouvoir') || { appearances: 0, wins: 0 };
-        targetMap.set('Aucun pouvoir', {
-          appearances: currentStats.appearances + 1,
-          wins: currentStats.wins + (playerWon ? 1 : 0)
-        });
+      else if (playerCamp === 'Villageois' || isWolfFamily) {
+        if (playerCamp === 'Villageois') {
+          const currentStats = villageoisPowersMap.get('Aucun pouvoir') || { appearances: 0, wins: 0 };
+          villageoisPowersMap.set('Aucun pouvoir', {
+            appearances: currentStats.appearances + 1,
+            wins: currentStats.wins + (playerWon ? 1 : 0)
+          });
+        } else {
+          const currentStats = loupPowersMap.get('Aucun pouvoir') || { 
+            appearances: 0, 
+            wins: 0, 
+            roleBreakdown: new Map<string, number>() 
+          };
+          const roleBreakdown = currentStats.roleBreakdown;
+          roleBreakdown.set(
+            playerStat.MainRoleInitial, 
+            (roleBreakdown.get(playerStat.MainRoleInitial) || 0) + 1
+          );
+          loupPowersMap.set('Aucun pouvoir', {
+            appearances: currentStats.appearances + 1,
+            wins: currentStats.wins + (playerWon ? 1 : 0),
+            roleBreakdown: roleBreakdown
+          });
+        }
       }
 
       // Process Secondary Role (for all camps)
@@ -124,23 +155,73 @@ function computePlayerRoleStats(
     }
   });
 
+  // Count total games (including non-modded) for Chasseur and Alchimiste
+  // But still respect deathInformationFilled filter for consistency
+  const chasseurAlchimisteTotal = new Map<string, number>();
+  gameData.forEach((game) => {
+    // Skip games without proper death information
+    if (!game.LegacyData || game.LegacyData.deathInformationFilled !== true) {
+      return;
+    }
+
+    const playerStat = game.PlayerStats.find(
+      player => getPlayerId(player) === playerIdentifier || 
+                player.Username.toLowerCase() === playerIdentifier.toLowerCase()
+    );
+
+    if (playerStat && 
+        (playerStat.MainRoleInitial === 'Chasseur' || playerStat.MainRoleInitial === 'Alchimiste')) {
+      const roleName = playerStat.MainRoleInitial;
+      chasseurAlchimisteTotal.set(roleName, (chasseurAlchimisteTotal.get(roleName) || 0) + 1);
+    }
+  });
+
   // Convert maps to sorted arrays
-  const mapToArray = (map: Map<string, { appearances: number; wins: number }>, camp?: 'Villageois' | 'Loup'): RoleStats[] => {
+  const mapToArrayVillageois = (map: Map<string, { appearances: number; wins: number }>): RoleStats[] => {
     return Array.from(map.entries())
       .map(([name, stats]) => ({
         name,
         appearances: stats.appearances,
         wins: stats.wins,
         winRate: stats.appearances > 0 ? ((stats.wins / stats.appearances) * 100).toFixed(1) : '0.0',
-        ...(camp && { camp })
+        camp: 'Villageois' as const,
+        // Add total games for Chasseur and Alchimiste
+        ...(chasseurAlchimisteTotal.has(name) && { totalGamesAllModes: chasseurAlchimisteTotal.get(name) })
+      }))
+      .sort((a, b) => b.appearances - a.appearances);
+  };
+
+  const mapToArrayLoup = (map: Map<string, { appearances: number; wins: number; roleBreakdown: Map<string, number> }>): RoleStats[] => {
+    return Array.from(map.entries())
+      .map(([name, stats]) => ({
+        name,
+        appearances: stats.appearances,
+        wins: stats.wins,
+        winRate: stats.appearances > 0 ? ((stats.wins / stats.appearances) * 100).toFixed(1) : '0.0',
+        camp: 'Loup' as const,
+        // Convert Map to array for role breakdown
+        roleBreakdown: Array.from(stats.roleBreakdown.entries())
+          .map(([role, count]) => ({ role, count }))
+          .sort((a, b) => b.count - a.count)
+      }))
+      .sort((a, b) => b.appearances - a.appearances);
+  };
+
+  const mapToArraySecondary = (map: Map<string, { appearances: number; wins: number }>): RoleStats[] => {
+    return Array.from(map.entries())
+      .map(([name, stats]) => ({
+        name,
+        appearances: stats.appearances,
+        wins: stats.wins,
+        winRate: stats.appearances > 0 ? ((stats.wins / stats.appearances) * 100).toFixed(1) : '0.0'
       }))
       .sort((a, b) => b.appearances - a.appearances);
   };
 
   return {
-    villageoisPowers: mapToArray(villageoisPowersMap, 'Villageois') as PowerStats[],
-    loupPowers: mapToArray(loupPowersMap, 'Loup') as PowerStats[],
-    secondaryRoles: mapToArray(secondaryRolesMap)
+    villageoisPowers: mapToArrayVillageois(villageoisPowersMap) as PowerStats[],
+    loupPowers: mapToArrayLoup(loupPowersMap) as PowerStats[],
+    secondaryRoles: mapToArraySecondary(secondaryRolesMap)
   };
 }
 
@@ -193,7 +274,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
   const hasSecondaryRoles = chartData.secondaryRoles.length > 0;
 
   if (!hasVillageoisPowers && !hasLoupPowers && !hasSecondaryRoles) {
-    return <div className="donnees-manquantes">Aucun pouvoir ou rôle secondaire trouvé (minimum 2 apparitions)</div>;
+    return <div className="donnees-manquantes">Aucun pouvoir ou rôle secondaire trouvé</div>;
   }
 
   // Custom tooltip component
@@ -210,6 +291,21 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
         }}>
           <div><strong>{dataPoint.name}</strong></div>
           <div>Apparitions: {dataPoint.appearances}</div>
+          {dataPoint.totalGamesAllModes && dataPoint.totalGamesAllModes !== dataPoint.appearances && (
+            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+              (Total avec parties non moddées: {dataPoint.totalGamesAllModes})
+            </div>
+          )}
+          {dataPoint.roleBreakdown && dataPoint.roleBreakdown.length > 0 && (
+            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+              <div style={{ fontStyle: 'italic' }}>Répartition par rôle:</div>
+              {dataPoint.roleBreakdown.map((rb: { role: string; count: number }, idx: number) => (
+                <div key={idx} style={{ marginLeft: '0.5rem' }}>
+                  • {rb.role}: {rb.count}
+                </div>
+              ))}
+            </div>
+          )}
           <div>Victoires: {dataPoint.wins}</div>
           <div>Taux de victoire: {dataPoint.winRate}%</div>
           <div style={{ 
