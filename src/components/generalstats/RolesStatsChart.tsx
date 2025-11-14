@@ -80,7 +80,7 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
         });
       }
       // Process Power (only for Villageois and Loup camps)
-      else if (playerStat.Power && playerStat.Power.trim() !== '') {
+      else if (playerStat.Power && playerStat.Power.trim() !== '' && playerStat.Power !== 'Inconnu') {
         if (playerCamp === 'Villageois') {
           const currentStats = villageoisPowersMap.get(playerStat.Power) || { 
             appearances: 0, 
@@ -118,7 +118,9 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
         }
       }
       // No power - add to "Aucun pouvoir" category for Villageois or Loup camps
-      else if (playerCamp === 'Villageois' || isWolfFamily) {
+      // But skip if the power is explicitly "Inconnu" (incomplete data)
+      else if ((playerCamp === 'Villageois' || isWolfFamily) && 
+               playerStat.Power !== 'Inconnu') {
         if (playerCamp === 'Villageois') {
           const currentStats = villageoisPowersMap.get('Aucun pouvoir') || { 
             appearances: 0, 
@@ -156,9 +158,9 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
       }
 
       // Process Secondary Role (for all camps)
-      if (playerStat.SecondaryRole && playerStat.SecondaryRole.trim() !== '') {
+      if (playerStat.SecondaryRole && playerStat.SecondaryRole.trim() !== '' && playerStat.SecondaryRole !== 'Inconnu') {
         // Skip "Inconnu" secondary role
-        if (playerStat.SecondaryRole === 'Inconnu') {
+        if (false) {
           return;
         }
         const currentStats = secondaryRolesMap.get(playerStat.SecondaryRole) || { 
@@ -530,7 +532,7 @@ export function RolesStatsChart() {
           borderRadius: '4px',
           border: '1px solid var(--border-color)'
         }}>
-          ℹ️ Les victoires et le taux de victoire excluent les parties où le rôle principal a changé en cours de partie.
+          ℹ️ Les victoires et le taux de victoire excluent les parties où le rôle principal a changé en cours de partie (ex: Garde en Chasseur, réssucité en Zombie par un Vaudou, etc...).
         </div>
       </div>
     </div>
