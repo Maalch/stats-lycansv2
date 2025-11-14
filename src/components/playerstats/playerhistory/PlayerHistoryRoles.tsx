@@ -347,9 +347,11 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
           <div>Apparitions: {dataPoint.appearances}</div>
           {hasRoleChanges && (
             <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: '0.25rem' }}>
-              dont {dataPoint.appearances - dataPoint.gamesWithoutRoleChange} avec changement de rôle
+              dont {dataPoint.appearances - dataPoint.gamesWithoutRoleChange} avec changement de rôle (exclu du calcul)
             </div>
           )}
+          <div>Victoires: {dataPoint.winsWithoutRoleChange}</div>
+          <div>Taux de victoire: {dataPoint.winRate}%</div>
           {dataPoint.totalGamesAllModes && dataPoint.totalGamesAllModes !== dataPoint.appearances && (
             <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
               (Total avec parties non moddées: {dataPoint.totalGamesAllModes})
@@ -506,6 +508,19 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
           });
         }
       )}
+
+      <div style={{ 
+        fontSize: '0.9rem', 
+        color: 'var(--text-secondary)', 
+        fontStyle: 'italic',
+        marginTop: '16px',
+        padding: '8px',
+        backgroundColor: 'var(--bg-tertiary)',
+        borderRadius: '4px',
+        border: '1px solid var(--border-color)'
+      }}>
+        ℹ️ Les victoires et le taux de victoire excluent les parties où le rôle principal a changé en cours de partie.
+      </div>
     </div>
   );
 }
