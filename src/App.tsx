@@ -28,6 +28,7 @@ const HarvestProgressChart = lazy(() => import('./components/generalstats/Harves
 const GameDurationInsights = lazy(() => import('./components/generalstats/GameDurationInsights').then(m => ({ default: m.GameDurationInsights })));
 const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTypesChart').then(m => ({ default: m.VictoryTypesChart })));
 const GlobalVotingStatsChart = lazy(() => import('./components/generalstats/GlobalVotingStatsChart').then(m => ({ default: m.GlobalVotingStatsChart })));
+const RolesStatsChart = lazy(() => import('./components/generalstats/RolesStatsChart').then(m => ({ default: m.RolesStatsChart })));
 
 const BRParticipationsChart = lazy(() => import('./components/brstats/BRParticipationsChart').then(m => ({ default: m.BRParticipationsChart })));
 const BRWinRateChart = lazy(() => import('./components/brstats/BRWinRateChart').then(m => ({ default: m.BRWinRateChart })));
@@ -138,6 +139,12 @@ const GENERAL_STATS_MENU = [
     label: 'Camps', 
     component: CampsChart,
     description: 'Détails des apparitions et victoires par camp'
+  },
+  { 
+    key: 'rolesStats', 
+    label: 'Rôles', 
+    component: RolesStatsChart,
+    description: 'Statistiques générales des rôles et pouvoirs'
   },
   { 
     key: 'victoryTypes',

@@ -76,6 +76,10 @@ export interface PlayerHistoryRolesState {
   chartMode: 'appearances' | 'winRate';
 }
 
+export interface RolesStatsState {
+  chartMode: 'appearances' | 'winRate';
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -99,6 +103,7 @@ export interface NavigationState {
   votingStatsState?: VotingStatsState;
   playerHistoryMapState?: PlayerHistoryMapState;
   playerHistoryRolesState?: PlayerHistoryRolesState;
+  rolesStatsState?: RolesStatsState;
 }
 
 interface NavigationContextType {
