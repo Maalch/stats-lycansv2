@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.4.2';
+export const APP_VERSION = '1.4.3';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.4.3',
+    date: '14/11/2025',
+    description: 'Ajouts de statistiques sur les temps de paroles (depuis la 0.215) dans',
+    link: {
+      mainTab: 'players',
+      subTab: 'talkingTime',
+      text: 'Joueurs / Temps de Parole'
+    }
+  },
   {
     version: 'v1.4.2',
     date: '14/11/2025',

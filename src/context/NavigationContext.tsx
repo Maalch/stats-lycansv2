@@ -80,6 +80,12 @@ export interface RolesStatsState {
   chartMode: 'appearances' | 'winRate';
 }
 
+export interface TalkingTimeState {
+  minGames: number;
+  displayMode: 'total' | 'outside' | 'during';
+  focusChart?: string; // For future expansion if needed
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -104,6 +110,7 @@ export interface NavigationState {
   playerHistoryMapState?: PlayerHistoryMapState;
   playerHistoryRolesState?: PlayerHistoryRolesState;
   rolesStatsState?: RolesStatsState;
+  talkingTimeState?: TalkingTimeState;
 }
 
 interface NavigationContextType {

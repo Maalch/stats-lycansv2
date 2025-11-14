@@ -13,6 +13,7 @@ const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/Play
 const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
 const PlayerComparisonChart = lazy(() => import('./components/playerstats/PlayerComparisonChart').then(m => ({ default: m.PlayerComparisonChart })));
 const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
+const TalkingTimeChart = lazy(() => import('./components/playerstats/TalkingTimeChart').then(m => ({ default: m.TalkingTimeChart })));
 
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsAndKills/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
@@ -116,6 +117,12 @@ const PLAYER_STATS_MENU = [
     label: 'Votes', 
     component: VotingStatisticsChart,
     description: 'Comportements et précision de vote des joueurs'
+  },
+  { 
+    key: 'talkingTime', 
+    label: 'Temps de Parole', 
+    component: TalkingTimeChart,
+    description: 'Analyse du temps de parole en et hors meetings'
   },
   { 
     key: 'campPerformance', 
