@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerStatsBase } from '../../../hooks/utils/baseStatsHook';
 import { useNavigation } from '../../../context/NavigationContext';
@@ -278,12 +278,38 @@ function computePlayerRoleStats(
 }
 
 export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesProps) {
-  const { navigateToGameDetails } = useNavigation();
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  const [chartMode, setChartMode] = useState<'appearances' | 'winRate'>(
+    navigationState.playerHistoryRolesState?.chartMode || 'appearances'
+  );
+  
   const { data, isLoading, error } = usePlayerStatsBase((gameData) => 
     computePlayerRoleStats(selectedPlayerName, gameData)
   );
+
+  // Save state to navigation context when it changes
+  useEffect(() => {
+    if (!navigationState.playerHistoryRolesState || 
+        navigationState.playerHistoryRolesState.chartMode !== chartMode) {
+      updateNavigationState({
+        playerHistoryRolesState: {
+          chartMode
+        }
+      });
+    }
+  }, [chartMode, navigationState.playerHistoryRolesState, updateNavigationState]);
+
+  // Function to handle chart mode change with persistence
+  const handleChartModeChange = (newMode: 'appearances' | 'winRate') => {
+    setChartMode(newMode);
+    updateNavigationState({
+      playerHistoryRolesState: {
+        chartMode: newMode
+      }
+    });
+  };
 
   // Prepare chart data with visibility threshold
   const chartData = useMemo(() => {
@@ -296,18 +322,35 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     // Limit all charts to top 15 entries
     const MAX_ENTRIES = 15;
 
+    // Sort function based on chart mode
+    const sortFunction = chartMode === 'winRate' 
+      ? (a: RoleStats, b: RoleStats) => parseFloat(b.winRate) - parseFloat(a.winRate)
+      : (a: RoleStats, b: RoleStats) => b.appearances - a.appearances;
+
+    // Add winRateDisplay for visibility (minimum 1% for 0% win rates)
+    const addWinRateDisplay = (role: RoleStats) => ({
+      ...role,
+      winRateDisplay: Math.max(parseFloat(role.winRate), 1)
+    });
+
     return {
       villageoisPowers: data.villageoisPowers
         .filter(r => r.appearances >= MIN_APPEARANCES)
+        .map(addWinRateDisplay)
+        .sort(sortFunction)
         .slice(0, MAX_ENTRIES),
       loupPowers: data.loupPowers
         .filter(r => r.appearances >= MIN_APPEARANCES)
+        .map(addWinRateDisplay)
+        .sort(sortFunction)
         .slice(0, MAX_ENTRIES),
       secondaryRoles: data.secondaryRoles
         .filter(r => r.appearances >= MIN_SECONDARY_APPEARANCES)
+        .map(addWinRateDisplay)
+        .sort(sortFunction)
         .slice(0, MAX_ENTRIES)
     };
-  }, [data]);
+  }, [data, chartMode]);
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement de l'historique des rôles...</div>;
@@ -329,7 +372,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     return <div className="donnees-manquantes">Aucun pouvoir ou rôle secondaire trouvé</div>;
   }
 
-  // Custom tooltip component
+  // Custom tooltip component (defined outside return for reusability)
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length > 0) {
       const dataPoint = payload[0].payload;
@@ -351,7 +394,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
             </div>
           )}
           <div>Victoires: {dataPoint.winsWithoutRoleChange}</div>
-          <div>Taux de victoire: {dataPoint.winRate}%</div>
+          <div><strong>Taux de victoire: {dataPoint.winRate}%</strong></div>
           {dataPoint.totalGamesAllModes && dataPoint.totalGamesAllModes !== dataPoint.appearances && (
             <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
               (Total avec parties non moddées: {dataPoint.totalGamesAllModes})
@@ -391,6 +434,10 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     onBarClick: (roleName: string) => void,
     getBarColor?: (roleName: string, index: number) => string
   ) => {
+    // Use winRateDisplay for chart display in winRate mode (shows 1% minimum for 0%)
+    const dataKey = chartMode === 'appearances' ? 'appearances' : 'winRateDisplay';
+    const yAxisLabel = chartMode === 'appearances' ? 'Nombre d\'apparitions' : 'Taux de victoire (%)';
+    const yAxisDomain = chartMode === 'winRate' ? [0, 100] : undefined;
 
     return (
       <div className="lycans-graphique-section">
@@ -424,10 +471,31 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
                   )}
                 />
                 <YAxis 
-                  label={{ value: 'Nombre d\'apparitions', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                  label={{ value: yAxisLabel, angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                  domain={yAxisDomain}
                 />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="appearances">
+                <Bar 
+                  dataKey={dataKey}
+                  label={chartMode === 'winRate' ? (props: any) => {
+                    // Add percentage labels on top of bars for win rate mode
+                    const { x, y, width, payload } = props;
+                    if (x === undefined || y === undefined || width === undefined || !payload) return null;
+                    const percentage = payload.winRate || '0';
+                    return (
+                      <text 
+                        x={(x as number) + (width as number) / 2} 
+                        y={(y as number) - 5} 
+                        fill="var(--text-primary)" 
+                        textAnchor="middle" 
+                        fontSize="12"
+                        fontWeight="bold"
+                      >
+                        {percentage}%
+                      </text>
+                    );
+                  } : undefined}
+                >
                   {chartDataArray.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
@@ -446,8 +514,33 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
   };
 
   return (
-    <div className="lycans-graphiques-groupe">
-      {hasVillageoisPowers && renderRoleChart(
+    <>
+      {/* Chart Mode Filter - placed above all charts */}
+      <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <label htmlFor="chart-mode-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+          Affichage :
+        </label>
+        <select
+          id="chart-mode-select"
+          value={chartMode}
+          onChange={(e) => handleChartModeChange(e.target.value as 'appearances' | 'winRate')}
+          style={{
+            background: 'var(--bg-tertiary)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '4px',
+            padding: '0.5rem',
+            fontSize: '0.9rem',
+            minWidth: '180px'
+          }}
+        >
+          <option value="appearances">Apparitions</option>
+          <option value="winRate">Taux de victoire</option>
+        </select>
+      </div>
+
+      <div className="lycans-graphiques-groupe">
+        {hasVillageoisPowers && renderRoleChart(
         chartData.villageoisPowers,
         'Camp Villageois',
         'var(--chart-color-1)',
@@ -509,18 +602,19 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
         }
       )}
 
-      <div style={{ 
-        fontSize: '0.9rem', 
-        color: 'var(--text-secondary)', 
-        fontStyle: 'italic',
-        marginTop: '16px',
-        padding: '8px',
-        backgroundColor: 'var(--bg-tertiary)',
-        borderRadius: '4px',
-        border: '1px solid var(--border-color)'
-      }}>
-        ℹ️ Les victoires et le taux de victoire excluent les parties où le rôle principal a changé en cours de partie.
+        <div style={{ 
+          fontSize: '0.9rem', 
+          color: 'var(--text-secondary)', 
+          fontStyle: 'italic',
+          marginTop: '16px',
+          padding: '8px',
+          backgroundColor: 'var(--bg-tertiary)',
+          borderRadius: '4px',
+          border: '1px solid var(--border-color)'
+        }}>
+          ℹ️ Les victoires et le taux de victoire excluent les parties où le rôle principal a changé en cours de partie.
+        </div>
       </div>
-    </div>
+    </>
   );
 }

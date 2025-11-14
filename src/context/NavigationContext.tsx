@@ -72,6 +72,10 @@ export interface PlayerHistoryMapState {
   selectedCamp: string;
 }
 
+export interface PlayerHistoryRolesState {
+  chartMode: 'appearances' | 'winRate';
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -94,6 +98,7 @@ export interface NavigationState {
   deathStatisticsState?: DeathStatisticsState;
   votingStatsState?: VotingStatsState;
   playerHistoryMapState?: PlayerHistoryMapState;
+  playerHistoryRolesState?: PlayerHistoryRolesState;
 }
 
 interface NavigationContextType {
