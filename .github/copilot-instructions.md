@@ -52,6 +52,7 @@ interface PlayerStat {
   DeathPosition: {x: number; y: number; z: number} | null;
   DeathType: string | null; KillerName: string | null;
   Votes: Vote[]; // Array of votes with Target and Date
+  SecondsTalkedOutsideMeeting: number; SecondsTalkedDuringMeeting: number; //number of seconds talked in that game
 }
 interface Vote {
   Target: string; Date: string; // ISO date string when vote was cast

@@ -38,6 +38,8 @@ export interface PlayerStat {
   KillerName: string | null;      // Name of the killer if applicable
   Victorious: boolean;            // Whether the player was on the winning side
   Votes: Vote[];                  // Array of votes cast by this player during meetings
+  SecondsTalkedOutsideMeeting: number;
+  SecondsTalkedDuringMeeting: number;
 }
 
 export interface LegacyData {
