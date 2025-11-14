@@ -65,16 +65,19 @@ export function computeTalkingTimeStats(gameData: GameLogEntry[]): TalkingTimeDa
 
   // Process each game with talking time data
   gamesWithData.forEach(game => {
-    const gameDuration = calculateGameDuration(game.StartDate, game.EndDate);
-    
-    // Skip games without valid duration
-    if (!gameDuration || gameDuration <= 0) {
-      return;
-    }
-
     game.PlayerStats.forEach(player => {
       const playerId = getPlayerId(player);
       const displayName = getCanonicalPlayerName(player);
+
+      // Calculate player-specific game duration
+      // If player died, use their death time; otherwise use game end time
+      const endTime = player.DeathDateIrl || game.EndDate;
+      const playerGameDuration = calculateGameDuration(game.StartDate, endTime);
+      
+      // Skip players with invalid duration
+      if (!playerGameDuration || playerGameDuration <= 0) {
+        return;
+      }
 
       if (!playerMap.has(playerId)) {
         playerMap.set(playerId, {
@@ -90,7 +93,7 @@ export function computeTalkingTimeStats(gameData: GameLogEntry[]): TalkingTimeDa
       stats.gamesPlayed++;
       stats.totalSecondsOutside += player.SecondsTalkedOutsideMeeting || 0;
       stats.totalSecondsDuring += player.SecondsTalkedDuringMeeting || 0;
-      stats.totalGameDurationSeconds += gameDuration;
+      stats.totalGameDurationSeconds += playerGameDuration;
     });
   });
 
