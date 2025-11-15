@@ -295,6 +295,9 @@ export function GameDetailsChart() {
     if (navigationFilters.selectedPower) {
       filters.push(`Pouvoir: ${navigationFilters.selectedPower}`);
     }
+    if (navigationFilters.selectedSecondaryRole) {
+      filters.push(`Rôle Secondaire: ${navigationFilters.selectedSecondaryRole}`);
+    }
     if (navigationFilters.playerPairFilter) {
       const { selectedPlayerPair, selectedPairRole } = navigationFilters.playerPairFilter;
       const pairText = selectedPlayerPair.join(' & ');

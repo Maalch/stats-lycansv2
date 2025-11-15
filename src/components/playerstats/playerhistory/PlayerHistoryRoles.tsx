@@ -547,13 +547,14 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
         'Camp Villageois',
         'var(--chart-color-1)',
         (powerName) => {
-          // Navigate to game details showing all games with this power in Villageois camp
+          // Navigate to game details showing games with this power for the selected player
           navigateToGameDetails({
             selectedPlayer: selectedPlayerName,
             campFilter: {
               selectedCamp: 'Villageois',
-              campFilterMode: 'all-assignments'
+              campFilterMode: chartMode === 'winRate' ? 'wins-only' : 'all-assignments'
             },
+            selectedPower: powerName,
             fromComponent: `Historique des Rôles - Pouvoir: ${powerName}`
           });
         },
@@ -575,13 +576,14 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
         'Camp Loups',
         'var(--chart-color-2)',
         (powerName) => {
-          // Navigate to game details showing all games with this power in Loup camp
+          // Navigate to game details showing games with this power for the selected player
           navigateToGameDetails({
             selectedPlayer: selectedPlayerName,
             campFilter: {
               selectedCamp: 'Loup',
-              campFilterMode: 'all-assignments'
+              campFilterMode: chartMode === 'winRate' ? 'wins-only' : 'all-assignments'
             },
+            selectedPower: powerName,
             fromComponent: `Historique des Rôles - Pouvoir: ${powerName}`
           });
         },
@@ -596,9 +598,10 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
         'Rôles Secondaires',
         'var(--chart-color-3)',
         (secondaryRoleName) => {
-          // Navigate to game details showing all games with this secondary role
+          // Navigate to game details showing games with this secondary role for the selected player
           navigateToGameDetails({
             selectedPlayer: selectedPlayerName,
+            selectedSecondaryRole: secondaryRoleName,
             fromComponent: `Historique des Rôles - Rôle Secondaire: ${secondaryRoleName}`
           });
         }

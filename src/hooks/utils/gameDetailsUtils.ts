@@ -2,6 +2,7 @@ import type { GameLogEntry } from '../useCombinedRawData';
 import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter } from '../../context/NavigationContext';
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
+import { getPlayerId } from '../../utils/playerIdentification';
 // Note: Player names are already normalized during data loading, so we can use Username directly
 
 
@@ -328,13 +329,14 @@ export function filterByMapNameFromGameLog(games: GameLogEntry[], selectedMapNam
 }
 
 /**
- * Filter games where at least one player had the specified power
+ * Filter games where at least one player (or a specific player) had the specified power
  * 
  * @param games - Array of GameLogEntry to filter
  * @param selectedPower - Power to filter by (e.g., "Voyant", "Sorcière", "Aucun pouvoir")
+ * @param selectedPlayer - Optional: filter to games where this specific player had the power
  * @returns Filtered array of GameLogEntry
  */
-export function filterByPowerFromGameLog(games: GameLogEntry[], selectedPower: string): GameLogEntry[] {
+export function filterByPowerFromGameLog(games: GameLogEntry[], selectedPower: string, selectedPlayer?: string): GameLogEntry[] {
   return games.filter(game => {
     // Only consider modded games for power statistics (same as RolesStatsChart)
     if (!game.Modded) {
@@ -346,11 +348,21 @@ export function filterByPowerFromGameLog(games: GameLogEntry[], selectedPower: s
       return false;
     }
 
-    // Check if any player in the game had the specified power
+    // Check if any player (or specific player) in the game had the specified power
     return game.PlayerStats.some(player => {
       // Skip players with unknown role (same as RolesStatsChart)
       if (player.MainRoleInitial === 'Inconnu') {
         return false;
+      }
+
+      // If selectedPlayer is provided, only check that specific player
+      if (selectedPlayer) {
+        const playerId = getPlayerId(player);
+        const isTargetPlayer = playerId === selectedPlayer || 
+                               player.Username.toLowerCase() === selectedPlayer.toLowerCase();
+        if (!isTargetPlayer) {
+          return false;
+        }
       }
 
       const playerCamp = getPlayerCampFromRole(player.MainRoleInitial);
@@ -371,6 +383,42 @@ export function filterByPowerFromGameLog(games: GameLogEntry[], selectedPower: s
       
       // Regular power matching
       return player.Power === selectedPower;
+    });
+  });
+}
+
+/**
+ * Filter games by secondary role
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedSecondaryRole - Secondary role to filter by (e.g., "Cupidon", "Amoureux")
+ * @param selectedPlayer - Optional: filter to games where this specific player had the secondary role
+ * @returns Filtered array of GameLogEntry
+ */
+export function filterBySecondaryRoleFromGameLog(games: GameLogEntry[], selectedSecondaryRole: string, selectedPlayer?: string): GameLogEntry[] {
+  return games.filter(game => {
+    // Only modded games
+    if (!game.Modded) return false;
+    
+    // Only games with complete death information
+    if (!game.LegacyData || game.LegacyData.deathInformationFilled !== true) return false;
+    
+    // Check if any player (or specific player) in the game has the selected secondary role
+    return game.PlayerStats.some(player => {
+      // Skip players with unknown role
+      if (player.MainRoleInitial === 'Inconnu') return false;
+      
+      // If selectedPlayer is provided, only check that specific player
+      if (selectedPlayer) {
+        const playerId = getPlayerId(player);
+        const isTargetPlayer = playerId === selectedPlayer || 
+                               player.Username.toLowerCase() === selectedPlayer.toLowerCase();
+        if (!isTargetPlayer) {
+          return false;
+        }
+      }
+      
+      return player.SecondaryRole === selectedSecondaryRole;
     });
   });
 }
@@ -735,6 +783,7 @@ export function applyNavigationFiltersFromGameLog(
     (filters.selectedGameIds && filters.selectedGameIds.length > 0) ||
     filters.selectedMapName ||
     filters.selectedPower ||
+    filters.selectedSecondaryRole ||
     filters.campFilter ||
     filters.playerPairFilter ||
     filters.multiPlayerFilter
@@ -796,7 +845,11 @@ export function applyNavigationFiltersFromGameLog(
   }
 
   if (filters.selectedPower) {
-    filteredGames = filterByPowerFromGameLog(filteredGames, filters.selectedPower);
+    filteredGames = filterByPowerFromGameLog(filteredGames, filters.selectedPower, filters.selectedPlayer);
+  }
+
+  if (filters.selectedSecondaryRole) {
+    filteredGames = filterBySecondaryRoleFromGameLog(filteredGames, filters.selectedSecondaryRole, filters.selectedPlayer);
   }
 
   // Apply multi-player filters (for player comparison scenarios)

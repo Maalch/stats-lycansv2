@@ -32,6 +32,7 @@ export interface NavigationFilters {
   selectedGameIds?: string[]; // Changed from number[] to string[] to support DisplayedId format
   selectedMapName?: string; // For filtering by map name (e.g., "Village", "Château", "Autres")
   selectedPower?: string; // For filtering by specific power (e.g., "Voyant", "Sorcière", "Aucun pouvoir")
+  selectedSecondaryRole?: string; // For filtering by secondary role (e.g., "Cupidon", "Amoureux")
   
   // Grouped filters - all properties in each group must be provided together
   campFilter?: CampFilter;

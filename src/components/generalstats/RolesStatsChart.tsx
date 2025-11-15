@@ -519,6 +519,7 @@ export function RolesStatsChart() {
           'var(--chart-color-3)',
           (secondaryRoleName) => {
             navigateToGameDetails({
+              selectedSecondaryRole: secondaryRoleName,
               fromComponent: `Statistiques des Rôles - Rôle Secondaire: ${secondaryRoleName}`
             });
           }
