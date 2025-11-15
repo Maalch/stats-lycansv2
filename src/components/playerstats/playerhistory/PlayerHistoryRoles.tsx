@@ -57,7 +57,7 @@ function computePlayerRoleStats(
     }
 
     // Skip games where death information is not filled
-    if (!game.LegacyData || game.LegacyData.deathInformationFilled !== true) {
+    if (game.LegacyData && game.LegacyData.deathInformationFilled !== true) {
       return;
     }
 
@@ -205,7 +205,7 @@ function computePlayerRoleStats(
   const chasseurAlchimisteTotal = new Map<string, number>();
   gameData.forEach((game) => {
     // Skip games without proper death information
-    if (!game.LegacyData || game.LegacyData.deathInformationFilled !== true) {
+    if (game.LegacyData && game.LegacyData.deathInformationFilled !== true) {
       return;
     }
 

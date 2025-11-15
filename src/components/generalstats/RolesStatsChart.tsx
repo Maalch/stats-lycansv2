@@ -43,7 +43,7 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
     }
 
     // Skip games where death information is not filled
-    if (!game.LegacyData || game.LegacyData.deathInformationFilled !== true) {
+    if (game.LegacyData && game.LegacyData.deathInformationFilled !== true) {
       return;
     }
 
@@ -477,8 +477,9 @@ export function RolesStatsChart() {
             navigateToGameDetails({
               campFilter: {
                 selectedCamp: 'Villageois',
-                campFilterMode: 'all-assignments'
+                campFilterMode: chartMode === 'winRate' ? 'wins-only' : 'all-assignments'
               },
+              selectedPower: powerName,
               fromComponent: `Statistiques des Rôles - Pouvoir: ${powerName}`
             });
           },
@@ -501,8 +502,9 @@ export function RolesStatsChart() {
             navigateToGameDetails({
               campFilter: {
                 selectedCamp: 'Loup',
-                campFilterMode: 'all-assignments'
+                campFilterMode: chartMode === 'winRate' ? 'wins-only' : 'all-assignments'
               },
+              selectedPower: powerName,
               fromComponent: `Statistiques des Rôles - Pouvoir: ${powerName}`
             });
           },

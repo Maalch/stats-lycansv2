@@ -24,6 +24,7 @@ export function GameDetailsChart() {
     navigationFilters.selectedGameDuration ||
     (navigationFilters.selectedGameIds && navigationFilters.selectedGameIds.length > 0) ||
     navigationFilters.selectedMapName ||
+    navigationFilters.selectedPower ||
     navigationFilters.campFilter ||
     navigationFilters.playerPairFilter ||
     navigationFilters.multiPlayerFilter
@@ -290,6 +291,9 @@ export function GameDetailsChart() {
     if (navigationFilters.selectedMapName) {
       const mapName = navigationFilters.selectedMapName === 'Autres' ? 'autres cartes' : navigationFilters.selectedMapName;
       filters.push(`Carte: ${mapName}`);
+    }
+    if (navigationFilters.selectedPower) {
+      filters.push(`Pouvoir: ${navigationFilters.selectedPower}`);
     }
     if (navigationFilters.playerPairFilter) {
       const { selectedPlayerPair, selectedPairRole } = navigationFilters.playerPairFilter;

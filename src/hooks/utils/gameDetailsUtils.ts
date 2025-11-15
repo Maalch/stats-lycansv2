@@ -328,6 +328,54 @@ export function filterByMapNameFromGameLog(games: GameLogEntry[], selectedMapNam
 }
 
 /**
+ * Filter games where at least one player had the specified power
+ * 
+ * @param games - Array of GameLogEntry to filter
+ * @param selectedPower - Power to filter by (e.g., "Voyant", "Sorcière", "Aucun pouvoir")
+ * @returns Filtered array of GameLogEntry
+ */
+export function filterByPowerFromGameLog(games: GameLogEntry[], selectedPower: string): GameLogEntry[] {
+  return games.filter(game => {
+    // Only consider modded games for power statistics (same as RolesStatsChart)
+    if (!game.Modded) {
+      return false;
+    }
+
+    // Skip games where death information is not filled (same as RolesStatsChart)
+    if (game.LegacyData && game.LegacyData.deathInformationFilled !== true) {
+      return false;
+    }
+
+    // Check if any player in the game had the specified power
+    return game.PlayerStats.some(player => {
+      // Skip players with unknown role (same as RolesStatsChart)
+      if (player.MainRoleInitial === 'Inconnu') {
+        return false;
+      }
+
+      const playerCamp = getPlayerCampFromRole(player.MainRoleInitial);
+      const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
+      
+      // Special handling for Chasseur and Alchimiste - they are roles that cannot have other powers
+      if (playerCamp === 'Villageois' && 
+          (player.MainRoleInitial === 'Chasseur' || player.MainRoleInitial === 'Alchimiste')) {
+        return player.MainRoleInitial === selectedPower;
+      }
+      
+      // Check for "Aucun pouvoir" case
+      if (selectedPower === 'Aucun pouvoir') {
+        return (playerCamp === 'Villageois' || isWolfFamily) && 
+               (!player.Power || player.Power.trim() === '') && 
+               player.Power !== 'Inconnu';
+      }
+      
+      // Regular power matching
+      return player.Power === selectedPower;
+    });
+  });
+}
+
+/**
  * Filter games by harvest range
  * 
  * @param games - Array of GameLogEntry to filter
@@ -686,6 +734,7 @@ export function applyNavigationFiltersFromGameLog(
     filters.selectedGameDuration ||
     (filters.selectedGameIds && filters.selectedGameIds.length > 0) ||
     filters.selectedMapName ||
+    filters.selectedPower ||
     filters.campFilter ||
     filters.playerPairFilter ||
     filters.multiPlayerFilter
@@ -744,6 +793,10 @@ export function applyNavigationFiltersFromGameLog(
 
   if (filters.selectedMapName) {
     filteredGames = filterByMapNameFromGameLog(filteredGames, filters.selectedMapName);
+  }
+
+  if (filters.selectedPower) {
+    filteredGames = filterByPowerFromGameLog(filteredGames, filters.selectedPower);
   }
 
   // Apply multi-player filters (for player comparison scenarios)
