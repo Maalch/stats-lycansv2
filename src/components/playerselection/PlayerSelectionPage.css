@@ -608,6 +608,18 @@
   border-color: var(--accent-primary);
 }
 
+.filter-btn:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.filter-btn:disabled.active {
+  /* When disabled and active (modded-only mode), keep the active styling */
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
 .highlight-btn {
   width: 100%;
   padding: 0.75rem 1rem;

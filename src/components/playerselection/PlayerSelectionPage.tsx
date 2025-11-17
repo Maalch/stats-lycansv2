@@ -54,6 +54,16 @@ export function PlayerSelectionPage() {
     return settings.gameFilter === 'modded' ? 'modded' : 'all';
   });
   
+  // Determine if we're in "modded only" mode (cannot switch to "all")
+  const isModdedOnlyMode = useMemo(() => {
+    // Check if independent filters are enabled and gameTypeEnabled is true
+    if (settings.useIndependentFilters && settings.independentFilters?.gameTypeEnabled) {
+      return settings.independentFilters.gameFilter === 'modded';
+    }
+    // Fallback to legacy gameFilter
+    return settings.gameFilter === 'modded';
+  }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
+  
   // Use navigationState to restore view selection, fallback to 'achievements'
   const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles'>(
     navigationState.selectedPlayerSelectionView || 'achievements'
@@ -73,6 +83,13 @@ export function PlayerSelectionPage() {
       setAchievementFilter(newFilter);
     }
   }, [settings.gameFilter, settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter]);
+  
+  // Force achievementFilter to 'modded' when in modded-only mode
+  useEffect(() => {
+    if (isModdedOnlyMode && achievementFilter !== 'modded') {
+      setAchievementFilter('modded');
+    }
+  }, [isModdedOnlyMode, achievementFilter]);
 
   // Sync selectedView with navigationState when it changes (for external navigation like changelog links)
   useEffect(() => {
@@ -88,6 +105,11 @@ export function PlayerSelectionPage() {
   const playerStats = useMemo(() => {
     if (!gameLogData || !gameLogData.GameStats) return [];
 
+    // Filter games based on modded-only mode
+    const filteredGames = isModdedOnlyMode 
+      ? gameLogData.GameStats.filter(game => game.Modded === true)
+      : gameLogData.GameStats;
+
     // Group by unique player ID (Steam ID or Username fallback)
     const playerMap = new Map<string, {
       games: number;
@@ -97,7 +119,7 @@ export function PlayerSelectionPage() {
       displayName: string; // Store the canonical display name
     }>();
 
-    gameLogData.GameStats.forEach((game: GameLogEntry) => {
+    filteredGames.forEach((game: GameLogEntry) => {
       const gameDate = new Date(game.StartDate);
       
       game.PlayerStats.forEach((playerStat) => {
@@ -157,7 +179,7 @@ export function PlayerSelectionPage() {
         youtube: playerInfo?.Youtube || null,
       };
     });
-  }, [gameLogData, settings.highlightedPlayer, joueursData]);
+  }, [gameLogData, settings.highlightedPlayer, joueursData, isModdedOnlyMode]);
 
   // Filter players based on search query
   const filteredPlayers = useMemo(() => {
@@ -449,21 +471,24 @@ export function PlayerSelectionPage() {
                         </div>
                       )}
                       <div className="achievements-filter">
-                        <button
-                          className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setAchievementFilter('all');
-                          }}
-                        >
-                          Toutes les parties
-                        </button>
+                        {!isModdedOnlyMode && (
+                          <button
+                            className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setAchievementFilter('all');
+                            }}
+                          >
+                            Toutes les parties
+                          </button>
+                        )}
                         <button
                           className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             setAchievementFilter('modded');
                           }}
+                          disabled={isModdedOnlyMode}
                         >
                           Parties moddées
                         </button>
