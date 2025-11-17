@@ -36,7 +36,15 @@ const ABSOLUTE_DATA_DIR = path.resolve(process.cwd(), DATA_DIR);
  * @returns {Object} - Object with achievements for all players
  */
 function generateAllPlayerAchievements(gameLogData) {
-  const allGames = gameLogData.GameStats || [];
+  // Filter out corrupted games without EndDate
+  const validGames = (gameLogData.GameStats || []).filter(game => {
+    if (!game.EndDate) {
+      return false;
+    }
+    return true;
+  });
+  
+  const allGames = validGames;
   const moddedGames = allGames.filter(game => game.Modded === true);
 
   // Compute statistics

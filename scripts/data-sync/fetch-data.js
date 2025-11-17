@@ -189,23 +189,32 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   let legacyCount = 0;
   let awsCount = 0;
   let mergedCount = 0;
+  let filteredCount = 0;
   
-  // Add legacy games to map first
+  // Add legacy games to map first (excluding games without EndDate)
   if (legacyGameLog && legacyGameLog.GameStats && Array.isArray(legacyGameLog.GameStats)) {
     legacyGameLog.GameStats.forEach(game => {
+      if (!game.EndDate) {
+        filteredCount++;
+        return;
+      }
       gamesByIdMap.set(game.Id, {
         ...game,
         source: 'legacy'
       });
     });
-    legacyCount = legacyGameLog.GameStats.length;
+    legacyCount = legacyGameLog.GameStats.length - filteredCount;
     console.log(`✓ Added ${legacyCount} legacy games to map`);
   }
   
-  // Add AWS games, merging with legacy if same ID exists
+  // Add AWS games, merging with legacy if same ID exists (excluding games without EndDate)
   for (const gameLog of awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(awsGame => {
+        if (!awsGame.EndDate) {
+          filteredCount++;
+          return;
+        }
         const gameId = awsGame.Id;
         
         // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)

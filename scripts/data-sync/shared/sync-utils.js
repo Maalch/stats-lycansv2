@@ -89,12 +89,19 @@ export async function mergeAWSGameLogs(awsGameLogs, config) {
   const gamesByIdMap = new Map();
   let totalGamesProcessed = 0;
   let filteredGamesCount = 0;
+  let corruptedGamesCount = 0;
   
   // Process all AWS game logs
   for (const gameLog of awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(awsGame => {
         const gameId = awsGame.Id;
+        
+        // Filter out corrupted games without EndDate
+        if (!awsGame.EndDate) {
+          corruptedGamesCount++;
+          return;
+        }
         
         // Apply filter if provided
         if (config.gameFilter && !config.gameFilter(gameId)) {

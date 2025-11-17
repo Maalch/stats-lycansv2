@@ -150,14 +150,22 @@ function useCombinedRawData(): {
           BRRefParties: { totalRecords: 0, data: [] } 
         };
 
-        // Generate DisplayedId values for all games
-        const displayedIdMap = generateDisplayedIds(gameLogResult.GameStats);
+        // Filter out corrupted games (games without EndDate) and add DisplayedId to each valid game
+        const validGames = gameLogResult.GameStats.filter(game => {
+          if (!game.EndDate) {
+            return false;
+          }
+          return true;
+        });
+
+        // Regenerate DisplayedIds for valid games only
+        const displayedIdMapFiltered = generateDisplayedIds(validGames);
 
         // Add DisplayedId to each game and normalize player names using joueurs data
-        const gameDataWithDisplayedIds = gameLogResult.GameStats.map(game => {
+        const gameDataWithDisplayedIds = validGames.map(game => {
           const gameWithDisplayedId = {
             ...game,
-            DisplayedId: displayedIdMap.get(game.Id) || game.Id // Fallback to original ID
+            DisplayedId: displayedIdMapFiltered.get(game.Id) || game.Id // Fallback to original ID
           };
           
           // Normalize all player names in the game using canonical name resolution
