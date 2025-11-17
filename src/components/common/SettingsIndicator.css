@@ -21,11 +21,62 @@
   min-width: 0;
 }
 
+.settings-indicator-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
 .settings-indicator-label {
   font-weight: 600;
   color: var(--text-primary);
-  margin-right: 8px;
   font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.settings-indicator-quick-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.settings-indicator-quick-toggle:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: var(--bg-secondary);
+}
+
+.settings-indicator-quick-toggle.active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.settings-indicator-quick-toggle.active:hover {
+  opacity: 0.9;
+}
+
+.settings-indicator-quick-toggle svg {
+  flex-shrink: 0;
+}
+
+.settings-indicator-empty {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 0.85rem;
+  padding: 4px 0;
 }
 
 .settings-indicator-filters {
@@ -82,6 +133,17 @@
   .settings-indicator {
     padding: 10px 12px;
     gap: 10px;
+  }
+  
+  .settings-indicator-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .settings-indicator-quick-toggle {
+    width: 100%;
+    justify-content: center;
   }
   
   .settings-indicator-filters {

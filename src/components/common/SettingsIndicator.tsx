@@ -1,4 +1,5 @@
 import { useSettings } from '../../context/SettingsContext';
+import type { GameFilter } from '../../context/SettingsContext';
 import './SettingsIndicator.css';
 
 interface FilterInfo {
@@ -25,9 +26,36 @@ export function SettingsIndicator() {
     return false; // No filters active if independentFilters not available
   })();
 
-  if (!hasActiveFilters) {
-    return null; // Don't show indicator when no filters are active
-  }
+  // Handler for quick modded game toggle
+  const handleModdedToggle = () => {
+    if (!settings.independentFilters) return;
+    
+    const currentFilter = settings.independentFilters.gameFilter;
+    const isModdedActive = settings.independentFilters.gameTypeEnabled && currentFilter === 'modded';
+    
+    if (isModdedActive) {
+      // Disable modded filter
+      updateSettings({
+        independentFilters: {
+          ...settings.independentFilters,
+          gameTypeEnabled: false,
+          gameFilter: 'all' as GameFilter
+        }
+      });
+    } else {
+      // Enable modded filter
+      updateSettings({
+        independentFilters: {
+          ...settings.independentFilters,
+          gameTypeEnabled: true,
+          gameFilter: 'modded' as GameFilter
+        }
+      });
+    }
+  };
+
+  const isModdedActive = settings.independentFilters?.gameTypeEnabled && 
+                          settings.independentFilters?.gameFilter === 'modded';
 
   const getFilterSummary = (): FilterInfo[] => {
     const filters: FilterInfo[] = [];
@@ -161,26 +189,45 @@ export function SettingsIndicator() {
         </svg>
       </div>
       <div className="settings-indicator-content">
-        <span className="settings-indicator-label">Filtres actifs:</span>
-        <div className="settings-indicator-filters">
-          {filters.map((filter) => (
-            <span key={filter.id} className="settings-indicator-filter">
-              <span className="settings-indicator-filter-text">
-                {filter.label}
-              </span>
-              <button
-                className="settings-indicator-filter-remove"
-                onClick={() => removeFilter(filter.type)}
-                title={`Supprimer le filtre: ${filter.label}`}
-                aria-label={`Supprimer le filtre: ${filter.label}`}
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                </svg>
-              </button>
-            </span>
-          ))}
+        <div className="settings-indicator-header">
+          <span className="settings-indicator-label">Filtres actifs:</span>
+          <button
+            className={`settings-indicator-quick-toggle ${isModdedActive ? 'active' : ''}`}
+            onClick={handleModdedToggle}
+            title={isModdedActive ? 'Désactiver le filtre parties moddées' : 'Activer le filtre parties moddées uniquement'}
+            aria-label={isModdedActive ? 'Désactiver le filtre parties moddées' : 'Activer le filtre parties moddées uniquement'}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+            </svg>
+            <span>Parties moddées</span>
+          </button>
         </div>
+        {hasActiveFilters ? (
+          <div className="settings-indicator-filters">
+            {filters.map((filter) => (
+              <span key={filter.id} className="settings-indicator-filter">
+                <span className="settings-indicator-filter-text">
+                  {filter.label}
+                </span>
+                <button
+                  className="settings-indicator-filter-remove"
+                  onClick={() => removeFilter(filter.type)}
+                  title={`Supprimer le filtre: ${filter.label}`}
+                  aria-label={`Supprimer le filtre: ${filter.label}`}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                  </svg>
+                </button>
+              </span>
+            ))}
+          </div>
+        ) : (
+          <div className="settings-indicator-empty">
+            Aucun filtre actif
+          </div>
+        )}
       </div>
     </div>
   );
