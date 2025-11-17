@@ -935,9 +935,11 @@ export function computeGameDetailsFromGameLog(
     // Determine winning camp
     const winningCamp = getWinnerCampFromGame(game);
     
-    // Extract solo roles (players who are not in main camps: Loup, Villageois, Amoureux)
-    const mainCampRoles = ['Loup', 'Villageois', 'Amoureux'];
-    const soloRolePlayers = game.PlayerStats.filter(p => !mainCampRoles.includes(getPlayerCampFromRole(getPlayerFinalRole(p.MainRoleInitial, p.MainRoleChanges || []))));
+    // Extract solo roles (players who are not in main camps or wolf special roles)
+    // Exclude: Loup, Villageois, Traître, Louveteau (wolf special roles are shown separately)
+    // Include: Amoureux and other solo roles
+    const excludedRoles = ['Loup', 'Villageois', 'Traître', 'Louveteau'];
+    const soloRolePlayers = game.PlayerStats.filter(p => !excludedRoles.includes(getPlayerCampFromRole(getPlayerFinalRole(p.MainRoleInitial, p.MainRoleChanges || []))));
     const soloRoles = soloRolePlayers.length > 0 ? soloRolePlayers.map(p => getPlayerCampFromRole(getPlayerFinalRole(p.MainRoleInitial, p.MainRoleChanges || []))).join(', ') : null;
     
     // Convert StartDate (ISO) to French format (DD/MM/YYYY)
@@ -970,7 +972,9 @@ export function computeGameDetailsFromGameLog(
       playerCount,
       wolfCount,
       hasTraitor: traitors.length > 0,
+      traitorsCount: traitors.length,
       hasWolfCub: wolfCubs.length > 0,
+      wolfCubsCount: wolfCubs.length,
       hasLovers: lovers.length > 0,
       soloRoles,
       winningCamp,

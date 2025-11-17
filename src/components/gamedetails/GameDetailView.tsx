@@ -209,18 +209,17 @@ export function GameDetailView({ game }: { game: any }) {
               <span className="label">Nombre de loups:</span>
               <span className="value">{game.wolfCount}</span>
             </div>
-            <div className="lycans-stat-item">
-              <span className="label">Traître:</span>
-              <span className="value">{game.hasTraitor ? 'Oui' : 'Non'}</span>
-            </div>
-            <div className="lycans-stat-item">
-              <span className="label">Louveteau:</span>
-              <span className="value">{game.hasWolfCub ? 'Oui' : 'Non'}</span>
-            </div>
-            <div className="lycans-stat-item">
-              <span className="label">Amoureux:</span>
-              <span className="value">{game.hasLovers ? 'Oui' : 'Non'}</span>
-            </div>
+            {(game.hasTraitor || game.hasWolfCub) && (
+              <div className="lycans-stat-item">
+                <span className="label">Rôles spéciaux loup:</span>
+                <span className="value">
+                  {[
+                    game.hasTraitor && `Traître (${game.traitorsCount})`,
+                    game.hasWolfCub && `Louveteau (${game.wolfCubsCount})`
+                  ].filter(Boolean).join(', ')}
+                </span>
+              </div>
+            )}
             {game.soloRoles && (
               <div className="lycans-stat-item">
                 <span className="label">Rôles solo:</span>
