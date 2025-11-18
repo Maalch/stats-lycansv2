@@ -251,6 +251,17 @@ export function SurvivalView({
 
   return (
     <div className="lycans-survival-stats">
+      {/* Explanation (moved above charts) */}
+      <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>
+        <p>
+          Un "Jour" représente un cycle complet composé d'une phase de jour, d'une phase de nuit, et d'une réunion. Par exemple, le Jour 2 signifie que le joueur a survécu au deuxième cycle jour/nuit/réunion.
+        </p>
+        <p>
+          Les statistiques de survie montrent le pourcentage de fois qu'un joueur survit au Jour {validSelectedDay} parmi toutes les parties qu'il a jouées et qui ont atteint ce jour. {highlightedPlayerAddedToHighest || highlightedPlayerAddedToLowest ?
+          'Les joueurs mis en évidence apparaissent même s\'ils ne sont pas dans le top 15.' : ''}
+        </p>
+      </div>
+
       {/* Controls */}
       <div className="lycans-graphique-controles" style={{ marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
@@ -523,17 +534,6 @@ export function SurvivalView({
             </ResponsiveContainer>
           </div>
         </FullscreenChart>
-      </div>
-
-      {/* Explanation */}
-      <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>
-        <p>
-          Un "Jour" représente un cycle complet composé d'une phase de jour, d'une phase de nuit, et d'une réunion. Par exemple, le Jour 2 signifie que le joueur a survécu au deuxième cycle jour/nuit/réunion.
-        </p>
-        <p>
-          Les statistiques de survie montrent le pourcentage de fois qu'un joueur survit au Jour {validSelectedDay} parmi toutes les parties qu'il a jouées et qui ont atteint ce jour. {highlightedPlayerAddedToHighest || highlightedPlayerAddedToLowest ?
-          'Les joueurs mis en évidence apparaissent même s\'ils ne sont pas dans le top 15.' : ''}
-        </p>
       </div>
     </div>
   );
