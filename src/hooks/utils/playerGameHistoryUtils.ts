@@ -74,8 +74,13 @@ export function computePlayerGameHistory(
       // Player names are already normalized during data loading
       playerDisplayName = playerStat.Username;
       
-      // Get player's camp from their final role (which contains the full role name)
-      const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+      // For Louveteau, always use MainRoleInitial even if they transformed to Loup
+      // For other roles, use the final role after transformations
+      const roleForCamp = playerStat.MainRoleInitial === 'Louveteau' 
+        ? playerStat.MainRoleInitial 
+        : getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+      
+      const playerCamp = getPlayerCampFromRole(roleForCamp);
 
       // Apply camp filter if specified
       if (campFilter && campFilter !== 'Tous les camps' && playerCamp !== campFilter) {

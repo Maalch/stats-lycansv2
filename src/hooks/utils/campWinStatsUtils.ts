@@ -23,7 +23,11 @@ function buildGamePlayerCampMapFromGameLog(gameData: GameLogEntry[]): Record<str
 
     game.PlayerStats.forEach(playerStat => {
       const playerName = playerStat.Username;
-      let playerRole = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+      // For Louveteau, always use MainRoleInitial even if they transformed to Loup
+      const roleForCamp = playerStat.MainRoleInitial === 'Louveteau' 
+        ? playerStat.MainRoleInitial 
+        : getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+      let playerRole = getPlayerCampFromRole(roleForCamp);
 
       if (playerName && playerRole) {
         gamePlayerCampMap[gameId][playerName] = playerRole;
@@ -53,7 +57,11 @@ function extractSoloRoles(game: GameLogEntry): string[] {
   // Solo roles are roles that aren't standard village/wolf camps
   const standardRoles = ['Villageois', 'Loup'];
   game.PlayerStats.forEach(playerStat => {
-    let role = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+    // For Louveteau, always use MainRoleInitial even if they transformed to Loup
+    const roleForCamp = playerStat.MainRoleInitial === 'Louveteau' 
+      ? playerStat.MainRoleInitial 
+      : getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+    let role = getPlayerCampFromRole(roleForCamp);
 
     if (role && !standardRoles.includes(role)) {
       soloRoles.push(role);
@@ -73,8 +81,13 @@ function getWinnerCamp(game: GameLogEntry): string | null {
     return null;
   }
   
+  // For Louveteau, always use MainRoleInitial even if they transformed to Loup
+  const roleForCamp = victoriousPlayers[0].MainRoleInitial === 'Louveteau' 
+    ? victoriousPlayers[0].MainRoleInitial 
+    : getPlayerFinalRole(victoriousPlayers[0].MainRoleInitial, victoriousPlayers[0].MainRoleChanges || []);
+  
   // Get the role of the first victorious player with all grouping options enabled
-  const winnerRole = getPlayerCampFromRole(getPlayerFinalRole(victoriousPlayers[0].MainRoleInitial, victoriousPlayers[0].MainRoleChanges || []), {
+  const winnerRole = getPlayerCampFromRole(roleForCamp, {
     regroupLovers: true,
     regroupVillagers: true,
     regroupWolfSubRoles: true
