@@ -435,6 +435,11 @@ export function PlayerComparisonChart() {
                     {((comparisonData.headToHeadStats.player1WinsAsOpponent / comparisonData.headToHeadStats.opposingCampGames) * 100).toFixed(0)}%
                   </div>
                 )}
+                {comparisonData.headToHeadStats.player1KilledPlayer2Count > 0 && (
+                  <div className="lycans-kill-stat" style={{ marginTop: '12px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                    💀 A tué {selectedPlayer2} {comparisonData.headToHeadStats.player1KilledPlayer2Count} fois
+                  </div>
+                )}
               </div>
 
               {/* Center Radar Chart */}
@@ -526,6 +531,11 @@ export function PlayerComparisonChart() {
                     {((comparisonData.headToHeadStats.player2WinsAsOpponent / comparisonData.headToHeadStats.opposingCampGames) * 100).toFixed(0)}%
                   </div>
                 )}
+                {comparisonData.headToHeadStats.player2KilledPlayer1Count > 0 && (
+                  <div className="lycans-kill-stat" style={{ marginTop: '12px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                    💀 A tué {selectedPlayer1} {comparisonData.headToHeadStats.player2KilledPlayer1Count} fois
+                  </div>
+                )}
               </div>
 
               {/* Winner Announcement - Inside Arena, Below Chart */}
@@ -602,26 +612,36 @@ export function PlayerComparisonChart() {
                   </span>
                 </div>
                 <div className="lycans-h2h-metric">
-                  <span className="lycans-h2h-label">Victoires {selectedPlayer1}:</span>
-                  <span 
-                    className="lycans-h2h-value lycans-clickable" 
-                    style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}
-                    onClick={() => handleCommonGameVictoryClick(selectedPlayer1)}
-                    title={`Cliquer pour voir les victoires de ${selectedPlayer1} dans toutes les parties communes`}
-                  >
-                    {comparisonData.headToHeadStats.player1Wins}
-                  </span>
+                  <span className="lycans-h2h-label">Victoires:</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <span 
+                      className="lycans-h2h-value lycans-clickable" 
+                      style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}
+                      onClick={() => handleCommonGameVictoryClick(selectedPlayer1)}
+                      title={`Cliquer pour voir les victoires de ${selectedPlayer1} dans toutes les parties communes`}
+                    >
+                      {selectedPlayer1}: {comparisonData.headToHeadStats.player1Wins}
+                    </span>
+                    <span 
+                      className="lycans-h2h-value lycans-clickable" 
+                      style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}
+                      onClick={() => handleCommonGameVictoryClick(selectedPlayer2)}
+                      title={`Cliquer pour voir les victoires de ${selectedPlayer2} dans toutes les parties communes`}
+                    >
+                      {selectedPlayer2}: {comparisonData.headToHeadStats.player2Wins}
+                    </span>
+                  </div>
                 </div>
                 <div className="lycans-h2h-metric">
-                  <span className="lycans-h2h-label">Victoires {selectedPlayer2}:</span>
-                  <span 
-                    className="lycans-h2h-value lycans-clickable" 
-                    style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}
-                    onClick={() => handleCommonGameVictoryClick(selectedPlayer2)}
-                    title={`Cliquer pour voir les victoires de ${selectedPlayer2} dans toutes les parties communes`}
-                  >
-                    {comparisonData.headToHeadStats.player2Wins}
-                  </span>
+                  <span className="lycans-h2h-label">💀 Kills:</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
+                      {selectedPlayer1} a tué {selectedPlayer2}: {comparisonData.headToHeadStats.player1KilledPlayer2Count} fois
+                    </span>
+                    <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
+                      {selectedPlayer2} a tué {selectedPlayer1}: {comparisonData.headToHeadStats.player2KilledPlayer1Count} fois
+                    </span>
+                  </div>
                 </div>
                 <div className="lycans-h2h-metric">
                   <span className="lycans-h2h-label">Durée moyenne:</span>
@@ -661,6 +681,17 @@ export function PlayerComparisonChart() {
                     <span className="lycans-h2h-value" style={{ color: 'var(--chart-color-success)' }}>
                       {((comparisonData.headToHeadStats.sameCampWins / comparisonData.headToHeadStats.sameCampGames) * 100).toFixed(0)}%
                     </span>
+                  </div>
+                  <div className="lycans-h2h-metric">
+                    <span className="lycans-h2h-label">💀 Kills:</span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer1] || '#0076FF' }}>
+                        {selectedPlayer1} a tué {selectedPlayer2}: {comparisonData.headToHeadStats.player1KilledPlayer2SameCamp} fois
+                      </span>
+                      <span className="lycans-h2h-value" style={{ color: playersColor[selectedPlayer2] || '#FF0000' }}>
+                        {selectedPlayer2} a tué {selectedPlayer1}: {comparisonData.headToHeadStats.player2KilledPlayer1SameCamp} fois
+                      </span>
+                    </div>
                   </div>
                   <div className="lycans-h2h-metric">
                     <span className="lycans-h2h-label">Durée moyenne:</span>

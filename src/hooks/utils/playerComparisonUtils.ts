@@ -42,10 +42,15 @@ export interface PlayerComparisonData {
     player1WinsAsOpponent: number;
     player2WinsAsOpponent: number;
     averageOpposingGameDuration: string;
+    // Kill statistics
+    player1KilledPlayer2Count: number;
+    player2KilledPlayer1Count: number;
     // Same camp statistics
     sameCampGames: number;
     sameCampWins: number;
     averageSameCampDuration: string;
+    player1KilledPlayer2SameCamp: number;
+    player2KilledPlayer1SameCamp: number;
     // Loups team specific statistics
     sameLoupsGames: number;
     sameLoupsWins: number;
@@ -349,6 +354,12 @@ export function generatePlayerComparison(
   let player2OpposingWins = 0;
   let sameCampWins = 0;
   let sameLoupsWins = 0;
+  let player1KilledPlayer2Count = 0;
+  let player2KilledPlayer1Count = 0;
+  let player1KilledPlayer2Opposing = 0;
+  let player2KilledPlayer1Opposing = 0;
+  let player1KilledPlayer2SameCamp = 0;
+  let player2KilledPlayer1SameCamp = 0;
   let totalGameDurationSeconds = 0;
   let gamesWithDuration = 0;
   let totalOpposingGameDurationSeconds = 0;
@@ -392,6 +403,14 @@ export function generatePlayerComparison(
       if (player1Won) player1CommonWins++;
       if (player2Won) player2CommonWins++;
       
+      // Check for kills between the two players (all common games)
+      if (player1Stat.KillerName && player1Stat.KillerName.toLowerCase() === player2Identifier.toLowerCase()) {
+        player2KilledPlayer1Count++;
+      }
+      if (player2Stat.KillerName && player2Stat.KillerName.toLowerCase() === player1Identifier.toLowerCase()) {
+        player1KilledPlayer2Count++;
+      }
+      
       // Duration calculation for common games
       if (game.StartDate && game.EndDate) {
         const duration = calculateGameDuration(game.StartDate, game.EndDate);
@@ -424,6 +443,14 @@ export function generatePlayerComparison(
         if (player1Won) player1OpposingWins++;
         if (player2Won) player2OpposingWins++;
         
+        // Track kills when in opposing camps
+        if (player1Stat.KillerName && player1Stat.KillerName.toLowerCase() === player2Identifier.toLowerCase()) {
+          player2KilledPlayer1Opposing++;
+        }
+        if (player2Stat.KillerName && player2Stat.KillerName.toLowerCase() === player1Identifier.toLowerCase()) {
+          player1KilledPlayer2Opposing++;
+        }
+        
         if (game.StartDate && game.EndDate) {
           const duration = calculateGameDuration(game.StartDate, game.EndDate);
           if (duration) {
@@ -434,6 +461,14 @@ export function generatePlayerComparison(
       } else if (player1MainCamp === player2MainCamp) {
         // Same camp affiliation (only possible for Loups+Traître+Louveteau or same exact role)
         sameCampGames.push(game);
+        
+        // Track kills when in same camp
+        if (player1Stat.KillerName && player1Stat.KillerName.toLowerCase() === player2Identifier.toLowerCase()) {
+          player2KilledPlayer1SameCamp++;
+        }
+        if (player2Stat.KillerName && player2Stat.KillerName.toLowerCase() === player1Identifier.toLowerCase()) {
+          player1KilledPlayer2SameCamp++;
+        }
         
         // Check if both are specifically in the Loups team
         const isBothLoupsTeam = player1MainCamp === 'Loup';
@@ -537,11 +572,15 @@ export function generatePlayerComparison(
       averageOpposingGameDuration: opposingGamesWithDuration > 0 
         ? formatDuration(totalOpposingGameDurationSeconds / opposingGamesWithDuration)
         : "N/A",
+      player1KilledPlayer2Count: player1KilledPlayer2Opposing,
+      player2KilledPlayer1Count: player2KilledPlayer1Opposing,
       sameCampGames: sameCampGames.length,
       sameCampWins: sameCampWins,
       averageSameCampDuration: sameCampGamesWithDuration > 0 
         ? formatDuration(totalSameCampDurationSeconds / sameCampGamesWithDuration)
         : "N/A",
+      player1KilledPlayer2SameCamp: player1KilledPlayer2SameCamp,
+      player2KilledPlayer1SameCamp: player2KilledPlayer1SameCamp,
       sameLoupsGames: sameLoupsGames.length,
       sameLoupsWins: sameLoupsWins,
       averageSameLoupsDuration: sameLoupsGamesWithDuration > 0 

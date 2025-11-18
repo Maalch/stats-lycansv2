@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.4.3';
+export const APP_VERSION = '1.4.4';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.4.4',
+    date: '18/11/2025',
+    description: 'Ajouts du nombre de kills dans',
+    link: {
+      mainTab: 'players',
+      subTab: 'comparison',
+      text: 'Joueurs / Face à Face'
+    }
+  },
   {
     version: 'v1.4.3',
     date: '14/11/2025',
