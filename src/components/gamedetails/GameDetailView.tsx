@@ -4,6 +4,7 @@ import { formatDeathTiming } from '../../utils/gameUtils';
 import './GameDetailsChart.css';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { useSettings } from '../../context/SettingsContext';
+import { getDeathTypeLabel } from '../../types/deathTypes';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {
@@ -72,6 +73,19 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
                     playerColor = frenchColorMapping[player.Color];
                   }
                   
+                  // Build death information for tooltip
+                  let deathInfo = '';
+                  if (player.DeathTiming) {
+                    deathInfo = ` (Mort ${formatDeathTiming(player.DeathTiming)}`;
+                    if (player.DeathType) {
+                      deathInfo += ` - ${getDeathTypeLabel(player.DeathType)}`;
+                    }
+                    if (player.KillerName) {
+                      deathInfo += ` - Tueur ${player.KillerName}`;
+                    }
+                    deathInfo += ')';
+                  }
+                  
                   return (
                     <div 
                       key={player.Username} 
@@ -81,7 +95,7 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
                       }}
                         title={`${player.Username} - ${getPlayerCampFromRole(player.MainRoleInitial) !== getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []))
                           ? `${getPlayerCampFromRole(player.MainRoleInitial)} puis ${getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []))}`
-                          : getPlayerCampFromRole(player.MainRoleInitial)}${player.DeathTiming ? ` (Mort ${formatDeathTiming(player.DeathTiming)})` : ''}`}
+                          : getPlayerCampFromRole(player.MainRoleInitial)}${deathInfo}`}
                     >
                       <span className="player-name">{player.Username}</span>
                       {player.DeathTiming && <span className="death-indicator">💀</span>}

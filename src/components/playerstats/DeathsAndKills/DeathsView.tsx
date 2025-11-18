@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { getDeathDescription } from '../../../hooks/utils/deathStatisticsUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { minGamesOptions, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
+import { getDeathTypeLabel } from '../../../types/deathTypes';
 
 // Type for player death statistics charts
 type ChartPlayerDeathData = {
@@ -243,7 +243,7 @@ export function DeathsView({
                   margin: '2px 0', 
                   fontSize: '0.8rem' 
                 }}>
-                  <strong>{getDeathDescription(deathType)}:</strong> {count}
+                  <strong>{getDeathTypeLabel(deathType)}:</strong> {count}
                 </p>
               );
             })}
@@ -341,7 +341,7 @@ export function DeathsView({
                   margin: '2px 0', 
                   fontSize: '0.8rem' 
                 }}>
-                  <strong>{getDeathDescription(deathType)}:</strong> {count}
+                  <strong>{getDeathTypeLabel(deathType)}:</strong> {count}
                 </p>
               );
             })}

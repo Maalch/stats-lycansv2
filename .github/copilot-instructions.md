@@ -97,10 +97,6 @@ playerMap.set(getPlayerId(player), stats); // Same Steam ID = 1 entry, prevents 
 const playerMap = new Map<string, Stats>();
 playerMap.set(player.Username, stats); // Creates duplicates! ("Johnny" vs "[S.P.Q.R] Johnny")
 
-// ❌ WRONG: Don't use getPlayerDisplayName (deprecated)
-const name = getPlayerDisplayName(player); // Deprecated, use getCanonicalPlayerName() instead
-```
-
 #### Key Points
 - **Names are pre-normalized**: By the time data reaches components, all `Username` fields already contain canonical names
 - **Steam IDs are unique identifiers**: Use `getPlayerId()` for grouping, filtering, comparing

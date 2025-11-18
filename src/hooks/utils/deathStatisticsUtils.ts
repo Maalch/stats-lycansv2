@@ -1,6 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
-import { DEATH_TYPES, type DeathType, isValidDeathType, getDeathTypeLabel } from '../../types/deathTypes';
+import { DEATH_TYPES, type DeathType, isValidDeathType } from '../../types/deathTypes';
 import { mainCampOrder } from '../../types/api';
 import { getPlayerId } from '../../utils/playerIdentification';
 
@@ -128,17 +128,6 @@ export interface DeathStatistics {
   // Most dangerous phases/times
   mostCommonDeathType: DeathType | null;
   mostDeadlyKiller: string | null;
-}
-
-
-/**
- * Convert death type code to death description (from victim's perspective)
- * 
- * @deprecated Use getDeathTypeLabel from deathTypes.ts instead
- */
-export function getDeathDescription(deathTypeCode: DeathType): string {
-  // Use centralized label function
-  return getDeathTypeLabel(deathTypeCode);
 }
 
 /**
