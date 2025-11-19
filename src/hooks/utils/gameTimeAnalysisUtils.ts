@@ -53,6 +53,16 @@ export function parseEndTiming(endTiming: string | null): GameTimeInfo | null {
 }
 
 /**
+ * Convert game timing to a comparable numeric value
+ * The cycle is: Jour (J) → Nuit (N) → Meeting (M)
+ * Example: J1 = 1.0, N1 = 1.33, M1 = 1.67, J2 = 2.0, etc.
+ */
+export function getTimingComparableValue(gameTimeInfo: GameTimeInfo): number {
+  const phaseOrder = { 'J': 0, 'N': 0.33, 'M': 0.67 };
+  return gameTimeInfo.dayNumber + phaseOrder[gameTimeInfo.phase];
+}
+
+/**
  * Distribution of games by end timing
  */
 export interface EndTimingDistribution {
@@ -140,8 +150,10 @@ export function computeGameTimeAnalysis(rawGameData: GameLogEntry[]): GameTimeAn
       gamesWithEndTiming++;
       totalDays += gameTimeInfo.dayNumber;
 
-      // Update longest/shortest games
-      if (!longestGame || gameTimeInfo.dayNumber > longestGame.dayNumber) {
+      const comparableValue = getTimingComparableValue(gameTimeInfo);
+
+      // Update longest/shortest games using comparable value
+      if (!longestGame || comparableValue > getTimingComparableValue(parseEndTiming(longestGame.endTiming)!)) {
         longestGame = {
           gameId: game.DisplayedId,
           endTiming: gameTimeInfo.originalTiming,
@@ -149,7 +161,7 @@ export function computeGameTimeAnalysis(rawGameData: GameLogEntry[]): GameTimeAn
         };
       }
 
-      if (!shortestGame || gameTimeInfo.dayNumber < shortestGame.dayNumber) {
+      if (!shortestGame || comparableValue < getTimingComparableValue(parseEndTiming(shortestGame.endTiming)!)) {
         shortestGame = {
           gameId: game.DisplayedId,
           endTiming: gameTimeInfo.originalTiming,

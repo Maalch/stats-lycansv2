@@ -429,7 +429,7 @@ export function GameDurationInsights() {
               }}
               title={tempsJeuDonnees.shortestGame ? 'Cliquez pour voir cette partie' : 'Aucune partie trouvée'}
             >
-              <h3>Partie Plus Courte</h3>
+              <h3>Partie la plus courte</h3>
               <p className="lycans-valeur-principale">
                 {tempsJeuDonnees.shortestGame ? formatTiming(tempsJeuDonnees.shortestGame.endTiming) : 'N/A'}
               </p>
@@ -468,7 +468,7 @@ export function GameDurationInsights() {
               }}
               title={tempsJeuDonnees.longestGame ? 'Cliquez pour voir cette partie' : 'Aucune partie trouvée'}
             >
-              <h3>Partie Plus Longue</h3>
+              <h3>Partie la plus longue</h3>
               <p className="lycans-valeur-principale">
                 {tempsJeuDonnees.longestGame ? formatTiming(tempsJeuDonnees.longestGame.endTiming) : 'N/A'}
               </p>
