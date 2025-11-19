@@ -17,12 +17,16 @@ interface ChartPlayerStat {
   isHighlightedAddition?: boolean;
 }
 
+// Min games options for BR
+const minGamesOptions = [3, 10, 25, 50, 100];
+
 export function BRKillsStatsChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredRawBRData();
   const { settings } = useSettings();
   const { joueursData } = useJoueursData();
   
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
+  const [minGamesForAverageScore, setMinGamesForAverageScore] = useState<number>(3);
 
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
@@ -77,7 +81,7 @@ export function BRKillsStatsChart() {
 
     // Top joueurs par score moyen
     const eligibleForAverageScore = Object.values(playerStats)
-      .filter((p: any) => p.participations >= 3); // Minimum 3 participations
+      .filter((p: any) => p.participations >= minGamesForAverageScore);
     
     const sortedByAverageScore = eligibleForAverageScore
       .sort((a: any, b: any) => b.averageScore - a.averageScore);
@@ -159,9 +163,10 @@ export function BRKillsStatsChart() {
       topPlayersByAverageScore,
       scoreData,
       winnerScoreData,
-      highlightedPlayerInAverageScore: highlightedPlayerAddedToAverageScore
+      highlightedPlayerInAverageScore: highlightedPlayerAddedToAverageScore,
+      totalEligiblePlayers: eligibleForAverageScore.length
     };
-  }, [brData, settings.highlightedPlayer]);
+  }, [brData, settings.highlightedPlayer, minGamesForAverageScore]);
 
   if (brLoading) {
     return <div className="statistiques-chargement">Chargement des données Battle Royale...</div>;
@@ -184,12 +189,40 @@ export function BRKillsStatsChart() {
       <div className="lycans-graphiques-groupe">
         {/* Top joueurs par kill moyen */}
         <div className="lycans-graphique-section">
-          <h3>Kill Moyen par Partie (min. 3 parties)</h3>
-          {stats.highlightedPlayerInAverageScore && settings.highlightedPlayer && (
-            <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
-              🎯 {settings.highlightedPlayer} affiché en plus du top 15
-            </p>
-          )}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+          <div>
+            <h3>Kill Moyen par Partie</h3>
+            {stats.highlightedPlayerInAverageScore && settings.highlightedPlayer && (
+              <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
+                🎯 {settings.highlightedPlayer} affiché en plus du top 15
+              </p>
+            )}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label htmlFor="min-games-avg-score-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Min. parties:
+            </label>
+            <select
+              id="min-games-avg-score-select"
+              value={minGamesForAverageScore}
+              onChange={(e) => setMinGamesForAverageScore(Number(e.target.value))}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem'
+              }}
+            >
+              {minGamesOptions.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
           <FullscreenChart
             title="Kill Moyen par Partie - Battle Royale"
             className="lycans-chart-wrapper"
@@ -228,7 +261,7 @@ export function BRKillsStatsChart() {
                       const d = payload[0].payload as ChartPlayerStat;
                       const isHighlightedAddition = d.isHighlightedAddition;
                       const isHighlightedFromSettings = settings.highlightedPlayer === d.name;
-                      const meetsMinParticipations = d.participations >= 3;
+                      const meetsMinParticipations = d.participations >= minGamesForAverageScore;
                       
                       return (
                         <div style={{ 
@@ -258,7 +291,7 @@ export function BRKillsStatsChart() {
                               paddingTop: '8px',
                               borderTop: '1px solid var(--border-color)'
                             }}>
-                              🎯 Affiché via sélection (&lt; 3 parties)
+                              🎯 Affiché via sélection (&lt; {minGamesForAverageScore} partie{minGamesForAverageScore > 1 ? 's' : ''})
                             </div>
                           )}
                           {isHighlightedAddition && meetsMinParticipations && (
@@ -319,6 +352,9 @@ export function BRKillsStatsChart() {
               </BarChart>
             </ResponsiveContainer>
           </FullscreenChart>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+            Top {stats.topPlayersByAverageScore.length} des joueurs (sur {stats.totalEligiblePlayers} ayant au moins {minGamesForAverageScore} partie{minGamesForAverageScore > 1 ? 's' : ''})
+          </p>
         </div>
 
         {/* Distribution des kills */}
