@@ -26,6 +26,7 @@ export function BRKillsStatsChart() {
   const { joueursData } = useJoueursData();
   
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
+  const [killsView, setKillsView] = useState<'total' | 'average'>('average');
   const [minGamesForAverageScore, setMinGamesForAverageScore] = useState<number>(3);
 
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
@@ -90,6 +91,28 @@ export function BRKillsStatsChart() {
 
     const sortedByParticipations = Object.values(playerStats)
       .sort((a: any, b: any) => b.participations - a.participations);
+
+    // Top joueurs par kills totaux
+    const sortedByTotalScore = Object.values(playerStats)
+      .sort((a: any, b: any) => b.totalScore - a.totalScore);
+    const top15TotalScore = sortedByTotalScore.slice(0, 15);
+
+    const highlightedPlayerInTop15TotalScore = settings.highlightedPlayer &&
+      top15TotalScore.some(p => p.name === settings.highlightedPlayer);
+
+    let highlightedPlayerAddedToTotalScore = false;
+    let topPlayersByTotalScore: ChartPlayerStat[] = [...top15TotalScore];
+    
+    if (settings.highlightedPlayer && !highlightedPlayerInTop15TotalScore) {
+      const highlightedPlayerData = sortedByTotalScore.find(p => p.name === settings.highlightedPlayer);
+      if (highlightedPlayerData) {
+        topPlayersByTotalScore.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        });
+        highlightedPlayerAddedToTotalScore = true;
+      }
+    }
 
     // Check if highlighted player is in top 15 average score (among eligible players)
     const highlightedPlayerInTop15AverageScore = settings.highlightedPlayer &&
@@ -161,9 +184,11 @@ export function BRKillsStatsChart() {
 
     return {
       topPlayersByAverageScore,
+      topPlayersByTotalScore,
       scoreData,
       winnerScoreData,
       highlightedPlayerInAverageScore: highlightedPlayerAddedToAverageScore,
+      highlightedPlayerInTotalScore: highlightedPlayerAddedToTotalScore,
       totalEligiblePlayers: eligibleForAverageScore.length
     };
   }, [brData, settings.highlightedPlayer, minGamesForAverageScore]);
@@ -191,45 +216,79 @@ export function BRKillsStatsChart() {
         <div className="lycans-graphique-section">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
           <div>
-            <h3>Kill Moyen par Partie</h3>
-            {stats.highlightedPlayerInAverageScore && settings.highlightedPlayer && (
+            <h3>{killsView === 'average' ? 'Kill Moyen par Partie' : 'Kills Totaux'}</h3>
+            {((killsView === 'average' && stats.highlightedPlayerInAverageScore) ||
+              (killsView === 'total' && stats.highlightedPlayerInTotalScore)) &&
+              settings.highlightedPlayer && (
               <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
                 🎯 {settings.highlightedPlayer} affiché en plus du top 15
               </p>
             )}
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <label htmlFor="min-games-avg-score-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-              Min. parties:
-            </label>
-            <select
-              id="min-games-avg-score-select"
-              value={minGamesForAverageScore}
-              onChange={(e) => setMinGamesForAverageScore(Number(e.target.value))}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: '350px', justifyContent: 'flex-end' }}>
+            {killsView === 'average' && (
+              <>
+                <label htmlFor="min-games-avg-score-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  Min. parties:
+                </label>
+                <select
+                  id="min-games-avg-score-select"
+                  value={minGamesForAverageScore}
+                  onChange={(e) => setMinGamesForAverageScore(Number(e.target.value))}
+                  style={{
+                    background: 'var(--bg-tertiary)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  {minGamesOptions.map(option => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
+            <button
+              onClick={() => setKillsView('total')}
               style={{
-                background: 'var(--bg-tertiary)',
-                color: 'var(--text-primary)',
+                background: killsView === 'total' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
+                color: killsView === 'total' ? 'var(--bg-primary)' : 'var(--text-primary)',
                 border: '1px solid var(--border-color)',
                 borderRadius: '4px',
                 padding: '0.25rem 0.5rem',
-                fontSize: '0.9rem'
+                fontSize: '0.9rem',
+                cursor: 'pointer'
               }}
             >
-              {minGamesOptions.map(option => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+              Kills Totaux
+            </button>
+            <button
+              onClick={() => setKillsView('average')}
+              style={{
+                background: killsView === 'average' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
+                color: killsView === 'average' ? 'var(--bg-primary)' : 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem',
+                cursor: 'pointer'
+              }}
+            >
+              Kill Moyen
+            </button>
           </div>
         </div>
           <FullscreenChart
-            title="Kill Moyen par Partie - Battle Royale"
+            title={`${killsView === 'average' ? 'Kill Moyen par Partie' : 'Kills Totaux'} - Battle Royale`}
             className="lycans-chart-wrapper"
           >
             <ResponsiveContainer width="100%" height={400}>
               <BarChart 
-                data={stats.topPlayersByAverageScore}
+                data={killsView === 'average' ? stats.topPlayersByAverageScore : stats.topPlayersByTotalScore}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
@@ -312,8 +371,8 @@ export function BRKillsStatsChart() {
                     return null;
                   }}
                 />
-                <Bar dataKey="averageScore" name="Kill moyen par partie">
-                  {stats.topPlayersByAverageScore.map((entry, index) => {
+                <Bar dataKey={killsView === 'average' ? 'averageScore' : 'totalScore'} name={killsView === 'average' ? 'Kill moyen par partie' : 'Kills totaux'}>
+                  {(killsView === 'average' ? stats.topPlayersByAverageScore : stats.topPlayersByTotalScore).map((entry, index) => {
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHoveredPlayer = hoveredPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
@@ -352,9 +411,11 @@ export function BRKillsStatsChart() {
               </BarChart>
             </ResponsiveContainer>
           </FullscreenChart>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            Top {stats.topPlayersByAverageScore.length} des joueurs (sur {stats.totalEligiblePlayers} ayant au moins {minGamesForAverageScore} partie{minGamesForAverageScore > 1 ? 's' : ''})
-          </p>
+          {killsView === 'average' && (
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+              Top {stats.topPlayersByAverageScore.length} des joueurs (sur {stats.totalEligiblePlayers} ayant au moins {minGamesForAverageScore} partie{minGamesForAverageScore > 1 ? 's' : ''})
+            </p>
+          )}
         </div>
 
         {/* Distribution des kills */}

@@ -92,6 +92,11 @@ export function useFilteredRawBRData() {
       return applyPlayerFilter(record, settings);
     }
 
+    // FILTER OUT MINI BR GAMES (less than 6 players) from regular BR statistics
+    if (globalGameData["Nombre de participants"] < 6) {
+      return false;
+    }
+
     // Apply independent filters using the "Game Moddée" field from global data
     if (settings.independentFilters) {
       const filters = settings.independentFilters;
@@ -138,6 +143,11 @@ export function useFilteredRawBRGlobalData() {
       return false;
     }
 
+    // FILTER OUT MINI BR GAMES (less than 6 players) from regular BR statistics
+    if (record["Nombre de participants"] < 6) {
+      return false;
+    }
+
     // Apply independent filters using the "Game Moddée" field
     if (settings.independentFilters) {
       const filters = settings.independentFilters;
@@ -167,6 +177,116 @@ export function useFilteredRawBRGlobalData() {
     }
 
     // For global data, we don't apply player filters as it's about the game itself, not participants
+    return true;
+  }) || null;
+
+  return { data: filteredData, isLoading, error };
+}
+
+// New hooks for Mini BR data (games with LESS than 6 players)
+export function useFilteredMiniBRData() {
+  const { settings } = useSettings();
+  const { brPartiesData, brRefPartiesData, isLoading, error } = useRawBRData();
+
+  // Apply filters to BR participant data - ONLY games with less than 6 players
+  const filteredData = brPartiesData?.filter(record => {
+    // Skip records without participant data
+    if (!record.Game || !record.Participants) {
+      return false;
+    }
+
+    // To apply game type and date filters, we need to find the corresponding global game data
+    const globalGameData = brRefPartiesData?.find(globalRecord => globalRecord.Game === record.Game);
+    
+    if (!globalGameData) {
+      // If we can't find global data, we can't apply filters
+      return false;
+    }
+
+    // ONLY INCLUDE MINI BR GAMES (less than 6 players)
+    if (globalGameData["Nombre de participants"] >= 6) {
+      return false;
+    }
+
+    // Apply independent filters using the "Game Moddée" field from global data
+    if (settings.independentFilters) {
+      const filters = settings.independentFilters;
+      
+      // Game type filter
+      if (filters.gameTypeEnabled && filters.gameFilter !== 'all') {
+        if (filters.gameFilter === 'modded') {
+          if (!globalGameData["Game Moddée"]) return false;
+        } else if (filters.gameFilter === 'non-modded') {
+          if (globalGameData["Game Moddée"]) return false;
+        }
+      }
+      
+      // Date range filter
+      if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
+        const gameDateObj = parseFrenchDate(globalGameData.Date);
+        if (!gameDateObj) return false;
+        if (filters.dateRange.start) {
+          const startObj = new Date(filters.dateRange.start);
+          if (gameDateObj < startObj) return false;
+        }
+        if (filters.dateRange.end) {
+          const endObj = new Date(filters.dateRange.end);
+          if (gameDateObj > endObj) return false;
+        }
+      }
+    }
+
+    // Apply player filter
+    return applyPlayerFilter(record, settings);
+  }) || null;
+
+  return { data: filteredData, isLoading, error };
+}
+
+export function useFilteredMiniBRGlobalData() {
+  const { settings } = useSettings();
+  const { brRefPartiesData, isLoading, error } = useRawBRData();
+
+  // Apply filters to global game data - ONLY games with less than 6 players
+  const filteredData = brRefPartiesData?.filter(record => {
+    // Skip records without essential data
+    if (!record.Game || !record.Date) {
+      return false;
+    }
+
+    // ONLY INCLUDE MINI BR GAMES (less than 6 players)
+    if (record["Nombre de participants"] >= 6) {
+      return false;
+    }
+
+    // Apply independent filters using the "Game Moddée" field
+    if (settings.independentFilters) {
+      const filters = settings.independentFilters;
+      
+      // Game type filter
+      if (filters.gameTypeEnabled && filters.gameFilter !== 'all') {
+        if (filters.gameFilter === 'modded') {
+          if (!record["Game Moddée"]) return false;
+        } else if (filters.gameFilter === 'non-modded') {
+          if (record["Game Moddée"]) return false;
+        }
+      }
+      
+      // Date range filter
+      if (filters.dateRangeEnabled && (filters.dateRange.start || filters.dateRange.end)) {
+        const gameDateObj = parseFrenchDate(record.Date);
+        if (!gameDateObj) return false;
+        if (filters.dateRange.start) {
+          const startObj = new Date(filters.dateRange.start);
+          if (gameDateObj < startObj) return false;
+        }
+        if (filters.dateRange.end) {
+          const endObj = new Date(filters.dateRange.end);
+          if (gameDateObj > endObj) return false;
+        }
+      }
+    }
+
     return true;
   }) || null;
 

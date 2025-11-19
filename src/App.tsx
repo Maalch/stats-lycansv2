@@ -34,6 +34,7 @@ const RolesStatsChart = lazy(() => import('./components/generalstats/RolesStatsC
 const BRParticipationsChart = lazy(() => import('./components/brstats/BRParticipationsChart').then(m => ({ default: m.BRParticipationsChart })));
 const BRWinRateChart = lazy(() => import('./components/brstats/BRWinRateChart').then(m => ({ default: m.BRWinRateChart })));
 const BRKillsStatsChart = lazy(() => import('./components/brstats/BRKillsStatsChart').then(m => ({ default: m.BRKillsStatsChart })));
+const BRMiniChart = lazy(() => import('./components/brstats/BRMiniChart').then(m => ({ default: m.BRMiniChart })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
 
@@ -204,6 +205,12 @@ const BR_STATS_MENU = [
     label: 'Kills', 
     component: BRKillsStatsChart,
     description: 'Statistiques de score et kills'
+  },
+  { 
+    key: 'brMini', 
+    label: 'Mini BR', 
+    component: BRMiniChart,
+    description: 'Mini Battle Royale (2-5 joueurs)'
   },
 ];
 
