@@ -447,12 +447,35 @@ export function useGameLogData(): {
         setError(null);
 
         const dataSource = settings.dataSource as DataSource;
+        
+        // Fetch joueurs data for canonical name resolution
+        const joueursData = await fetchDataFile<any>(dataSource, DATA_FILES.JOUEURS);
+        
+        // Initialize the player identification system with joueurs data
+        initializePlayerIdentification(joueursData);
+        
         const result = await fetchDataFile<GameLogData>(dataSource, DATA_FILES.GAME_LOG);
         
-        // Normalize player names in the GameLog data
+        // Filter out corrupted games (games without EndDate)
+        const validGames = result.GameStats.filter(game => game.EndDate);
+        
+        // Generate DisplayedIds for valid games
+        const displayedIdMap = generateDisplayedIds(validGames);
+        
+        // Add DisplayedId to each game and normalize player names
+        const gameStatsWithDisplayedIds = validGames.map(game => {
+          const gameWithDisplayedId = {
+            ...game,
+            DisplayedId: displayedIdMap.get(game.Id) || game.Id
+          };
+          
+          // Normalize all player names in the game using canonical name resolution
+          return normalizeGameLogEntry(gameWithDisplayedId, joueursData);
+        });
+        
         const normalizedResult = {
           ...result,
-          GameStats: result.GameStats.map(normalizeGameLogEntry)
+          GameStats: gameStatsWithDisplayedIds
         };
         
         setData(normalizedResult);

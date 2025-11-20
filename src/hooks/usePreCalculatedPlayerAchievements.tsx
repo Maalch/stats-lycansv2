@@ -100,22 +100,7 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
       const steamId = playerInfo?.SteamID;
       
       if (!steamId) {
-        console.log(`❌ No Steam ID found for player: ${playerName}`);
         return;
-      }
-      
-      const achievements = achievementsData.achievements[steamId];
-      if (achievements) {
-        console.log(`🏆 Achievements for ${playerName} [ID: ${steamId}] (${settings.dataSource}):`, {
-          allGames: achievements.allGamesAchievements.length,
-          moddedOnly: achievements.moddedOnlyAchievements.length,
-          categories: [...new Set([
-            ...achievements.allGamesAchievements.map(a => a.category),
-            ...achievements.moddedOnlyAchievements.map(a => a.category)
-          ])]
-        });
-      } else {
-        console.log(`❌ No achievements found for ${playerName} [ID: ${steamId}] in ${settings.dataSource} data source`);
       }
     }
   }, [playerName, achievementsData, joueursData, settings.dataSource]);

@@ -22,7 +22,6 @@ export function getDataPath(dataSource: DataSource): string {
 export function getDataFileUrl(dataSource: DataSource, filename: string): string {
   const basePath = getDataPath(dataSource);
   const url = `${import.meta.env.BASE_URL}${basePath}${filename}`;
-  console.log(`[dataPath] Constructing URL for ${filename} (source: ${dataSource}): ${url}`);
   return url;
 }
 
@@ -94,20 +93,18 @@ export async function fetchOptionalDataFile<T = unknown>(
     const response = await fetch(url, options);
     
     if (!response.ok) {
-      console.log(`Optional file ${filename} not available for ${getDataPath(dataSource)} at ${url} (this may be expected)`);
-      return null;
+     return null;
     }
     
     // Check if response is actually JSON
     const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
-      console.log(`Optional file ${filename} returned non-JSON content type: ${contentType} from ${url}`);
       return null;
     }
     
     return response.json() as Promise<T>;
   } catch (error) {
-    console.log(`Optional file ${filename} failed to load from ${getDataPath(dataSource)}:`, error);
+    return null;
     return null;
   }
 }

@@ -808,3 +808,89 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
   };
 }
 
+/**
+ * Death location data point
+ */
+export interface DeathLocationData {
+  x: number;
+  z: number;
+  playerName: string;
+  deathType: DeathType | null;
+  mapName: string;
+  killerName: string | null;
+  camp: string;
+  gameId: string;
+  displayedGameId: string;
+}
+
+/**
+ * Compute death location statistics from game data
+ * Extracts X/Z coordinates for 2D map visualization
+ * Filters out legacy games without coordinate data
+ */
+export function computeDeathLocationStats(
+  gameData: GameLogEntry[],
+  campFilter?: string
+): DeathLocationData[] {
+  const deathLocations: DeathLocationData[] = [];
+
+  gameData
+    // Only include games with death position data (filter legacy games)
+    .filter(game => !game.LegacyData || game.LegacyData.deathInformationFilled === true)
+    .forEach(game => {
+      game.PlayerStats
+        .filter(player => player.DeathPosition !== null)
+        .filter(player => {
+          // Apply camp filter if specified
+          if (!campFilter || campFilter === 'Tous les camps') return true;
+          const camp = getPlayerCampFromRole(player.MainRoleInitial, {
+            regroupLovers: true,
+            regroupVillagers: true,
+            regroupWolfSubRoles: false
+          });
+          return camp === campFilter;
+        })
+        .forEach(player => {
+          if (player.DeathPosition) {
+            const camp = getPlayerCampFromRole(player.MainRoleInitial, {
+              regroupLovers: true,
+              regroupVillagers: true,
+              regroupWolfSubRoles: false
+            });
+
+            deathLocations.push({
+              x: player.DeathPosition.x,
+              z: player.DeathPosition.z, // Use Z for 2D vertical axis (Y is elevation)
+              playerName: player.Username,
+              deathType: normalizeDeathTypeForStats(player.DeathType as DeathType | null),
+              mapName: game.MapName,
+              killerName: player.KillerName || null,
+              camp: camp,
+              gameId: game.DisplayedId, // Sequential game number for display
+              displayedGameId: game.DisplayedId // Kept for compatibility, same as gameId
+            });
+          }
+        });
+    });
+
+  return deathLocations;
+}
+
+/**
+ * Get available maps from game data that have death position information
+ */
+export function getAvailableMapsWithDeathData(gameData: GameLogEntry[]): string[] {
+  const mapsSet = new Set<string>();
+
+  gameData
+    .filter(game => !game.LegacyData || game.LegacyData.deathInformationFilled === true)
+    .forEach(game => {
+      const hasDeathPosition = game.PlayerStats.some(player => player.DeathPosition !== null);
+      if (hasDeathPosition && game.MapName) {
+        mapsSet.add(game.MapName);
+      }
+    });
+
+  return Array.from(mapsSet).sort();
+}
+
