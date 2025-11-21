@@ -8,6 +8,7 @@ import { computeDeathLocationStats, getAvailableMapsWithDeathData } from '../../
 import type { DeathLocationData } from '../../../hooks/utils/deathStatisticsUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { getDeathTypeLabel } from '../../../types/deathTypes';
+import { DeathLocationHeatmapCanvas } from './DeathLocationHeatmapCanvas';
 
 interface DeathLocationViewProps {
   selectedCamp: string;
@@ -26,6 +27,7 @@ export function DeathLocationView({
   const [selectedMap, setSelectedMap] = useState<string>('');
   const [selectedDeathType, setSelectedDeathType] = useState<string>('all');
   const [hoveredDeath, setHoveredDeath] = useState<DeathLocationData | null>(null);
+  const [viewMode, setViewMode] = useState<'scatter' | 'heatmap'>('scatter');
 
   // Get available maps with death position data, sorted by number of deaths (descending)
   const availableMaps = useMemo(() => {
@@ -279,6 +281,51 @@ export function DeathLocationView({
     <div>
       {/* Filter Selection */}
       <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+        {/* View Mode Toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <label style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+            Mode :
+          </label>
+          <div style={{ 
+            display: 'flex', 
+            backgroundColor: 'var(--bg-tertiary)', 
+            borderRadius: '4px',
+            border: '1px solid var(--border-color)',
+            overflow: 'hidden'
+          }}>
+            <button
+              onClick={() => setViewMode('scatter')}
+              style={{
+                background: viewMode === 'scatter' ? 'var(--accent-primary)' : 'transparent',
+                color: viewMode === 'scatter' ? 'white' : 'var(--text-primary)',
+                border: 'none',
+                padding: '0.5rem 1rem',
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                fontWeight: viewMode === 'scatter' ? 'bold' : 'normal',
+                transition: 'all 0.2s'
+              }}
+            >
+              Points
+            </button>
+            <button
+              onClick={() => setViewMode('heatmap')}
+              style={{
+                background: viewMode === 'heatmap' ? 'var(--accent-primary)' : 'transparent',
+                color: viewMode === 'heatmap' ? 'white' : 'var(--text-primary)',
+                border: 'none',
+                padding: '0.5rem 1rem',
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                fontWeight: viewMode === 'heatmap' ? 'bold' : 'normal',
+                transition: 'all 0.2s'
+              }}
+            >
+              Carte de chaleur
+            </button>
+          </div>
+        </div>
+
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <label htmlFor="map-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
             Carte :
@@ -355,76 +402,103 @@ export function DeathLocationView({
         </div>
       </div>
 
-      {/* Death Location Scatter Plot */}
+      {/* Death Location Visualization */}
       {deathLocations.length > 0 ? (
-        <FullscreenChart title="Carte des Morts">
-          <div style={{ height: 600 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
-                <XAxis 
-                  dataKey="x" 
-                  type="number"
-                  name="Position X"
-                  label={{ 
-                    value: 'Position X', 
-                    position: 'bottom',
-                    offset: 10,
-                    style: { fill: 'var(--text-secondary)' }
-                  }}
-                  domain={xDomain}
-                  stroke="var(--text-secondary)"
-                  tick={{ fill: 'var(--text-secondary)' }}
-                  tickFormatter={(value) => Math.round(value).toString()}
-                />
-                <YAxis 
-                  dataKey="z"
-                  type="number"
-                  name="Position Z"
-                  label={{ 
-                    value: 'Position Z', 
-                    angle: -90, 
-                    position: 'left',
-                    offset: 20,
-                    style: { fill: 'var(--text-secondary)' }
-                  }}
-                  domain={zDomain}
-                  stroke="var(--text-secondary)"
-                  tick={{ fill: 'var(--text-secondary)' }}
-                  tickFormatter={(value) => Math.round(value).toString()}
-                />
-                <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
-                <Scatter 
-                  data={aggregatedLocationData}
-                  onClick={(data) => handleDeathClick(data)}
-                  onMouseEnter={(data) => setHoveredDeath(data as DeathLocationData)}
-                  onMouseLeave={() => setHoveredDeath(null)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  {aggregatedLocationData.map((entry, index) => {
-                    const isHighlighted = settings.highlightedPlayer === entry.playerName;
-                    const isHovered = hoveredDeath?.playerName === entry.playerName && 
-                                     hoveredDeath?.gameId === entry.gameId;
-                    
-                    // Size based on number of deaths at this location
-                    const baseSize = entry.deathCount > 1 ? 7 : 5;
-                    const highlightedSize = baseSize + 2;
-                    
-                    return (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={isHighlighted ? 'var(--accent-primary)' : getDeathColor(entry.deathType)}
-                        stroke={isHighlighted || isHovered ? 'white' : entry.deathCount > 1 ? 'var(--accent-secondary)' : 'none'}
-                        strokeWidth={isHighlighted ? 3 : isHovered ? 2 : entry.deathCount > 1 ? 1 : 0}
-                        opacity={isHighlighted ? 1 : 0.7}
-                        r={isHighlighted ? highlightedSize : isHovered ? baseSize + 1 : baseSize}
-                      />
-                    );
-                  })}
-                </Scatter>
-              </ScatterChart>
-            </ResponsiveContainer>
-          </div>
+        <FullscreenChart title={viewMode === 'scatter' ? 'Carte des Morts' : 'Carte de Chaleur des Morts'}>
+          {viewMode === 'scatter' ? (
+            <div style={{ height: 600 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis 
+                    dataKey="x" 
+                    type="number"
+                    name="Position X"
+                    label={{ 
+                      value: 'Position X', 
+                      position: 'bottom',
+                      offset: 10,
+                      style: { fill: 'var(--text-secondary)' }
+                    }}
+                    domain={xDomain}
+                    stroke="var(--text-secondary)"
+                    tick={{ fill: 'var(--text-secondary)' }}
+                    tickFormatter={(value) => Math.round(value).toString()}
+                  />
+                  <YAxis 
+                    dataKey="z"
+                    type="number"
+                    name="Position Z"
+                    label={{ 
+                      value: 'Position Z', 
+                      angle: -90, 
+                      position: 'left',
+                      offset: 20,
+                      style: { fill: 'var(--text-secondary)' }
+                    }}
+                    domain={zDomain}
+                    stroke="var(--text-secondary)"
+                    tick={{ fill: 'var(--text-secondary)' }}
+                    tickFormatter={(value) => Math.round(value).toString()}
+                  />
+                  <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
+                  <Scatter 
+                    data={aggregatedLocationData}
+                    onClick={(data) => handleDeathClick(data)}
+                    onMouseEnter={(data) => setHoveredDeath(data as DeathLocationData)}
+                    onMouseLeave={() => setHoveredDeath(null)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {aggregatedLocationData.map((entry, index) => {
+                      const isHighlighted = settings.highlightedPlayer === entry.playerName;
+                      const isHovered = hoveredDeath?.playerName === entry.playerName && 
+                                       hoveredDeath?.gameId === entry.gameId;
+                      
+                      // Size based on number of deaths at this location
+                      const baseSize = entry.deathCount > 1 ? 7 : 5;
+                      const highlightedSize = baseSize + 2;
+                      
+                      return (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={isHighlighted ? 'var(--accent-primary)' : getDeathColor(entry.deathType)}
+                          stroke={isHighlighted || isHovered ? 'white' : entry.deathCount > 1 ? 'var(--accent-secondary)' : 'none'}
+                          strokeWidth={isHighlighted ? 3 : isHovered ? 2 : entry.deathCount > 1 ? 1 : 0}
+                          opacity={isHighlighted ? 1 : 0.7}
+                          r={isHighlighted ? highlightedSize : isHovered ? baseSize + 1 : baseSize}
+                        />
+                      );
+                    })}
+                  </Scatter>
+                </ScatterChart>
+              </ResponsiveContainer>
+            </div>
+          ) : (
+            <div style={{ padding: '2rem 0', display: 'flex', justifyContent: 'center' }}>
+              <DeathLocationHeatmapCanvas
+                deathLocations={deathLocations}
+                xDomain={xDomain as [number, number]}
+                zDomain={zDomain as [number, number]}
+                width={800}
+                height={600}
+                bandwidth={25}
+                onRegionClick={(deaths) => {
+                  if (deaths.length === 1) {
+                    navigateToGameDetails({
+                      selectedGame: deaths[0].gameId,
+                      fromComponent: 'Death Location View (Heatmap)'
+                    });
+                  } else {
+                    const gameIds = deaths.map(d => d.gameId).filter(id => id);
+                    navigateToGameDetails({
+                      selectedGameIds: gameIds,
+                      fromComponent: 'Death Location View (Heatmap)'
+                    });
+                  }
+                }}
+              />
+            </div>
+          )}
         </FullscreenChart>
       ) : (
         <div className="donnees-manquantes" style={{ 
@@ -486,15 +560,27 @@ export function DeathLocationView({
         </p>
         <ul style={{ marginTop: '0.5rem', paddingLeft: '1.5rem' }}>
           <li>Les positions sont basées sur les coordonnées X et Z (vue 2D de la carte)</li>
-          <li>Chaque point représente la mort d'un joueur à un endroit précis</li>
-          <li>La couleur indique le type de mort (voir légende ci-dessus)</li>
-          <li>Les joueurs en surbrillance sont affichés en {' '}
-            <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>
-              couleur primaire
-            </span>
-          </li>
-          <li>Cliquez sur un point pour voir les détails de la partie</li>
-          <li>Survolez un point pour voir les informations détaillées</li>
+          {viewMode === 'scatter' ? (
+            <>
+              <li>Chaque point représente la mort d'un joueur à un endroit précis</li>
+              <li>La couleur indique le type de mort (voir légende ci-dessus)</li>
+              <li>Les joueurs en surbrillance sont affichés en {' '}
+                <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>
+                  couleur primaire
+                </span>
+              </li>
+              <li>Cliquez sur un point pour voir les détails de la partie</li>
+              <li>Survolez un point pour voir les informations détaillées</li>
+            </>
+          ) : (
+            <>
+              <li>La carte de chaleur montre les zones de forte densité de morts (du jaune au rouge)</li>
+              <li>Les points noirs indiquent l'emplacement exact de chaque mort</li>
+              <li>Les zones rouges indiquent une concentration élevée de morts</li>
+              <li>Cliquez sur une zone pour voir les détails des parties associées</li>
+              <li>Utilisez le mode "Points" pour voir les détails individuels par type de mort</li>
+            </>
+          )}
         </ul>
         <p style={{ marginTop: '0.5rem', fontStyle: 'italic', color: 'var(--text-secondary)' }}>
           Note : Seules les parties récentes contiennent des données de position. Les parties legacy sont exclues.
