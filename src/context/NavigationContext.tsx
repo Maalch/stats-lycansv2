@@ -61,7 +61,7 @@ export interface DeathStatisticsState {
   selectedCamp: string;
   victimCampFilter?: string;
   minGamesForAverage: number;
-  selectedView?: 'killers' | 'deaths' | 'hunter' | 'survival' | 'location'; // Which view is currently displayed
+  selectedView?: 'killers' | 'deaths' | 'hunter' | 'survival'; // Which view is currently displayed
   focusChart?: 'totalKills' | 'averageKills' | 'totalDeaths' | 'survivalRate'; // Which chart to focus on when navigating
 }
 
@@ -86,6 +86,10 @@ export interface TalkingTimeState {
   minGames: number;
   displayMode: 'total' | 'outside' | 'during';
   focusChart?: string; // For future expansion if needed
+}
+
+export interface DeathLocationState {
+  selectedCamp: string;
 }
 
 export interface NavigationState {
@@ -113,6 +117,7 @@ export interface NavigationState {
   playerHistoryRolesState?: PlayerHistoryRolesState;
   rolesStatsState?: RolesStatsState;
   talkingTimeState?: TalkingTimeState;
+  deathLocationState?: DeathLocationState;
 }
 
 interface NavigationContextType {

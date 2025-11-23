@@ -11,7 +11,6 @@ import { KillersView } from './KillersView';
 import { DeathsView } from './DeathsView';
 import { HunterView } from './HunterView';
 import { SurvivalView } from './SurvivalView';
-import { DeathLocationView } from './DeathLocationView';
 
 export function DeathStatisticsChart() {
   const { navigationState, updateNavigationState } = useNavigation();
@@ -26,9 +25,14 @@ export function DeathStatisticsChart() {
   const [minGamesForAverage, setMinGamesForAverage] = useState<number>(
     navigationState.deathStatisticsState?.minGamesForAverage || 25
   );
-  const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter' | 'survival' | 'location'>(
-    navigationState.deathStatisticsState?.selectedView || 'killers'
-  );
+  const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter' | 'survival'>(() => {
+    const savedView = navigationState.deathStatisticsState?.selectedView as string | undefined;
+    // Filter out legacy 'location' value
+    if (savedView && savedView !== 'location') {
+      return savedView as 'killers' | 'deaths' | 'hunter' | 'survival';
+    }
+    return 'killers';
+  });
   const { data: availableCamps } = useAvailableCampsFromRaw();
   const { data: deathStats, isLoading, error } = useDeathStatisticsFromRaw(selectedCamp, victimCampFilter);
   // Hunter stats always use all camps data (no camp filter)
@@ -155,7 +159,7 @@ export function DeathStatisticsChart() {
   };
 
   // Function to handle view change with persistence
-  const handleViewChange = (newView: 'killers' | 'deaths' | 'hunter' | 'survival' | 'location') => {
+  const handleViewChange = (newView: 'killers' | 'deaths' | 'hunter' | 'survival') => {
     setSelectedView(newView);
     updateNavigationState({
       deathStatisticsState: {
@@ -227,8 +231,8 @@ export function DeathStatisticsChart() {
         */}
       </div>
 
-      {/* Camp Filter - Only visible for Tueurs, Morts, Survie, and Localisation views */}
-      {(selectedView === 'killers' || selectedView === 'deaths' || selectedView === 'survival' || selectedView === 'location') && (
+      {/* Camp Filter - Only visible for Tueurs, Morts, and Survie views */}
+      {(selectedView === 'killers' || selectedView === 'deaths' || selectedView === 'survival') && (
         <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
@@ -355,15 +359,6 @@ export function DeathStatisticsChart() {
           onMinGamesChange={handleMinGamesChange}
           isLoading={survivalLoading}
           error={survivalError}
-        />
-      )}
-
-      {/* Death Location View */}
-      {selectedView === 'location' && (
-        <DeathLocationView
-          selectedCamp={selectedCamp}
-          availableDeathTypes={availableDeathTypes}
-          deathTypeColors={deathTypeColors}
         />
       )}
 

@@ -36,6 +36,8 @@ const BRWinRateChart = lazy(() => import('./components/brstats/BRWinRateChart').
 const BRKillsStatsChart = lazy(() => import('./components/brstats/BRKillsStatsChart').then(m => ({ default: m.BRKillsStatsChart })));
 const BRMiniChart = lazy(() => import('./components/brstats/BRMiniChart').then(m => ({ default: m.BRMiniChart })));
 
+//const DeathLocationHeatmap = lazy(() => import('./components/generalstats/DeathLocationHeatmap').then(m => ({ default: m.DeathLocationHeatmap })));
+
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
 
 // Add settings import
@@ -178,7 +180,14 @@ const GENERAL_STATS_MENU = [
     component: GameDurationInsights,
     description: 'Statistiques sur la durée des parties'
   },
-
+  /*
+  { 
+    key: 'heatmap', 
+    label: 'Heatmap', 
+    component: DeathLocationHeatmap,
+    description: 'Carte de chaleur des localisations de mort'
+  },
+  */
   { 
     key: 'colorStats', 
     label: 'Couleurs', 
