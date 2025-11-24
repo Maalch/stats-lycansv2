@@ -938,9 +938,12 @@ export function computeGameDetailsFromGameLog(
     // Extract solo roles (players who are not in main camps or wolf special roles)
     // Exclude: Loup, Villageois, Traître, Louveteau (wolf special roles are shown separately)
     // Include: Amoureux and other solo roles
+    // Use MainRoleInitial (not final role) to capture the initial solo role assignment
     const excludedRoles = ['Loup', 'Villageois', 'Traître', 'Louveteau'];
-    const soloRolePlayers = game.PlayerStats.filter(p => !excludedRoles.includes(getPlayerCampFromRole(getPlayerFinalRole(p.MainRoleInitial, p.MainRoleChanges || []))));
-    const soloRoles = soloRolePlayers.length > 0 ? soloRolePlayers.map(p => getPlayerCampFromRole(getPlayerFinalRole(p.MainRoleInitial, p.MainRoleChanges || []))).join(', ') : null;
+    const soloRolePlayers = game.PlayerStats.filter(p => !excludedRoles.includes(getPlayerCampFromRole(p.MainRoleInitial)));
+    // Get unique solo roles (deduplicate if multiple players have the same role)
+    const uniqueSoloRoles = [...new Set(soloRolePlayers.map(p => getPlayerCampFromRole(p.MainRoleInitial)))];
+    const soloRoles = uniqueSoloRoles.length > 0 ? uniqueSoloRoles.join(', ') : null;
     
     // Convert StartDate (ISO) to French format (DD/MM/YYYY)
     const gameDate = new Date(game.StartDate);
