@@ -53,19 +53,19 @@ import { ChangelogPage } from './components/common/ChangelogPage';
 const MAIN_TABS = [
   { 
     key: 'playerSelection', 
-    label: 'Sélection Joueur', 
-    icon: '🏆',
+    label: 'Joueur', 
+    icon: '👤',
     description: 'Choisir un joueur et voir ses succès'
   },
   { 
-    key: 'players', 
-    label: 'Joueurs', 
-    icon: '👤',
+    key: 'rankings', 
+    label: 'Classements', 
+    icon: '🏆',
     description: 'Statistiques des joueurs'
   },
   { 
     key: 'general', 
-    label: 'Parties', 
+    label: 'Stats Parties', 
     icon: '🎯',
     description: 'Statistiques générales'
   },
@@ -271,7 +271,7 @@ function MainApp() {
     if (requestedTab) {
       setSelectedMainTab(requestedTab.mainTab);
       if (requestedTab.subTab) {
-        if (requestedTab.mainTab === 'players') {
+        if (requestedTab.mainTab === 'rankings') {
           setSelectedPlayerStat(requestedTab.subTab);
         } else if (requestedTab.mainTab === 'general') {
           setSelectedGeneralStat(requestedTab.subTab);
@@ -369,7 +369,7 @@ function MainApp() {
         );
       }
     
-      case 'players': {
+      case 'rankings': {
         const SelectedPlayerComponent = PLAYER_STATS_MENU.find(m => m.key === selectedPlayerStat)?.component ?? PlayersGeneralStatisticsChart;
         return (
           <div>

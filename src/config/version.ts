@@ -19,9 +19,9 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: '18/11/2025',
     description: 'Ajouts du nombre de kills dans',
     link: {
-      mainTab: 'players',
+      mainTab: 'rankings',
       subTab: 'comparison',
-      text: 'Joueurs / Face à Face'
+      text: 'Classements / Face à Face'
     }
   },
   {
@@ -29,9 +29,9 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: '14/11/2025',
     description: 'Ajouts de statistiques sur les temps de paroles (depuis la 0.215) dans',
     link: {
-      mainTab: 'players',
+      mainTab: 'rankings',
       subTab: 'talkingTime',
-      text: 'Joueurs / Temps de Parole'
+      text: 'Classements / Temps de Parole'
     }
   },
   {
@@ -41,7 +41,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     link: {
       mainTab: 'general',
       subTab: 'rolesStats',
-      text: 'Parties / Rôles'
+      text: 'Stats Parties / Rôles'
     }
   },
   {
@@ -50,7 +50,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     description: 'Ajouts de statistiques individuelles sur les métiers, pouvoirs et rôles secondaires dans',
     link: {
       mainTab: 'playerSelection',
-      text: 'Sélection Joueur / Rôles',
+      text: 'Joueur / Rôles',
       navigationState: {
         selectedPlayerSelectionView: 'roles'
       }
@@ -61,9 +61,9 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: '06/11/2025',
     description: 'Ajouts d\'une série "Rôles solo" dans',
     link: {
-      mainTab: 'players',
+      mainTab: 'rankings',
       subTab: 'series',
-      text: 'Joueurs / Séries / Rôles solo',
+      text: 'Classements / Séries / Rôles solo',
       navigationState: {
         selectedSeriesType: 'solo'
       }
@@ -76,7 +76,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     link: {
       mainTab: 'general',
       subTab: 'colorStats',
-      text: 'Parties / Couleurs'
+      text: 'Stats Parties / Couleurs'
     }
   },
   {
@@ -97,17 +97,17 @@ export const CHANGELOG: ChangelogEntry[] = [
   {
     version: 'v1.3.10',
     date: '30/10/2025',
-    description: 'Ajout d\'un graphique "Types de Mort les Plus Fréquents" dans "Sélection Joueurs" / "Kills".\nAjout du total du temps de jeu dans "Statistiques Générales" / "Durée des Parties" et dans par joueur "Evolution".',
+    description: 'Ajout d\'un graphique "Types de Mort les Plus Fréquents" dans "Joueur" / "Kills".\nAjout du total du temps de jeu dans "Statistiques Générales" / "Durée des Parties" et dans par joueur "Evolution".',
   },
   {
     version: 'v1.3.9',
     date: '24/10/2025',
-    description: 'Dans "Evolution", ajout de la possibilité de trier par Trimestre/année et par camp.\n Dans "Joueurs" / "Séries", ajout d\'un bouton pour voir uniquement les séries actives ou non.',
+    description: 'Dans "Evolution", ajout de la possibilité de trier par Trimestre/année et par camp.\n Dans "Classements" / "Séries", ajout d\'un bouton pour voir uniquement les séries actives ou non.',
   },
   {
     version: 'v1.3.8',
     date: '23/10/2025',
-    description: 'Réorganisation des pages du joueurs : les données précédemment disponibles dans "Historique Joueur" sont maintenant disponible dans la "Sélection Joueur".\n+ Beaucoup de petites clarifications sur des titres et descriptions des graphiques.',
+    description: 'Réorganisation des pages du joueurs : les données précédemment disponibles dans "Historique Joueur" sont maintenant disponible dans la "Joueur".\n+ Beaucoup de petites clarifications sur des titres et descriptions des graphiques.',
   },
     {
     version: 'v1.3.7',
