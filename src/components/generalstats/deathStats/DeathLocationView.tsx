@@ -1,7 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
-import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useFilteredGameLogData } from '../../../hooks/useCombinedRawData';
 import { computeDeathLocationStats, getAvailableMapsWithDeathData } from '../../../hooks/utils/deathStatisticsUtils';
@@ -9,6 +7,7 @@ import type { DeathLocationData } from '../../../hooks/utils/deathStatisticsUtil
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { getDeathTypeLabel } from '../../../types/deathTypes';
 import { DeathLocationHeatmapCanvas } from './DeathLocationHeatmapCanvas';
+import { DeathLocationScatter } from './DeathLocationScatter';
 
 interface DeathLocationViewProps {
   selectedCamp: string;
@@ -22,11 +21,9 @@ export function DeathLocationView({
   deathTypeColors
 }: DeathLocationViewProps) {
   const { navigateToGameDetails } = useNavigation();
-  const { settings } = useSettings();
   const { data: gameLogData, isLoading, error } = useFilteredGameLogData();
   const [selectedMap, setSelectedMap] = useState<string>('');
   const [selectedDeathType, setSelectedDeathType] = useState<string>('all');
-  const [hoveredDeath, setHoveredDeath] = useState<DeathLocationData | null>(null);
   const [viewMode, setViewMode] = useState<'scatter' | 'heatmap'>('scatter');
 
   // Get available maps with death position data, sorted by number of deaths (descending)
@@ -406,79 +403,23 @@ export function DeathLocationView({
       {deathLocations.length > 0 ? (
         <FullscreenChart title={viewMode === 'scatter' ? 'Carte des Morts' : 'Carte de Chaleur des Morts'}>
           {viewMode === 'scatter' ? (
-            <div style={{ height: 600 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
-                  <XAxis 
-                    dataKey="x" 
-                    type="number"
-                    name="Position X"
-                    label={{ 
-                      value: 'Position X', 
-                      position: 'bottom',
-                      offset: 10,
-                      style: { fill: 'var(--text-secondary)' }
-                    }}
-                    domain={xDomain}
-                    stroke="var(--text-secondary)"
-                    tick={{ fill: 'var(--text-secondary)' }}
-                    tickFormatter={(value) => Math.round(value).toString()}
-                  />
-                  <YAxis 
-                    dataKey="z"
-                    type="number"
-                    name="Position Z"
-                    label={{ 
-                      value: 'Position Z', 
-                      angle: -90, 
-                      position: 'left',
-                      offset: 20,
-                      style: { fill: 'var(--text-secondary)' }
-                    }}
-                    domain={zDomain}
-                    stroke="var(--text-secondary)"
-                    tick={{ fill: 'var(--text-secondary)' }}
-                    tickFormatter={(value) => Math.round(value).toString()}
-                  />
-                  <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
-                  <Scatter 
-                    data={aggregatedLocationData}
-                    onClick={(data) => handleDeathClick(data)}
-                    onMouseEnter={(data) => setHoveredDeath(data as DeathLocationData)}
-                    onMouseLeave={() => setHoveredDeath(null)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {aggregatedLocationData.map((entry, index) => {
-                      const isHighlighted = settings.highlightedPlayer === entry.playerName;
-                      const isHovered = hoveredDeath?.playerName === entry.playerName && 
-                                       hoveredDeath?.gameId === entry.gameId;
-                      
-                      // Size based on number of deaths at this location
-                      const baseSize = entry.deathCount > 1 ? 7 : 5;
-                      const highlightedSize = baseSize + 2;
-                      
-                      return (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={isHighlighted ? 'var(--accent-primary)' : getDeathColor(entry.deathType)}
-                          stroke={isHighlighted || isHovered ? 'white' : entry.deathCount > 1 ? 'var(--accent-secondary)' : 'none'}
-                          strokeWidth={isHighlighted ? 3 : isHovered ? 2 : entry.deathCount > 1 ? 1 : 0}
-                          opacity={isHighlighted ? 1 : 0.7}
-                          r={isHighlighted ? highlightedSize : isHovered ? baseSize + 1 : baseSize}
-                        />
-                      );
-                    })}
-                  </Scatter>
-                </ScatterChart>
-              </ResponsiveContainer>
-            </div>
+            <DeathLocationScatter
+              deathLocations={deathLocations}
+              aggregatedLocationData={aggregatedLocationData}
+              mapName={selectedMap}
+              xDomain={xDomain as [number, number]}
+              zDomain={zDomain as [number, number]}
+              onDeathClick={handleDeathClick}
+              CustomTooltip={CustomTooltip}
+              getDeathColor={getDeathColor}
+            />
           ) : (
             <div style={{ padding: '2rem 0', display: 'flex', justifyContent: 'center' }}>
               <DeathLocationHeatmapCanvas
                 deathLocations={deathLocations}
                 xDomain={xDomain as [number, number]}
                 zDomain={zDomain as [number, number]}
+                mapName={selectedMap}
                 width={800}
                 height={600}
                 bandwidth={25}
