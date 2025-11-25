@@ -28,11 +28,11 @@ export const MAP_CONFIGS_SCATTER: Record<string, MapConfig> = {
     name: 'Village',
     imagePath: '/Village.webp',
     cameraOffset: {
-      x: 185,     // World X coordinate at image center - ADJUST THIS to shift left/right
+      x: 170,     // World X coordinate at image center - ADJUST THIS to shift left/right
       y: 52.78,   // World Y coordinate (height) - not used for 2D heatmap
       z: 183      // World Z coordinate at image center - ADJUST THIS to shift up/down
     },
-    offsetMultiplier: 3.2,  // Pixels per world unit - ADJUST THIS to zoom in/out
+    offsetMultiplier: 2.4,  // Pixels per world unit - ADJUST THIS to zoom in/out
     // Smaller = zoom out (see more area), Larger = zoom in (more detail)
     // Fine-tune adjustments:
     manualOffsetX: 0,  // Additional pixel shift on X axis (positive = move dots right, negative = move dots left)

@@ -182,10 +182,30 @@ function correctLoverSecondaryRole(gameLog) {
   return gameLog;
 }
 
+/**
+ * Normalize game ID for matching between legacy and AWS data sources.
+ * AWS files may have Tsuna- prefix while legacy data uses Ponce- prefix for the same game.
+ * This function extracts the timestamp portion to enable proper matching.
+ * 
+ * @param {string} gameId - The game ID to normalize (e.g., "Ponce-20251111132522" or "Tsuna-20251111132522")
+ * @returns {string} - The timestamp portion (e.g., "20251111132522")
+ */
+function normalizeGameIdForMatching(gameId) {
+  if (!gameId) return gameId;
+  
+  // Extract timestamp by removing Ponce- or Tsuna- prefix
+  if (gameId.startsWith('Ponce-') || gameId.startsWith('Tsuna-')) {
+    return gameId.substring(gameId.indexOf('-') + 1);
+  }
+  
+  return gameId;
+}
+
 async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   console.log('Merging legacy and AWS game logs into unified structure...');
   
   const gamesByIdMap = new Map();
+  const gamesByNormalizedIdMap = new Map(); // Map normalized IDs to full game IDs for matching
   let legacyCount = 0;
   let awsCount = 0;
   let mergedCount = 0;
@@ -198,10 +218,12 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
         filteredCount++;
         return;
       }
+      const normalizedId = normalizeGameIdForMatching(game.Id);
       gamesByIdMap.set(game.Id, {
         ...game,
         source: 'legacy'
       });
+      gamesByNormalizedIdMap.set(normalizedId, game.Id);
     });
     legacyCount = legacyGameLog.GameStats.length - filteredCount;
     console.log(`✓ Added ${legacyCount} legacy games to map`);
@@ -222,10 +244,14 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
           return; // Skip non-Main Team games
         }
         
-        const existingLegacyGame = gamesByIdMap.get(gameId);
+        // Try to find matching legacy game by normalized ID (timestamp only)
+        const normalizedId = normalizeGameIdForMatching(gameId);
+        const legacyGameId = gamesByNormalizedIdMap.get(normalizedId);
+        const existingLegacyGame = legacyGameId ? gamesByIdMap.get(legacyGameId) : null;
         
         if (existingLegacyGame && existingLegacyGame.source === 'legacy') {
           // Merge: Use AWS data but preserve legacy Modded/Version/LegacyData
+          // Keep the AWS game ID (Tsuna- or Ponce-) as the primary ID
           const mergedGame = {
             ...awsGame,
             Version: existingLegacyGame.Version || gameLog.ModVersion,
@@ -233,9 +259,17 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
             LegacyData: existingLegacyGame.LegacyData || undefined,
             source: 'merged'
           };
+          
+          // Remove the old legacy game entry if it had a different prefix
+          if (legacyGameId !== gameId) {
+            gamesByIdMap.delete(legacyGameId);
+            console.log(`✓ Merged game ${gameId} (was ${legacyGameId} in legacy): AWS data + legacy metadata`);
+          } else {
+            console.log(`✓ Merged game ${gameId}: AWS data + legacy metadata`);
+          }
+          
           gamesByIdMap.set(gameId, mergedGame);
           mergedCount++;
-          console.log(`✓ Merged game ${gameId}: AWS data + legacy metadata`);
         } else {
           // Pure AWS game - add ModVersion and Modded flag
           const awsGameWithVersion = {
