@@ -406,7 +406,7 @@ export function DeathLocationView({
       {deathLocations.length > 0 ? (
         <FullscreenChart title={viewMode === 'scatter' ? 'Carte des Morts' : 'Carte de Chaleur des Morts'}>
           {viewMode === 'scatter' ? (
-            <div style={{ height: 600 }}>
+            <div style={{ height: 600, width: 800 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
