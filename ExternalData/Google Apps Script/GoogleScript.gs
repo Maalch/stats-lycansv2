@@ -127,8 +127,8 @@ function test_getRawBRData() {
 
 /**
  * Debug function to test a specific game ID
- * This function fetches and displays detailed information about a single game
- * including all player stats and role changes
+ * This function exports exactly what getRawGameDataInNewFormat would export, but for a single game
+ * Useful for testing minimal structure when GAMEMODID is filled
  * 
  * @param {number|string} testGameId - The game ID to test (e.g., 50, "50")
  * 
@@ -136,10 +136,10 @@ function test_getRawBRData() {
  */
 function debug_getGameById() {
   try {
-    var testGameId = 538;
-    Logger.log("=== DEBUG: Testing Game ID " + testGameId + " ===");
+    var testGameId = 551; // Change this to test different games
+    Logger.log("=== DEBUG: Exporting Game ID " + testGameId + " ===");
     
-    // Get all required data
+    // Get all required data (same as getRawGameDataInNewFormat)
     var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
     var gameValues = gameData.values;
     
@@ -155,6 +155,9 @@ function debug_getGameById() {
     var votesData = getLycanSheetData(LYCAN_SCHEMA.VOTES.SHEET);
     var votesValues = votesData.values;
     
+    var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
+    var playersValues = playersData.values;
+    
     if (!gameValues || gameValues.length === 0) {
       Logger.log("ERROR: No game data found");
       return;
@@ -166,6 +169,17 @@ function debug_getGameById() {
     var gameHeaders2 = gameValues2[0];
     var gameDataRows2 = gameValues2.slice(1);
     
+    // Create game2 data map
+    var game2DataMap = {};
+    if (gameDataRows2 && gameDataRows2.length > 0) {
+      gameDataRows2.forEach(function(row) {
+        var gameId = row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEID)];
+        if (gameId) {
+          game2DataMap[gameId] = row;
+        }
+      });
+    }
+    
     var detailsHeaders = detailsValues ? detailsValues[0] : [];
     var detailsDataRows = detailsValues ? detailsValues.slice(1) : [];
     
@@ -174,6 +188,21 @@ function debug_getGameById() {
     
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
+    
+    // Create player ID map
+    var playerIdMap = {};
+    if (playersValues && playersValues.length > 0) {
+      var playersHeaders = playersValues[0];
+      var playersDataRows = playersValues.slice(1);
+      
+      playersDataRows.forEach(function(row) {
+        var playerName = row[findColumnIndex(playersHeaders, LYCAN_SCHEMA.PLAYERS.COLS.PLAYER)];
+        var steamId = row[findColumnIndex(playersHeaders, LYCAN_SCHEMA.PLAYERS.COLS.ID)];
+        if (playerName && steamId) {
+          playerIdMap[playerName] = steamId;
+        }
+      });
+    }
     
     // Find the specific game
     var gameRow = gameDataRows.find(function(row) {
@@ -185,70 +214,115 @@ function debug_getGameById() {
       return;
     }
     
-    // Create a map of game2 data
-    var game2DataMap = {};
-    gameDataRows2.forEach(function(row) {
-      var gameId = row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEID)];
-      if (gameId) {
-        game2DataMap[gameId] = row;
-      }
-    });
-    
     var game2Row = game2DataMap[testGameId];
     
-    // Log basic game info
-    Logger.log("\n--- GAME INFORMATION ---");
-    Logger.log("Game ID: " + testGameId);
-    Logger.log("Date: " + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.DATE)]);
-    Logger.log("Map: " + (game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)] : 'N/A'));
-    Logger.log("Modded: " + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)]);
-    Logger.log("Winner Camp: " + gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.WINNERCAMP)]);
+    // Process the game exactly as getRawGameDataInNewFormat does
+    var gameId = testGameId;
+    var rawDateCell = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.DATE)];
+    var isoStart = convertDateToISO(rawDateCell);
+    var legacyDateFragment = formatDateForLegacyId(rawDateCell);
     
-    // Get player list
-    var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
-    var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
-    
-    Logger.log("Number of players: " + players.length);
-    Logger.log("Players: " + players.join(', '));
-    
-    // Log role changes for this game
-    Logger.log("\n--- ROLE CHANGES IN CHANGEMENTS SHEET ---");
-    var gameRoleChanges = roleChangesDataRows.filter(function(row) {
-      return row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.GAMEID)] == testGameId;
-    });
-    
-    if (gameRoleChanges.length === 0) {
-      Logger.log("No role changes found for this game in Changements sheet");
-    } else {
-      Logger.log("Found " + gameRoleChanges.length + " role change entries:");
-      gameRoleChanges.forEach(function(row, index) {
-        var player = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.PLAYER)];
-        var newCamp = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.NEWCAMP)];
-        var newMainRole = row[findColumnIndex(roleChangesHeaders, LYCAN_SCHEMA.ROLECHANGES.COLS.NEWMAINROLE)];
-        Logger.log("  [" + (index + 1) + "] Player: " + player + " | New Camp: " + newCamp + " | New Main Role: " + newMainRole);
-      });
+    // Get duration from GAMES2 sheet if available
+    var endDate = null;
+    if (game2Row && isoStart) {
+      var duration = game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.DURATION)];
+      if (duration) {
+        endDate = calculateEndDate(isoStart, duration);
+      }
     }
     
-    // Build and log player stats
-    Logger.log("\n--- PLAYER STATS WITH ROLE CHANGES ---");
-    players.forEach(function(playerName) {
-      var playerDetails = getPlayerDetailsForGame(playerName, testGameId, detailsHeaders, detailsDataRows);
-      var playerStats = buildPlayerStatsFromDetails(playerName, testGameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows);
-      
-      Logger.log("\nPlayer: " + playerName);
-      Logger.log("  MainRoleInitial: " + playerStats.MainRoleInitial);
-      Logger.log("  MainRoleChanges: " + JSON.stringify(playerStats.MainRoleChanges));
-      Logger.log("  Color: " + playerStats.Color);
-      Logger.log("  Power: " + playerStats.Power);
-      Logger.log("  SecondaryRole: " + playerStats.SecondaryRole);
-      Logger.log("  DeathTiming: " + playerStats.DeathTiming);
-      Logger.log("  DeathType: " + playerStats.DeathType);
-      Logger.log("  KillerName: " + playerStats.KillerName);
-      Logger.log("  Victorious: " + playerStats.Victorious);
-      Logger.log("  Votes: " + JSON.stringify(playerStats.Votes));
-    });
+    // Check if GAMEMODID is filled
+    var gameModId = game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEMODID)] : null;
+    var gameRecord;
     
-    Logger.log("\n=== DEBUG COMPLETE ===");
+    if (gameModId && gameModId.trim() !== '') {
+      Logger.log("GAMEMODID is filled: " + gameModId);
+      Logger.log("Generating minimal structure with PlayerVODs...");
+      
+      // Minimal structure - same as in getRawGameDataInNewFormat
+      var playerVODs = {};
+      var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
+      var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
+      
+      players.forEach(function(playerName) {
+        var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
+        var playerId = playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null;
+        
+        if (playerId && playerDetails && playerDetails.vod && playerDetails.vod !== '') {
+          playerVODs[playerId] = playerDetails.vod;
+        }
+      });
+      
+      gameRecord = {
+        Id: gameModId,
+        Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
+        Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
+        LegacyData: {
+          VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
+          PlayerVODs: playerVODs
+        }
+      };
+    } else {
+      Logger.log("GAMEMODID is NOT filled - generating full structure...");
+      
+      // Full structure - same as in getRawGameDataInNewFormat
+      gameRecord = {
+        Id: "Ponce-" + legacyDateFragment + "-" + gameId,
+        StartDate: isoStart,
+        EndDate: endDate,
+        MapName: game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)] : null,
+        HarvestGoal: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.TOTALHARVEST)],
+        HarvestDone: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.HARVEST)],
+        EndTiming: determinateTiming(gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.NBDAYS)]),
+        Version: game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)] : null,
+        Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
+        LegacyData: {
+          VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
+          PlayerVODs: {}
+        },
+        PlayerStats: []
+      };
+      
+      var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
+      var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
+      
+      var allPlayerDetails = [];
+      
+      gameRecord.PlayerStats = players.map(function(playerName) {
+        var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
+        allPlayerDetails.push(playerDetails);
+        
+        var playerId = playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null;
+        
+        if (playerId && playerDetails && playerDetails.vod && playerDetails.vod !== '') {
+          gameRecord.LegacyData.PlayerVODs[playerId] = playerDetails.vod;
+        }
+        
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap);
+      });
+      
+      var allPlayersHaveDeathInfo = allPlayerDetails.every(function(playerDetails) {
+        return playerDetails && playerDetails.typeOfDeath && 
+               playerDetails.typeOfDeath !== '' && 
+               playerDetails.typeOfDeath !== null;
+      });
+      
+      gameRecord.LegacyData.deathInformationFilled = allPlayersHaveDeathInfo;
+    }
+    
+    // Output the result in the same format as the API would return
+    var result = {
+      ModVersion: "Legacy",
+      TotalRecords: 1,
+      GameStats: [gameRecord]
+    };
+    
+    var jsonOutput = JSON.stringify(result, null, 2);
+    Logger.log("\n=== EXPORTED JSON ===");
+    Logger.log(jsonOutput);
+    Logger.log("\n=== Export size: " + jsonOutput.length + " characters ===");
+    
+    return result;
     
   } catch (error) {
     Logger.log("ERROR in debug_getGameById: " + error.message);

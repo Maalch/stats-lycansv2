@@ -187,24 +187,28 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   
   const gamesByIdMap = new Map();
   let legacyCount = 0;
+  let legacyMetadataOnlyCount = 0;
   let awsCount = 0;
+  let awsFilteredCount = 0;
   let mergedCount = 0;
-  let filteredCount = 0;
   
-  // Add legacy games to map first (excluding games without EndDate)
+  // Add legacy games to map first (including games without EndDate for merging LegacyData)
   if (legacyGameLog && legacyGameLog.GameStats && Array.isArray(legacyGameLog.GameStats)) {
     legacyGameLog.GameStats.forEach(game => {
-      if (!game.EndDate) {
-        filteredCount++;
-        return;
-      }
+      // Add all games to map, even those without EndDate, so LegacyData can be merged
       gamesByIdMap.set(game.Id, {
         ...game,
         source: 'legacy'
       });
+      
+      // Count separately: complete games vs metadata-only games
+      if (game.EndDate) {
+        legacyCount++;
+      } else {
+        legacyMetadataOnlyCount++;
+      }
     });
-    legacyCount = legacyGameLog.GameStats.length - filteredCount;
-    console.log(`✓ Added ${legacyCount} legacy games to map`);
+    console.log(`✓ Added ${gamesByIdMap.size} legacy games to map (${legacyCount} complete, ${legacyMetadataOnlyCount} metadata-only)`);
   }
   
   // Add AWS games, merging with legacy if same ID exists (excluding games without EndDate)
@@ -212,7 +216,7 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(awsGame => {
         if (!awsGame.EndDate) {
-          filteredCount++;
+          awsFilteredCount++;
           return;
         }
         const gameId = awsGame.Id;
