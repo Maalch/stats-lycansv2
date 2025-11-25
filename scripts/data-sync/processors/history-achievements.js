@@ -31,7 +31,7 @@ export function processHistoryAchievements(mapStats, playerId, suffix) {
         villageWinRateRank.value,
         byVillageWinRate.length,
         {
-          tab: 'players',
+          tab: 'rankings',
           subTab: 'playersGeneral',
           mapFilter: 'village'
         },
@@ -55,7 +55,7 @@ export function processHistoryAchievements(mapStats, playerId, suffix) {
         chateauWinRateRank.value,
         byChateauWinRate.length,
         {
-          tab: 'players',
+          tab: 'rankings',
           subTab: 'playersGeneral',
           mapFilter: 'chateau'
         },

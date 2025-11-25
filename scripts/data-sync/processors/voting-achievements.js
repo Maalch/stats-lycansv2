@@ -37,7 +37,7 @@ export function processVotingAchievements(votingStats, playerId, suffix) {
         aggressivenessRank.value,
         byAggressiveness.length,
         {
-          tab: 'players',
+          tab: 'rankings',
           subTab: 'votingStats'
         },
         'voting'
@@ -69,7 +69,7 @@ export function processVotingAchievements(votingStats, playerId, suffix) {
         accuracyRank.value,
         byAccuracy.length,
         {
-          tab: 'players',
+          tab: 'rankings',
           subTab: 'votingStats'
         },
         'voting'

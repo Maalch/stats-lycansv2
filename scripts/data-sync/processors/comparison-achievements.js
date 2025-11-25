@@ -159,7 +159,7 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
       'good',
       bestMate.sameCampWinRate,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'comparison',
         chartSection: 'same-camp-games'
       }
@@ -185,7 +185,7 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
         'bad',
         worstMate.sameCampWinRate,
         {
-          tab: 'players',
+          tab: 'rankings',
           subTab: 'comparison',
           chartSection: 'same-camp-games'
         }
@@ -207,7 +207,7 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
       'good',
       bestMatchup.opposingWinRate,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'comparison',
         chartSection: 'opposing-games'
       }
@@ -233,7 +233,7 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
         'bad',
         worstMatchup.opposingWinRate,
         {
-          tab: 'players',
+          tab: 'rankings',
           subTab: 'comparison',
           chartSection: 'opposing-games'
         }

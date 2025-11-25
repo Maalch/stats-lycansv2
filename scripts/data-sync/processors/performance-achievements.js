@@ -194,7 +194,7 @@ function createPerformanceAchievement(id, title, description, type, rank, value,
     value,
     totalRanked,
     redirectTo: redirectTo || {
-      tab: 'players',
+      tab: 'rankings',
       subTab: 'playersGeneral'
     }
   };
@@ -227,7 +227,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       overallPerformanceRank.performance,
       topOverallPerformers.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'campPerformance',
         chartSection: 'hall-of-fame'
       },
@@ -248,7 +248,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       villageoisRank.value,
       topVillageoisPerformers.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'campPerformance',
         chartSection: 'camp-villageois'
       },
@@ -269,7 +269,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       loupRank.value,
       topLoupPerformers.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'campPerformance',
         chartSection: 'camp-loup'
       },
@@ -290,7 +290,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       idiotRank.value,
       topIdiotPerformers.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'campPerformance',
         chartSection: 'camp-idiot'
       },
@@ -311,7 +311,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       amoureuxRank.value,
       topAmoureuxPerformers.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'campPerformance',
         chartSection: 'camp-amoureux'
       },
@@ -332,7 +332,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       soloRank.value,
       topSoloPerformers.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'campPerformance',
         chartSection: 'solo-roles'
       },

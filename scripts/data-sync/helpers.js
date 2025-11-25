@@ -92,7 +92,7 @@ export function createAchievement(id, title, description, type, rank, value, tot
     value,
     totalRanked,
     redirectTo: redirectTo || {
-      tab: 'players',
+      tab: 'rankings',
       subTab: 'playersGeneral'
     }
   };
@@ -148,7 +148,7 @@ export function createComparisonAchievement(id, title, description, type, value,
     category: 'comparison',
     value,
     redirectTo: redirectTo || {
-      tab: 'players',
+      tab: 'rankings',
       subTab: 'playerComparison'
     }
   };
@@ -177,7 +177,7 @@ export function createKillsAchievement(id, title, description, type, rank, value
     value,
     totalRanked,
     redirectTo: redirectTo || {
-      tab: 'players',
+      tab: 'rankings',
       subTab: 'deathStats'
     }
   };
@@ -208,7 +208,7 @@ export function createPerformanceAchievement(id, title, description, type, rank,
     value,
     totalRanked,
     redirectTo: redirectTo || {
-      tab: 'players',
+      tab: 'rankings',
       subTab: 'playersGeneral'
     }
   };

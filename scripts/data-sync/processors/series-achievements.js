@@ -83,7 +83,7 @@ export function processSeriesAchievements(seriesData, playerId, suffix) {
       villageoisRank.value,
       topVillageoisSeries.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'series',
         chartSection: 'villageois-series'
       }
@@ -103,7 +103,7 @@ export function processSeriesAchievements(seriesData, playerId, suffix) {
       loupRank.value,
       topLoupSeries.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'series',
         chartSection: 'loup-series'
       }
@@ -123,7 +123,7 @@ export function processSeriesAchievements(seriesData, playerId, suffix) {
       winRank.value,
       topWinSeries.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'series',
         chartSection: 'win-series'
       }
@@ -143,7 +143,7 @@ export function processSeriesAchievements(seriesData, playerId, suffix) {
       lossRank.value,
       topLossSeries.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'series',
         chartSection: 'loss-series'
       }

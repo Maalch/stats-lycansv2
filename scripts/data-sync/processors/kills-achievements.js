@@ -197,7 +197,7 @@ export function processKillsAchievements(deathStats, hunterStats, playerId, suff
       killerRank.value,
       topKillers.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'deathStats',
         chartSection: 'killers'
       }
@@ -217,7 +217,7 @@ export function processKillsAchievements(deathStats, hunterStats, playerId, suff
       parseFloat(killerAverageRank.stats.averageKillsPerGame.toFixed(2)),
       topKillersAverage.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'deathStats',
         chartSection: 'killers-average'
       }
@@ -237,7 +237,7 @@ export function processKillsAchievements(deathStats, hunterStats, playerId, suff
       parseFloat(survivalRank.value.toFixed(2)),
       topSurvivors.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'deathStats',
         chartSection: 'survivors-average'
       }
@@ -258,7 +258,7 @@ export function processKillsAchievements(deathStats, hunterStats, playerId, suff
         parseFloat(goodHunterRank.value.toFixed(2)),
         topGoodHunters.length,
         {
-          tab: 'players',
+          tab: 'rankings',
           subTab: 'deathStats',
           chartSection: 'hunters-good'
         }
@@ -281,7 +281,7 @@ export function processKillsAchievements(deathStats, hunterStats, playerId, suff
       deathRank.value,
       topDeaths.length,
       {
-        tab: 'players',
+        tab: 'rankings',
         subTab: 'deathStats',
         chartSection: 'deaths'
       }
@@ -302,7 +302,7 @@ export function processKillsAchievements(deathStats, hunterStats, playerId, suff
         parseFloat(badHunterRank.value.toFixed(2)),
         topBadHunters.length,
         {
-          tab: 'players',
+          tab: 'rankings',
           subTab: 'deathStats',
           chartSection: 'hunters-bad'
         }
