@@ -537,13 +537,27 @@ function getRawGameDataInNewFormat() {
       // Check if GAMEMODID is filled - if so, return minimal structure only
       var gameModId = game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEMODID)] : null;
       if (gameModId && gameModId.trim() !== '') {
+        // Still collect PlayerVODs even for minimal structure
+        var playerVODs = {};
+        var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
+        var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
+        
+        players.forEach(function(playerName) {
+          var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
+          var playerId = playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null;
+          
+          if (playerId && playerDetails && playerDetails.vod && playerDetails.vod !== '') {
+            playerVODs[playerId] = playerDetails.vod;
+          }
+        });
+        
         return {
           Id: gameModId,
           Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
           Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
           LegacyData: {
             VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-            PlayerVODs: {}
+            PlayerVODs: playerVODs
           }
         };
       }
