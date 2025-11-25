@@ -1,0 +1,1 @@
+import{u as e}from"./baseStatsHook-DTlldUME.js";import{d as s,e as u,f as i}from"./deathStatisticsUtils-a6AcbP2-.js";function m(t,a){return e(r=>s(r,t,a))}function c(){return e(t=>u(t))}function p(t){return e(a=>i(a))}export{m as a,p as b,c as u};

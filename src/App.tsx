@@ -36,7 +36,7 @@ const BRWinRateChart = lazy(() => import('./components/brstats/BRWinRateChart').
 const BRKillsStatsChart = lazy(() => import('./components/brstats/BRKillsStatsChart').then(m => ({ default: m.BRKillsStatsChart })));
 const BRMiniChart = lazy(() => import('./components/brstats/BRMiniChart').then(m => ({ default: m.BRMiniChart })));
 
-const DeathLocationHeatmap = lazy(() => import('./components/generalstats/deathStats/DeathLocationHeatmap').then(m => ({ default: m.DeathLocationHeatmap })));
+const DeathLocationView = lazy(() => import('./components/generalstats/deathStats/DeathLocationView').then(m => ({ default: m.DeathLocationView })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
 
@@ -317,7 +317,11 @@ function MainApp() {
               <SettingsIndicator />
               <div className="lycans-dashboard-content">
                 <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                  <DeathLocationHeatmap />
+                  <DeathLocationView 
+                    selectedCamp="Tous les camps"
+                    availableDeathTypes={[]}
+                    deathTypeColors={{} as Record<string, string>}
+                  />
                 </Suspense>
               </div>
             </div>

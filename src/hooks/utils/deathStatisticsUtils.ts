@@ -835,8 +835,6 @@ export function computeDeathLocationStats(
   const deathLocations: DeathLocationData[] = [];
 
   gameData
-    // Only include games with death position data (filter legacy games)
-    .filter(game => !game.LegacyData || game.LegacyData.deathInformationFilled === true)
     .forEach(game => {
       game.PlayerStats
         .filter(player => player.DeathPosition !== null)
@@ -883,7 +881,6 @@ export function getAvailableMapsWithDeathData(gameData: GameLogEntry[]): string[
   const mapsSet = new Set<string>();
 
   gameData
-    .filter(game => !game.LegacyData || game.LegacyData.deathInformationFilled === true)
     .forEach(game => {
       const hasDeathPosition = game.PlayerStats.some(player => player.DeathPosition !== null);
       if (hasDeathPosition && game.MapName) {
