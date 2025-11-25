@@ -56,11 +56,6 @@ function computePlayerRoleStats(
       return;
     }
 
-    // Skip games where death information is not filled
-    if (game.LegacyData && game.LegacyData.deathInformationFilled !== true) {
-      return;
-    }
-
     // Find the player in this game's PlayerStats by ID or username
     const playerStat = game.PlayerStats.find(
       player => getPlayerId(player) === playerIdentifier || 
@@ -201,13 +196,8 @@ function computePlayerRoleStats(
 
 
   // Count total games (including non-modded) for Chasseur and Alchimiste
-  // But still respect deathInformationFilled filter for consistency
   const chasseurAlchimisteTotal = new Map<string, number>();
   gameData.forEach((game) => {
-    // Skip games without proper death information
-    if (game.LegacyData && game.LegacyData.deathInformationFilled !== true) {
-      return;
-    }
 
     const playerStat = game.PlayerStats.find(
       player => getPlayerId(player) === playerIdentifier || 

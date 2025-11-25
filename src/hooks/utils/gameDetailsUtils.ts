@@ -343,11 +343,6 @@ export function filterByPowerFromGameLog(games: GameLogEntry[], selectedPower: s
       return false;
     }
 
-    // Skip games where death information is not filled (same as RolesStatsChart)
-    if (game.LegacyData && game.LegacyData.deathInformationFilled !== true) {
-      return false;
-    }
-
     // Check if any player (or specific player) in the game had the specified power
     return game.PlayerStats.some(player => {
       // Skip players with unknown role (same as RolesStatsChart)
@@ -399,9 +394,6 @@ export function filterBySecondaryRoleFromGameLog(games: GameLogEntry[], selected
   return games.filter(game => {
     // Only modded games
     if (!game.Modded) return false;
-    
-    // Only games with complete death information
-    if (!game.LegacyData || game.LegacyData.deathInformationFilled !== true) return false;
     
     // Check if any player (or specific player) in the game has the selected secondary role
     return game.PlayerStats.some(player => {

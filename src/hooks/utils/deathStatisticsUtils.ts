@@ -44,13 +44,8 @@ function normalizeDeathTypeForStats(deathType: DeathType | null): DeathType | nu
 export function getAvailableCamps(gameData: GameLogEntry[]): string[] {
   const campsSet = new Set<string>();
   
-  // Filter games to only include those with complete death information
-  // Include games where LegacyData.deathInformationFilled is true OR where LegacyData is not present
-  const filteredGameData = gameData.filter(game => 
-    !game.LegacyData || game.LegacyData.deathInformationFilled === true
-  );
   
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     game.PlayerStats.forEach(player => {
         // Use MainRoleInitial for camp detection to match the new role detection logic
         const camp = getPlayerCampFromRole(player.MainRoleInitial, {
@@ -404,13 +399,8 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
     return null;
   }
 
-  // Filter games to only include those with complete death information
-  // Include games where LegacyData.deathInformationFilled is true OR where LegacyData is not present
-  const filteredGameData = gameData.filter(game => 
-    !game.LegacyData || game.LegacyData.deathInformationFilled === true
-  );
 
-  if (filteredGameData.length === 0) {
+  if (gameData.length === 0) {
     return null;
   }
 
@@ -429,7 +419,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   const playerGameCountsById: Record<string, number> = {};
   const displayNameById: Record<string, string> = {};
   
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     const deaths = extractDeathsFromGame(game, campFilter);
     deaths.forEach(death => {
       allDeaths.push({
@@ -466,7 +456,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   });
 
   const totalDeaths = allDeaths.length;
-  const totalGames = filteredGameData.length;
+  const totalGames = gameData.length;
   const averageDeathsPerGame = totalGames > 0 ? totalDeaths / totalGames : 0;
 
 
@@ -488,7 +478,7 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
   const killerCountsById: Record<string, { kills: number; victims: Set<string>; killsByDeathType: Record<DeathType, number> }> = {};
   
   // Extract all kills from PlayersKilled arrays
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     const kills = extractKillsFromGame(game, campFilter, victimCampFilter);
     kills.forEach(kill => {
       displayNameById[kill.killerId] = kill.killerName; // Update latest
@@ -637,10 +627,6 @@ export interface HunterStatistics {
  * Tracks kills made by hunters (Chasseur role) and categorizes them
  */
 export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?: string): HunterStatistics {
-  // Filter games to only include those with complete death information
-  const filteredGameData = gameData.filter(game => 
-    !game.LegacyData || game.LegacyData.deathInformationFilled === true
-  );
 
   const hunterKillsMap: Record<string, {
     kills: DeathType[];
@@ -653,7 +639,7 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
   // Track latest display names for hunter IDs
   const displayNameById: Record<string, string> = {};
 
-  const totalGames = filteredGameData.length;
+  const totalGames = gameData.length;
 
   // Hunter-related death types
   const hunterDeathTypes: DeathType[] = [
@@ -663,7 +649,7 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
   ];
 
   // Process each game
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     // Track which players were hunters in this game (by ID)
     const huntersInGame = new Set<string>();
     

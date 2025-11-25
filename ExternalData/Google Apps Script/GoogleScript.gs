@@ -306,8 +306,6 @@ function debug_getGameById() {
                playerDetails.typeOfDeath !== '' && 
                playerDetails.typeOfDeath !== null;
       });
-      
-      gameRecord.LegacyData.deathInformationFilled = allPlayersHaveDeathInfo;
     }
     
     // Output the result in the same format as the API would return
@@ -657,12 +655,8 @@ function getRawGameDataInNewFormat() {
       var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
       var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
       
-      // Collect player details for reuse in deathInformationFilled check
-      var allPlayerDetails = [];
-      
       gameRecord.PlayerStats = players.map(function(playerName) {
         var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
-        allPlayerDetails.push(playerDetails); // Store for later use
         
         // Get player ID for VOD mapping
         var playerId = playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null;
@@ -673,17 +667,7 @@ function getRawGameDataInNewFormat() {
         }
         
         return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap);
-      });
-      
-      // Check if death information is filled for all players using collected playerDetails
-      var allPlayersHaveDeathInfo = allPlayerDetails.every(function(playerDetails) {
-        return playerDetails && playerDetails.typeOfDeath && 
-               playerDetails.typeOfDeath !== '' && 
-               playerDetails.typeOfDeath !== null;
-      });
-      
-      // Add deathInformationFilled to LegacyData
-      gameRecord.LegacyData.deathInformationFilled = allPlayersHaveDeathInfo;
+      });   
       
       return gameRecord;
     });

@@ -359,9 +359,8 @@ deathStats.playerDeathStats.forEach((player) => {
 
 ### Common Data Filtering Pitfalls
 1. **Camp Filtering:** Use `getPlayerCampFromRole(player.MainRoleInitial)` consistently - not `SecondaryRole`
-2. **Death Information:** Filter games with `!game.LegacyData || game.LegacyData.deathInformationFilled === true` before processing death stats
-3. **Game Counting:** Apply the same camp filter logic for both death counting and game counting to avoid rate calculation errors
-4. **Player Lookup:** Always try Steam ID lookup first, then fall back to name matching for compatibility with both data sources
+2. **Game Counting:** Apply the same camp filter logic for both death counting and game counting to avoid rate calculation errors
+3. **Player Lookup:** Always try Steam ID lookup first, then fall back to name matching for compatibility with both data sources
 
 ## Achievements System Architecture
 

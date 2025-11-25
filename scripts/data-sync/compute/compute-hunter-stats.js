@@ -38,14 +38,10 @@ function compareVersion(version, targetVersion) {
  * @returns {Object} - Hunter statistics object
  */
 export function computeHunterStatistics(gameData, selectedCamp) {
-  // Filter games to only include those with complete death information
-  const filteredGameData = gameData.filter(game => 
-    !game.LegacyData || game.LegacyData.deathInformationFilled === true
-  );
 
   const hunterKillsMap = {};
   const displayNameById = {};
-  const totalGames = filteredGameData.length;
+  const totalGames = gameData.length;
 
   // Hunter-related death types
   const hunterDeathTypes = [
@@ -55,7 +51,7 @@ export function computeHunterStatistics(gameData, selectedCamp) {
   ];
 
   // Process each game
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     // Track which players were hunters in this game (by ID)
     const huntersInGame = new Set();
     

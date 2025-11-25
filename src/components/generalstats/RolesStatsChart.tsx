@@ -42,11 +42,6 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
       return;
     }
 
-    // Skip games where death information is not filled
-    if (game.LegacyData && game.LegacyData.deathInformationFilled !== true) {
-      return;
-    }
-
     game.PlayerStats.forEach((playerStat) => {
       // Skip games where the player's role is "Inconnu"
       if (playerStat.MainRoleInitial === 'Inconnu') {

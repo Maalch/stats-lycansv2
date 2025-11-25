@@ -56,15 +56,6 @@ export function computeSurvivalStatistics(gameData: GameLogEntry[], campFilter?:
     return null;
   }
 
-  // Filter games to only include those with complete death information
-  const filteredGameData = gameData.filter(game => 
-    !game.LegacyData || game.LegacyData.deathInformationFilled === true
-  );
-
-  if (filteredGameData.length === 0) {
-    return null;
-  }
-
   // Track player survival data
   const playerSurvivalMap: Record<string, PlayerSurvivalStats> = {};
   
@@ -75,7 +66,7 @@ export function computeSurvivalStatistics(gameData: GameLogEntry[], campFilter?:
     survivorsOnDay: number;
   }> = {};
 
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     // Determine the maximum day reached in this game (from EndTiming)
     let maxDayInGame = 1; // Default to day 1
     if (game.EndTiming) {
@@ -204,7 +195,7 @@ export function computeSurvivalStatistics(gameData: GameLogEntry[], campFilter?:
     .sort((a, b) => a.dayNumber - b.dayNumber);
 
   return {
-    totalGames: filteredGameData.length,
+    totalGames: gameData.length,
     totalPlayersAnalyzed: playerSurvivalStats.length,
     playerSurvivalStats,
     dayStats

@@ -80,20 +80,11 @@ export function computeDeathStatistics(gameData) {
     return null;
   }
 
-  // Filter games to only include those with complete death information
-  const filteredGameData = gameData.filter(game => 
-    !game.LegacyData || game.LegacyData.deathInformationFilled === true
-  );
-
-  if (filteredGameData.length === 0) {
-    return null;
-  }
-
   // Extract all deaths and track player game counts
   const allDeaths = [];
   const playerGameCounts = {};
   
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     const deaths = extractDeathsFromGame(game);
     deaths.forEach(death => {
       allDeaths.push({
@@ -110,12 +101,12 @@ export function computeDeathStatistics(gameData) {
   });
 
   const totalDeaths = allDeaths.length;
-  const totalGames = filteredGameData.length;
+  const totalGames = gameData.length;
 
   // Calculate killer statistics using death information
   const killerCounts = {};
   
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     const kills = extractKillsFromGame(game);
     kills.forEach(kill => {
       if (!killerCounts[kill.killerName]) {
@@ -137,7 +128,7 @@ export function computeDeathStatistics(gameData) {
 
   // Map killer names to player IDs for game count lookup
   const killerNameToId = new Map();
-  filteredGameData.forEach(game => {
+  gameData.forEach(game => {
     game.PlayerStats.forEach(player => {
       killerNameToId.set(player.Username, getPlayerId(player));
     });
