@@ -51,7 +51,7 @@ function findTopSoloRolePerformers(gameData, minGames) {
 
     game.PlayerStats.forEach(player => {
       const roleName = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
-      const camp = getPlayerCampFromRole(roleName);
+      const camp = getPlayerCampFromRole(roleName, { regroupWolfSubRoles: true });
       const playerId = getPlayerId(player);
       const playerName = player.Username;
       const won = player.Victorious;
