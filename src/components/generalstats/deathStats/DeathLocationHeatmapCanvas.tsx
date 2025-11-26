@@ -2,7 +2,7 @@ import { useEffect, useRef, useMemo } from 'react';
 import { contourDensity } from 'd3-contour';
 import { scaleLinear } from 'd3-scale';
 import { interpolateYlOrRd } from 'd3-scale-chromatic';
-import type { DeathLocationData } from '../../../hooks/utils/deathStatisticsUtils';
+import type { DeathLocationData } from '../../../hooks/utils/deathLocationUtils';
 
 interface DeathLocationHeatmapCanvasProps {
   deathLocations: DeathLocationData[];

@@ -2,7 +2,7 @@ import { useEffect, useRef, useMemo, useState } from 'react';
 import { contourDensity } from 'd3-contour';
 import { scaleLinear } from 'd3-scale';
 import { interpolateYlOrRd } from 'd3-scale-chromatic';
-import type { DeathLocationData } from '../../../hooks/utils/deathStatisticsUtils';
+import type { DeathLocationData } from '../../../hooks/utils/deathLocationUtils';
 import { useFilteredGameLogData } from '../../../hooks/useCombinedRawData';
 import { useNavigation } from '../../../context/NavigationContext';
 import { getAllDeathTypes } from '../../../hooks/utils/deathStatisticsUtils';
