@@ -28,18 +28,19 @@ export function DeathLocationHeatmapCanvas({
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Create scale functions for coordinate transformation
-  const xScale = useMemo(() => 
-    scaleLinear()
-      .domain(xDomain)
-      .range([0, width]),
-    [xDomain, width]
-  );
-
+  // Z is horizontal (X-axis), X is vertical (Y-axis)
   const zScale = useMemo(() => 
     scaleLinear()
       .domain(zDomain)
+      .range([0, width]),
+    [zDomain, width]
+  );
+
+  const xScale = useMemo(() => 
+    scaleLinear()
+      .domain(xDomain)
       .range([height, 0]), // Inverted for canvas coordinates
-    [zDomain, height]
+    [xDomain, height]
   );
 
   // Calculate contour density
@@ -47,8 +48,8 @@ export function DeathLocationHeatmapCanvas({
     if (deathLocations.length === 0) return [];
 
     const densityData = contourDensity<DeathLocationData>()
-      .x(d => xScale(d.x))
-      .y(d => zScale(d.z))
+      .x(d => zScale(d.z))
+      .y(d => xScale(d.x))
       .size([width, height])
       .bandwidth(bandwidth)
       .thresholds(15) // Number of contour levels
@@ -119,11 +120,11 @@ export function DeathLocationHeatmapCanvas({
 
     // Draw small dots for each death location
     deathLocations.forEach((death) => {
-      const x = xScale(death.x);
       const z = zScale(death.z);
+      const x = xScale(death.x);
 
       ctx.beginPath();
-      ctx.arc(x, z, 2, 0, 2 * Math.PI);
+      ctx.arc(z, x, 2, 0, 2 * Math.PI);
       ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
       ctx.fill();
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
@@ -137,15 +138,15 @@ export function DeathLocationHeatmapCanvas({
     if (!onRegionClick || !containerRef.current) return;
 
     const rect = containerRef.current.getBoundingClientRect();
-    const clickX = event.clientX - rect.left;
-    const clickZ = event.clientY - rect.top;
+    const clickZ = event.clientX - rect.left;
+    const clickX = event.clientY - rect.top;
 
     // Find deaths within a radius of the click
     const radius = 30; // pixels
     const nearbyDeaths = deathLocations.filter((death) => {
-      const x = xScale(death.x);
       const z = zScale(death.z);
-      const distance = Math.sqrt(Math.pow(x - clickX, 2) + Math.pow(z - clickZ, 2));
+      const x = xScale(death.x);
+      const distance = Math.sqrt(Math.pow(z - clickZ, 2) + Math.pow(x - clickX, 2));
       return distance <= radius;
     });
 
@@ -159,15 +160,15 @@ export function DeathLocationHeatmapCanvas({
     if (!containerRef.current) return;
 
     const rect = containerRef.current.getBoundingClientRect();
-    const hoverX = event.clientX - rect.left;
-    const hoverZ = event.clientY - rect.top;
+    const hoverZ = event.clientX - rect.left;
+    const hoverX = event.clientY - rect.top;
 
     // Find deaths within a small radius
     const radius = 20;
     const nearbyDeaths = deathLocations.filter((death) => {
-      const x = xScale(death.x);
       const z = zScale(death.z);
-      const distance = Math.sqrt(Math.pow(x - hoverX, 2) + Math.pow(z - hoverZ, 2));
+      const x = xScale(death.x);
+      const distance = Math.sqrt(Math.pow(z - hoverZ, 2) + Math.pow(x - hoverX, 2));
       return distance <= radius;
     });
 
@@ -227,7 +228,7 @@ export function DeathLocationHeatmapCanvas({
         fontSize: '0.9rem',
         fontWeight: 'bold'
       }}>
-        Position X
+        Position Z
       </div>
       <div style={{
         position: 'absolute',
@@ -238,7 +239,7 @@ export function DeathLocationHeatmapCanvas({
         fontSize: '0.9rem',
         fontWeight: 'bold'
       }}>
-        Position Z
+        Position X
       </div>
 
       {/* Axis tick marks and labels */}
@@ -252,22 +253,22 @@ export function DeathLocationHeatmapCanvas({
           pointerEvents: 'none'
         }}
       >
-        {/* X-axis ticks */}
+        {/* Z-axis ticks (horizontal) */}
         {[0, 0.25, 0.5, 0.75, 1].map((ratio) => {
-          const x = width * ratio;
-          const value = xDomain[0] + (xDomain[1] - xDomain[0]) * ratio;
+          const z = width * ratio;
+          const value = zDomain[0] + (zDomain[1] - zDomain[0]) * ratio;
           return (
-            <g key={`x-${ratio}`}>
+            <g key={`z-${ratio}`}>
               <line
-                x1={x}
+                x1={z}
                 y1={height}
-                x2={x}
+                x2={z}
                 y2={height - 5}
                 stroke="var(--text-secondary)"
                 strokeWidth={1}
               />
               <text
-                x={x}
+                x={z}
                 y={height - 10}
                 textAnchor="middle"
                 fill="var(--text-secondary)"
@@ -279,23 +280,23 @@ export function DeathLocationHeatmapCanvas({
           );
         })}
 
-        {/* Z-axis ticks */}
+        {/* X-axis ticks (vertical) */}
         {[0, 0.25, 0.5, 0.75, 1].map((ratio) => {
-          const z = height * (1 - ratio); // Inverted
-          const value = zDomain[0] + (zDomain[1] - zDomain[0]) * ratio;
+          const x = height * (1 - ratio); // Inverted
+          const value = xDomain[0] + (xDomain[1] - xDomain[0]) * ratio;
           return (
-            <g key={`z-${ratio}`}>
+            <g key={`x-${ratio}`}>
               <line
                 x1={0}
-                y1={z}
+                y1={x}
                 x2={5}
-                y2={z}
+                y2={x}
                 stroke="var(--text-secondary)"
                 strokeWidth={1}
               />
               <text
                 x={10}
-                y={z}
+                y={x}
                 dominantBaseline="middle"
                 fill="var(--text-secondary)"
                 fontSize="0.75rem"

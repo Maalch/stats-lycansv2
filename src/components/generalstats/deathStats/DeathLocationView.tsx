@@ -251,6 +251,7 @@ export function DeathLocationView({
   };
 
   // Calculate axis domains with padding
+  // Z is horizontal (X-axis), X is vertical (Y-axis)
   const { xDomain, zDomain } = useMemo(() => {
     if (aggregatedLocationData.length === 0) {
       return { xDomain: [0, 100], zDomain: [0, 100] };
@@ -411,32 +412,32 @@ export function DeathLocationView({
                 <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
                   <XAxis 
-                    dataKey="x" 
+                    dataKey="z" 
                     type="number"
-                    name="Position X"
+                    name="Position Z"
                     label={{ 
-                      value: 'Position X', 
+                      value: 'Position Z', 
                       position: 'bottom',
                       offset: 10,
                       style: { fill: 'var(--text-secondary)' }
                     }}
-                    domain={xDomain}
+                    domain={zDomain}
                     stroke="var(--text-secondary)"
                     tick={{ fill: 'var(--text-secondary)' }}
                     tickFormatter={(value) => Math.round(value).toString()}
                   />
                   <YAxis 
-                    dataKey="z"
+                    dataKey="x"
                     type="number"
-                    name="Position Z"
+                    name="Position X"
                     label={{ 
-                      value: 'Position Z', 
+                      value: 'Position X', 
                       angle: -90, 
                       position: 'left',
                       offset: 20,
                       style: { fill: 'var(--text-secondary)' }
                     }}
-                    domain={zDomain}
+                    domain={xDomain}
                     stroke="var(--text-secondary)"
                     tick={{ fill: 'var(--text-secondary)' }}
                     tickFormatter={(value) => Math.round(value).toString()}
@@ -559,7 +560,7 @@ export function DeathLocationView({
           <strong>À propos de cette visualisation :</strong>
         </p>
         <ul style={{ marginTop: '0.5rem', paddingLeft: '1.5rem' }}>
-          <li>Les positions sont basées sur les coordonnées X et Z (vue 2D de la carte)</li>
+          <li>Les positions sont basées sur les coordonnées Z (horizontal) et X (vertical) - vue 2D de la carte</li>
           {viewMode === 'scatter' ? (
             <>
               <li>Chaque point représente la mort d'un joueur à un endroit précis</li>

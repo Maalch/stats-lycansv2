@@ -82,10 +82,10 @@ export function computeDeathLocationStats(
               let adjustedZ = player.DeathPosition.z;
               if (game.MapName === 'Village') {
                 adjustedX = (adjustedX -VILLAGE_OFFSETS.x) * VILLAGE_OFFSETS.multiplier;
-                adjustedZ = (adjustedZ - VILLAGE_OFFSETS.z) * VILLAGE_OFFSETS.multiplier;
+                adjustedZ = ((adjustedZ - VILLAGE_OFFSETS.z) * VILLAGE_OFFSETS.multiplier) * -1;
               } else if (game.MapName === 'Château') {
                 adjustedX = (adjustedX - CHATEAU_OFFSETS.x) * CHATEAU_OFFSETS.multiplier;
-                adjustedZ = (adjustedZ - CHATEAU_OFFSETS.z) * CHATEAU_OFFSETS.multiplier;
+                adjustedZ = ((adjustedZ - CHATEAU_OFFSETS.z) * CHATEAU_OFFSETS.multiplier) * -1;
               }
 
               deathLocations.push({
