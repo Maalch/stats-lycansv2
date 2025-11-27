@@ -556,6 +556,7 @@ export function DeathLocationView({
                     onMouseEnter={(data) => setHoveredDeath(data as DeathLocationData)}
                     onMouseLeave={() => setHoveredDeath(null)}
                     style={{ cursor: 'pointer' }}
+                    isAnimationActive={false}
                   >
                     {aggregatedLocationData.map((entry, index) => {
                       // Check if any death in this cluster belongs to the highlighted player
@@ -639,7 +640,8 @@ export function DeathLocationView({
           {viewMode === 'scatter' ? (
             <>
               <li>Les morts proches sont regroupées en un seul point - ajustez le curseur "Regroupement" pour contrôler la distance</li>
-              <li>La couleur indique le type de mort dominant dans le groupe</li>
+              <li>Les points regroupés ont une petite bordure blanche</li>
+              <li>La couleur indique le type de mort dominant dans ce regroupement</li>
               <li>Survolez un point pour voir tous les joueurs, types de mort et parties concernés</li>
               <li>Le joueur sélectionné est affiché en {' '}
                 <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>

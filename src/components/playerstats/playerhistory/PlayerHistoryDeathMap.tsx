@@ -500,7 +500,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
         {/* Cluster Radius */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <label htmlFor="cluster-slider" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-            Groupement :
+            Regroupement :
           </label>
           <input
             id="cluster-slider"
@@ -513,7 +513,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
             style={{ width: '80px' }}
           />
           <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', minWidth: '60px' }}>
-            {clusterRadius === 0 ? 'Aucun' : `${clusterRadius}u`}
+            {clusterRadius === 0 ? 'Aucun' : `${clusterRadius} unité${clusterRadius > 1 ? 's' : ''}`}
           </span>
         </div>
       </div>
@@ -609,6 +609,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                   data={clusteredData}
                   onClick={(data) => handleLocationClick(data)}
                   style={{ cursor: 'pointer' }}
+                  isAnimationActive={false}
                 >
                   {clusteredData.map((entry, index) => {
                     // Size scales with count
@@ -662,6 +663,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
           Les couleurs indiquent le type de mort. Cliquez sur un point pour voir les détails de la partie.
         </p>
         <p style={{ marginTop: '0.5rem' }}>
+          Les points regroupés ont une petite bordure blanche.<br/>
           <strong>💀 Morts:</strong> Où le joueur a été éliminé<br/>
           <strong>⚔️ Kills:</strong> Où le joueur a éliminé d'autres joueurs
         </p>
