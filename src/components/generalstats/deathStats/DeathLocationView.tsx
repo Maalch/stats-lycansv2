@@ -7,7 +7,7 @@ import { useFilteredGameLogData } from '../../../hooks/useCombinedRawData';
 import { computeDeathLocationStats, getAvailableMapsWithDeathData, getMapConfig } from '../../../hooks/utils/deathLocationUtils';
 import type { DeathLocationData } from '../../../hooks/utils/deathLocationUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
-import { getDeathTypeLabel } from '../../../types/deathTypes';
+import { type DeathType, getDeathTypeLabel } from '../../../types/deathTypes';
 import { DeathLocationHeatmapCanvas } from './DeathLocationHeatmapCanvas';
 
 interface DeathLocationViewProps {
@@ -28,6 +28,7 @@ export function DeathLocationView({
   const [selectedDeathType, setSelectedDeathType] = useState<string>('all');
   const [hoveredDeath, setHoveredDeath] = useState<DeathLocationData | null>(null);
   const [viewMode, setViewMode] = useState<'scatter' | 'heatmap'>('scatter');
+  const [clusterRadius, setClusterRadius] = useState<number>(20); // Clustering radius in game units
 
   // Get available maps with death position data, sorted by number of deaths (descending)
   const availableMaps = useMemo(() => {
@@ -77,30 +78,76 @@ export function DeathLocationView({
   }, [gameLogData, selectedCamp, selectedMap, selectedDeathType]);
 
   // Group deaths by coordinates to show density and aggregate data
+  // Uses spatial clustering to group nearby deaths together
   const locationData = useMemo(() => {
-    const locationMap = new Map<string, DeathLocationData[]>();
+    const clusters: { centroidX: number; centroidZ: number; deaths: DeathLocationData[] }[] = [];
     
     deathLocations.forEach(loc => {
-      const key = `${Math.round(loc.x)}_${Math.round(loc.z)}`;
-      if (!locationMap.has(key)) {
-        locationMap.set(key, []);
+      // Find if this death is close to an existing cluster
+      let addedToCluster = false;
+      
+      for (const cluster of clusters) {
+        const distance = Math.sqrt(
+          Math.pow(loc.x - cluster.centroidX, 2) + 
+          Math.pow(loc.z - cluster.centroidZ, 2)
+        );
+        
+        if (distance <= clusterRadius) {
+          // Add to existing cluster and update centroid
+          const n = cluster.deaths.length;
+          cluster.centroidX = (cluster.centroidX * n + loc.x) / (n + 1);
+          cluster.centroidZ = (cluster.centroidZ * n + loc.z) / (n + 1);
+          cluster.deaths.push(loc);
+          addedToCluster = true;
+          break;
+        }
       }
-      locationMap.get(key)!.push(loc);
+      
+      if (!addedToCluster) {
+        // Create a new cluster
+        clusters.push({
+          centroidX: loc.x,
+          centroidZ: loc.z,
+          deaths: [loc]
+        });
+      }
     });
     
-    return locationMap;
-  }, [deathLocations]);
+    return clusters;
+  }, [deathLocations, clusterRadius]);
 
-  // Create aggregated data points for rendering (one point per unique location)
+  // Create aggregated data points for rendering (one point per cluster)
   const aggregatedLocationData = useMemo(() => {
-    return Array.from(locationData.entries()).map(([key, deaths]) => {
-      // Use the first death for position, but attach all deaths for the click handler
-      const firstDeath = deaths[0];
+    return locationData.map((cluster, index) => {
+      const firstDeath = cluster.deaths[0];
+      
+      // Get the most common death type in the cluster for coloring
+      const deathTypeCounts = new Map<DeathType | null, number>();
+      cluster.deaths.forEach(d => {
+        deathTypeCounts.set(d.deathType, (deathTypeCounts.get(d.deathType) || 0) + 1);
+      });
+      let dominantDeathType: DeathType | null = firstDeath.deathType;
+      let maxCount = 0;
+      deathTypeCounts.forEach((count, type) => {
+        if (count > maxCount) {
+          maxCount = count;
+          dominantDeathType = type;
+        }
+      });
+      
       return {
-        ...firstDeath,
-        deathCount: deaths.length,
-        allDeaths: deaths, // Attach all deaths at this location
-        locationKey: key
+        x: cluster.centroidX,
+        z: cluster.centroidZ,
+        deathCount: cluster.deaths.length,
+        allDeaths: cluster.deaths,
+        dominantDeathType,
+        playerName: cluster.deaths.length === 1 ? firstDeath.playerName : null,
+        gameId: cluster.deaths.length === 1 ? firstDeath.gameId : null,
+        camp: firstDeath.camp,
+        mapName: firstDeath.mapName,
+        deathType: dominantDeathType,
+        killerName: cluster.deaths.length === 1 ? firstDeath.killerName : null,
+        clusterIndex: index
       };
     });
   }, [locationData]);
@@ -109,21 +156,34 @@ export function DeathLocationView({
   const CustomTooltip = ({ active, payload }: any) => {
     if (!active || !payload || payload.length === 0) return null;
     
-    const data = payload[0].payload as DeathLocationData;
-    const locationKey = `${Math.round(data.x)}_${Math.round(data.z)}`;
-    const deathsAtLocation = locationData.get(locationKey) || [data];
+    const data = payload[0].payload;
+    const deathsAtLocation: DeathLocationData[] = data.allDeaths || [data];
     const isMultipleDeaths = deathsAtLocation.length > 1;
     
     if (isMultipleDeaths) {
-      // Get unique death types and game IDs
+      // Get unique death types, players, and game IDs
       const deathTypeCounts = new Map<string, number>();
       const uniqueGameIds = new Set<string>();
+      const playerCounts = new Map<string, number>();
       
-      deathsAtLocation.forEach(death => {
+      deathsAtLocation.forEach((death: DeathLocationData) => {
         const deathTypeLabel = death.deathType ? getDeathTypeLabel(death.deathType) : 'Inconnu';
         deathTypeCounts.set(deathTypeLabel, (deathTypeCounts.get(deathTypeLabel) || 0) + 1);
         uniqueGameIds.add(death.gameId);
+        playerCounts.set(death.playerName, (playerCounts.get(death.playerName) || 0) + 1);
       });
+      
+      // Get top players (max 3)
+      const sortedPlayers = Array.from(playerCounts.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+      const hasMorePlayers = playerCounts.size > 3;
+      
+      // Get top death types (max 3)
+      const sortedDeathTypes = Array.from(deathTypeCounts.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+      const hasMoreDeathTypes = deathTypeCounts.size > 3;
       
       return (
         <div style={{
@@ -132,7 +192,7 @@ export function DeathLocationView({
           borderRadius: '6px',
           padding: '12px',
           boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-          maxWidth: '300px'
+          maxWidth: '350px'
         }}>
           <div style={{ 
             fontWeight: 'bold', 
@@ -140,25 +200,41 @@ export function DeathLocationView({
             fontSize: '1rem',
             color: 'var(--accent-primary)'
           }}>
-            {deathsAtLocation.length} morts à cet endroit
+            {deathsAtLocation.length} morts dans cette zone
           </div>
           
           <div style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
             <div style={{ marginBottom: '8px' }}>
-              <strong>Position:</strong> ({Math.round(data.x)}, {Math.round(data.z)})
+              <strong>Centre:</strong> ({Math.round(data.x)}, {Math.round(data.z)})
+            </div>
+            
+            <div style={{ marginBottom: '8px' }}>
+              <strong>Joueurs:</strong>
+              <ul style={{ margin: '4px 0 0 0', paddingLeft: '20px' }}>
+                {sortedPlayers.map(([player, count]) => (
+                  <li key={player}>
+                    {player} {count > 1 ? `(${count} morts)` : ''}
+                  </li>
+                ))}
+                {hasMorePlayers && <li style={{ color: 'var(--text-secondary)' }}>...et {playerCounts.size - 3} autres</li>}
+              </ul>
             </div>
             
             <div style={{ marginBottom: '8px' }}>
               <strong>Types de mort:</strong>
               <ul style={{ margin: '4px 0 0 0', paddingLeft: '20px' }}>
-                {Array.from(deathTypeCounts.entries()).map(([type, count]) => (
+                {sortedDeathTypes.map(([type, count]) => (
                   <li key={type}>{type} ({count})</li>
                 ))}
+                {hasMoreDeathTypes && <li style={{ color: 'var(--text-secondary)' }}>...et {deathTypeCounts.size - 3} autres</li>}
               </ul>
             </div>
             
             <div>
-              <strong>Parties:</strong> {Array.from(uniqueGameIds).filter(id => id).map(id => `#${id}`).join(', ')}
+              <strong>Parties:</strong> {uniqueGameIds.size} parties
+              {uniqueGameIds.size <= 5 && (
+                <span> ({Array.from(uniqueGameIds).filter(id => id).map(id => `#${id}`).join(', ')})</span>
+              )}
             </div>
           </div>
           
@@ -169,13 +245,14 @@ export function DeathLocationView({
             fontSize: '0.8rem',
             color: 'var(--text-secondary)'
           }}>
-            Cliquez pour voir une des parties
+            Cliquez pour voir les parties concernées
           </div>
         </div>
       );
     }
     
-    // Single death tooltip
+    // Single death tooltip - get the actual death data
+    const singleDeath = deathsAtLocation[0];
     return (
       <div style={{
         backgroundColor: 'var(--bg-secondary)',
@@ -191,17 +268,17 @@ export function DeathLocationView({
           fontSize: '1rem',
           color: 'var(--accent-primary)'
         }}>
-          {data.playerName}
+          {singleDeath.playerName}
         </div>
         
         <div style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
-          <div><strong>Camp:</strong> {data.camp}</div>
-          <div><strong>Type de mort:</strong> {data.deathType ? getDeathTypeLabel(data.deathType) : 'Inconnu'}</div>
-          {data.killerName && <div><strong>Tué par:</strong> {data.killerName}</div>}
-          <div><strong>Carte:</strong> {data.mapName}</div>
-          <div><strong>Partie:</strong> #{data.gameId}</div>
+          <div><strong>Camp:</strong> {singleDeath.camp}</div>
+          <div><strong>Type de mort:</strong> {singleDeath.deathType ? getDeathTypeLabel(singleDeath.deathType) : 'Inconnu'}</div>
+          {singleDeath.killerName && <div><strong>Tué par:</strong> {singleDeath.killerName}</div>}
+          <div><strong>Carte:</strong> {singleDeath.mapName}</div>
+          <div><strong>Partie:</strong> #{singleDeath.gameId}</div>
           <div style={{ marginTop: '4px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-            Position: ({Math.round(data.x)}, {Math.round(data.z)})
+            Position: ({Math.round(singleDeath.x)}, {Math.round(singleDeath.z)})
           </div>
         </div>
         
@@ -359,11 +436,13 @@ export function DeathLocationView({
               minWidth: '150px'
             }}
           >
-            {availableMaps.map(map => (
-              <option key={map} value={map}>
-                {map}
-              </option>
-            ))}
+            {availableMaps
+              .filter(map => map === 'Village' || map === 'Château')
+              .map(map => (
+                <option key={map} value={map}>
+                  {map}
+                </option>
+              ))}
           </select>
         </div>
 
@@ -393,6 +472,35 @@ export function DeathLocationView({
             ))}
           </select>
         </div>
+
+        {/* Cluster Radius Slider - only visible in scatter mode */}
+        {viewMode === 'scatter' && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label htmlFor="cluster-radius" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+              Regroupement :
+            </label>
+            <input
+              id="cluster-radius"
+              type="range"
+              min="0"
+              max="60"
+              step="5"
+              value={clusterRadius}
+              onChange={(e) => setClusterRadius(Number(e.target.value))}
+              style={{
+                width: '100px',
+                cursor: 'pointer'
+              }}
+            />
+            <span style={{ 
+              color: 'var(--text-primary)', 
+              fontSize: '0.85rem',
+              minWidth: '70px'
+            }}>
+              {clusterRadius === 0 ? 'Aucun' : `${clusterRadius} unités`}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Summary Statistics */}
@@ -402,6 +510,11 @@ export function DeathLocationView({
           <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
             {deathLocations.length}
           </div>
+          {viewMode === 'scatter' && clusterRadius > 0 && aggregatedLocationData.length < deathLocations.length && (
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+              → {aggregatedLocationData.length} points groupés
+            </div>
+          )}
         </div>
         <div className="lycans-stat-carte">
           <h3>Camp filtré</h3>
@@ -421,7 +534,7 @@ export function DeathLocationView({
       {deathLocations.length > 0 ? (
         <FullscreenChart title={viewMode === 'scatter' ? 'Carte des Morts' : 'Carte de Chaleur des Morts'}>
           {viewMode === 'scatter' ? (
-            <div style={{ height: 600, width: 800 }}>
+            <div style={{ height: 700, width: '100%', maxWidth: 1000, margin: '0 auto' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
                   {/* Map background image */}
@@ -490,22 +603,26 @@ export function DeathLocationView({
                     style={{ cursor: 'pointer' }}
                   >
                     {aggregatedLocationData.map((entry, index) => {
-                      const isHighlighted = settings.highlightedPlayer === entry.playerName;
-                      const isHovered = hoveredDeath?.playerName === entry.playerName && 
-                                       hoveredDeath?.gameId === entry.gameId;
+                      // Check if any death in this cluster belongs to the highlighted player
+                      const hasHighlightedPlayer = entry.allDeaths.some(
+                        (d: DeathLocationData) => settings.highlightedPlayer === d.playerName
+                      );
+                      const isHovered = hoveredDeath && entry.clusterIndex === (hoveredDeath as any).clusterIndex;
                       
-                      // Size based on number of deaths at this location
-                      const baseSize = entry.deathCount > 1 ? 7 : 5;
+                      // Size scales with number of deaths (logarithmic to avoid huge dots)
+                      // Base: 5 for 1 death, grows with log scale
+                      const sizeScale = Math.min(Math.log2(entry.deathCount + 1) * 3 + 4, 18);
+                      const baseSize = Math.round(sizeScale);
                       const highlightedSize = baseSize + 2;
                       
                       return (
                         <Cell
                           key={`cell-${index}`}
-                          fill={isHighlighted ? 'var(--accent-primary)' : getDeathColor(entry.deathType)}
-                          stroke={isHighlighted || isHovered ? 'white' : entry.deathCount > 1 ? 'var(--accent-secondary)' : 'none'}
-                          strokeWidth={isHighlighted ? 3 : isHovered ? 2 : entry.deathCount > 1 ? 1 : 0}
-                          opacity={isHighlighted ? 1 : 0.7}
-                          r={isHighlighted ? highlightedSize : isHovered ? baseSize + 1 : baseSize}
+                          fill={hasHighlightedPlayer ? 'var(--accent-primary)' : getDeathColor(entry.deathType)}
+                          stroke={hasHighlightedPlayer || isHovered ? 'white' : entry.deathCount > 1 ? 'rgba(255,255,255,0.6)' : 'none'}
+                          strokeWidth={hasHighlightedPlayer ? 3 : isHovered ? 2 : entry.deathCount > 1 ? 1.5 : 0}
+                          opacity={hasHighlightedPlayer ? 1 : 0.8}
+                          r={hasHighlightedPlayer ? highlightedSize : isHovered ? baseSize + 1 : baseSize}
                         />
                       );
                     })}
@@ -519,8 +636,8 @@ export function DeathLocationView({
                 deathLocations={deathLocations}
                 xDomain={xDomain as [number, number]}
                 zDomain={zDomain as [number, number]}
-                width={800}
-                height={600}
+                width={1000}
+                height={700}
                 bandwidth={25}
                 mapConfig={mapConfig}
                 onRegionClick={(deaths) => {
@@ -557,43 +674,6 @@ export function DeathLocationView({
         </div>
       )}
 
-      {/* Legend Section */}
-      {deathLocations.length > 0 && (
-        <div style={{ marginTop: '2rem', padding: '1rem', backgroundColor: 'var(--bg-secondary)', borderRadius: '8px' }}>
-          <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>Légende des types de mort</h3>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
-            gap: '0.5rem' 
-          }}>
-            {availableDeathTypes.map(deathType => {
-              const count = deathLocations.filter(d => d.deathType === deathType).length;
-              if (count === 0) return null;
-              
-              return (
-                <div key={deathType} style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.5rem',
-                  fontSize: '0.9rem'
-                }}>
-                  <div style={{
-                    width: '16px',
-                    height: '16px',
-                    borderRadius: '50%',
-                    backgroundColor: deathTypeColors[deathType],
-                    flexShrink: 0
-                  }} />
-                  <span style={{ color: 'var(--text-primary)' }}>
-                    {getDeathTypeLabel(deathType)} ({count})
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
       {/* Info Section */}
       <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>
         <p>
@@ -603,15 +683,15 @@ export function DeathLocationView({
           <li>Les positions sont basées sur les coordonnées Z (horizontal) et X (vertical) - vue 2D de la carte</li>
           {viewMode === 'scatter' ? (
             <>
-              <li>Chaque point représente la mort d'un joueur à un endroit précis</li>
-              <li>La couleur indique le type de mort (voir légende ci-dessus)</li>
-              <li>Les joueurs en surbrillance sont affichés en {' '}
+              <li>Les morts proches sont regroupées en un seul point - ajustez le curseur "Regroupement" pour contrôler la distance</li>
+              <li>La couleur indique le type de mort dominant dans le groupe</li>
+              <li>Survolez un point pour voir tous les joueurs, types de mort et parties concernés</li>
+              <li>Le joueur sélectionné est affiché en {' '}
                 <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>
                   couleur primaire
                 </span>
               </li>
-              <li>Cliquez sur un point pour voir les détails de la partie</li>
-              <li>Survolez un point pour voir les informations détaillées</li>
+              <li>Cliquez sur un point pour voir les détails de la ou des parties</li>
             </>
           ) : (
             <>
@@ -624,7 +704,7 @@ export function DeathLocationView({
           )}
         </ul>
         <p style={{ marginTop: '0.5rem', fontStyle: 'italic', color: 'var(--text-secondary)' }}>
-          Note : Seules les parties récentes contiennent des données de position. Les parties legacy sont exclues.
+          Note : Seules les parties récentes contiennent des données de position.
         </p>
       </div>
     </div>
