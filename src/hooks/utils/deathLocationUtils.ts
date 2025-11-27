@@ -3,6 +3,31 @@ import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 import type { DeathType } from '../../types/deathTypes';
 
 /**
+ * Map image configuration - fixed coordinates for map alignment
+ * Used for both scatter chart and heatmap visualizations
+ */
+export interface MapImageConfig {
+  src: string;
+  zMin: number;
+  zMax: number;
+  xMin: number;
+  xMax: number;
+}
+
+export const MAP_IMAGES: Record<string, MapImageConfig> = {
+  'Village': { src: '/Village.webp', zMin: -820, zMax: 820, xMin: -461, xMax: 461 },
+  'Château': { src: '/Château.webp', zMin: -820, zMax: 820, xMin: -461, xMax: 461 },
+  // Add more maps here as needed
+};
+
+/**
+ * Get map configuration for a given map name
+ */
+export function getMapConfig(mapName: string): MapImageConfig | null {
+  return MAP_IMAGES[mapName] || null;
+}
+
+/**
  * Death location data point
  */
 export interface DeathLocationData {

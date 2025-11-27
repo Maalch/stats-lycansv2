@@ -1,8 +1,8 @@
-import { useEffect, useRef, useMemo } from 'react';
+import { useEffect, useRef, useMemo, useState } from 'react';
 import { contourDensity } from 'd3-contour';
 import { scaleLinear } from 'd3-scale';
 import { interpolateYlOrRd } from 'd3-scale-chromatic';
-import type { DeathLocationData } from '../../../hooks/utils/deathLocationUtils';
+import type { DeathLocationData, MapImageConfig } from '../../../hooks/utils/deathLocationUtils';
 
 interface DeathLocationHeatmapCanvasProps {
   deathLocations: DeathLocationData[];
@@ -12,6 +12,7 @@ interface DeathLocationHeatmapCanvasProps {
   height?: number;
   bandwidth?: number;
   onRegionClick?: (deaths: DeathLocationData[]) => void;
+  mapConfig?: MapImageConfig | null;
 }
 
 export function DeathLocationHeatmapCanvas({
@@ -21,11 +22,14 @@ export function DeathLocationHeatmapCanvas({
   width = 800,
   height = 600,
   bandwidth = 25,
-  onRegionClick
+  onRegionClick,
+  mapConfig
 }: DeathLocationHeatmapCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayCanvasRef = useRef<HTMLCanvasElement>(null);
+  const backgroundCanvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [, setMapImageLoaded] = useState(false);
 
   // Create scale functions for coordinate transformation
   // Z is horizontal (X-axis), X is vertical (Y-axis)
@@ -71,6 +75,34 @@ export function DeathLocationHeatmapCanvas({
       return color;
     };
   }, [contours]);
+
+  // Render background map image
+  useEffect(() => {
+    const canvas = backgroundCanvasRef.current;
+    if (!canvas || !mapConfig) {
+      setMapImageLoaded(false);
+      return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Load and draw the map image
+    const img = new Image();
+    img.onload = () => {
+      ctx.globalAlpha = 0.85;
+      ctx.drawImage(img, 0, 0, width, height);
+      ctx.globalAlpha = 1;
+      setMapImageLoaded(true);
+    };
+    img.onerror = () => {
+      setMapImageLoaded(false);
+    };
+    img.src = mapConfig.src;
+  }, [mapConfig, width, height]);
 
   // Render heatmap
   useEffect(() => {
@@ -190,9 +222,9 @@ export function DeathLocationHeatmapCanvas({
       onClick={handleCanvasClick}
       onMouseMove={handleCanvasHover}
     >
-      {/* Heatmap layer */}
+      {/* Background map image layer */}
       <canvas
-        ref={canvasRef}
+        ref={backgroundCanvasRef}
         width={width}
         height={height}
         style={{
@@ -202,6 +234,20 @@ export function DeathLocationHeatmapCanvas({
           border: '1px solid var(--border-color)',
           borderRadius: '4px',
           backgroundColor: 'var(--bg-tertiary)'
+        }}
+      />
+      
+      {/* Heatmap layer */}
+      <canvas
+        ref={canvasRef}
+        width={width}
+        height={height}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          borderRadius: '4px',
+          pointerEvents: 'none'
         }}
       />
       

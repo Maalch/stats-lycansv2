@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceArea } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useFilteredGameLogData } from '../../../hooks/useCombinedRawData';
-import { computeDeathLocationStats, getAvailableMapsWithDeathData } from '../../../hooks/utils/deathLocationUtils';
+import { computeDeathLocationStats, getAvailableMapsWithDeathData, getMapConfig } from '../../../hooks/utils/deathLocationUtils';
 import type { DeathLocationData } from '../../../hooks/utils/deathLocationUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { getDeathTypeLabel } from '../../../types/deathTypes';
@@ -250,11 +250,25 @@ export function DeathLocationView({
     return deathTypeColors[deathType as DeathTypeCodeType] || 'var(--text-secondary)';
   };
 
-  // Calculate axis domains with padding
+  // Get map configuration for the selected map
+  const mapConfig = useMemo(() => {
+    return getMapConfig(selectedMap);
+  }, [selectedMap]);
+
+  // Calculate axis domains - use fixed map coordinates if available
   // Z is horizontal (X-axis), X is vertical (Y-axis)
   const { xDomain, zDomain } = useMemo(() => {
+    // If we have a map configuration, use its fixed coordinates
+    if (mapConfig) {
+      return {
+        xDomain: [mapConfig.xMin, mapConfig.xMax] as [number, number],
+        zDomain: [mapConfig.zMin, mapConfig.zMax] as [number, number]
+      };
+    }
+    
+    // Fallback to dynamic calculation based on death data
     if (aggregatedLocationData.length === 0) {
-      return { xDomain: [0, 100], zDomain: [0, 100] };
+      return { xDomain: [0, 100] as [number, number], zDomain: [0, 100] as [number, number] };
     }
     
     const xValues = aggregatedLocationData.map(d => d.x);
@@ -269,10 +283,10 @@ export function DeathLocationView({
     const zPadding = (zMax - zMin) * 0.1 || 10;
     
     return {
-      xDomain: [xMin - xPadding, xMax + xPadding],
-      zDomain: [zMin - zPadding, zMax + zPadding]
+      xDomain: [xMin - xPadding, xMax + xPadding] as [number, number],
+      zDomain: [zMin - zPadding, zMax + zPadding] as [number, number]
     };
-  }, [aggregatedLocationData]);
+  }, [aggregatedLocationData, mapConfig]);
 
   if (isLoading) return <div className="donnees-attente">Chargement des localisations de mort...</div>;
   if (error) return <div className="donnees-probleme">Erreur: {error}</div>;
@@ -410,7 +424,32 @@ export function DeathLocationView({
             <div style={{ height: 600, width: 800 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  {/* Map background image */}
+                  {mapConfig && (
+                    <ReferenceArea
+                      x1={mapConfig.zMin}
+                      x2={mapConfig.zMax}
+                      y1={mapConfig.xMin}
+                      y2={mapConfig.xMax}
+                      fill="transparent"
+                      stroke="none"
+                      shape={(props: any) => {
+                        const { x, y, width, height } = props;
+                        return (
+                          <image
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
+                            href={mapConfig.src}
+                            preserveAspectRatio="none"
+                            style={{ opacity: 0.85 }}
+                          />
+                        );
+                      }}
+                    />
+                  )}
+                  <CartesianGrid strokeDasharray="3 3" stroke={mapConfig ? 'rgba(255,255,255,0.3)' : 'var(--border-color)'} />
                   <XAxis 
                     dataKey="z" 
                     type="number"
@@ -483,6 +522,7 @@ export function DeathLocationView({
                 width={800}
                 height={600}
                 bandwidth={25}
+                mapConfig={mapConfig}
                 onRegionClick={(deaths) => {
                   if (deaths.length === 1) {
                     navigateToGameDetails({
