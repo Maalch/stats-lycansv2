@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceArea } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { useNavigation } from '../../../context/NavigationContext';
-import { getMapConfig } from '../../../hooks/utils/deathLocationUtils';
+import { getMapConfig, adjustCoordinatesForMap, clusterLocationPoints, getDominantDeathType } from '../../../hooks/utils/deathLocationUtils';
 import { getPlayerCampFromRole } from '../../../utils/datasyncExport';
 import { getDeathTypeLabel, type DeathType } from '../../../types/deathTypes';
 import { FullscreenChart } from '../../common/FullscreenChart';
@@ -26,21 +26,6 @@ interface LocationData {
   gameId: string;
   displayedGameId: string;
 }
-
-// Coordinate offsets for maps
-const VILLAGE_OFFSETS = {
-  x: 166.35,
-  y: 52.78,
-  z: 176.22,
-  multiplier: 5.45
-};
-
-const CHATEAU_OFFSETS = {
-  x: 403.32,
-  y: 53.06,
-  z: -121.11,
-  multiplier: 18.4
-};
 
 /**
  * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
@@ -131,20 +116,15 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
             regroupWolfSubRoles: true
           });
           
-          let adjustedX = playerStat.DeathPosition.x;
-          let adjustedZ = playerStat.DeathPosition.z;
-          
-          if (game.MapName === 'Village') {
-            adjustedX = (adjustedX - VILLAGE_OFFSETS.x) * VILLAGE_OFFSETS.multiplier;
-            adjustedZ = ((adjustedZ - VILLAGE_OFFSETS.z) * VILLAGE_OFFSETS.multiplier) * -1;
-          } else if (game.MapName === 'Château') {
-            adjustedX = (adjustedX - CHATEAU_OFFSETS.x) * CHATEAU_OFFSETS.multiplier;
-            adjustedZ = ((adjustedZ - CHATEAU_OFFSETS.z) * CHATEAU_OFFSETS.multiplier) * -1;
-          }
+          const adjusted = adjustCoordinatesForMap(
+            playerStat.DeathPosition.x,
+            playerStat.DeathPosition.z,
+            game.MapName
+          );
           
           locations.push({
-            x: adjustedX,
-            z: adjustedZ,
+            x: adjusted.x,
+            z: adjusted.z,
             victimName: playerStat.Username,
             killerName: playerStat.KillerName || null,
             deathType: normalizeDeathType(playerStat.DeathType as DeathType | null),
@@ -165,20 +145,15 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
               regroupWolfSubRoles: true
             });
             
-            let adjustedX = victim.DeathPosition.x;
-            let adjustedZ = victim.DeathPosition.z;
-            
-            if (game.MapName === 'Village') {
-              adjustedX = (adjustedX - VILLAGE_OFFSETS.x) * VILLAGE_OFFSETS.multiplier;
-              adjustedZ = ((adjustedZ - VILLAGE_OFFSETS.z) * VILLAGE_OFFSETS.multiplier) * -1;
-            } else if (game.MapName === 'Château') {
-              adjustedX = (adjustedX - CHATEAU_OFFSETS.x) * CHATEAU_OFFSETS.multiplier;
-              adjustedZ = ((adjustedZ - CHATEAU_OFFSETS.z) * CHATEAU_OFFSETS.multiplier) * -1;
-            }
+            const adjusted = adjustCoordinatesForMap(
+              victim.DeathPosition.x,
+              victim.DeathPosition.z,
+              game.MapName
+            );
             
             locations.push({
-              x: adjustedX,
-              z: adjustedZ,
+              x: adjusted.x,
+              z: adjusted.z,
               victimName: victim.Username,
               killerName: selectedPlayerName,
               deathType: normalizeDeathType(victim.DeathType as DeathType | null),
@@ -197,74 +172,24 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
 
   // Cluster nearby points
   const clusteredData = useMemo(() => {
-    if (clusterRadius === 0) {
-      return locationData.map((loc, index) => ({
-        ...loc,
-        count: 1,
-        allLocations: [loc],
-        clusterIndex: index
-      }));
-    }
-    
-    const clusters: { centroidX: number; centroidZ: number; locations: LocationData[] }[] = [];
-    
-    locationData.forEach(loc => {
-      let addedToCluster = false;
-      
-      for (const cluster of clusters) {
-        const distance = Math.sqrt(
-          Math.pow(loc.x - cluster.centroidX, 2) + 
-          Math.pow(loc.z - cluster.centroidZ, 2)
-        );
-        
-        if (distance <= clusterRadius) {
-          const n = cluster.locations.length;
-          cluster.centroidX = (cluster.centroidX * n + loc.x) / (n + 1);
-          cluster.centroidZ = (cluster.centroidZ * n + loc.z) / (n + 1);
-          cluster.locations.push(loc);
-          addedToCluster = true;
-          break;
-        }
-      }
-      
-      if (!addedToCluster) {
-        clusters.push({
-          centroidX: loc.x,
-          centroidZ: loc.z,
-          locations: [loc]
-        });
-      }
-    });
+    const clusters = clusterLocationPoints(locationData, clusterRadius);
     
     return clusters.map((cluster, index) => {
-      const firstLoc = cluster.locations[0];
-      
-      // Get dominant death type
-      const deathTypeCounts = new Map<DeathType | null, number>();
-      cluster.locations.forEach(loc => {
-        deathTypeCounts.set(loc.deathType, (deathTypeCounts.get(loc.deathType) || 0) + 1);
-      });
-      let dominantDeathType: DeathType | null = firstLoc.deathType;
-      let maxCount = 0;
-      deathTypeCounts.forEach((count, type) => {
-        if (count > maxCount) {
-          maxCount = count;
-          dominantDeathType = type;
-        }
-      });
+      const firstLoc = cluster.items[0];
+      const dominantDeathType = getDominantDeathType(cluster.items);
       
       return {
         x: cluster.centroidX,
         z: cluster.centroidZ,
-        count: cluster.locations.length,
-        allLocations: cluster.locations,
-        victimName: cluster.locations.length === 1 ? firstLoc.victimName : null,
-        killerName: cluster.locations.length === 1 ? firstLoc.killerName : null,
+        count: cluster.items.length,
+        allLocations: cluster.items,
+        victimName: cluster.items.length === 1 ? firstLoc.victimName : null,
+        killerName: cluster.items.length === 1 ? firstLoc.killerName : null,
         deathType: dominantDeathType,
         mapName: firstLoc.mapName,
         camp: firstLoc.camp,
-        gameId: cluster.locations.length === 1 ? firstLoc.gameId : null,
-        displayedGameId: cluster.locations.length === 1 ? firstLoc.displayedGameId : null,
+        gameId: cluster.items.length === 1 ? firstLoc.gameId : null,
+        displayedGameId: cluster.items.length === 1 ? firstLoc.displayedGameId : null,
         clusterIndex: index
       };
     });

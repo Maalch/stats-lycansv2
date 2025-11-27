@@ -4,10 +4,10 @@ import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useFilteredGameLogData } from '../../../hooks/useCombinedRawData';
-import { computeDeathLocationStats, getAvailableMapsWithDeathData, getMapConfig } from '../../../hooks/utils/deathLocationUtils';
+import { computeDeathLocationStats, getAvailableMapsWithDeathData, getMapConfig, clusterLocationPoints, getDominantDeathType } from '../../../hooks/utils/deathLocationUtils';
 import type { DeathLocationData } from '../../../hooks/utils/deathLocationUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
-import { type DeathType, getDeathTypeLabel } from '../../../types/deathTypes';
+import { getDeathTypeLabel } from '../../../types/deathTypes';
 import { DeathLocationHeatmapCanvas } from './DeathLocationHeatmapCanvas';
 
 interface DeathLocationViewProps {
@@ -80,73 +80,27 @@ export function DeathLocationView({
   // Group deaths by coordinates to show density and aggregate data
   // Uses spatial clustering to group nearby deaths together
   const locationData = useMemo(() => {
-    const clusters: { centroidX: number; centroidZ: number; deaths: DeathLocationData[] }[] = [];
-    
-    deathLocations.forEach(loc => {
-      // Find if this death is close to an existing cluster
-      let addedToCluster = false;
-      
-      for (const cluster of clusters) {
-        const distance = Math.sqrt(
-          Math.pow(loc.x - cluster.centroidX, 2) + 
-          Math.pow(loc.z - cluster.centroidZ, 2)
-        );
-        
-        if (distance <= clusterRadius) {
-          // Add to existing cluster and update centroid
-          const n = cluster.deaths.length;
-          cluster.centroidX = (cluster.centroidX * n + loc.x) / (n + 1);
-          cluster.centroidZ = (cluster.centroidZ * n + loc.z) / (n + 1);
-          cluster.deaths.push(loc);
-          addedToCluster = true;
-          break;
-        }
-      }
-      
-      if (!addedToCluster) {
-        // Create a new cluster
-        clusters.push({
-          centroidX: loc.x,
-          centroidZ: loc.z,
-          deaths: [loc]
-        });
-      }
-    });
-    
-    return clusters;
+    return clusterLocationPoints(deathLocations, clusterRadius);
   }, [deathLocations, clusterRadius]);
 
   // Create aggregated data points for rendering (one point per cluster)
   const aggregatedLocationData = useMemo(() => {
     return locationData.map((cluster, index) => {
-      const firstDeath = cluster.deaths[0];
-      
-      // Get the most common death type in the cluster for coloring
-      const deathTypeCounts = new Map<DeathType | null, number>();
-      cluster.deaths.forEach(d => {
-        deathTypeCounts.set(d.deathType, (deathTypeCounts.get(d.deathType) || 0) + 1);
-      });
-      let dominantDeathType: DeathType | null = firstDeath.deathType;
-      let maxCount = 0;
-      deathTypeCounts.forEach((count, type) => {
-        if (count > maxCount) {
-          maxCount = count;
-          dominantDeathType = type;
-        }
-      });
+      const firstDeath = cluster.items[0];
+      const dominantDeathType = getDominantDeathType(cluster.items);
       
       return {
         x: cluster.centroidX,
         z: cluster.centroidZ,
-        deathCount: cluster.deaths.length,
-        allDeaths: cluster.deaths,
+        deathCount: cluster.items.length,
+        allDeaths: cluster.items,
         dominantDeathType,
-        playerName: cluster.deaths.length === 1 ? firstDeath.playerName : null,
-        gameId: cluster.deaths.length === 1 ? firstDeath.gameId : null,
+        playerName: cluster.items.length === 1 ? firstDeath.playerName : null,
+        gameId: cluster.items.length === 1 ? firstDeath.gameId : null,
         camp: firstDeath.camp,
         mapName: firstDeath.mapName,
         deathType: dominantDeathType,
-        killerName: cluster.deaths.length === 1 ? firstDeath.killerName : null,
+        killerName: cluster.items.length === 1 ? firstDeath.killerName : null,
         clusterIndex: index
       };
     });

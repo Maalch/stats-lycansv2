@@ -221,14 +221,6 @@ export function DeathStatisticsChart() {
         >
           Chasseur
         </button>
-        {/*}
-        <button
-          className={`lycans-categorie-btn ${selectedView === 'location' ? 'active' : ''}`}
-          onClick={() => handleViewChange('location')}
-        >
-          Localisation
-        </button>
-        */}
       </div>
 
       {/* Camp Filter - Only visible for Tueurs, Morts, and Survie views */}
