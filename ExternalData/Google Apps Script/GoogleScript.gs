@@ -826,6 +826,10 @@ function getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows) {
  * Helper function to determine main role with details data priority
  */
 function determineMainRoleInitialWithDetails(playerDetails) {
+  // Handle null playerDetails
+  if (!playerDetails) {
+    return null;
+  }
     
   // Determine which camp to use based on type (initial)
   if (playerDetails.mainRole && playerDetails.mainRole !== 'Inconnu') {
@@ -1049,6 +1053,213 @@ function test_getRawJoueursData() {
   }
   
   return result;
+}
+
+/**
+ * Diagnostic function to find rows with empty mainRole in DetailsV2 sheet
+ * This helps identify data quality issues that cause "Cannot read properties of null (reading 'mainRole')" errors
+ * 
+ * Usage: Run checkEmptyMainRoles() in the Script Editor
+ * 
+ * @return {Array} Array of problematic rows with Game ID, Player, and missing field info
+ */
+function checkEmptyMainRoles() {
+  try {
+    Logger.log("=== Checking for empty mainRole values in DetailsV2 sheet ===");
+    
+    // Get DetailsV2 data
+    var detailsData = getLycanSheetData(LYCAN_SCHEMA.DETAILSV2.SHEET);
+    var detailsValues = detailsData.values;
+    
+    if (!detailsValues || detailsValues.length === 0) {
+      Logger.log("ERROR: No data found in DetailsV2 sheet");
+      return [];
+    }
+    
+    var detailsHeaders = detailsValues[0];
+    var detailsDataRows = detailsValues.slice(1);
+    
+    var gameIdIndex = findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.GAMEID);
+    var playerIndex = findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.PLAYER);
+    var mainRoleIndex = findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.MAINROLE);
+    var campIndex = findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.CAMP);
+    var colorIndex = findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.COLOR);
+    
+    var problematicRows = [];
+    var emptyMainRoleCount = 0;
+    var emptyCampCount = 0;
+    var emptyColorCount = 0;
+    
+    // Check each row
+    detailsDataRows.forEach(function(row, index) {
+      var gameId = row[gameIdIndex];
+      var player = row[playerIndex];
+      var mainRole = row[mainRoleIndex];
+      var camp = row[campIndex];
+      var color = row[colorIndex];
+      
+      var issues = [];
+      
+      // Check for empty or null mainRole
+      if (!mainRole || mainRole.toString().trim() === '') {
+        issues.push('mainRole is empty');
+        emptyMainRoleCount++;
+      }
+      
+      // Also check camp and color for completeness
+      if (!camp || camp.toString().trim() === '') {
+        issues.push('camp is empty');
+        emptyCampCount++;
+      }
+      
+      if (!color || color.toString().trim() === '') {
+        issues.push('color is empty');
+        emptyColorCount++;
+      }
+      
+      // If any issues found, log this row
+      if (issues.length > 0) {
+        var rowNumber = index + 2; // +2 because: +1 for 0-index, +1 for header row
+        var problemRow = {
+          rowNumber: rowNumber,
+          gameId: gameId || 'MISSING',
+          player: player || 'MISSING',
+          issues: issues
+        };
+        
+        problematicRows.push(problemRow);
+        
+        Logger.log("Row " + rowNumber + " - Game: " + problemRow.gameId + 
+                   ", Player: " + problemRow.player + 
+                   " | Issues: " + issues.join(', '));
+      }
+    });
+    
+    // Summary
+    Logger.log("\n=== SUMMARY ===");
+    Logger.log("Total rows checked: " + detailsDataRows.length);
+    Logger.log("Rows with empty mainRole: " + emptyMainRoleCount);
+    Logger.log("Rows with empty camp: " + emptyCampCount);
+    Logger.log("Rows with empty color: " + emptyColorCount);
+    Logger.log("Total problematic rows: " + problematicRows.length);
+    
+    if (problematicRows.length === 0) {
+      Logger.log("\n✓ No issues found - all rows have mainRole values!");
+    } else {
+      Logger.log("\n⚠️  Found " + problematicRows.length + " problematic row(s) - see details above");
+    }
+    
+    return problematicRows;
+    
+  } catch (error) {
+    Logger.log("ERROR in checkEmptyMainRoles: " + error.message);
+    Logger.log("Stack trace: " + error.stack);
+    return [];
+  }
+}
+
+/**
+ * Diagnostic function to find players listed in Games sheet but missing from DetailsV2 sheet
+ * This identifies the root cause of "Cannot read properties of null" errors
+ * 
+ * Usage: Run checkMissingPlayerDetails() in the Script Editor
+ * 
+ * @return {Array} Array of missing player/game combinations
+ */
+function checkMissingPlayerDetails() {
+  try {
+    Logger.log("=== Checking for missing player details ===");
+    
+    // Get Games data
+    var gameData = getLycanSheetData(LYCAN_SCHEMA.GAMES.SHEET);
+    var gameValues = gameData.values;
+    
+    // Get DetailsV2 data
+    var detailsData = getLycanSheetData(LYCAN_SCHEMA.DETAILSV2.SHEET);
+    var detailsValues = detailsData.values;
+    
+    if (!gameValues || gameValues.length === 0) {
+      Logger.log("ERROR: No game data found");
+      return [];
+    }
+    
+    if (!detailsValues || detailsValues.length === 0) {
+      Logger.log("ERROR: No details data found");
+      return [];
+    }
+    
+    var gameHeaders = gameValues[0];
+    var gameDataRows = gameValues.slice(1);
+    
+    var detailsHeaders = detailsValues[0];
+    var detailsDataRows = detailsValues.slice(1);
+    
+    var gameIdColIndex = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.GAMEID);
+    var playerListColIndex = findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST);
+    
+    var detailsGameIdIndex = findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.GAMEID);
+    var detailsPlayerIndex = findColumnIndex(detailsHeaders, LYCAN_SCHEMA.DETAILSV2.COLS.PLAYER);
+    
+    // Create a Set of existing game-player combinations in DetailsV2
+    var detailsSet = new Set();
+    detailsDataRows.forEach(function(row) {
+      var gameId = row[detailsGameIdIndex];
+      var player = row[detailsPlayerIndex];
+      if (gameId && player) {
+        detailsSet.add(gameId + '|' + player.trim());
+      }
+    });
+    
+    var missingDetails = [];
+    var totalPlayers = 0;
+    
+    // Check each game and its players
+    gameDataRows.forEach(function(gameRow, gameIndex) {
+      var gameId = gameRow[gameIdColIndex];
+      var playerListStr = gameRow[playerListColIndex];
+      
+      if (!playerListStr) return;
+      
+      var players = playerListStr.split(',').map(function(p) { return p.trim(); });
+      
+      players.forEach(function(playerName) {
+        totalPlayers++;
+        var key = gameId + '|' + playerName;
+        
+        if (!detailsSet.has(key)) {
+          missingDetails.push({
+            gameId: gameId,
+            playerName: playerName,
+            gameRowNumber: gameIndex + 2 // +2 for header and 0-index
+          });
+          
+          Logger.log("MISSING: Game " + gameId + ", Player: " + playerName + 
+                     " (Games sheet row " + (gameIndex + 2) + ")");
+        }
+      });
+    });
+    
+    // Summary
+    Logger.log("\n=== SUMMARY ===");
+    Logger.log("Total player entries in Games sheet: " + totalPlayers);
+    Logger.log("Total player entries in DetailsV2 sheet: " + detailsDataRows.length);
+    Logger.log("Missing player details: " + missingDetails.length);
+    
+    if (missingDetails.length === 0) {
+      Logger.log("\n✓ All players have corresponding details!");
+    } else {
+      Logger.log("\n⚠️  Found " + missingDetails.length + " missing player detail(s)");
+      Logger.log("These players are listed in the Games sheet but have no corresponding row in DetailsV2");
+      Logger.log("This causes 'Cannot read properties of null' errors during export");
+    }
+    
+    return missingDetails;
+    
+  } catch (error) {
+    Logger.log("ERROR in checkMissingPlayerDetails: " + error.message);
+    Logger.log("Stack trace: " + error.stack);
+    return [];
+  }
 }
 
 
