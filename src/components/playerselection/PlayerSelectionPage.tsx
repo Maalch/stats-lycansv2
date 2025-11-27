@@ -15,6 +15,7 @@ import {
   PlayerHistoryMap, 
   PlayerHistoryKills,
   PlayerHistoryRoles,
+  PlayerHistoryDeathMap,
   type GroupByMethod,
   type CampFilterOption
 } from '../playerstats/playerhistory';
@@ -65,7 +66,7 @@ export function PlayerSelectionPage() {
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
   // Use navigationState to restore view selection, fallback to 'achievements'
-  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles'>(
+  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap'>(
     navigationState.selectedPlayerSelectionView || 'achievements'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
@@ -202,7 +203,7 @@ export function PlayerSelectionPage() {
   };
 
   // Helper function to handle view changes and sync with navigation state
-  const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles') => {
+  const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap') => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
   };
@@ -438,6 +439,12 @@ export function PlayerSelectionPage() {
                     >
                       Kills
                     </button>
+                    <button
+                      className={`lycans-categorie-btn ${selectedView === 'deathmap' ? 'active' : ''}`}
+                      onClick={() => handleViewChange('deathmap')}
+                    >
+                      🗺️ Carte
+                    </button>
                   </div>
 
                   {/* Achievements Display */}
@@ -644,6 +651,13 @@ export function PlayerSelectionPage() {
                   {selectedView === 'kills' && (
                     <div className="player-history-section">
                       <PlayerHistoryKills selectedPlayerName={highlightedPlayerStats.name} />
+                    </div>
+                  )}
+
+                  {/* Death Map View */}
+                  {selectedView === 'deathmap' && (
+                    <div className="player-history-section">
+                      <PlayerHistoryDeathMap selectedPlayerName={highlightedPlayerStats.name} />
                     </div>
                   )}
 

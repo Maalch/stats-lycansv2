@@ -180,14 +180,13 @@ const GENERAL_STATS_MENU = [
     component: GameDurationInsights,
     description: 'Statistiques sur la durée des parties'
   },
-  /*
   { 
     key: 'heatmap', 
     label: 'Heatmap', 
     component: DeathLocationHeatmap,
     description: 'Carte de chaleur des localisations de mort'
   },
-  */
+
   { 
     key: 'colorStats', 
     label: 'Couleurs', 

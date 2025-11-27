@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.4.4';
+export const APP_VERSION = '1.5.1';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,29 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.5.1',
+    date: '27/11/2025',
+    description: 'Ajouts des cartes de kills par joueur dans',
+    link: {
+      mainTab: 'playerSelection',
+      subTab: 'heatmap',
+      text: 'Joueur / Carte',
+      navigationState: {
+        selectedPlayerSelectionView: 'deathmap'
+      }
+    }
+  },
+  {
+    version: 'v1.5.1',
+    date: '27/11/2025',
+    description: 'Ajouts des cartes de kills généralesdans',
+    link: {
+      mainTab: 'general',
+      subTab: 'heatmap',
+      text: 'Stats Parties / Heatmap'
+    }
+  },
   {
     version: 'v1.4.4',
     date: '18/11/2025',

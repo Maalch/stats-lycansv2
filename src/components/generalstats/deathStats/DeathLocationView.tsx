@@ -27,7 +27,7 @@ export function DeathLocationView({
   const [selectedMap, setSelectedMap] = useState<string>('');
   const [selectedDeathType, setSelectedDeathType] = useState<string>('all');
   const [hoveredDeath, setHoveredDeath] = useState<DeathLocationData | null>(null);
-  const [viewMode, setViewMode] = useState<'scatter' | 'heatmap'>('scatter');
+  const [viewMode, setViewMode] = useState<'heatmap' | 'scatter'>('heatmap');
   const [clusterRadius, setClusterRadius] = useState<number>(20); // Clustering radius in game units
 
   // Get available maps with death position data, sorted by number of deaths (descending)
@@ -386,21 +386,6 @@ export function DeathLocationView({
             overflow: 'hidden'
           }}>
             <button
-              onClick={() => setViewMode('scatter')}
-              style={{
-                background: viewMode === 'scatter' ? 'var(--accent-primary)' : 'transparent',
-                color: viewMode === 'scatter' ? 'white' : 'var(--text-primary)',
-                border: 'none',
-                padding: '0.5rem 1rem',
-                fontSize: '0.9rem',
-                cursor: 'pointer',
-                fontWeight: viewMode === 'scatter' ? 'bold' : 'normal',
-                transition: 'all 0.2s'
-              }}
-            >
-              Points
-            </button>
-            <button
               onClick={() => setViewMode('heatmap')}
               style={{
                 background: viewMode === 'heatmap' ? 'var(--accent-primary)' : 'transparent',
@@ -415,6 +400,22 @@ export function DeathLocationView({
             >
               Carte de chaleur
             </button>
+            <button
+              onClick={() => setViewMode('scatter')}
+              style={{
+                background: viewMode === 'scatter' ? 'var(--accent-primary)' : 'transparent',
+                color: viewMode === 'scatter' ? 'white' : 'var(--text-primary)',
+                border: 'none',
+                padding: '0.5rem 1rem',
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                fontWeight: viewMode === 'scatter' ? 'bold' : 'normal',
+                transition: 'all 0.2s'
+              }}
+            >
+              Points
+            </button>
+
           </div>
         </div>
 
