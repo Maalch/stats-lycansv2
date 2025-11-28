@@ -24,7 +24,7 @@ npm run generate-achievements  # Standalone achievements generation + copy to pu
 ```
 
 **Build Pipeline:** Inline Node.js scripts in `package.json` copy `/data` → `public/data/` (dev) or `docs/data/` (prod)  
-**Data Sync:** GitHub Actions runs daily (4AM UTC), manually triggerable via workflow_dispatch, includes achievements generation  
+**Data Sync:** GitHub Actions runs Mon/Tue/Thu at 8 PM UTC (post-game sync), manually triggerable via workflow_dispatch, includes achievements generation  
 **Environment:** No env vars needed locally - all data from static files. `LYCANS_API_BASE` + `STATS_LIST_URL` secrets on GitHub only.  
 **Achievement Generation:** `scripts/data-sync/generate-achievements.js` processes all players, creates ranked lists, integrates with `fetch-data.js`
 
@@ -103,8 +103,6 @@ playerMap.set(player.Username, stats); // Creates duplicates! ("Johnny" vs "[S.P
 - **joueurs.json is the source of truth**: Master registry maps Steam IDs to canonical names
 - **Automatic normalization**: Applied to `Username`, `KillerName`, and `Vote.Target` fields during data loading
 
-See `PLAYER_NAME_RESOLUTION.md` for complete documentation.
-
 ## Key Architectural Patterns
 
 ### Base Hook System (PREFERRED PATTERN)
@@ -169,7 +167,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 **Primary Flow:** `gameLog.json` → `useCombinedRawData()` → transformation → `useCombinedFilteredRawData()` → base hooks  
 **Filter Application:** All hooks automatically respect `SettingsContext` filters (game type, date range, player inclusion/exclusion)  
 **French Date Parsing:** Uses `parseFrenchDate()` for DD/MM/YYYY format compatibility  
-**URL Sharing:** Complete settings state serialized to URL parameters (see `URL_PARAMETERS.md`) with localStorage fallback
+**URL Sharing:** Complete settings state serialized to URL parameters (see `URL_FILTERS.md`) with localStorage fallback
 
 ### Dual Data Source System
 **Main Source:** `/data/gameLog.json` + `/data/joueurs.json` (with player images, Twitch, YouTube links)  
@@ -422,9 +420,32 @@ const handleAchievementClick = (achievement: Achievement, event: React.MouseEven
 
 **Critical:** Achievements automatically configure filters (modded games, map filters, minimum games) based on the achievement context when clicked.
 
+## Changelog System
+
+**Version Management:** `src/config/version.ts` contains `APP_VERSION` constant and `CHANGELOG` array  
+**Display Component:** `ChangelogPage.tsx` provides interactive changelog with navigation to specific features  
+**Entry Format:** Each changelog entry can include clickable links that navigate to specific tabs with proper filter/state configuration
+
+```typescript
+// Changelog entry with navigation
+{
+  version: 'v1.5.1',
+  date: '27/11/2025',
+  description: 'Feature description',
+  link: {
+    mainTab: 'playerSelection',
+    subTab: 'heatmap',
+    text: 'Link text',
+    navigationState: { selectedPlayerSelectionView: 'deathmap' } // Optional state
+  }
+}
+```
+
+**Integration:** Changelog button in `App.tsx` footer, version display persists across all pages
+
 ## Integration Points
 
-**GitHub Actions:** `.github/workflows/update-data.yml` for weekly data sync  
+**GitHub Actions:** `.github/workflows/update-data.yml` for Mon/Tue/Thu data sync (8 PM UTC post-game)  
 **Apps Script:** `scripts/data-sync/fetch-data.js` fetches from Google Sheets  
 **Build Output:** GitHub Pages serves from `/docs` with custom domain (base path `/`)  
 **Error Handling:** Static file loading only, graceful degradation for missing data
