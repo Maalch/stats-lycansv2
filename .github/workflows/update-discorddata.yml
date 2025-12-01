@@ -5,6 +5,12 @@ on:
     # Run only on Monday, Thursday, and Saturday (the day after usual game days) at 4 AM UTC
     - cron: '0 4 * * 1,4,6'
   workflow_dispatch: # Allow manual triggering
+    inputs:
+      full_sync:
+        description: 'Force full synchronization (re-fetch all games)'
+        required: false
+        default: false
+        type: boolean
   push:
     paths:
       - 'scripts/data-sync/fetch-data-unified.js'
@@ -45,7 +51,16 @@ jobs:
         run: |
           echo "🚀 Starting Discord Team data fetch from AWS S3..."
           echo "📡 AWS S3: ${STATS_LIST_URL:0:30}..." # Show partial URL for debugging
-          node scripts/data-sync/fetch-data-unified.js discord
+          
+          # Determine sync mode
+          if [ "${{ inputs.full_sync }}" == "true" ]; then
+            echo "🔄 Sync mode: FULL (forced via workflow input)"
+            node scripts/data-sync/fetch-data-unified.js discord --full
+          else
+            echo "🔄 Sync mode: INCREMENTAL (only new + recent games)"
+            node scripts/data-sync/fetch-data-unified.js discord
+          fi
+          
           echo "✅ Discord Team data fetch completed"
           
       - name: Validate Discord Team data files
