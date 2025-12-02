@@ -28,11 +28,11 @@ export function GlobalVotingStatsChart() {
   const campAccuracyData = useMemo(() => {
     if (!data?.campVotingStats) return [];
     
-    // Only show camps that can have multiple members (for friendly fire to be meaningful)
-    const multiMemberCamps = ['Amoureux', 'Villageois', 'Agent', 'Loup'];
+    // Only show the two main opposing camps (Villageois vs Loups including Traître/Louveteau)
+    const mainCamps = ['Villageois', 'Loup'];
     
     return data.campVotingStats
-      .filter(camp => multiMemberCamps.includes(camp.campName))
+      .filter(camp => mainCamps.includes(camp.campName))
       .map(camp => ({
         camp: camp.campName,
         accuracyRate: parseFloat(camp.accuracyRate.toFixed(1)),
