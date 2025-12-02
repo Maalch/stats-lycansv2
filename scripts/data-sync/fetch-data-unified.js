@@ -18,7 +18,9 @@ import {
   saveDataToFile,
   createDataIndex,
   generateJoueursFromGameLog,
-  createPlaceholderFiles
+  createPlaceholderFiles,
+  correctVictoriousStatusForDisconnectedPlayers,
+  correctLoverSecondaryRole
 } from './shared/sync-utils.js';
 
 // Time window for updating recent games (6 hours in milliseconds)
@@ -327,11 +329,16 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     
     const awsGameLogs = [];
     console.log(`📦 Fetching ${gameLogUrls.length} AWS game log files...`);
+    console.log(`🔧 Correcting victorious status for disconnected players (${config.name})...`);
     
     for (const url of gameLogUrls) {
       try {
         const gameLog = await fetchGameLogData(url);
-        awsGameLogs.push(gameLog);
+        
+        // Apply corrections based on team filter
+        let correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog, config.gameFilter);
+        correctedGameLog = correctLoverSecondaryRole(correctedGameLog, config.gameFilter);
+        awsGameLogs.push(correctedGameLog);
         
         // Small delay between requests to be respectful to S3
         await new Promise(resolve => setTimeout(resolve, 500));

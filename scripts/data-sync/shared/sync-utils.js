@@ -4,6 +4,131 @@
 import fetch from 'node-fetch';
 import fs from 'fs/promises';
 import path from 'path';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';
+
+/**
+ * Correct Victorious status for disconnected players
+ * When a player disconnects, they are incorrectly marked as Victorious:false
+ * even if their camp won. This function fixes that by checking the winning camp.
+ * 
+ * Logic:
+ * 1. For each game, identify which camps won by checking Victorious:true players
+ * 2. For each player in the game, check if their camp is in the winning camps
+ * 3. If their camp won but they're marked as not victorious, correct it to true
+ * 
+ * This handles main camps (Villageois, Loup) as well as special roles (Amoureux, etc.)
+ * using the same camp grouping logic as the rest of the application.
+ * 
+ * EXCEPTION: Agent camp is excluded - there are always 2 Agents but only 1 wins.
+ * 
+ * @param {Object} gameLog - The game log object with GameStats array
+ * @param {Function} gameFilter - Optional filter function to determine which games to process
+ * @returns {Object} - The corrected game log object
+ */
+export function correctVictoriousStatusForDisconnectedPlayers(gameLog, gameFilter = null) {
+  if (!gameLog || !gameLog.GameStats || !Array.isArray(gameLog.GameStats)) {
+    return gameLog;
+  }
+
+  let totalCorrections = 0;
+
+  gameLog.GameStats.forEach(game => {
+    // Apply game filter if provided
+    if (gameFilter && !gameFilter(game.Id)) {
+      return; // Skip games that don't match the filter
+    }
+
+    if (!game.PlayerStats || !Array.isArray(game.PlayerStats)) {
+      return;
+    }
+
+    // Find which camps won this game by checking Victorious players
+    // EXCEPTION: Exclude "Agent" camp as only 1 of 2 Agents wins
+    const victoriousCamps = new Set();
+    game.PlayerStats.forEach(player => {
+      if (player.Victorious) {
+        const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+        const camp = getPlayerCampFromRole(finalRole, { 
+          regroupWolfSubRoles: true, // Group Traître/Louveteau with Loup
+          regroupVillagers: true,     // Group villager roles together
+          regroupLovers: true         // Group lovers together
+        });
+        
+        // Skip Agent camp - only 1 of 2 Agents wins, so we can't auto-correct
+        if (camp !== 'Agent') {
+          victoriousCamps.add(camp);
+        }
+      }
+    });
+
+    // If no victorious camps found, skip this game
+    if (victoriousCamps.size === 0) {
+      return;
+    }
+
+    // Now check all players and correct those who should be victorious but aren't
+    game.PlayerStats.forEach(player => {
+      const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+      const playerCamp = getPlayerCampFromRole(finalRole, { 
+        regroupWolfSubRoles: true,
+        regroupVillagers: true,
+        regroupLovers: true
+      });
+
+      // Skip Agent camp - can't auto-correct as only 1 of 2 wins
+      if (playerCamp === 'Agent') {
+        return;
+      }
+
+      // If this player's camp won but they're marked as not victorious, correct it
+      if (victoriousCamps.has(playerCamp) && !player.Victorious) {
+        player.Victorious = true;
+        totalCorrections++;
+        console.log(`  ✓ Corrected ${player.Username} in game ${game.Id}: ${playerCamp} won`);
+      }
+    });
+  });
+
+  if (totalCorrections > 0) {
+    console.log(`✓ Corrected ${totalCorrections} disconnected player victory statuses`);
+  }
+
+  return gameLog;
+}
+
+/**
+ * Correct Lover secondary role in game Logs
+ * In old game logs entries, Lovers can have their secondary role incorrectly set to "Télépathe"
+ * "Télépathe" is always a capacity of Lovers, and should not be listed as a secondary role.
+ * 
+ * @param {Object} gameLog - The game log object with GameStats array
+ * @param {Function} gameFilter - Optional filter function to determine which games to process
+ * @returns {Object} - The corrected game log object
+ */
+export function correctLoverSecondaryRole(gameLog, gameFilter = null) {
+  if (!gameLog || !gameLog.GameStats || !Array.isArray(gameLog.GameStats)) {
+    return gameLog;
+  }
+
+  gameLog.GameStats.forEach(game => {
+    // Apply game filter if provided
+    if (gameFilter && !gameFilter(game.Id)) {
+      return; // Skip games that don't match the filter
+    }
+
+    if (!game.PlayerStats || !Array.isArray(game.PlayerStats)) {
+      return;
+    }
+
+    game.PlayerStats.forEach(player => {
+      if (player.SecondaryRole === "Télépathe" && (player.MainRoleInitial === "Amoureux" || player.MainRoleInitial === "Amoureux Loup" || player.MainRoleInitial === "Amoureux Villageois")) {
+        player.SecondaryRole = null;
+      }
+    });
+  });
+
+  return gameLog;
+}
 
 /**
  * Ensure data directory exists
