@@ -30,7 +30,7 @@ export const CHANGELOG: ChangelogEntry[] = [
   {
     version: 'v1.5.1',
     date: '27/11/2025',
-    description: 'Ajouts des cartes de kills généralesdans',
+    description: 'Ajouts des cartes de kills générales dans',
     link: {
       mainTab: 'general',
       subTab: 'heatmap',
