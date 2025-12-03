@@ -129,9 +129,14 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
         if (existingLegacyGame && existingLegacyGame.source === 'legacy') {
           // Check if Google Sheet has full data exported (GSHEETPRIORITY was set)
           if (existingLegacyGame.LegacyData?.FullDataExported === true) {
-            // Google Sheet has priority - keep GSheet data, don't merge with AWS
+            // Google Sheet has priority - keep GSheet data as-is, don't add/merge AWS data
             awsSkippedDueToGSheetPriority++;
             console.log(`✓ Game ${gameId}: Using full GSheet data (GSHEETPRIORITY set), skipping AWS data`);
+            // Mark the existing game to indicate it stayed as legacy-only
+            gamesByIdMap.set(gameId, {
+              ...existingLegacyGame,
+              source: 'legacy-priority'
+            });
             return;
           }
           
