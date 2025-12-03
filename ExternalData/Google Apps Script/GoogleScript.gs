@@ -286,7 +286,8 @@ function debug_getGameById() {
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
           PlayerVODs: {},
-          FullDataExported: true
+          FullDataExported: true,
+          GameModId: (gameModId && gameModId.trim() !== '') ? gameModId.trim() : null
         },
         PlayerStats: []
       };
@@ -648,6 +649,7 @@ function getRawGameDataInNewFormat() {
       
       // Build base game record with new Id format "Ponce-YYYYMMDDHHmmSS"
       // FullDataExported flag indicates whether this is full GSheet data (true) or minimal metadata (false)
+      // GameModId is stored when GSHEETPRIORITY is set, so sync scripts can identify matching AWS games to skip
       var gameRecord = {
         Id: "Ponce-" + legacyDateFragment + "-" + gameId,
         StartDate: isoStart,
@@ -661,7 +663,8 @@ function getRawGameDataInNewFormat() {
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
           PlayerVODs: {},
-          FullDataExported: true
+          FullDataExported: true,
+          GameModId: (gameModId && gameModId.trim() !== '') ? gameModId.trim() : null
         },
         PlayerStats: []
       };

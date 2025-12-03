@@ -79,6 +79,7 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   console.log('Merging legacy and AWS game logs into unified structure...');
   
   const gamesByIdMap = new Map();
+  const gameModIdsToSkip = new Set(); // Track GameModIds from GSheet games with GSHEETPRIORITY
   let legacyCount = 0;
   let legacyMetadataOnlyCount = 0;
   let legacyFullDataCount = 0;
@@ -99,6 +100,11 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
       // Count separately: complete games vs metadata-only games vs full data exported
       if (game.LegacyData?.FullDataExported === true) {
         legacyFullDataCount++;
+        // If this game has a GameModId, track it so we skip the matching AWS game
+        if (game.LegacyData?.GameModId) {
+          gameModIdsToSkip.add(game.LegacyData.GameModId);
+          console.log(`  📋 GSheet priority game: ${game.Id} (will skip AWS game ${game.LegacyData.GameModId})`);
+        }
       } else if (game.EndDate) {
         legacyCount++;
       } else {
@@ -106,6 +112,9 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
       }
     });
     console.log(`✓ Added ${gamesByIdMap.size} legacy games to map (${legacyCount} complete, ${legacyMetadataOnlyCount} metadata-only, ${legacyFullDataCount} full GSheet data)`);
+    if (gameModIdsToSkip.size > 0) {
+      console.log(`  🔒 Will skip ${gameModIdsToSkip.size} AWS games due to GSHEETPRIORITY`);
+    }
   }
   
   // Add AWS games, merging with legacy if same ID exists (excluding games without EndDate)
@@ -123,11 +132,19 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
           return; // Skip non-Main Team games
         }
         
+        // Check if this AWS game should be skipped because GSheet has priority (via GameModId)
+        if (gameModIdsToSkip.has(gameId)) {
+          awsSkippedDueToGSheetPriority++;
+          console.log(`✓ Skipping AWS game ${gameId}: GSheet has priority (GSHEETPRIORITY set)`);
+          return;
+        }
+        
         // Try to find matching legacy game by exact ID match
         const existingLegacyGame = gamesByIdMap.get(gameId);
         
         if (existingLegacyGame && existingLegacyGame.source === 'legacy') {
           // Check if Google Sheet has full data exported (GSHEETPRIORITY was set)
+          // This handles cases where IDs match exactly
           if (existingLegacyGame.LegacyData?.FullDataExported === true) {
             // Google Sheet has priority - keep GSheet data as-is, don't add/merge AWS data
             awsSkippedDueToGSheetPriority++;
