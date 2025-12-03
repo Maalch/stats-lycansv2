@@ -81,8 +81,10 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   const gamesByIdMap = new Map();
   let legacyCount = 0;
   let legacyMetadataOnlyCount = 0;
+  let legacyFullDataCount = 0;
   let awsCount = 0;
   let awsFilteredCount = 0;
+  let awsSkippedDueToGSheetPriority = 0;
   let mergedCount = 0;
   
   // Add legacy games to map first (including games without EndDate for merging LegacyData)
@@ -94,14 +96,16 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
         source: 'legacy'
       });
       
-      // Count separately: complete games vs metadata-only games
-      if (game.EndDate) {
+      // Count separately: complete games vs metadata-only games vs full data exported
+      if (game.LegacyData?.FullDataExported === true) {
+        legacyFullDataCount++;
+      } else if (game.EndDate) {
         legacyCount++;
       } else {
         legacyMetadataOnlyCount++;
       }
     });
-    console.log(`✓ Added ${gamesByIdMap.size} legacy games to map (${legacyCount} complete, ${legacyMetadataOnlyCount} metadata-only)`);
+    console.log(`✓ Added ${gamesByIdMap.size} legacy games to map (${legacyCount} complete, ${legacyMetadataOnlyCount} metadata-only, ${legacyFullDataCount} full GSheet data)`);
   }
   
   // Add AWS games, merging with legacy if same ID exists (excluding games without EndDate)
@@ -123,6 +127,14 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
         const existingLegacyGame = gamesByIdMap.get(gameId);
         
         if (existingLegacyGame && existingLegacyGame.source === 'legacy') {
+          // Check if Google Sheet has full data exported (GSHEETPRIORITY was set)
+          if (existingLegacyGame.LegacyData?.FullDataExported === true) {
+            // Google Sheet has priority - keep GSheet data, don't merge with AWS
+            awsSkippedDueToGSheetPriority++;
+            console.log(`✓ Game ${gameId}: Using full GSheet data (GSHEETPRIORITY set), skipping AWS data`);
+            return;
+          }
+          
           // Merge: Use AWS data but preserve legacy Modded/Version/LegacyData
           const mergedGame = {
             ...awsGame,
@@ -163,8 +175,10 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
     TotalRecords: allGameStats.length,
     Sources: {
       Legacy: legacyCount,
+      LegacyFullData: legacyFullDataCount,
       AWS: awsCount,
-      Merged: mergedCount
+      Merged: mergedCount,
+      AWSSkippedDueToGSheetPriority: awsSkippedDueToGSheetPriority
     },
     GameStats: allGameStats
   };
@@ -452,8 +466,14 @@ async function main() {
     console.log('\n✅ Data sync completed successfully!');
     console.log(`📊 Total games processed: ${mergedGameLog.TotalRecords}`);
     console.log(`   - Legacy: ${mergedGameLog.Sources.Legacy} games`);
+    if (mergedGameLog.Sources.LegacyFullData > 0) {
+      console.log(`   - Legacy Full Data (GSHEETPRIORITY): ${mergedGameLog.Sources.LegacyFullData} games`);
+    }
     console.log(`   - AWS: ${mergedGameLog.Sources.AWS} games`);
     console.log(`   - Merged: ${mergedGameLog.Sources.Merged} games`);
+    if (mergedGameLog.Sources.AWSSkippedDueToGSheetPriority > 0) {
+      console.log(`   - AWS skipped (GSheet priority): ${mergedGameLog.Sources.AWSSkippedDueToGSheetPriority} games`);
+    }
     console.log(`👥 Player data: ${mergedJoueursData.TotalRecords} players`);
     if (legacyJoueursData) {
       const legacyCount = legacyJoueursData.TotalRecords || 0;

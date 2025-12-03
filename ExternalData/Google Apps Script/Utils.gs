@@ -33,7 +33,8 @@ const LYCAN_SCHEMA = {
       GAMEID: 'Game', //Game ID (unique), same as Game v2 sheet
       MODDED: 'Game Moddée', //Checkbox: true / false if the game is modded
       VERSION: 'Versions', //Version of this game
-      GAMEMODID: 'Mod Game ID', //Name of the game in the original game mod log file
+      GAMEMODID: 'Mod Game ID', //Name of the game in the original game mod log file: if set, only the LegacyData should be exported
+      GSHEETPRIORITY: 'Utilisation du gdoc', //Checkbox : true / false, if true the export should returns all data and not only LegacyData, even if GAMEMODID is filled
       MAP: 'Map', //Map name of this game
       DURATION: 'Temps game' //Duration of the game, in mm:ss format (minutes/seconds)
     }

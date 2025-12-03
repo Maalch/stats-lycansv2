@@ -233,10 +233,12 @@ function debug_getGameById() {
     
     // Check if GAMEMODID is filled
     var gameModId = game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEMODID)] : null;
+    var gsheetPriority = game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GSHEETPRIORITY)] : false;
     var gameRecord;
     
-    if (gameModId && gameModId.trim() !== '') {
+    if (gameModId && gameModId.trim() !== '' && !gsheetPriority) {
       Logger.log("GAMEMODID is filled: " + gameModId);
+      Logger.log("GSHEETPRIORITY is: " + gsheetPriority);
       Logger.log("Generating minimal structure with PlayerVODs...");
       
       // Minimal structure - same as in getRawGameDataInNewFormat
@@ -259,11 +261,16 @@ function debug_getGameById() {
         Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-          PlayerVODs: playerVODs
+          PlayerVODs: playerVODs,
+          FullDataExported: false
         }
       };
     } else {
-      Logger.log("GAMEMODID is NOT filled - generating full structure...");
+      if (gameModId && gameModId.trim() !== '') {
+        Logger.log("GAMEMODID is filled (" + gameModId + ") but GSHEETPRIORITY is true - generating full structure...");
+      } else {
+        Logger.log("GAMEMODID is NOT filled - generating full structure...");
+      }
       
       // Full structure - same as in getRawGameDataInNewFormat
       gameRecord = {
@@ -278,7 +285,8 @@ function debug_getGameById() {
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-          PlayerVODs: {}
+          PlayerVODs: {},
+          FullDataExported: true
         },
         PlayerStats: []
       };
@@ -607,8 +615,11 @@ function getRawGameDataInNewFormat() {
       }
       
       // Check if GAMEMODID is filled - if so, return minimal structure only
+      // UNLESS GSHEETPRIORITY is set to true, in which case we export full data
       var gameModId = game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GAMEMODID)] : null;
-      if (gameModId && gameModId.trim() !== '') {
+      var gsheetPriority = game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.GSHEETPRIORITY)] : false;
+      
+      if (gameModId && gameModId.trim() !== '' && !gsheetPriority) {
         // Still collect PlayerVODs even for minimal structure
         var playerVODs = {};
         var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
@@ -629,12 +640,14 @@ function getRawGameDataInNewFormat() {
           Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
           LegacyData: {
             VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-            PlayerVODs: playerVODs
+            PlayerVODs: playerVODs,
+            FullDataExported: false
           }
         };
       }
       
       // Build base game record with new Id format "Ponce-YYYYMMDDHHmmSS"
+      // FullDataExported flag indicates whether this is full GSheet data (true) or minimal metadata (false)
       var gameRecord = {
         Id: "Ponce-" + legacyDateFragment + "-" + gameId,
         StartDate: isoStart,
@@ -647,7 +660,8 @@ function getRawGameDataInNewFormat() {
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-          PlayerVODs: {}
+          PlayerVODs: {},
+          FullDataExported: true
         },
         PlayerStats: []
       };
