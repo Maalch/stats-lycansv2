@@ -79,7 +79,9 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   console.log('Merging legacy and AWS game logs into unified structure...');
   
   const gamesByIdMap = new Map();
-  const gameModIdsToSkip = new Set(); // Track GameModIds from GSheet games with GSHEETPRIORITY
+  // Track legacy games by their GameModId for matching with AWS games
+  // Key: GameModId, Value: { game, fullDataExported }
+  const legacyGamesByModId = new Map();
   let legacyCount = 0;
   let legacyMetadataOnlyCount = 0;
   let legacyFullDataCount = 0;
@@ -91,29 +93,43 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   // Add legacy games to map first (including games without EndDate for merging LegacyData)
   if (legacyGameLog && legacyGameLog.GameStats && Array.isArray(legacyGameLog.GameStats)) {
     legacyGameLog.GameStats.forEach(game => {
-      // Add all games to map, even those without EndDate, so LegacyData can be merged
-      gamesByIdMap.set(game.Id, {
-        ...game,
-        source: 'legacy'
-      });
+      // Check if this game has GameModId (means it has matching AWS game)
+      const gameModId = game.LegacyData?.GameModId;
+      const fullDataExported = game.LegacyData?.FullDataExported;
       
-      // Count separately: complete games vs metadata-only games vs full data exported
-      if (game.LegacyData?.FullDataExported === true) {
-        legacyFullDataCount++;
-        // If this game has a GameModId, track it so we skip the matching AWS game
-        if (game.LegacyData?.GameModId) {
-          gameModIdsToSkip.add(game.LegacyData.GameModId);
-          console.log(`  📋 GSheet priority game: ${game.Id} (will skip AWS game ${game.LegacyData.GameModId})`);
+      if (gameModId) {
+        // Track by GameModId for AWS matching
+        legacyGamesByModId.set(gameModId, { game, fullDataExported });
+        
+        if (fullDataExported === true) {
+          // GSHEETPRIORITY is set - add to map with GameModId as key (will replace AWS game)
+          gamesByIdMap.set(gameModId, {
+            ...game,
+            source: 'legacy-priority'
+          });
+          legacyFullDataCount++;
+          console.log(`  📋 GSheet priority game: ${game.Id} (GameModId: ${gameModId})`);
+        } else {
+          // Has GameModId but FullDataExported:false - metadata only, will be merged with AWS
+          legacyMetadataOnlyCount++;
         }
-      } else if (game.EndDate) {
-        legacyCount++;
       } else {
-        legacyMetadataOnlyCount++;
+        // No GameModId - regular legacy game, add to map
+        gamesByIdMap.set(game.Id, {
+          ...game,
+          source: 'legacy'
+        });
+        
+        if (game.EndDate) {
+          legacyCount++;
+        } else {
+          legacyMetadataOnlyCount++;
+        }
       }
     });
-    console.log(`✓ Added ${gamesByIdMap.size} legacy games to map (${legacyCount} complete, ${legacyMetadataOnlyCount} metadata-only, ${legacyFullDataCount} full GSheet data)`);
-    if (gameModIdsToSkip.size > 0) {
-      console.log(`  🔒 Will skip ${gameModIdsToSkip.size} AWS games due to GSHEETPRIORITY`);
+    console.log(`✓ Added ${gamesByIdMap.size} legacy games to map (${legacyCount} complete, ${legacyMetadataOnlyCount} metadata-only, ${legacyFullDataCount} full GSheet priority)`);
+    if (legacyGamesByModId.size > 0) {
+      console.log(`  🔗 ${legacyGamesByModId.size} games have GameModId for AWS matching`);
     }
   }
   
@@ -132,53 +148,51 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
           return; // Skip non-Main Team games
         }
         
-        // Check if this AWS game should be skipped because GSheet has priority (via GameModId)
-        if (gameModIdsToSkip.has(gameId)) {
-          awsSkippedDueToGSheetPriority++;
-          console.log(`✓ Skipping AWS game ${gameId}: GSheet has priority (GSHEETPRIORITY set)`);
+        // Check if there's a legacy game with matching GameModId
+        const legacyMatch = legacyGamesByModId.get(gameId);
+        
+        if (legacyMatch) {
+          if (legacyMatch.fullDataExported === true) {
+            // GSheet has priority - skip this AWS game entirely (GSheet data already in map)
+            awsSkippedDueToGSheetPriority++;
+            console.log(`✓ Skipping AWS game ${gameId}: GSheet has priority (FullDataExported: true)`);
+            return;
+          } else {
+            // FullDataExported: false - Use AWS data but merge LegacyData from GSheet
+            const mergedGame = {
+              ...awsGame,
+              Version: legacyMatch.game.Version || gameLog.ModVersion,
+              Modded: legacyMatch.game.Modded !== undefined ? legacyMatch.game.Modded : true,
+              LegacyData: legacyMatch.game.LegacyData || undefined,
+              source: 'merged'
+            };
+            gamesByIdMap.set(gameId, mergedGame);
+            mergedCount++;
+            console.log(`✓ Merged game ${gameId}: AWS data + GSheet LegacyData`);
+            return;
+          }
+        }
+        
+        // Check if game already exists in map (exact ID match - shouldn't happen often)
+        const existingGame = gamesByIdMap.get(gameId);
+        
+        if (existingGame) {
+          // Game already exists - skip (could be legacy-priority or duplicate)
+          if (existingGame.source === 'legacy-priority') {
+            awsSkippedDueToGSheetPriority++;
+          }
           return;
         }
         
-        // Try to find matching legacy game by exact ID match
-        const existingLegacyGame = gamesByIdMap.get(gameId);
-        
-        if (existingLegacyGame && existingLegacyGame.source === 'legacy') {
-          // Check if Google Sheet has full data exported (GSHEETPRIORITY was set)
-          // This handles cases where IDs match exactly
-          if (existingLegacyGame.LegacyData?.FullDataExported === true) {
-            // Google Sheet has priority - keep GSheet data as-is, don't add/merge AWS data
-            awsSkippedDueToGSheetPriority++;
-            console.log(`✓ Game ${gameId}: Using full GSheet data (GSHEETPRIORITY set), skipping AWS data`);
-            // Mark the existing game to indicate it stayed as legacy-only
-            gamesByIdMap.set(gameId, {
-              ...existingLegacyGame,
-              source: 'legacy-priority'
-            });
-            return;
-          }
-          
-          // Merge: Use AWS data but preserve legacy Modded/Version/LegacyData
-          const mergedGame = {
-            ...awsGame,
-            Version: existingLegacyGame.Version || gameLog.ModVersion,
-            Modded: existingLegacyGame.Modded !== undefined ? existingLegacyGame.Modded : true,
-            LegacyData: existingLegacyGame.LegacyData || undefined,
-            source: 'merged'
-          };
-          gamesByIdMap.set(gameId, mergedGame);
-          mergedCount++;
-          console.log(`✓ Merged game ${gameId}: AWS data + legacy metadata`);
-        } else {
-          // Pure AWS game - add ModVersion and Modded flag
-          const awsGameWithVersion = {
-            ...awsGame,
-            Version: gameLog.ModVersion,
-            Modded: true,
-            source: 'aws'
-          };
-          gamesByIdMap.set(gameId, awsGameWithVersion);
-          awsCount++;
-        }
+        // Pure AWS game - add with ModVersion and Modded flag
+        const awsGameWithVersion = {
+          ...awsGame,
+          Version: gameLog.ModVersion,
+          Modded: true,
+          source: 'aws'
+        };
+        gamesByIdMap.set(gameId, awsGameWithVersion);
+        awsCount++;
       });
     }
   }

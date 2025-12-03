@@ -262,19 +262,21 @@ function debug_getGameById() {
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
           PlayerVODs: playerVODs,
+          GameModId: gameModId.trim(),
           FullDataExported: false
         }
       };
     } else {
-      if (gameModId && gameModId.trim() !== '') {
-        Logger.log("GAMEMODID is filled (" + gameModId + ") but GSHEETPRIORITY is true - generating full structure...");
+      var hasGameModIdWithPriority = gsheetPriority && gameModId && gameModId.trim() !== '';
+      if (hasGameModIdWithPriority) {
+        Logger.log("GAMEMODID is filled (" + gameModId + ") with GSHEETPRIORITY - generating full structure with GameModId...");
       } else {
-        Logger.log("GAMEMODID is NOT filled - generating full structure...");
+        Logger.log("GAMEMODID is NOT filled or no GSHEETPRIORITY - generating full structure without GameModId...");
       }
       
       // Full structure - same as in getRawGameDataInNewFormat
       gameRecord = {
-        Id: "Ponce-" + legacyDateFragment + "-" + gameId,
+        Id: hasGameModIdWithPriority ? gameModId.trim() : ("Ponce-" + legacyDateFragment + "-" + gameId),
         StartDate: isoStart,
         EndDate: endDate,
         MapName: game2Row ? game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)] : null,
@@ -285,12 +287,16 @@ function debug_getGameById() {
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-          PlayerVODs: {},
-          FullDataExported: true,
-          GameModId: (gameModId && gameModId.trim() !== '') ? gameModId.trim() : null
+          PlayerVODs: {}
         },
         PlayerStats: []
       };
+      
+      // Only add GameModId and FullDataExported when GAMEMODID is set with GSHEETPRIORITY
+      if (hasGameModIdWithPriority) {
+        gameRecord.LegacyData.GameModId = gameModId.trim();
+        gameRecord.LegacyData.FullDataExported = true;
+      }
       
       var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
       var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
@@ -642,16 +648,18 @@ function getRawGameDataInNewFormat() {
           LegacyData: {
             VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
             PlayerVODs: playerVODs,
+            GameModId: gameModId.trim(),
             FullDataExported: false
           }
         };
       }
       
       // Build base game record with new Id format "Ponce-YYYYMMDDHHmmSS"
-      // FullDataExported flag indicates whether this is full GSheet data (true) or minimal metadata (false)
-      // GameModId is stored when GSHEETPRIORITY is set, so sync scripts can identify matching AWS games to skip
+      // When GAMEMODID is set with GSHEETPRIORITY, include GameModId and FullDataExported:true
+      // so sync scripts know to skip the matching AWS game and use this GSheet data instead
+      var hasGameModIdWithPriority = gsheetPriority && gameModId && gameModId.trim() !== '';
       var gameRecord = {
-        Id: "Ponce-" + legacyDateFragment + "-" + gameId,
+        Id: hasGameModIdWithPriority ? gameModId.trim() : ("Ponce-" + legacyDateFragment + "-" + gameId),
         StartDate: isoStart,
         EndDate: endDate,
         MapName: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.MAP)],
@@ -662,12 +670,16 @@ function getRawGameDataInNewFormat() {
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-          PlayerVODs: {},
-          FullDataExported: true,
-          GameModId: (gameModId && gameModId.trim() !== '') ? gameModId.trim() : null
+          PlayerVODs: {}
         },
         PlayerStats: []
       };
+      
+      // Only add GameModId and FullDataExported when GAMEMODID is set with GSHEETPRIORITY
+      if (hasGameModIdWithPriority) {
+        gameRecord.LegacyData.GameModId = gameModId.trim();
+        gameRecord.LegacyData.FullDataExported = true;
+      }
       
       var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
       var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
