@@ -558,36 +558,42 @@ export function PlayerSeriesChart() {
         {/* Series Type Buttons */}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <button
+            type="button"
             className={`lycans-categorie-btn ${selectedSeriesType === 'villageois' ? 'active' : ''}`}
             onClick={() => handleSeriesTypeChange('villageois')}
           >
             Séries Villageois
           </button>
           <button
+            type="button"
             className={`lycans-categorie-btn ${selectedSeriesType === 'loup' ? 'active' : ''}`}
             onClick={() => handleSeriesTypeChange('loup')}
           >
             Séries Loups
           </button>
           <button
+            type="button"
             className={`lycans-categorie-btn ${selectedSeriesType === 'nowolf' ? 'active' : ''}`}
             onClick={() => handleSeriesTypeChange('nowolf')}
           >
             Séries Sans Loups
           </button>
           <button
+            type="button"
             className={`lycans-categorie-btn ${selectedSeriesType === 'solo' ? 'active' : ''}`}
             onClick={() => handleSeriesTypeChange('solo')}
           >
             Séries Rôles Solos
           </button>
           <button
+            type="button"
             className={`lycans-categorie-btn ${selectedSeriesType === 'wins' ? 'active' : ''}`}
             onClick={() => handleSeriesTypeChange('wins')}
           >
             Séries de Victoires
           </button>
           <button
+            type="button"
             className={`lycans-categorie-btn ${selectedSeriesType === 'losses' ? 'active' : ''}`}
             onClick={() => handleSeriesTypeChange('losses')}
           >
@@ -597,6 +603,7 @@ export function PlayerSeriesChart() {
         
         {/* Toggle View Mode Button */}
         <button
+          type="button"
           className="lycans-categorie-btn"
           onClick={() => handleViewModeChange(viewMode === 'best' ? 'ongoing' : 'best')}
           style={{ 

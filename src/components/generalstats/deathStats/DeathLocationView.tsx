@@ -340,6 +340,7 @@ export function DeathLocationView({
             overflow: 'hidden'
           }}>
             <button
+              type="button"
               onClick={() => setViewMode('heatmap')}
               style={{
                 background: viewMode === 'heatmap' ? 'var(--accent-primary)' : 'transparent',
@@ -355,6 +356,7 @@ export function DeathLocationView({
               Carte de chaleur
             </button>
             <button
+              type="button"
               onClick={() => setViewMode('scatter')}
               style={{
                 background: viewMode === 'scatter' ? 'var(--accent-primary)' : 'transparent',

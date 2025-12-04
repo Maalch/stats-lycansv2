@@ -49,6 +49,7 @@ export function VotingStatisticsChart() {
           flexWrap: 'wrap'
         }}>
           <button
+            type="button"
             onClick={() => {
               setSelectedCategory('overview');
             }}
@@ -67,6 +68,7 @@ export function VotingStatisticsChart() {
             📊 Vue d'Ensemble
           </button>
           <button
+            type="button"
             onClick={() => {
               setSelectedCategory('behavior');
             }}

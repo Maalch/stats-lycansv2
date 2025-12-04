@@ -25,6 +25,7 @@ export function FullscreenChart({ children, title, className = '' }: FullscreenC
   return (
     <div className={`lycans-chart-container ${className}`}>
       <button 
+        type="button"
         className="lycans-fullscreen-button"
         onClick={handleFullscreen}
         title="Afficher en plein écran"

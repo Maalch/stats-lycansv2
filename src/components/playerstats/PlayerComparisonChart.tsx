@@ -407,7 +407,7 @@ export function PlayerComparisonChart() {
                   {getPlayerInfo(selectedPlayer1)?.Image ? (
                     <img 
                       src={getPlayerInfo(selectedPlayer1)!.Image!} 
-                      alt={selectedPlayer1}
+                      alt={`Photo de profil de ${selectedPlayer1}`}
                       className="lycans-player-image"
                     />
                   ) : (
@@ -503,7 +503,7 @@ export function PlayerComparisonChart() {
                   {getPlayerInfo(selectedPlayer2)?.Image ? (
                     <img 
                       src={getPlayerInfo(selectedPlayer2)!.Image!} 
-                      alt={selectedPlayer2}
+                      alt={`Photo de profil de ${selectedPlayer2}`}
                       className="lycans-player-image"
                     />
                   ) : (

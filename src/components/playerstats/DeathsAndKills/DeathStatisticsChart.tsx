@@ -198,24 +198,28 @@ export function DeathStatisticsChart() {
       {/* View Selection */}
       <div className="lycans-categories-selection">
         <button
+          type="button"
           className={`lycans-categorie-btn ${selectedView === 'killers' ? 'active' : ''}`}
           onClick={() => handleViewChange('killers')}
         >
           Tueurs
         </button>
         <button
+          type="button"
           className={`lycans-categorie-btn ${selectedView === 'deaths' ? 'active' : ''}`}
           onClick={() => handleViewChange('deaths')}
         >
           Morts
         </button>
         <button
+          type="button"
           className={`lycans-categorie-btn ${selectedView === 'survival' ? 'active' : ''}`}
           onClick={() => handleViewChange('survival')}
         >
           Survie par Jour
         </button>
         <button
+          type="button"
           className={`lycans-categorie-btn ${selectedView === 'hunter' ? 'active' : ''}`}
           onClick={() => handleViewChange('hunter')}
         >

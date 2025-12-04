@@ -84,12 +84,14 @@ export function GameDurationInsights() {
       {/* Duration Type Selection */}
       <div className="lycans-categories-selection">
         <button
+          type="button"
           className={`lycans-categorie-btn ${selectedDurationType === 'real' ? 'active' : ''}`}
           onClick={() => setSelectedDurationType('real')}
         >
           Durée en jeu
         </button>
         <button
+          type="button"
           className={`lycans-categorie-btn ${selectedDurationType === 'gametime' ? 'active' : ''}`}
           onClick={() => setSelectedDurationType('gametime')}
         >

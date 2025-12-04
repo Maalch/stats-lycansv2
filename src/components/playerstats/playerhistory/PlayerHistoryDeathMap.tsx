@@ -438,6 +438,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
             overflow: 'hidden'
           }}>
             <button
+              type="button"
               onClick={() => setViewMode('deaths')}
               style={{
                 background: viewMode === 'deaths' ? 'var(--accent-primary)' : 'transparent',
@@ -453,6 +454,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
               💀 Morts
             </button>
             <button
+              type="button"
               onClick={() => setViewMode('kills')}
               style={{
                 background: viewMode === 'kills' ? 'var(--accent-primary)' : 'transparent',

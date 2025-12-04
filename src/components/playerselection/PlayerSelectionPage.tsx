@@ -273,6 +273,7 @@ export function PlayerSelectionPage() {
               <div className="search-results-header">
                 <h3>Résultats de recherche:</h3>
                 <button 
+                  type="button"
                   className="clear-search-btn"
                   onClick={() => setSearchQuery('')}
                 >
@@ -283,13 +284,14 @@ export function PlayerSelectionPage() {
                 {sortedFilteredPlayers.map((player) => (
                   <button
                     key={player.id}
+                    type="button"
                     className={`suggestion-btn ${player.isHighlighted ? 'highlighted' : ''}`}
                     onClick={() => handlePlayerSelect(player.name)}
                   >
                     {player.image ? (
                       <img 
                         src={player.image} 
-                        alt={player.name}
+                        alt={`Photo de profil de ${player.name}`}
                         className="player-avatar"
                       />
                     ) : (
@@ -319,6 +321,7 @@ export function PlayerSelectionPage() {
             <div className="no-results">
               <p>Aucun joueur trouvé pour "{searchQuery}"</p>
               <button 
+                type="button"
                 className="clear-search-btn"
                 onClick={() => setSearchQuery('')}
               >
@@ -335,6 +338,7 @@ export function PlayerSelectionPage() {
                 <div className="no-player-found">
                   <p>Le joueur "{settings.highlightedPlayer}" n'a pas été trouvé dans les données.</p>
                   <button 
+                    type="button"
                     className="clear-selection-btn"
                     onClick={() => updateSettings({ highlightedPlayer: null })}
                   >
@@ -355,7 +359,7 @@ export function PlayerSelectionPage() {
                   {highlightedPlayerStats.image ? (
                     <img 
                       src={highlightedPlayerStats.image} 
-                      alt={highlightedPlayerStats.name}
+                      alt={`Photo de profil de ${highlightedPlayerStats.name}`}
                       className="player-avatar large"
                     />
                   ) : (
@@ -403,30 +407,35 @@ export function PlayerSelectionPage() {
                   {/* View Type Selection */}
                   <div className="lycans-categories-selection" style={{ marginBottom: '1rem' }}>
                     <button
+                      type="button"
                       className={`lycans-categorie-btn ${selectedView === 'achievements' ? 'active' : ''}`}
                       onClick={() => handleViewChange('achievements')}
                     >
                       Classement
                     </button>
                     <button
+                      type="button"
                       className={`lycans-categorie-btn ${selectedView === 'evolution' ? 'active' : ''}`}
                       onClick={() => handleViewChange('evolution')}
                     >
                       Évolution
                     </button>
                     <button
+                      type="button"
                       className={`lycans-categorie-btn ${selectedView === 'camps' ? 'active' : ''}`}
                       onClick={() => handleViewChange('camps')}
                     >
                       Camps
                     </button>
                     <button
+                      type="button"
                       className={`lycans-categorie-btn ${selectedView === 'roles' ? 'active' : ''}`}
                       onClick={() => handleViewChange('roles')}
                     >
                       Rôles
                     </button>
                     <button
+                      type="button"
                       className={`lycans-categorie-btn ${selectedView === 'maps' ? 'active' : ''}`}
                       onClick={() => handleViewChange('maps')}
                     >
@@ -434,12 +443,14 @@ export function PlayerSelectionPage() {
                     </button>
 
                     <button
+                      type="button"
                       className={`lycans-categorie-btn ${selectedView === 'kills' ? 'active' : ''}`}
                       onClick={() => handleViewChange('kills')}
                     >
                       Kills
                     </button>
                     <button
+                      type="button"
                       className={`lycans-categorie-btn ${selectedView === 'deathmap' ? 'active' : ''}`}
                       onClick={() => handleViewChange('deathmap')}
                     >
@@ -480,6 +491,7 @@ export function PlayerSelectionPage() {
                       <div className="achievements-filter">
                         {!isModdedOnlyMode && (
                           <button
+                            type="button"
                             className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
                             onClick={(e) => {
                               e.stopPropagation();
@@ -490,6 +502,7 @@ export function PlayerSelectionPage() {
                           </button>
                         )}
                         <button
+                          type="button"
                           className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -662,6 +675,7 @@ export function PlayerSelectionPage() {
                   )}
 
                   <button
+                    type="button"
                     className="highlight-btn active"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -697,7 +711,7 @@ export function PlayerSelectionPage() {
                       {player.image ? (
                         <img 
                           src={player.image} 
-                          alt={player.name}
+                          alt={`Photo de profil de ${player.name}`}
                           className="character-avatar"
                         />
                       ) : (
