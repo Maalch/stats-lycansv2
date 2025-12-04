@@ -40,7 +40,6 @@ export function extractYouTubeInfo(url: string | null): { videoId: string | null
     
     return { videoId, timestamp };
   } catch (error) {
-    console.warn('Failed to parse YouTube URL:', url);
     return { videoId: null, timestamp: null };
   }
 }

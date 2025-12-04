@@ -72,15 +72,13 @@ function createYouTubeEmbedUrl(start: string | null, end: string | null): string
         if (endTime > startTime) {
           return `${embedUrl}&end=${endTime}`;
         }
-      } catch (endError) {
+      } catch (error) {
         // If end URL parsing fails, just use the start URL
-        console.warn('Failed to parse end URL:', end, endError);
       }
     }
     
     return embedUrl;
   } catch (error) {
-    console.warn('Failed to create YouTube embed URL:', start, error);
     return null;
   }
 }
@@ -120,7 +118,6 @@ function calculateGameDuration(start: string | null, end: string | null): number
     
     // Validate that the dates are valid
     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      console.warn('Invalid date format:', start, end);
       return null;
     }
     
@@ -133,7 +130,6 @@ function calculateGameDuration(start: string | null, end: string | null): number
     
     return null;
   } catch (error) {
-    console.warn('Failed to calculate game duration:', start, end, error);
     return null;
   }
 }

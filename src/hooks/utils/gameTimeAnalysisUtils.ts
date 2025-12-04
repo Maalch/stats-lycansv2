@@ -27,13 +27,11 @@ export function parseEndTiming(endTiming: string | null): GameTimeInfo | null {
 
   // Validate phase
   if (!['J', 'N', 'M'].includes(phase)) {
-    console.warn(`Invalid game phase in EndTiming: ${endTiming}`);
     return null;
   }
 
   // Validate day number
   if (isNaN(dayNumber) || dayNumber < 1) {
-    console.warn(`Invalid day number in EndTiming: ${endTiming}`);
     return null;
   }
 
