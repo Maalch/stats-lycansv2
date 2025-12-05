@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.5.1';
+export const APP_VERSION = '1.5.2';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.5.2',
+    date: '05/12/2025',
+    description: 'Ajout du détails des parties par composition Loups/Solos/Villageois dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'teamComposition',
+      text: 'Stats Parties / Compositions',
+    }
+  },
   {
     version: 'v1.5.1',
     date: '27/11/2025',
