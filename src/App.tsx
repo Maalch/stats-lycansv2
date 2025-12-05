@@ -252,6 +252,19 @@ function MainApp() {
   const [currentHash, setCurrentHash] = useState(window.location.hash);
   const [showChangelog, setShowChangelog] = useState(false);
 
+  // Helper function to update URL with pushState when tabs change
+  const updateTabUrl = (tab: string, subtab: string | null = null) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('tab', tab);
+    if (subtab) {
+      urlParams.set('subtab', subtab);
+    } else {
+      urlParams.delete('subtab');
+    }
+    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+    window.history.pushState({}, '', newUrl);
+  };
+
   // Helper function to format the subtitle text
   const getSubtitleText = () => {
     if (dateLoading) {
@@ -272,7 +285,23 @@ function MainApp() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Handle tab navigation requests
+  // Sync URL tab params to component state on mount and browser navigation
+  useEffect(() => {
+    if (settings.tab) {
+      setSelectedMainTab(settings.tab);
+      if (settings.subtab) {
+        if (settings.tab === 'rankings') {
+          setSelectedPlayerStat(settings.subtab);
+        } else if (settings.tab === 'general') {
+          setSelectedGeneralStat(settings.subtab);
+        } else if (settings.tab === 'br') {
+          setSelectedBRStat(settings.subtab);
+        }
+      }
+    }
+  }, [settings.tab, settings.subtab]);
+
+  // Handle tab navigation requests from NavigationContext
   useEffect(() => {
     if (requestedTab) {
       setSelectedMainTab(requestedTab.mainTab);
@@ -384,7 +413,10 @@ function MainApp() {
                 <button
                   key={item.key}
                   className={`lycans-submenu-btn${selectedPlayerStat === item.key ? ' active' : ''}`}
-                  onClick={() => setSelectedPlayerStat(item.key)}
+                  onClick={() => {
+                    setSelectedPlayerStat(item.key);
+                    updateTabUrl('rankings', item.key);
+                  }}
                   type="button"
                   title={item.description}
                 >
@@ -418,7 +450,10 @@ function MainApp() {
                 <button
                   key={item.key}
                   className={`lycans-submenu-btn${selectedGeneralStat === item.key ? ' active' : ''}`}
-                  onClick={() => setSelectedGeneralStat(item.key)}
+                  onClick={() => {
+                    setSelectedGeneralStat(item.key);
+                    updateTabUrl('general', item.key);
+                  }}
                   type="button"
                   title={item.description}
                 >
@@ -443,7 +478,10 @@ function MainApp() {
                 <button
                   key={item.key}
                   className={`lycans-submenu-btn${selectedBRStat === item.key ? ' active' : ''}`}
-                  onClick={() => setSelectedBRStat(item.key)}
+                  onClick={() => {
+                    setSelectedBRStat(item.key);
+                    updateTabUrl('br', item.key);
+                  }}
                   type="button"
                   title={item.description}
                 >
@@ -515,7 +553,15 @@ function MainApp() {
                     <button
                       key={tab.key}
                       className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
-                      onClick={() => setSelectedMainTab(tab.key)}
+                      onClick={() => {
+                        setSelectedMainTab(tab.key);
+                        // Determine default subtab for tabs that have subtabs
+                        let defaultSubtab: string | null = null;
+                        if (tab.key === 'rankings') defaultSubtab = selectedPlayerStat;
+                        else if (tab.key === 'general') defaultSubtab = selectedGeneralStat;
+                        else if (tab.key === 'br') defaultSubtab = selectedBRStat;
+                        updateTabUrl(tab.key, defaultSubtab);
+                      }}
                       type="button"
                       title={tab.description}
                     >

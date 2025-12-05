@@ -41,6 +41,10 @@ export interface SettingsState {
   
   // Data source selection (main team vs Discord team)
   dataSource: 'main' | 'discord';
+  
+  // Tab navigation (for URL persistence)
+  tab: string | null;
+  subtab: string | null;
 }
 
 interface SettingsContextType {
@@ -69,6 +73,8 @@ const defaultSettings: SettingsState = {
     playerFilter: { mode: 'none', players: [] },
   },
   dataSource: 'main',
+  tab: null,
+  subtab: null,
 };
 
 // Helper functions for URL parameters
@@ -158,6 +164,16 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
   } else {
     settings.dataSource = 'main';
   }
+  
+  // Parse tab and subtab
+  const tab = urlParams.get('tab');
+  if (tab) {
+    settings.tab = tab;
+  }
+  const subtab = urlParams.get('subtab');
+  if (subtab) {
+    settings.subtab = subtab;
+  }
 
   return settings;
 }
@@ -206,6 +222,14 @@ function updateUrlFromSettings(settings: SettingsState) {
   // Data source
   if (settings.dataSource && settings.dataSource !== defaultSettings.dataSource) {
     urlParams.set('dataSource', settings.dataSource);
+  }
+  
+  // Tab and subtab
+  if (settings.tab) {
+    urlParams.set('tab', settings.tab);
+  }
+  if (settings.subtab) {
+    urlParams.set('subtab', settings.subtab);
   }
   
   // Update URL without triggering page reload
