@@ -188,7 +188,7 @@ const AMOUREUX_ROLES = ['Amoureux', 'Amoureux Loup', 'Amoureux Villageois'];
 const VAUDOU_ROLES = ['Vaudou', 'Zombie'];
 // Solo roles - these players win alone, no consistency check needed
 // Note: Agent has 2 players but only 1 can win, so it's treated as solo
-const SOLO_ROLES = ['Idiot du Village', 'Agent', 'Cannibale', 'La Bête', 'Scientifique', 'Espion', 'Chasseur de primes'];
+const SOLO_ROLES = ['Idiot du Village', 'Agent', 'Cannibale', 'La Bête', 'Scientifique', 'Contrebandier', 'Espion', 'Chasseur de primes'];
 
 // Determine which camp a role belongs to for victory consistency
 function getCampForVictoryCheck(role) {

@@ -8,7 +8,7 @@ import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerId } from '../../..
 // Special roles are all camps except Villageois and Loup camps (exclusion list approach)
 // This dynamically includes any special role that appears in the game data:
 // - Amoureux (and all solo roles)
-// - All solo roles: Idiot du Village, Agent, Espion, Cannibale, Scientifique, La Bête, Chasseur de primes, Vaudou, etc.
+// - All solo roles: Idiot du Village, Agent, Espion, Cannibale, Scientifique, Contrebandier, La Bête, Chasseur de primes, Vaudou, etc.
 // - Any new roles added to the game will automatically be included
 const isSpecialRole = (camp) => {
   return camp !== 'Villageois' && camp !== 'Loup';

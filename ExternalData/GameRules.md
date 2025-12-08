@@ -34,6 +34,8 @@ Espion: He gets two targets to spy on (red names in the player list). Once he Sp
 
 Scientifique: He wins by attaining 100% Research. His Research increases by being close to a transformed Wolf, or by witnessing a Wolf kill or transformation. The more risks he takes, the faster he gains Research.
 
+Contrebandier: He wins by collecting ressource on his own. He has a specific ressource objectif each day else he dies. Once he collectes a certain total amount of ressources, he's hunted by everyone for a night. During that night, his role is revealed, and everyonce can kill him. If he survived that night, he wins.
+
 Amoureux: Actually a duo role. They win by surviving and killing most other players. One Lover is always a Villager and the other a Wolf. The Villager cannot heal naturally and only the Wolf's kills can heal him, but they can communicate directly and help each other through telepathy.
 
 La Bête: Few things are known about the Beast. It is said that it can Mark other players and then go on a rampage...
