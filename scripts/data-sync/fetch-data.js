@@ -144,7 +144,7 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
         const gameId = awsGame.Id;
         
         // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
-        if (!gameId || (!gameId.startsWith('Ponce-') && !gameId.startsWith('Tsuna-'))) {
+        if (!gameId || (!gameId.startsWith('Ponce-') && !gameId.startsWith('Tsuna-') && !gameId.startsWith('khalen-'))) {
           return; // Skip non-Main Team games
         }
         
@@ -279,7 +279,7 @@ async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
     if (gameLog.GameStats && Array.isArray(gameLog.GameStats)) {
       gameLog.GameStats.forEach(game => {
         // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
-        if (!game.Id || (!game.Id.startsWith('Ponce-') && !game.Id.startsWith('Tsuna-'))) {
+        if (!game.Id || (!game.Id.startsWith('Ponce-') && !game.Id.startsWith('Tsuna-') && !game.Id.startsWith('khalen-'))) {
           return; // Skip non-Main Team games
         }
         
@@ -426,7 +426,7 @@ async function main() {
           const gameLog = await fetchGameLogData(url);
           
           // Correct victorious status for disconnected players and Lover secondary role (Main Team only)
-          const mainTeamFilter = (gameId) => gameId?.startsWith('Ponce-') || gameId?.startsWith('Tsuna-');
+          const mainTeamFilter = (gameId) => gameId?.startsWith('Ponce-') || gameId?.startsWith('Tsuna-') || gameId?.startsWith('khalen-')  ;
           let correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog, mainTeamFilter);
           correctedGameLog = correctLoverSecondaryRole(correctedGameLog, mainTeamFilter);
           awsGameLogs.push(correctedGameLog);
