@@ -112,12 +112,10 @@ export function computeDeathStatistics(gameData) {
       if (!killerCounts[kill.killerName]) {
         killerCounts[kill.killerName] = { 
           kills: 0, 
-          victims: new Set(), 
           killsByDeathType: {} 
         };
       }
       killerCounts[kill.killerName].kills++;
-      killerCounts[kill.killerName].victims.add(kill.victimName);
       
       // Track kills by death type
       const deathType = kill.deathType;
@@ -141,7 +139,6 @@ export function computeDeathStatistics(gameData) {
       killerId,  // Add Steam ID as primary identifier
       killerName,
       kills: data.kills,
-      victims: Array.from(data.victims),
       percentage: totalDeaths > 0 ? (data.kills / totalDeaths) * 100 : 0,
       gamesPlayed: playerGameCounts[killerId] || 0,
       averageKillsPerGame: (playerGameCounts[killerId] || 0) > 0 ? 
