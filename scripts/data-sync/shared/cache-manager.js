@@ -11,7 +11,7 @@ import path from 'path';
 /**
  * Cache structure:
  * {
- *   version: "1.0.0",
+ *   version: "2.0.0",
  *   lastUpdated: "2025-12-10T12:00:00Z",
  *   lastProcessedGameId: "Ponce-20251209...",
  *   
@@ -20,19 +20,27 @@ import path from 'path';
  *     totalGames: 662,
  *     playerStats: { [playerId]: { ...rawStats } },
  *     seriesState: { [playerId]: { currentWinSeries, longestWinSeries, ... } },
- *     globalStats: { campAverages: {...}, totalGames: 662, ... }
+ *     mapStats: [ { player, playerName, villageWinRate, chateauWinRate, ... } ],
+ *     deathStats: { playerDeathStats: [...], playerKillStats: [...], ... },
+ *     hunterStats: [ { playerId, playerName, totalKills, ... } ],
+ *     campStats: [ { playerId, playerName, campPerformance: {...}, ... } ],
+ *     votingStats: { playerBehavior: [...], playerAccuracy: [...], playerTargets: [...] }
  *   },
  *   
  *   moddedGames: {
  *     totalGames: 371,
  *     playerStats: { [playerId]: { ...rawStats } },
  *     seriesState: { [playerId]: { ... } },
- *     globalStats: { ... }
+ *     mapStats: [...],
+ *     deathStats: {...},
+ *     hunterStats: [...],
+ *     campStats: [...],
+ *     votingStats: {...}
  *   }
  * }
  */
 
-const CACHE_VERSION = "1.0.0";
+const CACHE_VERSION = "2.0.0";
 const CACHE_FILENAME = "playerStatsCache.json";
 
 /**
@@ -48,20 +56,22 @@ export function createEmptyCache() {
       totalGames: 0,
       playerStats: {},
       seriesState: {},
-      globalStats: {
-        campAverages: {},
-        totalGames: 0
-      }
+      mapStats: [],
+      deathStats: null,
+      hunterStats: [],
+      campStats: [],
+      votingStats: null
     },
     
     moddedGames: {
       totalGames: 0,
       playerStats: {},
       seriesState: {},
-      globalStats: {
-        campAverages: {},
-        totalGames: 0
-      }
+      mapStats: [],
+      deathStats: null,
+      hunterStats: [],
+      campStats: [],
+      votingStats: null
     }
   };
 }

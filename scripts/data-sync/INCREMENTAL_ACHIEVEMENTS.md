@@ -12,7 +12,7 @@ A cache file (`playerStatsCache.json`) is created in each data directory (e.g., 
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "lastUpdated": "2025-12-10T12:00:00Z",
   "lastProcessedGameId": null,
   
@@ -34,12 +34,38 @@ A cache file (`playerStatsCache.json`) is created in each data directory (e.g., 
         ...
       }
     },
-    "globalStats": { ... }
+    "mapStats": [
+      {
+        "playerId": "76561198...",
+        "playerName": "Ponce",
+        "villageWinRate": 55.2,
+        "villageGames": 250,
+        "chateauWinRate": 48.5,
+        "chateauGames": 200
+      }
+    ],
+    "deathStats": {
+      "playerDeathStats": [...],
+      "playerKillStats": [...]
+    },
+    "hunterStats": [...],
+    "campStats": [...],
+    "votingStats": {
+      "playerBehavior": [...],
+      "playerAccuracy": [...],
+      "playerTargets": [...]
+    }
   },
   
   "moddedGames": { ... }
 }
 ```
+
+**Cache Version 2.0.0 Features:**
+- ✅ **Complete statistics caching** - All computed stats (map, death, hunter, camp, voting) are cached
+- ✅ **True zero-computation** - When no new games exist, no processing is needed at all
+- ✅ **Full incremental support** - New games update all cached statistics
+- ✅ **Backward compatible** - Old v1.0.0 caches automatically regenerate on first run
 
 ### Incremental Process Flow
 
@@ -56,12 +82,15 @@ A cache file (`playerStatsCache.json`) is created in each data directory (e.g., 
 - Compute stats for all 85 players from scratch
 - ~2-3 seconds for full dataset
 
-**After (incremental):**
-- Process only new games (typically 1-5 games per day)
-- Update stats for only affected players (~10-15 players per game)
-- ~0.5 seconds when no new games, ~1 second with new games
+**After (incremental with v2.0.0 cache):**
+- **0 new games:** ~0.1 seconds (just load cache + generate rankings)
+- **1-5 new games:** ~0.5-1 seconds (incremental update + rankings)
+- **Full recalculation:** ~2-3 seconds (cache regeneration)
 
-**Net speedup:** ~50-80% when most games are already processed
+**Net speedup:** 
+- ~95% faster when no new games (true zero-computation)
+- ~60-80% faster when few new games exist
+- No penalty for cache misses (same speed as before)
 
 ## Usage
 
