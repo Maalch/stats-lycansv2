@@ -68,7 +68,7 @@ jobs:
           fi
           
           # Check for required data files
-          REQUIRED_FILES=("data/index.json" "data/gameLog.json" "data/rawBRData.json" "data/joueurs.json" "data/playerAchievements.json")
+          REQUIRED_FILES=("data/index.json" "data/gameLog.json" "data/rawBRData.json" "data/joueurs.json" "data/playerAchievements.json" "data/playerStatsCache.json")
           for file in "${REQUIRED_FILES[@]}"; do
             if [ ! -f "$file" ]; then
               echo "❌ Required file $file not found!"
@@ -105,6 +105,18 @@ jobs:
             exit 1
           fi
           
+          # Validate cache structure
+          if [ -f "data/playerStatsCache.json" ]; then
+            if jq -e '.version and .allGames and .moddedGames' data/playerStatsCache.json > /dev/null; then
+              CACHE_VERSION=$(jq -r '.version' data/playerStatsCache.json)
+              ALL_GAMES_CACHED=$(jq '.allGames.totalGames' data/playerStatsCache.json)
+              MODDED_GAMES_CACHED=$(jq '.moddedGames.totalGames' data/playerStatsCache.json)
+              echo "✅ Cache file valid (v$CACHE_VERSION): $ALL_GAMES_CACHED games ($MODDED_GAMES_CACHED modded)"
+            else
+              echo "⚠️  Cache file exists but has unexpected structure"
+            fi
+          fi
+          
           echo "✅ All data files validated successfully"
 
       - name: Copy data to docs folder
@@ -134,4 +146,5 @@ jobs:
           echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
           echo "- Sources: Legacy Google Sheets API + AWS S3 Lycans Stats bucket"
           echo "- Data types: Game logs, Battle Royale data, Player information, Achievements"
+          echo "- Incremental processing: Cache enabled for faster achievements generation"
           ls -la data/ || echo "No data directory found"

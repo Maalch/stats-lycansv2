@@ -73,6 +73,7 @@ jobs:
             "data/discord/index.json" 
             "data/discord/playerAchievements.json"
             "data/discord/joueurs.json"
+            "data/discord/playerStatsCache.json"
           )
           
           for file in "${REQUIRED_FILES[@]}"; do
@@ -113,6 +114,15 @@ jobs:
             fi
           fi
           
+          # Validate cache file
+          if [ -f "data/discord/playerStatsCache.json" ]; then
+            if jq -e '.version and .allGames and .moddedGames' data/discord/playerStatsCache.json > /dev/null; then
+              CACHE_VERSION=$(jq -r '.version' data/discord/playerStatsCache.json)
+              ALL_GAMES_CACHED=$(jq '.allGames.totalGames' data/discord/playerStatsCache.json)
+              echo "   - Cache: v$CACHE_VERSION ($ALL_GAMES_CACHED games cached)"
+            fi
+          fi
+          
           echo "✅ All Discord Team data files validated successfully"
 
       - name: Copy Discord Team data to docs folder
@@ -143,5 +153,6 @@ jobs:
           echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
           echo "- Source: AWS S3 Discord Team bucket"
           echo "- Output folder: data/discord/"
-          echo "- Data types: Game logs, Achievements, Player data, Index"
+          echo "- Data types: Game logs, Achievements, Player data, Index, Cache"
+          echo "- Incremental processing: Cache enabled for faster achievements generation"
           ls -la data/discord/ 2>/dev/null || echo "No Discord Team data files found"

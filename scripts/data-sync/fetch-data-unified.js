@@ -9,8 +9,9 @@
  */
 import path from 'path';
 import fs from 'fs/promises';
-import { generateAllPlayerAchievements } from './generate-achievements.js';
+import { generateAllPlayerAchievements, generateAllPlayerAchievementsIncremental } from './generate-achievements.js';
 import { DATA_SOURCES } from './shared/data-sources.js';
+import { loadCache, saveCache } from './shared/cache-manager.js';
 import {
   ensureDataDirectory,
   fetchStatsListUrls,
@@ -390,13 +391,36 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     );
     
     // === GENERATE ACHIEVEMENTS ===
-    console.log(`\n🏆 Generating player achievements (${config.name})...`);
+    console.log(`\n🏆 Generating player achievements with incremental processing (${config.name})...`);
     try {
-      const achievementsData = generateAllPlayerAchievements(unifiedGameLog);
+      // Load cache for incremental generation
+      const cache = await loadCache(ABSOLUTE_DATA_DIR);
+      
+      let achievementsData;
+      let updatedCache = null;
+      
+      if (cache.allGames.totalGames === 0) {
+        // First run - use full calculation
+        console.log('  No cache found - performing full calculation...');
+        achievementsData = generateAllPlayerAchievements(unifiedGameLog);
+      } else {
+        // Incremental update
+        console.log('  Using incremental update with cached data...');
+        const result = generateAllPlayerAchievementsIncremental(unifiedGameLog, cache);
+        achievementsData = result.achievements;
+        updatedCache = result.updatedCache;
+      }
+      
       await saveDataToFile(ABSOLUTE_DATA_DIR, 'playerAchievements.json', achievementsData);
       console.log(`✓ Generated achievements for ${achievementsData.totalPlayers} players`);
+      
+      // Save updated cache
+      if (updatedCache) {
+        await saveCache(ABSOLUTE_DATA_DIR, updatedCache);
+      }
     } catch (error) {
       console.error('❌ Failed to generate achievements:', error.message);
+      console.error(error.stack);
       // Don't fail the entire sync for achievements generation failure
     }
     

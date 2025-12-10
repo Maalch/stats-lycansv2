@@ -467,3 +467,158 @@ export function computePlayerSeriesData(gameData) {
     totalPlayersCount: allPlayers.size
   };
 }
+
+/**
+ * Update player series data incrementally with new games
+ * @param {Object} cachedSeriesState - Existing series state { [playerId]: state }
+ * @param {Array} newGames - Array of new game entries to process
+ * @param {number} existingGameCount - Number of games already processed
+ * @param {number} totalGameCount - Total number of games after adding new ones
+ * @returns {Object|null} - Updated player series data or null
+ */
+export function updatePlayerSeriesDataIncremental(cachedSeriesState, newGames, existingGameCount, totalGameCount) {
+  if (newGames.length === 0) {
+    // No new games, return existing data converted to output format
+    return convertSeriesStateToOutput(cachedSeriesState, totalGameCount);
+  }
+
+  // Create a working copy of the series state
+  const playerSeriesState = {};
+  for (const [playerId, state] of Object.entries(cachedSeriesState)) {
+    playerSeriesState[playerId] = { ...state };
+  }
+
+  // Generate DisplayedId mapping for new games
+  // DisplayedIds start from existingGameCount + 1
+  const displayedIdMap = new Map();
+  
+  // Sort new games by timestamp to get chronological order
+  const sortedNewGames = [...newGames].sort((a, b) => {
+    const parsedA = parseGameId(a.Id);
+    const parsedB = parseGameId(b.Id);
+    
+    const timestampCompare = parsedA.timestamp.localeCompare(parsedB.timestamp);
+    if (timestampCompare !== 0) {
+      return timestampCompare;
+    }
+    
+    return parsedA.trailingNumber - parsedB.trailingNumber;
+  });
+  
+  // Assign DisplayedIds starting from existingGameCount + 1
+  sortedNewGames.forEach((game, index) => {
+    const displayedId = (existingGameCount + index + 1).toString();
+    displayedIdMap.set(game.Id, displayedId);
+  });
+
+  // Process each new game chronologically
+  sortedNewGames.forEach(game => {
+    const gameDisplayedId = displayedIdMap.get(game.Id) || game.Id;
+    const date = new Date(game.StartDate).toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit', 
+      year: 'numeric'
+    });
+
+    if (game.PlayerStats) {
+      game.PlayerStats.forEach(playerStat => {
+        const playerId = getPlayerId(playerStat);
+        const playerName = playerStat.Username.trim();
+        
+        // Initialize player if they're new
+        if (!playerSeriesState[playerId]) {
+          playerSeriesState[playerId] = {
+            playerName: playerName,
+            currentVillageoisSeries: 0,
+            currentLoupsSeries: 0,
+            longestVillageoisSeries: null,
+            longestLoupsSeries: null,
+            currentWinSeries: 0,
+            longestWinSeries: null,
+            currentWinCamps: [],
+            currentLossSeries: 0,
+            longestLossSeries: null,
+            currentLossCamps: [],
+            lastCamp: null,
+            lastWon: false,
+            villageoisSeriesStart: null,
+            loupsSeriesStart: null,
+            winSeriesStart: null,
+            lossSeriesStart: null,
+            currentVillageoisGameIds: [],
+            currentLoupsGameIds: [],
+            currentWinGameIds: [],
+            currentLossGameIds: []
+          };
+        }
+        
+        const playerStats = playerSeriesState[playerId];
+        
+        // Update player name if it changed
+        playerStats.playerName = playerName;
+        
+        const playerWon = playerStat.Victorious;
+        const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
+        
+        // Process camp series
+        processCampSeries(playerStats, playerId, playerName, mainCamp, gameDisplayedId, date);
+        
+        // Process win series
+        processWinSeries(playerStats, playerId, playerName, playerWon, mainCamp, gameDisplayedId, date);
+        
+        // Process loss series
+        processLossSeries(playerStats, playerId, playerName, playerWon, mainCamp, gameDisplayedId, date);
+      });
+    }
+  });
+
+  return convertSeriesStateToOutput(playerSeriesState, totalGameCount);
+}
+
+/**
+ * Convert series state to output format (used by both full and incremental)
+ * @param {Object} playerSeriesState - Player series state mapping
+ * @param {number} totalGames - Total number of games
+ * @returns {Object} - Formatted series data
+ */
+function convertSeriesStateToOutput(playerSeriesState, totalGames) {
+  // Collect and sort results
+  const seriesResults = collectSeriesResults(playerSeriesState);
+
+  // Mark ongoing series
+  Object.values(playerSeriesState).forEach(stats => {
+    // Check Villageois series
+    if (stats.longestVillageoisSeries && 
+        stats.currentVillageoisSeries === stats.longestVillageoisSeries.seriesLength &&
+        stats.currentVillageoisSeries > 0) {
+      stats.longestVillageoisSeries.isOngoing = true;
+    }
+
+    // Check Loups series
+    if (stats.longestLoupsSeries && 
+        stats.currentLoupsSeries === stats.longestLoupsSeries.seriesLength &&
+        stats.currentLoupsSeries > 0) {
+      stats.longestLoupsSeries.isOngoing = true;
+    }
+
+    // Check Win series
+    if (stats.longestWinSeries && 
+        stats.currentWinSeries === stats.longestWinSeries.seriesLength &&
+        stats.currentWinSeries > 0) {
+      stats.longestWinSeries.isOngoing = true;
+    }
+
+    // Check Loss series
+    if (stats.longestLossSeries && 
+        stats.currentLossSeries === stats.longestLossSeries.seriesLength &&
+        stats.currentLossSeries > 0) {
+      stats.longestLossSeries.isOngoing = true;
+    }
+  });
+
+  return {
+    ...seriesResults,
+    totalGamesAnalyzed: totalGames,
+    totalPlayersCount: Object.keys(playerSeriesState).length
+  };
+}
