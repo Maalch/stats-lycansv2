@@ -5,6 +5,17 @@ on:
     # Run only on Monday (before usual game day), Tuesday (game day), and Thursday (alternate game day) at 8 PM UTC (after game time)
     - cron: '0 20 * * 1,2,4'
   workflow_dispatch: # Allow manual triggering
+    inputs:
+      full_sync:
+        description: 'Force full synchronization (re-fetch all games from AWS)'
+        required: false
+        default: false
+        type: boolean
+      force_achievements_recalc:
+        description: 'Force full achievements/ranking recalculation (ignore cache)'
+        required: false
+        default: false
+        type: boolean
   push:
     paths:
       - 'scripts/data-sync/**'
@@ -56,7 +67,28 @@ jobs:
           else
             echo "⚠️  LYCANS_API_BASE not set (legacy data will be skipped)"
           fi
-          node fetch-data.js
+          
+          # Build command with appropriate flags
+          CMD="node fetch-data.js"
+          
+          # Determine sync mode
+          if [ "${{ inputs.full_sync }}" == "true" ]; then
+            echo "🔄 Sync mode: FULL (forced via workflow input)"
+            CMD="$CMD --full"
+          else
+            echo "🔄 Sync mode: INCREMENTAL"
+          fi
+          
+          # Determine achievements mode
+          if [ "${{ inputs.force_achievements_recalc }}" == "true" ]; then
+            echo "🔄 Achievements mode: FULL RECALCULATION (forced via workflow input)"
+            CMD="$CMD --force-achievements"
+          else
+            echo "🔄 Achievements mode: INCREMENTAL"
+          fi
+          
+          # Run the command
+          $CMD
           echo "✅ Data fetch completed"
           
       - name: Validate data files
@@ -142,9 +174,11 @@ jobs:
         run: |
           echo "🔍 Workflow Summary:"
           echo "- Data sync completed from Legacy + AWS sources"
+          echo "- Sync mode: ${{ inputs.full_sync == 'true' && 'FULL' || 'INCREMENTAL' }}"
+          echo "- Achievements: ${{ inputs.force_achievements_recalc == 'true' && 'FULL RECALC' || 'INCREMENTAL' }}"
           echo "- Files updated: $(git diff --name-only HEAD~1 2>/dev/null | grep '^data/' | wc -l || echo '0')"
           echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
           echo "- Sources: Legacy Google Sheets API + AWS S3 Lycans Stats bucket"
           echo "- Data types: Game logs, Battle Royale data, Player information, Achievements"
-          echo "- Incremental processing: Cache enabled for faster achievements generation"
+          echo "- Incremental processing: Enabled for both game sync and achievements generation"
           ls -la data/ || echo "No data directory found"

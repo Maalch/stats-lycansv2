@@ -10,6 +10,135 @@ import {
 } from './shared/sync-utils.js';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../src/utils/datasyncExport.js';
 
+// Parse command line arguments
+const args = process.argv.slice(2);
+const forceAchievementsRecalc = args.includes('--force-achievements') || args.includes('-fa');
+const forceFullSync = args.includes('--full') || args.includes('-f');
+
+// Time window for updating recent games (6 hours in milliseconds)
+const RECENT_GAMES_WINDOW_MS = 6 * 60 * 60 * 1000;
+
+// Time window for file-level filtering (7 days in milliseconds)
+const FILE_AGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+
+// Main Team game filter
+const MAIN_TEAM_FILTER = (gameId) => gameId?.startsWith('Ponce-') || gameId?.startsWith('Tsuna-') || gameId?.startsWith('khalen-');
+
+/**
+ * Parse date from filename (format: Prefix-YYYYMMDDHHMMSS.json)
+ * @param {string} url - Full URL or filename
+ * @returns {Date|null} - Parsed date or null if parsing fails
+ */
+function parseDateFromFilename(url) {
+  try {
+    const filename = url.split('/').pop();
+    const match = filename.match(/-(\d{14})\.json$/);
+    if (!match) return null;
+    
+    const dateStr = match[1];
+    const year = dateStr.substring(0, 4);
+    const month = dateStr.substring(4, 6);
+    const day = dateStr.substring(6, 8);
+    const hour = dateStr.substring(8, 10);
+    const minute = dateStr.substring(10, 12);
+    const second = dateStr.substring(12, 14);
+    
+    const isoString = `${year}-${month}-${day}T${hour}:${minute}:${second}Z`;
+    const date = new Date(isoString);
+    
+    if (isNaN(date.getTime())) return null;
+    return date;
+  } catch (error) {
+    return null;
+  }
+}
+
+/**
+ * Filter URLs to only include recent session files
+ * @param {Array<string>} urls - List of file URLs
+ * @param {Date} cutoffDate - Cutoff date for file filtering
+ * @param {boolean} forceFullSync - If true, skip filtering
+ * @returns {Object} - Filtered URLs and stats
+ */
+function filterRecentSessionFiles(urls, cutoffDate, forceFullSync) {
+  if (forceFullSync) {
+    return { filteredUrls: urls, skippedCount: 0, totalCount: urls.length };
+  }
+  
+  const filteredUrls = [];
+  let skippedCount = 0;
+  
+  for (const url of urls) {
+    const fileDate = parseDateFromFilename(url);
+    
+    if (!fileDate) {
+      console.log(`⚠️  Could not parse date from ${url.split('/').pop()} - including file`);
+      filteredUrls.push(url);
+    } else if (fileDate >= cutoffDate) {
+      filteredUrls.push(url);
+    } else {
+      skippedCount++;
+    }
+  }
+  
+  return { filteredUrls, skippedCount, totalCount: urls.length };
+}
+
+/**
+ * Load existing gameLog.json if it exists (for incremental sync)
+ * @returns {Object|null} - Existing game log or null
+ */
+async function loadExistingGameLog() {
+  const gameLogPath = path.join(ABSOLUTE_DATA_DIR, 'gameLog.json');
+  
+  try {
+    const content = await fs.readFile(gameLogPath, 'utf8');
+    const gameLog = JSON.parse(content);
+    console.log(`✓ Loaded existing gameLog.json with ${gameLog.TotalRecords} games`);
+    return gameLog;
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      console.log('ℹ️  No existing gameLog.json found - will perform full sync');
+      return null;
+    }
+    console.error('⚠️  Failed to load existing gameLog.json:', error.message);
+    return null;
+  }
+}
+
+/**
+ * Build a set of existing AWS game IDs for quick lookup
+ * @param {Object} existingGameLog - Existing game log data
+ * @returns {Set} - Set of existing game IDs (AWS games only)
+ */
+function buildExistingAwsGameIds(existingGameLog) {
+  const gameIds = new Set();
+  
+  if (existingGameLog?.GameStats) {
+    existingGameLog.GameStats.forEach(game => {
+      // Only track games that came from AWS (have Version field and no LegacyData without FullDataExported)
+      const isAWSGame = game.Version && (!game.LegacyData || game.LegacyData?.FullDataExported === false);
+      if (isAWSGame && MAIN_TEAM_FILTER(game.Id)) {
+        gameIds.add(game.Id);
+      }
+    });
+  }
+  
+  return gameIds;
+}
+
+/**
+ * Check if a game is within the recent time window and should be updated
+ * @param {Object} game - Game data
+ * @param {Date} cutoffDate - Cutoff date for recent games
+ * @returns {boolean} - True if game is recent
+ */
+function isRecentGame(game, cutoffDate) {
+  if (!game.EndDate) return false;
+  const gameEndDate = new Date(game.EndDate);
+  return gameEndDate >= cutoffDate;
+}
+
 // Data sources
 const LEGACY_DATA_ENDPOINTS = [
   'gameLog',
@@ -75,7 +204,7 @@ async function fetchLegacyEndpointData(endpoint) {
   }
 }
 
-async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
+async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = null, gameCutoffDate = null) {
   console.log('Merging legacy and AWS game logs into unified structure...');
   
   const gamesByIdMap = new Map();
@@ -86,9 +215,32 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
   let legacyMetadataOnlyCount = 0;
   let legacyFullDataCount = 0;
   let awsCount = 0;
+  let awsNewCount = 0;
+  let awsUpdatedCount = 0;
+  let awsSkippedCount = 0;
   let awsFilteredCount = 0;
   let awsSkippedDueToGSheetPriority = 0;
   let mergedCount = 0;
+  
+  // Build set of existing AWS game IDs and their end dates for incremental updates
+  const existingAwsGames = new Map();
+  const recentExistingGameIds = new Set();
+  
+  if (existingGameLog?.GameStats) {
+    existingGameLog.GameStats.forEach(game => {
+      // Track existing games for incremental processing
+      existingAwsGames.set(game.Id, game);
+      
+      // Track which existing games are "recent" and should be updated
+      if (gameCutoffDate && isRecentGame(game, gameCutoffDate)) {
+        recentExistingGameIds.add(game.Id);
+      }
+    });
+    
+    if (recentExistingGameIds.size > 0) {
+      console.log(`📋 Found ${recentExistingGameIds.size} recent games (last 6 hours) that may be updated`);
+    }
+  }
   
   // Add legacy games to map first (including games without EndDate for merging LegacyData)
   if (legacyGameLog && legacyGameLog.GameStats && Array.isArray(legacyGameLog.GameStats)) {
@@ -184,17 +336,55 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
           return;
         }
         
+        // === INCREMENTAL SYNC LOGIC ===
+        const existingAwsGame = existingAwsGames.get(gameId);
+        const isRecent = gameCutoffDate && isRecentGame(awsGame, gameCutoffDate);
+        const wasRecent = recentExistingGameIds.has(gameId);
+        
         // Pure AWS game - add with ModVersion and Modded flag
         const awsGameWithVersion = {
           ...awsGame,
           Version: gameLog.ModVersion,
           Modded: true,
+          // Preserve LegacyData from existing game if it has any
+          ...(existingAwsGame?.LegacyData && { LegacyData: existingAwsGame.LegacyData }),
           source: 'aws'
         };
-        gamesByIdMap.set(gameId, awsGameWithVersion);
-        awsCount++;
+        
+        if (!existingAwsGame) {
+          // New game - add it
+          gamesByIdMap.set(gameId, awsGameWithVersion);
+          awsCount++;
+          awsNewCount++;
+        } else if (isRecent || wasRecent) {
+          // Recent game - update it (might have new data)
+          gamesByIdMap.set(gameId, awsGameWithVersion);
+          awsCount++;
+          awsUpdatedCount++;
+        } else {
+          // Old game already exists and hasn't been updated from AWS - use existing
+          gamesByIdMap.set(gameId, { ...existingAwsGame, source: 'aws' });
+          awsCount++;
+          awsSkippedCount++;
+        }
       });
     }
+  }
+  
+  // Also add any existing AWS games that weren't in the fetched files (for incremental sync)
+  // This preserves games from older session files that weren't re-fetched
+  if (existingGameLog?.GameStats) {
+    existingGameLog.GameStats.forEach(game => {
+      if (!gamesByIdMap.has(game.Id) && MAIN_TEAM_FILTER(game.Id)) {
+        // Check if it's not a legacy-priority game
+        const legacyMatch = legacyGamesByModId.get(game.Id);
+        if (!legacyMatch || legacyMatch.fullDataExported !== true) {
+          gamesByIdMap.set(game.Id, { ...game, source: 'aws' });
+          awsCount++;
+          awsSkippedCount++;
+        }
+      }
+    });
   }
   
   // Convert map back to array and remove source tracking
@@ -213,9 +403,13 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs) {
       Legacy: legacyCount,
       LegacyFullData: legacyFullDataCount,
       AWS: awsCount,
+      AWSNew: awsNewCount,
+      AWSUpdated: awsUpdatedCount,
+      AWSUnchanged: awsSkippedCount,
       Merged: mergedCount,
       AWSSkippedDueToGSheetPriority: awsSkippedDueToGSheetPriority
     },
+    LastSync: new Date().toISOString(),
     GameStats: allGameStats
   };
   
@@ -377,9 +571,26 @@ async function createDataIndex(legacyAvailable, awsFilesCount, totalGames) {
 async function main() {
   console.log('🚀 Starting Lycans data sync from multiple sources...');
   console.log(`📁 Data directory: ${ABSOLUTE_DATA_DIR}`);
+  console.log(`📋 Sync mode: ${forceFullSync ? 'FULL (forced)' : 'INCREMENTAL'}`);
 
   try {
     await ensureDataDirectory();
+    
+    // === LOAD EXISTING DATA FOR INCREMENTAL SYNC ===
+    let existingGameLog = null;
+    if (!forceFullSync) {
+      existingGameLog = await loadExistingGameLog();
+    }
+    
+    const isIncrementalSync = existingGameLog !== null && !forceFullSync;
+    const gameCutoffDate = new Date(Date.now() - RECENT_GAMES_WINDOW_MS);
+    const fileCutoffDate = new Date(Date.now() - FILE_AGE_WINDOW_MS);
+    
+    if (isIncrementalSync) {
+      console.log(`\n📅 Incremental sync settings:`);
+      console.log(`   - File-level filter: skip sessions older than ${fileCutoffDate.toISOString()} (7 days)`);
+      console.log(`   - Game-level update: refresh games newer than ${gameCutoffDate.toISOString()} (6 hours)`);
+    }
 
     // === FETCH LEGACY DATA ===
     console.log('\n📊 Fetching Legacy data from Google Sheets API...');
@@ -414,7 +625,18 @@ async function main() {
 
     // === FETCH AWS DATA ===
     console.log('\n📦 Fetching AWS data from S3 bucket...');
-    const gameLogUrls = await fetchStatsListUrls();
+    const allGameLogUrls = await fetchStatsListUrls();
+    
+    // Filter URLs based on file age (unless full sync)
+    const { filteredUrls: gameLogUrls, skippedCount, totalCount } = filterRecentSessionFiles(
+      allGameLogUrls,
+      fileCutoffDate,
+      forceFullSync
+    );
+    
+    if (skippedCount > 0) {
+      console.log(`🔍 File-level filtering: skipping ${skippedCount} old session files (${gameLogUrls.length}/${totalCount} will be fetched)`);
+    }
     
     const awsGameLogs = [];
     if (gameLogUrls.length > 0) {
@@ -426,9 +648,8 @@ async function main() {
           const gameLog = await fetchGameLogData(url);
           
           // Correct victorious status for disconnected players and Lover secondary role (Main Team only)
-          const mainTeamFilter = (gameId) => gameId?.startsWith('Ponce-') || gameId?.startsWith('Tsuna-') || gameId?.startsWith('khalen-')  ;
-          let correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog, mainTeamFilter);
-          correctedGameLog = correctLoverSecondaryRole(correctedGameLog, mainTeamFilter);
+          let correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog, MAIN_TEAM_FILTER);
+          correctedGameLog = correctLoverSecondaryRole(correctedGameLog, MAIN_TEAM_FILTER);
           awsGameLogs.push(correctedGameLog);
           
           // Small delay between requests to be respectful to S3
@@ -440,6 +661,8 @@ async function main() {
       }
       
       console.log(`✓ Successfully fetched ${awsGameLogs.length} AWS game log files`);
+    } else if (isIncrementalSync && allGameLogUrls.length > 0) {
+      console.log(`ℹ️  No recent session files to fetch - all AWS data is up to date`);
     } else {
       console.log('⚠️  No AWS game log files found');
     }
@@ -448,13 +671,18 @@ async function main() {
     console.log('\n🔄 Creating unified dataset...');
     
     let mergedGameLog;
-    if (legacyGameLogData) {
-      // We have fresh data from API
-      mergedGameLog = await mergeAllGameLogs(legacyGameLogData, awsGameLogs);
+    if (legacyGameLogData || awsGameLogs.length > 0 || existingGameLog) {
+      // We have data to merge (legacy, AWS, or existing)
+      mergedGameLog = await mergeAllGameLogs(
+        legacyGameLogData, 
+        awsGameLogs, 
+        existingGameLog, 
+        isIncrementalSync ? gameCutoffDate : null
+      );
       await saveDataToFile('gameLog.json', mergedGameLog);
     } else {
-      // No fresh data, try to use existing gameLog.json for achievements generation
-      console.log('⚠️  No fresh data from API, attempting to use existing gameLog.json for achievements...');
+      // No data at all
+      console.log('⚠️  No data available from any source...');
       try {
         const existingGameLogPath = path.join(ABSOLUTE_DATA_DIR, 'gameLog.json');
         const existingGameLogContent = await fs.readFile(existingGameLogPath, 'utf-8');
@@ -489,11 +717,11 @@ async function main() {
     await createDataIndex(!!legacyGameLogData, awsGameLogs.length, mergedGameLog.TotalRecords);
     
     // === GENERATE ACHIEVEMENTS ===
-    console.log('\n🏆 Generating player achievements with incremental processing...');
+    console.log(`\n🏆 Generating player achievements (${forceAchievementsRecalc ? 'FULL recalculation' : 'incremental'})...`);
     try {
       // Load cache for incremental generation
-      const { loadCache, saveCache } = await import('./shared/cache-manager.js');
-      const cache = await loadCache(ABSOLUTE_DATA_DIR);
+      const { loadCache, saveCache, createEmptyCache } = await import('./shared/cache-manager.js');
+      const cache = forceAchievementsRecalc ? createEmptyCache() : await loadCache(ABSOLUTE_DATA_DIR);
       
       // Import incremental generation function
       const { generateAllPlayerAchievementsIncremental } = await import('./generate-achievements.js');
@@ -501,10 +729,12 @@ async function main() {
       let achievementsData;
       let updatedCache = null;
       
-      if (cache.allGames.totalGames === 0) {
-        // First run - use full calculation
-        console.log('  No cache found - performing full calculation...');
-        achievementsData = generateAllPlayerAchievements(mergedGameLog);
+      if (forceAchievementsRecalc || cache.allGames.totalGames === 0) {
+        // Force full calculation or first run
+        console.log(forceAchievementsRecalc ? '  Forced full recalculation...' : '  No cache found - performing full calculation...');
+        const result = generateAllPlayerAchievements(mergedGameLog, true);
+        achievementsData = result.achievements;
+        updatedCache = result.updatedCache;
       } else {
         // Incremental update
         console.log('  Using incremental update with cached data...');
@@ -528,12 +758,17 @@ async function main() {
     
     console.log('\n✅ Data sync completed successfully!');
     console.log(`📊 Total games processed: ${mergedGameLog.TotalRecords}`);
-    console.log(`   - Legacy: ${mergedGameLog.Sources.Legacy} games`);
+    console.log(`   - Legacy: ${mergedGameLog.Sources.Legacy || 0} games`);
     if (mergedGameLog.Sources.LegacyFullData > 0) {
       console.log(`   - Legacy Full Data (GSHEETPRIORITY): ${mergedGameLog.Sources.LegacyFullData} games`);
     }
-    console.log(`   - AWS: ${mergedGameLog.Sources.AWS} games`);
-    console.log(`   - Merged: ${mergedGameLog.Sources.Merged} games`);
+    console.log(`   - AWS: ${mergedGameLog.Sources.AWS || 0} games`);
+    if (mergedGameLog.Sources.AWSNew > 0 || mergedGameLog.Sources.AWSUpdated > 0) {
+      console.log(`     • New: ${mergedGameLog.Sources.AWSNew || 0}`);
+      console.log(`     • Updated: ${mergedGameLog.Sources.AWSUpdated || 0}`);
+      console.log(`     • Unchanged: ${mergedGameLog.Sources.AWSUnchanged || 0}`);
+    }
+    console.log(`   - Merged: ${mergedGameLog.Sources.Merged || 0} games`);
     if (mergedGameLog.Sources.AWSSkippedDueToGSheetPriority > 0) {
       console.log(`   - AWS skipped (GSheet priority): ${mergedGameLog.Sources.AWSSkippedDueToGSheetPriority} games`);
     }

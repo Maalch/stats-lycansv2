@@ -11,7 +11,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import { generateAllPlayerAchievements, generateAllPlayerAchievementsIncremental } from './generate-achievements.js';
 import { DATA_SOURCES } from './shared/data-sources.js';
-import { loadCache, saveCache } from './shared/cache-manager.js';
+import { loadCache, saveCache, createEmptyCache } from './shared/cache-manager.js';
 import {
   ensureDataDirectory,
   fetchStatsListUrls,
@@ -391,18 +391,20 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     );
     
     // === GENERATE ACHIEVEMENTS ===
-    console.log(`\n🏆 Generating player achievements with incremental processing (${config.name})...`);
+    console.log(`\n🏆 Generating player achievements (${forceFullSync ? 'FULL recalculation' : 'incremental'}) (${config.name})...`);
     try {
-      // Load cache for incremental generation
-      const cache = await loadCache(ABSOLUTE_DATA_DIR);
+      // Load cache for incremental generation (or start fresh if forcing full sync)
+      const cache = forceFullSync ? createEmptyCache() : await loadCache(ABSOLUTE_DATA_DIR);
       
       let achievementsData;
       let updatedCache = null;
       
-      if (cache.allGames.totalGames === 0) {
-        // First run - use full calculation
-        console.log('  No cache found - performing full calculation...');
-        achievementsData = generateAllPlayerAchievements(unifiedGameLog);
+      if (forceFullSync || cache.allGames.totalGames === 0) {
+        // Force full calculation or first run
+        console.log(forceFullSync ? '  Forced full recalculation...' : '  No cache found - performing full calculation...');
+        const result = generateAllPlayerAchievements(unifiedGameLog, true);
+        achievementsData = result.achievements;
+        updatedCache = result.updatedCache;
       } else {
         // Incremental update
         console.log('  Using incremental update with cached data...');
