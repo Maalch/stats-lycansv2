@@ -30,6 +30,9 @@ const RECENT_GAMES_WINDOW_MS = 6 * 60 * 60 * 1000;
 // Time window for file-level filtering (7 days in milliseconds)
 const FILE_AGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
+// Minimum number of players required for a valid game
+const MIN_PLAYERS = 8;
+
 /**
  * Parse date from filename (format: Prefix-YYYYMMDDHHMMSS.json)
  * @param {string} url - Full URL or filename
@@ -202,6 +205,13 @@ function mergeWithIncremental(awsGameLogs, config, existingGamesMap, cutoffDate)
         // Filter out corrupted games without EndDate
         if (!awsGame.EndDate) {
           corruptedGamesCount++;
+          return;
+        }
+        
+        // Filter: Only process games with at least MIN_PLAYERS players
+        const playerCount = awsGame.PlayerStats?.length || 0;
+        if (playerCount < MIN_PLAYERS) {
+          filteredGamesCount++;
           return;
         }
         

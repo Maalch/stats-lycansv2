@@ -21,6 +21,10 @@ const RECENT_GAMES_WINDOW_MS = 6 * 60 * 60 * 1000;
 // Time window for file-level filtering (7 days in milliseconds)
 const FILE_AGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 
+// Minimum number of players required for a valid main Werewolf game
+// NOTE: This filter is NOT applied to Battle Royale games
+const MIN_PLAYERS = 8;
+
 // Main Team game filter
 const MAIN_TEAM_FILTER = (gameId) => gameId?.startsWith('Ponce-') || gameId?.startsWith('Tsuna-') || gameId?.startsWith('khalen-');
 
@@ -293,6 +297,14 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
           awsFilteredCount++;
           return;
         }
+        
+        // Filter: Only process games with at least MIN_PLAYERS players
+        const playerCount = awsGame.PlayerStats?.length || 0;
+        if (playerCount < MIN_PLAYERS) {
+          awsFilteredCount++;
+          return;
+        }
+        
         const gameId = awsGame.Id;
         
         // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
@@ -475,6 +487,12 @@ async function mergeJoueursWithAWSPlayers(legacyJoueursData, awsGameLogs) {
         // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
         if (!game.Id || (!game.Id.startsWith('Ponce-') && !game.Id.startsWith('Tsuna-') && !game.Id.startsWith('khalen-'))) {
           return; // Skip non-Main Team games
+        }
+        
+        // Filter: Only process games with at least MIN_PLAYERS players
+        const playerCount = game.PlayerStats?.length || 0;
+        if (playerCount < MIN_PLAYERS) {
+          return; // Skip test games
         }
         
         if (game.PlayerStats && Array.isArray(game.PlayerStats)) {
@@ -705,7 +723,8 @@ async function main() {
     if (!legacyBRData) {
       const emptyBRData = {
         description: "Battle Royale data not available from current sources",
-        data: []
+        BRParties: { totalRecords: 0, data: [] },
+        BRRefParties: { totalRecords: 0, data: [] }
       };
       await saveDataToFile('rawBRData.json', emptyBRData);
     }
@@ -785,7 +804,7 @@ async function main() {
     if (legacyBRData) {
       const brParticipants = legacyBRData.BRParties?.totalRecords || 0;
       const brGames = legacyBRData.BRRefParties?.totalRecords || 0;
-      console.log(`🎯 Battle Royale data: ${brParticipants} participants across ${brGames} games`);
+      console.log(`🎯 Battle Royale data: ${brParticipants} participants across ${brGames} games (no player minimum filter)`);
     }
   } catch (error) {
     console.error('❌ Data sync failed:', error.message);
