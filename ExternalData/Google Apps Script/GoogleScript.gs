@@ -158,8 +158,8 @@ function debug_getGameById() {
     var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
     var playersValues = playersData.values;
     
-    var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
-    var clipsValues = clipsData.values;
+    //var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
+    //var clipsValues = clipsData.values;
     
     if (!gameValues || gameValues.length === 0) {
       Logger.log("ERROR: No game data found");
@@ -192,8 +192,8 @@ function debug_getGameById() {
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
     
-    var clipsHeaders = clipsValues ? clipsValues[0] : [];
-    var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
+    //var clipsHeaders = clipsValues ? clipsValues[0] : [];
+    //var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
     
     // Create player ID map
     var playerIdMap = {};
@@ -265,7 +265,7 @@ function debug_getGameById() {
         Id: gameModId,
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
-        Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
+        //Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
           PlayerVODs: playerVODs,
@@ -324,7 +324,7 @@ function debug_getGameById() {
       });
       
       // Add clips for this game
-      gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
+      //gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
       
       var allPlayersHaveDeathInfo = allPlayerDetails.every(function(playerDetails) {
         return playerDetails && playerDetails.typeOfDeath && 
@@ -569,8 +569,8 @@ function getRawGameDataInNewFormat() {
     var playersValues = playersData.values;
     
     // Get clips data
-    var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
-    var clipsValues = clipsData.values;
+    //var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
+    //var clipsValues = clipsData.values;
     
     if (!gameValues || gameValues.length === 0) {
       return JSON.stringify({ error: 'No game data found' });
@@ -602,8 +602,8 @@ function getRawGameDataInNewFormat() {
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
     
-    var clipsHeaders = clipsValues ? clipsValues[0] : [];
-    var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
+    //var clipsHeaders = clipsValues ? clipsValues[0] : [];
+    //var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
     
     // Create a map of player names to Steam IDs for efficient lookup
     var playerIdMap = {};
@@ -662,7 +662,7 @@ function getRawGameDataInNewFormat() {
           Id: gameModId,
           Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
           Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
-          Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
+          //Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
           LegacyData: {
             VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
             PlayerVODs: playerVODs,
@@ -717,7 +717,7 @@ function getRawGameDataInNewFormat() {
       });   
       
       // Add clips for this game
-      gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
+      //gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
       
       return gameRecord;
     });
@@ -1357,6 +1357,73 @@ function checkMissingPlayerDetails() {
     Logger.log("ERROR in checkMissingPlayerDetails: " + error.message);
     Logger.log("Stack trace: " + error.stack);
     return [];
+  }
+}
+
+
+/**
+ * Diagnostic function to test if CLIPS schema is accessible
+ * Run this in Google Apps Script editor to verify the schema
+ */
+function test_ClipsSchemaAccess() {
+  try {
+    Logger.log("=== Testing CLIPS Schema Access ===");
+    
+    // Test if LYCAN_SCHEMA exists
+    if (typeof LYCAN_SCHEMA === 'undefined') {
+      Logger.log("❌ LYCAN_SCHEMA is undefined!");
+      return;
+    }
+    Logger.log("✓ LYCAN_SCHEMA exists");
+    
+    // Test if CLIPS exists in schema
+    if (typeof LYCAN_SCHEMA.CLIPS === 'undefined') {
+      Logger.log("❌ LYCAN_SCHEMA.CLIPS is undefined!");
+      Logger.log("Available keys in LYCAN_SCHEMA: " + Object.keys(LYCAN_SCHEMA).join(', '));
+      return;
+    }
+    Logger.log("✓ LYCAN_SCHEMA.CLIPS exists");
+    
+    // Test if CLIPS.SHEET exists
+    if (typeof LYCAN_SCHEMA.CLIPS.SHEET === 'undefined') {
+      Logger.log("❌ LYCAN_SCHEMA.CLIPS.SHEET is undefined!");
+      Logger.log("Available keys in LYCAN_SCHEMA.CLIPS: " + Object.keys(LYCAN_SCHEMA.CLIPS).join(', '));
+      return;
+    }
+    Logger.log("✓ LYCAN_SCHEMA.CLIPS.SHEET = '" + LYCAN_SCHEMA.CLIPS.SHEET + "'");
+    
+    // Test if sheet exists in spreadsheet
+    var lycanDoc = SpreadsheetApp.getActiveSpreadsheet();
+    var clipsSheet = lycanDoc.getSheetByName(LYCAN_SCHEMA.CLIPS.SHEET);
+    
+    if (!clipsSheet) {
+      Logger.log("⚠️  Sheet '" + LYCAN_SCHEMA.CLIPS.SHEET + "' does NOT exist in spreadsheet!");
+      Logger.log("Available sheets: " + lycanDoc.getSheets().map(function(s) { return s.getName(); }).join(', '));
+      return;
+    }
+    Logger.log("✓ Sheet '" + LYCAN_SCHEMA.CLIPS.SHEET + "' exists in spreadsheet");
+    
+    // Test reading data from sheet
+    try {
+      var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
+      Logger.log("✓ Successfully called getLycanSheetData() for CLIPS sheet");
+      Logger.log("  Rows: " + (clipsData.values ? clipsData.values.length : 0));
+    } catch (e) {
+      Logger.log("❌ Error calling getLycanSheetData(): " + e.message);
+    }
+    
+    // Test all CLIPS columns
+    Logger.log("\n=== CLIPS Column Definitions ===");
+    var cols = LYCAN_SCHEMA.CLIPS.COLS;
+    Object.keys(cols).forEach(function(key) {
+      Logger.log("  " + key + ": '" + cols[key] + "'");
+    });
+    
+    Logger.log("\n✅ All CLIPS schema tests passed!");
+    
+  } catch (error) {
+    Logger.log("❌ Unexpected error: " + error.message);
+    Logger.log("Stack trace: " + error.stack);
   }
 }
 

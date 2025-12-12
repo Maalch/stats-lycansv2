@@ -69,6 +69,7 @@ const LYCAN_SCHEMA = {
       SELECTEDVOTE: 'Choix', //True/false if the VOTE is the selected vote type or not for that meeting
     }
   },
+  /*
   CLIPS: {
     SHEET: 'Clips', //list of clips / best moments of games
     COLS: {
@@ -82,9 +83,10 @@ const LYCAN_SCHEMA = {
       NEXTCLIP: 'Suite de clips', //Name of the next CLIPID, if the clip are directly in sequence. Empty most of the times.
       NEWNAME: 'Nom créé', //Displayed of the clip. Can be empty.
       ADDITIONALINFO: 'Contexte', //Additional information/explanation/context about the clip action
-      CATEGORY: 'Categorie', //Category name of the clip (to regroup them more easily). Can be empty 
+      CATEGORY: 'Catégorie', //Category name of the clip (to regroup them more easily). Can be empty 
     }
   },
+  */
 
   DETAILSV2: {
     SHEET: 'Détails v2', //Details data about each player each game in the new format
