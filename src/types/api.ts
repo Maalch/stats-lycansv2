@@ -21,6 +21,9 @@ const lycansColorScheme: Record<string, string> = {
   'Villageois': '#0096FF',
   'Chasseur': '#fbff00',
   'Alchimiste': '#ff00d4',
+  'Camp Loup': '#FF0000',
+  'Camp Villageois': '#0096FF',
+  'Rôles Spéciaux': '#808080',
 };
 
 // Mapping for French color names to hex codes 
