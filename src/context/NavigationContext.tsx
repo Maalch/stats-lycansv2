@@ -43,6 +43,7 @@ export interface NavigationFilters {
 export interface CampPerformanceState {
   selectedCampPerformanceCamp: string;
   selectedCampPerformanceMinGames: number;
+  viewMode: 'performance' | 'playPercentage';
 }
 
 export interface PlayerComparisonState {

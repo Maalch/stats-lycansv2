@@ -330,7 +330,8 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
       updateNavigationState({
         campPerformanceState: {
           selectedCampPerformanceCamp: selectedCamp,
-          selectedCampPerformanceMinGames: minGames
+          selectedCampPerformanceMinGames: minGames,
+          viewMode: 'performance'
         }
       });
     }

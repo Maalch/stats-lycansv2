@@ -36,6 +36,9 @@ export function PlayerCampPerformanceChart() {
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   
   // Use navigationState to restore state, with fallbacks
+  const [viewMode, setViewMode] = useState<'performance' | 'playPercentage'>(
+    navigationState.campPerformanceState?.viewMode || 'performance'
+  );
   const [selectedCamp, setSelectedCamp] = useState<string>(
     navigationState.campPerformanceState?.selectedCampPerformanceCamp || 'Camp Villageois'
   );
@@ -50,12 +53,13 @@ export function PlayerCampPerformanceChart() {
     if (!navigationState.campPerformanceState) {
       updateNavigationState({
         campPerformanceState: {
+          viewMode: viewMode,
           selectedCampPerformanceCamp: selectedCamp,
           selectedCampPerformanceMinGames: minGames
         }
       });
     }
-  }, [selectedCamp, minGames, navigationState.campPerformanceState, updateNavigationState]);
+  }, [viewMode, selectedCamp, minGames, navigationState.campPerformanceState, updateNavigationState]);
 
   // Get available camps from camp averages, ordered by mainCampOrder
   const availableCamps = useMemo(() => {
@@ -122,9 +126,216 @@ export function PlayerCampPerformanceChart() {
     return [...orderedCamps, ...otherCamps];
   }, [playerCampPerformance]);
 
+  // Data processing for play percentage view
+  const { campPlayPercentageData, topPlayPercentageData, totalPlayPercentagePlayers } = useMemo(() => {
+    if (!playerCampPerformance?.playerPerformance || viewMode !== 'playPercentage') {
+      return { campPlayPercentageData: [], topPlayPercentageData: [], totalPlayPercentagePlayers: 0 };
+    }
+
+    const { playerPerformance } = playerCampPerformance;
+    
+    interface PlayPercentageEntry extends ChartPlayerCampPerformance {
+      totalGames: number;
+      playPercentage: number;
+    }
+    
+    const campPlayers: PlayPercentageEntry[] = [];
+    const allPercentages: PlayPercentageEntry[] = [];
+    const playerBestPercentage = new Map<string, PlayPercentageEntry>();
+    
+    for (const player of playerPerformance) {
+      // Calculate total games for this player
+      const totalGames = player.campPerformance.reduce((sum, cp) => sum + cp.games, 0);
+      
+      for (const cp of player.campPerformance) {
+        if (cp.games >= minGames) {
+          const playPercentage = (cp.games / totalGames) * 100;
+          const uniqueKey = `${player.player}-${cp.camp}`;
+          const percentageData: PlayPercentageEntry = {
+            player: player.player,
+            camp: cp.camp,
+            games: cp.games,
+            wins: cp.wins,
+            winRate: cp.winRate,
+            performance: cp.performance,
+            winRateNum: parseFloat(cp.winRate),
+            performanceNum: parseFloat(cp.performance),
+            campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
+            totalGames: totalGames,
+            playPercentage: playPercentage,
+            isHighlightedAddition: false,
+            uniqueKey: uniqueKey,
+            playerCamp: uniqueKey
+          };
+          
+          // For Tous les Camps, track highest percentage per player
+          const currentBest = playerBestPercentage.get(player.player);
+          if (!currentBest || percentageData.playPercentage > currentBest.playPercentage) {
+            playerBestPercentage.set(player.player, percentageData);
+          }
+          
+          // Add to camp-specific data if it matches selected camp
+          if (selectedCamp !== 'Tous les camps' && cp.camp === selectedCamp) {
+            campPlayers.push(percentageData);
+          }
+        }
+      }
+    }
+    
+    allPercentages.push(...playerBestPercentage.values());
+
+    // Helper function to add highlighted player
+    const addHighlightedPlayer = (
+      dataArray: PlayPercentageEntry[],
+      campFilter?: string,
+      isTousLesCamps: boolean = false
+    ): PlayPercentageEntry[] => {
+      if (!settings.highlightedPlayer) return dataArray;
+
+      const highlightedPlayerExists = dataArray.some(
+        item => item.player === settings.highlightedPlayer && 
+                (!campFilter || item.camp === campFilter)
+      );
+
+      if (highlightedPlayerExists) {
+        return dataArray;
+      }
+
+      const highlightedPlayerData = playerPerformance.find(
+        player => player.player === settings.highlightedPlayer
+      );
+
+      if (!highlightedPlayerData) return dataArray;
+
+      const totalGames = highlightedPlayerData.campPerformance.reduce((sum, cp) => sum + cp.games, 0);
+
+      if (isTousLesCamps) {
+        let bestPercentage: PlayPercentageEntry | null = null;
+        
+        for (const cp of highlightedPlayerData.campPerformance) {
+          if (cp.games >= 1) {
+            const playPercentage = (cp.games / totalGames) * 100;
+            const uniqueKey = `${highlightedPlayerData.player}-${cp.camp}`;
+            const percentageData: PlayPercentageEntry = {
+              player: highlightedPlayerData.player,
+              camp: cp.camp,
+              games: cp.games,
+              wins: cp.wins,
+              winRate: cp.winRate,
+              performance: cp.performance,
+              winRateNum: parseFloat(cp.winRate),
+              performanceNum: parseFloat(cp.performance),
+              campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
+              totalGames: totalGames,
+              playPercentage: playPercentage,
+              isHighlightedAddition: true,
+              uniqueKey: uniqueKey,
+              playerCamp: uniqueKey
+            };
+            
+            if (!bestPercentage || percentageData.playPercentage > bestPercentage.playPercentage) {
+              bestPercentage = percentageData;
+            }
+          }
+        }
+        
+        return bestPercentage ? [...dataArray, bestPercentage] : dataArray;
+      }
+
+      const highlightedAdditions: PlayPercentageEntry[] = [];
+      
+      for (const cp of highlightedPlayerData.campPerformance) {
+        if ((!campFilter || cp.camp === campFilter) && cp.games >= 1) {
+          const playPercentage = (cp.games / totalGames) * 100;
+          const uniqueKey = `${highlightedPlayerData.player}-${cp.camp}`;
+          highlightedAdditions.push({
+            player: highlightedPlayerData.player,
+            camp: cp.camp,
+            games: cp.games,
+            wins: cp.wins,
+            winRate: cp.winRate,
+            performance: cp.performance,
+            winRateNum: parseFloat(cp.winRate),
+            performanceNum: parseFloat(cp.performance),
+            campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
+            totalGames: totalGames,
+            playPercentage: playPercentage,
+            isHighlightedAddition: true,
+            uniqueKey: uniqueKey,
+            playerCamp: uniqueKey
+          });
+        }
+      }
+
+      return [...dataArray, ...highlightedAdditions];
+    };
+
+    const campPlayersWithHighlighted = selectedCamp !== 'Tous les camps' 
+      ? addHighlightedPlayer(campPlayers, selectedCamp, false)
+      : [];
+    
+    const topPercentagesWithHighlighted = addHighlightedPlayer(allPercentages, undefined, true);
+    
+    // Debug logging
+    if (viewMode === 'playPercentage') {
+      console.log('PlayPercentage Debug:', {
+        selectedCamp,
+        minGames,
+        campPlayersCount: campPlayers.length,
+        allPercentagesCount: allPercentages.length,
+        sampleCampPlayer: campPlayers[0],
+        sampleAllPercentage: allPercentages[0]
+      });
+    }
+    
+    const sortedCampPlayers = campPlayersWithHighlighted.sort((a, b) => b.playPercentage - a.playPercentage);
+    const sortedTopPercentages = topPercentagesWithHighlighted.sort((a, b) => b.playPercentage - a.playPercentage);
+    
+    const getTopPlayersWithHighlighted = (data: PlayPercentageEntry[], limit: number) => {
+      const topPlayers = data.slice(0, limit);
+      const highlightedPlayerInTop = topPlayers.some(p => p.player === settings.highlightedPlayer);
+      
+      if (highlightedPlayerInTop || !settings.highlightedPlayer) {
+        return topPlayers;
+      }
+      
+      const highlightedPlayerData = data.find(p => p.player === settings.highlightedPlayer);
+      if (highlightedPlayerData) {
+        const highlightedAddition = { ...highlightedPlayerData, isHighlightedAddition: true };
+        return [...topPlayers, highlightedAddition];
+      }
+      
+      return topPlayers;
+    };
+    
+    let totalPlayers = 0;
+    if (selectedCamp === 'Tous les camps') {
+      totalPlayers = playerBestPercentage.size;
+    } else {
+      totalPlayers = campPlayers.length;
+    }
+    
+    const finalCampData = getTopPlayersWithHighlighted(sortedCampPlayers, 15);
+    const finalTopData = getTopPlayersWithHighlighted(sortedTopPercentages, 15);
+    
+    console.log('PlayPercentage Final Data:', {
+      selectedCamp,
+      finalCampDataLength: finalCampData.length,
+      finalTopDataLength: finalTopData.length,
+      sampleCampData: finalCampData[0],
+      sampleTopData: finalTopData[0]
+    });
+    
+    return {
+      campPlayPercentageData: finalCampData,
+      topPlayPercentageData: finalTopData,
+      totalPlayPercentagePlayers: totalPlayers
+    };
+  }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer, viewMode]);
+
   // Optimize data processing by combining operations and reducing redundant calculations
   const { campPlayerData, topPerformersData, totalMatchingPlayers } = useMemo(() => {
-    if (!playerCampPerformance?.playerPerformance) {
+    if (!playerCampPerformance?.playerPerformance || viewMode !== 'performance') {
       return { campPlayerData: [], topPerformersData: [], totalMatchingPlayers: 0 };
     }
 
@@ -316,7 +527,7 @@ export function PlayerCampPerformanceChart() {
       topPerformersData: getTopPlayersWithHighlighted(sortedTopPerformers, 15),
       totalMatchingPlayers: totalPlayers
     };
-  }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer]);
+  }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer, viewMode]);
 
   // Handler for bar chart clicks - navigate to game details
   const handleBarClick = (data: any) => {
@@ -420,7 +631,7 @@ export function PlayerCampPerformanceChart() {
 
   return (
     <div className="lycans-player-camp-performance">
-      <h2>Meilleurs Performances par Camp</h2>
+      <h2>{viewMode === 'performance' ? 'Meilleures Performances par Camp' : 'Pourcentage de Parties Jouées par Rôle'}</h2>
       
       {/* Controls */}
       <div className="lycans-controls-section" style={{ 
@@ -430,6 +641,39 @@ export function PlayerCampPerformanceChart() {
         justifyContent: 'center',
         flexWrap: 'wrap'
       }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <label htmlFor="view-mode-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            Affichage:
+          </label>
+          <select
+            id="view-mode-select"
+            value={viewMode}
+            onChange={(e) => {
+              const newViewMode = e.target.value as 'performance' | 'playPercentage';
+              setViewMode(newViewMode);
+              updateNavigationState({ 
+                campPerformanceState: {
+                  viewMode: newViewMode,
+                  selectedCampPerformanceCamp: selectedCamp,
+                  selectedCampPerformanceMinGames: minGames
+                }
+              });
+            }}
+            style={{
+              background: 'var(--bg-tertiary)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '4px',
+              padding: '0.5rem',
+              fontSize: '0.9rem',
+              minWidth: '200px'
+            }}
+          >
+            <option value="performance">🏆 Meilleures performances</option>
+            <option value="playPercentage">📊 % parties jouées</option>
+          </select>
+        </div>
+
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
             Camp:
@@ -442,6 +686,7 @@ export function PlayerCampPerformanceChart() {
               setSelectedCamp(newCamp);
               updateNavigationState({ 
                 campPerformanceState: {
+                  viewMode: viewMode,
                   selectedCampPerformanceCamp: newCamp,
                   selectedCampPerformanceMinGames: minGames
                 }
@@ -533,6 +778,7 @@ export function PlayerCampPerformanceChart() {
               setMinGames(newMinGames);
               updateNavigationState({ 
                 campPerformanceState: {
+                  viewMode: viewMode,
                   selectedCampPerformanceCamp: selectedCamp,
                   selectedCampPerformanceMinGames: newMinGames
                 }
@@ -571,7 +817,7 @@ export function PlayerCampPerformanceChart() {
           fontSize: '0.95rem',
           fontWeight: '500'
         }}>
-          {totalMatchingPlayers} joueur{totalMatchingPlayers !== 1 ? 's' : ''} {totalMatchingPlayers !== 1 ? 'correspondent' : 'correspond'} aux critères
+          {viewMode === 'performance' ? totalMatchingPlayers : totalPlayPercentagePlayers} joueur{(viewMode === 'performance' ? totalMatchingPlayers : totalPlayPercentagePlayers) !== 1 ? 's' : ''} {(viewMode === 'performance' ? totalMatchingPlayers : totalPlayPercentagePlayers) !== 1 ? 'correspondent' : 'correspond'} aux critères
         </span>
       </div>
 
@@ -579,21 +825,44 @@ export function PlayerCampPerformanceChart() {
         {/* Unified Player Performance View */}
         <div className="lycans-graphique-section">
           <h3>
-            {selectedCamp === 'Tous les camps' 
-              ? 'Meilleurs performances - Tous les camps'
-              : `Meilleurs joueurs en ${selectedCamp}`
+            {viewMode === 'performance' 
+              ? (selectedCamp === 'Tous les camps' 
+                  ? 'Meilleures performances - Tous les camps'
+                  : `Meilleurs joueurs en ${selectedCamp}`)
+              : (selectedCamp === 'Tous les camps'
+                  ? 'Plus grand % de parties - Tous les camps'
+                  : `Plus grand % de parties en ${selectedCamp}`)
             }
           </h3>
           <FullscreenChart title={
-            selectedCamp === 'Tous les camps' 
-              ? 'Meilleurs Performances - Tous les camps'
-              : `Meilleurs Joueurs - ${selectedCamp}`
+            viewMode === 'performance'
+              ? (selectedCamp === 'Tous les camps' 
+                  ? 'Meilleures Performances - Tous les camps'
+                  : `Meilleurs Joueurs - ${selectedCamp}`)
+              : (selectedCamp === 'Tous les camps'
+                  ? 'Pourcentage de Parties Jouées - Tous les camps'
+                  : `Pourcentage de Parties Jouées - ${selectedCamp}`)
           }>
-          <div style={{ height: selectedCamp === 'Tous les camps' ? 600 : 500 }}>
+          <div style={{ height: 500 }}>
+            {(() => {
+              const chartData = viewMode === 'performance' 
+                ? (selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData)
+                : (selectedCamp === 'Tous les camps' ? topPlayPercentageData : campPlayPercentageData);
+              
+              console.log('BarChart Data Debug:', {
+                viewMode,
+                selectedCamp,
+                dataLength: chartData.length,
+                firstItem: chartData[0],
+                lastItem: chartData[chartData.length - 1],
+                allData: chartData
+              });
+              
+              return (
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
-                data={selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData} 
-                margin={{ top: 20, right: 30, left: 20, bottom: selectedCamp === 'Tous les camps' ? 20 : 0 }}
+                data={chartData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 0 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
@@ -604,8 +873,7 @@ export function PlayerCampPerformanceChart() {
                   interval={0}
                   fontSize={15}
                   tick={({ x, y, payload, index }) => {
-                    const dataArray = selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData;
-                    const dataPoint = dataArray[index];
+                    const dataPoint = chartData[index];
                     const displayText = dataPoint?.player || payload.value;
                     const isHighlighted = settings.highlightedPlayer === (dataPoint?.player || payload.value);
                     
@@ -626,7 +894,13 @@ export function PlayerCampPerformanceChart() {
                   }}
                 />
                 <YAxis 
-                  label={{ value: 'Performance vs moyenne (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}                 
+                  domain={viewMode === 'playPercentage' ? [0, 100] : ['auto', 'auto']}
+                  label={{ 
+                    value: viewMode === 'performance' ? 'Performance vs moyenne (%)' : 'Pourcentage de parties jouées (%)', 
+                    angle: 270, 
+                    position: 'left', 
+                    style: { textAnchor: 'middle' } 
+                  }}                 
                 />
                 <Tooltip
                   content={({ active, payload }) => {
@@ -649,11 +923,23 @@ export function PlayerCampPerformanceChart() {
                               }
                             </strong>
                           </div>
-                          <div>Parties: {dataPoint.games}</div>
-                          <div>Victoires: {dataPoint.wins}</div>
-                          <div>Taux personnel: {dataPoint.winRate}%</div>
-                          {selectedCamp !== 'Tous les camps' && <div>Moyenne camp: {dataPoint.campAvgWinRate}%</div>}
-                          <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
+                          {viewMode === 'performance' ? (
+                            <>
+                              <div>Parties: {dataPoint.games}</div>
+                              <div>Victoires: {dataPoint.wins}</div>
+                              <div>Taux personnel: {dataPoint.winRate}%</div>
+                              {selectedCamp !== 'Tous les camps' && <div>Moyenne camp: {dataPoint.campAvgWinRate}%</div>}
+                              <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
+                            </>
+                          ) : (
+                            <>
+                              <div>Parties dans ce rôle: {dataPoint.games}</div>
+                              <div>Total parties: {dataPoint.totalGames}</div>
+                              <div>Pourcentage: {dataPoint.playPercentage.toFixed(1)}%</div>
+                              <div>Victoires: {dataPoint.wins}</div>
+                              <div>Taux de victoire: {dataPoint.winRate}%</div>
+                            </>
+                          )}
                           <div style={{ 
                             fontSize: '0.8rem', 
                             color: 'var(--accent-primary)', 
@@ -671,22 +957,28 @@ export function PlayerCampPerformanceChart() {
                   }}
                 />
                  <Bar 
-                   dataKey="performanceNum" 
+                   dataKey={viewMode === 'performance' ? 'performanceNum' : 'playPercentage'}
                    style={{ cursor: 'pointer' }}
                    onClick={handleBarClick}
                  >
-                 {(selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData).map((entry, index) => {
+                 {chartData.map((entry, index) => {
                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                    const isHighlightedAddition = entry.isHighlightedAddition;
+                   
+                   // Determine fill color based on view mode and camp selection
+                   let fillColor: string;
+                   if (selectedCamp === 'Tous les camps') {
+                     // Use camp colors for "Tous les camps" view
+                     fillColor = lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`;
+                   } else {
+                     // Use player colors for specific camp view
+                     fillColor = playersColor[entry.player] || 'var(--accent-primary)';
+                   }
                    
                    return (
                     <Cell
                        key={`cell-${index}`}
-                       fill={
-                         selectedCamp === 'Tous les camps'
-                           ? lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
-                           : playersColor[entry.player] || (entry.performanceNum >= 0 ? 'var(--accent-tertiary)' : 'var(--accent-danger)')
-                       }
+                       fill={fillColor}
                        stroke={
                          isHighlightedFromSettings 
                            ? 'var(--accent-primary)' 
@@ -705,6 +997,8 @@ export function PlayerCampPerformanceChart() {
                  </Bar>
               </BarChart>
             </ResponsiveContainer>
+              );
+            })()}
           </div>
           </FullscreenChart>
         </div>
@@ -712,32 +1006,52 @@ export function PlayerCampPerformanceChart() {
         {/* Scatter chart - show for all selections */}
         <div className="lycans-graphique-section">
           <h3>
-            {selectedCamp === 'Tous les camps' 
-              ? 'Performances sur nombre de parties jouées - Tous les camps'
-              : `Performances en ${selectedCamp} sur nombre de parties jouées`
+            {viewMode === 'performance'
+              ? (selectedCamp === 'Tous les camps' 
+                  ? 'Performances sur nombre de parties jouées - Tous les camps'
+                  : `Performances en ${selectedCamp} sur nombre de parties jouées`)
+              : (selectedCamp === 'Tous les camps'
+                  ? 'Pourcentage de parties jouées - Tous les camps'
+                  : `Pourcentage de parties en ${selectedCamp}`)
             }
           </h3>
           <FullscreenChart title={
-            selectedCamp === 'Tous les camps' 
-              ? 'Performances vs Parties Jouées - Tous les camps'
-              : `Performances vs Parties Jouées - ${selectedCamp}`
+            viewMode === 'performance'
+              ? (selectedCamp === 'Tous les camps' 
+                  ? 'Performances vs Parties Jouées - Tous les camps'
+                  : `Performances vs Parties Jouées - ${selectedCamp}`)
+              : (selectedCamp === 'Tous les camps'
+                  ? 'Pourcentage vs Total Parties - Tous les camps'
+                  : `Pourcentage vs Total Parties - ${selectedCamp}`)
           }>
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
               <ScatterChart
-                 data={selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData}
+                 data={viewMode === 'performance'
+                   ? (selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData)
+                   : (selectedCamp === 'Tous les camps' ? topPlayPercentageData : campPlayPercentageData)
+                 }
                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
               >
                  <CartesianGrid strokeDasharray="3 3" />
                  <XAxis 
-                    dataKey="games"
+                    dataKey={viewMode === 'performance' ? 'games' : 'totalGames'}
                     type="number"
-                    label={{ value: 'Parties jouées', position: 'insideBottom', offset: -10 }}
+                    label={{ 
+                      value: viewMode === 'performance' ? 'Parties jouées dans ce rôle' : 'Total parties jouées', 
+                      position: 'insideBottom', 
+                      offset: -10 
+                    }}
                  />
                  <YAxis 
-                    dataKey="performanceNum"
+                    dataKey={viewMode === 'performance' ? 'performanceNum' : 'playPercentage'}
                     type="number"
-                    label={{ value: 'Performance (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                    label={{ 
+                      value: viewMode === 'performance' ? 'Performance (%)' : 'Pourcentage parties (%)', 
+                      angle: 270, 
+                      position: 'left', 
+                      style: { textAnchor: 'middle' } 
+                    }} 
                  />
                  <Tooltip
                     content={({ active, payload }) => {
@@ -753,8 +1067,18 @@ export function PlayerCampPerformanceChart() {
                           }}>
                           <div><strong>{dataPoint.player}</strong></div>
                           {selectedCamp === 'Tous les camps' && <div>Camp: {dataPoint.camp}</div>}
-                          <div>Parties: {dataPoint.games}</div>
-                          <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
+                          {viewMode === 'performance' ? (
+                            <>
+                              <div>Parties: {dataPoint.games}</div>
+                              <div>Performance: {dataPoint.performance > 0 ? '+' : ''}{dataPoint.performance}</div>
+                            </>
+                          ) : (
+                            <>
+                              <div>Parties dans ce rôle: {dataPoint.games}</div>
+                              <div>Total parties: {dataPoint.totalGames}</div>
+                              <div>Pourcentage: {dataPoint.playPercentage.toFixed(1)}%</div>
+                            </>
+                          )}
                           <div style={{ 
                             fontSize: '0.8rem', 
                             color: 'var(--accent-primary)', 
@@ -772,8 +1096,8 @@ export function PlayerCampPerformanceChart() {
                     }}
                  />
                 <Scatter
-                  dataKey="performanceNum"
-                  name="Performance"
+                  dataKey={viewMode === 'performance' ? 'performanceNum' : 'playPercentage'}
+                  name={viewMode === 'performance' ? 'Performance' : 'Pourcentage'}
                   onClick={(data: any) => {
                     if (data && data.player) {
                       // For "Tous les camps", use the camp from the data point
