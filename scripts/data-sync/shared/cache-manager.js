@@ -23,7 +23,7 @@ import path from 'path';
  *     mapStats: [ { player, playerName, villageWinRate, chateauWinRate, ... } ],
  *     deathStats: { playerDeathStats: [...], playerKillStats: [...], ... },
  *     hunterStats: [ { playerId, playerName, totalKills, ... } ],
- *     campStats: [ { playerId, playerName, campPerformance: {...}, ... } ],
+ *     campStats: [ { playerId, playerName, campStats: {...}, ... } ],
  *     votingStats: { playerBehavior: [...], playerAccuracy: [...], playerTargets: [...] }
  *   },
  *   

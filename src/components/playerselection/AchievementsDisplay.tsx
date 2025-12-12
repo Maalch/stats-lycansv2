@@ -290,7 +290,7 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
     }
 
     // Handle performance achievements with specific camp and minGames filters
-    if (achievement.category === 'performance' && achievement.redirectTo.subTab === 'campPerformance') {
+    if (achievement.category === 'performance' && achievement.redirectTo.subTab === 'campStats') {
       // Extract camp from chartSection (e.g., 'camp-loup' → 'Loup')
       const chartSection = (achievement.redirectTo as any).chartSection;
       let selectedCamp = 'Villageois'; // default
@@ -482,7 +482,7 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         }
         break;
       case 'performance':
-        if (achievement.redirectTo.subTab === 'campPerformance') {
+        if (achievement.redirectTo.subTab === 'campStats') {
           // Extract camp from chartSection for a more specific tooltip
           const chartSection = (achievement.redirectTo as any).chartSection;
           const filterInfo = achievementType === 'modded' 

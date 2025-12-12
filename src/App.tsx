@@ -10,7 +10,7 @@ import './App.css';
 // Lazy load each dashboard section
 const PlayersGeneralStatisticsChart = lazy(() => import('./components/playerstats/PlayersGeneralStatisticsChart').then(m => ({ default: m.PlayersGeneralStatisticsChart })));
 const PlayerPairingStatsChart = lazy(() => import('./components/playerstats/PlayerPairingStatsChart').then(m => ({ default: m.PlayerPairingStatsChart })));
-const PlayerCampPerformanceChart = lazy(() => import('./components/playerstats/PlayerCampPerformanceChart').then(m => ({ default: m.PlayerCampPerformanceChart })));
+const PlayerCampChart = lazy(() => import('./components/playerstats/PlayerCamp/PlayerCampChart').then(m => ({ default: m.PlayerCampChart })));
 const PlayerComparisonChart = lazy(() => import('./components/playerstats/PlayerComparisonChart').then(m => ({ default: m.PlayerComparisonChart })));
 const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
 const TalkingTimeChart = lazy(() => import('./components/playerstats/TalkingTimeChart').then(m => ({ default: m.TalkingTimeChart })));
@@ -99,6 +99,12 @@ const PLAYER_STATS_MENU = [
     description: 'Classement par participations et victoires'
   },
   { 
+    key: 'campStats', 
+    label: 'Camps et Rôles', 
+    component: PlayerCampChart,
+    description: 'Meilleures performances et apparitions, par camp'
+  },
+  { 
     key: 'series', 
     label: 'Séries', 
     component: PlayerSeriesChart,
@@ -127,12 +133,6 @@ const PLAYER_STATS_MENU = [
     label: 'Temps de Parole', 
     component: TalkingTimeChart,
     description: 'Analyse du temps de parole en et hors meetings'
-  },
-  { 
-    key: 'campPerformance', 
-    label: 'Performances', 
-    component: PlayerCampPerformanceChart,
-    description: 'Meilleurs performances (par rapport à la moyenne), par camp'
   },
   { 
     key: 'comparison', 

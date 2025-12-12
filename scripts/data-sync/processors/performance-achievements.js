@@ -228,7 +228,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       topOverallPerformers.length,
       {
         tab: 'rankings',
-        subTab: 'campPerformance',
+        subTab: 'campStats',
         chartSection: 'hall-of-fame'
       },
       'performance'
@@ -249,7 +249,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       topVillageoisPerformers.length,
       {
         tab: 'rankings',
-        subTab: 'campPerformance',
+        subTab: 'campStats',
         chartSection: 'camp-villageois'
       },
       'performance'
@@ -270,7 +270,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       topLoupPerformers.length,
       {
         tab: 'rankings',
-        subTab: 'campPerformance',
+        subTab: 'campStats',
         chartSection: 'camp-loup'
       },
       'performance'
@@ -291,7 +291,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       topIdiotPerformers.length,
       {
         tab: 'rankings',
-        subTab: 'campPerformance',
+        subTab: 'campStats',
         chartSection: 'camp-idiot'
       },
       'performance'
@@ -312,7 +312,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       topAmoureuxPerformers.length,
       {
         tab: 'rankings',
-        subTab: 'campPerformance',
+        subTab: 'campStats',
         chartSection: 'camp-amoureux'
       },
       'performance'
@@ -333,7 +333,7 @@ export function processPerformanceAchievements(campStats, gameData, playerId, su
       topSoloPerformers.length,
       {
         tab: 'rankings',
-        subTab: 'campPerformance',
+        subTab: 'campStats',
         chartSection: 'solo-roles'
       },
       'performance'

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.5.2';
+export const APP_VERSION = '1.5.3';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.5.3',
+    date: '12/12/2025',
+    description: 'Ajout du % d\'apparition par camp et rôle dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'campStats',
+      text: 'Classements / Camps et Rôles',
+    }
+  },
   {
     version: 'v1.5.2',
     date: '05/12/2025',
