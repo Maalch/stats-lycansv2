@@ -158,6 +158,9 @@ function debug_getGameById() {
     var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
     var playersValues = playersData.values;
     
+    var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
+    var clipsValues = clipsData.values;
+    
     if (!gameValues || gameValues.length === 0) {
       Logger.log("ERROR: No game data found");
       return;
@@ -188,6 +191,9 @@ function debug_getGameById() {
     
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
+    
+    var clipsHeaders = clipsValues ? clipsValues[0] : [];
+    var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
     
     // Create player ID map
     var playerIdMap = {};
@@ -259,6 +265,7 @@ function debug_getGameById() {
         Id: gameModId,
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
+        Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
           PlayerVODs: playerVODs,
@@ -315,6 +322,9 @@ function debug_getGameById() {
         
         return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap);
       });
+      
+      // Add clips for this game
+      gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
       
       var allPlayersHaveDeathInfo = allPlayerDetails.every(function(playerDetails) {
         return playerDetails && playerDetails.typeOfDeath && 
@@ -558,6 +568,10 @@ function getRawGameDataInNewFormat() {
     var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
     var playersValues = playersData.values;
     
+    // Get clips data
+    var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
+    var clipsValues = clipsData.values;
+    
     if (!gameValues || gameValues.length === 0) {
       return JSON.stringify({ error: 'No game data found' });
     }
@@ -587,6 +601,9 @@ function getRawGameDataInNewFormat() {
     
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
+    
+    var clipsHeaders = clipsValues ? clipsValues[0] : [];
+    var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
     
     // Create a map of player names to Steam IDs for efficient lookup
     var playerIdMap = {};
@@ -645,6 +662,7 @@ function getRawGameDataInNewFormat() {
           Id: gameModId,
           Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
           Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
+          Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
           LegacyData: {
             VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
             PlayerVODs: playerVODs,
@@ -697,6 +715,9 @@ function getRawGameDataInNewFormat() {
         
         return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap);
       });   
+      
+      // Add clips for this game
+      gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
       
       return gameRecord;
     });
@@ -849,6 +870,54 @@ function getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows) {
   });
   
   return votes;
+}
+
+/**
+ * Helper function to get clips for a specific game
+ * Returns an array of clips with all CLIPS schema fields
+ */
+function getClipsForGame(gameId, clipsHeaders, clipsDataRows) {
+  if (!clipsDataRows || clipsDataRows.length === 0) {
+    return [];
+  }
+  
+  var clips = [];
+  
+  // Find all clips matching this game
+  clipsDataRows.forEach(function(row) {
+    var rowGameId = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.GAMEID)];
+    
+    if (rowGameId == gameId) {
+      var clipId = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.CLIPID)];
+      var clipUrl = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.CLIPURL)];
+      var clipName = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.CLIPNAME)];
+      var povPlayer = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.POVPLAYER)];
+      var othersPlayers = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.OTHERSPLAYERS)];
+      var relatedClips = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.RELATEDCLIPS)];
+      var nextClip = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.NEXTCLIP)];
+      var newName = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.NEWNAME)];
+      var additionalInfo = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.ADDITIONALINFO)];
+      var category = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.CATEGORY)];
+      
+      // Only add clips that have at least a ClipId and POVPlayer
+      if (clipId && clipId.toString().trim() !== '' && povPlayer && povPlayer.toString().trim() !== '') {
+        clips.push({
+          ClipId: clipId.toString().trim(),
+          ClipUrl: clipUrl && clipUrl.toString().trim() !== '' ? clipUrl.toString().trim() : null,
+          ClipName: clipName && clipName.toString().trim() !== '' ? clipName.toString().trim() : null,
+          POVPlayer: povPlayer.toString().trim(),
+          OthersPlayers: othersPlayers && othersPlayers.toString().trim() !== '' ? othersPlayers.toString().trim() : null,
+          RelatedClips: relatedClips && relatedClips.toString().trim() !== '' ? relatedClips.toString().trim() : null,
+          NextClip: nextClip && nextClip.toString().trim() !== '' ? nextClip.toString().trim() : null,
+          NewName: newName && newName.toString().trim() !== '' ? newName.toString().trim() : null,
+          AdditionalInfo: additionalInfo && additionalInfo.toString().trim() !== '' ? additionalInfo.toString().trim() : null,
+          Category: category && category.toString().trim() !== '' ? category.toString().trim() : null
+        });
+      }
+    }
+  });
+  
+  return clips;
 }
 
 /**

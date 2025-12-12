@@ -69,6 +69,22 @@ const LYCAN_SCHEMA = {
       SELECTEDVOTE: 'Choix', //True/false if the VOTE is the selected vote type or not for that meeting
     }
   },
+  CLIPS: {
+    SHEET: 'Clips', //list of clips / best moments of games
+    COLS: {
+      CLIPID: 'Clip id', //Unique ID of the video clip
+      CLIPURL: 'Liens', //URL of the video clip (usually from Twitch)
+      CLIPNAME: 'Nom du clip original', //Name of the video clip as displayed on Twitch/source
+      GAMEID: 'Game', //Game ID (unique), same as Game v2 sheet
+      POVPLAYER: 'POV', //Name of the player that displayed the POV of the clip
+      OTHERSPLAYERS: 'Personnes impliquées', //List players involved in the clip. The POVPLAYER is in this list
+      RELATEDCLIPS: 'Clips associés', //List of related CLIPID (for example, for different POVs). Empty most of the times.
+      NEXTCLIP: 'Suite de clips', //Name of the next CLIPID, if the clip are directly in sequence. Empty most of the times.
+      NEWNAME: 'Nom créé', //Displayed of the clip. Can be empty.
+      ADDITIONALINFO: 'Contexte', //Additional information/explanation/context about the clip action
+      CATEGORY: 'Categorie', //Category name of the clip (to regroup them more easily). Can be empty 
+    }
+  },
 
   DETAILSV2: {
     SHEET: 'Détails v2', //Details data about each player each game in the new format

@@ -19,6 +19,19 @@ export interface RoleChange {
   RoleChangeDateIrl: string;     // Date of role change
 }
 
+export interface Clip {
+  ClipId: string;                 // Unique ID of the video clip
+  ClipUrl: string | null;         // URL of the video clip (usually from Twitch)
+  ClipName: string | null;        // Name of the clip as displayed on Twitch/source
+  POVPlayer: string;              // Player whose POV is shown in the clip
+  OthersPlayers: string | null;   // Comma-separated list of other players involved
+  RelatedClips: string | null;    // Comma-separated list of related clip IDs (different POVs)
+  NextClip: string | null;        // ID of the next clip in sequence (if applicable)
+  NewName: string | null;         // Custom display name for the clip
+  AdditionalInfo: string | null;  // Additional context/explanation about the clip
+  Category: string | null;        // Category name for grouping clips
+}
+
 export interface PlayerStat {
   ID?: string | null;             // Steam ID - unique identifier (may be null for legacy data)
   Username: string;
@@ -58,6 +71,7 @@ export interface GameLogEntry {
   EndTiming: string | null;       // Timing of game end (e.g., "Nuit 5 --> N5", "Jour 6 --> J6")
   Version: string;               // Mod version used for the game
   Modded: boolean;              // Whether the game was modded or not
+  Clips: Clip[];                 // Array of clips associated with this game
   LegacyData: LegacyData | null;
   PlayerStats: PlayerStat[];
 }
