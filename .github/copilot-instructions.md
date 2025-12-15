@@ -17,16 +17,23 @@ A Vite-based React + TypeScript dashboard for visualizing werewolf game statisti
 ## Critical Workflows
 
 ```bash
-npm run dev                    # Dev server + copy data to public/data/
-npm run build                  # TypeScript check + Vite build + copy data to docs/data/
-npm run sync-data              # Full data sync: fetch from APIs + generate achievements
-npm run generate-achievements  # Standalone achievements generation + copy to public/
+npm run dev                     # Dev server + copy data to public/data/
+npm run build                   # TypeScript check + Vite build + copy data to docs/data/
+npm run sync-data-aws           # AWS sync for main team (recommended)
+npm run sync-data-discord       # AWS sync for Discord team
+npm run sync-data               # Legacy Google Sheets sync
+npm run generate-achievements   # Standalone achievements generation + copy to public/
 ```
 
 **Build Pipeline:** Inline Node.js scripts in `package.json` copy `/data` → `public/data/` (dev) or `docs/data/` (prod)  
-**Data Sync:** GitHub Actions runs Mon/Tue/Thu at 8 PM UTC (post-game sync), manually triggerable via workflow_dispatch, includes achievements generation  
-**Environment:** No env vars needed locally - all data from static files. `LYCANS_API_BASE` + `STATS_LIST_URL` secrets on GitHub only.  
-**Achievement Generation:** `scripts/data-sync/generate-achievements.js` processes all players, creates ranked lists, integrates with `fetch-data.js`
+**Data Sync:** 
+  - Primary: AWS-based sync via `fetch-data-unified.js` (supports multiple teams via `shared/data-sources.js` config)
+  - Legacy: Google Sheets sync via `fetch-data.js` (deprecated but maintained for backward compatibility)
+  - GitHub Actions runs Mon/Tue/Thu at 8 PM UTC (post-game sync), manually triggerable via workflow_dispatch
+  - Auto-generates achievements + joueurs.json for configured teams
+  
+**Environment:** No env vars needed locally - all data from static files. `STATS_LIST_URL` (AWS) and `LYCANS_API_BASE` (Google Sheets) secrets on GitHub Actions only.  
+**Achievement Generation:** `scripts/data-sync/generate-achievements.js` processes all players, creates ranked lists, supports multiple teams via config
 
 ## Data Architecture Migration (RECENT CHANGE)
 
@@ -391,6 +398,29 @@ export function processNewAchievements(playerStats: PlayerStat[], playerName: st
 - **Kills:** Death statistics, survival rates, kill counts by role
 - **Series:** Consecutive wins, camp streaks, role performance chains
 
+## Voting Statistics System
+
+**New Feature:** Comprehensive voting behavior analysis with multiple views and metrics.
+
+### Voting Analytics Components
+```typescript
+// Located in: src/components/playerstats/Voting/
+VotingStatisticsChart.tsx       // Main voting dashboard with multiple views
+VotingOverviewView.tsx          // Overall statistics with top performers
+VotingBehaviorView.tsx          // Aggressiveness analysis
+VotingAccuracyView.tsx          // Camp targeting accuracy
+TargetedPlayersView.tsx         // Survival rates when targeted
+```
+
+**Core Utilities:** `src/utils/votingStatsUtils.ts` provides `calculateAggregatedVotingStats()` for cross-game analysis
+
+**Key Metrics:**
+- **Aggressiveness Score:** `votingRate - (skippingRate * 0.5) - (abstentionRate * 0.7)` - measures voting activity
+- **Accuracy Rate:** `(votesForEnemyCamp / totalVotes) * 100` - targeting correctness
+- **Survival Rate:** `((timesTargeted - eliminatedByVote) / timesTargeted) * 100` - resilience when targeted
+
+**Data Requirements:** Uses `PlayerStat.Votes` array with `Target` and `Date` fields from `gameLog.json`
+
 ## Player Selection System
 
 **New Feature (2024):** Centralized player search and selection interface with integrated achievements display
@@ -443,9 +473,42 @@ const handleAchievementClick = (achievement: Achievement, event: React.MouseEven
 
 **Integration:** Changelog button in `App.tsx` footer, version display persists across all pages
 
-## Integration Points
+## Integration Points & External Systems
 
-**GitHub Actions:** `.github/workflows/update-data.yml` for Mon/Tue/Thu data sync (8 PM UTC post-game)  
-**Apps Script:** `scripts/data-sync/fetch-data.js` fetches from Google Sheets  
+**GitHub Actions:** 
+  - `.github/workflows/update-data.yml` - Main team AWS sync (Mon/Tue/Thu at 8 PM UTC)
+  - `.github/workflows/update-discorddata.yml` - Discord team AWS sync
+  - Manual triggers via workflow_dispatch with `full_sync` and `force_achievements_recalc` options
+  
+**Data Sources:**
+  - Primary: AWS S3 bucket game logs (via `fetch-data-unified.js`)
+  - Legacy: Google Sheets API (via `fetch-data.js` - deprecated)
+  - Multi-team support via `scripts/data-sync/shared/data-sources.js` configuration
+  
 **Build Output:** GitHub Pages serves from `/docs` with custom domain (base path `/`)  
 **Error Handling:** Static file loading only, graceful degradation for missing data
+
+## Data Sync Scripts Architecture
+
+**Unified AWS Sync (`fetch-data-unified.js`):**
+```bash
+# Supports multiple teams via configuration
+node fetch-data-unified.js main      # Main team to /data
+node fetch-data-unified.js discord   # Discord team to /data/discord
+```
+
+**Configuration Pattern (`shared/data-sources.js`):**
+```javascript
+export const DATA_SOURCES = {
+  teamKey: {
+    name: 'Team Name',
+    outputDir: '../../data/teamname',
+    gameFilter: (gameId) => gameId.startsWith('Prefix-'),
+    generateJoueurs: true,
+    modVersionLabel: 'Label for mod detection',
+    indexDescription: 'Description for index.json'
+  }
+};
+```
+
+**Adding New Teams:** Edit `shared/data-sources.js` → run sync script with team key → data outputs to configured directory
