@@ -321,17 +321,18 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
             console.log(`✓ Skipping AWS game ${gameId}: GSheet has priority (FullDataExported: true)`);
             return;
           } else {
-            // FullDataExported: false - Use AWS data but merge LegacyData from GSheet
+            // FullDataExported: false - Use AWS data but merge LegacyData and Clips from GSheet
             const mergedGame = {
               ...awsGame,
               Version: legacyMatch.game.Version || gameLog.ModVersion,
               Modded: legacyMatch.game.Modded !== undefined ? legacyMatch.game.Modded : true,
               LegacyData: legacyMatch.game.LegacyData || undefined,
+              Clips: legacyMatch.game.Clips || awsGame.Clips || [],
               source: 'merged'
             };
             gamesByIdMap.set(gameId, mergedGame);
             mergedCount++;
-            console.log(`✓ Merged game ${gameId}: AWS data + GSheet LegacyData`);
+            console.log(`✓ Merged game ${gameId}: AWS data + GSheet LegacyData + Clips`);
             return;
           }
         }
@@ -357,8 +358,9 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
           ...awsGame,
           Version: gameLog.ModVersion,
           Modded: true,
-          // Preserve LegacyData from existing game if it has any
+          // Preserve LegacyData and Clips from existing game if it has any
           ...(existingAwsGame?.LegacyData && { LegacyData: existingAwsGame.LegacyData }),
+          ...(existingAwsGame?.Clips && { Clips: existingAwsGame.Clips }),
           source: 'aws'
         };
         

@@ -19,7 +19,11 @@ import {
   type GroupByMethod,
   type CampFilterOption
 } from '../playerstats/playerhistory';
-import type { GameLogEntry } from '../../hooks/useCombinedRawData';
+import type { GameLogEntry, Clip } from '../../hooks/useCombinedRawData';
+import { usePlayerClips } from '../../hooks/useClips';
+import { ClipViewer } from '../common/ClipViewer';
+import { findRelatedClips, findNextClip } from '../../utils/clipUtils';
+import { useAllClips } from '../../hooks/useClips';
 import './PlayerSelectionPage.css';
 
 interface PlayerBasicStats {
@@ -44,6 +48,11 @@ export function PlayerSelectionPage() {
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
+  
+  // Get player clips for random clip feature
+  const { clips: playerClips } = usePlayerClips(settings.highlightedPlayer);
+  const { clips: allClips } = useAllClips();
   
   // Initialize achievementFilter based on global gameFilter setting
   const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>(() => {
@@ -206,6 +215,13 @@ export function PlayerSelectionPage() {
   const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap') => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
+  };
+  
+  // Handler for random clip button
+  const handleRandomClip = () => {
+    if (playerClips.length === 0) return;
+    const randomIndex = Math.floor(Math.random() * playerClips.length);
+    setSelectedClip(playerClips[randomIndex]);
   };
 
   if (isLoading || joueursLoading) {
@@ -376,7 +392,7 @@ export function PlayerSelectionPage() {
                     <div className="player-stats-summary">
                       {highlightedPlayerStats.totalGames} parties • {highlightedPlayerStats.totalWins} victoires • {highlightedPlayerStats.winRate.toFixed(1)}% taux de victoire
                     </div>
-                    {(highlightedPlayerStats.twitch || highlightedPlayerStats.youtube) && (
+                    {(highlightedPlayerStats.twitch || highlightedPlayerStats.youtube || playerClips.length > 0) && (
                       <div className="social-links">
                         {highlightedPlayerStats.twitch && (
                           <a 
@@ -397,6 +413,20 @@ export function PlayerSelectionPage() {
                           >
                             🎬 YouTube
                           </a>
+                        )}
+                        {/* Clips Section DISABLED FOR NOW */}
+                        {playerClips.length > 100000 && (
+                          <button
+                            type="button"
+                            className="social-link clips-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRandomClip();
+                            }}
+                            title={`${playerClips.length} clip${playerClips.length > 1 ? 's' : ''} disponible${playerClips.length > 1 ? 's' : ''}`}
+                          >
+                            🎬 Clip aléatoire ({playerClips.length})
+                          </button>
                         )}
                       </div>
                     )}
@@ -751,6 +781,24 @@ export function PlayerSelectionPage() {
           </div>
         )}
       </div>
+      
+      {/* Clip Viewer Modal */}
+      {selectedClip && (
+        <ClipViewer
+          clip={selectedClip}
+          onClose={() => setSelectedClip(null)}
+          relatedClips={findRelatedClips(selectedClip, allClips)}
+          nextClip={findNextClip(selectedClip, allClips)}
+          onNextClip={() => {
+            const next = findNextClip(selectedClip, allClips);
+            if (next) setSelectedClip(next);
+          }}
+          onRelatedClip={(clipId) => {
+            const related = allClips.find(c => c.ClipId === clipId);
+            if (related) setSelectedClip(related);
+          }}
+        />
+      )}
     </div>
   );
 }

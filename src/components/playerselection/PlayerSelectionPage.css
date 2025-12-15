@@ -537,6 +537,17 @@
   border-color: #ff0000;
 }
 
+.social-link.clips-btn {
+  cursor: pointer;
+  background: var(--bg-secondary);
+}
+
+.social-link.clips-btn:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
+}
+
 
 /* Player Period */
 .player-period {

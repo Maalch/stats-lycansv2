@@ -5,6 +5,10 @@ import './GameDetailsChart.css';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { useSettings } from '../../context/SettingsContext';
 import { getDeathTypeLabel } from '../../types/deathTypes';
+import type { Clip } from '../../hooks/useCombinedRawData';
+import { ClipViewer } from '../common/ClipViewer';
+import { getClipDisplayName, groupClipsByCategory, findRelatedClips, findNextClip } from '../../utils/clipUtils';
+import { useAllClips } from '../../hooks/useClips';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {
@@ -134,9 +138,13 @@ function formatDuration(durationInSeconds: number | null): string {
 export function GameDetailView({ game }: { game: any }) {
   const [showVideo, setShowVideo] = useState(false);
   const [selectedVOD, setSelectedVOD] = useState<string | null>(null);
+  const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
   
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  
+  // Get all clips for related clips navigation
+  const { clips: allClips } = useAllClips();
   
   // Get highlighted player from settings
   const { settings } = useSettings();
@@ -471,7 +479,74 @@ export function GameDetailView({ game }: { game: any }) {
           </div>
         )}
 
+        {/* Clips Section DISABLED FOR NOW */}
+        {game.clips && game.clips.length > 100000 && (
+          <div className="lycans-game-detail-section full-width">
+            <h4>🎬 Clips de la Partie ({game.clips.length})</h4>
+            
+            {(() => {
+              const groupedClips = groupClipsByCategory(game.clips);
+              const categories = Array.from(groupedClips.keys()).sort();
+              
+              return categories.map(category => {
+                const categoryClips = groupedClips.get(category)!;
+                const showCategoryTitle = category !== 'Sans catégorie';
+                
+                return (
+                  <div key={category} className="lycans-clips-category">
+                    {showCategoryTitle && (
+                      <h5 className="lycans-clips-category-title">{category}</h5>
+                    )}
+                    <div className="lycans-clips-grid">
+                      {categoryClips.map((clip) => (
+                        <button
+                          key={clip.ClipId}
+                          className="lycans-clip-card"
+                          onClick={() => setSelectedClip(clip)}
+                        >
+                          <div className="lycans-clip-card-header">
+                            <span className="lycans-clip-icon">🎬</span>
+                            <span className="lycans-clip-name">{getClipDisplayName(clip)}</span>
+                          </div>
+                          <div className="lycans-clip-card-pov">
+                            POV: {clip.POVPlayer}
+                          </div>
+                          {clip.AdditionalInfo && (
+                            <div className="lycans-clip-card-info">
+                              {clip.AdditionalInfo.length > 60 
+                                ? `${clip.AdditionalInfo.substring(0, 60)}...` 
+                                : clip.AdditionalInfo}
+                            </div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                );
+              });
+            })()}
+          </div>
+        )}
+
       </div>
+      
+      {/* Clip Viewer Modal */}
+      {selectedClip && (
+        <ClipViewer
+          clip={selectedClip}
+          onClose={() => setSelectedClip(null)}
+          relatedClips={findRelatedClips(selectedClip, allClips)}
+          nextClip={findNextClip(selectedClip, allClips)}
+          onNextClip={() => {
+            const next = findNextClip(selectedClip, allClips);
+            if (next) setSelectedClip(next);
+          }}
+          onRelatedClip={(clipId) => {
+            const related = allClips.find(c => c.ClipId === clipId);
+            if (related) setSelectedClip(related);
+          }}
+        />
+      )}
     </div>
   );
 }

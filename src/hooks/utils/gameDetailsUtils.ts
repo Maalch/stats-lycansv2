@@ -981,6 +981,7 @@ export function computeGameDetailsFromGameLog(
       playerVODs: convertPlayerVODsToEmbedUrls(game.LegacyData?.PlayerVODs),
       gameDuration: calculateGameDuration(game.StartDate, game.EndDate),
       playerData : game.PlayerStats,
+      clips: game.Clips || [], // Include clips array from GameLogEntry
     };
   });
 }

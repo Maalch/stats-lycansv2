@@ -496,6 +496,90 @@
   }
 }
 
+/* Clips Section Styles */
+
+.lycans-clips-category {
+  margin: 1.5rem 0;
+}
+
+.lycans-clips-category-title {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-primary);
+}
+
+.lycans-clips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.lycans-clip-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lycans-clip-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent-primary);
+  background: var(--bg-tertiary);
+}
+
+.lycans-clip-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lycans-clip-icon {
+  font-size: 1.25rem;
+}
+
+.lycans-clip-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.lycans-clip-card-pov {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  padding-left: 2rem;
+}
+
+.lycans-clip-card-info {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  padding-left: 2rem;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .lycans-clips-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .lycans-clip-card-pov,
+  .lycans-clip-card-info {
+    padding-left: 0;
+  }
+}
+
 /* Camp Visualization Styles */
 
 .lycans-camp-visualization {
