@@ -1,7 +1,6 @@
 /**
  * Shared utilities for data sync scripts
  */
-import fetch from 'node-fetch';
 import fs from 'fs/promises';
 import path from 'path';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../src/utils/datasyncExport.js';

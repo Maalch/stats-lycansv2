@@ -69,7 +69,6 @@ const LYCAN_SCHEMA = {
       SELECTEDVOTE: 'Choix', //True/false if the VOTE is the selected vote type or not for that meeting
     }
   },
-  /*
   CLIPS: {
     SHEET: 'Clips', //list of clips / best moments of games
     COLS: {
@@ -86,8 +85,6 @@ const LYCAN_SCHEMA = {
       CATEGORY: 'Catégorie', //Category name of the clip (to regroup them more easily). Can be empty 
     }
   },
-  */
-
   DETAILSV2: {
     SHEET: 'Détails v2', //Details data about each player each game in the new format
     COLS: {

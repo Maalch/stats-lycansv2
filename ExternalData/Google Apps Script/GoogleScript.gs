@@ -158,8 +158,8 @@ function debug_getGameById() {
     var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
     var playersValues = playersData.values;
     
-    //var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
-    //var clipsValues = clipsData.values;
+    var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
+    var clipsValues = clipsData.values;
     
     if (!gameValues || gameValues.length === 0) {
       Logger.log("ERROR: No game data found");
@@ -192,8 +192,8 @@ function debug_getGameById() {
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
     
-    //var clipsHeaders = clipsValues ? clipsValues[0] : [];
-    //var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
+    var clipsHeaders = clipsValues ? clipsValues[0] : [];
+    var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
     
     // Create player ID map
     var playerIdMap = {};
@@ -265,7 +265,7 @@ function debug_getGameById() {
         Id: gameModId,
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
-        //Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
+        Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
         LegacyData: {
           VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
           PlayerVODs: playerVODs,
@@ -324,7 +324,7 @@ function debug_getGameById() {
       });
       
       // Add clips for this game
-      //gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
+      gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
       
       var allPlayersHaveDeathInfo = allPlayerDetails.every(function(playerDetails) {
         return playerDetails && playerDetails.typeOfDeath && 
@@ -569,8 +569,8 @@ function getRawGameDataInNewFormat() {
     var playersValues = playersData.values;
     
     // Get clips data
-    //var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
-    //var clipsValues = clipsData.values;
+    var clipsData = getLycanSheetData(LYCAN_SCHEMA.CLIPS.SHEET);
+    var clipsValues = clipsData.values;
     
     if (!gameValues || gameValues.length === 0) {
       return JSON.stringify({ error: 'No game data found' });
@@ -602,8 +602,8 @@ function getRawGameDataInNewFormat() {
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
     
-    //var clipsHeaders = clipsValues ? clipsValues[0] : [];
-    //var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
+    var clipsHeaders = clipsValues ? clipsValues[0] : [];
+    var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
     
     // Create a map of player names to Steam IDs for efficient lookup
     var playerIdMap = {};
@@ -662,7 +662,7 @@ function getRawGameDataInNewFormat() {
           Id: gameModId,
           Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
           Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
-          //Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
+          Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
           LegacyData: {
             VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
             PlayerVODs: playerVODs,
@@ -717,7 +717,7 @@ function getRawGameDataInNewFormat() {
       });   
       
       // Add clips for this game
-      //gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
+      gameRecord.Clips = getClipsForGame(gameId, clipsHeaders, clipsDataRows);
       
       return gameRecord;
     });
