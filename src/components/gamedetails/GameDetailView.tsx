@@ -479,8 +479,8 @@ export function GameDetailView({ game }: { game: any }) {
           </div>
         )}
 
-        {/* Clips Section DISABLED FOR NOW */}
-        {game.clips && game.clips.length > 100000 && (
+        {/* Clips Section */}
+        {settings.clipsEnabled && game.clips && game.clips.length > 0 && (
           <div className="lycans-game-detail-section full-width">
             <h4>🎬 Clips de la Partie ({game.clips.length})</h4>
             

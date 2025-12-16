@@ -414,8 +414,8 @@ export function PlayerSelectionPage() {
                             🎬 YouTube
                           </a>
                         )}
-                        {/* Clips Section DISABLED FOR NOW */}
-                        {playerClips.length > 100000 && (
+                        {/* Clips Section */}
+                        {settings.clipsEnabled && playerClips.length > 0 && (
                           <button
                             type="button"
                             className="social-link clips-btn"

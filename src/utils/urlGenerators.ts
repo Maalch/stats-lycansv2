@@ -21,6 +21,7 @@ const defaultSettings: SettingsState = {
     mapNameFilter: 'all',
     playerFilter: { mode: 'none', players: [] },
   },
+  clipsEnabled: false,
   tab: null,
   subtab: null,
 };
