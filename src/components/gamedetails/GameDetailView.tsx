@@ -5,10 +5,12 @@ import './GameDetailsChart.css';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { useSettings } from '../../context/SettingsContext';
 import { getDeathTypeLabel } from '../../types/deathTypes';
-import type { Clip } from '../../hooks/useCombinedRawData';
+import type { Clip, GameLogEntry } from '../../hooks/useCombinedRawData';
 import { ClipViewer } from '../common/ClipViewer';
 import { getClipDisplayName, groupClipsByCategory, findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
+import { GameTimeline } from './GameTimeline';
+import { FullscreenChart } from '../common/FullscreenChart';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {
@@ -422,6 +424,29 @@ export function GameDetailView({ game }: { game: any }) {
           </div>
         </div>
 
+        {/* Timeline des Actions */}
+        <div className="lycans-game-detail-section full-width">
+          <FullscreenChart title="Timeline des Actions">
+            <GameTimeline 
+              game={{
+                ...game,
+                PlayerStats: game.playerData,
+                StartDate: '', // Will be auto-handled by timeline if needed
+                EndDate: '',
+                Id: game.gameId,
+                DisplayedId: game.gameId,
+                MapName: game.map || '',
+                HarvestGoal: game.totalHarvest || 0,
+                HarvestDone: game.harvest || 0,
+                EndTiming: null,
+                Version: game.versions || '',
+                Modded: game.isModded || false,
+                Clips: game.clips || [],
+                LegacyData: null
+              } as GameLogEntry}
+            />
+          </FullscreenChart>
+        </div>
 
         {/* Video Toggle Button */}
         {hasAnyVOD && (
