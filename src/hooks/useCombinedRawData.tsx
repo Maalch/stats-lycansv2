@@ -19,6 +19,19 @@ export interface RoleChange {
   RoleChangeDateIrl: string;     // Date of role change
 }
 
+export interface Action {
+  Date: string;                   // ISO date string when the action was performed
+  Timing: string;                 // Game timing (e.g., "N3" for Night 3, "J6" for Day 6)
+  Position: {                     // Game coordinates where action was performed
+    x: number;
+    y: number;
+    z: number;
+  };
+  ActionType: string;             // Type of action (e.g., "UseGadget", "DrinkPotion", "Sabotage")
+  ActionName: string | null;      // Name of the action/item used (e.g., "Diamant", "Invisible", "Vampire")
+  ActionTarget: string | null;    // Target of the action if applicable
+}
+
 export interface Clip {
   ClipId: string;                 // Unique ID of the video clip
   ClipUrl: string | null;         // URL of the video clip (usually from Twitch)
@@ -53,6 +66,8 @@ export interface PlayerStat {
   Votes: Vote[];                  // Array of votes cast by this player during meetings
   SecondsTalkedOutsideMeeting: number;
   SecondsTalkedDuringMeeting: number;
+  TotalCollectedLoot?: number;    // Total loot collected during the game (optional for legacy data)
+  Actions: Action[];              // Array of actions performed by this player during the game
 }
 
 export interface LegacyData {
