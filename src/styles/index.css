@@ -1,0 +1,29 @@
+/**
+ * Main Styles Entry Point
+ * Imports all modularized CSS files in the correct order
+ * 
+ * Import Order:
+ * 1. Theme Variables (must be first)
+ * 2. Base Styles
+ * 3. Component Styles
+ * 4. Utility Styles (media queries last)
+ */
+
+/* Theme Variables */
+@import './theme/variables.css';
+
+/* Base Styles */
+@import './base/reset.css';
+@import './base/typography.css';
+
+/* Component Styles */
+@import './components/menu.css';
+@import './components/dashboard.css';
+@import './components/stats.css';
+@import './components/charts.css';
+@import './components/changelog.css';
+@import './components/fullscreen.css';
+@import './components/player-comparison.css';
+
+/* Utility Styles */
+@import './utilities/responsive.css';

@@ -1,0 +1,435 @@
+/**
+ * Player Comparison Styles
+ * Styling for player comparison interface
+ */
+
+/* ===========================
+   PLAYER SELECTION
+   =========================== */
+.lycans-player-comparison {
+  padding: 1rem;
+}
+
+.lycans-player-selection {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-player-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.lycans-player-selector label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.lycans-select {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.lycans-select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.lycans-vs-indicator {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-secondary);
+  padding: 0 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ===========================
+   COMPARISON RESULTS
+   =========================== */
+.lycans-comparison-results {
+  margin-top: 2rem;
+}
+
+.lycans-comparison-instructions {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-comparison-instructions h3 {
+  margin-top: 0;
+  color: var(--accent-primary);
+}
+
+.lycans-comparison-instructions ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.lycans-comparison-instructions li {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.lycans-comparison-instructions li strong {
+  color: var(--text-primary);
+}
+
+.lycans-comparison-error {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--accent-secondary);
+  color: white;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ===========================
+   HEAD-TO-HEAD STATS
+   =========================== */
+.lycans-head-to-head-stats {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-head-to-head-stats h3 {
+  margin-top: 0;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-primary);
+  padding-bottom: 0.5rem;
+}
+
+.lycans-h2h-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.lycans-h2h-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-h2h-section h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--accent-primary);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lycans-h2h-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1rem 0;
+  font-style: italic;
+}
+
+.lycans-h2h-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-h2h-label {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.lycans-h2h-value {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* ===========================
+   DETAILED STATS
+   =========================== */
+.lycans-detailed-stats {
+  margin: 2rem 0;
+}
+
+/* ===========================
+   VERSUS ARENA
+   =========================== */
+.lycans-versus-arena {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 0rem;
+  align-items: center;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-radius: 16px;
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.lycans-versus-arena::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.lycans-player-score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lycans-player-score-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.lycans-player1-card {
+  border-left: 4px solid var(--chart-color-1);
+}
+
+.lycans-player2-card {
+  border-right: 4px solid var(--chart-color-2);
+}
+
+.lycans-player-avatar {
+  margin-bottom: 1rem;
+}
+
+.lycans-player-initials {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.lycans-player-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--border-color);
+}
+
+.lycans-player-avatar-default {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: relative;
+  background-color: var(--player-color);
+  background-image: url('/playerCard.webp');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--border-color);
+  overflow: hidden;
+}
+
+.lycans-player-avatar-overlay {
+  display: none;
+}
+
+.lycans-player-name {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.lycans-score-display {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.lycans-score-number {
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.lycans-score-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.5rem;
+}
+
+.lycans-win-rate {
+  background: var(--bg-tertiary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-radar-container {
+  position: relative;
+  z-index: 2;
+}
+
+.lycans-battle-summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0.5rem 0 1rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.lycans-battle-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.lycans-battle-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.lycans-battle-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--accent-primary);
+}
+
+.lycans-winner-announcement {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 0rem;
+  padding: 0.75rem;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-no-battles {
+  text-align: center;
+  padding: 3rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  margin: 2rem 0;
+}
+
+.lycans-no-battles-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.lycans-no-battles-text {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ===========================
+   RADAR CHART LEGEND
+   =========================== */
+.lycans-radar-explanation {
+  margin: 1rem 0 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.lycans-radar-info {
+  margin: 0 0 1rem 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.lycans-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.lycans-metric-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease;
+}
+
+.lycans-metric-info:hover {
+  transform: translateY(-1px);
+}
+
+.lycans-metric-name {
+  font-weight: 600;
+  color: var(--accent-primary);
+  font-size: 0.9rem;
+}
+
+.lycans-metric-desc {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}

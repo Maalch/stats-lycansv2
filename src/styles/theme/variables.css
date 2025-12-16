@@ -1,0 +1,73 @@
+/**
+ * Theme Variables
+ * Consolidated CSS custom properties for the entire application
+ * 
+ * Dark theme is the default
+ * Light theme overrides via @media (prefers-color-scheme: light)
+ */
+
+:root {
+  /* ===========================
+     DARK THEME (Default)
+     =========================== */
+  
+  /* Background Colors */
+  --bg-primary: #23233a;          /* Main application background */
+  --bg-secondary: #2c2c44;        /* Card/box backgrounds */
+  --bg-tertiary: #343552;         /* Button/header backgrounds */
+  
+  /* Text Colors */
+  --text-primary: #fff;           /* Primary text color */
+  --text-secondary: #bbb;         /* Secondary/muted text */
+  
+  /* Accent Colors */
+  --accent-primary: #4853a8;      /* Primary accent/highlight */
+  --accent-secondary: #e74c3c;    /* Secondary accent (danger/warning) */
+  --accent-tertiary: #82ca9d;     /* Tertiary accent (success) */
+  --accent-color: #4853a8;        /* Alias for accent-primary (legacy) */
+  
+  /* Border Colors */
+  --border-color: #565674;        /* Standard border color */
+  
+  /* Chart Colors */
+  --chart-color-1: #0088FE;       /* Primary chart color */
+  --chart-color-2: #00C49F;       /* Secondary chart color */
+  --chart-color-3: #FFBB28;       /* Tertiary chart color */
+  --chart-color-4: #FF8042;       /* Quaternary chart color */
+  --chart-color-5: #8884d8;       /* Quinary chart color */
+  --chart-color-6: #82ca9d;       /* Senary chart color */
+  --chart-primary: #0088FE;       /* Alias for chart-color-1 */
+  --chart-secondary: #00C49F;     /* Alias for chart-color-2 */
+  
+  /* Timing-Specific Colors */
+  --timing-day: #FFD700;          /* Day phase color (gold) */
+  --timing-night: #0088FE;        /* Night phase color (blue) */
+  --timing-council: #FF8042;      /* Council phase color (orange) */
+  
+  /* Hover States */
+  --accent-hover: #5a66c0;        /* Hover state for accent elements */
+}
+
+/* ===========================
+   LIGHT THEME
+   =========================== */
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Background Colors */
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #f2f2f2;
+    --bg-tertiary: #e9e9f0;
+    
+    /* Text Colors */
+    --text-primary: #23233a;
+    --text-secondary: #666;
+    
+    /* Accent Colors (mostly unchanged) */
+    --accent-primary: #4853a8;
+    --accent-secondary: #e74c3c;
+    --accent-color: #4853a8;
+    
+    /* Border Colors */
+    --border-color: #d0d0d0;
+  }
+}

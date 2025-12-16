@@ -1,0 +1,144 @@
+/**
+ * Menu Styles
+ * Main menu (tabs) and submenu styling
+ */
+
+/* ===========================
+   MAIN MENU (Primary Tabs)
+   =========================== */
+.lycans-main-menu {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0;
+  justify-content: center;
+}
+
+.lycans-main-menu-btn {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+}
+
+.tab-label {
+  flex: 1;
+}
+
+.lycans-main-menu-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.lycans-main-menu-btn.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+  border-bottom: 2px solid var(--accent-color);
+  margin-bottom: -2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   SUBMENU
+   =========================== */
+.lycans-submenu {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lycans-submenu-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.lycans-submenu-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.lycans-submenu-btn.active {
+  background: var(--chart-color-1);
+  color: white;
+  border-color: var(--chart-color-1);
+}
+
+/* ===========================
+   LEGACY MENU (Hidden)
+   =========================== */
+.lycans-menu {
+  display: none;
+}
+
+.lycans-menu-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 6px 6px 0 0;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lycans-menu-btn.active,
+.lycans-menu-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+/* ===========================
+   ROLE CATEGORIES SELECTION
+   =========================== */
+.lycans-categories-selection {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lycans-categorie-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.lycans-categorie-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.lycans-categorie-btn.active {
+  background: var(--chart-color-3);
+  color: white;
+  border-color: var(--chart-color-3);
+}

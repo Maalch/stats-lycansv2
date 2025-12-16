@@ -1,10 +1,110 @@
-The Vote have been added to the game json files.
+🧪 1. Add Automated Testing
+Current state: No test suite (package.json shows no test scripts or testing libraries)
 
-I would like to do some cool statistics about the voting data.
+Recommendation:
 
-Please notice the game rule:
+Add Vitest (integrates seamlessly with Vite) for unit testing
+Test critical utility functions: playerIdentification.ts, gameUtils.ts, votingStatsUtils.ts
+Add component tests for key charts using React Testing Library
+Example: Test player name resolution, vote accuracy calculations, death type parsing
 
-- Vote only take place during the Meeting phase of the game
-- A player can vote another player, or skip ("Passé" in the log data), or do nothing during a meeting. Voting partern are interesting to check (what players are skipping the most, what players are voting aggressively, what players are not voting at all even if they are alive at that step)
-- If a player has the majority of the votes, it is eliminated from the game. The goal of the "Idiot du Village" role is to be eliminated by vote (if that's the case, he wons instantly)
-the players don't know the other player camps/roles, so it's interesting to know what players are able to spot and vote for others camps (and what players are not and are voting their own mates, especially as camp Villageois)
+♿ 3. Improve Accessibility (a11y)
+Current state: Charts use icons without ARIA labels
+
+Recommendations:
+
+Add aria-label to icon-only buttons (fullscreen ⛶ button, menu icons)
+Ensure keyboard navigation works for all interactive elements
+Add screen reader descriptions for charts
+Consider adding a skip-to-content link
+📦 4. Extract Shared Types to a Dedicated Module
+Current state: ChartPlayerStat extended type is defined inline in multiple chart components
+
+Recommendation: Create a centralized chart types file:
+
+🎨 5. CSS Architecture Improvements
+Current state:
+
+App.css is 1400+ lines
+Duplicate CSS variable definitions between App.css and index.css
+Recommendations:
+
+Split CSS into component-specific files or use CSS modules
+Consolidate theme variables in one place (index.css OR App.css, not both)
+Consider using CSS-in-JS or utility classes for dynamic styling
+⚡ 6. Performance Optimizations
+a) Memoize expensive calculations
+Some chart components recalculate on every render. Consider:
+
+b) Virtualization for large data sets
+For player lists with 70+ players, consider using react-window or react-virtualized in dropdowns/lists.
+
+c) Add loading skeleton states
+Replace generic "Chargement..." with skeleton placeholders for better perceived performance.
+
+🔧 7. Error Boundary Implementation
+Current state: Error handling is per-component with if (error) return <div>Erreur: {error}</div>
+
+Recommendation: Add React Error Boundaries for graceful failure:
+
+📊 8. Add Data Export Features
+Recommendation: Allow users to export chart data:
+
+CSV export for statistics tables
+PNG/SVG export for charts (Recharts supports this)
+Share URLs already exist - add "copy to clipboard" feedback
+🔍 9. Search & Filter Enhancements
+Current state: Player selection and filtering work well
+
+Recommendations:
+
+Add global search across all statistics
+Add keyboard shortcuts (e.g., / to focus search)
+Remember recent searches in localStorage
+📱 10. Mobile Responsiveness
+Current state: min-width: 1200px in .app-container prevents mobile use
+
+Recommendation:
+
+Add responsive breakpoints for tablet/mobile
+Consider a simplified mobile view for key statistics
+Make charts horizontally scrollable on small screens
+🔄 11. State Management Consolidation
+Current state: Triple context system works but could be complex to maintain
+
+Recommendations:
+
+Consider consolidating SettingsContext and NavigationContext if they frequently interact
+Document the relationship between contexts clearly
+Add a state diagram to the README
+📚 12. Code Documentation
+Current state: Good copilot instructions, but limited JSDoc in code
+
+Recommendation: Add JSDoc comments to:
+
+Hook return types and parameters
+Utility function edge cases
+Complex calculation algorithms (voting accuracy, series detection)
+🚀 13. Build & Bundle Optimizations
+Recommendations:
+
+Analyze bundle size with vite-bundle-visualizer
+Lazy load Recharts sub-components if possible
+Consider preloading critical data files
+🛡️ 14. Add Data Validation
+Current state: validate-votes.js exists but runtime validation is limited
+
+Recommendation: Add Zod or similar for:
+
+gameLog.json schema validation on load
+Runtime type checking for API responses
+Better error messages when data is malformed
+Priority Ranking
+Priority	Improvement	Impact	Effort
+🔴 High	Add Error Boundaries	Reliability	Medium
+🟡 Medium	Add automated testing	Long-term quality	High
+🟡 Medium	Mobile responsiveness	User reach	Medium
+🟡 Medium	CSS consolidation	Maintainability	Medium
+🟢 Low	Data export features	User feature	Medium
+🟢 Low	Extract shared types	Maintainability	Low
+Would you like me to implement any of these improvemen

@@ -274,20 +274,7 @@ export function PlayerCampPerformanceChart() {
       ? addHighlightedPlayer(campPlayers, selectedCamp, false)
       : [];
     
-    const topPercentagesWithHighlighted = addHighlightedPlayer(allPercentages, undefined, true);
-    
-    // Debug logging
-    if (viewMode === 'playPercentage') {
-      console.log('PlayPercentage Debug:', {
-        selectedCamp,
-        minGames,
-        campPlayersCount: campPlayers.length,
-        allPercentagesCount: allPercentages.length,
-        sampleCampPlayer: campPlayers[0],
-        sampleAllPercentage: allPercentages[0]
-      });
-    }
-    
+    const topPercentagesWithHighlighted = addHighlightedPlayer(allPercentages, undefined, true);    
     const sortedCampPlayers = campPlayersWithHighlighted.sort((a, b) => b.playPercentage - a.playPercentage);
     const sortedTopPercentages = topPercentagesWithHighlighted.sort((a, b) => b.playPercentage - a.playPercentage);
     

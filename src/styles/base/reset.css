@@ -1,0 +1,35 @@
+/**
+ * Base Reset and HTML/Body Styles
+ * Foundational styles for the entire application
+ */
+
+html, body {
+  margin: 0;
+  padding: 2px;
+  height: 100%;
+  color: var(--text-primary);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* App Container */
+.app-container {
+  width: 95vw;
+  margin: 0 auto;
+  padding: 0;
+  min-width: 1200px;
+}
+
+/* Main Container */
+.main-container {
+  width: auto;
+  margin: 0 auto;
+  padding: 0.25rem;
+  background: var(--bg-primary);
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+}

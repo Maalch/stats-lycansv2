@@ -1,0 +1,160 @@
+/**
+ * Responsive Styles
+ * Media queries and responsive adjustments
+ */
+
+/* ===========================
+   MOBILE & TABLET (max-width: 768px)
+   =========================== */
+@media (max-width: 768px) {
+  /* Main Menu */
+  .lycans-main-menu {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .lycans-main-menu-btn {
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Submenu */
+  .lycans-submenu {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  .lycans-submenu::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .lycans-submenu-btn {
+    white-space: nowrap;
+  }
+  
+  /* App Container */
+  .app-container {
+    width: 100%;
+    min-width: 0;
+  }
+  
+  /* Main Container */
+  .main-container {
+    border-radius: 0;
+  }
+  
+  /* Banner */
+  .lycans-banner {
+    width: 50%;
+    max-width: 150px;
+    min-width: 120px;
+  }
+
+  /* Header */
+  .lycans-header-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lycans-dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .lycans-dashboard-header p {
+    font-size: 0.9rem;
+  }
+
+  .lycans-version-display {
+    font-size: 0.75rem;
+  }
+
+  /* Changelog */
+  .lycans-changelog-overlay {
+    padding: 0.5rem;
+  }
+
+  .lycans-changelog-container {
+    max-height: 90vh;
+  }
+
+  .lycans-changelog-header {
+    padding: 1rem;
+  }
+
+  .lycans-changelog-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .lycans-changelog-content {
+    padding: 0 1rem;
+  }
+
+  .lycans-changelog-footer {
+    padding: 1rem;
+  }
+
+  .lycans-changelog-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lycans-changelog-version {
+    font-size: 1rem;
+  }
+
+  /* Win Rate Controls */
+  .lycans-winrate-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Player Selection */
+  .lycans-player-selection {
+    flex-direction: column;
+  }
+  
+  .lycans-vs-indicator {
+    transform: rotate(90deg);
+  }
+  
+  /* Stats Summary */
+  .lycans-h2h-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Stats Table */
+  .lycans-stats-table {
+    font-size: 0.85rem;
+  }
+  
+  .lycans-stats-table th,
+  .lycans-stats-table td {
+    padding: 0.5rem;
+  }
+  
+  /* Metrics Grid */
+  .lycans-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================
+   LARGE DESKTOP (max-width: 1024px)
+   =========================== */
+@media (max-width: 1024px) {
+  /* Versus Arena */
+  .lycans-versus-arena {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .lycans-player-score-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .lycans-battle-summary {
+    flex-direction: column;
+  }
+}

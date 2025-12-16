@@ -37,15 +37,7 @@ export function PlayerCampPerformanceBarChart({
   playersColor,
   onBarClick
 }: PlayerCampPerformanceBarChartProps) {
-  console.log('BarChart Data Debug:', {
-    viewMode,
-    selectedCamp,
-    dataLength: chartData.length,
-    firstItem: chartData[0],
-    lastItem: chartData[chartData.length - 1],
-    allData: chartData
-  });
-
+  
   return (
     <div className="lycans-graphique-section">
       <h3>

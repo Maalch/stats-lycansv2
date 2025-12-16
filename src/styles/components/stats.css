@@ -1,0 +1,183 @@
+/**
+ * Stats Cards and Grids
+ * Styling for statistics display components
+ */
+
+/* ===========================
+   STATS CARDS
+   =========================== */
+.lycans-resume-conteneur,
+.lycans-recolte-sommaire {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.lycans-stat-carte {
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  padding: 12px 14px;
+  text-align: center;
+  flex: 1;
+  min-width: 180px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.lycans-stat-carte h3 {
+  margin-top: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.lycans-valeur-principale,
+.lycans-nombre-grand {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: var(--accent-primary);
+}
+
+/* ===========================
+   STATS GRID
+   =========================== */
+.lycans-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.lycans-stat-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.lycans-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.lycans-stat-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.lycans-stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--accent-primary);
+  margin: 0;
+}
+
+/* ===========================
+   LOADING/ERROR STATES
+   =========================== */
+.donnees-chargement,
+.donnees-erreur,
+.donnees-absentes,
+.donnees-attente,
+.donnees-probleme,
+.donnees-manquantes,
+.statistiques-attente,
+.statistiques-echec,
+.statistiques-indisponibles,
+.statistiques-chargement,
+.statistiques-erreur,
+.statistiques-vide {
+  text-align: center;
+  padding: 40px;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  color: var(--text-secondary);
+}
+
+.donnees-erreur,
+.donnees-probleme,
+.statistiques-erreur,
+.statistiques-echec {
+  color: var(--accent-secondary);
+  border: 1px solid var(--accent-secondary);
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* ===========================
+   STATS TABLE
+   =========================== */
+.lycans-stats-table {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.lycans-stats-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lycans-stats-table th,
+.lycans-stats-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.lycans-stats-table th {
+  background: var(--bg-tertiary);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.lycans-stats-table th[style*="cursor"] {
+  transition: background-color 0.2s;
+}
+
+.lycans-stats-table th[style*="cursor"]:hover {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.lycans-stats-table td {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.lycans-stats-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===========================
+   STATS TOGGLE
+   =========================== */
+.lycans-stats-toggle {
+  margin-bottom: 1rem;
+}
+
+.lycans-toggle-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.lycans-toggle-btn:hover {
+  background: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.lycans-toggle-btn.active {
+  background: var(--accent-primary);
+  color: white;
+}
