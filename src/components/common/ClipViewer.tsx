@@ -35,6 +35,7 @@ export function ClipViewer({
   const embedUrl = getTwitchEmbedUrl(clip.ClipUrl);
   const displayName = getClipDisplayName(clip);
   const otherPlayers = parseOtherPlayers(clip.OthersPlayers);
+  const hasSoundWarning = Array.isArray(clip.Tags) && clip.Tags.some(tag => tag.toLowerCase().includes('warning sonore'));
 
   return (
     <div className="lycans-clip-viewer-overlay" onClick={onClose}>
@@ -54,6 +55,14 @@ export function ClipViewer({
             ✕
           </button>
         </div>
+        
+        {/* Sound Warning Banner */}
+        {hasSoundWarning && (
+          <div className="lycans-clip-warning-banner">
+            <span className="lycans-clip-warning-icon">⚠️ 🔊</span>
+            <span className="lycans-clip-warning-text">Attention : Ce clip contient un son fort</span>
+          </div>
+        )}
 
         <div className="lycans-clip-viewer-content">
           {/* Video Player */}

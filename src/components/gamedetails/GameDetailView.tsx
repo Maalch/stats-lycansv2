@@ -7,7 +7,7 @@ import { useSettings } from '../../context/SettingsContext';
 import { getDeathTypeLabel } from '../../types/deathTypes';
 import type { Clip } from '../../hooks/useCombinedRawData';
 import { ClipViewer } from '../common/ClipViewer';
-import { getClipDisplayName, groupClipsByTag, findRelatedClips, findNextClip } from '../../utils/clipUtils';
+import { getClipDisplayName, findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
 
 // Interactive Camp Visualization Component
@@ -484,47 +484,30 @@ export function GameDetailView({ game }: { game: any }) {
           <div className="lycans-game-detail-section full-width">
             <h4>🎬 Clips de la Partie ({game.clips.length})</h4>
             
-            {(() => {
-              const groupedClips = groupClipsByTag(game.clips);
-              const tags = Array.from(groupedClips.keys()).sort();
-              
-              return tags.map(tag => {
-                const tagClips = groupedClips.get(tag)!;
-                const showTagTitle = tag !== 'Sans catégorie';
-                
-                return (
-                  <div key={tag} className="lycans-clips-tag">
-                    {showTagTitle && (
-                      <h5 className="lycans-clips-tag-title">{tag}</h5>
-                    )}
-                    <div className="lycans-clips-grid">
-                      {tagClips.map((clip) => (
-                        <button
-                          key={clip.ClipId}
-                          className="lycans-clip-card"
-                          onClick={() => setSelectedClip(clip)}
-                        >
-                          <div className="lycans-clip-card-header">
-                            <span className="lycans-clip-icon">🎬</span>
-                            <span className="lycans-clip-name">{getClipDisplayName(clip)}</span>
-                          </div>
-                          <div className="lycans-clip-card-pov">
-                            POV: {clip.POVPlayer}
-                          </div>
-                          {clip.AdditionalInfo && (
-                            <div className="lycans-clip-card-info">
-                              {clip.AdditionalInfo.length > 60 
-                                ? `${clip.AdditionalInfo.substring(0, 60)}...` 
-                                : clip.AdditionalInfo}
-                            </div>
-                          )}
-                        </button>
-                      ))}
-                    </div>
+            <div className="lycans-clips-grid">
+              {game.clips.map((clip: Clip) => (
+                <button
+                  key={clip.ClipId}
+                  className="lycans-clip-card"
+                  onClick={() => setSelectedClip(clip)}
+                >
+                  <div className="lycans-clip-card-header">
+                    <span className="lycans-clip-icon">🎬</span>
+                    <span className="lycans-clip-name">{getClipDisplayName(clip)}</span>
                   </div>
-                );
-              });
-            })()}
+                  <div className="lycans-clip-card-pov">
+                    POV: {clip.POVPlayer}
+                  </div>
+                  {clip.AdditionalInfo && (
+                    <div className="lycans-clip-card-info">
+                      {clip.AdditionalInfo.length > 60 
+                        ? `${clip.AdditionalInfo.substring(0, 60)}...` 
+                        : clip.AdditionalInfo}
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
