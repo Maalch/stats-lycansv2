@@ -897,7 +897,7 @@ function getClipsForGame(gameId, clipsHeaders, clipsDataRows) {
       var nextClip = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.NEXTCLIP)];
       var newName = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.NEWNAME)];
       var additionalInfo = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.ADDITIONALINFO)];
-      var category = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.CATEGORY)];
+      var tags = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.TAGS)];
       
       // Only add clips that have at least a ClipId and POVPlayer
       if (clipId && clipId.toString().trim() !== '' && povPlayer && povPlayer.toString().trim() !== '') {
@@ -911,7 +911,7 @@ function getClipsForGame(gameId, clipsHeaders, clipsDataRows) {
           NextClip: nextClip && nextClip.toString().trim() !== '' ? nextClip.toString().trim() : null,
           NewName: newName && newName.toString().trim() !== '' ? newName.toString().trim() : null,
           AdditionalInfo: additionalInfo && additionalInfo.toString().trim() !== '' ? additionalInfo.toString().trim() : null,
-          Category: category && category.toString().trim() !== '' ? category.toString().trim() : null
+          Tags: tags && tags.toString().trim() !== '' ? tags.toString().trim() : null
         });
       }
     }
