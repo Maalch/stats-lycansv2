@@ -13,8 +13,6 @@ on:
         type: boolean
   push:
     paths:
-      - 'scripts/data-sync/fetch-data-unified.js'
-      - 'scripts/data-sync/shared/**'
       - '.github/workflows/update-discorddata.yml'
 
 jobs:

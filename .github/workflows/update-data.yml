@@ -18,7 +18,6 @@ on:
         type: boolean
   push:
     paths:
-      - 'scripts/data-sync/**'
       - '.github/workflows/update-data.yml'
 
 jobs:

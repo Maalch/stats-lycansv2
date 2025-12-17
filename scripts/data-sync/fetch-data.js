@@ -393,8 +393,8 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
         const legacyMatch = legacyGamesByModId.get(game.Id);
         if (!legacyMatch || legacyMatch.fullDataExported !== true) {
           gamesByIdMap.set(game.Id, { ...game, source: 'aws' });
-          awsCount++;
-          awsSkippedCount++;
+          // Don't increment counters - these games are just preserved from previous sync,
+          // not processed in this run. They're already part of the total output.
         }
       }
     });
