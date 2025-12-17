@@ -100,7 +100,7 @@ const PLAYER_STATS_MENU = [
   },
   { 
     key: 'campStats', 
-    label: 'Camps et Rôles', 
+    label: 'Camps & Rôles', 
     component: PlayerCampChart,
     description: 'Meilleures performances et apparitions, par camp'
   },
