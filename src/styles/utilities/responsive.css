@@ -19,18 +19,16 @@
   
   /* Submenu */
   .lycans-submenu {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-  }
-
-  .lycans-submenu::-webkit-scrollbar {
-    height: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
   }
   
   .lycans-submenu-btn {
-    white-space: nowrap;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    flex: 0 1 auto;
+    min-width: fit-content;
   }
   
   /* App Container */

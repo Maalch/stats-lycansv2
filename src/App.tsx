@@ -94,7 +94,7 @@ const MAIN_TABS = [
 const PLAYER_STATS_MENU = [
   { 
     key: 'playersGeneral', 
-    label: 'Victoires', 
+    label: 'Participations & Victoires', 
     component: PlayersGeneralStatisticsChart,
     description: 'Classement par participations et victoires'
   },
