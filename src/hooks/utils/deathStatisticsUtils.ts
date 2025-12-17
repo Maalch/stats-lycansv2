@@ -29,9 +29,14 @@ function compareVersion(version: string, targetVersion: string): boolean {
 
 /**
  * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
+ * and converting null/undefined to UNKNOWN
  * This ensures both death types are treated as "Tué par Loup" in all statistics
+ * and null deaths are properly categorized
  */
-function normalizeDeathTypeForStats(deathType: DeathType | null): DeathType | null {
+function normalizeDeathTypeForStats(deathType: DeathType | null): DeathType {
+  if (!deathType) {
+    return DEATH_TYPES.UNKNOWN;
+  }
   if (deathType === DEATH_TYPES.SURVIVALIST_NOT_SAVED) {
     return DEATH_TYPES.BY_WOLF;
   }

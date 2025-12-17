@@ -91,6 +91,7 @@ export interface TalkingTimeState {
 
 export interface DeathLocationState {
   selectedCamp: string;
+  selectedDeathTypes?: string[]; // Array of selected death type codes for multi-select filtering
 }
 
 export interface NavigationState {

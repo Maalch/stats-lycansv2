@@ -21,14 +21,17 @@ export function DeathLocationView({
   availableDeathTypes,
   deathTypeColors
 }: DeathLocationViewProps) {
-  const { navigateToGameDetails } = useNavigation();
+  const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
   const { data: gameLogData, isLoading, error } = useFilteredGameLogData();
   const [selectedMap, setSelectedMap] = useState<string>('');
-  const [selectedDeathType, setSelectedDeathType] = useState<string>('all');
+  const [selectedDeathTypes, setSelectedDeathTypes] = useState<string[]>(
+    navigationState.deathLocationState?.selectedDeathTypes || []
+  );
   const [hoveredDeath, setHoveredDeath] = useState<DeathLocationData | null>(null);
   const [viewMode, setViewMode] = useState<'heatmap' | 'scatter'>('heatmap');
   const [clusterRadius, setClusterRadius] = useState<number>(20); // Clustering radius in game units
+  const [isDeathTypesExpanded, setIsDeathTypesExpanded] = useState<boolean>(false); // Toggle for death types panel
 
   // Get available maps with death position data, sorted by number of deaths (descending)
   const availableMaps = useMemo(() => {
@@ -70,12 +73,14 @@ export function DeathLocationView({
     }
     
     // Apply death type filter
-    if (selectedDeathType !== 'all') {
-      locations = locations.filter(loc => loc.deathType === selectedDeathType);
+    // When no types selected: show all deaths
+    // When types selected: only show deaths matching those types
+    if (selectedDeathTypes.length > 0) {
+      locations = locations.filter(loc => selectedDeathTypes.includes(loc.deathType));
     }
     
     return locations;
-  }, [gameLogData, selectedCamp, selectedMap, selectedDeathType]);
+  }, [gameLogData, selectedCamp, selectedMap, selectedDeathTypes]);
 
   // Group deaths by coordinates to show density and aggregate data
   // Uses spatial clustering to group nearby deaths together
@@ -403,31 +408,187 @@ export function DeathLocationView({
           </select>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="death-type-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
-            Type de mort :
-          </label>
-          <select
-            id="death-type-select"
-            value={selectedDeathType}
-            onChange={(e) => setSelectedDeathType(e.target.value)}
-            style={{
-              background: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '4px',
+        {/* Multi-select death type filter - collapsible */}
+        <div style={{ width: '100%', marginTop: '1rem' }}>
+          {/* Clickable header to expand/collapse */}
+          <div 
+            onClick={() => setIsDeathTypesExpanded(!isDeathTypesExpanded)}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '1rem',
+              marginBottom: isDeathTypesExpanded ? '0.5rem' : '0',
+              cursor: 'pointer',
               padding: '0.5rem',
-              fontSize: '0.9rem',
-              minWidth: '180px'
+              background: 'var(--bg-tertiary)',
+              borderRadius: '4px',
+              border: '1px solid var(--border-color)',
+              transition: 'all 0.2s'
             }}
           >
-            <option value="all">Tous les types</option>
-            {availableDeathTypes.map(deathType => (
-              <option key={deathType} value={deathType}>
-                {getDeathTypeLabel(deathType)}
-              </option>
-            ))}
-          </select>
+            <span style={{ 
+              color: 'var(--text-primary)', 
+              fontSize: '1rem',
+              transition: 'transform 0.2s',
+              transform: isDeathTypesExpanded ? 'rotate(90deg)' : 'rotate(0deg)'
+            }}>
+              ▶
+            </span>
+            <label style={{ 
+              color: 'var(--text-secondary)', 
+              fontSize: '0.9rem', 
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              flexGrow: 1
+            }}>
+              Types de mort
+            </label>
+            <span style={{ 
+              color: 'var(--text-secondary)', 
+              fontSize: '0.85rem'
+            }}>
+              {selectedDeathTypes.length} / {availableDeathTypes.length} sélectionné{selectedDeathTypes.length > 1 ? 's' : ''}
+            </span>
+          </div>
+          
+          {/* Expanded content with bulk buttons and checkbox grid */}
+          {isDeathTypesExpanded && (
+            <>
+              <div style={{ 
+                display: 'flex', 
+                gap: '0.5rem',
+                marginTop: '0.5rem',
+                marginBottom: '0.5rem'
+              }}>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedDeathTypes(availableDeathTypes);
+                    updateNavigationState({
+                      deathLocationState: {
+                        ...navigationState.deathLocationState,
+                        selectedCamp: selectedCamp,
+                        selectedDeathTypes: availableDeathTypes
+                      }
+                    });
+                  }}
+                  style={{
+                    background: 'var(--bg-tertiary)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '4px',
+                    padding: '0.3rem 0.8rem',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  Tous
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedDeathTypes([]);
+                    updateNavigationState({
+                      deathLocationState: {
+                        ...navigationState.deathLocationState,
+                        selectedCamp: selectedCamp,
+                        selectedDeathTypes: []
+                      }
+                    });
+                  }}
+                  style={{
+                    background: 'var(--bg-tertiary)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '4px',
+                    padding: '0.3rem 0.8rem',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  Aucun
+                </button>
+              </div>
+              
+              {/* Checkbox grid */}
+              <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gap: '0.5rem',
+            maxHeight: '300px',
+            overflowY: 'auto',
+            padding: '0.5rem',
+            background: 'var(--bg-secondary)',
+            borderRadius: '4px',
+            border: '1px solid var(--border-color)'
+          }}>
+            {availableDeathTypes.map(deathType => {
+              const isSelected = selectedDeathTypes.includes(deathType);
+              const color = deathTypeColors[deathType] || 'var(--chart-primary)';
+              
+              return (
+                <label
+                  key={deathType}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.5rem',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    background: isSelected ? color : 'var(--bg-tertiary)',
+                    color: isSelected ? 'white' : 'var(--text-primary)',
+                    border: `1px solid ${isSelected ? color : 'var(--border-color)'}`,
+                    transition: 'all 0.2s',
+                    fontSize: '0.85rem',
+                    fontWeight: isSelected ? '600' : 'normal'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.background = 'var(--bg-hover)';
+                      e.currentTarget.style.borderColor = color;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.background = 'var(--bg-tertiary)';
+                      e.currentTarget.style.borderColor = 'var(--border-color)';
+                    }
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={(e) => {
+                      const newSelectedTypes = e.target.checked
+                        ? [...selectedDeathTypes, deathType]
+                        : selectedDeathTypes.filter(t => t !== deathType);
+                      
+                      setSelectedDeathTypes(newSelectedTypes);
+                      updateNavigationState({
+                        deathLocationState: {
+                          ...navigationState.deathLocationState,
+                          selectedCamp: selectedCamp,
+                          selectedDeathTypes: newSelectedTypes
+                        }
+                      });
+                    }}
+                    style={{
+                      cursor: 'pointer',
+                      accentColor: color
+                    }}
+                  />
+                  <span>{getDeathTypeLabel(deathType)}</span>
+                </label>
+              );
+            })}
+              </div>
+            </>
+          )}
         </div>
 
         {/* Cluster Radius Slider - only visible in scatter mode */}
@@ -458,33 +619,6 @@ export function DeathLocationView({
             </span>
           </div>
         )}
-      </div>
-
-      {/* Summary Statistics */}
-      <div className="lycans-resume-conteneur" style={{ marginBottom: '2rem' }}>
-        <div className="lycans-stat-carte">
-          <h3>Morts localisées</h3>
-          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
-            {deathLocations.length}
-          </div>
-          {viewMode === 'scatter' && clusterRadius > 0 && aggregatedLocationData.length < deathLocations.length && (
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              → {aggregatedLocationData.length} points groupés
-            </div>
-          )}
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Camp filtré</h3>
-          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-secondary)', fontSize: '1.2rem' }}>
-            {selectedCamp}
-          </div>
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Type de mort</h3>
-          <div className="lycans-valeur-principale" style={{ color: 'var(--chart-color-2)', fontSize: '1.2rem' }}>
-            {selectedDeathType === 'all' ? 'Tous' : getDeathTypeLabel(selectedDeathType)}
-          </div>
-        </div>
       </div>
 
       {/* Death Location Visualization */}
@@ -631,6 +765,35 @@ export function DeathLocationView({
           </p>
         </div>
       )}
+
+      {/* Summary Statistics */}
+      <div className="lycans-resume-conteneur" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+        <div className="lycans-stat-carte">
+          <h3>Morts localisées</h3>
+          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
+            {deathLocations.length}
+          </div>
+          {viewMode === 'scatter' && clusterRadius > 0 && aggregatedLocationData.length < deathLocations.length && (
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+              → {aggregatedLocationData.length} points groupés
+            </div>
+          )}
+        </div>
+        <div className="lycans-stat-carte">
+          <h3>Camp filtré</h3>
+          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-secondary)', fontSize: '1.2rem' }}>
+            {selectedCamp}
+          </div>
+        </div>
+        <div className="lycans-stat-carte">
+          <h3>Types de mort</h3>
+          <div className="lycans-valeur-principale" style={{ color: 'var(--chart-color-2)', fontSize: '1.2rem' }}>
+            {selectedDeathTypes.length === 0 ? 'Tous' : 
+             selectedDeathTypes.length === availableDeathTypes.length ? 'Tous' :
+             `${selectedDeathTypes.length} type${selectedDeathTypes.length > 1 ? 's' : ''}`}
+          </div>
+        </div>
+      </div>
 
       {/* Info Section */}
       <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>

@@ -27,7 +27,7 @@ import { useAllClips } from '../../hooks/useClips';
 import './PlayerSelectionPage.css';
 
 interface PlayerBasicStats {
-  id: string; // Unique player ID (Steam ID or Username fallback)
+  id: string; // Unique player ID 
   name: string;
   totalGames: number;
   totalWins: number;
@@ -484,7 +484,7 @@ export function PlayerSelectionPage() {
                       className={`lycans-categorie-btn ${selectedView === 'deathmap' ? 'active' : ''}`}
                       onClick={() => handleViewChange('deathmap')}
                     >
-                      🗺️ Carte
+                      Carte
                     </button>
                   </div>
 

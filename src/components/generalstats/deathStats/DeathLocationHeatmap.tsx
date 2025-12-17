@@ -327,22 +327,27 @@ export function DeathLocationHeatmap() {
   const { data: gameLogData } = useFilteredGameLogData();
   const lycansColors = useThemeAdjustedLycansColorScheme();
 
-  // Save state to navigation context when it changes
-  useEffect(() => {
-    if (!navigationState.deathLocationState || 
-        navigationState.deathLocationState.selectedCamp !== selectedCamp) {
-      updateNavigationState({
-        deathLocationState: {
-          selectedCamp
-        }
-      });
-    }
-  }, [selectedCamp, navigationState.deathLocationState, updateNavigationState]);
-
   // Get all unique death types for chart configuration
   const availableDeathTypes = useMemo(() => {
     return gameLogData ? getAllDeathTypes(gameLogData) : [];
   }, [gameLogData]);
+
+  // Initialize default selected death types: all except 'VOTED' (Mort aux votes)
+  const defaultDeathTypes = useMemo(() => {
+    return availableDeathTypes.filter(type => type !== 'VOTED');
+  }, [availableDeathTypes]);
+
+  // Initialize death types from navigation state or use default (all except VOTED)
+  useEffect(() => {
+    if (!navigationState.deathLocationState?.selectedDeathTypes && availableDeathTypes.length > 0) {
+      updateNavigationState({
+        deathLocationState: {
+          selectedCamp,
+          selectedDeathTypes: defaultDeathTypes
+        }
+      });
+    }
+  }, [availableDeathTypes, defaultDeathTypes, navigationState.deathLocationState, selectedCamp, updateNavigationState]);
 
   // Define colors for different death types
   const deathTypeColors = useMemo(() => {

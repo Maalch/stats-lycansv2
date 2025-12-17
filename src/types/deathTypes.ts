@@ -29,7 +29,8 @@ export const DEATH_TYPES = {
   BULLET: 'BULLET',                         // Tué par Chasseur (less specific than official log)
   BULLET_HUMAN: 'BULLET_HUMAN',            // Tué par Chasseur en humain (official log specific)
   BULLET_WOLF: 'BULLET_WOLF',              // Tué par Chasseur en loup (official log specific)
-  SHERIF_SUCCESS: 'SHERIF_SUCCESS',                         // Tué par Shérif (less specific than official log)
+  SHERIF_SUCCESS: 'SHERIF_SUCCESS',        // Tué par Shérif (correct target)
+  SHERIF_MISTAKE: 'SHERIF_MISTAKE',        // Tué par Shérif (wrong target)
   
   // Role-Based Kills
   OTHER_AGENT: 'OTHER_AGENT',               // Tué par l'Agent
@@ -130,6 +131,7 @@ export const KILLER_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.BULLET_HUMAN,
   DEATH_TYPES.BULLET_WOLF,
   DEATH_TYPES.SHERIF_SUCCESS,
+  DEATH_TYPES.SHERIF_MISTAKE,
   DEATH_TYPES.OTHER_AGENT,
   DEATH_TYPES.AVENGER,
   DEATH_TYPES.SEER,
@@ -154,6 +156,7 @@ export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.BULLET_HUMAN]: 'Tué par Chasseur (humain)',
   [DEATH_TYPES.BULLET_WOLF]: 'Tué par Chasseur (loup)',
   [DEATH_TYPES.SHERIF_SUCCESS]: 'Tué par Shérif',
+  [DEATH_TYPES.SHERIF_MISTAKE]: 'Tué par Shérif (erreur)',
   [DEATH_TYPES.OTHER_AGENT]: 'Tué par l\'Agent',
   [DEATH_TYPES.AVENGER]: 'Tué par Vengeur',
   [DEATH_TYPES.SEER]: 'Rôle deviné par loup',

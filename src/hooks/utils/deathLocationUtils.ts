@@ -74,7 +74,7 @@ export interface DeathLocationData {
   x: number;
   z: number;
   playerName: string;
-  deathType: DeathType | null;
+  deathType: DeathType; // Never null - normalizeDeathTypeForStats converts null to UNKNOWN
   mapName: string;
   killerName: string | null;
   camp: string;
@@ -84,9 +84,14 @@ export interface DeathLocationData {
 
 /**
  * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
+ * and converting null/undefined to UNKNOWN
  * This ensures both death types are treated as "Tué par Loup" in all statistics
+ * and null deaths are properly categorized
  */
-function normalizeDeathTypeForStats(deathType: DeathType | null): DeathType | null {
+function normalizeDeathTypeForStats(deathType: DeathType | null): DeathType {
+  if (!deathType) {
+    return 'UNKNOWN';
+  }
   if (deathType === 'SURVIVALIST_NOT_SAVED') {
     return 'BY_WOLF';
   }
