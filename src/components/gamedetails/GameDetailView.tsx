@@ -7,7 +7,7 @@ import { useSettings } from '../../context/SettingsContext';
 import { getDeathTypeLabel } from '../../types/deathTypes';
 import type { Clip } from '../../hooks/useCombinedRawData';
 import { ClipViewer } from '../common/ClipViewer';
-import { getClipDisplayName, groupClipsByCategory, findRelatedClips, findNextClip } from '../../utils/clipUtils';
+import { getClipDisplayName, groupClipsByTag, findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
 
 // Interactive Camp Visualization Component
@@ -101,7 +101,7 @@ const CampVisualization = ({ playerData }: CampVisualizationProps) => {
                           ? `${getPlayerCampFromRole(player.MainRoleInitial)} puis ${getPlayerCampFromRole(getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []))}`
                           : getPlayerCampFromRole(player.MainRoleInitial)}${deathInfo}`}
                     >
-                      <span className="player-name">{player.Username}</span>
+                      <span className="gamedetails-player-name">{player.Username}</span>
                       {player.DeathTiming && <span className="death-indicator">💀</span>}
                       {player.Victorious && <span className="victory-indicator">⭐</span>}
                     </div>
@@ -485,20 +485,20 @@ export function GameDetailView({ game }: { game: any }) {
             <h4>🎬 Clips de la Partie ({game.clips.length})</h4>
             
             {(() => {
-              const groupedClips = groupClipsByCategory(game.clips);
-              const categories = Array.from(groupedClips.keys()).sort();
+              const groupedClips = groupClipsByTag(game.clips);
+              const tags = Array.from(groupedClips.keys()).sort();
               
-              return categories.map(category => {
-                const categoryClips = groupedClips.get(category)!;
-                const showCategoryTitle = category !== 'Sans catégorie';
+              return tags.map(tag => {
+                const tagClips = groupedClips.get(tag)!;
+                const showTagTitle = tag !== 'Sans catégorie';
                 
                 return (
-                  <div key={category} className="lycans-clips-category">
-                    {showCategoryTitle && (
-                      <h5 className="lycans-clips-category-title">{category}</h5>
+                  <div key={tag} className="lycans-clips-tag">
+                    {showTagTitle && (
+                      <h5 className="lycans-clips-tag-title">{tag}</h5>
                     )}
                     <div className="lycans-clips-grid">
-                      {categoryClips.map((clip) => (
+                      {tagClips.map((clip) => (
                         <button
                           key={clip.ClipId}
                           className="lycans-clip-card"
