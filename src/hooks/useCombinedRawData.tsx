@@ -42,7 +42,7 @@ export interface Clip {
   NextClip: string | null;        // ID of the next clip in sequence (if applicable)
   NewName: string | null;         // Custom display name for the clip
   AdditionalInfo: string | null;  // Additional context/explanation about the clip
-  Category: string | null;        // Category name for grouping clips
+  Tags: string[];                 // Array of tag names for grouping clips
 }
 
 export interface PlayerStat {

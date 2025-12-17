@@ -47,7 +47,14 @@
   color: var(--text-primary);
 }
 
-.lycans-clip-category {
+.lycans-clip-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.lycans-clip-tag {
   background: var(--accent-primary);
   color: white;
   padding: 0.25rem 0.75rem;

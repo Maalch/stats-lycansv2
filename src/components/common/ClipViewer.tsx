@@ -42,7 +42,13 @@ export function ClipViewer({
         <div className="lycans-clip-viewer-header">
           <div className="lycans-clip-viewer-title">
             <h2>{displayName}</h2>
-            {clip.Category && <span className="lycans-clip-category">{clip.Category}</span>}
+            {Array.isArray(clip.Tags) && clip.Tags.length > 0 && (
+              <div className="lycans-clip-tags">
+                {clip.Tags.map((tag, idx) => (
+                  <span key={idx} className="lycans-clip-tag">{tag}</span>
+                ))}
+              </div>
+            )}
           </div>
           <button className="lycans-clip-viewer-close" onClick={onClose}>
             ✕

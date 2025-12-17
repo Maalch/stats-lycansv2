@@ -899,6 +899,16 @@ function getClipsForGame(gameId, clipsHeaders, clipsDataRows) {
       var additionalInfo = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.ADDITIONALINFO)];
       var tags = row[findColumnIndex(clipsHeaders, LYCAN_SCHEMA.CLIPS.COLS.TAGS)];
       
+      // Parse tags as array - split by comma and trim each tag
+      var tagsArray = [];
+      if (tags && tags.toString().trim() !== '') {
+        tagsArray = tags.toString().split(',').map(function(tag) {
+          return tag.trim();
+        }).filter(function(tag) {
+          return tag !== '';
+        });
+      }
+      
       // Only add clips that have at least a ClipId and POVPlayer
       if (clipId && clipId.toString().trim() !== '' && povPlayer && povPlayer.toString().trim() !== '') {
         clips.push({
@@ -911,7 +921,7 @@ function getClipsForGame(gameId, clipsHeaders, clipsDataRows) {
           NextClip: nextClip && nextClip.toString().trim() !== '' ? nextClip.toString().trim() : null,
           NewName: newName && newName.toString().trim() !== '' ? newName.toString().trim() : null,
           AdditionalInfo: additionalInfo && additionalInfo.toString().trim() !== '' ? additionalInfo.toString().trim() : null,
-          Tags: tags && tags.toString().trim() !== '' ? tags.toString().trim() : null
+          Tags: tagsArray
         });
       }
     }

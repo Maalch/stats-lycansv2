@@ -86,24 +86,25 @@ export function filterClipsByPlayer(clips: Clip[], playerName: string): Clip[] {
 }
 
 /**
- * Filter clips by category
+ * Filter clips by tag
  */
-export function filterClipsByCategory(clips: Clip[], category: string): Clip[] {
-  return clips.filter(clip => clip.Category === category);
+export function filterClipsByTag(clips: Clip[], tag: string): Clip[] {
+  return clips.filter(clip => Array.isArray(clip.Tags) && clip.Tags.includes(tag));
 }
 
 /**
- * Get all unique categories from a list of clips
+ * Get all unique tags from a list of clips
  */
-export function getUniqueCategories(clips: Clip[]): string[] {
-  const categories = new Set<string>();
+export function getUniqueTags(clips: Clip[]): string[] {
+  const tags = new Set<string>();
   clips.forEach(clip => {
-    if (clip.Category) {
-      categories.add(clip.Category);
+    if (Array.isArray(clip.Tags)) {
+      clip.Tags.forEach(tag => tags.add(tag));
     }
   });
-  return Array.from(categories).sort();
+  return Array.from(tags).sort();
 }
+
 
 /**
  * Get a random clip from an array of clips
@@ -131,17 +132,26 @@ export function findNextClip(clip: Clip, allClips: Clip[]): Clip | null {
 }
 
 /**
- * Group clips by category
+ * Group clips by tag
  */
-export function groupClipsByCategory(clips: Clip[]): Map<string, Clip[]> {
+export function groupClipsByTag(clips: Clip[]): Map<string, Clip[]> {
   const grouped = new Map<string, Clip[]>();
   
   clips.forEach(clip => {
-    const category = clip.Category || 'Sans catégorie';
-    if (!grouped.has(category)) {
-      grouped.set(category, []);
+    if (Array.isArray(clip.Tags) && clip.Tags.length > 0) {
+      clip.Tags.forEach(tag => {
+        if (!grouped.has(tag)) {
+          grouped.set(tag, []);
+        }
+        grouped.get(tag)!.push(clip);
+      });
+    } else {
+      // Clips without tags go to 'Sans catégorie'
+      if (!grouped.has('Sans catégorie')) {
+        grouped.set('Sans catégorie', []);
+      }
+      grouped.get('Sans catégorie')!.push(clip);
     }
-    grouped.get(category)!.push(clip);
   });
   
   return grouped;
