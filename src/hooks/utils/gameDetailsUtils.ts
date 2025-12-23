@@ -3,6 +3,7 @@ import type { NavigationFilters, PlayerPairFilter, MultiPlayerFilter, CampFilter
 import { getWinnerCampFromGame } from '../../utils/gameUtils';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { getPlayerId } from '../../utils/playerIdentification';
+import { isVillageoisElite, getEffectivePower } from '../../utils/roleUtils';
 // Note: Player names are already normalized during data loading, so we can use Username directly
 
 
@@ -359,10 +360,11 @@ export function filterByPowerFromGameLog(games: GameLogEntry[], selectedPower: s
       const playerCamp = getPlayerCampFromRole(player.MainRoleInitial);
       const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
       
-      // Special handling for Chasseur and Alchimiste - they are roles that cannot have other powers
-      if (playerCamp === 'Villageois' && 
-          (player.MainRoleInitial === 'Chasseur' || player.MainRoleInitial === 'Alchimiste')) {
-        return player.MainRoleInitial === selectedPower;
+      // Special handling for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple)
+      // This handles both legacy format (MainRoleInitial === 'Chasseur') and new format (Villageois Élite + Power)
+      if (playerCamp === 'Villageois' && isVillageoisElite(player)) {
+        const effectivePower = getEffectivePower(player);
+        return effectivePower === selectedPower;
       }
       
       // Check for "Aucun pouvoir" case

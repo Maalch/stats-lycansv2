@@ -7,6 +7,7 @@ import { FullscreenChart } from '../../common/FullscreenChart';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../utils/datasyncExport';
 import { getPlayerId } from '../../../utils/playerIdentification';
 import { useThemeAdjustedLycansColorScheme } from '../../../types/api';
+import { isVillageoisElite, getEffectivePower, VILLAGEOIS_ELITE_POWERS } from '../../../utils/roleUtils';
 import type { GameLogEntry } from '../../../hooks/useCombinedRawData';
 
 interface PlayerHistoryRolesProps {
@@ -78,21 +79,24 @@ function computePlayerRoleStats(
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
       const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
 
-      // Special handling for Chasseur and Alchimiste - they are roles that cannot have other powers
-      if (playerCamp === 'Villageois' && 
-          (playerStat.MainRoleInitial === 'Chasseur' || playerStat.MainRoleInitial === 'Alchimiste')) {
-        const currentStats = villageoisPowersMap.get(playerStat.MainRoleInitial) || { 
-          appearances: 0, 
-          wins: 0, 
-          winsWithoutRoleChange: 0, 
-          gamesWithoutRoleChange: 0 
-        };
-        villageoisPowersMap.set(playerStat.MainRoleInitial, {
-          appearances: currentStats.appearances + 1,
-          wins: currentStats.wins + (playerWon ? 1 : 0),
-          winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
-          gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
-        });
+      // Special handling for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple)
+      // This handles both legacy format (MainRoleInitial === 'Chasseur') and new format (Villageois Élite + Power)
+      if (playerCamp === 'Villageois' && isVillageoisElite(playerStat)) {
+        const effectivePower = getEffectivePower(playerStat);
+        if (effectivePower && VILLAGEOIS_ELITE_POWERS.includes(effectivePower as typeof VILLAGEOIS_ELITE_POWERS[number])) {
+          const currentStats = villageoisPowersMap.get(effectivePower) || { 
+            appearances: 0, 
+            wins: 0, 
+            winsWithoutRoleChange: 0, 
+            gamesWithoutRoleChange: 0 
+          };
+          villageoisPowersMap.set(effectivePower, {
+            appearances: currentStats.appearances + 1,
+            wins: currentStats.wins + (playerWon ? 1 : 0),
+            winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+            gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
+          });
+        }
       }
       // Process Power (only for Villageois and Loup camps)
       else if (playerStat.Power && playerStat.Power.trim() !== '' && playerStat.Power !== 'Inconnu') {
@@ -195,8 +199,8 @@ function computePlayerRoleStats(
   });
 
 
-  // Count total games (including non-modded) for Chasseur and Alchimiste
-  const chasseurAlchimisteTotal = new Map<string, number>();
+  // Count total games (including non-modded) for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple)
+  const elitePowersTotal = new Map<string, number>();
   gameData.forEach((game) => {
 
     const playerStat = game.PlayerStats.find(
@@ -204,10 +208,11 @@ function computePlayerRoleStats(
                 player.Username.toLowerCase() === playerIdentifier.toLowerCase()
     );
 
-    if (playerStat && 
-        (playerStat.MainRoleInitial === 'Chasseur' || playerStat.MainRoleInitial === 'Alchimiste')) {
-      const roleName = playerStat.MainRoleInitial;
-      chasseurAlchimisteTotal.set(roleName, (chasseurAlchimisteTotal.get(roleName) || 0) + 1);
+    if (playerStat && isVillageoisElite(playerStat)) {
+      const effectivePower = getEffectivePower(playerStat);
+      if (effectivePower) {
+        elitePowersTotal.set(effectivePower, (elitePowersTotal.get(effectivePower) || 0) + 1);
+      }
     }
   });
 
@@ -223,8 +228,8 @@ function computePlayerRoleStats(
         // Win rate is calculated only from games where the role didn't change
         winRate: stats.gamesWithoutRoleChange > 0 ? ((stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100).toFixed(1) : '0.0',
         camp: 'Villageois' as const,
-        // Add total games for Chasseur and Alchimiste
-        ...(chasseurAlchimisteTotal.has(name) && { totalGamesAllModes: chasseurAlchimisteTotal.get(name) })
+        // Add total games for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple)
+        ...(elitePowersTotal.has(name) && { totalGamesAllModes: elitePowersTotal.get(name) })
       }))
       .sort((a, b) => b.appearances - a.appearances);
   };

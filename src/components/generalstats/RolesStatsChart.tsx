@@ -5,6 +5,7 @@ import { useNavigation } from '../../context/NavigationContext';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
+import { isVillageoisElite, getEffectivePower, VILLAGEOIS_ELITE_POWERS } from '../../utils/roleUtils';
 import type { GameLogEntry } from '../../hooks/useCombinedRawData';
 
 interface RoleStats {
@@ -58,21 +59,24 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
       const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
 
-      // Special handling for Chasseur and Alchimiste - they are roles that cannot have other powers
-      if (playerCamp === 'Villageois' && 
-          (playerStat.MainRoleInitial === 'Chasseur' || playerStat.MainRoleInitial === 'Alchimiste')) {
-        const currentStats = villageoisPowersMap.get(playerStat.MainRoleInitial) || { 
-          appearances: 0, 
-          wins: 0, 
-          winsWithoutRoleChange: 0, 
-          gamesWithoutRoleChange: 0 
-        };
-        villageoisPowersMap.set(playerStat.MainRoleInitial, {
-          appearances: currentStats.appearances + 1,
-          wins: currentStats.wins + (playerWon ? 1 : 0),
-          winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
-          gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
-        });
+      // Special handling for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple)
+      // This handles both legacy format (MainRoleInitial === 'Chasseur') and new format (Villageois Élite + Power)
+      if (playerCamp === 'Villageois' && isVillageoisElite(playerStat)) {
+        const effectivePower = getEffectivePower(playerStat);
+        if (effectivePower && VILLAGEOIS_ELITE_POWERS.includes(effectivePower as typeof VILLAGEOIS_ELITE_POWERS[number])) {
+          const currentStats = villageoisPowersMap.get(effectivePower) || { 
+            appearances: 0, 
+            wins: 0, 
+            winsWithoutRoleChange: 0, 
+            gamesWithoutRoleChange: 0 
+          };
+          villageoisPowersMap.set(effectivePower, {
+            appearances: currentStats.appearances + 1,
+            wins: currentStats.wins + (playerWon ? 1 : 0),
+            winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+            gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0)
+          });
+        }
       }
       // Process Power (only for Villageois and Loup camps)
       else if (playerStat.Power && playerStat.Power.trim() !== '' && playerStat.Power !== 'Inconnu') {

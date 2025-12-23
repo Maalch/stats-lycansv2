@@ -103,8 +103,9 @@ export function getPlayerCampFromRole(roleName, groupOptions) {
     return regroupLovers ? 'Amoureux' : roleName;
   }
   
-  // Handle Villager-type roles
-  if (roleName === 'Chasseur' || roleName === 'Alchimiste') {
+  // Handle Villager-type roles (including Villageois Élite and legacy Chasseur/Alchimiste)
+  if (roleName === 'Villageois Élite' || roleName === 'Chasseur' || roleName === 'Alchimiste' || 
+      roleName === 'Protecteur' || roleName === 'Disciple') {
     return regroupVillagers ? 'Villageois' : roleName;
   }
 

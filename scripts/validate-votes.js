@@ -178,8 +178,8 @@ function getFinalRole(player) {
 }
 
 // Camp definitions for victory consistency
-// Villageois camp - all standard village roles
-const VILLAGEOIS_ROLES = ['Villageois', 'Chasseur', 'Alchimiste'];
+// Villageois camp - all standard village roles (including Villageois Élite and its powers)
+const VILLAGEOIS_ROLES = ['Villageois', 'Villageois Élite', 'Chasseur', 'Alchimiste', 'Protecteur', 'Disciple'];
 // Loups camp - wolves and their allies
 const LOUPS_ROLES = ['Loup', 'Traître', 'Louveteau'];
 // Amoureux camp - lovers win together

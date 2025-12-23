@@ -659,10 +659,14 @@ export function computeHunterStatistics(gameData: GameLogEntry[], selectedCamp?:
     const huntersInGame = new Set<string>();
     
     game.PlayerStats.forEach(player => {
-      // Check if player was Chasseur (using MainRoleInitial OR final role)
+      // Check if player was Chasseur (handles both formats):
+      // - Legacy format: MainRoleInitial === 'Chasseur'
+      // - New format: MainRoleInitial === 'Villageois Élite' && Power === 'Chasseur'
       const initialRole = player.MainRoleInitial;
       const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
-      if (initialRole === 'Chasseur' || finalRole === 'Chasseur') {
+      const isHunterPlayer = initialRole === 'Chasseur' || finalRole === 'Chasseur' ||
+                              (initialRole === 'Villageois Élite' && player.Power === 'Chasseur');
+      if (isHunterPlayer) {
         const hunterId = getPlayerId(player);
         displayNameById[hunterId] = player.Username;
         huntersInGame.add(hunterId);

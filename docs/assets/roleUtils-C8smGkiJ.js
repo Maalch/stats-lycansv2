@@ -1,0 +1,1 @@
+const t=["Chasseur","Alchimiste","Protecteur","Disciple"],e=["Chasseur","Alchimiste"];function n(i){return!!(i.MainRoleInitial==="Villageois Élite"||e.includes(i.MainRoleInitial))}function l(i){return i.MainRoleInitial==="Villageois Élite"?i.Power||null:e.includes(i.MainRoleInitial)?i.MainRoleInitial:i.Power||null}export{t as V,l as g,n as i};
