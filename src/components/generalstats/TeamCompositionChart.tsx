@@ -108,41 +108,34 @@ export function TeamCompositionChart() {
         </div>
       </div>
 
-      <div className="lycans-graphiques-groupe">
-
       {/* View mode toggle */}
-      <div className="flex gap-2">
+      <div className="lycans-categories-selection">
         <button
+          type="button"
+          className={`lycans-categorie-btn ${viewMode === 'overview' ? 'active' : ''}`}
           onClick={() => {
             setViewMode('overview');
             setSelectedPlayerCount(null);
           }}
-          className={`px-4 py-2 rounded ${
-            viewMode === 'overview'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 dark:bg-gray-700'
-          }`}
         >
           Vue d'ensemble
         </button>
         <button
+          type="button"
+          className={`lycans-categorie-btn ${viewMode === 'detailed' ? 'active' : ''}`}
           onClick={() => setViewMode('detailed')}
-          className={`px-4 py-2 rounded ${
-            viewMode === 'detailed'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 dark:bg-gray-700'
-          }`}
         >
           Vue détaillée
         </button>
       </div>
 
+      <div className="lycans-graphiques-groupe">
       {viewMode === 'overview' ? (
         <FullscreenChart title="Compositions les Plus Fréquentes par Nombre de Joueurs">
           <div className="space-y-4">
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Configuration la plus jouée pour chaque nombre de joueurs (minimum
-              5 parties). Format: Loups (L=Loup pur, T=Traître, Lou=Louveteau) / S=Rôles Solo
+              5 parties).
             </p>
             <ResponsiveContainer width="100%" height={400}>
               <BarChart data={overviewData}>

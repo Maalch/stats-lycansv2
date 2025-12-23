@@ -9,6 +9,7 @@ import type { Clip } from '../../hooks/useCombinedRawData';
 import { ClipViewer } from '../common/ClipViewer';
 import { getClipDisplayName, findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
+import { isVillageoisElite, getEffectivePower } from '../../utils/roleUtils';
 
 // Interactive Camp Visualization Component
 interface CampVisualizationProps {
@@ -357,22 +358,45 @@ export function GameDetailView({ game }: { game: any }) {
               const power = playerStat.Power;
               const secondaryRole = playerStat.SecondaryRole;
               
+              // Check if this is a Villageois Élite (new or legacy format)
+              const isElite = isVillageoisElite(playerStat);
+              const effectivePower = isElite ? getEffectivePower(playerStat) : null;
+              
               // Build the comprehensive display text
-              let displayText = camp; // Start with main camp
-                            
-              // Add original role if different from main role
-              if (originalRole && originalRole !== camp) {
-                displayText += ` - ${originalRole}`;
-              }
+              let displayText: string;
               
-              // Add power if available
-              if (power && power.trim()) {
-                displayText += ` - ${power}`;
-              }
-              
-              // Add secondary role if available
-              if (secondaryRole && secondaryRole.trim()) {
-                displayText += ` + ${secondaryRole}`;
+              if (isElite) {
+                // For Villageois Élite: show "Villageois Élite - [Power] + [SecondaryRole]"
+                // instead of "Villageois - Villageois Élite - [Power] + [SecondaryRole]"
+                displayText = 'Villageois Élite';
+                
+                // Add power if available (from effective power which handles both formats)
+                if (effectivePower && effectivePower.trim()) {
+                  displayText += ` - ${effectivePower}`;
+                }
+                
+                // Add secondary role if available
+                if (secondaryRole && secondaryRole.trim()) {
+                  displayText += ` + ${secondaryRole}`;
+                }
+              } else {
+                // Standard display logic for non-Villageois Élite
+                displayText = camp; // Start with main camp
+                              
+                // Add original role if different from main role
+                if (originalRole && originalRole !== camp) {
+                  displayText += ` - ${originalRole}`;
+                }
+                
+                // Add power if available
+                if (power && power.trim()) {
+                  displayText += ` - ${power}`;
+                }
+                
+                // Add secondary role if available
+                if (secondaryRole && secondaryRole.trim()) {
+                  displayText += ` + ${secondaryRole}`;
+                }
               }
 
               if (finalRole && finalRole !== originalRole) {
@@ -384,6 +408,15 @@ export function GameDetailView({ game }: { game: any }) {
               if (campTextColor === '#666') {
                  campTextColor = lycansColorScheme[finalcamp as keyof typeof lycansColorScheme] || '#666';
               }
+              
+              // For Villageois Élite, use the power color for the player name
+              if (isElite && effectivePower) {
+                const powerColor = lycansColorScheme[effectivePower as keyof typeof lycansColorScheme];
+                if (powerColor) {
+                  campTextColor = powerColor;
+                }
+              }
+              
               const campBorderColor = lycansColorScheme[finalcamp as keyof typeof lycansColorScheme] || '#666';
               
               // Check if player is dead
