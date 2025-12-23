@@ -3,6 +3,27 @@
  */
 
 import { getPlayerId, getPlayerFinalRole, getPlayerCampFromRole } from '../../../src/utils/datasyncExport.js';
+import { getEffectivePowerJS } from '../shared/roleUtils.js';
+
+/**
+ * Helper to get effective power for Villageois Élite (JavaScript version)
+ * @param {Object} player - Player object with MainRoleInitial and Power fields
+ * @returns {string|null} The effective power or null
+ */
+function getEffectivePower(player) {
+  // Use shared utility if available, otherwise inline logic
+  if (typeof getEffectivePowerJS === 'function') {
+    return getEffectivePowerJS(player);
+  }
+  // Fallback inline implementation
+  if (player.MainRoleInitial === 'Villageois Élite') {
+    return player.Power || null;
+  }
+  if (player.MainRoleInitial === 'Chasseur' || player.MainRoleInitial === 'Alchimiste') {
+    return player.MainRoleInitial;
+  }
+  return player.Power || null;
+}
 
 /**
  * Compute camp performance statistics from game log data
@@ -24,8 +45,9 @@ export function computePlayerCampPerformance(gameData) {
 
     game.PlayerStats.forEach(player => {
       const roleName = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
-      const camp = getPlayerCampFromRole(roleName, { regroupVillagers: false, regroupWolfSubRoles: false });
-      const campGrouped = getPlayerCampFromRole(roleName, { regroupVillagers: true, regroupWolfSubRoles: true });
+      const power = getEffectivePower(player);
+      const camp = getPlayerCampFromRole(roleName, { regroupVillagers: false, regroupWolfSubRoles: false }, power);
+      const campGrouped = getPlayerCampFromRole(roleName, { regroupVillagers: true, regroupWolfSubRoles: true }, power);
       const playerId = getPlayerId(player);
       const playerName = player.Username;
       const won = player.Victorious;

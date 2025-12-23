@@ -1,8 +1,21 @@
-import type { GameLogEntry } from '../useCombinedRawData';
+import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
 import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, PlayerCampPerformance } from '../../types/api';
 import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import { getPlayerId } from '../../utils/playerIdentification';
+import { getEffectivePower } from '../../utils/roleUtils';
 // Note: Player names are already normalized during data loading, so we can use Username directly
+
+/**
+ * Helper to get camp for a player, handling Villageois Élite power correctly
+ */
+function getPlayerCampWithPower(
+  playerStat: PlayerStat,
+  options: { regroupWolfSubRoles: boolean; regroupVillagers: boolean }
+): string {
+  const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+  const power = getEffectivePower(playerStat);
+  return getPlayerCampFromRole(finalRole, options, power);
+}
 
 
 /**
@@ -32,7 +45,7 @@ function calculateCampStatistics(
     const campsInGame = new Set<string>();
     
     game.PlayerStats.forEach(playerStat => {
-      const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), { regroupWolfSubRoles, regroupVillagers });
+      const playerCamp = getPlayerCampWithPower(playerStat, { regroupWolfSubRoles, regroupVillagers });
       campsInGame.add(playerCamp);
     });
 
@@ -53,7 +66,7 @@ function calculateCampStatistics(
     const winningCamps = new Set<string>();
     game.PlayerStats.forEach(playerStat => {
       if (playerStat.Victorious) {
-        const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), { regroupWolfSubRoles, regroupVillagers });
+        const playerCamp = getPlayerCampWithPower(playerStat, { regroupWolfSubRoles, regroupVillagers });
         winningCamps.add(playerCamp);
       }
     });
@@ -111,7 +124,7 @@ function analyzePlayerPerformance(
       const displayName = playerStat.Username;
 
       // Determine player's camp using helper function
-      const mainCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), { regroupWolfSubRoles, regroupVillagers });
+      const mainCamp = getPlayerCampWithPower(playerStat, { regroupWolfSubRoles, regroupVillagers });
       const playerCamp = mainCamp === 'Autres' ? 'Rôles spéciaux' : mainCamp;
 
       // Track player performance in this camp

@@ -124,7 +124,7 @@ export function PlayerCampPerformanceChart() {
     
     // Add remaining camps (solo/special roles) alphabetically
     const specialCamps = ['Camp Villageois', 'Camp Loup', 'Rôles spéciaux'];
-    const mainCamps = ['Camp Villageois', 'Villageois', 'Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Camp Loup', 'Loup', 'Traître', 'Louveteau']; 
+    const mainCamps = ['Camp Villageois', 'Villageois', 'Villageois Élite', 'Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Camp Loup', 'Loup', 'Traître', 'Louveteau']; 
     const excludedCamps = [...mainCamps, ...specialCamps];
     
     const otherCamps = availableCampNames

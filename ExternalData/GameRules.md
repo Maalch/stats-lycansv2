@@ -20,6 +20,12 @@ En plus des pouvoirs et des rôles secondaires, les Loups peuvent avoir deux sou
 - Traître est un loup qui ne peut pas se transformer en loup, mais qui doit aider les autres loups à gagner. Il peut toutefois saboter comme un loup.
 - Louveteau est un loup qui ne peut se transformer qui si au moins 1 autre loup est mort.
 
+Du côté des Villageois, il existe des pouvoirs "Élites" qui donnent des pouvoirs plus fort que les autres : 
+- Chasseur
+- Alchimiste
+- Disciple
+- Protecteur
+
 Il existe également des "rôle solo" qui ont leurs propres objectifs de victoire et ne sont ni avec les loups, ni avec les Villageois. Voici la liste:
 
 **************************************************** Solo roles****************************************************

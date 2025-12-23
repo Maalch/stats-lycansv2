@@ -88,9 +88,10 @@ export function calculateGameDuration(startDate, endDate) {
  * 
  * @param {string} roleName - The role name to get the camp for
  * @param {CampGroupOptions} [groupOptions] - An options object with grouping settings
+ * @param {string|null} [power] - Optional power field for Villageois Élite roles (Chasseur, Alchimiste, Protecteur, Disciple)
  * @returns {string} The camp name for the role
  */
-export function getPlayerCampFromRole(roleName, groupOptions) {
+export function getPlayerCampFromRole(roleName, groupOptions, power = null) {
   if (!roleName) return 'Villageois';
   
   const options = groupOptions || {};
@@ -98,12 +99,17 @@ export function getPlayerCampFromRole(roleName, groupOptions) {
   //by default: regroup lovers, villagers, but not wolf sub roles
   const { regroupLovers = true, regroupVillagers = true, regroupWolfSubRoles = false } = options;
   
+  // Handle Villageois Élite: use the Power field as the effective role
+  if (roleName === 'Villageois Élite' && power) {
+    roleName = power;
+  }
+  
   // Handle Amoureux roles
   if (roleName === 'Amoureux Loup' || roleName === 'Amoureux Villageois') {
     return regroupLovers ? 'Amoureux' : roleName;
   }
   
-  // Handle Villager-type roles (including Villageois Élite and legacy Chasseur/Alchimiste)
+  // Handle Villager-type roles (including legacy Chasseur/Alchimiste and new powers)
   if (roleName === 'Villageois Élite' || roleName === 'Chasseur' || roleName === 'Alchimiste' || 
       roleName === 'Protecteur' || roleName === 'Disciple') {
     return regroupVillagers ? 'Villageois' : roleName;

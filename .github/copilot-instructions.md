@@ -78,6 +78,53 @@ interface RawGameData {
 
 **Critical:** `Amoureux` is `MainRoleInitial`, not `SecondaryRole`. Solo roles win as their role name, not "Villageois". Recent data includes detailed vote tracking and death metadata.
 
+## Role System Architecture (CRITICAL)
+
+**ALWAYS use `src/utils/roleUtils.ts` helpers** for role checking - never compare `MainRoleInitial` directly for elite roles.
+
+### Villageois Élite / Power System
+The game has evolved its role format. "Chasseur" and "Alchimiste" were previously `MainRoleInitial` values, but are now Powers under the "Villageois Élite" role. New powers "Protecteur" and "Disciple" were also added.
+
+**Legacy Format (older games):**
+```typescript
+{ MainRoleInitial: "Chasseur", Power: null }
+{ MainRoleInitial: "Alchimiste", Power: null }
+```
+
+**New Format (current games):**
+```typescript
+{ MainRoleInitial: "Villageois Élite", Power: "Chasseur" }
+{ MainRoleInitial: "Villageois Élite", Power: "Alchimiste" }
+{ MainRoleInitial: "Villageois Élite", Power: "Protecteur" }
+{ MainRoleInitial: "Villageois Élite", Power: "Disciple" }
+```
+
+### Role Checking Pattern
+```typescript
+import { isHunter, isAlchimiste, isProtecteur, isDisciple, isVillageoisElite, getEffectivePower, VILLAGEOIS_ELITE_POWERS } from '../utils/roleUtils';
+
+// ✅ CORRECT: Use helper functions (handles both formats)
+if (isHunter(player)) { /* Hunter logic */ }
+if (isAlchimiste(player)) { /* Alchimiste logic */ }
+const power = getEffectivePower(player); // Returns 'Chasseur' for both formats
+
+// ❌ WRONG: Direct comparison misses legacy format
+if (player.Power === 'Chasseur') { /* Misses legacy MainRoleInitial: "Chasseur" */ }
+if (player.MainRoleInitial === 'Chasseur') { /* Misses new format */ }
+```
+
+### Key Role Constants
+```typescript
+// All Villageois Élite powers
+VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple']
+
+// Legacy roles that became powers
+LEGACY_ELITE_ROLES = ['Chasseur', 'Alchimiste']
+```
+
+### Camp Determination for Elite Roles
+Villageois Élite and all its powers belong to the Villageois camp. The `getPlayerCampFromRole()` in `datasyncExport.js` handles this correctly.
+
 ### Player Identification & Name Resolution System (CRITICAL)
 
 **ALWAYS use `playerIdentification.ts` utilities** - never compare players by username alone or display raw usernames.
@@ -221,6 +268,7 @@ if (!playerInfo) {
 4. **Settings:** Add to `SettingsState` interface → ensure localStorage persistence
 5. **Player Highlighting:** Extend chart data types with `isHighlightedAddition` for special inclusion logic
 6. **Achievements:** Add processor in `src/hooks/utils/achievementProcessors/` → integrate in `scripts/data-sync/generate-achievements.js` → client consumes pre-calculated JSON
+7. **Role-Based Logic:** Use `roleUtils.ts` helpers (`isHunter()`, `isAlchimiste()`, `getEffectivePower()`) - never compare roles directly
 
 ### Base Hook Template
 ```typescript
