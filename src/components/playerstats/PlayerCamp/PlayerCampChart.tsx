@@ -74,6 +74,11 @@ export function PlayerCampChart() {
     if (availableCampNames.includes('Camp Villageois')) {
       orderedCamps.push('Camp Villageois');
     }
+
+    // Add Villageois (non-elite) if available
+    if (availableCampNames.includes('Villageois')) {
+      orderedCamps.push('Villageois');
+    }
     
     // Add individual villager roles if available
     if (availableCampNames.includes('Chasseur')) {
@@ -92,10 +97,7 @@ export function PlayerCampChart() {
       orderedCamps.push('Disciple');
     }
     
-    // Add original Villageois if available (for backward compatibility)
-    if (availableCampNames.includes('Villageois')) {
-      orderedCamps.push('Villageois');
-    }
+
     
     // Add Loups (Loup, Traître, Louveteau...) if available
     if (availableCampNames.includes('Camp Loup')) {
