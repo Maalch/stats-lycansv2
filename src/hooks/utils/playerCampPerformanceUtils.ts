@@ -206,7 +206,9 @@ function calculateSpecialRolesCampStatistics(
   // Process each game - count individual player participations, not game occurrences
   gameData.forEach(game => {
     game.PlayerStats.forEach(playerStat => {
-      const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+      const power = getEffectivePower(playerStat);
+      const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+      const mainCamp = getPlayerMainCampFromRole(finalRole, power);
       
       // Count each player participation in special roles
       if (mainCamp === 'Autres') {
@@ -263,7 +265,8 @@ function analyzeSpecialRolesPlayerPerformance(
       const displayName = playerStat.Username;
 
       // Check if this player is playing a special role
-      const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+      const power = getEffectivePower(playerStat);
+      const mainCamp = getPlayerMainCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []), power);
       
       if (mainCamp === 'Autres') {
         const playerCamp = 'Rôles spéciaux';

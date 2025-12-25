@@ -262,7 +262,7 @@ export function GameDetailsChart() {
       }
       // Handle Camp Villageois and subroles
       else if (navigationFilters.campFilter.selectedCamp === 'Villageois' && navigationFilters.campFilter.excludeVillagers) {
-        campDisplayName = 'Villageois sans Chasseur/Alchimiste';
+        campDisplayName = 'Villageois sans Villageois Élite';
       }
       filters.push(`${navigationFilters.selectedPlayer} jouant ${campDisplayName}${playerWinModeText}`);
     } else {
@@ -280,7 +280,7 @@ export function GameDetailsChart() {
         }
         // Handle Camp Villageois and subroles
         else if (navigationFilters.campFilter.selectedCamp === 'Villageois' && navigationFilters.campFilter.excludeVillagers) {
-          campDisplayName = 'Villageois sans Chasseur/Alchimiste';
+          campDisplayName = 'Villageois sans Villageois Élite';
         }
         const campFilterText = `Camp: ${campDisplayName}`;
         const modeText = campFilterMode === 'wins-only' ? ' (victoires uniquement)' : 

@@ -412,7 +412,7 @@ export function computePlayerSeriesData(gameData) {
         
         if (playerStats) {
           const playerWon = playerStat.Victorious;
-          const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
+          const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
           
           // Process camp series
           processCampSeries(playerStats, playerId, playerName, mainCamp, gameDisplayedId, date);
@@ -558,7 +558,7 @@ export function updatePlayerSeriesDataIncremental(cachedSeriesState, newGames, e
         playerStats.playerName = playerName;
         
         const playerWon = playerStat.Victorious;
-        const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial);
+        const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
         
         // Process camp series
         processCampSeries(playerStats, playerId, playerName, mainCamp, gameDisplayedId, date);

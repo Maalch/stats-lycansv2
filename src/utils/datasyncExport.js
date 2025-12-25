@@ -112,7 +112,8 @@ export function getPlayerCampFromRole(roleName, groupOptions, power = null) {
   // Handle Villager-type roles (including legacy Chasseur/Alchimiste and new powers)
   if (roleName === 'Villageois Élite' || roleName === 'Chasseur' || roleName === 'Alchimiste' || 
       roleName === 'Protecteur' || roleName === 'Disciple') {
-    return regroupVillagers ? 'Villageois' : roleName;
+    const result = regroupVillagers ? 'Villageois' : roleName;
+    return result;
   }
 
   if (roleName === 'Zombie') {
@@ -130,17 +131,21 @@ export function getPlayerCampFromRole(roleName, groupOptions, power = null) {
 
 /**
  * Helper function to get player's main camp from role name
+ * @param {string} roleName - The role name
+ * @param {string|null} [power] - Optional power for Villageois Élite roles (Chasseur, Alchimiste, Protecteur, Disciple)
+ * @returns {'Villageois' | 'Loup' | 'Autres'}
  */
-export function getPlayerMainCampFromRole(roleName) {
+export function getPlayerMainCampFromRole(roleName, power = null) {
   if (!roleName) return 'Villageois';
   
-  roleName = getPlayerCampFromRole(roleName, { regroupWolfSubRoles: true });
+  // Pass the power parameter to correctly resolve Villageois Élite roles
+  const resolvedRole = getPlayerCampFromRole(roleName, { regroupWolfSubRoles: true, regroupVillagers: true }, power);
 
   // Loups camp (now includes Traître automatically)
-  if (roleName === 'Loup') {
+  if (resolvedRole === 'Loup') {
     return 'Loup';
   }
-  else if (roleName === 'Villageois') {
+  else if (resolvedRole === 'Villageois') {
     return 'Villageois';
   }
   else {

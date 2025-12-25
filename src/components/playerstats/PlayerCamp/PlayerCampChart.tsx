@@ -83,6 +83,14 @@ export function PlayerCampChart() {
     if (availableCampNames.includes('Alchimiste')) {
       orderedCamps.push('Alchimiste');
     }
+
+    if (availableCampNames.includes('Protecteur')) {
+      orderedCamps.push('Protecteur');
+    }
+
+    if (availableCampNames.includes('Disciple')) {
+      orderedCamps.push('Disciple');
+    }
     
     // Add original Villageois if available (for backward compatibility)
     if (availableCampNames.includes('Villageois')) {
@@ -116,7 +124,7 @@ export function PlayerCampChart() {
     
     // Add remaining camps (solo/special roles) alphabetically
     const specialCamps = ['Camp Villageois', 'Camp Loup', 'Rôles spéciaux'];
-    const mainCamps = ['Camp Villageois', 'Villageois', 'Chasseur', 'Alchimiste', 'Camp Loup', 'Loup', 'Traître', 'Louveteau']; 
+    const mainCamps = ['Camp Villageois', 'Villageois', 'Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Camp Loup', 'Loup', 'Traître', 'Louveteau']; 
     const excludedCamps = [...mainCamps, ...specialCamps];
     
     const otherCamps = availableCampNames
@@ -548,7 +556,7 @@ export function PlayerCampChart() {
               selectedCamp: selectedCamp,
               campFilterMode: 'wins-only',
               excludeWolfSubRoles: selectedCamp === 'Traître' || selectedCamp === 'Louveteau', // Exclude traitor and Louveteau from Loups filtering
-              excludeVillagers: selectedCamp === 'Chasseur' || selectedCamp === 'Alchimiste' // Exclude Chasseur and Alchimiste from Villagers filtering
+              excludeVillagers: selectedCamp === 'Chasseur' || selectedCamp === 'Alchimiste' || selectedCamp === 'Protecteur' || selectedCamp === 'Disciple'  // Exclude Chasseur, Alchimiste, Protecteur, and Disciple from Villagers filtering
             },
             fromComponent: `Performance des Joueurs - ${selectedCamp}`
           });
@@ -588,7 +596,7 @@ export function PlayerCampChart() {
               selectedCamp: data.camp,
               campFilterMode: 'wins-only',
               excludeWolfSubRoles: data.camp === 'Traître' || data.camp === 'Louveteau',
-              excludeVillagers: data.camp === 'Chasseur' || data.camp === 'Alchimiste' 
+              excludeVillagers: data.camp === 'Chasseur' || data.camp === 'Alchimiste' || data.camp === 'Protecteur' || data.camp === 'Disciple'
             },
             fromComponent: `Performance des Joueurs - Tous les camps`
           });
@@ -709,7 +717,15 @@ export function PlayerCampChart() {
               } else if (camp === 'Alchimiste') {
                 optionText = '     Alchimiste';
                 isIndented = true;
-              } else if (camp === 'Camp Loup') {
+              } else if (camp === 'Protecteur') {
+                optionText = '     Protecteur';
+                isIndented = true;
+              }
+              else if (camp === 'Disciple') {
+                optionText = '     Disciple';
+                isIndented = true;
+              } 
+              else if (camp === 'Camp Loup') {
                 optionText = '   🐺 Camp Loup';
                 isIndented = true;
                 isSubGroup = true;

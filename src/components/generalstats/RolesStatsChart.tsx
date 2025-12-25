@@ -489,6 +489,12 @@ export function RolesStatsChart() {
             if (roleName === 'Alchimiste' && lycansColorScheme['Alchimiste']) {
               return lycansColorScheme['Alchimiste'];
             }
+            if (roleName === 'Protecteur' && lycansColorScheme['Protecteur']) {
+              return lycansColorScheme['Protecteur'];
+            }
+            if (roleName === 'Disciple' && lycansColorScheme['Disciple']) {
+              return lycansColorScheme['Disciple'];
+            }
             return 'var(--chart-color-1)';
           }
         )}

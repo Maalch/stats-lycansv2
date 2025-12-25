@@ -46,7 +46,7 @@ export declare function getPlayerCampFromRole(
   * @param roleName - The initial role name to get the main camp for
   * @returns The main camp name: 'Villageois', 'Loup', or 'Autres' 
 */
-export declare function getPlayerMainCampFromRole(roleName: string): 'Villageois' | 'Loup' | 'Autres';
+export declare function getPlayerMainCampFromRole(roleName: string, power?: string | null): 'Villageois' | 'Loup' | 'Autres';
 
 /**
  * Helper function to determine the final role of a player after role changes

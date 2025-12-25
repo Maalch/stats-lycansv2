@@ -25,7 +25,7 @@ export function computePlayerStats(gameData) {
     // Count victories by camp
     game.PlayerStats.forEach(player => {
       if (player.Victorious) {
-        const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial);
+        const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
         if (mainCamp === 'Villageois') {
           campCounts.Villageois++;
         } else if (mainCamp === 'Loup') {
@@ -72,7 +72,7 @@ export function computePlayerStats(gameData) {
       }
 
       // Categorize by camp using the centralized logic
-      const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial);
+      const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
       if (mainCamp === 'Villageois') {
         stats.camps.villageois.played++;
         if (player.Victorious) stats.camps.villageois.won++;
@@ -152,7 +152,7 @@ export function updatePlayerStatsIncremental(cachedStats, newGames, totalGameCou
       }
 
       // Categorize by camp using the centralized logic
-      const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial);
+      const mainCamp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
       if (mainCamp === 'Villageois') {
         stats.camps.villageois.played++;
         if (player.Victorious) stats.camps.villageois.won++;

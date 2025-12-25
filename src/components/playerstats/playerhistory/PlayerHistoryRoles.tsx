@@ -561,6 +561,13 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
           if (roleName === 'Alchimiste' && lycansColorScheme['Alchimiste']) {
             return lycansColorScheme['Alchimiste'];
           }
+          if (roleName === 'Protecteur' && lycansColorScheme['Protecteur']) {
+            return lycansColorScheme['Protecteur'];
+          }
+          if (roleName === 'Disciple' && lycansColorScheme['Disciple']) {
+            return lycansColorScheme['Disciple'];
+          }
+            
           // Default color for other powers
           return 'var(--chart-color-1)';
         }

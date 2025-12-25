@@ -683,7 +683,7 @@ export function computePlayerSeries(
       if (!playerStats) return; // Skip if player not initialized
       
       const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
-      const mainCamp = getPlayerMainCampFromRole(finalRole);
+      const mainCamp = getPlayerMainCampFromRole(finalRole, playerStat.Power);
       const playerWon = playerStat.Victorious;
 
       // Process camp series (pass display name for output)
