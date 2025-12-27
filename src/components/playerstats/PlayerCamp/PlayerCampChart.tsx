@@ -96,9 +96,7 @@ export function PlayerCampChart() {
     if (availableCampNames.includes('Disciple')) {
       orderedCamps.push('Disciple');
     }
-    
-
-    
+      
     // Add Loups (Loup, Traître, Louveteau...) if available
     if (availableCampNames.includes('Camp Loup')) {
       orderedCamps.push('Camp Loup');

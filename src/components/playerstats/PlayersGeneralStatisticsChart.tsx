@@ -315,7 +315,7 @@ export function PlayersGeneralStatisticsChart() {
             <h3>
               {winRateOrder === 'best'
                 ? 'Meilleurs Taux de Victoire'
-                : 'Moins Bon Taux de Victoire'}
+                : 'Moins Bons Taux de Victoire'}
             </h3>
             {highlightedPlayerInWinRate && settings.highlightedPlayer && (
               <p style={{ 
@@ -344,7 +344,7 @@ export function PlayersGeneralStatisticsChart() {
                 }}
               >
                 <option value="best">Meilleurs Taux de Victoire</option>
-                <option value="worst">Moins Bon Taux de Victoire</option>
+                <option value="worst">Moins Bons Taux de Victoire</option>
               </select>
               <label htmlFor="min-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                 Min. parties:
@@ -371,7 +371,7 @@ export function PlayersGeneralStatisticsChart() {
             </div>
           <FullscreenChart title={winRateOrder === 'best'
                 ? 'Meilleurs Taux de Victoire'
-                : 'Moins Bon Taux de Victoire'}>
+                : 'Moins Bons Taux de Victoire'}>
           
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
