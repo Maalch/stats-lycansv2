@@ -565,10 +565,6 @@ function MainApp() {
                     if (tab.key === 'br' && settings.dataSource === 'discord') {
                       return false;
                     }
-                    // Hide "Clips" when clipsEnabled is false
-                    if (tab.key === 'clips') {
-                      return false;
-                    }
                     return true;
                   })
                   .map(tab => (
