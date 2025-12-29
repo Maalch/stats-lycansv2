@@ -47,6 +47,9 @@ const SettingsPanel = lazy(() => import('./components/settings/SettingsPanel').t
 // Player selection page
 const PlayerSelectionPage = lazy(() => import('./components/playerselection/PlayerSelectionPage').then(m => ({ default: m.PlayerSelectionPage })));
 
+// Clips page
+const ClipsPage = lazy(() => import('./components/clips/ClipsPage').then(m => ({ default: m.ClipsPage })));
+
 // Import VersionDisplay component
 import { VersionDisplay } from './components/common/VersionDisplay';
 import { ChangelogPage } from './components/common/ChangelogPage';
@@ -75,6 +78,12 @@ const MAIN_TABS = [
     label: 'Détails des Parties', 
     icon: '📋',
     description: 'Détails complets de chaque partie'
+  },
+  { 
+    key: 'clips', 
+    label: 'Clips', 
+    icon: '🎬',
+    description: 'Bibliothèque de clips vidéo'
   },
   { 
     key: 'br', 
@@ -506,6 +515,15 @@ function MainApp() {
           </div>
         );
       }
+      case 'clips': {
+        return (
+          <div className="lycans-dashboard-content">
+            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
+              <ClipsPage />
+            </Suspense>
+          </div>
+        );
+      }
       case 'settings': {
         return (
           <div className="lycans-dashboard-content">
@@ -545,6 +563,10 @@ function MainApp() {
                   .filter(tab => {
                     // Hide "Battle Royale" when dataSource is 'discord'
                     if (tab.key === 'br' && settings.dataSource === 'discord') {
+                      return false;
+                    }
+                    // Hide "Clips" when clipsEnabled is false
+                    if (tab.key === 'clips' && !settings.clipsEnabled) {
                       return false;
                     }
                     return true;
