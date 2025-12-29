@@ -42,9 +42,6 @@ export interface SettingsState {
   // Data source selection (main team vs Discord team)
   dataSource: 'main' | 'discord';
   
-  // Feature flags (developer-only, URL-accessible)
-  clipsEnabled: boolean;
-  
   // Tab navigation (for URL persistence)
   tab: string | null;
   subtab: string | null;
@@ -76,7 +73,6 @@ const defaultSettings: SettingsState = {
     playerFilter: { mode: 'none', players: [] },
   },
   dataSource: 'main',
-  clipsEnabled: false,
   tab: null,
   subtab: null,
 };
@@ -169,12 +165,6 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
     settings.dataSource = 'main';
   }
   
-  // Parse feature flags
-  const clipsEnabled = urlParams.get('clipsEnabled');
-  if (clipsEnabled === 'true') {
-    settings.clipsEnabled = true;
-  }
-  
   // Parse tab and subtab
   const tab = urlParams.get('tab');
   if (tab) {
@@ -232,11 +222,6 @@ function updateUrlFromSettings(settings: SettingsState) {
   // Data source
   if (settings.dataSource && settings.dataSource !== defaultSettings.dataSource) {
     urlParams.set('dataSource', settings.dataSource);
-  }
-  
-  // Feature flags
-  if (settings.clipsEnabled && settings.clipsEnabled !== defaultSettings.clipsEnabled) {
-    urlParams.set('clipsEnabled', 'true');
   }
   
   // Tab and subtab
@@ -348,10 +333,6 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     
     if (targetSettings.highlightedPlayer && targetSettings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
       urlParams.set('highlightedPlayer', encodeURIComponent(targetSettings.highlightedPlayer));
-    }
-    
-    if (targetSettings.clipsEnabled && targetSettings.clipsEnabled !== defaultSettings.clipsEnabled) {
-      urlParams.set('clipsEnabled', 'true');
     }
     
     const baseUrl = `${window.location.origin}${window.location.pathname}`;

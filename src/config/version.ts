@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.5.3';
+export const APP_VERSION = '1.5.4';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,15 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.5.4',
+    date: '29/12/2025',
+    description: 'Ajout d\'une page dédiée aux Clips Twitch dans',
+    link: {
+      mainTab: 'clips',
+      text: 'Clips'
+    }
+  },
   {
     version: 'v1.5.3',
     date: '12/12/2025',

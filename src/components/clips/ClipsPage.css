@@ -1,7 +1,7 @@
 .lycans-clips-page {
   width: 100%;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 /* Header */
@@ -9,17 +9,42 @@
   margin-bottom: 1.5rem;
 }
 
-.lycans-clips-header-info h2 {
+.lycans-clips-header h2 {
   margin: 0 0 0.5rem 0;
   font-size: 1.75rem;
   color: var(--text-primary);
   font-weight: 700;
 }
 
+.lycans-clips-count-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .lycans-clips-count {
   margin: 0;
   font-size: 1rem;
   color: var(--text-secondary);
+}
+
+.lycans-clips-random-btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.lycans-clips-random-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
 }
 
 /* Filters Panel */
@@ -37,7 +62,7 @@
 /* Search Bar */
 .lycans-clips-search {
   position: relative;
-  width: 100%;
+  width: 90%;
 }
 
 .lycans-clips-search-input {
@@ -319,6 +344,7 @@
   background: var(--bg-secondary);
   border-radius: 8px;
   margin-bottom: 1rem;
+  width:95%;
   flex-wrap: wrap;
   gap: 1rem;
   border: 1px solid var(--border-primary);

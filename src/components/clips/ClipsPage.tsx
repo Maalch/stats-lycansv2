@@ -212,6 +212,14 @@ export function ClipsPage() {
     }
   };
 
+  // Handle random clip selection
+  const handleRandomClip = () => {
+    if (filteredAndSortedClips.length === 0) return;
+    const randomIndex = Math.floor(Math.random() * filteredAndSortedClips.length);
+    const randomClip = filteredAndSortedClips[randomIndex];
+    setSelectedClip(randomClip);
+  };
+
   // Handle sort
   const handleSort = (field: SortField) => {
     if (sortBy === field) {
@@ -245,19 +253,6 @@ export function ClipsPage() {
     const date = new Date(dateStr);
     return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
-
-  if (!settings.clipsEnabled) {
-    return (
-      <div className="lycans-clips-page">
-        <div className="lycans-clips-disabled">
-          <div className="lycans-clips-disabled-icon">🎬</div>
-          <h2>Clips désactivés</h2>
-          <p>Cette fonctionnalité est actuellement désactivée.</p>
-          <p>Ajoutez <code>?clipsEnabled=true</code> à l'URL pour l'activer.</p>
-        </div>
-      </div>
-    );
-  }
 
   if (isLoading) {
     return (
@@ -298,12 +293,21 @@ export function ClipsPage() {
     <div className="lycans-clips-page">
       {/* Header */}
       <div className="lycans-clips-header">
-        <div className="lycans-clips-header-info">
-          <h2>🎬 Bibliothèque de Clips</h2>
+        <h2>🎬 Bibliothèque de Clips</h2>
+        <div className="lycans-clips-count-row">
           <p className="lycans-clips-count">
             {filteredAndSortedClips.length} clip{filteredAndSortedClips.length !== 1 ? 's' : ''} 
             {hasActiveFilters && ` sur ${allClips.length}`}
           </p>
+          {filteredAndSortedClips.length > 0 && (
+            <button
+              className="lycans-clips-random-btn"
+              onClick={handleRandomClip}
+              title="Lire un clip aléatoire"
+            >
+              🎲 Aléatoire
+            </button>
+          )}
         </div>
       </div>
 

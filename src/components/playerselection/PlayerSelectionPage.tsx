@@ -415,7 +415,7 @@ export function PlayerSelectionPage() {
                           </a>
                         )}
                         {/* Clips Section */}
-                        {settings.clipsEnabled && playerClips.length > 0 && (
+                        {playerClips.length > 0 && (
                           <button
                             type="button"
                             className="social-link clips-btn"

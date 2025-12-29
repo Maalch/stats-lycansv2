@@ -566,7 +566,7 @@ function MainApp() {
                       return false;
                     }
                     // Hide "Clips" when clipsEnabled is false
-                    if (tab.key === 'clips' && !settings.clipsEnabled) {
+                    if (tab.key === 'clips') {
                       return false;
                     }
                     return true;
