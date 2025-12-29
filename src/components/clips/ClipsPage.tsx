@@ -494,7 +494,12 @@ export function ClipsPage() {
                   );
                   
                   return (
-                    <tr key={clip.ClipId}>
+                    <tr 
+                      key={clip.ClipId}
+                      className="clickable-row"
+                      onClick={() => handleClipClick(clip)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <td>#{clip.gameId}</td>
                       <td>{formatDate(clip.gameDate)}</td>
                       <td className="lycans-clip-name-cell">{getClipDisplayName(clip)}</td>
@@ -535,7 +540,10 @@ export function ClipsPage() {
                       </td>
                       <td>
                         <button
-                          onClick={() => handleClipClick(clip)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleClipClick(clip);
+                          }}
                           className="lycans-clip-view-btn"
                         >
                           🎬 Voir
