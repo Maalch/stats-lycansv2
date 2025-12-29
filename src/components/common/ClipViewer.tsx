@@ -43,9 +43,9 @@ export function ClipViewer({
         <div className="lycans-clip-viewer-header">
           <div className="lycans-clip-viewer-title">
             <h2>{displayName}</h2>
-            {Array.isArray(clip.Tags) && clip.Tags.length > 0 && (
+            {Array.isArray(clip.Tags) && clip.Tags.filter(tag => !tag.toLowerCase().includes('warning')).length > 0 && (
               <div className="lycans-clip-tags">
-                {clip.Tags.map((tag, idx) => (
+                {clip.Tags.filter(tag => !tag.toLowerCase().includes('warning')).map((tag, idx) => (
                   <span key={idx} className="lycans-clip-tag">{tag}</span>
                 ))}
               </div>
@@ -108,7 +108,7 @@ export function ClipViewer({
 
             {clip.AdditionalInfo && (
               <div className="lycans-clip-info-section">
-                <h3>Description</h3>
+                <h3>Précision</h3>
                 <p className="lycans-clip-description">{clip.AdditionalInfo}</p>
               </div>
             )}

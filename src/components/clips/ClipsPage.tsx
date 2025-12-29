@@ -1,32 +1,81 @@
-import { useState, useMemo } from 'react';
-import { useAllClips } from '../../hooks/useClips';
+import { useState, useMemo, useEffect } from 'react';
+import { useFilteredGameLogData } from '../../hooks/useCombinedRawData';
 import { ClipViewer } from '../common/ClipViewer';
 import { 
   getUniqueTags, 
-  filterClipsByTag, 
-  filterClipsByPlayer, 
   findRelatedClips, 
   findNextClip,
   getClipDisplayName,
-  getAllClipPlayers
+  getAllClipPlayers,
+  parseOtherPlayers
 } from '../../utils/clipUtils';
 import type { Clip } from '../../hooks/useCombinedRawData';
 import { useSettings } from '../../context/SettingsContext';
+import { useNavigation } from '../../context/NavigationContext';
 import './ClipsPage.css';
 
+// Enhanced clip type with game context
+interface ClipWithGameContext extends Clip {
+  gameId: string;
+  gameDate: string;
+  gameNumber: number;
+}
+
+type SortField = 'gameNumber' | 'date' | 'name' | 'pov' | 'players';
+type SortDirection = 'asc' | 'desc';
+
 export function ClipsPage() {
-  const { clips: allClips, isLoading, error } = useAllClips();
+  const { data: gameData, isLoading, error } = useFilteredGameLogData();
   const { settings } = useSettings();
-  const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
+  const { navigationFilters } = useNavigation();
+  const [selectedClip, setSelectedClip] = useState<ClipWithGameContext | null>(null);
   
   // Filter states
   const [searchText, setSearchText] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedPlayer, setSelectedPlayer] = useState<string>('');
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'player' | 'name'>('newest');
+  const [sortBy, setSortBy] = useState<SortField>('gameNumber');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+
+  // Set selected player from navigation context or highlighted player
+  useEffect(() => {
+    const targetPlayer = navigationFilters.selectedPlayer || settings.highlightedPlayer;
+    if (targetPlayer) {
+      setSelectedPlayer(targetPlayer);
+    }
+  }, [navigationFilters.selectedPlayer, settings.highlightedPlayer]);
+
+  // Extract clips with game context
+  const allClips = useMemo((): ClipWithGameContext[] => {
+    if (!gameData) return [];
+    
+    const clipsWithContext: ClipWithGameContext[] = [];
+    gameData.forEach(game => {
+      if (game.Clips && Array.isArray(game.Clips)) {
+        game.Clips.forEach(clip => {
+          clipsWithContext.push({
+            ...clip,
+            gameId: game.DisplayedId || game.Id,
+            gameDate: game.StartDate,
+            gameNumber: parseInt(game.DisplayedId || game.Id, 10)
+          });
+        });
+      }
+    });
+    
+    return clipsWithContext;
+  }, [gameData]);
 
   // Extract unique tags and players
-  const uniqueTags = useMemo(() => getUniqueTags(allClips), [allClips]);
+  const uniqueTags = useMemo(() => {
+    const allTags = getUniqueTags(allClips);
+    // Filter out "Warning sonore" tags from the filter options
+    return allTags.filter(tag => !tag.toLowerCase().includes('warning'));
+  }, [allClips]);
   const uniquePlayers = useMemo(() => {
     const playersSet = new Set<string>();
     allClips.forEach(clip => {
@@ -35,20 +84,29 @@ export function ClipsPage() {
     return Array.from(playersSet).sort();
   }, [allClips]);
 
-  // Apply filters
-  const filteredClips = useMemo(() => {
+  // Apply filters and sort
+  const filteredAndSortedClips = useMemo(() => {
     let result = [...allClips];
 
     // Filter by selected tags
     if (selectedTags.length > 0) {
       result = result.filter(clip => 
-        selectedTags.some(tag => filterClipsByTag(allClips, tag).includes(clip))
+        selectedTags.some(tag => {
+          const clipTags = clip.Tags || [];
+          return clipTags.some((clipTag: string) => 
+            clipTag.toLowerCase() === tag.toLowerCase()
+          );
+        })
       );
     }
 
     // Filter by player
     if (selectedPlayer) {
-      result = filterClipsByPlayer(result, selectedPlayer);
+      result = result.filter(clip => 
+        getAllClipPlayers(clip).some(player => 
+          player.toLowerCase() === selectedPlayer.toLowerCase()
+        )
+      );
     }
 
     // Filter by search text
@@ -59,39 +117,60 @@ export function ClipsPage() {
         const additionalInfo = clip.AdditionalInfo?.toLowerCase() || '';
         const clipName = clip.ClipName?.toLowerCase() || '';
         const players = getAllClipPlayers(clip).join(' ').toLowerCase();
+        const gameId = clip.gameId.toLowerCase();
         
         return displayName.includes(searchLower) || 
                additionalInfo.includes(searchLower) || 
                clipName.includes(searchLower) ||
-               players.includes(searchLower);
+               players.includes(searchLower) ||
+               gameId.includes(searchLower);
       });
     }
 
     // Sort clips
     result.sort((a, b) => {
+      let comparison = 0;
+      
       switch (sortBy) {
-        case 'newest':
-          // Assuming ClipId contains some temporal ordering, or we could use game dates
-          return b.ClipId.localeCompare(a.ClipId);
-        case 'oldest':
-          return a.ClipId.localeCompare(b.ClipId);
-        case 'player':
-          return a.POVPlayer.localeCompare(b.POVPlayer);
+        case 'gameNumber':
+          comparison = a.gameNumber - b.gameNumber;
+          break;
+        case 'date':
+          comparison = new Date(a.gameDate).getTime() - new Date(b.gameDate).getTime();
+          break;
         case 'name':
-          return getClipDisplayName(a).localeCompare(getClipDisplayName(b));
+          comparison = getClipDisplayName(a).localeCompare(getClipDisplayName(b));
+          break;
+        case 'pov':
+          comparison = a.POVPlayer.localeCompare(b.POVPlayer);
+          break;
+        case 'players':
+          const aPlayers = getAllClipPlayers(a).length;
+          const bPlayers = getAllClipPlayers(b).length;
+          comparison = aPlayers - bPlayers;
+          break;
         default:
-          return 0;
+          comparison = 0;
       }
+      
+      return sortDirection === 'asc' ? comparison : -comparison;
     });
 
     return result;
-  }, [allClips, selectedTags, selectedPlayer, searchText, sortBy]);
+  }, [allClips, selectedTags, selectedPlayer, searchText, sortBy, sortDirection]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredAndSortedClips.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedClips = filteredAndSortedClips.slice(startIndex, endIndex);
 
   // Toggle tag selection
   const toggleTag = (tag: string) => {
     setSelectedTags(prev => 
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
+    setCurrentPage(1); // Reset to first page when filter changes
   };
 
   // Clear all filters
@@ -99,19 +178,20 @@ export function ClipsPage() {
     setSearchText('');
     setSelectedTags([]);
     setSelectedPlayer('');
+    setCurrentPage(1);
   };
 
   // Handle clip click
-  const handleClipClick = (clip: Clip) => {
+  const handleClipClick = (clip: ClipWithGameContext) => {
     setSelectedClip(clip);
   };
 
   // Handle next clip navigation
   const handleNextClip = () => {
     if (!selectedClip) return;
-    const next = findNextClip(selectedClip, filteredClips);
-    if (next) {
-      setSelectedClip(next);
+    const currentIndex = paginatedClips.findIndex(c => c.ClipId === selectedClip.ClipId);
+    if (currentIndex < paginatedClips.length - 1) {
+      setSelectedClip(paginatedClips[currentIndex + 1]);
     }
   };
 
@@ -121,6 +201,40 @@ export function ClipsPage() {
     if (related) {
       setSelectedClip(related);
     }
+  };
+
+  // Handle sort
+  const handleSort = (field: SortField) => {
+    if (sortBy === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(field);
+      setSortDirection('desc');
+    }
+    setCurrentPage(1);
+  };
+
+  // Get sort icon
+  const getSortIcon = (field: SortField) => {
+    if (sortBy !== field) return '↕️';
+    return sortDirection === 'asc' ? '↗️' : '↘️';
+  };
+
+  // Handle page change
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  // Handle items per page change
+  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
+
+  // Format date
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
 
   if (!settings.clipsEnabled) {
@@ -176,9 +290,9 @@ export function ClipsPage() {
       {/* Header */}
       <div className="lycans-clips-header">
         <div className="lycans-clips-header-info">
-          <h1>🎬 Bibliothèque de Clips</h1>
+          <h2>🎬 Bibliothèque de Clips</h2>
           <p className="lycans-clips-count">
-            {filteredClips.length} clip{filteredClips.length !== 1 ? 's' : ''} 
+            {filteredAndSortedClips.length} clip{filteredAndSortedClips.length !== 1 ? 's' : ''} 
             {hasActiveFilters && ` sur ${allClips.length}`}
           </p>
         </div>
@@ -190,15 +304,21 @@ export function ClipsPage() {
         <div className="lycans-clips-search">
           <input
             type="text"
-            placeholder="Rechercher par nom, description, joueur..."
+            placeholder="Rechercher par nom, description, joueur, partie..."
             value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+              setCurrentPage(1);
+            }}
             className="lycans-clips-search-input"
           />
           {searchText && (
             <button 
               className="lycans-clips-search-clear"
-              onClick={() => setSearchText('')}
+              onClick={() => {
+                setSearchText('');
+                setCurrentPage(1);
+              }}
               title="Effacer la recherche"
             >
               ✕
@@ -214,29 +334,16 @@ export function ClipsPage() {
             <select
               id="player-filter"
               value={selectedPlayer}
-              onChange={(e) => setSelectedPlayer(e.target.value)}
+              onChange={(e) => {
+                setSelectedPlayer(e.target.value);
+                setCurrentPage(1);
+              }}
               className="lycans-clips-select"
             >
               <option value="">Tous les joueurs</option>
               {uniquePlayers.map(player => (
                 <option key={player} value={player}>{player}</option>
               ))}
-            </select>
-          </div>
-
-          {/* Sort By */}
-          <div className="lycans-clips-filter-group">
-            <label htmlFor="sort-filter">Trier par :</label>
-            <select
-              id="sort-filter"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="lycans-clips-select"
-            >
-              <option value="newest">Plus récent</option>
-              <option value="oldest">Plus ancien</option>
-              <option value="player">Joueur (A-Z)</option>
-              <option value="name">Nom (A-Z)</option>
             </select>
           </div>
 
@@ -271,8 +378,8 @@ export function ClipsPage() {
         )}
       </div>
 
-      {/* Clips Grid */}
-      {filteredClips.length === 0 ? (
+      {/* No results */}
+      {filteredAndSortedClips.length === 0 ? (
         <div className="lycans-clips-no-results">
           <div className="lycans-clips-no-results-icon">🔍</div>
           <h3>Aucun clip trouvé</h3>
@@ -287,41 +394,178 @@ export function ClipsPage() {
           )}
         </div>
       ) : (
-        <div className="lycans-clips-grid">
-          {filteredClips.map((clip) => (
-            <button
-              key={clip.ClipId}
-              className="lycans-clip-card"
-              onClick={() => handleClipClick(clip)}
-            >
-              <div className="lycans-clip-card-header">
-                <span className="lycans-clip-icon">🎬</span>
-                <span className="lycans-clip-name">{getClipDisplayName(clip)}</span>
+        <>
+          {/* Pagination Controls - Top */}
+          {totalPages > 1 && (
+            <div className="lycans-pagination-container">
+              <div className="lycans-pagination-info">
+                Affichage de {startIndex + 1} à {Math.min(endIndex, filteredAndSortedClips.length)} sur {filteredAndSortedClips.length} clips
               </div>
               
-              <div className="lycans-clip-card-pov">
-                <span className="lycans-clip-pov-badge">POV</span>
-                <span className="lycans-clip-pov-player">{clip.POVPlayer}</span>
+              <div className="lycans-pagination-controls">
+                <select 
+                  value={itemsPerPage} 
+                  onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+                  className="lycans-pagination-select"
+                >
+                  <option value={10}>10 par page</option>
+                  <option value={25}>25 par page</option>
+                  <option value={50}>50 par page</option>
+                  <option value={100}>100 par page</option>
+                </select>
+                
+                <div className="lycans-pagination-buttons">
+                  <button 
+                    onClick={() => handlePageChange(1)}
+                    disabled={currentPage === 1}
+                    className="lycans-pagination-btn"
+                  >
+                    ««
+                  </button>
+                  <button 
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="lycans-pagination-btn"
+                  >
+                    ‹
+                  </button>
+                  
+                  <span className="lycans-pagination-current">
+                    Page {currentPage} sur {totalPages}
+                  </span>
+                  
+                  <button 
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="lycans-pagination-btn"
+                  >
+                    ›
+                  </button>
+                  <button 
+                    onClick={() => handlePageChange(totalPages)}
+                    disabled={currentPage === totalPages}
+                    className="lycans-pagination-btn"
+                  >
+                    »»
+                  </button>
+                </div>
               </div>
+            </div>
+          )}
 
-              {clip.Tags && clip.Tags.length > 0 && (
-                <div className="lycans-clip-card-tags">
-                  {clip.Tags.map((tag, idx) => (
-                    <span key={idx} className="lycans-clip-card-tag">{tag}</span>
-                  ))}
-                </div>
-              )}
+          {/* Clips Table */}
+          <div className="lycans-clips-table-container">
+            <table className="lycans-clips-table">
+              <thead>
+                <tr>
+                  <th onClick={() => handleSort('gameNumber')} className="sortable">
+                    Partie {getSortIcon('gameNumber')}
+                  </th>
+                  <th onClick={() => handleSort('date')} className="sortable">
+                    Date {getSortIcon('date')}
+                  </th>
+                  <th onClick={() => handleSort('name')} className="sortable">
+                    Nom {getSortIcon('name')}
+                  </th>
+                  <th onClick={() => handleSort('pov')} className="sortable">
+                    POV {getSortIcon('pov')}
+                  </th>
+                  <th onClick={() => handleSort('players')} className="sortable">
+                    Personnes impliquées {getSortIcon('players')}
+                  </th>
+                  <th>Tags</th>
+                  <th>Voir</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedClips.map(clip => {
+                  const otherPlayers = parseOtherPlayers(clip.OthersPlayers);
+                  const displayTags = (clip.Tags || []).filter((tag: string) => 
+                    !tag.toLowerCase().includes('warning')
+                  );
+                  
+                  return (
+                    <tr key={clip.ClipId}>
+                      <td>#{clip.gameId}</td>
+                      <td>{formatDate(clip.gameDate)}</td>
+                      <td className="lycans-clip-name-cell">{getClipDisplayName(clip)}</td>
+                      <td>
+                        <span className="lycans-clip-pov-badge">{clip.POVPlayer}</span>
+                      </td>
+                      <td className="lycans-clip-players-cell">
+                        {otherPlayers.length > 0 ? otherPlayers.join(', ') : '-'}
+                      </td>
+                      <td className="lycans-clip-tags-cell">
+                        {displayTags.length > 0 ? (
+                          <div className="lycans-clip-tags-inline">
+                            {displayTags.map((tag: string, idx: number) => (
+                              <span key={idx} className="lycans-clip-tag-small">{tag}</span>
+                            ))}
+                          </div>
+                        ) : '-'}
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => handleClipClick(clip)}
+                          className="lycans-clip-view-btn"
+                        >
+                          🎬 Voir
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
 
-              {clip.AdditionalInfo && (
-                <div className="lycans-clip-card-info">
-                  {clip.AdditionalInfo.length > 80 
-                    ? `${clip.AdditionalInfo.substring(0, 80)}...` 
-                    : clip.AdditionalInfo}
+          {/* Pagination Controls - Bottom */}
+          {totalPages > 1 && (
+            <div className="lycans-pagination-container">
+              <div className="lycans-pagination-info">
+                Affichage de {startIndex + 1} à {Math.min(endIndex, filteredAndSortedClips.length)} sur {filteredAndSortedClips.length} clips
+              </div>
+              
+              <div className="lycans-pagination-controls">
+                <div className="lycans-pagination-buttons">
+                  <button 
+                    onClick={() => handlePageChange(1)}
+                    disabled={currentPage === 1}
+                    className="lycans-pagination-btn"
+                  >
+                    ««
+                  </button>
+                  <button 
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="lycans-pagination-btn"
+                  >
+                    ‹
+                  </button>
+                  
+                  <span className="lycans-pagination-current">
+                    Page {currentPage} sur {totalPages}
+                  </span>
+                  
+                  <button 
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="lycans-pagination-btn"
+                  >
+                    ›
+                  </button>
+                  <button 
+                    onClick={() => handlePageChange(totalPages)}
+                    disabled={currentPage === totalPages}
+                    className="lycans-pagination-btn"
+                  >
+                    »»
+                  </button>
                 </div>
-              )}
-            </button>
-          ))}
-        </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {/* Clip Viewer Modal */}
@@ -330,7 +574,7 @@ export function ClipsPage() {
           clip={selectedClip}
           onClose={() => setSelectedClip(null)}
           relatedClips={findRelatedClips(selectedClip, allClips)}
-          nextClip={findNextClip(selectedClip, filteredClips)}
+          nextClip={findNextClip(selectedClip, allClips)}
           onNextClip={handleNextClip}
           onRelatedClip={handleRelatedClip}
         />
