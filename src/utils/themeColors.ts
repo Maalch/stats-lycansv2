@@ -55,11 +55,14 @@ const LIGHT_THEME_ADJUSTMENTS: Record<string, { lightness: number; saturation?: 
   '#fbff00': { lightness: 40, saturation: 90 }, // Chasseur - make much darker and less saturated
   '#54D90F': { lightness: 35 }, // Vert pomme - make darker
   '#FFED00': { lightness: 45, saturation: 90 }, // Jaune - make darker and less saturated
+  '#00FFFF': { lightness: 40 }, // Cyan - make darker
 };
 
 // Colors that need adjustment for dark theme (too dark)
 const DARK_THEME_ADJUSTMENTS: Record<string, { lightness: number; saturation?: number }> = {
   '#800080': { lightness: 65 }, // Agent & Chasseur de primes - make lighter
+  '#00FFFF': { lightness: 40 }, // Cyan - make darker
+  '#FFED00': { lightness: 45 }, // Jaune - make darker 
 };
 
 /**

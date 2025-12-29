@@ -12,6 +12,8 @@ import {
 import type { Clip } from '../../hooks/useCombinedRawData';
 import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
+import { useJoueursData } from '../../hooks/useJoueursData';
+import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import './ClipsPage.css';
 
 // Enhanced clip type with game context
@@ -26,9 +28,13 @@ type SortDirection = 'asc' | 'desc';
 
 export function ClipsPage() {
   const { data: gameData, isLoading, error } = useFilteredGameLogData();
+  const { joueursData } = useJoueursData();
   const { settings } = useSettings();
   const { navigationFilters } = useNavigation();
   const [selectedClip, setSelectedClip] = useState<ClipWithGameContext | null>(null);
+  
+  // Build player colors mapping with theme adjustments
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   
   // Filter states
   const [searchText, setSearchText] = useState('');
@@ -189,9 +195,12 @@ export function ClipsPage() {
   // Handle next clip navigation
   const handleNextClip = () => {
     if (!selectedClip) return;
-    const currentIndex = paginatedClips.findIndex(c => c.ClipId === selectedClip.ClipId);
-    if (currentIndex < paginatedClips.length - 1) {
-      setSelectedClip(paginatedClips[currentIndex + 1]);
+    const nextClipBasic = findNextClip(selectedClip, allClips);
+    if (nextClipBasic) {
+      const nextClip = allClips.find(c => c.ClipId === nextClipBasic.ClipId);
+      if (nextClip) {
+        setSelectedClip(nextClip);
+      }
     }
   };
 
@@ -330,7 +339,7 @@ export function ClipsPage() {
         <div className="lycans-clips-filter-controls">
           {/* Player Filter */}
           <div className="lycans-clips-filter-group">
-            <label htmlFor="player-filter">Joueur POV :</label>
+            <label htmlFor="player-filter">Joueur :</label>
             <select
               id="player-filter"
               value={selectedPlayer}
@@ -490,10 +499,30 @@ export function ClipsPage() {
                       <td>{formatDate(clip.gameDate)}</td>
                       <td className="lycans-clip-name-cell">{getClipDisplayName(clip)}</td>
                       <td>
-                        <span className="lycans-clip-pov-badge">{clip.POVPlayer}</span>
+                        <span 
+                          className="lycans-clip-pov-badge"
+                          style={{
+                            backgroundColor: playersColor[clip.POVPlayer] || 'var(--accent-primary)',
+                            color: 'white'
+                          }}
+                        >
+                          {clip.POVPlayer}
+                        </span>
                       </td>
                       <td className="lycans-clip-players-cell">
-                        {otherPlayers.length > 0 ? otherPlayers.join(', ') : '-'}
+                        {otherPlayers.length > 0 ? (
+                          otherPlayers.map((player, idx) => (
+                            <span
+                              key={idx}
+                              style={{
+                                color: playersColor[player] || 'var(--text-secondary)',
+                                fontWeight: 500
+                              }}
+                            >
+                              {player}{idx < otherPlayers.length - 1 ? ', ' : ''}
+                            </span>
+                          ))
+                        ) : '-'}
                       </td>
                       <td className="lycans-clip-tags-cell">
                         {displayTags.length > 0 ? (

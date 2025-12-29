@@ -1,6 +1,5 @@
 .lycans-clips-page {
   width: 100%;
-  max-width: 1400px;
   margin: 0 auto;
   padding: 1.5rem;
 }
@@ -272,23 +271,24 @@
 }
 
 .lycans-clip-tag-small {
-  background: var(--accent-primary);
-  color: white;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
   padding: 0.2rem 0.5rem;
-  border-radius: 10px;
+  border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
 }
 
 .lycans-clip-pov-badge {
-  background: var(--accent-primary);
-  color: white;
+  display: inline-block;
   padding: 0.25rem 0.625rem;
   border-radius: 4px;
   font-size: 0.8125rem;
   font-weight: 600;
   white-space: nowrap;
+  /* Background color set inline based on player color */
 }
 
 .lycans-clip-view-btn {
