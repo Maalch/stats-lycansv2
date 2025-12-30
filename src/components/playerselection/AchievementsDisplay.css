@@ -22,28 +22,6 @@
   overflow: hidden;
 }
 
-.top3-showcase::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 0%,
-    rgba(255, 215, 0, 0.15) 49%,
-    rgba(255, 215, 0, 0.25) 50%,
-    transparent 51%
-  );
-  animation: shine 3s infinite;
-}
-
-@keyframes shine {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-}
-
 .top3-title {
   text-align: center;
   color: var(--text-primary);
@@ -104,57 +82,16 @@
   background: linear-gradient(135deg, var(--background-primary) 0%, rgba(255, 215, 0, 0.15) 100%);
 }
 
-.top3-card.rank-1::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
-  animation: gradientShift 2s ease infinite;
-  z-index: 2;
-}
-
 /* Silver Medal Styling */
 .top3-card.rank-2 {
   border: 3px solid #c0c0c0;
   background: linear-gradient(135deg, var(--background-primary) 0%, rgba(192, 192, 192, 0.15) 100%);
 }
 
-.top3-card.rank-2::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #c0c0c0, #e8e8e8, #c0c0c0);
-  animation: gradientShift 2s ease infinite;
-  z-index: 2;
-}
-
 /* Bronze Medal Styling */
 .top3-card.rank-3 {
   border: 3px solid #cd7f32;
   background: linear-gradient(135deg, var(--background-primary) 0%, rgba(205, 127, 50, 0.15) 100%);
-}
-
-.top3-card.rank-3::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #cd7f32, #e9a661, #cd7f32);
-  animation: gradientShift 2s ease infinite;
-  z-index: 2;
-}
-
-@keyframes gradientShift {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
 }
 
 /* Medal Container */
