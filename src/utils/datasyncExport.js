@@ -17,8 +17,7 @@ export const DeathTypeCode = {
   
   // Wolf Kills
   BY_WOLF: 'BY_WOLF',                       // Tué par Loup
-  BY_WOLF_REZ: 'BY_WOLF_REZ',              // Tué par Loup ressuscité (GDOC specific)
-  BY_WOLF_LOVER: 'BY_WOLF_LOVER',          // Tué par Loup amoureux (GDOC specific)
+  SURVIVALIST_NOT_SAVED: 'SURVIVALIST_NOT_SAVED', // Tué par Loup (Survivaliste non sauvé)
   
   // Other Creature Kills
   BY_ZOMBIE: 'BY_ZOMBIE',                   // Tué par Zombie
@@ -28,21 +27,21 @@ export const DeathTypeCode = {
   BULLET: 'BULLET',                         // Tué par Chasseur (less specific than official log)
   BULLET_HUMAN: 'BULLET_HUMAN',            // Tué par Chasseur en humain (official log specific)
   BULLET_WOLF: 'BULLET_WOLF',              // Tué par Chasseur en loup (official log specific)
-  BULLET_BOUNTYHUNTER: 'BULLET_BOUNTYHUNTER', // Tué par Chasseur de primes (GDOC specific)
-  SHERIF: 'SHERIF',                         // Tué par Shérif (less specific than official log)
+  SHERIF_SUCCESS: 'SHERIF_SUCCESS',        // Tué par Shérif (correct target)
+  SHERIF_MISTAKE: 'SHERIF_MISTAKE',        // Tué par Shérif (wrong target)
   
   // Role-Based Kills
   OTHER_AGENT: 'OTHER_AGENT',               // Tué par l'Agent
   AVENGER: 'AVENGER',                       // Tué par Vengeur
   SEER: 'SEER',                             // Rôle deviné par loup
-  
+  SMUGGLER_HUNT_KILL: 'SMUGGLER_HUNT_KILL', // Mort en Contrebandier (chasse ouverte)
+
   // Potions
   HANTED: 'HANTED',                         // Tué par potion hantée (GDOC specific)
   ASSASSIN: 'ASSASSIN',                     // Tué par potion assassin
   
   // Lovers
   LOVER_DEATH: 'LOVER_DEATH',               // Amoureux mort
-  LOVER_DEATH_OWN: 'LOVER_DEATH_OWN',      // A tué son amoureux / Tué par son amoureux (GDOC specific)
   
   // Environmental
   BOMB: 'BOMB',                             // A explosé

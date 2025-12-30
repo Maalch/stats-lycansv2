@@ -179,6 +179,8 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Chute mortelle';
     case DEATH_TYPES.UNKNOWN:
       return 'Kill inconnu';
+    case DEATH_TYPES.SMUGGLER_HUNT_KILL:
+      return 'Kill sur Contrebandier';
     default:
       return '';
   }
@@ -216,7 +218,8 @@ export function getAllDeathTypes(gameData: GameLogEntry[]): DeathType[] {
     DEATH_TYPES.BY_ZOMBIE,
     DEATH_TYPES.ASSASSIN,
     DEATH_TYPES.AVENGER,
-    DEATH_TYPES.LOVER_DEATH
+    DEATH_TYPES.LOVER_DEATH,
+    DEATH_TYPES.SHERIF_SUCCESS
   ];
   
   return [

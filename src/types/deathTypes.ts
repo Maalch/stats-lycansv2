@@ -36,7 +36,8 @@ export const DEATH_TYPES = {
   OTHER_AGENT: 'OTHER_AGENT',               // Tué par l'Agent
   AVENGER: 'AVENGER',                       // Tué par Vengeur
   SEER: 'SEER',                             // Rôle deviné par loup
-  
+  SMUGGLER_HUNT_KILL: 'SMUGGLER_HUNT_KILL', // Mort en Contrebandier (chasse ouverte)
+
   // Potions
   HANTED: 'HANTED',                         // Tué par potion hantée (GDOC specific)
   ASSASSIN: 'ASSASSIN',                     // Tué par potion assassin
@@ -96,6 +97,10 @@ export const DEATH_TYPE_CATEGORIES = {
   LOVER_DEATHS: [
     DEATH_TYPES.LOVER_DEATH
   ],
+
+  SMUGGLER_DEATHS: [
+    DEATH_TYPES.SMUGGLER_HUNT_KILL
+  ],
   
   ENVIRONMENTAL: [
     DEATH_TYPES.STARVATION,
@@ -138,6 +143,7 @@ export const KILLER_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.HANTED,
   DEATH_TYPES.ASSASSIN,
   DEATH_TYPES.LOVER_DEATH,
+  DEATH_TYPES.SMUGGLER_HUNT_KILL,
   DEATH_TYPES.BOMB,
   DEATH_TYPES.CRUSHED,
 ] as const;
@@ -170,6 +176,7 @@ export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.FALL]: 'Mort de chute',
   [DEATH_TYPES.UNKNOWN]: 'Inconnu',
   [DEATH_TYPES.SURVIVOR]: 'Survivant',
+  [DEATH_TYPES.SMUGGLER_HUNT_KILL]: 'Tué en tant que Contrebandier',
 };
 
 /**

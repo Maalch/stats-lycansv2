@@ -253,6 +253,9 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
     } else if (deathType === 'SHERIF_SUCCESS') {
       return 'var(--chart-color-4)';
     }
+      else if (deathType === 'SMUGGLER_HUNT_KILL') {
+      return lycansColors['Contrebandier'];
+    }
     
     return 'var(--accent-primary)';
   };
