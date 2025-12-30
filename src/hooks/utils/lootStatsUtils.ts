@@ -1,6 +1,9 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerId, getCanonicalPlayerName } from '../../utils/playerIdentification';
 import { calculateGameDuration } from '../../utils/datasyncExport';
+import { getPlayerMainCampFromRole } from '../../utils/datasyncExport';
+
+export type CampFilter = 'all' | 'villageois' | 'loup' | 'autres';
 
 export interface PlayerLootStats {
   player: string;
@@ -31,8 +34,11 @@ function gameHasLootData(game: GameLogEntry): boolean {
 /**
  * Compute per-player loot statistics from game log data
  * Excludes games without loot data (created before feature implementation)
+ * 
+ * @param gameData - Array of game log entries
+ * @param campFilter - Filter by camp: 'all', 'villageois', 'loup', or 'autres'
  */
-export function computeLootStats(gameData: GameLogEntry[]): LootStatsData | null {
+export function computeLootStats(gameData: GameLogEntry[], campFilter: CampFilter = 'all'): LootStatsData | null {
   if (!gameData || gameData.length === 0) {
     return null;
   }
@@ -64,6 +70,21 @@ export function computeLootStats(gameData: GameLogEntry[]): LootStatsData | null
       // Skip players without loot data
       if (player.TotalCollectedLoot === undefined || player.TotalCollectedLoot === null) {
         return;
+      }
+
+      // Apply camp filter
+      if (campFilter !== 'all') {
+        const playerCamp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
+        const campFilterMap: Record<CampFilter, string> = {
+          'all': '',
+          'villageois': 'Villageois',
+          'loup': 'Loup',
+          'autres': 'Autres'
+        };
+        
+        if (playerCamp !== campFilterMap[campFilter]) {
+          return;
+        }
       }
 
       // Calculate player-specific game duration

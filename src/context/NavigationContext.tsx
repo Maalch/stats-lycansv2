@@ -91,6 +91,7 @@ export interface TalkingTimeState {
 
 export interface LootStatsState {
   minGames: number;
+  campFilter?: string; // 'all', 'villageois', 'loup', or 'autres'
 }
 
 export interface DeathLocationState {

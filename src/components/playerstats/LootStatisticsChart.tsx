@@ -6,7 +6,7 @@ import { useSettings } from '../../context/SettingsContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
-import type { PlayerLootStats } from '../../hooks/utils/lootStatsUtils';
+import type { PlayerLootStats, CampFilter } from '../../hooks/utils/lootStatsUtils';
 
 // Extended type for chart data with highlighting info
 type ChartLootStat = PlayerLootStats & {
@@ -16,7 +16,6 @@ type ChartLootStat = PlayerLootStats & {
 const minGamesOptions = [3, 5, 10, 15, 25, 50];
 
 export function LootStatisticsChart() {
-  const { data: lootData, isLoading: dataLoading, error: fetchError } = useLootStats();
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
 
@@ -24,22 +23,29 @@ export function LootStatisticsChart() {
   const [minGames, setMinGames] = useState<number>(
     navigationState.lootStatsState?.minGames || 5
   );
+  const [campFilter, setCampFilter] = useState<CampFilter>(
+    (navigationState.lootStatsState?.campFilter as CampFilter) || 'all'
+  );
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
 
+  const { data: lootData, isLoading: dataLoading, error: fetchError } = useLootStats(campFilter);
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Save state to navigation context when it changes
   useEffect(() => {
     const currentNavState = navigationState.lootStatsState;
-    if (!currentNavState || currentNavState.minGames !== minGames) {
+    if (!currentNavState || 
+        currentNavState.minGames !== minGames ||
+        currentNavState.campFilter !== campFilter) {
       updateNavigationState({
         lootStatsState: {
-          minGames
+          minGames,
+          campFilter
         }
       });
     }
-  }, [minGames, updateNavigationState]);
+  }, [minGames, campFilter, updateNavigationState]);
 
   // Data processing with highlighting support - for total loot
   const { totalLootChartData, highlightedPlayerAddedTotal } = useMemo(() => {
@@ -194,7 +200,7 @@ export function LootStatisticsChart() {
     <div className="lycans-players-stats">
       <h2>Statistiques de Récolte de Loot</h2>
       <p className="lycans-stats-info">
-        {lootData.gamesWithLootData} parties avec données de loot collecté · 3 vues complémentaires : Total cumulé, Moyenne par partie, et Taux normalisé par 60 minutes
+        {lootData.gamesWithLootData} parties avec données de loot collecté · Filtrage par camp disponible · 3 vues complémentaires : Total cumulé, Moyenne par partie, et Taux normalisé par 60 minutes
       </p>
 
       <div className="lycans-graphiques-groupe">
@@ -216,7 +222,29 @@ export function LootStatisticsChart() {
           </div>
 
           <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-            <label htmlFor="min-games-select-total" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            <label htmlFor="camp-filter-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Camp:
+            </label>
+            <select
+              id="camp-filter-select"
+              value={campFilter}
+              onChange={(e) => setCampFilter(e.target.value as CampFilter)}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem'
+              }}
+            >
+              <option value="all">Tous les camps</option>
+              <option value="villageois">Camp Villageois</option>
+              <option value="loup">Camp Loup</option>
+              <option value="autres">Autres (Solo)</option>
+            </select>
+
+            <label htmlFor="min-games-select-total" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginLeft: '1rem' }}>
               Min. parties:
             </label>
             <select
