@@ -14,6 +14,7 @@ const PlayerCampChart = lazy(() => import('./components/playerstats/PlayerCamp/P
 const PlayerComparisonChart = lazy(() => import('./components/playerstats/PlayerComparisonChart').then(m => ({ default: m.PlayerComparisonChart })));
 const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
 const TalkingTimeChart = lazy(() => import('./components/playerstats/TalkingTimeChart').then(m => ({ default: m.TalkingTimeChart })));
+const LootStatisticsChart = lazy(() => import('./components/playerstats/LootStatisticsChart').then(m => ({ default: m.LootStatisticsChart })));
 
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsAndKills/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
@@ -142,6 +143,12 @@ const PLAYER_STATS_MENU = [
     label: 'Temps de Parole', 
     component: TalkingTimeChart,
     description: 'Analyse du temps de parole en et hors meetings'
+  },
+  { 
+    key: 'lootStats', 
+    label: 'Récolte de Loot', 
+    component: LootStatisticsChart,
+    description: 'Classement du loot collecté par joueur'
   },
   { 
     key: 'comparison', 

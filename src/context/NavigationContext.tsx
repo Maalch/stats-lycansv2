@@ -89,6 +89,10 @@ export interface TalkingTimeState {
   focusChart?: string; // For future expansion if needed
 }
 
+export interface LootStatsState {
+  minGames: number;
+}
+
 export interface DeathLocationState {
   selectedCamp: string;
   selectedDeathTypes?: string[]; // Array of selected death type codes for multi-select filtering
@@ -119,6 +123,7 @@ export interface NavigationState {
   playerHistoryRolesState?: PlayerHistoryRolesState;
   rolesStatsState?: RolesStatsState;
   talkingTimeState?: TalkingTimeState;
+  lootStatsState?: LootStatsState;
   deathLocationState?: DeathLocationState;
 }
 

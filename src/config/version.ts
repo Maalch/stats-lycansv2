@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.5.4';
+export const APP_VERSION = '1.5.5';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,15 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.5.5',
+    date: '30/12/2025',
+    description: 'Ajout d\'une page sur les données de récolte individuelle dans',
+    link: {
+      mainTab: 'lootStats',
+      text: 'Statistiques de Récolte'
+    }
+  },
   {
     version: 'v1.5.4',
     date: '29/12/2025',
