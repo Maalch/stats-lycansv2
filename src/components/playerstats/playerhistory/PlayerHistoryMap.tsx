@@ -71,21 +71,12 @@ export function PlayerHistoryMap({ selectedPlayerName }: PlayerHistoryMapProps) 
     return <div className="donnees-manquantes">Aucune donnée d'historique disponible</div>;
   }
 
-  if (mapPerformanceData.length === 0) {
-    return (
-      <div className="lycans-empty-section">
-        <h3>Aucune donnée de carte disponible</h3>
-        <p>Aucune statistique de carte n'est disponible pour ce joueur.</p>
-      </div>
-    );
-  }
-
   return (
     <div className="lycans-graphiques-groupe">
       <div className="lycans-graphique-section">
         <h3>Performance par Carte{selectedCamp !== 'Tous les camps' ? ` (${selectedCamp})` : ''}</h3>
         
-        {/* Camp Filter */}
+        {/* Camp Filter - Always visible */}
         <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <label htmlFor="camp-select-map" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
             Camp :
@@ -112,6 +103,14 @@ export function PlayerHistoryMap({ selectedPlayerName }: PlayerHistoryMapProps) 
             ))}
           </select>
         </div>
+
+        {/* Show empty state if no data for selected camp */}
+        {mapPerformanceData.length === 0 ? (
+          <div className="lycans-empty-section">
+            <h3>Aucune donnée de carte disponible</h3>
+            <p>Aucune statistique de carte n'est disponible pour ce joueur avec le camp sélectionné.</p>
+          </div>
+        ) : (
         
         <FullscreenChart title="Performance par Carte">
           <div style={{ height: 400 }}>
@@ -316,6 +315,7 @@ export function PlayerHistoryMap({ selectedPlayerName }: PlayerHistoryMapProps) 
             </ResponsiveContainer>
           </div>
         </FullscreenChart>
+        )}
       </div>
     </div>
   );
