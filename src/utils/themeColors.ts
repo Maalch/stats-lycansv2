@@ -63,7 +63,7 @@ const DARK_THEME_ADJUSTMENTS: Record<string, { lightness: number; saturation?: n
   '#800080': { lightness: 65 }, // Agent & Chasseur de primes - make lighter
   '#00FFFF': { lightness: 40 }, // Cyan - make darker
   '#FFED00': { lightness: 45 }, // Jaune - make darker 
-  "#0012A6": { lightness: 40 }, // Bleu foncé - make lighter
+  "#0012A6": { lightness: 40 }, // Bleu royal - make lighter
 };
 
 /**

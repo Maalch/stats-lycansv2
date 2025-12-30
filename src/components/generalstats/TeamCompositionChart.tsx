@@ -303,8 +303,19 @@ export function TeamCompositionChart() {
       ) : (
         <div className="space-y-4">
           {/* Player count selector */}
-          <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
-            <label className="font-medium mr-2">
+          <div style={{ 
+            background: 'var(--bg-tertiary)', 
+            padding: '1rem', 
+            borderRadius: '8px',
+            marginBottom: '1rem'
+          }}>
+            <label style={{ 
+              display: 'block',
+              marginBottom: '0.5rem',
+              color: 'var(--text-primary)',
+              fontWeight: 500,
+              fontSize: '0.9rem'
+            }}>
               Sélectionner le nombre de joueurs:
             </label>
             <select
@@ -314,7 +325,16 @@ export function TeamCompositionChart() {
                   e.target.value ? Number(e.target.value) : null
                 )
               }
-              className="px-3 py-2 border rounded bg-white dark:bg-gray-700"
+              style={{
+                background: 'var(--bg-primary)',
+                color: 'var(--text-primary)',
+                border: '2px solid var(--border-color)',
+                borderRadius: '8px',
+                padding: '10px 12px',
+                fontSize: '0.9rem',
+                width: '100%',
+                cursor: 'pointer'
+              }}
             >
               <option value="">-- Choisir --</option>
               {teamCompositionStats.compositionsByPlayerCount.map((p) => (
