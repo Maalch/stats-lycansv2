@@ -592,6 +592,40 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
     return '';
   };
 
+  // Helper function to calculate gradient color from green (rank 4) to red (last rank)
+  const getGradientColor = (rank: number | undefined, totalRanked: number | undefined): string | undefined => {
+    // Only apply gradient for ranks 4 and beyond
+    if (!rank || rank <= 3 || !totalRanked) return undefined;
+    
+    // Calculate the position in the gradient (0 = rank 4 = green, 1 = last rank = red)
+    // We start from rank 4, so subtract 3 from both rank and totalRanked
+    const adjustedRank = rank - 3; // rank 4 becomes 1, rank 5 becomes 2, etc.
+    const adjustedTotal = totalRanked - 3; // total range excluding top 3
+    
+    // Prevent division by zero and handle edge cases
+    if (adjustedTotal <= 1) return 'hsl(120, 70%, 50%)'; // All green if only one rank beyond top 3
+    
+    // Calculate position (0 to 1)
+    const position = (adjustedRank - 1) / (adjustedTotal - 1);
+    
+    // Interpolate hue from 120 (green) to 0 (red)
+    const hue = 120 * (1 - position);
+    
+    return `hsl(${hue}, 70%, 50%)`;
+  };
+
+  // Helper function to get border color with slight opacity adjustment
+  const getBorderColorFromGradient = (baseColor: string | undefined): string | undefined => {
+    if (!baseColor) return undefined;
+    // Extract HSL values and create a slightly darker version for border
+    const hslMatch = baseColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
+    if (hslMatch) {
+      const [, hue, saturation] = hslMatch;
+      return `hsl(${hue}, ${saturation}%, 40%)`; // Darker lightness for border
+    }
+    return baseColor;
+  };
+
   // Separate achievements by category and sort by rank
   const goodAchievements = achievements
     .filter(a => a.category !== 'comparison' && (a.type === 'good' || a.type === 'neutral'))
@@ -650,25 +684,36 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
           <div className="achievements-grid">
             {goodAchievements
               .filter(a => !a.rank || a.rank > 3) // Exclude top 3 from this section
-              .map((achievement, index) => (
-              <div
-                key={achievement.id}
-                className={`achievement-card good ${getRankClassName(achievement.rank)}`}
-                onClick={(e) => handleAchievementClick(achievement, e)}
-                title={getAchievementTooltip(achievement)}
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <div className="achievement-header">
-                  <span className="achievement-title">
-                    {achievement.title}
-                  </span>
-                  <span className="achievement-rank">
-                    #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
-                  </span>
-                </div>
-                <p className="achievement-description">{achievement.description}</p>
-              </div>
-            ))}
+              .map((achievement, index) => {
+                const gradientColor = getGradientColor(achievement.rank, achievement.totalRanked);
+                const borderColor = getBorderColorFromGradient(gradientColor);
+                return (
+                  <div
+                    key={achievement.id}
+                    className={`achievement-card good ${getRankClassName(achievement.rank)}`}
+                    onClick={(e) => handleAchievementClick(achievement, e)}
+                    title={getAchievementTooltip(achievement)}
+                    style={{ 
+                      animationDelay: `${index * 0.05}s`,
+                      borderLeftColor: borderColor,
+                      ...(gradientColor && { borderLeftWidth: '4px' })
+                    }}
+                  >
+                    <div className="achievement-header">
+                      <span className="achievement-title">
+                        {achievement.title}
+                      </span>
+                      <span 
+                        className="achievement-rank"
+                        style={gradientColor ? { backgroundColor: gradientColor } : {}}
+                      >
+                        #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
+                      </span>
+                    </div>
+                    <p className="achievement-description">{achievement.description}</p>
+                  </div>
+                );
+              })}
           </div>
         </div>
       )}
@@ -677,22 +722,33 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         <div className="achievements-section bad-achievements">
           <h5>💀 Classements (Inversés)</h5>
           <div className="achievements-grid">
-            {badAchievements.map((achievement) => (
-              <div
-                key={achievement.id}
-                className={`achievement-card bad rank-${achievement.rank}`}
-                onClick={(e) => handleAchievementClick(achievement, e)}
-                title={getAchievementTooltip(achievement)}
-              >
-                <div className="achievement-header">
-                  <span className="achievement-title">{achievement.title}</span>
-                  <span className="achievement-rank">
-                    #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
-                  </span>
+            {badAchievements.map((achievement) => {
+              const gradientColor = getGradientColor(achievement.rank, achievement.totalRanked);
+              const borderColor = getBorderColorFromGradient(gradientColor);
+              return (
+                <div
+                  key={achievement.id}
+                  className={`achievement-card bad rank-${achievement.rank}`}
+                  onClick={(e) => handleAchievementClick(achievement, e)}
+                  title={getAchievementTooltip(achievement)}
+                  style={{
+                    borderLeftColor: borderColor,
+                    ...(gradientColor && { borderLeftWidth: '4px' })
+                  }}
+                >
+                  <div className="achievement-header">
+                    <span className="achievement-title">{achievement.title}</span>
+                    <span 
+                      className="achievement-rank"
+                      style={gradientColor ? { backgroundColor: gradientColor } : {}}
+                    >
+                      #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
+                    </span>
+                  </div>
+                  <p className="achievement-description">{achievement.description}</p>
                 </div>
-                <p className="achievement-description">{achievement.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

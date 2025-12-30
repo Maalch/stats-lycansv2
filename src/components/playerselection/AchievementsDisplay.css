@@ -345,23 +345,16 @@
 }
 
 /* Good achievements styling */
-.achievement-card.good {
-  border-left: 4px solid var(--success-color, #4caf50);
-}
 
 .achievement-card.good:hover {
-  border-left-color: var(--success-color-hover, #45a049);
-  background: var(--success-color-transparent, rgba(76, 175, 80, 0.05));
+  /* Border color preserved from inline styles, only add background on hover */
+  background: rgba(76, 175, 80, 0.05);
 }
 
 /* Bad achievements styling */
-.achievement-card.bad {
-  border-left: 4px solid var(--error-color, #ff6b6b);
-}
-
 .achievement-card.bad:hover {
-  border-left-color: var(--error-color-hover, #ff5252);
-  background: var(--error-color-transparent, rgba(255, 107, 107, 0.05));
+  /* Border color preserved from inline styles, only add background on hover */
+  background: rgba(255, 107, 107, 0.05);
 }
 
 /* Comparison achievements styling */
@@ -417,11 +410,6 @@
 .achievement-card.rank-3:hover {
   box-shadow: 0 4px 16px rgba(205, 127, 50, 0.5);
   border-color: #e9a661;
-}
-
-.achievement-card.rank-top-10 {
-  border-width: 1.5px;
-  border-color: var(--accent-secondary);
 }
 
 /* Achievement Header */
