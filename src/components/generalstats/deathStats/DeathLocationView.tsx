@@ -770,7 +770,7 @@ export function DeathLocationView({
       <div className="lycans-resume-conteneur" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
         <div className="lycans-stat-carte">
           <h3>Morts localisées</h3>
-          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
+          <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary-text)' }}>
             {deathLocations.length}
           </div>
           {viewMode === 'scatter' && clusterRadius > 0 && aggregatedLocationData.length < deathLocations.length && (

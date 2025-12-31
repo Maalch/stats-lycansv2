@@ -144,7 +144,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
           {highlightedPlayerInVoteRate && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
-              color: 'var(--accent-primary)', 
+              color: 'var(--accent-primary-text)', 
               fontStyle: 'italic',
               marginTop: '0.25rem',
               marginBottom: '0.5rem'
@@ -310,7 +310,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
           {highlightedPlayerInSkipRate && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
-              color: 'var(--accent-primary)', 
+              color: 'var(--accent-primary-text)', 
               fontStyle: 'italic',
               marginTop: '0.25rem',
               marginBottom: '0.5rem'
@@ -476,7 +476,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
           {highlightedPlayerInAbstentionRate && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
-              color: 'var(--accent-primary)', 
+              color: 'var(--accent-primary-text)', 
               fontStyle: 'italic',
               marginTop: '0.25rem',
               marginBottom: '0.5rem'

@@ -125,7 +125,7 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
       <div className="lycans-resume-conteneur">
         <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
           <h3>🎤 Temps de parole / 60min</h3>
-          <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem' }}>
+          <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
             {formatSecondsToMinutesSeconds(data.secondsAllPer60Min)}
           </div>
           <p style={{ fontSize: '0.8rem', color: isAboveAverage ? 'var(--success-color, #4CAF50)' : 'var(--warning-color, #FF9800)' }}>
@@ -135,7 +135,7 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
 
         <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
           <h3>📊 Classement</h3>
-          <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem' }}>
+          <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
             #{data.playerRank} / {data.totalPlayersWithData}
           </div>
           <p>Top {100 - data.percentile + 1}% {data.percentile >= 50 ? 'bavard' : 'discret'}</p>
@@ -143,7 +143,7 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
 
         <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
           <h3>📈 Parties analysées</h3>
-          <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem' }}>
+          <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
             {data.gamesPlayed}
           </div>
           <p>sur {data.gamesWithTalkingData} avec données</p>
@@ -151,7 +151,7 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
 
         <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
           <h3>🗣️ Ratio en réunion</h3>
-          <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem' }}>
+          <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
             {data.meetingRatio.toFixed(1)}%
           </div>
           <p>du temps de parole</p>

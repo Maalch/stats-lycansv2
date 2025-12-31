@@ -326,7 +326,7 @@ export function SurvivalView({
         <div className="lycans-resume-conteneur" style={{ marginBottom: '2rem' }}>
           <div className="lycans-stat-carte">
             <h3>{validSelectedDay === 1 ? 'Total des parties enregistrées' : `Parties atteignant le Jour ${validSelectedDay}`}</h3>
-            <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary)' }}>
+            <div className="lycans-valeur-principale" style={{ color: 'var(--accent-primary-text)' }}>
               {survivalStats.dayStats.find(d => d.dayNumber === validSelectedDay)?.totalGamesReachingDay || 0}
             </div>
           </div>
@@ -355,7 +355,7 @@ export function SurvivalView({
           {highlightedPlayerAddedToHighest && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
-              color: 'var(--accent-primary)', 
+              color: 'var(--accent-primary-text)', 
               fontStyle: 'italic',
               marginTop: '0.25rem',
               marginBottom: '0.5rem'
@@ -384,7 +384,7 @@ export function SurvivalView({
                       dy={16}
                       textAnchor="end"
                       transform={`rotate(-45, ${x}, ${y})`}
-                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                       fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
                       fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
                     >
@@ -478,7 +478,7 @@ export function SurvivalView({
                       dy={16}
                       textAnchor="end"
                       transform={`rotate(-45, ${x}, ${y})`}
-                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                       fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
                       fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
                     >

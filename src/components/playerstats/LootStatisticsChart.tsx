@@ -163,7 +163,7 @@ export function LootStatisticsChart() {
             {highlightedPlayerAddedTotal && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 
-                color: 'var(--accent-primary)', 
+                color: 'var(--accent-primary-text)', 
                 fontStyle: 'italic',
                 marginTop: '0.25rem',
                 marginBottom: '0.5rem'
@@ -217,7 +217,7 @@ export function LootStatisticsChart() {
                         y={y}
                         dy={16}
                         textAnchor="end"
-                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                         fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
                         fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
                         transform={`rotate(-45 ${x} ${y})`}
@@ -333,7 +333,7 @@ export function LootStatisticsChart() {
             {highlightedPlayerAddedNormalized && settings.highlightedPlayer && (
               <p style={{ 
                 fontSize: '0.8rem', 
-                color: 'var(--accent-primary)', 
+                color: 'var(--accent-primary-text)', 
                 fontStyle: 'italic',
                 marginTop: '0.25rem',
                 marginBottom: '0.5rem'
@@ -410,7 +410,7 @@ export function LootStatisticsChart() {
                         y={y}
                         dy={16}
                         textAnchor="end"
-                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                         fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
                         fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
                         transform={`rotate(-45 ${x} ${y})`}

@@ -149,7 +149,7 @@ export function VotingOverviewCharts({ minMeetings }: VotingOverviewChartsProps)
           {highlightedPlayerInBehavior && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
-              color: 'var(--accent-primary)', 
+              color: 'var(--accent-primary-text)', 
               fontStyle: 'italic',
               marginTop: '0.25rem',
               marginBottom: '0.5rem'
@@ -483,7 +483,7 @@ export function VotingOverviewCharts({ minMeetings }: VotingOverviewChartsProps)
           {highlightedPlayerInTargets && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
-              color: 'var(--accent-primary)', 
+              color: 'var(--accent-primary-text)', 
               fontStyle: 'italic',
               marginTop: '0.25rem',
               marginBottom: '0.5rem'

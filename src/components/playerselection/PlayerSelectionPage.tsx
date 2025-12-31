@@ -572,7 +572,7 @@ export function PlayerSelectionPage() {
                               );
                               }}
                               title={`Cliquer pour voir toutes les parties de ${highlightedPlayerStats.name}`}
-                              style={{ fontSize: '1.3rem' }}
+                              style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}
                             >
                               {playerHistoryData.totalGames}
                             </div>
@@ -580,7 +580,7 @@ export function PlayerSelectionPage() {
                           </div>
                           <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
                             <h3>Temps de jeu cumulés</h3>
-                            <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem' }}>
+                            <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
                               {formatCumulativeDuration(playerHistoryData.totalPlayTime)}
                             </div>
                             <p>temps total de jeu</p>
@@ -597,7 +597,7 @@ export function PlayerSelectionPage() {
                                 });
                               }}
                               title={`Cliquer pour voir toutes les victoires de ${highlightedPlayerStats.name}`}
-                              style={{ fontSize: '1.3rem' }}
+                              style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}
                             >
                               {playerHistoryData.totalWins}
                             </div>
@@ -605,7 +605,7 @@ export function PlayerSelectionPage() {
                           </div>
                           <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
                             <h3>Taux de Victoire</h3>
-                            <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem' }}>{playerHistoryData.winRate}%</div>
+                            <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>{playerHistoryData.winRate}%</div>
                             <p>pourcentage global</p>
                           </div>
                         </div>

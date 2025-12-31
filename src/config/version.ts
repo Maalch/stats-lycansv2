@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.5.5';
+export const APP_VERSION = '1.6.3';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -15,7 +15,20 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
-    version: 'v1.5.5',
+    version: 'v1.6.3',
+    date: '31/12/2025',
+    description: 'Ajout d\'une page sur le temps de parole individuel dans',
+    link: {
+      mainTab: 'playerSelection',
+      subTab: 'talkingTime',
+      text: 'Joueur / Parole',
+      navigationState: {
+        selectedPlayerSelectionView: 'talkingTime'
+      }
+    }
+  },
+  {
+    version: 'v1.6.2',
     date: '30/12/2025',
     description: 'Ajout d\'une page sur les données de récolte individuelle dans',
     link: {
@@ -24,7 +37,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     }
   },
   {
-    version: 'v1.5.4',
+    version: 'v1.6.1',
     date: '29/12/2025',
     description: 'Ajout d\'une page dédiée aux Clips Twitch dans',
     link: {

@@ -527,7 +527,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
       <div className="lycans-resume-conteneur" style={{ flex: '1 1 100%', marginBottom: '1.5rem' }}>
         <div className="lycans-stat-carte">
           <h3>{viewMode === 'deaths' ? 'Morts localisées' : 'Kills localisés'}</h3>
-          <div className="lycans-valeur-principale" style={{ color: viewMode === 'deaths' ? 'var(--accent-secondary)' : 'var(--accent-primary)' }}>
+          <div className="lycans-valeur-principale" style={{ color: viewMode === 'deaths' ? 'var(--accent-secondary)' : 'var(--accent-primary-text)' }}>
             {locationData.length}
           </div>
           {clusterRadius > 0 && clusteredData.length < locationData.length && (

@@ -220,7 +220,7 @@ export function BRKillsStatsChart() {
             {((killsView === 'average' && stats.highlightedPlayerInAverageScore) ||
               (killsView === 'total' && stats.highlightedPlayerInTotalScore)) &&
               settings.highlightedPlayer && (
-              <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
+              <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary-text)', margin: '0.5rem 0' }}>
                 🎯 {settings.highlightedPlayer} affiché en plus du top 15
               </p>
             )}
@@ -304,7 +304,7 @@ export function BRKillsStatsChart() {
                       y={y}
                       dy={16}
                       textAnchor="end"
-                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                       fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
                       fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
                       transform={`rotate(-45 ${x} ${y})`}

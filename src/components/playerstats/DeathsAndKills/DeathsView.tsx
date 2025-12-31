@@ -401,7 +401,7 @@ export function DeathsView({
           {highlightedPlayerAddedToDeaths && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
-              color: 'var(--accent-primary)', 
+              color: 'var(--accent-primary-text)', 
               fontStyle: 'italic',
               marginTop: '0.25rem',
               marginBottom: '0.5rem'
@@ -429,7 +429,7 @@ export function DeathsView({
                       x={x}
                       y={y}
                       dy={10}
-                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                       fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
                       fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
                       textAnchor="end"
@@ -486,7 +486,7 @@ export function DeathsView({
           {highlightedPlayerAddedToSurvival && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
-              color: 'var(--accent-primary)', 
+              color: 'var(--accent-primary-text)', 
               fontStyle: 'italic',
               marginTop: '0.25rem',
               marginBottom: '0.5rem'
@@ -538,7 +538,7 @@ export function DeathsView({
                       x={x}
                       y={y}
                       dy={10}
-                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                       fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
                       fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
                       textAnchor="end"

@@ -167,7 +167,7 @@ export function BRWinRateChart() {
         <div className="lycans-graphique-section">
           <h3>Victoires</h3>
           {stats.highlightedPlayerInWins && settings.highlightedPlayer && (
-            <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
+            <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary-text)', margin: '0.5rem 0' }}>
               🎯 {settings.highlightedPlayer} affiché en plus du top 15
             </p>
           )}
@@ -193,7 +193,7 @@ export function BRWinRateChart() {
                       y={y}
                       dy={16}
                       textAnchor="end"
-                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                       fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
                       fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
                       transform={`rotate(-45 ${x} ${y})`}
@@ -294,7 +294,7 @@ export function BRWinRateChart() {
           <div>
             <h3>Taux de Victoire</h3>
             {stats.highlightedPlayerInWinRate && settings.highlightedPlayer && (
-              <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', margin: '0.5rem 0' }}>
+              <p style={{ fontSize: '0.9rem', color: 'var(--accent-primary-text)', margin: '0.5rem 0' }}>
                 🎯 {settings.highlightedPlayer} affiché en plus du top 15
               </p>
             )}
@@ -346,7 +346,7 @@ export function BRWinRateChart() {
                     y={y}
                     dy={16}
                     textAnchor="end"
-                    fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
+                    fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
                     fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
                     fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
                     transform={`rotate(-45 ${x} ${y})`}
