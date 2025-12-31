@@ -16,6 +16,7 @@ import {
   PlayerHistoryKills,
   PlayerHistoryRoles,
   PlayerHistoryDeathMap,
+  PlayerHistoryTalkingTime,
   type GroupByMethod,
   type CampFilterOption
 } from '../playerstats/playerhistory';
@@ -75,7 +76,7 @@ export function PlayerSelectionPage() {
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
   // Use navigationState to restore view selection, fallback to 'achievements'
-  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap'>(
+  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime'>(
     navigationState.selectedPlayerSelectionView || 'achievements'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
@@ -212,7 +213,7 @@ export function PlayerSelectionPage() {
   };
 
   // Helper function to handle view changes and sync with navigation state
-  const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap') => {
+  const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime') => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
   };
@@ -486,6 +487,13 @@ export function PlayerSelectionPage() {
                     >
                       Carte
                     </button>
+                    <button
+                      type="button"
+                      className={`lycans-categorie-btn ${selectedView === 'talkingtime' ? 'active' : ''}`}
+                      onClick={() => handleViewChange('talkingtime')}
+                    >
+                      Parole
+                    </button>
                   </div>
 
                   {/* Achievements Display */}
@@ -701,6 +709,13 @@ export function PlayerSelectionPage() {
                   {selectedView === 'deathmap' && (
                     <div className="player-history-section">
                       <PlayerHistoryDeathMap selectedPlayerName={highlightedPlayerStats.name} />
+                    </div>
+                  )}
+
+                  {/* Talking Time View */}
+                  {selectedView === 'talkingtime' && (
+                    <div className="player-history-section">
+                      <PlayerHistoryTalkingTime selectedPlayerName={highlightedPlayerStats.name} />
                     </div>
                   )}
 

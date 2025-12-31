@@ -214,3 +214,32 @@ export function getElitePowerDisplayName(player: PlayerStat): string | null {
   
   return null;
 }
+
+/**
+ * Get the display role name for any player
+ * For Villageois Élite, shows the power instead of the generic role
+ * For Villageois with a power, shows the power
+ * For all other roles, shows the MainRoleInitial
+ * 
+ * @param player - PlayerStat object
+ * @returns The role name to display
+ */
+export function getRoleDisplayName(player: PlayerStat): string {
+  // If it's Villageois Élite, return the power (handles both legacy and new format)
+  if (player.MainRoleInitial === 'Villageois Élite') {
+    return player.Power || 'Villageois Élite';
+  }
+  
+  // If it's a legacy elite role (Chasseur, Alchimiste as MainRoleInitial), keep it
+  if (LEGACY_ELITE_ROLES.includes(player.MainRoleInitial as typeof LEGACY_ELITE_ROLES[number])) {
+    return player.MainRoleInitial;
+  }
+  
+  // If it's regular Villageois with a power, return the power
+  if (player.MainRoleInitial === 'Villageois' && player.Power) {
+    return player.Power;
+  }
+  
+  // Otherwise return the main role
+  return player.MainRoleInitial;
+}
