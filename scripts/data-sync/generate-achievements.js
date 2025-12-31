@@ -9,6 +9,7 @@ import { processKillsAchievements } from './processors/kills-achievements.js';
 import { processPerformanceAchievements } from './processors/performance-achievements.js';
 import { processSeriesAchievements } from './processors/series-achievements.js';
 import { processVotingAchievements } from './processors/voting-achievements.js';
+import { processCommunicationAchievements } from './processors/communication-achievements.js';
 
 // Import compute functions from modular files
 import { computePlayerStats, updatePlayerStatsIncremental } from './compute/compute-player-stats.js';
@@ -19,6 +20,7 @@ import { computePlayerCampPerformance } from './compute/compute-camp-performance
 import { computePlayerSeriesData, updatePlayerSeriesDataIncremental } from './compute/compute-series-data.js';
 import { computeVotingStatistics } from './compute/compute-voting-stats.js';
 import { computeHunterStatistics } from './compute/compute-hunter-stats.js';
+import { computeTalkingTimeStats } from './compute/compute-talking-stats.js';
 
 // Import incremental compute wrappers
 import {
@@ -97,6 +99,10 @@ function generateAllPlayerAchievements(gameLogData, returnCache = false) {
   const allGamesVotingStats = computeVotingStatistics(allGames);
   const moddedOnlyVotingStats = computeVotingStatistics(moddedGames);
 
+  // Compute talking time statistics
+  const allGamesTalkingStats = computeTalkingTimeStats(allGames);
+  const moddedOnlyTalkingStats = computeTalkingTimeStats(moddedGames);
+
   console.log(`  Generating achievements for ${allGamesStats.playerStats.length} players...`);
 
   const achievements = generateAchievementsFromStats(
@@ -115,7 +121,9 @@ function generateAllPlayerAchievements(gameLogData, returnCache = false) {
     allGamesSeriesData,
     moddedOnlySeriesData,
     allGamesVotingStats,
-    moddedOnlyVotingStats
+    moddedOnlyVotingStats,
+    allGamesTalkingStats,
+    moddedOnlyTalkingStats
   );
   
   // Build cache structure if requested
@@ -184,6 +192,7 @@ function generateAllPlayerAchievementsIncremental(gameLogData, cache) {
   let allGamesCampStats, moddedOnlyCampStats;
   let allGamesSeriesData, moddedOnlySeriesData;
   let allGamesVotingStats, moddedOnlyVotingStats;
+  let allGamesTalkingStats, moddedOnlyTalkingStats;
 
   // All games dataset
   if (hasNewAllGames) {
@@ -209,6 +218,9 @@ function generateAllPlayerAchievementsIncremental(gameLogData, cache) {
     
     allGamesVotingStats = updateVotingStatisticsIncremental(cache.allGames.votingStats, allGames);
     
+    // Recompute talking stats (always full recalculation for simplicity)
+    allGamesTalkingStats = computeTalkingTimeStats(allGames);
+    
     // Update cache for all games - store ALL computed statistics
     cache.allGames.totalGames = allGames.length;
     cache.allGames.playerStats = convertPlayerStatsToCache(allGamesStats.playerStats);
@@ -218,6 +230,7 @@ function generateAllPlayerAchievementsIncremental(gameLogData, cache) {
     cache.allGames.hunterStats = allGamesHunterStats;
     cache.allGames.campStats = allGamesCampStats;
     cache.allGames.votingStats = allGamesVotingStats;
+    cache.allGames.talkingStats = allGamesTalkingStats;
   } else {
     console.log(`    Using cached stats for all games (no new games, zero computation!)`);
     
@@ -232,6 +245,7 @@ function generateAllPlayerAchievementsIncremental(gameLogData, cache) {
     allGamesCampStats = cache.allGames.campStats || [];
     allGamesSeriesData = computePlayerSeriesData(allGames); // Reconstruct from series state (fast)
     allGamesVotingStats = cache.allGames.votingStats || { playerBehavior: [], playerAccuracy: [], playerTargets: [] };
+    allGamesTalkingStats = cache.allGames.talkingStats || { playerStats: [], totalGames: 0, gamesWithTalkingData: 0 };
   }
 
   // Modded games dataset
@@ -258,6 +272,9 @@ function generateAllPlayerAchievementsIncremental(gameLogData, cache) {
     
     moddedOnlyVotingStats = updateVotingStatisticsIncremental(cache.moddedGames.votingStats, moddedGames);
     
+    // Recompute talking stats (always full recalculation for simplicity)
+    moddedOnlyTalkingStats = computeTalkingTimeStats(moddedGames);
+    
     // Update cache for modded games - store ALL computed statistics
     cache.moddedGames.totalGames = moddedGames.length;
     cache.moddedGames.playerStats = convertPlayerStatsToCache(moddedOnlyStats.playerStats);
@@ -267,6 +284,7 @@ function generateAllPlayerAchievementsIncremental(gameLogData, cache) {
     cache.moddedGames.hunterStats = moddedOnlyHunterStats;
     cache.moddedGames.campStats = moddedOnlyCampStats;
     cache.moddedGames.votingStats = moddedOnlyVotingStats;
+    cache.moddedGames.talkingStats = moddedOnlyTalkingStats;
   } else {
     console.log(`    Using cached stats for modded games (no new games, zero computation!)`);
     
@@ -281,6 +299,7 @@ function generateAllPlayerAchievementsIncremental(gameLogData, cache) {
     moddedOnlyCampStats = cache.moddedGames.campStats || [];
     moddedOnlySeriesData = computePlayerSeriesData(moddedGames); // Reconstruct from series state (fast)
     moddedOnlyVotingStats = cache.moddedGames.votingStats || { playerBehavior: [], playerAccuracy: [], playerTargets: [] };
+    moddedOnlyTalkingStats = cache.moddedGames.talkingStats || { playerStats: [], totalGames: 0, gamesWithTalkingData: 0 };
   }
 
   console.log(`  Generating achievements for ${allGamesStats.playerStats.length} players...`);
@@ -301,7 +320,9 @@ function generateAllPlayerAchievementsIncremental(gameLogData, cache) {
     allGamesSeriesData,
     moddedOnlySeriesData,
     allGamesVotingStats,
-    moddedOnlyVotingStats
+    moddedOnlyVotingStats,
+    allGamesTalkingStats,
+    moddedOnlyTalkingStats
   );
 
   return { achievements, updatedCache: cache };
@@ -327,7 +348,9 @@ function generateAchievementsFromStats(
   allGamesSeriesData,
   moddedOnlySeriesData,
   allGamesVotingStats,
-  moddedOnlyVotingStats
+  moddedOnlyVotingStats,
+  allGamesTalkingStats,
+  moddedOnlyTalkingStats
 ) {
   // Get all unique players by ID
   const allPlayersMap = new Map();
@@ -359,7 +382,8 @@ function generateAchievementsFromStats(
       ...processKillsAchievements(allGamesDeathStats, allGamesHunterStats, playerId, ''),
       ...processPerformanceAchievements(allGamesCampStats, allGames, playerId, ''),
       ...processSeriesAchievements(allGamesSeriesData, playerId, ''),
-      ...processVotingAchievements(allGamesVotingStats, playerId, '')
+      ...processVotingAchievements(allGamesVotingStats, playerId, ''),
+      ...processCommunicationAchievements(allGamesTalkingStats, playerId, '')
     ];
     
     const moddedOnlyAchievements = [
@@ -369,7 +393,8 @@ function generateAchievementsFromStats(
       ...processKillsAchievements(moddedOnlyDeathStats, moddedOnlyHunterStats, playerId, ' (Parties Moddées)'),
       ...processPerformanceAchievements(moddedOnlyCampStats, moddedGames, playerId, ' (Parties Moddées)'),
       ...processSeriesAchievements(moddedOnlySeriesData, playerId, ' (Parties Moddées)'),
-      ...processVotingAchievements(moddedOnlyVotingStats, playerId, ' (Parties Moddées)')
+      ...processVotingAchievements(moddedOnlyVotingStats, playerId, ' (Parties Moddées)'),
+      ...processCommunicationAchievements(moddedOnlyTalkingStats, playerId, ' (Parties Moddées)')
     ];
 
     // Use playerId as the key in achievements object
@@ -540,10 +565,12 @@ export {
   processKillsAchievements,
   processPerformanceAchievements,
   processSeriesAchievements,
+  processCommunicationAchievements,
   computePlayerStats, 
   computeMapStats,
   computePlayerGameHistory,
   computeDeathStatistics,
   computePlayerCampPerformance,
-  computePlayerSeriesData
+  computePlayerSeriesData,
+  computeTalkingTimeStats
 };
