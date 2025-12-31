@@ -58,11 +58,8 @@ export function LootStatisticsChart() {
 
     const stats = lootData.playerStats;
 
-    // Filter players by minimum games threshold
-    const eligiblePlayers = stats.filter(player => player.gamesPlayed >= minGames);
-
-    // Sort by total loot and take top 20
-    const sortedPlayers = eligiblePlayers
+    // Sort by total loot and take top 20 (no minimum games filter for total loot)
+    const sortedPlayers = stats
       .sort((a, b) => b.totalLoot - a.totalLoot)
       .slice(0, 20);
 
@@ -90,52 +87,7 @@ export function LootStatisticsChart() {
       totalLootChartData: finalChartData,
       highlightedPlayerAddedTotal: playerAdded
     };
-  }, [lootData, minGames, settings.highlightedPlayer]);
-
-  // Data processing with highlighting support - for average loot per game
-  const { averageLootChartData, highlightedPlayerAddedAverage } = useMemo(() => {
-    if (!lootData?.playerStats) {
-      return {
-        averageLootChartData: [],
-        highlightedPlayerAddedAverage: false
-      };
-    }
-
-    const stats = lootData.playerStats;
-
-    // Filter players by minimum games threshold
-    const eligiblePlayers = stats.filter(player => player.gamesPlayed >= minGames);
-
-    // Sort by average loot and take top 20
-    const sortedPlayers = eligiblePlayers
-      .sort((a, b) => b.averageLoot - a.averageLoot)
-      .slice(0, 20);
-
-    // Check if highlighted player is in top 20
-    const highlightedInTop20 = settings.highlightedPlayer && 
-      sortedPlayers.some(p => p.player === settings.highlightedPlayer);
-
-    // Add highlighted player if not in top 20 or doesn't meet min games
-    let finalChartData: ChartLootStat[] = [...sortedPlayers];
-    let playerAdded = false;
-
-    if (settings.highlightedPlayer && !highlightedInTop20) {
-      const highlightedPlayerData = stats.find(p => p.player === settings.highlightedPlayer);
-
-      if (highlightedPlayerData) {
-        finalChartData.push({
-          ...highlightedPlayerData,
-          isHighlightedAddition: true
-        });
-        playerAdded = true;
-      }
-    }
-
-    return {
-      averageLootChartData: finalChartData,
-      highlightedPlayerAddedAverage: playerAdded
-    };
-  }, [lootData, minGames, settings.highlightedPlayer]);
+  }, [lootData, settings.highlightedPlayer]);
 
   // Data processing with highlighting support - for normalized loot per 60 minutes
   const { normalizedLootChartData, highlightedPlayerAddedNormalized } = useMemo(() => {
@@ -200,7 +152,7 @@ export function LootStatisticsChart() {
     <div className="lycans-players-stats">
       <h2>Statistiques de Récolte de Loot</h2>
       <p className="lycans-stats-info">
-        {lootData.gamesWithLootData} parties avec données de loot collecté · Filtrage par camp disponible · 3 vues complémentaires : Total cumulé, Moyenne par partie, et Taux normalisé par 60 minutes
+        {lootData.gamesWithLootData} parties avec données de loot collecté. 
       </p>
 
       <div className="lycans-graphiques-groupe">
@@ -242,29 +194,6 @@ export function LootStatisticsChart() {
               <option value="villageois">Camp Villageois</option>
               <option value="loup">Camp Loup</option>
               <option value="autres">Autres (Solo)</option>
-            </select>
-
-            <label htmlFor="min-games-select-total" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginLeft: '1rem' }}>
-              Min. parties:
-            </label>
-            <select
-              id="min-games-select-total"
-              value={minGames}
-              onChange={(e) => setMinGames(Number(e.target.value))}
-              style={{
-                background: 'var(--bg-tertiary)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '4px',
-                padding: '0.25rem 0.5rem',
-                fontSize: '0.9rem'
-              }}
-            >
-              {minGamesOptions.map(option => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
             </select>
           </div>
 
@@ -390,153 +319,7 @@ export function LootStatisticsChart() {
           </FullscreenChart>
 
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            Top {totalLootChartData.length} des joueurs (sur {eligiblePlayersCount} ayant au moins {minGames} partie{minGames > 1 ? 's' : ''})
-          </p>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center', fontStyle: 'italic', marginTop: '0.25rem' }}>
-            Calculé sur {lootData.gamesWithLootData} parties avec données de loot
-          </p>
-        </div>
-
-        {/* Average Loot Per Game Chart */}
-        <div className="lycans-graphique-section">
-          <div>
-            <h3>Moyenne de Loot par Partie</h3>
-            {highlightedPlayerAddedAverage && settings.highlightedPlayer && (
-              <p style={{ 
-                fontSize: '0.8rem', 
-                color: 'var(--accent-primary)', 
-                fontStyle: 'italic',
-                marginTop: '0.25rem',
-                marginBottom: '0.5rem'
-              }}>
-                🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
-              </p>
-            )}
-          </div>
-
-          <FullscreenChart title="Moyenne de Loot par Partie">
-            <div style={{ height: 400 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={averageLootChartData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="player"
-                    angle={-45}
-                    textAnchor="end"
-                    height={80}
-                    interval={0}
-                    tick={({ x, y, payload }) => (
-                      <text
-                        x={x}
-                        y={y}
-                        dy={16}
-                        textAnchor="end"
-                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary)' : 'var(--text-secondary)'}
-                        fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
-                        fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
-                        transform={`rotate(-45 ${x} ${y})`}
-                      >
-                        {payload.value}
-                      </text>
-                    )}
-                  />
-                  <YAxis 
-                    label={{ 
-                      value: 'Loot moyen par partie', 
-                      angle: 270, 
-                      position: 'left', 
-                      offset: 15,
-                      style: { textAnchor: 'middle' } 
-                    }}
-                  />
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length > 0) {
-                        const d = payload[0].payload as ChartLootStat;
-                        const isHighlightedAddition = d.isHighlightedAddition;
-
-                        return (
-                          <div
-                            style={{
-                              background: 'var(--bg-secondary)',
-                              border: '1px solid var(--border-color)',
-                              borderRadius: '4px',
-                              padding: '8px',
-                              fontSize: '0.85rem'
-                            }}
-                          >
-                            <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{d.player}</div>
-                            <div>Parties jouées: {d.gamesPlayed}</div>
-                            <div style={{ marginTop: '4px', paddingTop: '4px', borderTop: '1px solid var(--border-color)' }}>
-                              <strong>Loot collecté:</strong>
-                            </div>
-                            <div>Moyenne par partie: {d.averageLoot.toFixed(1)}</div>
-                            <div>Total: {d.totalLoot.toLocaleString()}</div>
-                            <div>Taux (par 60 min): {d.lootPer60Min.toFixed(1)}</div>
-                            {isHighlightedAddition && (
-                              <div style={{ 
-                                marginTop: '4px', 
-                                paddingTop: '4px', 
-                                borderTop: '1px solid var(--accent-primary)',
-                                color: 'var(--accent-primary)',
-                                fontStyle: 'italic'
-                              }}>
-                                🎯 Affiché via sélection personnelle
-                                {d.gamesPlayed < minGames && ` (< ${minGames} parties)`}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                  <Bar dataKey="averageLoot">
-                    {averageLootChartData.map((entry, index) => {
-                      const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
-                      const isHoveredPlayer = highlightedPlayer === entry.player;
-                      const isHighlightedAddition = entry.isHighlightedAddition;
-
-                      const playerColor = playersColor[entry.player] || 'var(--chart-primary)';
-
-                      return (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={
-                            isHighlightedFromSettings ? 'var(--accent-primary)' :
-                            isHighlightedAddition ? 'var(--accent-secondary)' :
-                            playerColor
-                          }
-                          stroke={
-                            isHighlightedFromSettings ? "var(--accent-primary)" :
-                            isHoveredPlayer ? "#000000" : 
-                            "none"
-                          }
-                          strokeWidth={
-                            isHighlightedFromSettings ? 3 :
-                            isHoveredPlayer ? 2 : 
-                            0
-                          }
-                          strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
-                          opacity={isHighlightedAddition ? 0.8 : 1}
-                          onClick={() => navigateToGameDetails({ selectedPlayer: entry.player })}
-                          onMouseEnter={() => setHighlightedPlayer(entry.player)}
-                          onMouseLeave={() => setHighlightedPlayer(null)}
-                          style={{ cursor: 'pointer' }}
-                        />
-                      );
-                    })}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </FullscreenChart>
-
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            Top {averageLootChartData.length} des joueurs (sur {eligiblePlayersCount} ayant au moins {minGames} partie{minGames > 1 ? 's' : ''})
+            Top {totalLootChartData.length} des joueurs (tous joueurs inclus)
           </p>
           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center', fontStyle: 'italic', marginTop: '0.25rem' }}>
             Calculé sur {lootData.gamesWithLootData} parties avec données de loot
@@ -558,6 +341,53 @@ export function LootStatisticsChart() {
                 🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
               </p>
             )}
+          </div>
+
+          <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <label htmlFor="camp-filter-select-normalized" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Camp:
+            </label>
+            <select
+              id="camp-filter-select-normalized"
+              value={campFilter}
+              onChange={(e) => setCampFilter(e.target.value as CampFilter)}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem'
+              }}
+            >
+              <option value="all">Tous les camps</option>
+              <option value="villageois">Camp Villageois</option>
+              <option value="loup">Camp Loup</option>
+              <option value="autres">Autres (Solo)</option>
+            </select>
+
+            <label htmlFor="min-games-select-normalized" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginLeft: '1rem' }}>
+              Min. parties:
+            </label>
+            <select
+              id="min-games-select-normalized"
+              value={minGames}
+              onChange={(e) => setMinGames(Number(e.target.value))}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem'
+              }}
+            >
+              {minGamesOptions.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
 
           <FullscreenChart title="Taux de Récolte (par 60 min)">

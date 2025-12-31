@@ -146,7 +146,7 @@ const PLAYER_STATS_MENU = [
   },
   { 
     key: 'lootStats', 
-    label: 'Récolte de Loot', 
+    label: 'Récolte', 
     component: LootStatisticsChart,
     description: 'Classement du loot collecté par joueur'
   },
