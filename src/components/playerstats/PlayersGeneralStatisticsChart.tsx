@@ -14,6 +14,9 @@ type ChartPlayerStat = PlayerStat & {
   isHighlightedAddition?: boolean;
 };
 
+// Consistent chart height for both charts
+const CHART_HEIGHT = 400;
+
 export function PlayersGeneralStatisticsChart() {
   const { data: playerStatsData, isLoading: dataLoading, error: fetchError } = usePlayerStatsFromRaw();
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
@@ -87,17 +90,17 @@ export function PlayersGeneralStatisticsChart() {
     // Sort and slice for participation data
     const sortedParticipation = eligibleForParticipation
       .sort((a, b) => b.gamesPlayed - a.gamesPlayed)
-      .slice(0, 20);
+      .slice(0, 15);
     
-    // Check if highlighted player is in the top 20 participation
-    const highlightedPlayerInTop20 = settings.highlightedPlayer && 
+    // Check if highlighted player is in the top 15 participation
+    const highlightedPlayerInTop15 = settings.highlightedPlayer && 
       sortedParticipation.some(p => p.player === settings.highlightedPlayer);
     
-    // If highlighted player is not in top 20 but exists in eligible data, add them
+    // If highlighted player is not in top 15 but exists in eligible data, add them
     let finalParticipationData: ChartPlayerStat[] = [...sortedParticipation];
     let highlightedPlayerAddedToParticipation = false;
     
-    if (settings.highlightedPlayer && !highlightedPlayerInTop20) {
+    if (settings.highlightedPlayer && !highlightedPlayerInTop15) {
       const highlightedPlayerData = eligibleForParticipation.find(p => p.player === settings.highlightedPlayer);
       if (highlightedPlayerData) {
         // Add highlighted player with a special flag
@@ -116,17 +119,17 @@ export function PlayersGeneralStatisticsChart() {
           ? parseFloat(b.winPercent) - parseFloat(a.winPercent)
           : parseFloat(a.winPercent) - parseFloat(b.winPercent)
       )
-      .slice(0, 20);
+      .slice(0, 15);
 
-    // Check if highlighted player is in the top 20 win rate
-    const highlightedPlayerInWinRateTop20 = settings.highlightedPlayer && 
+    // Check if highlighted player is in the top 15 win rate
+    const highlightedPlayerInWinRateTop15 = settings.highlightedPlayer && 
       sortedWinRate.some(p => p.player === settings.highlightedPlayer);
     
-    // If highlighted player is not in top 20 OR doesn't meet min games criteria, add them
+    // If highlighted player is not in top 15 OR doesn't meet min games criteria, add them
     let finalWinRateData: ChartPlayerStat[] = [...sortedWinRate];
     let highlightedPlayerAddedToWinRate = false;
     
-    if (settings.highlightedPlayer && !highlightedPlayerInWinRateTop20) {
+    if (settings.highlightedPlayer && !highlightedPlayerInWinRateTop15) {
       // Search for highlighted player in all stats (not just eligible)
       const highlightedPlayerData = stats.find(p => p.player === settings.highlightedPlayer);
       
@@ -179,16 +182,16 @@ export function PlayersGeneralStatisticsChart() {
                 marginTop: '0.25rem',
                 marginBottom: '0.5rem'
               }}>
-                🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+                🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
               </p>
             )}
           </div>
           <FullscreenChart title="Top Participations">
-          <div style={{ height: 400 }}>
+          <div style={{ height: 450 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={participationData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+                margin={{ top: 100, right: 30, left: 20, bottom: 10 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
@@ -325,7 +328,7 @@ export function PlayersGeneralStatisticsChart() {
                 marginTop: '0.25rem',
                 marginBottom: '0.5rem'
               }}>
-                🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+                🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
               </p>
             )}
           </div>
@@ -373,7 +376,7 @@ export function PlayersGeneralStatisticsChart() {
                 ? 'Meilleurs Taux de Victoire'
                 : 'Moins Bons Taux de Victoire'}>
           
-          <div style={{ height: 400 }}>
+          <div style={{ height: CHART_HEIGHT }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={winRateData}
@@ -435,7 +438,7 @@ export function PlayersGeneralStatisticsChart() {
                               marginTop: '0.25rem',
                               fontStyle: 'italic'
                             }}>
-                              🎯 Affiché via sélection (hors top 20)
+                              🎯 Affiché via sélection (hors top 15)
                             </div>
                           )}
                           {isHighlightedFromSettings && !isHighlightedAddition && (

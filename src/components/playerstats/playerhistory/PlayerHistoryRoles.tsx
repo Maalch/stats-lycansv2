@@ -2,7 +2,6 @@ import { useMemo, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerStatsBase } from '../../../hooks/utils/baseStatsHook';
 import { useNavigation } from '../../../context/NavigationContext';
-import { useSettings } from '../../../context/SettingsContext';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../../utils/datasyncExport';
 import { getPlayerId } from '../../../utils/playerIdentification';
@@ -276,7 +275,6 @@ function computePlayerRoleStats(
 
 export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesProps) {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
-  const { settings } = useSettings();
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
   const [chartMode, setChartMode] = useState<'appearances' | 'winRate'>(
     navigationState.playerHistoryRolesState?.chartMode || 'appearances'
@@ -453,19 +451,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
                   textAnchor="end"
                   height={90}
                   interval={0}
-                  fontSize={12}
-                  tick={({ x, y, payload }) => (
-                    <text
-                      x={x}
-                      y={y}
-                      textAnchor="end"
-                      transform={`rotate(-45, ${x}, ${y})`}
-                      fill={settings.highlightedPlayer === selectedPlayerName ? 'var(--text-primary)' : 'var(--text-secondary)'}
-                      fontSize={12}
-                    >
-                      {payload.value}
-                    </text>
-                  )}
+                  fontSize={14}
                 />
                 <YAxis 
                   label={{ value: yAxisLabel, angle: 270, position: 'left', style: { textAnchor: 'middle' } }}

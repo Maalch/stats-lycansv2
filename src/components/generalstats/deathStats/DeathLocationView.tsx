@@ -157,7 +157,7 @@ export function DeathLocationView({
             fontWeight: 'bold', 
             marginBottom: '8px', 
             fontSize: '1rem',
-            color: 'var(--accent-primary)'
+            color: 'var(--accent-primary-text)'
           }}>
             {deathsAtLocation.length} morts dans cette zone
           </div>
@@ -225,7 +225,7 @@ export function DeathLocationView({
           fontWeight: 'bold', 
           marginBottom: '8px', 
           fontSize: '1rem',
-          color: 'var(--accent-primary)'
+          color: 'var(--accent-primary-text)'
         }}>
           {singleDeath.playerName}
         </div>
@@ -658,32 +658,15 @@ export function DeathLocationView({
                     dataKey="z" 
                     type="number"
                     name="Position Z"
-                    label={{ 
-                      value: 'Position Z', 
-                      position: 'bottom',
-                      offset: 10,
-                      style: { fill: 'var(--text-secondary)' }
-                    }}
                     domain={zDomain}
-                    stroke="var(--text-secondary)"
-                    tick={{ fill: 'var(--text-secondary)' }}
-                    tickFormatter={(value) => Math.round(value).toString()}
+                    hide={true}
                   />
                   <YAxis 
                     dataKey="x"
                     type="number"
                     name="Position X"
-                    label={{ 
-                      value: 'Position X', 
-                      angle: -90, 
-                      position: 'left',
-                      offset: 20,
-                      style: { fill: 'var(--text-secondary)' }
-                    }}
                     domain={xDomain}
-                    stroke="var(--text-secondary)"
-                    tick={{ fill: 'var(--text-secondary)' }}
-                    tickFormatter={(value) => Math.round(value).toString()}
+                    hide={true}
                   />
                   <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
                   <Scatter 
@@ -710,7 +693,7 @@ export function DeathLocationView({
                       return (
                         <Cell
                           key={`cell-${index}`}
-                          fill={hasHighlightedPlayer ? 'var(--accent-primary)' : getDeathColor(entry.deathType)}
+                          fill={hasHighlightedPlayer ? 'var(--accent-primary-text)' : getDeathColor(entry.deathType)}
                           stroke={hasHighlightedPlayer || isHovered ? 'white' : entry.deathCount > 1 ? 'rgba(255,255,255,0.6)' : 'none'}
                           strokeWidth={hasHighlightedPlayer ? 3 : isHovered ? 2 : entry.deathCount > 1 ? 1.5 : 0}
                           opacity={hasHighlightedPlayer ? 1 : 0.8}

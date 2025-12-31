@@ -257,7 +257,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
       return lycansColors['Contrebandier'];
     }
     
-    return 'var(--accent-primary)';
+    return 'var(--accent-primary-text)';
   };
 
   // Custom tooltip
@@ -301,7 +301,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
             fontWeight: 'bold', 
             marginBottom: '8px', 
             fontSize: '1rem',
-            color: 'var(--accent-primary)'
+            color: 'var(--accent-primary-text)'
           }}>
             {viewMode === 'deaths' ? '💀' : '⚔️'} {locations.length} {viewMode === 'deaths' ? 'morts' : 'kills'} à cet endroit
           </div>
@@ -362,7 +362,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
           fontWeight: 'bold', 
           marginBottom: '8px', 
           fontSize: '1rem',
-          color: 'var(--accent-primary)'
+          color: 'var(--accent-primary-text)'
         }}>
           {viewMode === 'deaths' ? '💀' : '⚔️'} {viewMode === 'deaths' ? 'Mort de' : 'Kill de'} {selectedPlayerName}
         </div>
@@ -549,7 +549,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
         {locationData.length > 0 ? (
           <FullscreenChart title={viewMode === 'deaths' ? `Carte des Morts de ${selectedPlayerName}` : `Carte des Kills de ${selectedPlayerName}`}>
             {/* Aspect ratio: map is 1640:922 ≈ 1.78:1, so height = width / 1.78 */}
-            <div style={{ width: '100%', maxWidth: 900, margin: '0 auto', aspectRatio: '1640 / 922' }}>
+            <div style={{ width: '100%', margin: '0 auto', aspectRatio: '1640 / 922' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
                 {/* Map background image */}
@@ -582,32 +582,15 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                   dataKey="z" 
                   type="number"
                   name="Position Z"
-                  label={{ 
-                    value: 'Position Z', 
-                    position: 'bottom',
-                    offset: 10,
-                    style: { fill: 'var(--text-secondary)' }
-                  }}
                   domain={zDomain}
-                  stroke="var(--text-secondary)"
-                  tick={{ fill: 'var(--text-secondary)' }}
-                  tickFormatter={(value) => Math.round(value).toString()}
+                  hide={true}
                 />
                 <YAxis 
                   dataKey="x"
                   type="number"
                   name="Position X"
-                  label={{ 
-                    value: 'Position X', 
-                    angle: -90, 
-                    position: 'left',
-                    offset: 20,
-                    style: { fill: 'var(--text-secondary)' }
-                  }}
                   domain={xDomain}
-                  stroke="var(--text-secondary)"
-                  tick={{ fill: 'var(--text-secondary)' }}
-                  tickFormatter={(value) => Math.round(value).toString()}
+                  hide={true}
                 />
                 <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter 
