@@ -337,6 +337,34 @@ interface ChartPlayerStat extends PlayerStat {
 />
 ```
 
+### Chart-Specific Filter Persistence Pattern
+```typescript
+// Charts with local filters should persist state via NavigationContext for achievement navigation
+const { navigationState, updateNavigationState } = useNavigation();
+
+// Initialize from navigationState with fallback to defaults
+const [minGames, setMinGames] = useState<number>(
+  navigationState.chartNameState?.minGames || 5
+);
+const [campFilter, setCampFilter] = useState<CampFilter>(
+  (navigationState.chartNameState?.campFilter as CampFilter) || 'all'
+);
+
+// Sync local state back to navigationState when it changes
+useEffect(() => {
+  const currentNavState = navigationState.chartNameState;
+  if (!currentNavState || 
+      currentNavState.minGames !== minGames ||
+      currentNavState.campFilter !== campFilter) {
+    updateNavigationState({
+      chartNameState: { minGames, campFilter }
+    });
+  }
+}, [minGames, campFilter, updateNavigationState]);
+```
+
+**Critical:** Each chart with local filters should have its own state key in `NavigationState` (e.g., `lootStatsState`, `deathStatisticsState`) to preserve filter values when navigating from achievements.
+
 ## Integration Points
 
 **GitHub Actions:** `.github/workflows/update-data.yml` for weekly data sync  
@@ -361,6 +389,22 @@ Complete settings serialization via `generateUrlWithSettings()` enables shareabl
 **Independent Filters:** System allows combining multiple filter types simultaneously (gameType, dateRange, mapName, playerFilter)  
 **Filter Application:** Automatic filtering in `useCombinedFilteredRawData()` respects all `SettingsContext` state  
 **URL Compatibility:** Legacy URL parameters automatically converted to independent filters for backward compatibility
+
+**Filter Scope Pattern:** When a chart displays multiple views (e.g., total vs. normalized metrics), filters can have different scopes:
+```typescript
+// Example: Total chart shows all players, normalized chart applies minimum games filter
+const totalLootData = useMemo(() => {
+  // No minGames filter - shows all players
+  return stats.sort((a, b) => b.totalLoot - a.totalLoot).slice(0, 20);
+}, [lootData, settings.highlightedPlayer]); // Note: minGames NOT in dependency array
+
+const normalizedLootData = useMemo(() => {
+  // Apply minGames filter for normalized metrics
+  const eligible = stats.filter(p => p.gamesPlayed >= minGames);
+  return eligible.sort((a, b) => b.lootPer60Min - a.lootPer60Min).slice(0, 20);
+}, [lootData, minGames, settings.highlightedPlayer]);
+```
+**Pattern:** Place filters only above the charts they apply to. Global filters (camp, date range) should be in `SettingsContext`, chart-specific filters (min games for specific views) should be local state persisted in `NavigationContext`.
 
 ### Theme System
 Uses CSS custom properties (`--accent-primary`, `--chart-primary`) with theme-adjusted colors via `useThemeAdjusted*Color()` hooks for consistent chart styling across light/dark themes.
