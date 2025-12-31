@@ -4,6 +4,7 @@ import {
   ResponsiveContainer, PieChart, Pie, Cell, Legend
 } from 'recharts';
 import { usePlayerTalkingTimeStats } from '../../../hooks/usePlayerTalkingTimeStats';
+import { getRoleBreakdownTopN } from '../../../hooks/utils/playerTalkingTimeUtils';
 import { useThemeAdjustedLycansColorScheme } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { formatSecondsToMinutesSeconds } from '../../../utils/durationFormatters';
@@ -53,17 +54,6 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
       { name: 'En réunion', value: data.totalSecondsDuring, color: '#2196F3' },
       { name: 'Hors réunion', value: data.totalSecondsOutside, color: '#FF9800' }
     ];
-  }, [data]);
-
-  // Prepare role breakdown data
-  const roleBreakdownData = useMemo(() => {
-    if (!data?.roleBreakdown) return [];
-
-    return data.roleBreakdown.map(role => ({
-      role: role.role,
-      secondsPer60Min: Math.round(role.secondsAllPer60Min),
-      gamesPlayed: role.gamesPlayed
-    }));
   }, [data]);
 
   // Get camp color
@@ -273,48 +263,59 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
       </div>
 
       {/* Role Breakdown */}
-      {roleBreakdownData.length > 0 && (
+      {data && data.roleBreakdown.length > 0 && (
         <div className="lycans-graphique-section">
-          <FullscreenChart title="Top 5 rôles les plus bavards (par 60min)">
-            <div style={{ height: 300 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={roleBreakdownData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
-                  <XAxis 
-                    dataKey="role" 
-                    tick={{ fill: 'var(--text-primary)', fontSize: 12 }}
-                    interval={0}
-                    angle={-20}
-                    textAnchor="end"
-                    height={60}
-                  />
-                  <YAxis 
-                    tick={{ fill: 'var(--text-secondary)' }}
-                    tickFormatter={(value) => `${Math.floor(value / 60)}m`}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'var(--bg-secondary)',
-                      border: '1px solid var(--border-color)',
-                      borderRadius: '8px'
-                    }}
-                    formatter={(value: number) => [formatSecondsToMinutesSeconds(value), 'Temps de parole']}
-                    labelFormatter={(label) => {
-                      const roleData = roleBreakdownData.find(r => r.role === label);
-                      return `${label} (${roleData?.gamesPlayed || 0} parties)`;
-                    }}
-                  />
-                  <Bar dataKey="secondsPer60Min" fill="var(--accent-primary, #8884d8)">
-                    {roleBreakdownData.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`}
-                        fill={getRoleColor(entry.role)}
+          <FullscreenChart title={(isFullscreen) => isFullscreen ? "Top 15 rôles les plus bavards (par 60min)" : "Top 5 rôles les plus bavards (par 60min)"}>
+            {(isFullscreen) => {
+              const topN = isFullscreen ? 15 : 5;
+              const roleBreakdownData = getRoleBreakdownTopN(data, topN).map(role => ({
+                role: role.role,
+                secondsPer60Min: Math.round(role.secondsAllPer60Min),
+                gamesPlayed: role.gamesPlayed
+              }));
+              
+              return (
+                <div style={{ height: isFullscreen ? 400 : 300 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={roleBreakdownData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                      <XAxis 
+                        dataKey="role" 
+                        tick={{ fill: 'var(--text-primary)', fontSize: 12 }}
+                        interval={0}
+                        angle={-20}
+                        textAnchor="end"
+                        height={60}
                       />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+                      <YAxis 
+                        tick={{ fill: 'var(--text-secondary)' }}
+                        tickFormatter={(value) => `${Math.floor(value / 60)}m`}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          border: '1px solid var(--border-color)',
+                          borderRadius: '8px'
+                        }}
+                        formatter={(value: number) => [formatSecondsToMinutesSeconds(value), 'Temps de parole']}
+                        labelFormatter={(label) => {
+                          const roleData = roleBreakdownData.find(r => r.role === label);
+                          return `${label} (${roleData?.gamesPlayed || 0} parties)`;
+                        }}
+                      />
+                      <Bar dataKey="secondsPer60Min" fill="var(--accent-primary, #8884d8)">
+                        {roleBreakdownData.map((entry, index) => (
+                          <Cell 
+                            key={`cell-${index}`}
+                            fill={getRoleColor(entry.role)}
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              );
+            }}
           </FullscreenChart>
         </div>
       )}

@@ -274,7 +274,7 @@ export function computePlayerTalkingTimeStats(
   // Sort camp breakdown by games played
   campBreakdown.sort((a, b) => b.gamesPlayed - a.gamesPlayed);
 
-  // Build role breakdown (top 5 by talking time per 60min)
+  // Build role breakdown (sorted by talking time per 60min)
   const roleBreakdown: RoleTalkingStats[] = Array.from(roleStats.entries())
     .filter(([_, stats]) => stats.gamesPlayed >= 1)
     .map(([role, stats]) => ({
@@ -285,8 +285,7 @@ export function computePlayerTalkingTimeStats(
         : 0,
       totalSecondsAll: stats.totalSecondsAll
     }))
-    .sort((a, b) => b.secondsAllPer60Min - a.secondsAllPer60Min)
-    .slice(0, 5);
+    .sort((a, b) => b.secondsAllPer60Min - a.secondsAllPer60Min);
 
   // Calculate global average and ranking
   const allPlayersNormalized: { id: string; name: string; per60: number }[] = [];
@@ -362,4 +361,15 @@ export function computePlayerTalkingTimeStats(
     roleBreakdown,
     winCorrelation
   };
+}
+
+/**
+ * Helper function to get role breakdown with custom limit
+ */
+export function getRoleBreakdownTopN(
+  stats: PlayerTalkingTimeDetail | null,
+  topN: number
+): RoleTalkingStats[] {
+  if (!stats) return [];
+  return stats.roleBreakdown.slice(0, topN);
 }

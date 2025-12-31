@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 import { useFullscreen } from '../../context/FullscreenContext';
 
 interface FullscreenChartProps {
-  children: ReactNode;
-  title?: string;
+  children: ReactNode | ((isFullscreen: boolean) => ReactNode);
+  title?: string | ((isFullscreen: boolean) => string);
   className?: string;
 }
 
@@ -11,11 +11,12 @@ export function FullscreenChart({ children, title, className = '' }: FullscreenC
   const { openFullscreen } = useFullscreen();
 
   const handleFullscreen = () => {
+    const fullscreenTitle = typeof title === 'function' ? title(true) : title;
     const fullscreenContent = (
       <div className="lycans-fullscreen-chart">
-        {title && <h2 style={{ marginBottom: '2rem', textAlign: 'center' }}>{title}</h2>}
+        {fullscreenTitle && <h2 style={{ marginBottom: '2rem', textAlign: 'center' }}>{fullscreenTitle}</h2>}
         <div style={{ height: 'calc(100vh - 200px)' }}>
-          {children}
+          {typeof children === 'function' ? children(true) : children}
         </div>
       </div>
     );
@@ -32,7 +33,7 @@ export function FullscreenChart({ children, title, className = '' }: FullscreenC
       >
         ⛶
       </button>
-      {children}
+      {typeof children === 'function' ? children(false) : children}
     </div>
   );
 }
