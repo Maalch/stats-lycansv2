@@ -21,7 +21,7 @@ export function processCommunicationAchievements(talkingStats, playerId, suffix)
 
   // Minimum games threshold for talking time achievements
   // Note: Talking time data only available since version 0.215
-  const MIN_GAMES_TALKING = 20;
+  const MIN_GAMES_TALKING = 15;
 
   // Filter players with enough games with talking data
   const eligiblePlayers = talkingStats.playerStats.filter(p => p.gamesPlayed >= MIN_GAMES_TALKING);
@@ -53,14 +53,14 @@ export function processCommunicationAchievements(talkingStats, playerId, suffix)
     achievements.push({
       id: `communication-most-talkative${suffix.toLowerCase().replace(/[()]/g, '').replace(/\s+/g, '-')}`,
       title: `🎤 Bavard N°${rank}${suffix}`,
-      description: `${rank === 1 ? 'Champion' : rank === 2 ? 'Vice-champion' : '3ème place'} du temps de parole total avec ${timeFormatted} par heure de jeu`,
+      description: `${rank === 1 ? 'Champion' : rank === 2 ? 'Vice-champion' : '3ème place'} du temps de parole total avec ${timeFormatted} par heure de jeu (minimum ${MIN_GAMES_TALKING} parties avec données)`,
       type: 'good',
       category: 'communication',
       rank: rank,
       value: playerStats.secondsAllPer60Min,
       totalRanked: totalRanked,
       redirectTo: {
-        tab: 'playerStats',
+        tab: 'rankings',
         subTab: 'talkingTime',
         filters: {
           moddedGames: suffix.includes('Moddées') ? true : false,
