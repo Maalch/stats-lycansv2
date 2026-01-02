@@ -85,7 +85,10 @@ export function usePreCalculatedPlayerAchievements(playerName: string | null): {
     const steamId = playerInfo?.SteamID;
     
     if (!steamId) {
-      console.warn(`⚠️ No Steam ID found for player: ${playerName}`);
+      // Player doesn't have Steam ID - this is expected in dev mode
+      if (import.meta.env.DEV) {
+        console.error(`No Steam ID found for player: ${playerName}`);
+      }
       return null;
     }
     

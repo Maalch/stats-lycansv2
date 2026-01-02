@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import type { JoueursData } from '../types/joueurs';
-import { useThemeAdjustedDynamicPlayersColor } from '../types/api';
 import { useSettings } from '../context/SettingsContext';
 import { fetchDataFile, DATA_FILES } from '../utils/dataPath';
+import type { JoueursData } from '../types/joueurs';
 import type { DataSource } from '../utils/dataPath';
+import { useThemeAdjustedDynamicPlayersColor } from '../types/api';
+import { handleFetchError } from '../utils/logger';
 
 export function useJoueursData() {
   const { settings } = useSettings();
@@ -21,8 +22,8 @@ export function useJoueursData() {
         const result = await fetchDataFile<JoueursData>(dataSource, DATA_FILES.JOUEURS);
         setJoueursData(result);
       } catch (err) {
-        console.error('Error fetching joueurs data:', err);
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        const errorMsg = handleFetchError(err, 'useJoueursData');
+        setError(errorMsg);
       } finally {
         setIsLoading(false);
       }
