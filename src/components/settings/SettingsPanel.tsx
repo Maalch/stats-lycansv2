@@ -43,7 +43,10 @@ export function SettingsPanel() {
         const result = await response.json();
         setGameLogData(result.GameStats || []);
       } catch (error) {
-        console.error('Error fetching game log data:', error);
+        // Log error in dev mode only
+        if (import.meta.env.DEV) {
+          console.error('Error fetching game log data:', error);
+        }
       }
     };
     fetchData();
