@@ -17,6 +17,7 @@ export interface PlayerTitle {
  * All available player titles with their metadata
  */
 export const PLAYER_TITLES: Record<string, PlayerTitle> = {
+  // Positive titles
   BAVARD: {
     id: 'BAVARD',
     name: 'Bavard',
@@ -52,12 +53,77 @@ export const PLAYER_TITLES: Record<string, PlayerTitle> = {
     color: '#F39C12',
     description: 'Nombreuses parties jouées'
   },
+  CHANCEUX: {
+    id: 'CHANCEUX',
+    name: 'Chanceux',
+    emoji: '🍀',
+    color: '#27AE60',
+    description: 'Taux de victoire élevé'
+  },
+  LEADER: {
+    id: 'LEADER',
+    name: 'Leader',
+    emoji: '👑',
+    color: '#FFD700',
+    description: 'Beaucoup de votes reçus'
+  },
+  DISCRET: {
+    id: 'DISCRET',
+    name: 'Discret',
+    emoji: '🥷',
+    color: '#34495E',
+    description: 'Rarement voté'
+  },
+  
+  // Negative titles
   SILENCIEUX: {
     id: 'SILENCIEUX',
     name: 'Silencieux',
     emoji: '🤐',
     color: '#95A5A6',
     description: 'Parle très peu'
+  },
+  VICTIME: {
+    id: 'VICTIME',
+    name: 'Victime',
+    emoji: '💀',
+    color: '#7F8C8D',
+    description: 'Meurt souvent'
+  },
+  MALCHANCEUX: {
+    id: 'MALCHANCEUX',
+    name: 'Malchanceux',
+    emoji: '😢',
+    color: '#95A5A6',
+    description: 'Faible taux de victoire'
+  },
+  PACIFIQUE: {
+    id: 'PACIFIQUE',
+    name: 'Pacifique',
+    emoji: '☮️',
+    color: '#BDC3C7',
+    description: 'Peu de kills'
+  },
+  DEBUTANT: {
+    id: 'DEBUTANT',
+    name: 'Débutant',
+    emoji: '🌱',
+    color: '#A8D5BA',
+    description: 'Peu de parties jouées'
+  },
+  DISTRAIT: {
+    id: 'DISTRAIT',
+    name: 'Distrait',
+    emoji: '😵',
+    color: '#BDC3C7',
+    description: 'Mauvaise précision de vote'
+  },
+  IMPULSIF: {
+    id: 'IMPULSIF',
+    name: 'Impulsif',
+    emoji: '⚡',
+    color: '#E67E22',
+    description: 'Vote rapidement et souvent'
   }
 };
 
@@ -68,24 +134,25 @@ export const PLAYER_TITLES: Record<string, PlayerTitle> = {
 const TITLE_THRESHOLDS = {
   MIN_GAMES_FOR_TITLES: 10, // Minimum games to be eligible for any title
   
-  // Bavard: Top 20% in talking time (normalized per 60 min)
+  // Positive titles
   BAVARD_SECONDS_PER_60MIN: 1200, // 20+ minutes of talking per hour
-  
-  // Silencieux: Bottom 20% in talking time
-  SILENCIEUX_SECONDS_PER_60MIN: 300, // Less than 5 minutes per hour
-  
-  // Tueur: Top 20% in kills per game
   TUEUR_KILLS_PER_GAME: 0.8, // 0.8+ kills per game
-  
-  // Survivant: Top 20% in survival rate
   SURVIVANT_SURVIVAL_RATE: 0.7, // 70%+ survival rate
-  
-  // Stratège: Top 30% in vote accuracy (voting for enemy camp)
-  STRATEGE_VOTE_ACCURACY: 0.6, // 60%+ accuracy
+  STRATEGE_VOTE_ACCURACY: 0.65, // 65%+ accuracy
   STRATEGE_MIN_VOTES: 20, // Need at least 20 votes to qualify
+  VETERAN_GAMES: 100, // 100+ games
+  CHANCEUX_WIN_RATE: 0.55, // 55%+ win rate
+  LEADER_VOTES_RECEIVED_PER_GAME: 1.5, // 1.5+ votes received per game
+  DISCRET_VOTES_RECEIVED_PER_GAME: 0.3, // Less than 0.3 votes received per game
   
-  // Vétéran: Top 10% in games played
-  VETERAN_GAMES: 100 // 100+ games
+  // Negative titles
+  SILENCIEUX_SECONDS_PER_60MIN: 300, // Less than 5 minutes per hour
+  VICTIME_DEATH_RATE: 0.7, // 70%+ death rate
+  MALCHANCEUX_WIN_RATE: 0.35, // Less than 35% win rate
+  PACIFIQUE_KILLS_PER_GAME: 0.2, // Less than 0.2 kills per game
+  DEBUTANT_GAMES: 20, // Less than 20 games
+  DISTRAIT_VOTE_ACCURACY: 0.45, // Less than 45% accuracy
+  IMPULSIF_VOTE_RATE: 0.85 // 85%+ voting rate (rarely skips)
 };
 
 /**
@@ -95,6 +162,7 @@ interface PlayerTitleStats {
   playerId: string;
   displayName: string;
   gamesPlayed: number;
+  totalWins: number;
   
   // Talking time stats
   totalTalkingSeconds: number;
@@ -108,11 +176,19 @@ interface PlayerTitleStats {
   // Survival stats
   totalDeaths: number;
   survivalRate: number;
+  deathRate: number;
   
   // Vote stats
   totalVotes: number;
   accurateVotes: number;
   voteAccuracy: number;
+  totalVotesReceived: number;
+  votesReceivedPerGame: number;
+  totalVoteOpportunities: number;
+  voteRate: number;
+  
+  // Win rate
+  winRate: number;
 }
 
 /**
@@ -159,6 +235,7 @@ export function calculatePlayerTitleStats(gameData: GameLogEntry[]): Map<string,
           playerId,
           displayName,
           gamesPlayed: 0,
+          totalWins: 0,
           totalTalkingSeconds: 0,
           totalGameDurationSeconds: 0,
           talkingSecondsPer60Min: 0,
@@ -166,27 +243,43 @@ export function calculatePlayerTitleStats(gameData: GameLogEntry[]): Map<string,
           killsPerGame: 0,
           totalDeaths: 0,
           survivalRate: 0,
+          deathRate: 0,
           totalVotes: 0,
           accurateVotes: 0,
-          voteAccuracy: 0
+          voteAccuracy: 0,
+          totalVotesReceived: 0,
+          votesReceivedPerGame: 0,
+          totalVoteOpportunities: 0,
+          voteRate: 0,
+          winRate: 0
         });
       }
       
       const stats = playerStatsMap.get(playerId)!;
       stats.gamesPlayed++;
       
+      // Win stats
+      if (player.Victorious) {
+        stats.totalWins++;
+      }
+      
       // Death stats
       if (player.DeathType) {
         stats.totalDeaths++;
       }
       
-      // Kill stats
-      if (player.KillerName === displayName || 
-          (player.DeathType && ['BY_WOLF', 'BY_ZOMBIE', 'BY_BEAST'].includes(player.DeathType))) {
-        // Count as killer if this player is listed as killer
-      }
+      // Count votes received by this player
+      game.PlayerStats.forEach(otherPlayer => {
+        if (otherPlayer.Votes && otherPlayer.Votes.length > 0) {
+          otherPlayer.Votes.forEach(vote => {
+            if (vote.Target === displayName) {
+              stats.totalVotesReceived++;
+            }
+          });
+        }
+      });
       
-      // Vote stats - analyze vote accuracy
+      // Vote stats - analyze vote accuracy and voting behavior
       if (player.Votes && player.Votes.length > 0) {
         const playerCamp = getPlayerCamp(player.MainRoleInitial);
         
@@ -213,6 +306,10 @@ export function calculatePlayerTitleStats(gameData: GameLogEntry[]): Map<string,
           }
         });
       }
+      
+      // Track vote opportunities (meetings where player could vote)
+      // Estimate: roughly 3-4 vote opportunities per game
+      stats.totalVoteOpportunities += 3;
     });
   });
   
@@ -269,14 +366,30 @@ export function calculatePlayerTitleStats(gameData: GameLogEntry[]): Map<string,
       stats.killsPerGame = stats.totalKills / stats.gamesPlayed;
     }
     
-    // Survival rate
+    // Survival and death rates
     if (stats.gamesPlayed > 0) {
       stats.survivalRate = (stats.gamesPlayed - stats.totalDeaths) / stats.gamesPlayed;
+      stats.deathRate = stats.totalDeaths / stats.gamesPlayed;
     }
     
     // Vote accuracy
     if (stats.totalVotes > 0) {
       stats.voteAccuracy = stats.accurateVotes / stats.totalVotes;
+    }
+    
+    // Vote rate (how often they vote vs skip/abstain)
+    if (stats.totalVoteOpportunities > 0) {
+      stats.voteRate = stats.totalVotes / stats.totalVoteOpportunities;
+    }
+    
+    // Votes received per game
+    if (stats.gamesPlayed > 0) {
+      stats.votesReceivedPerGame = stats.totalVotesReceived / stats.gamesPlayed;
+    }
+    
+    // Win rate
+    if (stats.gamesPlayed > 0) {
+      stats.winRate = stats.totalWins / stats.gamesPlayed;
     }
   });
   
@@ -284,54 +397,157 @@ export function calculatePlayerTitleStats(gameData: GameLogEntry[]): Map<string,
 }
 
 /**
+ * Title candidate with score for prioritization
+ */
+interface TitleCandidate {
+  title: PlayerTitle;
+  score: number; // Higher score = more prominent characteristic
+  isPositive: boolean;
+}
+
+/**
  * Calculate which titles a player should have based on their stats
+ * Returns exactly 2 titles: prioritizes most prominent characteristics
  */
 export function calculatePlayerTitles(
   playerStats: PlayerTitleStats
 ): PlayerTitle[] {
-  const titles: PlayerTitle[] = [];
-  
   // Must have minimum games to get any title
   if (playerStats.gamesPlayed < TITLE_THRESHOLDS.MIN_GAMES_FOR_TITLES) {
-    return titles;
+    return [];
   }
+  
+  const candidates: TitleCandidate[] = [];
+  
+  // === POSITIVE TITLES ===
   
   // Bavard: High talking time
   if (playerStats.totalGameDurationSeconds > 0 && 
       playerStats.talkingSecondsPer60Min >= TITLE_THRESHOLDS.BAVARD_SECONDS_PER_60MIN) {
-    titles.push(PLAYER_TITLES.BAVARD);
-  }
-  
-  // Silencieux: Low talking time (mutually exclusive with Bavard)
-  if (playerStats.totalGameDurationSeconds > 0 && 
-      playerStats.talkingSecondsPer60Min > 0 &&
-      playerStats.talkingSecondsPer60Min <= TITLE_THRESHOLDS.SILENCIEUX_SECONDS_PER_60MIN &&
-      !titles.includes(PLAYER_TITLES.BAVARD)) {
-    titles.push(PLAYER_TITLES.SILENCIEUX);
+    const score = playerStats.talkingSecondsPer60Min / TITLE_THRESHOLDS.BAVARD_SECONDS_PER_60MIN;
+    candidates.push({ title: PLAYER_TITLES.BAVARD, score, isPositive: true });
   }
   
   // Tueur: High kill rate
   if (playerStats.killsPerGame >= TITLE_THRESHOLDS.TUEUR_KILLS_PER_GAME) {
-    titles.push(PLAYER_TITLES.TUEUR);
+    const score = playerStats.killsPerGame / TITLE_THRESHOLDS.TUEUR_KILLS_PER_GAME;
+    candidates.push({ title: PLAYER_TITLES.TUEUR, score, isPositive: true });
   }
   
   // Survivant: High survival rate
   if (playerStats.survivalRate >= TITLE_THRESHOLDS.SURVIVANT_SURVIVAL_RATE) {
-    titles.push(PLAYER_TITLES.SURVIVANT);
+    const score = playerStats.survivalRate / TITLE_THRESHOLDS.SURVIVANT_SURVIVAL_RATE;
+    candidates.push({ title: PLAYER_TITLES.SURVIVANT, score, isPositive: true });
   }
   
-  // Stratège: High vote accuracy with minimum votes
+  // Stratège: High vote accuracy
   if (playerStats.totalVotes >= TITLE_THRESHOLDS.STRATEGE_MIN_VOTES &&
       playerStats.voteAccuracy >= TITLE_THRESHOLDS.STRATEGE_VOTE_ACCURACY) {
-    titles.push(PLAYER_TITLES.STRATEGE);
+    const score = playerStats.voteAccuracy / TITLE_THRESHOLDS.STRATEGE_VOTE_ACCURACY;
+    candidates.push({ title: PLAYER_TITLES.STRATEGE, score, isPositive: true });
   }
   
   // Vétéran: Many games played
   if (playerStats.gamesPlayed >= TITLE_THRESHOLDS.VETERAN_GAMES) {
-    titles.push(PLAYER_TITLES.VETERAN);
+    const score = playerStats.gamesPlayed / TITLE_THRESHOLDS.VETERAN_GAMES;
+    candidates.push({ title: PLAYER_TITLES.VETERAN, score, isPositive: true });
   }
   
-  return titles;
+  // Chanceux: High win rate
+  if (playerStats.winRate >= TITLE_THRESHOLDS.CHANCEUX_WIN_RATE) {
+    const score = playerStats.winRate / TITLE_THRESHOLDS.CHANCEUX_WIN_RATE;
+    candidates.push({ title: PLAYER_TITLES.CHANCEUX, score, isPositive: true });
+  }
+  
+  // Leader: Many votes received
+  if (playerStats.votesReceivedPerGame >= TITLE_THRESHOLDS.LEADER_VOTES_RECEIVED_PER_GAME) {
+    const score = playerStats.votesReceivedPerGame / TITLE_THRESHOLDS.LEADER_VOTES_RECEIVED_PER_GAME;
+    candidates.push({ title: PLAYER_TITLES.LEADER, score, isPositive: true });
+  }
+  
+  // Discret: Rarely voted
+  if (playerStats.votesReceivedPerGame <= TITLE_THRESHOLDS.DISCRET_VOTES_RECEIVED_PER_GAME) {
+    const score = TITLE_THRESHOLDS.DISCRET_VOTES_RECEIVED_PER_GAME / Math.max(0.1, playerStats.votesReceivedPerGame);
+    candidates.push({ title: PLAYER_TITLES.DISCRET, score, isPositive: true });
+  }
+  
+  // === NEGATIVE TITLES ===
+  
+  // Silencieux: Low talking time
+  if (playerStats.totalGameDurationSeconds > 0 && 
+      playerStats.talkingSecondsPer60Min > 0 &&
+      playerStats.talkingSecondsPer60Min <= TITLE_THRESHOLDS.SILENCIEUX_SECONDS_PER_60MIN) {
+    const score = TITLE_THRESHOLDS.SILENCIEUX_SECONDS_PER_60MIN / playerStats.talkingSecondsPer60Min;
+    candidates.push({ title: PLAYER_TITLES.SILENCIEUX, score, isPositive: false });
+  }
+  
+  // Victime: High death rate
+  if (playerStats.deathRate >= TITLE_THRESHOLDS.VICTIME_DEATH_RATE) {
+    const score = playerStats.deathRate / TITLE_THRESHOLDS.VICTIME_DEATH_RATE;
+    candidates.push({ title: PLAYER_TITLES.VICTIME, score, isPositive: false });
+  }
+  
+  // Malchanceux: Low win rate
+  if (playerStats.winRate <= TITLE_THRESHOLDS.MALCHANCEUX_WIN_RATE) {
+    const score = TITLE_THRESHOLDS.MALCHANCEUX_WIN_RATE / Math.max(0.1, playerStats.winRate);
+    candidates.push({ title: PLAYER_TITLES.MALCHANCEUX, score, isPositive: false });
+  }
+  
+  // Pacifique: Low kill rate
+  if (playerStats.killsPerGame <= TITLE_THRESHOLDS.PACIFIQUE_KILLS_PER_GAME) {
+    const score = TITLE_THRESHOLDS.PACIFIQUE_KILLS_PER_GAME / Math.max(0.05, playerStats.killsPerGame);
+    candidates.push({ title: PLAYER_TITLES.PACIFIQUE, score, isPositive: false });
+  }
+  
+  // Débutant: Few games played
+  if (playerStats.gamesPlayed < TITLE_THRESHOLDS.DEBUTANT_GAMES) {
+    const score = TITLE_THRESHOLDS.DEBUTANT_GAMES / playerStats.gamesPlayed;
+    candidates.push({ title: PLAYER_TITLES.DEBUTANT, score, isPositive: false });
+  }
+  
+  // Distrait: Low vote accuracy
+  if (playerStats.totalVotes >= TITLE_THRESHOLDS.STRATEGE_MIN_VOTES &&
+      playerStats.voteAccuracy <= TITLE_THRESHOLDS.DISTRAIT_VOTE_ACCURACY) {
+    const score = TITLE_THRESHOLDS.DISTRAIT_VOTE_ACCURACY / Math.max(0.1, playerStats.voteAccuracy);
+    candidates.push({ title: PLAYER_TITLES.DISTRAIT, score, isPositive: false });
+  }
+  
+  // Impulsif: High vote rate
+  if (playerStats.voteRate >= TITLE_THRESHOLDS.IMPULSIF_VOTE_RATE) {
+    const score = playerStats.voteRate / TITLE_THRESHOLDS.IMPULSIF_VOTE_RATE;
+    candidates.push({ title: PLAYER_TITLES.IMPULSIF, score, isPositive: false });
+  }
+  
+  // If no titles qualify, return empty
+  if (candidates.length === 0) {
+    return [];
+  }
+  
+  // Sort by score (highest first)
+  candidates.sort((a, b) => b.score - a.score);
+  
+  // Strategy: Pick the 2 most prominent titles
+  // Try to balance positive and negative if possible
+  const selectedTitles: PlayerTitle[] = [];
+  
+  // First, add the highest scoring title
+  selectedTitles.push(candidates[0].title);
+  
+  // For second title, prefer opposite sentiment if available
+  const firstIsPositive = candidates[0].isPositive;
+  const oppositeCandidate = candidates.find((c, idx) => 
+    idx > 0 && c.isPositive !== firstIsPositive
+  );
+  
+  if (oppositeCandidate) {
+    // Add opposite sentiment title
+    selectedTitles.push(oppositeCandidate.title);
+  } else if (candidates.length > 1) {
+    // No opposite sentiment available, add second highest
+    selectedTitles.push(candidates[1].title);
+  }
+  
+  return selectedTitles;
 }
 
 /**
