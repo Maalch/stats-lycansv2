@@ -25,6 +25,7 @@ import { usePlayerClips } from '../../hooks/useClips';
 import { ClipViewer } from '../common/ClipViewer';
 import { findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
+import { calculateAllPlayerTitles, type PlayerTitle } from '../../utils/playerTitles';
 import './PlayerSelectionPage.css';
 
 interface PlayerBasicStats {
@@ -39,6 +40,7 @@ interface PlayerBasicStats {
   image?: string | null;
   twitch?: string | null;
   youtube?: string | null;
+  titles?: PlayerTitle[]; // Dynamic titles calculated from game data
 }
 
 export function PlayerSelectionPage() {
@@ -121,6 +123,9 @@ export function PlayerSelectionPage() {
       ? gameLogData.GameStats.filter(game => game.Modded === true)
       : gameLogData.GameStats;
 
+    // Calculate titles for all players based on the filtered games
+    const playerTitlesMap = calculateAllPlayerTitles(filteredGames);
+
     // Group by unique player ID (Steam ID or Username fallback)
     const playerMap = new Map<string, {
       games: number;
@@ -188,6 +193,7 @@ export function PlayerSelectionPage() {
         image: playerInfo?.Image || null,
         twitch: playerInfo?.Twitch || null,
         youtube: playerInfo?.Youtube || null,
+        titles: playerTitlesMap.get(playerId) || [],
       };
     });
   }, [gameLogData, settings.highlightedPlayer, joueursData, isModdedOnlyMode]);
@@ -326,6 +332,24 @@ export function PlayerSelectionPage() {
                         {player.name}
                         {player.isHighlighted && <span className="highlight-indicator"> ★</span>}
                       </div>
+                      {/* Player Titles */}
+                      {player.titles && player.titles.length > 0 && (
+                        <div className="player-titles-compact">
+                          {player.titles.slice(0, 2).map((title) => (
+                            <span 
+                              key={title.id} 
+                              className="player-title-badge-compact"
+                              style={{ backgroundColor: title.color }}
+                              title={title.description}
+                            >
+                              {title.emoji} {title.name}
+                            </span>
+                          ))}
+                          {player.titles.length > 2 && (
+                            <span className="player-title-more">+{player.titles.length - 2}</span>
+                          )}
+                        </div>
+                      )}
                       <div className="suggestion-btn-stats">
                         {player.totalGames} parties • {player.winRate.toFixed(1)}% victoires
                       </div>
@@ -371,6 +395,22 @@ export function PlayerSelectionPage() {
                   <h3 className="player-name">{highlightedPlayerStats.name}</h3>
                   <span className="highlight-badge">★ Mis en évidence</span>
                 </div>
+                
+                {/* Player Titles */}
+                {highlightedPlayerStats.titles && highlightedPlayerStats.titles.length > 0 && (
+                  <div className="player-titles">
+                    {highlightedPlayerStats.titles.map((title) => (
+                      <span 
+                        key={title.id} 
+                        className="player-title-badge"
+                        style={{ backgroundColor: title.color }}
+                        title={title.description}
+                      >
+                        {title.emoji} {title.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 
                 <div className="player-info-row">
                   {highlightedPlayerStats.image ? (
