@@ -6,6 +6,7 @@ import type { DeathType } from '../types/deathTypes';
 import { fetchDataFile, fetchOptionalDataFile, DATA_FILES } from '../utils/dataPath';
 import type { DataSource } from '../utils/dataPath';
 import { getPlayerId } from '../utils/playerIdentification';
+import { logger, handleFetchError } from '../utils/logger';
 
 // New GameLog interfaces
 export interface Vote {
@@ -206,8 +207,8 @@ function useCombinedRawData(): {
           brRefPartiesData: brResult.BRRefParties?.data || []
         });
       } catch (err) {
-        console.error('Error fetching combined raw data:', err);
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        const errorMsg = handleFetchError(err, 'useCombinedRawData');
+        setError(errorMsg);
       } finally {
         setIsLoading(false);
       }
@@ -508,8 +509,8 @@ export function useGameLogData(): {
         
         setData(normalizedResult);
       } catch (err) {
-        console.error('Error fetching game log data:', err);
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        const errorMsg = handleFetchError(err, 'useGameLogData');
+        setError(errorMsg);
       } finally {
         setIsLoading(false);
       }
@@ -609,13 +610,13 @@ function generateDisplayedIds(games: GameLogEntry[]): Map<string, string> {
  */
 function normalizePlayerStat(playerStat: PlayerStat, joueursData?: any): PlayerStat {
   if (!playerStat) {
-    console.warn('normalizePlayerStat: received null/undefined playerStat');
+    logger.warn('normalizePlayerStat: received null/undefined playerStat');
     return playerStat;
   }
   
   // Add safety check for Votes array
   if (playerStat.Votes && !Array.isArray(playerStat.Votes)) {
-    console.warn('normalizePlayerStat: Votes is not an array for player', playerStat.Username, playerStat.Votes);
+    logger.warn('normalizePlayerStat: Votes is not an array for player', playerStat.Username, playerStat.Votes);
   }
   
   // Resolve canonical name using Steam ID lookup in joueurs.json
@@ -640,13 +641,13 @@ function normalizePlayerStat(playerStat: PlayerStat, joueursData?: any): PlayerS
  */
 function normalizeGameLogEntry(game: GameLogEntry, joueursData?: any): GameLogEntry {
   if (!game) {
-    console.warn('normalizeGameLogEntry: received null/undefined game');
+    logger.warn('normalizeGameLogEntry: received null/undefined game');
     return game;
   }
   
   // Add safety check for PlayerStats array
   if (game.PlayerStats && !Array.isArray(game.PlayerStats)) {
-    console.warn('normalizeGameLogEntry: PlayerStats is not an array for game', game.Id, game.PlayerStats);
+    logger.warn('normalizeGameLogEntry: PlayerStats is not an array for game', game.Id, game.PlayerStats);
   }
   
   // First pass: normalize all player usernames

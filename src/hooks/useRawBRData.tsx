@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { fetchOptionalDataFile, DATA_FILES } from '../utils/dataPath';
+import { handleFetchError } from '../utils/logger';
 import { useSettings } from '../context/SettingsContext';
 import { parseFrenchDate } from './utils/dataUtils';
-import { fetchOptionalDataFile, DATA_FILES } from '../utils/dataPath';
 import type { DataSource } from '../utils/dataPath';
 
 export interface RawBRData {
@@ -59,8 +60,11 @@ function useRawBRData() {
           setBRRefPartiesData([]);
         }
       } catch (err) {
-        console.error('Error fetching raw BR data:', err);
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        const errorMsg = handleFetchError(err, 'useRawBRData');
+        setError(errorMsg);
+        // Set empty arrays on error so UI doesn't break
+        setBRPartiesData([]);
+        setBRRefPartiesData([]);
       } finally {
         setIsLoading(false);
       }

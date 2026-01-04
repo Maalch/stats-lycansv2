@@ -5,6 +5,8 @@ import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { SettingsIndicator } from './components/common/SettingsIndicator';
 import { SettingsBadge } from './components/common/SettingsBadge';
 import { useLastRecordedGameDate } from './hooks/useLastRecordedGameDate';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+import { LoadingSkeleton } from './components/common/LoadingSkeleton';
 import './App.css';
 
 // Lazy load each dashboard section
@@ -367,9 +369,11 @@ function MainApp() {
             <div className="lycans-dashboard-section">
               <SettingsIndicator />
               <div className="lycans-dashboard-content">
-                <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                  <DeathLocationHeatmap />
-                </Suspense>
+                <ErrorBoundary>
+                  <Suspense fallback={<LoadingSkeleton type="chart" height="600px" />}>
+                    <DeathLocationHeatmap />
+                  </Suspense>
+                </ErrorBoundary>
               </div>
             </div>
           </div>
@@ -396,9 +400,11 @@ function MainApp() {
             <div className="lycans-dashboard-section">
               <SettingsIndicator />
               <div className="lycans-dashboard-content">
-                <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                  <GameDetailsChart />
-                </Suspense>
+                <ErrorBoundary>
+                  <Suspense fallback={<LoadingSkeleton type="chart" height="600px" />}>
+                    <GameDetailsChart />
+                  </Suspense>
+                </ErrorBoundary>
               </div>
             </div>
           </div>
@@ -413,9 +419,11 @@ function MainApp() {
       case 'playerSelection': {
         return (
           <div className="lycans-dashboard-content">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <PlayerSelectionPage />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSkeleton type="chart" height="600px" />}>
+                <PlayerSelectionPage />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         );
       }
@@ -441,9 +449,11 @@ function MainApp() {
               ))}
             </nav>
             <div className="lycans-dashboard-content">
-              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                <SelectedPlayerComponent />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSkeleton type="chart" height="500px" />}>
+                  <SelectedPlayerComponent />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </div>
         );
@@ -478,9 +488,11 @@ function MainApp() {
               ))}
             </nav>
             <div className="lycans-dashboard-content">
-              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                <SelectedGeneralComponent />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSkeleton type="chart" height="500px" />}>
+                  <SelectedGeneralComponent />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </div>
         );
@@ -506,9 +518,11 @@ function MainApp() {
               ))}
             </nav>
             <div className="lycans-dashboard-content">
-              <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-                <SelectedBRComponent />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSkeleton type="chart" height="500px" />}>
+                  <SelectedBRComponent />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </div>
         );
@@ -516,27 +530,33 @@ function MainApp() {
       case 'gameDetails': {
         return (
           <div className="lycans-dashboard-content">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <GameDetailsChart />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSkeleton type="chart" height="600px" />}>
+                <GameDetailsChart />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         );
       }
       case 'clips': {
         return (
           <div className="lycans-dashboard-content">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <ClipsPage />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSkeleton type="chart" height="500px" />}>
+                <ClipsPage />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         );
       }
       case 'settings': {
         return (
           <div className="lycans-dashboard-content">
-            <Suspense fallback={<div className="statistiques-chargement">Chargement...</div>}>
-              <SettingsPanel />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSkeleton type="card" height="400px" />}>
+                <SettingsPanel />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         );
       }
