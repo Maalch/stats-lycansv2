@@ -618,6 +618,7 @@ export function ClipsPage() {
           nextClip={findNextClip(selectedClip, allClips)}
           onNextClip={handleNextClip}
           onRelatedClip={handleRelatedClip}
+          onRandomClip={handleRandomClip}
         />
       )}
     </div>

@@ -279,6 +279,19 @@
   font-weight: 500;
 }
 
+.lycans-clip-random-btn {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
+  font-weight: 600;
+}
+
+.lycans-clip-random-btn:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  transform: translateX(4px) scale(1.02);
+}
+
 .lycans-clip-related-clips {
   display: flex;
   flex-direction: column;

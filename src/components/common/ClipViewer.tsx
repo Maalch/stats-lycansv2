@@ -8,6 +8,7 @@ interface ClipViewerProps {
   onClose: () => void;
   onNextClip?: () => void;
   onRelatedClip?: (clipId: string) => void;
+  onRandomClip?: () => void;
   relatedClips?: Clip[];
   nextClip?: Clip | null;
 }
@@ -17,6 +18,7 @@ export function ClipViewer({
   onClose, 
   onNextClip, 
   onRelatedClip,
+  onRandomClip,
   relatedClips = [],
   nextClip = null
 }: ClipViewerProps) {
@@ -114,10 +116,19 @@ export function ClipViewer({
             )}
 
             {/* Navigation Section */}
-            {(nextClip || relatedClips.length > 0) && (
+            {(nextClip || relatedClips.length > 0 || onRandomClip) && (
               <div className="lycans-clip-info-section">
-                <h3>Clips liés</h3>
+                <h3>Navigation</h3>
                 <div className="lycans-clip-navigation">
+                  {onRandomClip && (
+                    <button 
+                      className="lycans-clip-nav-btn lycans-clip-random-btn"
+                      onClick={onRandomClip}
+                      title="Lire un clip aléatoire"
+                    >
+                      🎲 Clip aléatoire
+                    </button>
+                  )}
                   {nextClip && onNextClip && (
                     <button 
                       className="lycans-clip-nav-btn lycans-clip-next-btn"
