@@ -661,7 +661,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Anaee: 77.8% de victoires en équipe (14/18 parties, min. 10)",
+          "description": "Meilleur duo avec Fukano: 77.8% de victoires en équipe (14/18 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 77.77777777777779,
@@ -5638,7 +5638,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Tsuna: 50.0% de victoires en équipe (6/12 parties, min. 10)",
+          "description": "Meilleur duo avec Fukano: 50.0% de victoires en équipe (7/14 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 50,
@@ -6743,7 +6743,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Ponce: 72.7% de victoires en équipe (8/11 parties, min. 10)",
+          "description": "Meilleur duo avec Naka: 72.7% de victoires en équipe (8/11 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 72.72727272727273,
@@ -6974,7 +6974,7 @@
         {
           "id": "worst-mate-all",
           "title": "💔 Pire Coéquipier",
-          "description": "Duo le moins efficace avec LyeGaia: 50.0% de victoires en équipe (12/24 parties, min. 10)",
+          "description": "Duo le moins efficace avec Heimdalle: 50.0% de victoires en équipe (5/10 parties, min. 10)",
           "type": "bad",
           "category": "comparison",
           "value": 50,
@@ -12373,6 +12373,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 9 Taux de Récolte",
+          "description": "9ème meilleur taux de récolte: 834.9 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 9,
+          "value": 834.8686348954463,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -12766,6 +12782,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 9 Taux de Récolte (Parties Moddées)",
+          "description": "9ème meilleur taux de récolte: 834.9 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 9,
+          "value": 834.8686348954463,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -13507,21 +13539,19 @@
           }
         },
         {
-          "id": "communication-most-talkative",
-          "title": "🎤 Bavard N°3",
-          "description": "3ème place du temps de parole total avec 20m 28s par heure de jeu (minimum 15 parties avec données)",
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 10 Taux de Récolte",
+          "description": "10ème meilleur taux de récolte: 807.1 par 60 min (min. 25 parties)",
           "type": "good",
-          "category": "communication",
-          "rank": 3,
-          "value": 1228.1760432627643,
-          "totalRanked": 19,
+          "category": "general",
+          "rank": 10,
+          "value": 807.0724073736882,
+          "totalRanked": 15,
           "redirectTo": {
-            "tab": "rankings",
-            "subTab": "talkingTime",
-            "filters": {
-              "moddedGames": false,
-              "minGames": 15
-            }
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ],
@@ -13919,21 +13949,19 @@
           }
         },
         {
-          "id": "communication-most-talkative-parties-moddées",
-          "title": "🎤 Bavard N°3 (Parties Moddées)",
-          "description": "3ème place du temps de parole total avec 20m 28s par heure de jeu (minimum 15 parties avec données)",
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 10 Taux de Récolte (Parties Moddées)",
+          "description": "10ème meilleur taux de récolte: 807.1 par 60 min (min. 25 parties)",
           "type": "good",
-          "category": "communication",
-          "rank": 3,
-          "value": 1228.1760432627643,
-          "totalRanked": 19,
+          "category": "general",
+          "rank": 10,
+          "value": 807.0724073736882,
+          "totalRanked": 15,
           "redirectTo": {
-            "tab": "rankings",
-            "subTab": "talkingTime",
-            "filters": {
-              "moddedGames": true,
-              "minGames": 15
-            }
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -14335,21 +14363,19 @@
           }
         },
         {
-          "id": "communication-most-talkative",
-          "title": "🎤 Bavard N°1",
-          "description": "Champion du temps de parole total avec 23m 13s par heure de jeu (minimum 15 parties avec données)",
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 7 Taux de Récolte",
+          "description": "7ème meilleur taux de récolte: 874.1 par 60 min (min. 25 parties)",
           "type": "good",
-          "category": "communication",
-          "rank": 1,
-          "value": 1393.3515613788447,
-          "totalRanked": 19,
+          "category": "general",
+          "rank": 7,
+          "value": 874.1122836960784,
+          "totalRanked": 15,
           "redirectTo": {
-            "tab": "rankings",
-            "subTab": "talkingTime",
-            "filters": {
-              "moddedGames": false,
-              "minGames": 15
-            }
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ],
@@ -14747,21 +14773,19 @@
           }
         },
         {
-          "id": "communication-most-talkative-parties-moddées",
-          "title": "🎤 Bavard N°1 (Parties Moddées)",
-          "description": "Champion du temps de parole total avec 23m 13s par heure de jeu (minimum 15 parties avec données)",
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 7 Taux de Récolte (Parties Moddées)",
+          "description": "7ème meilleur taux de récolte: 874.1 par 60 min (min. 25 parties)",
           "type": "good",
-          "category": "communication",
-          "rank": 1,
-          "value": 1393.3515613788447,
-          "totalRanked": 19,
+          "category": "general",
+          "rank": 7,
+          "value": 874.1122836960784,
+          "totalRanked": 15,
           "redirectTo": {
-            "tab": "rankings",
-            "subTab": "talkingTime",
-            "filters": {
-              "moddedGames": true,
-              "minGames": 15
-            }
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -15161,6 +15185,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 3 Taux de Récolte",
+          "description": "3ème meilleur taux de récolte: 1156.5 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 3,
+          "value": 1156.5295914944995,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -15554,6 +15594,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 3 Taux de Récolte (Parties Moddées)",
+          "description": "3ème meilleur taux de récolte: 1156.5 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 3,
+          "value": 1156.5295914944995,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -15953,6 +16009,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 1 Taux de Récolte",
+          "description": "1er meilleur taux de récolte: 1363.4 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 1,
+          "value": 1363.3716312807753,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -16346,6 +16418,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 1 Taux de Récolte (Parties Moddées)",
+          "description": "1er meilleur taux de récolte: 1363.4 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 1,
+          "value": 1363.3716312807753,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -16745,6 +16833,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 12 Taux de Récolte",
+          "description": "12ème meilleur taux de récolte: 744.3 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 12,
+          "value": 744.2866087279383,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -17138,6 +17242,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 12 Taux de Récolte (Parties Moddées)",
+          "description": "12ème meilleur taux de récolte: 744.3 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 12,
+          "value": 744.2866087279383,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -17537,6 +17657,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 2 Taux de Récolte",
+          "description": "2ème meilleur taux de récolte: 1167.0 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 2,
+          "value": 1167.0007835266088,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -17931,6 +18067,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 2 Taux de Récolte (Parties Moddées)",
+          "description": "2ème meilleur taux de récolte: 1167.0 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 2,
+          "value": 1167.0007835266088,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ]
     },
@@ -18013,7 +18165,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Nahomay: 75.0% de victoires en équipe (9/12 parties, min. 10)",
+          "description": "Meilleur duo avec BoccA: 75.0% de victoires en équipe (18/24 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 75,
@@ -20066,7 +20218,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Kao: 70.0% de victoires en équipe (14/20 parties, min. 10)",
+          "description": "Meilleur duo avec Zarcross: 70.0% de victoires en équipe (7/10 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 70,
@@ -21114,6 +21266,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 5 Taux de Récolte",
+          "description": "5ème meilleur taux de récolte: 939.9 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 5,
+          "value": 939.8840031773572,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -21507,6 +21675,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 5 Taux de Récolte (Parties Moddées)",
+          "description": "5ème meilleur taux de récolte: 939.9 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 5,
+          "value": 939.8840031773572,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -23701,6 +23885,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 6 Taux de Récolte",
+          "description": "6ème meilleur taux de récolte: 878.8 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 6,
+          "value": 878.8111613730592,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -24094,6 +24294,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 6 Taux de Récolte (Parties Moddées)",
+          "description": "6ème meilleur taux de récolte: 878.8 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 6,
+          "value": 878.8111613730592,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -25165,6 +25381,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 4 Taux de Récolte",
+          "description": "4ème meilleur taux de récolte: 986.6 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 4,
+          "value": 986.5682986429838,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -25558,6 +25790,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 4 Taux de Récolte (Parties Moddées)",
+          "description": "4ème meilleur taux de récolte: 986.6 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 4,
+          "value": 986.5682986429838,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -25957,6 +26205,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 8 Taux de Récolte",
+          "description": "8ème meilleur taux de récolte: 859.8 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 8,
+          "value": 859.7991252816424,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -26350,6 +26614,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 8 Taux de Récolte (Parties Moddées)",
+          "description": "8ème meilleur taux de récolte: 859.8 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 8,
+          "value": 859.7991252816424,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -26749,6 +27029,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 11 Taux de Récolte",
+          "description": "11ème meilleur taux de récolte: 788.1 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 11,
+          "value": 788.1013986557977,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -27142,6 +27438,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 11 Taux de Récolte (Parties Moddées)",
+          "description": "11ème meilleur taux de récolte: 788.1 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 11,
+          "value": 788.1013986557977,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -27990,6 +28302,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 14 Taux de Récolte",
+          "description": "14ème meilleur taux de récolte: 649.9 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 14,
+          "value": 649.8971843425825,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -28368,6 +28696,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 14 Taux de Récolte (Parties Moddées)",
+          "description": "14ème meilleur taux de récolte: 649.9 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 14,
+          "value": 649.8971843425825,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -31827,21 +32171,19 @@
           }
         },
         {
-          "id": "communication-most-talkative",
-          "title": "🎤 Bavard N°2",
-          "description": "Vice-champion du temps de parole total avec 20m 38s par heure de jeu (minimum 15 parties avec données)",
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 13 Taux de Récolte",
+          "description": "13ème meilleur taux de récolte: 718.7 par 60 min (min. 25 parties)",
           "type": "good",
-          "category": "communication",
-          "rank": 2,
-          "value": 1238.3999118254742,
-          "totalRanked": 19,
+          "category": "general",
+          "rank": 13,
+          "value": 718.7293664399119,
+          "totalRanked": 15,
           "redirectTo": {
-            "tab": "rankings",
-            "subTab": "talkingTime",
-            "filters": {
-              "moddedGames": false,
-              "minGames": 15
-            }
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ],
@@ -32179,21 +32521,19 @@
           }
         },
         {
-          "id": "communication-most-talkative-parties-moddées",
-          "title": "🎤 Bavard N°2 (Parties Moddées)",
-          "description": "Vice-champion du temps de parole total avec 20m 38s par heure de jeu (minimum 15 parties avec données)",
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 13 Taux de Récolte (Parties Moddées)",
+          "description": "13ème meilleur taux de récolte: 718.7 par 60 min (min. 25 parties)",
           "type": "good",
-          "category": "communication",
-          "rank": 2,
-          "value": 1238.3999118254742,
-          "totalRanked": 19,
+          "category": "general",
+          "rank": 13,
+          "value": 718.7293664399119,
+          "totalRanked": 15,
           "redirectTo": {
-            "tab": "rankings",
-            "subTab": "talkingTime",
-            "filters": {
-              "moddedGames": true,
-              "minGames": 15
-            }
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]
@@ -34917,6 +35257,22 @@
             "tab": "rankings",
             "subTab": "votingStats"
           }
+        },
+        {
+          "id": "loot-rate-25-all",
+          "title": "💎 Rang 15 Taux de Récolte",
+          "description": "15ème meilleur taux de récolte: 606.9 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 15,
+          "value": 606.8655061431824,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
+          }
         }
       ],
       "moddedOnlyAchievements": [
@@ -35146,6 +35502,22 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "loot-rate-25-modded",
+          "title": "💎 Rang 15 Taux de Récolte (Parties Moddées)",
+          "description": "15ème meilleur taux de récolte: 606.9 par 60 min (min. 25 parties)",
+          "type": "good",
+          "category": "general",
+          "rank": 15,
+          "value": 606.8655061431824,
+          "totalRanked": 15,
+          "redirectTo": {
+            "tab": "stats",
+            "subtab": "loot",
+            "view": "normalized",
+            "minGames": 25
           }
         }
       ]

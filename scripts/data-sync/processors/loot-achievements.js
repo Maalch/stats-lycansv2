@@ -80,6 +80,7 @@ function computeLootStats(gameData) {
       : 0;
 
     return {
+      player: stats.playerId,  // Use 'player' field for consistency with findPlayerRank
       playerId: stats.playerId,
       gamesPlayed: stats.gamesPlayed,
       totalLoot: stats.totalLoot,
@@ -110,6 +111,11 @@ export function processLootAchievements(gameData, playerId, suffix) {
 
   // Loot rate ranking (min. 25 games)
   const eligiblePlayers = lootStats.filter(p => p.gamesPlayed >= 25);
+  
+  if (eligiblePlayers.length === 0) {
+    return achievements;
+  }
+  
   const byLootRate = [...eligiblePlayers].sort((a, b) => b.lootPer60Min - a.lootPer60Min);
   const lootRateRank = findPlayerRank(byLootRate, playerId, p => p.lootPer60Min);
   
