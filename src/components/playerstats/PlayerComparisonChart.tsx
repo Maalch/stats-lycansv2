@@ -86,12 +86,12 @@ export function PlayerComparisonChart() {
 
   // Metric descriptions for tooltip
   const metricDescriptions: Record<string, string> = {
-    'Participation': 'Nombre de parties jouées par rapport au joueur le plus actif',
-    'Score de Victoire': 'Score de victoires, comparé à la moyenne générale',
-    'Régularité': 'Stabilité des performances au fil du temps (analyse des variations entre périodes de jeu)',
-    'Maîtrise Villageois': 'Efficacité estimée en tant que Villageois',
-    'Efficacité Loups': 'Efficacité estimée en tant que Loup',
-    'Adaptabilité Rôles': 'Performance avec les rôles solo'
+    'Taux de Victoire': 'Pourcentage de victoires sur toutes les parties jouées',
+    'Kills / Partie': 'Nombre moyen de kills réalisés par partie',
+    'Taux de Survie': "Pourcentage de parties où le joueur survit jusqu'à la fin",
+    'Agressivité (Votes)': 'Score d\'agressivité basé sur le comportement de vote (votes actifs vs abstentions/skip)',
+    'Récolte / 60 min': 'Quantité de ressources collectées normalisée par heure de jeu',
+    'Dissimulation': 'Cohérence du temps de parole entre les camps Villageois et Loup (plus c\'est proche, mieux c\'est)'
   };
 
   // Transform data for radar chart
@@ -100,39 +100,39 @@ export function PlayerComparisonChart() {
 
     return [
       {
-        metric: 'Participation',
-        [selectedPlayer1]: Math.round(comparisonData.player1.participationScore),
-        [selectedPlayer2]: Math.round(comparisonData.player2.participationScore),
-        fullMark: 100
-      },
-      {
-        metric: 'Score de Victoire',
+        metric: 'Taux de Victoire',
         [selectedPlayer1]: Math.round(comparisonData.player1.winRateScore),
         [selectedPlayer2]: Math.round(comparisonData.player2.winRateScore),
         fullMark: 100
       },
       {
-        metric: 'Régularité',
-        [selectedPlayer1]: Math.round(comparisonData.player1.consistencyScore),
-        [selectedPlayer2]: Math.round(comparisonData.player2.consistencyScore),
+        metric: 'Kills / Partie',
+        [selectedPlayer1]: Math.round(comparisonData.player1.killsPerGameScore),
+        [selectedPlayer2]: Math.round(comparisonData.player2.killsPerGameScore),
         fullMark: 100
       },
       {
-        metric: 'Maîtrise Villageois',
-        [selectedPlayer1]: Math.round(comparisonData.player1.villageoisMastery),
-        [selectedPlayer2]: Math.round(comparisonData.player2.villageoisMastery),
+        metric: 'Taux de Survie',
+        [selectedPlayer1]: Math.round(comparisonData.player1.survivalRateScore),
+        [selectedPlayer2]: Math.round(comparisonData.player2.survivalRateScore),
         fullMark: 100
       },
       {
-        metric: 'Efficacité Loups',
-        [selectedPlayer1]: Math.round(comparisonData.player1.loupsEfficiency),
-        [selectedPlayer2]: Math.round(comparisonData.player2.loupsEfficiency),
+        metric: 'Agressivité (Votes)',
+        [selectedPlayer1]: Math.round(comparisonData.player1.aggressivenessScore),
+        [selectedPlayer2]: Math.round(comparisonData.player2.aggressivenessScore),
         fullMark: 100
       },
       {
-        metric: 'Adaptabilité Rôles',
-        [selectedPlayer1]: Math.round(comparisonData.player1.specialRoleAdaptability),
-        [selectedPlayer2]: Math.round(comparisonData.player2.specialRoleAdaptability),
+        metric: 'Récolte / 60 min',
+        [selectedPlayer1]: Math.round(comparisonData.player1.harvestRateScore),
+        [selectedPlayer2]: Math.round(comparisonData.player2.harvestRateScore),
+        fullMark: 100
+      },
+      {
+        metric: 'Dissimulation',
+        [selectedPlayer1]: Math.round(comparisonData.player1.talkingPerformanceScore),
+        [selectedPlayer2]: Math.round(comparisonData.player2.talkingPerformanceScore),
         fullMark: 100
       }
     ];
@@ -566,28 +566,28 @@ export function PlayerComparisonChart() {
               </p>
               <div className="lycans-metrics-grid">
                 <div className="lycans-metric-info">
-                  <span className="lycans-metric-name">🎯 Participation</span>
-                  <span className="lycans-metric-desc">Nombre de parties jouées par rapport au joueur le plus actif</span>
+                  <span className="lycans-metric-name">� Taux de Victoire</span>
+                  <span className="lycans-metric-desc">Pourcentage de victoires sur toutes les parties jouées</span>
                 </div>
                 <div className="lycans-metric-info">
-                  <span className="lycans-metric-name">🏆 Score de Victoire</span>
-                  <span className="lycans-metric-desc">Score de victoires, comparé à la moyenne générale</span>
+                  <span className="lycans-metric-name">💀 Kills / Partie</span>
+                  <span className="lycans-metric-desc">Nombre moyen de kills réalisés par partie</span>
                 </div>
                 <div className="lycans-metric-info">
-                  <span className="lycans-metric-name">📊 Régularité</span>
-                  <span className="lycans-metric-desc">Stabilité des performances au fil du temps (analyse des variations entre périodes de jeu)</span>
+                  <span className="lycans-metric-name">❤️ Taux de Survie</span>
+                  <span className="lycans-metric-desc">Pourcentage de parties où le joueur survit jusqu'à la fin</span>
                 </div>
                 <div className="lycans-metric-info">
-                  <span className="lycans-metric-name">🏘️ Maîtrise Villageois</span>
-                  <span className="lycans-metric-desc">Efficacité estimée en tant que Villageois</span>
+                  <span className="lycans-metric-name">⚔️ Agressivité (Votes)</span>
+                  <span className="lycans-metric-desc">Score d'agressivité basé sur le comportement de vote (votes actifs vs abstentions/skip)</span>
                 </div>
                 <div className="lycans-metric-info">
-                  <span className="lycans-metric-name">🐺 Efficacité Loups</span>
-                  <span className="lycans-metric-desc">Efficacité estimée en tant que Loup</span>
+                  <span className="lycans-metric-name">🌾 Récolte / 60 min</span>
+                  <span className="lycans-metric-desc">Quantité de ressources collectées normalisée par heure de jeu</span>
                 </div>
                 <div className="lycans-metric-info">
-                  <span className="lycans-metric-name">🎭 Adaptabilité Rôles</span>
-                  <span className="lycans-metric-desc">Performance avec les rôles solo</span>
+                  <span className="lycans-metric-name">🗣️ Dissimulation</span>
+                  <span className="lycans-metric-desc">Cohérence du temps de parole entre les camps Villageois et Loup (capacité à parler de manière similaire quel que soit le camp)</span>
                 </div>
               </div>
             </div>
@@ -750,12 +750,12 @@ export function PlayerComparisonChart() {
           <h3>🎮 Préparez le face-à-face !</h3>
           <p>Sélectionnez deux joueurs pour découvrir qui l'emporte le plus souvent !</p>
           <ul>
-            <li><strong>🎯 Participation:</strong> Basé sur le nombre de parties jouées</li>
-            <li><strong>🏆 Score de Victoire:</strong> Comparé à la moyenne générale</li>
-            <li><strong>📊 Régularité:</strong> Stabilité des performances au fil du temps</li>
-            <li><strong>🏘️ Maîtrise Villageois:</strong> Efficacité en tant que Villageois</li>
-            <li><strong>🐺 Efficacité Loups:</strong> Réussite en tant que Loup</li>
-            <li><strong>🎭 Adaptabilité Rôles:</strong> Performance avec les rôles solos</li>
+            <li><strong>� Taux de Victoire:</strong> Pourcentage de victoires sur toutes les parties</li>
+            <li><strong>💀 Kills / Partie:</strong> Nombre moyen de kills par partie</li>
+            <li><strong>❤️ Taux de Survie:</strong> Fréquence de survie jusqu'à la fin de la partie</li>
+            <li><strong>⚔️ Agressivité (Votes):</strong> Comportement de vote (actif vs passif)</li>
+            <li><strong>🌾 Récolte / 60 min:</strong> Efficacité de collecte de ressources</li>
+            <li><strong>🗣️ Dissimulation:</strong> Cohérence du temps de parole entre Villageois et Loup (mieux si similaire)</li>
           </ul>
         </div>
       )}

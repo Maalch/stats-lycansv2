@@ -12,12 +12,12 @@ import { getPlayerId } from '../../utils/playerIdentification';
 export interface PlayerComparisonMetrics {
   player: string;
   // Normalized metrics (0-100 scale)
-  participationScore: number;       // Based on games played vs max
-  winRateScore: number;             // Based on win rate vs average
-  consistencyScore: number;         // Based on standard deviation of performance
-  villageoisMastery: number;        // Success rate as Villageois
-  loupsEfficiency: number;          // Success rate as Loups
-  specialRoleAdaptability: number;  // Success with special roles
+  winRateScore: number;             // Overall win rate
+  killsPerGameScore: number;        // Average kills per game
+  survivalRateScore: number;        // Survival rate (games survived / total games)
+  aggressivenessScore: number;      // Voting aggressiveness score
+  harvestRateScore: number;         // Harvest collection per 60 minutes
+  talkingPerformanceScore: number;  // Performance compared to players with similar talking time
   
   // Raw stats for detailed comparison
   gamesPlayed: number;
@@ -56,6 +56,235 @@ export interface PlayerComparisonData {
     sameLoupsWins: number;
     averageSameLoupsDuration: string;
   };
+}
+
+/**
+ * Calculate kills per game for a player
+ * @param playerIdentifier - Player name or ID to find
+ * @param rawGameData - Array of game log entries
+ */
+export function calculateKillsPerGame(
+  playerIdentifier: string,
+  rawGameData: GameLogEntry[]
+): number {
+  let totalKills = 0;
+  let gamesPlayed = 0;
+
+  rawGameData.forEach(game => {
+    const hasPlayer = game.PlayerStats.some(p => 
+      getPlayerId(p) === playerIdentifier || 
+      p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+    );
+    
+    if (hasPlayer) {
+      gamesPlayed++;
+      // Count how many players were killed by this player
+      const killsInGame = game.PlayerStats.filter(p => 
+        p.KillerName && 
+        (p.KillerName.toLowerCase() === playerIdentifier.toLowerCase())
+      ).length;
+      totalKills += killsInGame;
+    }
+  });
+
+  return gamesPlayed > 0 ? totalKills / gamesPlayed : 0;
+}
+
+/**
+ * Calculate survival rate for a player
+ * @param playerIdentifier - Player name or ID to find
+ * @param rawGameData - Array of game log entries
+ */
+export function calculateSurvivalRate(
+  playerIdentifier: string,
+  rawGameData: GameLogEntry[]
+): number {
+  let gamesPlayed = 0;
+  let gamesSurvived = 0;
+
+  rawGameData.forEach(game => {
+    const playerStat = game.PlayerStats.find(p => 
+      getPlayerId(p) === playerIdentifier || 
+      p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+    );
+    
+    if (playerStat) {
+      gamesPlayed++;
+      if (!playerStat.DeathTiming) {
+        gamesSurvived++;
+      }
+    }
+  });
+
+  return gamesPlayed > 0 ? (gamesSurvived / gamesPlayed) * 100 : 0;
+}
+
+/**
+ * Calculate voting aggressiveness score for a player
+ * @param playerIdentifier - Player name or ID to find
+ * @param rawGameData - Array of game log entries
+ */
+export function calculateAggressivenessScore(
+  playerIdentifier: string,
+  rawGameData: GameLogEntry[]
+): number {
+  let totalMeetings = 0;
+  let totalVotes = 0;
+  let totalSkips = 0;
+  let totalAbstentions = 0;
+
+  rawGameData.forEach(game => {
+    const playerStat = game.PlayerStats.find(p => 
+      getPlayerId(p) === playerIdentifier || 
+      p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+    );
+    
+    if (playerStat && playerStat.Votes && playerStat.Votes.length > 0) {
+      // Group votes by meeting day
+      const votesByDay = new Map<number, string>();
+      playerStat.Votes.forEach(vote => {
+        const day = (vote as any).Day;
+        if (day !== undefined && day !== null) {
+          votesByDay.set(day, vote.Target);
+        }
+      });
+      
+      const meetings = votesByDay.size;
+      totalMeetings += meetings;
+      
+      votesByDay.forEach((target) => {
+        if (target === 'Passé') {
+          totalSkips++;
+        } else {
+          totalVotes++;
+        }
+      });
+    }
+  });
+
+  if (totalMeetings === 0) return 0;
+  
+  const votingRate = (totalVotes / totalMeetings) * 100;
+  const skippingRate = (totalSkips / totalMeetings) * 100;
+  const abstentionRate = (totalAbstentions / totalMeetings) * 100;
+  
+  // Formula from copilot-instructions.md
+  return votingRate - (skippingRate * 0.5) - (abstentionRate * 0.7);
+}
+
+/**
+ * Calculate harvest rate per 60 minutes for a player
+ * @param playerIdentifier - Player name or ID to find
+ * @param rawGameData - Array of game log entries
+ */
+export function calculateHarvestRate(
+  playerIdentifier: string,
+  rawGameData: GameLogEntry[]
+): number {
+  let totalLoot = 0;
+  let totalGameDurationSeconds = 0;
+  let gamesWithLoot = 0;
+
+  rawGameData.forEach(game => {
+    const playerStat = game.PlayerStats.find(p => 
+      getPlayerId(p) === playerIdentifier || 
+      p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+    );
+    
+    if (playerStat && playerStat.TotalCollectedLoot !== undefined && playerStat.TotalCollectedLoot !== null) {
+      totalLoot += playerStat.TotalCollectedLoot;
+      gamesWithLoot++;
+      
+      if (game.StartDate && game.EndDate) {
+        const duration = calculateGameDuration(game.StartDate, game.EndDate);
+        if (duration) {
+          totalGameDurationSeconds += duration;
+        }
+      }
+    }
+  });
+
+  if (gamesWithLoot === 0 || totalGameDurationSeconds === 0) return 0;
+  
+  // Normalize to per-hour rate
+  const normalizationFactor = 3600 / totalGameDurationSeconds;
+  return totalLoot * normalizationFactor;
+}
+
+/**
+ * Calculate talking time consistency score between Villageois and Loup camps
+ * Measures how consistently a player talks regardless of their camp assignment
+ * Higher score = more consistent (better at not revealing their role through talking behavior)
+ * @param playerIdentifier - Player name or ID to find
+ * @param rawGameData - Array of game log entries
+ */
+export function calculateTalkingPerformanceScore(
+  playerIdentifier: string,
+  rawGameData: GameLogEntry[]
+): number {
+  // Calculate talking time per 60 min for each camp
+  const villageoisData = {
+    totalSeconds: 0,
+    totalDuration: 0,
+    gamesPlayed: 0
+  };
+  
+  const loupsData = {
+    totalSeconds: 0,
+    totalDuration: 0,
+    gamesPlayed: 0
+  };
+
+  rawGameData.forEach(game => {
+    const playerStat = game.PlayerStats.find(p => 
+      getPlayerId(p) === playerIdentifier || 
+      p.Username.toLowerCase() === playerIdentifier.toLowerCase()
+    );
+    
+    if (playerStat) {
+      const totalTalked = (playerStat.SecondsTalkedOutsideMeeting || 0) + (playerStat.SecondsTalkedDuringMeeting || 0);
+      
+      // Use player-specific duration (ends at death time if died early)
+      const endTime = playerStat.DeathDateIrl || game.EndDate;
+      const duration = game.StartDate && endTime ? calculateGameDuration(game.StartDate, endTime) : null;
+      
+      if (totalTalked > 0 && duration && duration > 0) {
+        const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []));
+        
+        if (playerCamp === 'Villageois') {
+          villageoisData.totalSeconds += totalTalked;
+          villageoisData.totalDuration += duration;
+          villageoisData.gamesPlayed++;
+        } else if (playerCamp === 'Loup') {
+          loupsData.totalSeconds += totalTalked;
+          loupsData.totalDuration += duration;
+          loupsData.gamesPlayed++;
+        }
+      }
+    }
+  });
+
+  // Need minimum games in both camps to calculate consistency
+  if (villageoisData.gamesPlayed < 5 || loupsData.gamesPlayed < 3) {
+    return 10; // Default low score for insufficient data
+  }
+  
+  // Calculate talking rate per 60 minutes for each camp
+  const villageoisTalkingRate = (villageoisData.totalSeconds / villageoisData.totalDuration) * 3600;
+  const loupsTalkingRate = (loupsData.totalSeconds / loupsData.totalDuration) * 3600;
+  
+  // Calculate the difference (smaller = better)
+  const difference = Math.abs(villageoisTalkingRate - loupsTalkingRate);
+  const averageRate = (villageoisTalkingRate + loupsTalkingRate) / 2;
+  
+  // Calculate percentage difference relative to average
+  const percentageDifference = averageRate > 0 ? (difference / averageRate) * 100 : 0;
+  
+  // Convert to score (0% difference = 100 score, 100%+ difference = 0 score)
+  // Using exponential decay for more granular scoring
+  const score = Math.max(0, 100 * Math.exp(-percentageDifference / 50));
+  
+  return score;
 }
 
 /**
@@ -286,62 +515,32 @@ export function generatePlayerComparison(
 
   // Calculate raw metrics for ALL players to establish ranges for dynamic scaling
   const allPlayersRawMetrics = playerStatsData.playerStats.map(playerStat => {
-    const campPerformance = calculateCampSpecificPerformance(playerStat.player, rawGameData);
-    const consistencyScore = calculateAdvancedConsistency(playerStat.player, rawGameData);
-    
     return {
       player: playerStat.player,
-      rawParticipation: playerStat.gamesPlayed,
       rawWinRate: (playerStat.wins / playerStat.gamesPlayed) * 100,
-      rawConsistency: consistencyScore,
-      rawVillageoisMastery: campPerformance.villageoisWinRate,
-      rawLoupsEfficiency: campPerformance.loupsWinRate,
-      rawSpecialRoleAdaptability: campPerformance.specialRoleWinRate,
-      villageoisGames: rawGameData.filter(game => {
-        const playerInGame = game.PlayerStats.find(p => 
-          getPlayerId(p) === getPlayerId({ Username: playerStat.player, ID: null } as any) || 
-          p.Username.toLowerCase() === playerStat.player.toLowerCase()
-        );
-        if (!playerInGame) return false;
-        const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
-        return playerCamp === 'Villageois';
-      }).length,
-      loupsGames: rawGameData.filter(game => {
-        const playerInGame = game.PlayerStats.find(p => 
-          getPlayerId(p) === getPlayerId({ Username: playerStat.player, ID: null } as any) || 
-          p.Username.toLowerCase() === playerStat.player.toLowerCase()
-        );
-        if (!playerInGame) return false;
-        const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
-        return playerCamp === 'Loup';
-      }).length,
-      specialRoleGames: rawGameData.filter(game => {
-        const playerInGame = game.PlayerStats.find(p => 
-          getPlayerId(p) === getPlayerId({ Username: playerStat.player, ID: null } as any) || 
-          p.Username.toLowerCase() === playerStat.player.toLowerCase()
-        );
-        if (!playerInGame) return false;
-        const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
-        return !['Villageois', 'Loup'].includes(playerCamp);
-      }).length
+      rawKillsPerGame: calculateKillsPerGame(playerStat.player, rawGameData),
+      rawSurvivalRate: calculateSurvivalRate(playerStat.player, rawGameData),
+      rawAggressiveness: calculateAggressivenessScore(playerStat.player, rawGameData),
+      rawHarvestRate: calculateHarvestRate(playerStat.player, rawGameData),
+      rawTalkingPerformance: calculateTalkingPerformanceScore(playerStat.player, rawGameData)
     };
-  }).filter(metrics => metrics.rawParticipation >= 30); // Only include players with meaningful participation (30+ games)
+  }).filter(metrics => playerStatsData.playerStats.find(p => p.player === metrics.player)!.gamesPlayed >= 30); // Only include players with meaningful participation (30+ games)
 
   // Calculate dynamic scaling ranges
-  const participationValues = allPlayersRawMetrics.map(m => m.rawParticipation);
   const winRateValues = allPlayersRawMetrics.map(m => m.rawWinRate);
-  const consistencyValues = allPlayersRawMetrics.map(m => m.rawConsistency);
-  const villageoisValues = allPlayersRawMetrics.filter(m => m.villageoisGames >= 5).map(m => m.rawVillageoisMastery);
-  const loupsValues = allPlayersRawMetrics.filter(m => m.loupsGames >= 3).map(m => m.rawLoupsEfficiency);
-  const specialValues = allPlayersRawMetrics.filter(m => m.specialRoleGames >= 10).map(m => m.rawSpecialRoleAdaptability);
+  const killsPerGameValues = allPlayersRawMetrics.map(m => m.rawKillsPerGame);
+  const survivalRateValues = allPlayersRawMetrics.map(m => m.rawSurvivalRate);
+  const aggressivenessValues = allPlayersRawMetrics.map(m => m.rawAggressiveness);
+  const harvestRateValues = allPlayersRawMetrics.filter(m => m.rawHarvestRate > 0).map(m => m.rawHarvestRate);
+  // Note: talkingPerformance is NOT scaled - raw score is already meaningful (0-100 absolute)
 
   // Create scaling functions
-  const participationScaler = createScaler(participationValues);
   const winRateScaler = createScaler(winRateValues);
-  const consistencyScaler = createScaler(consistencyValues);
-  const villageoisScaler = createScaler(villageoisValues);
-  const loupsScaler = createScaler(loupsValues);
-  const specialRoleScaler = createSpecialRoleScaler(specialValues);
+  const killsPerGameScaler = createScaler(killsPerGameValues);
+  const survivalRateScaler = createScaler(survivalRateValues);
+  const aggressivenessScaler = createScaler(aggressivenessValues);
+  const harvestRateScaler = harvestRateValues.length > 0 ? createScaler(harvestRateValues) : () => 10;
+  // No scaler for talking performance - use raw score directly
 
   // Find common games and head-to-head stats
   const commonGames: GameLogEntry[] = [];
@@ -501,50 +700,23 @@ export function generatePlayerComparison(
 
   // Calculate metrics for both players using dynamic scaling
   const calculateMetrics = (stats: PlayerStat, playerIdentifier: string): PlayerComparisonMetrics => {
-    const campPerformance = calculateCampSpecificPerformance(stats.player, rawGameData);
-    const consistencyScore = calculateAdvancedConsistency(stats.player, rawGameData);
-    
-    // Count games in each category for the player
-    const playerVillageoisGames = rawGameData.filter(game => {
-      const playerInGame = game.PlayerStats.find(p => 
-        getPlayerId(p) === playerIdentifier || 
-        p.Username.toLowerCase() === stats.player.toLowerCase()
-      );
-      if (!playerInGame) return false;
-      const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
-      return playerCamp === 'Villageois';
-    }).length;
-    
-    const playerLoupsGames = rawGameData.filter(game => {
-      const playerInGame = game.PlayerStats.find(p => 
-        getPlayerId(p) === playerIdentifier || 
-        p.Username.toLowerCase() === stats.player.toLowerCase()
-      );
-      if (!playerInGame) return false;
-      const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
-      return playerCamp === 'Loup';
-    }).length;
-    
-    const playerSpecialRoleGames = rawGameData.filter(game => {
-      const playerInGame = game.PlayerStats.find(p => 
-        getPlayerId(p) === playerIdentifier || 
-        p.Username.toLowerCase() === stats.player.toLowerCase()
-      );
-      if (!playerInGame) return false;
-      const playerCamp = getPlayerCampFromRole(getPlayerFinalRole(playerInGame.MainRoleInitial, playerInGame.MainRoleChanges || []));
-      return !['Villageois', 'Loup'].includes(playerCamp);
-    }).length;
+    const rawWinRate = (stats.wins / stats.gamesPlayed) * 100;
+    const rawKillsPerGame = calculateKillsPerGame(playerIdentifier, rawGameData);
+    const rawSurvivalRate = calculateSurvivalRate(playerIdentifier, rawGameData);
+    const rawAggressiveness = calculateAggressivenessScore(playerIdentifier, rawGameData);
+    const rawHarvestRate = calculateHarvestRate(playerIdentifier, rawGameData);
+    const rawTalkingPerformance = calculateTalkingPerformanceScore(playerIdentifier, rawGameData);
 
     return {
       player: stats.player,
-      participationScore: participationScaler(stats.gamesPlayed),
-      winRateScore: winRateScaler((stats.wins / stats.gamesPlayed) * 100),
-      consistencyScore: consistencyScaler(consistencyScore),
-      villageoisMastery: playerVillageoisGames >= 5 ? villageoisScaler(campPerformance.villageoisWinRate) : 10,
-      loupsEfficiency: playerLoupsGames >= 3 ? loupsScaler(campPerformance.loupsWinRate) : 10,
-      specialRoleAdaptability: specialRoleScaler(campPerformance.specialRoleWinRate, playerSpecialRoleGames),
+      winRateScore: winRateScaler(rawWinRate),
+      killsPerGameScore: killsPerGameScaler(rawKillsPerGame),
+      survivalRateScore: survivalRateScaler(rawSurvivalRate),
+      aggressivenessScore: aggressivenessScaler(rawAggressiveness),
+      harvestRateScore: rawHarvestRate > 0 ? harvestRateScaler(rawHarvestRate) : 10,
+      talkingPerformanceScore: rawTalkingPerformance, // Use raw score directly (already 0-100)
       gamesPlayed: stats.gamesPlayed,
-      winRate: (stats.wins / stats.gamesPlayed) * 100,
+      winRate: rawWinRate,
       avgGameDuration: 0, // Could be calculated if needed
       commonGames: commonGames.length,
       winRateVsOpponent: commonGames.length > 0 
