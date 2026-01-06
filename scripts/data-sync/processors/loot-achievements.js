@@ -20,7 +20,7 @@ function gameHasLootData(game) {
  * @param {Array} gameData - Array of game log entries
  * @returns {Array} - Array of player loot stats with { playerId, gamesPlayed, totalLoot, totalGameDurationSeconds, lootPer60Min }
  */
-function computeLootStats(gameData) {
+export function computeLootStats(gameData) {
   if (!gameData || gameData.length === 0) {
     return [];
   }

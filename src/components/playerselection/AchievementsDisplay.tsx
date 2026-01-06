@@ -363,6 +363,22 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
       });
     }
 
+    // Handle loot achievements navigation
+    if (achievement.category === 'loot' && achievement.redirectTo.subTab === 'lootStats') {
+      const redirectData = achievement.redirectTo as any;
+      const minGames = redirectData.minGames || 5;
+      const view = redirectData.view || 'normalized';
+      
+      // Set the loot stats chart state
+      updateNavigationState({
+        lootStatsState: {
+          minGames,
+          campFilter: 'all',
+          view
+        }
+      });
+    }
+
     // Navigate to the specified tab and subTab
     navigateToTab(achievement.redirectTo.tab, achievement.redirectTo.subTab);
   };
@@ -524,6 +540,18 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
             return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir la précision des votes${filterInfo}`;
           }
           return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir les statistiques de vote${filterInfo}`;
+        }
+        break;
+      case 'loot':
+        if (achievement.redirectTo.subTab === 'lootStats') {
+          const minGamesMatch = achievement.description.match(/min\.\s*(\d+)/);
+          const minGames = minGamesMatch ? parseInt(minGamesMatch[1], 10) : 25;
+          
+          const filterInfo = achievementType === 'modded' 
+            ? " (Filtre parties moddées activé)" 
+            : " (Filtres réinitialisés)";
+          
+          return `Classement: ${achievement.rank}${achievement.totalRanked ? `/${achievement.totalRanked} joueurs` : ''} - Cliquez pour voir le taux de récolte (min. ${minGames} parties)${filterInfo}`;
         }
         break;
     }

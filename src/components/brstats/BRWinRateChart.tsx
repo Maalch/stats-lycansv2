@@ -36,16 +36,6 @@ export function BRWinRateChart() {
     return playersColor[playerName] || getRandomColor(playerName);
   };
 
-  // Chart colors using CSS custom properties
-  const chartColors = [
-    'var(--chart-color-1)',
-    'var(--chart-color-2)', 
-    'var(--chart-color-3)',
-    'var(--chart-color-4)',
-    'var(--chart-color-5)',
-    'var(--chart-color-6)'
-  ];
-
   const stats = useMemo(() => {
     if (!brData || !globalData) return null;
     
@@ -423,7 +413,7 @@ export function BRWinRateChart() {
                       fill={
                         isHighlightedFromSettings ? 'var(--accent-primary)' :
                         isHighlightedAddition ? 'var(--accent-secondary)' :
-                        chartColors[index % chartColors.length]
+                        getPlayerColor(entry.name)
                       }
                       stroke={
                         isHighlightedFromSettings 

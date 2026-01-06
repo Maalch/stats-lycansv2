@@ -3,7 +3,7 @@ export interface Achievement {
   title: string;
   description: string;
   type: 'good' | 'bad' | 'neutral';
-  category: 'general' | 'performance' | 'series' | 'kills' | 'history' | 'comparison' | 'map' | 'voting';
+  category: 'general' | 'performance' | 'series' | 'kills' | 'history' | 'comparison' | 'map' | 'voting' | 'loot';
   rank?: number; // Position in the ranking (1, 2, 3, ...)
   value?: number; // The actual value (games, win rate, etc.)
   totalRanked?: number; // Total number of players ranked in this category

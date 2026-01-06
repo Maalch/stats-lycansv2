@@ -10,6 +10,7 @@ import { computeVotingStatistics } from './compute-voting-stats.js';
 import { computeHunterStatistics } from './compute-hunter-stats.js';
 import { computeMapStats } from './compute-map-stats.js';
 import { computePlayerCampPerformance } from './compute-camp-performance.js';
+import { computeLootStats } from '../../processors/loot-achievements.js';
 
 /**
  * For most compute functions that deal with cumulative statistics,
@@ -73,4 +74,16 @@ export function updateMapStatsIncremental(cachedStats, allGames) {
  */
 export function updatePlayerCampPerformanceIncremental(cachedStats, allGames) {
   return computePlayerCampPerformance(allGames);
+}
+
+/**
+ * Wrapper for loot statistics - just re-runs on all games
+ * Note: Loot stats are computed within the achievements processor,
+ * but this wrapper is provided for API consistency
+ * @param {Object} cachedStats - Unused for now
+ * @param {Array} allGames - All games (existing + new)
+ * @returns {Array} - Loot statistics
+ */
+export function updateLootStatsIncremental(cachedStats, allGames) {
+  return computeLootStats(allGames);
 }
