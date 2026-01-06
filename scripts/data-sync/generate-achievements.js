@@ -10,6 +10,7 @@ import { processPerformanceAchievements } from './processors/performance-achieve
 import { processSeriesAchievements } from './processors/series-achievements.js';
 import { processVotingAchievements } from './processors/voting-achievements.js';
 import { processCommunicationAchievements } from './processors/communication-achievements.js';
+import { processLootAchievements } from './processors/loot-achievements.js';
 
 // Import compute functions from modular files
 import { computePlayerStats, updatePlayerStatsIncremental } from './compute/compute-player-stats.js';
@@ -383,7 +384,8 @@ function generateAchievementsFromStats(
       ...processPerformanceAchievements(allGamesCampStats, allGames, playerId, ''),
       ...processSeriesAchievements(allGamesSeriesData, playerId, ''),
       ...processVotingAchievements(allGamesVotingStats, playerId, ''),
-      ...processCommunicationAchievements(allGamesTalkingStats, playerId, '')
+      ...processCommunicationAchievements(allGamesTalkingStats, playerId, ''),
+      ...processLootAchievements(allGames, playerId, '')
     ];
     
     const moddedOnlyAchievements = [
@@ -394,7 +396,8 @@ function generateAchievementsFromStats(
       ...processPerformanceAchievements(moddedOnlyCampStats, moddedGames, playerId, ' (Parties Moddées)'),
       ...processSeriesAchievements(moddedOnlySeriesData, playerId, ' (Parties Moddées)'),
       ...processVotingAchievements(moddedOnlyVotingStats, playerId, ' (Parties Moddées)'),
-      ...processCommunicationAchievements(moddedOnlyTalkingStats, playerId, ' (Parties Moddées)')
+      ...processCommunicationAchievements(moddedOnlyTalkingStats, playerId, ' (Parties Moddées)'),
+      ...processLootAchievements(moddedGames, playerId, ' (Parties Moddées)')
     ];
 
     // Use playerId as the key in achievements object
@@ -566,6 +569,7 @@ export {
   processPerformanceAchievements,
   processSeriesAchievements,
   processCommunicationAchievements,
+  processLootAchievements,
   computePlayerStats, 
   computeMapStats,
   computePlayerGameHistory,
