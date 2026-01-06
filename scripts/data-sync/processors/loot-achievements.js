@@ -5,7 +5,6 @@
 import { findPlayerRank, createAchievement } from '../helpers.js';
 import { getPlayerId } from '../../../src/utils/datasyncExport.js';
 import { calculateGameDuration } from '../../../src/utils/datasyncExport.js';
-import { getPlayerMainCampFromRole } from '../../../src/utils/datasyncExport.js';
 
 /**
  * Check if a game has loot data

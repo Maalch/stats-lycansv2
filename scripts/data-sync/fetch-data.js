@@ -7,7 +7,6 @@ import {
   correctVictoriousStatusForDisconnectedPlayers,
   correctLoverSecondaryRole
 } from './shared/sync-utils.js';
-import { getPlayerCampFromRole, getPlayerFinalRole } from '../../src/utils/datasyncExport.js';
 
 // Parse command line arguments
 const args = process.argv.slice(2);

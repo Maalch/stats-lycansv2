@@ -3,8 +3,6 @@
  * Processes talking time statistics to generate communication-related achievements
  */
 
-import { getPlayerId } from '../../../src/utils/datasyncExport.js';
-
 /**
  * Process communication achievements for a specific player
  * @param {Object} talkingStats - Talking time statistics object
