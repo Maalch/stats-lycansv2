@@ -50,19 +50,28 @@ function extractKillsFromGame(game) {
       const deathType = player.DeathType;
       
       // Only count direct kills (not votes, environmental deaths)
+      // This matches the client-side logic in deathStatisticsUtils.ts
       if (
         deathType !== DeathTypeCode.VOTED &&
+        deathType !== DeathTypeCode.STARVATION &&
+        deathType !== DeathTypeCode.FALL &&
+        deathType !== DeathTypeCode.BY_AVATAR_CHAIN &&
         deathType !== DeathTypeCode.SURVIVOR &&
         deathType !== '' &&
         deathType !== DeathTypeCode.UNKNOWN
       ) {
-        kills.push({
-          killerName: player.KillerName,
-          victimId: getPlayerId(player),
-          victimName: player.Username,
-          deathType: deathType,
-          gameId: game.Id
-        });
+        // Find the killer player to get their Steam ID
+        const killerPlayer = game.PlayerStats.find(p => p.Username === player.KillerName);
+        if (killerPlayer) {
+          kills.push({
+            killerId: getPlayerId(killerPlayer),
+            killerName: player.KillerName,
+            victimId: getPlayerId(player),
+            victimName: player.Username,
+            deathType: deathType,
+            gameId: game.Id
+          });
+        }
       }
     }
   });
@@ -104,40 +113,36 @@ export function computeDeathStatistics(gameData) {
   const totalGames = gameData.length;
 
   // Calculate killer statistics using death information
-  const killerCounts = {};
+  // Group by killerId (Steam ID) to handle players with varying usernames
+  const killerCountsById = {};
+  const displayNameById = {}; // Track latest display name for each killer ID
   
   gameData.forEach(game => {
     const kills = extractKillsFromGame(game);
     kills.forEach(kill => {
-      if (!killerCounts[kill.killerName]) {
-        killerCounts[kill.killerName] = { 
+      // Update latest display name
+      displayNameById[kill.killerId] = kill.killerName;
+      
+      if (!killerCountsById[kill.killerId]) {
+        killerCountsById[kill.killerId] = { 
           kills: 0, 
           killsByDeathType: {} 
         };
       }
-      killerCounts[kill.killerName].kills++;
+      killerCountsById[kill.killerId].kills++;
       
       // Track kills by death type
       const deathType = kill.deathType;
-      killerCounts[kill.killerName].killsByDeathType[deathType] = 
-        (killerCounts[kill.killerName].killsByDeathType[deathType] || 0) + 1;
-    });
-  });
-
-  // Map killer names to player IDs for game count lookup
-  const killerNameToId = new Map();
-  gameData.forEach(game => {
-    game.PlayerStats.forEach(player => {
-      killerNameToId.set(player.Username, getPlayerId(player));
+      killerCountsById[kill.killerId].killsByDeathType[deathType] = 
+        (killerCountsById[kill.killerId].killsByDeathType[deathType] || 0) + 1;
     });
   });
 
   // Convert to array and calculate percentages and averages
-  const killerStats = Object.entries(killerCounts).map(([killerName, data]) => {
-    const killerId = killerNameToId.get(killerName) || killerName;
+  const killerStats = Object.entries(killerCountsById).map(([killerId, data]) => {
     return {
-      killerId,  // Add Steam ID as primary identifier
-      killerName,
+      killerId,  // Steam ID as primary identifier
+      killerName: displayNameById[killerId] || killerId, // Use latest display name
       kills: data.kills,
       percentage: totalDeaths > 0 ? (data.kills / totalDeaths) * 100 : 0,
       gamesPlayed: playerGameCounts[killerId] || 0,
