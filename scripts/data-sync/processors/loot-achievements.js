@@ -129,11 +129,12 @@ export function processLootAchievements(gameData, playerId, suffix) {
       lootRateRank.value,
       byLootRate.length,
       {
-        tab: 'stats',
-        subtab: 'loot',
+        tab: 'rankings',
+        subtab: 'lootStats',
         view: 'normalized',
         minGames: 25
       }
+      , 'loot'
     ));
   }
 
