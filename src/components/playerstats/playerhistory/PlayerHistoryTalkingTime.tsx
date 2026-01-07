@@ -5,28 +5,14 @@ import {
 } from 'recharts';
 import { usePlayerTalkingTimeStats } from '../../../hooks/usePlayerTalkingTimeStats';
 import { getRoleBreakdownTopN } from '../../../hooks/utils/playerTalkingTimeUtils';
-import { useThemeAdjustedLycansColorScheme } from '../../../types/api';
+import { useThemeAdjustedLycansColorScheme, getCampColor } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { formatSecondsToMinutesSeconds } from '../../../utils/durationFormatters';
-import type { MainCamp } from '../../../hooks/usePlayerTalkingTimeStats';
 
 interface PlayerHistoryTalkingTimeProps {
   selectedPlayerName: string;
 }
 
-// Camp color mapping
-const CAMP_COLORS: Record<MainCamp, string> = {
-  Villageois: 'var(--camp-villageois)',
-  Loup: 'var(--camp-loup)',
-  Autres: 'var(--camp-autres)'
-};
-
-// Fallback colors if CSS variables not available
-const CAMP_COLORS_FALLBACK: Record<MainCamp, string> = {
-  Villageois: '#4CAF50',
-  Loup: '#F44336',
-  Autres: '#9C27B0'
-};
 
 export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTalkingTimeProps) {
   const { data, isLoading, error } = usePlayerTalkingTimeStats(selectedPlayerName);
@@ -56,39 +42,7 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
     ];
   }, [data]);
 
-  // Get camp color
-  const getCampColor = (camp: string): string => {
-    const campKey = camp as MainCamp;
-    return lycansColorScheme[camp as keyof typeof lycansColorScheme] 
-      || CAMP_COLORS[campKey] 
-      || CAMP_COLORS_FALLBACK[campKey] 
-      || '#888888';
-  };
-
-  // Get role color (consistent with PlayerHistoryRoles component)
-  const getRoleColor = (roleName: string): string => {
-    // Special color mappings for Villageois Elite powers and solo roles
-    const colorMap: Record<string, string> = {
-      'Chasseur': lycansColorScheme.Chasseur || '#FF5722',
-      'Alchimiste': lycansColorScheme.Alchimiste || '#9C27B0',
-      'Protecteur': lycansColorScheme.Protecteur || '#4CAF50',
-      'Disciple': lycansColorScheme.Disciple || '#2196F3',
-      'Aucun pouvoir': lycansColorScheme.Villageois || '#8BC34A',
-      'Villageois': lycansColorScheme.Villageois || '#4CAF50',
-      'Loup': lycansColorScheme.Loup || '#F44336',
-      'Idiot du Village': lycansColorScheme['Idiot du Village'] || '#FFC107',
-      'Traître': lycansColorScheme.Traître || '#E91E63',
-      'Louveteau': lycansColorScheme.Louveteau || '#FF5722'
-    };
-    
-    // Try to find color in lycansColorScheme first
-    if (roleName in lycansColorScheme) {
-      return (lycansColorScheme as any)[roleName] || colorMap[roleName] || lycansColorScheme.Villageois || '#4CAF50';
-    }
-    
-    // If found in colorMap, use it; otherwise default to Villageois blue (most unmapped roles are Villageois powers)
-    return colorMap[roleName] || lycansColorScheme.Villageois || '#4CAF50';
-  };
+  // Note: Using getCampColor from api.ts for consistent color management across components
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de temps de parole...</div>;
@@ -307,7 +261,7 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
                         {roleBreakdownData.map((entry, index) => (
                           <Cell 
                             key={`cell-${index}`}
-                            fill={getRoleColor(entry.role)}
+                            fill={lycansColorScheme[entry.role as keyof typeof lycansColorScheme] || lycansColorScheme.Villageois}
                           />
                         ))}
                       </Bar>
