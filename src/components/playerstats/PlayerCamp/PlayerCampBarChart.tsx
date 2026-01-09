@@ -1,5 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
+import { InfoBubble } from '../../common/InfoBubble';
 
 interface ChartPlayerCampPerformance {
   player: string;
@@ -21,6 +22,7 @@ interface ChartPlayerCampPerformance {
 interface PlayerCampPerformanceBarChartProps {
   viewMode: 'performance' | 'playPercentage';
   selectedCamp: string;
+  minGames: number;
   chartData: ChartPlayerCampPerformance[];
   highlightedPlayer: string | null;
   lycansColorScheme: Record<string, string>;
@@ -31,6 +33,7 @@ interface PlayerCampPerformanceBarChartProps {
 export function PlayerCampPerformanceBarChart({
   viewMode,
   selectedCamp,
+  minGames,
   chartData,
   highlightedPlayer,
   lycansColorScheme,
@@ -40,16 +43,99 @@ export function PlayerCampPerformanceBarChart({
   
   return (
     <div className="lycans-graphique-section">
-      <h3>
-        {viewMode === 'performance' 
-          ? (selectedCamp === 'Tous les camps' 
-              ? 'Meilleures performances - Tous les camps'
-              : `Meilleurs joueurs en ${selectedCamp}`)
-          : (selectedCamp === 'Tous les camps'
-              ? 'Plus grand % de parties - Tous les camps'
-              : `Plus grand % de parties en ${selectedCamp}`)
-        }
-      </h3>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+        <h3 style={{ margin: 0 }}>
+          {viewMode === 'performance' 
+            ? (selectedCamp === 'Tous les camps' 
+                ? 'Meilleures performances - Tous les camps'
+                : `Meilleurs joueurs en ${selectedCamp}`)
+            : (selectedCamp === 'Tous les camps'
+                ? 'Plus grand % de parties - Tous les camps'
+                : `Plus grand % de parties en ${selectedCamp}`)
+          }
+        </h3>
+        <InfoBubble 
+          infoId={`bar-chart-${viewMode}-${selectedCamp}`}
+          title="À propos de ce graphique"
+        >
+          {viewMode === 'performance' ? (
+            <>
+              <p>
+                <strong>Filtres actuels :</strong>
+              </p>
+              <ul>
+                <li><strong>Affichage :</strong> Meilleures Performances</li>
+                <li><strong>Camp/Rôle :</strong> {selectedCamp}</li>
+                <li><strong>Minimum de parties :</strong> {minGames}</li>
+              </ul>
+              {(selectedCamp === 'Tous les camps' || selectedCamp === 'Camp Villageois' || selectedCamp === 'Camp Loup' || selectedCamp === 'Rôles spéciaux') && (
+                <p style={{ background: 'var(--bg-primary)', padding: '0.75rem', borderRadius: '6px', marginTop: '0.5rem' }}>
+                  <strong>ℹ️ {selectedCamp} :</strong>{' '}
+                  {selectedCamp === 'Tous les camps' && 'Affiche le meilleur rôle de chaque joueur (toutes catégories confondues).'}
+                  {selectedCamp === 'Camp Villageois' && 'Inclut Villageois, Chasseur, Alchimiste, Protecteur et Disciple.'}
+                  {selectedCamp === 'Camp Loup' && 'Inclut Loup, Traître et Louveteau.'}
+                  {selectedCamp === 'Rôles spéciaux' && 'Inclut les rôles solo comme Amoureux, Idiot du Village, Agent, etc.'}
+                </p>
+              )}
+              <p>
+                <strong>Comment ça marche :</strong>
+              </p>
+              <ul>
+                <li><strong>Taux personnel</strong> : Le pourcentage de victoires du joueur dans ce camp</li>
+                <li><strong>Moyenne du camp</strong> : Le taux de victoire moyen de tous les joueurs dans ce camp</li>
+                <li><strong>Performance</strong> : La différence entre le taux personnel et la moyenne du camp</li>
+              </ul>
+              <p>
+                <strong>Interprétation :</strong>
+              </p>
+              <ul>
+                <li><strong>Performance positive (+)</strong> : Le joueur performe mieux que la moyenne</li>
+                <li><strong>Performance négative (-)</strong> : Le joueur performe moins bien que la moyenne</li>
+              </ul>
+              <p>
+                <em>Exemple :</em> Si un joueur a 60% de victoires en Camp Villageois et que la moyenne est 45%, 
+                sa performance est de <code>+15%</code>.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                <strong>Filtres actuels :</strong>
+              </p>
+              <ul>
+                <li><strong>Affichage :</strong> Pourcentage de Parties Jouées</li>
+                <li><strong>Camp/Rôle :</strong> {selectedCamp}</li>
+                <li><strong>Minimum de parties :</strong> {minGames}</li>
+              </ul>
+              {(selectedCamp === 'Tous les camps' || selectedCamp === 'Camp Villageois' || selectedCamp === 'Camp Loup' || selectedCamp === 'Rôles spéciaux') && (
+                <p style={{ background: 'var(--bg-primary)', padding: '0.75rem', borderRadius: '6px', marginTop: '0.5rem' }}>
+                  <strong>ℹ️ {selectedCamp} :</strong>{' '}
+                  {selectedCamp === 'Tous les camps' && 'Affiche le rôle le plus joué par chaque joueur (toutes catégories confondues).'}
+                  {selectedCamp === 'Camp Villageois' && 'Inclut Villageois, Chasseur, Alchimiste, Protecteur et Disciple.'}
+                  {selectedCamp === 'Camp Loup' && 'Inclut Loup, Traître et Louveteau.'}
+                  {selectedCamp === 'Rôles spéciaux' && 'Inclut les rôles solo comme Amoureux, Idiot du Village, Agent, etc.'}
+                </p>
+              )}
+              <p>
+                <strong>Comment ça marche :</strong>
+              </p>
+              <ul>
+                <li><strong>Parties dans ce rôle</strong> : Nombre de parties jouées avec ce rôle/camp</li>
+                <li><strong>Total parties</strong> : Nombre total de parties jouées par le joueur</li>
+                <li><strong>Pourcentage</strong> : (Parties dans ce rôle / Total parties) × 100</li>
+              </ul>
+              <p>
+                <strong>Interprétation :</strong>
+              </p>
+              <ul>
+                <li>Un <strong>pourcentage élevé</strong> indique que le joueur a souvent eu ce rôle</li>
+                <li>Permet d'identifier les <strong>rôles récurrents</strong> pour chaque joueur</li>
+                <li>Utile pour comprendre l'<strong>expérience de jeu</strong> de chacun</li>
+              </ul>
+            </>
+          )}
+        </InfoBubble>
+      </div>
       <FullscreenChart title={
         viewMode === 'performance'
           ? (selectedCamp === 'Tous les camps' 

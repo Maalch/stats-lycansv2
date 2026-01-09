@@ -43,7 +43,7 @@ export function PlayerCampChart() {
     navigationState.campPerformanceState?.selectedCampPerformanceCamp || 'Camp Villageois'
   );
   const [minGames, setMinGames] = useState<number>(
-    navigationState.campPerformanceState?.selectedCampPerformanceMinGames || 3
+    navigationState.campPerformanceState?.selectedCampPerformanceMinGames || 50
   );
   
   const { playerCampPerformance, isLoading, error } = usePlayerCampPerformanceFromRaw();
@@ -825,6 +825,7 @@ export function PlayerCampChart() {
         <PlayerCampPerformanceBarChart
           viewMode={viewMode}
           selectedCamp={selectedCamp}
+          minGames={minGames}
           chartData={chartData}
           highlightedPlayer={settings.highlightedPlayer}
           lycansColorScheme={lycansColorScheme}
@@ -835,6 +836,7 @@ export function PlayerCampChart() {
         <PlayerCampPerformanceScatterChart
           viewMode={viewMode}
           selectedCamp={selectedCamp}
+          minGames={minGames}
           chartData={chartData}
           highlightedPlayer={settings.highlightedPlayer}
           lycansColorScheme={lycansColorScheme}
