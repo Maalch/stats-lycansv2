@@ -1,0 +1,109 @@
+/* Strengths & Weaknesses Styles */
+
+.strengths-weaknesses-section {
+  padding: 1.5rem;
+}
+
+.no-data {
+  text-align: center;
+  color: var(--text-tertiary);
+  font-style: italic;
+  padding: 2rem;
+}
+
+.sw-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Column Styles */
+.sw-column {
+  background: var(--background-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.strengths-column {
+  border-left: 4px solid #4caf50;
+}
+
+.weaknesses-column {
+  border-left: 4px solid #ff9800;
+}
+
+.sw-column-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sw-icon {
+  font-size: 1.1rem;
+}
+
+/* List Styles */
+.sw-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sw-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sw-item:last-child {
+  border-bottom: none;
+}
+
+.sw-category-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.sw-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.strength-item .sw-description {
+  color: var(--text-primary);
+}
+
+.weakness-item .sw-description {
+  color: var(--text-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .strengths-weaknesses-section {
+    padding: 1rem;
+  }
+  
+  .sw-column {
+    padding: 0.75rem;
+  }
+  
+  .sw-item {
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+  }
+  
+  .sw-description {
+    font-size: 0.85rem;
+  }
+}

@@ -940,6 +940,29 @@
   font-style: italic;
 }
 
+/* Player Profile Section */
+.player-profile-section {
+  margin-top: 0.5rem;
+}
+
+/* Profile Button Styling */
+.lycans-categorie-btn.profile-btn {
+  background: linear-gradient(135deg, var(--accent-primary-transparent), var(--background-secondary));
+  border: 2px solid var(--accent-primary);
+  font-weight: 600;
+}
+
+.lycans-categorie-btn.profile-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.lycans-categorie-btn.profile-btn.active {
+  background: var(--accent-primary);
+  color: white;
+  box-shadow: 0 2px 8px rgba(var(--accent-primary-rgb), 0.3);
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

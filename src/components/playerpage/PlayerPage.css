@@ -1,0 +1,157 @@
+/* Player Page Styles */
+
+.player-page-container {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Empty, Loading, Error States */
+.player-page-empty,
+.player-page-loading,
+.player-page-error {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: var(--background-secondary);
+  border-radius: 16px;
+  border: 2px solid var(--border-color);
+}
+
+.player-page-empty h2,
+.player-page-error h2 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.player-page-empty p,
+.player-page-loading p,
+.player-page-error p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.back-button {
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+.loading-spinner.small {
+  width: 30px;
+  height: 30px;
+  border-width: 3px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Main Grid Layout */
+.player-page-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.player-page-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Section Cards */
+.player-page-section {
+  background: var(--background-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.player-page-section:hover {
+  border-color: var(--accent-primary-transparent);
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* Achievements Section */
+.player-page-achievements {
+  margin-top: 1.5rem;
+}
+
+.achievements-loading,
+.achievements-error {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.no-achievements {
+  text-align: center;
+  color: var(--text-tertiary);
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .player-page-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .player-page-container {
+    padding: 1rem;
+  }
+  
+  .player-page-section {
+    padding: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .player-page-container {
+    padding: 0.75rem;
+  }
+  
+  .player-page-section {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+}

@@ -1,0 +1,198 @@
+/* Playstyle Analysis Styles */
+
+.playstyle-section {
+  padding: 1.5rem;
+}
+
+/* Traits Grid */
+.playstyle-traits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.trait-card {
+  background: var(--background-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.trait-card:hover {
+  border-color: var(--accent-primary-transparent);
+  transform: translateY(-2px);
+}
+
+.trait-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.trait-emoji {
+  font-size: 1.5rem;
+}
+
+.trait-category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.trait-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.trait-description {
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+.trait-stats {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mini-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.mini-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  letter-spacing: 0.3px;
+}
+
+/* Camp Performance */
+.camp-performance {
+  margin-top: 1rem;
+}
+
+.subsection-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.camp-cards {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.camp-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--background-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  flex: 1;
+  min-width: 140px;
+  transition: all 0.3s ease;
+}
+
+.camp-card:hover {
+  border-color: var(--accent-primary-transparent);
+}
+
+.camp-card.favorite {
+  border-left: 4px solid #ffd700;
+}
+
+.camp-card.best {
+  border-left: 4px solid #4caf50;
+}
+
+.camp-card.worst {
+  border-left: 4px solid #ff6b6b;
+}
+
+.camp-emoji {
+  font-size: 1.25rem;
+}
+
+.camp-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.camp-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  letter-spacing: 0.3px;
+}
+
+.camp-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.camp-rate {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-left: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .playstyle-traits {
+    grid-template-columns: 1fr;
+  }
+  
+  .camp-cards {
+    flex-direction: column;
+  }
+  
+  .camp-card {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .playstyle-section {
+    padding: 1rem;
+  }
+  
+  .trait-card {
+    padding: 0.75rem;
+  }
+  
+  .trait-emoji {
+    font-size: 1.25rem;
+  }
+  
+  .trait-value {
+    font-size: 1.1rem;
+  }
+}
