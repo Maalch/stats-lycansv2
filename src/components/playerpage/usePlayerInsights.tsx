@@ -10,6 +10,52 @@ import type { Player } from '../../types/joueurs';
 import type { Achievement } from '../../types/achievements';
 
 // =====================================================
+// Configuration Constants
+// =====================================================
+
+// Voting style thresholds for aggressiveness score
+const VOTING_STYLE_THRESHOLDS = {
+  AGGRESSIVE: 60,
+  STRATEGIC: 30,
+} as const;
+
+// Communication level thresholds (seconds per game average)
+const COMMUNICATION_THRESHOLDS = {
+  TALKATIVE: 120,
+  MODERATE: 60,
+} as const;
+
+// Minimum games required for various calculations
+const MIN_GAMES = {
+  CAMP_STATS: 3,          // Minimum games to include in camp win rate rankings
+  GLOBAL_STATS: 10,       // Minimum games for global average calculations
+  TEAMMATE_STATS: 5,      // Minimum games together for teammate analysis
+  FUN_FACT_STATS: 5,      // Minimum games for fun fact inclusion
+  VOTE_STATS: 20,         // Minimum votes for accuracy calculations
+  TARGET_STATS: 5,        // Minimum times targeted for survival rate
+} as const;
+
+// Strength/weakness thresholds (percentage difference from average)
+const PERFORMANCE_THRESHOLDS = {
+  STRENGTH: 10,           // Minimum % above average to be considered a strength
+  WEAKNESS: 10,           // Minimum % below average to be considered a weakness
+  MAP_STRENGTH: 15,       // Minimum % difference for map-specific insights
+  SURVIVAL_STRONG: 60,    // Survival rate to be considered strong
+  SURVIVAL_WEAK: 30,      // Survival rate to be considered weak
+  VOTE_ACCURACY_STRONG: 70,
+  VOTE_ACCURACY_WEAK: 40,
+} as const;
+
+// Fun fact thresholds
+const FUN_FACT_THRESHOLDS = {
+  MIN_KILL_COUNT: 10,     // Minimum wolf kills to show fun fact
+  MIN_WIN_STREAK: 5,      // Minimum win streak to show fun fact
+  MIN_NEMESIS_KILLS: 3,   // Minimum deaths by same player to show nemesis
+  BEST_DAY_WIN_RATE: 60,  // Minimum win rate on best day
+  BEST_TEAMMATE_WIN_RATE: 60, // Minimum win rate with best teammate
+} as const;
+
+// =====================================================
 // Types
 // =====================================================
 
@@ -189,8 +235,8 @@ function computePlaystyle(
   // Determine voting style based on aggressiveness score
   let votingStyle: 'aggressive' | 'cautious' | 'strategic' | 'unknown' = 'unknown';
   const aggressiveness = playerBehavior?.aggressivenessScore || 0;
-  if (aggressiveness > 60) votingStyle = 'aggressive';
-  else if (aggressiveness > 30) votingStyle = 'strategic';
+  if (aggressiveness > VOTING_STYLE_THRESHOLDS.AGGRESSIVE) votingStyle = 'aggressive';
+  else if (aggressiveness > VOTING_STYLE_THRESHOLDS.STRATEGIC) votingStyle = 'strategic';
   else if (aggressiveness >= 0) votingStyle = 'cautious';
   
   // Calculate communication level
@@ -211,8 +257,8 @@ function computePlaystyle(
   
   const avgTalkingTimePerGame = playerGames.length > 0 ? totalTalkingTime / playerGames.length : 0;
   let communicationLevel: 'talkative' | 'moderate' | 'quiet' | 'unknown' = 'unknown';
-  if (avgTalkingTimePerGame > 120) communicationLevel = 'talkative';
-  else if (avgTalkingTimePerGame > 60) communicationLevel = 'moderate';
+  if (avgTalkingTimePerGame > COMMUNICATION_THRESHOLDS.TALKATIVE) communicationLevel = 'talkative';
+  else if (avgTalkingTimePerGame > COMMUNICATION_THRESHOLDS.MODERATE) communicationLevel = 'moderate';
   else if (avgTalkingTimePerGame >= 0) communicationLevel = 'quiet';
   
   const talkingRatio = totalTalkingTime > 0 ? totalMeetingTime / totalTalkingTime : 0;
@@ -270,7 +316,7 @@ function computePlaystyle(
   const favoriteCamp = campEntries.sort((a, b) => b[1].games - a[1].games)[0]?.[0] || 'Inconnu';
   
   const campWinRates = campEntries
-    .filter(([_, stats]) => stats.games >= 3) // Minimum 3 games
+    .filter(([_, stats]) => stats.games >= MIN_GAMES.CAMP_STATS)
     .map(([camp, stats]) => ({
       camp,
       winRate: (stats.wins / stats.games) * 100,
@@ -334,7 +380,7 @@ function computeStrengthsWeaknesses(
     : 50;
   
   // Camp-based strengths/weaknesses
-  if (playstyle.bestCamp.winRate > globalAvgWinRate + 10) {
+  if (playstyle.bestCamp.winRate > globalAvgWinRate + PERFORMANCE_THRESHOLDS.STRENGTH) {
     const diff = playstyle.bestCamp.winRate - globalAvgWinRate;
     strengths.push({
       type: 'strength',
@@ -345,7 +391,7 @@ function computeStrengthsWeaknesses(
     });
   }
   
-  if (playstyle.worstCamp.winRate < globalAvgWinRate - 10 && playstyle.worstCamp.camp !== 'Inconnu') {
+  if (playstyle.worstCamp.winRate < globalAvgWinRate - PERFORMANCE_THRESHOLDS.WEAKNESS && playstyle.worstCamp.camp !== 'Inconnu') {
     const diff = globalAvgWinRate - playstyle.worstCamp.winRate;
     weaknesses.push({
       type: 'weakness',
@@ -357,14 +403,14 @@ function computeStrengthsWeaknesses(
   }
   
   // Survival-based
-  if (playstyle.survivalRateWhenTargeted > 60) {
+  if (playstyle.survivalRateWhenTargeted > PERFORMANCE_THRESHOLDS.SURVIVAL_STRONG) {
     strengths.push({
       type: 'strength',
       category: 'survival',
       description: `Fort taux de survie quand ciblé lors des votes (${playstyle.survivalRateWhenTargeted.toFixed(0)}%)`,
       value: playstyle.survivalRateWhenTargeted,
     });
-  } else if (playstyle.survivalRateWhenTargeted < 30 && playstyle.survivalRateWhenTargeted > 0) {
+  } else if (playstyle.survivalRateWhenTargeted < PERFORMANCE_THRESHOLDS.SURVIVAL_WEAK && playstyle.survivalRateWhenTargeted > 0) {
     weaknesses.push({
       type: 'weakness',
       category: 'survival',
@@ -374,14 +420,14 @@ function computeStrengthsWeaknesses(
   }
   
   // Vote accuracy
-  if (playstyle.voteAccuracy > 70) {
+  if (playstyle.voteAccuracy > PERFORMANCE_THRESHOLDS.VOTE_ACCURACY_STRONG) {
     strengths.push({
       type: 'strength',
       category: 'voting',
       description: `Excellente précision de vote contre le camp adverse (${playstyle.voteAccuracy.toFixed(0)}%)`,
       value: playstyle.voteAccuracy,
     });
-  } else if (playstyle.voteAccuracy < 40 && playstyle.voteAccuracy > 0) {
+  } else if (playstyle.voteAccuracy < PERFORMANCE_THRESHOLDS.VOTE_ACCURACY_WEAK && playstyle.voteAccuracy > 0) {
     weaknesses.push({
       type: 'weakness',
       category: 'voting',
@@ -394,7 +440,7 @@ function computeStrengthsWeaknesses(
   Object.entries(playerHistory.mapStats).forEach(([mapName, stats]) => {
     if (stats.appearances >= 5) {
       const mapWinRate = parseFloat(stats.winRate);
-      if (mapWinRate > globalWinRate + 15) {
+      if (mapWinRate > globalWinRate + PERFORMANCE_THRESHOLDS.MAP_STRENGTH) {
         strengths.push({
           type: 'strength',
           category: 'map',
@@ -402,7 +448,7 @@ function computeStrengthsWeaknesses(
           value: mapWinRate,
           comparisonValue: globalWinRate,
         });
-      } else if (mapWinRate < globalWinRate - 15) {
+      } else if (mapWinRate < globalWinRate - PERFORMANCE_THRESHOLDS.MAP_STRENGTH) {
         weaknesses.push({
           type: 'weakness',
           category: 'map',
@@ -452,7 +498,7 @@ function computeComparisons(
     });
   });
   
-  const playersWithMinGames = Object.entries(allPlayerStats).filter(([_, s]) => s.games >= 10);
+  const playersWithMinGames = Object.entries(allPlayerStats).filter(([_, s]) => s.games >= MIN_GAMES.GLOBAL_STATS);
   
   // Win rate comparison
   const avgWinRates = playersWithMinGames.map(([_, s]) => (s.wins / s.games) * 100);
@@ -471,7 +517,7 @@ function computeComparisons(
   // Voting accuracy comparison
   const votingStats = calculateAggregatedVotingStats(gameData);
   const allAccuracies = votingStats.playerAccuracyStats
-    .filter(p => p.totalVotes >= 20)
+    .filter(p => p.totalVotes >= MIN_GAMES.VOTE_STATS)
     .map(p => p.accuracyRate);
   const avgAccuracy = allAccuracies.length > 0 
     ? allAccuracies.reduce((a, b) => a + b, 0) / allAccuracies.length 
@@ -501,7 +547,7 @@ function computeComparisons(
   
   // Survival rate comparison
   const allSurvivalRates = votingStats.playerTargetStats
-    .filter(p => p.totalTimesTargeted >= 5)
+    .filter(p => p.totalTimesTargeted >= MIN_GAMES.TARGET_STATS)
     .map(p => p.survivalRate);
   const avgSurvivalRate = allSurvivalRates.length > 0 
     ? allSurvivalRates.reduce((a, b) => a + b, 0) / allSurvivalRates.length 
@@ -549,7 +595,7 @@ function computeFunFacts(
   const favoriteColor = Object.entries(colorCounts)
     .sort((a, b) => b[1].games - a[1].games)[0];
   
-  if (favoriteColor && favoriteColor[1].games >= 5) {
+  if (favoriteColor && favoriteColor[1].games >= MIN_GAMES.FUN_FACT_STATS) {
     const winRate = (favoriteColor[1].wins / favoriteColor[1].games * 100).toFixed(0);
     funFacts.push({
       emoji: '🎨',
@@ -570,7 +616,7 @@ function computeFunFacts(
   const nemesis = Object.entries(killedByCounts)
     .sort((a, b) => b[1] - a[1])[0];
   
-  if (nemesis && nemesis[1] >= 3) {
+  if (nemesis && nemesis[1] >= FUN_FACT_THRESHOLDS.MIN_NEMESIS_KILLS) {
     funFacts.push({
       emoji: '💀',
       title: 'Némésis',
@@ -610,7 +656,7 @@ function computeFunFacts(
   });
   
   const bestTeammate = Object.entries(teammateWins)
-    .filter(([_, stats]) => stats.together >= 5)
+    .filter(([_, stats]) => stats.together >= MIN_GAMES.TEAMMATE_STATS)
     .map(([name, stats]) => ({
       name,
       winRate: (stats.wins / stats.together) * 100,
@@ -618,7 +664,7 @@ function computeFunFacts(
     }))
     .sort((a, b) => b.winRate - a.winRate)[0];
   
-  if (bestTeammate && bestTeammate.winRate > 60) {
+  if (bestTeammate && bestTeammate.winRate > FUN_FACT_THRESHOLDS.BEST_TEAMMATE_WIN_RATE) {
     funFacts.push({
       emoji: '🤝',
       title: 'Meilleur coéquipier',
@@ -643,7 +689,7 @@ function computeFunFacts(
     }
   });
   
-  if (maxWinStreak >= 5) {
+  if (maxWinStreak >= FUN_FACT_THRESHOLDS.MIN_WIN_STREAK) {
     funFacts.push({
       emoji: '🔥',
       title: 'Meilleure série de victoires',
@@ -672,7 +718,7 @@ function computeFunFacts(
   });
   
   const bestDay = Object.entries(dayStats)
-    .filter(([_, stats]) => stats.games >= 5)
+    .filter(([_, stats]) => stats.games >= MIN_GAMES.FUN_FACT_STATS)
     .map(([day, stats]) => ({
       day,
       winRate: (stats.wins / stats.games) * 100,
@@ -680,7 +726,7 @@ function computeFunFacts(
     }))
     .sort((a, b) => b.winRate - a.winRate)[0];
   
-  if (bestDay && bestDay.winRate > 60) {
+  if (bestDay && bestDay.winRate > FUN_FACT_THRESHOLDS.BEST_DAY_WIN_RATE) {
     funFacts.push({
       emoji: '📅',
       title: 'Meilleur jour',
@@ -707,7 +753,7 @@ function computeFunFacts(
     });
   });
   
-  if (totalKillsAsWolf >= 10) {
+  if (totalKillsAsWolf >= FUN_FACT_THRESHOLDS.MIN_KILL_COUNT) {
     funFacts.push({
       emoji: '🐺',
       title: 'Victimes en tant que Loup',
