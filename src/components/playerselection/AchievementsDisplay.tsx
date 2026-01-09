@@ -642,6 +642,25 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
     return `hsl(${hue}, 70%, 50%)`;
   };
 
+  // Helper function to calculate red gradient for reverse rankings (bad achievements)
+  const getRedGradientColor = (rank: number | undefined, totalRanked: number | undefined): string | undefined => {
+    // Apply red gradient for all ranks (including top 3 when they appear in main grid)
+    if (!rank || !totalRanked) return undefined;
+    
+    // Prevent division by zero
+    if (totalRanked <= 1) return 'hsl(0, 70%, 50%)'; // Pure red if only one rank
+    
+    // Calculate position (0 = rank 1 = bright red, 1 = last rank = dark red)
+    const position = (rank - 1) / (totalRanked - 1);
+    
+    // Stay in red spectrum: hue 0 (red) to hue 15 (red-orange)
+    // Vary lightness from 50% (bright) to 35% (dark)
+    const hue = position * 15; // 0 to 15
+    const lightness = 50 - (position * 15); // 50% to 35%
+    
+    return `hsl(${hue}, 70%, ${lightness}%)`;
+  };
+
   // Helper function to get border color with slight opacity adjustment
   const getBorderColorFromGradient = (baseColor: string | undefined): string | undefined => {
     if (!baseColor) return undefined;
@@ -663,7 +682,11 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
     .sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
   const comparisonAchievements = achievements.filter(a => a.category === 'comparison');
 
-  // Count top 3 achievements
+  // Combine rankings: good achievements (all ranks) + bad achievements (all ranks)
+  const allRankings = [...goodAchievements, ...badAchievements]
+    .sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+
+  // Count top 3 achievements (only from good achievements for podium)
   const top3Count = goodAchievements.filter(a => a.rank && a.rank <= 3).length;
 
   return (
@@ -706,30 +729,40 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         </div>
       )}
       
-      {goodAchievements.length > 0 && (
-        <div className="achievements-section good-achievements">
+      {allRankings.length > 0 && (
+        <div className="achievements-section unified-rankings">
           <h5>🏆 Classements</h5>
           <div className="achievements-grid">
-            {goodAchievements
-              .filter(a => !a.rank || a.rank > 3) // Exclude top 3 from this section
+            {allRankings
+              .filter(a => {
+                // Exclude top 3 good achievements (they're in podium)
+                // Include all bad achievements (reverse rankings never go to podium)
+                if (a.type === 'bad') return true;
+                return !a.rank || a.rank > 3;
+              })
               .map((achievement, index) => {
-                const gradientColor = getGradientColor(achievement.rank, achievement.totalRanked);
+                const isBad = achievement.type === 'bad';
+                const gradientColor = isBad 
+                  ? getRedGradientColor(achievement.rank, achievement.totalRanked)
+                  : getGradientColor(achievement.rank, achievement.totalRanked);
                 const borderColor = getBorderColorFromGradient(gradientColor);
+                // Only apply rank class name to good achievements (prevents yellow styling on reverse rankings)
+                const rankClass = isBad ? '' : getRankClassName(achievement.rank);
                 return (
                   <div
                     key={achievement.id}
-                    className={`achievement-card good ${getRankClassName(achievement.rank)}`}
+                    className={`achievement-card ${isBad ? 'bad' : 'good'} ${rankClass}`}
                     onClick={(e) => handleAchievementClick(achievement, e)}
                     title={getAchievementTooltip(achievement)}
                     style={{ 
                       animationDelay: `${index * 0.05}s`,
                       borderLeftColor: borderColor,
-                      ...(gradientColor && { borderLeftWidth: '4px' })
+                      borderLeftWidth: '4px'
                     }}
                   >
                     <div className="achievement-header">
                       <span className="achievement-title">
-                        {achievement.title}
+                        {isBad && '💀 '}{achievement.title}
                       </span>
                       <span 
                         className="achievement-rank"
@@ -746,44 +779,9 @@ export function AchievementsDisplay({ achievements, title, emptyMessage, achieve
         </div>
       )}
 
-      {badAchievements.length > 0 && (
-        <div className="achievements-section bad-achievements">
-          <h5>💀 Classements (Inversés)</h5>
-          <div className="achievements-grid">
-            {badAchievements.map((achievement) => {
-              const gradientColor = getGradientColor(achievement.rank, achievement.totalRanked);
-              const borderColor = getBorderColorFromGradient(gradientColor);
-              return (
-                <div
-                  key={achievement.id}
-                  className={`achievement-card bad rank-${achievement.rank}`}
-                  onClick={(e) => handleAchievementClick(achievement, e)}
-                  title={getAchievementTooltip(achievement)}
-                  style={{
-                    borderLeftColor: borderColor,
-                    ...(gradientColor && { borderLeftWidth: '4px' })
-                  }}
-                >
-                  <div className="achievement-header">
-                    <span className="achievement-title">{achievement.title}</span>
-                    <span 
-                      className="achievement-rank"
-                      style={gradientColor ? { backgroundColor: gradientColor } : {}}
-                    >
-                      #{achievement.rank}{achievement.totalRanked ? `/${achievement.totalRanked}` : ''}
-                    </span>
-                  </div>
-                  <p className="achievement-description">{achievement.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
       {comparisonAchievements.length > 0 && (
         <div className="achievements-section comparison-achievements">
-          <h5>📊 Statistiques Face-à-Face</h5>
+          <h5>📊 Statistiques Coéquipiers et Face-à-Face</h5>
           <div className="achievements-grid">
             {comparisonAchievements.map((achievement) => (
               <div
