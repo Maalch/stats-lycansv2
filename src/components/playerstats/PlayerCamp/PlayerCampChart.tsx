@@ -24,6 +24,7 @@ interface ChartPlayerCampPerformance {
   playerCamp?: string;
   totalGames?: number;
   playPercentage?: number;
+  campAvgPlayPercentage?: number;
 }
 
 export function PlayerCampChart() {
@@ -145,18 +146,58 @@ export function PlayerCampChart() {
     interface PlayPercentageEntry extends ChartPlayerCampPerformance {
       totalGames: number;
       playPercentage: number;
+      campAvgPlayPercentage: number;
+    }
+    
+    // First pass: calculate total games per player and accumulate camp statistics
+    const campGamesMap = new Map<string, { totalGames: number; totalPlayersWithCamp: number }>();
+    const playerTotalGames = new Map<string, number>();
+    
+    for (const player of playerPerformance) {
+      const totalGames = player.campPerformance.reduce((sum, cp) => sum + cp.games, 0);
+      playerTotalGames.set(player.player, totalGames);
+      
+      for (const cp of player.campPerformance) {
+        if (cp.games >= minGames) {
+          const existing = campGamesMap.get(cp.camp) || { totalGames: 0, totalPlayersWithCamp: 0 };
+          existing.totalGames += cp.games;
+          existing.totalPlayersWithCamp += 1;
+          campGamesMap.set(cp.camp, existing);
+        }
+      }
+    }
+    
+    // Calculate average play percentage for each camp
+    const campAvgPlayPercentages = new Map<string, number>();
+    for (const [camp, stats] of campGamesMap.entries()) {
+      // Average play percentage = average number of games in this camp / average total games
+      const avgGamesInCamp = stats.totalGames / stats.totalPlayersWithCamp;
+      const totalPlayerCount = stats.totalPlayersWithCamp;
+      
+      // Get average total games for players who played this camp
+      let sumTotalGames = 0;
+      for (const player of playerPerformance) {
+        const campData = player.campPerformance.find(cp => cp.camp === camp && cp.games >= minGames);
+        if (campData) {
+          sumTotalGames += playerTotalGames.get(player.player) || 0;
+        }
+      }
+      const avgTotalGames = sumTotalGames / totalPlayerCount;
+      const avgPlayPercentage = (avgGamesInCamp / avgTotalGames) * 100;
+      campAvgPlayPercentages.set(camp, avgPlayPercentage);
     }
     
     const campPlayers: PlayPercentageEntry[] = [];
     const allPercentages: PlayPercentageEntry[] = [];
     const playerBestPercentage = new Map<string, PlayPercentageEntry>();
     
+    // Second pass: create entries with average play percentages
     for (const player of playerPerformance) {
-      // Calculate total games for this player
-      const totalGames = player.campPerformance.reduce((sum, cp) => sum + cp.games, 0);
+      const totalGames = playerTotalGames.get(player.player) || 0;
       
       for (const cp of player.campPerformance) {
         if (cp.games >= minGames) {
+          const campAvgPlayPercentage = campAvgPlayPercentages.get(cp.camp) || 0;
           const playPercentage = (cp.games / totalGames) * 100;
           const uniqueKey = `${player.player}-${cp.camp}`;
           const percentageData: PlayPercentageEntry = {
@@ -171,6 +212,7 @@ export function PlayerCampChart() {
             campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
             totalGames: totalGames,
             playPercentage: playPercentage,
+            campAvgPlayPercentage: campAvgPlayPercentage,
             isHighlightedAddition: false,
             uniqueKey: uniqueKey,
             playerCamp: uniqueKey
@@ -215,7 +257,8 @@ export function PlayerCampChart() {
 
       if (!highlightedPlayerData) return dataArray;
 
-      const totalGames = highlightedPlayerData.campPerformance.reduce((sum, cp) => sum + cp.games, 0);
+      const totalGames = playerTotalGames.get(settings.highlightedPlayer) || 
+                         highlightedPlayerData.campPerformance.reduce((sum, cp) => sum + cp.games, 0);
 
       if (isTousLesCamps) {
         let bestPercentage: PlayPercentageEntry | null = null;
@@ -223,6 +266,7 @@ export function PlayerCampChart() {
         for (const cp of highlightedPlayerData.campPerformance) {
           if (cp.games >= 1) {
             const playPercentage = (cp.games / totalGames) * 100;
+            const campAvgPlayPercentage = campAvgPlayPercentages.get(cp.camp) || 0;
             const uniqueKey = `${highlightedPlayerData.player}-${cp.camp}`;
             const percentageData: PlayPercentageEntry = {
               player: highlightedPlayerData.player,
@@ -236,6 +280,7 @@ export function PlayerCampChart() {
               campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
               totalGames: totalGames,
               playPercentage: playPercentage,
+              campAvgPlayPercentage: campAvgPlayPercentage,
               isHighlightedAddition: true,
               uniqueKey: uniqueKey,
               playerCamp: uniqueKey
@@ -255,6 +300,7 @@ export function PlayerCampChart() {
       for (const cp of highlightedPlayerData.campPerformance) {
         if ((!campFilter || cp.camp === campFilter) && cp.games >= 1) {
           const playPercentage = (cp.games / totalGames) * 100;
+          const campAvgPlayPercentage = campAvgPlayPercentages.get(cp.camp) || 0;
           const uniqueKey = `${highlightedPlayerData.player}-${cp.camp}`;
           highlightedAdditions.push({
             player: highlightedPlayerData.player,
@@ -268,6 +314,7 @@ export function PlayerCampChart() {
             campAvgWinRateNum: parseFloat(cp.campAvgWinRate),
             totalGames: totalGames,
             playPercentage: playPercentage,
+            campAvgPlayPercentage: campAvgPlayPercentage,
             isHighlightedAddition: true,
             uniqueKey: uniqueKey,
             playerCamp: uniqueKey

@@ -17,6 +17,7 @@ interface ChartPlayerCampPerformance {
   playerCamp?: string;
   totalGames?: number;
   playPercentage?: number;
+  campAvgPlayPercentage?: number;
 }
 
 interface PlayerCampPerformanceScatterChartProps {
@@ -164,7 +165,7 @@ export function PlayerCampPerformanceScatterChart({
                 type="number"
                 dataKey={viewMode === 'performance' ? 'performanceNum' : (selectedCamp === 'Tous les camps' ? 'playPercentage' : 'winRateNum')}
                 name={viewMode === 'performance' ? 'Performance' : (selectedCamp === 'Tous les camps' ? 'Pourcentage' : 'Taux de victoire')}
-                domain={viewMode === 'performance' ? ['auto', 'auto'] : [0, 100]}
+                domain={['auto', 'auto']}
                 label={{ 
                   value: viewMode === 'performance' 
                     ? 'Performance vs moyenne (%)' 
@@ -211,13 +212,12 @@ export function PlayerCampPerformanceScatterChart({
                                 <div>Parties dans ce rôle: {dataPoint.games}</div>
                                 <div>Total parties: {dataPoint.totalGames}</div>
                                 <div>Pourcentage: {dataPoint.playPercentage?.toFixed(1)}%</div>
-                                <div>Victoires: {dataPoint.wins}</div>
+                                <div>Moyenne tous joueurs: {dataPoint.campAvgPlayPercentage?.toFixed(1)}%</div>
                                 <div>Taux de victoire: {dataPoint.winRate}%</div>
                               </>
                             ) : (
                               <>
                                 <div>Parties: {dataPoint.games}</div>
-                                <div>Victoires: {dataPoint.wins}</div>
                                 <div>Taux de victoire: {dataPoint.winRate}%</div>
                               </>
                             )}

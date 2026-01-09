@@ -17,6 +17,7 @@ interface ChartPlayerCampPerformance {
   playerCamp?: string;
   totalGames?: number;
   playPercentage?: number;
+  campAvgPlayPercentage?: number;
 }
 
 interface PlayerCampPerformanceBarChartProps {
@@ -181,7 +182,7 @@ export function PlayerCampPerformanceBarChart({
                 }}
               />
               <YAxis 
-                domain={viewMode === 'playPercentage' ? [0, 100] : ['auto', 'auto']}
+                domain={['auto', 'auto']}
                 label={{ 
                   value: viewMode === 'performance' ? 'Performance vs moyenne (%)' : 'Pourcentage de parties jouées (%)', 
                   angle: 270, 
@@ -223,7 +224,7 @@ export function PlayerCampPerformanceBarChart({
                             <div>Parties dans ce rôle: {dataPoint.games}</div>
                             <div>Total parties: {dataPoint.totalGames}</div>
                             <div>Pourcentage: {dataPoint.playPercentage?.toFixed(1)}%</div>
-                            <div>Victoires: {dataPoint.wins}</div>
+                            <div>Moyenne tous joueurs: {dataPoint.campAvgPlayPercentage?.toFixed(1)}%</div>
                             <div>Taux de victoire: {dataPoint.winRate}%</div>
                           </>
                         )}
