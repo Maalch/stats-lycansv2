@@ -56,6 +56,7 @@ const ClipsPage = lazy(() => import('./components/clips/ClipsPage').then(m => ({
 // Import VersionDisplay component
 import { VersionDisplay } from './components/common/VersionDisplay';
 import { ChangelogPage } from './components/common/ChangelogPage';
+import { PrivacyPolicyPage } from './components/common/PrivacyPolicyPage';
 
 const MAIN_TABS = [
   { 
@@ -269,6 +270,7 @@ function MainApp() {
   const [selectedBRStat, setSelectedBRStat] = useState('brParticipations');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
   const [showChangelog, setShowChangelog] = useState(false);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   // Helper function to update URL with pushState when tabs change
   const updateTabUrl = (tab: string, subtab: string | null = null) => {
@@ -632,6 +634,14 @@ function MainApp() {
                   >
                     📧 Contact & Feedback
                   </a>
+                  <span className="footer-separator"> • </span>
+                  <button 
+                    onClick={() => setShowPrivacyPolicy(true)}
+                    className="contact-link privacy-link"
+                    title="Consultez notre politique de confidentialité"
+                  >
+                    🔒 Confidentialité
+                  </button>
                 </p>
               </footer>
             </div>
@@ -641,6 +651,11 @@ function MainApp() {
         {/* Changelog overlay */}
         {showChangelog && (
           <ChangelogPage onClose={() => setShowChangelog(false)} />
+        )}
+
+        {/* Privacy policy overlay */}
+        {showPrivacyPolicy && (
+          <PrivacyPolicyPage onClose={() => setShowPrivacyPolicy(false)} />
         )}
       </>
   );
