@@ -10,7 +10,7 @@ import { computeVotingStatistics } from './compute-voting-stats.js';
 import { computeHunterStatistics } from './compute-hunter-stats.js';
 import { computeMapStats } from './compute-map-stats.js';
 import { computePlayerCampPerformance } from './compute-camp-performance.js';
-import { computeLootStats } from '../../processors/loot-achievements.js';
+import { computeLootStats } from '../processors/loot-achievements.js';
 
 /**
  * For most compute functions that deal with cumulative statistics,
