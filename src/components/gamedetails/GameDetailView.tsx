@@ -138,6 +138,7 @@ function formatDuration(durationInSeconds: number | null): string {
 // Component to display detailed view of a single game
 export function GameDetailView({ game }: { game: any }) {
   const [showVideo, setShowVideo] = useState(false);
+  const [showClips, setShowClips] = useState(false);
   const [selectedVOD, setSelectedVOD] = useState<string | null>(null);
   const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
   
@@ -456,15 +457,29 @@ export function GameDetailView({ game }: { game: any }) {
         </div>
 
 
-        {/* Video Toggle Button */}
-        {hasAnyVOD && (
+        {/* Video and Clips Toggle Buttons */}
+        {(hasAnyVOD || (game.clips && game.clips.length > 0)) && (
           <div className="lycans-game-detail-section full-width">
-            <button
-              onClick={() => setShowVideo(!showVideo)}
-              className="lycans-video-toggle-btn"
-            >
-              {showVideo ? '📹 Masquer la vidéo' : '🎥 Voir la vidéo'}
-            </button>
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              {hasAnyVOD && (
+                <button
+                  onClick={() => setShowVideo(!showVideo)}
+                  className="lycans-video-toggle-btn"
+                  style={{ width: 'auto', flex: '1', minWidth: '200px' }}
+                >
+                  {showVideo ? '📹 Masquer la vidéo' : '🎥 Voir la vidéo'}
+                </button>
+              )}
+              {game.clips && game.clips.length > 0 && (
+                <button
+                  onClick={() => setShowClips(!showClips)}
+                  className="lycans-video-toggle-btn"
+                  style={{ width: 'auto', flex: '1', minWidth: '200px' }}
+                >
+                  {showClips ? '🎬 Masquer les clips' : '🎬 Voir les Clips'}
+                </button>
+              )}
+            </div>
           </div>
         )}
 
@@ -513,7 +528,7 @@ export function GameDetailView({ game }: { game: any }) {
         )}
 
         {/* Clips Section */}
-        {game.clips && game.clips.length > 0 && (
+        {game.clips && game.clips.length > 0 && showClips && (
           <div className="lycans-game-detail-section full-width">
             <h4>🎬 Clips de la Partie ({game.clips.length})</h4>
             
