@@ -6,7 +6,6 @@ import { minGamesOptions} from '../../../types/api';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useSettings } from '../../../context/SettingsContext';
 import { PlayerCampPerformanceBarChart } from './PlayerCampBarChart';
-import { PlayerCampPerformanceScatterChart } from './PlayerCampScatterChart';
 
 // Extended interface for chart display with highlighting support
 interface ChartPlayerCampPerformance {
@@ -37,9 +36,6 @@ export function PlayerCampChart() {
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   
   // Use navigationState to restore state, with fallbacks
-  const [viewMode, setViewMode] = useState<'performance' | 'playPercentage'>(
-    navigationState.campPerformanceState?.viewMode || 'performance'
-  );
   const [selectedCamp, setSelectedCamp] = useState<string>(
     navigationState.campPerformanceState?.selectedCampPerformanceCamp || 'Camp Villageois'
   );
@@ -54,13 +50,13 @@ export function PlayerCampChart() {
     if (!navigationState.campPerformanceState) {
       updateNavigationState({
         campPerformanceState: {
-          viewMode: viewMode,
+          viewMode: 'performance',
           selectedCampPerformanceCamp: selectedCamp,
           selectedCampPerformanceMinGames: minGames
         }
       });
     }
-  }, [viewMode, selectedCamp, minGames, navigationState.campPerformanceState, updateNavigationState]);
+  }, [selectedCamp, minGames, navigationState.campPerformanceState, updateNavigationState]);
 
   // Get available camps from camp averages, ordered by mainCampOrder
   const availableCamps = useMemo(() => {
@@ -136,8 +132,8 @@ export function PlayerCampChart() {
   }, [playerCampPerformance]);
 
   // Data processing for play percentage view
-  const { campPlayPercentageData, topPlayPercentageData, totalPlayPercentagePlayers } = useMemo(() => {
-    if (!playerCampPerformance?.playerPerformance || viewMode !== 'playPercentage') {
+  const { campPlayPercentageData, topPlayPercentageData } = useMemo(() => {
+    if (!playerCampPerformance?.playerPerformance) {
       return { campPlayPercentageData: [], topPlayPercentageData: [], totalPlayPercentagePlayers: 0 };
     }
 
@@ -351,26 +347,18 @@ export function PlayerCampChart() {
       return topPlayers;
     };
     
-    let totalPlayers = 0;
-    if (selectedCamp === 'Tous les camps') {
-      totalPlayers = playerBestPercentage.size;
-    } else {
-      totalPlayers = campPlayers.length;
-    }
-    
     const finalCampData = getTopPlayersWithHighlighted(sortedCampPlayers, 15);
     const finalTopData = getTopPlayersWithHighlighted(sortedTopPercentages, 15);
     
     return {
       campPlayPercentageData: finalCampData,
-      topPlayPercentageData: finalTopData,
-      totalPlayPercentagePlayers: totalPlayers
+      topPlayPercentageData: finalTopData
     };
-  }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer, viewMode]);
+  }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer]);
 
   // Optimize data processing by combining operations and reducing redundant calculations
   const { campPlayerData, topPerformersData, totalMatchingPlayers } = useMemo(() => {
-    if (!playerCampPerformance?.playerPerformance || viewMode !== 'performance') {
+    if (!playerCampPerformance?.playerPerformance) {
       return { campPlayerData: [], topPerformersData: [], totalMatchingPlayers: 0 };
     }
 
@@ -562,7 +550,7 @@ export function PlayerCampChart() {
       topPerformersData: getTopPlayersWithHighlighted(sortedTopPerformers, 15),
       totalMatchingPlayers: totalPlayers
     };
-  }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer, viewMode]);
+  }, [playerCampPerformance, selectedCamp, minGames, settings.highlightedPlayer]);
 
   // Handler for bar chart clicks - navigate to game details
   const handleBarClick = (data: any) => {
@@ -664,13 +652,9 @@ export function PlayerCampChart() {
     return <div className="donnees-manquantes">Aucune donnée de performance par camp disponible</div>;
   }
 
-  const chartData = viewMode === 'performance' 
-    ? (selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData)
-    : (selectedCamp === 'Tous les camps' ? topPlayPercentageData : campPlayPercentageData);
-
   return (
     <div className="lycans-player-camp-performance">
-      <h2>{viewMode === 'performance' ? 'Meilleures Performances par Camp' : 'Pourcentage de Parties Jouées par Rôle'}</h2>
+      <h2>Comparaison des Camps</h2>
       
       {/* Controls */}
       <div className="lycans-controls-section" style={{ 
@@ -680,39 +664,6 @@ export function PlayerCampChart() {
         justifyContent: 'center',
         flexWrap: 'wrap'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <label htmlFor="view-mode-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Affichage:
-          </label>
-          <select
-            id="view-mode-select"
-            value={viewMode}
-            onChange={(e) => {
-              const newViewMode = e.target.value as 'performance' | 'playPercentage';
-              setViewMode(newViewMode);
-              updateNavigationState({ 
-                campPerformanceState: {
-                  viewMode: newViewMode,
-                  selectedCampPerformanceCamp: selectedCamp,
-                  selectedCampPerformanceMinGames: minGames
-                }
-              });
-            }}
-            style={{
-              background: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '4px',
-              padding: '0.5rem',
-              fontSize: '0.9rem',
-              minWidth: '200px'
-            }}
-          >
-            <option value="performance">🏆 Meilleures performances</option>
-            <option value="playPercentage">📊 % parties jouées</option>
-          </select>
-        </div>
-
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <label htmlFor="camp-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
             Camp:
@@ -725,7 +676,7 @@ export function PlayerCampChart() {
               setSelectedCamp(newCamp);
               updateNavigationState({ 
                 campPerformanceState: {
-                  viewMode: viewMode,
+                  viewMode: 'performance',
                   selectedCampPerformanceCamp: newCamp,
                   selectedCampPerformanceMinGames: minGames
                 }
@@ -825,7 +776,7 @@ export function PlayerCampChart() {
               setMinGames(newMinGames);
               updateNavigationState({ 
                 campPerformanceState: {
-                  viewMode: viewMode,
+                  viewMode: 'performance',
                   selectedCampPerformanceCamp: selectedCamp,
                   selectedCampPerformanceMinGames: newMinGames
                 }
@@ -864,32 +815,38 @@ export function PlayerCampChart() {
           fontSize: '0.95rem',
           fontWeight: '500'
         }}>
-          {viewMode === 'performance' ? totalMatchingPlayers : totalPlayPercentagePlayers} joueur{(viewMode === 'performance' ? totalMatchingPlayers : totalPlayPercentagePlayers) !== 1 ? 's' : ''} {(viewMode === 'performance' ? totalMatchingPlayers : totalPlayPercentagePlayers) !== 1 ? 'correspondent' : 'correspond'} aux critères
+          {totalMatchingPlayers} joueur{totalMatchingPlayers !== 1 ? 's' : ''} {totalMatchingPlayers !== 1 ? 'correspondent' : 'correspond'} aux critères
         </span>
       </div>
 
-      <div className="lycans-graphiques-groupe">
-        <PlayerCampPerformanceBarChart
-          viewMode={viewMode}
-          selectedCamp={selectedCamp}
-          minGames={minGames}
-          chartData={chartData}
-          highlightedPlayer={settings.highlightedPlayer}
-          lycansColorScheme={lycansColorScheme}
-          playersColor={playersColor}
-          onBarClick={handleBarClick}
-        />
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+        <div>
+          <h3 style={{ textAlign: 'center', marginBottom: '1rem' }}>Meilleures Performances par Camp</h3>
+          <PlayerCampPerformanceBarChart
+            viewMode="performance"
+            selectedCamp={selectedCamp}
+            minGames={minGames}
+            chartData={selectedCamp === 'Tous les camps' ? topPerformersData : campPlayerData}
+            highlightedPlayer={settings.highlightedPlayer}
+            lycansColorScheme={lycansColorScheme}
+            playersColor={playersColor}
+            onBarClick={handleBarClick}
+          />
+        </div>
         
-        <PlayerCampPerformanceScatterChart
-          viewMode={viewMode}
-          selectedCamp={selectedCamp}
-          minGames={minGames}
-          chartData={chartData}
-          highlightedPlayer={settings.highlightedPlayer}
-          lycansColorScheme={lycansColorScheme}
-          playersColor={playersColor}
-          onScatterClick={handleBarClick}
-        />
+        <div>
+          <h3 style={{ textAlign: 'center', marginBottom: '1rem' }}>Pourcentage de Parties Jouées par Rôle</h3>
+          <PlayerCampPerformanceBarChart
+            viewMode="playPercentage"
+            selectedCamp={selectedCamp}
+            minGames={minGames}
+            chartData={selectedCamp === 'Tous les camps' ? topPlayPercentageData : campPlayPercentageData}
+            highlightedPlayer={settings.highlightedPlayer}
+            lycansColorScheme={lycansColorScheme}
+            playersColor={playersColor}
+            onBarClick={handleBarClick}
+          />
+        </div>
       </div>
     </div>
   );
