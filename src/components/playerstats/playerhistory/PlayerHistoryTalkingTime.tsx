@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, Legend
@@ -13,10 +13,12 @@ interface PlayerHistoryTalkingTimeProps {
   selectedPlayerName: string;
 }
 
+type MeetingFilter = 'both' | 'meeting' | 'outside';
 
 export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTalkingTimeProps) {
   const { data, isLoading, error } = usePlayerTalkingTimeStats(selectedPlayerName);
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+  const [meetingFilter, setMeetingFilter] = useState<MeetingFilter>('both');
 
   // Prepare camp comparison data for bar chart
   const campComparisonData = useMemo(() => {
@@ -116,6 +118,61 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
       {campComparisonData.length > 0 && (
         <div className="lycans-graphique-section">
           <FullscreenChart title="Temps de parole par camp (par 60min de jeu)">
+            {/* Meeting Type Filter */}
+            <div style={{ 
+              display: 'flex', 
+              gap: '0.5rem', 
+              marginBottom: '1rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap'
+            }}>
+              <button
+                onClick={() => setMeetingFilter('meeting')}
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '6px',
+                  border: meetingFilter === 'meeting' ? '2px solid var(--accent-primary)' : '1px solid var(--border-color)',
+                  backgroundColor: meetingFilter === 'meeting' ? 'var(--accent-primary)' : 'var(--bg-secondary)',
+                  color: meetingFilter === 'meeting' ? 'white' : 'var(--text-primary)',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: meetingFilter === 'meeting' ? 'bold' : 'normal'
+                }}
+              >
+                En réunion
+              </button>
+              <button
+                onClick={() => setMeetingFilter('outside')}
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '6px',
+                  border: meetingFilter === 'outside' ? '2px solid var(--accent-primary)' : '1px solid var(--border-color)',
+                  backgroundColor: meetingFilter === 'outside' ? 'var(--accent-primary)' : 'var(--bg-secondary)',
+                  color: meetingFilter === 'outside' ? 'white' : 'var(--text-primary)',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: meetingFilter === 'outside' ? 'bold' : 'normal'
+                }}
+              >
+                Hors réunion
+              </button>
+              <button
+                onClick={() => setMeetingFilter('both')}
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '6px',
+                  border: meetingFilter === 'both' ? '2px solid var(--accent-primary)' : '1px solid var(--border-color)',
+                  backgroundColor: meetingFilter === 'both' ? 'var(--accent-primary)' : 'var(--bg-secondary)',
+                  color: meetingFilter === 'both' ? 'white' : 'var(--text-primary)',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: meetingFilter === 'both' ? 'bold' : 'normal'
+                }}
+              >
+                Les deux
+              </button>
+            </div>
+
             <div style={{ height: 350 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={campComparisonData} layout="vertical">
@@ -147,14 +204,18 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
                     }}
                   />
                   <Legend />
-                  <Bar dataKey="Hors réunion" stackId="talk" fill="#FF9800" />
-                  <Bar dataKey="En réunion" stackId="talk" fill="#2196F3" />
+                  {(meetingFilter === 'both' || meetingFilter === 'outside') && (
+                    <Bar dataKey="Hors réunion" stackId="talk" fill="#FF9800" />
+                  )}
+                  {(meetingFilter === 'both' || meetingFilter === 'meeting') && (
+                    <Bar dataKey="En réunion" stackId="talk" fill="#2196F3" />
+                  )}
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </FullscreenChart>
           
-          {/* Insight text */}
+          {/* Insight text - Always compare Villageois vs Loup */}
           <div style={{ 
             marginTop: '1rem', 
             padding: '1rem', 
@@ -162,22 +223,53 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
             borderRadius: '8px',
             fontSize: '0.9rem'
           }}>
-            {campComparisonData.length >= 2 && (() => {
-              const sorted = [...campComparisonData].sort((a, b) => b.total - a.total);
-              const mostTalkative = sorted[0];
-              const leastTalkative = sorted[sorted.length - 1];
-              const diff = mostTalkative.total - leastTalkative.total;
+            {(() => {
+              const villageoisData = campComparisonData.find(c => c.camp === 'Villageois');
+              const loupsData = campComparisonData.find(c => c.camp === 'Loup');
               
-              return (
-                <p>
-                  💡 <strong>{selectedPlayerName}</strong> parle{' '}
-                  <strong style={{ color: getCampColor(mostTalkative.camp) }}>
-                    {formatSecondsToMinutesSeconds(diff)} de plus
-                  </strong>{' '}
-                  en tant que <strong>{mostTalkative.camp}</strong> qu'en tant que{' '}
-                  <strong>{leastTalkative.camp}</strong> (par heure de jeu).
-                </p>
-              );
+              if (!villageoisData || !loupsData) {
+                return (
+                  <p>
+                    💡 Pas assez de données pour comparer les camps Villageois et Loups.
+                  </p>
+                );
+              }
+
+              const diff = villageoisData.total - loupsData.total;
+              const percentage = loupsData.total > 0 
+                ? ((Math.abs(diff) / loupsData.total) * 100).toFixed(0)
+                : '0';
+              
+              if (diff > 0) {
+                return (
+                  <p>
+                    💡 <strong>{selectedPlayerName}</strong> parle{' '}
+                    <strong style={{ color: getCampColor('Villageois') }}>
+                      {formatSecondsToMinutesSeconds(diff)} de plus (+{percentage}%)
+                    </strong>{' '}
+                    en tant que <strong>Villageois</strong> qu'en tant que{' '}
+                    <strong>Loup</strong> (par heure de jeu).
+                  </p>
+                );
+              } else if (diff < 0) {
+                return (
+                  <p>
+                    💡 <strong>{selectedPlayerName}</strong> parle{' '}
+                    <strong style={{ color: getCampColor('Loup') }}>
+                      {formatSecondsToMinutesSeconds(Math.abs(diff))} de plus (+{percentage}%)
+                    </strong>{' '}
+                    en tant que <strong>Loup</strong> qu'en tant que{' '}
+                    <strong>Villageois</strong> (par heure de jeu).
+                  </p>
+                );
+              } else {
+                return (
+                  <p>
+                    💡 <strong>{selectedPlayerName}</strong> parle exactement autant en tant que{' '}
+                    <strong>Villageois</strong> qu'en tant que <strong>Loup</strong> (par heure de jeu).
+                  </p>
+                );
+              }
             })()}
           </div>
         </div>
