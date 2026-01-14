@@ -23,7 +23,7 @@ export const CHANGELOG: ChangelogEntry[] = [
       subTab: 'talkingTime',
       text: 'Joueur / Parole',
       navigationState: {
-        selectedPlayerSelectionView: 'talkingTime'
+        selectedPlayerSelectionView: 'talkingtime'
       }
     }
   },
