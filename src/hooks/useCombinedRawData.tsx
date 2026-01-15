@@ -284,7 +284,6 @@ function applyCommonFilters<T extends { Game?: number; "Game Moddée"?: boolean;
  */
 function applyIndependentGameLogFilters(data: GameLogEntry[], settings: any): GameLogEntry[] {
   return data.filter(game => {
-    // Remove the hard-coded Ponce filter - let all games through based on dataSource
     // The dataSource is already determined in the data fetching layer
     
     const filters = settings.independentFilters;
