@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, LabelList, Cell, PieChart, Pie } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, LabelList, Cell, PieChart, Pie, ComposedChart, Legend } from 'recharts';
 import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
 import { useGameTimeAnalysisFromRaw } from '../../hooks/useGameTimeAnalysisFromRaw';
+import { useCampWinRateByGameTime } from '../../hooks/useCampWinRateByGameTime';
 import { useNavigation } from '../../context/NavigationContext';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -11,6 +12,7 @@ import { formatDurationToMinutesSeconds, formatSecondsToMinutesSeconds, formatDu
 export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysisFromRaw();
   const { gameTimeAnalysis: tempsJeuDonnees, fetchingData: tempsJeuChargement, apiError: tempsJeuErreur } = useGameTimeAnalysisFromRaw();
+  const { data: campWinRateData, isLoading: campWinRateLoading, error: campWinRateError } = useCampWinRateByGameTime();
   const { navigateToGameDetails } = useNavigation();
   
   // State for duration type selection
@@ -36,12 +38,12 @@ export function GameDurationInsights() {
     return `${phaseLabels[phase as keyof typeof phaseLabels] || phase} ${dayNumber}`;
   };
 
-  if (telechargementActif || tempsJeuChargement) {
+  if (telechargementActif || tempsJeuChargement || campWinRateLoading) {
     return <div className="statistiques-attente">Analyse des durées en cours...</div>;
   }
 
-  if (erreurApi || tempsJeuErreur) {
-    return <div className="statistiques-echec">Problème rencontré: {erreurApi || tempsJeuErreur}</div>;
+  if (erreurApi || tempsJeuErreur || campWinRateError) {
+    return <div className="statistiques-echec">Problème rencontré: {erreurApi || tempsJeuErreur || campWinRateError}</div>;
   }
 
   if (!jeuDonnees || !tempsJeuDonnees) {
@@ -670,6 +672,179 @@ export function GameDurationInsights() {
                   </ResponsiveContainer>
                 </div>
               </FullscreenChart>
+            </div>
+
+            <div className="lycans-graphique-element">
+              <h3>Taux de Victoire par Jour de Jeu</h3>
+              <FullscreenChart title="Taux de Victoire par Jour de Jeu">
+                <div style={{ height: 450 }}>
+                  {campWinRateData && campWinRateData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <ComposedChart
+                        data={campWinRateData}
+                        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="day" 
+                          label={{ value: 'Jour de fin de partie', position: 'insideBottom', offset: -10 }}
+                          tickFormatter={(value) => `Jour ${value}`}
+                        />
+                        <YAxis 
+                          yAxisId="left"
+                          label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                          domain={[0, 100]}
+                        />
+                        <YAxis 
+                          yAxisId="right"
+                          orientation="right"
+                          label={{ value: 'Nombre de parties', angle: 90, position: 'right', style: { textAnchor: 'middle' } }}
+                          domain={[0, 'auto']}
+                        />
+                        <Tooltip
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length > 0) {
+                              const data = payload[0].payload;
+                              return (
+                                <div style={{ 
+                                  background: 'var(--bg-secondary)', 
+                                  color: 'var(--text-primary)', 
+                                  padding: 12, 
+                                  borderRadius: 6,
+                                  border: '1px solid var(--border-color)'
+                                }}>
+                                  <div style={{ fontWeight: 'bold', marginBottom: 8 }}>Jour {data.day}</div>
+                                  <div style={{ fontSize: '0.9rem' }}>
+                                    <div style={{ color: '#4CAF50', marginBottom: 4 }}>
+                                      🟢 Villageois: {data.villageoisWinRate.toFixed(1)}% ({data.villageoisWins}/{data.totalGames})
+                                    </div>
+                                    <div style={{ color: '#f44336', marginBottom: 4 }}>
+                                      🔴 Loups: {data.loupsWinRate.toFixed(1)}% ({data.loupsWins}/{data.totalGames})
+                                    </div>
+                                    <div style={{ color: '#FF9800' }}>
+                                      🟠 Solo: {data.soloWinRate.toFixed(1)}% ({data.soloWins}/{data.totalGames})
+                                    </div>
+                                  </div>
+                                  <div style={{ 
+                                    marginTop: 8, 
+                                    paddingTop: 8, 
+                                    borderTop: '1px solid var(--border-color)',
+                                    fontSize: '0.85rem',
+                                    color: 'var(--text-secondary)'
+                                  }}>
+                                    Total: {data.totalGames} parties
+                                  </div>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <Legend 
+                          wrapperStyle={{ paddingTop: '20px' }}
+                          formatter={(value) => {
+                            if (value === 'villageoisWinRate') return 'Villageois';
+                            if (value === 'loupsWinRate') return 'Loups';
+                            if (value === 'soloWinRate') return 'Solo';
+                            if (value === 'totalGames') return 'Nombre de parties';
+                            return value;
+                          }}
+                        />
+                        <Bar 
+                          yAxisId="right"
+                          dataKey="totalGames"
+                          name="totalGames"
+                          fill="rgba(128, 128, 128, 0.2)"
+                          radius={[4, 4, 0, 0]}
+                        />
+                        <Line 
+                          yAxisId="left"
+                          type="monotone" 
+                          dataKey="villageoisWinRate" 
+                          name="villageoisWinRate"
+                          stroke="#4CAF50" 
+                          strokeWidth={3}
+                          activeDot={{ r: 8 }}
+                          dot={(props: any) => {
+                            const { cx, cy, payload } = props;
+                            const radius = 3 + (payload.totalGames / Math.max(...campWinRateData.map(d => d.totalGames))) * 5;
+                            return (
+                              <circle
+                                cx={cx}
+                                cy={cy}
+                                r={radius}
+                                fill="#4CAF50"
+                                stroke="#4CAF50"
+                                strokeWidth={2}
+                              />
+                            );
+                          }}
+                        />
+                        <Line 
+                          yAxisId="left"
+                          type="monotone" 
+                          dataKey="loupsWinRate" 
+                          name="loupsWinRate"
+                          stroke="#f44336" 
+                          strokeWidth={3}
+                          activeDot={{ r: 8 }}
+                          dot={(props: any) => {
+                            const { cx, cy, payload } = props;
+                            const radius = 3 + (payload.totalGames / Math.max(...campWinRateData.map(d => d.totalGames))) * 5;
+                            return (
+                              <circle
+                                cx={cx}
+                                cy={cy}
+                                r={radius}
+                                fill="#f44336"
+                                stroke="#f44336"
+                                strokeWidth={2}
+                              />
+                            );
+                          }}
+                        />
+                        <Line 
+                          yAxisId="left"
+                          type="monotone" 
+                          dataKey="soloWinRate" 
+                          name="soloWinRate"
+                          stroke="#FF9800" 
+                          strokeWidth={3}
+                          activeDot={{ r: 8 }}
+                          dot={(props: any) => {
+                            const { cx, cy, payload } = props;
+                            const radius = 3 + (payload.totalGames / Math.max(...campWinRateData.map(d => d.totalGames))) * 5;
+                            return (
+                              <circle
+                                cx={cx}
+                                cy={cy}
+                                r={radius}
+                                fill="#FF9800"
+                                stroke="#FF9800"
+                                strokeWidth={2}
+                              />
+                            );
+                          }}
+                        />
+                      </ComposedChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-secondary)' }}>
+                      Aucune donnée disponible (minimum 5 parties par jour requis)
+                    </div>
+                  )}
+                </div>
+              </FullscreenChart>
+              <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text-secondary)', padding: '0 1rem' }}>
+                <p>
+                  <strong>Analyse des victoires selon la durée :</strong> Ce graphique montre le taux de victoire de chaque camp 
+                  en fonction du jour où la partie s'est terminée. Les phases Jour, Nuit et Meeting de chaque journée sont regroupées ensemble.
+                  <br/>
+                  La taille des points reflète le nombre de parties terminées ce "jour"-là. Les barres grises en arrière-plan indiquent le volume de parties.
+                  <br/>
+                  Seuls les jours avec au moins 5 parties sont affichés pour garantir la fiabilité statistique.
+                </p>
+              </div>
             </div>
           </div>
         </>
