@@ -34,6 +34,7 @@ const VictoryTypesChart = lazy(() => import('./components/generalstats/VictoryTy
 const GlobalVotingStatsChart = lazy(() => import('./components/generalstats/GlobalVotingStatsChart').then(m => ({ default: m.GlobalVotingStatsChart })));
 const RolesStatsChart = lazy(() => import('./components/generalstats/RolesStatsChart').then(m => ({ default: m.RolesStatsChart })));
 const TeamCompositionChart = lazy(() => import('./components/generalstats/TeamCompositionChart').then(m => ({ default: m.TeamCompositionChart })));
+const GlobalGameHistoryChart = lazy(() => import('./components/generalstats/GlobalGameHistoryChart').then(m => ({ default: m.GlobalGameHistoryChart })));
 
 const BRParticipationsChart = lazy(() => import('./components/brstats/BRParticipationsChart').then(m => ({ default: m.BRParticipationsChart })));
 const BRWinRateChart = lazy(() => import('./components/brstats/BRWinRateChart').then(m => ({ default: m.BRWinRateChart })));
@@ -165,6 +166,12 @@ const PLAYER_STATS_MENU = [
 
 const GENERAL_STATS_MENU = [
   { 
+    key: 'evolution', 
+    label: 'Évolution', 
+    component: GlobalGameHistoryChart,
+    description: 'Évolution des parties au fil du temps'
+  },
+  { 
     key: 'camps', 
     label: 'Camps', 
     component: CampsChart,
@@ -266,7 +273,7 @@ function MainApp() {
   const { lastRecordedGameDate, isLoading: dateLoading } = useLastRecordedGameDate();
   const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
-  const [selectedGeneralStat, setSelectedGeneralStat] = useState('camps');
+  const [selectedGeneralStat, setSelectedGeneralStat] = useState('evolution');
   const [selectedBRStat, setSelectedBRStat] = useState('brParticipations');
   const [currentHash, setCurrentHash] = useState(window.location.hash);
   const [showChangelog, setShowChangelog] = useState(false);

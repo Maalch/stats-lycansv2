@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.6.3';
+export const APP_VERSION = '1.6.4';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.6.4',
+    date: '19/01/2026',
+    description: 'Ajout d\'une page d\'évolution globale des parties (nombre de parties, taux de victoire par camp, joueurs moyens, durée) dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'evolution',
+      text: 'Stats Parties / Évolution'
+    }
+  },
   {
     version: 'v1.6.3',
     date: '31/12/2025',
