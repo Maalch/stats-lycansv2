@@ -128,7 +128,8 @@ export function processLootAchievements(gameData, playerId, suffix) {
       lootRateRank.value,
       byLootRate.length,
       {
-        tab: 'lootStats',
+        tab: 'rankings',
+        subTab: 'lootStats',
         view: 'normalized',
         minGames: 25
       }
