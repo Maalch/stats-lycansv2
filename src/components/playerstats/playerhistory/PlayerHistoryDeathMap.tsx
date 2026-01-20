@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceArea } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { useNavigation } from '../../../context/NavigationContext';
-import { getMapConfig, adjustCoordinatesForMap, clusterLocationPoints, getDominantDeathType } from '../../../hooks/utils/deathLocationUtils';
+import { getMapConfig, adjustCoordinatesForMap, clusterLocationPoints, getDominantDeathType, getDeathTypeColor } from '../../../hooks/utils/deathLocationUtils';
 import { getPlayerCampFromRole } from '../../../utils/datasyncExport';
 import { getDeathTypeLabel, type DeathType } from '../../../types/deathTypes';
 import { FullscreenChart } from '../../common/FullscreenChart';
@@ -77,6 +77,8 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
   const [selectedMap, setSelectedMap] = useState<string>('');
   const [clusterRadius, setClusterRadius] = useState<number>(0);
   const [hoveredZone, setHoveredZone] = useState<Exclude<VillageZone, null> | null>(null);
+  const [selectedDeathTypes, setSelectedDeathTypes] = useState<string[]>([]);
+  const [isDeathTypesExpanded, setIsDeathTypesExpanded] = useState<boolean>(false);
 
   // Get available maps with death position data for this player
   const availableMaps = useMemo(() => {
@@ -122,6 +124,63 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
   if (selectedMap === '' && defaultMap !== '') {
     setSelectedMap(defaultMap);
   }
+
+  // Get available death types and colors from location data
+  const { availableDeathTypes, deathTypeColors } = useMemo(() => {
+    if (!filteredGameData || !selectedPlayerName) {
+      return { availableDeathTypes: [], deathTypeColors: {} };
+    }
+
+    const deathTypesSet = new Set<DeathType>();
+    const colors: Record<string, string> = {};
+
+    filteredGameData.forEach(game => {
+      const playerStat = game.PlayerStats.find(
+        p => p.Username.toLowerCase() === selectedPlayerName.toLowerCase()
+      );
+
+      if (playerStat) {
+        // For deaths mode
+        if (playerStat.DeathPosition && playerStat.DeathType) {
+          const normalized = normalizeDeathType(playerStat.DeathType as DeathType);
+          if (normalized) deathTypesSet.add(normalized);
+        }
+
+        // For kills mode
+        game.PlayerStats.forEach(victim => {
+          if (victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase() 
+              && victim.DeathPosition && victim.DeathType) {
+            const normalized = normalizeDeathType(victim.DeathType as DeathType);
+            if (normalized) deathTypesSet.add(normalized);
+          }
+        });
+      }
+    });
+
+    // Map death types to colors using shared utility function
+    deathTypesSet.forEach(deathType => {
+      colors[deathType] = getDeathTypeColor(deathType, lycansColors);
+    });
+
+    return {
+      availableDeathTypes: Array.from(deathTypesSet).sort(),
+      deathTypeColors: colors
+    };
+  }, [filteredGameData, selectedPlayerName, lycansColors]);
+
+  // Get color for death type - uses the pre-calculated deathTypeColors
+  const getDeathColor = (deathType: string | null): string => {
+    if (!deathType) return 'var(--text-secondary)';
+    return deathTypeColors[deathType as DeathType] || 'var(--text-secondary)';
+  };
+
+  // Initialize selectedDeathTypes with all types except VOTED if no selection exists
+  useEffect(() => {
+    if (selectedDeathTypes.length === 0 && availableDeathTypes.length > 0) {
+      const defaultTypes = availableDeathTypes.filter(type => type !== 'VOTED');
+      setSelectedDeathTypes(defaultTypes);
+    }
+  }, [availableDeathTypes.length]);
 
   // Compute location data based on view mode
   const locationData = useMemo(() => {
@@ -199,8 +258,13 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
       }
     });
     
+    // Apply death type filter
+    if (selectedDeathTypes.length > 0 && selectedDeathTypes.length < availableDeathTypes.length) {
+      return locations.filter(loc => loc.deathType && selectedDeathTypes.includes(loc.deathType));
+    }
+    
     return locations;
-  }, [filteredGameData, selectedPlayerName, viewMode, selectedMap]);
+  }, [filteredGameData, selectedPlayerName, viewMode, selectedMap, selectedDeathTypes, availableDeathTypes]);
 
   // Zone analysis for Village map (deaths mode, excluding votes)
   const zoneAnalysis = useMemo(() => {
@@ -366,36 +430,6 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
       zDomain: [zMin - zPadding, zMax + zPadding] as [number, number]
     };
   }, [clusteredData, mapConfig]);
-
-  // Get color for death type
-  const getDeathColor = (deathType: string | null): string => {
-    if (!deathType) return 'var(--text-secondary)';
-    
-    if (deathType === 'BY_WOLF' || deathType === 'SURVIVALIST_NOT_SAVED') {
-      return lycansColors['Loup'];
-    } else if (deathType === 'VOTED') {
-      return 'var(--chart-color-1)';
-    } else if (deathType === 'BULLET' || deathType === 'BULLET_HUMAN' || deathType === 'BULLET_WOLF') {
-      return lycansColors['Chasseur'];
-    } else if (deathType === 'BY_ZOMBIE') {
-      return lycansColors['Vaudou'];
-    } else if (deathType === 'ASSASSIN') {
-      return lycansColors['Alchimiste'];
-    } else if (deathType === 'AVENGER') {
-      return 'var(--chart-color-2)';
-    } else if (deathType === 'LOVER_DEATH') {
-      return lycansColors['Amoureux'];
-    } else if (deathType === 'BY_BEAST') {
-      return 'var(--chart-color-3)';
-    } else if (deathType === 'SHERIF_SUCCESS') {
-      return 'var(--chart-color-4)';
-    }
-      else if (deathType === 'SMUGGLER_HUNT_KILL') {
-      return lycansColors['Contrebandier'];
-    }
-    
-    return 'var(--accent-primary-text)';
-  };
 
   // Custom tooltip
   const CustomTooltip = ({ active, payload }: any) => {
@@ -657,6 +691,162 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
           <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', minWidth: '60px' }}>
             {clusterRadius === 0 ? 'Aucun' : `${clusterRadius} unité${clusterRadius > 1 ? 's' : ''}`}
           </span>
+        </div>
+
+        {/* Multi-select death type filter - collapsible */}
+        <div style={{ width: '100%', marginTop: '1rem' }}>
+          {/* Clickable header to expand/collapse */}
+          <div 
+            onClick={() => setIsDeathTypesExpanded(!isDeathTypesExpanded)}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '1rem',
+              marginBottom: isDeathTypesExpanded ? '0.5rem' : '0',
+              cursor: 'pointer',
+              padding: '0.5rem',
+              background: 'var(--bg-tertiary)',
+              borderRadius: '4px',
+              border: '1px solid var(--border-color)',
+              transition: 'all 0.2s'
+            }}
+          >
+            <span style={{ 
+              color: 'var(--text-primary)', 
+              fontSize: '1rem',
+              transition: 'transform 0.2s',
+              transform: isDeathTypesExpanded ? 'rotate(90deg)' : 'rotate(0deg)'
+            }}>
+              ▶
+            </span>
+            <label style={{ 
+              color: 'var(--text-secondary)', 
+              fontSize: '0.9rem', 
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              flexGrow: 1
+            }}>
+              Types de mort
+            </label>
+            <span style={{ 
+              color: 'var(--text-secondary)', 
+              fontSize: '0.85rem'
+            }}>
+              {selectedDeathTypes.length} / {availableDeathTypes.length} sélectionné{selectedDeathTypes.length > 1 ? 's' : ''}
+            </span>
+          </div>
+          
+          {/* Expanded content with bulk buttons and checkbox grid */}
+          {isDeathTypesExpanded && (
+            <>
+              <div style={{ 
+                display: 'flex', 
+                gap: '0.5rem',
+                marginTop: '0.5rem',
+                marginBottom: '0.5rem'
+              }}>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedDeathTypes(availableDeathTypes);
+                  }}
+                  style={{
+                    background: 'var(--bg-tertiary)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '4px',
+                    padding: '0.3rem 0.8rem',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  Tous
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedDeathTypes([]);
+                  }}
+                  style={{
+                    background: 'var(--bg-tertiary)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '4px',
+                    padding: '0.3rem 0.8rem',
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  Aucun
+                </button>
+              </div>
+              
+              {/* Checkbox grid */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                gap: '0.5rem',
+                maxHeight: '300px',
+                overflowY: 'auto',
+                padding: '0.5rem',
+                background: 'var(--bg-secondary)',
+                borderRadius: '4px',
+                border: '1px solid var(--border-color)'
+              }}>
+                {availableDeathTypes.map(deathType => {
+                  const isSelected = selectedDeathTypes.includes(deathType);
+                  const color = deathTypeColors[deathType] || 'var(--chart-primary)';
+                  
+                  return (
+                    <label
+                      key={deathType}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        padding: '0.5rem',
+                        background: isSelected ? 'var(--bg-tertiary)' : 'transparent',
+                        borderRadius: '4px',
+                        border: `1px solid ${isSelected ? color : 'var(--border-color)'}`,
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        fontSize: '0.9rem'
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (isSelected) {
+                          setSelectedDeathTypes(prev => prev.filter(t => t !== deathType));
+                        } else {
+                          setSelectedDeathTypes(prev => [...prev, deathType]);
+                        }
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => {}} // Handled by label onClick
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <div
+                        style={{
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '2px',
+                          backgroundColor: color,
+                          flexShrink: 0
+                        }}
+                      />
+                      <span>{getDeathTypeLabel(deathType)}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </div>
       </div>
 

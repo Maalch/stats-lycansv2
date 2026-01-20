@@ -283,9 +283,9 @@ export function PlayerHistoryMap({ selectedPlayerName }: PlayerHistoryMapProps) 
                     let fillColor;
                     
                     if (entry.name === 'Village') {
-                      fillColor = 'var(--accent-secondary)';
-                    } else if (entry.name === 'Château') {
                       fillColor = 'var(--accent-tertiary)';
+                    } else if (entry.name === 'Château') {
+                      fillColor = 'var(--accent-secondary)';
                     } else if (entry.name === 'Autres') {
                       fillColor = lycansOtherCategoryColor;
                     } else {

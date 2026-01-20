@@ -3,6 +3,35 @@ import { getPlayerCampFromRole } from '../../utils/datasyncExport';
 import type { DeathType } from '../../types/deathTypes';
 
 /**
+ * Get color for a death type based on theme colors
+ * Centralized color mapping used across all death location visualizations
+ */
+export function getDeathTypeColor(deathType: string, lycansColors: Record<string, string>): string {
+  if (deathType === 'BY_WOLF' || deathType === 'SURVIVALIST_NOT_SAVED') {
+    return lycansColors['Loup'];
+  } else if (deathType === 'VOTED') {
+    return 'var(--chart-color-1)';
+  } else if (deathType === 'BULLET' || deathType === 'BULLET_HUMAN' || deathType === 'BULLET_WOLF') {
+    return lycansColors['Chasseur'];
+  } else if (deathType === 'BY_ZOMBIE') {
+    return lycansColors['Vaudou'];
+  } else if (deathType === 'ASSASSIN') {
+    return lycansColors['Alchimiste'];
+  } else if (deathType === 'AVENGER') {
+    return 'var(--chart-color-2)';
+  } else if (deathType === 'LOVER_DEATH') {
+    return lycansColors['Amoureux'];
+  } else if (deathType === 'BY_BEAST') {
+    return 'var(--chart-color-3)';
+  } else if (deathType === 'SHERIF_SUCCESS') {
+    return 'var(--chart-color-4)';
+  } else if (deathType === 'SMUGGLER_HUNT_KILL') {
+    return lycansColors['Contrebandier'];
+  }
+  return 'var(--accent-primary-text)';
+}
+
+/**
  * Map image configuration - fixed coordinates for map alignment
  * Used for both scatter chart and heatmap visualizations
  */

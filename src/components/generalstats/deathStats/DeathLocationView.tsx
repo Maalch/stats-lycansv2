@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceArea } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
@@ -32,6 +32,21 @@ export function DeathLocationView({
   const [viewMode, setViewMode] = useState<'heatmap' | 'scatter'>('heatmap');
   const [clusterRadius, setClusterRadius] = useState<number>(20); // Clustering radius in game units
   const [isDeathTypesExpanded, setIsDeathTypesExpanded] = useState<boolean>(false); // Toggle for death types panel
+
+  // Initialize selectedDeathTypes with all types except VOTED if no saved state exists
+  useEffect(() => {
+    if (selectedDeathTypes.length === 0 && availableDeathTypes.length > 0) {
+      const defaultTypes = availableDeathTypes.filter(type => type !== 'VOTED');
+      setSelectedDeathTypes(defaultTypes);
+      updateNavigationState({
+        deathLocationState: {
+          ...navigationState.deathLocationState,
+          selectedCamp: selectedCamp,
+          selectedDeathTypes: defaultTypes
+        }
+      });
+    }
+  }, [availableDeathTypes.length]); // Only run when availableDeathTypes becomes available
 
   // Get available maps with death position data, sorted by number of deaths (descending)
   const availableMaps = useMemo(() => {
@@ -538,48 +553,42 @@ export function DeathLocationView({
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.5rem',
+                    background: isSelected ? 'var(--bg-tertiary)' : 'transparent',
                     borderRadius: '4px',
-                    cursor: 'pointer',
-                    background: isSelected ? color : 'var(--bg-tertiary)',
-                    color: isSelected ? 'white' : 'var(--text-primary)',
                     border: `1px solid ${isSelected ? color : 'var(--border-color)'}`,
+                    cursor: 'pointer',
                     transition: 'all 0.2s',
-                    fontSize: '0.85rem',
-                    fontWeight: isSelected ? '600' : 'normal'
+                    fontSize: '0.9rem'
                   }}
-                  onMouseEnter={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.background = 'var(--bg-hover)';
-                      e.currentTarget.style.borderColor = color;
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.background = 'var(--bg-tertiary)';
-                      e.currentTarget.style.borderColor = 'var(--border-color)';
-                    }
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const newSelectedTypes = isSelected
+                      ? selectedDeathTypes.filter(t => t !== deathType)
+                      : [...selectedDeathTypes, deathType];
+                    
+                    setSelectedDeathTypes(newSelectedTypes);
+                    updateNavigationState({
+                      deathLocationState: {
+                        ...navigationState.deathLocationState,
+                        selectedCamp: selectedCamp,
+                        selectedDeathTypes: newSelectedTypes
+                      }
+                    });
                   }}
                 >
                   <input
                     type="checkbox"
                     checked={isSelected}
-                    onChange={(e) => {
-                      const newSelectedTypes = e.target.checked
-                        ? [...selectedDeathTypes, deathType]
-                        : selectedDeathTypes.filter(t => t !== deathType);
-                      
-                      setSelectedDeathTypes(newSelectedTypes);
-                      updateNavigationState({
-                        deathLocationState: {
-                          ...navigationState.deathLocationState,
-                          selectedCamp: selectedCamp,
-                          selectedDeathTypes: newSelectedTypes
-                        }
-                      });
-                    }}
+                    onChange={() => {}} // Handled by label onClick
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <div
                     style={{
-                      cursor: 'pointer',
-                      accentColor: color
+                      width: '12px',
+                      height: '12px',
+                      borderRadius: '2px',
+                      backgroundColor: color,
+                      flexShrink: 0
                     }}
                   />
                   <span>{getDeathTypeLabel(deathType)}</span>
