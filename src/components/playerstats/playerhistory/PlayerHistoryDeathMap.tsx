@@ -28,6 +28,37 @@ interface LocationData {
 }
 
 /**
+ * Village map zones based on adjusted coordinates
+ */
+type VillageZone = 'Village Principal' | 'Village Forgeron' | 'Village Pêcheur' | 'Ruines' | null;
+
+/**
+ * Determine which zone of the Village map a death occurred in
+ * Uses adjusted coordinates (after adjustCoordinatesForMap transformation)
+ */
+function getVillageZone(adjustedX: number, adjustedZ: number): VillageZone {
+  // Zone boundaries based on adjusted coordinates (matching ReferenceArea highlights)
+  // Village Principal: South area
+  if (adjustedZ >= -250 && adjustedZ <= 100 && adjustedX >= -450 && adjustedX <= -120) {
+    return 'Village Principal';
+  }
+  // Village Forgeron: West area
+  if (adjustedZ >= -550 && adjustedZ <= -250 && adjustedX >= -150 && adjustedX <= 150) {
+    return 'Village Forgeron';
+  }
+  // Village Pêcheur: East area
+  if (adjustedZ >= 150 && adjustedZ <= 500 && adjustedX >= -320 && adjustedX <= 80) {
+    return 'Village Pêcheur';
+  }
+  // Ruines: North area
+  if (adjustedZ >= -280 && adjustedZ <= 200 && adjustedX >= 100 && adjustedX <= 450) {
+    return 'Ruines';
+  }
+  // Central area - not in a specific zone
+  return null;
+}
+
+/**
  * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
  */
 function normalizeDeathType(deathType: DeathType | null): DeathType | null {
@@ -45,6 +76,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
   const [viewMode, setViewMode] = useState<'deaths' | 'kills'>('deaths');
   const [selectedMap, setSelectedMap] = useState<string>('');
   const [clusterRadius, setClusterRadius] = useState<number>(0);
+  const [hoveredZone, setHoveredZone] = useState<Exclude<VillageZone, null> | null>(null);
 
   // Get available maps with death position data for this player
   const availableMaps = useMemo(() => {
@@ -169,6 +201,111 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
     
     return locations;
   }, [filteredGameData, selectedPlayerName, viewMode, selectedMap]);
+
+  // Zone analysis for Village map (deaths mode, excluding votes)
+  const zoneAnalysis = useMemo(() => {
+    if (selectedMap !== 'Village' || viewMode !== 'deaths') {
+      return null;
+    }
+
+    // Filter to exclude VOTED deaths
+    const nonVoteDeaths = locationData.filter(loc => loc.deathType !== 'VOTED');
+
+    if (nonVoteDeaths.length === 0) {
+      return null;
+    }
+
+    // Calculate player's zone distribution
+    const playerZoneCounts = {
+
+      'Village Principal': 0,
+      'Village Forgeron': 0,
+      'Village Pêcheur': 0,
+      'Ruines': 0,
+      'other': 0  // For null zones (central area)
+    };
+
+    nonVoteDeaths.forEach(loc => {
+      const zone = getVillageZone(loc.x, loc.z);
+      if (zone) {
+        playerZoneCounts[zone] = (playerZoneCounts[zone] || 0) + 1;
+      } else {
+        playerZoneCounts['other'] += 1;
+      }
+    });
+
+    // Calculate all players' zone distribution for comparison
+    if (!filteredGameData) {
+      return null;
+    }
+
+    const allZoneCounts = {
+      'Village Principal': 0,
+      'Village Forgeron': 0,
+      'Village Pêcheur': 0,
+      'Ruines': 0,
+      'other': 0
+    };
+
+    filteredGameData.forEach(game => {
+      if (game.MapName !== 'Village') return;
+
+      game.PlayerStats.forEach(player => {
+        if (!player.DeathPosition || player.DeathType === 'VOTED') return;
+
+        const adjusted = adjustCoordinatesForMap(
+          player.DeathPosition.x,
+          player.DeathPosition.z,
+          'Village'
+        );
+        const zone = getVillageZone(adjusted.x, adjusted.z);
+        if (zone) {
+          allZoneCounts[zone] = (allZoneCounts[zone] || 0) + 1;
+        } else {
+          allZoneCounts['other'] += 1;
+        }
+      });
+    });
+
+    const totalAllDeaths = Object.values(allZoneCounts).reduce((sum, count) => sum + count, 0);
+    const totalPlayerDeaths = Object.values(playerZoneCounts).reduce((sum, count) => sum + count, 0);
+
+    if (totalAllDeaths === 0 || totalPlayerDeaths === 0) {
+      return null;
+    }
+
+    // Calculate percentages and find significant deviation
+    const zones: Array<Exclude<VillageZone, null>> = ['Village Principal', 'Village Pêcheur', 'Village Forgeron', 'Ruines'];
+    let maxDeviation = 0;
+    let dominantZone: Exclude<VillageZone, null> | null = null;
+
+    const zoneStats = zones.map(zone => {
+      const playerPercent = (playerZoneCounts[zone] / totalPlayerDeaths) * 100;
+      const avgPercent = (allZoneCounts[zone] / totalAllDeaths) * 100;
+      const deviation = playerPercent - avgPercent;
+
+      if (deviation > maxDeviation && playerZoneCounts[zone] >= 2) { // At least 2 deaths in zone
+        maxDeviation = deviation;
+        dominantZone = zone;
+      }
+
+      return {
+        zone,
+        playerCount: playerZoneCounts[zone],
+        playerPercent,
+        avgPercent,
+        deviation
+      };
+    });
+
+    return {
+      totalPlayerDeaths,
+      totalAllDeaths,
+      zoneStats,
+      dominantZone,
+      maxDeviation
+    };
+  }, [locationData, selectedMap, viewMode, filteredGameData]);
 
   // Cluster nearby points
   const clusteredData = useMemo(() => {
@@ -577,6 +714,65 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                     }}
                   />
                 )}
+                
+                {/* Zone highlights for Village map */}
+                {selectedMap === 'Village' && hoveredZone && (
+                  <>
+                    {hoveredZone === 'Ruines' && (
+                      <ReferenceArea
+                        x1={-280}
+                        x2={200}
+                        y1={100}
+                        y2={450}
+                        fill="var(--accent-primary)"
+                        fillOpacity={0.2}
+                        stroke="var(--accent-primary)"
+                        strokeWidth={3}
+                        strokeDasharray="5 5"
+                      />
+                    )}
+                    {hoveredZone === 'Village Principal' && (
+                      <ReferenceArea
+                        x1={-250}
+                        x2={100}
+                        y1={-120}
+                        y2={-450}
+                        fill="var(--accent-primary)"
+                        fillOpacity={0.2}
+                        stroke="var(--accent-primary)"
+                        strokeWidth={3}
+                        strokeDasharray="5 5"
+                      />
+                    )}
+                    {hoveredZone === 'Village Forgeron' && (
+                      <ReferenceArea
+                        x1={-550}
+                        x2={-250}
+                        y1={150}
+                        y2={-150}
+                        fill="var(--accent-primary)"
+                        fillOpacity={0.2}
+                        stroke="var(--accent-primary)"
+                        strokeWidth={3}
+                        strokeDasharray="5 5"
+                      />
+                    )}
+                    {hoveredZone === 'Village Pêcheur' && (
+                      <ReferenceArea
+                        x1={150}
+                        x2={500}
+                        y1={80}
+                        y2={-320}
+                        fill="var(--accent-primary)"
+                        fillOpacity={0.2}
+                        stroke="var(--accent-primary)"
+                        strokeWidth={3}
+                        strokeDasharray="5 5"
+                      />
+                    )}
+                  </>
+                )}
+                
                 <CartesianGrid strokeDasharray="3 3" stroke={mapConfig ? 'rgba(255,255,255,0.3)' : 'var(--border-color)'} />
                 <XAxis 
                   dataKey="z" 
@@ -655,6 +851,61 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
           <strong>💀 Morts:</strong> Où le joueur a été éliminé<br/>
           <strong>⚔️ Kills:</strong> Où le joueur a éliminé d'autres joueurs
         </p>
+        
+        {zoneAnalysis && selectedMap === 'Village' && viewMode === 'deaths' && (
+          <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+            <h4 style={{ marginBottom: '0.75rem', color: 'var(--accent-primary)' }}>📊 Analyse par zone (Village)</h4>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: 'var(--text-secondary)' }}>
+              Distribution des morts (hors votes) comparée à la moyenne de tous les joueurs:
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem' }}>
+              {zoneAnalysis.zoneStats.map(stat => (
+                <div 
+                  key={stat.zone} 
+                  style={{ 
+                    padding: '0.75rem', 
+                    backgroundColor: stat.zone === zoneAnalysis.dominantZone && zoneAnalysis.maxDeviation > 10 ? 'var(--accent-primary-bg)' : 'var(--bg-tertiary)',
+                    borderRadius: '6px',
+                    border: hoveredZone === stat.zone 
+                      ? '2px solid var(--accent-primary)' 
+                      : stat.zone === zoneAnalysis.dominantZone && zoneAnalysis.maxDeviation > 10 
+                        ? '2px solid var(--accent-primary)' 
+                        : '1px solid var(--border-color)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    transform: hoveredZone === stat.zone ? 'scale(1.02)' : 'scale(1)',
+                    boxShadow: hoveredZone === stat.zone ? '0 4px 12px rgba(0,0,0,0.2)' : 'none'
+                  }}
+                  onMouseEnter={() => setHoveredZone(stat.zone)}
+                  onMouseLeave={() => setHoveredZone(null)}
+                >
+                  <div style={{ fontWeight: 'bold', marginBottom: '0.25rem', color: 'var(--text-primary)' }}>
+                    {stat.zone}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                    {stat.playerCount} mort{stat.playerCount > 1 ? 's' : ''} ({stat.playerPercent.toFixed(1)}%)
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                    Moyenne: {stat.avgPercent.toFixed(1)}%
+                  </div>
+                  <div style={{ 
+                    fontSize: '0.85rem', 
+                    fontWeight: 'bold',
+                    color: stat.deviation > 5 ? 'var(--accent-primary)' : stat.deviation < -5 ? 'var(--chart-color-2)' : 'var(--text-secondary)',
+                    marginTop: '0.25rem'
+                  }}>
+                    {stat.deviation > 0 ? '+' : ''}{stat.deviation.toFixed(1)}%
+                  </div>
+                </div>
+              ))}
+            </div>
+            {zoneAnalysis.dominantZone && zoneAnalysis.maxDeviation > 10 && (
+              <div style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: 'var(--accent-primary)', fontWeight: 'bold' }}>
+                ⚠️ {selectedPlayerName} meurt significativement plus souvent en zone <strong>{zoneAnalysis.dominantZone}</strong> (+{zoneAnalysis.maxDeviation.toFixed(1)}% par rapport à la moyenne)
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
