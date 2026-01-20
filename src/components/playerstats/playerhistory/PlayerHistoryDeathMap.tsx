@@ -30,7 +30,7 @@ interface LocationData {
 /**
  * Village map zones based on adjusted coordinates
  */
-type VillageZone = 'Village Principal' | 'Ferme' | 'Village Pêcheur' | 'Ruines' | null;
+type VillageZone = 'Village Principal' | 'Ferme' | 'Village Pêcheur' | 'Ruines' | 'Reste de la Carte';
 
 /**
  * Determine which zone of the Village map a death occurred in
@@ -51,11 +51,11 @@ function getVillageZone(adjustedX: number, adjustedZ: number): VillageZone {
     return 'Village Pêcheur';
   }
   // Ruines: North area
-  if (adjustedZ >= -280 && adjustedZ <= 200 && adjustedX >= 100 && adjustedX <= 450) {
+  if (adjustedZ >= -220 && adjustedZ <= 200 && adjustedX >= 100 && adjustedX <= 450) {
     return 'Ruines';
   }
-  // Central area - not in a specific zone
-  return null;
+  // Reste de la Carte: Rest of the map
+  return 'Reste de la Carte';
 }
 
 /**
@@ -76,7 +76,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
   const [viewMode, setViewMode] = useState<'deaths' | 'kills'>('deaths');
   const [selectedMap, setSelectedMap] = useState<string>('');
   const [clusterRadius, setClusterRadius] = useState<number>(0);
-  const [hoveredZone, setHoveredZone] = useState<Exclude<VillageZone, null> | null>(null);
+  const [hoveredZone, setHoveredZone] = useState<VillageZone | null>(null);
   const [selectedDeathTypes, setSelectedDeathTypes] = useState<string[]>([]);
   const [isDeathTypesExpanded, setIsDeathTypesExpanded] = useState<boolean>(false);
 
@@ -281,21 +281,16 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
 
     // Calculate player's zone distribution
     const playerZoneCounts = {
-
       'Village Principal': 0,
       'Ferme': 0,
       'Village Pêcheur': 0,
       'Ruines': 0,
-      'other': 0  // For null zones (central area)
+      'Reste de la Carte': 0
     };
 
     nonVoteDeaths.forEach(loc => {
       const zone = getVillageZone(loc.x, loc.z);
-      if (zone) {
-        playerZoneCounts[zone] = (playerZoneCounts[zone] || 0) + 1;
-      } else {
-        playerZoneCounts['other'] += 1;
-      }
+      playerZoneCounts[zone] = (playerZoneCounts[zone] || 0) + 1;
     });
 
     // Calculate all players' zone distribution for comparison
@@ -308,7 +303,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
       'Ferme': 0,
       'Village Pêcheur': 0,
       'Ruines': 0,
-      'other': 0
+      'Reste de la Carte': 0
     };
 
     filteredGameData.forEach(game => {
@@ -323,11 +318,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
           'Village'
         );
         const zone = getVillageZone(adjusted.x, adjusted.z);
-        if (zone) {
-          allZoneCounts[zone] = (allZoneCounts[zone] || 0) + 1;
-        } else {
-          allZoneCounts['other'] += 1;
-        }
+        allZoneCounts[zone] = (allZoneCounts[zone] || 0) + 1;
       });
     });
 
@@ -339,7 +330,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
     }
 
     // Calculate percentages and find significant deviation
-    const zones: Array<Exclude<VillageZone, null>> = ['Village Principal', 'Village Pêcheur', 'Ferme', 'Ruines'];
+    const zones: VillageZone[] = ['Village Principal', 'Village Pêcheur', 'Ferme', 'Ruines', 'Reste de la Carte'];
     let maxDeviation = 0;
     let dominantZone: Exclude<VillageZone, null> | null = null;
 
@@ -850,26 +841,101 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
         </div>
       </div>
 
-      {/* Summary - displayed as row above the chart, full width */}
-      <div className="lycans-resume-conteneur" style={{ flex: '1 1 100%', marginBottom: '1.5rem' }}>
-        <div className="lycans-stat-carte">
-          <h3>{viewMode === 'deaths' ? 'Morts localisées' : 'Kills localisés'}</h3>
-          <div className="lycans-valeur-principale" style={{ color: viewMode === 'deaths' ? 'var(--accent-secondary)' : 'var(--accent-primary-text)' }}>
-            {locationData.length}
+      {/* Zone Analysis - prominent display for Village map */}
+      {zoneAnalysis && selectedMap === 'Village' && viewMode === 'deaths' && (
+        <div style={{ 
+          flex: '1 1 100%', 
+          marginBottom: '0rem',
+          padding: '1.5rem', 
+          background: 'linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%)',
+          borderRadius: '12px', 
+          border: '2px solid var(--accent-primary)',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+        }}>
+          <h3 style={{ 
+            marginTop: 0,
+            marginBottom: '1rem', 
+            color: 'var(--accent-primary)',
+            fontSize: '1.3rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            📊 Analyse par zone (Village)
+          </h3>
+          <p style={{ 
+            fontSize: '0.95rem', 
+            marginBottom: '1rem', 
+            color: 'var(--text-secondary)',
+            lineHeight: '1.5'
+          }}>
+            Distribution des morts (hors votes) comparée à la moyenne de tous les joueurs:
+          </p>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
+            gap: '1rem' 
+          }}>
+            {zoneAnalysis.zoneStats.map(stat => {
+              const isHighlight = stat.zone === zoneAnalysis.dominantZone && zoneAnalysis.maxDeviation > 10;
+              return (
+                <div 
+                  key={stat.zone}
+                  onMouseEnter={() => setHoveredZone(stat.zone)}
+                  onMouseLeave={() => setHoveredZone(null)}
+                  style={{ 
+                    padding: '1rem',
+                    background: 'var(--bg-primary)',
+                    borderRadius: '8px',
+                    border: hoveredZone === stat.zone ? '1px solid var(--accent-primary)' : '1px solid var(--border-color)',
+                    color: isHighlight ? 'white' : 'var(--text-primary)'
+                  }}
+                >
+                  <div style={{ 
+                    fontWeight: 'bold', 
+                    marginBottom: '0.5rem',
+                    fontSize: '0.95rem'
+                  }}>
+                    {stat.zone}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', lineHeight: '1.6' }}>
+                    <div>{selectedPlayerName}: <strong>{stat.playerPercent.toFixed(1)}%</strong> ({stat.playerCount})</div>
+                    <div style={{ opacity: 0.85 }}>Moyenne: {stat.avgPercent.toFixed(1)}%</div>
+                    <div style={{ 
+                      marginTop: '0.25rem',
+                      color: isHighlight ? 'white' : (stat.deviation > 0 ? 'var(--accent-secondary)' : 'var(--text-secondary)'),
+                      fontWeight: Math.abs(stat.deviation) > 5 ? 'bold' : 'normal'
+                    }}>
+                      {stat.deviation > 0 ? '+' : ''}{stat.deviation.toFixed(1)}% vs moyenne
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          {clusterRadius > 0 && clusteredData.length < locationData.length && (
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              → {clusteredData.length} points groupés
+          {zoneAnalysis.dominantZone && zoneAnalysis.maxDeviation > 10 && (
+            <div style={{ 
+              marginTop: '1rem', 
+              padding: '1rem',
+              fontSize: '0.95rem', 
+              color: 'var(--accent-primary)', 
+              fontWeight: 'bold',
+              background: 'var(--bg-primary)',
+              borderRadius: '8px',
+              border: '2px solid var(--accent-primary)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
+              <span style={{ fontSize: '1.5rem' }}>⚠️</span>
+              <span>
+                {selectedPlayerName} meurt significativement plus souvent en zone {zoneAnalysis.dominantZone} 
+                ({'+' + zoneAnalysis.maxDeviation.toFixed(1)}% par rapport à la moyenne)
+              </span>
             </div>
           )}
         </div>
-        <div className="lycans-stat-carte">
-          <h3>Carte</h3>
-          <div className="lycans-valeur-principale" style={{ color: 'var(--chart-color-2)', fontSize: '1.2rem' }}>
-            {selectedMap || 'Aucune'}
-          </div>
-        </div>
-      </div>
+      )}
 
       {/* Map Visualization - full width section */}
       <div className="lycans-graphique-section" style={{ flex: '1 1 100%', minWidth: '100%' }}>
@@ -910,7 +976,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                   <>
                     {hoveredZone === 'Ruines' && (
                       <ReferenceArea
-                        x1={-280}
+                        x1={-220}
                         x2={200}
                         y1={100}
                         y2={450}
@@ -957,6 +1023,19 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                         fillOpacity={0.2}
                         stroke="var(--accent-primary)"
                         strokeWidth={3}
+                        strokeDasharray="5 5"
+                      />
+                    )}
+                    {hoveredZone === 'Reste de la Carte' && (
+                      <ReferenceArea
+                        x1={mapConfig?.zMin ?? -600}
+                        x2={mapConfig?.zMax ?? 600}
+                        y1={mapConfig?.xMin ?? -500}
+                        y2={mapConfig?.xMax ?? 500}
+                        fill="var(--accent-primary)"
+                        fillOpacity={0.15}
+                        stroke="var(--accent-primary)"
+                        strokeWidth={2}
                         strokeDasharray="5 5"
                       />
                     )}
@@ -1041,61 +1120,6 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
           <strong>💀 Morts:</strong> Où le joueur a été éliminé<br/>
           <strong>⚔️ Kills:</strong> Où le joueur a éliminé d'autres joueurs
         </p>
-        
-        {zoneAnalysis && selectedMap === 'Village' && viewMode === 'deaths' && (
-          <div style={{ marginTop: '1rem', padding: '1rem', backgroundColor: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
-            <h4 style={{ marginBottom: '0.75rem', color: 'var(--accent-primary)' }}>📊 Analyse par zone (Village)</h4>
-            <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: 'var(--text-secondary)' }}>
-              Distribution des morts (hors votes) comparée à la moyenne de tous les joueurs:
-            </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem' }}>
-              {zoneAnalysis.zoneStats.map(stat => (
-                <div 
-                  key={stat.zone} 
-                  style={{ 
-                    padding: '0.75rem', 
-                    backgroundColor: stat.zone === zoneAnalysis.dominantZone && zoneAnalysis.maxDeviation > 10 ? 'var(--accent-primary-bg)' : 'var(--bg-tertiary)',
-                    borderRadius: '6px',
-                    border: hoveredZone === stat.zone 
-                      ? '2px solid var(--accent-primary)' 
-                      : stat.zone === zoneAnalysis.dominantZone && zoneAnalysis.maxDeviation > 10 
-                        ? '2px solid var(--accent-primary)' 
-                        : '1px solid var(--border-color)',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    transform: hoveredZone === stat.zone ? 'scale(1.02)' : 'scale(1)',
-                    boxShadow: hoveredZone === stat.zone ? '0 4px 12px rgba(0,0,0,0.2)' : 'none'
-                  }}
-                  onMouseEnter={() => setHoveredZone(stat.zone)}
-                  onMouseLeave={() => setHoveredZone(null)}
-                >
-                  <div style={{ fontWeight: 'bold', marginBottom: '0.25rem', color: 'var(--text-primary)' }}>
-                    {stat.zone}
-                  </div>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                    {stat.playerCount} mort{stat.playerCount > 1 ? 's' : ''} ({stat.playerPercent.toFixed(1)}%)
-                  </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                    Moyenne: {stat.avgPercent.toFixed(1)}%
-                  </div>
-                  <div style={{ 
-                    fontSize: '0.85rem', 
-                    fontWeight: 'bold',
-                    color: stat.deviation > 5 ? 'var(--accent-primary)' : stat.deviation < -5 ? 'var(--chart-color-2)' : 'var(--text-secondary)',
-                    marginTop: '0.25rem'
-                  }}>
-                    {stat.deviation > 0 ? '+' : ''}{stat.deviation.toFixed(1)}%
-                  </div>
-                </div>
-              ))}
-            </div>
-            {zoneAnalysis.dominantZone && zoneAnalysis.maxDeviation > 10 && (
-              <div style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: 'var(--accent-primary)', fontWeight: 'bold' }}>
-                ⚠️ {selectedPlayerName} meurt significativement plus souvent en zone <strong>{zoneAnalysis.dominantZone}</strong> (+{zoneAnalysis.maxDeviation.toFixed(1)}% par rapport à la moyenne)
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
