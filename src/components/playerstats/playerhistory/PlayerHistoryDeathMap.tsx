@@ -903,7 +903,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                     <div style={{ opacity: 0.85 }}>Moyenne: {stat.avgPercent.toFixed(1)}%</div>
                     <div style={{ 
                       marginTop: '0.25rem',
-                      color: isHighlight ? 'white' : (stat.deviation > 0 ? 'var(--accent-secondary)' : 'var(--text-secondary)'),
+                      color: isHighlight ? 'var(--accent-secondary)' : (stat.deviation > 0 ? 'white' : 'var(--text-secondary)'),
                       fontWeight: Math.abs(stat.deviation) > 5 ? 'bold' : 'normal'
                     }}>
                       {stat.deviation > 0 ? '+' : ''}{stat.deviation.toFixed(1)}% vs moyenne
