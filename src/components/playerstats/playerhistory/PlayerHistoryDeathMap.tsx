@@ -30,7 +30,7 @@ interface LocationData {
 /**
  * Village map zones based on adjusted coordinates
  */
-type VillageZone = 'Village Principal' | 'Village Forgeron' | 'Village Pêcheur' | 'Ruines' | null;
+type VillageZone = 'Village Principal' | 'Ferme' | 'Village Pêcheur' | 'Ruines' | null;
 
 /**
  * Determine which zone of the Village map a death occurred in
@@ -42,9 +42,9 @@ function getVillageZone(adjustedX: number, adjustedZ: number): VillageZone {
   if (adjustedZ >= -250 && adjustedZ <= 100 && adjustedX >= -450 && adjustedX <= -120) {
     return 'Village Principal';
   }
-  // Village Forgeron: West area
+  // Ferme: West area
   if (adjustedZ >= -550 && adjustedZ <= -250 && adjustedX >= -150 && adjustedX <= 150) {
-    return 'Village Forgeron';
+    return 'Ferme';
   }
   // Village Pêcheur: East area
   if (adjustedZ >= 150 && adjustedZ <= 500 && adjustedX >= -320 && adjustedX <= 80) {
@@ -219,7 +219,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
     const playerZoneCounts = {
 
       'Village Principal': 0,
-      'Village Forgeron': 0,
+      'Ferme': 0,
       'Village Pêcheur': 0,
       'Ruines': 0,
       'other': 0  // For null zones (central area)
@@ -241,7 +241,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
 
     const allZoneCounts = {
       'Village Principal': 0,
-      'Village Forgeron': 0,
+      'Ferme': 0,
       'Village Pêcheur': 0,
       'Ruines': 0,
       'other': 0
@@ -275,7 +275,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
     }
 
     // Calculate percentages and find significant deviation
-    const zones: Array<Exclude<VillageZone, null>> = ['Village Principal', 'Village Pêcheur', 'Village Forgeron', 'Ruines'];
+    const zones: Array<Exclude<VillageZone, null>> = ['Village Principal', 'Village Pêcheur', 'Ferme', 'Ruines'];
     let maxDeviation = 0;
     let dominantZone: Exclude<VillageZone, null> | null = null;
 
@@ -744,7 +744,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                         strokeDasharray="5 5"
                       />
                     )}
-                    {hoveredZone === 'Village Forgeron' && (
+                    {hoveredZone === 'Ferme' && (
                       <ReferenceArea
                         x1={-550}
                         x2={-250}
