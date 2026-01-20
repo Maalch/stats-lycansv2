@@ -45,6 +45,9 @@ export interface SettingsState {
   // Tab navigation (for URL persistence)
   tab: string | null;
   subtab: string | null;
+  
+  // PlayerSelection view type (for URL persistence)
+  selectedPlayerSelectionView?: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime';
 }
 
 interface SettingsContextType {
@@ -75,6 +78,7 @@ const defaultSettings: SettingsState = {
   dataSource: 'main',
   tab: null,
   subtab: null,
+  selectedPlayerSelectionView: undefined,
 };
 
 // Helper functions for URL parameters
@@ -174,6 +178,12 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
   if (subtab) {
     settings.subtab = subtab;
   }
+  
+  // Parse selectedPlayerSelectionView
+  const playerSelectionView = urlParams.get('playerSelectionView');
+  if (playerSelectionView && ['achievements', 'evolution', 'camps', 'maps', 'kills', 'roles', 'deathmap', 'talkingtime'].includes(playerSelectionView)) {
+    settings.selectedPlayerSelectionView = playerSelectionView as 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime';
+  }
 
   return settings;
 }
@@ -230,6 +240,15 @@ function updateUrlFromSettings(settings: SettingsState) {
   }
   if (settings.subtab) {
     urlParams.set('subtab', settings.subtab);
+  }
+  
+  // PlayerSelection view type (automatically add tab if not set)
+  if (settings.selectedPlayerSelectionView && settings.selectedPlayerSelectionView !== 'achievements') {
+    // Ensure tab parameter is present when playerSelectionView is set
+    if (!settings.tab) {
+      urlParams.set('tab', 'playerSelection');
+    }
+    urlParams.set('playerSelectionView', settings.selectedPlayerSelectionView);
   }
   
   // Update URL without triggering page reload
@@ -333,6 +352,23 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     
     if (targetSettings.highlightedPlayer && targetSettings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
       urlParams.set('highlightedPlayer', encodeURIComponent(targetSettings.highlightedPlayer));
+    }
+    
+    // Tab and subtab
+    if (targetSettings.tab) {
+      urlParams.set('tab', targetSettings.tab);
+    }
+    if (targetSettings.subtab) {
+      urlParams.set('subtab', targetSettings.subtab);
+    }
+    
+    // PlayerSelection view type (automatically add tab if not set)
+    if (targetSettings.selectedPlayerSelectionView && targetSettings.selectedPlayerSelectionView !== 'achievements') {
+      // Ensure tab parameter is present when playerSelectionView is set
+      if (!targetSettings.tab) {
+        urlParams.set('tab', 'playerSelection');
+      }
+      urlParams.set('playerSelectionView', targetSettings.selectedPlayerSelectionView);
     }
     
     const baseUrl = `${window.location.origin}${window.location.pathname}`;

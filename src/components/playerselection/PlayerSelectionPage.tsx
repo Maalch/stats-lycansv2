@@ -75,9 +75,9 @@ export function PlayerSelectionPage() {
     return settings.gameFilter === 'modded';
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
-  // Use navigationState to restore view selection, fallback to 'achievements'
+  // Use URL/settings to restore view selection, fallback to navigationState, then 'achievements'
   const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime'>(
-    navigationState.selectedPlayerSelectionView || 'achievements'
+    settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView || 'achievements'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
   const [campFilter, setCampFilter] = useState<CampFilterOption>('all');
@@ -102,12 +102,13 @@ export function PlayerSelectionPage() {
     }
   }, [isModdedOnlyMode, achievementFilter]);
 
-  // Sync selectedView with navigationState when it changes (for external navigation like changelog links)
+  // Sync selectedView with URL/settings changes (for shareable URLs and external navigation)
   useEffect(() => {
-    if (navigationState.selectedPlayerSelectionView) {
-      setSelectedView(navigationState.selectedPlayerSelectionView);
+    const viewFromUrl = settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView;
+    if (viewFromUrl && viewFromUrl !== selectedView) {
+      setSelectedView(viewFromUrl);
     }
-  }, [navigationState.selectedPlayerSelectionView]);
+  }, [settings.selectedPlayerSelectionView, navigationState.selectedPlayerSelectionView]);
 
   // Get player history data for summary cards (only when a player is highlighted)
   const { data: playerHistoryData } = usePlayerGameHistoryFromRaw(settings.highlightedPlayer || '');
@@ -212,10 +213,11 @@ export function PlayerSelectionPage() {
     setSearchQuery(''); // Clear search to show the selected player's card
   };
 
-  // Helper function to handle view changes and sync with navigation state
+  // Helper function to handle view changes and sync with navigation state and settings (for URL)
   const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime') => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
+    updateSettings({ selectedPlayerSelectionView: newView, tab: 'playerSelection' });
   };
   
   // Handler for random clip button
