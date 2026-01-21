@@ -461,7 +461,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
         }}>
           <div style={{ 
             fontWeight: 'bold', 
-            marginBottom: '8px', 
+            marginBottom: '4px', 
             fontSize: '1rem',
             color: 'var(--accent-primary-text)'
           }}>
@@ -469,7 +469,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
           </div>
           
           <div style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
-            <div style={{ marginBottom: '8px' }}>
+            <div style={{ marginBottom: '4px' }}>
               <strong>{viewMode === 'deaths' ? 'Par:' : 'Victimes:'}</strong>
               {topVictims.map(([name, count]) => (
                 <div key={name} style={{ paddingLeft: '0.5rem' }}>
@@ -483,7 +483,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
               )}
             </div>
             
-            <div>
+            <div style={{ marginBottom: '4px' }}>
               <strong>Types de mort:</strong>
               {topDeathTypes.map(([type, count]) => (
                 <div key={type} style={{ paddingLeft: '0.5rem' }}>
@@ -522,7 +522,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
       }}>
         <div style={{ 
           fontWeight: 'bold', 
-          marginBottom: '8px', 
+          marginBottom: '4px', 
           fontSize: '1rem',
           color: 'var(--accent-primary-text)'
         }}>
@@ -888,7 +888,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                     background: 'var(--bg-primary)',
                     borderRadius: '8px',
                     border: hoveredZone === stat.zone ? '1px solid var(--accent-primary)' : '1px solid var(--border-color)',
-                    color: isHighlight ? 'white' : 'var(--text-primary)'
+                    color: 'var(--text-primary)'
                   }}
                 >
                   <div style={{ 
@@ -903,7 +903,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
                     <div style={{ opacity: 0.85 }}>Moyenne: {stat.avgPercent.toFixed(1)}%</div>
                     <div style={{ 
                       marginTop: '0.25rem',
-                      color: isHighlight ? 'var(--accent-secondary)' : (stat.deviation > 0 ? 'white' : 'var(--text-secondary)'),
+                      color: isHighlight ? 'var(--accent-secondary)' : (stat.deviation > 0 ? 'var(--accent-primary)' : 'var(--text-secondary)'),
                       fontWeight: Math.abs(stat.deviation) > 5 ? 'bold' : 'normal'
                     }}>
                       {stat.deviation > 0 ? '+' : ''}{stat.deviation.toFixed(1)}% vs moyenne
@@ -944,7 +944,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
             {/* Aspect ratio: map is 1640:922 ≈ 1.78:1, so height = width / 1.78 */}
             <div style={{ width: '100%', margin: '0 auto', aspectRatio: '1640 / 922' }}>
               <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 60 }}>
+                <ScatterChart margin={{ top: 20, right: 30, left: 60, bottom: 20 }}>
                 {/* Map background image */}
                 {mapConfig && (
                   <ReferenceArea

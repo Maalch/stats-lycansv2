@@ -1,6 +1,6 @@
 export { PlayerHistoryEvolution } from './PlayerHistoryEvolution';
 export { PlayerHistoryCamp } from './PlayerHistoryCamp';
-export { PlayerHistoryMap } from './PlayerHistoryMap';
+export { PlayerHistoryMapTypes } from './PlayerHistoryMapTypes';
 export { PlayerHistoryKills } from './PlayerHistoryKills';
 export { PlayerHistoryRoles } from './PlayerHistoryRoles';
 export { PlayerHistoryDeathMap } from './PlayerHistoryDeathMap';

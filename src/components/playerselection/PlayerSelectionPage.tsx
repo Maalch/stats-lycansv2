@@ -12,7 +12,7 @@ import { AchievementsDisplay } from './AchievementsDisplay';
 import { 
   PlayerHistoryEvolution, 
   PlayerHistoryCamp, 
-  PlayerHistoryMap, 
+  PlayerHistoryMapTypes, 
   PlayerHistoryKills,
   PlayerHistoryRoles,
   PlayerHistoryDeathMap,
@@ -76,7 +76,7 @@ export function PlayerSelectionPage() {
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
   // Use URL/settings to restore view selection, fallback to navigationState, then 'achievements'
-  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime'>(
+  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'maptypes' | 'kills' | 'roles' | 'deathmap' | 'talkingtime'>(
     settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView || 'achievements'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
@@ -214,7 +214,7 @@ export function PlayerSelectionPage() {
   };
 
   // Helper function to handle view changes and sync with navigation state and settings (for URL)
-  const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime') => {
+  const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'maptypes' | 'kills' | 'roles' | 'deathmap' | 'talkingtime') => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
     updateSettings({ selectedPlayerSelectionView: newView, tab: 'playerSelection' });
@@ -469,10 +469,10 @@ export function PlayerSelectionPage() {
                     </button>
                     <button
                       type="button"
-                      className={`lycans-categorie-btn ${selectedView === 'maps' ? 'active' : ''}`}
-                      onClick={() => handleViewChange('maps')}
+                      className={`lycans-categorie-btn ${selectedView === 'maptypes' ? 'active' : ''}`}
+                      onClick={() => handleViewChange('maptypes')}
                     >
-                      Maps
+                      Types de cartes
                     </button>
 
                     <button
@@ -487,7 +487,7 @@ export function PlayerSelectionPage() {
                       className={`lycans-categorie-btn ${selectedView === 'deathmap' ? 'active' : ''}`}
                       onClick={() => handleViewChange('deathmap')}
                     >
-                      Carte
+                      Cartes
                     </button>
                     <button
                       type="button"
@@ -686,10 +686,10 @@ export function PlayerSelectionPage() {
                     </div>
                   )}
 
-                  {/* Map View */}
-                  {selectedView === 'maps' && (
+                  {/* Map TypesView */}
+                  {selectedView === 'maptypes' && (
                     <div className="player-history-section">
-                      <PlayerHistoryMap selectedPlayerName={highlightedPlayerStats.name} />
+                      <PlayerHistoryMapTypes selectedPlayerName={highlightedPlayerStats.name} />
                     </div>
                   )}
 
