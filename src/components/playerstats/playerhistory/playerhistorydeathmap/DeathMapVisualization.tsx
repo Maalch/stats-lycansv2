@@ -35,14 +35,14 @@ interface ClusteredDataPoint {
 interface DeathMapVisualizationProps {
   locationData: LocationData[];
   clusteredData: ClusteredDataPoint[];
-  viewMode: 'deaths' | 'kills';
+  viewMode: 'deaths' | 'kills' | 'transformations';
   selectedPlayerName: string;
   selectedMap: string;
   mapConfig: MapImageConfig | null;
   xDomain: [number, number];
   zDomain: [number, number];
   hoveredZone: VillageZone | null;
-  getDeathColor: (deathType: string | null) => string;
+  getDeathColor: (deathType: string | null, camp?: string) => string;
   handleLocationClick: (data: any) => void;
 }
 
@@ -66,16 +66,22 @@ export function DeathMapVisualization({
     const data = payload[0].payload;
     const locations = data.allLocations || [data];
     const isMultiple = locations.length > 1;
+    const isTransformation = viewMode === 'transformations';
     
     if (isMultiple) {
       const victimCounts = new Map<string, number>();
       const deathTypeCounts = new Map<string, number>();
       const uniqueGames = new Set<string>();
+      const campCounts = new Map<string, number>();
       
       locations.forEach((loc: LocationData) => {
         victimCounts.set(loc.victimName, (victimCounts.get(loc.victimName) || 0) + 1);
-        const label = loc.deathType ? getDeathTypeLabel(loc.deathType) : 'Inconnu';
-        deathTypeCounts.set(label, (deathTypeCounts.get(label) || 0) + 1);
+        if (!isTransformation) {
+          const label = loc.deathType ? getDeathTypeLabel(loc.deathType) : 'Inconnu';
+          deathTypeCounts.set(label, (deathTypeCounts.get(label) || 0) + 1);
+        } else {
+          campCounts.set(loc.camp, (campCounts.get(loc.camp) || 0) + 1);
+        }
         uniqueGames.add(loc.gameId);
       });
       
@@ -86,6 +92,9 @@ export function DeathMapVisualization({
       const topDeathTypes = Array.from(deathTypeCounts.entries())
         .sort((a, b) => b[1] - a[1])
         .slice(0, 3);
+      
+      const topCamps = Array.from(campCounts.entries())
+        .sort((a, b) => b[1] - a[1]);
       
       return (
         <div style={{
@@ -102,27 +111,42 @@ export function DeathMapVisualization({
             fontSize: '1rem',
             color: 'var(--accent-primary-text)'
           }}>
-            {viewMode === 'deaths' ? '💀' : '⚔️'} {locations.length} {viewMode === 'deaths' ? 'morts' : 'kills'} à cet endroit
+            {isTransformation ? '🐺' : viewMode === 'deaths' ? '💀' : '⚔️'} {locations.length} {isTransformation ? 'transformations' : viewMode === 'deaths' ? 'morts' : 'kills'} à cet endroit
           </div>
           
           <div style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
-            <div style={{ marginBottom: '4px' }}>
-              <strong>{viewMode === 'deaths' ? 'Victimes:' : 'Kills sur:'}</strong>
-              {topVictims.map(([name, count]) => (
-                <div key={name} style={{ marginLeft: '0.5rem' }}>
-                  • {name} ({count}×)
+            {isTransformation ? (
+              <>
+                <div style={{ marginBottom: '4px' }}>
+                  <strong>Camps loup:</strong>
+                  {topCamps.map(([camp, count]) => (
+                    <div key={camp} style={{ marginLeft: '0.5rem' }}>
+                      • {camp} ({count}×)
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            
-            <div style={{ marginBottom: '4px' }}>
-              <strong>Types de mort:</strong>
-              {topDeathTypes.map(([type, count]) => (
-                <div key={type} style={{ marginLeft: '0.5rem' }}>
-                  • {type} ({count}×)
+              </>
+            ) : (
+              <>
+                <div style={{ marginBottom: '4px' }}>
+                  <strong>{viewMode === 'deaths' ? 'Victimes:' : 'Kills sur:'}</strong>
+                  {topVictims.map(([name, count]) => (
+                    <div key={name} style={{ marginLeft: '0.5rem' }}>
+                      • {name} ({count}×)
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+                
+                <div style={{ marginBottom: '4px' }}>
+                  <strong>Types de mort:</strong>
+                  {topDeathTypes.map(([type, count]) => (
+                    <div key={type} style={{ marginLeft: '0.5rem' }}>
+                      • {type} ({count}×)
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
             
             <div style={{ marginTop: '8px', color: 'var(--text-secondary)' }}>
               📍 {uniqueGames.size} partie{uniqueGames.size > 1 ? 's' : ''} différente{uniqueGames.size > 1 ? 's' : ''}
@@ -158,11 +182,18 @@ export function DeathMapVisualization({
           fontSize: '1rem',
           color: 'var(--accent-primary-text)'
         }}>
-          {viewMode === 'deaths' ? '💀' : '⚔️'} {viewMode === 'deaths' ? 'Mort de' : 'Kill de'} {selectedPlayerName}
+          {isTransformation ? '🐺' : viewMode === 'deaths' ? '💀' : '⚔️'} {isTransformation ? 'Transformation de' : viewMode === 'deaths' ? 'Mort de' : 'Kill de'} {selectedPlayerName}
         </div>
         
         <div style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
-          {viewMode === 'deaths' ? (
+          {isTransformation ? (
+            <>
+              <div>👤 <strong>Joueur:</strong> {singleLoc.victimName}</div>
+              <div>🏕️ <strong>Camp loup:</strong> {singleLoc.camp}</div>
+              <div>🗺️ <strong>Carte:</strong> {singleLoc.mapName}</div>
+              <div>🎮 <strong>Partie:</strong> #{singleLoc.gameId}</div>
+            </>
+          ) : viewMode === 'deaths' ? (
             <>
               <div>⚰️ <strong>Victime:</strong> {singleLoc.victimName}</div>
               <div>⚔️ <strong>Tueur:</strong> {singleLoc.killerName || 'Inconnu'}</div>
@@ -175,8 +206,12 @@ export function DeathMapVisualization({
               <div>💀 <strong>Type:</strong> {singleLoc.deathType ? getDeathTypeLabel(singleLoc.deathType) : 'Inconnu'}</div>
             </>
           )}
-          <div>🗺️ <strong>Carte:</strong> {singleLoc.mapName}</div>
-          <div>🎮 <strong>Partie:</strong> #{singleLoc.gameId}</div>
+          {!isTransformation && (
+            <>
+              <div>🗺️ <strong>Carte:</strong> {singleLoc.mapName}</div>
+              <div>🎮 <strong>Partie:</strong> #{singleLoc.gameId}</div>
+            </>
+          )}
         </div>
         
         <div style={{ 
@@ -327,7 +362,7 @@ export function DeathMapVisualization({
                     return (
                       <Cell
                         key={`cell-${index}`}
-                        fill={getDeathColor(entry.deathType)}
+                        fill={getDeathColor(entry.deathType, entry.camp)}
                         stroke={entry.count > 1 ? 'white' : 'rgba(255,255,255,0.5)'}
                         strokeWidth={entry.count > 1 ? 2 : 1}
                         opacity={0.85}
@@ -348,9 +383,11 @@ export function DeathMapVisualization({
           borderRadius: '8px'
         }}>
           <p style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-            {viewMode === 'deaths' 
+            {viewMode === 'deaths'
               ? `Aucune mort localisée pour ${selectedPlayerName} sur cette carte.`
-              : `Aucun kill localisé pour ${selectedPlayerName} sur cette carte.`
+              : viewMode === 'kills'
+                ? `Aucun kill localisé pour ${selectedPlayerName} sur cette carte.`
+                : `Aucune transformation en loup localisée pour ${selectedPlayerName} sur cette carte.`
             }
           </p>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>

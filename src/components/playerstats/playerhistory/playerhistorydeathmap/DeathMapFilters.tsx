@@ -1,8 +1,8 @@
 import { type DeathType, getDeathTypeLabel } from '../../../../types/deathTypes';
 
 interface DeathMapFiltersProps {
-  viewMode: 'deaths' | 'kills';
-  setViewMode: (mode: 'deaths' | 'kills') => void;
+  viewMode: 'deaths' | 'kills' | 'transformations';
+  setViewMode: (mode: 'deaths' | 'kills' | 'transformations') => void;
   selectedMap: string;
   setSelectedMap: (map: string) => void;
   availableMaps: string[];
@@ -77,6 +77,22 @@ export function DeathMapFilters({
           >
             ⚔️ Kills
           </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('transformations')}
+            style={{
+              background: viewMode === 'transformations' ? 'var(--accent-primary)' : 'transparent',
+              color: viewMode === 'transformations' ? 'white' : 'var(--text-primary)',
+              border: 'none',
+              padding: '0.5rem 1rem',
+              fontSize: '0.9rem',
+              cursor: 'pointer',
+              fontWeight: viewMode === 'transformations' ? 'bold' : 'normal',
+              transition: 'all 0.2s'
+            }}
+          >
+            🐺 Transfos
+          </button>
         </div>
       </div>
 
@@ -127,51 +143,52 @@ export function DeathMapFilters({
         </span>
       </div>
 
-      {/* Multi-select death type filter - collapsible */}
-      <div style={{ width: '100%', marginTop: '1rem' }}>
-        {/* Clickable header to expand/collapse */}
-        <div 
-          onClick={() => setIsDeathTypesExpanded(!isDeathTypesExpanded)}
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '1rem',
-            marginBottom: isDeathTypesExpanded ? '0.5rem' : '0',
-            cursor: 'pointer',
-            padding: '0.5rem',
-            background: 'var(--bg-tertiary)',
-            borderRadius: '4px',
-            border: '1px solid var(--border-color)',
-            transition: 'all 0.2s'
-          }}
-        >
-          <span style={{ 
-            color: 'var(--text-primary)', 
-            fontSize: '1rem',
-            transition: 'transform 0.2s',
-            transform: isDeathTypesExpanded ? 'rotate(90deg)' : 'rotate(0deg)'
-          }}>
-            ▶
-          </span>
-          <label style={{ 
-            color: 'var(--text-secondary)', 
-            fontSize: '0.9rem', 
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            flexGrow: 1
-          }}>
-            Types de mort
-          </label>
-          <span style={{ 
-            color: 'var(--text-secondary)', 
-            fontSize: '0.85rem'
-          }}>
-            {selectedDeathTypes.length} / {availableDeathTypes.length} sélectionné{selectedDeathTypes.length > 1 ? 's' : ''}
-          </span>
-        </div>
-        
-        {/* Expanded content with bulk buttons and checkbox grid */}
-        {isDeathTypesExpanded && (
+      {/* Multi-select death type filter - collapsible (hidden for transformations) */}
+      {viewMode !== 'transformations' && (
+        <div style={{ width: '100%', marginTop: '1rem' }}>
+          {/* Clickable header to expand/collapse */}
+          <div 
+            onClick={() => setIsDeathTypesExpanded(!isDeathTypesExpanded)}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '1rem',
+              marginBottom: isDeathTypesExpanded ? '0.5rem' : '0',
+              cursor: 'pointer',
+              padding: '0.5rem',
+              background: 'var(--bg-tertiary)',
+              borderRadius: '4px',
+              border: '1px solid var(--border-color)',
+              transition: 'all 0.2s'
+            }}
+          >
+            <span style={{ 
+              color: 'var(--text-primary)', 
+              fontSize: '1rem',
+              transition: 'transform 0.2s',
+              transform: isDeathTypesExpanded ? 'rotate(90deg)' : 'rotate(0deg)'
+            }}>
+              ▶
+            </span>
+            <label style={{ 
+              color: 'var(--text-secondary)', 
+              fontSize: '0.9rem', 
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              flexGrow: 1
+            }}>
+              Types de mort
+            </label>
+            <span style={{ 
+              color: 'var(--text-secondary)', 
+              fontSize: '0.85rem'
+            }}>
+              {selectedDeathTypes.length} / {availableDeathTypes.length} sélectionné{selectedDeathTypes.length > 1 ? 's' : ''}
+            </span>
+          </div>
+          
+          {/* Expanded content with bulk buttons and checkbox grid */}
+          {isDeathTypesExpanded && (
           <>
             <div style={{ 
               display: 'flex', 
@@ -281,7 +298,8 @@ export function DeathMapFilters({
             </div>
           </>
         )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

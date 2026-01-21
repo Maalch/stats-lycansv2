@@ -17,7 +17,7 @@ interface ZoneAnalysisData {
 interface DeathMapZoneAnalysisProps {
   zoneAnalysis: ZoneAnalysisData | null;
   selectedMap: string;
-  viewMode: 'deaths' | 'kills';
+  viewMode: 'deaths' | 'kills' | 'transformations';
   selectedPlayerName: string;
   hoveredZone: VillageZone | null;
   setHoveredZone: (zone: VillageZone | null) => void;

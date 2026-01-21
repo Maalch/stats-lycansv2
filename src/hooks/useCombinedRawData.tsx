@@ -68,7 +68,7 @@ export interface PlayerStat {
   SecondsTalkedOutsideMeeting: number;
   SecondsTalkedDuringMeeting: number;
   TotalCollectedLoot?: number;    // Total loot collected during the game (optional for legacy data)
-  Actions: Action[];              // Array of actions performed by this player during the game
+  Actions?: Action[];             // Array of actions performed by this player during the game (optional for legacy data)
 }
 
 export interface LegacyData {

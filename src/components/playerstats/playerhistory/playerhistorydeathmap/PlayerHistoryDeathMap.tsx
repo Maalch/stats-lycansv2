@@ -75,7 +75,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
   const { gameData: filteredGameData, isLoading, error } = useCombinedFilteredRawData();
   const lycansColors = useThemeAdjustedLycansColorScheme();
   
-  const [viewMode, setViewMode] = useState<'deaths' | 'kills'>('deaths');
+  const [viewMode, setViewMode] = useState<'deaths' | 'kills' | 'transformations'>('deaths');
   const [selectedMap, setSelectedMap] = useState<string>('');
   const [clusterRadius, setClusterRadius] = useState<number>(0);
   const [hoveredZone, setHoveredZone] = useState<VillageZone | null>(null);
@@ -111,6 +111,13 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
             mapsSet.add(game.MapName);
           }
         });
+        
+        // For transformations mode: check if player has transformation actions
+        if (playerStat.Actions && Array.isArray(playerStat.Actions) && 
+            playerStat.Actions.some(action => action.ActionType === 'Transform') && 
+            game.MapName) {
+          mapsSet.add(game.MapName);
+        }
       }
     });
     
@@ -173,8 +180,12 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
     };
   }, [filteredGameData, selectedPlayerName, lycansColors]);
 
-  // Get color for death type - uses the pre-calculated deathTypeColors
-  const getDeathColor = (deathType: string | null): string => {
+  // Get color for death type or camp - uses the pre-calculated deathTypeColors or lycans camp colors
+  const getDeathColor = (deathType: string | null, camp?: string): string => {
+    // For transformations (null deathType in transformation mode), use camp color
+    if (viewMode === 'transformations' && camp) {
+      return lycansColors[camp as keyof typeof lycansColors] || 'var(--text-secondary)';
+    }
     if (!deathType) return 'var(--text-secondary)';
     return deathTypeColors[deathType as DeathType] || 'var(--text-secondary)';
   };
@@ -230,7 +241,7 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
             displayedGameId: game.DisplayedId
           });
         }
-      } else {
+      } else if (viewMode === 'kills') {
         // Show where the player killed others
         game.PlayerStats.forEach(victim => {
           if (victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase() 
@@ -260,18 +271,51 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
             });
           }
         });
+      } else if (viewMode === 'transformations') {
+        // Show where the player transformed (wolf transformations)
+        if (playerStat.Actions && Array.isArray(playerStat.Actions)) {
+          playerStat.Actions.forEach(action => {
+            if (action.ActionType === 'Transform' && action.Position) {
+              const camp = getPlayerCampFromRole(playerStat.MainRoleInitial, {
+                regroupLovers: true,
+                regroupVillagers: true,
+                regroupWolfSubRoles: true
+              });
+              
+              const adjusted = adjustCoordinatesForMap(
+                action.Position.x,
+                action.Position.z,
+                game.MapName
+              );
+              
+              locations.push({
+                x: adjusted.x,
+                z: adjusted.z,
+                victimName: playerStat.Username,
+                killerName: null,
+                deathType: null, // Transformations don't use death types, use camp for coloring
+                mapName: game.MapName,
+                camp,
+                gameId: game.DisplayedId,
+                displayedGameId: game.DisplayedId
+              });
+            }
+          });
+        }
       }
     });
     
-    // Apply death type filter
-    if (selectedDeathTypes.length > 0 && selectedDeathTypes.length < availableDeathTypes.length) {
+    // Apply death type filter (only for deaths and kills modes, not transformations)
+    if (viewMode !== 'transformations' && 
+        selectedDeathTypes.length > 0 && 
+        selectedDeathTypes.length < availableDeathTypes.length) {
       return locations.filter(loc => loc.deathType && selectedDeathTypes.includes(loc.deathType));
     }
     
     return locations;
   }, [filteredGameData, selectedPlayerName, viewMode, selectedMap, selectedDeathTypes, availableDeathTypes]);
 
-  // Zone analysis for Village map (deaths mode)
+  // Zone analysis for Village map (deaths mode only)
   const zoneAnalysis = useMemo(() => {
     if (selectedMap !== 'Village' || viewMode !== 'deaths') {
       return null;
@@ -558,14 +602,17 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
         <p>
           Cette carte affiche {viewMode === 'deaths' 
             ? `les emplacements où ${selectedPlayerName} est mort` 
-            : `les emplacements où ${selectedPlayerName} a éliminé d'autres joueurs`
+            : viewMode === 'kills'
+            ? `les emplacements où ${selectedPlayerName} a éliminé d'autres joueurs`
+            : `les emplacements où ${selectedPlayerName} s'est transformé en loup`
           } au cours des parties.
-          Les couleurs indiquent le type de mort. Cliquez sur un point pour voir les détails de la partie.
+          {viewMode !== 'transformations' && 'Les couleurs indiquent le type de mort.'} Cliquez sur un point pour voir les détails de la partie.
         </p>
         <p style={{ marginTop: '0.5rem' }}>
           Les points regroupés ont une petite bordure blanche.<br/>
           <strong>💀 Morts:</strong> Où le joueur a été éliminé<br/>
-          <strong>⚔️ Kills:</strong> Où le joueur a éliminé d'autres joueurs
+          <strong>⚔️ Kills:</strong> Où le joueur a éliminé d'autres joueurs<br/>
+          <strong>🐺 Transformations:</strong> Où le joueur s'est transformé en loup
         </p>
       </div>
     </div>
