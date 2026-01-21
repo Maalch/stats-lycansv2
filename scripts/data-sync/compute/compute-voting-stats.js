@@ -30,7 +30,9 @@ export function computeVotingStatistics(gameData) {
     
     if (deathTiming.startsWith('N') || deathTiming.startsWith('J')) {
       const deathDay = parseInt(deathTiming.substring(1));
-      return meetingNumber <= deathDay;
+      // Sequence: J1 -> N1 -> M1 -> J2 -> N2 -> M2
+      // If player dies at J2 or N2, they are NOT alive for M2
+      return meetingNumber < deathDay;
     }
     
     return true;

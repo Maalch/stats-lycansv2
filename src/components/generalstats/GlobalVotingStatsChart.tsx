@@ -66,7 +66,7 @@ export function GlobalVotingStatsChart() {
         gap: '1rem' 
       }}>
         <SummaryCard
-          title="Meetings Totales"
+          title="Meetings Totaux"
           value={data.totalMeetings}
           color={lycansColorScheme.Villageois}
         />

@@ -83,11 +83,13 @@ function wasPlayerAliveAtMeeting(player: PlayerStat, meetingNumber: number): boo
     return meetingNumber < deathMeeting;
   }
   
-  // For night/day deaths, assume they died before the next meeting
+  // For night/day deaths, they died before that meeting number
+  // Sequence: J1 -> N1 -> M1 -> J2 -> N2 -> M2
+  // So if player dies at J2 or N2, they are NOT alive for M2
   if (deathTiming.startsWith('N') || deathTiming.startsWith('J')) {
     const deathDay = parseInt(deathTiming.substring(1));
-    // If they died on night/day X, they're not alive for meeting X+1
-    return meetingNumber <= deathDay;
+    // If they died on night/day X, they're not alive for meeting X
+    return meetingNumber < deathDay;
   }
   
   // Default to alive if we can't parse
