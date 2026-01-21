@@ -5,6 +5,7 @@ import { useThemeAdjustedLycansColorScheme } from '../../../../types/api';
 import { getDeathTypeColor, clusterLocationPoints, getDominantDeathType, adjustCoordinatesForMap, getMapConfig } from '../../../../hooks/utils/deathLocationUtils';
 import { getPlayerCampFromRole } from '../../../../utils/datasyncExport';
 import { type DeathType } from '../../../../types/deathTypes';
+import { usePlayerGameHistoryFromRaw } from '../../../../hooks/usePlayerGameHistoryFromRaw';
 import { DeathMapFilters } from './DeathMapFilters';
 import { DeathMapZoneAnalysis } from './DeathMapZoneAnalysis';
 import { DeathMapVisualization } from './DeathMapVisualization';
@@ -80,6 +81,9 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
   const [hoveredZone, setHoveredZone] = useState<VillageZone | null>(null);
   const [selectedDeathTypes, setSelectedDeathTypes] = useState<string[]>([]);
   const [isDeathTypesExpanded, setIsDeathTypesExpanded] = useState<boolean>(false);
+
+  // Get win rate stats for all camps combined
+  const { data: playerHistory } = usePlayerGameHistoryFromRaw(selectedPlayerName, 'Tous les camps');
 
   // Get available maps with death position data for this player
   const availableMaps = useMemo(() => {
@@ -450,7 +454,20 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
         fromComponent: 'Player Death Map'
       });
     }
-  };
+  }
+  // Calculate win rate for selected map only
+  const selectedMapWinStats = useMemo(() => {
+    if (!playerHistory?.mapStats || !selectedMap) return null;
+    
+    const mapStat = playerHistory.mapStats[selectedMap];
+    if (!mapStat) return null;
+    
+    return {
+      winRate: mapStat.winRate,
+      wins: mapStat.wins,
+      total: mapStat.appearances
+    };
+  }, [playerHistory, selectedMap]);
 
   if (isLoading) return <div className="donnees-attente">Chargement des données...</div>;
   if (error) return <div className="donnees-probleme">Erreur: {error}</div>;
@@ -499,6 +516,41 @@ export function PlayerHistoryDeathMap({ selectedPlayerName }: PlayerHistoryDeath
         hoveredZone={hoveredZone}
         setHoveredZone={setHoveredZone}
       />
+
+      {/* Win Rate Stats Display - One Line */}
+      {selectedMapWinStats && (
+        <div style={{ 
+          flex: '1 1 100%',
+          textAlign: 'center',
+          padding: '0.75rem',
+          background: 'var(--bg-secondary)',
+          borderRadius: '4px',
+          border: '1px solid var(--border-color)',
+          marginTop: '1rem'
+        }}>
+          <span style={{ 
+            fontSize: '0.9rem', 
+            color: 'var(--text-secondary)',
+            marginRight: '1rem'
+          }}>
+            Taux de victoire sur <strong>{selectedMap}</strong> :
+          </span>
+          <span style={{ 
+            fontSize: '1.1rem', 
+            fontWeight: 'bold',
+            color: parseFloat(selectedMapWinStats.winRate) >= 50 ? 'var(--accent-tertiary)' : 'var(--chart-color-4)'
+          }}>
+            {selectedMapWinStats.winRate}%
+          </span>
+          <span style={{ 
+            fontSize: '0.85rem', 
+            color: 'var(--text-secondary)',
+            marginLeft: '0.5rem'
+          }}>
+            ({selectedMapWinStats.wins} / {selectedMapWinStats.total} victoires)
+          </span>
+        </div>
+      )}
 
       {/* Legend - full width */}
       <div className="lycans-section-description" style={{ flex: '1 1 100%', marginTop: '1.5rem' }}>
