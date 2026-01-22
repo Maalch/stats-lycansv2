@@ -78,9 +78,10 @@ function wasPlayerAliveAtMeeting(player: PlayerStat, meetingNumber: number): boo
   const deathTiming = player.DeathTiming.toUpperCase();
   
   // Extract meeting number from death timing (e.g., "M3" = meeting 3, "N2" = night 2, "J2" = day 2)
+  // Player death at meeting means they were alive during that meeting
   if (deathTiming.startsWith('M')) {
     const deathMeeting = parseInt(deathTiming.substring(1));
-    return meetingNumber < deathMeeting;
+    return meetingNumber <= deathMeeting;
   }
   
   // For night/day deaths, they died before that meeting number
@@ -204,6 +205,13 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
           voterRole: player.MainRoleInitial 
         }));
     });
+
+    // Skip meeting only if game ended at this specific meeting without any votes
+    // (e.g., EndTiming = "M3" and meeting 3 has no votes = auto-end)
+    // Meetings with no votes are otherwise valid (everyone abstained)
+    if (votesInMeeting.length === 0 && game.EndTiming === `M${meetingNum}`) {
+      continue;
+    }
 
     // Track meeting analytics
     const totalVotes = votesInMeeting.filter(v => v.vote.Target !== 'Passé').length;
@@ -486,6 +494,13 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
           .filter(vote => vote.Day === meetingNum)
           .map(vote => ({ voter: player.Username, vote, voterStats: player }))
       );
+
+      // Skip meeting only if game ended at this specific meeting without any votes
+      // (e.g., EndTiming = "M3" and meeting 3 has no votes = auto-end)
+      // Meetings with no votes are otherwise valid (everyone abstained)
+      if (votesInMeeting.length === 0 && game.EndTiming === `M${meetingNum}`) {
+        continue;
+      }
 
       const meetingVoteCount = votesInMeeting.filter(v => v.vote.Target !== 'Passé').length;
       const meetingSkipCount = votesInMeeting.filter(v => v.vote.Target === 'Passé').length;
