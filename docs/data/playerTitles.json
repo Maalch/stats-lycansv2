@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-23T16:07:42.598Z",
+  "generatedAt": "2026-01-23T16:13:48.989Z",
   "teamName": "Main Team",
   "totalPlayers": 36,
   "minGamesRequired": 25,
@@ -104,6 +104,18 @@
           "value": 57.14285714285714,
           "percentile": 96.7741935483871,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_extreme_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 72.36842105263158,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -230,6 +242,11 @@
           "percentile": 33.33333333333333,
           "category": "LOW"
         },
+        "survivalDay1Rate": {
+          "value": 72.36842105263158,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW"
+        },
         "killRate": {
           "value": 0.32894736842105265,
           "percentile": 25,
@@ -261,6 +278,7 @@
         "campLoupPercent": 9.210526315789473,
         "campSoloPercent": 21.052631578947366,
         "survivalRate": 28.947368421052634,
+        "survivalDay1Rate": 72.36842105263158,
         "killRate": 0.32894736842105265,
         "lootPer60Min": 489.6162599339112,
         "lootVillageoisPer60Min": 477.7753646349634,
@@ -329,6 +347,18 @@
           "value": 56.25,
           "percentile": 77.77777777777779,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 77.41935483870968,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -427,6 +457,11 @@
           "percentile": 13.88888888888889,
           "category": "EXTREME_LOW"
         },
+        "survivalDay1Rate": {
+          "value": 77.41935483870968,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
         "killRate": {
           "value": 0.1935483870967742,
           "percentile": 2.7777777777777777,
@@ -458,6 +493,7 @@
         "campLoupPercent": 32.25806451612903,
         "campSoloPercent": 16.129032258064516,
         "survivalRate": 25.806451612903224,
+        "survivalDay1Rate": 77.41935483870968,
         "killRate": 0.1935483870967742,
         "lootPer60Min": 508.8062838852257,
         "lootVillageoisPer60Min": 486.0488086696422,
@@ -678,6 +714,11 @@
           "percentile": 91.66666666666666,
           "category": "EXTREME_HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 83.46456692913385,
+          "percentile": 61.111111111111114,
+          "category": "ABOVE_AVERAGE"
+        },
         "killRate": {
           "value": 0.6456692913385826,
           "percentile": 80.55555555555556,
@@ -709,6 +750,7 @@
         "campLoupPercent": 22.04724409448819,
         "campSoloPercent": 11.023622047244094,
         "survivalRate": 47.24409448818898,
+        "survivalDay1Rate": 83.46456692913385,
         "killRate": 0.6456692913385826,
         "lootPer60Min": 487.3529202625836,
         "lootVillageoisPer60Min": 487.2179639574354,
@@ -788,6 +830,18 @@
           "percentile": 8.333333333333332,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 75.86206896551724,
+          "percentile": 25,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -890,6 +944,11 @@
           "percentile": 47.22222222222222,
           "category": "AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 75.86206896551724,
+          "percentile": 25,
+          "category": "LOW"
+        },
         "killRate": {
           "value": 0.5862068965517241,
           "percentile": 75,
@@ -921,6 +980,7 @@
         "campLoupPercent": 13.793103448275861,
         "campSoloPercent": 17.24137931034483,
         "survivalRate": 31.03448275862069,
+        "survivalDay1Rate": 75.86206896551724,
         "killRate": 0.5862068965517241,
         "lootPer60Min": 494.99792349922853,
         "lootVillageoisPer60Min": 494.38150572478924,
@@ -1061,6 +1121,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 85,
+          "percentile": 75,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_above_average",
           "title": "Le·a Travailleur·se",
           "emoji": "👷",
@@ -1131,6 +1203,11 @@
           "percentile": 86.11111111111111,
           "category": "EXTREME_HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 85,
+          "percentile": 75,
+          "category": "HIGH"
+        },
         "killRate": {
           "value": 0.775,
           "percentile": 94.44444444444444,
@@ -1162,6 +1239,7 @@
         "campLoupPercent": 15,
         "campSoloPercent": 32.5,
         "survivalRate": 45,
+        "survivalDay1Rate": 85,
         "killRate": 0.775,
         "lootPer60Min": 517.1165859327316,
         "lootVillageoisPer60Min": 508.8841135572887,
@@ -1242,6 +1320,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_extreme_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 74.07407407407408,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "killRate_extreme_low",
           "title": "L'Agneau",
           "emoji": "🐑",
@@ -1291,15 +1381,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootVillageois_high",
-        "title": "Le·a Citoyen·ne Modèle",
-        "emoji": "🏘️",
-        "description": "Récolte excellente en Villageois",
-        "stat": "lootVillageoisPer60Min",
-        "value": 540.5014227440349,
-        "percentile": 83.33333333333334,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "survivalDay1_extreme_low",
+        "title": "Le·a Téméraire",
+        "emoji": "⚡",
+        "description": "Meurt souvent Jour 1",
+        "stat": "survivalDay1Rate",
+        "value": 74.07407407407408,
+        "percentile": 13.88888888888889,
+        "category": "EXTREME_LOW",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -1343,6 +1433,11 @@
           "percentile": 38.88888888888889,
           "category": "BELOW_AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 74.07407407407408,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW"
+        },
         "killRate": {
           "value": 0.2962962962962963,
           "percentile": 8.333333333333332,
@@ -1374,6 +1469,7 @@
         "campLoupPercent": 11.11111111111111,
         "campSoloPercent": 25.925925925925924,
         "survivalRate": 29.629629629629626,
+        "survivalDay1Rate": 74.07407407407408,
         "killRate": 0.2962962962962963,
         "lootPer60Min": 523.4764745238834,
         "lootVillageoisPer60Min": 540.5014227440349,
@@ -1470,6 +1566,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 75,
+          "percentile": 19.444444444444446,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootLoup_low",
           "title": "Le Loup Impatient",
           "emoji": "😤",
@@ -1540,6 +1648,11 @@
           "percentile": 8.333333333333332,
           "category": "EXTREME_LOW"
         },
+        "survivalDay1Rate": {
+          "value": 75,
+          "percentile": 19.444444444444446,
+          "category": "LOW"
+        },
         "killRate": {
           "value": 0.4166666666666667,
           "percentile": 36.11111111111111,
@@ -1571,6 +1684,7 @@
         "campLoupPercent": 10.714285714285714,
         "campSoloPercent": 15.476190476190476,
         "survivalRate": 23.809523809523807,
+        "survivalDay1Rate": 75,
         "killRate": 0.4166666666666667,
         "lootPer60Min": 470.29323427961197,
         "lootVillageoisPer60Min": 468.6834423862727,
@@ -1768,6 +1882,11 @@
           "percentile": 61.111111111111114,
           "category": "ABOVE_AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 82.24543080939948,
+          "percentile": 58.333333333333336,
+          "category": "ABOVE_AVERAGE"
+        },
         "killRate": {
           "value": 0.46736292428198434,
           "percentile": 47.22222222222222,
@@ -1802,6 +1921,7 @@
         "talkingOutsidePer60Min": 708.8374480058299,
         "talkingDuringPer60Min": 366.97370876583614,
         "survivalRate": 37.59791122715404,
+        "survivalDay1Rate": 82.24543080939948,
         "killRate": 0.46736292428198434,
         "lootPer60Min": 521.3001473508045,
         "lootVillageoisPer60Min": 519.5797959474837,
@@ -1970,6 +2090,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 85.13931888544892,
+          "percentile": 83.33333333333334,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_high",
           "title": "Le·a Fermier·ère",
           "emoji": "🌾",
@@ -2079,6 +2211,11 @@
           "percentile": 97.22222222222221,
           "category": "EXTREME_HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 85.13931888544892,
+          "percentile": 83.33333333333334,
+          "category": "HIGH"
+        },
         "killRate": {
           "value": 0.8544891640866873,
           "percentile": 97.22222222222221,
@@ -2113,6 +2250,7 @@
         "talkingOutsidePer60Min": 887.4697003205858,
         "talkingDuringPer60Min": 306.5052605067603,
         "survivalRate": 53.56037151702786,
+        "survivalDay1Rate": 85.13931888544892,
         "killRate": 0.8544891640866873,
         "lootPer60Min": 530.3408432442998,
         "lootVillageoisPer60Min": 529.9975617213066,
@@ -2344,6 +2482,11 @@
           "percentile": 75,
           "category": "HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 81.86813186813187,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
+        },
         "killRate": {
           "value": 0.7005494505494505,
           "percentile": 88.88888888888889,
@@ -2378,6 +2521,7 @@
         "talkingOutsidePer60Min": 747.5704676982232,
         "talkingDuringPer60Min": 271.4637928916498,
         "survivalRate": 40.10989010989011,
+        "survivalDay1Rate": 81.86813186813187,
         "killRate": 0.7005494505494505,
         "lootPer60Min": 514.9328182163557,
         "lootVillageoisPer60Min": 521.7038688867576,
@@ -2647,6 +2791,11 @@
           "percentile": 66.66666666666666,
           "category": "HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 81.77339901477832,
+          "percentile": 52.77777777777778,
+          "category": "AVERAGE"
+        },
         "killRate": {
           "value": 0.6551724137931034,
           "percentile": 83.33333333333334,
@@ -2681,6 +2830,7 @@
         "talkingOutsidePer60Min": 606.6569219025239,
         "talkingDuringPer60Min": 244.66801601807288,
         "survivalRate": 38.42364532019704,
+        "survivalDay1Rate": 81.77339901477832,
         "killRate": 0.6551724137931034,
         "lootPer60Min": 541.9126658637708,
         "lootVillageoisPer60Min": 533.007543938706,
@@ -2958,6 +3108,11 @@
           "percentile": 63.888888888888886,
           "category": "ABOVE_AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 80.90452261306532,
+          "percentile": 41.66666666666667,
+          "category": "BELOW_AVERAGE"
+        },
         "killRate": {
           "value": 0.6683417085427136,
           "percentile": 86.11111111111111,
@@ -2992,6 +3147,7 @@
         "talkingOutsidePer60Min": 719.6561382008498,
         "talkingDuringPer60Min": 213.07926441020265,
         "survivalRate": 37.68844221105528,
+        "survivalDay1Rate": 80.90452261306532,
         "killRate": 0.6683417085427136,
         "lootPer60Min": 503.6563139283604,
         "lootVillageoisPer60Min": 506.05483974252803,
@@ -3193,6 +3349,11 @@
           "percentile": 50,
           "category": "AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 83.85269121813032,
+          "percentile": 63.888888888888886,
+          "category": "ABOVE_AVERAGE"
+        },
         "killRate": {
           "value": 0.623229461756374,
           "percentile": 77.77777777777779,
@@ -3227,6 +3388,7 @@
         "talkingOutsidePer60Min": 872.3837949135537,
         "talkingDuringPer60Min": 337.8319321924623,
         "survivalRate": 31.728045325779036,
+        "survivalDay1Rate": 83.85269121813032,
         "killRate": 0.623229461756374,
         "lootPer60Min": 512.7099112960258,
         "lootVillageoisPer60Min": 509.37386782700287,
@@ -3396,6 +3558,11 @@
           "percentile": 44.44444444444444,
           "category": "BELOW_AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 81.29032258064515,
+          "percentile": 47.22222222222222,
+          "category": "AVERAGE"
+        },
         "killRate": {
           "value": 0.3548387096774194,
           "percentile": 30.555555555555557,
@@ -3430,6 +3597,7 @@
         "talkingOutsidePer60Min": 779.1891562842417,
         "talkingDuringPer60Min": 281.3738619915317,
         "survivalRate": 30.32258064516129,
+        "survivalDay1Rate": 81.29032258064515,
         "killRate": 0.3548387096774194,
         "lootPer60Min": 508.0729911740813,
         "lootVillageoisPer60Min": 506.97583138151714,
@@ -3592,6 +3760,11 @@
           "percentile": 58.333333333333336,
           "category": "ABOVE_AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 81.53846153846153,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "killRate": {
           "value": 0.35384615384615387,
           "percentile": 27.77777777777778,
@@ -3623,6 +3796,7 @@
         "campLoupPercent": 16.923076923076923,
         "campSoloPercent": 12.307692307692308,
         "survivalRate": 36.92307692307693,
+        "survivalDay1Rate": 81.53846153846153,
         "killRate": 0.35384615384615387,
         "lootPer60Min": 493.4755461967211,
         "lootVillageoisPer60Min": 498.36191633020877,
@@ -3683,6 +3857,18 @@
               "actualPercentile": 83.33333333333334
             }
           ]
+        },
+        {
+          "id": "survivalDay1_extreme_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 89.92805755395683,
+          "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "winRate_high",
@@ -3758,15 +3944,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRate_high",
-        "title": "Le·a Winner",
-        "emoji": "🏆",
-        "description": "Taux de victoire élevé",
-        "stat": "winRate",
-        "value": 46.8,
-        "percentile": 83.33333333333334,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "survivalDay1_extreme_high",
+        "title": "Le·a Prudent·e",
+        "emoji": "🏃",
+        "description": "Survit au Jour 1",
+        "stat": "survivalDay1Rate",
+        "value": 89.92805755395683,
+        "percentile": 97.22222222222221,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -3815,6 +4001,11 @@
           "percentile": 83.33333333333334,
           "category": "HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 89.92805755395683,
+          "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH"
+        },
         "killRate": {
           "value": 0.5611510791366906,
           "percentile": 63.888888888888886,
@@ -3846,6 +4037,7 @@
         "campLoupPercent": 20.14388489208633,
         "campSoloPercent": 17.985611510791365,
         "survivalRate": 41.726618705035975,
+        "survivalDay1Rate": 89.92805755395683,
         "killRate": 0.5611510791366906,
         "lootPer60Min": 512.6107901013185,
         "lootVillageoisPer60Min": 512.2501634075333,
@@ -4026,6 +4218,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 84.85804416403786,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_high",
           "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
@@ -4123,6 +4327,11 @@
           "percentile": 69.44444444444444,
           "category": "HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 84.85804416403786,
+          "percentile": 72.22222222222221,
+          "category": "HIGH"
+        },
         "killRate": {
           "value": 0.7160883280757098,
           "percentile": 91.66666666666666,
@@ -4157,6 +4366,7 @@
         "talkingOutsidePer60Min": 967.5418235819591,
         "talkingDuringPer60Min": 469.1423635843672,
         "survivalRate": 38.48580441640379,
+        "survivalDay1Rate": 84.85804416403786,
         "killRate": 0.7160883280757098,
         "lootPer60Min": 516.613769207369,
         "lootVillageoisPer60Min": 523.8633874962719,
@@ -4189,6 +4399,18 @@
               "actualPercentile": 91.66666666666666
             }
           ]
+        },
+        {
+          "id": "survivalDay1_extreme_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 74.07407407407408,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "killRate_extreme_low",
@@ -4382,6 +4604,11 @@
           "percentile": 55.55555555555556,
           "category": "ABOVE_AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 74.07407407407408,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW"
+        },
         "killRate": {
           "value": 0.291005291005291,
           "percentile": 5.555555555555555,
@@ -4416,6 +4643,7 @@
         "talkingOutsidePer60Min": 679.9079802204543,
         "talkingDuringPer60Min": 237.602673304896,
         "survivalRate": 32.27513227513227,
+        "survivalDay1Rate": 74.07407407407408,
         "killRate": 0.291005291005291,
         "lootPer60Min": 547.5631551233826,
         "lootVillageoisPer60Min": 526.5688363213716,
@@ -4471,6 +4699,18 @@
           "stat": "survivalRate",
           "value": 41.09947643979058,
           "percentile": 80.55555555555556,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 85.07853403141361,
+          "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4573,6 +4813,11 @@
           "percentile": 80.55555555555556,
           "category": "HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 85.07853403141361,
+          "percentile": 77.77777777777779,
+          "category": "HIGH"
+        },
         "killRate": {
           "value": 0.5235602094240838,
           "percentile": 55.55555555555556,
@@ -4607,6 +4852,7 @@
         "talkingOutsidePer60Min": 739.4579059990489,
         "talkingDuringPer60Min": 452.96271675977243,
         "survivalRate": 41.09947643979058,
+        "survivalDay1Rate": 85.07853403141361,
         "killRate": 0.5235602094240838,
         "lootPer60Min": 518.5808539452105,
         "lootVillageoisPer60Min": 520.3875271832401,
@@ -4678,6 +4924,18 @@
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_extreme_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 73.77049180327869,
+          "percentile": 11.11111111111111,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -4844,6 +5102,11 @@
           "percentile": 25,
           "category": "LOW"
         },
+        "survivalDay1Rate": {
+          "value": 73.77049180327869,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW"
+        },
         "killRate": {
           "value": 0.45901639344262296,
           "percentile": 44.44444444444444,
@@ -4878,6 +5141,7 @@
         "talkingOutsidePer60Min": 733.372131618966,
         "talkingDuringPer60Min": 262.6163524598654,
         "survivalRate": 27.049180327868854,
+        "survivalDay1Rate": 73.77049180327869,
         "killRate": 0.45901639344262296,
         "lootPer60Min": 511.9119492511369,
         "lootVillageoisPer60Min": 494.9569061032115,
@@ -5103,6 +5367,11 @@
           "percentile": 11.11111111111111,
           "category": "EXTREME_LOW"
         },
+        "survivalDay1Rate": {
+          "value": 78.18181818181819,
+          "percentile": 36.11111111111111,
+          "category": "BELOW_AVERAGE"
+        },
         "killRate": {
           "value": 0.32,
           "percentile": 19.444444444444446,
@@ -5137,6 +5406,7 @@
         "talkingOutsidePer60Min": 603.1558479990774,
         "talkingDuringPer60Min": 174.3477312862382,
         "survivalRate": 25.454545454545453,
+        "survivalDay1Rate": 78.18181818181819,
         "killRate": 0.32,
         "lootPer60Min": 516.6595209891901,
         "lootVillageoisPer60Min": 509.5319242392576,
@@ -5191,6 +5461,18 @@
               "actualPercentile": 83.33333333333334
             }
           ]
+        },
+        {
+          "id": "survivalDay1_extreme_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 85.54216867469879,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "lootVillageois_extreme_high",
@@ -5408,6 +5690,11 @@
           "percentile": 72.22222222222221,
           "category": "HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 85.54216867469879,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH"
+        },
         "killRate": {
           "value": 0.5662650602409639,
           "percentile": 66.66666666666666,
@@ -5442,6 +5729,7 @@
         "talkingOutsidePer60Min": 826.7087423448536,
         "talkingDuringPer60Min": 330.2755556340704,
         "survivalRate": 39.3574297188755,
+        "survivalDay1Rate": 85.54216867469879,
         "killRate": 0.5662650602409639,
         "lootPer60Min": 539.4051930505553,
         "lootVillageoisPer60Min": 541.6267023410664,
@@ -5566,6 +5854,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 77.19298245614034,
+          "percentile": 30.555555555555557,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_low",
           "title": "Le·a Flâneur·se",
           "emoji": "🚶",
@@ -5675,6 +5975,11 @@
           "percentile": 22.22222222222222,
           "category": "LOW"
         },
+        "survivalDay1Rate": {
+          "value": 77.19298245614034,
+          "percentile": 30.555555555555557,
+          "category": "LOW"
+        },
         "killRate": {
           "value": 0.4824561403508772,
           "percentile": 52.77777777777778,
@@ -5709,6 +6014,7 @@
         "talkingOutsidePer60Min": 754.8924693481885,
         "talkingDuringPer60Min": 330.74441278783365,
         "survivalRate": 26.75438596491228,
+        "survivalDay1Rate": 77.19298245614034,
         "killRate": 0.4824561403508772,
         "lootPer60Min": 499.79380468662185,
         "lootVillageoisPer60Min": 503.9897981155459,
@@ -6020,6 +6326,11 @@
           "percentile": 77.77777777777779,
           "category": "HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 80.9278350515464,
+          "percentile": 44.44444444444444,
+          "category": "BELOW_AVERAGE"
+        },
         "killRate": {
           "value": 0.5773195876288659,
           "percentile": 69.44444444444444,
@@ -6054,6 +6365,7 @@
         "talkingOutsidePer60Min": 877.6729472596473,
         "talkingDuringPer60Min": 316.5767270970832,
         "survivalRate": 40.72164948453608,
+        "survivalDay1Rate": 80.9278350515464,
         "killRate": 0.5773195876288659,
         "lootPer60Min": 544.1142900769254,
         "lootVillageoisPer60Min": 544.903930848865,
@@ -6134,6 +6446,18 @@
           "value": 24.390243902439025,
           "percentile": 25.806451612903224,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 85.13513513513513,
+          "percentile": 80.55555555555556,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -6235,6 +6559,11 @@
           "percentile": 36.11111111111111,
           "category": "BELOW_AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 85.13513513513513,
+          "percentile": 80.55555555555556,
+          "category": "HIGH"
+        },
         "killRate": {
           "value": 0.3153153153153153,
           "percentile": 13.88888888888889,
@@ -6269,6 +6598,7 @@
         "talkingOutsidePer60Min": 559.4020963104329,
         "talkingDuringPer60Min": 250.98407032764712,
         "survivalRate": 29.27927927927928,
+        "survivalDay1Rate": 85.13513513513513,
         "killRate": 0.3153153153153153,
         "lootPer60Min": 506.3529732203604,
         "lootVillageoisPer60Min": 511.5982952285992,
@@ -6362,6 +6692,18 @@
           "stat": "survivalRate",
           "value": 17.326732673267326,
           "percentile": 2.7777777777777777,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_extreme_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 72.27722772277228,
+          "percentile": 5.555555555555555,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -6524,6 +6866,11 @@
           "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW"
         },
+        "survivalDay1Rate": {
+          "value": 72.27722772277228,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW"
+        },
         "killRate": {
           "value": 0.3217821782178218,
           "percentile": 22.22222222222222,
@@ -6558,6 +6905,7 @@
         "talkingOutsidePer60Min": 742.6213765367423,
         "talkingDuringPer60Min": 224.44191748356914,
         "survivalRate": 17.326732673267326,
+        "survivalDay1Rate": 72.27722772277228,
         "killRate": 0.3217821782178218,
         "lootPer60Min": 533.367764162655,
         "lootVillageoisPer60Min": 543.1723836768067,
@@ -6626,6 +6974,18 @@
           "value": 242.3821692022768,
           "percentile": 28.000000000000004,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 84.24657534246576,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -6739,6 +7099,11 @@
           "percentile": 52.77777777777778,
           "category": "AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 84.24657534246576,
+          "percentile": 66.66666666666666,
+          "category": "HIGH"
+        },
         "killRate": {
           "value": 0.4452054794520548,
           "percentile": 38.88888888888889,
@@ -6773,6 +7138,7 @@
         "talkingOutsidePer60Min": 890.5967882510423,
         "talkingDuringPer60Min": 242.3821692022768,
         "survivalRate": 32.19178082191781,
+        "survivalDay1Rate": 84.24657534246576,
         "killRate": 0.4452054794520548,
         "lootPer60Min": 506.44484583980835,
         "lootVillageoisPer60Min": 508.44473865711007,
@@ -6817,6 +7183,18 @@
           "value": 25,
           "percentile": 97.22222222222221,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_extreme_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 71.05263157894737,
+          "percentile": 2.7777777777777777,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -6927,6 +7305,11 @@
           "percentile": 16.666666666666664,
           "category": "LOW"
         },
+        "survivalDay1Rate": {
+          "value": 71.05263157894737,
+          "percentile": 2.7777777777777777,
+          "category": "EXTREME_LOW"
+        },
         "killRate": {
           "value": 0.5263157894736842,
           "percentile": 58.333333333333336,
@@ -6958,6 +7341,7 @@
         "campLoupPercent": 18.421052631578945,
         "campSoloPercent": 21.052631578947366,
         "survivalRate": 26.31578947368421,
+        "survivalDay1Rate": 71.05263157894737,
         "killRate": 0.5263157894736842,
         "lootPer60Min": 414.56608746566127,
         "lootVillageoisPer60Min": 440.62143117533367,
@@ -7064,6 +7448,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 75.75757575757575,
+          "percentile": 22.22222222222222,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_high",
           "title": "Le·a Fermier·ère",
           "emoji": "🌾",
@@ -7129,6 +7525,11 @@
           "percentile": 27.77777777777778,
           "category": "LOW"
         },
+        "survivalDay1Rate": {
+          "value": 75.75757575757575,
+          "percentile": 22.22222222222222,
+          "category": "LOW"
+        },
         "killRate": {
           "value": 0.30303030303030304,
           "percentile": 11.11111111111111,
@@ -7160,6 +7561,7 @@
         "campLoupPercent": 15.151515151515152,
         "campSoloPercent": 18.181818181818183,
         "survivalRate": 27.27272727272727,
+        "survivalDay1Rate": 75.75757575757575,
         "killRate": 0.30303030303030304,
         "lootPer60Min": 538.5743267028114,
         "lootVillageoisPer60Min": 520.7378465642586,
@@ -7270,6 +7672,18 @@
           "description": "Première victime récurrente",
           "stat": "survivalRate",
           "value": 13.043478260869565,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_extreme_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 63.04347826086957,
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -7402,6 +7816,11 @@
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
+        "survivalDay1Rate": {
+          "value": 63.04347826086957,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
         "killRate": {
           "value": 0.17391304347826086,
           "percentile": 0,
@@ -7436,6 +7855,7 @@
         "talkingOutsidePer60Min": 760.4134243282276,
         "talkingDuringPer60Min": 183.32363582235445,
         "survivalRate": 13.043478260869565,
+        "survivalDay1Rate": 63.04347826086957,
         "killRate": 0.17391304347826086,
         "lootPer60Min": 526.4628333395082,
         "lootVillageoisPer60Min": 512.8258376615138,
@@ -7685,6 +8105,11 @@
           "percentile": 27.77777777777778,
           "category": "LOW"
         },
+        "survivalDay1Rate": {
+          "value": 78.18181818181819,
+          "percentile": 36.11111111111111,
+          "category": "BELOW_AVERAGE"
+        },
         "killRate": {
           "value": 0.4727272727272727,
           "percentile": 50,
@@ -7719,6 +8144,7 @@
         "talkingOutsidePer60Min": 711.229567933368,
         "talkingDuringPer60Min": 231.47943779281624,
         "survivalRate": 27.27272727272727,
+        "survivalDay1Rate": 78.18181818181819,
         "killRate": 0.4727272727272727,
         "lootPer60Min": 465.5771106747295,
         "lootVillageoisPer60Min": 477.4551934157611,
@@ -7835,6 +8261,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_low",
+          "title": "Le·a Téméraire",
+          "emoji": "⚡",
+          "description": "Meurt souvent Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 76.31578947368422,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_high",
           "title": "Le·a Fermier·ère",
           "emoji": "🌾",
@@ -7944,6 +8382,11 @@
           "percentile": 5.555555555555555,
           "category": "EXTREME_LOW"
         },
+        "survivalDay1Rate": {
+          "value": 76.31578947368422,
+          "percentile": 27.77777777777778,
+          "category": "LOW"
+        },
         "killRate": {
           "value": 0.5526315789473685,
           "percentile": 61.111111111111114,
@@ -7978,6 +8421,7 @@
         "talkingOutsidePer60Min": 850.8162626271243,
         "talkingDuringPer60Min": 310.3247871162214,
         "survivalRate": 23.684210526315788,
+        "survivalDay1Rate": 76.31578947368422,
         "killRate": 0.5526315789473685,
         "lootPer60Min": 525.9719515223404,
         "lootVillageoisPer60Min": 534.1446149683193,
@@ -8067,6 +8511,18 @@
           "stat": "survivalRate",
           "value": 50,
           "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_extreme_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 86.11111111111111,
+          "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -8212,6 +8668,11 @@
           "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 86.11111111111111,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH"
+        },
         "killRate": {
           "value": 0.3888888888888889,
           "percentile": 33.33333333333333,
@@ -8246,6 +8707,7 @@
         "talkingOutsidePer60Min": 250.0868690847025,
         "talkingDuringPer60Min": 59.33857508541933,
         "survivalRate": 50,
+        "survivalDay1Rate": 86.11111111111111,
         "killRate": 0.3888888888888889,
         "lootPer60Min": 451.6394981833935,
         "lootVillageoisPer60Min": 432.3230944897344,
@@ -8300,6 +8762,18 @@
           "value": 33.33333333333333,
           "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_extreme_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 87.34177215189874,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -8461,6 +8935,11 @@
           "percentile": 19.444444444444446,
           "category": "LOW"
         },
+        "survivalDay1Rate": {
+          "value": 87.34177215189874,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH"
+        },
         "killRate": {
           "value": 0.45569620253164556,
           "percentile": 41.66666666666667,
@@ -8495,6 +8974,7 @@
         "talkingOutsidePer60Min": 704.2299991298266,
         "talkingDuringPer60Min": 265.97337293743135,
         "survivalRate": 26.582278481012654,
+        "survivalDay1Rate": 87.34177215189874,
         "killRate": 0.45569620253164556,
         "lootPer60Min": 570.6939713350705,
         "lootVillageoisPer60Min": 566.3147545702742,
@@ -8659,6 +9139,18 @@
           "type": "basic"
         },
         {
+          "id": "survivalDay1_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 84.44444444444444,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "killRate_high",
           "title": "Le·a Prédateur·rice",
           "emoji": "🐺",
@@ -8744,6 +9236,11 @@
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
         },
+        "survivalDay1Rate": {
+          "value": 84.44444444444444,
+          "percentile": 69.44444444444444,
+          "category": "HIGH"
+        },
         "killRate": {
           "value": 0.5777777777777777,
           "percentile": 72.22222222222221,
@@ -8778,6 +9275,7 @@
         "talkingOutsidePer60Min": 1096.300187793795,
         "talkingDuringPer60Min": 381.0763446467006,
         "survivalRate": 46.666666666666664,
+        "survivalDay1Rate": 84.44444444444444,
         "killRate": 0.5777777777777777,
         "lootPer60Min": 625.4951740407253,
         "lootVillageoisPer60Min": 659.6699241994943,
@@ -8808,6 +9306,18 @@
           "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 20,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survivalDay1_extreme_high",
+          "title": "Le·a Prudent·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 89.36170212765957,
           "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -8971,6 +9481,11 @@
           "percentile": 41.66666666666667,
           "category": "BELOW_AVERAGE"
         },
+        "survivalDay1Rate": {
+          "value": 89.36170212765957,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH"
+        },
         "killRate": {
           "value": 0.3191489361702128,
           "percentile": 16.666666666666664,
@@ -9005,6 +9520,7 @@
         "talkingOutsidePer60Min": 610.0530112383552,
         "talkingDuringPer60Min": 250.63920600214018,
         "survivalRate": 29.78723404255319,
+        "survivalDay1Rate": 89.36170212765957,
         "killRate": 0.3191489361702128,
         "lootPer60Min": 514.3061058580921,
         "lootVillageoisPer60Min": 494.26537404597104,
