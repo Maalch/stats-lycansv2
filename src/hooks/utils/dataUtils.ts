@@ -58,6 +58,24 @@ export function formatLycanDate(date: any): string {
   return date?.toString() || '';
 }
 
+// Helper to compare two version strings (e.g., "0.207" >= "0.202")
+export function compareVersion(version: string, targetVersion: string): boolean {
+  if (!version || !targetVersion) return false;
+  
+  const versionParts = version.split('.').map(Number);
+  const targetParts = targetVersion.split('.').map(Number);
+  
+  for (let i = 0; i < Math.max(versionParts.length, targetParts.length); i++) {
+    const v = versionParts[i] || 0;
+    const t = targetParts[i] || 0;
+    
+    if (v > t) return true;
+    if (v < t) return false;
+  }
+  
+  return true; // Equal versions
+}
+
 // Helper to determine if a camp won based on camp name and winner camp
 export function didCampWin(camp: string, winnerCamp: string): boolean {
   if (camp === winnerCamp) return true;

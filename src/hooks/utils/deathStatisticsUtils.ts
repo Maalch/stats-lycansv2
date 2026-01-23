@@ -3,29 +3,7 @@ import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncE
 import { DEATH_TYPES, type DeathType, isValidDeathType } from '../../types/deathTypes';
 import { mainCampOrder } from '../../types/api';
 import { getPlayerId } from '../../utils/playerIdentification';
-
-/**
- * Compare two version strings (e.g., "0.207" >= "0.202")
- * @param version - Version string to compare (e.g., "0.207")
- * @param targetVersion - Target version to compare against (e.g., "0.202")
- * @returns true if version >= targetVersion
- */
-function compareVersion(version: string, targetVersion: string): boolean {
-  if (!version || !targetVersion) return false;
-  
-  const versionParts = version.split('.').map(Number);
-  const targetParts = targetVersion.split('.').map(Number);
-  
-  for (let i = 0; i < Math.max(versionParts.length, targetParts.length); i++) {
-    const v = versionParts[i] || 0;
-    const t = targetParts[i] || 0;
-    
-    if (v > t) return true;
-    if (v < t) return false;
-  }
-  
-  return true; // Equal versions
-}
+import { compareVersion } from './dataUtils';
 
 /**
  * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF

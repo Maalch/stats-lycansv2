@@ -6,6 +6,7 @@ import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { DEATH_TYPES } from '../../types/deathTypes';
 import { getPlayerId } from '../../utils/playerIdentification';
+import { compareVersion } from './dataUtils';
 
 export interface VotingBehaviorStats {
   playerName: string;
@@ -444,15 +445,8 @@ export function calculateVotingTimingStats(games: GameLogEntry[]): VotingTimingS
     if (!game.Modded) return false;
     if (!game.Version) return false;
     
-    // Parse version - must be >= 0.201
-    const versionMatch = game.Version.match(/^(\d+)\.(\d+)/);
-    if (!versionMatch) return false;
-    
-    const major = parseInt(versionMatch[1]);
-    const minor = parseInt(versionMatch[2]);
-    
-    // Version 0.201+ or 1.0+
-    return (major === 0 && minor >= 201) || major >= 1;
+    // Version must be >= 0.201
+    return compareVersion(game.Version, '0.201');
   });
 
   // Process each game
