@@ -3,6 +3,23 @@ BRAINSTORMING:
 L'idée est de générer un titre composée d'un nom + d'un adjectif, ou de deux adjectifs selon ce qui le plus pratique
 Ce titre doit être généré par le backend (en partant de fetch-data.js / generate-achievements.js)
 
+## IMPLÉMENTATION (2026-01-23)
+- Script: scripts/data-sync/generate-titles.js
+- Workflow: .github/workflows/update-titles.yml (dimanche 6h UTC)
+- Output: data/playerTitles.json + data/discord/playerTitles.json
+- Système basé sur les percentiles pour une distribution équitable
+- Titres multiples par joueur (triés par priorité)
+- Min 25 games pour être éligible aux titres
+
+## PERCENTILES UTILISÉS
+- EXTREME_HIGH: Top 10%
+- HIGH: Top 25% 
+- ABOVE_AVERAGE: Top 40%
+- AVERAGE: 45-55%
+- BELOW_AVERAGE: Bottom 40%
+- LOW: Bottom 25%
+- EXTREME_LOW: Bottom 10%
+
 Voici quelques valeurs qui peuvent être testées
 Catégorie sous le contrôle du joueur:
 - Bavard / Peu Bavard (par 60 min de jeu effectif)
@@ -47,3 +64,35 @@ Catégories hors de contrôle du joueur:
 Toutes les valeurs doivent être calculées sur les parties moddées uniquement.
 Toutes les valeurs doivent être relatives à la moyenne des joueurs.
 Les titres ne doivent être attribuées qu'aux joueurs qui ont au moins 25 parties en partie moddées
+
+Une fois que toutes ces stats "basiques" sont générées, je voudrais créer des titres originaux avec des combinaisons.
+Par exemple, Bavard + Récolte élevée pourrait donner le titre "Hyperactif"
+
+## TITRES DE COMBINAISON IMPLÉMENTÉS
+
+| Combinaison | Titre | Emoji | Priority |
+|-------------|-------|-------|----------|
+| Bavard + Récolte élevée | L'Hyperactif | ⚡ | 10 |
+| Silencieux + Récolte élevée | L'Efficace | 🎯 | 10 |
+| Bavard + Récolte faible | Le Philosophe | 📚 | 10 |
+| Kills élevés + Survie élevée | L'Alpha | 🦁 | 15 |
+| Kills élevés + Survie faible | Le Kamikaze | 💥 | 10 |
+| Survie J1 faible + Survie élevée | Le Phoenix | 🔥 | 12 |
+| Voteur agressif + Premier voteur | Le Cow-Boy | 🤠 | 10 |
+| Vote précis + Silencieux | Le Détective | 🔎 | 12 |
+| Bavard + Vote imprécis | Le Démagogue | 📣 | 10 |
+| Super Loup + Silencieux | L'Infiltré | 🎭 | 15 |
+| Super Loup + Bavard | Le Manipulateur | 🐍 | 15 |
+| Win rate extrême + Serial Winner | La Légende | 🏅 | 20 |
+| Lose rate extrême + Serial Looser | Le Poissard | 🌧️ | 20 |
+| Récolte + Survie + Silencieux | Le Robot | 🤖 | 18 |
+| Bavard + Improductif + Meurt | Le Pitre | 🎪 | 18 |
+| Serial Amoureux + Winner | Cupidon | 💘 | 12 |
+| Serial Amoureux + Looser | Roméo | 💔 | 12 |
+| Serial Chasseur + Précis | Sniper Elite | 🎖️ | 15 |
+| Serial Chasseur + Imprécis | Le Chasseur Maladroit | 🔫 | 15 |
+
+## TODO: Titres additionnels à implémenter
+- Titres basés sur les cartes (Village vs Château)
+- Titres basés sur les relations (duo gagnant, nemesis, etc.)
+- Titres saisonniers / temporaires
