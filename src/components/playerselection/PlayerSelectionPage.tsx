@@ -372,15 +372,7 @@ export function PlayerSelectionPage() {
             return (
               <div className="single-player-card highlighted">
                 <div className="player-card-header">
-                  <div className="player-name-with-title">
-                    <h3 className="player-name">{highlightedPlayerStats.name}</h3>
-                    {playerTitles?.primaryTitle && (
-                      <div className="player-primary-title" title={playerTitles.primaryTitle.description}>
-                        <span className="title-emoji">{playerTitles.primaryTitle.emoji}</span>
-                        <span className="title-text">{playerTitles.primaryTitle.title}</span>
-                      </div>
-                    )}
-                  </div>
+                  <h3 className="player-name">{highlightedPlayerStats.name}</h3>
                   <span className="highlight-badge">★ Mis en évidence</span>
                 </div>
                 
@@ -405,6 +397,16 @@ export function PlayerSelectionPage() {
                     <div className="player-stats-summary">
                       {highlightedPlayerStats.totalGames} parties • {highlightedPlayerStats.totalWins} victoires • {highlightedPlayerStats.winRate.toFixed(1)}% taux de victoire
                     </div>
+                    {playerTitles?.primaryTitle ? (
+                      <div className="player-primary-title" title={playerTitles.primaryTitle.description} style={{ marginTop: '0.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.25rem 0.5rem', fontSize: '0.9rem' }}>
+                        <span className="title-emoji">{playerTitles.primaryTitle.emoji}</span>
+                        <span className="title-text">{playerTitles.primaryTitle.title}</span>
+                      </div>
+                    ) : (
+                      <div className="player-no-title" style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                        📜 25 parties moddées minimum pour obtenir un titre
+                      </div>
+                    )}
                     {(highlightedPlayerStats.twitch || highlightedPlayerStats.youtube || playerClips.length > 0) && (
                       <div className="social-links">
                         {highlightedPlayerStats.twitch && (
