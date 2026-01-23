@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.6.6';
+export const APP_VERSION = '1.6.7';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,11 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.6.7',
+    date: '23/01/2026',
+    description: 'Ajout de titres sur la page des joueurs',
+  },
   {
     version: 'v1.6.6',
     date: '23/01/2026',

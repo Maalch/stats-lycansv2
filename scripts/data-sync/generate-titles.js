@@ -653,9 +653,13 @@ function computeAllStatistics(moddedGames) {
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
-      agg.stats.talkingPer60Min = player.secondsAllPer60Min || 0;
-      agg.stats.talkingOutsidePer60Min = player.secondsOutsidePer60Min || 0;
-      agg.stats.talkingDuringPer60Min = player.secondsDuringPer60Min || 0;
+      // Only set talking stats if data exists (not 0 from missing data)
+      agg.stats.talkingPer60Min = (player.secondsAllPer60Min !== undefined && player.secondsAllPer60Min !== null) 
+        ? player.secondsAllPer60Min : null;
+      agg.stats.talkingOutsidePer60Min = (player.secondsOutsidePer60Min !== undefined && player.secondsOutsidePer60Min !== null) 
+        ? player.secondsOutsidePer60Min : null;
+      agg.stats.talkingDuringPer60Min = (player.secondsDuringPer60Min !== undefined && player.secondsDuringPer60Min !== null) 
+        ? player.secondsDuringPer60Min : null;
     });
   }
 
@@ -730,7 +734,7 @@ function computeAllStatistics(moddedGames) {
   // Process death stats for survival rates
   if (deathStats?.playerDeathStats) {
     deathStats.playerDeathStats.forEach(player => {
-      const playerId = player.playerId;
+      const playerId = player.player; // Use 'player' field, not 'playerId'
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
@@ -741,14 +745,14 @@ function computeAllStatistics(moddedGames) {
         agg.stats.survivalRate = ((gamesPlayed - deaths) / gamesPlayed) * 100;
       }
       
-      // Early deaths (Day 1)
-      const earlyDeaths = player.earlyDeaths || 0;
-      if (gamesPlayed > 0) {
-        agg.stats.survivalDay1Rate = ((gamesPlayed - earlyDeaths) / gamesPlayed) * 100;
+      // Survival Day 1 Rate - now available from compute-death-stats.js
+      if (player.survivalDay1Rate !== undefined && player.survivalDay1Rate !== null) {
+        agg.stats.survivalDay1Rate = player.survivalDay1Rate;
       }
       
-      // Kill rate
-      const kills = player.killCount || 0;
+      // Kill rate - get from killerStats
+      const killerData = deathStats.killerStats?.find(k => k.killerId === playerId);
+      const kills = killerData?.kills || 0;
       agg.stats.killRate = kills / Math.max(gamesPlayed, 1);
     });
   }
@@ -771,9 +775,13 @@ function computeAllStatistics(moddedGames) {
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
-      agg.stats.lootPer60Min = player.lootPer60Min || 0;
-      agg.stats.lootVillageoisPer60Min = player.lootVillageoisPer60Min || 0;
-      agg.stats.lootLoupPer60Min = player.lootLoupPer60Min || 0;
+      // Only set loot stats if data exists (not 0 from missing data)
+      agg.stats.lootPer60Min = (player.lootPer60Min !== undefined && player.lootPer60Min !== null) 
+        ? player.lootPer60Min : null;
+      agg.stats.lootVillageoisPer60Min = (player.lootVillageoisPer60Min !== undefined && player.lootVillageoisPer60Min !== null) 
+        ? player.lootVillageoisPer60Min : null;
+      agg.stats.lootLoupPer60Min = (player.lootLoupPer60Min !== undefined && player.lootLoupPer60Min !== null) 
+        ? player.lootLoupPer60Min : null;
     });
   }
 

@@ -27,6 +27,7 @@ function extractDeathsFromGame(game) {
         playerId: getPlayerId(player),
         playerName: player.Username,
         deathType: deathTypeCode,
+        deathTiming: player.DeathTiming || null,
         killerName: player.KillerName || null,
         gameId: game.Id
       });
@@ -152,6 +153,31 @@ export function computeDeathStatistics(gameData) {
     };
   }).sort((a, b) => b.kills - a.kills);
 
+  /**
+   * Parse death timing to extract day number
+   * @param {string|null} deathTiming - Death timing string like "J1", "N1", "M1"
+   * @returns {number|null} - Day number or null
+   */
+  function parseDeathTimingDay(deathTiming) {
+    if (!deathTiming || deathTiming.trim() === '') {
+      return null;
+    }
+    const trimmed = deathTiming.trim();
+    const dayNumberStr = trimmed.slice(1);
+    const dayNumber = parseInt(dayNumberStr, 10);
+    return isNaN(dayNumber) || dayNumber < 1 ? null : dayNumber;
+  }
+
+  /**
+   * Check if death occurred on Day 1 (J1, N1, or M1)
+   * @param {string|null} deathTiming - Death timing string
+   * @returns {boolean}
+   */
+  function isDay1Death(deathTiming) {
+    const day = parseDeathTimingDay(deathTiming);
+    return day === 1;
+  }
+
   // Calculate player death statistics
   const playerDeathCounts = {};
   
@@ -161,12 +187,19 @@ export function computeDeathStatistics(gameData) {
       playerDeathCounts[playerId] = {
         playerName: death.playerName,
         totalDeaths: 0,
+        day1Deaths: 0,
         deathsByType: {},
         killedBy: {}
       };
     }
     
     playerDeathCounts[playerId].totalDeaths++;
+    
+    // Track Day 1 deaths
+    if (isDay1Death(death.deathTiming)) {
+      playerDeathCounts[playerId].day1Deaths++;
+    }
+    
     playerDeathCounts[playerId].deathsByType[death.deathType] = 
       (playerDeathCounts[playerId].deathsByType[death.deathType] || 0) + 1;
     
@@ -176,16 +209,22 @@ export function computeDeathStatistics(gameData) {
     }
   });
 
-  const playerDeathStats = Object.entries(playerDeathCounts).map(([playerId, data]) => ({
-    player: playerId, // Use playerId as the main player identifier
-    playerName: data.playerName,
-    totalDeaths: data.totalDeaths,
-    deathsByType: data.deathsByType,
-    killedBy: data.killedBy,
-    gamesPlayed: playerGameCounts[playerId] || 0,
-    deathRate: (playerGameCounts[playerId] || 0) > 0 ? 
-      data.totalDeaths / (playerGameCounts[playerId] || 1) : 0
-  })).sort((a, b) => b.totalDeaths - a.totalDeaths);
+  const playerDeathStats = Object.entries(playerDeathCounts).map(([playerId, data]) => {
+    const gamesPlayed = playerGameCounts[playerId] || 0;
+    return {
+      player: playerId, // Use playerId as the main player identifier
+      playerName: data.playerName,
+      totalDeaths: data.totalDeaths,
+      day1Deaths: data.day1Deaths,
+      survivalDay1Rate: gamesPlayed > 0 
+        ? ((gamesPlayed - data.day1Deaths) / gamesPlayed) * 100 
+        : null,
+      deathsByType: data.deathsByType,
+      killedBy: data.killedBy,
+      gamesPlayed: gamesPlayed,
+      deathRate: gamesPlayed > 0 ? data.totalDeaths / gamesPlayed : 0
+    };
+  }).sort((a, b) => b.totalDeaths - a.totalDeaths);
 
   return {
     totalDeaths,

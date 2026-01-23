@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-23T15:57:17.797Z",
+  "generatedAt": "2026-01-23T16:07:42.598Z",
   "teamName": "Main Team",
   "totalPlayers": 36,
   "minGamesRequired": 25,
@@ -130,6 +130,30 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
+        },
+        {
+          "id": "survival_low",
+          "title": "La Cible",
+          "emoji": "🎯",
+          "description": "Meurt souvent",
+          "stat": "survivalRate",
+          "value": 28.947368421052634,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_low",
+          "title": "Le·a Pacifiste",
+          "emoji": "☮️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.32894736842105265,
+          "percentile": 25,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -201,6 +225,16 @@
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
         },
+        "survivalRate": {
+          "value": 28.947368421052634,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
+        "killRate": {
+          "value": 0.32894736842105265,
+          "percentile": 25,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 489.6162599339112,
           "percentile": 13.88888888888889,
@@ -226,6 +260,8 @@
         "campVillageoisPercent": 69.73684210526315,
         "campLoupPercent": 9.210526315789473,
         "campSoloPercent": 21.052631578947366,
+        "survivalRate": 28.947368421052634,
+        "killRate": 0.32894736842105265,
         "lootPer60Min": 489.6162599339112,
         "lootVillageoisPer60Min": 477.7753646349634,
         "lootLoupPer60Min": 529.8619856060548
@@ -244,6 +280,30 @@
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survival_extreme_low",
+          "title": "Le·a Martyr·e",
+          "emoji": "✝️",
+          "description": "Première victime récurrente",
+          "stat": "survivalRate",
+          "value": 25.806451612903224,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_extreme_low",
+          "title": "L'Agneau",
+          "emoji": "🐑",
+          "description": "Ne tue jamais",
+          "stat": "killRate",
+          "value": 0.1935483870967742,
+          "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -362,6 +422,16 @@
           "percentile": 30.555555555555557,
           "category": "LOW"
         },
+        "survivalRate": {
+          "value": 25.806451612903224,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW"
+        },
+        "killRate": {
+          "value": 0.1935483870967742,
+          "percentile": 2.7777777777777777,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 508.8062838852257,
           "percentile": 36.11111111111111,
@@ -387,6 +457,8 @@
         "campVillageoisPercent": 51.61290322580645,
         "campLoupPercent": 32.25806451612903,
         "campSoloPercent": 16.129032258064516,
+        "survivalRate": 25.806451612903224,
+        "killRate": 0.1935483870967742,
         "lootPer60Min": 508.8062838852257,
         "lootVillageoisPer60Min": 486.0488086696422,
         "lootLoupPer60Min": 545.6625524788363
@@ -398,6 +470,50 @@
       "gamesPlayed": 127,
       "titles": [
         {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.6456692913385826,
+              "actualPercentile": 80.55555555555556
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 47.24409448818898,
+              "actualPercentile": 91.66666666666666
+            }
+          ]
+        },
+        {
+          "id": "prudent",
+          "title": "Le·a Prudent·e",
+          "emoji": "🛡️",
+          "description": "Survit mais récolte peu",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 487.3529202625836,
+              "actualPercentile": 11.11111111111111
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 47.24409448818898,
+              "actualPercentile": 91.66666666666666
+            }
+          ]
+        },
+        {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -406,6 +522,18 @@
           "value": 0,
           "percentile": 0,
           "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survival_extreme_high",
+          "title": "L'Immortel·le",
+          "emoji": "⭐",
+          "description": "Survie exceptionnelle",
+          "stat": "survivalRate",
+          "value": 47.24409448818898,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -458,6 +586,18 @@
           "type": "basic"
         },
         {
+          "id": "killRate_high",
+          "title": "Le·a Prédateur·rice",
+          "emoji": "🐺",
+          "description": "Taux de kills élevé",
+          "stat": "killRate",
+          "value": 0.6456692913385826,
+          "percentile": 80.55555555555556,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_low",
           "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
@@ -471,16 +611,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "loot_extreme_low",
-        "title": "Le·a Touriste",
-        "emoji": "📸",
-        "description": "Ne récolte jamais",
-        "stat": "lootPer60Min",
-        "value": 487.3529202625836,
-        "percentile": 11.11111111111111,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "alpha_predator",
+        "title": "L'Alpha",
+        "emoji": "🦁",
+        "description": "Tue beaucoup et survit",
+        "priority": 15,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "killRate",
+            "category": "HIGH",
+            "actualValue": 0.6456692913385826,
+            "actualPercentile": 80.55555555555556
+          },
+          {
+            "stat": "survival",
+            "category": "HIGH",
+            "actualValue": 47.24409448818898,
+            "actualPercentile": 91.66666666666666
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -523,6 +673,16 @@
           "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW"
         },
+        "survivalRate": {
+          "value": 47.24409448818898,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH"
+        },
+        "killRate": {
+          "value": 0.6456692913385826,
+          "percentile": 80.55555555555556,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 487.3529202625836,
           "percentile": 11.11111111111111,
@@ -548,6 +708,8 @@
         "campVillageoisPercent": 66.92913385826772,
         "campLoupPercent": 22.04724409448819,
         "campSoloPercent": 11.023622047244094,
+        "survivalRate": 47.24409448818898,
+        "killRate": 0.6456692913385826,
         "lootPer60Min": 487.3529202625836,
         "lootVillageoisPer60Min": 487.2179639574354,
         "lootLoupPer60Min": 482.69850824959434
@@ -626,6 +788,18 @@
           "percentile": 8.333333333333332,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_high",
+          "title": "Le·a Prédateur·rice",
+          "emoji": "🐺",
+          "description": "Taux de kills élevé",
+          "stat": "killRate",
+          "value": 0.5862068965517241,
+          "percentile": 75,
+          "category": "HIGH",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -711,6 +885,16 @@
           "percentile": 44.44444444444444,
           "category": "BELOW_AVERAGE"
         },
+        "survivalRate": {
+          "value": 31.03448275862069,
+          "percentile": 47.22222222222222,
+          "category": "AVERAGE"
+        },
+        "killRate": {
+          "value": 0.5862068965517241,
+          "percentile": 75,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 494.99792349922853,
           "percentile": 19.444444444444446,
@@ -736,6 +920,8 @@
         "campVillageoisPercent": 68.96551724137932,
         "campLoupPercent": 13.793103448275861,
         "campSoloPercent": 17.24137931034483,
+        "survivalRate": 31.03448275862069,
+        "killRate": 0.5862068965517241,
         "lootPer60Min": 494.99792349922853,
         "lootVillageoisPer60Min": 494.38150572478924,
         "lootLoupPer60Min": 469.94466015084566
@@ -746,6 +932,28 @@
       "playerName": "Noamouille",
       "gamesPlayed": 40,
       "titles": [
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.775,
+              "actualPercentile": 94.44444444444444
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 45,
+              "actualPercentile": 86.11111111111111
+            }
+          ]
+        },
         {
           "id": "opportuniste",
           "title": "L'Opportuniste",
@@ -801,6 +1009,30 @@
           "value": 16.666666666666664,
           "percentile": 6.451612903225806,
           "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survival_extreme_high",
+          "title": "L'Immortel·le",
+          "emoji": "⭐",
+          "description": "Survie exceptionnelle",
+          "stat": "survivalRate",
+          "value": 45,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_extreme_high",
+          "title": "L'Exterminateur·rice",
+          "emoji": "💀",
+          "description": "Tueur·se en série",
+          "stat": "killRate",
+          "value": 0.775,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -894,6 +1126,16 @@
           "percentile": 97.22222222222221,
           "category": "EXTREME_HIGH"
         },
+        "survivalRate": {
+          "value": 45,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH"
+        },
+        "killRate": {
+          "value": 0.775,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH"
+        },
         "lootPer60Min": {
           "value": 517.1165859327316,
           "percentile": 58.333333333333336,
@@ -919,6 +1161,8 @@
         "campVillageoisPercent": 52.5,
         "campLoupPercent": 15,
         "campSoloPercent": 32.5,
+        "survivalRate": 45,
+        "killRate": 0.775,
         "lootPer60Min": 517.1165859327316,
         "lootVillageoisPer60Min": 508.8841135572887,
         "lootLoupPer60Min": 433.9948406491844
@@ -952,6 +1196,28 @@
           ]
         },
         {
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 523.4764745238834,
+              "actualPercentile": 66.66666666666666
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 29.629629629629626,
+              "actualPercentile": 38.88888888888889
+            }
+          ]
+        },
+        {
           "id": "winRateVillageois_extreme_high",
           "title": "Le·a Protecteur·rice du Village",
           "emoji": "🦸",
@@ -971,6 +1237,18 @@
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_extreme_low",
+          "title": "L'Agneau",
+          "emoji": "🐑",
+          "description": "Ne tue jamais",
+          "stat": "killRate",
+          "value": 0.2962962962962963,
+          "percentile": 8.333333333333332,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -1060,6 +1338,16 @@
           "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH"
         },
+        "survivalRate": {
+          "value": 29.629629629629626,
+          "percentile": 38.88888888888889,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRate": {
+          "value": 0.2962962962962963,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 523.4764745238834,
           "percentile": 66.66666666666666,
@@ -1085,6 +1373,8 @@
         "campVillageoisPercent": 62.96296296296296,
         "campLoupPercent": 11.11111111111111,
         "campSoloPercent": 25.925925925925924,
+        "survivalRate": 29.629629629629626,
+        "killRate": 0.2962962962962963,
         "lootPer60Min": 523.4764745238834,
         "lootVillageoisPer60Min": 540.5014227440349,
         "lootLoupPer60Min": 533.7272218421543
@@ -1139,6 +1429,18 @@
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survival_extreme_low",
+          "title": "Le·a Martyr·e",
+          "emoji": "✝️",
+          "description": "Première victime récurrente",
+          "stat": "survivalRate",
+          "value": 23.809523809523807,
+          "percentile": 8.333333333333332,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -1233,6 +1535,16 @@
           "percentile": 25,
           "category": "LOW"
         },
+        "survivalRate": {
+          "value": 23.809523809523807,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW"
+        },
+        "killRate": {
+          "value": 0.4166666666666667,
+          "percentile": 36.11111111111111,
+          "category": "BELOW_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 470.29323427961197,
           "percentile": 8.333333333333332,
@@ -1258,6 +1570,8 @@
         "campVillageoisPercent": 73.80952380952381,
         "campLoupPercent": 10.714285714285714,
         "campSoloPercent": 15.476190476190476,
+        "survivalRate": 23.809523809523807,
+        "killRate": 0.4166666666666667,
         "lootPer60Min": 470.29323427961197,
         "lootVillageoisPer60Min": 468.6834423862727,
         "lootLoupPer60Min": 491.435509799227
@@ -1449,6 +1763,16 @@
           "percentile": 84,
           "category": "HIGH"
         },
+        "survivalRate": {
+          "value": 37.59791122715404,
+          "percentile": 61.111111111111114,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRate": {
+          "value": 0.46736292428198434,
+          "percentile": 47.22222222222222,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 521.3001473508045,
           "percentile": 63.888888888888886,
@@ -1477,6 +1801,8 @@
         "talkingPer60Min": 1075.811156771666,
         "talkingOutsidePer60Min": 708.8374480058299,
         "talkingDuringPer60Min": 366.97370876583614,
+        "survivalRate": 37.59791122715404,
+        "killRate": 0.46736292428198434,
         "lootPer60Min": 521.3001473508045,
         "lootVillageoisPer60Min": 519.5797959474837,
         "lootLoupPer60Min": 525.8095235296739
@@ -1516,6 +1842,28 @@
           ]
         },
         {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.8544891640866873,
+              "actualPercentile": 97.22222222222221
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 53.56037151702786,
+              "actualPercentile": 97.22222222222221
+            }
+          ]
+        },
+        {
           "id": "hyperactif",
           "title": "L'Hyperactif·ve",
           "emoji": "⚡",
@@ -1545,6 +1893,30 @@
           "stat": "winRateSolo",
           "value": 18.181818181818183,
           "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survival_extreme_high",
+          "title": "L'Immortel·le",
+          "emoji": "⭐",
+          "description": "Survie exceptionnelle",
+          "stat": "survivalRate",
+          "value": 53.56037151702786,
+          "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_extreme_high",
+          "title": "L'Exterminateur·rice",
+          "emoji": "💀",
+          "description": "Tueur·se en série",
+          "stat": "killRate",
+          "value": 0.8544891640866873,
+          "percentile": 97.22222222222221,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -1635,15 +2007,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "talkingOutsideMeeting_high",
-        "title": "Le·a Chuchoteur·se",
-        "emoji": "👂",
-        "description": "Bavard·e hors meeting",
-        "stat": "talkingOutsidePer60Min",
-        "value": 887.4697003205858,
-        "percentile": 84,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "survival_extreme_high",
+        "title": "L'Immortel·le",
+        "emoji": "⭐",
+        "description": "Survie exceptionnelle",
+        "stat": "survivalRate",
+        "value": 53.56037151702786,
+        "percentile": 97.22222222222221,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -1702,6 +2074,16 @@
           "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
+        "survivalRate": {
+          "value": 53.56037151702786,
+          "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH"
+        },
+        "killRate": {
+          "value": 0.8544891640866873,
+          "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH"
+        },
         "lootPer60Min": {
           "value": 530.3408432442998,
           "percentile": 75,
@@ -1730,6 +2112,8 @@
         "talkingPer60Min": 1193.9749608273462,
         "talkingOutsidePer60Min": 887.4697003205858,
         "talkingDuringPer60Min": 306.5052605067603,
+        "survivalRate": 53.56037151702786,
+        "killRate": 0.8544891640866873,
         "lootPer60Min": 530.3408432442998,
         "lootVillageoisPer60Min": 529.9975617213066,
         "lootLoupPer60Min": 542.9701210614894
@@ -1769,6 +2153,40 @@
           ]
         },
         {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.7005494505494505,
+              "actualPercentile": 88.88888888888889
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 40.10989010989011,
+              "actualPercentile": 75
+            }
+          ]
+        },
+        {
+          "id": "killRate_extreme_high",
+          "title": "L'Exterminateur·rice",
+          "emoji": "💀",
+          "description": "Tueur·se en série",
+          "stat": "killRate",
+          "value": 0.7005494505494505,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_high",
           "title": "Le·a Winner",
           "emoji": "🏆",
@@ -1788,6 +2206,18 @@
           "stat": "winRateSolo",
           "value": 14.285714285714285,
           "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survival_high",
+          "title": "Le·a Survivant·e",
+          "emoji": "🛡️",
+          "description": "Survie élevée fin de game",
+          "stat": "survivalRate",
+          "value": 40.10989010989011,
+          "percentile": 75,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -1842,15 +2272,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRateSolo_high",
-        "title": "L'Électron Libre",
-        "emoji": "🦊",
-        "description": "Excellent·e en rôles Solo",
-        "stat": "winRateSolo",
-        "value": 14.285714285714285,
-        "percentile": 69.44444444444444,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "killRate_extreme_high",
+        "title": "L'Exterminateur·rice",
+        "emoji": "💀",
+        "description": "Tueur·se en série",
+        "stat": "killRate",
+        "value": 0.7005494505494505,
+        "percentile": 88.88888888888889,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -1909,6 +2339,16 @@
           "percentile": 52,
           "category": "AVERAGE"
         },
+        "survivalRate": {
+          "value": 40.10989010989011,
+          "percentile": 75,
+          "category": "HIGH"
+        },
+        "killRate": {
+          "value": 0.7005494505494505,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH"
+        },
         "lootPer60Min": {
           "value": 514.9328182163557,
           "percentile": 50,
@@ -1937,6 +2377,8 @@
         "talkingPer60Min": 1019.0342605898729,
         "talkingOutsidePer60Min": 747.5704676982232,
         "talkingDuringPer60Min": 271.4637928916498,
+        "survivalRate": 40.10989010989011,
+        "killRate": 0.7005494505494505,
         "lootPer60Min": 514.9328182163557,
         "lootVillageoisPer60Min": 521.7038688867576,
         "lootLoupPer60Min": 542.940472560428
@@ -1947,6 +2389,56 @@
       "playerName": "Kao",
       "gamesPlayed": 203,
       "titles": [
+        {
+          "id": "robot",
+          "title": "Le·a Robot",
+          "emoji": "🤖",
+          "description": "Productif·ve, survit, parle peu",
+          "priority": 18,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 541.9126658637708,
+              "actualPercentile": 86.11111111111111
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 38.42364532019704,
+              "actualPercentile": 66.66666666666666
+            },
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 851.3249379205968,
+              "actualPercentile": 12
+            }
+          ]
+        },
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.6551724137931034,
+              "actualPercentile": 83.33333333333334
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 38.42364532019704,
+              "actualPercentile": 66.66666666666666
+            }
+          ]
+        },
         {
           "id": "efficace",
           "title": "L'Efficace",
@@ -2018,6 +2510,30 @@
           "type": "basic"
         },
         {
+          "id": "survival_high",
+          "title": "Le·a Survivant·e",
+          "emoji": "🛡️",
+          "description": "Survie élevée fin de game",
+          "stat": "survivalRate",
+          "value": 38.42364532019704,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_high",
+          "title": "Le·a Prédateur·rice",
+          "emoji": "🐺",
+          "description": "Taux de kills élevé",
+          "stat": "killRate",
+          "value": 0.6551724137931034,
+          "percentile": 83.33333333333334,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_high",
           "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
@@ -2043,24 +2559,30 @@
         }
       ],
       "primaryTitle": {
-        "id": "efficace",
-        "title": "L'Efficace",
-        "emoji": "🎯",
-        "description": "Silencieux·se mais productif·ve",
-        "priority": 10,
+        "id": "robot",
+        "title": "Le·a Robot",
+        "emoji": "🤖",
+        "description": "Productif·ve, survit, parle peu",
+        "priority": 18,
         "type": "combination",
         "conditions": [
-          {
-            "stat": "talking",
-            "category": "LOW",
-            "actualValue": 851.3249379205968,
-            "actualPercentile": 12
-          },
           {
             "stat": "loot",
             "category": "HIGH",
             "actualValue": 541.9126658637708,
             "actualPercentile": 86.11111111111111
+          },
+          {
+            "stat": "survival",
+            "category": "HIGH",
+            "actualValue": 38.42364532019704,
+            "actualPercentile": 66.66666666666666
+          },
+          {
+            "stat": "talking",
+            "category": "LOW",
+            "actualValue": 851.3249379205968,
+            "actualPercentile": 12
           }
         ]
       },
@@ -2120,6 +2642,16 @@
           "percentile": 32,
           "category": "LOW"
         },
+        "survivalRate": {
+          "value": 38.42364532019704,
+          "percentile": 66.66666666666666,
+          "category": "HIGH"
+        },
+        "killRate": {
+          "value": 0.6551724137931034,
+          "percentile": 83.33333333333334,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 541.9126658637708,
           "percentile": 86.11111111111111,
@@ -2148,6 +2680,8 @@
         "talkingPer60Min": 851.3249379205968,
         "talkingOutsidePer60Min": 606.6569219025239,
         "talkingDuringPer60Min": 244.66801601807288,
+        "survivalRate": 38.42364532019704,
+        "killRate": 0.6551724137931034,
         "lootPer60Min": 541.9126658637708,
         "lootVillageoisPer60Min": 533.007543938706,
         "lootLoupPer60Min": 534.44865765658
@@ -2209,6 +2743,28 @@
           ]
         },
         {
+          "id": "prudent",
+          "title": "Le·a Prudent·e",
+          "emoji": "🛡️",
+          "description": "Survit mais récolte peu",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 503.6563139283604,
+              "actualPercentile": 25
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 37.68844221105528,
+              "actualPercentile": 63.888888888888886
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
           "emoji": "👑",
@@ -2241,6 +2797,18 @@
           "value": 213.07926441020265,
           "percentile": 12,
           "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_extreme_high",
+          "title": "L'Exterminateur·rice",
+          "emoji": "💀",
+          "description": "Tueur·se en série",
+          "stat": "killRate",
+          "value": 0.6683417085427136,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -2385,6 +2953,16 @@
           "percentile": 12,
           "category": "EXTREME_LOW"
         },
+        "survivalRate": {
+          "value": 37.68844221105528,
+          "percentile": 63.888888888888886,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRate": {
+          "value": 0.6683417085427136,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH"
+        },
         "lootPer60Min": {
           "value": 503.6563139283604,
           "percentile": 25,
@@ -2413,6 +2991,8 @@
         "talkingPer60Min": 932.7354026110525,
         "talkingOutsidePer60Min": 719.6561382008498,
         "talkingDuringPer60Min": 213.07926441020265,
+        "survivalRate": 37.68844221105528,
+        "killRate": 0.6683417085427136,
         "lootPer60Min": 503.6563139283604,
         "lootVillageoisPer60Min": 506.05483974252803,
         "lootLoupPer60Min": 504.6654276330909
@@ -2489,6 +3069,18 @@
           "stat": "talkingDuringPer60Min",
           "value": 337.8319321924623,
           "percentile": 80,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_high",
+          "title": "Le·a Prédateur·rice",
+          "emoji": "🐺",
+          "description": "Taux de kills élevé",
+          "stat": "killRate",
+          "value": 0.623229461756374,
+          "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -2596,6 +3188,16 @@
           "percentile": 80,
           "category": "HIGH"
         },
+        "survivalRate": {
+          "value": 31.728045325779036,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "killRate": {
+          "value": 0.623229461756374,
+          "percentile": 77.77777777777779,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 512.7099112960258,
           "percentile": 44.44444444444444,
@@ -2624,6 +3226,8 @@
         "talkingPer60Min": 1210.215727106016,
         "talkingOutsidePer60Min": 872.3837949135537,
         "talkingDuringPer60Min": 337.8319321924623,
+        "survivalRate": 31.728045325779036,
+        "killRate": 0.623229461756374,
         "lootPer60Min": 512.7099112960258,
         "lootVillageoisPer60Min": 509.37386782700287,
         "lootLoupPer60Min": 521.084089191906
@@ -2666,6 +3270,18 @@
           "stat": "winRateLoup",
           "value": 23.333333333333332,
           "percentile": 22.58064516129032,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_low",
+          "title": "Le·a Pacifiste",
+          "emoji": "☮️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.3548387096774194,
+          "percentile": 30.555555555555557,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -2775,6 +3391,16 @@
           "percentile": 56.00000000000001,
           "category": "ABOVE_AVERAGE"
         },
+        "survivalRate": {
+          "value": 30.32258064516129,
+          "percentile": 44.44444444444444,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRate": {
+          "value": 0.3548387096774194,
+          "percentile": 30.555555555555557,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 508.0729911740813,
           "percentile": 33.33333333333333,
@@ -2803,6 +3429,8 @@
         "talkingPer60Min": 1060.5630182757734,
         "talkingOutsidePer60Min": 779.1891562842417,
         "talkingDuringPer60Min": 281.3738619915317,
+        "survivalRate": 30.32258064516129,
+        "killRate": 0.3548387096774194,
         "lootPer60Min": 508.0729911740813,
         "lootVillageoisPer60Min": 506.97583138151714,
         "lootLoupPer60Min": 497.19278050585314
@@ -2814,6 +3442,28 @@
       "gamesPlayed": 65,
       "titles": [
         {
+          "id": "prudent",
+          "title": "Le·a Prudent·e",
+          "emoji": "🛡️",
+          "description": "Survit mais récolte peu",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 493.4755461967211,
+              "actualPercentile": 16.666666666666664
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 36.92307692307693,
+              "actualPercentile": 58.333333333333336
+            }
+          ]
+        },
+        {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -2823,6 +3473,18 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_low",
+          "title": "Le·a Pacifiste",
+          "emoji": "☮️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.35384615384615387,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -2863,16 +3525,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootVillageois_low",
-        "title": "Le·a Villageois·e Paresseux·se",
-        "emoji": "💤",
-        "description": "Faible récolte en Villageois",
-        "stat": "lootVillageoisPer60Min",
-        "value": 498.36191633020877,
-        "percentile": 27.77777777777778,
-        "category": "LOW",
-        "priority": 6,
-        "type": "basic"
+        "id": "prudent",
+        "title": "Le·a Prudent·e",
+        "emoji": "🛡️",
+        "description": "Survit mais récolte peu",
+        "priority": 11,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "loot",
+            "category": "LOW",
+            "actualValue": 493.4755461967211,
+            "actualPercentile": 16.666666666666664
+          },
+          {
+            "stat": "survival",
+            "category": "HIGH",
+            "actualValue": 36.92307692307693,
+            "actualPercentile": 58.333333333333336
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -2915,6 +3587,16 @@
           "percentile": 8.333333333333332,
           "category": "EXTREME_LOW"
         },
+        "survivalRate": {
+          "value": 36.92307692307693,
+          "percentile": 58.333333333333336,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRate": {
+          "value": 0.35384615384615387,
+          "percentile": 27.77777777777778,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 493.4755461967211,
           "percentile": 16.666666666666664,
@@ -2940,6 +3622,8 @@
         "campVillageoisPercent": 70.76923076923077,
         "campLoupPercent": 16.923076923076923,
         "campSoloPercent": 12.307692307692308,
+        "survivalRate": 36.92307692307693,
+        "killRate": 0.35384615384615387,
         "lootPer60Min": 493.4755461967211,
         "lootVillageoisPer60Min": 498.36191633020877,
         "lootLoupPer60Min": 518.1103936430704
@@ -2975,6 +3659,28 @@
               "category": "HIGH",
               "actualValue": 16,
               "actualPercentile": 80.55555555555556
+            }
+          ]
+        },
+        {
+          "id": "prudent",
+          "title": "Le·a Prudent·e",
+          "emoji": "🛡️",
+          "description": "Survit mais récolte peu",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 512.6107901013185,
+              "actualPercentile": 41.66666666666667
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 41.726618705035975,
+              "actualPercentile": 83.33333333333334
             }
           ]
         },
@@ -3022,6 +3728,18 @@
           "stat": "winRateSolo",
           "value": 16,
           "percentile": 80.55555555555556,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survival_high",
+          "title": "Le·a Survivant·e",
+          "emoji": "🛡️",
+          "description": "Survie élevée fin de game",
+          "stat": "survivalRate",
+          "value": 41.726618705035975,
+          "percentile": 83.33333333333334,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3092,6 +3810,16 @@
           "percentile": 58.333333333333336,
           "category": "ABOVE_AVERAGE"
         },
+        "survivalRate": {
+          "value": 41.726618705035975,
+          "percentile": 83.33333333333334,
+          "category": "HIGH"
+        },
+        "killRate": {
+          "value": 0.5611510791366906,
+          "percentile": 63.888888888888886,
+          "category": "ABOVE_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 512.6107901013185,
           "percentile": 41.66666666666667,
@@ -3117,6 +3845,8 @@
         "campVillageoisPercent": 61.87050359712231,
         "campLoupPercent": 20.14388489208633,
         "campSoloPercent": 17.985611510791365,
+        "survivalRate": 41.726618705035975,
+        "killRate": 0.5611510791366906,
         "lootPer60Min": 512.6107901013185,
         "lootVillageoisPer60Min": 512.2501634075333,
         "lootLoupPer60Min": 537.9670118120534
@@ -3152,6 +3882,28 @@
               "category": "HIGH",
               "actualValue": 11.864406779661017,
               "actualPercentile": 61.111111111111114
+            }
+          ]
+        },
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.7160883280757098,
+              "actualPercentile": 91.66666666666666
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 38.48580441640379,
+              "actualPercentile": 69.44444444444444
             }
           ]
         },
@@ -3226,6 +3978,18 @@
           "type": "basic"
         },
         {
+          "id": "killRate_extreme_high",
+          "title": "L'Exterminateur·rice",
+          "emoji": "💀",
+          "description": "Tueur·se en série",
+          "stat": "killRate",
+          "value": 0.7160883280757098,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_high",
           "title": "Le·a Winner",
           "emoji": "🏆",
@@ -3245,6 +4009,18 @@
           "stat": "winRateVillageois",
           "value": 52.38095238095239,
           "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survival_high",
+          "title": "Le·a Survivant·e",
+          "emoji": "🛡️",
+          "description": "Survie élevée fin de game",
+          "stat": "survivalRate",
+          "value": 38.48580441640379,
+          "percentile": 69.44444444444444,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3342,6 +4118,16 @@
           "percentile": 96,
           "category": "EXTREME_HIGH"
         },
+        "survivalRate": {
+          "value": 38.48580441640379,
+          "percentile": 69.44444444444444,
+          "category": "HIGH"
+        },
+        "killRate": {
+          "value": 0.7160883280757098,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH"
+        },
         "lootPer60Min": {
           "value": 516.613769207369,
           "percentile": 52.77777777777778,
@@ -3370,6 +4156,8 @@
         "talkingPer60Min": 1436.6841871663262,
         "talkingOutsidePer60Min": 967.5418235819591,
         "talkingDuringPer60Min": 469.1423635843672,
+        "survivalRate": 38.48580441640379,
+        "killRate": 0.7160883280757098,
         "lootPer60Min": 516.613769207369,
         "lootVillageoisPer60Min": 523.8633874962719,
         "lootLoupPer60Min": 541.6416006018458
@@ -3401,6 +4189,18 @@
               "actualPercentile": 91.66666666666666
             }
           ]
+        },
+        {
+          "id": "killRate_extreme_low",
+          "title": "L'Agneau",
+          "emoji": "🐑",
+          "description": "Ne tue jamais",
+          "stat": "killRate",
+          "value": 0.291005291005291,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "loot_extreme_high",
@@ -3500,16 +4300,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootLoup_high",
-        "title": "Le Loup Discret",
-        "emoji": "🐺",
-        "description": "Récolte élevée en Loup (camouflage)",
-        "stat": "lootLoupPer60Min",
-        "value": 583.1767116488371,
-        "percentile": 83.33333333333334,
-        "category": "HIGH",
-        "priority": 6,
-        "type": "basic"
+        "id": "efficace",
+        "title": "L'Efficace",
+        "emoji": "🎯",
+        "description": "Silencieux·se mais productif·ve",
+        "priority": 10,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "talking",
+            "category": "LOW",
+            "actualValue": 917.5106535253502,
+            "actualPercentile": 20
+          },
+          {
+            "stat": "loot",
+            "category": "HIGH",
+            "actualValue": 547.5631551233826,
+            "actualPercentile": 91.66666666666666
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -3567,6 +4377,16 @@
           "percentile": 24,
           "category": "LOW"
         },
+        "survivalRate": {
+          "value": 32.27513227513227,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRate": {
+          "value": 0.291005291005291,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 547.5631551233826,
           "percentile": 91.66666666666666,
@@ -3595,6 +4415,8 @@
         "talkingPer60Min": 917.5106535253502,
         "talkingOutsidePer60Min": 679.9079802204543,
         "talkingDuringPer60Min": 237.602673304896,
+        "survivalRate": 32.27513227513227,
+        "killRate": 0.291005291005291,
         "lootPer60Min": 547.5631551233826,
         "lootVillageoisPer60Min": 526.5688363213716,
         "lootLoupPer60Min": 583.1767116488371
@@ -3642,6 +4464,18 @@
           "type": "basic"
         },
         {
+          "id": "survival_high",
+          "title": "Le·a Survivant·e",
+          "emoji": "🛡️",
+          "description": "Survie élevée fin de game",
+          "stat": "survivalRate",
+          "value": 41.09947643979058,
+          "percentile": 80.55555555555556,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_above_average",
           "title": "Le·a Travailleur·se",
           "emoji": "👷",
@@ -3667,15 +4501,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "loot_above_average",
-        "title": "Le·a Travailleur·se",
-        "emoji": "👷",
-        "description": "Récolte correcte",
-        "stat": "lootPer60Min",
-        "value": 518.5808539452105,
-        "percentile": 61.111111111111114,
-        "category": "ABOVE_AVERAGE",
-        "priority": 4,
+        "id": "survival_high",
+        "title": "Le·a Survivant·e",
+        "emoji": "🛡️",
+        "description": "Survie élevée fin de game",
+        "stat": "survivalRate",
+        "value": 41.09947643979058,
+        "percentile": 80.55555555555556,
+        "category": "HIGH",
+        "priority": 6,
         "type": "basic"
       },
       "percentiles": {
@@ -3734,6 +4568,16 @@
           "percentile": 92,
           "category": "EXTREME_HIGH"
         },
+        "survivalRate": {
+          "value": 41.09947643979058,
+          "percentile": 80.55555555555556,
+          "category": "HIGH"
+        },
+        "killRate": {
+          "value": 0.5235602094240838,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 518.5808539452105,
           "percentile": 61.111111111111114,
@@ -3762,6 +4606,8 @@
         "talkingPer60Min": 1192.4206227588213,
         "talkingOutsidePer60Min": 739.4579059990489,
         "talkingDuringPer60Min": 452.96271675977243,
+        "survivalRate": 41.09947643979058,
+        "killRate": 0.5235602094240838,
         "lootPer60Min": 518.5808539452105,
         "lootVillageoisPer60Min": 520.3875271832401,
         "lootLoupPer60Min": 537.6126394710933
@@ -3844,6 +4690,18 @@
           "stat": "winRateLoup",
           "value": 25.925925925925924,
           "percentile": 32.25806451612903,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survival_low",
+          "title": "La Cible",
+          "emoji": "🎯",
+          "description": "Meurt souvent",
+          "stat": "survivalRate",
+          "value": 27.049180327868854,
+          "percentile": 25,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -3981,6 +4839,16 @@
           "percentile": 44,
           "category": "BELOW_AVERAGE"
         },
+        "survivalRate": {
+          "value": 27.049180327868854,
+          "percentile": 25,
+          "category": "LOW"
+        },
+        "killRate": {
+          "value": 0.45901639344262296,
+          "percentile": 44.44444444444444,
+          "category": "BELOW_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 511.9119492511369,
           "percentile": 38.88888888888889,
@@ -4009,6 +4877,8 @@
         "talkingPer60Min": 995.9884840788314,
         "talkingOutsidePer60Min": 733.372131618966,
         "talkingDuringPer60Min": 262.6163524598654,
+        "survivalRate": 27.049180327868854,
+        "killRate": 0.45901639344262296,
         "lootPer60Min": 511.9119492511369,
         "lootVillageoisPer60Min": 494.9569061032115,
         "lootLoupPer60Min": 543.3467818273259
@@ -4019,6 +4889,28 @@
       "playerName": "ClydeCreator",
       "gamesPlayed": 275,
       "titles": [
+        {
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 516.6595209891901,
+              "actualPercentile": 55.55555555555556
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 25.454545454545453,
+              "actualPercentile": 11.11111111111111
+            }
+          ]
+        },
         {
           "id": "winRateLoup_extreme_low",
           "title": "Loup Débutant·e",
@@ -4068,6 +4960,18 @@
           "type": "basic"
         },
         {
+          "id": "survival_extreme_low",
+          "title": "Le·a Martyr·e",
+          "emoji": "✝️",
+          "description": "Première victime récurrente",
+          "stat": "survivalRate",
+          "value": 25.454545454545453,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateSolo_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -4075,6 +4979,18 @@
           "stat": "winRateSolo",
           "value": 2.083333333333333,
           "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_low",
+          "title": "Le·a Pacifiste",
+          "emoji": "☮️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.32,
+          "percentile": 19.444444444444446,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -4105,16 +5021,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "talkingOutsideMeeting_extreme_low",
-        "title": "Le·a Concentré·e",
-        "emoji": "🎯",
-        "description": "Silencieux·se hors meeting",
-        "stat": "talkingOutsidePer60Min",
-        "value": 603.1558479990774,
-        "percentile": 8,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "avide",
+        "title": "L'Avide",
+        "emoji": "💰",
+        "description": "Récolte beaucoup mais meurt",
+        "priority": 11,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "loot",
+            "category": "HIGH",
+            "actualValue": 516.6595209891901,
+            "actualPercentile": 55.55555555555556
+          },
+          {
+            "stat": "survival",
+            "category": "LOW",
+            "actualValue": 25.454545454545453,
+            "actualPercentile": 11.11111111111111
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -4172,6 +5098,16 @@
           "percentile": 4,
           "category": "EXTREME_LOW"
         },
+        "survivalRate": {
+          "value": 25.454545454545453,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW"
+        },
+        "killRate": {
+          "value": 0.32,
+          "percentile": 19.444444444444446,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 516.6595209891901,
           "percentile": 55.55555555555556,
@@ -4200,6 +5136,8 @@
         "talkingPer60Min": 777.5035792853156,
         "talkingOutsidePer60Min": 603.1558479990774,
         "talkingDuringPer60Min": 174.3477312862382,
+        "survivalRate": 25.454545454545453,
+        "killRate": 0.32,
         "lootPer60Min": 516.6595209891901,
         "lootVillageoisPer60Min": 509.5319242392576,
         "lootLoupPer60Min": 516.4953918619718
@@ -4210,6 +5148,28 @@
       "playerName": "Anaee",
       "gamesPlayed": 249,
       "titles": [
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.5662650602409639,
+              "actualPercentile": 66.66666666666666
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 39.3574297188755,
+              "actualPercentile": 72.22222222222221
+            }
+          ]
+        },
         {
           "id": "hyperactif",
           "title": "L'Hyperactif·ve",
@@ -4300,6 +5260,30 @@
           "stat": "talkingDuringPer60Min",
           "value": 330.2755556340704,
           "percentile": 72,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survival_high",
+          "title": "Le·a Survivant·e",
+          "emoji": "🛡️",
+          "description": "Survie élevée fin de game",
+          "stat": "survivalRate",
+          "value": 39.3574297188755,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_high",
+          "title": "Le·a Prédateur·rice",
+          "emoji": "🐺",
+          "description": "Taux de kills élevé",
+          "stat": "killRate",
+          "value": 0.5662650602409639,
+          "percentile": 66.66666666666666,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4419,6 +5403,16 @@
           "percentile": 72,
           "category": "HIGH"
         },
+        "survivalRate": {
+          "value": 39.3574297188755,
+          "percentile": 72.22222222222221,
+          "category": "HIGH"
+        },
+        "killRate": {
+          "value": 0.5662650602409639,
+          "percentile": 66.66666666666666,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 539.4051930505553,
           "percentile": 83.33333333333334,
@@ -4447,6 +5441,8 @@
         "talkingPer60Min": 1156.984297978924,
         "talkingOutsidePer60Min": 826.7087423448536,
         "talkingDuringPer60Min": 330.2755556340704,
+        "survivalRate": 39.3574297188755,
+        "killRate": 0.5662650602409639,
         "lootPer60Min": 539.4051930505553,
         "lootVillageoisPer60Min": 541.6267023410664,
         "lootLoupPer60Min": 542.7821317945175
@@ -4558,6 +5554,18 @@
           "type": "basic"
         },
         {
+          "id": "survival_low",
+          "title": "La Cible",
+          "emoji": "🎯",
+          "description": "Meurt souvent",
+          "stat": "survivalRate",
+          "value": 26.75438596491228,
+          "percentile": 22.22222222222222,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_low",
           "title": "Le·a Flâneur·se",
           "emoji": "🚶",
@@ -4662,6 +5670,16 @@
           "percentile": 76,
           "category": "HIGH"
         },
+        "survivalRate": {
+          "value": 26.75438596491228,
+          "percentile": 22.22222222222222,
+          "category": "LOW"
+        },
+        "killRate": {
+          "value": 0.4824561403508772,
+          "percentile": 52.77777777777778,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 499.79380468662185,
           "percentile": 22.22222222222222,
@@ -4690,6 +5708,8 @@
         "talkingPer60Min": 1085.6368821360222,
         "talkingOutsidePer60Min": 754.8924693481885,
         "talkingDuringPer60Min": 330.74441278783365,
+        "survivalRate": 26.75438596491228,
+        "killRate": 0.4824561403508772,
         "lootPer60Min": 499.79380468662185,
         "lootVillageoisPer60Min": 503.9897981155459,
         "lootLoupPer60Min": 486.7315563405865
@@ -4725,6 +5745,28 @@
               "category": "HIGH",
               "actualValue": 14.285714285714285,
               "actualPercentile": 69.44444444444444
+            }
+          ]
+        },
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.5773195876288659,
+              "actualPercentile": 69.44444444444444
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 40.72164948453608,
+              "actualPercentile": 77.77777777777779
             }
           ]
         },
@@ -4857,6 +5899,30 @@
           "type": "basic"
         },
         {
+          "id": "survival_high",
+          "title": "Le·a Survivant·e",
+          "emoji": "🛡️",
+          "description": "Survie élevée fin de game",
+          "stat": "survivalRate",
+          "value": 40.72164948453608,
+          "percentile": 77.77777777777779,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_high",
+          "title": "Le·a Prédateur·rice",
+          "emoji": "🐺",
+          "description": "Taux de kills élevé",
+          "stat": "killRate",
+          "value": 0.5773195876288659,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
@@ -4949,6 +6015,16 @@
           "percentile": 68,
           "category": "HIGH"
         },
+        "survivalRate": {
+          "value": 40.72164948453608,
+          "percentile": 77.77777777777779,
+          "category": "HIGH"
+        },
+        "killRate": {
+          "value": 0.5773195876288659,
+          "percentile": 69.44444444444444,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 544.1142900769254,
           "percentile": 88.88888888888889,
@@ -4977,6 +6053,8 @@
         "talkingPer60Min": 1194.2496743567306,
         "talkingOutsidePer60Min": 877.6729472596473,
         "talkingDuringPer60Min": 316.5767270970832,
+        "survivalRate": 40.72164948453608,
+        "killRate": 0.5773195876288659,
         "lootPer60Min": 544.1142900769254,
         "lootVillageoisPer60Min": 544.903930848865,
         "lootLoupPer60Min": 580.303446984737
@@ -5007,6 +6085,18 @@
           "stat": "talkingOutsidePer60Min",
           "value": 559.4020963104329,
           "percentile": 4,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_extreme_low",
+          "title": "L'Agneau",
+          "emoji": "🐑",
+          "description": "Ne tue jamais",
+          "stat": "killRate",
+          "value": 0.3153153153153153,
+          "percentile": 13.88888888888889,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -5073,15 +6163,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootLoup_low",
-        "title": "Le Loup Impatient",
-        "emoji": "😤",
-        "description": "Faible récolte en Loup",
-        "stat": "lootLoupPer60Min",
-        "value": 509.9522157605914,
-        "percentile": 33.33333333333333,
-        "category": "LOW",
-        "priority": 6,
+        "id": "killRate_extreme_low",
+        "title": "L'Agneau",
+        "emoji": "🐑",
+        "description": "Ne tue jamais",
+        "stat": "killRate",
+        "value": 0.3153153153153153,
+        "percentile": 13.88888888888889,
+        "category": "EXTREME_LOW",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -5140,6 +6230,16 @@
           "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
+        "survivalRate": {
+          "value": 29.27927927927928,
+          "percentile": 36.11111111111111,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRate": {
+          "value": 0.3153153153153153,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 506.3529732203604,
           "percentile": 27.77777777777778,
@@ -5168,6 +6268,8 @@
         "talkingPer60Min": 810.38616663808,
         "talkingOutsidePer60Min": 559.4020963104329,
         "talkingDuringPer60Min": 250.98407032764712,
+        "survivalRate": 29.27927927927928,
+        "killRate": 0.3153153153153153,
         "lootPer60Min": 506.3529732203604,
         "lootVillageoisPer60Min": 511.5982952285992,
         "lootLoupPer60Min": 509.9522157605914
@@ -5207,6 +6309,28 @@
           ]
         },
         {
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 533.367764162655,
+              "actualPercentile": 77.77777777777779
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 17.326732673267326,
+              "actualPercentile": 2.7777777777777777
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
           "emoji": "🪦",
@@ -5226,6 +6350,18 @@
           "stat": "winRateLoup",
           "value": 8.571428571428571,
           "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survival_extreme_low",
+          "title": "Le·a Martyr·e",
+          "emoji": "✝️",
+          "description": "Première victime récurrente",
+          "stat": "survivalRate",
+          "value": 17.326732673267326,
+          "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -5274,6 +6410,18 @@
           "stat": "talkingDuringPer60Min",
           "value": 224.44191748356914,
           "percentile": 16,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_low",
+          "title": "Le·a Pacifiste",
+          "emoji": "☮️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.3217821782178218,
+          "percentile": 22.22222222222222,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -5371,6 +6519,16 @@
           "percentile": 16,
           "category": "LOW"
         },
+        "survivalRate": {
+          "value": 17.326732673267326,
+          "percentile": 2.7777777777777777,
+          "category": "EXTREME_LOW"
+        },
+        "killRate": {
+          "value": 0.3217821782178218,
+          "percentile": 22.22222222222222,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 533.367764162655,
           "percentile": 77.77777777777779,
@@ -5399,6 +6557,8 @@
         "talkingPer60Min": 967.0632940203116,
         "talkingOutsidePer60Min": 742.6213765367423,
         "talkingDuringPer60Min": 224.44191748356914,
+        "survivalRate": 17.326732673267326,
+        "killRate": 0.3217821782178218,
         "lootPer60Min": 533.367764162655,
         "lootVillageoisPer60Min": 543.1723836768067,
         "lootLoupPer60Min": 522.0379943106672
@@ -5574,6 +6734,16 @@
           "percentile": 28.000000000000004,
           "category": "LOW"
         },
+        "survivalRate": {
+          "value": 32.19178082191781,
+          "percentile": 52.77777777777778,
+          "category": "AVERAGE"
+        },
+        "killRate": {
+          "value": 0.4452054794520548,
+          "percentile": 38.88888888888889,
+          "category": "BELOW_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 506.44484583980835,
           "percentile": 30.555555555555557,
@@ -5602,6 +6772,8 @@
         "talkingPer60Min": 1132.9789574533193,
         "talkingOutsidePer60Min": 890.5967882510423,
         "talkingDuringPer60Min": 242.3821692022768,
+        "survivalRate": 32.19178082191781,
+        "killRate": 0.4452054794520548,
         "lootPer60Min": 506.44484583980835,
         "lootVillageoisPer60Min": 508.44473865711007,
         "lootLoupPer60Min": 492.44748767715186
@@ -5683,6 +6855,18 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
+        },
+        {
+          "id": "survival_low",
+          "title": "La Cible",
+          "emoji": "🎯",
+          "description": "Meurt souvent",
+          "stat": "survivalRate",
+          "value": 26.31578947368421,
+          "percentile": 16.666666666666664,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -5738,6 +6922,16 @@
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
         },
+        "survivalRate": {
+          "value": 26.31578947368421,
+          "percentile": 16.666666666666664,
+          "category": "LOW"
+        },
+        "killRate": {
+          "value": 0.5263157894736842,
+          "percentile": 58.333333333333336,
+          "category": "ABOVE_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 414.56608746566127,
           "percentile": 0,
@@ -5763,6 +6957,8 @@
         "campVillageoisPercent": 60.526315789473685,
         "campLoupPercent": 18.421052631578945,
         "campSoloPercent": 21.052631578947366,
+        "survivalRate": 26.31578947368421,
+        "killRate": 0.5263157894736842,
         "lootPer60Min": 414.56608746566127,
         "lootVillageoisPer60Min": 440.62143117533367,
         "lootLoupPer60Min": 333.2374347067752
@@ -5774,12 +6970,46 @@
       "gamesPlayed": 33,
       "titles": [
         {
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 538.5743267028114,
+              "actualPercentile": 80.55555555555556
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 27.27272727272727,
+              "actualPercentile": 27.77777777777778
+            }
+          ]
+        },
+        {
           "id": "winRateVillageois_extreme_low",
           "title": "Idiot·e en Formation",
           "emoji": "🤡",
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 40.909090909090914,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_extreme_low",
+          "title": "L'Agneau",
+          "emoji": "🐑",
+          "description": "Ne tue jamais",
+          "stat": "killRate",
+          "value": 0.30303030303030304,
           "percentile": 11.11111111111111,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -5818,6 +7048,18 @@
           "value": 16.666666666666664,
           "percentile": 83.33333333333334,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survival_low",
+          "title": "La Cible",
+          "emoji": "🎯",
+          "description": "Meurt souvent",
+          "stat": "survivalRate",
+          "value": 27.27272727272727,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -5882,6 +7124,16 @@
           "percentile": 66.66666666666666,
           "category": "HIGH"
         },
+        "survivalRate": {
+          "value": 27.27272727272727,
+          "percentile": 27.77777777777778,
+          "category": "LOW"
+        },
+        "killRate": {
+          "value": 0.30303030303030304,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 538.5743267028114,
           "percentile": 80.55555555555556,
@@ -5907,6 +7159,8 @@
         "campVillageoisPercent": 66.66666666666666,
         "campLoupPercent": 15.151515151515152,
         "campSoloPercent": 18.181818181818183,
+        "survivalRate": 27.27272727272727,
+        "killRate": 0.30303030303030304,
         "lootPer60Min": 538.5743267028114,
         "lootVillageoisPer60Min": 520.7378465642586,
         "lootLoupPer60Min": 627.0657404146879
@@ -5917,6 +7171,28 @@
       "playerName": "Tovi",
       "gamesPlayed": 46,
       "titles": [
+        {
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 526.4628333395082,
+              "actualPercentile": 72.22222222222221
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 13.043478260869565,
+              "actualPercentile": 0
+            }
+          ]
+        },
         {
           "id": "efficace",
           "title": "L'Efficace",
@@ -5983,6 +7259,30 @@
           "stat": "talkingDuringPer60Min",
           "value": 183.32363582235445,
           "percentile": 8,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "survival_extreme_low",
+          "title": "Le·a Martyr·e",
+          "emoji": "✝️",
+          "description": "Première victime récurrente",
+          "stat": "survivalRate",
+          "value": 13.043478260869565,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_extreme_low",
+          "title": "L'Agneau",
+          "emoji": "🐑",
+          "description": "Ne tue jamais",
+          "stat": "killRate",
+          "value": 0.17391304347826086,
+          "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -6097,6 +7397,16 @@
           "percentile": 8,
           "category": "EXTREME_LOW"
         },
+        "survivalRate": {
+          "value": 13.043478260869565,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "killRate": {
+          "value": 0.17391304347826086,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 526.4628333395082,
           "percentile": 72.22222222222221,
@@ -6125,6 +7435,8 @@
         "talkingPer60Min": 943.737060150582,
         "talkingOutsidePer60Min": 760.4134243282276,
         "talkingDuringPer60Min": 183.32363582235445,
+        "survivalRate": 13.043478260869565,
+        "killRate": 0.17391304347826086,
         "lootPer60Min": 526.4628333395082,
         "lootVillageoisPer60Min": 512.8258376615138,
         "lootLoupPer60Min": 1202.9457352932727
@@ -6266,6 +7578,18 @@
           "type": "basic"
         },
         {
+          "id": "survival_low",
+          "title": "La Cible",
+          "emoji": "🎯",
+          "description": "Meurt souvent",
+          "stat": "survivalRate",
+          "value": 27.27272727272727,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRate_above_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -6356,6 +7680,16 @@
           "percentile": 20,
           "category": "LOW"
         },
+        "survivalRate": {
+          "value": 27.27272727272727,
+          "percentile": 27.77777777777778,
+          "category": "LOW"
+        },
+        "killRate": {
+          "value": 0.4727272727272727,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 465.5771106747295,
           "percentile": 5.555555555555555,
@@ -6384,6 +7718,8 @@
         "talkingPer60Min": 942.7090057261843,
         "talkingOutsidePer60Min": 711.229567933368,
         "talkingDuringPer60Min": 231.47943779281624,
+        "survivalRate": 27.27272727272727,
+        "killRate": 0.4727272727272727,
         "lootPer60Min": 465.5771106747295,
         "lootVillageoisPer60Min": 477.4551934157611,
         "lootLoupPer60Min": 408.45203598223895
@@ -6394,6 +7730,28 @@
       "playerName": "Areliann",
       "gamesPlayed": 114,
       "titles": [
+        {
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 525.9719515223404,
+              "actualPercentile": 69.44444444444444
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 23.684210526315788,
+              "actualPercentile": 5.555555555555555
+            }
+          ]
+        },
         {
           "id": "hyperactif",
           "title": "L'Hyperactif·ve",
@@ -6415,6 +7773,18 @@
               "actualPercentile": 69.44444444444444
             }
           ]
+        },
+        {
+          "id": "survival_extreme_low",
+          "title": "Le·a Martyr·e",
+          "emoji": "✝️",
+          "description": "Première victime récurrente",
+          "stat": "survivalRate",
+          "value": 23.684210526315788,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "winRate_low",
@@ -6502,15 +7872,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "loot_high",
-        "title": "Le·a Fermier·ère",
-        "emoji": "🌾",
-        "description": "Récolte élevée",
-        "stat": "lootPer60Min",
-        "value": 525.9719515223404,
-        "percentile": 69.44444444444444,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "survival_extreme_low",
+        "title": "Le·a Martyr·e",
+        "emoji": "✝️",
+        "description": "Première victime récurrente",
+        "stat": "survivalRate",
+        "value": 23.684210526315788,
+        "percentile": 5.555555555555555,
+        "category": "EXTREME_LOW",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -6569,6 +7939,16 @@
           "percentile": 64,
           "category": "ABOVE_AVERAGE"
         },
+        "survivalRate": {
+          "value": 23.684210526315788,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW"
+        },
+        "killRate": {
+          "value": 0.5526315789473685,
+          "percentile": 61.111111111111114,
+          "category": "ABOVE_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 525.9719515223404,
           "percentile": 69.44444444444444,
@@ -6597,6 +7977,8 @@
         "talkingPer60Min": 1161.1410497433455,
         "talkingOutsidePer60Min": 850.8162626271243,
         "talkingDuringPer60Min": 310.3247871162214,
+        "survivalRate": 23.684210526315788,
+        "killRate": 0.5526315789473685,
         "lootPer60Min": 525.9719515223404,
         "lootVillageoisPer60Min": 534.1446149683193,
         "lootLoupPer60Min": 506.92891983347147
@@ -6607,6 +7989,28 @@
       "playerName": "SpicY",
       "gamesPlayed": 36,
       "titles": [
+        {
+          "id": "prudent",
+          "title": "Le·a Prudent·e",
+          "emoji": "🛡️",
+          "description": "Survit mais récolte peu",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 451.6394981833935,
+              "actualPercentile": 2.7777777777777777
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 50,
+              "actualPercentile": 94.44444444444444
+            }
+          ]
+        },
         {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
@@ -6656,6 +8060,18 @@
           "type": "basic"
         },
         {
+          "id": "survival_extreme_high",
+          "title": "L'Immortel·le",
+          "emoji": "⭐",
+          "description": "Survie exceptionnelle",
+          "stat": "survivalRate",
+          "value": 50,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "loot_extreme_low",
           "title": "Le·a Touriste",
           "emoji": "📸",
@@ -6687,6 +8103,18 @@
           "stat": "winRateVillageois",
           "value": 41.66666666666667,
           "percentile": 16.666666666666664,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_low",
+          "title": "Le·a Pacifiste",
+          "emoji": "☮️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.3888888888888889,
+          "percentile": 33.33333333333333,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -6779,6 +8207,16 @@
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
+        "survivalRate": {
+          "value": 50,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH"
+        },
+        "killRate": {
+          "value": 0.3888888888888889,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 451.6394981833935,
           "percentile": 2.7777777777777777,
@@ -6807,6 +8245,8 @@
         "talkingPer60Min": 309.4254441701218,
         "talkingOutsidePer60Min": 250.0868690847025,
         "talkingDuringPer60Min": 59.33857508541933,
+        "survivalRate": 50,
+        "killRate": 0.3888888888888889,
         "lootPer60Min": 451.6394981833935,
         "lootVillageoisPer60Min": 432.3230944897344,
         "lootLoupPer60Min": 493.9247425623904
@@ -6817,6 +8257,28 @@
       "playerName": "Raumane",
       "gamesPlayed": 79,
       "titles": [
+        {
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 570.6939713350705,
+              "actualPercentile": 94.44444444444444
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 26.582278481012654,
+              "actualPercentile": 19.444444444444446
+            }
+          ]
+        },
         {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
@@ -6902,6 +8364,18 @@
           "type": "basic"
         },
         {
+          "id": "survival_low",
+          "title": "La Cible",
+          "emoji": "🎯",
+          "description": "Meurt souvent",
+          "stat": "survivalRate",
+          "value": 26.582278481012654,
+          "percentile": 19.444444444444446,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talking_below_average",
           "title": "Le·a Équilibré·e",
           "emoji": "⚖️",
@@ -6982,6 +8456,16 @@
           "percentile": 48,
           "category": "AVERAGE"
         },
+        "survivalRate": {
+          "value": 26.582278481012654,
+          "percentile": 19.444444444444446,
+          "category": "LOW"
+        },
+        "killRate": {
+          "value": 0.45569620253164556,
+          "percentile": 41.66666666666667,
+          "category": "BELOW_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 570.6939713350705,
           "percentile": 94.44444444444444,
@@ -7010,6 +8494,8 @@
         "talkingPer60Min": 970.203372067258,
         "talkingOutsidePer60Min": 704.2299991298266,
         "talkingDuringPer60Min": 265.97337293743135,
+        "survivalRate": 26.582278481012654,
+        "killRate": 0.45569620253164556,
         "lootPer60Min": 570.6939713350705,
         "lootVillageoisPer60Min": 566.3147545702742,
         "lootLoupPer60Min": 611.3594828814319
@@ -7020,6 +8506,28 @@
       "playerName": "MartinPonK",
       "gamesPlayed": 45,
       "titles": [
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.5777777777777777,
+              "actualPercentile": 72.22222222222221
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 46.666666666666664,
+              "actualPercentile": 88.88888888888889
+            }
+          ]
+        },
         {
           "id": "hyperactif",
           "title": "L'Hyperactif·ve",
@@ -7091,6 +8599,18 @@
           "type": "basic"
         },
         {
+          "id": "survival_extreme_high",
+          "title": "L'Immortel·le",
+          "emoji": "⭐",
+          "description": "Survie exceptionnelle",
+          "stat": "survivalRate",
+          "value": 46.666666666666664,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "loot_extreme_high",
           "title": "Le·a Stakhanoviste",
           "emoji": "⚒️",
@@ -7135,6 +8655,18 @@
           "value": 33.3,
           "percentile": 16.666666666666664,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_high",
+          "title": "Le·a Prédateur·rice",
+          "emoji": "🐺",
+          "description": "Taux de kills élevé",
+          "stat": "killRate",
+          "value": 0.5777777777777777,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         }
@@ -7207,6 +8739,16 @@
           "percentile": 88,
           "category": "EXTREME_HIGH"
         },
+        "survivalRate": {
+          "value": 46.666666666666664,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH"
+        },
+        "killRate": {
+          "value": 0.5777777777777777,
+          "percentile": 72.22222222222221,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 625.4951740407253,
           "percentile": 97.22222222222221,
@@ -7235,6 +8777,8 @@
         "talkingPer60Min": 1477.3765324404956,
         "talkingOutsidePer60Min": 1096.300187793795,
         "talkingDuringPer60Min": 381.0763446467006,
+        "survivalRate": 46.666666666666664,
+        "killRate": 0.5777777777777777,
         "lootPer60Min": 625.4951740407253,
         "lootVillageoisPer60Min": 659.6699241994943,
         "lootLoupPer60Min": 622.7287031466398
@@ -7306,6 +8850,18 @@
           "type": "basic"
         },
         {
+          "id": "killRate_low",
+          "title": "Le·a Pacifiste",
+          "emoji": "☮️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.3191489361702128,
+          "percentile": 16.666666666666664,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_low",
           "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
@@ -7343,13 +8899,13 @@
         }
       ],
       "primaryTitle": {
-        "id": "talking_low",
-        "title": "Le·a Silencieux·se",
-        "emoji": "🤫",
-        "description": "Parle peu (par 60 min de jeu)",
-        "stat": "talkingPer60Min",
-        "value": 860.6922172404954,
-        "percentile": 16,
+        "id": "lootVillageois_low",
+        "title": "Le·a Villageois·e Paresseux·se",
+        "emoji": "💤",
+        "description": "Faible récolte en Villageois",
+        "stat": "lootVillageoisPer60Min",
+        "value": 494.26537404597104,
+        "percentile": 19.444444444444446,
         "category": "LOW",
         "priority": 6,
         "type": "basic"
@@ -7410,6 +8966,16 @@
           "percentile": 36,
           "category": "BELOW_AVERAGE"
         },
+        "survivalRate": {
+          "value": 29.78723404255319,
+          "percentile": 41.66666666666667,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRate": {
+          "value": 0.3191489361702128,
+          "percentile": 16.666666666666664,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 514.3061058580921,
           "percentile": 47.22222222222222,
@@ -7438,6 +9004,8 @@
         "talkingPer60Min": 860.6922172404954,
         "talkingOutsidePer60Min": 610.0530112383552,
         "talkingDuringPer60Min": 250.63920600214018,
+        "survivalRate": 29.78723404255319,
+        "killRate": 0.3191489361702128,
         "lootPer60Min": 514.3061058580921,
         "lootVillageoisPer60Min": 494.26537404597104,
         "lootLoupPer60Min": 614.7719839538478
