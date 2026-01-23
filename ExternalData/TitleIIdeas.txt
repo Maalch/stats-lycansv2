@@ -1,0 +1,49 @@
+BRAINSTORMING:
+
+L'idée est de générer un titre composée d'un nom + d'un adjectif, ou de deux adjectifs selon ce qui le plus pratique
+Ce titre doit être généré par le backend (en partant de fetch-data.js / generate-achievements.js)
+
+Voici quelques valeurs qui peuvent être testées
+Catégorie sous le contrôle du joueur:
+- Bavard / Peu Bavard (par 60 min de jeu effectif)
+- Bavard hors meeting / peu bavard hors meeting (par 60 min de jeu effectif)
+- Bavard en meeting / peu bavard en meeting (par 60 min de jeu effectif)
+- Taux de kills élevé / taux de kills faible (par game) 
+- Taux de survie élevé / taux de survie faible (pourcentage de survie fin de game)
+- Taux de survie Jour 1 elevé / taux de survie faible Jour 1 faible (pourcentage de survie à la fin du jour 1)
+- Récolte élevée / récolte faible (par 60 min de jeu effectif)
+- Récole en camp Villageois élevée / récolte en camp Villageois faible (par 60 min de jeu effectif)
+- Récole en camp Loup élevée / récolte en camp Loup faible (par 60 min de jeu effectif)
+- Voteur aggressif / voteur passif (par meeting, basé sur le score d'aggressivité)
+- Premier voteur / dernier voteur (par meeting, basé sur le taux de premier voteur / taux de dernier voteur)
+- Voteur précoce / voteur tardif (basé sur la Position moyenne de vote)
+- Bon chasseur / mauvais chasseur (kill de non villageois par partie / kill de villageois par partie)
+- Winner / looser (taux de victoire général, min 25 games)
+- Super Villageois / Villageois nul (taux de victoire en camp Villageois, min 25 games)
+- Super Loup / Loup nul (taux de victoire en camp Loup, min 25 games)
+- Super Solo / Solo nul (taux de victoire dans les camps Solo, min 25 games)
+- Serial Winner (grosse série de victoire)
+- Serial Looser (grosse série de défaite)
+
+- titre spécial pour le joueur qui excellent le plus dans les catégories sous contrôle
+- titre spécial pour le joueur le plus bas dans les catégories sous contrôle
+
+Catégories hors de contrôle du joueur:
+- Serial Villageois (gros pourcentage de partie jouées dans le camp Villageois, min 25 games)
+- Serial Loup (gros pourcentage de partie jouées dans le camp Loup, min 25 games)
+- Serial Solo (gros pourcentage de partie jouées dans les camps Solo, min 25 games)
+- Serial Alchimiste (gros pourcentage de partie jouées dans les rôle Alchimiste, min 10 games)
+- Serial Chasseur (gros pourcentage de partie jouées dans les rôle Chasseur, min 10 games)
+- Serial Amoureux (gros pourcentage de partie jouées dans le camp Amoureux, min 10 games)
+- Serial Agent (gros pourcentage de partie jouées dans le camp Agent, min 10 games)
+- Serial Espion (gros pourcentage de partie jouées dans le camp Espion, min 10 games)
+- Serial Idiot du Village (gros pourcentage de partie jouées dans le camp Idiot Du Village, min 10 games)
+- Serial Chasseur de Prime (gros pourcentage de partie jouées dans le camp Chasseur de Prime, min 10 games)
+- Serial Contrebandier (gros pourcentage de partie jouées dans le camp Contrebander, min 10 games)
+- Serial La Bête (gros pourcentage de partie jouées dans le camp La Bête, min 10 games)
+- Serial Vaudou (gros pourcentage de partie jouées dans le camp Vaudou, min 10 games)
+- Serial Scientifique (gros pourcentage de partie jouées dans le camp Scientifique, min 10 games)
+
+Toutes les valeurs doivent être calculées sur les parties moddées uniquement.
+Toutes les valeurs doivent être relatives à la moyenne des joueurs.
+Les titres ne doivent être attribuées qu'aux joueurs qui ont au moins 25 parties en partie moddées
