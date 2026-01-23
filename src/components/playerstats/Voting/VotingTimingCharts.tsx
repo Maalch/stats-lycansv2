@@ -111,9 +111,15 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
   const { firstVoterChartData, highlightedPlayerInFirstVoter } = useMemo(() => {
     if (!filteredVotingStats) return { firstVoterChartData: [], highlightedPlayerInFirstVoter: false };
     
-    const sortedData = [...filteredVotingStats.playerTimingStats]
+    // Add calculated percentage field to each player
+    const dataWithPercentage = filteredVotingStats.playerTimingStats.map(p => ({
+      ...p,
+      firstVoterPercentage: p.totalTimedVotes > 0 ? (p.timesFirstVoter / p.totalTimedVotes) * 100 : 0
+    }));
+    
+    const sortedData = dataWithPercentage
       .filter(p => p.timesFirstVoter > 0) // Only players who've been first at least once
-      .sort((a, b) => b.timesFirstVoter - a.timesFirstVoter)
+      .sort((a, b) => b.firstVoterPercentage - a.firstVoterPercentage) // Sort by percentage descending
       .slice(0, 15);
     
     const highlightedInTop = settings.highlightedPlayer && 
@@ -123,7 +129,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
     let highlightedAdded = false;
     
     if (settings.highlightedPlayer && !highlightedInTop) {
-      const highlightedPlayerData = filteredVotingStats.playerTimingStats.find(
+      const highlightedPlayerData = dataWithPercentage.find(
         p => p.playerName === settings.highlightedPlayer
       );
       if (highlightedPlayerData && highlightedPlayerData.timesFirstVoter > 0) {
@@ -527,7 +533,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
           textAlign: 'center', 
           marginBottom: '1rem' 
         }}>
-          Nombre de fois où le joueur a été le premier à voter dans un meeting (votes actifs uniquement).
+          Pourcentage de fois où le joueur a été le premier à voter dans un meeting (votes actifs uniquement).
         </p>
         <FullscreenChart title="Champions du Premier Vote - Top 15">
           <div style={{ height: 500 }}>
@@ -565,7 +571,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
                 />
                 <YAxis 
                   label={{ 
-                    value: 'Nombre de fois premier', 
+                    value: 'Taux (%)', 
                     angle: 270, 
                     position: 'left', 
                     style: { textAnchor: 'middle' } 
@@ -629,7 +635,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
                   }}
                 />
                 <Bar 
-                  dataKey="timesFirstVoter" 
+                  dataKey="firstVoterPercentage" 
                   style={{ cursor: 'pointer' }}
                   onClick={handlePlayerClick}
                 >
@@ -842,7 +848,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
         border: '1px solid var(--border-color)',
         borderRadius: '8px',
         padding: '1rem',
-        marginTop: '2rem',
+        marginTop: '0rem',
         textAlign: 'center'
       }}>
         <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-primary)' }}>
