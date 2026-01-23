@@ -273,11 +273,9 @@ export function RolesStatsChart() {
     });
   };
 
-  // Prepare chart data with sorting based on mode
+  // Prepare chart data with sorting based on mode (full dataset, no slicing)
   const chartData = useMemo(() => {
     if (!data) return { villageoisPowers: [], loupPowers: [], secondaryRoles: [] };
-
-    const MAX_ENTRIES = 15;
 
     // Sort function based on chart mode
     const sortFunction = chartMode === 'winRate' 
@@ -285,15 +283,9 @@ export function RolesStatsChart() {
       : (a: RoleStats, b: RoleStats) => b.appearances - a.appearances;
 
     return {
-      villageoisPowers: [...data.villageoisPowers]
-        .sort(sortFunction)
-        .slice(0, MAX_ENTRIES),
-      loupPowers: [...data.loupPowers]
-        .sort(sortFunction)
-        .slice(0, MAX_ENTRIES),
-      secondaryRoles: [...data.secondaryRoles]
-        .sort(sortFunction)
-        .slice(0, MAX_ENTRIES)
+      villageoisPowers: [...data.villageoisPowers].sort(sortFunction),
+      loupPowers: [...data.loupPowers].sort(sortFunction),
+      secondaryRoles: [...data.secondaryRoles].sort(sortFunction)
     };
   }, [data, chartMode]);
 
@@ -381,59 +373,66 @@ export function RolesStatsChart() {
     return (
       <div className="lycans-graphique-section">
         <h3>{title}</h3>
-        <FullscreenChart title={title}>
-          <div style={{ height: 400 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={chartDataArray}
-                margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="name"
-                  angle={-45}
-                  textAnchor="end"
-                  height={90}
-                  interval={0}
-                  fontSize={12}
-                />
-                <YAxis 
-                  label={{ value: yAxisLabel, angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
-                  domain={yAxisDomain}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar 
-                  dataKey={dataKey}
-                  label={chartMode === 'winRate' ? (props: any) => {
-                    const { x, y, width, payload } = props;
-                    if (x === undefined || y === undefined || width === undefined || !payload) return null;
-                    const percentage = payload.winRate || '0';
-                    return (
-                      <text 
-                        x={(x as number) + (width as number) / 2} 
-                        y={(y as number) - 5} 
-                        fill="var(--text-primary)" 
-                        textAnchor="middle" 
-                        fontSize="12"
-                        fontWeight="bold"
-                      >
-                        {percentage}%
-                      </text>
-                    );
-                  } : undefined}
-                >
-                  {chartDataArray.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={getBarColor ? getBarColor(entry.name, index) : barColor}
-                      onClick={() => onBarClick(entry.name)}
-                      style={{ cursor: 'pointer' }}
+        <FullscreenChart title={(isFullscreen) => isFullscreen ? `${title} (Tous)` : `${title} (Top 15)`}>
+          {(isFullscreen) => {
+            const MAX_ENTRIES = 15;
+            const displayData = isFullscreen ? chartDataArray : chartDataArray.slice(0, MAX_ENTRIES);
+            
+            return (
+              <div style={{ height: 400 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={displayData}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis 
+                      dataKey="name"
+                      angle={-45}
+                      textAnchor="end"
+                      height={90}
+                      interval={0}
+                      fontSize={12}
                     />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+                    <YAxis 
+                      label={{ value: yAxisLabel, angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                      domain={yAxisDomain}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Bar 
+                      dataKey={dataKey}
+                      label={chartMode === 'winRate' ? (props: any) => {
+                        const { x, y, width, payload } = props;
+                        if (x === undefined || y === undefined || width === undefined || !payload) return null;
+                        const percentage = payload.winRate || '0';
+                        return (
+                          <text 
+                            x={(x as number) + (width as number) / 2} 
+                            y={(y as number) - 5} 
+                            fill="var(--text-primary)" 
+                            textAnchor="middle" 
+                            fontSize="12"
+                            fontWeight="bold"
+                          >
+                            {percentage}%
+                          </text>
+                        );
+                      } : undefined}
+                    >
+                      {displayData.map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={getBarColor ? getBarColor(entry.name, index) : barColor}
+                          onClick={() => onBarClick(entry.name)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            );
+          }}
         </FullscreenChart>
       </div>
     );

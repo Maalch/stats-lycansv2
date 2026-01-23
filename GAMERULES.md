@@ -4,8 +4,8 @@ Lycans est un jeu de type "Mensonges et trahisons" en ligne, pour 8 à 15 joueur
 
 Chaque journée de jeu se découpe en 3 phases: jour, nuit, puis conseil (vote).
 
-Les joueurs sont répartis en plusieurs camps de manière aléatoire au début de la partie (ou bien un système de draft si l'option draft est selectionnée). De base, il y a des "Villageois" qui doivent enquêter et démasquer les "Loups", qui eux, doivent tuer les villageois pendant la nuit. Les joueurs Loups peuvent se transformer en Loup une fois par nuit, et revenir en forme Villageoise une fois par nuit également.
-Les joueurs ne savent pas qui est Villageois et qui est Loup.
+Les joueurs sont répartis en plusieurs camps de manière aléatoire au début de la partie (ou bien un système de draft si l'option draft est selectionnée). De base, il y a des "Villageois" qui doivent enquêter et démasquer les "Loups", qui eux, doivent tuer les villageois pendant la nuit. Les joueurs Loups peuvent se transformer en Loup une fois par nuit (chaque nuit), et revenir en forme Villageoise une fois par nuit également.
+Les joueurs ne savent pas en début de partie qui est Villageois et qui est Loup.
 
 Les Villageois ont également un objectif de Récolte pour les villageois. Récolter des ressources permet de de faire monter un score de Récolte, partagé entre tous les Villageois. Si le score atteint 100% de l'objectif, la partie se termine immédiatement par une victoire Villageois.
 
