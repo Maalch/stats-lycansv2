@@ -697,7 +697,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
           textAlign: 'center', 
           marginBottom: '1rem' 
         }}>
-          Délai moyen en secondes entre le début du meeting (premier vote) et le vote du joueur. Plus c'est bas, plus le joueur vote rapidement.
+          Délai moyen en secondes entre le premier vote et le vote du joueur. Plus c'est bas, plus le joueur vote rapidement.
         </p>
         <FullscreenChart title="Voteurs les Plus Rapides - Top 15">
           <div style={{ height: 500 }}>
