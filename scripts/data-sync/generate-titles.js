@@ -29,14 +29,14 @@ const MIN_GAMES_FOR_ROLE_TITLES = 10;
 
 // Percentile thresholds for title categories
 const PERCENTILE_THRESHOLDS = {
-  EXTREME_HIGH: 90,   // Top 10%
-  HIGH: 75,           // Top 25%
-  ABOVE_AVERAGE: 60,  // Above average
-  AVERAGE_HIGH: 55,
-  AVERAGE_LOW: 45,
-  BELOW_AVERAGE: 40,  // Below average
-  LOW: 25,            // Bottom 25%
-  EXTREME_LOW: 10     // Bottom 10%
+  EXTREME_HIGH: 85,   // Top 15% (was 90)
+  HIGH: 65,           // Top 35% (was 75)
+  ABOVE_AVERAGE: 55,  // Top 45% (was 60)
+  AVERAGE_HIGH: 52,
+  AVERAGE_LOW: 48,
+  BELOW_AVERAGE: 45,  // Bottom 55% (was 40)
+  LOW: 35,            // Bottom 35% (was 25)
+  EXTREME_LOW: 15     // Bottom 15% (was 10)
 };
 
 /**
@@ -81,50 +81,52 @@ const TITLE_DEFINITIONS = {
   
   // Talking time titles
   talking: {
-    high: { title: 'Le Bavard', emoji: '🗣️', description: 'Parle beaucoup (par 60 min de jeu)' },
-    low: { title: 'Le Silencieux', emoji: '🤫', description: 'Parle peu (par 60 min de jeu)' },
+    high: { title: 'Le·a Bavard·e', emoji: '🗣️', description: 'Parle beaucoup (par 60 min de jeu)' },
+    average: { title: 'Le·a Équilibré·e', emoji: '⚖️', description: 'Temps de parole normal' },
+    low: { title: 'Le·a Silencieux·se', emoji: '🤫', description: 'Parle peu (par 60 min de jeu)' },
     extremeHigh: { title: 'Le Moulin à Paroles', emoji: '💬', description: 'Parle énormément' },
-    extremeLow: { title: 'Le Fantôme', emoji: '👻', description: 'Quasi muet' }
+    extremeLow: { title: 'Le·a Fantôme', emoji: '👻', description: 'Quasi muet·te' }
   },
   talkingOutsideMeeting: {
-    high: { title: 'Le Chuchoteur', emoji: '👂', description: 'Bavard hors meeting' },
-    low: { title: 'Le Concentré', emoji: '🎯', description: 'Silencieux hors meeting' }
+    high: { title: 'Le·a Chuchoteur·se', emoji: '👂', description: 'Bavard·e hors meeting' },
+    low: { title: 'Le·a Concentré·e', emoji: '🎯', description: 'Silencieux·se hors meeting' }
   },
   talkingDuringMeeting: {
-    high: { title: "L'Orateur", emoji: '🎤', description: 'Bavard en meeting' },
-    low: { title: 'Le Discret', emoji: '🤐', description: 'Silencieux en meeting' }
+    high: { title: "L'Orateur·rice", emoji: '🎤', description: 'Bavard·e en meeting' },
+    low: { title: 'Le·a Discret·ète', emoji: '🤐', description: 'Silencieux·se en meeting' }
   },
 
   // Kill rate titles
   killRate: {
-    high: { title: 'Le Prédateur', emoji: '🐺', description: 'Taux de kills élevé' },
-    low: { title: 'Le Pacifiste', emoji: '☮️', description: 'Taux de kills faible' },
-    extremeHigh: { title: "L'Exterminateur", emoji: '💀', description: 'Tueur en série' },
+    high: { title: 'Le·a Prédateur·rice', emoji: '🐺', description: 'Taux de kills élevé' },
+    low: { title: 'Le·a Pacifiste', emoji: '☮️', description: 'Taux de kills faible' },
+    extremeHigh: { title: "L'Exterminateur·rice", emoji: '💀', description: 'Tueur·se en série' },
     extremeLow: { title: "L'Agneau", emoji: '🐑', description: 'Ne tue jamais' }
   },
 
   // Survival titles
   survival: {
-    high: { title: 'Le Survivant', emoji: '🛡️', description: 'Survie élevée fin de game' },
+    high: { title: 'Le·a Survivant·e', emoji: '🛡️', description: 'Survie élevée fin de game' },
     low: { title: 'La Cible', emoji: '🎯', description: 'Meurt souvent' },
-    extremeHigh: { title: "L'Immortel", emoji: '⭐', description: 'Survie exceptionnelle' },
-    extremeLow: { title: 'Le Martyr', emoji: '✝️', description: 'Première victime récurrente' }
+    extremeHigh: { title: "L'Immortel·le", emoji: '⭐', description: 'Survie exceptionnelle' },
+    extremeLow: { title: 'Le·a Martyr·e', emoji: '✝️', description: 'Première victime récurrente' }
   },
   survivalDay1: {
-    high: { title: 'Le Prudent', emoji: '🏃', description: 'Survit au Jour 1' },
-    low: { title: 'Le Téméraire', emoji: '⚡', description: 'Meurt souvent Jour 1' }
+    high: { title: 'Le·a Prudent·e', emoji: '🏃', description: 'Survit au Jour 1' },
+    low: { title: 'Le·a Téméraire', emoji: '⚡', description: 'Meurt souvent Jour 1' }
   },
 
   // Loot/Harvest titles
   loot: {
-    high: { title: 'Le Fermier', emoji: '🌾', description: 'Récolte élevée' },
-    low: { title: 'Le Flâneur', emoji: '🚶', description: 'Récolte faible' },
-    extremeHigh: { title: 'Le Stakhanoviste', emoji: '⚒️', description: 'Récolte exceptionnelle' },
-    extremeLow: { title: 'Le Touriste', emoji: '📸', description: 'Ne récolte jamais' }
+    high: { title: 'Le·a Fermier·ère', emoji: '🌾', description: 'Récolte élevée' },
+    average: { title: 'Le·a Travailleur·se', emoji: '👷', description: 'Récolte correcte' },
+    low: { title: 'Le·a Flâneur·se', emoji: '🚶', description: 'Récolte faible' },
+    extremeHigh: { title: 'Le·a Stakhanoviste', emoji: '⚒️', description: 'Récolte exceptionnelle' },
+    extremeLow: { title: 'Le·a Touriste', emoji: '📸', description: 'Ne récolte jamais' }
   },
   lootVillageois: {
-    high: { title: 'Le Citoyen Modèle', emoji: '🏘️', description: 'Récolte excellente en Villageois' },
-    low: { title: 'Le Villageois Paresseux', emoji: '💤', description: 'Faible récolte en Villageois' }
+    high: { title: 'Le·a Citoyen·ne Modèle', emoji: '🏘️', description: 'Récolte excellente en Villageois' },
+    low: { title: 'Le·a Villageois·e Paresseux·se', emoji: '💤', description: 'Faible récolte en Villageois' }
   },
   lootLoup: {
     high: { title: 'Le Loup Discret', emoji: '🐺', description: 'Récolte élevée en Loup (camouflage)' },
@@ -133,60 +135,61 @@ const TITLE_DEFINITIONS = {
 
   // Voting behavior titles
   votingAggressive: {
-    high: { title: "L'Agitateur", emoji: '📢', description: 'Voteur agressif' },
-    low: { title: 'Le Sage', emoji: '🧘', description: 'Voteur passif' },
-    extremeHigh: { title: 'Le Tribun', emoji: '⚖️', description: 'Toujours en action' },
-    extremeLow: { title: "L'Indécis", emoji: '🤷', description: 'Vote rarement' }
+    high: { title: "L'Agitateur·rice", emoji: '📢', description: 'Voteur·se agressif·ve' },
+    low: { title: 'Le·a Sage', emoji: '🧘', description: 'Voteur·se passif·ve' },
+    extremeHigh: { title: 'Le·a Tribun·e', emoji: '⚖️', description: 'Toujours en action' },
+    extremeLow: { title: "L'Indécis·e", emoji: '🤷', description: 'Vote rarement' }
   },
   votingFirst: {
-    high: { title: "L'Impulsif", emoji: '🏃', description: 'Premier voteur' },
-    low: { title: 'Le Stratège', emoji: '🧠', description: 'Attend avant de voter' }
+    high: { title: "L'Impulsif·ve", emoji: '🏃', description: 'Premier·ère voteur·se' },
+    low: { title: 'Le·a Stratège', emoji: '🧠', description: 'Attend avant de voter' }
   },
   votingAccuracy: {
-    high: { title: 'Le Flaireur', emoji: '👃', description: 'Bon instinct de vote' },
+    high: { title: 'Le·a Flaireur·se', emoji: '👃', description: 'Bon instinct de vote' },
     low: { title: "L'Aveugle", emoji: '🙈', description: 'Mauvais instinct de vote' }
   },
 
   // Hunter accuracy titles
   hunterAccuracy: {
-    high: { title: 'Le Sniper', emoji: '🎯', description: 'Bon chasseur (tue des ennemis)' },
-    low: { title: 'Le Myope', emoji: '👓', description: 'Mauvais chasseur (tue des alliés)' },
-    extremeHigh: { title: "L'Exécuteur", emoji: '⚔️', description: 'Chasseur parfait' },
-    extremeLow: { title: 'Le Chasseur Maudit', emoji: '💔', description: 'Tire toujours sur les mauvaises cibles' }
+    high: { title: 'Le·a Sniper', emoji: '🎯', description: 'Bon·ne chasseur·se (tue des ennemis)' },
+    low: { title: 'Le·a Myope', emoji: '👓', description: 'Mauvais·e chasseur·se (tue des alliés)' },
+    extremeHigh: { title: "L'Exécuteur·rice", emoji: '⚔️', description: 'Chasseur·se parfait·e' },
+    extremeLow: { title: 'Le·a Chasseur·se Maudit·e', emoji: '💔', description: 'Tire toujours sur les mauvaises cibles' }
   },
 
   // Win rate titles
   winRate: {
-    high: { title: 'Le Winner', emoji: '🏆', description: 'Taux de victoire élevé' },
-    low: { title: 'Le Looser', emoji: '😢', description: 'Taux de victoire faible' },
+    high: { title: 'Le·a Winner', emoji: '🏆', description: 'Taux de victoire élevé' },
+    average: { title: 'Le·a Constant·e', emoji: '📊', description: 'Performance stable' },
+    low: { title: 'Le·a Looser', emoji: '😢', description: 'Taux de victoire faible' },
     extremeHigh: { title: "L'Inarrêtable", emoji: '👑', description: 'Gagne presque toujours' },
-    extremeLow: { title: 'Le Maudit', emoji: '🪦', description: 'Perd presque toujours' }
+    extremeLow: { title: 'Le·a Maudit·e', emoji: '🪦', description: 'Perd presque toujours' }
   },
   winRateVillageois: {
-    high: { title: 'Super Villageois', emoji: '🦸', description: 'Excellent en camp Villageois' },
-    low: { title: 'Villageois Nul', emoji: '🤡', description: 'Mauvais en camp Villageois' }
+    high: { title: 'Le·a Protecteur·rice du Village', emoji: '🦸', description: 'Excellent·e en camp Villageois' },
+    low: { title: 'Idiot·e en Formation', emoji: '🤡', description: 'Mauvais·e en camp Villageois' }
   },
   winRateLoup: {
-    high: { title: 'Super Loup', emoji: '🐺', description: 'Excellent en camp Loup' },
-    low: { title: 'Loup Nul', emoji: '🐩', description: 'Mauvais en camp Loup' }
+    high: { title: 'Le·a Chef de Meute', emoji: '🐺', description: 'Excellent·e en camp Loup' },
+    low: { title: 'Loup Débutant·e', emoji: '🐩', description: 'Mauvais·e en camp Loup' }
   },
   winRateSolo: {
-    high: { title: 'Super Solo', emoji: '🦊', description: 'Excellent en rôles Solo' },
-    low: { title: 'Solo Nul', emoji: '💩', description: 'Mauvais en rôles Solo' }
+    high: { title: "L'Électron Libre", emoji: '🦊', description: 'Excellent·e en rôles Solo' },
+    low: { title: "L'Enfant Perdu·e", emoji: '👶', description: 'Mauvais·e en rôles Solo' }
   },
 
   // Series titles
   winSeries: {
-    high: { title: 'Serial Winner', emoji: '🔥', description: 'Grosse série de victoires' }
+    high: { title: 'En Feu', emoji: '🔥', description: 'Grosse série de victoires' }
   },
   lossSeries: {
-    high: { title: 'Serial Looser', emoji: '❄️', description: 'Grosse série de défaites' }
+    high: { title: 'Glacé·e', emoji: '❄️', description: 'Grosse série de défaites' }
   },
 
   // === UNCONTROLLABLE STATS (Role assignment luck) ===
   
   campAssignment: {
-    villageois: { title: 'Serial Villageois', emoji: '🏘️', description: 'Joue souvent Villageois' },
+    villageois: { title: 'Serial Villageois·e', emoji: '🏘️', description: 'Joue souvent Villageois' },
     loup: { title: 'Serial Loup', emoji: '🌙', description: 'Joue souvent Loup' },
     solo: { title: 'Serial Solo', emoji: '🎭', description: 'Joue souvent en Solo' }
   },
@@ -203,6 +206,18 @@ const TITLE_DEFINITIONS = {
     bete: { title: 'Serial Bête', emoji: '🦁', description: 'Joue souvent La Bête' },
     vaudou: { title: 'Serial Vaudou', emoji: '🎃', description: 'Joue souvent Vaudou' },
     scientifique: { title: 'Serial Scientifique', emoji: '🔬', description: 'Joue souvent Scientifique' }
+  },
+
+  // Participation & consistency titles
+  participation: {
+    high: { title: 'Le·a Noctambule', emoji: '🌙', description: 'Joue énormément de parties' },
+    low: { title: 'Le·a Occasionnel·le', emoji: '🎲', description: 'Joue peu de parties' }
+  },
+
+  // Camp versatility titles
+  campBalance: {
+    balanced: { title: 'Le·a Polyvalent·e', emoji: '🎭', description: 'Performance équilibrée dans tous les camps' },
+    specialist: { title: 'Le·a Spécialiste', emoji: '🎯', description: 'Excellent dans un camp spécifique' }
   }
 };
 
@@ -217,9 +232,9 @@ const COMBINATION_TITLES = [
   // High talk + High loot = Hyperactive
   {
     id: 'hyperactif',
-    title: 'L\'Hyperactif',
+    title: 'L\'Hyperactif·ve',
     emoji: '⚡',
-    description: 'Bavard ET grande récolte',
+    description: 'Bavard·e ET grande récolte',
     conditions: [
       { stat: 'talking', category: 'HIGH' },
       { stat: 'loot', category: 'HIGH' }
@@ -232,7 +247,7 @@ const COMBINATION_TITLES = [
     id: 'efficace',
     title: 'L\'Efficace',
     emoji: '🎯',
-    description: 'Silencieux mais productif',
+    description: 'Silencieux·se mais productif·ve',
     conditions: [
       { stat: 'talking', category: 'LOW' },
       { stat: 'loot', category: 'HIGH' }
@@ -243,9 +258,9 @@ const COMBINATION_TITLES = [
   // High talk + Low loot = Philosopher
   {
     id: 'philosophe',
-    title: 'Le Philosophe',
+    title: 'Le·a Philosophe',
     emoji: '📚',
-    description: 'Bavard mais improductif',
+    description: 'Bavard·e mais improductif·ve',
     conditions: [
       { stat: 'talking', category: 'HIGH' },
       { stat: 'loot', category: 'LOW' }
@@ -269,7 +284,7 @@ const COMBINATION_TITLES = [
   // High kills + Low survival = Kamikaze
   {
     id: 'kamikaze',
-    title: 'Le Kamikaze',
+    title: 'Le·a Kamikaze',
     emoji: '💥',
     description: 'Tue mais meurt en retour',
     conditions: [
@@ -282,9 +297,9 @@ const COMBINATION_TITLES = [
   // Low survival Day 1 + High survival = Phoenix
   {
     id: 'phoenix',
-    title: 'Le Phoenix',
+    title: 'Le·a Phoenix',
     emoji: '🔥',
-    description: 'Souvent ciblé tôt mais survit',
+    description: 'Souvent ciblé·e tôt mais survit',
     conditions: [
       { stat: 'survivalDay1', category: 'LOW' },
       { stat: 'survival', category: 'HIGH' }
@@ -295,7 +310,7 @@ const COMBINATION_TITLES = [
   // Aggressive voter + First voter = Impulsive
   {
     id: 'cowboy',
-    title: 'Le Cow-Boy',
+    title: 'Le·a Cow-Boy',
     emoji: '🤠',
     description: 'Vote vite et souvent',
     conditions: [
@@ -308,7 +323,7 @@ const COMBINATION_TITLES = [
   // Good voting accuracy + Low talk = Detective
   {
     id: 'detective',
-    title: 'Le Détective',
+    title: 'Le·a Détective',
     emoji: '🔎',
     description: 'Observe silencieusement et vote juste',
     conditions: [
@@ -321,7 +336,7 @@ const COMBINATION_TITLES = [
   // High talk + Bad voting = Demagogue
   {
     id: 'demagogue',
-    title: 'Le Démagogue',
+    title: 'Le·a Démagogue',
     emoji: '📣',
     description: 'Parle beaucoup mais vote mal',
     conditions: [
@@ -334,9 +349,9 @@ const COMBINATION_TITLES = [
   // Super Loup + Low talk = Perfect Infiltrator
   {
     id: 'infiltrateur',
-    title: 'L\'Infiltré',
+    title: 'L\'Infiltré·e',
     emoji: '🎭',
-    description: 'Excellent loup discret',
+    description: 'Excellent·e loup discret·ète',
     conditions: [
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'talking', category: 'LOW' }
@@ -347,9 +362,9 @@ const COMBINATION_TITLES = [
   // Super Loup + High talk = Manipulator
   {
     id: 'manipulateur',
-    title: 'Le Manipulateur',
+    title: 'Le·a Manipulateur·rice',
     emoji: '🐍',
-    description: 'Loup bavard et gagnant',
+    description: 'Loup bavard·e et gagnant·e',
     conditions: [
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'talking', category: 'HIGH' }
@@ -373,7 +388,7 @@ const COMBINATION_TITLES = [
   // Low win rate + Serial Looser = The Cursed
   {
     id: 'poissard',
-    title: 'Le Poissard',
+    title: 'Le·a Poissard·e',
     emoji: '🌧️',
     description: 'Perd tout le temps + grosses séries de défaites',
     conditions: [
@@ -386,9 +401,9 @@ const COMBINATION_TITLES = [
   // High loot + High survival + Low talk = Robot
   {
     id: 'robot',
-    title: 'Le Robot',
+    title: 'Le·a Robot',
     emoji: '🤖',
-    description: 'Productif, survit, parle peu',
+    description: 'Productif·ve, survit, parle peu',
     conditions: [
       { stat: 'loot', category: 'HIGH' },
       { stat: 'survival', category: 'HIGH' },
@@ -400,9 +415,9 @@ const COMBINATION_TITLES = [
   // High talk + Low loot + Low survival = Clown
   {
     id: 'pitre',
-    title: 'Le Pitre',
+    title: 'Le·a Pitre',
     emoji: '🎪',
-    description: 'Bavard, improductif, meurt souvent',
+    description: 'Bavard·e, improductif·ve, meurt souvent',
     conditions: [
       { stat: 'talking', category: 'HIGH' },
       { stat: 'loot', category: 'LOW' },
@@ -442,7 +457,7 @@ const COMBINATION_TITLES = [
     id: 'sniper_elite',
     title: 'Sniper Elite',
     emoji: '🎖️',
-    description: 'Chasseur fréquent et précis',
+    description: 'Chasseur·se fréquent·e et précis·e',
     conditions: [
       { stat: 'roleChasseur', category: 'HIGH' },
       { stat: 'hunterAccuracy', category: 'HIGH' }
@@ -453,14 +468,108 @@ const COMBINATION_TITLES = [
   // Serial Chasseur + Bad hunter accuracy = Clumsy Hunter
   {
     id: 'chasseur_maladroit',
-    title: 'Le Chasseur Maladroit',
+    title: 'Le·a Chasseur·se Maladroit·e',
     emoji: '🔫',
-    description: 'Chasseur fréquent mais imprécis',
+    description: 'Chasseur·se fréquent·e mais imprécis·e',
     conditions: [
       { stat: 'roleChasseur', category: 'HIGH' },
       { stat: 'hunterAccuracy', category: 'LOW' }
     ],
     priority: 15
+  },
+
+  // High participation + balanced camps = The Enthusiast
+  {
+    id: 'enthusiaste',
+    title: 'L\'Enthousiaste',
+    emoji: '🌟',
+    description: 'Participe beaucoup et joue tous les camps',
+    conditions: [
+      { stat: 'gamesPlayed', category: 'HIGH', minValue: 100 },
+      { stat: 'campBalance', category: 'BALANCED' }
+    ],
+    priority: 12
+  },
+
+  // High win rate + low participation = The Opportunist
+  {
+    id: 'opportuniste',
+    title: 'L\'Opportuniste',
+    emoji: '🎯',
+    description: 'Gagne souvent mais joue peu',
+    conditions: [
+      { stat: 'winRate', category: 'HIGH' },
+      { stat: 'gamesPlayed', category: 'LOW' }
+    ],
+    priority: 13
+  },
+
+  // Balanced win rates across all camps = The Adaptable
+  {
+    id: 'adaptable',
+    title: 'L\'Adaptable',
+    emoji: '🦎',
+    description: 'Bon dans tous les camps',
+    conditions: [
+      { stat: 'winRateVillageois', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'winRateLoup', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'winRateSolo', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
+    ],
+    priority: 16
+  },
+
+  // Poor performance across all camps = The Struggling
+  {
+    id: 'en_difficulte',
+    title: 'En Difficulté',
+    emoji: '😰',
+    description: 'Peine dans tous les camps',
+    conditions: [
+      { stat: 'winRateVillageois', category: 'LOW' },
+      { stat: 'winRateLoup', category: 'LOW' },
+      { stat: 'winRateSolo', category: 'LOW' }
+    ],
+    priority: 16
+  },
+
+  // High loot + Low survival = The Greedy
+  {
+    id: 'avide',
+    title: 'L\'Avide',
+    emoji: '💰',
+    description: 'Récolte beaucoup mais meurt',
+    conditions: [
+      { stat: 'loot', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'survival', category: 'LOW', minCategory: 'BELOW_AVERAGE' }
+    ],
+    priority: 11
+  },
+
+  // Low loot + High survival = The Cautious
+  {
+    id: 'prudent',
+    title: 'Le·a Prudent·e',
+    emoji: '🛡️',
+    description: 'Survit mais récolte peu',
+    conditions: [
+      { stat: 'loot', category: 'LOW', minCategory: 'BELOW_AVERAGE' },
+      { stat: 'survival', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
+    ],
+    priority: 11
+  },
+
+  // Average talk + Average loot + Average win = The Average Joe
+  {
+    id: 'monsieur_madame_tout_le_monde',
+    title: 'Monsieur·Madame Tout-le-Monde',
+    emoji: '👤',
+    description: 'Performance moyenne partout',
+    conditions: [
+      { stat: 'talking', category: 'AVERAGE' },
+      { stat: 'loot', category: 'AVERAGE' },
+      { stat: 'winRate', category: 'AVERAGE' }
+    ],
+    priority: 5
   }
 ];
 
@@ -712,6 +821,75 @@ function computeRoleFrequencies(moddedGames) {
 // ============================================================================
 
 /**
+ * Assign unique primary titles to players
+ * Each title is ideally given to only one player - the one with the strongest claim
+ * @param {Object} playerTitles - Player titles object (modified in place)
+ */
+function assignUniquePrimaryTitles(playerTitles) {
+  const usedTitles = new Set();
+  const playerIds = Object.keys(playerTitles);
+  
+  // Create a list of all title claims with their strength
+  const titleClaims = [];
+  
+  playerIds.forEach(playerId => {
+    const player = playerTitles[playerId];
+    
+    player.titles.forEach((title, titleIndex) => {
+      // Calculate claim strength based on:
+      // 1. Priority (higher is better)
+      // 2. Percentile (higher is better for the stat)
+      // 3. Title position (earlier in list is better)
+      const claimStrength = 
+        (title.priority || 0) * 1000 + 
+        (title.percentile || 50) * 10 - 
+        titleIndex;
+      
+      titleClaims.push({
+        playerId,
+        playerName: player.playerName,
+        title,
+        titleIndex,
+        claimStrength
+      });
+    });
+  });
+  
+  // Sort claims by strength (highest first)
+  titleClaims.sort((a, b) => b.claimStrength - a.claimStrength);
+  
+  // First pass: assign unique titles
+  titleClaims.forEach(claim => {
+    const player = playerTitles[claim.playerId];
+    
+    // Skip if player already has a primary title
+    if (player.primaryTitle) return;
+    
+    // Skip if this title is already used
+    if (usedTitles.has(claim.title.id)) return;
+    
+    // Assign this title to the player
+    player.primaryTitle = claim.title;
+    usedTitles.add(claim.title.id);
+  });
+  
+  // Second pass: assign any remaining players their best available title (even if used)
+  playerIds.forEach(playerId => {
+    const player = playerTitles[playerId];
+    
+    if (!player.primaryTitle && player.titles.length > 0) {
+      // Give them their highest priority title, even if already used
+      player.primaryTitle = player.titles[0];
+    }
+  });
+  
+  // Log uniqueness stats
+  const uniqueTitles = usedTitles.size;
+  const totalPlayers = playerIds.length;
+  console.log(`  ✓ Primary title uniqueness: ${uniqueTitles}/${totalPlayers} unique (${Math.round(uniqueTitles/totalPlayers*100)}%)`);
+}
+
+/**
  * Generate titles for all eligible players
  * @param {Map} aggregatedStats - Aggregated statistics by player
  * @param {Map} roleFrequencies - Role frequencies by player
@@ -783,11 +961,14 @@ function generatePlayerTitles(aggregatedStats, roleFrequencies) {
       playerName: data.playerName,
       gamesPlayed: data.gamesPlayed,
       titles: sortedTitles,
-      primaryTitle: sortedTitles[0] || null,
+      primaryTitle: null, // Will be assigned in unique allocation phase
       percentiles: data.percentiles,
       stats: data.stats
     };
   });
+
+  // Assign unique primary titles
+  assignUniquePrimaryTitles(playerTitles);
 
   return playerTitles;
 }
@@ -861,6 +1042,18 @@ function generateBasicTitles(percentiles) {
         selectedTitle = titleDef.high;
         priority = 6;
         break;
+      case 'ABOVE_AVERAGE':
+        selectedTitle = titleDef.aboveAverage || titleDef.average;
+        priority = 4;
+        break;
+      case 'AVERAGE':
+        selectedTitle = titleDef.average;
+        priority = 3;
+        break;
+      case 'BELOW_AVERAGE':
+        selectedTitle = titleDef.belowAverage || titleDef.average;
+        priority = 4;
+        break;
       case 'EXTREME_LOW':
         selectedTitle = titleDef.extremeLow || titleDef.low;
         priority = 8;
@@ -889,6 +1082,38 @@ function generateBasicTitles(percentiles) {
 }
 
 /**
+ * Check if player has balanced camp performance
+ * @param {Object} percentiles - Player's percentile data
+ * @param {string} type - Type of balance check ('BALANCED' or 'SPECIALIST')
+ * @returns {boolean} - Whether condition is met
+ */
+function checkCampBalance(percentiles, type) {
+  const villWinRate = percentiles.winRateVillageois?.value;
+  const loupWinRate = percentiles.winRateLoup?.value;
+  const soloWinRate = percentiles.winRateSolo?.value;
+  
+  // Need at least 2 camp win rates to determine balance
+  const validRates = [villWinRate, loupWinRate, soloWinRate].filter(r => r !== null && r !== undefined);
+  if (validRates.length < 2) return false;
+  
+  if (type === 'BALANCED') {
+    // Balanced: low variance in win rates (within 20% difference)
+    const max = Math.max(...validRates);
+    const min = Math.min(...validRates);
+    return (max - min) <= 20;
+  }
+  
+  if (type === 'SPECIALIST') {
+    // Specialist: high variance in win rates (>30% difference)
+    const max = Math.max(...validRates);
+    const min = Math.min(...validRates);
+    return (max - min) > 30;
+  }
+  
+  return false;
+}
+
+/**
  * Generate combination titles based on multiple stats
  * @param {Object} percentiles - Player's percentile data
  * @returns {Array} - Array of combination title objects
@@ -908,11 +1133,15 @@ function generateCombinationTitles(percentiles) {
     votingAccuracy: 'votingAccuracy',
     hunterAccuracy: 'hunterAccuracy',
     winRate: 'winRate',
+    winRateVillageois: 'winRateVillageois',
     winRateLoup: 'winRateLoup',
+    winRateSolo: 'winRateSolo',
     winSeries: 'longestWinSeries',
     lossSeries: 'longestLossSeries',
+    gamesPlayed: 'gamesPlayed',
     roleAmoureux: 'roleAmoureux',
-    roleChasseur: 'roleChasseur'
+    roleChasseur: 'roleChasseur',
+    campBalance: 'campBalance' // Synthetic stat
   };
 
   COMBINATION_TITLES.forEach(combo => {
@@ -921,20 +1150,46 @@ function generateCombinationTitles(percentiles) {
       const statKey = conditionStatMap[condition.stat] || condition.stat;
       const playerData = percentiles[statKey];
       
-      if (!playerData) return false;
+      if (!playerData) {
+        // Special handling for synthetic stats
+        if (condition.stat === 'campBalance') {
+          return checkCampBalance(percentiles, condition.category);
+        }
+        if (condition.stat === 'gamesPlayed' && condition.minValue) {
+          return percentiles.gamesPlayed?.value >= condition.minValue;
+        }
+        return false;
+      }
       
-      // Check if category matches
+      // Check minimum value if specified
+      if (condition.minValue && playerData.value < condition.minValue) {
+        return false;
+      }
+      
+      // Check if category matches with optional minCategory fallback
+      const minCategory = condition.minCategory;
+      
       if (condition.category === 'HIGH') {
-        return playerData.category === 'HIGH' || playerData.category === 'EXTREME_HIGH';
+        const acceptableCategories = ['HIGH', 'EXTREME_HIGH'];
+        if (minCategory) acceptableCategories.push('ABOVE_AVERAGE');
+        return acceptableCategories.includes(playerData.category);
       }
       if (condition.category === 'LOW') {
-        return playerData.category === 'LOW' || playerData.category === 'EXTREME_LOW';
+        const acceptableCategories = ['LOW', 'EXTREME_LOW'];
+        if (minCategory) acceptableCategories.push('BELOW_AVERAGE');
+        return acceptableCategories.includes(playerData.category);
+      }
+      if (condition.category === 'AVERAGE') {
+        return ['AVERAGE', 'AVERAGE_HIGH', 'AVERAGE_LOW'].includes(playerData.category);
       }
       if (condition.category === 'EXTREME_HIGH') {
         return playerData.category === 'EXTREME_HIGH';
       }
       if (condition.category === 'EXTREME_LOW') {
         return playerData.category === 'EXTREME_LOW';
+      }
+      if (condition.category === 'BALANCED') {
+        return checkCampBalance(percentiles, 'BALANCED');
       }
       
       return playerData.category === condition.category;
@@ -992,8 +1247,8 @@ function generateRoleTitles(roleData, totalPlayers) {
     
     if (titleKey && TITLE_DEFINITIONS.roleAssignment[titleKey]) {
       // Only give role title if player has high percentage of that role
-      // Using 15% as threshold (above average for most roles)
-      if (percentage >= 15 && count >= 5) {
+      // Using 12% as threshold (lowered from 15% to award more titles)
+      if (percentage >= 12 && count >= 5) {
         const titleDef = TITLE_DEFINITIONS.roleAssignment[titleKey];
         titles.push({
           id: `role_${titleKey}`,

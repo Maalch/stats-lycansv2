@@ -1,19 +1,19 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-23T14:49:17.541Z",
+  "generatedAt": "2026-01-23T15:49:27.004Z",
   "teamName": "Main Team",
   "totalPlayers": 36,
   "minGamesRequired": 25,
   "moddedGamesAnalyzed": 428,
   "percentileThresholds": {
-    "EXTREME_HIGH": 90,
-    "HIGH": 75,
-    "ABOVE_AVERAGE": 60,
-    "AVERAGE_HIGH": 55,
-    "AVERAGE_LOW": 45,
-    "BELOW_AVERAGE": 40,
-    "LOW": 25,
-    "EXTREME_LOW": 10
+    "EXTREME_HIGH": 85,
+    "HIGH": 65,
+    "ABOVE_AVERAGE": 55,
+    "AVERAGE_HIGH": 52,
+    "AVERAGE_LOW": 48,
+    "BELOW_AVERAGE": 45,
+    "LOW": 35,
+    "EXTREME_LOW": 15
   },
   "players": {
     "8": {
@@ -21,6 +21,56 @@
       "playerName": "BoccA",
       "gamesPlayed": 76,
       "titles": [
+        {
+          "id": "adaptable",
+          "title": "L'Adaptable",
+          "emoji": "🦎",
+          "description": "Bon dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 64.15094339622641,
+              "actualPercentile": 88.88888888888889
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 57.14285714285714,
+              "actualPercentile": 96.7741935483871
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 12.5,
+              "actualPercentile": 63.888888888888886
+            }
+          ]
+        },
+        {
+          "id": "opportuniste",
+          "title": "L'Opportuniste",
+          "emoji": "🎯",
+          "description": "Gagne souvent mais joue peu",
+          "priority": 13,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "HIGH",
+              "actualValue": 52.6,
+              "actualPercentile": 97.22222222222221
+            },
+            {
+              "stat": "gamesPlayed",
+              "category": "LOW",
+              "actualValue": 76,
+              "actualPercentile": 33.33333333333333
+            }
+          ]
+        },
         {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
@@ -34,10 +84,22 @@
           "type": "basic"
         },
         {
+          "id": "winRateVillageois_extreme_high",
+          "title": "Super Villageois·e",
+          "emoji": "🦸",
+          "description": "Excellent·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 64.15094339622641,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateLoup_extreme_high",
           "title": "Super Loup",
           "emoji": "🐺",
-          "description": "Excellent en camp Loup",
+          "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
           "value": 57.14285714285714,
           "percentile": 96.7741935483871,
@@ -46,53 +108,57 @@
           "type": "basic"
         },
         {
-          "id": "winRateVillageois_high",
-          "title": "Super Villageois",
-          "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 64.15094339622641,
-          "percentile": 88.88888888888889,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "loot_low",
-          "title": "Le Flâneur",
-          "emoji": "🚶",
-          "description": "Récolte faible",
+          "id": "loot_extreme_low",
+          "title": "Le·a Touriste",
+          "emoji": "📸",
+          "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
           "value": 489.6162599339112,
           "percentile": 13.88888888888889,
-          "category": "LOW",
-          "priority": 6,
+          "category": "EXTREME_LOW",
+          "priority": 8,
           "type": "basic"
         },
         {
-          "id": "lootVillageois_low",
-          "title": "Le Villageois Paresseux",
+          "id": "lootVillageois_extreme_low",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
           "value": 477.7753646349634,
           "percentile": 11.11111111111111,
-          "category": "LOW",
-          "priority": 6,
+          "category": "EXTREME_LOW",
+          "priority": 8,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_high",
-        "title": "L'Inarrêtable",
-        "emoji": "👑",
-        "description": "Gagne presque toujours",
-        "stat": "winRate",
-        "value": 52.6,
-        "percentile": 97.22222222222221,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "adaptable",
+        "title": "L'Adaptable",
+        "emoji": "🦎",
+        "description": "Bon dans tous les camps",
+        "priority": 16,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "winRateVillageois",
+            "category": "HIGH",
+            "actualValue": 64.15094339622641,
+            "actualPercentile": 88.88888888888889
+          },
+          {
+            "stat": "winRateLoup",
+            "category": "HIGH",
+            "actualValue": 57.14285714285714,
+            "actualPercentile": 96.7741935483871
+          },
+          {
+            "stat": "winRateSolo",
+            "category": "HIGH",
+            "actualValue": 12.5,
+            "actualPercentile": 63.888888888888886
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -103,12 +169,12 @@
         "gamesPlayed": {
           "value": 76,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "winRateVillageois": {
           "value": 64.15094339622641,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "winRateLoup": {
           "value": 57.14285714285714,
@@ -133,17 +199,17 @@
         "campSoloPercent": {
           "value": 21.052631578947366,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
           "value": 489.6162599339112,
           "percentile": 13.88888888888889,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
           "value": 477.7753646349634,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "lootLoupPer60Min": {
           "value": 529.8619856060548,
@@ -172,9 +238,9 @@
       "titles": [
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -183,26 +249,26 @@
           "type": "basic"
         },
         {
-          "id": "winRateVillageois_high",
-          "title": "Super Villageois",
-          "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 56.25,
-          "percentile": 77.77777777777779,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_low",
-          "title": "Le Villageois Paresseux",
+          "id": "lootVillageois_extreme_low",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
           "value": 486.0488086696422,
           "percentile": 13.88888888888889,
-          "category": "LOW",
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRateVillageois_high",
+          "title": "Super Villageois·e",
+          "emoji": "🦸",
+          "description": "Excellent·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 56.25,
+          "percentile": 77.77777777777779,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -217,13 +283,37 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "winRate_below_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 38.7,
+          "percentile": 44.44444444444444,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "loot_below_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 508.8062838852257,
+          "percentile": 36.11111111111111,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
         "id": "winRateSolo_extreme_low",
-        "title": "Solo Nul",
-        "emoji": "💩",
-        "description": "Mauvais en rôles Solo",
+        "title": "L'Enfant Perdu·e",
+        "emoji": "👶",
+        "description": "Mauvais·e en rôles Solo",
         "stat": "winRateSolo",
         "value": 0,
         "percentile": 0,
@@ -235,7 +325,7 @@
         "winRate": {
           "value": 38.7,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
           "value": 31,
@@ -270,7 +360,7 @@
         "campSoloPercent": {
           "value": 16.129032258064516,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootPer60Min": {
           "value": 508.8062838852257,
@@ -280,7 +370,7 @@
         "lootVillageoisPer60Min": {
           "value": 486.0488086696422,
           "percentile": 13.88888888888889,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "lootLoupPer60Min": {
           "value": 545.6625524788363,
@@ -309,9 +399,9 @@
       "titles": [
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -320,20 +410,56 @@
           "type": "basic"
         },
         {
-          "id": "loot_low",
-          "title": "Le Flâneur",
-          "emoji": "🚶",
-          "description": "Récolte faible",
+          "id": "loot_extreme_low",
+          "title": "Le·a Touriste",
+          "emoji": "📸",
+          "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
           "value": 487.3529202625836,
           "percentile": 11.11111111111111,
-          "category": "LOW",
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_extreme_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 482.69850824959434,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_high",
+          "title": "Le·a Winner",
+          "emoji": "🏆",
+          "description": "Taux de victoire élevé",
+          "stat": "winRate",
+          "value": 42.5,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRateVillageois_high",
+          "title": "Super Villageois·e",
+          "emoji": "🦸",
+          "description": "Excellent·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 52.94117647058824,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
         {
           "id": "lootVillageois_low",
-          "title": "Le Villageois Paresseux",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -342,28 +468,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
-        },
-        {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 482.69850824959434,
-          "percentile": 11.11111111111111,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateSolo_extreme_low",
-        "title": "Solo Nul",
-        "emoji": "💩",
-        "description": "Mauvais en rôles Solo",
-        "stat": "winRateSolo",
-        "value": 0,
-        "percentile": 0,
+        "id": "loot_extreme_low",
+        "title": "Le·a Touriste",
+        "emoji": "📸",
+        "description": "Ne récolte jamais",
+        "stat": "lootPer60Min",
+        "value": 487.3529202625836,
+        "percentile": 11.11111111111111,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -372,7 +486,7 @@
         "winRate": {
           "value": 42.5,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "gamesPlayed": {
           "value": 127,
@@ -382,7 +496,7 @@
         "winRateVillageois": {
           "value": 52.94117647058824,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateLoup": {
           "value": 32.142857142857146,
@@ -412,7 +526,7 @@
         "lootPer60Min": {
           "value": 487.3529202625836,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
           "value": 487.2179639574354,
@@ -422,7 +536,7 @@
         "lootLoupPer60Min": {
           "value": 482.69850824959434,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -445,6 +559,28 @@
       "gamesPlayed": 29,
       "titles": [
         {
+          "id": "opportuniste",
+          "title": "L'Opportuniste",
+          "emoji": "🎯",
+          "description": "Gagne souvent mais joue peu",
+          "priority": 13,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "HIGH",
+              "actualValue": 48.3,
+              "actualPercentile": 91.66666666666666
+            },
+            {
+              "stat": "gamesPlayed",
+              "category": "LOW",
+              "actualValue": 29,
+              "actualPercentile": 2.7777777777777777
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
           "emoji": "👑",
@@ -458,9 +594,9 @@
         },
         {
           "id": "winRateVillageois_extreme_high",
-          "title": "Super Villageois",
+          "title": "Super Villageois·e",
           "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
+          "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 65,
           "percentile": 91.66666666666666,
@@ -470,9 +606,9 @@
         },
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -494,7 +630,7 @@
         },
         {
           "id": "loot_low",
-          "title": "Le Flâneur",
+          "title": "Le·a Flâneur·se",
           "emoji": "🚶",
           "description": "Récolte faible",
           "stat": "lootPer60Min",
@@ -506,7 +642,7 @@
         },
         {
           "id": "lootVillageois_low",
-          "title": "Le Villageois Paresseux",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -518,16 +654,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_high",
-        "title": "L'Inarrêtable",
-        "emoji": "👑",
-        "description": "Gagne presque toujours",
-        "stat": "winRate",
-        "value": 48.3,
-        "percentile": 91.66666666666666,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "opportuniste",
+        "title": "L'Opportuniste",
+        "emoji": "🎯",
+        "description": "Gagne souvent mais joue peu",
+        "priority": 13,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "winRate",
+            "category": "HIGH",
+            "actualValue": 48.3,
+            "actualPercentile": 91.66666666666666
+          },
+          {
+            "stat": "gamesPlayed",
+            "category": "LOW",
+            "actualValue": 29,
+            "actualPercentile": 2.7777777777777777
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -558,12 +704,12 @@
         "campLoupPercent": {
           "value": 13.793103448275861,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "campSoloPercent": {
           "value": 17.24137931034483,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "lootPer60Min": {
           "value": 494.99792349922853,
@@ -601,10 +747,44 @@
       "gamesPlayed": 40,
       "titles": [
         {
+          "id": "opportuniste",
+          "title": "L'Opportuniste",
+          "emoji": "🎯",
+          "description": "Gagne souvent mais joue peu",
+          "priority": 13,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "HIGH",
+              "actualValue": 47.5,
+              "actualPercentile": 88.88888888888889
+            },
+            {
+              "stat": "gamesPlayed",
+              "category": "LOW",
+              "actualValue": 40,
+              "actualPercentile": 16.666666666666664
+            }
+          ]
+        },
+        {
+          "id": "winRate_extreme_high",
+          "title": "L'Inarrêtable",
+          "emoji": "👑",
+          "description": "Gagne presque toujours",
+          "stat": "winRate",
+          "value": 47.5,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateVillageois_extreme_high",
-          "title": "Super Villageois",
+          "title": "Super Villageois·e",
           "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
+          "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 76.19047619047619,
           "percentile": 97.22222222222221,
@@ -614,9 +794,9 @@
         },
         {
           "id": "winRateLoup_extreme_low",
-          "title": "Loup Nul",
+          "title": "Loup Débutant·e",
           "emoji": "🐩",
-          "description": "Mauvais en camp Loup",
+          "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
           "value": 16.666666666666664,
           "percentile": 6.451612903225806,
@@ -637,35 +817,35 @@
           "type": "basic"
         },
         {
-          "id": "winRate_high",
-          "title": "Le Winner",
-          "emoji": "🏆",
-          "description": "Taux de victoire élevé",
-          "stat": "winRate",
-          "value": 47.5,
-          "percentile": 88.88888888888889,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "winRateSolo_high",
           "title": "Super Solo",
           "emoji": "🦊",
-          "description": "Excellent en rôles Solo",
+          "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 15.384615384615385,
           "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "loot_above_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 517.1165859327316,
+          "percentile": 58.333333333333336,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
         "id": "winRateVillageois_extreme_high",
-        "title": "Super Villageois",
+        "title": "Super Villageois·e",
         "emoji": "🦸",
-        "description": "Excellent en camp Villageois",
+        "description": "Excellent·e en camp Villageois",
         "stat": "winRateVillageois",
         "value": 76.19047619047619,
         "percentile": 97.22222222222221,
@@ -677,7 +857,7 @@
         "winRate": {
           "value": 47.5,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "gamesPlayed": {
           "value": 40,
@@ -717,12 +897,12 @@
         "lootPer60Min": {
           "value": 517.1165859327316,
           "percentile": 58.333333333333336,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "lootVillageoisPer60Min": {
           "value": 508.8841135572887,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "lootLoupPer60Min": {
           "value": 433.9948406491844,
@@ -750,10 +930,32 @@
       "gamesPlayed": 27,
       "titles": [
         {
+          "id": "opportuniste",
+          "title": "L'Opportuniste",
+          "emoji": "🎯",
+          "description": "Gagne souvent mais joue peu",
+          "priority": 13,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "HIGH",
+              "actualValue": 44.4,
+              "actualPercentile": 75
+            },
+            {
+              "stat": "gamesPlayed",
+              "category": "LOW",
+              "actualValue": 27,
+              "actualPercentile": 0
+            }
+          ]
+        },
+        {
           "id": "winRateVillageois_extreme_high",
-          "title": "Super Villageois",
+          "title": "Super Villageois·e",
           "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
+          "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 70.58823529411765,
           "percentile": 94.44444444444444,
@@ -763,9 +965,9 @@
         },
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -775,7 +977,7 @@
         },
         {
           "id": "winRate_high",
-          "title": "Le Winner",
+          "title": "Le·a Winner",
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
@@ -786,8 +988,20 @@
           "type": "basic"
         },
         {
+          "id": "loot_high",
+          "title": "Le·a Fermier·ère",
+          "emoji": "🌾",
+          "description": "Récolte élevée",
+          "stat": "lootPer60Min",
+          "value": 523.4764745238834,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_high",
-          "title": "Le Citoyen Modèle",
+          "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -799,15 +1013,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRateVillageois_extreme_high",
-        "title": "Super Villageois",
-        "emoji": "🦸",
-        "description": "Excellent en camp Villageois",
-        "stat": "winRateVillageois",
-        "value": 70.58823529411765,
-        "percentile": 94.44444444444444,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
+        "id": "lootVillageois_high",
+        "title": "Le·a Citoyen·ne Modèle",
+        "emoji": "🏘️",
+        "description": "Récolte excellente en Villageois",
+        "stat": "lootVillageoisPer60Min",
+        "value": 540.5014227440349,
+        "percentile": 83.33333333333334,
+        "category": "HIGH",
+        "priority": 6,
         "type": "basic"
       },
       "percentiles": {
@@ -849,7 +1063,7 @@
         "lootPer60Min": {
           "value": 523.4764745238834,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootVillageoisPer60Min": {
           "value": 540.5014227440349,
@@ -894,10 +1108,34 @@
           "type": "basic"
         },
         {
+          "id": "winRateVillageois_extreme_high",
+          "title": "Super Villageois·e",
+          "emoji": "🦸",
+          "description": "Excellent·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 59.67741935483871,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRateLoup_extreme_high",
+          "title": "Super Loup",
+          "emoji": "🐺",
+          "description": "Excellent·e en camp Loup",
+          "stat": "winRateLoup",
+          "value": 44.44444444444444,
+          "percentile": 87.09677419354838,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -907,7 +1145,7 @@
         },
         {
           "id": "loot_extreme_low",
-          "title": "Le Touriste",
+          "title": "Le·a Touriste",
           "emoji": "📸",
           "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
@@ -919,7 +1157,7 @@
         },
         {
           "id": "lootVillageois_extreme_low",
-          "title": "Le Villageois Paresseux",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -927,30 +1165,6 @@
           "percentile": 5.555555555555555,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "winRateVillageois_high",
-          "title": "Super Villageois",
-          "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 59.67741935483871,
-          "percentile": 86.11111111111111,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "winRateLoup_high",
-          "title": "Super Loup",
-          "emoji": "🐺",
-          "description": "Excellent en camp Loup",
-          "stat": "winRateLoup",
-          "value": 44.44444444444444,
-          "percentile": 87.09677419354838,
-          "category": "HIGH",
-          "priority": 6,
           "type": "basic"
         },
         {
@@ -992,12 +1206,12 @@
         "winRateVillageois": {
           "value": 59.67741935483871,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "winRateLoup": {
           "value": 44.44444444444444,
           "percentile": 87.09677419354838,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "winRateSolo": {
           "value": 0,
@@ -1055,8 +1269,48 @@
       "gamesPlayed": 383,
       "titles": [
         {
+          "id": "adaptable",
+          "title": "L'Adaptable",
+          "emoji": "🦎",
+          "description": "Bon dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 51.624548736462096,
+              "actualPercentile": 61.111111111111114
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 43.39622641509434,
+              "actualPercentile": 83.87096774193549
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 18.867924528301888,
+              "actualPercentile": 88.88888888888889
+            }
+          ]
+        },
+        {
+          "id": "winRateSolo_extreme_high",
+          "title": "Super Solo",
+          "emoji": "🦊",
+          "description": "Excellent·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 18.867924528301888,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_high",
-          "title": "Le Winner",
+          "title": "Le·a Winner",
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
@@ -1070,7 +1324,7 @@
           "id": "winRateLoup_high",
           "title": "Super Loup",
           "emoji": "🐺",
-          "description": "Excellent en camp Loup",
+          "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
           "value": 43.39622641509434,
           "percentile": 83.87096774193549,
@@ -1079,38 +1333,62 @@
           "type": "basic"
         },
         {
-          "id": "winRateSolo_high",
-          "title": "Super Solo",
-          "emoji": "🦊",
-          "description": "Excellent en rôles Solo",
-          "stat": "winRateSolo",
-          "value": 18.867924528301888,
-          "percentile": 88.88888888888889,
-          "category": "HIGH",
+          "id": "talkingOutsideMeeting_low",
+          "title": "Le·a Concentré·e",
+          "emoji": "🎯",
+          "description": "Silencieux·se hors meeting",
+          "stat": "talkingOutsidePer60Min",
+          "value": 708.8374480058299,
+          "percentile": 28.000000000000004,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
         {
           "id": "talkingDuringMeeting_high",
-          "title": "L'Orateur",
+          "title": "L'Orateur·rice",
           "emoji": "🎤",
-          "description": "Bavard en meeting",
+          "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 366.97370876583614,
           "percentile": 84,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "talking_above_average",
+          "title": "Le·a Équilibré·e",
+          "emoji": "⚖️",
+          "description": "Temps de parole normal",
+          "stat": "talkingPer60Min",
+          "value": 1075.811156771666,
+          "percentile": 56.00000000000001,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "loot_above_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 521.3001473508045,
+          "percentile": 63.888888888888886,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRate_high",
-        "title": "Le Winner",
-        "emoji": "🏆",
-        "description": "Taux de victoire élevé",
-        "stat": "winRate",
-        "value": 46,
-        "percentile": 80.55555555555556,
+        "id": "winRateLoup_high",
+        "title": "Super Loup",
+        "emoji": "🐺",
+        "description": "Excellent·e en camp Loup",
+        "stat": "winRateLoup",
+        "value": 43.39622641509434,
+        "percentile": 83.87096774193549,
         "category": "HIGH",
         "priority": 6,
         "type": "basic"
@@ -1139,17 +1417,17 @@
         "winRateSolo": {
           "value": 18.867924528301888,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "campVillageoisPercent": {
           "value": 72.32375979112271,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "campLoupPercent": {
           "value": 13.838120104438643,
           "percentile": 13.88888888888889,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "campSoloPercent": {
           "value": 13.838120104438643,
@@ -1159,12 +1437,12 @@
         "talkingPer60Min": {
           "value": 1075.811156771666,
           "percentile": 56.00000000000001,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "talkingOutsidePer60Min": {
           "value": 708.8374480058299,
           "percentile": 28.000000000000004,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "talkingDuringPer60Min": {
           "value": 366.97370876583614,
@@ -1179,7 +1457,7 @@
         "lootVillageoisPer60Min": {
           "value": 519.5797959474837,
           "percentile": 58.333333333333336,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "lootLoupPer60Min": {
           "value": 525.8095235296739,
@@ -1210,10 +1488,38 @@
       "gamesPlayed": 323,
       "titles": [
         {
+          "id": "adaptable",
+          "title": "L'Adaptable",
+          "emoji": "🦎",
+          "description": "Bon dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 54.166666666666664,
+              "actualPercentile": 72.22222222222221
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 34.92063492063492,
+              "actualPercentile": 58.06451612903226
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 18.181818181818183,
+              "actualPercentile": 86.11111111111111
+            }
+          ]
+        },
+        {
           "id": "hyperactif",
-          "title": "L'Hyperactif",
+          "title": "L'Hyperactif·ve",
           "emoji": "⚡",
-          "description": "Bavard ET grande récolte",
+          "description": "Bavard·e ET grande récolte",
           "priority": 10,
           "type": "combination",
           "conditions": [
@@ -1232,8 +1538,20 @@
           ]
         },
         {
+          "id": "winRateSolo_extreme_high",
+          "title": "Super Solo",
+          "emoji": "🦊",
+          "description": "Excellent·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 18.181818181818183,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_high",
-          "title": "Le Winner",
+          "title": "Le·a Winner",
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
@@ -1244,20 +1562,20 @@
           "type": "basic"
         },
         {
-          "id": "winRateSolo_high",
-          "title": "Super Solo",
-          "emoji": "🦊",
-          "description": "Excellent en rôles Solo",
-          "stat": "winRateSolo",
-          "value": 18.181818181818183,
-          "percentile": 86.11111111111111,
+          "id": "winRateVillageois_high",
+          "title": "Super Villageois·e",
+          "emoji": "🦸",
+          "description": "Excellent·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 54.166666666666664,
+          "percentile": 72.22222222222221,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
         {
           "id": "talking_high",
-          "title": "Le Bavard",
+          "title": "Le·a Bavard·e",
           "emoji": "🗣️",
           "description": "Parle beaucoup (par 60 min de jeu)",
           "stat": "talkingPer60Min",
@@ -1269,9 +1587,9 @@
         },
         {
           "id": "talkingOutsideMeeting_high",
-          "title": "Le Chuchoteur",
+          "title": "Le·a Chuchoteur·se",
           "emoji": "👂",
-          "description": "Bavard hors meeting",
+          "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 887.4697003205858,
           "percentile": 84,
@@ -1281,7 +1599,7 @@
         },
         {
           "id": "loot_high",
-          "title": "Le Fermier",
+          "title": "Le·a Fermier·ère",
           "emoji": "🌾",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
@@ -1293,7 +1611,7 @@
         },
         {
           "id": "lootVillageois_high",
-          "title": "Le Citoyen Modèle",
+          "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -1302,29 +1620,31 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "lootLoup_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 542.9701210614894,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "hyperactif",
-        "title": "L'Hyperactif",
-        "emoji": "⚡",
-        "description": "Bavard ET grande récolte",
-        "priority": 10,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "talking",
-            "category": "HIGH",
-            "actualValue": 1193.9749608273462,
-            "actualPercentile": 80
-          },
-          {
-            "stat": "loot",
-            "category": "HIGH",
-            "actualValue": 530.3408432442998,
-            "actualPercentile": 75
-          }
-        ]
+        "id": "talkingOutsideMeeting_high",
+        "title": "Le·a Chuchoteur·se",
+        "emoji": "👂",
+        "description": "Bavard·e hors meeting",
+        "stat": "talkingOutsidePer60Min",
+        "value": 887.4697003205858,
+        "percentile": 84,
+        "category": "HIGH",
+        "priority": 6,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -1335,22 +1655,22 @@
         "gamesPlayed": {
           "value": 323,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
           "value": 54.166666666666664,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateLoup": {
           "value": 34.92063492063492,
           "percentile": 58.06451612903226,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "winRateSolo": {
           "value": 18.181818181818183,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "campVillageoisPercent": {
           "value": 66.87306501547987,
@@ -1395,7 +1715,7 @@
         "lootLoupPer60Min": {
           "value": 542.9701210614894,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -1419,13 +1739,125 @@
       "playerId": "76561198125108195",
       "playerName": "Monodie",
       "gamesPlayed": 364,
-      "titles": [],
-      "primaryTitle": null,
+      "titles": [
+        {
+          "id": "adaptable",
+          "title": "L'Adaptable",
+          "emoji": "🦎",
+          "description": "Bon dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 51.867219917012456,
+              "actualPercentile": 63.888888888888886
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 35,
+              "actualPercentile": 61.29032258064516
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 14.285714285714285,
+              "actualPercentile": 69.44444444444444
+            }
+          ]
+        },
+        {
+          "id": "winRate_high",
+          "title": "Le·a Winner",
+          "emoji": "🏆",
+          "description": "Taux de victoire élevé",
+          "stat": "winRate",
+          "value": 42.6,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRateSolo_high",
+          "title": "Super Solo",
+          "emoji": "🦊",
+          "description": "Excellent·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 14.285714285714285,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 521.7038688867576,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 542.940472560428,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talking_average",
+          "title": "Le·a Équilibré·e",
+          "emoji": "⚖️",
+          "description": "Temps de parole normal",
+          "stat": "talkingPer60Min",
+          "value": 1019.0342605898729,
+          "percentile": 48,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
+        },
+        {
+          "id": "loot_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 514.9328182163557,
+          "percentile": 50,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
+        }
+      ],
+      "primaryTitle": {
+        "id": "winRateSolo_high",
+        "title": "Super Solo",
+        "emoji": "🦊",
+        "description": "Excellent·e en rôles Solo",
+        "stat": "winRateSolo",
+        "value": 14.285714285714285,
+        "percentile": 69.44444444444444,
+        "category": "HIGH",
+        "priority": 6,
+        "type": "basic"
+      },
       "percentiles": {
         "winRate": {
           "value": 42.6,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "gamesPlayed": {
           "value": 364,
@@ -1445,7 +1877,7 @@
         "winRateSolo": {
           "value": 14.285714285714285,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campVillageoisPercent": {
           "value": 66.20879120879121,
@@ -1455,7 +1887,7 @@
         "campLoupPercent": {
           "value": 16.483516483516482,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "campSoloPercent": {
           "value": 17.307692307692307,
@@ -1485,12 +1917,12 @@
         "lootVillageoisPer60Min": {
           "value": 521.7038688867576,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootLoupPer60Min": {
           "value": 542.940472560428,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -1519,7 +1951,7 @@
           "id": "efficace",
           "title": "L'Efficace",
           "emoji": "🎯",
-          "description": "Silencieux mais productif",
+          "description": "Silencieux·se mais productif·ve",
           "priority": 10,
           "type": "combination",
           "conditions": [
@@ -1538,44 +1970,56 @@
           ]
         },
         {
-          "id": "talking_low",
-          "title": "Le Silencieux",
-          "emoji": "🤫",
-          "description": "Parle peu (par 60 min de jeu)",
+          "id": "talking_extreme_low",
+          "title": "Le·a Fantôme",
+          "emoji": "👻",
+          "description": "Quasi muet·te",
           "stat": "talkingPer60Min",
           "value": 851.3249379205968,
           "percentile": 12,
-          "category": "LOW",
-          "priority": 6,
+          "category": "EXTREME_LOW",
+          "priority": 8,
           "type": "basic"
         },
         {
-          "id": "talkingOutsideMeeting_low",
-          "title": "Le Concentré",
+          "id": "talkingOutsideMeeting_extreme_low",
+          "title": "Le·a Concentré·e",
           "emoji": "🎯",
-          "description": "Silencieux hors meeting",
+          "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 606.6569219025239,
           "percentile": 12,
-          "category": "LOW",
-          "priority": 6,
+          "category": "EXTREME_LOW",
+          "priority": 8,
           "type": "basic"
         },
         {
-          "id": "loot_high",
-          "title": "Le Fermier",
-          "emoji": "🌾",
-          "description": "Récolte élevée",
+          "id": "loot_extreme_high",
+          "title": "Le·a Stakhanoviste",
+          "emoji": "⚒️",
+          "description": "Récolte exceptionnelle",
           "stat": "lootPer60Min",
           "value": 541.9126658637708,
           "percentile": 86.11111111111111,
-          "category": "HIGH",
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "talkingDuringMeeting_low",
+          "title": "Le·a Discret·ète",
+          "emoji": "🤐",
+          "description": "Silencieux·se en meeting",
+          "stat": "talkingDuringPer60Min",
+          "value": 244.66801601807288,
+          "percentile": 32,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
         {
           "id": "lootVillageois_high",
-          "title": "Le Citoyen Modèle",
+          "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -1584,13 +2028,25 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "winRate_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 39.9,
+          "percentile": 52.77777777777778,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
         "id": "efficace",
         "title": "L'Efficace",
         "emoji": "🎯",
-        "description": "Silencieux mais productif",
+        "description": "Silencieux·se mais productif·ve",
         "priority": 10,
         "type": "combination",
         "conditions": [
@@ -1617,7 +2073,7 @@
         "gamesPlayed": {
           "value": 203,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateVillageois": {
           "value": 49.6,
@@ -1632,7 +2088,7 @@
         "winRateSolo": {
           "value": 9.67741935483871,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "campVillageoisPercent": {
           "value": 61.57635467980296,
@@ -1652,22 +2108,22 @@
         "talkingPer60Min": {
           "value": 851.3249379205968,
           "percentile": 12,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "talkingOutsidePer60Min": {
           "value": 606.6569219025239,
           "percentile": 12,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "talkingDuringPer60Min": {
           "value": 244.66801601807288,
           "percentile": 32,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootPer60Min": {
           "value": 541.9126658637708,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "lootVillageoisPer60Min": {
           "value": 533.007543938706,
@@ -1677,7 +2133,7 @@
         "lootLoupPer60Min": {
           "value": 534.44865765658,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -1703,10 +2159,72 @@
       "gamesPlayed": 199,
       "titles": [
         {
+          "id": "adaptable",
+          "title": "L'Adaptable",
+          "emoji": "🦎",
+          "description": "Bon dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 56.2962962962963,
+              "actualPercentile": 80.55555555555556
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 36.36363636363637,
+              "actualPercentile": 70.96774193548387
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 19.35483870967742,
+              "actualPercentile": 91.66666666666666
+            }
+          ]
+        },
+        {
+          "id": "infiltrateur",
+          "title": "L'Infiltré·e",
+          "emoji": "🎭",
+          "description": "Excellent·e loup discret·ète",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 36.36363636363637,
+              "actualPercentile": 70.96774193548387
+            },
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 932.7354026110525,
+              "actualPercentile": 24
+            }
+          ]
+        },
+        {
+          "id": "winRate_extreme_high",
+          "title": "L'Inarrêtable",
+          "emoji": "👑",
+          "description": "Gagne presque toujours",
+          "stat": "winRate",
+          "value": 47.2,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateSolo_extreme_high",
           "title": "Super Solo",
           "emoji": "🦊",
-          "description": "Excellent en rôles Solo",
+          "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 19.35483870967742,
           "percentile": 91.66666666666666,
@@ -1715,22 +2233,22 @@
           "type": "basic"
         },
         {
-          "id": "winRate_high",
-          "title": "Le Winner",
-          "emoji": "🏆",
-          "description": "Taux de victoire élevé",
-          "stat": "winRate",
-          "value": 47.2,
-          "percentile": 86.11111111111111,
-          "category": "HIGH",
-          "priority": 6,
+          "id": "talkingDuringMeeting_extreme_low",
+          "title": "Le·a Discret·ète",
+          "emoji": "🤐",
+          "description": "Silencieux·se en meeting",
+          "stat": "talkingDuringPer60Min",
+          "value": 213.07926441020265,
+          "percentile": 12,
+          "category": "EXTREME_LOW",
+          "priority": 8,
           "type": "basic"
         },
         {
           "id": "winRateVillageois_high",
-          "title": "Super Villageois",
+          "title": "Super Villageois·e",
           "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
+          "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 56.2962962962963,
           "percentile": 80.55555555555556,
@@ -1739,8 +2257,20 @@
           "type": "basic"
         },
         {
+          "id": "winRateLoup_high",
+          "title": "Super Loup",
+          "emoji": "🐺",
+          "description": "Excellent·e en camp Loup",
+          "stat": "winRateLoup",
+          "value": 36.36363636363637,
+          "percentile": 70.96774193548387,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talking_low",
-          "title": "Le Silencieux",
+          "title": "Le·a Silencieux·se",
           "emoji": "🤫",
           "description": "Parle peu (par 60 min de jeu)",
           "stat": "talkingPer60Min",
@@ -1751,20 +2281,8 @@
           "type": "basic"
         },
         {
-          "id": "talkingDuringMeeting_low",
-          "title": "Le Discret",
-          "emoji": "🤐",
-          "description": "Silencieux en meeting",
-          "stat": "talkingDuringPer60Min",
-          "value": 213.07926441020265,
-          "percentile": 12,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "loot_low",
-          "title": "Le Flâneur",
+          "title": "Le·a Flâneur·se",
           "emoji": "🚶",
           "description": "Récolte faible",
           "stat": "lootPer60Min",
@@ -1773,17 +2291,41 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "lootVillageois_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 506.05483974252803,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 504.6654276330909,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateSolo_extreme_high",
-        "title": "Super Solo",
-        "emoji": "🦊",
-        "description": "Excellent en rôles Solo",
-        "stat": "winRateSolo",
-        "value": 19.35483870967742,
-        "percentile": 91.66666666666666,
-        "category": "EXTREME_HIGH",
+        "id": "talkingDuringMeeting_extreme_low",
+        "title": "Le·a Discret·ète",
+        "emoji": "🤐",
+        "description": "Silencieux·se en meeting",
+        "stat": "talkingDuringPer60Min",
+        "value": 213.07926441020265,
+        "percentile": 12,
+        "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
       },
@@ -1791,7 +2333,7 @@
         "winRate": {
           "value": 47.2,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "gamesPlayed": {
           "value": 199,
@@ -1806,7 +2348,7 @@
         "winRateLoup": {
           "value": 36.36363636363637,
           "percentile": 70.96774193548387,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateSolo": {
           "value": 19.35483870967742,
@@ -1821,12 +2363,12 @@
         "campLoupPercent": {
           "value": 16.582914572864322,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "campSoloPercent": {
           "value": 15.577889447236181,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "talkingPer60Min": {
           "value": 932.7354026110525,
@@ -1841,7 +2383,7 @@
         "talkingDuringPer60Min": {
           "value": 213.07926441020265,
           "percentile": 12,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "lootPer60Min": {
           "value": 503.6563139283604,
@@ -1851,12 +2393,12 @@
         "lootVillageoisPer60Min": {
           "value": 506.05483974252803,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootLoupPer60Min": {
           "value": 504.6654276330909,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         }
       },
       "stats": {
@@ -1882,22 +2424,56 @@
       "gamesPlayed": 353,
       "titles": [
         {
-          "id": "talking_high",
-          "title": "Le Bavard",
-          "emoji": "🗣️",
-          "description": "Parle beaucoup (par 60 min de jeu)",
+          "id": "manipulateur",
+          "title": "Le·a Manipulateur·rice",
+          "emoji": "🐍",
+          "description": "Loup bavard·e et gagnant·e",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 36.206896551724135,
+              "actualPercentile": 67.74193548387096
+            },
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1210.215727106016,
+              "actualPercentile": 88
+            }
+          ]
+        },
+        {
+          "id": "talking_extreme_high",
+          "title": "Le Moulin à Paroles",
+          "emoji": "💬",
+          "description": "Parle énormément",
           "stat": "talkingPer60Min",
           "value": 1210.215727106016,
           "percentile": 88,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRateLoup_high",
+          "title": "Super Loup",
+          "emoji": "🐺",
+          "description": "Excellent·e en camp Loup",
+          "stat": "winRateLoup",
+          "value": 36.206896551724135,
+          "percentile": 67.74193548387096,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
         {
           "id": "talkingOutsideMeeting_high",
-          "title": "Le Chuchoteur",
+          "title": "Le·a Chuchoteur·se",
           "emoji": "👂",
-          "description": "Bavard hors meeting",
+          "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 872.3837949135537,
           "percentile": 76,
@@ -1907,49 +2483,83 @@
         },
         {
           "id": "talkingDuringMeeting_high",
-          "title": "L'Orateur",
+          "title": "L'Orateur·rice",
           "emoji": "🎤",
-          "description": "Bavard en meeting",
+          "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 337.8319321924623,
           "percentile": 80,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "winRate_above_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 40.8,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "loot_below_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 512.7099112960258,
+          "percentile": 44.44444444444444,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "talking_high",
-        "title": "Le Bavard",
-        "emoji": "🗣️",
-        "description": "Parle beaucoup (par 60 min de jeu)",
-        "stat": "talkingPer60Min",
-        "value": 1210.215727106016,
-        "percentile": 88,
-        "category": "HIGH",
-        "priority": 6,
-        "type": "basic"
+        "id": "manipulateur",
+        "title": "Le·a Manipulateur·rice",
+        "emoji": "🐍",
+        "description": "Loup bavard·e et gagnant·e",
+        "priority": 15,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "winRateLoup",
+            "category": "HIGH",
+            "actualValue": 36.206896551724135,
+            "actualPercentile": 67.74193548387096
+          },
+          {
+            "stat": "talking",
+            "category": "HIGH",
+            "actualValue": 1210.215727106016,
+            "actualPercentile": 88
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
           "value": 40.8,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "gamesPlayed": {
           "value": 353,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
           "value": 50.21645021645021,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
           "value": 36.206896551724135,
           "percentile": 67.74193548387096,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateSolo": {
           "value": 10.9375,
@@ -1959,7 +2569,7 @@
         "campVillageoisPercent": {
           "value": 65.43909348441926,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
           "value": 16.43059490084986,
@@ -1974,7 +2584,7 @@
         "talkingPer60Min": {
           "value": 1210.215727106016,
           "percentile": 88,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "talkingOutsidePer60Min": {
           "value": 872.3837949135537,
@@ -1989,17 +2599,17 @@
         "lootPer60Min": {
           "value": 512.7099112960258,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "lootVillageoisPer60Min": {
           "value": 509.37386782700287,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "lootLoupPer60Min": {
           "value": 521.084089191906,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -2025,13 +2635,49 @@
       "gamesPlayed": 155,
       "titles": [
         {
+          "id": "winRate_low",
+          "title": "Le·a Looser",
+          "emoji": "😢",
+          "description": "Taux de victoire faible",
+          "stat": "winRate",
+          "value": 36.8,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRateVillageois_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 45.714285714285715,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRateLoup_low",
-          "title": "Loup Nul",
+          "title": "Loup Débutant·e",
           "emoji": "🐩",
-          "description": "Mauvais en camp Loup",
+          "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
           "value": 23.333333333333332,
           "percentile": 22.58064516129032,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "loot_low",
+          "title": "Le·a Flâneur·se",
+          "emoji": "🚶",
+          "description": "Récolte faible",
+          "stat": "lootPer60Min",
+          "value": 508.0729911740813,
+          "percentile": 33.33333333333333,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -2047,16 +2693,28 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "talking_average",
+          "title": "Le·a Équilibré·e",
+          "emoji": "⚖️",
+          "description": "Temps de parole normal",
+          "stat": "talkingPer60Min",
+          "value": 1060.5630182757734,
+          "percentile": 52,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_low",
-        "title": "Loup Nul",
-        "emoji": "🐩",
-        "description": "Mauvais en camp Loup",
-        "stat": "winRateLoup",
-        "value": 23.333333333333332,
-        "percentile": 22.58064516129032,
+        "id": "winRate_low",
+        "title": "Le·a Looser",
+        "emoji": "😢",
+        "description": "Taux de victoire faible",
+        "stat": "winRate",
+        "value": 36.8,
+        "percentile": 33.33333333333333,
         "category": "LOW",
         "priority": 6,
         "type": "basic"
@@ -2065,17 +2723,17 @@
         "winRate": {
           "value": 36.8,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "gamesPlayed": {
           "value": 155,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "winRateVillageois": {
           "value": 45.714285714285715,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "winRateLoup": {
           "value": 23.333333333333332,
@@ -2090,17 +2748,17 @@
         "campVillageoisPercent": {
           "value": 67.74193548387096,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campLoupPercent": {
           "value": 19.35483870967742,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campSoloPercent": {
           "value": 12.903225806451612,
           "percentile": 13.88888888888889,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "talkingPer60Min": {
           "value": 1060.5630182757734,
@@ -2115,12 +2773,12 @@
         "talkingDuringPer60Min": {
           "value": 281.3738619915317,
           "percentile": 56.00000000000001,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "lootPer60Min": {
           "value": 508.0729911740813,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootVillageoisPer60Min": {
           "value": 506.97583138151714,
@@ -2157,9 +2815,9 @@
       "titles": [
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -2169,7 +2827,7 @@
         },
         {
           "id": "loot_low",
-          "title": "Le Flâneur",
+          "title": "Le·a Flâneur·se",
           "emoji": "🚶",
           "description": "Récolte faible",
           "stat": "lootPer60Min",
@@ -2178,30 +2836,54 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "lootVillageois_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 498.36191633020877,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_below_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 38.5,
+          "percentile": 41.66666666666667,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateSolo_extreme_low",
-        "title": "Solo Nul",
-        "emoji": "💩",
-        "description": "Mauvais en rôles Solo",
-        "stat": "winRateSolo",
-        "value": 0,
-        "percentile": 0,
-        "category": "EXTREME_LOW",
-        "priority": 8,
+        "id": "lootVillageois_low",
+        "title": "Le·a Villageois·e Paresseux·se",
+        "emoji": "💤",
+        "description": "Faible récolte en Villageois",
+        "stat": "lootVillageoisPer60Min",
+        "value": 498.36191633020877,
+        "percentile": 27.77777777777778,
+        "category": "LOW",
+        "priority": 6,
         "type": "basic"
       },
       "percentiles": {
         "winRate": {
           "value": 38.5,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
           "value": 65,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "winRateVillageois": {
           "value": 47.82608695652174,
@@ -2221,7 +2903,7 @@
         "campVillageoisPercent": {
           "value": 70.76923076923077,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "campLoupPercent": {
           "value": 16.923076923076923,
@@ -2241,7 +2923,7 @@
         "lootVillageoisPer60Min": {
           "value": 498.36191633020877,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootLoupPer60Min": {
           "value": 518.1103936430704,
@@ -2269,8 +2951,36 @@
       "gamesPlayed": 139,
       "titles": [
         {
+          "id": "adaptable",
+          "title": "L'Adaptable",
+          "emoji": "🦎",
+          "description": "Bon dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 56.97674418604651,
+              "actualPercentile": 83.33333333333334
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 42.857142857142854,
+              "actualPercentile": 80.64516129032258
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 16,
+              "actualPercentile": 80.55555555555556
+            }
+          ]
+        },
+        {
           "id": "winRate_high",
-          "title": "Le Winner",
+          "title": "Le·a Winner",
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
@@ -2282,9 +2992,9 @@
         },
         {
           "id": "winRateVillageois_high",
-          "title": "Super Villageois",
+          "title": "Super Villageois·e",
           "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
+          "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 56.97674418604651,
           "percentile": 83.33333333333334,
@@ -2296,7 +3006,7 @@
           "id": "winRateLoup_high",
           "title": "Super Loup",
           "emoji": "🐺",
-          "description": "Excellent en camp Loup",
+          "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
           "value": 42.857142857142854,
           "percentile": 80.64516129032258,
@@ -2308,18 +3018,30 @@
           "id": "winRateSolo_high",
           "title": "Super Solo",
           "emoji": "🦊",
-          "description": "Excellent en rôles Solo",
+          "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 16,
           "percentile": 80.55555555555556,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "loot_below_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 512.6107901013185,
+          "percentile": 41.66666666666667,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
         "id": "winRate_high",
-        "title": "Le Winner",
+        "title": "Le·a Winner",
         "emoji": "🏆",
         "description": "Taux de victoire élevé",
         "stat": "winRate",
@@ -2368,12 +3090,12 @@
         "campSoloPercent": {
           "value": 17.985611510791365,
           "percentile": 58.333333333333336,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "lootPer60Min": {
           "value": 512.6107901013185,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "lootVillageoisPer60Min": {
           "value": 512.2501634075333,
@@ -2406,10 +3128,38 @@
       "gamesPlayed": 317,
       "titles": [
         {
+          "id": "adaptable",
+          "title": "L'Adaptable",
+          "emoji": "🦎",
+          "description": "Bon dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 52.38095238095239,
+              "actualPercentile": 66.66666666666666
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 45.83333333333333,
+              "actualPercentile": 90.32258064516128
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 11.864406779661017,
+              "actualPercentile": 61.111111111111114
+            }
+          ]
+        },
+        {
           "id": "manipulateur",
-          "title": "Le Manipulateur",
+          "title": "Le·a Manipulateur·rice",
           "emoji": "🐍",
-          "description": "Loup bavard et gagnant",
+          "description": "Loup bavard·e et gagnant·e",
           "priority": 15,
           "type": "combination",
           "conditions": [
@@ -2431,7 +3181,7 @@
           "id": "winRateLoup_extreme_high",
           "title": "Super Loup",
           "emoji": "🐺",
-          "description": "Excellent en camp Loup",
+          "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
           "value": 45.83333333333333,
           "percentile": 90.32258064516128,
@@ -2453,9 +3203,9 @@
         },
         {
           "id": "talkingOutsideMeeting_extreme_high",
-          "title": "Le Chuchoteur",
+          "title": "Le·a Chuchoteur·se",
           "emoji": "👂",
-          "description": "Bavard hors meeting",
+          "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 967.5418235819591,
           "percentile": 92,
@@ -2465,44 +3215,82 @@
         },
         {
           "id": "talkingDuringMeeting_extreme_high",
-          "title": "L'Orateur",
+          "title": "L'Orateur·rice",
           "emoji": "🎤",
-          "description": "Bavard en meeting",
+          "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 469.1423635843672,
           "percentile": 96,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
+        },
+        {
+          "id": "winRate_high",
+          "title": "Le·a Winner",
+          "emoji": "🏆",
+          "description": "Taux de victoire élevé",
+          "stat": "winRate",
+          "value": 43.8,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRateVillageois_high",
+          "title": "Super Villageois·e",
+          "emoji": "🦸",
+          "description": "Excellent·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 52.38095238095239,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 523.8633874962719,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "loot_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 516.613769207369,
+          "percentile": 52.77777777777778,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "manipulateur",
-        "title": "Le Manipulateur",
-        "emoji": "🐍",
-        "description": "Loup bavard et gagnant",
-        "priority": 15,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "winRateLoup",
-            "category": "HIGH",
-            "actualValue": 45.83333333333333,
-            "actualPercentile": 90.32258064516128
-          },
-          {
-            "stat": "talking",
-            "category": "HIGH",
-            "actualValue": 1436.6841871663262,
-            "actualPercentile": 92
-          }
-        ]
+        "id": "talkingDuringMeeting_extreme_high",
+        "title": "L'Orateur·rice",
+        "emoji": "🎤",
+        "description": "Bavard·e en meeting",
+        "stat": "talkingDuringPer60Min",
+        "value": 469.1423635843672,
+        "percentile": 96,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
           "value": 43.8,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "gamesPlayed": {
           "value": 317,
@@ -2512,7 +3300,7 @@
         "winRateVillageois": {
           "value": 52.38095238095239,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateLoup": {
           "value": 45.83333333333333,
@@ -2562,7 +3350,7 @@
         "lootVillageoisPer60Min": {
           "value": 523.8633874962719,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootLoupPer60Min": {
           "value": 541.6416006018458,
@@ -2596,7 +3384,7 @@
           "id": "efficace",
           "title": "L'Efficace",
           "emoji": "🎯",
-          "description": "Silencieux mais productif",
+          "description": "Silencieux·se mais productif·ve",
           "priority": 10,
           "type": "combination",
           "conditions": [
@@ -2616,7 +3404,7 @@
         },
         {
           "id": "loot_extreme_high",
-          "title": "Le Stakhanoviste",
+          "title": "Le·a Stakhanoviste",
           "emoji": "⚒️",
           "description": "Récolte exceptionnelle",
           "stat": "lootPer60Min",
@@ -2627,10 +3415,22 @@
           "type": "basic"
         },
         {
+          "id": "winRate_low",
+          "title": "Le·a Looser",
+          "emoji": "😢",
+          "description": "Taux de victoire faible",
+          "stat": "winRate",
+          "value": 36.5,
+          "percentile": 30.555555555555557,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRateLoup_low",
-          "title": "Loup Nul",
+          "title": "Loup Débutant·e",
           "emoji": "🐩",
-          "description": "Mauvais en camp Loup",
+          "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
           "value": 21.875,
           "percentile": 16.129032258064516,
@@ -2640,7 +3440,7 @@
         },
         {
           "id": "talking_low",
-          "title": "Le Silencieux",
+          "title": "Le·a Silencieux·se",
           "emoji": "🤫",
           "description": "Parle peu (par 60 min de jeu)",
           "stat": "talkingPer60Min",
@@ -2652,9 +3452,9 @@
         },
         {
           "id": "talkingOutsideMeeting_low",
-          "title": "Le Concentré",
+          "title": "Le·a Concentré·e",
           "emoji": "🎯",
-          "description": "Silencieux hors meeting",
+          "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 679.9079802204543,
           "percentile": 20,
@@ -2664,13 +3464,25 @@
         },
         {
           "id": "talkingDuringMeeting_low",
-          "title": "Le Discret",
+          "title": "Le·a Discret·ète",
           "emoji": "🤐",
-          "description": "Silencieux en meeting",
+          "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 237.602673304896,
           "percentile": 24,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 526.5688363213716,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -2688,42 +3500,32 @@
         }
       ],
       "primaryTitle": {
-        "id": "efficace",
-        "title": "L'Efficace",
-        "emoji": "🎯",
-        "description": "Silencieux mais productif",
-        "priority": 10,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "talking",
-            "category": "LOW",
-            "actualValue": 917.5106535253502,
-            "actualPercentile": 20
-          },
-          {
-            "stat": "loot",
-            "category": "HIGH",
-            "actualValue": 547.5631551233826,
-            "actualPercentile": 91.66666666666666
-          }
-        ]
+        "id": "lootLoup_high",
+        "title": "Le Loup Discret",
+        "emoji": "🐺",
+        "description": "Récolte élevée en Loup (camouflage)",
+        "stat": "lootLoupPer60Min",
+        "value": 583.1767116488371,
+        "percentile": 83.33333333333334,
+        "category": "HIGH",
+        "priority": 6,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
           "value": 36.5,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "gamesPlayed": {
           "value": 189,
           "percentile": 58.333333333333336,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "winRateVillageois": {
           "value": 47.93388429752066,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "winRateLoup": {
           "value": 21.875,
@@ -2733,12 +3535,12 @@
         "winRateSolo": {
           "value": 11.11111111111111,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "campVillageoisPercent": {
           "value": 64.02116402116403,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campLoupPercent": {
           "value": 16.93121693121693,
@@ -2773,7 +3575,7 @@
         "lootVillageoisPer60Min": {
           "value": 526.5688363213716,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootLoupPer60Min": {
           "value": 583.1767116488371,
@@ -2805,9 +3607,9 @@
       "titles": [
         {
           "id": "talkingDuringMeeting_extreme_high",
-          "title": "L'Orateur",
+          "title": "L'Orateur·rice",
           "emoji": "🎤",
-          "description": "Bavard en meeting",
+          "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 452.96271675977243,
           "percentile": 92,
@@ -2816,8 +3618,20 @@
           "type": "basic"
         },
         {
+          "id": "winRateSolo_high",
+          "title": "Super Solo",
+          "emoji": "🦊",
+          "description": "Excellent·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 13.698630136986301,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talking_high",
-          "title": "Le Bavard",
+          "title": "Le·a Bavard·e",
           "emoji": "🗣️",
           "description": "Parle beaucoup (par 60 min de jeu)",
           "stat": "talkingPer60Min",
@@ -2826,18 +3640,42 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "loot_above_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 518.5808539452105,
+          "percentile": 61.111111111111114,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 39.3,
+          "percentile": 50,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "talkingDuringMeeting_extreme_high",
-        "title": "L'Orateur",
-        "emoji": "🎤",
-        "description": "Bavard en meeting",
-        "stat": "talkingDuringPer60Min",
-        "value": 452.96271675977243,
-        "percentile": 92,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
+        "id": "loot_above_average",
+        "title": "Le·a Travailleur·se",
+        "emoji": "👷",
+        "description": "Récolte correcte",
+        "stat": "lootPer60Min",
+        "value": 518.5808539452105,
+        "percentile": 61.111111111111114,
+        "category": "ABOVE_AVERAGE",
+        "priority": 4,
         "type": "basic"
       },
       "percentiles": {
@@ -2854,7 +3692,7 @@
         "winRateVillageois": {
           "value": 47.983870967741936,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "winRateLoup": {
           "value": 34.42622950819672,
@@ -2864,17 +3702,17 @@
         "winRateSolo": {
           "value": 13.698630136986301,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campVillageoisPercent": {
           "value": 64.92146596858639,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campLoupPercent": {
           "value": 15.968586387434556,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campSoloPercent": {
           "value": 19.10994764397906,
@@ -2889,7 +3727,7 @@
         "talkingOutsidePer60Min": {
           "value": 739.4579059990489,
           "percentile": 44,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "talkingDuringPer60Min": {
           "value": 452.96271675977243,
@@ -2909,7 +3747,7 @@
         "lootLoupPer60Min": {
           "value": 537.6126394710933,
           "percentile": 58.333333333333336,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -2935,8 +3773,36 @@
       "gamesPlayed": 122,
       "titles": [
         {
+          "id": "en_difficulte",
+          "title": "En Difficulté",
+          "emoji": "😰",
+          "description": "Peine dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "LOW",
+              "actualValue": 35.80246913580247,
+              "actualPercentile": 5.555555555555555
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "LOW",
+              "actualValue": 25.925925925925924,
+              "actualPercentile": 32.25806451612903
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "LOW",
+              "actualValue": 0,
+              "actualPercentile": 0
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_low",
-          "title": "Le Maudit",
+          "title": "Le·a Maudit·e",
           "emoji": "🪦",
           "description": "Perd presque toujours",
           "stat": "winRate",
@@ -2948,9 +3814,9 @@
         },
         {
           "id": "winRateVillageois_extreme_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 35.80246913580247,
           "percentile": 5.555555555555555,
@@ -2960,9 +3826,9 @@
         },
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -2971,8 +3837,20 @@
           "type": "basic"
         },
         {
+          "id": "winRateLoup_low",
+          "title": "Loup Débutant·e",
+          "emoji": "🐩",
+          "description": "Mauvais·e en camp Loup",
+          "stat": "winRateLoup",
+          "value": 25.925925925925924,
+          "percentile": 32.25806451612903,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_low",
-          "title": "Le Villageois Paresseux",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -2993,19 +3871,59 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "talking_below_average",
+          "title": "Le·a Équilibré·e",
+          "emoji": "⚖️",
+          "description": "Temps de parole normal",
+          "stat": "talkingPer60Min",
+          "value": 995.9884840788314,
+          "percentile": 44,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "loot_below_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 511.9119492511369,
+          "percentile": 38.88888888888889,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_low",
-        "title": "Le Maudit",
-        "emoji": "🪦",
-        "description": "Perd presque toujours",
-        "stat": "winRate",
-        "value": 29.5,
-        "percentile": 2.7777777777777777,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "en_difficulte",
+        "title": "En Difficulté",
+        "emoji": "😰",
+        "description": "Peine dans tous les camps",
+        "priority": 16,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "winRateVillageois",
+            "category": "LOW",
+            "actualValue": 35.80246913580247,
+            "actualPercentile": 5.555555555555555
+          },
+          {
+            "stat": "winRateLoup",
+            "category": "LOW",
+            "actualValue": 25.925925925925924,
+            "actualPercentile": 32.25806451612903
+          },
+          {
+            "stat": "winRateSolo",
+            "category": "LOW",
+            "actualValue": 0,
+            "actualPercentile": 0
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -3016,7 +3934,7 @@
         "gamesPlayed": {
           "value": 122,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "winRateVillageois": {
           "value": 35.80246913580247,
@@ -3026,7 +3944,7 @@
         "winRateLoup": {
           "value": 25.925925925925924,
           "percentile": 32.25806451612903,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "winRateSolo": {
           "value": 0,
@@ -3041,7 +3959,7 @@
         "campLoupPercent": {
           "value": 22.131147540983605,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "campSoloPercent": {
           "value": 11.475409836065573,
@@ -3051,7 +3969,7 @@
         "talkingPer60Min": {
           "value": 995.9884840788314,
           "percentile": 44,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "talkingOutsidePer60Min": {
           "value": 733.372131618966,
@@ -3061,7 +3979,7 @@
         "talkingDuringPer60Min": {
           "value": 262.6163524598654,
           "percentile": 44,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "lootPer60Min": {
           "value": 511.9119492511369,
@@ -3102,10 +4020,22 @@
       "gamesPlayed": 275,
       "titles": [
         {
+          "id": "winRateLoup_extreme_low",
+          "title": "Loup Débutant·e",
+          "emoji": "🐩",
+          "description": "Mauvais·e en camp Loup",
+          "stat": "winRateLoup",
+          "value": 19.51219512195122,
+          "percentile": 12.903225806451612,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "talking_extreme_low",
-          "title": "Le Fantôme",
+          "title": "Le·a Fantôme",
           "emoji": "👻",
-          "description": "Quasi muet",
+          "description": "Quasi muet·te",
           "stat": "talkingPer60Min",
           "value": 777.5035792853156,
           "percentile": 4,
@@ -3115,9 +4045,9 @@
         },
         {
           "id": "talkingOutsideMeeting_extreme_low",
-          "title": "Le Concentré",
+          "title": "Le·a Concentré·e",
           "emoji": "🎯",
-          "description": "Silencieux hors meeting",
+          "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 603.1558479990774,
           "percentile": 8,
@@ -3127,9 +4057,9 @@
         },
         {
           "id": "talkingDuringMeeting_extreme_low",
-          "title": "Le Discret",
+          "title": "Le·a Discret·ète",
           "emoji": "🤐",
-          "description": "Silencieux en meeting",
+          "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 174.3477312862382,
           "percentile": 4,
@@ -3138,26 +4068,50 @@
           "type": "basic"
         },
         {
-          "id": "winRateLoup_low",
-          "title": "Loup Nul",
-          "emoji": "🐩",
-          "description": "Mauvais en camp Loup",
-          "stat": "winRateLoup",
-          "value": 19.51219512195122,
-          "percentile": 12.903225806451612,
+          "id": "winRateSolo_low",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 2.083333333333333,
+          "percentile": 27.77777777777778,
           "category": "LOW",
           "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_below_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 37.1,
+          "percentile": 36.11111111111111,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "loot_above_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 516.6595209891901,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "talking_extreme_low",
-        "title": "Le Fantôme",
-        "emoji": "👻",
-        "description": "Quasi muet",
-        "stat": "talkingPer60Min",
-        "value": 777.5035792853156,
-        "percentile": 4,
+        "id": "talkingOutsideMeeting_extreme_low",
+        "title": "Le·a Concentré·e",
+        "emoji": "🎯",
+        "description": "Silencieux·se hors meeting",
+        "stat": "talkingOutsidePer60Min",
+        "value": 603.1558479990774,
+        "percentile": 8,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -3181,17 +4135,17 @@
         "winRateLoup": {
           "value": 19.51219512195122,
           "percentile": 12.903225806451612,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "winRateSolo": {
           "value": 2.083333333333333,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campVillageoisPercent": {
           "value": 67.63636363636364,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campLoupPercent": {
           "value": 14.909090909090908,
@@ -3221,7 +4175,7 @@
         "lootPer60Min": {
           "value": 516.6595209891901,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "lootVillageoisPer60Min": {
           "value": 509.5319242392576,
@@ -3257,10 +4211,44 @@
       "gamesPlayed": 249,
       "titles": [
         {
+          "id": "hyperactif",
+          "title": "L'Hyperactif·ve",
+          "emoji": "⚡",
+          "description": "Bavard·e ET grande récolte",
+          "priority": 10,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1156.984297978924,
+              "actualPercentile": 68
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 539.4051930505553,
+              "actualPercentile": 83.33333333333334
+            }
+          ]
+        },
+        {
+          "id": "lootVillageois_extreme_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 541.6267023410664,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateVillageois_high",
-          "title": "Super Villageois",
+          "title": "Super Villageois·e",
           "emoji": "🦸",
-          "description": "Excellent en camp Villageois",
+          "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 56.17283950617284,
           "percentile": 75,
@@ -3269,8 +4257,56 @@
           "type": "basic"
         },
         {
+          "id": "winRateLoup_low",
+          "title": "Loup Débutant·e",
+          "emoji": "🐩",
+          "description": "Mauvais·e en camp Loup",
+          "stat": "winRateLoup",
+          "value": 24.390243902439025,
+          "percentile": 25.806451612903224,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talking_high",
+          "title": "Le·a Bavard·e",
+          "emoji": "🗣️",
+          "description": "Parle beaucoup (par 60 min de jeu)",
+          "stat": "talkingPer60Min",
+          "value": 1156.984297978924,
+          "percentile": 68,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talkingOutsideMeeting_high",
+          "title": "Le·a Chuchoteur·se",
+          "emoji": "👂",
+          "description": "Bavard·e hors meeting",
+          "stat": "talkingOutsidePer60Min",
+          "value": 826.7087423448536,
+          "percentile": 68,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talkingDuringMeeting_high",
+          "title": "L'Orateur·rice",
+          "emoji": "🎤",
+          "description": "Bavard·e en meeting",
+          "stat": "talkingDuringPer60Min",
+          "value": 330.2755556340704,
+          "percentile": 72,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_high",
-          "title": "Le Fermier",
+          "title": "Le·a Fermier·ère",
           "emoji": "🌾",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
@@ -3281,29 +4317,51 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_high",
-          "title": "Le Citoyen Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 541.6267023410664,
-          "percentile": 86.11111111111111,
+          "id": "lootLoup_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 542.7821317945175,
+          "percentile": 66.66666666666666,
           "category": "HIGH",
           "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_above_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 42.2,
+          "percentile": 61.111111111111114,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateVillageois_high",
-        "title": "Super Villageois",
-        "emoji": "🦸",
-        "description": "Excellent en camp Villageois",
-        "stat": "winRateVillageois",
-        "value": 56.17283950617284,
-        "percentile": 75,
-        "category": "HIGH",
-        "priority": 6,
-        "type": "basic"
+        "id": "hyperactif",
+        "title": "L'Hyperactif·ve",
+        "emoji": "⚡",
+        "description": "Bavard·e ET grande récolte",
+        "priority": 10,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "talking",
+            "category": "HIGH",
+            "actualValue": 1156.984297978924,
+            "actualPercentile": 68
+          },
+          {
+            "stat": "loot",
+            "category": "HIGH",
+            "actualValue": 539.4051930505553,
+            "actualPercentile": 83.33333333333334
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -3324,7 +4382,7 @@
         "winRateLoup": {
           "value": 24.390243902439025,
           "percentile": 25.806451612903224,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "winRateSolo": {
           "value": 8.695652173913043,
@@ -3344,22 +4402,22 @@
         "campSoloPercent": {
           "value": 18.473895582329316,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "talkingPer60Min": {
           "value": 1156.984297978924,
           "percentile": 68,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "talkingOutsidePer60Min": {
           "value": 826.7087423448536,
           "percentile": 68,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "talkingDuringPer60Min": {
           "value": 330.2755556340704,
           "percentile": 72,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootPer60Min": {
           "value": 539.4051930505553,
@@ -3369,12 +4427,12 @@
         "lootVillageoisPer60Min": {
           "value": 541.6267023410664,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "lootLoupPer60Min": {
           "value": 542.7821317945175,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -3400,22 +4458,62 @@
       "gamesPlayed": 228,
       "titles": [
         {
-          "id": "winRate_low",
-          "title": "Le Looser",
-          "emoji": "😢",
-          "description": "Taux de victoire faible",
+          "id": "en_difficulte",
+          "title": "En Difficulté",
+          "emoji": "😰",
+          "description": "Peine dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "LOW",
+              "actualValue": 41.95804195804196,
+              "actualPercentile": 19.444444444444446
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "LOW",
+              "actualValue": 22.727272727272727,
+              "actualPercentile": 19.35483870967742
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "LOW",
+              "actualValue": 4.878048780487805,
+              "actualPercentile": 33.33333333333333
+            }
+          ]
+        },
+        {
+          "id": "winRate_extreme_low",
+          "title": "Le·a Maudit·e",
+          "emoji": "🪦",
+          "description": "Perd presque toujours",
           "stat": "winRate",
           "value": 31.6,
           "percentile": 13.88888888888889,
-          "category": "LOW",
-          "priority": 6,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_extreme_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 486.7315563405865,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW",
+          "priority": 8,
           "type": "basic"
         },
         {
           "id": "winRateVillageois_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 41.95804195804196,
           "percentile": 19.444444444444446,
@@ -3425,9 +4523,9 @@
         },
         {
           "id": "winRateLoup_low",
-          "title": "Loup Nul",
+          "title": "Loup Débutant·e",
           "emoji": "🐩",
-          "description": "Mauvais en camp Loup",
+          "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
           "value": 22.727272727272727,
           "percentile": 19.35483870967742,
@@ -3436,10 +4534,22 @@
           "type": "basic"
         },
         {
+          "id": "winRateSolo_low",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 4.878048780487805,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talkingDuringMeeting_high",
-          "title": "L'Orateur",
+          "title": "L'Orateur·rice",
           "emoji": "🎤",
-          "description": "Bavard en meeting",
+          "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 330.74441278783365,
           "percentile": 76,
@@ -3449,7 +4559,7 @@
         },
         {
           "id": "loot_low",
-          "title": "Le Flâneur",
+          "title": "Le·a Flâneur·se",
           "emoji": "🚶",
           "description": "Récolte faible",
           "stat": "lootPer60Min",
@@ -3460,35 +4570,47 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 486.7315563405865,
-          "percentile": 13.88888888888889,
+          "id": "lootVillageois_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 503.9897981155459,
+          "percentile": 30.555555555555557,
           "category": "LOW",
           "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talking_above_average",
+          "title": "Le·a Équilibré·e",
+          "emoji": "⚖️",
+          "description": "Temps de parole normal",
+          "stat": "talkingPer60Min",
+          "value": 1085.6368821360222,
+          "percentile": 60,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRate_low",
-        "title": "Le Looser",
-        "emoji": "😢",
-        "description": "Taux de victoire faible",
+        "id": "winRate_extreme_low",
+        "title": "Le·a Maudit·e",
+        "emoji": "🪦",
+        "description": "Perd presque toujours",
         "stat": "winRate",
         "value": 31.6,
         "percentile": 13.88888888888889,
-        "category": "LOW",
-        "priority": 6,
+        "category": "EXTREME_LOW",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
         "winRate": {
           "value": 31.6,
           "percentile": 13.88888888888889,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "gamesPlayed": {
           "value": 228,
@@ -3508,7 +4630,7 @@
         "winRateSolo": {
           "value": 4.878048780487805,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campVillageoisPercent": {
           "value": 62.71929824561403,
@@ -3518,12 +4640,12 @@
         "campLoupPercent": {
           "value": 19.298245614035086,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campSoloPercent": {
           "value": 17.982456140350877,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "talkingPer60Min": {
           "value": 1085.6368821360222,
@@ -3533,7 +4655,7 @@
         "talkingOutsidePer60Min": {
           "value": 754.8924693481885,
           "percentile": 56.00000000000001,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "talkingDuringPer60Min": {
           "value": 330.74441278783365,
@@ -3548,12 +4670,12 @@
         "lootVillageoisPer60Min": {
           "value": 503.9897981155459,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootLoupPer60Min": {
           "value": 486.7315563405865,
           "percentile": 13.88888888888889,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -3579,10 +4701,38 @@
       "gamesPlayed": 194,
       "titles": [
         {
+          "id": "adaptable",
+          "title": "L'Adaptable",
+          "emoji": "🦎",
+          "description": "Bon dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 51.26050420168067,
+              "actualPercentile": 58.333333333333336
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 40,
+              "actualPercentile": 77.41935483870968
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 14.285714285714285,
+              "actualPercentile": 69.44444444444444
+            }
+          ]
+        },
+        {
           "id": "manipulateur",
-          "title": "Le Manipulateur",
+          "title": "Le·a Manipulateur·rice",
           "emoji": "🐍",
-          "description": "Loup bavard et gagnant",
+          "description": "Loup bavard·e et gagnant·e",
           "priority": 15,
           "type": "combination",
           "conditions": [
@@ -3602,9 +4752,9 @@
         },
         {
           "id": "hyperactif",
-          "title": "L'Hyperactif",
+          "title": "L'Hyperactif·ve",
           "emoji": "⚡",
-          "description": "Bavard ET grande récolte",
+          "description": "Bavard·e ET grande récolte",
           "priority": 10,
           "type": "combination",
           "conditions": [
@@ -3623,8 +4773,20 @@
           ]
         },
         {
+          "id": "loot_extreme_high",
+          "title": "Le·a Stakhanoviste",
+          "emoji": "⚒️",
+          "description": "Récolte exceptionnelle",
+          "stat": "lootPer60Min",
+          "value": 544.1142900769254,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_extreme_high",
-          "title": "Le Citoyen Modèle",
+          "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -3638,7 +4800,7 @@
           "id": "winRateLoup_high",
           "title": "Super Loup",
           "emoji": "🐺",
-          "description": "Excellent en camp Loup",
+          "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
           "value": 40,
           "percentile": 77.41935483870968,
@@ -3647,8 +4809,20 @@
           "type": "basic"
         },
         {
+          "id": "winRateSolo_high",
+          "title": "Super Solo",
+          "emoji": "🦊",
+          "description": "Excellent·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 14.285714285714285,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talking_high",
-          "title": "Le Bavard",
+          "title": "Le·a Bavard·e",
           "emoji": "🗣️",
           "description": "Parle beaucoup (par 60 min de jeu)",
           "stat": "talkingPer60Min",
@@ -3660,9 +4834,9 @@
         },
         {
           "id": "talkingOutsideMeeting_high",
-          "title": "Le Chuchoteur",
+          "title": "Le·a Chuchoteur·se",
           "emoji": "👂",
-          "description": "Bavard hors meeting",
+          "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 877.6729472596473,
           "percentile": 80,
@@ -3671,13 +4845,13 @@
           "type": "basic"
         },
         {
-          "id": "loot_high",
-          "title": "Le Fermier",
-          "emoji": "🌾",
-          "description": "Récolte élevée",
-          "stat": "lootPer60Min",
-          "value": 544.1142900769254,
-          "percentile": 88.88888888888889,
+          "id": "talkingDuringMeeting_high",
+          "title": "L'Orateur·rice",
+          "emoji": "🎤",
+          "description": "Bavard·e en meeting",
+          "stat": "talkingDuringPer60Min",
+          "value": 316.5767270970832,
+          "percentile": 68,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3693,29 +4867,31 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "winRate_above_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 42.3,
+          "percentile": 63.888888888888886,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "manipulateur",
-        "title": "Le Manipulateur",
-        "emoji": "🐍",
-        "description": "Loup bavard et gagnant",
-        "priority": 15,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "winRateLoup",
-            "category": "HIGH",
-            "actualValue": 40,
-            "actualPercentile": 77.41935483870968
-          },
-          {
-            "stat": "talking",
-            "category": "HIGH",
-            "actualValue": 1194.2496743567306,
-            "actualPercentile": 84
-          }
-        ]
+        "id": "talking_high",
+        "title": "Le·a Bavard·e",
+        "emoji": "🗣️",
+        "description": "Parle beaucoup (par 60 min de jeu)",
+        "stat": "talkingPer60Min",
+        "value": 1194.2496743567306,
+        "percentile": 84,
+        "category": "HIGH",
+        "priority": 6,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -3731,7 +4907,7 @@
         "winRateVillageois": {
           "value": 51.26050420168067,
           "percentile": 58.333333333333336,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
           "value": 40,
@@ -3741,12 +4917,12 @@
         "winRateSolo": {
           "value": 14.285714285714285,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campVillageoisPercent": {
           "value": 61.34020618556701,
           "percentile": 13.88888888888889,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "campLoupPercent": {
           "value": 20.618556701030926,
@@ -3771,12 +4947,12 @@
         "talkingDuringPer60Min": {
           "value": 316.5767270970832,
           "percentile": 68,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootPer60Min": {
           "value": 544.1142900769254,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "lootVillageoisPer60Min": {
           "value": 544.903930848865,
@@ -3813,9 +4989,9 @@
       "titles": [
         {
           "id": "talking_extreme_low",
-          "title": "Le Fantôme",
+          "title": "Le·a Fantôme",
           "emoji": "👻",
-          "description": "Quasi muet",
+          "description": "Quasi muet·te",
           "stat": "talkingPer60Min",
           "value": 810.38616663808,
           "percentile": 8,
@@ -3825,9 +5001,9 @@
         },
         {
           "id": "talkingOutsideMeeting_extreme_low",
-          "title": "Le Concentré",
+          "title": "Le·a Concentré·e",
           "emoji": "🎯",
-          "description": "Silencieux hors meeting",
+          "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 559.4020963104329,
           "percentile": 4,
@@ -3837,7 +5013,7 @@
         },
         {
           "id": "winRate_low",
-          "title": "Le Looser",
+          "title": "Le·a Looser",
           "emoji": "😢",
           "description": "Taux de victoire faible",
           "stat": "winRate",
@@ -3849,27 +5025,63 @@
         },
         {
           "id": "winRateVillageois_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 42.857142857142854,
           "percentile": 25,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "winRateLoup_low",
+          "title": "Loup Débutant·e",
+          "emoji": "🐩",
+          "description": "Mauvais·e en camp Loup",
+          "stat": "winRateLoup",
+          "value": 24.390243902439025,
+          "percentile": 25.806451612903224,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "loot_low",
+          "title": "Le·a Flâneur·se",
+          "emoji": "🚶",
+          "description": "Récolte faible",
+          "stat": "lootPer60Min",
+          "value": 506.3529732203604,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 509.9522157605914,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "talking_extreme_low",
-        "title": "Le Fantôme",
-        "emoji": "👻",
-        "description": "Quasi muet",
-        "stat": "talkingPer60Min",
-        "value": 810.38616663808,
-        "percentile": 8,
-        "category": "EXTREME_LOW",
-        "priority": 8,
+        "id": "lootLoup_low",
+        "title": "Le Loup Impatient",
+        "emoji": "😤",
+        "description": "Faible récolte en Loup",
+        "stat": "lootLoupPer60Min",
+        "value": 509.9522157605914,
+        "percentile": 33.33333333333333,
+        "category": "LOW",
+        "priority": 6,
         "type": "basic"
       },
       "percentiles": {
@@ -3881,7 +5093,7 @@
         "gamesPlayed": {
           "value": 222,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateVillageois": {
           "value": 42.857142857142854,
@@ -3891,27 +5103,27 @@
         "winRateLoup": {
           "value": 24.390243902439025,
           "percentile": 25.806451612903224,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "winRateSolo": {
           "value": 9.75609756097561,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "campVillageoisPercent": {
           "value": 63.06306306306306,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campLoupPercent": {
           "value": 18.46846846846847,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campSoloPercent": {
           "value": 18.46846846846847,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "talkingPer60Min": {
           "value": 810.38616663808,
@@ -3931,7 +5143,7 @@
         "lootPer60Min": {
           "value": 506.3529732203604,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootVillageoisPer60Min": {
           "value": 511.5982952285992,
@@ -3941,7 +5153,7 @@
         "lootLoupPer60Min": {
           "value": 509.9522157605914,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         }
       },
       "stats": {
@@ -3967,8 +5179,36 @@
       "gamesPlayed": 202,
       "titles": [
         {
+          "id": "en_difficulte",
+          "title": "En Difficulté",
+          "emoji": "😰",
+          "description": "Peine dans tous les camps",
+          "priority": 16,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateVillageois",
+              "category": "LOW",
+              "actualValue": 42.10526315789473,
+              "actualPercentile": 22.22222222222222
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "LOW",
+              "actualValue": 8.571428571428571,
+              "actualPercentile": 0
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "LOW",
+              "actualValue": 2.941176470588235,
+              "actualPercentile": 30.555555555555557
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_low",
-          "title": "Le Maudit",
+          "title": "Le·a Maudit·e",
           "emoji": "🪦",
           "description": "Perd presque toujours",
           "stat": "winRate",
@@ -3980,9 +5220,9 @@
         },
         {
           "id": "winRateLoup_extreme_low",
-          "title": "Loup Nul",
+          "title": "Loup Débutant·e",
           "emoji": "🐩",
-          "description": "Mauvais en camp Loup",
+          "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
           "value": 8.571428571428571,
           "percentile": 0,
@@ -3991,10 +5231,22 @@
           "type": "basic"
         },
         {
+          "id": "lootVillageois_extreme_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 543.1723836768067,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateVillageois_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 42.10526315789473,
           "percentile": 22.22222222222222,
@@ -4003,10 +5255,22 @@
           "type": "basic"
         },
         {
+          "id": "winRateSolo_low",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 2.941176470588235,
+          "percentile": 30.555555555555557,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talkingDuringMeeting_low",
-          "title": "Le Discret",
+          "title": "Le·a Discret·ète",
           "emoji": "🤐",
-          "description": "Silencieux en meeting",
+          "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 224.44191748356914,
           "percentile": 16,
@@ -4016,7 +5280,7 @@
         },
         {
           "id": "loot_high",
-          "title": "Le Fermier",
+          "title": "Le·a Fermier·ère",
           "emoji": "🌾",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
@@ -4027,26 +5291,26 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_high",
-          "title": "Le Citoyen Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 543.1723836768067,
-          "percentile": 88.88888888888889,
-          "category": "HIGH",
-          "priority": 6,
+          "id": "talking_below_average",
+          "title": "Le·a Équilibré·e",
+          "emoji": "⚖️",
+          "description": "Temps de parole normal",
+          "stat": "talkingPer60Min",
+          "value": 967.0632940203116,
+          "percentile": 36,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_low",
-        "title": "Le Maudit",
-        "emoji": "🪦",
-        "description": "Perd presque toujours",
-        "stat": "winRate",
-        "value": 29.7,
-        "percentile": 5.555555555555555,
+        "id": "winRateLoup_extreme_low",
+        "title": "Loup Débutant·e",
+        "emoji": "🐩",
+        "description": "Mauvais·e en camp Loup",
+        "stat": "winRateLoup",
+        "value": 8.571428571428571,
+        "percentile": 0,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -4060,7 +5324,7 @@
         "gamesPlayed": {
           "value": 202,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateVillageois": {
           "value": 42.10526315789473,
@@ -4075,17 +5339,17 @@
         "winRateSolo": {
           "value": 2.941176470588235,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campVillageoisPercent": {
           "value": 65.84158415841584,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
           "value": 17.326732673267326,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "campSoloPercent": {
           "value": 16.831683168316832,
@@ -4115,12 +5379,12 @@
         "lootVillageoisPer60Min": {
           "value": 543.1723836768067,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "lootLoupPer60Min": {
           "value": 522.0379943106672,
           "percentile": 44.44444444444444,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -4147,9 +5411,9 @@
       "titles": [
         {
           "id": "winRateLoup_extreme_low",
-          "title": "Loup Nul",
+          "title": "Loup Débutant·e",
           "emoji": "🐩",
-          "description": "Mauvais en camp Loup",
+          "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
           "value": 19.230769230769234,
           "percentile": 9.67741935483871,
@@ -4159,9 +5423,9 @@
         },
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -4170,14 +5434,50 @@
           "type": "basic"
         },
         {
-          "id": "talkingOutsideMeeting_high",
-          "title": "Le Chuchoteur",
+          "id": "talkingOutsideMeeting_extreme_high",
+          "title": "Le·a Chuchoteur·se",
           "emoji": "👂",
-          "description": "Bavard hors meeting",
+          "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 890.5967882510423,
           "percentile": 88,
-          "category": "HIGH",
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_low",
+          "title": "Le·a Looser",
+          "emoji": "😢",
+          "description": "Taux de victoire faible",
+          "stat": "winRate",
+          "value": 35.6,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talkingDuringMeeting_low",
+          "title": "Le·a Discret·ète",
+          "emoji": "🤐",
+          "description": "Silencieux·se en meeting",
+          "stat": "talkingDuringPer60Min",
+          "value": 242.3821692022768,
+          "percentile": 28.000000000000004,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "loot_low",
+          "title": "Le·a Flâneur·se",
+          "emoji": "🚶",
+          "description": "Récolte faible",
+          "stat": "lootPer60Min",
+          "value": 506.44484583980835,
+          "percentile": 30.555555555555557,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -4192,17 +5492,29 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "talking_above_average",
+          "title": "Le·a Équilibré·e",
+          "emoji": "⚖️",
+          "description": "Temps de parole normal",
+          "stat": "talkingPer60Min",
+          "value": 1132.9789574533193,
+          "percentile": 64,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_extreme_low",
-        "title": "Loup Nul",
-        "emoji": "🐩",
-        "description": "Mauvais en camp Loup",
-        "stat": "winRateLoup",
-        "value": 19.230769230769234,
-        "percentile": 9.67741935483871,
-        "category": "EXTREME_LOW",
+        "id": "talkingOutsideMeeting_extreme_high",
+        "title": "Le·a Chuchoteur·se",
+        "emoji": "👂",
+        "description": "Bavard·e hors meeting",
+        "stat": "talkingOutsidePer60Min",
+        "value": 890.5967882510423,
+        "percentile": 88,
+        "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"
       },
@@ -4210,7 +5522,7 @@
         "winRate": {
           "value": 35.6,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "gamesPlayed": {
           "value": 146,
@@ -4240,12 +5552,12 @@
         "campLoupPercent": {
           "value": 17.80821917808219,
           "percentile": 58.333333333333336,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "campSoloPercent": {
           "value": 17.123287671232877,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "talkingPer60Min": {
           "value": 1132.9789574533193,
@@ -4255,17 +5567,17 @@
         "talkingOutsidePer60Min": {
           "value": 890.5967882510423,
           "percentile": 88,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "talkingDuringPer60Min": {
           "value": 242.3821692022768,
           "percentile": 28.000000000000004,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootPer60Min": {
           "value": 506.44484583980835,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "lootVillageoisPer60Min": {
           "value": 508.44473865711007,
@@ -4302,7 +5614,7 @@
       "titles": [
         {
           "id": "winRate_extreme_low",
-          "title": "Le Maudit",
+          "title": "Le·a Maudit·e",
           "emoji": "🪦",
           "description": "Perd presque toujours",
           "stat": "winRate",
@@ -4314,9 +5626,9 @@
         },
         {
           "id": "winRateVillageois_extreme_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 30.434782608695656,
           "percentile": 0,
@@ -4328,7 +5640,7 @@
           "id": "winRateSolo_extreme_high",
           "title": "Super Solo",
           "emoji": "🦊",
-          "description": "Excellent en rôles Solo",
+          "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 25,
           "percentile": 97.22222222222221,
@@ -4338,7 +5650,7 @@
         },
         {
           "id": "loot_extreme_low",
-          "title": "Le Touriste",
+          "title": "Le·a Touriste",
           "emoji": "📸",
           "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
@@ -4350,7 +5662,7 @@
         },
         {
           "id": "lootVillageois_extreme_low",
-          "title": "Le Villageois Paresseux",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -4374,14 +5686,14 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_low",
-        "title": "Le Maudit",
-        "emoji": "🪦",
-        "description": "Perd presque toujours",
-        "stat": "winRate",
-        "value": 28.9,
-        "percentile": 0,
-        "category": "EXTREME_LOW",
+        "id": "winRateSolo_extreme_high",
+        "title": "Super Solo",
+        "emoji": "🦊",
+        "description": "Excellent·e en rôles Solo",
+        "stat": "winRateSolo",
+        "value": 25,
+        "percentile": 97.22222222222221,
+        "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"
       },
@@ -4394,7 +5706,7 @@
         "gamesPlayed": {
           "value": 38,
           "percentile": 13.88888888888889,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "winRateVillageois": {
           "value": 30.434782608695656,
@@ -4404,7 +5716,7 @@
         "winRateLoup": {
           "value": 28.57142857142857,
           "percentile": 41.935483870967744,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "winRateSolo": {
           "value": 25,
@@ -4424,7 +5736,7 @@
         "campSoloPercent": {
           "value": 21.052631578947366,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
           "value": 414.56608746566127,
@@ -4462,6 +5774,18 @@
       "gamesPlayed": 33,
       "titles": [
         {
+          "id": "winRateVillageois_extreme_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 40.909090909090914,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "lootLoup_extreme_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
@@ -4475,7 +5799,7 @@
         },
         {
           "id": "winRate_low",
-          "title": "Le Looser",
+          "title": "Le·a Looser",
           "emoji": "😢",
           "description": "Taux de victoire faible",
           "stat": "winRate",
@@ -4486,22 +5810,10 @@
           "type": "basic"
         },
         {
-          "id": "winRateVillageois_low",
-          "title": "Villageois Nul",
-          "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 40.909090909090914,
-          "percentile": 11.11111111111111,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "winRateSolo_high",
           "title": "Super Solo",
           "emoji": "🦊",
-          "description": "Excellent en rôles Solo",
+          "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 16.666666666666664,
           "percentile": 83.33333333333334,
@@ -4511,7 +5823,7 @@
         },
         {
           "id": "loot_high",
-          "title": "Le Fermier",
+          "title": "Le·a Fermier·ère",
           "emoji": "🌾",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
@@ -4523,14 +5835,14 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootLoup_extreme_high",
-        "title": "Le Loup Discret",
-        "emoji": "🐺",
-        "description": "Récolte élevée en Loup (camouflage)",
-        "stat": "lootLoupPer60Min",
-        "value": 627.0657404146879,
-        "percentile": 94.44444444444444,
-        "category": "EXTREME_HIGH",
+        "id": "winRateVillageois_extreme_low",
+        "title": "Idiot·e en Formation",
+        "emoji": "🤡",
+        "description": "Mauvais·e en camp Villageois",
+        "stat": "winRateVillageois",
+        "value": 40.909090909090914,
+        "percentile": 11.11111111111111,
+        "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
       },
@@ -4548,7 +5860,7 @@
         "winRateVillageois": {
           "value": 40.909090909090914,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "winRateSolo": {
           "value": 16.666666666666664,
@@ -4558,17 +5870,17 @@
         "campVillageoisPercent": {
           "value": 66.66666666666666,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "campLoupPercent": {
           "value": 15.151515151515152,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campSoloPercent": {
           "value": 18.181818181818183,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootPer60Min": {
           "value": 538.5743267028114,
@@ -4606,8 +5918,30 @@
       "gamesPlayed": 46,
       "titles": [
         {
+          "id": "efficace",
+          "title": "L'Efficace",
+          "emoji": "🎯",
+          "description": "Silencieux·se mais productif·ve",
+          "priority": 10,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 943.737060150582,
+              "actualPercentile": 32
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 526.4628333395082,
+              "actualPercentile": 72.22222222222221
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_low",
-          "title": "Le Maudit",
+          "title": "Le·a Maudit·e",
           "emoji": "🪦",
           "description": "Perd presque toujours",
           "stat": "winRate",
@@ -4619,9 +5953,9 @@
         },
         {
           "id": "winRateVillageois_extreme_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 37.83783783783784,
           "percentile": 8.333333333333332,
@@ -4631,9 +5965,9 @@
         },
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -4643,9 +5977,9 @@
         },
         {
           "id": "talkingDuringMeeting_extreme_low",
-          "title": "Le Discret",
+          "title": "Le·a Discret·ète",
           "emoji": "🤐",
-          "description": "Silencieux en meeting",
+          "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 183.32363582235445,
           "percentile": 8,
@@ -4664,17 +5998,51 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
+        },
+        {
+          "id": "talking_low",
+          "title": "Le·a Silencieux·se",
+          "emoji": "🤫",
+          "description": "Parle peu (par 60 min de jeu)",
+          "stat": "talkingPer60Min",
+          "value": 943.737060150582,
+          "percentile": 32,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "loot_high",
+          "title": "Le·a Fermier·ère",
+          "emoji": "🌾",
+          "description": "Récolte élevée",
+          "stat": "lootPer60Min",
+          "value": 526.4628333395082,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "role_alchimiste",
+          "title": "Serial Alchimiste",
+          "emoji": "⚗️",
+          "description": "Joue souvent Alchimiste",
+          "roleCount": 6,
+          "rolePercentage": 13.043478260869565,
+          "priority": 3,
+          "type": "role"
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_low",
-        "title": "Le Maudit",
-        "emoji": "🪦",
-        "description": "Perd presque toujours",
-        "stat": "winRate",
-        "value": 30.4,
-        "percentile": 8.333333333333332,
-        "category": "EXTREME_LOW",
+        "id": "lootLoup_extreme_high",
+        "title": "Le Loup Discret",
+        "emoji": "🐺",
+        "description": "Récolte élevée en Loup (camouflage)",
+        "stat": "lootLoupPer60Min",
+        "value": 1202.9457352932727,
+        "percentile": 97.22222222222221,
+        "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"
       },
@@ -4717,7 +6085,7 @@
         "talkingPer60Min": {
           "value": 943.737060150582,
           "percentile": 32,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "talkingOutsidePer60Min": {
           "value": 760.4134243282276,
@@ -4732,12 +6100,12 @@
         "lootPer60Min": {
           "value": 526.4628333395082,
           "percentile": 72.22222222222221,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootVillageoisPer60Min": {
           "value": 512.8258376615138,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "lootLoupPer60Min": {
           "value": 1202.9457352932727,
@@ -4768,10 +6136,32 @@
       "gamesPlayed": 55,
       "titles": [
         {
+          "id": "infiltrateur",
+          "title": "L'Infiltré·e",
+          "emoji": "🎭",
+          "description": "Excellent·e loup discret·ète",
+          "priority": 15,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 50,
+              "actualPercentile": 93.54838709677419
+            },
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 942.7090057261843,
+              "actualPercentile": 28.000000000000004
+            }
+          ]
+        },
+        {
           "id": "winRateLoup_extreme_high",
           "title": "Super Loup",
           "emoji": "🐺",
-          "description": "Excellent en camp Loup",
+          "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
           "value": 50,
           "percentile": 93.54838709677419,
@@ -4781,7 +6171,7 @@
         },
         {
           "id": "loot_extreme_low",
-          "title": "Le Touriste",
+          "title": "Le·a Touriste",
           "emoji": "📸",
           "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
@@ -4793,7 +6183,7 @@
         },
         {
           "id": "lootVillageois_extreme_low",
-          "title": "Le Villageois Paresseux",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -4816,45 +6206,115 @@
           "type": "basic"
         },
         {
+          "id": "winRateVillageois_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 44.73684210526316,
+          "percentile": 30.555555555555557,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRateSolo_high",
+          "title": "Super Solo",
+          "emoji": "🦊",
+          "description": "Excellent·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 14.285714285714285,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talking_low",
+          "title": "Le·a Silencieux·se",
+          "emoji": "🤫",
+          "description": "Parle peu (par 60 min de jeu)",
+          "stat": "talkingPer60Min",
+          "value": 942.7090057261843,
+          "percentile": 28.000000000000004,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talkingOutsideMeeting_low",
+          "title": "Le·a Concentré·e",
+          "emoji": "🎯",
+          "description": "Silencieux·se hors meeting",
+          "stat": "talkingOutsidePer60Min",
+          "value": 711.229567933368,
+          "percentile": 32,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talkingDuringMeeting_low",
-          "title": "Le Discret",
+          "title": "Le·a Discret·ète",
           "emoji": "🤐",
-          "description": "Silencieux en meeting",
+          "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 231.47943779281624,
           "percentile": 20,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "winRate_above_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 41.8,
+          "percentile": 58.333333333333336,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_extreme_high",
-        "title": "Super Loup",
-        "emoji": "🐺",
-        "description": "Excellent en camp Loup",
-        "stat": "winRateLoup",
-        "value": 50,
-        "percentile": 93.54838709677419,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "infiltrateur",
+        "title": "L'Infiltré·e",
+        "emoji": "🎭",
+        "description": "Excellent·e loup discret·ète",
+        "priority": 15,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "winRateLoup",
+            "category": "HIGH",
+            "actualValue": 50,
+            "actualPercentile": 93.54838709677419
+          },
+          {
+            "stat": "talking",
+            "category": "LOW",
+            "actualValue": 942.7090057261843,
+            "actualPercentile": 28.000000000000004
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
           "value": 41.8,
           "percentile": 58.333333333333336,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "gamesPlayed": {
           "value": 55,
           "percentile": 27.77777777777778,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "winRateVillageois": {
           "value": 44.73684210526316,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "winRateLoup": {
           "value": 50,
@@ -4864,7 +6324,7 @@
         "winRateSolo": {
           "value": 14.285714285714285,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campVillageoisPercent": {
           "value": 69.0909090909091,
@@ -4879,17 +6339,17 @@
         "campSoloPercent": {
           "value": 12.727272727272727,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "talkingPer60Min": {
           "value": 942.7090057261843,
           "percentile": 28.000000000000004,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "talkingOutsidePer60Min": {
           "value": 711.229567933368,
           "percentile": 32,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "talkingDuringPer60Min": {
           "value": 231.47943779281624,
@@ -4935,8 +6395,30 @@
       "gamesPlayed": 114,
       "titles": [
         {
+          "id": "hyperactif",
+          "title": "L'Hyperactif·ve",
+          "emoji": "⚡",
+          "description": "Bavard·e ET grande récolte",
+          "priority": 10,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1161.1410497433455,
+              "actualPercentile": 72
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 525.9719515223404,
+              "actualPercentile": 69.44444444444444
+            }
+          ]
+        },
+        {
           "id": "winRate_low",
-          "title": "Le Looser",
+          "title": "Le·a Looser",
           "emoji": "😢",
           "description": "Taux de victoire faible",
           "stat": "winRate",
@@ -4948,9 +6430,9 @@
         },
         {
           "id": "winRateVillageois_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 42.857142857142854,
           "percentile": 25,
@@ -4959,8 +6441,44 @@
           "type": "basic"
         },
         {
+          "id": "talking_high",
+          "title": "Le·a Bavard·e",
+          "emoji": "🗣️",
+          "description": "Parle beaucoup (par 60 min de jeu)",
+          "stat": "talkingPer60Min",
+          "value": 1161.1410497433455,
+          "percentile": 72,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "talkingOutsideMeeting_high",
+          "title": "Le·a Chuchoteur·se",
+          "emoji": "👂",
+          "description": "Bavard·e hors meeting",
+          "stat": "talkingOutsidePer60Min",
+          "value": 850.8162626271243,
+          "percentile": 72,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "loot_high",
+          "title": "Le·a Fermier·ère",
+          "emoji": "🌾",
+          "description": "Récolte élevée",
+          "stat": "lootPer60Min",
+          "value": 525.9719515223404,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_high",
-          "title": "Le Citoyen Modèle",
+          "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -4969,17 +6487,29 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "lootLoup_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 506.92891983347147,
+          "percentile": 30.555555555555557,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRate_low",
-        "title": "Le Looser",
-        "emoji": "😢",
-        "description": "Taux de victoire faible",
-        "stat": "winRate",
-        "value": 35.1,
-        "percentile": 25,
-        "category": "LOW",
+        "id": "loot_high",
+        "title": "Le·a Fermier·ère",
+        "emoji": "🌾",
+        "description": "Récolte élevée",
+        "stat": "lootPer60Min",
+        "value": 525.9719515223404,
+        "percentile": 69.44444444444444,
+        "category": "HIGH",
         "priority": 6,
         "type": "basic"
       },
@@ -4992,7 +6522,7 @@
         "gamesPlayed": {
           "value": 114,
           "percentile": 41.66666666666667,
-          "category": "AVERAGE"
+          "category": "BELOW_AVERAGE"
         },
         "winRateVillageois": {
           "value": 42.857142857142854,
@@ -5012,12 +6542,12 @@
         "campVillageoisPercent": {
           "value": 67.54385964912281,
           "percentile": 66.66666666666666,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "campLoupPercent": {
           "value": 15.789473684210526,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "campSoloPercent": {
           "value": 16.666666666666664,
@@ -5027,12 +6557,12 @@
         "talkingPer60Min": {
           "value": 1161.1410497433455,
           "percentile": 72,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "talkingOutsidePer60Min": {
           "value": 850.8162626271243,
           "percentile": 72,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "talkingDuringPer60Min": {
           "value": 310.3247871162214,
@@ -5042,7 +6572,7 @@
         "lootPer60Min": {
           "value": 525.9719515223404,
           "percentile": 69.44444444444444,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "lootVillageoisPer60Min": {
           "value": 534.1446149683193,
@@ -5052,7 +6582,7 @@
         "lootLoupPer60Min": {
           "value": 506.92891983347147,
           "percentile": 30.555555555555557,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         }
       },
       "stats": {
@@ -5079,9 +6609,9 @@
       "titles": [
         {
           "id": "winRateSolo_extreme_low",
-          "title": "Solo Nul",
-          "emoji": "💩",
-          "description": "Mauvais en rôles Solo",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
@@ -5091,9 +6621,9 @@
         },
         {
           "id": "talking_extreme_low",
-          "title": "Le Fantôme",
+          "title": "Le·a Fantôme",
           "emoji": "👻",
-          "description": "Quasi muet",
+          "description": "Quasi muet·te",
           "stat": "talkingPer60Min",
           "value": 309.4254441701218,
           "percentile": 0,
@@ -5103,9 +6633,9 @@
         },
         {
           "id": "talkingOutsideMeeting_extreme_low",
-          "title": "Le Concentré",
+          "title": "Le·a Concentré·e",
           "emoji": "🎯",
-          "description": "Silencieux hors meeting",
+          "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 250.0868690847025,
           "percentile": 0,
@@ -5115,9 +6645,9 @@
         },
         {
           "id": "talkingDuringMeeting_extreme_low",
-          "title": "Le Discret",
+          "title": "Le·a Discret·ète",
           "emoji": "🤐",
-          "description": "Silencieux en meeting",
+          "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 59.33857508541933,
           "percentile": 0,
@@ -5127,7 +6657,7 @@
         },
         {
           "id": "loot_extreme_low",
-          "title": "Le Touriste",
+          "title": "Le·a Touriste",
           "emoji": "📸",
           "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
@@ -5139,7 +6669,7 @@
         },
         {
           "id": "lootVillageois_extreme_low",
-          "title": "Le Villageois Paresseux",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -5151,9 +6681,9 @@
         },
         {
           "id": "winRateVillageois_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 41.66666666666667,
           "percentile": 16.666666666666664,
@@ -5172,15 +6702,27 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "winRate_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 38.9,
+          "percentile": 47.22222222222222,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateSolo_extreme_low",
-        "title": "Solo Nul",
-        "emoji": "💩",
-        "description": "Mauvais en rôles Solo",
-        "stat": "winRateSolo",
-        "value": 0,
+        "id": "talking_extreme_low",
+        "title": "Le·a Fantôme",
+        "emoji": "👻",
+        "description": "Quasi muet·te",
+        "stat": "talkingPer60Min",
+        "value": 309.4254441701218,
         "percentile": 0,
         "category": "EXTREME_LOW",
         "priority": 8,
@@ -5195,7 +6737,7 @@
         "gamesPlayed": {
           "value": 36,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "winRateVillageois": {
           "value": 41.66666666666667,
@@ -5210,7 +6752,7 @@
         "campVillageoisPercent": {
           "value": 66.66666666666666,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "campLoupPercent": {
           "value": 13.88888888888889,
@@ -5277,7 +6819,7 @@
       "titles": [
         {
           "id": "winRate_extreme_low",
-          "title": "Le Maudit",
+          "title": "Le·a Maudit·e",
           "emoji": "🪦",
           "description": "Perd presque toujours",
           "stat": "winRate",
@@ -5289,9 +6831,9 @@
         },
         {
           "id": "winRateVillageois_extreme_low",
-          "title": "Villageois Nul",
+          "title": "Idiot·e en Formation",
           "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
+          "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 33.33333333333333,
           "percentile": 2.7777777777777777,
@@ -5301,7 +6843,7 @@
         },
         {
           "id": "loot_extreme_high",
-          "title": "Le Stakhanoviste",
+          "title": "Le·a Stakhanoviste",
           "emoji": "⚒️",
           "description": "Récolte exceptionnelle",
           "stat": "lootPer60Min",
@@ -5313,7 +6855,7 @@
         },
         {
           "id": "lootVillageois_extreme_high",
-          "title": "Le Citoyen Modèle",
+          "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -5324,10 +6866,34 @@
           "type": "basic"
         },
         {
+          "id": "lootLoup_extreme_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 611.3594828814319,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRateLoup_high",
+          "title": "Super Loup",
+          "emoji": "🐺",
+          "description": "Excellent·e en camp Loup",
+          "stat": "winRateLoup",
+          "value": 38.88888888888889,
+          "percentile": 74.19354838709677,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talkingOutsideMeeting_low",
-          "title": "Le Concentré",
+          "title": "Le·a Concentré·e",
           "emoji": "🎯",
-          "description": "Silencieux hors meeting",
+          "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 704.2299991298266,
           "percentile": 24,
@@ -5336,27 +6902,27 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 611.3594828814319,
-          "percentile": 86.11111111111111,
-          "category": "HIGH",
-          "priority": 6,
+          "id": "talking_below_average",
+          "title": "Le·a Équilibré·e",
+          "emoji": "⚖️",
+          "description": "Temps de parole normal",
+          "stat": "talkingPer60Min",
+          "value": 970.203372067258,
+          "percentile": 40,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_low",
-        "title": "Le Maudit",
-        "emoji": "🪦",
-        "description": "Perd presque toujours",
-        "stat": "winRate",
-        "value": 30.4,
-        "percentile": 8.333333333333332,
-        "category": "EXTREME_LOW",
+        "id": "lootVillageois_extreme_high",
+        "title": "Le·a Citoyen·ne Modèle",
+        "emoji": "🏘️",
+        "description": "Récolte excellente en Villageois",
+        "stat": "lootVillageoisPer60Min",
+        "value": 566.3147545702742,
+        "percentile": 94.44444444444444,
+        "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"
       },
@@ -5379,7 +6945,7 @@
         "winRateLoup": {
           "value": 38.88888888888889,
           "percentile": 74.19354838709677,
-          "category": "ABOVE_AVERAGE"
+          "category": "HIGH"
         },
         "winRateSolo": {
           "value": 7.6923076923076925,
@@ -5389,17 +6955,17 @@
         "campVillageoisPercent": {
           "value": 60.75949367088608,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "campLoupPercent": {
           "value": 22.78481012658228,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "campSoloPercent": {
           "value": 16.455696202531644,
           "percentile": 33.33333333333333,
-          "category": "BELOW_AVERAGE"
+          "category": "LOW"
         },
         "talkingPer60Min": {
           "value": 970.203372067258,
@@ -5429,7 +6995,7 @@
         "lootLoupPer60Min": {
           "value": 611.3594828814319,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -5456,9 +7022,9 @@
       "titles": [
         {
           "id": "hyperactif",
-          "title": "L'Hyperactif",
+          "title": "L'Hyperactif·ve",
           "emoji": "⚡",
-          "description": "Bavard ET grande récolte",
+          "description": "Bavard·e ET grande récolte",
           "priority": 10,
           "type": "combination",
           "conditions": [
@@ -5477,6 +7043,18 @@
           ]
         },
         {
+          "id": "winRateVillageois_extreme_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 40.909090909090914,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "talking_extreme_high",
           "title": "Le Moulin à Paroles",
           "emoji": "💬",
@@ -5490,9 +7068,9 @@
         },
         {
           "id": "talkingOutsideMeeting_extreme_high",
-          "title": "Le Chuchoteur",
+          "title": "Le·a Chuchoteur·se",
           "emoji": "👂",
-          "description": "Bavard hors meeting",
+          "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 1096.300187793795,
           "percentile": 96,
@@ -5501,8 +7079,20 @@
           "type": "basic"
         },
         {
+          "id": "talkingDuringMeeting_extreme_high",
+          "title": "L'Orateur·rice",
+          "emoji": "🎤",
+          "description": "Bavard·e en meeting",
+          "stat": "talkingDuringPer60Min",
+          "value": 381.0763446467006,
+          "percentile": 88,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "loot_extreme_high",
-          "title": "Le Stakhanoviste",
+          "title": "Le·a Stakhanoviste",
           "emoji": "⚒️",
           "description": "Récolte exceptionnelle",
           "stat": "lootPer60Min",
@@ -5514,7 +7104,7 @@
         },
         {
           "id": "lootVillageois_extreme_high",
-          "title": "Le Citoyen Modèle",
+          "title": "Le·a Citoyen·ne Modèle",
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -5538,7 +7128,7 @@
         },
         {
           "id": "winRate_low",
-          "title": "Le Looser",
+          "title": "Le·a Looser",
           "emoji": "😢",
           "description": "Taux de victoire faible",
           "stat": "winRate",
@@ -5547,53 +7137,19 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
-        },
-        {
-          "id": "winRateVillageois_low",
-          "title": "Villageois Nul",
-          "emoji": "🤡",
-          "description": "Mauvais en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 40.909090909090914,
-          "percentile": 11.11111111111111,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "talkingDuringMeeting_high",
-          "title": "L'Orateur",
-          "emoji": "🎤",
-          "description": "Bavard en meeting",
-          "stat": "talkingDuringPer60Min",
-          "value": 381.0763446467006,
-          "percentile": 88,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "hyperactif",
-        "title": "L'Hyperactif",
-        "emoji": "⚡",
-        "description": "Bavard ET grande récolte",
-        "priority": 10,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "talking",
-            "category": "HIGH",
-            "actualValue": 1477.3765324404956,
-            "actualPercentile": 96
-          },
-          {
-            "stat": "loot",
-            "category": "HIGH",
-            "actualValue": 625.4951740407253,
-            "actualPercentile": 97.22222222222221
-          }
-        ]
+        "id": "loot_extreme_high",
+        "title": "Le·a Stakhanoviste",
+        "emoji": "⚒️",
+        "description": "Récolte exceptionnelle",
+        "stat": "lootPer60Min",
+        "value": 625.4951740407253,
+        "percentile": 97.22222222222221,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -5609,7 +7165,7 @@
         "winRateVillageois": {
           "value": 40.909090909090914,
           "percentile": 11.11111111111111,
-          "category": "LOW"
+          "category": "EXTREME_LOW"
         },
         "winRateLoup": {
           "value": 35.714285714285715,
@@ -5619,7 +7175,7 @@
         "winRateSolo": {
           "value": 11.11111111111111,
           "percentile": 55.55555555555556,
-          "category": "AVERAGE"
+          "category": "ABOVE_AVERAGE"
         },
         "campVillageoisPercent": {
           "value": 48.888888888888886,
@@ -5634,7 +7190,7 @@
         "campSoloPercent": {
           "value": 20,
           "percentile": 86.11111111111111,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "talkingPer60Min": {
           "value": 1477.3765324404956,
@@ -5649,7 +7205,7 @@
         "talkingDuringPer60Min": {
           "value": 381.0763446467006,
           "percentile": 88,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
           "value": 625.4951740407253,
@@ -5691,9 +7247,9 @@
       "titles": [
         {
           "id": "winRateLoup_extreme_low",
-          "title": "Loup Nul",
+          "title": "Loup Débutant·e",
           "emoji": "🐩",
-          "description": "Mauvais en camp Loup",
+          "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
           "value": 12.5,
           "percentile": 3.225806451612903,
@@ -5705,7 +7261,7 @@
           "id": "winRateSolo_extreme_high",
           "title": "Super Solo",
           "emoji": "🦊",
-          "description": "Excellent en rôles Solo",
+          "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 20,
           "percentile": 94.44444444444444,
@@ -5714,8 +7270,20 @@
           "type": "basic"
         },
         {
+          "id": "lootLoup_extreme_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 614.7719839538478,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "talking_low",
-          "title": "Le Silencieux",
+          "title": "Le·a Silencieux·se",
           "emoji": "🤫",
           "description": "Parle peu (par 60 min de jeu)",
           "stat": "talkingPer60Min",
@@ -5727,9 +7295,9 @@
         },
         {
           "id": "talkingOutsideMeeting_low",
-          "title": "Le Concentré",
+          "title": "Le·a Concentré·e",
           "emoji": "🎯",
-          "description": "Silencieux hors meeting",
+          "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
           "value": 610.0530112383552,
           "percentile": 16,
@@ -5739,7 +7307,7 @@
         },
         {
           "id": "lootVillageois_low",
-          "title": "Le Villageois Paresseux",
+          "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
@@ -5750,28 +7318,40 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 614.7719839538478,
-          "percentile": 88.88888888888889,
-          "category": "HIGH",
-          "priority": 6,
+          "id": "winRate_below_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 38.3,
+          "percentile": 38.88888888888889,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "loot_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 514.3061058580921,
+          "percentile": 47.22222222222222,
+          "category": "AVERAGE",
+          "priority": 3,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_extreme_low",
-        "title": "Loup Nul",
-        "emoji": "🐩",
-        "description": "Mauvais en camp Loup",
-        "stat": "winRateLoup",
-        "value": 12.5,
-        "percentile": 3.225806451612903,
-        "category": "EXTREME_LOW",
-        "priority": 8,
+        "id": "talking_low",
+        "title": "Le·a Silencieux·se",
+        "emoji": "🤫",
+        "description": "Parle peu (par 60 min de jeu)",
+        "stat": "talkingPer60Min",
+        "value": 860.6922172404954,
+        "percentile": 16,
+        "category": "LOW",
+        "priority": 6,
         "type": "basic"
       },
       "percentiles": {
@@ -5843,7 +7423,7 @@
         "lootLoupPer60Min": {
           "value": 614.7719839538478,
           "percentile": 88.88888888888889,
-          "category": "HIGH"
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {

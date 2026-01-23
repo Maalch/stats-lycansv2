@@ -113,6 +113,58 @@
   background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
 }
 
+/* Player card header */
+.player-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.player-name-with-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.player-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.player-primary-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: linear-gradient(135deg, var(--accent-primary-fade) 0%, var(--bg-tertiary) 100%);
+  border-radius: 8px;
+  border: 1px solid var(--accent-primary);
+  cursor: help;
+  transition: all 0.2s ease;
+}
+
+.player-primary-title:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.player-primary-title .title-emoji {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.player-primary-title .title-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-primary-text);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 /* Player Selection Prompt */
 .player-selection-prompt {
   width: 100%;

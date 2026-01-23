@@ -5,6 +5,7 @@ import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculated
 import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
+import { usePlayerTitles } from '../../hooks/usePlayerTitles';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { formatCumulativeDuration } from '../../utils/durationFormatters';
@@ -25,6 +26,7 @@ import { ClipViewer } from '../common/ClipViewer';
 import { findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
 import './PlayerSelectionPage.css';
+import './PlayerTitlesDisplay.css';
 
 interface PlayerBasicStats {
   id: string; // Unique player ID 
@@ -46,6 +48,7 @@ export function PlayerSelectionPage() {
   const { data: gameLogData, isLoading, error } = useGameLogData();
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
+  const { playerData: playerTitles, isLoading: titlesLoading } = usePlayerTitles(settings.highlightedPlayer);
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
@@ -75,7 +78,7 @@ export function PlayerSelectionPage() {
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
   // Use URL/settings to restore view selection, fallback to navigationState, then 'achievements'
-  const [selectedView, setSelectedView] = useState<'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime'>(
+  const [selectedView, setSelectedView] = useState<'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime'>(
     settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView || 'achievements'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
@@ -213,7 +216,7 @@ export function PlayerSelectionPage() {
   };
 
   // Helper function to handle view changes and sync with navigation state and settings (for URL)
-  const handleViewChange = (newView: 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime') => {
+  const handleViewChange = (newView: 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime') => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
     updateSettings({ selectedPlayerSelectionView: newView, tab: 'playerSelection' });
@@ -369,7 +372,15 @@ export function PlayerSelectionPage() {
             return (
               <div className="single-player-card highlighted">
                 <div className="player-card-header">
-                  <h3 className="player-name">{highlightedPlayerStats.name}</h3>
+                  <div className="player-name-with-title">
+                    <h3 className="player-name">{highlightedPlayerStats.name}</h3>
+                    {playerTitles?.primaryTitle && (
+                      <div className="player-primary-title" title={playerTitles.primaryTitle.description}>
+                        <span className="title-emoji">{playerTitles.primaryTitle.emoji}</span>
+                        <span className="title-text">{playerTitles.primaryTitle.title}</span>
+                      </div>
+                    )}
+                  </div>
                   <span className="highlight-badge">★ Mis en évidence</span>
                 </div>
                 
@@ -444,6 +455,13 @@ export function PlayerSelectionPage() {
                       onClick={() => handleViewChange('achievements')}
                     >
                       Classement
+                    </button>
+                    <button
+                      type="button"
+                      className={`lycans-categorie-btn ${selectedView === 'titles' ? 'active' : ''}`}
+                      onClick={() => handleViewChange('titles')}
+                    >
+                      Titres
                     </button>
                     <button
                       type="button"
@@ -534,6 +552,78 @@ export function PlayerSelectionPage() {
                           </button>
                         )}
                         <button
+                          type="button"
+                          className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setAchievementFilter('modded');
+                          }}
+                          disabled={isModdedOnlyMode}
+                        >
+                          Parties moddées
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Titles Display */}
+                  {selectedView === 'titles' && (
+                    <div className="titles-section">
+                      {titlesLoading ? (
+                        <div className="titles-loading">
+                          <div className="loading-spinner"></div>
+                          <p>Chargement des titres...</p>
+                        </div>
+                      ) : playerTitles && playerTitles.titles.length > 0 ? (
+                        <>
+                          <div className="titles-header">
+                            <h3>🏷️ Titres obtenus</h3>
+                            <p className="titles-info">
+                              {playerTitles.titles.length} titre{playerTitles.titles.length > 1 ? 's' : ''} • 
+                              {playerTitles.gamesPlayed} parties jouées
+                            </p>
+                          </div>
+                          <div className="titles-grid">
+                            {playerTitles.titles.map((title, index) => (
+                              <div 
+                                key={title.id} 
+                                className={`title-card ${title.type} ${index === 0 ? 'primary' : ''}`}
+                                title={`${title.description}${title.percentile ? ` (Percentile: ${title.percentile.toFixed(1)}%)` : ''}`}
+                              >
+                                <div className="title-rank">{index + 1}</div>
+                                <div className="title-emoji">{title.emoji}</div>
+                                <div className="title-info">
+                                  <div className="title-name">{title.title}</div>
+                                  <div className="title-description">{title.description}</div>
+                                  {title.percentile && (
+                                    <div className="title-percentile">
+                                      Top {(100 - title.percentile).toFixed(0)}%
+                                    </div>
+                                  )}
+                                  <div className="title-type-badge">
+                                    {title.type === 'combination' ? 'Combo' : 
+                                     title.type === 'role' ? 'Rôle' : 'Stat'}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="titles-empty">
+                          <p>📜 Aucun titre disponible</p>
+                          <p className="empty-subtitle">
+                            {playerTitles?.gamesPlayed ? 
+                              `${playerTitles.gamesPlayed} parties jouées - minimum 25 parties requises pour obtenir des titres` :
+                              'Les titres sont générés chaque dimanche pour les joueurs avec 25+ parties en mode moddé'
+                            }
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/*   <button
                           type="button"
                           className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
                           onClick={(e) => {

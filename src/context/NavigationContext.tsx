@@ -114,7 +114,7 @@ export interface NavigationState {
   selectedSeriesType?: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses';
   seriesViewMode?: 'best' | 'ongoing';
   // PlayerSelectionPage state
-  selectedPlayerSelectionView?: 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime';
+  selectedPlayerSelectionView?: 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime';
   
   // Grouped state - all properties in each group must be provided together
   campPerformanceState?: CampPerformanceState;

@@ -47,7 +47,7 @@ export interface SettingsState {
   subtab: string | null;
   
   // PlayerSelection view type (for URL persistence)
-  selectedPlayerSelectionView?: 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime';
+  selectedPlayerSelectionView?: 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime';
 }
 
 interface SettingsContextType {
