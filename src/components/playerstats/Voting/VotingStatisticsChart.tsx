@@ -3,12 +3,13 @@ import { useVotingStatisticsFromRaw } from '../../../hooks/useVotingStatisticsFr
 import { useNavigation } from '../../../context/NavigationContext';
 import { VotingOverviewCharts } from './VotingOverviewCharts';
 import { VotingBehaviorCharts } from './VotingBehaviorCharts';
+import { VotingTimingCharts } from './VotingTimingCharts';
 
 export function VotingStatisticsChart() {
   const { navigationState } = useNavigation();
 
   // Initialize state from navigation state or use defaults
-  const [selectedCategory, setSelectedCategory] = useState<'overview' | 'behavior'>(
+  const [selectedCategory, setSelectedCategory] = useState<'overview' | 'behavior' | 'timing'>(
     navigationState.votingStatsState?.selectedCategory || 'overview'
   );
   const [minMeetings, setMinMeetings] = useState<number>(25);
@@ -86,6 +87,25 @@ export function VotingStatisticsChart() {
           >
             🗳️ Comportements de Vote
           </button>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedCategory('timing');
+            }}
+            style={{
+              background: selectedCategory === 'timing' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
+              color: selectedCategory === 'timing' ? 'var(--bg-primary)' : 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '8px',
+              padding: '0.75rem 1.5rem',
+              fontSize: '0.95rem',
+              fontWeight: selectedCategory === 'timing' ? 'bold' : 'normal',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            ⏰ Timing de Vote
+          </button>
         </div>
 
         {/* Min Meetings filter */}
@@ -137,6 +157,10 @@ export function VotingStatisticsChart() {
 
         {selectedCategory === 'behavior' && (
           <VotingBehaviorCharts minMeetings={minMeetings} />
+        )}
+
+        {selectedCategory === 'timing' && (
+          <VotingTimingCharts minMeetings={minMeetings} />
         )}
       </div>
     </div>

@@ -42,6 +42,18 @@ export interface VotingTargetStats {
   survivalRate: number;          // Survived votes / total times targeted
 }
 
+export interface VotingTimingStats {
+  playerName: string;
+  totalActiveVotes: number;      // Total non-"Passé" votes cast
+  totalTimedVotes: number;       // Votes with timestamp data (Version >= 0.201)
+  averageVotePositionPercentile: number; // 0-100, where 0 = first voter, 100 = last voter
+  timesFirstVoter: number;       // Times player voted first in a meeting
+  timesLastVoter: number;        // Times player voted last in a meeting
+  earlyVoterRate: number;        // % of votes in first 33% of voters
+  lateVoterRate: number;         // % of votes in last 33% of voters
+  averageVoteDelaySeconds: number; // Average seconds from meeting start to vote
+}
+
 /**
  * Internal interfaces used by calculateGameVotingAnalysis
  * Not exported as they're only used for intermediate calculations
@@ -409,6 +421,146 @@ function calculateGameVotingAnalysis(game: GameLogEntry): GameVotingAnalysis {
     playerAccuracies,
     playerTargetStats
   };
+}
+
+/**
+ * Calculates voting timing statistics for games with Version >= 0.201 and Modded: true
+ * Analyzes when players vote relative to others in the same meeting
+ */
+export function calculateVotingTimingStats(games: GameLogEntry[]): VotingTimingStats[] {
+  const playerTimingMap = new Map<string, {
+    totalActiveVotes: number;
+    totalTimedVotes: number;
+    positionPercentileSum: number;
+    timesFirstVoter: number;
+    timesLastVoter: number;
+    earlyVotes: number;  // First 33% of voters
+    lateVotes: number;   // Last 33% of voters
+    voteDelaySum: number; // Total seconds from meeting start
+  }>();
+
+  // Filter games that support timing data
+  const timedGames = games.filter(game => {
+    if (!game.Modded) return false;
+    if (!game.Version) return false;
+    
+    // Parse version - must be >= 0.201
+    const versionMatch = game.Version.match(/^(\d+)\.(\d+)/);
+    if (!versionMatch) return false;
+    
+    const major = parseInt(versionMatch[1]);
+    const minor = parseInt(versionMatch[2]);
+    
+    // Version 0.201+ or 1.0+
+    return (major === 0 && minor >= 201) || major >= 1;
+  });
+
+  // Process each game
+  timedGames.forEach(game => {
+    // Group votes by meeting (Day)
+    const votesByMeeting = new Map<number, Array<{
+      playerName: string;
+      date: Date;
+      target: string;
+    }>>();
+
+    game.PlayerStats.forEach(player => {
+      if (!player.Votes || player.Votes.length === 0) return;
+      
+      player.Votes.forEach(vote => {
+        if (!vote.Date || vote.Target === 'Passé') return;
+        
+        const meetingVotes = votesByMeeting.get(vote.Day) || [];
+        meetingVotes.push({
+          playerName: player.Username,
+          date: new Date(vote.Date),
+          target: vote.Target
+        });
+        votesByMeeting.set(vote.Day, meetingVotes);
+      });
+    });
+
+    // Analyze each meeting
+    votesByMeeting.forEach((votes) => {
+      if (votes.length === 0) return;
+      
+      // Sort votes by timestamp
+      const sortedVotes = [...votes].sort((a, b) => a.date.getTime() - b.date.getTime());
+      
+      // Meeting start time = earliest vote timestamp
+      const meetingStartTime = sortedVotes[0].date.getTime();
+      
+      sortedVotes.forEach((vote, index) => {
+        const playerStats = playerTimingMap.get(vote.playerName) || {
+          totalActiveVotes: 0,
+          totalTimedVotes: 0,
+          positionPercentileSum: 0,
+          timesFirstVoter: 0,
+          timesLastVoter: 0,
+          earlyVotes: 0,
+          lateVotes: 0,
+          voteDelaySum: 0
+        };
+        
+        playerStats.totalActiveVotes++;
+        playerStats.totalTimedVotes++;
+        
+        // Calculate position percentile (0 = first, 100 = last)
+        const percentile = sortedVotes.length > 1 
+          ? (index / (sortedVotes.length - 1)) * 100 
+          : 50; // Middle if only one voter
+        playerStats.positionPercentileSum += percentile;
+        
+        // Track first/last voter
+        if (index === 0) playerStats.timesFirstVoter++;
+        if (index === sortedVotes.length - 1) playerStats.timesLastVoter++;
+        
+        // Track early (first 33%) vs late (last 33%)
+        const earlyThreshold = Math.ceil(sortedVotes.length / 3);
+        const lateThreshold = sortedVotes.length - Math.ceil(sortedVotes.length / 3);
+        
+        if (index < earlyThreshold) playerStats.earlyVotes++;
+        if (index >= lateThreshold) playerStats.lateVotes++;
+        
+        // Calculate delay from meeting start
+        const delaySeconds = (vote.date.getTime() - meetingStartTime) / 1000;
+        playerStats.voteDelaySum += delaySeconds;
+        
+        playerTimingMap.set(vote.playerName, playerStats);
+      });
+    });
+  });
+
+  // Convert to final stats array
+  return Array.from(playerTimingMap.entries()).map(([playerName, data]) => {
+    const averageVotePositionPercentile = data.totalTimedVotes > 0 
+      ? data.positionPercentileSum / data.totalTimedVotes 
+      : 50;
+    
+    const earlyVoterRate = data.totalTimedVotes > 0 
+      ? (data.earlyVotes / data.totalTimedVotes) * 100 
+      : 0;
+    
+    const lateVoterRate = data.totalTimedVotes > 0 
+      ? (data.lateVotes / data.totalTimedVotes) * 100 
+      : 0;
+    
+    const averageVoteDelaySeconds = data.totalTimedVotes > 0 
+      ? data.voteDelaySum / data.totalTimedVotes 
+      : 0;
+    
+    return {
+      playerName,
+      totalActiveVotes: data.totalActiveVotes,
+      totalTimedVotes: data.totalTimedVotes,
+      averageVotePositionPercentile,
+      timesFirstVoter: data.timesFirstVoter,
+      timesLastVoter: data.timesLastVoter,
+      earlyVoterRate,
+      lateVoterRate,
+      averageVoteDelaySeconds
+    };
+  });
 }
 
 /**

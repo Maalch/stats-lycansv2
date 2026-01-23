@@ -1,16 +1,18 @@
 import { useMemo } from 'react';
 import { usePlayerStatsBase } from './utils/baseStatsHook';
-import { calculateAggregatedVotingStats } from './utils/votingStatsUtils';
+import { calculateAggregatedVotingStats, calculateVotingTimingStats } from './utils/votingStatsUtils';
 import type { 
   VotingBehaviorStats,
   VotingAccuracyStats, 
-  VotingTargetStats
+  VotingTargetStats,
+  VotingTimingStats
 } from './utils/votingStatsUtils';
 
 export interface VotingStatisticsResult {
   playerBehaviorStats: VotingBehaviorStats[];
   playerAccuracyStats: VotingAccuracyStats[];
   playerTargetStats: VotingTargetStats[];
+  playerTimingStats: VotingTimingStats[];
   overallMeetingStats: {
     totalMeetings: number;
     averageParticipationRate: number;
@@ -38,7 +40,13 @@ export function useVotingStatisticsFromRaw() {
       return null;
     }
 
-    return calculateAggregatedVotingStats(gamesWithVotingData);
+    const aggregatedStats = calculateAggregatedVotingStats(gamesWithVotingData);
+    const timingStats = calculateVotingTimingStats(gamesWithVotingData);
+
+    return {
+      ...aggregatedStats,
+      playerTimingStats: timingStats
+    };
   });
 }
 
@@ -61,6 +69,9 @@ export function useFilteredVotingStatistics(minMeetings: number = 5) {
       ),
       playerTargetStats: allVotingStats.playerTargetStats.filter(
         player => player.totalTimesTargeted >= minMeetings
+      ),
+      playerTimingStats: allVotingStats.playerTimingStats.filter(
+        player => player.totalTimedVotes >= minMeetings
       )
     };
   }, [allVotingStats, minMeetings]);

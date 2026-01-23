@@ -67,7 +67,7 @@ export interface DeathStatisticsState {
 }
 
 export interface VotingStatsState {
-  selectedCategory: 'overview' | 'behavior';
+  selectedCategory: 'overview' | 'behavior' | 'timing';
   selectedView: 'behavior' | 'accuracy' | 'targets' | 'voteRate' | 'skipRate' | 'abstentionRate';
 }
 
