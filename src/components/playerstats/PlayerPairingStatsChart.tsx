@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerPairingStatsFromRaw } from '../../hooks/usePlayerPairingStatsFromRaw';
 import { useJoueursData } from '../../hooks/useJoueursData';
@@ -23,8 +23,42 @@ export function PlayerPairingStatsChart() {
   const [minWolfAppearances, setMinWolfAppearances] = useState<number>(2);
   const [minLoverAppearances, setMinLoverAppearances] = useState<number>(1);
 
+  // Pairing selection state - initialize from navigationState or settings.highlightedPlayer
+  const [pairingPlayer1, setPairingPlayer1] = useState<string | null>(
+    navigationState.selectedPairingPlayers?.[0] || settings.highlightedPlayer || null
+  );
+  const [pairingPlayer2, setPairingPlayer2] = useState<string | null>(
+    navigationState.selectedPairingPlayers?.[1] || null
+  );
+
+  // Sync pairing selection to navigationState
+  useEffect(() => {
+    const players = [pairingPlayer1, pairingPlayer2].filter(p => p !== null) as string[];
+    if (players.length > 0) {
+      updateNavigationState({ selectedPairingPlayers: players });
+    } else {
+      updateNavigationState({ selectedPairingPlayers: undefined });
+    }
+  }, [pairingPlayer1, pairingPlayer2, updateNavigationState]);
+
   // Options pour le nombre minimum d'apparitions
-  const minAppearancesOptions = [1, 2, 3, 4, 5];
+  const minLoverAppearancesOptions = [1, 2, 3, 5, 10];
+  const minWolfAppearancesOptions = [1, 3, 5, 7, 10, 15];
+
+  // Get unique player names from data for the selector
+  const allPlayerNames = useMemo(() => {
+    if (!data) return [];
+    const names = new Set<string>();
+    [...data.wolfPairs.pairs, ...data.loverPairs.pairs].forEach(pair => {
+      pair.players.forEach(player => names.add(player));
+    });
+    return Array.from(names).sort();
+  }, [data]);
+
+  // Determine highlighting mode
+  const isPairingMode = pairingPlayer1 !== null && pairingPlayer2 !== null;
+  const isSinglePlayerMode = pairingPlayer1 !== null && pairingPlayer2 === null;
+  const effectiveHighlightedPlayer = isSinglePlayerMode ? pairingPlayer1 : null;
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de paires...</div>;
@@ -83,21 +117,34 @@ export function PlayerPairingStatsChart() {
   }));
 
   // Find highlighted player's most common pairings (for frequency charts)
-  const highlightedPlayerWolfPairs = settings.highlightedPlayer 
-    ? findPlayerMostCommonPairings(data.wolfPairs.pairs, settings.highlightedPlayer, 5)
+  const highlightedPlayerWolfPairs = effectiveHighlightedPlayer 
+    ? findPlayerMostCommonPairings(data.wolfPairs.pairs, effectiveHighlightedPlayer, 5)
     : [];
   
-  const highlightedPlayerLoverPairs = settings.highlightedPlayer 
-    ? findPlayerMostCommonPairings(data.loverPairs.pairs, settings.highlightedPlayer, 5)
+  const highlightedPlayerLoverPairs = effectiveHighlightedPlayer 
+    ? findPlayerMostCommonPairings(data.loverPairs.pairs, effectiveHighlightedPlayer, 5)
     : [];
 
   // Find highlighted player's best performing pairings (for performance charts)
-  const highlightedPlayerWolfPairsPerformance = settings.highlightedPlayer 
-    ? findPlayerBestPerformingPairings(data.wolfPairs.pairs, settings.highlightedPlayer, 5)
+  const highlightedPlayerWolfPairsPerformance = effectiveHighlightedPlayer 
+    ? findPlayerBestPerformingPairings(data.wolfPairs.pairs, effectiveHighlightedPlayer, 5)
     : [];
   
-  const highlightedPlayerLoverPairsPerformance = settings.highlightedPlayer 
-    ? findPlayerBestPerformingPairings(data.loverPairs.pairs, settings.highlightedPlayer, 5)
+  const highlightedPlayerLoverPairsPerformance = effectiveHighlightedPlayer 
+    ? findPlayerBestPerformingPairings(data.loverPairs.pairs, effectiveHighlightedPlayer, 5)
+    : [];
+
+  // Find specific pairing if both players selected
+  const specificWolfPairing = isPairingMode
+    ? data.wolfPairs.pairs.filter(pair => 
+        pair.players.includes(pairingPlayer1!) && pair.players.includes(pairingPlayer2!)
+      )
+    : [];
+  
+  const specificLoverPairing = isPairingMode
+    ? data.loverPairs.pairs.filter(pair => 
+        pair.players.includes(pairingPlayer1!) && pair.players.includes(pairingPlayer2!)
+      )
     : [];
 
   // Total wolf pairs with at least minWolfAppearances
@@ -105,15 +152,12 @@ export function PlayerPairingStatsChart() {
   // Total lover pairs with at least minLoverAppearances
   const totalLoverPairsWithMinAppearances = loverPairsData.filter(pair => pair.appearances >= minLoverAppearances).length;
 
-  // Calculate recurring pairs (2+ appearances) for display
-  const recurringWolfPairs = wolfPairsData.filter(pair => pair.appearances >= 2);
-  const recurringLoverPairs = loverPairsData.filter(pair => pair.appearances >= 2);
-
-  // Helper function to combine top pairs with highlighted player pairs
+  // Helper function to combine top pairs with highlighted player pairs or specific pairing
   // This ensures highlighted player pairs are always shown, even if they weren't in the original top 10
   const combineWithHighlighted = (
     topPairs: any[],
-    highlightedPairs: any[]
+    highlightedPairs: any[],
+    specificPairing: any[]
   ): ChartPlayerPairStat[] => {
     const result = new Map<string, ChartPlayerPairStat>();
     
@@ -122,28 +166,45 @@ export function PlayerPairingStatsChart() {
       result.set(pair.pair, { ...pair, isHighlightedAddition: false });
     });
     
-    // Add highlighted pairs (mark as additions if not already included)
-    highlightedPairs.forEach(pair => {
-      const existing = result.get(pair.pair);
-      if (existing) {
-        // Already in top results, just ensure it's properly formatted
-        result.set(pair.pair, { 
-          ...existing, 
-          winRateNum: parseFloat(existing.winRate),
-          winRateDisplay: Math.max(parseFloat(existing.winRate), 1),
-          gradientId: createGradientId(existing.pair)
-        });
-      } else {
-        // New addition from highlighted player
-        result.set(pair.pair, { 
-          ...pair, 
-          winRateNum: parseFloat(pair.winRate),
-          winRateDisplay: Math.max(parseFloat(pair.winRate), 1),
-          gradientId: createGradientId(pair.pair),
-          isHighlightedAddition: true 
-        });
-      }
-    });
+    // In pairing mode, add the specific pairing if it exists
+    if (isPairingMode && specificPairing.length > 0) {
+      specificPairing.forEach(pair => {
+        const existing = result.get(pair.pair);
+        if (!existing) {
+          result.set(pair.pair, {
+            ...pair,
+            winRateNum: parseFloat(pair.winRate),
+            winRateDisplay: Math.max(parseFloat(pair.winRate), 1),
+            gradientId: createGradientId(pair.pair),
+            isHighlightedAddition: true
+          });
+        }
+      });
+    }
+    // In single player mode, add highlighted pairs
+    else if (isSinglePlayerMode) {
+      highlightedPairs.forEach(pair => {
+        const existing = result.get(pair.pair);
+        if (existing) {
+          // Already in top results, just ensure it's properly formatted
+          result.set(pair.pair, { 
+            ...existing, 
+            winRateNum: parseFloat(existing.winRate),
+            winRateDisplay: Math.max(parseFloat(existing.winRate), 1),
+            gradientId: createGradientId(existing.pair)
+          });
+        } else {
+          // New addition from highlighted player
+          result.set(pair.pair, { 
+            ...pair, 
+            winRateNum: parseFloat(pair.winRate),
+            winRateDisplay: Math.max(parseFloat(pair.winRate), 1),
+            gradientId: createGradientId(pair.pair),
+            isHighlightedAddition: true 
+          });
+        }
+      });
+    }
     
     // Return all results - highlighted pairs should always be included
     // even if it means showing more than maxResults
@@ -155,7 +216,8 @@ export function PlayerPairingStatsChart() {
     [...wolfPairsData]
       .sort((a, b) => b.appearances - a.appearances)
       .slice(0, 10),
-    highlightedPlayerWolfPairs
+    highlightedPlayerWolfPairs,
+    specificWolfPairing
   );
 
   const topWolfPairsByWinRate = combineWithHighlighted(
@@ -163,14 +225,16 @@ export function PlayerPairingStatsChart() {
       .filter(pair => pair.appearances >= minWolfAppearances)
       .sort((a, b) => b.winRateNum - a.winRateNum)
       .slice(0, 10),
-    highlightedPlayerWolfPairsPerformance.filter(pair => pair.appearances >= minWolfAppearances)
+    highlightedPlayerWolfPairsPerformance.filter(pair => pair.appearances >= minWolfAppearances),
+    specificWolfPairing.filter(pair => pair.appearances >= minWolfAppearances)
   );
 
   const topLoverPairsByAppearances = combineWithHighlighted(
     [...loverPairsData]
       .sort((a, b) => b.appearances - a.appearances)
       .slice(0, 10),
-    highlightedPlayerLoverPairs
+    highlightedPlayerLoverPairs,
+    specificLoverPairing
   );
 
   const topLoverPairsByWinRate = combineWithHighlighted(
@@ -178,28 +242,12 @@ export function PlayerPairingStatsChart() {
       .filter(pair => pair.appearances >= minLoverAppearances)
       .sort((a, b) => b.winRateNum - a.winRateNum)
       .slice(0, 10),
-    highlightedPlayerLoverPairsPerformance.filter(pair => pair.appearances >= minLoverAppearances)
+    highlightedPlayerLoverPairsPerformance.filter(pair => pair.appearances >= minLoverAppearances),
+    specificLoverPairing.filter(pair => pair.appearances >= minLoverAppearances)
   );
 
   const renderWolfPairsSection = () => (
     <div>
-      <div className="lycans-resume-conteneur">
-        <div className="lycans-stat-carte">
-          <h3>Parties avec Plusieurs Loups</h3>
-          <div className="lycans-valeur-principale">{data.wolfPairs.totalGames}</div>
-          <p>parties analysées</p>
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Paires Différentes</h3>
-          <div className="lycans-valeur-principale">{data.wolfPairs.pairs.length}</div>
-          <p>combinaisons trouvées</p>
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Paires Récurrentes</h3>
-          <div className="lycans-valeur-principale">{recurringWolfPairs.length}</div>
-          <p>avec 2+ apparitions</p>
-        </div>
-      </div>
 
       <div className="lycans-graphiques-groupe">
         {/* Most Common Wolf Pairs */}
@@ -225,8 +273,9 @@ export function PlayerPairingStatsChart() {
                       interval={0}
                       fontSize={11}
                       tick={({ x, y, payload }) => {
-                        const isPairHighlighted = settings.highlightedPlayer && 
-                          payload.value.includes(settings.highlightedPlayer);
+                        const isPairHighlighted = (effectiveHighlightedPlayer && 
+                          payload.value.includes(effectiveHighlightedPlayer)) ||
+                          (isPairingMode && payload.value.includes(pairingPlayer1!) && payload.value.includes(pairingPlayer2!));
                         return (
                           <text
                             x={x}
@@ -293,14 +342,16 @@ export function PlayerPairingStatsChart() {
                           key={`cell-${index}`} 
                           fill={`url(#${entry.gradientId})`}
                           stroke={
-                            settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                            (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                            (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
                               ? 'var(--accent-primary)'
                               : entry.isHighlightedAddition
                               ? 'var(--accent-secondary)'
                               : 'transparent'
                           }
                           strokeWidth={
-                            settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                            (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                            (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
                               ? 3
                               : entry.isHighlightedAddition
                               ? 2
@@ -351,7 +402,7 @@ export function PlayerPairingStatsChart() {
                   fontSize: '0.9rem'
                 }}
               >
-                {minAppearancesOptions.map(option => (
+                {minWolfAppearancesOptions.map(option => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -379,8 +430,9 @@ export function PlayerPairingStatsChart() {
                     interval={0}
                     fontSize={11}
                     tick={({ x, y, payload }) => {
-                      const isPairHighlighted = settings.highlightedPlayer && 
-                        payload.value.includes(settings.highlightedPlayer);
+                      const isPairHighlighted = (effectiveHighlightedPlayer && 
+                        payload.value.includes(effectiveHighlightedPlayer)) ||
+                        (isPairingMode && payload.value.includes(pairingPlayer1!) && payload.value.includes(pairingPlayer2!));
                       return (
                         <text
                           x={x}
@@ -437,14 +489,16 @@ export function PlayerPairingStatsChart() {
                         fill={`url(#${entry.gradientId})`}
                         fillOpacity={parseFloat(entry.winRate) === 0 ? 0.3 : 1}
                         stroke={
-                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
                             ? 'var(--accent-primary)'
                             : entry.isHighlightedAddition
                             ? 'var(--accent-secondary)'
                             : 'transparent'
                         }
                         strokeWidth={
-                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
                             ? 3
                             : entry.isHighlightedAddition
                             ? 2
@@ -482,24 +536,6 @@ export function PlayerPairingStatsChart() {
 
   const renderLoverPairsSection = () => (
     <div>
-      <div className="lycans-resume-conteneur">
-        <div className="lycans-stat-carte">
-          <h3>Parties avec des Amoureux</h3>
-          <div className="lycans-valeur-principale">{data.loverPairs.totalGames}</div>
-          <p>parties analysées</p>
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Paires Différentes</h3>
-          <div className="lycans-valeur-principale">{data.loverPairs.pairs.length}</div>
-          <p>combinaisons trouvées</p>
-        </div>
-        <div className="lycans-stat-carte">
-          <h3>Paires Récurrentes</h3>
-          <div className="lycans-valeur-principale">{recurringLoverPairs.length}</div>
-          <p>avec 2+ apparitions</p>
-        </div>
-      </div>
-
       <div className="lycans-graphiques-groupe">
         {/* Most Common Lover Pairs */}
         <div className="lycans-graphique-moitie">
@@ -524,8 +560,9 @@ export function PlayerPairingStatsChart() {
                     interval={0}
                     fontSize={11}
                     tick={({ x, y, payload }) => {
-                      const isPairHighlighted = settings.highlightedPlayer && 
-                        payload.value.includes(settings.highlightedPlayer);
+                      const isPairHighlighted = (effectiveHighlightedPlayer && 
+                        payload.value.includes(effectiveHighlightedPlayer)) ||
+                        (isPairingMode && payload.value.includes(pairingPlayer1!) && payload.value.includes(pairingPlayer2!));
                       return (
                         <text
                           x={x}
@@ -592,14 +629,16 @@ export function PlayerPairingStatsChart() {
                         key={`cell-${index}`} 
                         fill={`url(#${entry.gradientId})`}
                         stroke={
-                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
                             ? 'var(--accent-primary)'
                             : entry.isHighlightedAddition
                             ? 'var(--accent-secondary)'
                             : 'transparent'
                         }
                         strokeWidth={
-                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
                             ? 3
                             : entry.isHighlightedAddition
                             ? 2
@@ -650,7 +689,7 @@ export function PlayerPairingStatsChart() {
                   fontSize: '0.9rem'
                 }}
               >
-                {minAppearancesOptions.map(option => (
+                {minLoverAppearancesOptions.map(option => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -678,8 +717,9 @@ export function PlayerPairingStatsChart() {
                     interval={0}
                     fontSize={11}
                     tick={({ x, y, payload }) => {
-                      const isPairHighlighted = settings.highlightedPlayer && 
-                        payload.value.includes(settings.highlightedPlayer);
+                      const isPairHighlighted = (effectiveHighlightedPlayer && 
+                        payload.value.includes(effectiveHighlightedPlayer)) ||
+                        (isPairingMode && payload.value.includes(pairingPlayer1!) && payload.value.includes(pairingPlayer2!));
                       return (
                         <text
                           x={x}
@@ -746,14 +786,16 @@ export function PlayerPairingStatsChart() {
                         fill={`url(#${entry.gradientId})`}
                         fillOpacity={parseFloat(entry.winRate) === 0 ? 0.3 : 1}
                         stroke={
-                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
                             ? 'var(--accent-primary)'
                             : entry.isHighlightedAddition
                             ? 'var(--accent-secondary)'
                             : 'transparent'
                         }
                         strokeWidth={
-                          settings.highlightedPlayer && entry.players.includes(settings.highlightedPlayer)
+                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
                             ? 3
                             : entry.isHighlightedAddition
                             ? 2
@@ -795,6 +837,109 @@ export function PlayerPairingStatsChart() {
       <p className="lycans-stats-info">
         Fréquence et performance des joueurs lorsqu'ils jouent ensemble en tant que loups ou amoureux
       </p>
+      
+      {/* Pairing Selection UI */}
+      <div style={{ 
+        background: 'var(--bg-secondary)', 
+        padding: '1rem', 
+        borderRadius: '8px', 
+        marginBottom: '1rem',
+        border: '1px solid var(--border-color)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <label style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>Mettre en évidence une paire:</label>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label htmlFor="pairing-player1-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Joueur 1:
+            </label>
+            <select
+              id="pairing-player1-select"
+              value={pairingPlayer1 || ''}
+              onChange={(e) => setPairingPlayer1(e.target.value || null)}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem',
+                minWidth: '150px'
+              }}
+            >
+              <option value="">-- Aucun --</option>
+              {allPlayerNames.map(player => (
+                <option key={player} value={player}>
+                  {player}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label htmlFor="pairing-player2-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Joueur 2:
+            </label>
+            <select
+              id="pairing-player2-select"
+              value={pairingPlayer2 || ''}
+              onChange={(e) => setPairingPlayer2(e.target.value || null)}
+              disabled={!pairingPlayer1}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem',
+                minWidth: '150px',
+                opacity: !pairingPlayer1 ? 0.5 : 1,
+                cursor: !pairingPlayer1 ? 'not-allowed' : 'pointer'
+              }}
+            >
+              <option value="">-- Aucun --</option>
+              {allPlayerNames.filter(p => p !== pairingPlayer1).map(player => (
+                <option key={player} value={player}>
+                  {player}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {pairingPlayer1 && (
+            <button
+              onClick={() => {
+                setPairingPlayer1(null);
+                setPairingPlayer2(null);
+              }}
+              style={{
+                background: 'var(--accent-primary)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                padding: '0.25rem 0.75rem',
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                fontWeight: 'bold'
+              }}
+              type="button"
+            >
+              ✕ Réinitialiser
+            </button>
+          )}
+        </div>
+        
+        {isPairingMode && (
+          <p style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', marginTop: '0.5rem', marginBottom: 0 }}>
+            📊 Mode paire activé: {pairingPlayer1} + {pairingPlayer2}
+          </p>
+        )}
+        {isSinglePlayerMode && (
+          <p style={{ fontSize: '0.85rem', color: 'var(--accent-secondary)', marginTop: '0.5rem', marginBottom: 0 }}>
+            👤 Mode joueur unique: {pairingPlayer1}
+          </p>
+        )}
+      </div>
       
       {/* Tab Selection */}
       <nav className="lycans-submenu">

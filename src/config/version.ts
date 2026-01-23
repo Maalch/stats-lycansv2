@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.6.4';
+export const APP_VERSION = '1.6.6';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,31 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.6.6',
+    date: '23/01/2026',
+    description: 'Ajout de la possibilité de selectionner 2 joueurs dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'pairing',
+      text: 'Classements / Paires de Joueurs',
+    }
+  },
+  {
+    version: 'v1.6.5',
+    date: '23/01/2026',
+    description: 'Ajout de statistiques sur Timings de votes (premiers / derniers voteurs) dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'votingStats',
+      text: 'Classements / Votes / Timing de Vote',
+      navigationState: {
+        votingStatsState: {
+          selectedCategory: 'timing'
+        }
+      }
+    }
+  },
   {
     version: 'v1.6.4',
     date: '19/01/2026',

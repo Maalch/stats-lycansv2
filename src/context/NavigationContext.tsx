@@ -107,6 +107,7 @@ export interface NavigationState {
   selectedViewType?: 'performance' | 'camp' | 'map' | 'kills';
   // PlayerPairingStatsChart state
   selectedPairingTab?: 'wolves' | 'lovers';
+  selectedPairingPlayers?: string[]; // Array of 1 or 2 player names for pairing filter
   // DeathStatisticsChart state
   deathStatsSelectedCamp?: string;
   // PlayerSeriesChart state
