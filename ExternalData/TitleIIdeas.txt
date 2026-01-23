@@ -1,98 +1,12 @@
-BRAINSTORMING:
+Based on my search of the playerTitles.json file, here's what's available:
 
-L'idée est de générer un titre composée d'un nom + d'un adjectif, ou de deux adjectifs selon ce qui le plus pratique
-Ce titre doit être généré par le backend (en partant de fetch-data.js / generate-achievements.js)
+❌ NOT available for ANY player:
+Series Statistics: winSeries, lossSeries - MISSING
+Camp Balance: campBalance - MISSING
+Role Frequencies: roleChasseur, roleAlchimiste, roleAmoureux, roleAgent, roleEspion, roleIdiot, roleChasseurDePrime, roleContrebandier, roleBete, roleVaudou, roleScientifique - ALL MISSING
+This means that many titles defined in generate-titles.js can NEVER be assigned because the required stats aren't being computed, including:
 
-## IMPLÉMENTATION (2026-01-23)
-- Script: scripts/data-sync/generate-titles.js
-- Workflow: .github/workflows/update-titles.yml (dimanche 6h UTC)
-- Output: data/playerTitles.json + data/discord/playerTitles.json
-- Système basé sur les percentiles pour une distribution équitable
-- Titres multiples par joueur (triés par priorité)
-- Min 25 games pour être éligible aux titres
-
-## PERCENTILES UTILISÉS
-- EXTREME_HIGH: Top 10%
-- HIGH: Top 25% 
-- ABOVE_AVERAGE: Top 40%
-- AVERAGE: 45-55%
-- BELOW_AVERAGE: Bottom 40%
-- LOW: Bottom 25%
-- EXTREME_LOW: Bottom 10%
-
-Voici quelques valeurs qui peuvent être testées
-Catégorie sous le contrôle du joueur:
-- Bavard / Peu Bavard (par 60 min de jeu effectif)
-- Bavard hors meeting / peu bavard hors meeting (par 60 min de jeu effectif)
-- Bavard en meeting / peu bavard en meeting (par 60 min de jeu effectif)
-- Taux de kills élevé / taux de kills faible (par game) 
-- Taux de survie élevé / taux de survie faible (pourcentage de survie fin de game)
-- Taux de survie Jour 1 elevé / taux de survie faible Jour 1 faible (pourcentage de survie à la fin du jour 1)
-- Récolte élevée / récolte faible (par 60 min de jeu effectif)
-- Récole en camp Villageois élevée / récolte en camp Villageois faible (par 60 min de jeu effectif)
-- Récole en camp Loup élevée / récolte en camp Loup faible (par 60 min de jeu effectif)
-- Voteur aggressif / voteur passif (par meeting, basé sur le score d'aggressivité)
-- Premier voteur / dernier voteur (par meeting, basé sur le taux de premier voteur / taux de dernier voteur)
-- Voteur précoce / voteur tardif (basé sur la Position moyenne de vote)
-- Bon chasseur / mauvais chasseur (kill de non villageois par partie / kill de villageois par partie)
-- Winner / looser (taux de victoire général, min 25 games)
-- Super Villageois / Villageois nul (taux de victoire en camp Villageois, min 25 games)
-- Super Loup / Loup nul (taux de victoire en camp Loup, min 25 games)
-- Super Solo / Solo nul (taux de victoire dans les camps Solo, min 25 games)
-- Serial Winner (grosse série de victoire)
-- Serial Looser (grosse série de défaite)
-
-- titre spécial pour le joueur qui excellent le plus dans les catégories sous contrôle
-- titre spécial pour le joueur le plus bas dans les catégories sous contrôle
-
-Catégories hors de contrôle du joueur:
-- Serial Villageois (gros pourcentage de partie jouées dans le camp Villageois, min 25 games)
-- Serial Loup (gros pourcentage de partie jouées dans le camp Loup, min 25 games)
-- Serial Solo (gros pourcentage de partie jouées dans les camps Solo, min 25 games)
-- Serial Alchimiste (gros pourcentage de partie jouées dans les rôle Alchimiste, min 10 games)
-- Serial Chasseur (gros pourcentage de partie jouées dans les rôle Chasseur, min 10 games)
-- Serial Amoureux (gros pourcentage de partie jouées dans le camp Amoureux, min 10 games)
-- Serial Agent (gros pourcentage de partie jouées dans le camp Agent, min 10 games)
-- Serial Espion (gros pourcentage de partie jouées dans le camp Espion, min 10 games)
-- Serial Idiot du Village (gros pourcentage de partie jouées dans le camp Idiot Du Village, min 10 games)
-- Serial Chasseur de Prime (gros pourcentage de partie jouées dans le camp Chasseur de Prime, min 10 games)
-- Serial Contrebandier (gros pourcentage de partie jouées dans le camp Contrebander, min 10 games)
-- Serial La Bête (gros pourcentage de partie jouées dans le camp La Bête, min 10 games)
-- Serial Vaudou (gros pourcentage de partie jouées dans le camp Vaudou, min 10 games)
-- Serial Scientifique (gros pourcentage de partie jouées dans le camp Scientifique, min 10 games)
-
-Toutes les valeurs doivent être calculées sur les parties moddées uniquement.
-Toutes les valeurs doivent être relatives à la moyenne des joueurs.
-Les titres ne doivent être attribuées qu'aux joueurs qui ont au moins 25 parties en partie moddées
-
-Une fois que toutes ces stats "basiques" sont générées, je voudrais créer des titres originaux avec des combinaisons.
-Par exemple, Bavard + Récolte élevée pourrait donner le titre "Hyperactif"
-
-## TITRES DE COMBINAISON IMPLÉMENTÉS
-
-| Combinaison | Titre | Emoji | Priority |
-|-------------|-------|-------|----------|
-| Bavard + Récolte élevée | L'Hyperactif | ⚡ | 10 |
-| Silencieux + Récolte élevée | L'Efficace | 🎯 | 10 |
-| Bavard + Récolte faible | Le Philosophe | 📚 | 10 |
-| Kills élevés + Survie élevée | L'Alpha | 🦁 | 15 |
-| Kills élevés + Survie faible | Le Kamikaze | 💥 | 10 |
-| Survie J1 faible + Survie élevée | Le Phoenix | 🔥 | 12 |
-| Voteur agressif + Premier voteur | Le Cow-Boy | 🤠 | 10 |
-| Vote précis + Silencieux | Le Détective | 🔎 | 12 |
-| Bavard + Vote imprécis | Le Démagogue | 📣 | 10 |
-| Super Loup + Silencieux | L'Infiltré | 🎭 | 15 |
-| Super Loup + Bavard | Le Manipulateur | 🐍 | 15 |
-| Win rate extrême + Serial Winner | La Légende | 🏅 | 20 |
-| Lose rate extrême + Serial Looser | Le Poissard | 🌧️ | 20 |
-| Récolte + Survie + Silencieux | Le Robot | 🤖 | 18 |
-| Bavard + Improductif + Meurt | Le Pitre | 🎪 | 18 |
-| Serial Amoureux + Winner | Cupidon | 💘 | 12 |
-| Serial Amoureux + Looser | Roméo | 💔 | 12 |
-| Serial Chasseur + Précis | Sniper Elite | 🎖️ | 15 |
-| Serial Chasseur + Imprécis | Le Chasseur Maladroit | 🔫 | 15 |
-
-## TODO: Titres additionnels à implémenter
-- Titres basés sur les cartes (Village vs Château)
-- Titres basés sur les relations (duo gagnant, nemesis, etc.)
-- Titres saisonniers / temporaires
+Series titles (En Feu, Glacé·e, La Légende, Le·a Poissard·e)
+Camp balance titles (Le·a Polyvalent·e, Le·a Spécialiste)
+All "Serial" role titles (Serial Chasseur, Serial Alchimiste, Serial Amoureux, etc.)
+The generate-titles.js script needs to be updated to actually compute these missing statistics.

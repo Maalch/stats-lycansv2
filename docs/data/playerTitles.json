@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-23T16:13:48.989Z",
+  "generatedAt": "2026-01-23T16:31:12.112Z",
   "teamName": "Main Team",
   "totalPlayers": 36,
   "minGamesRequired": 25,
@@ -144,6 +144,30 @@
           "type": "basic"
         },
         {
+          "id": "votingAggressive_low",
+          "title": "Le·a Sage",
+          "emoji": "🧘",
+          "description": "Voteur·se passif·ve",
+          "stat": "votingAggressiveness",
+          "value": -5.535714285714281,
+          "percentile": 25,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 80.55555555555556,
+          "percentile": 20,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "survival_low",
           "title": "La Cible",
           "emoji": "🎯",
@@ -237,6 +261,16 @@
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
         },
+        "votingAggressiveness": {
+          "value": -5.535714285714281,
+          "percentile": 25,
+          "category": "LOW"
+        },
+        "votingAccuracy": {
+          "value": 80.55555555555556,
+          "percentile": 20,
+          "category": "LOW"
+        },
         "survivalRate": {
           "value": 28.947368421052634,
           "percentile": 33.33333333333333,
@@ -277,6 +311,8 @@
         "campVillageoisPercent": 69.73684210526315,
         "campLoupPercent": 9.210526315789473,
         "campSoloPercent": 21.052631578947366,
+        "votingAggressiveness": -5.535714285714281,
+        "votingAccuracy": 80.55555555555556,
         "survivalRate": 28.947368421052634,
         "survivalDay1Rate": 72.36842105263158,
         "killRate": 0.32894736842105265,
@@ -298,6 +334,18 @@
           "stat": "winRateSolo",
           "value": 0,
           "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_extreme_low",
+          "title": "L'Indécis·e",
+          "emoji": "🤷",
+          "description": "Vote rarement",
+          "stat": "votingAggressiveness",
+          "value": -28.200000000000003,
+          "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -452,6 +500,11 @@
           "percentile": 30.555555555555557,
           "category": "LOW"
         },
+        "votingAggressiveness": {
+          "value": -28.200000000000003,
+          "percentile": 2.7777777777777777,
+          "category": "EXTREME_LOW"
+        },
         "survivalRate": {
           "value": 25.806451612903224,
           "percentile": 13.88888888888889,
@@ -492,6 +545,7 @@
         "campVillageoisPercent": 51.61290322580645,
         "campLoupPercent": 32.25806451612903,
         "campSoloPercent": 16.129032258064516,
+        "votingAggressiveness": -28.200000000000003,
         "survivalRate": 25.806451612903224,
         "survivalDay1Rate": 77.41935483870968,
         "killRate": 0.1935483870967742,
@@ -562,6 +616,18 @@
           "type": "basic"
         },
         {
+          "id": "votingAccuracy_extreme_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 94.44444444444444,
+          "percentile": 85.71428571428571,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "survival_extreme_high",
           "title": "L'Immortel·le",
           "emoji": "⭐",
@@ -618,6 +684,30 @@
           "value": 52.94117647058824,
           "percentile": 69.44444444444444,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_low",
+          "title": "Le·a Sage",
+          "emoji": "🧘",
+          "description": "Voteur·se passif·ve",
+          "stat": "votingAggressiveness",
+          "value": -7.75,
+          "percentile": 19.444444444444446,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_low",
+          "title": "Le·a Myope",
+          "emoji": "👓",
+          "description": "Mauvais·e chasseur·se (tue des alliés)",
+          "stat": "hunterAccuracy",
+          "value": 50,
+          "percentile": 16.666666666666664,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -709,6 +799,26 @@
           "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW"
         },
+        "votingAggressiveness": {
+          "value": -7.75,
+          "percentile": 19.444444444444446,
+          "category": "LOW"
+        },
+        "votingAccuracy": {
+          "value": 94.44444444444444,
+          "percentile": 85.71428571428571,
+          "category": "EXTREME_HIGH"
+        },
+        "hunterGames": {
+          "value": 12,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW"
+        },
+        "hunterAccuracy": {
+          "value": 50,
+          "percentile": 16.666666666666664,
+          "category": "LOW"
+        },
         "survivalRate": {
           "value": 47.24409448818898,
           "percentile": 91.66666666666666,
@@ -749,6 +859,10 @@
         "campVillageoisPercent": 66.92913385826772,
         "campLoupPercent": 22.04724409448819,
         "campSoloPercent": 11.023622047244094,
+        "votingAggressiveness": -7.75,
+        "votingAccuracy": 94.44444444444444,
+        "hunterGames": 12,
+        "hunterAccuracy": 50,
         "survivalRate": 47.24409448818898,
         "survivalDay1Rate": 83.46456692913385,
         "killRate": 0.6456692913385826,
@@ -817,6 +931,30 @@
           "value": 0,
           "percentile": 0,
           "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_extreme_low",
+          "title": "L'Indécis·e",
+          "emoji": "🤷",
+          "description": "Vote rarement",
+          "stat": "votingAggressiveness",
+          "value": -12.558139534883717,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_extreme_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 100,
+          "percentile": 94.28571428571428,
+          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -939,6 +1077,16 @@
           "percentile": 44.44444444444444,
           "category": "BELOW_AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": -12.558139534883717,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW"
+        },
+        "votingAccuracy": {
+          "value": 100,
+          "percentile": 94.28571428571428,
+          "category": "EXTREME_HIGH"
+        },
         "survivalRate": {
           "value": 31.03448275862069,
           "percentile": 47.22222222222222,
@@ -979,6 +1127,8 @@
         "campVillageoisPercent": 68.96551724137932,
         "campLoupPercent": 13.793103448275861,
         "campSoloPercent": 17.24137931034483,
+        "votingAggressiveness": -12.558139534883717,
+        "votingAccuracy": 100,
         "survivalRate": 31.03448275862069,
         "survivalDay1Rate": 75.86206896551724,
         "killRate": 0.5862068965517241,
@@ -1069,6 +1219,30 @@
           "value": 16.666666666666664,
           "percentile": 6.451612903225806,
           "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_extreme_high",
+          "title": "Le·a Tribun·e",
+          "emoji": "⚖️",
+          "description": "Toujours en action",
+          "stat": "votingAggressiveness",
+          "value": 15.068493150684928,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_extreme_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 96.96969696969697,
+          "percentile": 91.42857142857143,
+          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -1198,6 +1372,16 @@
           "percentile": 97.22222222222221,
           "category": "EXTREME_HIGH"
         },
+        "votingAggressiveness": {
+          "value": 15.068493150684928,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH"
+        },
+        "votingAccuracy": {
+          "value": 96.96969696969697,
+          "percentile": 91.42857142857143,
+          "category": "EXTREME_HIGH"
+        },
         "survivalRate": {
           "value": 45,
           "percentile": 86.11111111111111,
@@ -1238,6 +1422,8 @@
         "campVillageoisPercent": 52.5,
         "campLoupPercent": 15,
         "campSoloPercent": 32.5,
+        "votingAggressiveness": 15.068493150684928,
+        "votingAccuracy": 96.96969696969697,
         "survivalRate": 45,
         "survivalDay1Rate": 85,
         "killRate": 0.775,
@@ -1356,6 +1542,30 @@
           "type": "basic"
         },
         {
+          "id": "votingAggressive_low",
+          "title": "Le·a Sage",
+          "emoji": "🧘",
+          "description": "Voteur·se passif·ve",
+          "stat": "votingAggressiveness",
+          "value": -6.444444444444445,
+          "percentile": 22.22222222222222,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 92.85714285714286,
+          "percentile": 80,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_high",
           "title": "Le·a Fermier·ère",
           "emoji": "🌾",
@@ -1428,6 +1638,16 @@
           "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH"
         },
+        "votingAggressiveness": {
+          "value": -6.444444444444445,
+          "percentile": 22.22222222222222,
+          "category": "LOW"
+        },
+        "votingAccuracy": {
+          "value": 92.85714285714286,
+          "percentile": 80,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 29.629629629629626,
           "percentile": 38.88888888888889,
@@ -1468,6 +1688,8 @@
         "campVillageoisPercent": 62.96296296296296,
         "campLoupPercent": 11.11111111111111,
         "campSoloPercent": 25.925925925925924,
+        "votingAggressiveness": -6.444444444444445,
+        "votingAccuracy": 92.85714285714286,
         "survivalRate": 29.629629629629626,
         "survivalDay1Rate": 74.07407407407408,
         "killRate": 0.2962962962962963,
@@ -1566,6 +1788,30 @@
           "type": "basic"
         },
         {
+          "id": "votingAggressive_high",
+          "title": "L'Agitateur·rice",
+          "emoji": "📢",
+          "description": "Voteur·se agressif·ve",
+          "stat": "votingAggressiveness",
+          "value": 5.32258064516129,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 91.66666666666666,
+          "percentile": 77.14285714285715,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "survivalDay1_low",
           "title": "Le·a Téméraire",
           "emoji": "⚡",
@@ -1643,6 +1889,16 @@
           "percentile": 25,
           "category": "LOW"
         },
+        "votingAggressiveness": {
+          "value": 5.32258064516129,
+          "percentile": 66.66666666666666,
+          "category": "HIGH"
+        },
+        "votingAccuracy": {
+          "value": 91.66666666666666,
+          "percentile": 77.14285714285715,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 23.809523809523807,
           "percentile": 8.333333333333332,
@@ -1683,6 +1939,8 @@
         "campVillageoisPercent": 73.80952380952381,
         "campLoupPercent": 10.714285714285714,
         "campSoloPercent": 15.476190476190476,
+        "votingAggressiveness": 5.32258064516129,
+        "votingAccuracy": 91.66666666666666,
         "survivalRate": 23.809523809523807,
         "survivalDay1Rate": 75,
         "killRate": 0.4166666666666667,
@@ -1785,6 +2043,42 @@
           "type": "basic"
         },
         {
+          "id": "votingAccuracy_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 82,
+          "percentile": 31.428571428571427,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 30.18867924528302,
+          "percentile": 20.689655172413794,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_low",
+          "title": "Le·a Myope",
+          "emoji": "👓",
+          "description": "Mauvais·e chasseur·se (tue des alliés)",
+          "stat": "hunterAccuracy",
+          "value": 69.23076923076923,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talking_above_average",
           "title": "Le·a Équilibré·e",
           "emoji": "⚖️",
@@ -1877,6 +2171,31 @@
           "percentile": 84,
           "category": "HIGH"
         },
+        "votingAggressiveness": {
+          "value": 1.6285714285714317,
+          "percentile": 58.333333333333336,
+          "category": "ABOVE_AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 82,
+          "percentile": 31.428571428571427,
+          "category": "LOW"
+        },
+        "votingFirst": {
+          "value": 30.18867924528302,
+          "percentile": 20.689655172413794,
+          "category": "LOW"
+        },
+        "hunterGames": {
+          "value": 31,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH"
+        },
+        "hunterAccuracy": {
+          "value": 69.23076923076923,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
         "survivalRate": {
           "value": 37.59791122715404,
           "percentile": 61.111111111111114,
@@ -1920,6 +2239,11 @@
         "talkingPer60Min": 1075.811156771666,
         "talkingOutsidePer60Min": 708.8374480058299,
         "talkingDuringPer60Min": 366.97370876583614,
+        "votingAggressiveness": 1.6285714285714317,
+        "votingAccuracy": 82,
+        "votingFirst": 30.18867924528302,
+        "hunterGames": 31,
+        "hunterAccuracy": 69.23076923076923,
         "survivalRate": 37.59791122715404,
         "survivalDay1Rate": 82.24543080939948,
         "killRate": 0.46736292428198434,
@@ -2013,6 +2337,18 @@
           "stat": "winRateSolo",
           "value": 18.181818181818183,
           "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_extreme_high",
+          "title": "Le·a Tribun·e",
+          "emoji": "⚖️",
+          "description": "Toujours en action",
+          "stat": "votingAggressiveness",
+          "value": 19.332344213649847,
+          "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -2206,6 +2542,31 @@
           "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": 19.332344213649847,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH"
+        },
+        "votingAccuracy": {
+          "value": 86.03174603174604,
+          "percentile": 51.42857142857142,
+          "category": "AVERAGE"
+        },
+        "votingFirst": {
+          "value": 44.11764705882353,
+          "percentile": 62.06896551724138,
+          "category": "ABOVE_AVERAGE"
+        },
+        "hunterGames": {
+          "value": 23,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
+        },
+        "hunterAccuracy": {
+          "value": 70.58823529411765,
+          "percentile": 38.88888888888889,
+          "category": "BELOW_AVERAGE"
+        },
         "survivalRate": {
           "value": 53.56037151702786,
           "percentile": 97.22222222222221,
@@ -2249,6 +2610,11 @@
         "talkingPer60Min": 1193.9749608273462,
         "talkingOutsidePer60Min": 887.4697003205858,
         "talkingDuringPer60Min": 306.5052605067603,
+        "votingAggressiveness": 19.332344213649847,
+        "votingAccuracy": 86.03174603174604,
+        "votingFirst": 44.11764705882353,
+        "hunterGames": 23,
+        "hunterAccuracy": 70.58823529411765,
         "survivalRate": 53.56037151702786,
         "survivalDay1Rate": 85.13931888544892,
         "killRate": 0.8544891640866873,
@@ -2344,6 +2710,42 @@
           "stat": "winRateSolo",
           "value": 14.285714285714285,
           "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_low",
+          "title": "Le·a Sage",
+          "emoji": "🧘",
+          "description": "Voteur·se passif·ve",
+          "stat": "votingAggressiveness",
+          "value": -4.026354319180083,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 32.608695652173914,
+          "percentile": 31.03448275862069,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_high",
+          "title": "Le·a Sniper",
+          "emoji": "🎯",
+          "description": "Bon·ne chasseur·se (tue des ennemis)",
+          "stat": "hunterAccuracy",
+          "value": 93.33333333333333,
+          "percentile": 72.22222222222221,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -2477,6 +2879,31 @@
           "percentile": 52,
           "category": "AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": -4.026354319180083,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
+        "votingAccuracy": {
+          "value": 86.52173913043478,
+          "percentile": 60,
+          "category": "ABOVE_AVERAGE"
+        },
+        "votingFirst": {
+          "value": 32.608695652173914,
+          "percentile": 31.03448275862069,
+          "category": "LOW"
+        },
+        "hunterGames": {
+          "value": 38,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH"
+        },
+        "hunterAccuracy": {
+          "value": 93.33333333333333,
+          "percentile": 72.22222222222221,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 40.10989010989011,
           "percentile": 75,
@@ -2520,6 +2947,11 @@
         "talkingPer60Min": 1019.0342605898729,
         "talkingOutsidePer60Min": 747.5704676982232,
         "talkingDuringPer60Min": 271.4637928916498,
+        "votingAggressiveness": -4.026354319180083,
+        "votingAccuracy": 86.52173913043478,
+        "votingFirst": 32.608695652173914,
+        "hunterGames": 38,
+        "hunterAccuracy": 93.33333333333333,
         "survivalRate": 40.10989010989011,
         "survivalDay1Rate": 81.86813186813187,
         "killRate": 0.7005494505494505,
@@ -2625,6 +3057,42 @@
           "stat": "talkingOutsidePer60Min",
           "value": 606.6569219025239,
           "percentile": 12,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_extreme_low",
+          "title": "L'Indécis·e",
+          "emoji": "🤷",
+          "description": "Vote rarement",
+          "stat": "votingAggressiveness",
+          "value": -9.652173913043477,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_extreme_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 25,
+          "percentile": 6.896551724137931,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_extreme_low",
+          "title": "Le·a Chasseur·se Maudit·e",
+          "emoji": "💔",
+          "description": "Tire toujours sur les mauvaises cibles",
+          "stat": "hunterAccuracy",
+          "value": 40,
+          "percentile": 5.555555555555555,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -2786,6 +3254,31 @@
           "percentile": 32,
           "category": "LOW"
         },
+        "votingAggressiveness": {
+          "value": -9.652173913043477,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW"
+        },
+        "votingAccuracy": {
+          "value": 87.5,
+          "percentile": 62.857142857142854,
+          "category": "ABOVE_AVERAGE"
+        },
+        "votingFirst": {
+          "value": 25,
+          "percentile": 6.896551724137931,
+          "category": "EXTREME_LOW"
+        },
+        "hunterGames": {
+          "value": 14,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
+        "hunterAccuracy": {
+          "value": 40,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW"
+        },
         "survivalRate": {
           "value": 38.42364532019704,
           "percentile": 66.66666666666666,
@@ -2829,6 +3322,11 @@
         "talkingPer60Min": 851.3249379205968,
         "talkingOutsidePer60Min": 606.6569219025239,
         "talkingDuringPer60Min": 244.66801601807288,
+        "votingAggressiveness": -9.652173913043477,
+        "votingAccuracy": 87.5,
+        "votingFirst": 25,
+        "hunterGames": 14,
+        "hunterAccuracy": 40,
         "survivalRate": 38.42364532019704,
         "survivalDay1Rate": 81.77339901477832,
         "killRate": 0.6551724137931034,
@@ -2999,6 +3497,30 @@
           "type": "basic"
         },
         {
+          "id": "votingAggressive_high",
+          "title": "L'Agitateur·rice",
+          "emoji": "📢",
+          "description": "Voteur·se agressif·ve",
+          "stat": "votingAggressiveness",
+          "value": 8.26330532212885,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 28.57142857142857,
+          "percentile": 17.24137931034483,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_low",
           "title": "Le·a Flâneur·se",
           "emoji": "🚶",
@@ -3103,6 +3625,31 @@
           "percentile": 12,
           "category": "EXTREME_LOW"
         },
+        "votingAggressiveness": {
+          "value": 8.26330532212885,
+          "percentile": 69.44444444444444,
+          "category": "HIGH"
+        },
+        "votingAccuracy": {
+          "value": 85.91549295774648,
+          "percentile": 48.57142857142857,
+          "category": "AVERAGE"
+        },
+        "votingFirst": {
+          "value": 28.57142857142857,
+          "percentile": 17.24137931034483,
+          "category": "LOW"
+        },
+        "hunterGames": {
+          "value": 23,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
+        },
+        "hunterAccuracy": {
+          "value": 71.42857142857143,
+          "percentile": 44.44444444444444,
+          "category": "BELOW_AVERAGE"
+        },
         "survivalRate": {
           "value": 37.68844221105528,
           "percentile": 63.888888888888886,
@@ -3146,6 +3693,11 @@
         "talkingPer60Min": 932.7354026110525,
         "talkingOutsidePer60Min": 719.6561382008498,
         "talkingDuringPer60Min": 213.07926441020265,
+        "votingAggressiveness": 8.26330532212885,
+        "votingAccuracy": 85.91549295774648,
+        "votingFirst": 28.57142857142857,
+        "hunterGames": 23,
+        "hunterAccuracy": 71.42857142857143,
         "survivalRate": 37.68844221105528,
         "survivalDay1Rate": 80.90452261306532,
         "killRate": 0.6683417085427136,
@@ -3194,6 +3746,18 @@
           "type": "basic"
         },
         {
+          "id": "hunterAccuracy_extreme_low",
+          "title": "Le·a Chasseur·se Maudit·e",
+          "emoji": "💔",
+          "description": "Tire toujours sur les mauvaises cibles",
+          "stat": "hunterAccuracy",
+          "value": 47.05882352941176,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateLoup_high",
           "title": "Le·a Chef de Meute",
           "emoji": "🐺",
@@ -3226,6 +3790,30 @@
           "value": 337.8319321924623,
           "percentile": 80,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_low",
+          "title": "Le·a Sage",
+          "emoji": "🧘",
+          "description": "Voteur·se passif·ve",
+          "stat": "votingAggressiveness",
+          "value": -4.106583072100314,
+          "percentile": 30.555555555555557,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 30.526315789473685,
+          "percentile": 24.137931034482758,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -3344,6 +3932,31 @@
           "percentile": 80,
           "category": "HIGH"
         },
+        "votingAggressiveness": {
+          "value": -4.106583072100314,
+          "percentile": 30.555555555555557,
+          "category": "LOW"
+        },
+        "votingAccuracy": {
+          "value": 86.44859813084112,
+          "percentile": 57.14285714285714,
+          "category": "ABOVE_AVERAGE"
+        },
+        "votingFirst": {
+          "value": 30.526315789473685,
+          "percentile": 24.137931034482758,
+          "category": "LOW"
+        },
+        "hunterGames": {
+          "value": 30,
+          "percentile": 83.33333333333334,
+          "category": "HIGH"
+        },
+        "hunterAccuracy": {
+          "value": 47.05882352941176,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW"
+        },
         "survivalRate": {
           "value": 31.728045325779036,
           "percentile": 50,
@@ -3387,6 +4000,11 @@
         "talkingPer60Min": 1210.215727106016,
         "talkingOutsidePer60Min": 872.3837949135537,
         "talkingDuringPer60Min": 337.8319321924623,
+        "votingAggressiveness": -4.106583072100314,
+        "votingAccuracy": 86.44859813084112,
+        "votingFirst": 30.526315789473685,
+        "hunterGames": 30,
+        "hunterAccuracy": 47.05882352941176,
         "survivalRate": 31.728045325779036,
         "survivalDay1Rate": 83.85269121813032,
         "killRate": 0.623229461756374,
@@ -3400,6 +4018,42 @@
       "playerName": "Kyria",
       "gamesPlayed": 155,
       "titles": [
+        {
+          "id": "votingAggressive_extreme_low",
+          "title": "L'Indécis·e",
+          "emoji": "🤷",
+          "description": "Vote rarement",
+          "stat": "votingAggressiveness",
+          "value": -13.571428571428573,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_extreme_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 78.46153846153847,
+          "percentile": 11.428571428571429,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_extreme_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 23.52941176470588,
+          "percentile": 3.4482758620689653,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
         {
           "id": "winRate_low",
           "title": "Le·a Looser",
@@ -3433,6 +4087,18 @@
           "value": 23.333333333333332,
           "percentile": 22.58064516129032,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_high",
+          "title": "Le·a Sniper",
+          "emoji": "🎯",
+          "description": "Bon·ne chasseur·se (tue des ennemis)",
+          "stat": "hunterAccuracy",
+          "value": 100,
+          "percentile": 77.77777777777779,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -3486,15 +4152,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRate_low",
-        "title": "Le·a Looser",
-        "emoji": "😢",
-        "description": "Taux de victoire faible",
-        "stat": "winRate",
-        "value": 36.8,
-        "percentile": 33.33333333333333,
-        "category": "LOW",
-        "priority": 6,
+        "id": "votingAccuracy_extreme_low",
+        "title": "L'Aveugle",
+        "emoji": "🙈",
+        "description": "Mauvais instinct de vote",
+        "stat": "votingAccuracy",
+        "value": 78.46153846153847,
+        "percentile": 11.428571428571429,
+        "category": "EXTREME_LOW",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -3553,6 +4219,31 @@
           "percentile": 56.00000000000001,
           "category": "ABOVE_AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": -13.571428571428573,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW"
+        },
+        "votingAccuracy": {
+          "value": 78.46153846153847,
+          "percentile": 11.428571428571429,
+          "category": "EXTREME_LOW"
+        },
+        "votingFirst": {
+          "value": 23.52941176470588,
+          "percentile": 3.4482758620689653,
+          "category": "EXTREME_LOW"
+        },
+        "hunterGames": {
+          "value": 13,
+          "percentile": 16.666666666666664,
+          "category": "LOW"
+        },
+        "hunterAccuracy": {
+          "value": 100,
+          "percentile": 77.77777777777779,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 30.32258064516129,
           "percentile": 44.44444444444444,
@@ -3596,6 +4287,11 @@
         "talkingPer60Min": 1060.5630182757734,
         "talkingOutsidePer60Min": 779.1891562842417,
         "talkingDuringPer60Min": 281.3738619915317,
+        "votingAggressiveness": -13.571428571428573,
+        "votingAccuracy": 78.46153846153847,
+        "votingFirst": 23.52941176470588,
+        "hunterGames": 13,
+        "hunterAccuracy": 100,
         "survivalRate": 30.32258064516129,
         "survivalDay1Rate": 81.29032258064515,
         "killRate": 0.3548387096774194,
@@ -3641,6 +4337,30 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_extreme_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 25,
+          "percentile": 6.896551724137931,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 88.37209302325581,
+          "percentile": 68.57142857142857,
+          "category": "HIGH",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -3755,6 +4475,21 @@
           "percentile": 8.333333333333332,
           "category": "EXTREME_LOW"
         },
+        "votingAggressiveness": {
+          "value": 0.23809523809523636,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 88.37209302325581,
+          "percentile": 68.57142857142857,
+          "category": "HIGH"
+        },
+        "votingFirst": {
+          "value": 25,
+          "percentile": 6.896551724137931,
+          "category": "EXTREME_LOW"
+        },
         "survivalRate": {
           "value": 36.92307692307693,
           "percentile": 58.333333333333336,
@@ -3795,6 +4530,9 @@
         "campVillageoisPercent": 70.76923076923077,
         "campLoupPercent": 16.923076923076923,
         "campSoloPercent": 12.307692307692308,
+        "votingAggressiveness": 0.23809523809523636,
+        "votingAccuracy": 88.37209302325581,
+        "votingFirst": 25,
         "survivalRate": 36.92307692307693,
         "survivalDay1Rate": 81.53846153846153,
         "killRate": 0.35384615384615387,
@@ -3859,6 +4597,18 @@
           ]
         },
         {
+          "id": "votingFirst_extreme_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 57.14285714285714,
+          "percentile": 86.20689655172413,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "survivalDay1_extreme_high",
           "title": "Le·a Prudent·e",
           "emoji": "🏃",
@@ -3914,6 +4664,18 @@
           "stat": "winRateSolo",
           "value": 16,
           "percentile": 80.55555555555556,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_high",
+          "title": "L'Agitateur·rice",
+          "emoji": "📢",
+          "description": "Voteur·se agressif·ve",
+          "stat": "votingAggressiveness",
+          "value": 9.186046511627909,
+          "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3996,6 +4758,21 @@
           "percentile": 58.333333333333336,
           "category": "ABOVE_AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": 9.186046511627909,
+          "percentile": 77.77777777777779,
+          "category": "HIGH"
+        },
+        "votingAccuracy": {
+          "value": 84.11214953271028,
+          "percentile": 40,
+          "category": "BELOW_AVERAGE"
+        },
+        "votingFirst": {
+          "value": 57.14285714285714,
+          "percentile": 86.20689655172413,
+          "category": "EXTREME_HIGH"
+        },
         "survivalRate": {
           "value": 41.726618705035975,
           "percentile": 83.33333333333334,
@@ -4036,6 +4813,9 @@
         "campVillageoisPercent": 61.87050359712231,
         "campLoupPercent": 20.14388489208633,
         "campSoloPercent": 17.985611510791365,
+        "votingAggressiveness": 9.186046511627909,
+        "votingAccuracy": 84.11214953271028,
+        "votingFirst": 57.14285714285714,
         "survivalRate": 41.726618705035975,
         "survivalDay1Rate": 89.92805755395683,
         "killRate": 0.5611510791366906,
@@ -4165,6 +4945,18 @@
           "stat": "talkingDuringPer60Min",
           "value": 469.1423635843672,
           "percentile": 96,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_extreme_high",
+          "title": "Le·a Tribun·e",
+          "emoji": "⚖️",
+          "description": "Toujours en action",
+          "stat": "votingAggressiveness",
+          "value": 23.373493975903607,
+          "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -4322,6 +5114,31 @@
           "percentile": 96,
           "category": "EXTREME_HIGH"
         },
+        "votingAggressiveness": {
+          "value": 23.373493975903607,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH"
+        },
+        "votingAccuracy": {
+          "value": 85.46712802768167,
+          "percentile": 45.714285714285715,
+          "category": "AVERAGE"
+        },
+        "votingFirst": {
+          "value": 38.01652892561984,
+          "percentile": 48.275862068965516,
+          "category": "AVERAGE"
+        },
+        "hunterGames": {
+          "value": 25,
+          "percentile": 72.22222222222221,
+          "category": "HIGH"
+        },
+        "hunterAccuracy": {
+          "value": 77.27272727272727,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "survivalRate": {
           "value": 38.48580441640379,
           "percentile": 69.44444444444444,
@@ -4365,6 +5182,11 @@
         "talkingPer60Min": 1436.6841871663262,
         "talkingOutsidePer60Min": 967.5418235819591,
         "talkingDuringPer60Min": 469.1423635843672,
+        "votingAggressiveness": 23.373493975903607,
+        "votingAccuracy": 85.46712802768167,
+        "votingFirst": 38.01652892561984,
+        "hunterGames": 25,
+        "hunterAccuracy": 77.27272727272727,
         "survivalRate": 38.48580441640379,
         "survivalDay1Rate": 84.85804416403786,
         "killRate": 0.7160883280757098,
@@ -4399,6 +5221,30 @@
               "actualPercentile": 91.66666666666666
             }
           ]
+        },
+        {
+          "id": "votingAccuracy_extreme_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 80,
+          "percentile": 14.285714285714285,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_extreme_low",
+          "title": "Le·a Chasseur·se Maudit·e",
+          "emoji": "💔",
+          "description": "Tire toujours sur les mauvaises cibles",
+          "stat": "hunterAccuracy",
+          "value": 33.33333333333333,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "survivalDay1_extreme_low",
@@ -4599,6 +5445,31 @@
           "percentile": 24,
           "category": "LOW"
         },
+        "votingAggressiveness": {
+          "value": 0.5228758169934675,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 80,
+          "percentile": 14.285714285714285,
+          "category": "EXTREME_LOW"
+        },
+        "votingFirst": {
+          "value": 43.859649122807014,
+          "percentile": 58.620689655172406,
+          "category": "ABOVE_AVERAGE"
+        },
+        "hunterGames": {
+          "value": 11,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "hunterAccuracy": {
+          "value": 33.33333333333333,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
         "survivalRate": {
           "value": 32.27513227513227,
           "percentile": 55.55555555555556,
@@ -4642,6 +5513,11 @@
         "talkingPer60Min": 917.5106535253502,
         "talkingOutsidePer60Min": 679.9079802204543,
         "talkingDuringPer60Min": 237.602673304896,
+        "votingAggressiveness": 0.5228758169934675,
+        "votingAccuracy": 80,
+        "votingFirst": 43.859649122807014,
+        "hunterGames": 11,
+        "hunterAccuracy": 33.33333333333333,
         "survivalRate": 32.27513227513227,
         "survivalDay1Rate": 74.07407407407408,
         "killRate": 0.291005291005291,
@@ -4687,6 +5563,30 @@
           "stat": "talkingPer60Min",
           "value": 1192.4206227588213,
           "percentile": 76,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 89.11290322580645,
+          "percentile": 74.28571428571429,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_high",
+          "title": "Le·a Sniper",
+          "emoji": "🎯",
+          "description": "Bon·ne chasseur·se (tue des ennemis)",
+          "stat": "hunterAccuracy",
+          "value": 100,
+          "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4808,6 +5708,31 @@
           "percentile": 92,
           "category": "EXTREME_HIGH"
         },
+        "votingAggressiveness": {
+          "value": -2.781546811397561,
+          "percentile": 36.11111111111111,
+          "category": "BELOW_AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 89.11290322580645,
+          "percentile": 74.28571428571429,
+          "category": "HIGH"
+        },
+        "votingFirst": {
+          "value": 37.77777777777778,
+          "percentile": 44.827586206896555,
+          "category": "BELOW_AVERAGE"
+        },
+        "hunterGames": {
+          "value": 18,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "hunterAccuracy": {
+          "value": 100,
+          "percentile": 77.77777777777779,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 41.09947643979058,
           "percentile": 80.55555555555556,
@@ -4851,6 +5776,11 @@
         "talkingPer60Min": 1192.4206227588213,
         "talkingOutsidePer60Min": 739.4579059990489,
         "talkingDuringPer60Min": 452.96271675977243,
+        "votingAggressiveness": -2.781546811397561,
+        "votingAccuracy": 89.11290322580645,
+        "votingFirst": 37.77777777777778,
+        "hunterGames": 18,
+        "hunterAccuracy": 100,
         "survivalRate": 41.09947643979058,
         "survivalDay1Rate": 85.07853403141361,
         "killRate": 0.5235602094240838,
@@ -4948,6 +5878,30 @@
           "stat": "winRateLoup",
           "value": 25.925925925925924,
           "percentile": 32.25806451612903,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 81.53846153846153,
+          "percentile": 25.71428571428571,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 31.818181818181817,
+          "percentile": 27.586206896551722,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -5097,6 +6051,21 @@
           "percentile": 44,
           "category": "BELOW_AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": -1.9270833333333268,
+          "percentile": 44.44444444444444,
+          "category": "BELOW_AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 81.53846153846153,
+          "percentile": 25.71428571428571,
+          "category": "LOW"
+        },
+        "votingFirst": {
+          "value": 31.818181818181817,
+          "percentile": 27.586206896551722,
+          "category": "LOW"
+        },
         "survivalRate": {
           "value": 27.049180327868854,
           "percentile": 25,
@@ -5140,6 +6109,9 @@
         "talkingPer60Min": 995.9884840788314,
         "talkingOutsidePer60Min": 733.372131618966,
         "talkingDuringPer60Min": 262.6163524598654,
+        "votingAggressiveness": -1.9270833333333268,
+        "votingAccuracy": 81.53846153846153,
+        "votingFirst": 31.818181818181817,
         "survivalRate": 27.049180327868854,
         "survivalDay1Rate": 73.77049180327869,
         "killRate": 0.45901639344262296,
@@ -5242,6 +6214,18 @@
           "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 2.083333333333333,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_low",
+          "title": "Le·a Myope",
+          "emoji": "👓",
+          "description": "Mauvais·e chasseur·se (tue des alliés)",
+          "stat": "hunterAccuracy",
+          "value": 66.66666666666666,
           "percentile": 27.77777777777778,
           "category": "LOW",
           "priority": 6,
@@ -5362,6 +6346,31 @@
           "percentile": 4,
           "category": "EXTREME_LOW"
         },
+        "votingAggressiveness": {
+          "value": -0.022831050228306893,
+          "percentile": 47.22222222222222,
+          "category": "AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 83.00653594771242,
+          "percentile": 37.142857142857146,
+          "category": "BELOW_AVERAGE"
+        },
+        "votingFirst": {
+          "value": 35.18518518518518,
+          "percentile": 37.93103448275862,
+          "category": "BELOW_AVERAGE"
+        },
+        "hunterGames": {
+          "value": 25,
+          "percentile": 72.22222222222221,
+          "category": "HIGH"
+        },
+        "hunterAccuracy": {
+          "value": 66.66666666666666,
+          "percentile": 27.77777777777778,
+          "category": "LOW"
+        },
         "survivalRate": {
           "value": 25.454545454545453,
           "percentile": 11.11111111111111,
@@ -5405,6 +6414,11 @@
         "talkingPer60Min": 777.5035792853156,
         "talkingOutsidePer60Min": 603.1558479990774,
         "talkingDuringPer60Min": 174.3477312862382,
+        "votingAggressiveness": -0.022831050228306893,
+        "votingAccuracy": 83.00653594771242,
+        "votingFirst": 35.18518518518518,
+        "hunterGames": 25,
+        "hunterAccuracy": 66.66666666666666,
         "survivalRate": 25.454545454545453,
         "survivalDay1Rate": 78.18181818181819,
         "killRate": 0.32,
@@ -5547,6 +6561,42 @@
           "type": "basic"
         },
         {
+          "id": "votingAggressive_high",
+          "title": "L'Agitateur·rice",
+          "emoji": "📢",
+          "description": "Voteur·se agressif·ve",
+          "stat": "votingAggressiveness",
+          "value": 12.128514056224905,
+          "percentile": 80.55555555555556,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 34.090909090909086,
+          "percentile": 34.48275862068966,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_low",
+          "title": "Le·a Myope",
+          "emoji": "👓",
+          "description": "Mauvais·e chasseur·se (tue des alliés)",
+          "stat": "hunterAccuracy",
+          "value": 60,
+          "percentile": 22.22222222222222,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "survival_high",
           "title": "Le·a Survivant·e",
           "emoji": "🛡️",
@@ -5685,6 +6735,31 @@
           "percentile": 72,
           "category": "HIGH"
         },
+        "votingAggressiveness": {
+          "value": 12.128514056224905,
+          "percentile": 80.55555555555556,
+          "category": "HIGH"
+        },
+        "votingAccuracy": {
+          "value": 86.19047619047619,
+          "percentile": 54.285714285714285,
+          "category": "AVERAGE"
+        },
+        "votingFirst": {
+          "value": 34.090909090909086,
+          "percentile": 34.48275862068966,
+          "category": "LOW"
+        },
+        "hunterGames": {
+          "value": 23,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
+        },
+        "hunterAccuracy": {
+          "value": 60,
+          "percentile": 22.22222222222222,
+          "category": "LOW"
+        },
         "survivalRate": {
           "value": 39.3574297188755,
           "percentile": 72.22222222222221,
@@ -5728,6 +6803,11 @@
         "talkingPer60Min": 1156.984297978924,
         "talkingOutsidePer60Min": 826.7087423448536,
         "talkingDuringPer60Min": 330.2755556340704,
+        "votingAggressiveness": 12.128514056224905,
+        "votingAccuracy": 86.19047619047619,
+        "votingFirst": 34.090909090909086,
+        "hunterGames": 23,
+        "hunterAccuracy": 60,
         "survivalRate": 39.3574297188755,
         "survivalDay1Rate": 85.54216867469879,
         "killRate": 0.5662650602409639,
@@ -5777,6 +6857,18 @@
           "stat": "winRate",
           "value": 31.6,
           "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_extreme_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 77.24137931034483,
+          "percentile": 8.571428571428571,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -5837,6 +6929,18 @@
           "stat": "talkingDuringPer60Min",
           "value": 330.74441278783365,
           "percentile": 76,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 47.540983606557376,
+          "percentile": 65.51724137931035,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -5970,6 +7074,31 @@
           "percentile": 76,
           "category": "HIGH"
         },
+        "votingAggressiveness": {
+          "value": 4.311688311688316,
+          "percentile": 63.888888888888886,
+          "category": "ABOVE_AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 77.24137931034483,
+          "percentile": 8.571428571428571,
+          "category": "EXTREME_LOW"
+        },
+        "votingFirst": {
+          "value": 47.540983606557376,
+          "percentile": 65.51724137931035,
+          "category": "HIGH"
+        },
+        "hunterGames": {
+          "value": 14,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
+        "hunterAccuracy": {
+          "value": 83.33333333333334,
+          "percentile": 61.111111111111114,
+          "category": "ABOVE_AVERAGE"
+        },
         "survivalRate": {
           "value": 26.75438596491228,
           "percentile": 22.22222222222222,
@@ -6013,6 +7142,11 @@
         "talkingPer60Min": 1085.6368821360222,
         "talkingOutsidePer60Min": 754.8924693481885,
         "talkingDuringPer60Min": 330.74441278783365,
+        "votingAggressiveness": 4.311688311688316,
+        "votingAccuracy": 77.24137931034483,
+        "votingFirst": 47.540983606557376,
+        "hunterGames": 14,
+        "hunterAccuracy": 83.33333333333334,
         "survivalRate": 26.75438596491228,
         "survivalDay1Rate": 77.19298245614034,
         "killRate": 0.4824561403508772,
@@ -6121,6 +7255,30 @@
           ]
         },
         {
+          "id": "votingAggressive_extreme_high",
+          "title": "Le·a Tribun·e",
+          "emoji": "⚖️",
+          "description": "Toujours en action",
+          "stat": "votingAggressiveness",
+          "value": 20.744985673352435,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_extreme_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 75.38461538461539,
+          "percentile": 93.10344827586206,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "loot_extreme_high",
           "title": "Le·a Stakhanoviste",
           "emoji": "⚒️",
@@ -6205,6 +7363,18 @@
           "type": "basic"
         },
         {
+          "id": "votingAccuracy_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 88.62275449101796,
+          "percentile": 71.42857142857143,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "survival_high",
           "title": "Le·a Survivant·e",
           "emoji": "🛡️",
@@ -6254,15 +7424,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "talking_high",
-        "title": "Le·a Bavard·e",
-        "emoji": "🗣️",
-        "description": "Parle beaucoup (par 60 min de jeu)",
-        "stat": "talkingPer60Min",
-        "value": 1194.2496743567306,
-        "percentile": 84,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "votingFirst_extreme_high",
+        "title": "L'Impulsif·ve",
+        "emoji": "🏃",
+        "description": "Premier·ère voteur·se",
+        "stat": "votingFirst",
+        "value": 75.38461538461539,
+        "percentile": 93.10344827586206,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -6321,6 +7491,31 @@
           "percentile": 68,
           "category": "HIGH"
         },
+        "votingAggressiveness": {
+          "value": 20.744985673352435,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH"
+        },
+        "votingAccuracy": {
+          "value": 88.62275449101796,
+          "percentile": 71.42857142857143,
+          "category": "HIGH"
+        },
+        "votingFirst": {
+          "value": 75.38461538461539,
+          "percentile": 93.10344827586206,
+          "category": "EXTREME_HIGH"
+        },
+        "hunterGames": {
+          "value": 14,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
+        "hunterAccuracy": {
+          "value": 80,
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
+        },
         "survivalRate": {
           "value": 40.72164948453608,
           "percentile": 77.77777777777779,
@@ -6364,6 +7559,11 @@
         "talkingPer60Min": 1194.2496743567306,
         "talkingOutsidePer60Min": 877.6729472596473,
         "talkingDuringPer60Min": 316.5767270970832,
+        "votingAggressiveness": 20.744985673352435,
+        "votingAccuracy": 88.62275449101796,
+        "votingFirst": 75.38461538461539,
+        "hunterGames": 14,
+        "hunterAccuracy": 80,
         "survivalRate": 40.72164948453608,
         "survivalDay1Rate": 80.9278350515464,
         "killRate": 0.5773195876288659,
@@ -6397,6 +7597,30 @@
           "stat": "talkingOutsidePer60Min",
           "value": 559.4020963104329,
           "percentile": 4,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_extreme_low",
+          "title": "L'Indécis·e",
+          "emoji": "🤷",
+          "description": "Vote rarement",
+          "stat": "votingAggressiveness",
+          "value": -12.948402948402947,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_extreme_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 27.083333333333332,
+          "percentile": 13.793103448275861,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -6487,13 +7711,13 @@
         }
       ],
       "primaryTitle": {
-        "id": "killRate_extreme_low",
-        "title": "L'Agneau",
-        "emoji": "🐑",
-        "description": "Ne tue jamais",
-        "stat": "killRate",
-        "value": 0.3153153153153153,
-        "percentile": 13.88888888888889,
+        "id": "votingFirst_extreme_low",
+        "title": "Le·a Stratège",
+        "emoji": "🧠",
+        "description": "Attend avant de voter",
+        "stat": "votingFirst",
+        "value": 27.083333333333332,
+        "percentile": 13.793103448275861,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -6554,6 +7778,31 @@
           "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": -12.948402948402947,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW"
+        },
+        "votingAccuracy": {
+          "value": 85.18518518518519,
+          "percentile": 42.857142857142854,
+          "category": "BELOW_AVERAGE"
+        },
+        "votingFirst": {
+          "value": 27.083333333333332,
+          "percentile": 13.793103448275861,
+          "category": "EXTREME_LOW"
+        },
+        "hunterGames": {
+          "value": 13,
+          "percentile": 16.666666666666664,
+          "category": "LOW"
+        },
+        "hunterAccuracy": {
+          "value": 83.33333333333334,
+          "percentile": 61.111111111111114,
+          "category": "ABOVE_AVERAGE"
+        },
         "survivalRate": {
           "value": 29.27927927927928,
           "percentile": 36.11111111111111,
@@ -6597,6 +7846,11 @@
         "talkingPer60Min": 810.38616663808,
         "talkingOutsidePer60Min": 559.4020963104329,
         "talkingDuringPer60Min": 250.98407032764712,
+        "votingAggressiveness": -12.948402948402947,
+        "votingAccuracy": 85.18518518518519,
+        "votingFirst": 27.083333333333332,
+        "hunterGames": 13,
+        "hunterAccuracy": 83.33333333333334,
         "survivalRate": 29.27927927927928,
         "survivalDay1Rate": 85.13513513513513,
         "killRate": 0.3153153153153153,
@@ -6757,6 +8011,42 @@
           "type": "basic"
         },
         {
+          "id": "votingAccuracy_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 80.8080808080808,
+          "percentile": 22.857142857142858,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 48,
+          "percentile": 72.41379310344827,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_high",
+          "title": "Le·a Sniper",
+          "emoji": "🎯",
+          "description": "Bon·ne chasseur·se (tue des ennemis)",
+          "stat": "hunterAccuracy",
+          "value": 100,
+          "percentile": 77.77777777777779,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "killRate_low",
           "title": "Le·a Pacifiste",
           "emoji": "☮️",
@@ -6794,14 +8084,14 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_extreme_low",
-        "title": "Loup Débutant·e",
-        "emoji": "🐩",
-        "description": "Mauvais·e en camp Loup",
-        "stat": "winRateLoup",
-        "value": 8.571428571428571,
-        "percentile": 0,
-        "category": "EXTREME_LOW",
+        "id": "lootVillageois_extreme_high",
+        "title": "Le·a Citoyen·ne Modèle",
+        "emoji": "🏘️",
+        "description": "Récolte excellente en Villageois",
+        "stat": "lootVillageoisPer60Min",
+        "value": 543.1723836768067,
+        "percentile": 88.88888888888889,
+        "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"
       },
@@ -6861,6 +8151,31 @@
           "percentile": 16,
           "category": "LOW"
         },
+        "votingAggressiveness": {
+          "value": -2.1305841924398603,
+          "percentile": 41.66666666666667,
+          "category": "BELOW_AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 80.8080808080808,
+          "percentile": 22.857142857142858,
+          "category": "LOW"
+        },
+        "votingFirst": {
+          "value": 48,
+          "percentile": 72.41379310344827,
+          "category": "HIGH"
+        },
+        "hunterGames": {
+          "value": 13,
+          "percentile": 16.666666666666664,
+          "category": "LOW"
+        },
+        "hunterAccuracy": {
+          "value": 100,
+          "percentile": 77.77777777777779,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 17.326732673267326,
           "percentile": 2.7777777777777777,
@@ -6904,6 +8219,11 @@
         "talkingPer60Min": 967.0632940203116,
         "talkingOutsidePer60Min": 742.6213765367423,
         "talkingDuringPer60Min": 224.44191748356914,
+        "votingAggressiveness": -2.1305841924398603,
+        "votingAccuracy": 80.8080808080808,
+        "votingFirst": 48,
+        "hunterGames": 13,
+        "hunterAccuracy": 100,
         "survivalRate": 17.326732673267326,
         "survivalDay1Rate": 72.27722772277228,
         "killRate": 0.3217821782178218,
@@ -6954,6 +8274,18 @@
           "type": "basic"
         },
         {
+          "id": "votingFirst_extreme_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 70.2127659574468,
+          "percentile": 89.65517241379311,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_low",
           "title": "Le·a Looser",
           "emoji": "😢",
@@ -6974,6 +8306,42 @@
           "value": 242.3821692022768,
           "percentile": 28.000000000000004,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_high",
+          "title": "L'Agitateur·rice",
+          "emoji": "📢",
+          "description": "Voteur·se agressif·ve",
+          "stat": "votingAggressiveness",
+          "value": 8.888888888888886,
+          "percentile": 75,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 81.98198198198197,
+          "percentile": 28.57142857142857,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_high",
+          "title": "Le·a Sniper",
+          "emoji": "🎯",
+          "description": "Bon·ne chasseur·se (tue des ennemis)",
+          "stat": "hunterAccuracy",
+          "value": 100,
+          "percentile": 77.77777777777779,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -7094,6 +8462,31 @@
           "percentile": 28.000000000000004,
           "category": "LOW"
         },
+        "votingAggressiveness": {
+          "value": 8.888888888888886,
+          "percentile": 75,
+          "category": "HIGH"
+        },
+        "votingAccuracy": {
+          "value": 81.98198198198197,
+          "percentile": 28.57142857142857,
+          "category": "LOW"
+        },
+        "votingFirst": {
+          "value": 70.2127659574468,
+          "percentile": 89.65517241379311,
+          "category": "EXTREME_HIGH"
+        },
+        "hunterGames": {
+          "value": 12,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW"
+        },
+        "hunterAccuracy": {
+          "value": 100,
+          "percentile": 77.77777777777779,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 32.19178082191781,
           "percentile": 52.77777777777778,
@@ -7137,6 +8530,11 @@
         "talkingPer60Min": 1132.9789574533193,
         "talkingOutsidePer60Min": 890.5967882510423,
         "talkingDuringPer60Min": 242.3821692022768,
+        "votingAggressiveness": 8.888888888888886,
+        "votingAccuracy": 81.98198198198197,
+        "votingFirst": 70.2127659574468,
+        "hunterGames": 12,
+        "hunterAccuracy": 100,
         "survivalRate": 32.19178082191781,
         "survivalDay1Rate": 84.24657534246576,
         "killRate": 0.4452054794520548,
@@ -7187,6 +8585,30 @@
           "type": "basic"
         },
         {
+          "id": "votingAccuracy_extreme_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 94.73684210526315,
+          "percentile": 88.57142857142857,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_extreme_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 80,
+          "percentile": 96.55172413793103,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "survivalDay1_extreme_low",
           "title": "Le·a Téméraire",
           "emoji": "⚡",
@@ -7232,6 +8654,18 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_low",
+          "title": "Le·a Sage",
+          "emoji": "🧘",
+          "description": "Voteur·se passif·ve",
+          "stat": "votingAggressiveness",
+          "value": -4.745762711864414,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -7300,6 +8734,21 @@
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
         },
+        "votingAggressiveness": {
+          "value": -4.745762711864414,
+          "percentile": 27.77777777777778,
+          "category": "LOW"
+        },
+        "votingAccuracy": {
+          "value": 94.73684210526315,
+          "percentile": 88.57142857142857,
+          "category": "EXTREME_HIGH"
+        },
+        "votingFirst": {
+          "value": 80,
+          "percentile": 96.55172413793103,
+          "category": "EXTREME_HIGH"
+        },
         "survivalRate": {
           "value": 26.31578947368421,
           "percentile": 16.666666666666664,
@@ -7340,6 +8789,9 @@
         "campVillageoisPercent": 60.526315789473685,
         "campLoupPercent": 18.421052631578945,
         "campSoloPercent": 21.052631578947366,
+        "votingAggressiveness": -4.745762711864414,
+        "votingAccuracy": 94.73684210526315,
+        "votingFirst": 80,
         "survivalRate": 26.31578947368421,
         "survivalDay1Rate": 71.05263157894737,
         "killRate": 0.5263157894736842,
@@ -7436,6 +8888,30 @@
           "type": "basic"
         },
         {
+          "id": "votingAggressive_high",
+          "title": "L'Agitateur·rice",
+          "emoji": "📢",
+          "description": "Voteur·se agressif·ve",
+          "stat": "votingAggressiveness",
+          "value": 8.771929824561399,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 82.6086956521739,
+          "percentile": 34.285714285714285,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "survival_low",
           "title": "La Cible",
           "emoji": "🎯",
@@ -7520,6 +8996,21 @@
           "percentile": 66.66666666666666,
           "category": "HIGH"
         },
+        "votingAggressiveness": {
+          "value": 8.771929824561399,
+          "percentile": 72.22222222222221,
+          "category": "HIGH"
+        },
+        "votingAccuracy": {
+          "value": 82.6086956521739,
+          "percentile": 34.285714285714285,
+          "category": "LOW"
+        },
+        "votingFirst": {
+          "value": 36.36363636363637,
+          "percentile": 41.37931034482759,
+          "category": "BELOW_AVERAGE"
+        },
         "survivalRate": {
           "value": 27.27272727272727,
           "percentile": 27.77777777777778,
@@ -7560,6 +9051,9 @@
         "campVillageoisPercent": 66.66666666666666,
         "campLoupPercent": 15.151515151515152,
         "campSoloPercent": 18.181818181818183,
+        "votingAggressiveness": 8.771929824561399,
+        "votingAccuracy": 82.6086956521739,
+        "votingFirst": 36.36363636363637,
         "survivalRate": 27.27272727272727,
         "survivalDay1Rate": 75.75757575757575,
         "killRate": 0.30303030303030304,
@@ -7666,6 +9160,18 @@
           "type": "basic"
         },
         {
+          "id": "votingAccuracy_extreme_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 75,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "survival_extreme_low",
           "title": "Le·a Martyr·e",
           "emoji": "✝️",
@@ -7722,6 +9228,18 @@
           "value": 943.737060150582,
           "percentile": 32,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_high",
+          "title": "L'Agitateur·rice",
+          "emoji": "📢",
+          "description": "Voteur·se agressif·ve",
+          "stat": "votingAggressiveness",
+          "value": 12.499999999999996,
+          "percentile": 83.33333333333334,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -7811,6 +9329,21 @@
           "percentile": 8,
           "category": "EXTREME_LOW"
         },
+        "votingAggressiveness": {
+          "value": 12.499999999999996,
+          "percentile": 83.33333333333334,
+          "category": "HIGH"
+        },
+        "votingAccuracy": {
+          "value": 75,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "votingFirst": {
+          "value": 41.17647058823529,
+          "percentile": 55.172413793103445,
+          "category": "ABOVE_AVERAGE"
+        },
         "survivalRate": {
           "value": 13.043478260869565,
           "percentile": 0,
@@ -7854,6 +9387,9 @@
         "talkingPer60Min": 943.737060150582,
         "talkingOutsidePer60Min": 760.4134243282276,
         "talkingDuringPer60Min": 183.32363582235445,
+        "votingAggressiveness": 12.499999999999996,
+        "votingAccuracy": 75,
+        "votingFirst": 41.17647058823529,
         "survivalRate": 13.043478260869565,
         "survivalDay1Rate": 63.04347826086957,
         "killRate": 0.17391304347826086,
@@ -7890,6 +9426,28 @@
           ]
         },
         {
+          "id": "detective",
+          "title": "Le·a Détective",
+          "emoji": "🔎",
+          "description": "Observe silencieusement et vote juste",
+          "priority": 12,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "votingAccuracy",
+              "category": "HIGH",
+              "actualValue": 93.33333333333333,
+              "actualPercentile": 82.85714285714286
+            },
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 942.7090057261843,
+              "actualPercentile": 28.000000000000004
+            }
+          ]
+        },
+        {
           "id": "winRateLoup_extreme_high",
           "title": "Le·a Chef de Meute",
           "emoji": "🐺",
@@ -7898,6 +9456,18 @@
           "value": 50,
           "percentile": 93.54838709677419,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_extreme_low",
+          "title": "Le·a Stratège",
+          "emoji": "🧠",
+          "description": "Attend avant de voter",
+          "stat": "votingFirst",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -7994,6 +9564,18 @@
           "value": 231.47943779281624,
           "percentile": 20,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 93.33333333333333,
+          "percentile": 82.85714285714286,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -8100,6 +9682,21 @@
           "percentile": 20,
           "category": "LOW"
         },
+        "votingAggressiveness": {
+          "value": 0.47619047619047805,
+          "percentile": 52.77777777777778,
+          "category": "AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 93.33333333333333,
+          "percentile": 82.85714285714286,
+          "category": "HIGH"
+        },
+        "votingFirst": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
         "survivalRate": {
           "value": 27.27272727272727,
           "percentile": 27.77777777777778,
@@ -8143,6 +9740,9 @@
         "talkingPer60Min": 942.7090057261843,
         "talkingOutsidePer60Min": 711.229567933368,
         "talkingDuringPer60Min": 231.47943779281624,
+        "votingAggressiveness": 0.47619047619047805,
+        "votingAccuracy": 93.33333333333333,
+        "votingFirst": 0,
         "survivalRate": 27.27272727272727,
         "survivalDay1Rate": 78.18181818181819,
         "killRate": 0.4727272727272727,
@@ -8199,6 +9799,40 @@
               "actualPercentile": 69.44444444444444
             }
           ]
+        },
+        {
+          "id": "demagogue",
+          "title": "Le·a Démagogue",
+          "emoji": "📣",
+          "description": "Parle beaucoup mais vote mal",
+          "priority": 10,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1161.1410497433455,
+              "actualPercentile": 72
+            },
+            {
+              "stat": "votingAccuracy",
+              "category": "LOW",
+              "actualValue": 76.92307692307693,
+              "actualPercentile": 5.714285714285714
+            }
+          ]
+        },
+        {
+          "id": "votingAccuracy_extreme_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 76.92307692307693,
+          "percentile": 5.714285714285714,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "survival_extreme_low",
@@ -8261,6 +9895,18 @@
           "type": "basic"
         },
         {
+          "id": "votingFirst_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 47.91666666666667,
+          "percentile": 68.96551724137932,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "survivalDay1_low",
           "title": "Le·a Téméraire",
           "emoji": "⚡",
@@ -8310,16 +9956,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "survival_extreme_low",
-        "title": "Le·a Martyr·e",
-        "emoji": "✝️",
-        "description": "Première victime récurrente",
-        "stat": "survivalRate",
-        "value": 23.684210526315788,
-        "percentile": 5.555555555555555,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "demagogue",
+        "title": "Le·a Démagogue",
+        "emoji": "📣",
+        "description": "Parle beaucoup mais vote mal",
+        "priority": 10,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "talking",
+            "category": "HIGH",
+            "actualValue": 1161.1410497433455,
+            "actualPercentile": 72
+          },
+          {
+            "stat": "votingAccuracy",
+            "category": "LOW",
+            "actualValue": 76.92307692307693,
+            "actualPercentile": 5.714285714285714
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -8377,6 +10033,21 @@
           "percentile": 64,
           "category": "ABOVE_AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": -2.5641025641025674,
+          "percentile": 38.88888888888889,
+          "category": "BELOW_AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 76.92307692307693,
+          "percentile": 5.714285714285714,
+          "category": "EXTREME_LOW"
+        },
+        "votingFirst": {
+          "value": 47.91666666666667,
+          "percentile": 68.96551724137932,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 23.684210526315788,
           "percentile": 5.555555555555555,
@@ -8420,6 +10091,9 @@
         "talkingPer60Min": 1161.1410497433455,
         "talkingOutsidePer60Min": 850.8162626271243,
         "talkingDuringPer60Min": 310.3247871162214,
+        "votingAggressiveness": -2.5641025641025674,
+        "votingAccuracy": 76.92307692307693,
+        "votingFirst": 47.91666666666667,
         "survivalRate": 23.684210526315788,
         "survivalDay1Rate": 76.31578947368422,
         "killRate": 0.5526315789473685,
@@ -8433,6 +10107,28 @@
       "playerName": "SpicY",
       "gamesPlayed": 36,
       "titles": [
+        {
+          "id": "detective",
+          "title": "Le·a Détective",
+          "emoji": "🔎",
+          "description": "Observe silencieusement et vote juste",
+          "priority": 12,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "votingAccuracy",
+              "category": "HIGH",
+              "actualValue": 100,
+              "actualPercentile": 94.28571428571428
+            },
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 309.4254441701218,
+              "actualPercentile": 0
+            }
+          ]
+        },
         {
           "id": "prudent",
           "title": "Le·a Prudent·e",
@@ -8504,6 +10200,30 @@
           "type": "basic"
         },
         {
+          "id": "votingAggressive_extreme_low",
+          "title": "L'Indécis·e",
+          "emoji": "🤷",
+          "description": "Vote rarement",
+          "stat": "votingAggressiveness",
+          "value": -29.315068493150683,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_extreme_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 100,
+          "percentile": 94.28571428571428,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "survival_extreme_high",
           "title": "L'Immortel·le",
           "emoji": "⭐",
@@ -8564,6 +10284,18 @@
           "type": "basic"
         },
         {
+          "id": "votingFirst_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 50,
+          "percentile": 79.3103448275862,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "killRate_low",
           "title": "Le·a Pacifiste",
           "emoji": "☮️",
@@ -8601,16 +10333,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "talking_extreme_low",
-        "title": "Le·a Fantôme",
-        "emoji": "👻",
-        "description": "Quasi muet·te",
-        "stat": "talkingPer60Min",
-        "value": 309.4254441701218,
-        "percentile": 0,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "detective",
+        "title": "Le·a Détective",
+        "emoji": "🔎",
+        "description": "Observe silencieusement et vote juste",
+        "priority": 12,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "votingAccuracy",
+            "category": "HIGH",
+            "actualValue": 100,
+            "actualPercentile": 94.28571428571428
+          },
+          {
+            "stat": "talking",
+            "category": "LOW",
+            "actualValue": 309.4254441701218,
+            "actualPercentile": 0
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -8663,6 +10405,21 @@
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
+        "votingAggressiveness": {
+          "value": -29.315068493150683,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "votingAccuracy": {
+          "value": 100,
+          "percentile": 94.28571428571428,
+          "category": "EXTREME_HIGH"
+        },
+        "votingFirst": {
+          "value": 50,
+          "percentile": 79.3103448275862,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 50,
           "percentile": 94.44444444444444,
@@ -8706,6 +10463,9 @@
         "talkingPer60Min": 309.4254441701218,
         "talkingOutsidePer60Min": 250.0868690847025,
         "talkingDuringPer60Min": 59.33857508541933,
+        "votingAggressiveness": -29.315068493150683,
+        "votingAccuracy": 100,
+        "votingFirst": 50,
         "survivalRate": 50,
         "survivalDay1Rate": 86.11111111111111,
         "killRate": 0.3888888888888889,
@@ -8838,6 +10598,30 @@
           "type": "basic"
         },
         {
+          "id": "votingAggressive_low",
+          "title": "Le·a Sage",
+          "emoji": "🧘",
+          "description": "Voteur·se passif·ve",
+          "stat": "votingAggressiveness",
+          "value": -9.424460431654678,
+          "percentile": 16.666666666666664,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 48.888888888888886,
+          "percentile": 75.86206896551724,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "survival_low",
           "title": "La Cible",
           "emoji": "🎯",
@@ -8863,12 +10647,12 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootVillageois_extreme_high",
-        "title": "Le·a Citoyen·ne Modèle",
-        "emoji": "🏘️",
-        "description": "Récolte excellente en Villageois",
-        "stat": "lootVillageoisPer60Min",
-        "value": 566.3147545702742,
+        "id": "loot_extreme_high",
+        "title": "Le·a Stakhanoviste",
+        "emoji": "⚒️",
+        "description": "Récolte exceptionnelle",
+        "stat": "lootPer60Min",
+        "value": 570.6939713350705,
         "percentile": 94.44444444444444,
         "category": "EXTREME_HIGH",
         "priority": 8,
@@ -8930,6 +10714,21 @@
           "percentile": 48,
           "category": "AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": -9.424460431654678,
+          "percentile": 16.666666666666664,
+          "category": "LOW"
+        },
+        "votingAccuracy": {
+          "value": 87.5,
+          "percentile": 62.857142857142854,
+          "category": "ABOVE_AVERAGE"
+        },
+        "votingFirst": {
+          "value": 48.888888888888886,
+          "percentile": 75.86206896551724,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 26.582278481012654,
           "percentile": 19.444444444444446,
@@ -8973,6 +10772,9 @@
         "talkingPer60Min": 970.203372067258,
         "talkingOutsidePer60Min": 704.2299991298266,
         "talkingDuringPer60Min": 265.97337293743135,
+        "votingAggressiveness": -9.424460431654678,
+        "votingAccuracy": 87.5,
+        "votingFirst": 48.888888888888886,
         "survivalRate": 26.582278481012654,
         "survivalDay1Rate": 87.34177215189874,
         "killRate": 0.45569620253164556,
@@ -9031,6 +10833,28 @@
           ]
         },
         {
+          "id": "demagogue",
+          "title": "Le·a Démagogue",
+          "emoji": "📣",
+          "description": "Parle beaucoup mais vote mal",
+          "priority": 10,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1477.3765324404956,
+              "actualPercentile": 96
+            },
+            {
+              "stat": "votingAccuracy",
+              "category": "LOW",
+              "actualValue": 80,
+              "actualPercentile": 14.285714285714285
+            }
+          ]
+        },
+        {
           "id": "winRateVillageois_extreme_low",
           "title": "Idiot·e en Formation",
           "emoji": "🤡",
@@ -9075,6 +10899,30 @@
           "value": 381.0763446467006,
           "percentile": 88,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAggressive_extreme_high",
+          "title": "Le·a Tribun·e",
+          "emoji": "⚖️",
+          "description": "Toujours en action",
+          "stat": "votingAggressiveness",
+          "value": 30.000000000000007,
+          "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_extreme_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 80,
+          "percentile": 14.285714285714285,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -9164,12 +11012,12 @@
         }
       ],
       "primaryTitle": {
-        "id": "loot_extreme_high",
-        "title": "Le·a Stakhanoviste",
-        "emoji": "⚒️",
-        "description": "Récolte exceptionnelle",
-        "stat": "lootPer60Min",
-        "value": 625.4951740407253,
+        "id": "votingAggressive_extreme_high",
+        "title": "Le·a Tribun·e",
+        "emoji": "⚖️",
+        "description": "Toujours en action",
+        "stat": "votingAggressiveness",
+        "value": 30.000000000000007,
         "percentile": 97.22222222222221,
         "category": "EXTREME_HIGH",
         "priority": 8,
@@ -9231,6 +11079,21 @@
           "percentile": 88,
           "category": "EXTREME_HIGH"
         },
+        "votingAggressiveness": {
+          "value": 30.000000000000007,
+          "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH"
+        },
+        "votingAccuracy": {
+          "value": 80,
+          "percentile": 14.285714285714285,
+          "category": "EXTREME_LOW"
+        },
+        "votingFirst": {
+          "value": 39.130434782608695,
+          "percentile": 51.724137931034484,
+          "category": "AVERAGE"
+        },
         "survivalRate": {
           "value": 46.666666666666664,
           "percentile": 88.88888888888889,
@@ -9274,6 +11137,9 @@
         "talkingPer60Min": 1477.3765324404956,
         "talkingOutsidePer60Min": 1096.300187793795,
         "talkingDuringPer60Min": 381.0763446467006,
+        "votingAggressiveness": 30.000000000000007,
+        "votingAccuracy": 80,
+        "votingFirst": 39.130434782608695,
         "survivalRate": 46.666666666666664,
         "survivalDay1Rate": 84.44444444444444,
         "killRate": 0.5777777777777777,
@@ -9308,6 +11174,18 @@
           "value": 20,
           "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_extreme_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 76.31578947368422,
+          "percentile": 2.857142857142857,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -9356,6 +11234,18 @@
           "value": 610.0530112383552,
           "percentile": 16,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingFirst_high",
+          "title": "L'Impulsif·ve",
+          "emoji": "🏃",
+          "description": "Premier·ère voteur·se",
+          "stat": "votingFirst",
+          "value": 51.21951219512195,
+          "percentile": 82.75862068965517,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -9409,15 +11299,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootVillageois_low",
-        "title": "Le·a Villageois·e Paresseux·se",
-        "emoji": "💤",
-        "description": "Faible récolte en Villageois",
-        "stat": "lootVillageoisPer60Min",
-        "value": 494.26537404597104,
-        "percentile": 19.444444444444446,
-        "category": "LOW",
-        "priority": 6,
+        "id": "winRateLoup_extreme_low",
+        "title": "Loup Débutant·e",
+        "emoji": "🐩",
+        "description": "Mauvais·e en camp Loup",
+        "stat": "winRateLoup",
+        "value": 12.5,
+        "percentile": 3.225806451612903,
+        "category": "EXTREME_LOW",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -9476,6 +11366,21 @@
           "percentile": 36,
           "category": "BELOW_AVERAGE"
         },
+        "votingAggressiveness": {
+          "value": 2.264150943396225,
+          "percentile": 61.111111111111114,
+          "category": "ABOVE_AVERAGE"
+        },
+        "votingAccuracy": {
+          "value": 76.31578947368422,
+          "percentile": 2.857142857142857,
+          "category": "EXTREME_LOW"
+        },
+        "votingFirst": {
+          "value": 51.21951219512195,
+          "percentile": 82.75862068965517,
+          "category": "HIGH"
+        },
         "survivalRate": {
           "value": 29.78723404255319,
           "percentile": 41.66666666666667,
@@ -9519,6 +11424,9 @@
         "talkingPer60Min": 860.6922172404954,
         "talkingOutsidePer60Min": 610.0530112383552,
         "talkingDuringPer60Min": 250.63920600214018,
+        "votingAggressiveness": 2.264150943396225,
+        "votingAccuracy": 76.31578947368422,
+        "votingFirst": 51.21951219512195,
         "survivalRate": 29.78723404255319,
         "survivalDay1Rate": 89.36170212765957,
         "killRate": 0.3191489361702128,

@@ -663,70 +663,70 @@ function computeAllStatistics(moddedGames) {
     });
   }
 
-  // Process voting stats
-  if (votingStats?.votingBehavior) {
-    votingStats.votingBehavior.forEach(player => {
-      const playerId = player.playerId;
+  // Process voting behavior stats
+  if (votingStats?.playerBehaviorStats) {
+    votingStats.playerBehaviorStats.forEach(player => {
+      const playerId = player.player; // Use 'player' field from compute-voting-stats
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
-      // Calculate voting rate (votes per meeting attended)
-      const totalMeetings = player.totalMeetings || 0;
-      const totalVotes = player.totalVotes || 0;
-      const totalSkips = player.totalSkips || 0;
-      const totalAbstentions = player.totalAbstentions || 0;
-      
-      if (totalMeetings > 0) {
-        const votingRate = (totalVotes / totalMeetings) * 100;
-        const skipRate = (totalSkips / totalMeetings) * 100;
-        const abstentionRate = (totalAbstentions / totalMeetings) * 100;
-        
-        // Aggressiveness score: high voting rate, low skip/abstention
-        agg.stats.votingAggressiveness = votingRate - (skipRate * 0.5) - (abstentionRate * 0.7);
+      // Use aggressivenessScore directly from compute-voting-stats
+      if (player.aggressivenessScore !== undefined && player.aggressivenessScore !== null) {
+        agg.stats.votingAggressiveness = player.aggressivenessScore;
       }
     });
   }
 
   // Process voting accuracy
-  if (votingStats?.votingAccuracy) {
-    votingStats.votingAccuracy.forEach(player => {
-      const playerId = player.playerId;
+  if (votingStats?.playerAccuracyStats) {
+    votingStats.playerAccuracyStats.forEach(player => {
+      const playerId = player.player; // Use 'player' field from compute-voting-stats
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
       const totalVotes = player.totalVotes || 0;
-      const votesForEnemy = player.votesForEnemyCamp || 0;
+      const accuracyRate = player.accuracyRate;
       
-      if (totalVotes >= 10) {
-        agg.stats.votingAccuracy = (votesForEnemy / totalVotes) * 100;
+      if (totalVotes >= 10 && accuracyRate !== undefined && accuracyRate !== null) {
+        agg.stats.votingAccuracy = accuracyRate;
+      }
+    });
+  }
+
+  // Process voting first/early stats
+  if (votingStats?.playerFirstVoteStats) {
+    votingStats.playerFirstVoteStats.forEach(player => {
+      const playerId = player.player;
+      if (!aggregatedStats.has(playerId)) return;
+      const agg = aggregatedStats.get(playerId);
+      
+      const totalMeetingsWithVotes = player.totalMeetingsWithVotes || 0;
+      const earlyVoteRate = player.earlyVoteRate;
+      
+      // Use early vote rate (top 33% of voters) as the "first vote" metric
+      if (totalMeetingsWithVotes >= 5 && earlyVoteRate !== undefined && earlyVoteRate !== null) {
+        agg.stats.votingFirst = earlyVoteRate;
       }
     });
   }
 
   // Process hunter stats
-  if (hunterStats) {
-    Object.entries(hunterStats).forEach(([hunterId, data]) => {
+  if (hunterStats?.hunterStats) {
+    hunterStats.hunterStats.forEach(hunterData => {
+      const hunterId = hunterData.hunterId;
       if (!aggregatedStats.has(hunterId)) return;
       const agg = aggregatedStats.get(hunterId);
       
-      const gamesAsHunter = data.gamesPlayed || 0;
-      const kills = data.kills || [];
+      const gamesAsHunter = hunterData.gamesPlayedAsHunter || 0;
+      const totalKills = hunterData.totalKills || 0;
+      const goodKills = hunterData.nonVillageoisKills || 0;
+      const badKills = hunterData.villageoisKills || 0;
       
-      // Count enemy kills vs ally kills
-      let enemyKills = 0;
-      let allyKills = 0;
-      kills.forEach(kill => {
-        if (kill.victimCamp !== 'Villageois') {
-          enemyKills++;
-        } else {
-          allyKills++;
-        }
-      });
-      
-      if (gamesAsHunter >= 3) {
+      // Only compute accuracy if played at least MIN_GAMES_FOR_ROLE_TITLES games as hunter
+      if (gamesAsHunter >= MIN_GAMES_FOR_ROLE_TITLES) {
         agg.stats.hunterGames = gamesAsHunter;
-        agg.stats.hunterAccuracy = kills.length > 0 
-          ? (enemyKills / kills.length) * 100 : null;
+        agg.stats.hunterAccuracy = totalKills > 0 
+          ? (goodKills / totalKills) * 100 : null;
       }
     });
   }
@@ -1023,6 +1023,7 @@ function generateBasicTitles(percentiles) {
     lootVillageoisPer60Min: 'lootVillageois',
     lootLoupPer60Min: 'lootLoup',
     votingAggressiveness: 'votingAggressive',
+    votingFirst: 'votingFirst',
     votingAccuracy: 'votingAccuracy',
     hunterAccuracy: 'hunterAccuracy',
     winRate: 'winRate',

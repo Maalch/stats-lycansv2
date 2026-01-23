@@ -16,6 +16,7 @@ export function computeVotingStatistics(gameData) {
   const playerBehaviorMap = new Map();
   const playerAccuracyMap = new Map();
   const playerTargetMap = new Map();
+  const playerFirstVoteMap = new Map(); // Track first/early voting behavior
 
   // Helper to determine if a player was alive at a meeting
   function wasPlayerAliveAtMeeting(player, meetingNumber) {
@@ -84,6 +85,15 @@ export function computeVotingStatistics(gameData) {
           eliminationsByVote: 0
         });
       }
+
+      if (!playerFirstVoteMap.has(playerId)) {
+        playerFirstVoteMap.set(playerId, {
+          playerName: playerName,
+          totalMeetingsWithVotes: 0,
+          timesFirstToVote: 0,
+          timesEarlyVote: 0 // Top 33% of voters
+        });
+      }
     });
 
     // Find max meeting number
@@ -107,6 +117,38 @@ export function computeVotingStatistics(gameData) {
             voterRole: getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || [])
           }))
       );
+
+      // Sort votes by date to determine first voters
+      // Filter out "Passé" votes for first-vote analysis
+      const realVotesInMeeting = votesInMeeting
+        .filter(v => v.vote.Target !== 'Passé' && v.vote.Date)
+        .sort((a, b) => new Date(a.vote.Date) - new Date(b.vote.Date));
+      
+      // Determine first voter and early voters (top 33%)
+      if (realVotesInMeeting.length > 0) {
+        const firstVoterId = realVotesInMeeting[0].voterId;
+        const earlyVoteThreshold = Math.ceil(realVotesInMeeting.length * 0.33);
+        
+        realVotesInMeeting.forEach((voteData, index) => {
+          const firstVoteStats = playerFirstVoteMap.get(voteData.voterId);
+          if (firstVoteStats) {
+            if (index === 0) {
+              firstVoteStats.timesFirstToVote++;
+            }
+            if (index < earlyVoteThreshold) {
+              firstVoteStats.timesEarlyVote++;
+            }
+          }
+        });
+        
+        // Mark all players who voted (not skipped/abstained) in this meeting
+        realVotesInMeeting.forEach(voteData => {
+          const firstVoteStats = playerFirstVoteMap.get(voteData.voterId);
+          if (firstVoteStats) {
+            firstVoteStats.totalMeetingsWithVotes++;
+          }
+        });
+      }
 
       // Process each alive player
       alivePlayersAtMeeting.forEach(player => {
@@ -242,9 +284,29 @@ export function computeVotingStatistics(gameData) {
     };
   });
 
+  const playerFirstVoteStats = Array.from(playerFirstVoteMap.entries()).map(([playerId, data]) => {
+    const firstVoteRate = data.totalMeetingsWithVotes > 0 
+      ? (data.timesFirstToVote / data.totalMeetingsWithVotes) * 100 
+      : 0;
+    const earlyVoteRate = data.totalMeetingsWithVotes > 0 
+      ? (data.timesEarlyVote / data.totalMeetingsWithVotes) * 100 
+      : 0;
+
+    return {
+      player: playerId,
+      playerName: data.playerName,
+      totalMeetingsWithVotes: data.totalMeetingsWithVotes,
+      timesFirstToVote: data.timesFirstToVote,
+      timesEarlyVote: data.timesEarlyVote,
+      firstVoteRate,
+      earlyVoteRate
+    };
+  });
+
   return {
     playerBehaviorStats,
     playerAccuracyStats,
-    playerTargetStats
+    playerTargetStats,
+    playerFirstVoteStats
   };
 }
