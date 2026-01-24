@@ -1,16 +1,3 @@
-Based on my search of the playerTitles.json file, here's what's available:
-
-❌ NOT available for ANY player:
-Series Statistics: winSeries, lossSeries - MISSING
-Camp Balance: campBalance - MISSING
-Role Frequencies: roleChasseur, roleAlchimiste, roleAmoureux, roleAgent, roleEspion, roleIdiot, roleChasseurDePrime, roleContrebandier, roleBete, roleVaudou, roleScientifique - ALL MISSING
-This means that many titles defined in generate-titles.js can NEVER be assigned because the required stats aren't being computed, including:
-
-Series titles (En Feu, Glacé·e, La Légende, Le·a Poissard·e)
-Camp balance titles (Le·a Polyvalent·e, Le·a Spécialiste)
-All "Serial" role titles (Serial Chasseur, Serial Alchimiste, Serial Amoureux, etc.)
-The generate-titles.js script needs to be updated to actually compute these missing statistics.
-
 
 MERGE TITLES AND ACHIEVEMENT TOGETHER
 CHECK GENERATE TITLES - IMPROVE THEM

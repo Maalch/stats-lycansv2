@@ -520,9 +520,9 @@ const COMBINATION_TITLES = [
 
   // Poor performance across all camps = The Struggling
   {
-    id: 'en_difficulte',
-    title: 'En Difficulté',
-    emoji: '😰',
+    id: 'en_rodage',
+    title: 'En Rodage',
+    emoji: '⚙️',
     description: 'Peine dans tous les camps',
     conditions: [
       { stat: 'winRateVillageois', category: 'LOW' },
@@ -946,6 +946,10 @@ function generatePlayerTitles(aggregatedStats, roleFrequencies) {
     const basicTitles = generateBasicTitles(data.percentiles);
     titles.push(...basicTitles);
     
+    // Generate camp balance titles
+    const campBalanceTitles = generateCampBalanceTitles(data.percentiles);
+    titles.push(...campBalanceTitles);
+    
     // Generate combination titles
     const comboTitles = generateCombinationTitles(data.percentiles);
     titles.push(...comboTitles);
@@ -1120,6 +1124,43 @@ function checkCampBalance(percentiles, type) {
   }
   
   return false;
+}
+
+/**
+ * Generate camp balance titles
+ * @param {Object} percentiles - Player's percentile data
+ * @returns {Array} - Array of camp balance title objects
+ */
+function generateCampBalanceTitles(percentiles) {
+  const titles = [];
+  
+  // Check if player has balanced camp performance
+  if (checkCampBalance(percentiles, 'BALANCED')) {
+    const titleDef = TITLE_DEFINITIONS.campBalance.balanced;
+    titles.push({
+      id: 'campBalance_balanced',
+      ...titleDef,
+      stat: 'campBalance',
+      category: 'BALANCED',
+      priority: 7,
+      type: 'campBalance'
+    });
+  }
+  
+  // Check if player is a specialist
+  if (checkCampBalance(percentiles, 'SPECIALIST')) {
+    const titleDef = TITLE_DEFINITIONS.campBalance.specialist;
+    titles.push({
+      id: 'campBalance_specialist',
+      ...titleDef,
+      stat: 'campBalance',
+      category: 'SPECIALIST',
+      priority: 7,
+      type: 'campBalance'
+    });
+  }
+  
+  return titles;
 }
 
 /**
