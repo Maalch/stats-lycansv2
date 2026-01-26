@@ -6,6 +6,7 @@ import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { useSettings } from '../../context/SettingsContext';
 import { FullscreenChart } from '../common/FullscreenChart';
+import { CHART_LIMITS } from '../../config/chartConstants';
 
 // Extended type for chart data with highlighting info
 type ChartSeriesData = {
@@ -113,7 +114,7 @@ export function PlayerSeriesChart() {
     }
 
     // Get top 20 from the full dataset
-    const top20Data = fullDataset.slice(0, 20);
+    const top20Data = fullDataset.slice(0, CHART_LIMITS.TOP_20);
 
     // Check if highlighted player is in the top 20
     const highlightedPlayerInTop20 = settings.highlightedPlayer && 

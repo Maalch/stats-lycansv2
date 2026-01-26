@@ -5,6 +5,7 @@ import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor, useThemeAdjustedLycansColorScheme } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { getDeathTypeLabel, type DeathType } from '../../../types/deathTypes';
+import { CHART_LIMITS } from '../../../config/chartConstants';
 
 interface PlayerHistoryKillsProps {
   selectedPlayerName: string;
@@ -69,12 +70,12 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
     const playersKilled = Object.entries(playersKilledMap)
       .map(([player, count]) => ({ player, kills: count }))
       .sort((a, b) => b.kills - a.kills)
-      .slice(0, 10); // Top 10
+      .slice(0, CHART_LIMITS.TOP_10); // Top 10
 
     const killedBy = Object.entries(killedByMap)
       .map(([player, count]) => ({ player, kills: count }))
       .sort((a, b) => b.kills - a.kills)
-      .slice(0, 10); // Top 10
+      .slice(0, CHART_LIMITS.TOP_10); // Top 10
 
     const deathTypes = Object.entries(deathTypesMap)
       .map(([deathTypeLabel, data]) => {
@@ -90,7 +91,7 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
         return chartData;
       })
       .sort((a, b) => b.count - a.count)
-      .slice(0, 10); // Top 10
+      .slice(0, CHART_LIMITS.TOP_10); // Top 10
 
     // Use labels as available types for the chart (one bar segment per label)
     const availableDeathTypes = Object.keys(deathTypesMap);

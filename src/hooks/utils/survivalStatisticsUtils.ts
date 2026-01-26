@@ -1,5 +1,6 @@
 import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerCampFromRole } from '../../utils/datasyncExport';
+import { CHART_LIMITS, MIN_GAMES_DEFAULTS } from '../../config/chartConstants';
 
 /**
  * Parse death timing string to extract day number
@@ -212,7 +213,7 @@ export function computeSurvivalStatistics(gameData: GameLogEntry[], campFilter?:
 export function getTopSurvivorsForDay(
   survivalStats: SurvivalStatistics,
   dayNumber: number,
-  minGames: number = 10
+  minGames: number = MIN_GAMES_DEFAULTS.MEDIUM
 ): Array<{
   playerName: string;
   survivalRate: number;
@@ -233,7 +234,7 @@ export function getTopSurvivorsForDay(
       timesSurvivedDay: player.survivalsByDay[dayNumber] || 0
     }))
     .sort((a, b) => b.survivalRate - a.survivalRate)
-    .slice(0, 15);
+    .slice(0, CHART_LIMITS.TOP_15);
 }
 
 /**
@@ -246,7 +247,7 @@ export function getTopSurvivorsForDay(
 export function getWorstSurvivorsForDay(
   survivalStats: SurvivalStatistics,
   dayNumber: number,
-  minGames: number = 10
+  minGames: number = MIN_GAMES_DEFAULTS.MEDIUM
 ): Array<{
   playerName: string;
   survivalRate: number;
@@ -267,5 +268,5 @@ export function getWorstSurvivorsForDay(
       timesSurvivedDay: player.survivalsByDay[dayNumber] || 0
     }))
     .sort((a, b) => a.survivalRate - b.survivalRate)
-    .slice(0, 15);
+    .slice(0, CHART_LIMITS.TOP_15);
 }

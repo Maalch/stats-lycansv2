@@ -7,6 +7,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { findPlayerMostCommonPairings, findPlayerBestPerformingPairings, type ChartPlayerPairStat } from '../../hooks/utils/playerPairingUtils';
+import { CHART_DEFAULTS } from '../../config/chartConstants';
 
 export function PlayerPairingStatsChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
@@ -20,8 +21,8 @@ export function PlayerPairingStatsChart() {
   const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers'>(
     navigationState.selectedPairingTab || 'wolves'
   );
-  const [minWolfAppearances, setMinWolfAppearances] = useState<number>(2);
-  const [minLoverAppearances, setMinLoverAppearances] = useState<number>(1);
+  const [minWolfAppearances, setMinWolfAppearances] = useState<number>(CHART_DEFAULTS.MIN_WOLF_APPEARANCES);
+  const [minLoverAppearances, setMinLoverAppearances] = useState<number>(CHART_DEFAULTS.MIN_LOVER_APPEARANCES);
 
   // Pairing selection state - initialize from navigationState or settings.highlightedPlayer
   const [pairingPlayer1, setPairingPlayer1] = useState<string | null>(

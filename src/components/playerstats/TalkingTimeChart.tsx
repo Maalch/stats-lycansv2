@@ -7,6 +7,7 @@ import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { formatSecondsToMinutesSeconds } from '../../utils/durationFormatters';
+import { MIN_GAMES_OPTIONS, MIN_GAMES_DEFAULTS, CHART_LIMITS } from '../../config/chartConstants';
 import type { PlayerTalkingTimeStats } from '../../hooks/utils/talkingTimeUtils';
 
 // Extended type for chart data with highlighting info
@@ -16,7 +17,7 @@ type ChartTalkingTimeStat = PlayerTalkingTimeStats & {
 
 type TalkingTimeMode = 'total' | 'outside' | 'during';
 
-const minGamesOptions = [3, 5, 15, 25, 50, 100];
+const minGamesOptions = MIN_GAMES_OPTIONS.STANDARD;
 
 export function TalkingTimeChart() {
   const { data: talkingTimeData, isLoading: dataLoading, error: fetchError } = useTalkingTimeStats();
@@ -25,7 +26,7 @@ export function TalkingTimeChart() {
 
   // Use navigationState to restore state from achievement navigation, with fallbacks to defaults
   const [minGames, setMinGames] = useState<number>(
-    navigationState.talkingTimeState?.minGames || 5
+    navigationState.talkingTimeState?.minGames || MIN_GAMES_DEFAULTS.STANDARD
   );
   const [displayMode, setDisplayMode] = useState<TalkingTimeMode>(
     navigationState.talkingTimeState?.displayMode || 'total'
@@ -81,7 +82,7 @@ export function TalkingTimeChart() {
     // Sort and take top 20
     const sortedPlayers = eligiblePlayers
       .sort((a, b) => getSortValue(b) - getSortValue(a))
-      .slice(0, 20);
+      .slice(0, CHART_LIMITS.TOP_20);
 
     // Check if highlighted player is in top 20
     const highlightedInTop20 = settings.highlightedPlayer && 

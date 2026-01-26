@@ -6,6 +6,7 @@ import { useSettings } from '../../context/SettingsContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
+import { MIN_GAMES_OPTIONS, MIN_GAMES_DEFAULTS, CHART_LIMITS } from '../../config/chartConstants';
 import type { PlayerLootStats, CampFilter } from '../../hooks/utils/lootStatsUtils';
 
 // Extended type for chart data with highlighting info
@@ -13,7 +14,7 @@ type ChartLootStat = PlayerLootStats & {
   isHighlightedAddition?: boolean;
 };
 
-const minGamesOptions = [3, 5, 10, 15, 25, 50];
+const minGamesOptions = MIN_GAMES_OPTIONS.COMPACT;
 
 export function LootStatisticsChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
@@ -21,7 +22,7 @@ export function LootStatisticsChart() {
 
   // Use navigationState to restore state from achievement navigation, with fallbacks to defaults
   const [minGames, setMinGames] = useState<number>(
-    navigationState.lootStatsState?.minGames || 5
+    navigationState.lootStatsState?.minGames || MIN_GAMES_DEFAULTS.STANDARD
   );
   const [campFilter, setCampFilter] = useState<CampFilter>(
     (navigationState.lootStatsState?.campFilter as CampFilter) || 'all'
@@ -61,7 +62,7 @@ export function LootStatisticsChart() {
     // Sort by total loot and take top 20 (no minimum games filter for total loot)
     const sortedPlayers = stats
       .sort((a, b) => b.totalLoot - a.totalLoot)
-      .slice(0, 20);
+      .slice(0, CHART_LIMITS.TOP_20);
 
     // Check if highlighted player is in top 20
     const highlightedInTop20 = settings.highlightedPlayer && 
@@ -106,7 +107,7 @@ export function LootStatisticsChart() {
     // Sort by loot per 60 minutes and take top 20
     const sortedPlayers = eligiblePlayers
       .sort((a, b) => b.lootPer60Min - a.lootPer60Min)
-      .slice(0, 20);
+      .slice(0, CHART_LIMITS.TOP_20);
 
     // Check if highlighted player is in top 20
     const highlightedInTop20 = settings.highlightedPlayer && 

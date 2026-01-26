@@ -5,6 +5,7 @@ import { useFilteredRawBRData, useFilteredRawBRGlobalData } from '../../hooks/us
 import { useSettings } from '../../context/SettingsContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor, getRandomColor } from '../../types/api';
+import { MIN_GAMES_OPTIONS, MIN_GAMES_DEFAULTS } from '../../config/chartConstants';
 
 // Extended type for chart data with highlighting info
 interface ChartPlayerStat {
@@ -18,7 +19,7 @@ interface ChartPlayerStat {
 }
 
 // Min games options for BR
-const minGamesOptions = [3, 10, 25, 50, 100];
+const minGamesOptions = MIN_GAMES_OPTIONS.BR_STANDARD;
 
 export function BRWinRateChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredRawBRData();
@@ -27,7 +28,7 @@ export function BRWinRateChart() {
   const { joueursData } = useJoueursData();
   
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
-  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(3);
+  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(MIN_GAMES_DEFAULTS.LOW);
 
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 

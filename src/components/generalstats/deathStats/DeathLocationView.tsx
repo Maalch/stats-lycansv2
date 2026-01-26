@@ -9,6 +9,7 @@ import type { DeathLocationData } from '../../../hooks/utils/deathLocationUtils'
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { getDeathTypeLabel } from '../../../types/deathTypes';
 import { DeathLocationHeatmapCanvas } from './DeathLocationHeatmapCanvas';
+import { CHART_DEFAULTS } from '../../../config/chartConstants';
 
 interface DeathLocationViewProps {
   selectedCamp: string;
@@ -30,7 +31,7 @@ export function DeathLocationView({
   );
   const [hoveredDeath, setHoveredDeath] = useState<DeathLocationData | null>(null);
   const [viewMode, setViewMode] = useState<'heatmap' | 'scatter'>('heatmap');
-  const [clusterRadius, setClusterRadius] = useState<number>(20); // Clustering radius in game units
+  const [clusterRadius, setClusterRadius] = useState<number>(CHART_DEFAULTS.CLUSTER_RADIUS); // Clustering radius in game units
   const [isDeathTypesExpanded, setIsDeathTypesExpanded] = useState<boolean>(false); // Toggle for death types panel
 
   // Initialize selectedDeathTypes with all types except VOTED if no saved state exists

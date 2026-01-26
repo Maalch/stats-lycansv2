@@ -5,6 +5,7 @@ import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
 import { GameDetailView } from './GameDetailView';
 import { formatDuration } from '../../utils/durationFormatters';
+import { PAGINATION_DEFAULTS } from '../../config/chartConstants';
 import './GameDetailsChart.css';
 
 type SortField = 'date' | 'gameId' | 'playerCount' | 'gameDuration' | 'winningCamp'  | 'winner';
@@ -41,8 +42,8 @@ export function GameDetailsChart() {
   const [sortField, setSortField] = useState<SortField>('date');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(25);
+  const [currentPage, setCurrentPage] = useState<number>(PAGINATION_DEFAULTS.INITIAL_PAGE);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(PAGINATION_DEFAULTS.ITEMS_PER_PAGE);
   // When the user explicitly changes page, some upstream hooks may re-create
   // the data array which would otherwise trigger the data-change effect and
   // reset the page back to 1. Use this ref to ignore the next data-change

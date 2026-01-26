@@ -6,6 +6,7 @@ import { useSettings } from '../../context/SettingsContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { minGamesOptions } from '../../types/api';
+import { MIN_GAMES_DEFAULTS, CHART_LIMITS } from '../../config/chartConstants';
 import type { PlayerStat } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 
@@ -24,7 +25,7 @@ export function PlayersGeneralStatisticsChart() {
   
   // Use navigationState to restore state from achievement navigation, with fallbacks to defaults
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(
-    navigationState.playersGeneralState?.minGamesForWinRate || 10
+    navigationState.playersGeneralState?.minGamesForWinRate || MIN_GAMES_DEFAULTS.MEDIUM
   );
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>(
     navigationState.playersGeneralState?.winRateOrder || 'best'
@@ -90,7 +91,7 @@ export function PlayersGeneralStatisticsChart() {
     // Sort and slice for participation data
     const sortedParticipation = eligibleForParticipation
       .sort((a, b) => b.gamesPlayed - a.gamesPlayed)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     // Check if highlighted player is in the top 15 participation
     const highlightedPlayerInTop15 = settings.highlightedPlayer && 
@@ -119,7 +120,7 @@ export function PlayersGeneralStatisticsChart() {
           ? parseFloat(b.winPercent) - parseFloat(a.winPercent)
           : parseFloat(a.winPercent) - parseFloat(b.winPercent)
       )
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
 
     // Check if highlighted player is in the top 15 win rate
     const highlightedPlayerInWinRateTop15 = settings.highlightedPlayer && 

@@ -15,6 +15,7 @@ import { useFilteredVotingStatistics } from '../../../hooks/useVotingStatisticsF
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
+import { CHART_LIMITS } from '../../../config/chartConstants';
 
 // Extended type for chart data with highlighting info
 type ChartPlayerStat = {
@@ -53,7 +54,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
     
     const sortedData = [...filteredVotingStats.playerTimingStats]
       .sort((a, b) => a.averageVotePositionPercentile - b.averageVotePositionPercentile)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);
@@ -83,7 +84,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
     
     const sortedData = [...filteredVotingStats.playerTimingStats]
       .sort((a, b) => b.averageVotePositionPercentile - a.averageVotePositionPercentile)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);
@@ -120,7 +121,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
     const sortedData = dataWithPercentage
       .filter(p => p.timesFirstVoter > 0) // Only players who've been first at least once
       .sort((a, b) => b.firstVoterPercentage - a.firstVoterPercentage) // Sort by percentage descending
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);
@@ -150,7 +151,7 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
     
     const sortedData = [...filteredVotingStats.playerTimingStats]
       .sort((a, b) => a.averageVoteDelaySeconds - b.averageVoteDelaySeconds)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);

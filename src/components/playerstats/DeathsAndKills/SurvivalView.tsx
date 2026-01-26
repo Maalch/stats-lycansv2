@@ -7,6 +7,7 @@ import { useNavigation } from '../../../context/NavigationContext';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 import { minGamesOptions } from '../../../types/api';
+import { CHART_DEFAULTS } from '../../../config/chartConstants';
 
 // Type for chart data with highlighting support
 type ChartSurvivalData = {
@@ -41,7 +42,7 @@ export function SurvivalView({
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // State for day selection and hover
-  const [selectedDay, setSelectedDay] = useState<number>(1);
+  const [selectedDay, setSelectedDay] = useState<number>(CHART_DEFAULTS.DEFAULT_SELECTED_DAY);
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
 
   // Get available days from the data

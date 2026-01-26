@@ -9,6 +9,7 @@ import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
+import { CHART_LIMITS } from '../../../config/chartConstants';
 
 // Extended type for chart data with highlighting info
 type ChartPlayerStat = {
@@ -47,7 +48,7 @@ export function VotingOverviewCharts({ minMeetings }: VotingOverviewChartsProps)
     
     const sortedData = [...filteredVotingStats.playerBehaviorStats]
       .sort((a, b) => b.aggressivenessScore - a.aggressivenessScore)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);
@@ -82,7 +83,7 @@ export function VotingOverviewCharts({ minMeetings }: VotingOverviewChartsProps)
         }
         return b.totalVotes - a.totalVotes;
       })
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);
@@ -112,7 +113,7 @@ export function VotingOverviewCharts({ minMeetings }: VotingOverviewChartsProps)
     
     const sortedData = [...filteredVotingStats.playerTargetStats]
       .sort((a, b) => b.survivalRate - a.survivalRate)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);

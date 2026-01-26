@@ -3,6 +3,7 @@ import type { PlayerCampPerformanceResponse, CampAverage, PlayerPerformance, Pla
 import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { getEffectivePower } from '../../utils/roleUtils';
+import { CHART_DEFAULTS } from '../../config/chartConstants';
 // Note: Player names are already normalized during data loading, so we can use Username directly
 
 /**
@@ -561,7 +562,7 @@ export function computePlayerCampPerformance(
   }
 
   // Format results with minimum game threshold
-  const minGamesToInclude = 3; // Minimum games required in a camp to be included
+  const minGamesToInclude = CHART_DEFAULTS.MIN_CAMP_GAMES; // Minimum games required in a camp to be included
   const { campAverages, playerPerformanceArray } = formatResults(
     mergedPlayerPerformance, 
     mergedCampStats, 

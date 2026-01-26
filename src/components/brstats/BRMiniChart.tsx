@@ -5,6 +5,7 @@ import { useFilteredMiniBRData, useFilteredMiniBRGlobalData } from '../../hooks/
 import { useSettings } from '../../context/SettingsContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor, getRandomColor } from '../../types/api';
+import { MIN_GAMES_OPTIONS, MIN_GAMES_DEFAULTS } from '../../config/chartConstants';
 
 // Extended type for chart data with highlighting info
 interface ChartPlayerStat {
@@ -18,7 +19,7 @@ interface ChartPlayerStat {
 }
 
 // Min games options for Mini BR
-const minGamesOptions = [1, 2, 3, 5, 10];
+const minGamesOptions = MIN_GAMES_OPTIONS.BR_MINIMAL;
 
 export function BRMiniChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredMiniBRData();
@@ -29,8 +30,8 @@ export function BRMiniChart() {
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
   const [winRateView, setWinRateView] = useState<'wins' | 'winRate'>('wins');
   const [killsView, setKillsView] = useState<'total' | 'average'>('total');
-  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(1);
-  const [minGamesForKills, setMinGamesForKills] = useState<number>(1);
+  const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(MIN_GAMES_DEFAULTS.VERY_LOW);
+  const [minGamesForKills, setMinGamesForKills] = useState<number>(MIN_GAMES_DEFAULTS.VERY_LOW);
 
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 

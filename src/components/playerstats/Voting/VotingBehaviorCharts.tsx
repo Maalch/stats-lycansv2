@@ -9,6 +9,7 @@ import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
+import { CHART_LIMITS } from '../../../config/chartConstants';
 
 // Extended type for chart data with highlighting info
 type ChartPlayerStat = {
@@ -47,7 +48,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
     
     const sortedData = [...filteredVotingStats.playerBehaviorStats]
       .sort((a, b) => b.votingRate - a.votingRate)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);
@@ -77,7 +78,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
     
     const sortedData = [...filteredVotingStats.playerBehaviorStats]
       .sort((a, b) => b.skippingRate - a.skippingRate)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);
@@ -107,7 +108,7 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
     
     const sortedData = [...filteredVotingStats.playerBehaviorStats]
       .sort((a, b) => b.abstentionRate - a.abstentionRate)
-      .slice(0, 15);
+      .slice(0, CHART_LIMITS.TOP_15);
     
     const highlightedInTop = settings.highlightedPlayer && 
       sortedData.some(p => p.playerName === settings.highlightedPlayer);

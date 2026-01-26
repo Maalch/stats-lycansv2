@@ -14,6 +14,7 @@ import { useSettings } from '../../context/SettingsContext';
 import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
+import { PAGINATION_DEFAULTS } from '../../config/chartConstants';
 import './ClipsPage.css';
 
 // Enhanced clip type with game context
@@ -44,8 +45,8 @@ export function ClipsPage() {
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   
   // Pagination states
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(25);
+  const [currentPage, setCurrentPage] = useState<number>(PAGINATION_DEFAULTS.INITIAL_PAGE);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(PAGINATION_DEFAULTS.ITEMS_PER_PAGE);
 
   // Set selected player from navigation context or highlighted player
   useEffect(() => {
