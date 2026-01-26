@@ -29,11 +29,12 @@ npm run generate-achievements   # Standalone achievements generation + copy to p
 **Data Sync:** 
   - Primary: AWS-based sync via `fetch-data-unified.js` (supports multiple teams via `shared/data-sources.js` config)
   - Legacy: Google Sheets sync via `fetch-data.js` (deprecated but maintained for backward compatibility)
-  - GitHub Actions runs Mon/Tue/Thu at 8 PM UTC (post-game sync), manually triggerable via workflow_dispatch
-  - Auto-generates achievements + joueurs.json for configured teams
+  - Game data sync: Mon/Tue/Thu at 8 PM UTC via `update-data.yml` and `update-discorddata.yml`
+  - Achievements & Titles: Weekly on Sunday at 6 AM UTC via `update-achievements-titles.yml`
   
 **Environment:** No env vars needed locally - all data from static files. `STATS_LIST_URL` (AWS) and `LYCANS_API_BASE` (Google Sheets) secrets on GitHub Actions only.  
 **Achievement Generation:** `scripts/data-sync/generate-achievements.js` processes all players, creates ranked lists, supports multiple teams via config
+**Title Generation:** `scripts/data-sync/generate-titles.js` generates player titles based on statistics
 
 ## Data Architecture Migration (RECENT CHANGE)
 
@@ -568,9 +569,10 @@ const handleAchievementClick = (achievement: Achievement, event: React.MouseEven
 ## Integration Points & External Systems
 
 **GitHub Actions:** 
-  - `.github/workflows/update-data.yml` - Main team AWS sync (Mon/Tue/Thu at 8 PM UTC)
-  - `.github/workflows/update-discorddata.yml` - Discord team AWS sync
-  - Manual triggers via workflow_dispatch with `full_sync` and `force_achievements_recalc` options
+  - `.github/workflows/update-data.yml` - Main team game data sync (Mon/Tue/Thu at 8 PM UTC)
+  - `.github/workflows/update-discorddata.yml` - Discord team game data sync (Mon/Thu/Sat at 4 AM UTC)
+  - `.github/workflows/update-achievements-titles.yml` - Weekly achievements & titles generation (Sunday at 6 AM UTC)
+  - Manual triggers via workflow_dispatch with `full_sync` option for data sync, `force_recalculation` for achievements/titles
   
 **Data Sources:**
   - Primary: AWS S3 bucket game logs (via `fetch-data-unified.js`)
@@ -584,9 +586,20 @@ const handleAchievementClick = (achievement: Achievement, event: React.MouseEven
 
 **Unified AWS Sync (`fetch-data-unified.js`):**
 ```bash
-# Supports multiple teams via configuration
+# Supports multiple teams via configuration (game data only, no achievements)
 node fetch-data-unified.js main      # Main team to /data
 node fetch-data-unified.js discord   # Discord team to /data/discord
+```
+
+**Achievements & Titles Generation:**
+```bash
+# Generate achievements (supports incremental updates via cache)
+node generate-achievements.js main           # Incremental update
+node generate-achievements.js discord -f     # Force full recalculation
+
+# Generate titles
+node generate-titles.js main
+node generate-titles.js discord
 ```
 
 **Configuration Pattern (`shared/data-sources.js`):**

@@ -11,11 +11,6 @@ on:
         required: false
         default: false
         type: boolean
-      force_achievements_recalc:
-        description: 'Force full achievements/ranking recalculation (ignore cache)'
-        required: false
-        default: false
-        type: boolean
   push:
     paths:
       - '.github/workflows/update-data.yml'
@@ -78,17 +73,10 @@ jobs:
             echo "🔄 Sync mode: INCREMENTAL"
           fi
           
-          # Determine achievements mode
-          if [ "${{ inputs.force_achievements_recalc }}" == "true" ]; then
-            echo "🔄 Achievements mode: FULL RECALCULATION (forced via workflow input)"
-            CMD="$CMD --force-achievements"
-          else
-            echo "🔄 Achievements mode: INCREMENTAL"
-          fi
-          
-          # Run the command
+          # Run the command (achievements are generated separately in update-achievements-titles.yml)
           $CMD
           echo "✅ Data fetch completed"
+          echo "ℹ️  Note: Achievements and titles are generated weekly via update-achievements-titles.yml"
           
       - name: Validate data files
         run: |
@@ -98,8 +86,8 @@ jobs:
             exit 1
           fi
           
-          # Check for required data files
-          REQUIRED_FILES=("data/index.json" "data/gameLog.json" "data/rawBRData.json" "data/joueurs.json" "data/playerAchievements.json" "data/playerStatsCache.json")
+          # Check for required data files (achievements and cache are generated separately)
+          REQUIRED_FILES=("data/index.json" "data/gameLog.json" "data/rawBRData.json" "data/joueurs.json")
           for file in "${REQUIRED_FILES[@]}"; do
             if [ ! -f "$file" ]; then
               echo "❌ Required file $file not found!"
@@ -136,18 +124,6 @@ jobs:
             exit 1
           fi
           
-          # Validate cache structure
-          if [ -f "data/playerStatsCache.json" ]; then
-            if jq -e '.version and .allGames and .moddedGames' data/playerStatsCache.json > /dev/null; then
-              CACHE_VERSION=$(jq -r '.version' data/playerStatsCache.json)
-              ALL_GAMES_CACHED=$(jq '.allGames.totalGames' data/playerStatsCache.json)
-              MODDED_GAMES_CACHED=$(jq '.moddedGames.totalGames' data/playerStatsCache.json)
-              echo "✅ Cache file valid (v$CACHE_VERSION): $ALL_GAMES_CACHED games ($MODDED_GAMES_CACHED modded)"
-            else
-              echo "⚠️  Cache file exists but has unexpected structure"
-            fi
-          fi
-          
           echo "✅ All data files validated successfully"
 
       - name: Copy data to docs folder
@@ -174,10 +150,9 @@ jobs:
           echo "🔍 Workflow Summary:"
           echo "- Data sync completed from Legacy + AWS sources"
           echo "- Sync mode: ${{ inputs.full_sync == 'true' && 'FULL' || 'INCREMENTAL' }}"
-          echo "- Achievements: ${{ inputs.force_achievements_recalc == 'true' && 'FULL RECALC' || 'INCREMENTAL' }}"
           echo "- Files updated: $(git diff --name-only HEAD~1 2>/dev/null | grep '^data/' | wc -l || echo '0')"
           echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
           echo "- Sources: Legacy Google Sheets API + AWS S3 Lycans Stats bucket"
-          echo "- Data types: Game logs, Battle Royale data, Player information, Achievements"
-          echo "- Incremental processing: Enabled for both game sync and achievements generation"
+          echo "- Data types: Game logs, Battle Royale data, Player information"
+          echo "- Note: Achievements and titles are generated weekly via update-achievements-titles.yml"
           ls -la data/ || echo "No data directory found"

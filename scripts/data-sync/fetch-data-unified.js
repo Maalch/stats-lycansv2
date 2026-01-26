@@ -6,12 +6,12 @@
  * - Keeps existing gameLog.json
  * - Only fetches and adds new games
  * - Updates games from the last 6 hours (to ensure completeness)
+ * 
+ * Note: Achievements and titles are generated separately via update-achievements-titles.yml
  */
 import path from 'path';
 import fs from 'fs/promises';
-import { generateAllPlayerAchievements, generateAllPlayerAchievementsIncremental } from './generate-achievements.js';
 import { DATA_SOURCES } from './shared/data-sources.js';
-import { loadCache, saveCache, createEmptyCache } from './shared/cache-manager.js';
 import {
   ensureDataDirectory,
   fetchStatsListUrls,
@@ -399,42 +399,6 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
       unifiedGameLog.TotalRecords,
       config.indexDescription
     );
-    
-    // === GENERATE ACHIEVEMENTS ===
-    console.log(`\n🏆 Generating player achievements (${forceFullSync ? 'FULL recalculation' : 'incremental'}) (${config.name})...`);
-    try {
-      // Load cache for incremental generation (or start fresh if forcing full sync)
-      const cache = forceFullSync ? createEmptyCache() : await loadCache(ABSOLUTE_DATA_DIR);
-      
-      let achievementsData;
-      let updatedCache = null;
-      
-      if (forceFullSync || cache.allGames.totalGames === 0) {
-        // Force full calculation or first run
-        console.log(forceFullSync ? '  Forced full recalculation...' : '  No cache found - performing full calculation...');
-        const result = generateAllPlayerAchievements(unifiedGameLog, true);
-        achievementsData = result.achievements;
-        updatedCache = result.updatedCache;
-      } else {
-        // Incremental update
-        console.log('  Using incremental update with cached data...');
-        const result = generateAllPlayerAchievementsIncremental(unifiedGameLog, cache);
-        achievementsData = result.achievements;
-        updatedCache = result.updatedCache;
-      }
-      
-      await saveDataToFile(ABSOLUTE_DATA_DIR, 'playerAchievements.json', achievementsData);
-      console.log(`✓ Generated achievements for ${achievementsData.totalPlayers} players`);
-      
-      // Save updated cache
-      if (updatedCache) {
-        await saveCache(ABSOLUTE_DATA_DIR, updatedCache);
-      }
-    } catch (error) {
-      console.error('❌ Failed to generate achievements:', error.message);
-      console.error(error.stack);
-      // Don't fail the entire sync for achievements generation failure
-    }
     
     // === SUMMARY ===
     console.log(`\n✅ ${config.name} data sync completed successfully!`);
