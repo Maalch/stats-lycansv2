@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-26T08:29:22.982Z",
+  "generatedAt": "2026-01-26T08:43:57.979Z",
   "teamName": "Discord Team",
   "totalPlayers": 41,
   "minGamesRequired": 25,
@@ -21,6 +21,34 @@
       "playerName": "Timaki",
       "gamesPlayed": 129,
       "titles": [
+        {
+          "id": "maitre_ceremonie",
+          "title": "Le·a Maître·sse de Cérémonie",
+          "emoji": "🎙️",
+          "description": "Mène les débats et vote juste",
+          "priority": 14,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "HIGH",
+              "actualValue": 282.9773925095845,
+              "actualPercentile": 70
+            },
+            {
+              "stat": "votingAccuracy",
+              "category": "HIGH",
+              "actualValue": 86.32478632478633,
+              "actualPercentile": 71.7948717948718
+            },
+            {
+              "stat": "votingAggressive",
+              "category": "HIGH",
+              "actualValue": 26.755555555555556,
+              "actualPercentile": 95.1219512195122
+            }
+          ]
+        },
         {
           "id": "hyperactif",
           "title": "L'Hyperactif·ve",
@@ -211,24 +239,30 @@
         }
       ],
       "primaryTitle": {
-        "id": "hyperactif",
-        "title": "L'Hyperactif·ve",
-        "emoji": "⚡",
-        "description": "Bavard·e ET grande récolte",
-        "priority": 10,
+        "id": "maitre_ceremonie",
+        "title": "Le·a Maître·sse de Cérémonie",
+        "emoji": "🎙️",
+        "description": "Mène les débats et vote juste",
+        "priority": 14,
         "type": "combination",
         "conditions": [
           {
-            "stat": "talking",
+            "stat": "talkingDuringMeeting",
             "category": "HIGH",
-            "actualValue": 864.3567649073497,
-            "actualPercentile": 67.5
+            "actualValue": 282.9773925095845,
+            "actualPercentile": 70
           },
           {
-            "stat": "loot",
+            "stat": "votingAccuracy",
             "category": "HIGH",
-            "actualValue": 629.4457466847234,
-            "actualPercentile": 85.36585365853658
+            "actualValue": 86.32478632478633,
+            "actualPercentile": 71.7948717948718
+          },
+          {
+            "stat": "votingAggressive",
+            "category": "HIGH",
+            "actualValue": 26.755555555555556,
+            "actualPercentile": 95.1219512195122
           }
         ]
       },
@@ -2251,10 +2285,10 @@
         }
       ],
       "primaryTitle": {
-        "id": "demagogue",
-        "title": "Le·a Démagogue",
-        "emoji": "📣",
-        "description": "Parle beaucoup mais vote mal",
+        "id": "hyperactif",
+        "title": "L'Hyperactif·ve",
+        "emoji": "⚡",
+        "description": "Bavard·e ET grande récolte",
         "priority": 10,
         "type": "combination",
         "conditions": [
@@ -2265,10 +2299,10 @@
             "actualPercentile": 90
           },
           {
-            "stat": "votingAccuracy",
-            "category": "LOW",
-            "actualValue": 65.75342465753424,
-            "actualPercentile": 0
+            "stat": "loot",
+            "category": "HIGH",
+            "actualValue": 627.5476019346131,
+            "actualPercentile": 82.92682926829268
           }
         ]
       },
@@ -2774,6 +2808,34 @@
               "category": "HIGH",
               "actualValue": 53.191489361702125,
               "actualPercentile": 87.8048780487805
+            }
+          ]
+        },
+        {
+          "id": "maitre_ceremonie",
+          "title": "Le·a Maître·sse de Cérémonie",
+          "emoji": "🎙️",
+          "description": "Mène les débats et vote juste",
+          "priority": 14,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "HIGH",
+              "actualValue": 414.21664073134474,
+              "actualPercentile": 95
+            },
+            {
+              "stat": "votingAccuracy",
+              "category": "HIGH",
+              "actualValue": 94.91525423728814,
+              "actualPercentile": 97.43589743589743
+            },
+            {
+              "stat": "votingAggressive",
+              "category": "HIGH",
+              "actualValue": 14.338235294117645,
+              "actualPercentile": 90.2439024390244
             }
           ]
         },
@@ -8428,16 +8490,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "votingFirst_extreme_high",
-        "title": "L'Impulsif·ve",
-        "emoji": "🏃",
-        "description": "Premier·ère voteur·se",
-        "stat": "votingFirst",
-        "value": 72.1311475409836,
-        "percentile": 95,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "demagogue",
+        "title": "Le·a Démagogue",
+        "emoji": "📣",
+        "description": "Parle beaucoup mais vote mal",
+        "priority": 10,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "talking",
+            "category": "HIGH",
+            "actualValue": 962.8841587753215,
+            "actualPercentile": 75
+          },
+          {
+            "stat": "votingAccuracy",
+            "category": "LOW",
+            "actualValue": 67.27272727272727,
+            "actualPercentile": 2.564102564102564
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -11915,13 +11987,13 @@
         }
       ],
       "primaryTitle": {
-        "id": "votingAggressive_extreme_high",
-        "title": "Le·a Tribun·e",
-        "emoji": "⚖️",
-        "description": "Toujours en action",
-        "stat": "votingAggressiveness",
-        "value": 12.553191489361701,
-        "percentile": 85.36585365853658,
+        "id": "votingFirst_extreme_high",
+        "title": "L'Impulsif·ve",
+        "emoji": "🏃",
+        "description": "Premier·ère voteur·se",
+        "stat": "votingFirst",
+        "value": 65,
+        "percentile": 92.5,
         "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"

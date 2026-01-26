@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-26T08:29:13.701Z",
+  "generatedAt": "2026-01-26T08:43:47.702Z",
   "teamName": "Main Team",
   "totalPlayers": 36,
   "minGamesRequired": 25,
@@ -7461,6 +7461,34 @@
           ]
         },
         {
+          "id": "maitre_ceremonie",
+          "title": "Le·a Maître·sse de Cérémonie",
+          "emoji": "🎙️",
+          "description": "Mène les débats et vote juste",
+          "priority": 14,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "HIGH",
+              "actualValue": 316.5767270970832,
+              "actualPercentile": 68
+            },
+            {
+              "stat": "votingAccuracy",
+              "category": "HIGH",
+              "actualValue": 88.62275449101796,
+              "actualPercentile": 71.42857142857143
+            },
+            {
+              "stat": "votingAggressive",
+              "category": "HIGH",
+              "actualValue": 20.744985673352435,
+              "actualPercentile": 91.66666666666666
+            }
+          ]
+        },
+        {
           "id": "hyperactif",
           "title": "L'Hyperactif·ve",
           "emoji": "⚡",
@@ -7662,16 +7690,32 @@
         }
       ],
       "primaryTitle": {
-        "id": "votingFirst_extreme_high",
-        "title": "L'Impulsif·ve",
-        "emoji": "🏃",
-        "description": "Premier·ère voteur·se",
-        "stat": "votingFirst",
-        "value": 75.38461538461539,
-        "percentile": 93.10344827586206,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "maitre_ceremonie",
+        "title": "Le·a Maître·sse de Cérémonie",
+        "emoji": "🎙️",
+        "description": "Mène les débats et vote juste",
+        "priority": 14,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "talkingDuringMeeting",
+            "category": "HIGH",
+            "actualValue": 316.5767270970832,
+            "actualPercentile": 68
+          },
+          {
+            "stat": "votingAccuracy",
+            "category": "HIGH",
+            "actualValue": 88.62275449101796,
+            "actualPercentile": 71.42857142857143
+          },
+          {
+            "stat": "votingAggressive",
+            "category": "HIGH",
+            "actualValue": 20.744985673352435,
+            "actualPercentile": 91.66666666666666
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -8663,13 +8707,13 @@
         }
       ],
       "primaryTitle": {
-        "id": "talkingOutsideMeeting_extreme_high",
-        "title": "Le·a Chuchoteur·se",
-        "emoji": "👂",
-        "description": "Bavard·e hors meeting",
-        "stat": "talkingOutsidePer60Min",
-        "value": 890.5967882510423,
-        "percentile": 88,
+        "id": "votingFirst_extreme_high",
+        "title": "L'Impulsif·ve",
+        "emoji": "🏃",
+        "description": "Premier·ère voteur·se",
+        "stat": "votingFirst",
+        "value": 70.2127659574468,
+        "percentile": 89.65517241379311,
         "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"
