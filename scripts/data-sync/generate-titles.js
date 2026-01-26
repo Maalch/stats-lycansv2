@@ -333,6 +333,20 @@ const COMBINATION_TITLES = [
     priority: 12
   },
 
+  // High talk during meeting + Good voting + Aggressive = Master of Ceremony
+  {
+    id: 'maitre_ceremonie',
+    title: 'Le·a Maître·sse de Cérémonie',
+    emoji: '🎙️',
+    description: 'Mène les débats et vote juste',
+    conditions: [
+      { stat: 'talkingDuringMeeting', category: 'HIGH' },
+      { stat: 'votingAccuracy', category: 'HIGH' },
+      { stat: 'votingAggressive', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
+    ],
+    priority: 14
+  },
+
   // High talk + Bad voting = Demagogue
   {
     id: 'demagogue',
@@ -1174,6 +1188,7 @@ function generateCombinationTitles(percentiles) {
   // Map stat names used in conditions to percentile keys
   const conditionStatMap = {
     talking: 'talkingPer60Min',
+    talkingDuringMeeting: 'talkingDuringPer60Min',
     loot: 'lootPer60Min',
     killRate: 'killRate',
     survival: 'survivalRate',
