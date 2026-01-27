@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-27T16:13:03.148Z",
+  "generatedAt": "2026-01-27T16:50:18.919Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -1315,14 +1315,20 @@
       "gamesPlayed": 84,
       "titles": [
         {
-          "id": "martyr",
-          "title": "Le·a Martyr·e",
-          "emoji": "✝️",
-          "description": "Meurt souvent mais fait gagner son camp",
-          "priority": 14,
+          "id": "sacrifice",
+          "title": "Le·a Sacrifice",
+          "emoji": "🕯️",
+          "description": "Meurt rapidement mais fait gagner son camp",
+          "priority": 15,
           "type": "combination",
-          "percentile": 51.351351351351354,
+          "percentile": 40.54054054054054,
           "conditions": [
+            {
+              "stat": "survivalDay1",
+              "category": "LOW",
+              "actualValue": 75,
+              "actualPercentile": 18.91891891891892
+            },
             {
               "stat": "survival",
               "category": "LOW",
@@ -1338,20 +1344,14 @@
           ]
         },
         {
-          "id": "sacrifice",
-          "title": "Le·a Sacrifice",
-          "emoji": "🕯️",
-          "description": "Meurt rapidement mais fait gagner son camp",
-          "priority": 13,
+          "id": "martyr",
+          "title": "Le·a Martyr·e",
+          "emoji": "✝️",
+          "description": "Meurt souvent mais fait gagner son camp",
+          "priority": 14,
           "type": "combination",
-          "percentile": 40.54054054054054,
+          "percentile": 51.351351351351354,
           "conditions": [
-            {
-              "stat": "survivalDay1",
-              "category": "LOW",
-              "actualValue": 75,
-              "actualPercentile": 18.91891891891892
-            },
             {
               "stat": "survival",
               "category": "LOW",
@@ -1464,14 +1464,20 @@
         }
       ],
       "primaryTitle": {
-        "id": "martyr",
-        "title": "Le·a Martyr·e",
-        "emoji": "✝️",
-        "description": "Meurt souvent mais fait gagner son camp",
-        "priority": 14,
+        "id": "sacrifice",
+        "title": "Le·a Sacrifice",
+        "emoji": "🕯️",
+        "description": "Meurt rapidement mais fait gagner son camp",
+        "priority": 15,
         "type": "combination",
-        "percentile": 51.351351351351354,
+        "percentile": 40.54054054054054,
         "conditions": [
+          {
+            "stat": "survivalDay1",
+            "category": "LOW",
+            "actualValue": 75,
+            "actualPercentile": 18.91891891891892
+          },
           {
             "stat": "survival",
             "category": "LOW",
@@ -5692,6 +5698,35 @@
       "gamesPlayed": 260,
       "titles": [
         {
+          "id": "politicien",
+          "title": "Le·a Politicien·ne",
+          "emoji": "🎩",
+          "description": "Parle beaucoup, survit, mais ne récolte pas",
+          "priority": 14,
+          "type": "combination",
+          "percentile": 57.546174937479286,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1147.7051507393826,
+              "actualPercentile": 69.23076923076923
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 39.61538461538461,
+              "actualPercentile": 72.97297297297297
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 689.6046219340815,
+              "actualPercentile": 30.434782608695656
+            }
+          ]
+        },
+        {
           "id": "assassin",
           "title": "L'Assassin·e",
           "emoji": "🗡️",
@@ -5872,25 +5907,31 @@
         }
       ],
       "primaryTitle": {
-        "id": "assassin",
-        "title": "L'Assassin·e",
-        "emoji": "🗡️",
-        "description": "Ignore la récolte, se concentre sur les kills",
-        "priority": 12,
+        "id": "politicien",
+        "title": "Le·a Politicien·ne",
+        "emoji": "🎩",
+        "description": "Parle beaucoup, survit, mais ne récolte pas",
+        "priority": 14,
         "type": "combination",
-        "percentile": 53.05522914218567,
+        "percentile": 57.546174937479286,
         "conditions": [
+          {
+            "stat": "talking",
+            "category": "HIGH",
+            "actualValue": 1147.7051507393826,
+            "actualPercentile": 69.23076923076923
+          },
+          {
+            "stat": "survival",
+            "category": "HIGH",
+            "actualValue": 39.61538461538461,
+            "actualPercentile": 72.97297297297297
+          },
           {
             "stat": "loot",
             "category": "LOW",
             "actualValue": 689.6046219340815,
             "actualPercentile": 30.434782608695656
-          },
-          {
-            "stat": "killRate",
-            "category": "HIGH",
-            "actualValue": 0.5884615384615385,
-            "actualPercentile": 75.67567567567568
           }
         ]
       },
@@ -9191,6 +9232,29 @@
           ]
         },
         {
+          "id": "grande_gueule",
+          "title": "La Grande Gueule",
+          "emoji": "📢",
+          "description": "Parle trop et meurt Jour 1",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 50.05197505197505,
+          "conditions": [
+            {
+              "stat": "survivalDay1",
+              "category": "LOW",
+              "actualValue": 76.31578947368422,
+              "actualPercentile": 27.027027027027028
+            },
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1161.1410497433455,
+              "actualPercentile": 73.07692307692307
+            }
+          ]
+        },
+        {
           "id": "philosophe",
           "title": "Le·a Philosophe",
           "emoji": "📚",
@@ -10144,6 +10208,52 @@
       "gamesPlayed": 45,
       "titles": [
         {
+          "id": "tete_brulee",
+          "title": "La Tête Brûlée",
+          "emoji": "💣",
+          "description": "Tue beaucoup mais fait perdre son camp",
+          "priority": 13,
+          "type": "combination",
+          "percentile": 44.5945945945946,
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.5777777777777777,
+              "actualPercentile": 70.27027027027027
+            },
+            {
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 33.3,
+              "actualPercentile": 18.91891891891892
+            }
+          ]
+        },
+        {
+          "id": "couard",
+          "title": "Le·a Couard·e",
+          "emoji": "🐢",
+          "description": "Survit longtemps mais perd quand même",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 54.054054054054056,
+          "conditions": [
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 46.666666666666664,
+              "actualPercentile": 89.1891891891892
+            },
+            {
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 33.3,
+              "actualPercentile": 18.91891891891892
+            }
+          ]
+        },
+        {
           "id": "populiste",
           "title": "Le·a Populiste",
           "emoji": "📢",
@@ -10317,31 +10427,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "populiste",
-        "title": "Le·a Populiste",
-        "emoji": "📢",
-        "description": "Bruyant·e et actif·ve mais se trompe de cible",
-        "priority": 11,
+        "id": "tete_brulee",
+        "title": "La Tête Brûlée",
+        "emoji": "💣",
+        "description": "Tue beaucoup mais fait perdre son camp",
+        "priority": 13,
         "type": "combination",
-        "percentile": 70.96519596519597,
+        "percentile": 44.5945945945946,
         "conditions": [
           {
-            "stat": "talking",
+            "stat": "killRate",
             "category": "HIGH",
-            "actualValue": 1477.3765324404956,
-            "actualPercentile": 96.15384615384616
+            "actualValue": 0.5777777777777777,
+            "actualPercentile": 70.27027027027027
           },
           {
-            "stat": "votingAggressive",
-            "category": "HIGH",
-            "actualValue": 30.000000000000007,
-            "actualPercentile": 97.2972972972973
-          },
-          {
-            "stat": "votingAccuracy",
+            "stat": "winRate",
             "category": "LOW",
-            "actualValue": 80,
-            "actualPercentile": 19.444444444444446
+            "actualValue": 33.3,
+            "actualPercentile": 18.91891891891892
           }
         ]
       },
