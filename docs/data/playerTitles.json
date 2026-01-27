@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-27T13:14:13.828Z",
+  "generatedAt": "2026-01-27T13:24:11.060Z",
   "teamName": "Main Team",
   "totalPlayers": 36,
   "minGamesRequired": 25,
@@ -142,6 +142,18 @@
           "percentile": 8.333333333333332,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "participation_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 76,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -311,6 +323,18 @@
       "gamesPlayed": 31,
       "titles": [
         {
+          "id": "participation_extreme_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 31,
+          "percentile": 5.555555555555555,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -396,13 +420,13 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRateSolo_extreme_low",
-        "title": "L'Enfant Perdu·e",
-        "emoji": "👶",
-        "description": "Mauvais·e en rôles Solo",
-        "stat": "winRateSolo",
-        "value": 0,
-        "percentile": 0,
+        "id": "participation_extreme_low",
+        "title": "Le·a Occasionnel·le",
+        "emoji": "🎲",
+        "description": "Joue peu de parties",
+        "stat": "gamesPlayed",
+        "value": 31,
+        "percentile": 5.555555555555555,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -711,6 +735,18 @@
           "type": "basic"
         },
         {
+          "id": "participation_extreme_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 29,
+          "percentile": 2.7777777777777777,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateVillageois_extreme_high",
           "title": "Le·a Protecteur·rice du Village",
           "emoji": "🦸",
@@ -963,6 +999,18 @@
           "type": "basic"
         },
         {
+          "id": "participation_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 40,
+          "percentile": 16.666666666666664,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRateSolo_high",
           "title": "L'Électron Libre",
           "emoji": "🦊",
@@ -1109,6 +1157,18 @@
               "actualPercentile": 0
             }
           ]
+        },
+        {
+          "id": "participation_extreme_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 27,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_high",
@@ -1499,6 +1559,18 @@
       "gamesPlayed": 389,
       "titles": [
         {
+          "id": "participation_extreme_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 389,
+          "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateSolo_extreme_high",
           "title": "L'Électron Libre",
           "emoji": "🦊",
@@ -1620,15 +1692,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_high",
-        "title": "Le·a Chef de Meute",
-        "emoji": "🐺",
-        "description": "Excellent·e en camp Loup",
-        "stat": "winRateLoup",
-        "value": 43.39622641509434,
-        "percentile": 83.87096774193549,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "participation_extreme_high",
+        "title": "Le·a Noctambule",
+        "emoji": "🌙",
+        "description": "Joue énormément de parties",
+        "stat": "gamesPlayed",
+        "value": 389,
+        "percentile": 97.22222222222221,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -1847,6 +1919,18 @@
               "actualPercentile": 95.45454545454545
             }
           ]
+        },
+        {
+          "id": "participation_extreme_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 329,
+          "percentile": 86.11111111111111,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "winRateSolo_extreme_high",
@@ -2164,6 +2248,18 @@
       "playerName": "Monodie",
       "gamesPlayed": 370,
       "titles": [
+        {
+          "id": "participation_extreme_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 370,
+          "percentile": 91.66666666666666,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
         {
           "id": "killRate_extreme_high",
           "title": "L'Exterminateur·rice",
@@ -2562,6 +2658,18 @@
           "percentile": 90.9090909090909,
           "category": "EXTREME_HIGH",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "participation_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 209,
+          "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -3065,6 +3173,18 @@
       "playerName": "Bytell",
       "gamesPlayed": 359,
       "titles": [
+        {
+          "id": "participation_extreme_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 359,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
         {
           "id": "talking_extreme_high",
           "title": "Le Moulin à Paroles",
@@ -3622,6 +3742,18 @@
           "type": "basic"
         },
         {
+          "id": "participation_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 65,
+          "percentile": 30.555555555555557,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRateLoup_low",
           "title": "Loup Débutant·e",
           "emoji": "🐩",
@@ -3671,15 +3803,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "votingAccuracy_high",
-        "title": "Le·a Flaireur·se",
-        "emoji": "👃",
-        "description": "Bon instinct de vote",
-        "stat": "votingAccuracy",
-        "value": 88.37209302325581,
-        "percentile": 68.57142857142857,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "winRateSolo_extreme_low",
+        "title": "L'Enfant Perdu·e",
+        "emoji": "👶",
+        "description": "Mauvais·e en rôles Solo",
+        "stat": "winRateSolo",
+        "value": 0,
+        "percentile": 0,
+        "category": "EXTREME_LOW",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -4116,6 +4248,18 @@
           "stat": "winRate",
           "value": 43.3,
           "percentile": 72.22222222222221,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "participation_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 323,
+          "percentile": 83.33333333333334,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4633,6 +4777,18 @@
       "playerName": "Tsuna",
       "gamesPlayed": 388,
       "titles": [
+        {
+          "id": "participation_extreme_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 388,
+          "percentile": 94.44444444444444,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
         {
           "id": "talkingDuringMeeting_extreme_high",
           "title": "L'Orateur·rice",
@@ -5268,6 +5424,18 @@
           "type": "basic"
         },
         {
+          "id": "participation_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 275,
+          "percentile": 80.55555555555556,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRateSolo_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -5572,6 +5740,18 @@
           "stat": "winRate",
           "value": 42.7,
           "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "participation_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 255,
+          "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -5896,6 +6076,18 @@
           "percentile": 8.571428571428571,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "participation_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 234,
+          "percentile": 75,
+          "category": "HIGH",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -6603,6 +6795,18 @@
           "type": "basic"
         },
         {
+          "id": "participation_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 228,
+          "percentile": 72.22222222222221,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRateVillageois_low",
           "title": "Idiot·e en Formation",
           "emoji": "🤡",
@@ -6928,6 +7132,18 @@
           "percentile": 13.636363636363635,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "participation_high",
+          "title": "Le·a Noctambule",
+          "emoji": "🌙",
+          "description": "Joue énormément de parties",
+          "stat": "gamesPlayed",
+          "value": 208,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -7546,6 +7762,18 @@
           "type": "basic"
         },
         {
+          "id": "participation_extreme_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 38,
+          "percentile": 13.88888888888889,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateVillageois_extreme_low",
           "title": "Idiot·e en Formation",
           "emoji": "🤡",
@@ -7736,6 +7964,18 @@
       "playerName": "PeoBran",
       "gamesPlayed": 33,
       "titles": [
+        {
+          "id": "participation_extreme_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 33,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
         {
           "id": "winRateVillageois_extreme_low",
           "title": "Idiot·e en Formation",
@@ -8089,6 +8329,18 @@
           "type": "basic"
         },
         {
+          "id": "participation_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 46,
+          "percentile": 22.22222222222222,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talking_low",
           "title": "Le·a Silencieux·se",
           "emoji": "🤫",
@@ -8328,6 +8580,18 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "participation_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 55,
+          "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -8975,6 +9239,18 @@
               "actualPercentile": 94.44444444444444
             }
           ]
+        },
+        {
+          "id": "participation_extreme_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 36,
+          "percentile": 11.11111111111111,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -9700,6 +9976,18 @@
           "type": "basic"
         },
         {
+          "id": "participation_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 45,
+          "percentile": 19.444444444444446,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "votingAccuracy_low",
           "title": "L'Aveugle",
           "emoji": "🙈",
@@ -9953,6 +10241,18 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "participation_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 47,
+          "percentile": 25,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
