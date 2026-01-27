@@ -661,7 +661,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Fukano: 77.8% de victoires en équipe (14/18 parties, min. 10)",
+          "description": "Meilleur duo avec Anaee: 77.8% de victoires en équipe (14/18 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 77.77777777777779,
@@ -5582,7 +5582,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Fukano: 50.0% de victoires en équipe (7/14 parties, min. 10)",
+          "description": "Meilleur duo avec Tsuna: 50.0% de victoires en équipe (6/12 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 50,
@@ -6659,7 +6659,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Naka: 72.7% de victoires en équipe (8/11 parties, min. 10)",
+          "description": "Meilleur duo avec Ponce: 72.7% de victoires en équipe (8/11 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 72.72727272727273,
@@ -6890,7 +6890,7 @@
         {
           "id": "worst-mate-all",
           "title": "💔 Pire Coéquipier",
-          "description": "Duo le moins efficace avec Heimdalle: 50.0% de victoires en équipe (5/10 parties, min. 10)",
+          "description": "Duo le moins efficace avec LyeGaia: 50.0% de victoires en équipe (12/24 parties, min. 10)",
           "type": "bad",
           "category": "comparison",
           "value": 50,
@@ -13315,6 +13315,24 @@
           }
         },
         {
+          "id": "communication-most-talkative",
+          "title": "🎤 Bavard N°2",
+          "description": "Vice-champion du temps de parole total avec 20m 16s par heure de jeu (minimum 15 parties avec données)",
+          "type": "good",
+          "category": "communication",
+          "rank": 2,
+          "value": 1216.383200511132,
+          "totalRanked": 20,
+          "redirectTo": {
+            "tab": "rankings",
+            "subTab": "talkingTime",
+            "filters": {
+              "moddedGames": false,
+              "minGames": 15
+            }
+          }
+        },
+        {
           "id": "loot-rate-25-all",
           "title": "💎 Rang 12 Taux de Récolte",
           "description": "12ème meilleur taux de récolte: 719.8 par 60 min (min. 25 parties)",
@@ -13722,6 +13740,24 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "communication-most-talkative-parties-moddées",
+          "title": "🎤 Bavard N°2 (Parties Moddées)",
+          "description": "Vice-champion du temps de parole total avec 20m 16s par heure de jeu (minimum 15 parties avec données)",
+          "type": "good",
+          "category": "communication",
+          "rank": 2,
+          "value": 1216.383200511132,
+          "totalRanked": 20,
+          "redirectTo": {
+            "tab": "rankings",
+            "subTab": "talkingTime",
+            "filters": {
+              "moddedGames": true,
+              "minGames": 15
+            }
           }
         },
         {
@@ -14139,6 +14175,24 @@
           }
         },
         {
+          "id": "communication-most-talkative",
+          "title": "🎤 Bavard N°1",
+          "description": "Champion du temps de parole total avec 23m 33s par heure de jeu (minimum 15 parties avec données)",
+          "type": "good",
+          "category": "communication",
+          "rank": 1,
+          "value": 1413.5497677973035,
+          "totalRanked": 20,
+          "redirectTo": {
+            "tab": "rankings",
+            "subTab": "talkingTime",
+            "filters": {
+              "moddedGames": false,
+              "minGames": 15
+            }
+          }
+        },
+        {
           "id": "loot-rate-25-all",
           "title": "💎 Rang 8 Taux de Récolte",
           "description": "8ème meilleur taux de récolte: 822.6 par 60 min (min. 25 parties)",
@@ -14546,6 +14600,24 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "communication-most-talkative-parties-moddées",
+          "title": "🎤 Bavard N°1 (Parties Moddées)",
+          "description": "Champion du temps de parole total avec 23m 33s par heure de jeu (minimum 15 parties avec données)",
+          "type": "good",
+          "category": "communication",
+          "rank": 1,
+          "value": 1413.5497677973035,
+          "totalRanked": 20,
+          "redirectTo": {
+            "tab": "rankings",
+            "subTab": "talkingTime",
+            "filters": {
+              "moddedGames": true,
+              "minGames": 15
+            }
           }
         },
         {
@@ -15787,6 +15859,24 @@
           }
         },
         {
+          "id": "communication-most-talkative",
+          "title": "🎤 Bavard N°3",
+          "description": "3ème place du temps de parole total avec 19m 55s par heure de jeu (minimum 15 parties avec données)",
+          "type": "good",
+          "category": "communication",
+          "rank": 3,
+          "value": 1195.990414005691,
+          "totalRanked": 20,
+          "redirectTo": {
+            "tab": "rankings",
+            "subTab": "talkingTime",
+            "filters": {
+              "moddedGames": false,
+              "minGames": 15
+            }
+          }
+        },
+        {
           "id": "loot-rate-25-all",
           "title": "💎 Rang 1 Taux de Récolte",
           "description": "1er meilleur taux de récolte: 1299.6 par 60 min (min. 25 parties)",
@@ -16194,6 +16284,24 @@
           "redirectTo": {
             "tab": "rankings",
             "subTab": "votingStats"
+          }
+        },
+        {
+          "id": "communication-most-talkative-parties-moddées",
+          "title": "🎤 Bavard N°3 (Parties Moddées)",
+          "description": "3ème place du temps de parole total avec 19m 55s par heure de jeu (minimum 15 parties avec données)",
+          "type": "good",
+          "category": "communication",
+          "rank": 3,
+          "value": 1195.990414005691,
+          "totalRanked": 20,
+          "redirectTo": {
+            "tab": "rankings",
+            "subTab": "talkingTime",
+            "filters": {
+              "moddedGames": true,
+              "minGames": 15
+            }
           }
         },
         {
@@ -17941,7 +18049,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec BoccA: 75.0% de victoires en équipe (18/24 parties, min. 10)",
+          "description": "Meilleur duo avec Nahomay: 75.0% de victoires en équipe (9/12 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 75,
@@ -20026,7 +20134,7 @@
         {
           "id": "best-mate-all",
           "title": "🤝 Meilleur Coéquipier",
-          "description": "Meilleur duo avec Zarcross: 70.0% de victoires en équipe (7/10 parties, min. 10)",
+          "description": "Meilleur duo avec Kao: 70.0% de victoires en équipe (14/20 parties, min. 10)",
           "type": "good",
           "category": "comparison",
           "value": 70,
