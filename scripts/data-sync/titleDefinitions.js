@@ -664,5 +664,127 @@ export const COMBINATION_TITLES = [
       { stat: 'winRate', category: 'AVERAGE' }
     ],
     priority: 5
+  },
+
+  // High voting accuracy + Low survival = Whistleblower
+  {
+    id: 'lanceur_alerte',
+    title: 'Le·a Lanceur·se d\'Alerte',
+    emoji: '🚨',
+    description: 'Vote juste mais se fait éliminer pour ça',
+    conditions: [
+      { stat: 'votingAccuracy', category: 'HIGH' },
+      { stat: 'survival', category: 'LOW' }
+    ],
+    priority: 13
+  },
+
+  // High loot Loup + High win rate Loup + Low talk = Lone Wolf
+  {
+    id: 'loup_solitaire',
+    title: 'Le Loup Solitaire',
+    emoji: '🐺',
+    description: 'Loup efficace, discret et gagnant',
+    conditions: [
+      { stat: 'lootLoup', category: 'HIGH' },
+      { stat: 'winRateLoup', category: 'HIGH' },
+      { stat: 'talking', category: 'LOW' }
+    ],
+    priority: 16
+  },
+
+  // Serial Solo + High win rate Solo = Anarchist
+  {
+    id: 'anarchiste',
+    title: 'L\'Anarchiste',
+    emoji: '🦊',
+    description: 'Maître des rôles solitaires',
+    conditions: [
+      { stat: 'campSolo', category: 'HIGH' },
+      { stat: 'winRateSolo', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+
+  // High survival + Low kill rate + High win rate = Diplomat
+  {
+    id: 'diplomate',
+    title: 'Le·a Diplomate',
+    emoji: '🤝',
+    description: 'Gagne en survivant sans tuer',
+    conditions: [
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'killRate', category: 'LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 15
+  },
+
+  // High talk + High voting aggressive + Low voting accuracy = Populist
+  {
+    id: 'populiste',
+    title: 'Le·a Populiste',
+    emoji: '📢',
+    description: 'Bruyant·e et actif·ve mais se trompe de cible',
+    conditions: [
+      { stat: 'talking', category: 'HIGH' },
+      { stat: 'votingAggressive', category: 'HIGH' },
+      { stat: 'votingAccuracy', category: 'LOW' }
+    ],
+    priority: 11
+  },
+
+  // Serial Chasseur + High kill rate + High survival = Vigilante
+  {
+    id: 'justicier',
+    title: 'Le·a Justicier·ère',
+    emoji: '⚔️',
+    description: 'Chasseur·se qui tue souvent et survit',
+    conditions: [
+      { stat: 'roleChasseur', category: 'HIGH' },
+      { stat: 'killRate', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 16
+  },
+
+  // Extreme low talk + High win rate = Invisible
+  {
+    id: 'invisible',
+    title: 'L\'Invisible',
+    emoji: '👁️',
+    description: 'Quasi muet·te mais redoutablement efficace',
+    conditions: [
+      { stat: 'talking', category: 'EXTREME_LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 15
+  },
+
+  // High talk during meeting + Low voting aggressive = Theorist
+  {
+    id: 'theoricien',
+    title: 'Le·a Théoricien·ne',
+    emoji: '🎓',
+    description: 'Parle beaucoup en débat mais vote peu',
+    conditions: [
+      { stat: 'talkingDuringMeeting', category: 'HIGH' },
+      { stat: 'votingAggressive', category: 'LOW' }
+    ],
+    priority: 10
+  },
+
+  // Low survival Day 1 + Low survival + High win rate = Sacrifice
+  {
+    id: 'sacrifice',
+    title: 'Le·a Sacrifice',
+    emoji: '🕯️',
+    description: 'Meurt rapidement mais fait gagner son camp',
+    conditions: [
+      { stat: 'survivalDay1', category: 'LOW' },
+      { stat: 'survival', category: 'LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 13
   }
 ];
