@@ -8,54 +8,25 @@
 import { getPlayerId, getCanonicalPlayerName, calculateGameDuration, getPlayerMainCampFromRole } from '../../../src/utils/datasyncExport.js';
 
 /**
- * Check if a game has loot/harvest data
+ * Check if a game has actual per-player loot data
  * @param {Object} game - Game log entry
- * @returns {boolean} - True if game has loot data
+ * @returns {boolean} - True if game has actual TotalCollectedLoot data
  */
 function gameHasLootData(game) {
-  // Check if HarvestDone exists at game level
-  if (game.HarvestDone !== undefined && game.HarvestDone !== null) {
-    return true;
-  }
-  
-  // Check if any player has loot data (future-proofing)
+  // ONLY check if any player has TotalCollectedLoot field
+  // Never use HarvestDone for estimation
   return game.PlayerStats?.some(
-    player => player.Loot !== undefined || player.Harvest !== undefined
+    player => player.TotalCollectedLoot !== undefined && player.TotalCollectedLoot !== null
   );
 }
 
 /**
- * Estimate player contribution to harvest based on game time
- * Since we don't have per-player loot tracking, we estimate based on survival time
- * Players who survive longer likely contributed more
+ * Get actual player loot from TotalCollectedLoot field
  * @param {Object} player - Player stat object
- * @param {Object} game - Game object
- * @param {number} totalHarvest - Total harvest for the game
- * @param {Array} allPlayers - All players in the game
- * @returns {number} - Estimated player loot contribution
+ * @returns {number} - Actual player loot or 0 if not available
  */
-function estimatePlayerLoot(player, game, totalHarvest, allPlayers) {
-  // Calculate player's survival time
-  const playerEndTime = player.DeathDateIrl || game.EndDate;
-  const playerDuration = calculateGameDuration(game.StartDate, playerEndTime);
-  
-  // Calculate total survival time of all players
-  let totalDuration = 0;
-  allPlayers.forEach(p => {
-    const pEndTime = p.DeathDateIrl || game.EndDate;
-    const pDuration = calculateGameDuration(game.StartDate, pEndTime);
-    if (pDuration > 0) {
-      totalDuration += pDuration;
-    }
-  });
-  
-  if (totalDuration <= 0 || playerDuration <= 0) {
-    // Fallback: equal distribution
-    return totalHarvest / allPlayers.length;
-  }
-  
-  // Proportional loot based on survival time
-  return (playerDuration / totalDuration) * totalHarvest;
+function getPlayerLoot(player) {
+  return player.TotalCollectedLoot ?? 0;
 }
 
 /**
@@ -83,12 +54,17 @@ export function computeLootStatistics(gameData) {
 
   // Process each game with loot data
   gamesWithData.forEach(game => {
-    const totalHarvest = game.HarvestDone || 0;
     const allPlayers = game.PlayerStats || [];
     
     if (allPlayers.length === 0) return;
 
     allPlayers.forEach(player => {
+      // Skip players without TotalCollectedLoot data
+      const playerLoot = getPlayerLoot(player);
+      if (playerLoot === 0 && (player.TotalCollectedLoot === undefined || player.TotalCollectedLoot === null)) {
+        return;
+      }
+
       const playerId = getPlayerId(player);
       const displayName = getCanonicalPlayerName(player);
       const camp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
@@ -101,9 +77,6 @@ export function computeLootStatistics(gameData) {
       if (!playerGameDuration || playerGameDuration <= 0) {
         return;
       }
-
-      // Estimate player's loot contribution
-      const playerLoot = estimatePlayerLoot(player, game, totalHarvest, allPlayers);
 
       if (!playerMap.has(playerId)) {
         playerMap.set(playerId, {

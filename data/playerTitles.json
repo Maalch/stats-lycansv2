@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-27T09:34:12.062Z",
+  "generatedAt": "2026-01-27T09:43:34.028Z",
   "teamName": "Main Team",
   "totalPlayers": 36,
   "minGamesRequired": 25,
@@ -164,30 +164,6 @@
           "type": "basic"
         },
         {
-          "id": "loot_extreme_low",
-          "title": "Le·a Touriste",
-          "emoji": "📸",
-          "description": "Ne récolte jamais",
-          "stat": "lootPer60Min",
-          "value": 489.6162599339112,
-          "percentile": 13.88888888888889,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_extreme_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 477.7753646349634,
-          "percentile": 11.11111111111111,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -339,21 +315,6 @@
           "value": 0.32894736842105265,
           "percentile": 25,
           "category": "LOW"
-        },
-        "lootPer60Min": {
-          "value": 489.6162599339112,
-          "percentile": 13.88888888888889,
-          "category": "EXTREME_LOW"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 477.7753646349634,
-          "percentile": 11.11111111111111,
-          "category": "EXTREME_LOW"
-        },
-        "lootLoupPer60Min": {
-          "value": 529.8619856060548,
-          "percentile": 50,
-          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -369,10 +330,7 @@
         "votingAccuracy": 80.55555555555556,
         "survivalRate": 28.947368421052634,
         "survivalDay1Rate": 72.36842105263158,
-        "killRate": 0.32894736842105265,
-        "lootPer60Min": 489.6162599339112,
-        "lootVillageoisPer60Min": 477.7753646349634,
-        "lootLoupPer60Min": 529.8619856060548
+        "killRate": 0.32894736842105265
       }
     },
     "13": {
@@ -429,18 +387,6 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_extreme_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 486.0488086696422,
-          "percentile": 13.88888888888889,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -475,18 +421,6 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 545.6625524788363,
-          "percentile": 77.77777777777779,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -494,18 +428,6 @@
           "stat": "winRate",
           "value": 38.7,
           "percentile": 44.44444444444444,
-          "category": "BELOW_AVERAGE",
-          "priority": 4,
-          "type": "basic"
-        },
-        {
-          "id": "loot_below_average",
-          "title": "Le·a Travailleur·se",
-          "emoji": "👷",
-          "description": "Récolte correcte",
-          "stat": "lootPer60Min",
-          "value": 508.8062838852257,
-          "percentile": 36.11111111111111,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -583,21 +505,6 @@
           "value": 0.1935483870967742,
           "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW"
-        },
-        "lootPer60Min": {
-          "value": 508.8062838852257,
-          "percentile": 36.11111111111111,
-          "category": "BELOW_AVERAGE"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 486.0488086696422,
-          "percentile": 13.88888888888889,
-          "category": "EXTREME_LOW"
-        },
-        "lootLoupPer60Min": {
-          "value": 545.6625524788363,
-          "percentile": 77.77777777777779,
-          "category": "HIGH"
         }
       },
       "stats": {
@@ -612,10 +519,7 @@
         "votingAggressiveness": -28.200000000000003,
         "survivalRate": 25.806451612903224,
         "survivalDay1Rate": 77.41935483870968,
-        "killRate": 0.1935483870967742,
-        "lootPer60Min": 508.8062838852257,
-        "lootVillageoisPer60Min": 486.0488086696422,
-        "lootLoupPer60Min": 545.6625524788363
+        "killRate": 0.1935483870967742
       }
     },
     "17": {
@@ -636,50 +540,6 @@
               "category": "HIGH",
               "actualValue": 0.6456692913385826,
               "actualPercentile": 80.55555555555556
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 47.24409448818898,
-              "actualPercentile": 91.66666666666666
-            }
-          ]
-        },
-        {
-          "id": "assassin",
-          "title": "L'Assassin·e",
-          "emoji": "🗡️",
-          "description": "Ignore la récolte, se concentre sur les kills",
-          "priority": 12,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 487.3529202625836,
-              "actualPercentile": 11.11111111111111
-            },
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6456692913385826,
-              "actualPercentile": 80.55555555555556
-            }
-          ]
-        },
-        {
-          "id": "prudent",
-          "title": "Le·a Prudent·e",
-          "emoji": "🛡️",
-          "description": "Survit mais récolte peu",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 487.3529202625836,
-              "actualPercentile": 11.11111111111111
             },
             {
               "stat": "survival",
@@ -722,30 +582,6 @@
           "value": 47.24409448818898,
           "percentile": 91.66666666666666,
           "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "loot_extreme_low",
-          "title": "Le·a Touriste",
-          "emoji": "📸",
-          "description": "Ne récolte jamais",
-          "stat": "lootPer60Min",
-          "value": 487.3529202625836,
-          "percentile": 11.11111111111111,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_extreme_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 482.69850824959434,
-          "percentile": 11.11111111111111,
-          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -816,18 +652,6 @@
           "value": 0.6456692913385826,
           "percentile": 80.55555555555556,
           "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 487.2179639574354,
-          "percentile": 16.666666666666664,
-          "category": "LOW",
           "priority": 6,
           "type": "basic"
         }
@@ -929,21 +753,6 @@
           "value": 0.6456692913385826,
           "percentile": 80.55555555555556,
           "category": "HIGH"
-        },
-        "lootPer60Min": {
-          "value": 487.3529202625836,
-          "percentile": 11.11111111111111,
-          "category": "EXTREME_LOW"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 487.2179639574354,
-          "percentile": 16.666666666666664,
-          "category": "LOW"
-        },
-        "lootLoupPer60Min": {
-          "value": 482.69850824959434,
-          "percentile": 11.11111111111111,
-          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -961,10 +770,7 @@
         "hunterAccuracy": 50,
         "survivalRate": 47.24409448818898,
         "survivalDay1Rate": 83.46456692913385,
-        "killRate": 0.6456692913385826,
-        "lootPer60Min": 487.3529202625836,
-        "lootVillageoisPer60Min": 487.2179639574354,
-        "lootLoupPer60Min": 482.69850824959434
+        "killRate": 0.6456692913385826
       }
     },
     "19": {
@@ -991,28 +797,6 @@
               "category": "LOW",
               "actualValue": 29,
               "actualPercentile": 2.7777777777777777
-            }
-          ]
-        },
-        {
-          "id": "assassin",
-          "title": "L'Assassin·e",
-          "emoji": "🗡️",
-          "description": "Ignore la récolte, se concentre sur les kills",
-          "priority": 12,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 494.99792349922853,
-              "actualPercentile": 19.444444444444446
-            },
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.5862068965517241,
-              "actualPercentile": 75
             }
           ]
         },
@@ -1077,18 +861,6 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_extreme_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 469.94466015084566,
-          "percentile": 8.333333333333332,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -1119,30 +891,6 @@
           "value": 0.5862068965517241,
           "percentile": 75,
           "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "loot_low",
-          "title": "Le·a Flâneur·se",
-          "emoji": "🚶",
-          "description": "Récolte faible",
-          "stat": "lootPer60Min",
-          "value": 494.99792349922853,
-          "percentile": 19.444444444444446,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 494.38150572478924,
-          "percentile": 22.22222222222222,
-          "category": "LOW",
           "priority": 6,
           "type": "basic"
         }
@@ -1229,21 +977,6 @@
           "value": 0.5862068965517241,
           "percentile": 75,
           "category": "HIGH"
-        },
-        "lootPer60Min": {
-          "value": 494.99792349922853,
-          "percentile": 19.444444444444446,
-          "category": "LOW"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 494.38150572478924,
-          "percentile": 22.22222222222222,
-          "category": "LOW"
-        },
-        "lootLoupPer60Min": {
-          "value": 469.94466015084566,
-          "percentile": 8.333333333333332,
-          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -1259,10 +992,7 @@
         "votingAccuracy": 100,
         "survivalRate": 31.03448275862069,
         "survivalDay1Rate": 75.86206896551724,
-        "killRate": 0.5862068965517241,
-        "lootPer60Min": 494.99792349922853,
-        "lootVillageoisPer60Min": 494.38150572478924,
-        "lootLoupPer60Min": 469.94466015084566
+        "killRate": 0.5862068965517241
       }
     },
     "36": {
@@ -1270,34 +1000,6 @@
       "playerName": "Noamouille",
       "gamesPlayed": 40,
       "titles": [
-        {
-          "id": "joueur_parfait",
-          "title": "Le·a Joueur·se Parfait·e",
-          "emoji": "💎",
-          "description": "Gagne, récolte, et survit",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 47.5,
-              "actualPercentile": 88.88888888888889
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 517.1165859327316,
-              "actualPercentile": 58.333333333333336
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 45,
-              "actualPercentile": 86.11111111111111
-            }
-          ]
-        },
         {
           "id": "alpha_predator",
           "title": "L'Alpha",
@@ -1427,18 +1129,6 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_extreme_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 433.9948406491844,
-          "percentile": 5.555555555555555,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -1471,47 +1161,19 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
-        },
-        {
-          "id": "loot_above_average",
-          "title": "Le·a Travailleur·se",
-          "emoji": "👷",
-          "description": "Récolte correcte",
-          "stat": "lootPer60Min",
-          "value": 517.1165859327316,
-          "percentile": 58.333333333333336,
-          "category": "ABOVE_AVERAGE",
-          "priority": 4,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "joueur_parfait",
-        "title": "Le·a Joueur·se Parfait·e",
-        "emoji": "💎",
-        "description": "Gagne, récolte, et survit",
-        "priority": 19,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "winRate",
-            "category": "HIGH",
-            "actualValue": 47.5,
-            "actualPercentile": 88.88888888888889
-          },
-          {
-            "stat": "loot",
-            "category": "HIGH",
-            "actualValue": 517.1165859327316,
-            "actualPercentile": 58.333333333333336
-          },
-          {
-            "stat": "survival",
-            "category": "HIGH",
-            "actualValue": 45,
-            "actualPercentile": 86.11111111111111
-          }
-        ]
+        "id": "winRateVillageois_extreme_high",
+        "title": "Le·a Protecteur·rice du Village",
+        "emoji": "🦸",
+        "description": "Excellent·e en camp Villageois",
+        "stat": "winRateVillageois",
+        "value": 76.19047619047619,
+        "percentile": 97.22222222222221,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -1578,21 +1240,6 @@
           "value": 0.775,
           "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH"
-        },
-        "lootPer60Min": {
-          "value": 517.1165859327316,
-          "percentile": 58.333333333333336,
-          "category": "ABOVE_AVERAGE"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 508.8841135572887,
-          "percentile": 41.66666666666667,
-          "category": "BELOW_AVERAGE"
-        },
-        "lootLoupPer60Min": {
-          "value": 433.9948406491844,
-          "percentile": 5.555555555555555,
-          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -1608,10 +1255,7 @@
         "votingAccuracy": 96.96969696969697,
         "survivalRate": 45,
         "survivalDay1Rate": 85,
-        "killRate": 0.775,
-        "lootPer60Min": 517.1165859327316,
-        "lootVillageoisPer60Min": 508.8841135572887,
-        "lootLoupPer60Min": 433.9948406491844
+        "killRate": 0.775
       }
     },
     "39": {
@@ -1660,28 +1304,6 @@
               "category": "LOW",
               "actualValue": 27,
               "actualPercentile": 0
-            }
-          ]
-        },
-        {
-          "id": "avide",
-          "title": "L'Avide",
-          "emoji": "💰",
-          "description": "Récolte beaucoup mais meurt",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 523.4764745238834,
-              "actualPercentile": 66.66666666666666
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 29.629629629629626,
-              "actualPercentile": 38.88888888888889
             }
           ]
         },
@@ -1778,30 +1400,6 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
-        },
-        {
-          "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
-          "description": "Récolte élevée",
-          "stat": "lootPer60Min",
-          "value": 523.4764745238834,
-          "percentile": 66.66666666666666,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 540.5014227440349,
-          "percentile": 83.33333333333334,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -1886,21 +1484,6 @@
           "value": 0.2962962962962963,
           "percentile": 8.333333333333332,
           "category": "EXTREME_LOW"
-        },
-        "lootPer60Min": {
-          "value": 523.4764745238834,
-          "percentile": 66.66666666666666,
-          "category": "HIGH"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 540.5014227440349,
-          "percentile": 83.33333333333334,
-          "category": "HIGH"
-        },
-        "lootLoupPer60Min": {
-          "value": 533.7272218421543,
-          "percentile": 52.77777777777778,
-          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -1916,10 +1499,7 @@
         "votingAccuracy": 92.85714285714286,
         "survivalRate": 29.629629629629626,
         "survivalDay1Rate": 74.07407407407408,
-        "killRate": 0.2962962962962963,
-        "lootPer60Min": 523.4764745238834,
-        "lootVillageoisPer60Min": 540.5014227440349,
-        "lootLoupPer60Min": 533.7272218421543
+        "killRate": 0.2962962962962963
       }
     },
     "52": {
@@ -2010,30 +1590,6 @@
           "type": "basic"
         },
         {
-          "id": "loot_extreme_low",
-          "title": "Le·a Touriste",
-          "emoji": "📸",
-          "description": "Ne récolte jamais",
-          "stat": "lootPer60Min",
-          "value": 470.29323427961197,
-          "percentile": 8.333333333333332,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_extreme_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 468.6834423862727,
-          "percentile": 5.555555555555555,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -2075,18 +1631,6 @@
           "stat": "survivalDay1Rate",
           "value": 75,
           "percentile": 19.444444444444446,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 491.435509799227,
-          "percentile": 16.666666666666664,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -2179,21 +1723,6 @@
           "value": 0.4166666666666667,
           "percentile": 36.11111111111111,
           "category": "BELOW_AVERAGE"
-        },
-        "lootPer60Min": {
-          "value": 470.29323427961197,
-          "percentile": 8.333333333333332,
-          "category": "EXTREME_LOW"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 468.6834423862727,
-          "percentile": 5.555555555555555,
-          "category": "EXTREME_LOW"
-        },
-        "lootLoupPer60Min": {
-          "value": 491.435509799227,
-          "percentile": 16.666666666666664,
-          "category": "LOW"
         }
       },
       "stats": {
@@ -2209,10 +1738,7 @@
         "votingAccuracy": 91.66666666666666,
         "survivalRate": 23.809523809523807,
         "survivalDay1Rate": 75,
-        "killRate": 0.4166666666666667,
-        "lootPer60Min": 470.29323427961197,
-        "lootVillageoisPer60Min": 468.6834423862727,
-        "lootLoupPer60Min": 491.435509799227
+        "killRate": 0.4166666666666667
       }
     },
     "76561198034021995": {
@@ -2220,34 +1746,6 @@
       "playerName": "Ponce",
       "gamesPlayed": 383,
       "titles": [
-        {
-          "id": "joueur_parfait",
-          "title": "Le·a Joueur·se Parfait·e",
-          "emoji": "💎",
-          "description": "Gagne, récolte, et survit",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 46,
-              "actualPercentile": 80.55555555555556
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 521.3001473508045,
-              "actualPercentile": 63.888888888888886
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 37.59791122715404,
-              "actualPercentile": 61.111111111111114
-            }
-          ]
-        },
         {
           "id": "adaptable",
           "title": "L'Adaptable",
@@ -2383,6 +1881,18 @@
           "type": "basic"
         },
         {
+          "id": "lootLoup_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 809.6577509215375,
+          "percentile": 77.27272727272727,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talking_above_average",
           "title": "Le·a Équilibré·e",
           "emoji": "⚖️",
@@ -2395,29 +1905,27 @@
           "type": "basic"
         },
         {
-          "id": "loot_above_average",
+          "id": "loot_average",
           "title": "Le·a Travailleur·se",
           "emoji": "👷",
           "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 521.3001473508045,
-          "percentile": 63.888888888888886,
-          "category": "ABOVE_AVERAGE",
-          "priority": 4,
+          "value": 783.0808720455436,
+          "percentile": 54.54545454545454,
+          "category": "AVERAGE",
+          "priority": 3,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_high",
-        "title": "Le·a Chef de Meute",
-        "emoji": "🐺",
-        "description": "Excellent·e en camp Loup",
-        "stat": "winRateLoup",
-        "value": 43.39622641509434,
-        "percentile": 83.87096774193549,
-        "category": "HIGH",
-        "priority": 6,
-        "type": "basic"
+        "id": "campBalance_specialist",
+        "title": "Le·a Spécialiste",
+        "emoji": "🎯",
+        "description": "Excellent dans un camp spécifique",
+        "stat": "campBalance",
+        "category": "SPECIALIST",
+        "priority": 7,
+        "type": "campBalance"
       },
       "percentiles": {
         "winRate": {
@@ -2516,19 +2024,19 @@
           "category": "AVERAGE"
         },
         "lootPer60Min": {
-          "value": 521.3001473508045,
-          "percentile": 63.888888888888886,
-          "category": "ABOVE_AVERAGE"
+          "value": 783.0808720455436,
+          "percentile": 54.54545454545454,
+          "category": "AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 519.5797959474837,
-          "percentile": 58.333333333333336,
-          "category": "ABOVE_AVERAGE"
+          "value": 832.0243036675748,
+          "percentile": 50,
+          "category": "AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 525.8095235296739,
-          "percentile": 47.22222222222222,
-          "category": "AVERAGE"
+          "value": 809.6577509215375,
+          "percentile": 77.27272727272727,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -2551,9 +2059,9 @@
         "survivalRate": 37.59791122715404,
         "survivalDay1Rate": 82.24543080939948,
         "killRate": 0.46736292428198434,
-        "lootPer60Min": 521.3001473508045,
-        "lootVillageoisPer60Min": 519.5797959474837,
-        "lootLoupPer60Min": 525.8095235296739
+        "lootPer60Min": 783.0808720455436,
+        "lootVillageoisPer60Min": 832.0243036675748,
+        "lootLoupPer60Min": 809.6577509215375
       }
     },
     "76561198012951437": {
@@ -2578,8 +2086,8 @@
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 530.3408432442998,
-              "actualPercentile": 75
+              "actualValue": 1315.7749631389822,
+              "actualPercentile": 95.45454545454545
             },
             {
               "stat": "survival",
@@ -2656,8 +2164,8 @@
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 530.3408432442998,
-              "actualPercentile": 75
+              "actualValue": 1315.7749631389822,
+              "actualPercentile": 95.45454545454545
             }
           ]
         },
@@ -2705,6 +2213,42 @@
           "stat": "killRate",
           "value": 0.8544891640866873,
           "percentile": 97.22222222222221,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "loot_extreme_high",
+          "title": "Le·a Stakhanoviste",
+          "emoji": "⚒️",
+          "description": "Récolte exceptionnelle",
+          "stat": "lootPer60Min",
+          "value": 1315.7749631389822,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_extreme_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 1368.965601146553,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_extreme_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 1173.3670826390255,
+          "percentile": 95.45454545454545,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -2778,55 +2322,35 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
-        },
-        {
-          "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
-          "description": "Récolte élevée",
-          "stat": "lootPer60Min",
-          "value": 530.3408432442998,
-          "percentile": 75,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 529.9975617213066,
-          "percentile": 75,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 542.9701210614894,
-          "percentile": 72.22222222222221,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "survival_extreme_high",
-        "title": "Le·a Survivant·e",
-        "emoji": "🛡️",
-        "description": "Survie élevée fin de game",
-        "stat": "survivalRate",
-        "value": 53.56037151702786,
-        "percentile": 97.22222222222221,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "joueur_parfait",
+        "title": "Le·a Joueur·se Parfait·e",
+        "emoji": "💎",
+        "description": "Gagne, récolte, et survit",
+        "priority": 19,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "winRate",
+            "category": "HIGH",
+            "actualValue": 45.5,
+            "actualPercentile": 77.77777777777779
+          },
+          {
+            "stat": "loot",
+            "category": "HIGH",
+            "actualValue": 1315.7749631389822,
+            "actualPercentile": 95.45454545454545
+          },
+          {
+            "stat": "survival",
+            "category": "HIGH",
+            "actualValue": 53.56037151702786,
+            "actualPercentile": 97.22222222222221
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -2925,19 +2449,19 @@
           "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
-          "value": 530.3408432442998,
-          "percentile": 75,
-          "category": "HIGH"
+          "value": 1315.7749631389822,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 529.9975617213066,
-          "percentile": 75,
-          "category": "HIGH"
+          "value": 1368.965601146553,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 542.9701210614894,
-          "percentile": 72.22222222222221,
-          "category": "HIGH"
+          "value": 1173.3670826390255,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -2960,9 +2484,9 @@
         "survivalRate": 53.56037151702786,
         "survivalDay1Rate": 85.13931888544892,
         "killRate": 0.8544891640866873,
-        "lootPer60Min": 530.3408432442998,
-        "lootVillageoisPer60Min": 529.9975617213066,
-        "lootLoupPer60Min": 542.9701210614894
+        "lootPer60Min": 1315.7749631389822,
+        "lootVillageoisPer60Min": 1368.965601146553,
+        "lootLoupPer60Min": 1173.3670826390255
       }
     },
     "76561198125108195": {
@@ -2970,6 +2494,34 @@
       "playerName": "Monodie",
       "gamesPlayed": 364,
       "titles": [
+        {
+          "id": "joueur_parfait",
+          "title": "Le·a Joueur·se Parfait·e",
+          "emoji": "💎",
+          "description": "Gagne, récolte, et survit",
+          "priority": 19,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "HIGH",
+              "actualValue": 42.6,
+              "actualPercentile": 69.44444444444444
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 913.5347771410071,
+              "actualPercentile": 68.18181818181817
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 40.10989010989011,
+              "actualPercentile": 75
+            }
+          ]
+        },
         {
           "id": "adaptable",
           "title": "L'Adaptable",
@@ -3028,6 +2580,18 @@
           "stat": "killRate",
           "value": 0.7005494505494505,
           "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_extreme_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 913.7641865200699,
+          "percentile": 86.36363636363636,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -3115,25 +2679,25 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 521.7038688867576,
-          "percentile": 66.66666666666666,
+          "id": "loot_high",
+          "title": "Le·a Fermier·ère",
+          "emoji": "🌾",
+          "description": "Récolte élevée",
+          "stat": "lootPer60Min",
+          "value": 913.5347771410071,
+          "percentile": 68.18181818181817,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
         {
-          "id": "lootLoup_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 542.940472560428,
-          "percentile": 69.44444444444444,
+          "id": "lootVillageois_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 995.1179051308105,
+          "percentile": 72.72727272727273,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3146,18 +2710,6 @@
           "stat": "talkingPer60Min",
           "value": 1019.0342605898729,
           "percentile": 48,
-          "category": "AVERAGE",
-          "priority": 3,
-          "type": "basic"
-        },
-        {
-          "id": "loot_average",
-          "title": "Le·a Travailleur·se",
-          "emoji": "👷",
-          "description": "Récolte correcte",
-          "stat": "lootPer60Min",
-          "value": 514.9328182163557,
-          "percentile": 50,
           "category": "AVERAGE",
           "priority": 3,
           "type": "basic"
@@ -3272,19 +2824,19 @@
           "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
-          "value": 514.9328182163557,
-          "percentile": 50,
-          "category": "AVERAGE"
+          "value": 913.5347771410071,
+          "percentile": 68.18181818181817,
+          "category": "HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 521.7038688867576,
-          "percentile": 66.66666666666666,
+          "value": 995.1179051308105,
+          "percentile": 72.72727272727273,
           "category": "HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 542.940472560428,
-          "percentile": 69.44444444444444,
-          "category": "HIGH"
+          "value": 913.7641865200699,
+          "percentile": 86.36363636363636,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -3307,9 +2859,9 @@
         "survivalRate": 40.10989010989011,
         "survivalDay1Rate": 81.86813186813187,
         "killRate": 0.7005494505494505,
-        "lootPer60Min": 514.9328182163557,
-        "lootVillageoisPer60Min": 521.7038688867576,
-        "lootLoupPer60Min": 542.940472560428
+        "lootPer60Min": 913.5347771410071,
+        "lootVillageoisPer60Min": 995.1179051308105,
+        "lootLoupPer60Min": 913.7641865200699
       }
     },
     "76561198390111869": {
@@ -3328,8 +2880,8 @@
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 541.9126658637708,
-              "actualPercentile": 86.11111111111111
+              "actualValue": 1104.1553632675848,
+              "actualPercentile": 90.9090909090909
             },
             {
               "stat": "survival",
@@ -3384,8 +2936,8 @@
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 541.9126658637708,
-              "actualPercentile": 86.11111111111111
+              "actualValue": 1104.1553632675848,
+              "actualPercentile": 90.9090909090909
             }
           ]
         },
@@ -3455,8 +3007,20 @@
           "emoji": "⚒️",
           "description": "Récolte exceptionnelle",
           "stat": "lootPer60Min",
-          "value": 541.9126658637708,
-          "percentile": 86.11111111111111,
+          "value": 1104.1553632675848,
+          "percentile": 90.9090909090909,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_extreme_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 1158.283080971491,
+          "percentile": 90.9090909090909,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -3508,13 +3072,13 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 533.007543938706,
-          "percentile": 77.77777777777779,
+          "id": "lootLoup_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 851.767935927987,
+          "percentile": 81.81818181818183,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3543,8 +3107,8 @@
           {
             "stat": "loot",
             "category": "HIGH",
-            "actualValue": 541.9126658637708,
-            "actualPercentile": 86.11111111111111
+            "actualValue": 1104.1553632675848,
+            "actualPercentile": 90.9090909090909
           },
           {
             "stat": "survival",
@@ -3657,19 +3221,19 @@
           "category": "HIGH"
         },
         "lootPer60Min": {
-          "value": 541.9126658637708,
-          "percentile": 86.11111111111111,
+          "value": 1104.1553632675848,
+          "percentile": 90.9090909090909,
           "category": "EXTREME_HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 533.007543938706,
-          "percentile": 77.77777777777779,
-          "category": "HIGH"
+          "value": 1158.283080971491,
+          "percentile": 90.9090909090909,
+          "category": "EXTREME_HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 534.44865765658,
-          "percentile": 55.55555555555556,
-          "category": "ABOVE_AVERAGE"
+          "value": 851.767935927987,
+          "percentile": 81.81818181818183,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -3692,9 +3256,9 @@
         "survivalRate": 38.42364532019704,
         "survivalDay1Rate": 81.77339901477832,
         "killRate": 0.6551724137931034,
-        "lootPer60Min": 541.9126658637708,
-        "lootVillageoisPer60Min": 533.007543938706,
-        "lootLoupPer60Min": 534.44865765658
+        "lootPer60Min": 1104.1553632675848,
+        "lootVillageoisPer60Min": 1158.283080971491,
+        "lootLoupPer60Min": 851.767935927987
       }
     },
     "76561198043736664": {
@@ -3749,50 +3313,6 @@
               "category": "LOW",
               "actualValue": 932.7354026110525,
               "actualPercentile": 24
-            }
-          ]
-        },
-        {
-          "id": "assassin",
-          "title": "L'Assassin·e",
-          "emoji": "🗡️",
-          "description": "Ignore la récolte, se concentre sur les kills",
-          "priority": 12,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 503.6563139283604,
-              "actualPercentile": 25
-            },
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6683417085427136,
-              "actualPercentile": 86.11111111111111
-            }
-          ]
-        },
-        {
-          "id": "prudent",
-          "title": "Le·a Prudent·e",
-          "emoji": "🛡️",
-          "description": "Survit mais récolte peu",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 503.6563139283604,
-              "actualPercentile": 25
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 37.68844221105528,
-              "actualPercentile": 63.888888888888886
             }
           ]
         },
@@ -3913,65 +3433,19 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
-        },
-        {
-          "id": "loot_low",
-          "title": "Le·a Flâneur·se",
-          "emoji": "🚶",
-          "description": "Récolte faible",
-          "stat": "lootPer60Min",
-          "value": 503.6563139283604,
-          "percentile": 25,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 506.05483974252803,
-          "percentile": 33.33333333333333,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 504.6654276330909,
-          "percentile": 27.77777777777778,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "assassin",
-        "title": "L'Assassin·e",
-        "emoji": "🗡️",
-        "description": "Ignore la récolte, se concentre sur les kills",
-        "priority": 12,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "loot",
-            "category": "LOW",
-            "actualValue": 503.6563139283604,
-            "actualPercentile": 25
-          },
-          {
-            "stat": "killRate",
-            "category": "HIGH",
-            "actualValue": 0.6683417085427136,
-            "actualPercentile": 86.11111111111111
-          }
-        ]
+        "id": "winRate_extreme_high",
+        "title": "L'Inarrêtable",
+        "emoji": "👑",
+        "description": "Gagne presque toujours",
+        "stat": "winRate",
+        "value": 47.2,
+        "percentile": 86.11111111111111,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -4068,21 +3542,6 @@
           "value": 0.6683417085427136,
           "percentile": 86.11111111111111,
           "category": "EXTREME_HIGH"
-        },
-        "lootPer60Min": {
-          "value": 503.6563139283604,
-          "percentile": 25,
-          "category": "LOW"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 506.05483974252803,
-          "percentile": 33.33333333333333,
-          "category": "LOW"
-        },
-        "lootLoupPer60Min": {
-          "value": 504.6654276330909,
-          "percentile": 27.77777777777778,
-          "category": "LOW"
         }
       },
       "stats": {
@@ -4104,10 +3563,7 @@
         "hunterAccuracy": 71.42857142857143,
         "survivalRate": 37.68844221105528,
         "survivalDay1Rate": 80.90452261306532,
-        "killRate": 0.6683417085427136,
-        "lootPer60Min": 503.6563139283604,
-        "lootVillageoisPer60Min": 506.05483974252803,
-        "lootLoupPer60Min": 504.6654276330909
+        "killRate": 0.6683417085427136
       }
     },
     "76561198045789440": {
@@ -4244,6 +3700,18 @@
           "type": "basic"
         },
         {
+          "id": "lootVillageois_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 756.0520981097624,
+          "percentile": 27.27272727272727,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRate_above_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -4261,8 +3729,8 @@
           "emoji": "👷",
           "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 512.7099112960258,
-          "percentile": 44.44444444444444,
+          "value": 727.5755914350816,
+          "percentile": 36.36363636363637,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -4387,19 +3855,19 @@
           "category": "HIGH"
         },
         "lootPer60Min": {
-          "value": 512.7099112960258,
-          "percentile": 44.44444444444444,
+          "value": 727.5755914350816,
+          "percentile": 36.36363636363637,
           "category": "BELOW_AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 509.37386782700287,
-          "percentile": 44.44444444444444,
-          "category": "BELOW_AVERAGE"
+          "value": 756.0520981097624,
+          "percentile": 27.27272727272727,
+          "category": "LOW"
         },
         "lootLoupPer60Min": {
-          "value": 521.084089191906,
-          "percentile": 41.66666666666667,
-          "category": "BELOW_AVERAGE"
+          "value": 684.3690369112954,
+          "percentile": 59.09090909090909,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -4422,9 +3890,9 @@
         "survivalRate": 31.728045325779036,
         "survivalDay1Rate": 83.85269121813032,
         "killRate": 0.623229461756374,
-        "lootPer60Min": 512.7099112960258,
-        "lootVillageoisPer60Min": 509.37386782700287,
-        "lootLoupPer60Min": 521.084089191906
+        "lootPer60Min": 727.5755914350816,
+        "lootVillageoisPer60Min": 756.0520981097624,
+        "lootLoupPer60Min": 684.3690369112954
       }
     },
     "76561198140298176": {
@@ -4534,30 +4002,6 @@
           "stat": "killRate",
           "value": 0.3548387096774194,
           "percentile": 30.555555555555557,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "loot_low",
-          "title": "Le·a Flâneur·se",
-          "emoji": "🚶",
-          "description": "Récolte faible",
-          "stat": "lootPer60Min",
-          "value": 508.0729911740813,
-          "percentile": 33.33333333333333,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 497.19278050585314,
-          "percentile": 25,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -4682,21 +4126,6 @@
           "value": 0.3548387096774194,
           "percentile": 30.555555555555557,
           "category": "LOW"
-        },
-        "lootPer60Min": {
-          "value": 508.0729911740813,
-          "percentile": 33.33333333333333,
-          "category": "LOW"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 506.97583138151714,
-          "percentile": 36.11111111111111,
-          "category": "BELOW_AVERAGE"
-        },
-        "lootLoupPer60Min": {
-          "value": 497.19278050585314,
-          "percentile": 25,
-          "category": "LOW"
         }
       },
       "stats": {
@@ -4718,10 +4147,7 @@
         "hunterAccuracy": 100,
         "survivalRate": 30.32258064516129,
         "survivalDay1Rate": 81.29032258064515,
-        "killRate": 0.3548387096774194,
-        "lootPer60Min": 508.0729911740813,
-        "lootVillageoisPer60Min": 506.97583138151714,
-        "lootLoupPer60Min": 497.19278050585314
+        "killRate": 0.3548387096774194
       }
     },
     "76561197997304949": {
@@ -4729,28 +4155,6 @@
       "playerName": "Brybry",
       "gamesPlayed": 65,
       "titles": [
-        {
-          "id": "prudent",
-          "title": "Le·a Prudent·e",
-          "emoji": "🛡️",
-          "description": "Survit mais récolte peu",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 493.4755461967211,
-              "actualPercentile": 16.666666666666664
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 36.92307692307693,
-              "actualPercentile": 58.333333333333336
-            }
-          ]
-        },
         {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
@@ -4810,30 +4214,6 @@
           "type": "basic"
         },
         {
-          "id": "loot_low",
-          "title": "Le·a Flâneur·se",
-          "emoji": "🚶",
-          "description": "Récolte faible",
-          "stat": "lootPer60Min",
-          "value": 493.4755461967211,
-          "percentile": 16.666666666666664,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 498.36191633020877,
-          "percentile": 27.77777777777778,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -4847,26 +4227,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "prudent",
-        "title": "Le·a Prudent·e",
-        "emoji": "🛡️",
-        "description": "Survit mais récolte peu",
-        "priority": 11,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "loot",
-            "category": "LOW",
-            "actualValue": 493.4755461967211,
-            "actualPercentile": 16.666666666666664
-          },
-          {
-            "stat": "survival",
-            "category": "HIGH",
-            "actualValue": 36.92307692307693,
-            "actualPercentile": 58.333333333333336
-          }
-        ]
+        "id": "votingAccuracy_high",
+        "title": "Le·a Flaireur·se",
+        "emoji": "👃",
+        "description": "Bon instinct de vote",
+        "stat": "votingAccuracy",
+        "value": 88.37209302325581,
+        "percentile": 68.57142857142857,
+        "category": "HIGH",
+        "priority": 6,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -4938,21 +4308,6 @@
           "value": 0.35384615384615387,
           "percentile": 27.77777777777778,
           "category": "LOW"
-        },
-        "lootPer60Min": {
-          "value": 493.4755461967211,
-          "percentile": 16.666666666666664,
-          "category": "LOW"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 498.36191633020877,
-          "percentile": 27.77777777777778,
-          "category": "LOW"
-        },
-        "lootLoupPer60Min": {
-          "value": 518.1103936430704,
-          "percentile": 38.88888888888889,
-          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -4969,10 +4324,7 @@
         "votingFirst": 25,
         "survivalRate": 36.92307692307693,
         "survivalDay1Rate": 81.53846153846153,
-        "killRate": 0.35384615384615387,
-        "lootPer60Min": 493.4755461967211,
-        "lootVillageoisPer60Min": 498.36191633020877,
-        "lootLoupPer60Min": 518.1103936430704
+        "killRate": 0.35384615384615387
       }
     },
     "76561198256660482": {
@@ -5027,28 +4379,6 @@
               "category": "HIGH",
               "actualValue": 42.857142857142854,
               "actualPercentile": 80.64516129032258
-            }
-          ]
-        },
-        {
-          "id": "prudent",
-          "title": "Le·a Prudent·e",
-          "emoji": "🛡️",
-          "description": "Survit mais récolte peu",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 512.6107901013185,
-              "actualPercentile": 41.66666666666667
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 41.726618705035975,
-              "actualPercentile": 83.33333333333334
             }
           ]
         },
@@ -5157,18 +4487,6 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
-        },
-        {
-          "id": "loot_below_average",
-          "title": "Le·a Travailleur·se",
-          "emoji": "👷",
-          "description": "Récolte correcte",
-          "stat": "lootPer60Min",
-          "value": 512.6107901013185,
-          "percentile": 41.66666666666667,
-          "category": "BELOW_AVERAGE",
-          "priority": 4,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -5263,21 +4581,6 @@
           "value": 0.5611510791366906,
           "percentile": 63.888888888888886,
           "category": "ABOVE_AVERAGE"
-        },
-        "lootPer60Min": {
-          "value": 512.6107901013185,
-          "percentile": 41.66666666666667,
-          "category": "BELOW_AVERAGE"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 512.2501634075333,
-          "percentile": 52.77777777777778,
-          "category": "AVERAGE"
-        },
-        "lootLoupPer60Min": {
-          "value": 537.9670118120534,
-          "percentile": 61.111111111111114,
-          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -5294,10 +4597,7 @@
         "votingFirst": 57.14285714285714,
         "survivalRate": 41.726618705035975,
         "survivalDay1Rate": 89.92805755395683,
-        "killRate": 0.5611510791366906,
-        "lootPer60Min": 512.6107901013185,
-        "lootVillageoisPer60Min": 512.2501634075333,
-        "lootLoupPer60Min": 537.9670118120534
+        "killRate": 0.5611510791366906
       }
     },
     "76561198372242900": {
@@ -5530,14 +4830,14 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 523.8633874962719,
-          "percentile": 69.44444444444444,
-          "category": "HIGH",
+          "id": "lootLoup_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 432.40462125597116,
+          "percentile": 22.727272727272727,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -5547,8 +4847,8 @@
           "emoji": "👷",
           "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 516.613769207369,
-          "percentile": 52.77777777777778,
+          "value": 777.084304622307,
+          "percentile": 50,
           "category": "AVERAGE",
           "priority": 3,
           "type": "basic"
@@ -5663,19 +4963,19 @@
           "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
-          "value": 516.613769207369,
-          "percentile": 52.77777777777778,
+          "value": 777.084304622307,
+          "percentile": 50,
           "category": "AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 523.8633874962719,
-          "percentile": 69.44444444444444,
-          "category": "HIGH"
+          "value": 859.9954539143198,
+          "percentile": 59.09090909090909,
+          "category": "ABOVE_AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 541.6416006018458,
-          "percentile": 63.888888888888886,
-          "category": "ABOVE_AVERAGE"
+          "value": 432.40462125597116,
+          "percentile": 22.727272727272727,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -5698,9 +4998,9 @@
         "survivalRate": 38.48580441640379,
         "survivalDay1Rate": 84.85804416403786,
         "killRate": 0.7160883280757098,
-        "lootPer60Min": 516.613769207369,
-        "lootVillageoisPer60Min": 523.8633874962719,
-        "lootLoupPer60Min": 541.6416006018458
+        "lootPer60Min": 777.084304622307,
+        "lootVillageoisPer60Min": 859.9954539143198,
+        "lootLoupPer60Min": 432.40462125597116
       }
     },
     "76561199291323199": {
@@ -5708,28 +5008,6 @@
       "playerName": "Miraaaaaah",
       "gamesPlayed": 189,
       "titles": [
-        {
-          "id": "efficace",
-          "title": "L'Efficace",
-          "emoji": "🎯",
-          "description": "Silencieux·se mais productif·ve",
-          "priority": 10,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "LOW",
-              "actualValue": 917.5106535253502,
-              "actualPercentile": 20
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 547.5631551233826,
-              "actualPercentile": 91.66666666666666
-            }
-          ]
-        },
         {
           "id": "votingAccuracy_extreme_low",
           "title": "L'Aveugle",
@@ -5775,18 +5053,6 @@
           "value": 0.291005291005291,
           "percentile": 5.555555555555555,
           "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "loot_extreme_high",
-          "title": "Le·a Stakhanoviste",
-          "emoji": "⚒️",
-          "description": "Récolte exceptionnelle",
-          "stat": "lootPer60Min",
-          "value": 547.5631551233826,
-          "percentile": 91.66666666666666,
-          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -5866,46 +5132,36 @@
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 526.5688363213716,
-          "percentile": 72.22222222222221,
+          "value": 927.8022805165391,
+          "percentile": 68.18181818181817,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
         {
-          "id": "lootLoup_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 583.1767116488371,
-          "percentile": 83.33333333333334,
-          "category": "HIGH",
-          "priority": 6,
+          "id": "loot_above_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 825.2492056954584,
+          "percentile": 59.09090909090909,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "efficace",
-        "title": "L'Efficace",
-        "emoji": "🎯",
-        "description": "Silencieux·se mais productif·ve",
-        "priority": 10,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "talking",
-            "category": "LOW",
-            "actualValue": 917.5106535253502,
-            "actualPercentile": 20
-          },
-          {
-            "stat": "loot",
-            "category": "HIGH",
-            "actualValue": 547.5631551233826,
-            "actualPercentile": 91.66666666666666
-          }
-        ]
+        "id": "hunterAccuracy_extreme_low",
+        "title": "Le·a Chasseur·se Maudit·e",
+        "emoji": "💔",
+        "description": "Tire toujours sur les mauvaises cibles",
+        "stat": "hunterAccuracy",
+        "value": 33.33333333333333,
+        "percentile": 0,
+        "category": "EXTREME_LOW",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -6004,19 +5260,19 @@
           "category": "EXTREME_LOW"
         },
         "lootPer60Min": {
-          "value": 547.5631551233826,
-          "percentile": 91.66666666666666,
-          "category": "EXTREME_HIGH"
+          "value": 825.2492056954584,
+          "percentile": 59.09090909090909,
+          "category": "ABOVE_AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 526.5688363213716,
-          "percentile": 72.22222222222221,
+          "value": 927.8022805165391,
+          "percentile": 68.18181818181817,
           "category": "HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 583.1767116488371,
-          "percentile": 83.33333333333334,
-          "category": "HIGH"
+          "value": 489.00175011152675,
+          "percentile": 36.36363636363637,
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -6039,9 +5295,9 @@
         "survivalRate": 32.27513227513227,
         "survivalDay1Rate": 74.07407407407408,
         "killRate": 0.291005291005291,
-        "lootPer60Min": 547.5631551233826,
-        "lootVillageoisPer60Min": 526.5688363213716,
-        "lootLoupPer60Min": 583.1767116488371
+        "lootPer60Min": 825.2492056954584,
+        "lootVillageoisPer60Min": 927.8022805165391,
+        "lootLoupPer60Min": 489.00175011152675
       }
     },
     "76561199060053791": {
@@ -6050,6 +5306,28 @@
       "gamesPlayed": 382,
       "titles": [
         {
+          "id": "hyperactif",
+          "title": "L'Hyperactif·ve",
+          "emoji": "⚡",
+          "description": "Bavard·e ET grande récolte",
+          "priority": 10,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1192.4206227588213,
+              "actualPercentile": 76
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 1085.0474153778173,
+              "actualPercentile": 86.36363636363636
+            }
+          ]
+        },
+        {
           "id": "talkingDuringMeeting_extreme_high",
           "title": "L'Orateur·rice",
           "emoji": "🎤",
@@ -6057,6 +5335,30 @@
           "stat": "talkingDuringPer60Min",
           "value": 452.96271675977243,
           "percentile": 92,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "loot_extreme_high",
+          "title": "Le·a Stakhanoviste",
+          "emoji": "⚒️",
+          "description": "Récolte exceptionnelle",
+          "stat": "lootPer60Min",
+          "value": 1085.0474153778173,
+          "percentile": 86.36363636363636,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_extreme_high",
+          "title": "Le Loup Discret",
+          "emoji": "🐺",
+          "description": "Récolte élevée en Loup (camouflage)",
+          "stat": "lootLoupPer60Min",
+          "value": 1015.0247420530426,
+          "percentile": 90.9090909090909,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -6144,15 +5446,15 @@
           "type": "basic"
         },
         {
-          "id": "loot_above_average",
-          "title": "Le·a Travailleur·se",
-          "emoji": "👷",
-          "description": "Récolte correcte",
-          "stat": "lootPer60Min",
-          "value": 518.5808539452105,
-          "percentile": 61.111111111111114,
-          "category": "ABOVE_AVERAGE",
-          "priority": 4,
+          "id": "lootVillageois_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 1114.1036919203368,
+          "percentile": 81.81818181818183,
+          "category": "HIGH",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -6169,14 +5471,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "campBalance_specialist",
-        "title": "Le·a Spécialiste",
-        "emoji": "🎯",
-        "description": "Excellent dans un camp spécifique",
-        "stat": "campBalance",
-        "category": "SPECIALIST",
-        "priority": 7,
-        "type": "campBalance"
+        "id": "hyperactif",
+        "title": "L'Hyperactif·ve",
+        "emoji": "⚡",
+        "description": "Bavard·e ET grande récolte",
+        "priority": 10,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "talking",
+            "category": "HIGH",
+            "actualValue": 1192.4206227588213,
+            "actualPercentile": 76
+          },
+          {
+            "stat": "loot",
+            "category": "HIGH",
+            "actualValue": 1085.0474153778173,
+            "actualPercentile": 86.36363636363636
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -6275,19 +5589,19 @@
           "category": "ABOVE_AVERAGE"
         },
         "lootPer60Min": {
-          "value": 518.5808539452105,
-          "percentile": 61.111111111111114,
-          "category": "ABOVE_AVERAGE"
+          "value": 1085.0474153778173,
+          "percentile": 86.36363636363636,
+          "category": "EXTREME_HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 520.3875271832401,
-          "percentile": 61.111111111111114,
-          "category": "ABOVE_AVERAGE"
+          "value": 1114.1036919203368,
+          "percentile": 81.81818181818183,
+          "category": "HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 537.6126394710933,
-          "percentile": 58.333333333333336,
-          "category": "ABOVE_AVERAGE"
+          "value": 1015.0247420530426,
+          "percentile": 90.9090909090909,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -6310,9 +5624,9 @@
         "survivalRate": 41.09947643979058,
         "survivalDay1Rate": 85.07853403141361,
         "killRate": 0.5235602094240838,
-        "lootPer60Min": 518.5808539452105,
-        "lootVillageoisPer60Min": 520.3875271832401,
-        "lootLoupPer60Min": 537.6126394710933
+        "lootPer60Min": 1085.0474153778173,
+        "lootVillageoisPer60Min": 1114.1036919203368,
+        "lootLoupPer60Min": 1015.0247420530426
       }
     },
     "76561198095017745": {
@@ -6320,6 +5634,34 @@
       "playerName": "Craco",
       "gamesPlayed": 122,
       "titles": [
+        {
+          "id": "debutant_galere",
+          "title": "Le·a Débutant·e en Galère",
+          "emoji": "🆘",
+          "description": "Peine en victoire, survie et récolte",
+          "priority": 19,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 29.5,
+              "actualPercentile": 2.7777777777777777
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 27.049180327868854,
+              "actualPercentile": 25
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 634.7793324934693,
+              "actualPercentile": 22.727272727272727
+            }
+          ]
+        },
         {
           "id": "en_rodage",
           "title": "En Rodage",
@@ -6397,6 +5739,18 @@
           "type": "basic"
         },
         {
+          "id": "lootVillageois_extreme_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 577.302815007249,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -6455,13 +5809,13 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 494.9569061032115,
-          "percentile": 25,
+          "id": "loot_low",
+          "title": "Le·a Flâneur·se",
+          "emoji": "🚶",
+          "description": "Récolte faible",
+          "stat": "lootPer60Min",
+          "value": 634.7793324934693,
+          "percentile": 22.727272727272727,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -6472,8 +5826,8 @@
           "emoji": "🐺",
           "description": "Récolte élevée en Loup (camouflage)",
           "stat": "lootLoupPer60Min",
-          "value": 543.3467818273259,
-          "percentile": 75,
+          "value": 735.5446237532449,
+          "percentile": 68.18181818181817,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -6489,45 +5843,33 @@
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
-        },
-        {
-          "id": "loot_below_average",
-          "title": "Le·a Travailleur·se",
-          "emoji": "👷",
-          "description": "Récolte correcte",
-          "stat": "lootPer60Min",
-          "value": 511.9119492511369,
-          "percentile": 38.88888888888889,
-          "category": "BELOW_AVERAGE",
-          "priority": 4,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "en_rodage",
-        "title": "En Rodage",
-        "emoji": "⚙️",
-        "description": "Peine dans tous les camps",
-        "priority": 16,
+        "id": "debutant_galere",
+        "title": "Le·a Débutant·e en Galère",
+        "emoji": "🆘",
+        "description": "Peine en victoire, survie et récolte",
+        "priority": 19,
         "type": "combination",
         "conditions": [
           {
-            "stat": "winRateVillageois",
+            "stat": "winRate",
             "category": "LOW",
-            "actualValue": 35.80246913580247,
-            "actualPercentile": 5.555555555555555
+            "actualValue": 29.5,
+            "actualPercentile": 2.7777777777777777
           },
           {
-            "stat": "winRateLoup",
+            "stat": "survival",
             "category": "LOW",
-            "actualValue": 25.925925925925924,
-            "actualPercentile": 32.25806451612903
+            "actualValue": 27.049180327868854,
+            "actualPercentile": 25
           },
           {
-            "stat": "winRateSolo",
+            "stat": "loot",
             "category": "LOW",
-            "actualValue": 0,
-            "actualPercentile": 0
+            "actualValue": 634.7793324934693,
+            "actualPercentile": 22.727272727272727
           }
         ]
       },
@@ -6618,18 +5960,18 @@
           "category": "BELOW_AVERAGE"
         },
         "lootPer60Min": {
-          "value": 511.9119492511369,
-          "percentile": 38.88888888888889,
-          "category": "BELOW_AVERAGE"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 494.9569061032115,
-          "percentile": 25,
+          "value": 634.7793324934693,
+          "percentile": 22.727272727272727,
           "category": "LOW"
         },
+        "lootVillageoisPer60Min": {
+          "value": 577.302815007249,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW"
+        },
         "lootLoupPer60Min": {
-          "value": 543.3467818273259,
-          "percentile": 75,
+          "value": 735.5446237532449,
+          "percentile": 68.18181818181817,
           "category": "HIGH"
         }
       },
@@ -6651,9 +5993,9 @@
         "survivalRate": 27.049180327868854,
         "survivalDay1Rate": 73.77049180327869,
         "killRate": 0.45901639344262296,
-        "lootPer60Min": 511.9119492511369,
-        "lootVillageoisPer60Min": 494.9569061032115,
-        "lootLoupPer60Min": 543.3467818273259
+        "lootPer60Min": 634.7793324934693,
+        "lootVillageoisPer60Min": 577.302815007249,
+        "lootLoupPer60Min": 735.5446237532449
       }
     },
     "76561198875528482": {
@@ -6672,14 +6014,36 @@
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 516.6595209891901,
-              "actualPercentile": 55.55555555555556
+              "actualValue": 934.1930847311006,
+              "actualPercentile": 72.72727272727273
             },
             {
               "stat": "survival",
               "category": "LOW",
               "actualValue": 25.454545454545453,
               "actualPercentile": 11.11111111111111
+            }
+          ]
+        },
+        {
+          "id": "efficace",
+          "title": "L'Efficace",
+          "emoji": "🎯",
+          "description": "Silencieux·se mais productif·ve",
+          "priority": 10,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 777.5035792853156,
+              "actualPercentile": 4
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 934.1930847311006,
+              "actualPercentile": 72.72727272727273
             }
           ]
         },
@@ -6790,6 +6154,42 @@
           "type": "basic"
         },
         {
+          "id": "loot_high",
+          "title": "Le·a Fermier·ère",
+          "emoji": "🌾",
+          "description": "Récolte élevée",
+          "stat": "lootPer60Min",
+          "value": 934.1930847311006,
+          "percentile": 72.72727272727273,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 1079.5032652901293,
+          "percentile": 77.27272727272727,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 389.070435078014,
+          "percentile": 18.181818181818183,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -6798,18 +6198,6 @@
           "value": 37.1,
           "percentile": 36.11111111111111,
           "category": "BELOW_AVERAGE",
-          "priority": 4,
-          "type": "basic"
-        },
-        {
-          "id": "loot_above_average",
-          "title": "Le·a Travailleur·se",
-          "emoji": "👷",
-          "description": "Récolte correcte",
-          "stat": "lootPer60Min",
-          "value": 516.6595209891901,
-          "percentile": 55.55555555555556,
-          "category": "ABOVE_AVERAGE",
           "priority": 4,
           "type": "basic"
         }
@@ -6825,8 +6213,8 @@
           {
             "stat": "loot",
             "category": "HIGH",
-            "actualValue": 516.6595209891901,
-            "actualPercentile": 55.55555555555556
+            "actualValue": 934.1930847311006,
+            "actualPercentile": 72.72727272727273
           },
           {
             "stat": "survival",
@@ -6933,19 +6321,19 @@
           "category": "LOW"
         },
         "lootPer60Min": {
-          "value": 516.6595209891901,
-          "percentile": 55.55555555555556,
-          "category": "ABOVE_AVERAGE"
+          "value": 934.1930847311006,
+          "percentile": 72.72727272727273,
+          "category": "HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 509.5319242392576,
-          "percentile": 47.22222222222222,
-          "category": "AVERAGE"
+          "value": 1079.5032652901293,
+          "percentile": 77.27272727272727,
+          "category": "HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 516.4953918619718,
-          "percentile": 36.11111111111111,
-          "category": "BELOW_AVERAGE"
+          "value": 389.070435078014,
+          "percentile": 18.181818181818183,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -6968,9 +6356,9 @@
         "survivalRate": 25.454545454545453,
         "survivalDay1Rate": 78.18181818181819,
         "killRate": 0.32,
-        "lootPer60Min": 516.6595209891901,
-        "lootVillageoisPer60Min": 509.5319242392576,
-        "lootLoupPer60Min": 516.4953918619718
+        "lootPer60Min": 934.1930847311006,
+        "lootVillageoisPer60Min": 1079.5032652901293,
+        "lootLoupPer60Min": 389.070435078014
       }
     },
     "76561198361954746": {
@@ -6978,34 +6366,6 @@
       "playerName": "Anaee",
       "gamesPlayed": 249,
       "titles": [
-        {
-          "id": "joueur_parfait",
-          "title": "Le·a Joueur·se Parfait·e",
-          "emoji": "💎",
-          "description": "Gagne, récolte, et survit",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 42.2,
-              "actualPercentile": 61.111111111111114
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 539.4051930505553,
-              "actualPercentile": 83.33333333333334
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 39.3574297188755,
-              "actualPercentile": 72.22222222222221
-            }
-          ]
-        },
         {
           "id": "alpha_predator",
           "title": "L'Alpha",
@@ -7029,10 +6389,54 @@
           ]
         },
         {
-          "id": "hyperactif",
-          "title": "L'Hyperactif·ve",
-          "emoji": "⚡",
-          "description": "Bavard·e ET grande récolte",
+          "id": "assassin",
+          "title": "L'Assassin·e",
+          "emoji": "🗡️",
+          "description": "Ignore la récolte, se concentre sur les kills",
+          "priority": 12,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 715.5825858735263,
+              "actualPercentile": 31.818181818181817
+            },
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.5662650602409639,
+              "actualPercentile": 66.66666666666666
+            }
+          ]
+        },
+        {
+          "id": "prudent",
+          "title": "Le·a Prudent·e",
+          "emoji": "🛡️",
+          "description": "Survit mais récolte peu",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 715.5825858735263,
+              "actualPercentile": 31.818181818181817
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 39.3574297188755,
+              "actualPercentile": 72.22222222222221
+            }
+          ]
+        },
+        {
+          "id": "philosophe",
+          "title": "Le·a Philosophe",
+          "emoji": "📚",
+          "description": "Bavard·e mais improductif·ve",
           "priority": 10,
           "type": "combination",
           "conditions": [
@@ -7044,9 +6448,9 @@
             },
             {
               "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 539.4051930505553,
-              "actualPercentile": 83.33333333333334
+              "category": "LOW",
+              "actualValue": 715.5825858735263,
+              "actualPercentile": 31.818181818181817
             }
           ]
         },
@@ -7057,18 +6461,6 @@
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
           "value": 85.54216867469879,
-          "percentile": 86.11111111111111,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_extreme_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 541.6267023410664,
           "percentile": 86.11111111111111,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -7205,26 +6597,14 @@
           "type": "basic"
         },
         {
-          "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
-          "description": "Récolte élevée",
+          "id": "loot_low",
+          "title": "Le·a Flâneur·se",
+          "emoji": "🚶",
+          "description": "Récolte faible",
           "stat": "lootPer60Min",
-          "value": 539.4051930505553,
-          "percentile": 83.33333333333334,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 542.7821317945175,
-          "percentile": 66.66666666666666,
-          "category": "HIGH",
+          "value": 715.5825858735263,
+          "percentile": 31.818181818181817,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -7242,16 +6622,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "loot_high",
-        "title": "Le·a Fermier·ère",
-        "emoji": "🌾",
-        "description": "Récolte élevée",
-        "stat": "lootPer60Min",
-        "value": 539.4051930505553,
-        "percentile": 83.33333333333334,
-        "category": "HIGH",
-        "priority": 6,
-        "type": "basic"
+        "id": "assassin",
+        "title": "L'Assassin·e",
+        "emoji": "🗡️",
+        "description": "Ignore la récolte, se concentre sur les kills",
+        "priority": 12,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "loot",
+            "category": "LOW",
+            "actualValue": 715.5825858735263,
+            "actualPercentile": 31.818181818181817
+          },
+          {
+            "stat": "killRate",
+            "category": "HIGH",
+            "actualValue": 0.5662650602409639,
+            "actualPercentile": 66.66666666666666
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -7350,19 +6740,19 @@
           "category": "HIGH"
         },
         "lootPer60Min": {
-          "value": 539.4051930505553,
-          "percentile": 83.33333333333334,
-          "category": "HIGH"
+          "value": 715.5825858735263,
+          "percentile": 31.818181818181817,
+          "category": "LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 541.6267023410664,
-          "percentile": 86.11111111111111,
-          "category": "EXTREME_HIGH"
+          "value": 798.3085277289671,
+          "percentile": 40.909090909090914,
+          "category": "BELOW_AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 542.7821317945175,
-          "percentile": 66.66666666666666,
-          "category": "HIGH"
+          "value": 539.1530258680547,
+          "percentile": 45.45454545454545,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -7385,9 +6775,9 @@
         "survivalRate": 39.3574297188755,
         "survivalDay1Rate": 85.54216867469879,
         "killRate": 0.5662650602409639,
-        "lootPer60Min": 539.4051930505553,
-        "lootVillageoisPer60Min": 541.6267023410664,
-        "lootLoupPer60Min": 542.7821317945175
+        "lootPer60Min": 715.5825858735263,
+        "lootVillageoisPer60Min": 798.3085277289671,
+        "lootLoupPer60Min": 539.1530258680547
       }
     },
     "76561198109331759": {
@@ -7395,34 +6785,6 @@
       "playerName": "Flonflon",
       "gamesPlayed": 228,
       "titles": [
-        {
-          "id": "debutant_galere",
-          "title": "Le·a Débutant·e en Galère",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 31.6,
-              "actualPercentile": 13.88888888888889
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 26.75438596491228,
-              "actualPercentile": 22.22222222222222
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 499.79380468662185,
-              "actualPercentile": 22.22222222222222
-            }
-          ]
-        },
         {
           "id": "en_rodage",
           "title": "En Rodage",
@@ -7452,6 +6814,28 @@
           ]
         },
         {
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 11,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 1001.7846216743652,
+              "actualPercentile": 77.27272727272727
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 26.75438596491228,
+              "actualPercentile": 22.22222222222222
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
           "emoji": "🪦",
@@ -7476,14 +6860,14 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_extreme_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 486.7315563405865,
-          "percentile": 13.88888888888889,
-          "category": "EXTREME_LOW",
+          "id": "lootVillageois_extreme_high",
+          "title": "Le·a Citoyen·ne Modèle",
+          "emoji": "🏘️",
+          "description": "Récolte excellente en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 1115.240266910352,
+          "percentile": 86.36363636363636,
+          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -7582,26 +6966,14 @@
           "type": "basic"
         },
         {
-          "id": "loot_low",
-          "title": "Le·a Flâneur·se",
-          "emoji": "🚶",
-          "description": "Récolte faible",
+          "id": "loot_high",
+          "title": "Le·a Fermier·ère",
+          "emoji": "🌾",
+          "description": "Récolte élevée",
           "stat": "lootPer60Min",
-          "value": 499.79380468662185,
-          "percentile": 22.22222222222222,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 503.9897981155459,
-          "percentile": 30.555555555555557,
-          "category": "LOW",
+          "value": 1001.7846216743652,
+          "percentile": 77.27272727272727,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -7619,30 +6991,30 @@
         }
       ],
       "primaryTitle": {
-        "id": "debutant_galere",
-        "title": "Le·a Débutant·e en Galère",
-        "emoji": "🆘",
-        "description": "Peine en victoire, survie et récolte",
-        "priority": 19,
+        "id": "en_rodage",
+        "title": "En Rodage",
+        "emoji": "⚙️",
+        "description": "Peine dans tous les camps",
+        "priority": 16,
         "type": "combination",
         "conditions": [
           {
-            "stat": "winRate",
+            "stat": "winRateVillageois",
             "category": "LOW",
-            "actualValue": 31.6,
-            "actualPercentile": 13.88888888888889
+            "actualValue": 41.95804195804196,
+            "actualPercentile": 19.444444444444446
           },
           {
-            "stat": "survival",
+            "stat": "winRateLoup",
             "category": "LOW",
-            "actualValue": 26.75438596491228,
-            "actualPercentile": 22.22222222222222
+            "actualValue": 22.727272727272727,
+            "actualPercentile": 19.35483870967742
           },
           {
-            "stat": "loot",
+            "stat": "winRateSolo",
             "category": "LOW",
-            "actualValue": 499.79380468662185,
-            "actualPercentile": 22.22222222222222
+            "actualValue": 4.878048780487805,
+            "actualPercentile": 33.33333333333333
           }
         ]
       },
@@ -7743,19 +7115,19 @@
           "category": "AVERAGE"
         },
         "lootPer60Min": {
-          "value": 499.79380468662185,
-          "percentile": 22.22222222222222,
-          "category": "LOW"
+          "value": 1001.7846216743652,
+          "percentile": 77.27272727272727,
+          "category": "HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 503.9897981155459,
-          "percentile": 30.555555555555557,
-          "category": "LOW"
+          "value": 1115.240266910352,
+          "percentile": 86.36363636363636,
+          "category": "EXTREME_HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 486.7315563405865,
-          "percentile": 13.88888888888889,
-          "category": "EXTREME_LOW"
+          "value": 705.8673923606061,
+          "percentile": 63.63636363636363,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -7778,9 +7150,9 @@
         "survivalRate": 26.75438596491228,
         "survivalDay1Rate": 77.19298245614034,
         "killRate": 0.4824561403508772,
-        "lootPer60Min": 499.79380468662185,
-        "lootVillageoisPer60Min": 503.9897981155459,
-        "lootLoupPer60Min": 486.7315563405865
+        "lootPer60Min": 1001.7846216743652,
+        "lootVillageoisPer60Min": 1115.240266910352,
+        "lootLoupPer60Min": 705.8673923606061
       }
     },
     "76561198250955250": {
@@ -7805,8 +7177,8 @@
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 544.1142900769254,
-              "actualPercentile": 88.88888888888889
+              "actualValue": 862.3002390314293,
+              "actualPercentile": 63.63636363636363
             },
             {
               "stat": "survival",
@@ -7939,28 +7311,6 @@
           ]
         },
         {
-          "id": "hyperactif",
-          "title": "L'Hyperactif·ve",
-          "emoji": "⚡",
-          "description": "Bavard·e ET grande récolte",
-          "priority": 10,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 1194.2496743567306,
-              "actualPercentile": 84
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 544.1142900769254,
-              "actualPercentile": 88.88888888888889
-            }
-          ]
-        },
-        {
           "id": "votingAggressive_extreme_high",
           "title": "Le·a Tribun·e",
           "emoji": "⚖️",
@@ -7980,30 +7330,6 @@
           "stat": "votingFirst",
           "value": 75.38461538461539,
           "percentile": 93.10344827586206,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "loot_extreme_high",
-          "title": "Le·a Stakhanoviste",
-          "emoji": "⚒️",
-          "description": "Récolte exceptionnelle",
-          "stat": "lootPer60Min",
-          "value": 544.1142900769254,
-          "percentile": 88.88888888888889,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_extreme_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 544.903930848865,
-          "percentile": 91.66666666666666,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -8120,8 +7446,8 @@
           "emoji": "🐺",
           "description": "Récolte élevée en Loup (camouflage)",
           "stat": "lootLoupPer60Min",
-          "value": 580.303446984737,
-          "percentile": 80.55555555555556,
+          "value": 737.2076912995451,
+          "percentile": 72.72727272727273,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -8134,6 +7460,18 @@
           "stat": "winRate",
           "value": 42.3,
           "percentile": 63.888888888888886,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "loot_above_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 862.3002390314293,
+          "percentile": 63.63636363636363,
           "category": "ABOVE_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -8264,18 +7602,18 @@
           "category": "HIGH"
         },
         "lootPer60Min": {
-          "value": 544.1142900769254,
-          "percentile": 88.88888888888889,
-          "category": "EXTREME_HIGH"
+          "value": 862.3002390314293,
+          "percentile": 63.63636363636363,
+          "category": "ABOVE_AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 544.903930848865,
-          "percentile": 91.66666666666666,
-          "category": "EXTREME_HIGH"
+          "value": 841.4885105937993,
+          "percentile": 54.54545454545454,
+          "category": "AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 580.303446984737,
-          "percentile": 80.55555555555556,
+          "value": 737.2076912995451,
+          "percentile": 72.72727272727273,
           "category": "HIGH"
         }
       },
@@ -8299,9 +7637,9 @@
         "survivalRate": 40.72164948453608,
         "survivalDay1Rate": 80.9278350515464,
         "killRate": 0.5773195876288659,
-        "lootPer60Min": 544.1142900769254,
-        "lootVillageoisPer60Min": 544.903930848865,
-        "lootLoupPer60Min": 580.303446984737
+        "lootPer60Min": 862.3002390314293,
+        "lootVillageoisPer60Min": 841.4885105937993,
+        "lootLoupPer60Min": 737.2076912995451
       }
     },
     "76561198849250630": {
@@ -8428,27 +7766,15 @@
           "type": "basic"
         },
         {
-          "id": "loot_low",
-          "title": "Le·a Flâneur·se",
-          "emoji": "🚶",
-          "description": "Récolte faible",
+          "id": "loot_below_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 506.3529732203604,
-          "percentile": 27.77777777777778,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 509.9522157605914,
-          "percentile": 33.33333333333333,
-          "category": "LOW",
-          "priority": 6,
+          "value": 750.7292256083625,
+          "percentile": 40.909090909090914,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
@@ -8561,19 +7887,19 @@
           "category": "EXTREME_LOW"
         },
         "lootPer60Min": {
-          "value": 506.3529732203604,
-          "percentile": 27.77777777777778,
-          "category": "LOW"
+          "value": 750.7292256083625,
+          "percentile": 40.909090909090914,
+          "category": "BELOW_AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 511.5982952285992,
-          "percentile": 50,
-          "category": "AVERAGE"
+          "value": 860.3659396999105,
+          "percentile": 63.63636363636363,
+          "category": "ABOVE_AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 509.9522157605914,
-          "percentile": 33.33333333333333,
-          "category": "LOW"
+          "value": 498.3397605468519,
+          "percentile": 40.909090909090914,
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -8596,9 +7922,9 @@
         "survivalRate": 29.27927927927928,
         "survivalDay1Rate": 85.13513513513513,
         "killRate": 0.3153153153153153,
-        "lootPer60Min": 506.3529732203604,
-        "lootVillageoisPer60Min": 511.5982952285992,
-        "lootLoupPer60Min": 509.9522157605914
+        "lootPer60Min": 750.7292256083625,
+        "lootVillageoisPer60Min": 860.3659396999105,
+        "lootLoupPer60Min": 498.3397605468519
       }
     },
     "76561198076015877": {
@@ -8606,6 +7932,34 @@
       "playerName": "CHLOE",
       "gamesPlayed": 202,
       "titles": [
+        {
+          "id": "debutant_galere",
+          "title": "Le·a Débutant·e en Galère",
+          "emoji": "🆘",
+          "description": "Peine en victoire, survie et récolte",
+          "priority": 19,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 29.7,
+              "actualPercentile": 5.555555555555555
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 17.326732673267326,
+              "actualPercentile": 2.7777777777777777
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 607.9269576898778,
+              "actualPercentile": 13.636363636363635
+            }
+          ]
+        },
         {
           "id": "en_rodage",
           "title": "En Rodage",
@@ -8631,28 +7985,6 @@
               "category": "LOW",
               "actualValue": 2.941176470588235,
               "actualPercentile": 30.555555555555557
-            }
-          ]
-        },
-        {
-          "id": "avide",
-          "title": "L'Avide",
-          "emoji": "💰",
-          "description": "Récolte beaucoup mais meurt",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 533.367764162655,
-              "actualPercentile": 77.77777777777779
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 17.326732673267326,
-              "actualPercentile": 2.7777777777777777
             }
           ]
         },
@@ -8705,14 +8037,14 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_extreme_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 543.1723836768067,
-          "percentile": 88.88888888888889,
-          "category": "EXTREME_HIGH",
+          "id": "loot_extreme_low",
+          "title": "Le·a Touriste",
+          "emoji": "📸",
+          "description": "Ne récolte jamais",
+          "stat": "lootPer60Min",
+          "value": 607.9269576898778,
+          "percentile": 13.636363636363635,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -8811,14 +8143,26 @@
           "type": "basic"
         },
         {
-          "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
-          "description": "Récolte élevée",
-          "stat": "lootPer60Min",
-          "value": 533.367764162655,
-          "percentile": 77.77777777777779,
-          "category": "HIGH",
+          "id": "lootVillageois_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 659.6847708847988,
+          "percentile": 18.181818181818183,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 434.56895522427305,
+          "percentile": 27.27272727272727,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -8836,14 +8180,14 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootVillageois_extreme_high",
-        "title": "Le·a Citoyen·ne Modèle",
-        "emoji": "🏘️",
-        "description": "Récolte excellente en Villageois",
-        "stat": "lootVillageoisPer60Min",
-        "value": 543.1723836768067,
-        "percentile": 88.88888888888889,
-        "category": "EXTREME_HIGH",
+        "id": "winRateLoup_extreme_low",
+        "title": "Loup Débutant·e",
+        "emoji": "🐩",
+        "description": "Mauvais·e en camp Loup",
+        "stat": "winRateLoup",
+        "value": 8.571428571428571,
+        "percentile": 0,
+        "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
       },
@@ -8944,19 +8288,19 @@
           "category": "LOW"
         },
         "lootPer60Min": {
-          "value": 533.367764162655,
-          "percentile": 77.77777777777779,
-          "category": "HIGH"
+          "value": 607.9269576898778,
+          "percentile": 13.636363636363635,
+          "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 543.1723836768067,
-          "percentile": 88.88888888888889,
-          "category": "EXTREME_HIGH"
+          "value": 659.6847708847988,
+          "percentile": 18.181818181818183,
+          "category": "LOW"
         },
         "lootLoupPer60Min": {
-          "value": 522.0379943106672,
-          "percentile": 44.44444444444444,
-          "category": "BELOW_AVERAGE"
+          "value": 434.56895522427305,
+          "percentile": 27.27272727272727,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -8979,9 +8323,9 @@
         "survivalRate": 17.326732673267326,
         "survivalDay1Rate": 72.27722772277228,
         "killRate": 0.3217821782178218,
-        "lootPer60Min": 533.367764162655,
-        "lootVillageoisPer60Min": 543.1723836768067,
-        "lootLoupPer60Min": 522.0379943106672
+        "lootPer60Min": 607.9269576898778,
+        "lootVillageoisPer60Min": 659.6847708847988,
+        "lootLoupPer60Min": 434.56895522427305
       }
     },
     "76561198056292624": {
@@ -9034,6 +8378,42 @@
           "value": 70.2127659574468,
           "percentile": 89.65517241379311,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "loot_extreme_low",
+          "title": "Le·a Touriste",
+          "emoji": "📸",
+          "description": "Ne récolte jamais",
+          "stat": "lootPer60Min",
+          "value": 565.4169543848247,
+          "percentile": 9.090909090909092,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_extreme_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 604.0245346508264,
+          "percentile": 13.636363636363635,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootLoup_extreme_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 284.0186492956653,
+          "percentile": 9.090909090909092,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -9116,30 +8496,6 @@
           "value": 84.24657534246576,
           "percentile": 66.66666666666666,
           "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "loot_low",
-          "title": "Le·a Flâneur·se",
-          "emoji": "🚶",
-          "description": "Récolte faible",
-          "stat": "lootPer60Min",
-          "value": 506.44484583980835,
-          "percentile": 30.555555555555557,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 492.44748767715186,
-          "percentile": 19.444444444444446,
-          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -9265,19 +8621,19 @@
           "category": "BELOW_AVERAGE"
         },
         "lootPer60Min": {
-          "value": 506.44484583980835,
-          "percentile": 30.555555555555557,
-          "category": "LOW"
+          "value": 565.4169543848247,
+          "percentile": 9.090909090909092,
+          "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 508.44473865711007,
-          "percentile": 38.88888888888889,
-          "category": "BELOW_AVERAGE"
+          "value": 604.0245346508264,
+          "percentile": 13.636363636363635,
+          "category": "EXTREME_LOW"
         },
         "lootLoupPer60Min": {
-          "value": 492.44748767715186,
-          "percentile": 19.444444444444446,
-          "category": "LOW"
+          "value": 284.0186492956653,
+          "percentile": 9.090909090909092,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -9300,9 +8656,9 @@
         "survivalRate": 32.19178082191781,
         "survivalDay1Rate": 84.24657534246576,
         "killRate": 0.4452054794520548,
-        "lootPer60Min": 506.44484583980835,
-        "lootVillageoisPer60Min": 508.44473865711007,
-        "lootLoupPer60Min": 492.44748767715186
+        "lootPer60Min": 565.4169543848247,
+        "lootVillageoisPer60Min": 604.0245346508264,
+        "lootLoupPer60Min": 284.0186492956653
       }
     },
     "76561197996828190": {
@@ -9310,34 +8666,6 @@
       "playerName": "Mickalow",
       "gamesPlayed": 38,
       "titles": [
-        {
-          "id": "debutant_galere",
-          "title": "Le·a Débutant·e en Galère",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 28.9,
-              "actualPercentile": 0
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 26.31578947368421,
-              "actualPercentile": 16.666666666666664
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 414.56608746566127,
-              "actualPercentile": 0
-            }
-          ]
-        },
         {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
@@ -9406,42 +8734,6 @@
           "stat": "survivalDay1Rate",
           "value": 71.05263157894737,
           "percentile": 2.7777777777777777,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "loot_extreme_low",
-          "title": "Le·a Touriste",
-          "emoji": "📸",
-          "description": "Ne récolte jamais",
-          "stat": "lootPer60Min",
-          "value": 414.56608746566127,
-          "percentile": 0,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_extreme_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 440.62143117533367,
-          "percentile": 2.7777777777777777,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_extreme_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 333.2374347067752,
-          "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -9563,21 +8855,6 @@
           "value": 0.5263157894736842,
           "percentile": 58.333333333333336,
           "category": "ABOVE_AVERAGE"
-        },
-        "lootPer60Min": {
-          "value": 414.56608746566127,
-          "percentile": 0,
-          "category": "EXTREME_LOW"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 440.62143117533367,
-          "percentile": 2.7777777777777777,
-          "category": "EXTREME_LOW"
-        },
-        "lootLoupPer60Min": {
-          "value": 333.2374347067752,
-          "percentile": 0,
-          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -9594,10 +8871,7 @@
         "votingFirst": 80,
         "survivalRate": 26.31578947368421,
         "survivalDay1Rate": 71.05263157894737,
-        "killRate": 0.5263157894736842,
-        "lootPer60Min": 414.56608746566127,
-        "lootVillageoisPer60Min": 440.62143117533367,
-        "lootLoupPer60Min": 333.2374347067752
+        "killRate": 0.5263157894736842
       }
     },
     "76561197987657681": {
@@ -9605,28 +8879,6 @@
       "playerName": "PeoBran",
       "gamesPlayed": 33,
       "titles": [
-        {
-          "id": "avide",
-          "title": "L'Avide",
-          "emoji": "💰",
-          "description": "Récolte beaucoup mais meurt",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 538.5743267028114,
-              "actualPercentile": 80.55555555555556
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 27.27272727272727,
-              "actualPercentile": 27.77777777777778
-            }
-          ]
-        },
         {
           "id": "winRateVillageois_extreme_low",
           "title": "Idiot·e en Formation",
@@ -9648,18 +8900,6 @@
           "value": 0.30303030303030304,
           "percentile": 11.11111111111111,
           "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_extreme_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 627.0657404146879,
-          "percentile": 94.44444444444444,
-          "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
@@ -9732,18 +8972,6 @@
           "value": 75.75757575757575,
           "percentile": 22.22222222222222,
           "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
-          "description": "Récolte élevée",
-          "stat": "lootPer60Min",
-          "value": 538.5743267028114,
-          "percentile": 80.55555555555556,
-          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         }
@@ -9825,21 +9053,6 @@
           "value": 0.30303030303030304,
           "percentile": 11.11111111111111,
           "category": "EXTREME_LOW"
-        },
-        "lootPer60Min": {
-          "value": 538.5743267028114,
-          "percentile": 80.55555555555556,
-          "category": "HIGH"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 520.7378465642586,
-          "percentile": 63.888888888888886,
-          "category": "ABOVE_AVERAGE"
-        },
-        "lootLoupPer60Min": {
-          "value": 627.0657404146879,
-          "percentile": 94.44444444444444,
-          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -9856,10 +9069,7 @@
         "votingFirst": 36.36363636363637,
         "survivalRate": 27.27272727272727,
         "survivalDay1Rate": 75.75757575757575,
-        "killRate": 0.30303030303030304,
-        "lootPer60Min": 538.5743267028114,
-        "lootVillageoisPer60Min": 520.7378465642586,
-        "lootLoupPer60Min": 627.0657404146879
+        "killRate": 0.30303030303030304
       }
     },
     "76561198052560531": {
@@ -9878,8 +9088,8 @@
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 526.4628333395082,
-              "actualPercentile": 72.22222222222221
+              "actualValue": 1014.2461508514875,
+              "actualPercentile": 81.81818181818183
             },
             {
               "stat": "survival",
@@ -9906,8 +9116,8 @@
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 526.4628333395082,
-              "actualPercentile": 72.22222222222221
+              "actualValue": 1014.2461508514875,
+              "actualPercentile": 81.81818181818183
             }
           ]
         },
@@ -10008,14 +9218,14 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_extreme_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "id": "lootLoup_extreme_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
           "stat": "lootLoupPer60Min",
-          "value": 1202.9457352932727,
-          "percentile": 97.22222222222221,
-          "category": "EXTREME_HIGH",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -10059,8 +9269,8 @@
           "emoji": "🌾",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
-          "value": 526.4628333395082,
-          "percentile": 72.22222222222221,
+          "value": 1014.2461508514875,
+          "percentile": 81.81818181818183,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -10077,16 +9287,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootLoup_extreme_high",
-        "title": "Le Loup Discret",
-        "emoji": "🐺",
-        "description": "Récolte élevée en Loup (camouflage)",
-        "stat": "lootLoupPer60Min",
-        "value": 1202.9457352932727,
-        "percentile": 97.22222222222221,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "efficace",
+        "title": "L'Efficace",
+        "emoji": "🎯",
+        "description": "Silencieux·se mais productif·ve",
+        "priority": 10,
+        "type": "combination",
+        "conditions": [
+          {
+            "stat": "talking",
+            "category": "LOW",
+            "actualValue": 943.737060150582,
+            "actualPercentile": 32
+          },
+          {
+            "stat": "loot",
+            "category": "HIGH",
+            "actualValue": 1014.2461508514875,
+            "actualPercentile": 81.81818181818183
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -10170,19 +9390,19 @@
           "category": "EXTREME_LOW"
         },
         "lootPer60Min": {
-          "value": 526.4628333395082,
-          "percentile": 72.22222222222221,
+          "value": 1014.2461508514875,
+          "percentile": 81.81818181818183,
           "category": "HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 512.8258376615138,
-          "percentile": 55.55555555555556,
-          "category": "ABOVE_AVERAGE"
+          "value": 808.093352823795,
+          "percentile": 45.45454545454545,
+          "category": "AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 1202.9457352932727,
-          "percentile": 97.22222222222221,
-          "category": "EXTREME_HIGH"
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -10203,9 +9423,9 @@
         "survivalRate": 13.043478260869565,
         "survivalDay1Rate": 63.04347826086957,
         "killRate": 0.17391304347826086,
-        "lootPer60Min": 526.4628333395082,
-        "lootVillageoisPer60Min": 512.8258376615138,
-        "lootLoupPer60Min": 1202.9457352932727
+        "lootPer60Min": 1014.2461508514875,
+        "lootVillageoisPer60Min": 808.093352823795,
+        "lootLoupPer60Min": 0
       }
     },
     "76561198155130320": {
@@ -10277,42 +9497,6 @@
           "stat": "votingFirst",
           "value": 0,
           "percentile": 0,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "loot_extreme_low",
-          "title": "Le·a Touriste",
-          "emoji": "📸",
-          "description": "Ne récolte jamais",
-          "stat": "lootPer60Min",
-          "value": 465.5771106747295,
-          "percentile": 5.555555555555555,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_extreme_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 477.4551934157611,
-          "percentile": 8.333333333333332,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_extreme_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 408.45203598223895,
-          "percentile": 2.7777777777777777,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -10421,6 +9605,18 @@
           "percentile": 58.333333333333336,
           "category": "ABOVE_AVERAGE",
           "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "loot_average",
+          "title": "Le·a Travailleur·se",
+          "emoji": "👷",
+          "description": "Récolte correcte",
+          "stat": "lootPer60Min",
+          "value": 752.6080166579907,
+          "percentile": 45.45454545454545,
+          "category": "AVERAGE",
+          "priority": 3,
           "type": "basic"
         }
       ],
@@ -10533,19 +9729,19 @@
           "category": "AVERAGE"
         },
         "lootPer60Min": {
-          "value": 465.5771106747295,
-          "percentile": 5.555555555555555,
-          "category": "EXTREME_LOW"
+          "value": 752.6080166579907,
+          "percentile": 45.45454545454545,
+          "category": "AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 477.4551934157611,
-          "percentile": 8.333333333333332,
-          "category": "EXTREME_LOW"
+          "value": 781.8605255452371,
+          "percentile": 36.36363636363637,
+          "category": "BELOW_AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 408.45203598223895,
-          "percentile": 2.7777777777777777,
-          "category": "EXTREME_LOW"
+          "value": 574.3357027635474,
+          "percentile": 50,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -10566,9 +9762,9 @@
         "survivalRate": 27.27272727272727,
         "survivalDay1Rate": 78.18181818181819,
         "killRate": 0.4727272727272727,
-        "lootPer60Min": 465.5771106747295,
-        "lootVillageoisPer60Min": 477.4551934157611,
-        "lootLoupPer60Min": 408.45203598223895
+        "lootPer60Min": 752.6080166579907,
+        "lootVillageoisPer60Min": 781.8605255452371,
+        "lootLoupPer60Min": 574.3357027635474
       }
     },
     "76561198076478013": {
@@ -10577,18 +9773,52 @@
       "gamesPlayed": 114,
       "titles": [
         {
-          "id": "avide",
-          "title": "L'Avide",
-          "emoji": "💰",
-          "description": "Récolte beaucoup mais meurt",
-          "priority": 11,
+          "id": "debutant_galere",
+          "title": "Le·a Débutant·e en Galère",
+          "emoji": "🆘",
+          "description": "Peine en victoire, survie et récolte",
+          "priority": 19,
           "type": "combination",
           "conditions": [
             {
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 35.1,
+              "actualPercentile": 25
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 23.684210526315788,
+              "actualPercentile": 5.555555555555555
+            },
+            {
               "stat": "loot",
+              "category": "LOW",
+              "actualValue": 699.1041674044872,
+              "actualPercentile": 27.27272727272727
+            }
+          ]
+        },
+        {
+          "id": "pitre",
+          "title": "Le·a Pitre",
+          "emoji": "🎪",
+          "description": "Bavard·e, improductif·ve, meurt souvent",
+          "priority": 18,
+          "type": "combination",
+          "conditions": [
+            {
+              "stat": "talking",
               "category": "HIGH",
-              "actualValue": 525.9719515223404,
-              "actualPercentile": 69.44444444444444
+              "actualValue": 1161.1410497433455,
+              "actualPercentile": 72
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 699.1041674044872,
+              "actualPercentile": 27.27272727272727
             },
             {
               "stat": "survival",
@@ -10599,10 +9829,10 @@
           ]
         },
         {
-          "id": "hyperactif",
-          "title": "L'Hyperactif·ve",
-          "emoji": "⚡",
-          "description": "Bavard·e ET grande récolte",
+          "id": "philosophe",
+          "title": "Le·a Philosophe",
+          "emoji": "📚",
+          "description": "Bavard·e mais improductif·ve",
           "priority": 10,
           "type": "combination",
           "conditions": [
@@ -10614,9 +9844,9 @@
             },
             {
               "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 525.9719515223404,
-              "actualPercentile": 69.44444444444444
+              "category": "LOW",
+              "actualValue": 699.1041674044872,
+              "actualPercentile": 27.27272727272727
             }
           ]
         },
@@ -10749,48 +9979,36 @@
           "type": "basic"
         },
         {
-          "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
-          "description": "Récolte élevée",
+          "id": "loot_low",
+          "title": "Le·a Flâneur·se",
+          "emoji": "🚶",
+          "description": "Récolte faible",
           "stat": "lootPer60Min",
-          "value": 525.9719515223404,
-          "percentile": 69.44444444444444,
-          "category": "HIGH",
+          "value": 699.1041674044872,
+          "percentile": 27.27272727272727,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
         {
-          "id": "lootVillageois_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
+          "id": "lootVillageois_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 534.1446149683193,
-          "percentile": 80.55555555555556,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 506.92891983347147,
-          "percentile": 30.555555555555557,
+          "value": 763.5620902420003,
+          "percentile": 31.818181818181817,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "hyperactif",
-        "title": "L'Hyperactif·ve",
-        "emoji": "⚡",
-        "description": "Bavard·e ET grande récolte",
-        "priority": 10,
+        "id": "pitre",
+        "title": "Le·a Pitre",
+        "emoji": "🎪",
+        "description": "Bavard·e, improductif·ve, meurt souvent",
+        "priority": 18,
         "type": "combination",
         "conditions": [
           {
@@ -10801,9 +10019,15 @@
           },
           {
             "stat": "loot",
-            "category": "HIGH",
-            "actualValue": 525.9719515223404,
-            "actualPercentile": 69.44444444444444
+            "category": "LOW",
+            "actualValue": 699.1041674044872,
+            "actualPercentile": 27.27272727272727
+          },
+          {
+            "stat": "survival",
+            "category": "LOW",
+            "actualValue": 23.684210526315788,
+            "actualPercentile": 5.555555555555555
           }
         ]
       },
@@ -10894,19 +10118,19 @@
           "category": "ABOVE_AVERAGE"
         },
         "lootPer60Min": {
-          "value": 525.9719515223404,
-          "percentile": 69.44444444444444,
-          "category": "HIGH"
+          "value": 699.1041674044872,
+          "percentile": 27.27272727272727,
+          "category": "LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 534.1446149683193,
-          "percentile": 80.55555555555556,
-          "category": "HIGH"
+          "value": 763.5620902420003,
+          "percentile": 31.818181818181817,
+          "category": "LOW"
         },
         "lootLoupPer60Min": {
-          "value": 506.92891983347147,
-          "percentile": 30.555555555555557,
-          "category": "LOW"
+          "value": 578.555466864927,
+          "percentile": 54.54545454545454,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -10927,9 +10151,9 @@
         "survivalRate": 23.684210526315788,
         "survivalDay1Rate": 76.31578947368422,
         "killRate": 0.5526315789473685,
-        "lootPer60Min": 525.9719515223404,
-        "lootVillageoisPer60Min": 534.1446149683193,
-        "lootLoupPer60Min": 506.92891983347147
+        "lootPer60Min": 699.1041674044872,
+        "lootVillageoisPer60Min": 763.5620902420003,
+        "lootLoupPer60Min": 578.555466864927
       }
     },
     "76561199013115670": {
@@ -10970,8 +10194,8 @@
             {
               "stat": "loot",
               "category": "LOW",
-              "actualValue": 451.6394981833935,
-              "actualPercentile": 2.7777777777777777
+              "actualValue": 629.4213227684155,
+              "actualPercentile": 18.181818181818183
             },
             {
               "stat": "survival",
@@ -11078,24 +10302,12 @@
           "type": "basic"
         },
         {
-          "id": "loot_extreme_low",
-          "title": "Le·a Touriste",
-          "emoji": "📸",
-          "description": "Ne récolte jamais",
-          "stat": "lootPer60Min",
-          "value": 451.6394981833935,
-          "percentile": 2.7777777777777777,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_extreme_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 432.3230944897344,
+          "id": "lootLoup_extreme_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 0,
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -11148,13 +10360,25 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_low",
-          "title": "Le Loup Impatient",
-          "emoji": "😤",
-          "description": "Faible récolte en Loup",
-          "stat": "lootLoupPer60Min",
-          "value": 493.9247425623904,
-          "percentile": 22.22222222222222,
+          "id": "loot_low",
+          "title": "Le·a Flâneur·se",
+          "emoji": "🚶",
+          "description": "Récolte faible",
+          "stat": "lootPer60Min",
+          "value": 629.4213227684155,
+          "percentile": 18.181818181818183,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 664.5833787610098,
+          "percentile": 22.727272727272727,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -11276,19 +10500,19 @@
           "category": "LOW"
         },
         "lootPer60Min": {
-          "value": 451.6394981833935,
-          "percentile": 2.7777777777777777,
-          "category": "EXTREME_LOW"
+          "value": 629.4213227684155,
+          "percentile": 18.181818181818183,
+          "category": "LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 432.3230944897344,
-          "percentile": 0,
-          "category": "EXTREME_LOW"
+          "value": 664.5833787610098,
+          "percentile": 22.727272727272727,
+          "category": "LOW"
         },
         "lootLoupPer60Min": {
-          "value": 493.9247425623904,
-          "percentile": 22.22222222222222,
-          "category": "LOW"
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -11309,9 +10533,9 @@
         "survivalRate": 50,
         "survivalDay1Rate": 86.11111111111111,
         "killRate": 0.3888888888888889,
-        "lootPer60Min": 451.6394981833935,
-        "lootVillageoisPer60Min": 432.3230944897344,
-        "lootLoupPer60Min": 493.9247425623904
+        "lootPer60Min": 629.4213227684155,
+        "lootVillageoisPer60Min": 664.5833787610098,
+        "lootLoupPer60Min": 0
       }
     },
     "76561198160286790": {
@@ -11320,24 +10544,30 @@
       "gamesPlayed": 79,
       "titles": [
         {
-          "id": "avide",
-          "title": "L'Avide",
-          "emoji": "💰",
-          "description": "Récolte beaucoup mais meurt",
-          "priority": 11,
+          "id": "debutant_galere",
+          "title": "Le·a Débutant·e en Galère",
+          "emoji": "🆘",
+          "description": "Peine en victoire, survie et récolte",
+          "priority": 19,
           "type": "combination",
           "conditions": [
             {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 570.6939713350705,
-              "actualPercentile": 94.44444444444444
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 30.4,
+              "actualPercentile": 8.333333333333332
             },
             {
               "stat": "survival",
               "category": "LOW",
               "actualValue": 26.582278481012654,
               "actualPercentile": 19.444444444444446
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 539.0705793130148,
+              "actualPercentile": 0
             }
           ]
         },
@@ -11378,38 +10608,38 @@
           "type": "basic"
         },
         {
-          "id": "loot_extreme_high",
-          "title": "Le·a Stakhanoviste",
-          "emoji": "⚒️",
-          "description": "Récolte exceptionnelle",
+          "id": "loot_extreme_low",
+          "title": "Le·a Touriste",
+          "emoji": "📸",
+          "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
-          "value": 570.6939713350705,
-          "percentile": 94.44444444444444,
-          "category": "EXTREME_HIGH",
+          "value": 539.0705793130148,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
         {
-          "id": "lootVillageois_extreme_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
+          "id": "lootVillageois_extreme_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 566.3147545702742,
-          "percentile": 94.44444444444444,
-          "category": "EXTREME_HIGH",
+          "value": 579.350310871458,
+          "percentile": 9.090909090909092,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
         {
-          "id": "lootLoup_extreme_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "id": "lootLoup_extreme_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
           "stat": "lootLoupPer60Min",
-          "value": 611.3594828814319,
-          "percentile": 86.11111111111111,
-          "category": "EXTREME_HIGH",
+          "value": 373.6927359919957,
+          "percentile": 13.636363636363635,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -11497,14 +10727,14 @@
         }
       ],
       "primaryTitle": {
-        "id": "loot_extreme_high",
-        "title": "Le·a Stakhanoviste",
-        "emoji": "⚒️",
-        "description": "Récolte exceptionnelle",
+        "id": "loot_extreme_low",
+        "title": "Le·a Touriste",
+        "emoji": "📸",
+        "description": "Ne récolte jamais",
         "stat": "lootPer60Min",
-        "value": 570.6939713350705,
-        "percentile": 94.44444444444444,
-        "category": "EXTREME_HIGH",
+        "value": 539.0705793130148,
+        "percentile": 0,
+        "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
       },
@@ -11595,19 +10825,19 @@
           "category": "BELOW_AVERAGE"
         },
         "lootPer60Min": {
-          "value": 570.6939713350705,
-          "percentile": 94.44444444444444,
-          "category": "EXTREME_HIGH"
+          "value": 539.0705793130148,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 566.3147545702742,
-          "percentile": 94.44444444444444,
-          "category": "EXTREME_HIGH"
+          "value": 579.350310871458,
+          "percentile": 9.090909090909092,
+          "category": "EXTREME_LOW"
         },
         "lootLoupPer60Min": {
-          "value": 611.3594828814319,
-          "percentile": 86.11111111111111,
-          "category": "EXTREME_HIGH"
+          "value": 373.6927359919957,
+          "percentile": 13.636363636363635,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -11628,9 +10858,9 @@
         "survivalRate": 26.582278481012654,
         "survivalDay1Rate": 87.34177215189874,
         "killRate": 0.45569620253164556,
-        "lootPer60Min": 570.6939713350705,
-        "lootVillageoisPer60Min": 566.3147545702742,
-        "lootLoupPer60Min": 611.3594828814319
+        "lootPer60Min": 539.0705793130148,
+        "lootVillageoisPer60Min": 579.350310871458,
+        "lootLoupPer60Min": 373.6927359919957
       }
     },
     "76561198271274269": {
@@ -11657,28 +10887,6 @@
               "category": "HIGH",
               "actualValue": 46.666666666666664,
               "actualPercentile": 88.88888888888889
-            }
-          ]
-        },
-        {
-          "id": "hyperactif",
-          "title": "L'Hyperactif·ve",
-          "emoji": "⚡",
-          "description": "Bavard·e ET grande récolte",
-          "priority": 10,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 1477.3765324404956,
-              "actualPercentile": 96
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 625.4951740407253,
-              "actualPercentile": 97.22222222222221
             }
           ]
         },
@@ -11784,42 +10992,6 @@
           "stat": "survivalRate",
           "value": 46.666666666666664,
           "percentile": 88.88888888888889,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "loot_extreme_high",
-          "title": "Le·a Stakhanoviste",
-          "emoji": "⚒️",
-          "description": "Récolte exceptionnelle",
-          "stat": "lootPer60Min",
-          "value": 625.4951740407253,
-          "percentile": 97.22222222222221,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootVillageois_extreme_high",
-          "title": "Le·a Citoyen·ne Modèle",
-          "emoji": "🏘️",
-          "description": "Récolte excellente en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 659.6699241994943,
-          "percentile": 97.22222222222221,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "lootLoup_extreme_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 622.7287031466398,
-          "percentile": 91.66666666666666,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -11968,21 +11140,6 @@
           "value": 0.5777777777777777,
           "percentile": 72.22222222222221,
           "category": "HIGH"
-        },
-        "lootPer60Min": {
-          "value": 625.4951740407253,
-          "percentile": 97.22222222222221,
-          "category": "EXTREME_HIGH"
-        },
-        "lootVillageoisPer60Min": {
-          "value": 659.6699241994943,
-          "percentile": 97.22222222222221,
-          "category": "EXTREME_HIGH"
-        },
-        "lootLoupPer60Min": {
-          "value": 622.7287031466398,
-          "percentile": 91.66666666666666,
-          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -12002,10 +11159,7 @@
         "votingFirst": 39.130434782608695,
         "survivalRate": 46.666666666666664,
         "survivalDay1Rate": 84.44444444444444,
-        "killRate": 0.5777777777777777,
-        "lootPer60Min": 625.4951740407253,
-        "lootVillageoisPer60Min": 659.6699241994943,
-        "lootLoupPer60Min": 622.7287031466398
+        "killRate": 0.5777777777777777
       }
     },
     "76561198245459930": {
@@ -12062,14 +11216,26 @@
           "type": "basic"
         },
         {
-          "id": "lootLoup_extreme_high",
-          "title": "Le Loup Discret",
-          "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
-          "stat": "lootLoupPer60Min",
-          "value": 614.7719839538478,
-          "percentile": 88.88888888888889,
-          "category": "EXTREME_HIGH",
+          "id": "loot_extreme_low",
+          "title": "Le·a Touriste",
+          "emoji": "📸",
+          "description": "Ne récolte jamais",
+          "stat": "lootPer60Min",
+          "value": 542.992942778513,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "lootVillageois_extreme_low",
+          "title": "Le·a Villageois·e Paresseux·se",
+          "emoji": "💤",
+          "description": "Faible récolte en Villageois",
+          "stat": "lootVillageoisPer60Min",
+          "value": 536.7643926096137,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -12132,13 +11298,13 @@
           "type": "basic"
         },
         {
-          "id": "lootVillageois_low",
-          "title": "Le·a Villageois·e Paresseux·se",
-          "emoji": "💤",
-          "description": "Faible récolte en Villageois",
-          "stat": "lootVillageoisPer60Min",
-          "value": 494.26537404597104,
-          "percentile": 19.444444444444446,
+          "id": "lootLoup_low",
+          "title": "Le Loup Impatient",
+          "emoji": "😤",
+          "description": "Faible récolte en Loup",
+          "stat": "lootLoupPer60Min",
+          "value": 477.29201492107717,
+          "percentile": 31.818181818181817,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -12153,18 +11319,6 @@
           "percentile": 38.88888888888889,
           "category": "BELOW_AVERAGE",
           "priority": 4,
-          "type": "basic"
-        },
-        {
-          "id": "loot_average",
-          "title": "Le·a Travailleur·se",
-          "emoji": "👷",
-          "description": "Récolte correcte",
-          "stat": "lootPer60Min",
-          "value": 514.3061058580921,
-          "percentile": 47.22222222222222,
-          "category": "AVERAGE",
-          "priority": 3,
           "type": "basic"
         }
       ],
@@ -12267,19 +11421,19 @@
           "category": "LOW"
         },
         "lootPer60Min": {
-          "value": 514.3061058580921,
-          "percentile": 47.22222222222222,
-          "category": "AVERAGE"
+          "value": 542.992942778513,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 494.26537404597104,
-          "percentile": 19.444444444444446,
-          "category": "LOW"
+          "value": 536.7643926096137,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         },
         "lootLoupPer60Min": {
-          "value": 614.7719839538478,
-          "percentile": 88.88888888888889,
-          "category": "EXTREME_HIGH"
+          "value": 477.29201492107717,
+          "percentile": 31.818181818181817,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -12300,9 +11454,9 @@
         "survivalRate": 29.78723404255319,
         "survivalDay1Rate": 89.36170212765957,
         "killRate": 0.3191489361702128,
-        "lootPer60Min": 514.3061058580921,
-        "lootVillageoisPer60Min": 494.26537404597104,
-        "lootLoupPer60Min": 614.7719839538478
+        "lootPer60Min": 542.992942778513,
+        "lootVillageoisPer60Min": 536.7643926096137,
+        "lootLoupPer60Min": 477.29201492107717
       }
     }
   }

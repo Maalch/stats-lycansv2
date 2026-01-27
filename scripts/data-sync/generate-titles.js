@@ -1340,7 +1340,7 @@ function generateCombinationTitles(percentiles) {
     campBalance: 'campBalance' // Synthetic stat
   };
 
-  COMBINATION_TITLES.forEach(combo => {
+  COMBINATION_TITLES.forEach(combo => {    
     // Check if all conditions are met
     const conditionsMet = combo.conditions.every(condition => {
       const statKey = conditionStatMap[condition.stat] || condition.stat;
