@@ -366,7 +366,7 @@ export const COMBINATION_TITLES = [
     id: 'phoenix',
     title: 'Le·a Phoenix',
     emoji: '🔥',
-    description: 'Souvent ciblé·e tôt mais survit',
+    description: 'Meurt souvent tôt mais survit jusqu\'au bout après',
     conditions: [
       { stat: 'survivalDay1', category: 'LOW' },
       { stat: 'survival', category: 'HIGH' }
@@ -785,6 +785,91 @@ export const COMBINATION_TITLES = [
       { stat: 'survival', category: 'LOW' },
       { stat: 'winRate', category: 'HIGH' }
     ],
+    priority: 15
+  },
+
+  // Low survival Day 1 + high talking
+  {
+    id: 'grande_gueule',
+    title: 'La Grande Gueule',
+    emoji: '📢',
+    description: 'Parle trop et meurt Jour 1',
+    conditions: [
+      { stat: 'survivalDay1', category: 'LOW' },
+      { stat: 'talking', category: 'HIGH' }
+    ],
+    priority: 11
+  },
+  {
+    id: 'couard',
+    title: 'Le·a Couard·e',
+    emoji: '🐢',
+    description: 'Survit longtemps mais perd quand même',
+    conditions: [
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'winRate', category: 'LOW' }
+    ],
+    priority: 12
+  },
+  // High kills + Low win rate = The Reckless
+  {
+    id: 'tete_brulee',
+    title: 'La Tête Brûlée',
+    emoji: '💣',
+    description: 'Tue beaucoup mais fait perdre son camp',
+    conditions: [
+      { stat: 'killRate', category: 'HIGH' },
+      { stat: 'winRate', category: 'LOW' }
+    ],
     priority: 13
-  }
+  },
+  // High loot Villageois + Low win rate Villageois = The Worker Bee
+  {
+    id: 'abeille_ouvriere',
+    title: 'L\'Abeille Ouvrière',
+    emoji: '🐝',
+    description: 'Récolte bien en Villageois mais perd',
+    conditions: [
+      { stat: 'lootVillageois', category: 'HIGH' },
+      { stat: 'winRateVillageois', category: 'LOW' }
+    ],
+    priority: 11
+  },
+  // High loot Loup + Low win rate Loup = The Exposed Wolf
+  {
+    id: 'loup_repere',
+    title: 'Le Loup Repéré',
+    emoji: '🔦',
+    description: 'Récolte en Loup mais se fait démasquer',
+    conditions: [
+      { stat: 'lootLoup', category: 'HIGH' },
+      { stat: 'winRateLoup', category: 'LOW' }
+    ],
+    priority: 11
+  },
+  // Extreme high loot + Extreme low talk = The Machine
+  {
+    id: 'machine',
+    title: 'La Machine',
+    emoji: '⚙️',
+    description: 'Récolte énormément sans dire un mot',
+    conditions: [
+      { stat: 'loot', category: 'EXTREME_HIGH' },
+      { stat: 'talking', category: 'EXTREME_LOW' }
+    ],
+    priority: 16
+  },
+  // High talk + High survival + Low loot = The Politician
+  {
+    id: 'politicien',
+    title: 'Le·a Politicien·ne',
+    emoji: '🎩',
+    description: 'Parle beaucoup, survit, mais ne récolte pas',
+    conditions: [
+      { stat: 'talking', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'loot', category: 'LOW' }
+    ],
+    priority: 14
+  },
 ];
