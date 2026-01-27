@@ -99,7 +99,7 @@ const TITLE_DEFINITIONS = {
   // Kill rate titles
   killRate: {
     high: { title: 'Le·a Prédateur·rice', emoji: '🐺', description: 'Taux de kills élevé' },
-    low: { title: 'Le·a Pacifiste', emoji: '☮️', description: 'Taux de kills faible' },
+    low: { title: 'Le·a Doux·ce', emoji: '🕊️', description: 'Taux de kills faible' },
     extremeHigh: { title: "L'Exterminateur·rice", emoji: '💀', description: 'Tueur·se en série' },
     extremeLow: { title: "L'Agneau", emoji: '🐑', description: 'Ne tue jamais' }
   },
@@ -107,13 +107,11 @@ const TITLE_DEFINITIONS = {
   // Survival titles
   survival: {
     high: { title: 'Le·a Survivant·e', emoji: '🛡️', description: 'Survie élevée fin de game' },
-    low: { title: 'La Cible', emoji: '🎯', description: 'Meurt souvent' },
-    extremeHigh: { title: "L'Immortel·le", emoji: '⭐', description: 'Survie exceptionnelle' },
-    extremeLow: { title: 'Le·a Martyr·e', emoji: '✝️', description: 'Première victime récurrente' }
+    low: { title: 'La Cible', emoji: '🎯', description: 'Meurt souvent' }
   },
   survivalDay1: {
     high: { title: 'Le·a Prudent·e', emoji: '🏃', description: 'Survit au Jour 1' },
-    low: { title: 'Le·a Téméraire', emoji: '⚡', description: 'Meurt souvent Jour 1' }
+    low: { title: 'La Première Victime', emoji: '⚰️', description: 'Meurt souvent Jour 1' }
   },
 
   // Loot/Harvest titles
@@ -240,6 +238,139 @@ const COMBINATION_TITLES = [
       { stat: 'loot', category: 'HIGH' }
     ],
     priority: 10
+  },
+
+  // Low kills + High win rate = The Pacifist
+  {
+    id: 'pacifiste',
+    title: 'Le·a Pacifiste',
+    emoji: '☮️',
+    description: 'Gagne sans tuer',
+    conditions: [
+      { stat: 'killRate', category: 'LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 13
+  },
+
+  // Low survival + High win rate = The Martyr
+  {
+    id: 'martyr',
+    title: 'Le·a Martyr·e',
+    emoji: '✝️',
+    description: 'Meurt souvent mais fait gagner son camp',
+    conditions: [
+      { stat: 'survival', category: 'LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+
+  // High talk outside meeting + Low talk during meeting = The Conspirator
+  {
+    id: 'conspirateur',
+    title: 'Le·a Conspirateur·rice',
+    emoji: '🗨️',
+    description: 'Bavard·e hors meeting, silencieux·se pendant',
+    conditions: [
+      { stat: 'talkingOutsideMeeting', category: 'HIGH' },
+      { stat: 'talkingDuringMeeting', category: 'LOW' }
+    ],
+    priority: 11
+  },
+
+  // Low talk outside + High talk during meeting = The Lawyer
+  {
+    id: 'avocat',
+    title: 'L\'Avocat·e',
+    emoji: '⚖️',
+    description: 'Silencieux·se hors débats, éloquent·e en meeting',
+    conditions: [
+      { stat: 'talkingOutsideMeeting', category: 'LOW' },
+      { stat: 'talkingDuringMeeting', category: 'HIGH' }
+    ],
+    priority: 11
+  },
+
+  // High survival + High win rate loup = The Alpha Wolf
+  {
+    id: 'loup_alpha',
+    title: 'Le Loup Alpha',
+    emoji: '🐺',
+    description: 'Survit et domine en Loup',
+    conditions: [
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'winRateLoup', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+
+  // High loot villageois + High win rate villageois = The Model Citizen
+  {
+    id: 'citoyen_exemplaire',
+    title: 'Le·a Citoyen·ne Exemplaire',
+    emoji: '👑',
+    description: 'Récolte et gagne en Villageois',
+    conditions: [
+      { stat: 'lootVillageois', category: 'HIGH' },
+      { stat: 'winRateVillageois', category: 'HIGH' }
+    ],
+    priority: 13
+  },
+
+  // Extreme high talk + Low loot + Low kills = The Commentator
+  {
+    id: 'commentateur',
+    title: 'Le·a Commentateur·rice',
+    emoji: '📻',
+    description: 'Ne fait que parler, ne récolte rien et tue peu',
+    conditions: [
+      { stat: 'talking', category: 'EXTREME_HIGH' },
+      { stat: 'loot', category: 'LOW' },
+      { stat: 'killRate', category: 'LOW' }
+    ],
+    priority: 17
+  },
+
+  // High win rate + High loot + High survival = The Perfect Player
+  {
+    id: 'joueur_parfait',
+    title: 'Le·a Joueur·se Parfait·e',
+    emoji: '💎',
+    description: 'Gagne, récolte, et survit',
+    conditions: [
+      { stat: 'winRate', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'loot', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'survival', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
+    ],
+    priority: 19
+  },
+
+  // Low everything = The Struggling Beginner
+  {
+    id: 'debutant_galere',
+    title: 'Le·a Débutant·e en Galère',
+    emoji: '🆘',
+    description: 'Peine en victoire, survie et récolte',
+    conditions: [
+      { stat: 'winRate', category: 'LOW' },
+      { stat: 'survival', category: 'LOW' },
+      { stat: 'loot', category: 'LOW' }
+    ],
+    priority: 19
+  },
+
+  // Low loot + High kill rate = The Assassin
+  {
+    id: 'assassin',
+    title: 'L\'Assassin·e',
+    emoji: '🗡️',
+    description: 'Ignore la récolte, se concentre sur les kills',
+    conditions: [
+      { stat: 'loot', category: 'LOW' },
+      { stat: 'killRate', category: 'HIGH' }
+    ],
+    priority: 12
   },
   
   // Low talk + High loot = Efficient
