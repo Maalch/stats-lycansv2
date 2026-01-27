@@ -346,10 +346,10 @@ const COMBINATION_TITLES = [
     priority: 19
   },
 
-  // Low everything = The Struggling Beginner
+  // Low everything = The Beginner
   {
-    id: 'debutant_galere',
-    title: 'Le·a Débutant·e en Galère',
+    id: 'debutant',
+    title: 'Le·a Débutant·e',
     emoji: '🆘',
     description: 'Peine en victoire, survie et récolte',
     conditions: [
@@ -1250,9 +1250,9 @@ function checkCampBalance(percentiles, type) {
   const loupWinRate = percentiles.winRateLoup?.value;
   const soloWinRate = percentiles.winRateSolo?.value;
   
-  // Need at least 2 camp win rates to determine balance
+  // Need at least 5 camp win rates to determine balance
   const validRates = [villWinRate, loupWinRate, soloWinRate].filter(r => r !== null && r !== undefined);
-  if (validRates.length < 2) return false;
+  if (validRates.length < 5) return false;
   
   if (type === 'BALANCED') {
     // Balanced: low variance in win rates (within 20% difference)
