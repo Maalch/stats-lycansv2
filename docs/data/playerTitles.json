@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-27T19:49:04.341Z",
+  "generatedAt": "2026-01-27T20:08:37.083Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -986,8 +986,7 @@
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Monodie"
+          "type": "basic"
         },
         {
           "id": "participation_low",
@@ -1601,6 +1600,29 @@
       "gamesPlayed": 397,
       "titles": [
         {
+          "id": "traitre",
+          "title": "Le·a Traître·sse",
+          "emoji": "🦹",
+          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
+          "priority": 14,
+          "type": "combination",
+          "percentile": 83.82737576285965,
+          "conditions": [
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 44.44444444444444,
+              "actualPercentile": 83.87096774193549
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 16.666666666666664,
+              "actualPercentile": 83.78378378378379
+            }
+          ]
+        },
+        {
           "id": "participation_extreme_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -1610,7 +1632,8 @@
           "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Monodie"
         },
         {
           "id": "winRate_high",
@@ -1747,16 +1770,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "participation_extreme_high",
-        "title": "Le·a Noctambule",
-        "emoji": "🌙",
-        "description": "Joue énormément de parties",
-        "stat": "gamesPlayed",
-        "value": 397,
-        "percentile": 97.2972972972973,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "traitre",
+        "title": "Le·a Traître·sse",
+        "emoji": "🦹",
+        "description": "Gagnant·e dans tous les camps ennemis des Villageois",
+        "priority": 14,
+        "type": "combination",
+        "percentile": 83.82737576285965,
+        "conditions": [
+          {
+            "stat": "winRateLoup",
+            "category": "HIGH",
+            "actualValue": 44.44444444444444,
+            "actualPercentile": 83.87096774193549
+          },
+          {
+            "stat": "winRateSolo",
+            "category": "HIGH",
+            "actualValue": 16.666666666666664,
+            "actualPercentile": 83.78378378378379
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -2009,7 +2043,7 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Ponce"
+          "primaryOwner": "Monodie"
         },
         {
           "id": "winRateSolo_extreme_high",
@@ -2071,8 +2105,7 @@
           "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Monodie"
+          "type": "basic"
         },
         {
           "id": "loot_extreme_high",
@@ -2352,8 +2385,7 @@
           "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Ponce"
+          "type": "basic"
         },
         {
           "id": "killRate_extreme_high",
@@ -2490,13 +2522,13 @@
         }
       ],
       "primaryTitle": {
-        "id": "killRate_extreme_high",
-        "title": "L'Exterminateur·rice",
-        "emoji": "💀",
-        "description": "Tueur·se en série",
-        "stat": "killRate",
-        "value": 0.7127659574468085,
-        "percentile": 89.1891891891892,
+        "id": "participation_extreme_high",
+        "title": "Le·a Noctambule",
+        "emoji": "🌙",
+        "description": "Joue énormément de parties",
+        "stat": "gamesPlayed",
+        "value": 376,
+        "percentile": 91.8918918918919,
         "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"
@@ -2728,8 +2760,7 @@
           "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Monodie"
+          "type": "basic"
         },
         {
           "id": "loot_extreme_high",
@@ -3251,7 +3282,7 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Ponce"
+          "primaryOwner": "Monodie"
         },
         {
           "id": "talking_extreme_high",
@@ -4290,8 +4321,7 @@
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Monodie"
+          "type": "basic"
         },
         {
           "id": "winRate_high",
@@ -4842,7 +4872,7 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Ponce"
+          "primaryOwner": "Monodie"
         },
         {
           "id": "talkingDuringMeeting_extreme_high",
