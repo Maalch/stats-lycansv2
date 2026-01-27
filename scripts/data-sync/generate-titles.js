@@ -1056,6 +1056,67 @@ function assignUniquePrimaryTitles(playerTitles) {
 }
 
 /**
+ * Filter combination titles to keep only the top player(s) for each title
+ * Awards combination titles only to players with the highest average percentile
+ * @param {Object} playerTitles - Player titles object (modified in place)
+ */
+function filterCombinationTitlesToTopPlayers(playerTitles) {
+  const playerIds = Object.keys(playerTitles);
+  
+  // Group players by combination title ID with their average percentiles
+  const titleCandidates = {};
+  
+  playerIds.forEach(playerId => {
+    const player = playerTitles[playerId];
+    
+    player.titles.forEach(title => {
+      if (title.type === 'combination') {
+        if (!titleCandidates[title.id]) {
+          titleCandidates[title.id] = [];
+        }
+        
+        titleCandidates[title.id].push({
+          playerId,
+          playerName: player.playerName,
+          title,
+          averagePercentile: title.percentile || 0
+        });
+      }
+    });
+  });
+  
+  // For each combination title, find the max average percentile
+  Object.keys(titleCandidates).forEach(titleId => {
+    const candidates = titleCandidates[titleId];
+    
+    if (candidates.length === 0) return;
+    
+    // Find the maximum average percentile
+    const maxPercentile = Math.max(...candidates.map(c => c.averagePercentile));
+    
+    // Allow a small tolerance (0.1%) for ties
+    const tolerance = 0.1;
+    const topPlayerIds = new Set(
+      candidates
+        .filter(c => Math.abs(c.averagePercentile - maxPercentile) <= tolerance)
+        .map(c => c.playerId)
+    );
+    
+    // Remove this title from players who don't have the top score
+    playerIds.forEach(playerId => {
+      if (!topPlayerIds.has(playerId)) {
+        const player = playerTitles[playerId];
+        player.titles = player.titles.filter(t => 
+          t.type !== 'combination' || t.id !== titleId
+        );
+      }
+    });
+    
+    console.log(`  ✓ Combination title "${titleId}": awarded to ${topPlayerIds.size} player(s) with avg percentile ${maxPercentile.toFixed(1)}%`);
+  });
+}
+
+/**
  * Generate titles for all eligible players
  * @param {Map} aggregatedStats - Aggregated statistics by player
  * @param {Map} roleFrequencies - Role frequencies by player
@@ -1136,6 +1197,9 @@ function generatePlayerTitles(aggregatedStats, roleFrequencies) {
       stats: data.stats
     };
   });
+
+  // Filter combination titles to keep only top players
+  filterCombinationTitlesToTopPlayers(playerTitles);
 
   // Assign unique primary titles
   assignUniquePrimaryTitles(playerTitles);
@@ -1405,6 +1469,22 @@ function generateCombinationTitles(percentiles) {
     });
 
     if (conditionsMet) {
+      // Calculate average percentile across all conditions for ranking
+      const conditionsData = combo.conditions.map(c => ({
+        stat: c.stat,
+        category: c.category,
+        actualValue: percentiles[conditionStatMap[c.stat] || c.stat]?.value,
+        actualPercentile: percentiles[conditionStatMap[c.stat] || c.stat]?.percentile || 0
+      }));
+      
+      const validPercentiles = conditionsData
+        .map(c => c.actualPercentile)
+        .filter(p => p !== null && p !== undefined && p > 0);
+      
+      const averagePercentile = validPercentiles.length > 0
+        ? validPercentiles.reduce((sum, p) => sum + p, 0) / validPercentiles.length
+        : 0;
+      
       titles.push({
         id: combo.id,
         title: combo.title,
@@ -1412,12 +1492,8 @@ function generateCombinationTitles(percentiles) {
         description: combo.description,
         priority: combo.priority,
         type: 'combination',
-        conditions: combo.conditions.map(c => ({
-          stat: c.stat,
-          category: c.category,
-          actualValue: percentiles[conditionStatMap[c.stat] || c.stat]?.value,
-          actualPercentile: percentiles[conditionStatMap[c.stat] || c.stat]?.percentile
-        }))
+        percentile: averagePercentile, // Add average percentile for ranking
+        conditions: conditionsData
       });
     }
   });
