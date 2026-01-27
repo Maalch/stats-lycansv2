@@ -623,17 +623,30 @@ const COMBINATION_TITLES = [
     priority: 15
   },
 
+  // High participation + specialist camps = Taulier
+  {
+    id: 'taulier',
+    title: 'Le·a Taulier·e',
+    emoji: '🔑',
+    description: 'Participe beaucoup et excelle dans un camp',
+    conditions: [
+      { stat: 'gamesPlayed', category: 'HIGH', minValue: 100 },
+      { stat: 'campBalance', category: 'SPECIALIST' }
+    ],
+    priority: 10
+  },
+
   // High participation + balanced camps = The Enthusiast
   {
     id: 'enthusiaste',
     title: 'L\'Enthousiaste',
     emoji: '🌟',
-    description: 'Participe beaucoup et joue tous les camps',
+    description: 'Participe beaucoup et gagne autant dans chaque camp',
     conditions: [
       { stat: 'gamesPlayed', category: 'HIGH', minValue: 100 },
       { stat: 'campBalance', category: 'BALANCED' }
     ],
-    priority: 12
+    priority: 10
   },
 
   // High win rate + low participation = The Opportunist
@@ -1287,7 +1300,7 @@ function generateCampBalanceTitles(percentiles) {
       ...titleDef,
       stat: 'campBalance',
       category: 'BALANCED',
-      priority: 7,
+      priority: 6,
       type: 'campBalance'
     });
   }
@@ -1300,7 +1313,7 @@ function generateCampBalanceTitles(percentiles) {
       ...titleDef,
       stat: 'campBalance',
       category: 'SPECIALIST',
-      priority: 7,
+      priority: 6,
       type: 'campBalance'
     });
   }
