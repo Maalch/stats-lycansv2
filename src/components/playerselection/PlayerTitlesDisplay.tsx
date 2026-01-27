@@ -34,8 +34,22 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
     );
   }
 
-  // Sort titles by priority (highest first) to show why primary title was chosen
-  const sortedTitles = [...playerTitles.titles].sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  // Sort titles by claim strength (same algorithm as server-side) to show why primary title was chosen
+  const sortedTitles = [...playerTitles.titles].sort((a, b) => {
+    // Calculate claim strength for title A
+    const indexA = playerTitles.titles.indexOf(a);
+    const isBadA = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(a.category || '');
+    const adjustedPercentileA = isBadA ? (100 - (a.percentile || 50)) : (a.percentile || 50);
+    const claimStrengthA = ((a.priority || 0) * 1000) + (adjustedPercentileA * 10) - indexA;
+    
+    // Calculate claim strength for title B
+    const indexB = playerTitles.titles.indexOf(b);
+    const isBadB = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(b.category || '');
+    const adjustedPercentileB = isBadB ? (100 - (b.percentile || 50)) : (b.percentile || 50);
+    const claimStrengthB = ((b.priority || 0) * 1000) + (adjustedPercentileB * 10) - indexB;
+    
+    return claimStrengthB - claimStrengthA; // Highest claim strength first
+  });
 
   return (
     <div className="titles-section">

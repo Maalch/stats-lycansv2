@@ -453,6 +453,19 @@ export const COMBINATION_TITLES = [
     priority: 15
   },
 
+  // High wolf win rate + High solo win rate = Traître
+  {
+    id: 'traitre',
+    title: 'Le·a Traître·sse',
+    emoji: '🦹',
+    description: 'Gagnant·e dans tous les camps ennemis des Villageois',
+    conditions: [
+      { stat: 'winRateLoup', category: 'HIGH' },
+      { stat: 'winRateSolo', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+
   // High win rate + Serial Winner = The Legend
   {
     id: 'legende',
