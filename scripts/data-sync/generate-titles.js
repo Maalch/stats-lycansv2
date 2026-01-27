@@ -338,6 +338,9 @@ function assignUniquePrimaryTitles(playerTitles) {
   const usedTitles = new Set();
   const playerIds = Object.keys(playerTitles);
   
+  // Map to track which player owns each title as primary
+  const titleOwners = new Map();
+  
   // Create a list of all title claims with their strength
   const titleClaims = [];
   
@@ -347,11 +350,22 @@ function assignUniquePrimaryTitles(playerTitles) {
     player.titles.forEach((title, titleIndex) => {
       // Calculate claim strength based on:
       // 1. Priority (higher is better)
-      // 2. Percentile (higher is better for the stat)
+      // 2. Percentile (adjusted for "bad" vs "good" achievements)
+      //    - For bad achievements (LOW, EXTREME_LOW, BELOW_AVERAGE): lower percentile = stronger claim
+      //    - For good achievements (HIGH, EXTREME_HIGH, ABOVE_AVERAGE): higher percentile = stronger claim
       // 3. Title position (earlier in list is better)
+      
+      let adjustedPercentile = title.percentile || 50;
+      
+      // Invert percentile for "bad achievement" categories where lower is better
+      const isBadAchievement = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(title.category);
+      if (isBadAchievement) {
+        adjustedPercentile = 100 - adjustedPercentile;
+      }
+      
       const claimStrength = 
         (title.priority || 0) * 1000 + 
-        (title.percentile || 50) * 10 - 
+        adjustedPercentile * 10 - 
         titleIndex;
       
       titleClaims.push({
@@ -380,6 +394,7 @@ function assignUniquePrimaryTitles(playerTitles) {
     // Assign this title to the player
     player.primaryTitle = claim.title;
     usedTitles.add(claim.title.id);
+    titleOwners.set(claim.title.id, player.playerName);
   });
   
   // Second pass: assign any remaining players their best available title (even if used)
@@ -390,6 +405,18 @@ function assignUniquePrimaryTitles(playerTitles) {
       // Give them their highest priority title, even if already used
       player.primaryTitle = player.titles[0];
     }
+  });
+  
+  // Third pass: add primaryOwner info to titles that belong to other players
+  playerIds.forEach(playerId => {
+    const player = playerTitles[playerId];
+    
+    player.titles.forEach(title => {
+      const owner = titleOwners.get(title.id);
+      if (owner && owner !== player.playerName) {
+        title.primaryOwner = owner;
+      }
+    });
   });
   
   // Log uniqueness stats

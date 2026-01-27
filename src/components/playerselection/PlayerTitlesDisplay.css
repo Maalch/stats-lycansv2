@@ -92,13 +92,13 @@
   background: linear-gradient(135deg, var(--accent-primary-fade) 0%, var(--bg-secondary) 50%);
 }
 
-.title-card.primary::before {
-  content: '👑';
+.title-crown {
   position: absolute;
   top: -10px;
   right: -10px;
   font-size: 2rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  z-index: 10;
 }
 
 /* Title Type Variants */
@@ -186,6 +186,22 @@
   letter-spacing: 0.5px;
   align-self: flex-start;
   border: 1px solid var(--border-color);
+}
+
+.title-primary-owner {
+  display: inline-block;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 193, 7, 0.15);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  margin-top: 0.2rem;
+}
+
+.title-primary-owner strong {
+  color: var(--accent-primary);
+  font-weight: 600;
 }
 
 /* Responsive adjustments */

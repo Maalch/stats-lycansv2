@@ -12,6 +12,7 @@ export interface PlayerTitle {
   value?: number;
   percentile?: number;
   category?: string;
+  primaryOwner?: string; // Player name who has this title as primary
   conditions?: Array<{
     stat: string;
     category: string;

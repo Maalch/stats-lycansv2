@@ -34,6 +34,9 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
     );
   }
 
+  // Sort titles by priority (highest first) to show why primary title was chosen
+  const sortedTitles = [...playerTitles.titles].sort((a, b) => (b.priority || 0) - (a.priority || 0));
+
   return (
     <div className="titles-section">
       <div className="titles-header">
@@ -44,14 +47,15 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
         </p>
       </div>
       <div className="titles-grid">
-        {playerTitles.titles.map((title, index) => (
+        {sortedTitles.map((title, index) => {
+          const isPrimary = playerTitles.primaryTitle?.id === title.id;
+          return (
           <div 
             key={title.id} 
-            className={`title-card ${title.type} ${index === 0 ? 'primary' : ''}`}
+            className={`title-card ${title.type} ${isPrimary ? 'primary' : ''}`}
             title={`${title.description}${title.percentile !== undefined ? `\nMeilleur·e que ${title.percentile.toFixed(1)}% des joueurs` : ''}`}
           >
-            <div className="title-rank">{index + 1}</div>
-            <div className="title-emoji">{title.emoji}</div>
+            <div className="title-rank">{index + 1}</div>            {isPrimary && <div className="title-crown">👑</div>}            <div className="title-emoji">{title.emoji}</div>
             <div className="title-info">
               <div className="title-name">{title.title}</div>
               <div className="title-description">{title.description}</div>
@@ -64,6 +68,12 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
                 {title.type === 'combination' ? 'Combo' : 
                  title.type === 'role' ? 'Rôle' : 'Stat'}
               </div>
+              {/* Show primary owner if title belongs to someone else */}
+              {!isPrimary && title.primaryOwner && (
+                <div className="title-primary-owner">
+                  👤 Titre principal de: <strong>{title.primaryOwner}</strong>
+                </div>
+              )}
               {/* Breakdown for combination titles */}
               {title.type === 'combination' && title.conditions && title.conditions.length > 0 && (
                 <div className="title-conditions-breakdown">
@@ -101,7 +111,8 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
               )}
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
