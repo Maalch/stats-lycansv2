@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-27T09:56:49.481Z",
+  "generatedAt": "2026-01-27T10:36:45.062Z",
   "teamName": "Main Team",
   "totalPlayers": 36,
   "minGamesRequired": 25,
@@ -28,6 +28,7 @@
           "description": "Bon dans tous les camps",
           "priority": 16,
           "type": "combination",
+          "percentile": 83.18399044205496,
           "conditions": [
             {
               "stat": "winRateVillageois",
@@ -56,6 +57,7 @@
           "description": "Meurt souvent mais fait gagner son camp",
           "priority": 14,
           "type": "combination",
+          "percentile": 65.27777777777777,
           "conditions": [
             {
               "stat": "survival",
@@ -78,6 +80,7 @@
           "description": "Gagne sans tuer",
           "priority": 13,
           "type": "combination",
+          "percentile": 61.11111111111111,
           "conditions": [
             {
               "stat": "killRate",
@@ -90,28 +93,6 @@
               "category": "HIGH",
               "actualValue": 52.6,
               "actualPercentile": 97.22222222222221
-            }
-          ]
-        },
-        {
-          "id": "opportuniste",
-          "title": "L'Opportuniste",
-          "emoji": "🎯",
-          "description": "Gagne souvent mais joue peu",
-          "priority": 13,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 52.6,
-              "actualPercentile": 97.22222222222221
-            },
-            {
-              "stat": "gamesPlayed",
-              "category": "LOW",
-              "actualValue": 76,
-              "actualPercentile": 33.33333333333333
             }
           ]
         },
@@ -219,6 +200,7 @@
         "description": "Bon dans tous les camps",
         "priority": 16,
         "type": "combination",
+        "percentile": 83.18399044205496,
         "conditions": [
           {
             "stat": "winRateVillageois",
@@ -508,28 +490,6 @@
       "gamesPlayed": 127,
       "titles": [
         {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6456692913385826,
-              "actualPercentile": 80.55555555555556
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 47.24409448818898,
-              "actualPercentile": 91.66666666666666
-            }
-          ]
-        },
-        {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -627,26 +587,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "alpha_predator",
-        "title": "L'Alpha",
-        "emoji": "🦁",
-        "description": "Tue beaucoup et survit",
-        "priority": 15,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "killRate",
-            "category": "HIGH",
-            "actualValue": 0.6456692913385826,
-            "actualPercentile": 80.55555555555556
-          },
-          {
-            "stat": "survival",
-            "category": "HIGH",
-            "actualValue": 47.24409448818898,
-            "actualPercentile": 91.66666666666666
-          }
-        ]
+        "id": "survival_extreme_high",
+        "title": "Le·a Survivant·e",
+        "emoji": "🛡️",
+        "description": "Survie élevée fin de game",
+        "stat": "survivalRate",
+        "value": 47.24409448818898,
+        "percentile": 91.66666666666666,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -749,28 +699,6 @@
       "gamesPlayed": 29,
       "titles": [
         {
-          "id": "opportuniste",
-          "title": "L'Opportuniste",
-          "emoji": "🎯",
-          "description": "Gagne souvent mais joue peu",
-          "priority": 13,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 48.3,
-              "actualPercentile": 91.66666666666666
-            },
-            {
-              "stat": "gamesPlayed",
-              "category": "LOW",
-              "actualValue": 29,
-              "actualPercentile": 2.7777777777777777
-            }
-          ]
-        },
-        {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
           "emoji": "👑",
@@ -856,26 +784,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "opportuniste",
-        "title": "L'Opportuniste",
-        "emoji": "🎯",
-        "description": "Gagne souvent mais joue peu",
-        "priority": 13,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "winRate",
-            "category": "HIGH",
-            "actualValue": 48.3,
-            "actualPercentile": 91.66666666666666
-          },
-          {
-            "stat": "gamesPlayed",
-            "category": "LOW",
-            "actualValue": 29,
-            "actualPercentile": 2.7777777777777777
-          }
-        ]
+        "id": "votingAccuracy_extreme_high",
+        "title": "Le·a Flaireur·se",
+        "emoji": "👃",
+        "description": "Bon instinct de vote",
+        "stat": "votingAccuracy",
+        "value": 100,
+        "percentile": 94.28571428571428,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -960,50 +878,6 @@
       "playerName": "Noamouille",
       "gamesPlayed": 40,
       "titles": [
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.775,
-              "actualPercentile": 94.44444444444444
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 45,
-              "actualPercentile": 86.11111111111111
-            }
-          ]
-        },
-        {
-          "id": "opportuniste",
-          "title": "L'Opportuniste",
-          "emoji": "🎯",
-          "description": "Gagne souvent mais joue peu",
-          "priority": 13,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 47.5,
-              "actualPercentile": 88.88888888888889
-            },
-            {
-              "stat": "gamesPlayed",
-              "category": "LOW",
-              "actualValue": 40,
-              "actualPercentile": 16.666666666666664
-            }
-          ]
-        },
         {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
@@ -1214,34 +1088,13 @@
       "gamesPlayed": 27,
       "titles": [
         {
-          "id": "pacifiste",
-          "title": "Le·a Pacifiste",
-          "emoji": "☮️",
-          "description": "Gagne sans tuer",
-          "priority": 13,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "LOW",
-              "actualValue": 0.2962962962962963,
-              "actualPercentile": 8.333333333333332
-            },
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 44.4,
-              "actualPercentile": 75
-            }
-          ]
-        },
-        {
           "id": "opportuniste",
           "title": "L'Opportuniste",
           "emoji": "🎯",
           "description": "Gagne souvent mais joue peu",
           "priority": 13,
           "type": "combination",
+          "percentile": 75,
           "conditions": [
             {
               "stat": "winRate",
@@ -1343,24 +1196,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "pacifiste",
-        "title": "Le·a Pacifiste",
-        "emoji": "☮️",
-        "description": "Gagne sans tuer",
+        "id": "opportuniste",
+        "title": "L'Opportuniste",
+        "emoji": "🎯",
+        "description": "Gagne souvent mais joue peu",
         "priority": 13,
         "type": "combination",
+        "percentile": 75,
         "conditions": [
-          {
-            "stat": "killRate",
-            "category": "LOW",
-            "actualValue": 0.2962962962962963,
-            "actualPercentile": 8.333333333333332
-          },
           {
             "stat": "winRate",
             "category": "HIGH",
             "actualValue": 44.4,
             "actualPercentile": 75
+          },
+          {
+            "stat": "gamesPlayed",
+            "category": "LOW",
+            "actualValue": 27,
+            "actualPercentile": 0
           }
         ]
       },
@@ -1447,28 +1301,6 @@
       "playerName": "Zarcross",
       "gamesPlayed": 84,
       "titles": [
-        {
-          "id": "martyr",
-          "title": "Le·a Martyr·e",
-          "emoji": "✝️",
-          "description": "Meurt souvent mais fait gagner son camp",
-          "priority": 14,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 23.809523809523807,
-              "actualPercentile": 8.333333333333332
-            },
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 48.8,
-              "actualPercentile": 94.44444444444444
-            }
-          ]
-        },
         {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
@@ -1567,26 +1399,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "martyr",
-        "title": "Le·a Martyr·e",
-        "emoji": "✝️",
-        "description": "Meurt souvent mais fait gagner son camp",
-        "priority": 14,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "survival",
-            "category": "LOW",
-            "actualValue": 23.809523809523807,
-            "actualPercentile": 8.333333333333332
-          },
-          {
-            "stat": "winRate",
-            "category": "HIGH",
-            "actualValue": 48.8,
-            "actualPercentile": 94.44444444444444
-          }
-        ]
+        "id": "winRate_extreme_high",
+        "title": "L'Inarrêtable",
+        "emoji": "👑",
+        "description": "Gagne presque toujours",
+        "stat": "winRate",
+        "value": 48.8,
+        "percentile": 94.44444444444444,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -1676,34 +1498,6 @@
       "playerName": "Ponce",
       "gamesPlayed": 383,
       "titles": [
-        {
-          "id": "adaptable",
-          "title": "L'Adaptable",
-          "emoji": "🦎",
-          "description": "Bon dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "HIGH",
-              "actualValue": 51.624548736462096,
-              "actualPercentile": 61.111111111111114
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 43.39622641509434,
-              "actualPercentile": 83.87096774193549
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 18.867924528301888,
-              "actualPercentile": 88.88888888888889
-            }
-          ]
-        },
         {
           "id": "winRateSolo_extreme_high",
           "title": "L'Électron Libre",
@@ -1998,6 +1792,7 @@
           "description": "Gagne, récolte, et survit",
           "priority": 19,
           "type": "combination",
+          "percentile": 90.15151515151514,
           "conditions": [
             {
               "stat": "winRate",
@@ -2020,40 +1815,13 @@
           ]
         },
         {
-          "id": "adaptable",
-          "title": "L'Adaptable",
-          "emoji": "🦎",
-          "description": "Bon dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "HIGH",
-              "actualValue": 54.166666666666664,
-              "actualPercentile": 72.22222222222221
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 34.92063492063492,
-              "actualPercentile": 58.06451612903226
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 18.181818181818183,
-              "actualPercentile": 86.11111111111111
-            }
-          ]
-        },
-        {
           "id": "alpha_predator",
           "title": "L'Alpha",
           "emoji": "🦁",
           "description": "Tue beaucoup et survit",
           "priority": 15,
           "type": "combination",
+          "percentile": 97.22222222222221,
           "conditions": [
             {
               "stat": "killRate",
@@ -2076,6 +1844,7 @@
           "description": "Bavard·e ET grande récolte",
           "priority": 10,
           "type": "combination",
+          "percentile": 87.72727272727272,
           "conditions": [
             {
               "stat": "talking",
@@ -2243,6 +2012,7 @@
         "description": "Gagne, récolte, et survit",
         "priority": 19,
         "type": "combination",
+        "percentile": 90.15151515151514,
         "conditions": [
           {
             "stat": "winRate",
@@ -2406,84 +2176,6 @@
       "playerName": "Monodie",
       "gamesPlayed": 364,
       "titles": [
-        {
-          "id": "joueur_parfait",
-          "title": "Le·a Joueur·se Parfait·e",
-          "emoji": "💎",
-          "description": "Gagne, récolte, et survit",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 42.6,
-              "actualPercentile": 69.44444444444444
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 913.5347771410071,
-              "actualPercentile": 68.18181818181817
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 40.10989010989011,
-              "actualPercentile": 75
-            }
-          ]
-        },
-        {
-          "id": "adaptable",
-          "title": "L'Adaptable",
-          "emoji": "🦎",
-          "description": "Bon dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "HIGH",
-              "actualValue": 51.867219917012456,
-              "actualPercentile": 63.888888888888886
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 35,
-              "actualPercentile": 61.29032258064516
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 14.285714285714285,
-              "actualPercentile": 69.44444444444444
-            }
-          ]
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.7005494505494505,
-              "actualPercentile": 88.88888888888889
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 40.10989010989011,
-              "actualPercentile": 75
-            }
-          ]
-        },
         {
           "id": "killRate_extreme_high",
           "title": "L'Exterminateur·rice",
@@ -2778,6 +2470,7 @@
           "description": "Productif·ve, survit, parle peu",
           "priority": 18,
           "type": "combination",
+          "percentile": 56.52525252525252,
           "conditions": [
             {
               "stat": "loot",
@@ -2796,50 +2489,6 @@
               "category": "LOW",
               "actualValue": 851.3249379205968,
               "actualPercentile": 12
-            }
-          ]
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6551724137931034,
-              "actualPercentile": 83.33333333333334
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 38.42364532019704,
-              "actualPercentile": 66.66666666666666
-            }
-          ]
-        },
-        {
-          "id": "efficace",
-          "title": "L'Efficace",
-          "emoji": "🎯",
-          "description": "Silencieux·se mais productif·ve",
-          "priority": 10,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "LOW",
-              "actualValue": 851.3249379205968,
-              "actualPercentile": 12
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 1104.1553632675848,
-              "actualPercentile": 90.9090909090909
             }
           ]
         },
@@ -2995,6 +2644,7 @@
         "description": "Productif·ve, survit, parle peu",
         "priority": 18,
         "type": "combination",
+        "percentile": 56.52525252525252,
         "conditions": [
           {
             "stat": "loot",
@@ -3159,56 +2809,6 @@
       "gamesPlayed": 199,
       "titles": [
         {
-          "id": "adaptable",
-          "title": "L'Adaptable",
-          "emoji": "🦎",
-          "description": "Bon dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "HIGH",
-              "actualValue": 56.2962962962963,
-              "actualPercentile": 80.55555555555556
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 36.36363636363637,
-              "actualPercentile": 70.96774193548387
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 19.35483870967742,
-              "actualPercentile": 91.66666666666666
-            }
-          ]
-        },
-        {
-          "id": "infiltrateur",
-          "title": "L'Infiltré·e",
-          "emoji": "🎭",
-          "description": "Excellent·e loup discret·ète",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 36.36363636363637,
-              "actualPercentile": 70.96774193548387
-            },
-            {
-              "stat": "talking",
-              "category": "LOW",
-              "actualValue": 932.7354026110525,
-              "actualPercentile": 24
-            }
-          ]
-        },
-        {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
           "emoji": "👑",
@@ -3318,14 +2918,14 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_high",
-        "title": "L'Inarrêtable",
-        "emoji": "👑",
-        "description": "Gagne presque toujours",
-        "stat": "winRate",
-        "value": 47.2,
-        "percentile": 86.11111111111111,
-        "category": "EXTREME_HIGH",
+        "id": "talkingDuringMeeting_extreme_low",
+        "title": "Le·a Discret·ète",
+        "emoji": "🤐",
+        "description": "Silencieux·se en meeting",
+        "stat": "talkingDuringPer60Min",
+        "value": 213.07926441020265,
+        "percentile": 12,
+        "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
       },
@@ -3453,28 +3053,6 @@
       "playerName": "Bytell",
       "gamesPlayed": 353,
       "titles": [
-        {
-          "id": "manipulateur",
-          "title": "Le·a Manipulateur·rice",
-          "emoji": "🐍",
-          "description": "Loup bavard·e et gagnant·e",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 36.206896551724135,
-              "actualPercentile": 67.74193548387096
-            },
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 1210.215727106016,
-              "actualPercentile": 88
-            }
-          ]
-        },
         {
           "id": "talking_extreme_high",
           "title": "Le Moulin à Paroles",
@@ -3609,26 +3187,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "manipulateur",
-        "title": "Le·a Manipulateur·rice",
-        "emoji": "🐍",
-        "description": "Loup bavard·e et gagnant·e",
-        "priority": 15,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "winRateLoup",
-            "category": "HIGH",
-            "actualValue": 36.206896551724135,
-            "actualPercentile": 67.74193548387096
-          },
-          {
-            "stat": "talking",
-            "category": "HIGH",
-            "actualValue": 1210.215727106016,
-            "actualPercentile": 88
-          }
-        ]
+        "id": "talking_extreme_high",
+        "title": "Le Moulin à Paroles",
+        "emoji": "💬",
+        "description": "Parle énormément",
+        "stat": "talkingPer60Min",
+        "value": 1210.215727106016,
+        "percentile": 88,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -4185,40 +3753,13 @@
       "gamesPlayed": 139,
       "titles": [
         {
-          "id": "adaptable",
-          "title": "L'Adaptable",
-          "emoji": "🦎",
-          "description": "Bon dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "HIGH",
-              "actualValue": 56.97674418604651,
-              "actualPercentile": 83.33333333333334
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 42.857142857142854,
-              "actualPercentile": 80.64516129032258
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 16,
-              "actualPercentile": 80.55555555555556
-            }
-          ]
-        },
-        {
           "id": "loup_alpha",
           "title": "Le Loup Alpha",
           "emoji": "🐺",
           "description": "Survit et domine en Loup",
           "priority": 14,
           "type": "combination",
+          "percentile": 81.98924731182797,
           "conditions": [
             {
               "stat": "survival",
@@ -4338,6 +3879,7 @@
         "description": "Survit et domine en Loup",
         "priority": 14,
         "type": "combination",
+        "percentile": 81.98924731182797,
         "conditions": [
           {
             "stat": "survival",
@@ -4448,62 +3990,13 @@
       "gamesPlayed": 317,
       "titles": [
         {
-          "id": "adaptable",
-          "title": "L'Adaptable",
-          "emoji": "🦎",
-          "description": "Bon dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "HIGH",
-              "actualValue": 52.38095238095239,
-              "actualPercentile": 66.66666666666666
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 45.83333333333333,
-              "actualPercentile": 90.32258064516128
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 11.864406779661017,
-              "actualPercentile": 61.111111111111114
-            }
-          ]
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.7160883280757098,
-              "actualPercentile": 91.66666666666666
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 38.48580441640379,
-              "actualPercentile": 69.44444444444444
-            }
-          ]
-        },
-        {
           "id": "manipulateur",
           "title": "Le·a Manipulateur·rice",
           "emoji": "🐍",
           "description": "Loup bavard·e et gagnant·e",
           "priority": 15,
           "type": "combination",
+          "percentile": 91.16129032258064,
           "conditions": [
             {
               "stat": "winRateLoup",
@@ -4516,28 +4009,6 @@
               "category": "HIGH",
               "actualValue": 1436.6841871663262,
               "actualPercentile": 92
-            }
-          ]
-        },
-        {
-          "id": "loup_alpha",
-          "title": "Le Loup Alpha",
-          "emoji": "🐺",
-          "description": "Survit et domine en Loup",
-          "priority": 14,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 38.48580441640379,
-              "actualPercentile": 69.44444444444444
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 45.83333333333333,
-              "actualPercentile": 90.32258064516128
             }
           ]
         },
@@ -4687,16 +4158,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "talkingDuringMeeting_extreme_high",
-        "title": "L'Orateur·rice",
-        "emoji": "🎤",
-        "description": "Bavard·e en meeting",
-        "stat": "talkingDuringPer60Min",
-        "value": 469.1423635843672,
-        "percentile": 96,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "manipulateur",
+        "title": "Le·a Manipulateur·rice",
+        "emoji": "🐍",
+        "description": "Loup bavard·e et gagnant·e",
+        "priority": 15,
+        "type": "combination",
+        "percentile": 91.16129032258064,
+        "conditions": [
+          {
+            "stat": "winRateLoup",
+            "category": "HIGH",
+            "actualValue": 45.83333333333333,
+            "actualPercentile": 90.32258064516128
+          },
+          {
+            "stat": "talking",
+            "category": "HIGH",
+            "actualValue": 1436.6841871663262,
+            "actualPercentile": 92
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -5128,28 +4610,6 @@
       "gamesPlayed": 382,
       "titles": [
         {
-          "id": "hyperactif",
-          "title": "L'Hyperactif·ve",
-          "emoji": "⚡",
-          "description": "Bavard·e ET grande récolte",
-          "priority": 10,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 1192.4206227588213,
-              "actualPercentile": 76
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 1085.0474153778173,
-              "actualPercentile": 86.36363636363636
-            }
-          ]
-        },
-        {
           "id": "talkingDuringMeeting_extreme_high",
           "title": "L'Orateur·rice",
           "emoji": "🎤",
@@ -5283,26 +4743,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "hyperactif",
-        "title": "L'Hyperactif·ve",
-        "emoji": "⚡",
-        "description": "Bavard·e ET grande récolte",
-        "priority": 10,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "talking",
-            "category": "HIGH",
-            "actualValue": 1192.4206227588213,
-            "actualPercentile": 76
-          },
-          {
-            "stat": "loot",
-            "category": "HIGH",
-            "actualValue": 1085.0474153778173,
-            "actualPercentile": 86.36363636363636
-          }
-        ]
+        "id": "talkingDuringMeeting_extreme_high",
+        "title": "L'Orateur·rice",
+        "emoji": "🎤",
+        "description": "Bavard·e en meeting",
+        "stat": "talkingDuringPer60Min",
+        "value": 452.96271675977243,
+        "percentile": 92,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -5446,62 +4896,6 @@
       "playerName": "Craco",
       "gamesPlayed": 122,
       "titles": [
-        {
-          "id": "debutant",
-          "title": "Le·a Débutant·e",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 29.5,
-              "actualPercentile": 2.7777777777777777
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 27.049180327868854,
-              "actualPercentile": 25
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 634.7793324934693,
-              "actualPercentile": 22.727272727272727
-            }
-          ]
-        },
-        {
-          "id": "en_rodage",
-          "title": "En Rodage",
-          "emoji": "⚙️",
-          "description": "Peine dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "LOW",
-              "actualValue": 35.80246913580247,
-              "actualPercentile": 5.555555555555555
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "LOW",
-              "actualValue": 25.925925925925924,
-              "actualPercentile": 32.25806451612903
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "LOW",
-              "actualValue": 0,
-              "actualPercentile": 0
-            }
-          ]
-        },
         {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
@@ -5648,32 +5042,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "debutant",
-        "title": "Le·a Débutant·e",
-        "emoji": "🆘",
-        "description": "Peine en victoire, survie et récolte",
-        "priority": 19,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "winRate",
-            "category": "LOW",
-            "actualValue": 29.5,
-            "actualPercentile": 2.7777777777777777
-          },
-          {
-            "stat": "survival",
-            "category": "LOW",
-            "actualValue": 27.049180327868854,
-            "actualPercentile": 25
-          },
-          {
-            "stat": "loot",
-            "category": "LOW",
-            "actualValue": 634.7793324934693,
-            "actualPercentile": 22.727272727272727
-          }
-        ]
+        "id": "survivalDay1_extreme_low",
+        "title": "La Première Victime",
+        "emoji": "⚰️",
+        "description": "Meurt souvent Jour 1",
+        "stat": "survivalDay1Rate",
+        "value": 73.77049180327869,
+        "percentile": 11.11111111111111,
+        "category": "EXTREME_LOW",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -5805,50 +5183,6 @@
       "playerName": "ClydeCreator",
       "gamesPlayed": 275,
       "titles": [
-        {
-          "id": "avide",
-          "title": "L'Avide",
-          "emoji": "💰",
-          "description": "Récolte beaucoup mais meurt",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 934.1930847311006,
-              "actualPercentile": 72.72727272727273
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 25.454545454545453,
-              "actualPercentile": 11.11111111111111
-            }
-          ]
-        },
-        {
-          "id": "efficace",
-          "title": "L'Efficace",
-          "emoji": "🎯",
-          "description": "Silencieux·se mais productif·ve",
-          "priority": 10,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "LOW",
-              "actualValue": 777.5035792853156,
-              "actualPercentile": 4
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 934.1930847311006,
-              "actualPercentile": 72.72727272727273
-            }
-          ]
-        },
         {
           "id": "winRateLoup_extreme_low",
           "title": "Loup Débutant·e",
@@ -5995,26 +5329,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "avide",
-        "title": "L'Avide",
-        "emoji": "💰",
-        "description": "Récolte beaucoup mais meurt",
-        "priority": 11,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "loot",
-            "category": "HIGH",
-            "actualValue": 934.1930847311006,
-            "actualPercentile": 72.72727272727273
-          },
-          {
-            "stat": "survival",
-            "category": "LOW",
-            "actualValue": 25.454545454545453,
-            "actualPercentile": 11.11111111111111
-          }
-        ]
+        "id": "winRateLoup_extreme_low",
+        "title": "Loup Débutant·e",
+        "emoji": "🐩",
+        "description": "Mauvais·e en camp Loup",
+        "stat": "winRateLoup",
+        "value": 19.51219512195122,
+        "percentile": 12.903225806451612,
+        "category": "EXTREME_LOW",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -6159,34 +5483,13 @@
       "gamesPlayed": 249,
       "titles": [
         {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.5662650602409639,
-              "actualPercentile": 66.66666666666666
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 39.3574297188755,
-              "actualPercentile": 72.22222222222221
-            }
-          ]
-        },
-        {
           "id": "assassin",
           "title": "L'Assassin·e",
           "emoji": "🗡️",
           "description": "Ignore la récolte, se concentre sur les kills",
           "priority": 12,
           "type": "combination",
+          "percentile": 49.242424242424235,
           "conditions": [
             {
               "stat": "loot",
@@ -6199,28 +5502,6 @@
               "category": "HIGH",
               "actualValue": 0.5662650602409639,
               "actualPercentile": 66.66666666666666
-            }
-          ]
-        },
-        {
-          "id": "prudent",
-          "title": "Le·a Prudent·e",
-          "emoji": "🛡️",
-          "description": "Survit mais récolte peu",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 715.5825858735263,
-              "actualPercentile": 31.818181818181817
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 39.3574297188755,
-              "actualPercentile": 72.22222222222221
             }
           ]
         },
@@ -6231,6 +5512,7 @@
           "description": "Bavard·e mais improductif·ve",
           "priority": 10,
           "type": "combination",
+          "percentile": 49.90909090909091,
           "conditions": [
             {
               "stat": "talking",
@@ -6410,6 +5692,7 @@
         "description": "Ignore la récolte, se concentre sur les kills",
         "priority": 12,
         "type": "combination",
+        "percentile": 49.242424242424235,
         "conditions": [
           {
             "stat": "loot",
@@ -6568,56 +5851,6 @@
       "gamesPlayed": 228,
       "titles": [
         {
-          "id": "en_rodage",
-          "title": "En Rodage",
-          "emoji": "⚙️",
-          "description": "Peine dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "LOW",
-              "actualValue": 41.95804195804196,
-              "actualPercentile": 19.444444444444446
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "LOW",
-              "actualValue": 22.727272727272727,
-              "actualPercentile": 19.35483870967742
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "LOW",
-              "actualValue": 4.878048780487805,
-              "actualPercentile": 33.33333333333333
-            }
-          ]
-        },
-        {
-          "id": "avide",
-          "title": "L'Avide",
-          "emoji": "💰",
-          "description": "Récolte beaucoup mais meurt",
-          "priority": 11,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 1001.7846216743652,
-              "actualPercentile": 77.27272727272727
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 26.75438596491228,
-              "actualPercentile": 22.22222222222222
-            }
-          ]
-        },
-        {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
           "emoji": "🪦",
@@ -6763,32 +5996,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "en_rodage",
-        "title": "En Rodage",
-        "emoji": "⚙️",
-        "description": "Peine dans tous les camps",
-        "priority": 16,
-        "type": "combination",
-        "conditions": [
-          {
-            "stat": "winRateVillageois",
-            "category": "LOW",
-            "actualValue": 41.95804195804196,
-            "actualPercentile": 19.444444444444446
-          },
-          {
-            "stat": "winRateLoup",
-            "category": "LOW",
-            "actualValue": 22.727272727272727,
-            "actualPercentile": 19.35483870967742
-          },
-          {
-            "stat": "winRateSolo",
-            "category": "LOW",
-            "actualValue": 4.878048780487805,
-            "actualPercentile": 33.33333333333333
-          }
-        ]
+        "id": "lootVillageois_extreme_high",
+        "title": "Le·a Citoyen·ne Modèle",
+        "emoji": "🏘️",
+        "description": "Récolte excellente en Villageois",
+        "stat": "lootVillageoisPer60Min",
+        "value": 1115.240266910352,
+        "percentile": 86.36363636363636,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -6933,134 +6150,13 @@
       "gamesPlayed": 194,
       "titles": [
         {
-          "id": "joueur_parfait",
-          "title": "Le·a Joueur·se Parfait·e",
-          "emoji": "💎",
-          "description": "Gagne, récolte, et survit",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 42.3,
-              "actualPercentile": 63.888888888888886
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 862.3002390314293,
-              "actualPercentile": 63.63636363636363
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 40.72164948453608,
-              "actualPercentile": 77.77777777777779
-            }
-          ]
-        },
-        {
-          "id": "adaptable",
-          "title": "L'Adaptable",
-          "emoji": "🦎",
-          "description": "Bon dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "HIGH",
-              "actualValue": 51.26050420168067,
-              "actualPercentile": 58.333333333333336
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 40,
-              "actualPercentile": 77.41935483870968
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 14.285714285714285,
-              "actualPercentile": 69.44444444444444
-            }
-          ]
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.5773195876288659,
-              "actualPercentile": 69.44444444444444
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 40.72164948453608,
-              "actualPercentile": 77.77777777777779
-            }
-          ]
-        },
-        {
-          "id": "manipulateur",
-          "title": "Le·a Manipulateur·rice",
-          "emoji": "🐍",
-          "description": "Loup bavard·e et gagnant·e",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 40,
-              "actualPercentile": 77.41935483870968
-            },
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 1194.2496743567306,
-              "actualPercentile": 84
-            }
-          ]
-        },
-        {
-          "id": "loup_alpha",
-          "title": "Le Loup Alpha",
-          "emoji": "🐺",
-          "description": "Survit et domine en Loup",
-          "priority": 14,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 40.72164948453608,
-              "actualPercentile": 77.77777777777779
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 40,
-              "actualPercentile": 77.41935483870968
-            }
-          ]
-        },
-        {
           "id": "maitre_ceremonie",
           "title": "Le·a Maître·sse de Cérémonie",
           "emoji": "🎙️",
           "description": "Mène les débats et vote juste",
           "priority": 14,
           "type": "combination",
+          "percentile": 77.03174603174604,
           "conditions": [
             {
               "stat": "talkingDuringMeeting",
@@ -7246,6 +6342,7 @@
         "description": "Mène les débats et vote juste",
         "priority": 14,
         "type": "combination",
+        "percentile": 77.03174603174604,
         "conditions": [
           {
             "stat": "talkingDuringMeeting",
@@ -7685,40 +6782,13 @@
       "gamesPlayed": 202,
       "titles": [
         {
-          "id": "debutant",
-          "title": "Le·a Débutant·e",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 29.7,
-              "actualPercentile": 5.555555555555555
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 17.326732673267326,
-              "actualPercentile": 2.7777777777777777
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 607.9269576898778,
-              "actualPercentile": 13.636363636363635
-            }
-          ]
-        },
-        {
           "id": "en_rodage",
           "title": "En Rodage",
           "emoji": "⚙️",
           "description": "Peine dans tous les camps",
           "priority": 16,
           "type": "combination",
+          "percentile": 26.38888888888889,
           "conditions": [
             {
               "stat": "winRateVillageois",
@@ -7922,16 +6992,33 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_extreme_low",
-        "title": "Loup Débutant·e",
-        "emoji": "🐩",
-        "description": "Mauvais·e en camp Loup",
-        "stat": "winRateLoup",
-        "value": 8.571428571428571,
-        "percentile": 0,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "en_rodage",
+        "title": "En Rodage",
+        "emoji": "⚙️",
+        "description": "Peine dans tous les camps",
+        "priority": 16,
+        "type": "combination",
+        "percentile": 26.38888888888889,
+        "conditions": [
+          {
+            "stat": "winRateVillageois",
+            "category": "LOW",
+            "actualValue": 42.10526315789473,
+            "actualPercentile": 22.22222222222222
+          },
+          {
+            "stat": "winRateLoup",
+            "category": "LOW",
+            "actualValue": 8.571428571428571,
+            "actualPercentile": 0
+          },
+          {
+            "stat": "winRateSolo",
+            "category": "LOW",
+            "actualValue": 2.941176470588235,
+            "actualPercentile": 30.555555555555557
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -8806,6 +7893,7 @@
           "description": "Récolte beaucoup mais meurt",
           "priority": 11,
           "type": "combination",
+          "percentile": 81.81818181818183,
           "conditions": [
             {
               "stat": "loot",
@@ -8828,6 +7916,7 @@
           "description": "Silencieux·se mais productif·ve",
           "priority": 10,
           "type": "combination",
+          "percentile": 56.909090909090914,
           "conditions": [
             {
               "stat": "talking",
@@ -8999,24 +8088,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "efficace",
-        "title": "L'Efficace",
-        "emoji": "🎯",
-        "description": "Silencieux·se mais productif·ve",
-        "priority": 10,
+        "id": "avide",
+        "title": "L'Avide",
+        "emoji": "💰",
+        "description": "Récolte beaucoup mais meurt",
+        "priority": 11,
         "type": "combination",
+        "percentile": 81.81818181818183,
         "conditions": [
-          {
-            "stat": "talking",
-            "category": "LOW",
-            "actualValue": 943.737060150582,
-            "actualPercentile": 32
-          },
           {
             "stat": "loot",
             "category": "HIGH",
             "actualValue": 1014.2461508514875,
             "actualPercentile": 81.81818181818183
+          },
+          {
+            "stat": "survival",
+            "category": "LOW",
+            "actualValue": 13.043478260869565,
+            "actualPercentile": 0
           }
         ]
       },
@@ -9152,34 +8242,13 @@
           "description": "Excellent·e loup discret·ète",
           "priority": 15,
           "type": "combination",
+          "percentile": 60.774193548387096,
           "conditions": [
             {
               "stat": "winRateLoup",
               "category": "HIGH",
               "actualValue": 50,
               "actualPercentile": 93.54838709677419
-            },
-            {
-              "stat": "talking",
-              "category": "LOW",
-              "actualValue": 942.7090057261843,
-              "actualPercentile": 28.000000000000004
-            }
-          ]
-        },
-        {
-          "id": "detective",
-          "title": "Le·a Détective",
-          "emoji": "🔎",
-          "description": "Observe silencieusement et vote juste",
-          "priority": 12,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "votingAccuracy",
-              "category": "HIGH",
-              "actualValue": 93.33333333333333,
-              "actualPercentile": 82.85714285714286
             },
             {
               "stat": "talking",
@@ -9329,6 +8398,7 @@
         "description": "Excellent·e loup discret·ète",
         "priority": 15,
         "type": "combination",
+        "percentile": 60.774193548387096,
         "conditions": [
           {
             "stat": "winRateLoup",
@@ -9481,6 +8551,7 @@
           "description": "Peine en victoire, survie et récolte",
           "priority": 19,
           "type": "combination",
+          "percentile": 19.276094276094273,
           "conditions": [
             {
               "stat": "winRate",
@@ -9509,6 +8580,7 @@
           "description": "Bavard·e, improductif·ve, meurt souvent",
           "priority": 18,
           "type": "combination",
+          "percentile": 34.94276094276094,
           "conditions": [
             {
               "stat": "talking",
@@ -9527,50 +8599,6 @@
               "category": "LOW",
               "actualValue": 23.684210526315788,
               "actualPercentile": 5.555555555555555
-            }
-          ]
-        },
-        {
-          "id": "philosophe",
-          "title": "Le·a Philosophe",
-          "emoji": "📚",
-          "description": "Bavard·e mais improductif·ve",
-          "priority": 10,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 1161.1410497433455,
-              "actualPercentile": 72
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 699.1041674044872,
-              "actualPercentile": 27.27272727272727
-            }
-          ]
-        },
-        {
-          "id": "demagogue",
-          "title": "Le·a Démagogue",
-          "emoji": "📣",
-          "description": "Parle beaucoup mais vote mal",
-          "priority": 10,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 1161.1410497433455,
-              "actualPercentile": 72
-            },
-            {
-              "stat": "votingAccuracy",
-              "category": "LOW",
-              "actualValue": 76.92307692307693,
-              "actualPercentile": 5.714285714285714
             }
           ]
         },
@@ -9696,30 +8724,31 @@
         }
       ],
       "primaryTitle": {
-        "id": "pitre",
-        "title": "Le·a Pitre",
-        "emoji": "🎪",
-        "description": "Bavard·e, improductif·ve, meurt souvent",
-        "priority": 18,
+        "id": "debutant",
+        "title": "Le·a Débutant·e",
+        "emoji": "🆘",
+        "description": "Peine en victoire, survie et récolte",
+        "priority": 19,
         "type": "combination",
+        "percentile": 19.276094276094273,
         "conditions": [
           {
-            "stat": "talking",
-            "category": "HIGH",
-            "actualValue": 1161.1410497433455,
-            "actualPercentile": 72
-          },
-          {
-            "stat": "loot",
+            "stat": "winRate",
             "category": "LOW",
-            "actualValue": 699.1041674044872,
-            "actualPercentile": 27.27272727272727
+            "actualValue": 35.1,
+            "actualPercentile": 25
           },
           {
             "stat": "survival",
             "category": "LOW",
             "actualValue": 23.684210526315788,
             "actualPercentile": 5.555555555555555
+          },
+          {
+            "stat": "loot",
+            "category": "LOW",
+            "actualValue": 699.1041674044872,
+            "actualPercentile": 27.27272727272727
           }
         ]
       },
@@ -9860,6 +8889,7 @@
           "description": "Observe silencieusement et vote juste",
           "priority": 12,
           "type": "combination",
+          "percentile": 94.28571428571428,
           "conditions": [
             {
               "stat": "votingAccuracy",
@@ -9882,6 +8912,7 @@
           "description": "Survit mais récolte peu",
           "priority": 11,
           "type": "combination",
+          "percentile": 56.313131313131315,
           "conditions": [
             {
               "stat": "loot",
@@ -10085,6 +9116,7 @@
         "description": "Observe silencieusement et vote juste",
         "priority": 12,
         "type": "combination",
+        "percentile": 94.28571428571428,
         "conditions": [
           {
             "stat": "votingAccuracy",
@@ -10225,34 +9257,6 @@
       "playerName": "Raumane",
       "gamesPlayed": 79,
       "titles": [
-        {
-          "id": "debutant",
-          "title": "Le·a Débutant·e",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 19,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 30.4,
-              "actualPercentile": 8.333333333333332
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 26.582278481012654,
-              "actualPercentile": 19.444444444444446
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 539.0705793130148,
-              "actualPercentile": 0
-            }
-          ]
-        },
         {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
@@ -10541,34 +9545,13 @@
       "gamesPlayed": 45,
       "titles": [
         {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.5777777777777777,
-              "actualPercentile": 72.22222222222221
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 46.666666666666664,
-              "actualPercentile": 88.88888888888889
-            }
-          ]
-        },
-        {
           "id": "demagogue",
           "title": "Le·a Démagogue",
           "emoji": "📣",
           "description": "Parle beaucoup mais vote mal",
           "priority": 10,
           "type": "combination",
+          "percentile": 55.14285714285714,
           "conditions": [
             {
               "stat": "talking",
@@ -10712,6 +9695,7 @@
         "description": "Parle beaucoup mais vote mal",
         "priority": 10,
         "type": "combination",
+        "percentile": 55.14285714285714,
         "conditions": [
           {
             "stat": "talking",
