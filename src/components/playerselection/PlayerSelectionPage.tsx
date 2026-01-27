@@ -25,6 +25,7 @@ import { usePlayerClips } from '../../hooks/useClips';
 import { ClipViewer } from '../common/ClipViewer';
 import { findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
+import { PlayerTitlesDisplay } from './PlayerTitlesDisplay';
 import './PlayerSelectionPage.css';
 import './PlayerTitlesDisplay.css';
 
@@ -570,94 +571,10 @@ export function PlayerSelectionPage() {
 
                   {/* Titles Display */}
                   {selectedView === 'titles' && (
-                    <div className="titles-section">
-                      {titlesLoading ? (
-                        <div className="titles-loading">
-                          <div className="loading-spinner"></div>
-                          <p>Chargement des titres...</p>
-                        </div>
-                      ) : playerTitles && playerTitles.titles.length > 0 ? (
-                        <>
-                          <div className="titles-header">
-                            <h3>🏷️ Titres actuels</h3>
-                            <p className="titles-info">
-                              {playerTitles.titles.length} titre{playerTitles.titles.length > 1 ? 's' : ''} • 
-                              {playerTitles.gamesPlayed} parties jouées
-                            </p>
-                          </div>
-                          <div className="titles-grid">
-                            {playerTitles.titles.map((title, index) => (
-                              <div 
-                                key={title.id} 
-                                className={`title-card ${title.type} ${index === 0 ? 'primary' : ''}`}
-                                title={`${title.description}${title.percentile !== undefined ? `\nMeilleur·e que ${title.percentile.toFixed(1)}% des joueurs` : ''}`}
-                              >
-                                <div className="title-rank">{index + 1}</div>
-                                <div className="title-emoji">{title.emoji}</div>
-                                <div className="title-info">
-                                  <div className="title-name">{title.title}</div>
-                                  <div className="title-description">{title.description}</div>
-                                  {title.percentile !== undefined && (
-                                    <div className="title-percentile">
-                                      Top {(100 - title.percentile).toFixed(0)}%
-                                    </div>
-                                  )}
-                                  <div className="title-type-badge">
-                                    {title.type === 'combination' ? 'Combo' : 
-                                     title.type === 'role' ? 'Rôle' : 'Stat'}
-                                  </div>
-                                  {/* Breakdown for combination titles */}
-                                  {title.type === 'combination' && title.conditions && title.conditions.length > 0 && (
-                                    <div className="title-conditions-breakdown">
-                                      <div className="breakdown-header">Conditions:</div>
-                                      {title.conditions.map((condition: any, condIndex: number) => (
-                                        <div key={condIndex} className="condition-item">
-                                          <span className="condition-stat">
-                                            {condition.stat === 'winRate' ? 'Victoires' :
-                                             condition.stat === 'loot' ? 'Récolte' :
-                                             condition.stat === 'survival' ? 'Survie' :
-                                             condition.stat === 'killRate' ? 'Kills' :
-                                             condition.stat === 'talking' ? 'Parole' :
-                                             condition.stat === 'talkingDuringMeeting' ? 'Parole (meeting)' :
-                                             condition.stat === 'votingAggressive' ? 'Vote agressif' :
-                                             condition.stat === 'votingAccuracy' ? 'Précision vote' :
-                                             condition.stat === 'votingFirst' ? 'Vote rapide' :
-                                             condition.stat === 'survivalDay1' ? 'Survie J1' :
-                                             condition.stat === 'winRateVillageois' ? 'Victoires Villageois' :
-                                             condition.stat === 'winRateLoup' ? 'Victoires Loup' :
-                                             condition.stat === 'winRateSolo' ? 'Victoires Solo' :
-                                             condition.stat === 'hunterAccuracy' ? 'Précision chasseur' :
-                                             condition.stat}:
-                                          </span>
-                                          <span className={`condition-category ${condition.category?.toLowerCase()}`}>
-                                            {condition.category}
-                                          </span>
-                                          {condition.actualPercentile !== undefined && (
-                                            <span className="condition-percentile">
-                                              (Top {(100 - condition.actualPercentile).toFixed(0)}%)
-                                            </span>
-                                          )}
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </>
-                      ) : (
-                        <div className="titles-empty">
-                          <p>📜 Aucun titre disponible</p>
-                          <p className="empty-subtitle">
-                            {playerTitles?.gamesPlayed ? 
-                              `${playerTitles.gamesPlayed} parties jouées - minimum 25 parties requises pour obtenir des titres` :
-                              'Les titres sont générés chaque dimanche pour les joueurs avec 25+ parties en mode moddé'
-                            }
-                          </p>
-                        </div>
-                      )}
-                    </div>
+                    <PlayerTitlesDisplay 
+                      playerTitles={playerTitles}
+                      titlesLoading={titlesLoading}
+                    />
                   )}
 
                   {/* Evolution View */}
