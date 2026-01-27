@@ -23,7 +23,10 @@ npm run sync-data-aws           # AWS sync for main team (recommended)
 npm run sync-data-discord       # AWS sync for Discord team
 npm run sync-data               # Legacy Google Sheets sync
 npm run generate-achievements   # Standalone achievements generation + copy to public/
+npm run generate-titles         # Standalone titles generation + copy to public/
 ```
+
+**Title Generation:** `node scripts/data-sync/generate-titles.js [main|discord]` - Run from project root, outputs to `/data` or `/data/discord`
 
 **Build Pipeline:** Inline Node.js scripts in `package.json` copy `/data` → `public/data/` (dev) or `docs/data/` (prod)  
 **Data Sync:** 
@@ -490,6 +493,60 @@ export function processNewAchievements(playerStats: PlayerStat[], playerName: st
 - **Comparison:** Player relationship stats, wolf/lover pairing performance
 - **Kills:** Death statistics, survival rates, kill counts by role
 - **Series:** Consecutive wins, camp streaks, role performance chains
+
+## Player Titles System Architecture
+
+**Server-Side Generation:** `scripts/data-sync/generate-titles.js` processes modded games only → creates `playerTitles.json` with unique primary titles  
+**Client-Side Display:** `PlayerTitlesDisplay.tsx` shows sorted titles with crown on primary, ownership info, and priority explanations  
+**Uniqueness System:** Each title ideally assigned to only one player as primary - player with strongest claim wins  
+**Performance:** Pre-calculation with percentile-based distribution ensures fair title assignment across 25+ game minimum
+
+### Title Generation Critical Patterns
+
+**Claim Strength Algorithm (CRITICAL):**
+```javascript
+// Bad achievements (EXTREME_LOW, LOW, BELOW_AVERAGE): lower percentile = stronger claim
+// Good achievements (EXTREME_HIGH, HIGH, ABOVE_AVERAGE): higher percentile = stronger claim
+const isBadAchievement = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(title.category);
+const adjustedPercentile = isBadAchievement ? (100 - percentile) : percentile;
+const claimStrength = (priority * 1000) + (adjustedPercentile * 10) - titleIndex;
+```
+
+**Three-Pass Assignment System:**
+1. **First Pass:** Assign unique primary titles to players with strongest claims (highest claimStrength)
+2. **Second Pass:** Give remaining players their best available title (even if already used by someone else)
+3. **Third Pass:** Add `primaryOwner` field to titles owned by other players for UI display
+
+**Display Pattern:**
+```typescript
+// Titles sorted by priority (highest first) to explain selection
+const sortedTitles = [...playerTitles.titles].sort((a, b) => (b.priority || 0) - (a.priority || 0));
+const isPrimary = playerTitles.primaryTitle?.id === title.id; // Crown on primary
+// Show ownership: {!isPrimary && title.primaryOwner && <div>{title.primaryOwner}</div>}
+```
+
+**Title Types:**
+- **Basic:** Single stat-based (win rate, loot, survival, etc.)
+- **Combination:** Multiple stat thresholds (e.g., "Le·a Détective" = high win + high voting accuracy + high talking)
+- **Role:** Uncontrollable role assignment frequency (e.g., "L'Agneau" = frequent Amoureux)
+- **Camp Balance:** Synthetic stat for balanced/specialist camp performance
+
+**Percentile Thresholds:**
+```javascript
+EXTREME_HIGH: 85,   // Top 15%
+HIGH: 65,           // Top 35%
+ABOVE_AVERAGE: 55,  // Top 45%
+AVERAGE: 48-52,
+BELOW_AVERAGE: 45,  // Bottom 55%
+LOW: 35,            // Bottom 35%
+EXTREME_LOW: 15     // Bottom 15%
+```
+
+**Key Files:**
+- `scripts/data-sync/generate-titles.js` - Server-side generation with claim strength logic
+- `scripts/data-sync/shared/titleDefinitions.js` - Title definitions and combinations
+- `src/components/playerselection/PlayerTitlesDisplay.tsx` - Client display component
+- `src/hooks/usePlayerTitles.tsx` - Data loading hook with TypeScript interfaces
 
 ## Voting Statistics System
 
