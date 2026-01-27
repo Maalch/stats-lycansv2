@@ -62,7 +62,7 @@
 /* Titles Grid */
 .titles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 1rem;
   padding: 0.5rem;
 }
@@ -210,4 +210,86 @@
 /* Animation */
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* Conditions Breakdown for Combination Titles */
+.title-conditions-breakdown {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.breakdown-header {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.2rem;
+}
+
+.condition-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  padding: 0.3rem 0;
+}
+
+.condition-stat {
+  color: var(--text-primary);
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.condition-category {
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.condition-category.high,
+.condition-category.extreme_high {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.4);
+}
+
+.condition-category.above_average {
+  background: rgba(139, 195, 74, 0.2);
+  color: #8bc34a;
+  border: 1px solid rgba(139, 195, 74, 0.4);
+}
+
+.condition-category.average,
+.condition-category.average_high,
+.condition-category.average_low {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.condition-category.below_average {
+  background: rgba(255, 152, 0, 0.2);
+  color: #ff9800;
+  border: 1px solid rgba(255, 152, 0, 0.4);
+}
+
+.condition-category.low,
+.condition-category.extreme_low {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.4);
+}
+
+.condition-percentile {
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+  margin-left: auto;
 }

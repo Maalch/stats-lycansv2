@@ -12,6 +12,12 @@ export interface PlayerTitle {
   value?: number;
   percentile?: number;
   category?: string;
+  conditions?: Array<{
+    stat: string;
+    category: string;
+    actualValue?: number;
+    actualPercentile?: number;
+  }>;
 }
 
 export interface PlayerTitleData {

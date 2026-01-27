@@ -579,7 +579,7 @@ export function PlayerSelectionPage() {
                       ) : playerTitles && playerTitles.titles.length > 0 ? (
                         <>
                           <div className="titles-header">
-                            <h3>🏷️ Titres obtenus</h3>
+                            <h3>🏷️ Titres actuels</h3>
                             <p className="titles-info">
                               {playerTitles.titles.length} titre{playerTitles.titles.length > 1 ? 's' : ''} • 
                               {playerTitles.gamesPlayed} parties jouées
@@ -590,14 +590,14 @@ export function PlayerSelectionPage() {
                               <div 
                                 key={title.id} 
                                 className={`title-card ${title.type} ${index === 0 ? 'primary' : ''}`}
-                                title={`${title.description}${title.percentile ? ` (Percentile: ${title.percentile.toFixed(1)}%)` : ''}`}
+                                title={`${title.description}${title.percentile !== undefined ? `\nMeilleur·e que ${title.percentile.toFixed(1)}% des joueurs` : ''}`}
                               >
                                 <div className="title-rank">{index + 1}</div>
                                 <div className="title-emoji">{title.emoji}</div>
                                 <div className="title-info">
                                   <div className="title-name">{title.title}</div>
                                   <div className="title-description">{title.description}</div>
-                                  {title.percentile && (
+                                  {title.percentile !== undefined && (
                                     <div className="title-percentile">
                                       Top {(100 - title.percentile).toFixed(0)}%
                                     </div>
@@ -606,6 +606,41 @@ export function PlayerSelectionPage() {
                                     {title.type === 'combination' ? 'Combo' : 
                                      title.type === 'role' ? 'Rôle' : 'Stat'}
                                   </div>
+                                  {/* Breakdown for combination titles */}
+                                  {title.type === 'combination' && title.conditions && title.conditions.length > 0 && (
+                                    <div className="title-conditions-breakdown">
+                                      <div className="breakdown-header">Conditions:</div>
+                                      {title.conditions.map((condition: any, condIndex: number) => (
+                                        <div key={condIndex} className="condition-item">
+                                          <span className="condition-stat">
+                                            {condition.stat === 'winRate' ? 'Victoires' :
+                                             condition.stat === 'loot' ? 'Récolte' :
+                                             condition.stat === 'survival' ? 'Survie' :
+                                             condition.stat === 'killRate' ? 'Kills' :
+                                             condition.stat === 'talking' ? 'Parole' :
+                                             condition.stat === 'talkingDuringMeeting' ? 'Parole (meeting)' :
+                                             condition.stat === 'votingAggressive' ? 'Vote agressif' :
+                                             condition.stat === 'votingAccuracy' ? 'Précision vote' :
+                                             condition.stat === 'votingFirst' ? 'Vote rapide' :
+                                             condition.stat === 'survivalDay1' ? 'Survie J1' :
+                                             condition.stat === 'winRateVillageois' ? 'Victoires Villageois' :
+                                             condition.stat === 'winRateLoup' ? 'Victoires Loup' :
+                                             condition.stat === 'winRateSolo' ? 'Victoires Solo' :
+                                             condition.stat === 'hunterAccuracy' ? 'Précision chasseur' :
+                                             condition.stat}:
+                                          </span>
+                                          <span className={`condition-category ${condition.category?.toLowerCase()}`}>
+                                            {condition.category}
+                                          </span>
+                                          {condition.actualPercentile !== undefined && (
+                                            <span className="condition-percentile">
+                                              (Top {(100 - condition.actualPercentile).toFixed(0)}%)
+                                            </span>
+                                          )}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             ))}
@@ -622,21 +657,6 @@ export function PlayerSelectionPage() {
                           </p>
                         </div>
                       )}
-                    </div>
-                  )}
-
-                  {/*   <button
-                          type="button"
-                          className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setAchievementFilter('modded');
-                          }}
-                          disabled={isModdedOnlyMode}
-                        >
-                          Parties moddées
-                        </button>
-                      </div>
                     </div>
                   )}
 
