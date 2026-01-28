@@ -63,7 +63,7 @@ export const TITLE_DEFINITIONS = {
     low: { title: 'Le·a Villageois·e Paresseux·se', emoji: '💤', description: 'Faible récolte en Villageois' }
   },
   lootLoup: {
-    high: { title: 'Le Loup Discret', emoji: '🐺', description: 'Récolte élevée en Loup (camouflage)' },
+    high: { title: 'Le Loup Discret', emoji: '🐺', description: 'Récolte élevée en Loup' },
     low: { title: 'Le Loup Impatient', emoji: '😤', description: 'Faible récolte en Loup' }
   },
 

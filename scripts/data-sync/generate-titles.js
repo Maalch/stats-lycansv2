@@ -698,22 +698,40 @@ function checkCampBalance(percentiles, type) {
   const loupWinRate = percentiles.winRateLoup?.value;
   const soloWinRate = percentiles.winRateSolo?.value;
   
-  // Need at least 5 camp win rates to determine balance
-  const validRates = [villWinRate, loupWinRate, soloWinRate].filter(r => r !== null && r !== undefined);
-  if (validRates.length < 5) return false;
+  // Expected win rates for each camp (baseline difficulty)
+  const EXPECTED_RATES = {
+    villageois: 52,
+    loup: 28,
+    solo: 20
+  };
+  
+  // Calculate normalized performance (difference from expected rate)
+  const normalizedRates = [];
+  if (villWinRate !== null && villWinRate !== undefined) {
+    normalizedRates.push(villWinRate - EXPECTED_RATES.villageois);
+  }
+  if (loupWinRate !== null && loupWinRate !== undefined) {
+    normalizedRates.push(loupWinRate - EXPECTED_RATES.loup);
+  }
+  if (soloWinRate !== null && soloWinRate !== undefined) {
+    normalizedRates.push(soloWinRate - EXPECTED_RATES.solo);
+  }
+  
+  // Need at least 2 camp win rates to determine balance
+  if (normalizedRates.length < 2) return false;
+  
+  const max = Math.max(...normalizedRates);
+  const min = Math.min(...normalizedRates);
+  const diff = max - min;
   
   if (type === 'BALANCED') {
-    // Balanced: low variance in win rates (within 20% difference)
-    const max = Math.max(...validRates);
-    const min = Math.min(...validRates);
-    return (max - min) <= 20;
+    // Balanced: low variance in normalized performance (within 10% difference)
+    return diff <= 10;
   }
   
   if (type === 'SPECIALIST') {
-    // Specialist: high variance in win rates (>30% difference)
-    const max = Math.max(...validRates);
-    const min = Math.min(...validRates);
-    return (max - min) > 30;
+    // Specialist: high variance in normalized performance (>15% difference)
+    return diff > 15;
   }
   
   return false;
