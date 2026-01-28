@@ -78,7 +78,7 @@ const LYCAN_SCHEMA = {
       ACTIONNAME: 'ActionName - Métier/Pouvoir/Rôle/Meeting', //Name of the action (power)
       ACTIONNAME2: 'ActionName - Effet/Objet/Potion', //Name of the action (object)
       TARGET: 'Target', //Name of the target player (may be empty if action without target, like Transform)
-      TIMING: 'Timing', //Timing of the action, formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number
+      TIMING: 'Timing - Début', //Timing of the action, formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number
       TIMINGEND: 'Timing - Fin', //End of action, , formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number.  Maybe be empty if TIMINGSTART is filled
     }
   },

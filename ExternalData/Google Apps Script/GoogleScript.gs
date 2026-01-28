@@ -136,7 +136,7 @@ function test_getRawBRData() {
  */
 function debug_getGameById() {
   try {
-    var testGameId = 551; // Change this to test different games
+    var testGameId = 627; // Change this to test different games
     Logger.log("=== DEBUG: Exporting Game ID " + testGameId + " ===");
     
     // Get all required data (same as getRawGameDataInNewFormat)
@@ -154,6 +154,9 @@ function debug_getGameById() {
     
     var votesData = getLycanSheetData(LYCAN_SCHEMA.VOTES.SHEET);
     var votesValues = votesData.values;
+    
+    var actionsData = getLycanSheetData(LYCAN_SCHEMA.ACTIONS.SHEET);
+    var actionsValues = actionsData.values;
     
     var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
     var playersValues = playersData.values;
@@ -191,6 +194,9 @@ function debug_getGameById() {
     
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
+    
+    var actionsHeaders = actionsValues ? actionsValues[0] : [];
+    var actionsDataRows = actionsValues ? actionsValues.slice(1) : [];
     
     var clipsHeaders = clipsValues ? clipsValues[0] : [];
     var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
@@ -320,7 +326,7 @@ function debug_getGameById() {
           gameRecord.LegacyData.PlayerVODs[playerId] = playerDetails.vod;
         }
         
-        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap);
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, playerIdMap);
       });
       
       // Add clips for this game
@@ -924,11 +930,7 @@ function getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows
         actions.push({
           Date: null, // Date not available in legacy data
           Timing: timing.toString().trim(),
-          Position: {
-            x: 0,
-            y: 0,
-            z: 0
-          }, // Position not available in legacy data
+          Position: null,
           ActionType: actionType.toString().trim(),
           ActionName: combinedActionName,
           ActionTarget: target && target.toString().trim() !== '' ? target.toString().trim() : null
