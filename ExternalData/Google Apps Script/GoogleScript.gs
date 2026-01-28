@@ -564,6 +564,10 @@ function getRawGameDataInNewFormat() {
     var votesData = getLycanSheetData(LYCAN_SCHEMA.VOTES.SHEET);
     var votesValues = votesData.values;
     
+    // Get actions data
+    var actionsData = getLycanSheetData(LYCAN_SCHEMA.ACTIONS.SHEET);
+    var actionsValues = actionsData.values;
+    
     // Get players data for Steam IDs
     var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
     var playersValues = playersData.values;
@@ -601,6 +605,9 @@ function getRawGameDataInNewFormat() {
     
     var votesHeaders = votesValues ? votesValues[0] : [];
     var votesDataRows = votesValues ? votesValues.slice(1) : [];
+    
+    var actionsHeaders = actionsValues ? actionsValues[0] : [];
+    var actionsDataRows = actionsValues ? actionsValues.slice(1) : [];
     
     var clipsHeaders = clipsValues ? clipsValues[0] : [];
     var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
@@ -713,7 +720,7 @@ function getRawGameDataInNewFormat() {
           gameRecord.LegacyData.PlayerVODs[playerId] = playerDetails.vod;
         }
         
-        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap);
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, playerIdMap);
       });   
       
       // Add clips for this game
@@ -741,7 +748,7 @@ function getRawGameDataInNewFormat() {
  * Helper function to build player stats from legacy data using pre-fetched player details
  * This version avoids duplicate calls to getPlayerDetailsForGame
  */
-function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, playerIdMap) {
+function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, playerIdMap) {
   var playerStats = {
     ID: playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null,
     Username: playerName,
@@ -756,7 +763,11 @@ function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, p
     DeathType: determineDeathType(playerDetails),
     KillerName: determineKillerName(playerDetails),
     Victorious: isPlayerVictorious(playerName, gameRow, gameHeaders),
-    Votes: getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows)
+    Votes: getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows),
+    SecondsTalkedOutsideMeeting: 0, // Not available in legacy data
+    SecondsTalkedDuringMeeting: 0, // Not available in legacy data
+    TotalCollectedLoot: null, // Not available in legacy data
+    Actions: getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows)
   };
   
   return playerStats;
@@ -870,6 +881,63 @@ function getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows) {
   });
   
   return votes;
+}
+
+/**
+ * Helper function to get actions for a specific game and player
+ * Returns an array of actions with timing, position, type, name, and target
+ */
+function getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows) {
+  if (!actionsDataRows || actionsDataRows.length === 0) {
+    return [];
+  }
+  
+  var actions = [];
+  
+  // Find all action rows matching this player and game
+  actionsDataRows.forEach(function(row) {
+    var rowGameId = row[findColumnIndex(actionsHeaders, LYCAN_SCHEMA.ACTIONS.COLS.GAMEID)];
+    var rowPlayer = row[findColumnIndex(actionsHeaders, LYCAN_SCHEMA.ACTIONS.COLS.PLAYER)];
+    
+    if (rowGameId == gameId && rowPlayer === playerName) {
+      var timing = row[findColumnIndex(actionsHeaders, LYCAN_SCHEMA.ACTIONS.COLS.TIMING)];
+      var actionType = row[findColumnIndex(actionsHeaders, LYCAN_SCHEMA.ACTIONS.COLS.ACTIONTYPE)];
+      var actionName = row[findColumnIndex(actionsHeaders, LYCAN_SCHEMA.ACTIONS.COLS.ACTIONNAME)];
+      var actionName2 = row[findColumnIndex(actionsHeaders, LYCAN_SCHEMA.ACTIONS.COLS.ACTIONNAME2)];
+      var target = row[findColumnIndex(actionsHeaders, LYCAN_SCHEMA.ACTIONS.COLS.TARGET)];
+      
+      // Combine ActionName and ActionName2 if both exist
+      var combinedActionName = null;
+      if (actionName && actionName.toString().trim() !== '') {
+        combinedActionName = actionName.toString().trim();
+      }
+      if (actionName2 && actionName2.toString().trim() !== '') {
+        if (combinedActionName) {
+          combinedActionName = combinedActionName + ' - ' + actionName2.toString().trim();
+        } else {
+          combinedActionName = actionName2.toString().trim();
+        }
+      }
+      
+      // Only add actions that have at least a timing and action type
+      if (timing && timing.toString().trim() !== '' && actionType && actionType.toString().trim() !== '') {
+        actions.push({
+          Date: null, // Date not available in legacy data
+          Timing: timing.toString().trim(),
+          Position: {
+            x: 0,
+            y: 0,
+            z: 0
+          }, // Position not available in legacy data
+          ActionType: actionType.toString().trim(),
+          ActionName: combinedActionName,
+          ActionTarget: target && target.toString().trim() !== '' ? target.toString().trim() : null
+        });
+      }
+    }
+  });
+  
+  return actions;
 }
 
 /**
