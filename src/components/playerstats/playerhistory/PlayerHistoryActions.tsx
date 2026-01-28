@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
 import { useCombinedFilteredRawData, type Action } from '../../../hooks/useCombinedRawData';
-import { useThemeAdjustedLycansColorScheme } from '../../../types/api';
+import { useJoueursData } from '../../../hooks/useJoueursData';
+import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { CHART_LIMITS } from '../../../config/chartConstants';
 
@@ -63,7 +64,9 @@ interface ActionStatistics {
 
 export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryActionsProps) {
   const { gameData: filteredGameData } = useCombinedFilteredRawData();
+  const { joueursData } = useJoueursData();
   const lycansColors = useThemeAdjustedLycansColorScheme();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Calculate action statistics for the selected player
   const actionStatistics = useMemo<ActionStatistics>(() => {
@@ -462,10 +465,10 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                     }}
                   />
                   <Bar dataKey="count" fill={lycansColors['Chasseur'] || 'var(--chart-color-2)'}>
-                    {actionStatistics.hunterTargets.map((_, index) => (
+                    {actionStatistics.hunterTargets.map((entry, index) => (
                       <Cell 
                         key={`cell-hunter-${index}`} 
-                        fill={lycansColors['Chasseur'] || `hsl(${120 + index * 15}, 60%, 45%)`}
+                        fill={playersColor[entry.target] || lycansColors['Chasseur'] || `hsl(${120 + index * 15}, 60%, 45%)`}
                       />
                     ))}
                   </Bar>

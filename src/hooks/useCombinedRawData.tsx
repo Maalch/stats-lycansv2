@@ -624,7 +624,7 @@ function normalizePlayerStat(playerStat: PlayerStat, joueursData?: any): PlayerS
   return {
     ...playerStat,
     Username: canonicalName,
-    // KillerName and Vote targets will be resolved in the second pass of normalizeGameLogEntry
+    // KillerName, Vote targets, and Action targets will be resolved in the second pass of normalizeGameLogEntry
     // using the name mapping built from all players in the game
     KillerName: playerStat.KillerName,
     Votes: playerStat.Votes || []
@@ -661,7 +661,7 @@ function normalizeGameLogEntry(game: GameLogEntry, joueursData?: any): GameLogEn
     }
   });
   
-  // Second pass: fix KillerName and Vote targets using the name map
+  // Second pass: fix KillerName, Vote targets, and Action targets using the name map
   const fullyNormalizedPlayers = normalizedPlayers.map(player => {
     let killerName = player.KillerName;
     if (killerName && nameMap.has(killerName.toLowerCase())) {
@@ -678,10 +678,22 @@ function normalizeGameLogEntry(game: GameLogEntry, joueursData?: any): GameLogEn
       return vote;
     });
     
+    // Normalize ActionTarget in Actions array
+    const normalizedActions = player.Actions ? player.Actions.map(action => {
+      if (!action.ActionTarget) return action;
+      
+      const lowerTarget = action.ActionTarget.toLowerCase();
+      if (nameMap.has(lowerTarget)) {
+        return { ...action, ActionTarget: nameMap.get(lowerTarget)! };
+      }
+      return action;
+    }) : undefined;
+    
     return {
       ...player,
       KillerName: killerName,
-      Votes: normalizedVotes
+      Votes: normalizedVotes,
+      Actions: normalizedActions
     };
   });
   
