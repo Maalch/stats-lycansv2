@@ -767,13 +767,16 @@ function generateCombinationTitles(percentiles) {
   // Map stat names used in conditions to percentile keys
   const conditionStatMap = {
     talking: 'talkingPer60Min',
+    talkingOutsideMeeting: 'talkingOutsidePer60Min',
     talkingDuringMeeting: 'talkingDuringPer60Min',
     loot: 'lootPer60Min',
+    lootVillageois: 'lootVillageoisPer60Min',
+    lootLoup: 'lootLoupPer60Min',
     killRate: 'killRate',
     survival: 'survivalRate',
     survivalDay1: 'survivalDay1Rate',
     votingAggressive: 'votingAggressiveness',
-    votingFirst: 'votingFirstRate',
+    votingFirst: 'votingFirst',
     votingAccuracy: 'votingAccuracy',
     hunterAccuracy: 'hunterAccuracy',
     winRate: 'winRate',
