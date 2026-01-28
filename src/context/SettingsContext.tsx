@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
+import { replaceUrlState, parseUrlState, buildUrlSearch, type UrlState } from '../utils/urlManager';
 
 
 export type GameFilter = 'all' | 'modded' | 'non-modded';
@@ -81,57 +82,55 @@ const defaultSettings: SettingsState = {
   selectedPlayerSelectionView: undefined,
 };
 
-// Helper functions for URL parameters
-function parseSettingsFromUrl(): Partial<SettingsState> {
-  const urlParams = new URLSearchParams(window.location.search);
+// Helper function to convert UrlState to SettingsState
+function urlStateToSettings(urlState: UrlState): Partial<SettingsState> {
   const settings: Partial<SettingsState> = {};
 
   // Always use independent filters (the default now)
   settings.useIndependentFilters = true;
   
-  // Parse independent filters (support both new-style and legacy URL parameters)
-  const hasNewStyle = urlParams.has('gameTypeEnabled') || urlParams.has('dateRangeEnabled') || urlParams.has('mapNameEnabled');
+  // Parse independent filters
+  const hasNewStyle = urlState.gameTypeEnabled !== undefined || urlState.dateRangeEnabled !== undefined || urlState.mapNameEnabled !== undefined;
   
   let independentFilters: IndependentFilters;
   
   if (hasNewStyle) {
     // New-style URL parameters
     independentFilters = {
-      gameTypeEnabled: urlParams.get('gameTypeEnabled') === 'true',
-      gameFilter: (urlParams.get('gameFilter') as GameFilter) || 'all',
-      dateRangeEnabled: urlParams.get('dateRangeEnabled') === 'true',
+      gameTypeEnabled: urlState.gameTypeEnabled || false,
+      gameFilter: (urlState.gameFilter as GameFilter) || 'all',
+      dateRangeEnabled: urlState.dateRangeEnabled || false,
       dateRange: {
-        start: urlParams.get('dateStart') || null,
-        end: urlParams.get('dateEnd') || null,
+        start: urlState.dateStart || null,
+        end: urlState.dateEnd || null,
       },
-      mapNameEnabled: urlParams.get('mapNameEnabled') === 'true',
-      mapNameFilter: (urlParams.get('mapNameFilter') as MapNameFilter) || 'all',
+      mapNameEnabled: urlState.mapNameEnabled || false,
+      mapNameFilter: (urlState.mapNameFilter as MapNameFilter) || 'all',
       playerFilter: {
-        mode: (urlParams.get('playerFilterMode') as PlayerFilterMode) || 'none',
-        players: urlParams.get('players') 
-          ? decodeURIComponent(urlParams.get('players')!).split(',').map(p => p.trim()).filter(p => p)
+        mode: (urlState.playerFilterMode as PlayerFilterMode) || 'none',
+        players: urlState.players 
+          ? decodeURIComponent(urlState.players).split(',').map(p => p.trim()).filter(p => p)
           : [],
       },
     };
   } else {
     // Legacy URL parameters - convert to independent filters for backward compatibility
-    const legacyFilterMode = urlParams.get('filterMode');
-    const gameFilter = (urlParams.get('gameFilter') as GameFilter) || 'all';
-    const mapNameFilter = (urlParams.get('mapNameFilter') as MapNameFilter) || 'all';
-    const dateStart = urlParams.get('dateStart');
-    const dateEnd = urlParams.get('dateEnd');
-    const playerFilterMode = (urlParams.get('playerFilterMode') as PlayerFilterMode) || 'none';
-    const playersList = urlParams.get('players');
+    const gameFilter = (urlState.gameFilter as GameFilter) || 'all';
+    const mapNameFilter = (urlState.mapNameFilter as MapNameFilter) || 'all';
+    const dateStart = urlState.dateStart;
+    const dateEnd = urlState.dateEnd;
+    const playerFilterMode = (urlState.playerFilterMode as PlayerFilterMode) || 'none';
+    const playersList = urlState.players;
     
     independentFilters = {
-      gameTypeEnabled: legacyFilterMode === 'gameType' && gameFilter !== 'all',
+      gameTypeEnabled: gameFilter !== 'all',
       gameFilter: gameFilter,
-      dateRangeEnabled: legacyFilterMode === 'dateRange' && (!!dateStart || !!dateEnd),
+      dateRangeEnabled: !!dateStart || !!dateEnd,
       dateRange: {
         start: dateStart || null,
         end: dateEnd || null,
       },
-      mapNameEnabled: legacyFilterMode === 'mapName' && mapNameFilter !== 'all',
+      mapNameEnabled: mapNameFilter !== 'all',
       mapNameFilter: mapNameFilter,
       playerFilter: {
         mode: playerFilterMode,
@@ -156,40 +155,41 @@ function parseSettingsFromUrl(): Partial<SettingsState> {
   settings.independentFilters = independentFilters;
 
   // Parse highlighted player
-  const highlightedPlayer = urlParams.get('highlightedPlayer');
-  if (highlightedPlayer) {
-    settings.highlightedPlayer = decodeURIComponent(highlightedPlayer);
+  if (urlState.highlightedPlayer) {
+    settings.highlightedPlayer = decodeURIComponent(urlState.highlightedPlayer);
   }
   
   // Parse data source
-  const dataSource = urlParams.get('dataSource');
-  if (dataSource === 'discord') {
+  if (urlState.dataSource === 'discord') {
     settings.dataSource = 'discord';
-  } else {
+  } else if (urlState.dataSource) {
     settings.dataSource = 'main';
   }
   
   // Parse tab and subtab
-  const tab = urlParams.get('tab');
-  if (tab) {
-    settings.tab = tab;
+  if (urlState.tab) {
+    settings.tab = urlState.tab;
   }
-  const subtab = urlParams.get('subtab');
-  if (subtab) {
-    settings.subtab = subtab;
+  if (urlState.subtab) {
+    settings.subtab = urlState.subtab;
   }
   
   // Parse selectedPlayerSelectionView
-  const playerSelectionView = urlParams.get('playerSelectionView');
-  if (playerSelectionView && ['achievements', 'evolution', 'camps', 'kills', 'roles', 'deathmap', 'talkingtime'].includes(playerSelectionView)) {
-    settings.selectedPlayerSelectionView = playerSelectionView as 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime';
+  if (urlState.playerSelectionView && ['achievements', 'titles', 'evolution', 'camps', 'kills', 'roles', 'deathmap', 'talkingtime'].includes(urlState.playerSelectionView)) {
+    settings.selectedPlayerSelectionView = urlState.playerSelectionView as 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime';
   }
 
   return settings;
 }
 
+// Helper function to parse settings from current URL
+function parseSettingsFromUrl(): Partial<SettingsState> {
+  const urlState = parseUrlState();
+  return urlStateToSettings(urlState);
+}
+
 function updateUrlFromSettings(settings: SettingsState) {
-  const urlParams = new URLSearchParams();
+  const urlState: Partial<UrlState> = {};
   
   // Always use independent filters format
   if (settings.independentFilters) {
@@ -197,63 +197,62 @@ function updateUrlFromSettings(settings: SettingsState) {
     
     // Only add parameters for enabled filters or non-default values
     if (filters.gameTypeEnabled) {
-      urlParams.set('gameTypeEnabled', 'true');
+      urlState.gameTypeEnabled = true;
       if (filters.gameFilter !== 'all') {
-        urlParams.set('gameFilter', filters.gameFilter);
+        urlState.gameFilter = filters.gameFilter;
       }
     }
     
     if (filters.dateRangeEnabled) {
-      urlParams.set('dateRangeEnabled', 'true');
-      if (filters.dateRange.start) urlParams.set('dateStart', filters.dateRange.start);
-      if (filters.dateRange.end) urlParams.set('dateEnd', filters.dateRange.end);
+      urlState.dateRangeEnabled = true;
+      if (filters.dateRange.start) urlState.dateStart = filters.dateRange.start;
+      if (filters.dateRange.end) urlState.dateEnd = filters.dateRange.end;
     }
     
     if (filters.mapNameEnabled) {
-      urlParams.set('mapNameEnabled', 'true');
+      urlState.mapNameEnabled = true;
       if (filters.mapNameFilter !== 'all') {
-        urlParams.set('mapNameFilter', filters.mapNameFilter);
+        urlState.mapNameFilter = filters.mapNameFilter;
       }
     }
     
     if (filters.playerFilter.mode !== 'none') {
-      urlParams.set('playerFilterMode', filters.playerFilter.mode);
+      urlState.playerFilterMode = filters.playerFilter.mode;
       if (filters.playerFilter.players.length > 0) {
-        urlParams.set('players', encodeURIComponent(filters.playerFilter.players.join(',')));
+        urlState.players = encodeURIComponent(filters.playerFilter.players.join(','));
       }
     }
   }
   
   // Highlighted player
   if (settings.highlightedPlayer && settings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
-    urlParams.set('highlightedPlayer', encodeURIComponent(settings.highlightedPlayer));
+    urlState.highlightedPlayer = encodeURIComponent(settings.highlightedPlayer);
   }
   
   // Data source
   if (settings.dataSource && settings.dataSource !== defaultSettings.dataSource) {
-    urlParams.set('dataSource', settings.dataSource);
+    urlState.dataSource = settings.dataSource;
   }
   
   // Tab and subtab
   if (settings.tab) {
-    urlParams.set('tab', settings.tab);
+    urlState.tab = settings.tab;
   }
   if (settings.subtab) {
-    urlParams.set('subtab', settings.subtab);
+    urlState.subtab = settings.subtab;
   }
   
   // PlayerSelection view type (automatically add tab if not set)
   if (settings.selectedPlayerSelectionView && settings.selectedPlayerSelectionView !== 'achievements') {
     // Ensure tab parameter is present when playerSelectionView is set
     if (!settings.tab) {
-      urlParams.set('tab', 'playerSelection');
+      urlState.tab = 'playerSelection';
     }
-    urlParams.set('playerSelectionView', settings.selectedPlayerSelectionView);
+    urlState.playerSelectionView = settings.selectedPlayerSelectionView;
   }
   
-  // Update URL without triggering page reload
-  const newUrl = urlParams.toString() ? `${window.location.pathname}?${urlParams.toString()}` : window.location.pathname;
-  window.history.replaceState({}, '', newUrl);
+  // Update URL without triggering page reload (replaceState for silent update)
+  replaceUrlState(urlState);
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -316,63 +315,64 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
   const generateUrlWithSettings = (settingsOverride?: Partial<SettingsState>): string => {
     const targetSettings = { ...settings, ...settingsOverride };
-    const urlParams = new URLSearchParams();
+    const urlState: Partial<UrlState> = {};
     
     // Always use independent filters format
     if (targetSettings.independentFilters) {
       const filters = targetSettings.independentFilters;
       
       if (filters.gameTypeEnabled) {
-        urlParams.set('gameTypeEnabled', 'true');
+        urlState.gameTypeEnabled = true;
         if (filters.gameFilter !== 'all') {
-          urlParams.set('gameFilter', filters.gameFilter);
+          urlState.gameFilter = filters.gameFilter;
         }
       }
       
       if (filters.dateRangeEnabled) {
-        urlParams.set('dateRangeEnabled', 'true');
-        if (filters.dateRange.start) urlParams.set('dateStart', filters.dateRange.start);
-        if (filters.dateRange.end) urlParams.set('dateEnd', filters.dateRange.end);
+        urlState.dateRangeEnabled = true;
+        if (filters.dateRange.start) urlState.dateStart = filters.dateRange.start;
+        if (filters.dateRange.end) urlState.dateEnd = filters.dateRange.end;
       }
       
       if (filters.mapNameEnabled) {
-        urlParams.set('mapNameEnabled', 'true');
+        urlState.mapNameEnabled = true;
         if (filters.mapNameFilter !== 'all') {
-          urlParams.set('mapNameFilter', filters.mapNameFilter);
+          urlState.mapNameFilter = filters.mapNameFilter;
         }
       }
       
       if (filters.playerFilter.mode !== 'none') {
-        urlParams.set('playerFilterMode', filters.playerFilter.mode);
+        urlState.playerFilterMode = filters.playerFilter.mode;
         if (filters.playerFilter.players.length > 0) {
-          urlParams.set('players', encodeURIComponent(filters.playerFilter.players.join(',')));
+          urlState.players = encodeURIComponent(filters.playerFilter.players.join(','));
         }
       }
     }
     
     if (targetSettings.highlightedPlayer && targetSettings.highlightedPlayer !== defaultSettings.highlightedPlayer) {
-      urlParams.set('highlightedPlayer', encodeURIComponent(targetSettings.highlightedPlayer));
+      urlState.highlightedPlayer = encodeURIComponent(targetSettings.highlightedPlayer);
     }
     
     // Tab and subtab
     if (targetSettings.tab) {
-      urlParams.set('tab', targetSettings.tab);
+      urlState.tab = targetSettings.tab;
     }
     if (targetSettings.subtab) {
-      urlParams.set('subtab', targetSettings.subtab);
+      urlState.subtab = targetSettings.subtab;
     }
     
     // PlayerSelection view type (automatically add tab if not set)
     if (targetSettings.selectedPlayerSelectionView && targetSettings.selectedPlayerSelectionView !== 'achievements') {
       // Ensure tab parameter is present when playerSelectionView is set
       if (!targetSettings.tab) {
-        urlParams.set('tab', 'playerSelection');
+        urlState.tab = 'playerSelection';
       }
-      urlParams.set('playerSelectionView', targetSettings.selectedPlayerSelectionView);
+      urlState.playerSelectionView = targetSettings.selectedPlayerSelectionView;
     }
     
     const baseUrl = `${window.location.origin}${window.location.pathname}`;
-    return urlParams.toString() ? `${baseUrl}?${urlParams.toString()}` : baseUrl;
+    const search = buildUrlSearch(urlState);
+    return search ? `${baseUrl}?${search}` : baseUrl;
   };
 
   return (

@@ -7,6 +7,7 @@ import { SettingsBadge } from './components/common/SettingsBadge';
 import { useLastRecordedGameDate } from './hooks/useLastRecordedGameDate';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { LoadingSkeleton } from './components/common/LoadingSkeleton';
+import { mergeUrlState } from './utils/urlManager';
 import './App.css';
 
 // Lazy load each dashboard section
@@ -275,21 +276,19 @@ function MainApp() {
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('evolution');
   const [selectedBRStat, setSelectedBRStat] = useState('brParticipations');
-  const [currentHash, setCurrentHash] = useState(window.location.hash);
   const [showChangelog, setShowChangelog] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   // Helper function to update URL with pushState when tabs change
   const updateTabUrl = (tab: string, subtab: string | null = null) => {
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('tab', tab);
-    if (subtab) {
-      urlParams.set('subtab', subtab);
-    } else {
-      urlParams.delete('subtab');
-    }
-    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-    window.history.pushState({}, '', newUrl);
+    mergeUrlState({
+      tab,
+      subtab: subtab || undefined,
+      view: undefined, // Clear navigation view when changing tabs
+      selectedPlayer: undefined,
+      selectedGame: undefined,
+      fromComponent: undefined,
+    }, 'push'); // Use pushState to create history entry
   };
 
   // Helper function to format the subtitle text
@@ -302,15 +301,6 @@ function MainApp() {
     }
     return "";
   };
-
-  // Listen for hash changes
-  useEffect(() => {
-    const handleHashChange = () => {
-      setCurrentHash(window.location.hash);
-    };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
 
   // Sync URL tab params to component state on mount and browser navigation
   useEffect(() => {
@@ -344,52 +334,6 @@ function MainApp() {
       clearTabNavigation();
     }
   }, [requestedTab, clearTabNavigation]);
-
-  // Check if we're in TestZone route (hash-based)
-  const isTestZone = currentHash === '#/TestZone';
-
-  // If we're in TestZone, show test components
-  if (isTestZone) {
-   
-    return (
-      <div className="app-container">
-        <img
-          className="lycans-banner"
-          src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
-          alt="Lycans Banner"
-        />
-        <div className="main-container">
-          <div className="lycans-dashboard-container">
-            <header className="lycans-dashboard-header">
-              <h1>Zone de Test - Statistiques Lycans</h1>
-              <p>Composants en développement</p>
-              <button 
-                onClick={() => {
-                  window.location.hash = '';
-                }}
-                className="lycans-back-button"
-                style={{ marginTop: '10px', padding: '8px 16px', cursor: 'pointer' }}
-              >
-                ← Retour au dashboard principal
-              </button>
-            </header>
-            
-            
-            <div className="lycans-dashboard-section">
-              <SettingsIndicator />
-              <div className="lycans-dashboard-content">
-                <ErrorBoundary>
-                  <Suspense fallback={<LoadingSkeleton type="chart" height="600px" />}>
-                    <DeathLocationHeatmap />
-                  </Suspense>
-                </ErrorBoundary>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // If we're in game details view, show that instead of the normal tabs
   if (currentView === 'gameDetails') {

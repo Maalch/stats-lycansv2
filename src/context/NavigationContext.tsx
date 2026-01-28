@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { ReactNode } from 'react';
+import { mergeUrlState, parseUrlState } from '../utils/urlManager';
 
 export interface PlayerPairFilter {
   selectedPlayerPair: string[]; // Array of exactly 2 players (e.g., ["Player1", "Player2"])
@@ -152,20 +153,104 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const [navigationState, setNavigationState] = useState<NavigationState>({});
   const [requestedTab, setRequestedTab] = useState<{ mainTab: string; subTab?: string } | undefined>();
 
+  // Initialize view from URL on mount
+  useEffect(() => {
+    const urlState = parseUrlState();
+    if (urlState.view === 'gameDetails') {
+      setCurrentView('gameDetails');
+      // Restore navigation filters from URL
+      const filters: NavigationFilters = {};
+      if (urlState.selectedPlayer) filters.selectedPlayer = decodeURIComponent(urlState.selectedPlayer);
+      if (urlState.selectedGame) filters.selectedGame = urlState.selectedGame;
+      if (urlState.fromComponent) filters.fromComponent = decodeURIComponent(urlState.fromComponent);
+      setNavigationFilters(filters);
+    }
+  }, []);
+
+  // Sync state from URL to context
+  const syncFromUrl = useCallback(() => {
+    const urlState = parseUrlState();
+    if (urlState.view === 'gameDetails') {
+      setCurrentView('gameDetails');
+      // Restore navigation filters from URL
+      const filters: NavigationFilters = {};
+      if (urlState.selectedPlayer) filters.selectedPlayer = decodeURIComponent(urlState.selectedPlayer);
+      if (urlState.selectedGame) filters.selectedGame = urlState.selectedGame;
+      if (urlState.fromComponent) filters.fromComponent = decodeURIComponent(urlState.fromComponent);
+      setNavigationFilters(filters);
+    } else {
+      // No view in URL means we're back to the main view
+      setCurrentView('');
+      setNavigationFilters({});
+      
+      // CRITICAL FIX: If the URL has tab=gameDetails without view=gameDetails,
+      // it means we navigated back but the tab param is stale.
+      // Replace it with a sensible default tab.
+      if (urlState.tab === 'gameDetails') {
+        mergeUrlState({ tab: 'playerSelection' }, 'replace');
+      }
+    }
+  }, []); // No dependencies - always sync directly from URL
+
+  // Listen for popstate events (browser back/forward)
+  useEffect(() => {
+    window.addEventListener('popstate', syncFromUrl);
+    return () => window.removeEventListener('popstate', syncFromUrl);
+  }, [syncFromUrl]);
+
+  // Listen for custom urlchange events (when URL is updated programmatically)
+  useEffect(() => {
+    const handleUrlChange = () => {
+      syncFromUrl();
+    };
+
+    window.addEventListener('urlchange', handleUrlChange);
+    return () => window.removeEventListener('urlchange', handleUrlChange);
+  }, [syncFromUrl]);
+
   const navigateToGameDetails = useCallback((filters: NavigationFilters = {}) => {
     setNavigationFilters(filters);
     setCurrentView('gameDetails');
+    
+    // Persist navigation to URL with pushState (creates history entry)
+    mergeUrlState({
+      view: 'gameDetails',
+      selectedPlayer: filters.selectedPlayer ? encodeURIComponent(filters.selectedPlayer) : undefined,
+      selectedGame: filters.selectedGame,
+      fromComponent: filters.fromComponent ? encodeURIComponent(filters.fromComponent) : undefined,
+    }, 'push');
   }, []);
 
   const navigateBack = useCallback(() => {
-    setCurrentView('');
-    setNavigationFilters({});
+    // Only use browser's back functionality
+    // The popstate event will automatically sync state from URL
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // Fallback if no history - manually clear navigation
+      setCurrentView('');
+      setNavigationFilters({});
+      mergeUrlState({
+        view: undefined,
+        selectedPlayer: undefined,
+        selectedGame: undefined,
+        fromComponent: undefined,
+      }, 'replace');
+    }
   }, []);
 
   const clearNavigation = useCallback(() => {
     setCurrentView('');
     setNavigationFilters({});
     setNavigationState({});
+    
+    // Clear view from URL (silently update)
+    mergeUrlState({
+      view: undefined,
+      selectedPlayer: undefined,
+      selectedGame: undefined,
+      fromComponent: undefined,
+    }, 'replace');
   }, []);
 
   const updateNavigationState = useCallback((state: Partial<NavigationState>) => {
