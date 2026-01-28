@@ -73,7 +73,8 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
             <div className="title-info">
               <div className="title-name">{title.title}</div>
               <div className="title-description">{title.description}</div>
-              {title.percentile !== undefined && (
+              {/* Only show global percentile for non-combination titles */}
+              {title.percentile !== undefined && title.type !== 'combination' && (
                 <div className="title-percentile">
                   Top {(100 - title.percentile).toFixed(0)}%
                 </div>
@@ -97,9 +98,12 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
                       <span className="condition-stat">
                         {condition.stat === 'winRate' ? 'Victoires' :
                          condition.stat === 'loot' ? 'Récolte' :
+                         condition.stat === 'lootVillageois' ? 'Récolte (Villageois)' :
+                         condition.stat === 'lootLoup' ? 'Récolte (Loup)' :
                          condition.stat === 'survival' ? 'Survie' :
                          condition.stat === 'killRate' ? 'Kills' :
                          condition.stat === 'talking' ? 'Parole' :
+                         condition.stat === 'talkingOutsideMeeting' ? 'Parole (hors débats)' :
                          condition.stat === 'talkingDuringMeeting' ? 'Parole (meeting)' :
                          condition.stat === 'votingAggressive' ? 'Vote agressif' :
                          condition.stat === 'votingAccuracy' ? 'Précision vote' :
