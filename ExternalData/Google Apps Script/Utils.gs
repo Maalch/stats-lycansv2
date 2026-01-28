@@ -69,6 +69,20 @@ const LYCAN_SCHEMA = {
       SELECTEDVOTE: 'Choix', //True/false if the VOTE is the selected vote type or not for that meeting
     }
   },
+  ACTIONS: {
+    SHEET: 'Actions', //list of objects usage and power/role usage
+    COLS: {
+      GAMEID: 'Game', //Game ID (unique), same as Game v2 sheet
+      PLAYER: 'Joueur', //Name of the player
+      ACTIONTYPE: 'ActionType', //Type of action: UsePower, UsePowerDeath, UseGadget, UsePortal, DrinkPotion, HunterShoot, Transform, Untransform, VictimPower, VictimGadget, VictimPotion, VictimChaos, VictimHanté, Sabotage, Sauvetage, TransferBombe, UntransformInfecté, ChooseImitateur, NewMayor, ActionMayor, DestitutionMayor, ActionElector, KillWolf
+      ACTIONNAME: 'ActionName - Métier/Pouvoir/Rôle/Meeting', //Name of the action (power)
+      ACTIONNAME2: 'ActionName - Effet/Objet/Potion', //Name of the action (object)
+      TARGET: 'Target', //Name of the target player (may be empty if action without target, like Transform)
+      TIMING: 'Timing', //Timing of the action, formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number
+      TIMINGSTART: 'Timing - Début', //Start of action, , formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number. Empty is TIMING is filled
+      TIMINGEND: 'Timing - Fin', //End of action, , formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number. Empty is TIMING is filled, maybe be empty if TIMINGSTART is filled
+    }
+  },
   CLIPS: {
     SHEET: 'Clips', //list of clips / best moments of games
     COLS: {
