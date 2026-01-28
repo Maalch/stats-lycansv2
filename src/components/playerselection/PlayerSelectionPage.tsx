@@ -15,6 +15,7 @@ import {
   PlayerHistoryCamp, 
   PlayerHistoryKills,
   PlayerHistoryRoles,
+  PlayerHistoryActions,
   PlayerHistoryDeathMap,
   PlayerHistoryTalkingTime,
   type GroupByMethod,
@@ -79,7 +80,7 @@ export function PlayerSelectionPage() {
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
   // Use URL/settings to restore view selection, fallback to navigationState, then 'achievements'
-  const [selectedView, setSelectedView] = useState<'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime'>(
+  const [selectedView, setSelectedView] = useState<'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions'>(
     settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView || 'achievements'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
@@ -217,7 +218,7 @@ export function PlayerSelectionPage() {
   };
 
   // Helper function to handle view changes and sync with navigation state and settings (for URL)
-  const handleViewChange = (newView: 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime') => {
+  const handleViewChange = (newView: 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'deathmap' | 'talkingtime' ) => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
     updateSettings({ selectedPlayerSelectionView: newView, tab: 'playerSelection' });
@@ -487,7 +488,13 @@ export function PlayerSelectionPage() {
                     >
                       Rôles
                     </button>
-
+                    <button
+                      type="button"
+                      className={`lycans-categorie-btn ${selectedView === 'actions' ? 'active' : ''}`}
+                      onClick={() => handleViewChange('actions')}
+                    >
+                      Actions
+                    </button>
                     <button
                       type="button"
                       className={`lycans-categorie-btn ${selectedView === 'kills' ? 'active' : ''}`}
@@ -714,6 +721,13 @@ export function PlayerSelectionPage() {
                     </div>
                   )}
 
+                  {/* Actions View */}
+                  {selectedView === 'actions' && (
+                    <div className="player-history-section">
+                      <PlayerHistoryActions selectedPlayerName={highlightedPlayerStats.name} />
+                    </div>
+                  )}
+
                   {/* Kills View */}
                   {selectedView === 'kills' && (
                     <div className="player-history-section">
@@ -734,6 +748,8 @@ export function PlayerSelectionPage() {
                       <PlayerHistoryTalkingTime selectedPlayerName={highlightedPlayerStats.name} />
                     </div>
                   )}
+
+
 
                   <button
                     type="button"
