@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-28T08:38:00.387Z",
+  "generatedAt": "2026-01-28T10:12:17.374Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -935,8 +935,7 @@
           "percentile": 6.451612903225806,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Flonflon"
+          "type": "basic"
         },
         {
           "id": "votingAggressive_extreme_high",
@@ -1623,6 +1622,29 @@
           ]
         },
         {
+          "id": "avocat",
+          "title": "L'Avocat·e",
+          "emoji": "⚖️",
+          "description": "Silencieux·se hors débats, éloquent·e en meeting",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 59.61538461538461,
+          "conditions": [
+            {
+              "stat": "talkingOutsideMeeting",
+              "category": "LOW",
+              "actualValue": 722.0082855263229,
+              "actualPercentile": 34.61538461538461
+            },
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "HIGH",
+              "actualValue": 355.0772090760051,
+              "actualPercentile": 84.61538461538461
+            }
+          ]
+        },
+        {
           "id": "participation_extreme_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -2006,6 +2028,29 @@
               "category": "HIGH",
               "actualValue": 37.3134328358209,
               "actualPercentile": 70.96774193548387
+            }
+          ]
+        },
+        {
+          "id": "citoyen_exemplaire",
+          "title": "Le·a Citoyen·ne Exemplaire",
+          "emoji": "👑",
+          "description": "Récolte et gagne en Villageois",
+          "priority": 13,
+          "type": "combination",
+          "percentile": 84.31257344300823,
+          "conditions": [
+            {
+              "stat": "lootVillageois",
+              "category": "HIGH",
+              "actualValue": 1373.228738986365,
+              "actualPercentile": 95.65217391304348
+            },
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 54.7085201793722,
+              "actualPercentile": 72.97297297297297
             }
           ]
         },
@@ -5175,6 +5220,29 @@
       "gamesPlayed": 122,
       "titles": [
         {
+          "id": "loup_repere",
+          "title": "Le Loup Repéré",
+          "emoji": "🔦",
+          "description": "Récolte en Loup mais se fait démasquer",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 49.298737727910236,
+          "conditions": [
+            {
+              "stat": "lootLoup",
+              "category": "HIGH",
+              "actualValue": 735.5446237532449,
+              "actualPercentile": 69.56521739130434
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "LOW",
+              "actualValue": 25.925925925925924,
+              "actualPercentile": 29.03225806451613
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
           "emoji": "🪦",
@@ -5322,16 +5390,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_low",
-        "title": "Le·a Maudit·e",
-        "emoji": "🪦",
-        "description": "Perd presque toujours",
-        "stat": "winRate",
-        "value": 29.5,
-        "percentile": 2.7027027027027026,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "loup_repere",
+        "title": "Le Loup Repéré",
+        "emoji": "🔦",
+        "description": "Récolte en Loup mais se fait démasquer",
+        "priority": 11,
+        "type": "combination",
+        "percentile": 49.298737727910236,
+        "conditions": [
+          {
+            "stat": "lootLoup",
+            "category": "HIGH",
+            "actualValue": 735.5446237532449,
+            "actualPercentile": 69.56521739130434
+          },
+          {
+            "stat": "winRateLoup",
+            "category": "LOW",
+            "actualValue": 25.925925925925924,
+            "actualPercentile": 29.03225806451613
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -5473,8 +5552,7 @@
           "percentile": 9.67741935483871,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Flonflon"
+          "type": "basic"
         },
         {
           "id": "talking_extreme_low",
@@ -5522,8 +5600,7 @@
           "percentile": 13.043478260869565,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "RomainJacques"
+          "type": "basic"
         },
         {
           "id": "participation_high",
@@ -6158,6 +6235,29 @@
       "gamesPlayed": 237,
       "titles": [
         {
+          "id": "abeille_ouvriere",
+          "title": "L'Abeille Ouvrière",
+          "emoji": "🐝",
+          "description": "Récolte bien en Villageois mais perd",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 48.88366627497062,
+          "conditions": [
+            {
+              "stat": "lootVillageois",
+              "category": "HIGH",
+              "actualValue": 1092.0430065950095,
+              "actualPercentile": 86.95652173913044
+            },
+            {
+              "stat": "winRateVillageois",
+              "category": "LOW",
+              "actualValue": 40.54054054054054,
+              "actualPercentile": 10.81081081081081
+            }
+          ]
+        },
+        {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
           "emoji": "🪦",
@@ -6167,8 +6267,7 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Craco"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -6342,16 +6441,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRateLoup_extreme_low",
-        "title": "Loup Débutant·e",
-        "emoji": "🐩",
-        "description": "Mauvais·e en camp Loup",
-        "stat": "winRateLoup",
-        "value": 21.73913043478261,
-        "percentile": 12.903225806451612,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "abeille_ouvriere",
+        "title": "L'Abeille Ouvrière",
+        "emoji": "🐝",
+        "description": "Récolte bien en Villageois mais perd",
+        "priority": 11,
+        "type": "combination",
+        "percentile": 48.88366627497062,
+        "conditions": [
+          {
+            "stat": "lootVillageois",
+            "category": "HIGH",
+            "actualValue": 1092.0430065950095,
+            "actualPercentile": 86.95652173913044
+          },
+          {
+            "stat": "winRateVillageois",
+            "category": "LOW",
+            "actualValue": 40.54054054054054,
+            "actualPercentile": 10.81081081081081
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -6521,6 +6631,29 @@
               "category": "HIGH",
               "actualValue": 20.160857908847184,
               "actualPercentile": 91.8918918918919
+            }
+          ]
+        },
+        {
+          "id": "cowboy",
+          "title": "Le·a Cow-Boy",
+          "emoji": "🤠",
+          "description": "Vote vite et souvent",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 92.61261261261262,
+          "conditions": [
+            {
+              "stat": "votingAggressive",
+              "category": "HIGH",
+              "actualValue": 20.160857908847184,
+              "actualPercentile": 91.8918918918919
+            },
+            {
+              "stat": "votingFirst",
+              "category": "HIGH",
+              "actualValue": 73.33333333333333,
+              "actualPercentile": 93.33333333333333
             }
           ]
         },
@@ -7205,8 +7338,7 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Craco"
+          "type": "basic"
         },
         {
           "id": "winRateLoup_extreme_low",
@@ -7218,8 +7350,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Flonflon"
+          "type": "basic"
         },
         {
           "id": "hunterAccuracy_extreme_low",
@@ -7563,6 +7694,29 @@
       "gamesPlayed": 155,
       "titles": [
         {
+          "id": "conspirateur",
+          "title": "Le·a Conspirateur·rice",
+          "emoji": "🗨️",
+          "description": "Bavard·e hors meeting, silencieux·se pendant",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 50.00000000000001,
+          "conditions": [
+            {
+              "stat": "talkingOutsideMeeting",
+              "category": "HIGH",
+              "actualValue": 857.2946141301557,
+              "actualPercentile": 76.92307692307693
+            },
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "LOW",
+              "actualValue": 227.02599041057962,
+              "actualPercentile": 23.076923076923077
+            }
+          ]
+        },
+        {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -7721,16 +7875,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootLoup_extreme_low",
-        "title": "Le Loup Impatient",
-        "emoji": "😤",
-        "description": "Faible récolte en Loup",
-        "stat": "lootLoupPer60Min",
-        "value": 240.8617726743173,
-        "percentile": 8.695652173913043,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "conspirateur",
+        "title": "Le·a Conspirateur·rice",
+        "emoji": "🗨️",
+        "description": "Bavard·e hors meeting, silencieux·se pendant",
+        "priority": 11,
+        "type": "combination",
+        "percentile": 50.00000000000001,
+        "conditions": [
+          {
+            "stat": "talkingOutsideMeeting",
+            "category": "HIGH",
+            "actualValue": 857.2946141301557,
+            "actualPercentile": 76.92307692307693
+          },
+          {
+            "stat": "talkingDuringMeeting",
+            "category": "LOW",
+            "actualValue": 227.02599041057962,
+            "actualPercentile": 23.076923076923077
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -7884,8 +8049,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Craco"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -8338,8 +8502,7 @@
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Craco"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -8439,8 +8602,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "RomainJacques"
+          "type": "basic"
         },
         {
           "id": "participation_low",
@@ -9825,8 +9987,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "RomainJacques"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_low",
@@ -10059,8 +10220,7 @@
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Craco"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -10695,8 +10855,7 @@
           "percentile": 3.225806451612903,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Flonflon"
+          "type": "basic"
         },
         {
           "id": "winRateSolo_extreme_high",

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-28T08:38:10.683Z",
+  "generatedAt": "2026-01-28T10:12:27.649Z",
   "teamName": "Discord Team",
   "totalPlayers": 41,
   "minGamesRequired": 25,
@@ -987,8 +987,7 @@
           "percentile": 90,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Acuado"
+          "type": "basic"
         },
         {
           "id": "winRate_high",
@@ -1972,6 +1971,29 @@
               "category": "LOW",
               "actualValue": 65.75342465753424,
               "actualPercentile": 0
+            }
+          ]
+        },
+        {
+          "id": "cowboy",
+          "title": "Le·a Cow-Boy",
+          "emoji": "🤠",
+          "description": "Vote vite et souvent",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 95.09146341463415,
+          "conditions": [
+            {
+              "stat": "votingAggressive",
+              "category": "HIGH",
+              "actualValue": 25.815602836879428,
+              "actualPercentile": 92.6829268292683
+            },
+            {
+              "stat": "votingFirst",
+              "category": "HIGH",
+              "actualValue": 76.82926829268293,
+              "actualPercentile": 97.5
             }
           ]
         },
@@ -3497,8 +3519,7 @@
           "percentile": 10,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kitsulia"
+          "type": "basic"
         },
         {
           "id": "talkingDuringMeeting_extreme_low",
@@ -4439,6 +4460,35 @@
           ]
         },
         {
+          "id": "loup_solitaire",
+          "title": "Le Loup Solitaire",
+          "emoji": "🐺",
+          "description": "Loup efficace, discret et gagnant",
+          "priority": 16,
+          "type": "combination",
+          "percentile": 62.9954954954955,
+          "conditions": [
+            {
+              "stat": "lootLoup",
+              "category": "HIGH",
+              "actualValue": 781.4769939691408,
+              "actualPercentile": 85
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 38.88888888888889,
+              "actualPercentile": 86.48648648648648
+            },
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 466.5492978130073,
+              "actualPercentile": 17.5
+            }
+          ]
+        },
+        {
           "id": "alpha_predator",
           "title": "L'Alpha",
           "emoji": "🦁",
@@ -4519,8 +4569,7 @@
           "percentile": 5,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kitsulia"
+          "type": "basic"
         },
         {
           "id": "survival_extreme_high",
@@ -4594,8 +4643,7 @@
           "percentile": 85,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Acuado"
+          "type": "basic"
         },
         {
           "id": "winRate_high",
@@ -4855,6 +4903,29 @@
       "gamesPlayed": 102,
       "titles": [
         {
+          "id": "avocat",
+          "title": "L'Avocat·e",
+          "emoji": "⚖️",
+          "description": "Silencieux·se hors débats, éloquent·e en meeting",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 57.5,
+          "conditions": [
+            {
+              "stat": "talkingOutsideMeeting",
+              "category": "LOW",
+              "actualValue": 419.6748834246303,
+              "actualPercentile": 35
+            },
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "HIGH",
+              "actualValue": 319.0552364674213,
+              "actualPercentile": 80
+            }
+          ]
+        },
+        {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -5027,16 +5098,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "lootLoup_extreme_high",
-        "title": "Le Loup Discret",
-        "emoji": "🐺",
-        "description": "Récolte élevée en Loup (camouflage)",
-        "stat": "lootLoupPer60Min",
-        "value": 830.2719916085607,
-        "percentile": 92.5,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "avocat",
+        "title": "L'Avocat·e",
+        "emoji": "⚖️",
+        "description": "Silencieux·se hors débats, éloquent·e en meeting",
+        "priority": 11,
+        "type": "combination",
+        "percentile": 57.5,
+        "conditions": [
+          {
+            "stat": "talkingOutsideMeeting",
+            "category": "LOW",
+            "actualValue": 419.6748834246303,
+            "actualPercentile": 35
+          },
+          {
+            "stat": "talkingDuringMeeting",
+            "category": "HIGH",
+            "actualValue": 319.0552364674213,
+            "actualPercentile": 80
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -5908,8 +5990,7 @@
           "percentile": 7.5,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kitsulia"
+          "type": "basic"
         },
         {
           "id": "talkingDuringMeeting_extreme_low",
@@ -6768,6 +6849,29 @@
       "gamesPlayed": 32,
       "titles": [
         {
+          "id": "citoyen_exemplaire",
+          "title": "Le·a Citoyen·ne Exemplaire",
+          "emoji": "👑",
+          "description": "Récolte et gagne en Villageois",
+          "priority": 13,
+          "type": "combination",
+          "percentile": 90.09146341463415,
+          "conditions": [
+            {
+              "stat": "lootVillageois",
+              "category": "HIGH",
+              "actualValue": 991.8223121781308,
+              "actualPercentile": 87.5
+            },
+            {
+              "stat": "winRateVillageois",
+              "category": "HIGH",
+              "actualValue": 71.42857142857143,
+              "actualPercentile": 92.6829268292683
+            }
+          ]
+        },
+        {
           "id": "phoenix",
           "title": "Le·a Phoenix",
           "emoji": "🔥",
@@ -6962,25 +7066,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "phoenix",
-        "title": "Le·a Phoenix",
-        "emoji": "🔥",
-        "description": "Meurt souvent tôt mais survit jusqu'au bout après",
-        "priority": 12,
+        "id": "citoyen_exemplaire",
+        "title": "Le·a Citoyen·ne Exemplaire",
+        "emoji": "👑",
+        "description": "Récolte et gagne en Villageois",
+        "priority": 13,
         "type": "combination",
-        "percentile": 48.78048780487805,
+        "percentile": 90.09146341463415,
         "conditions": [
           {
-            "stat": "survivalDay1",
-            "category": "LOW",
-            "actualValue": 87.5,
-            "actualPercentile": 29.268292682926827
+            "stat": "lootVillageois",
+            "category": "HIGH",
+            "actualValue": 991.8223121781308,
+            "actualPercentile": 87.5
           },
           {
-            "stat": "survival",
+            "stat": "winRateVillageois",
             "category": "HIGH",
-            "actualValue": 43.75,
-            "actualPercentile": 68.29268292682927
+            "actualValue": 71.42857142857143,
+            "actualPercentile": 92.6829268292683
           }
         ]
       },
@@ -7201,8 +7305,7 @@
           "percentile": 15,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kitsulia"
+          "type": "basic"
         },
         {
           "id": "votingFirst_extreme_high",
@@ -7491,6 +7594,29 @@
       "gamesPlayed": 54,
       "titles": [
         {
+          "id": "loup_repere",
+          "title": "Le Loup Repéré",
+          "emoji": "🔦",
+          "description": "Récolte en Loup mais se fait démasquer",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 57.263513513513516,
+          "conditions": [
+            {
+              "stat": "lootLoup",
+              "category": "HIGH",
+              "actualValue": 817.0435859418858,
+              "actualPercentile": 87.5
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "LOW",
+              "actualValue": 12.5,
+              "actualPercentile": 27.027027027027028
+            }
+          ]
+        },
+        {
           "id": "talking_extreme_low",
           "title": "Le·a Fantôme",
           "emoji": "👻",
@@ -7524,8 +7650,7 @@
           "percentile": 87.5,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Acuado"
+          "type": "basic"
         },
         {
           "id": "winRate_low",
@@ -7661,16 +7786,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "talkingOutsideMeeting_extreme_low",
-        "title": "Le·a Concentré·e",
-        "emoji": "🎯",
-        "description": "Silencieux·se hors meeting",
-        "stat": "talkingOutsidePer60Min",
-        "value": 242.45230736860447,
-        "percentile": 2.5,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "loup_repere",
+        "title": "Le Loup Repéré",
+        "emoji": "🔦",
+        "description": "Récolte en Loup mais se fait démasquer",
+        "priority": 11,
+        "type": "combination",
+        "percentile": 57.263513513513516,
+        "conditions": [
+          {
+            "stat": "lootLoup",
+            "category": "HIGH",
+            "actualValue": 817.0435859418858,
+            "actualPercentile": 87.5
+          },
+          {
+            "stat": "winRateLoup",
+            "category": "LOW",
+            "actualValue": 12.5,
+            "actualPercentile": 27.027027027027028
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -7907,8 +8043,7 @@
           "percentile": 97.5,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Acuado"
+          "type": "basic"
         },
         {
           "id": "winRate_high",
@@ -9285,8 +9420,7 @@
           "percentile": 95,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Acuado"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_high",
@@ -9534,6 +9668,29 @@
               "category": "HIGH",
               "actualValue": 64.5,
               "actualPercentile": 97.5609756097561
+            }
+          ]
+        },
+        {
+          "id": "conspirateur",
+          "title": "Le·a Conspirateur·rice",
+          "emoji": "🗨️",
+          "description": "Bavard·e hors meeting, silencieux·se pendant",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 52.5,
+          "conditions": [
+            {
+              "stat": "talkingOutsideMeeting",
+              "category": "HIGH",
+              "actualValue": 639.522637417196,
+              "actualPercentile": 72.5
+            },
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "LOW",
+              "actualValue": 177.18376101601967,
+              "actualPercentile": 32.5
             }
           ]
         },
@@ -10168,6 +10325,29 @@
       "gamesPlayed": 90,
       "titles": [
         {
+          "id": "abeille_ouvriere",
+          "title": "L'Abeille Ouvrière",
+          "emoji": "🐝",
+          "description": "Récolte bien en Villageois mais perd",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 59.57317073170732,
+          "conditions": [
+            {
+              "stat": "lootVillageois",
+              "category": "HIGH",
+              "actualValue": 986.5843557096257,
+              "actualPercentile": 85
+            },
+            {
+              "stat": "winRateVillageois",
+              "category": "LOW",
+              "actualValue": 56.92307692307692,
+              "actualPercentile": 34.146341463414636
+            }
+          ]
+        },
+        {
           "id": "hyperactif",
           "title": "L'Hyperactif·ve",
           "emoji": "⚡",
@@ -10387,25 +10567,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "theoricien",
-        "title": "Le·a Théoricien·ne",
-        "emoji": "🎓",
-        "description": "Parle beaucoup en débat mais vote peu",
-        "priority": 10,
+        "id": "abeille_ouvriere",
+        "title": "L'Abeille Ouvrière",
+        "emoji": "🐝",
+        "description": "Récolte bien en Villageois mais perd",
+        "priority": 11,
         "type": "combination",
-        "percentile": 64.60365853658537,
+        "percentile": 59.57317073170732,
         "conditions": [
           {
-            "stat": "talkingDuringMeeting",
+            "stat": "lootVillageois",
             "category": "HIGH",
-            "actualValue": 499.03159429461124,
-            "actualPercentile": 97.5
+            "actualValue": 986.5843557096257,
+            "actualPercentile": 85
           },
           {
-            "stat": "votingAggressive",
+            "stat": "winRateVillageois",
             "category": "LOW",
-            "actualValue": -11.559139784946236,
-            "actualPercentile": 31.70731707317073
+            "actualValue": 56.92307692307692,
+            "actualPercentile": 34.146341463414636
           }
         ]
       },
@@ -11423,8 +11603,7 @@
           "percentile": 12.5,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kitsulia"
+          "type": "basic"
         },
         {
           "id": "talkingDuringMeeting_extreme_low",
@@ -11711,8 +11890,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kitsulia"
+          "type": "basic"
         },
         {
           "id": "survivalDay1_extreme_low",
