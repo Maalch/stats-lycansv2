@@ -43,8 +43,6 @@ import {
   loadCache, 
   saveCache, 
   detectNewGames, 
-  getAffectedPlayers,
-  ensurePlayerInCache,
   createEmptyCache
 } from './shared/cache-manager.js';
 

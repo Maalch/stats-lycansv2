@@ -42,31 +42,29 @@ export function processCommunicationAchievements(talkingStats, playerId, suffix)
   const rank = playerIndex + 1;
   const totalRanked = sortedByTotalTalking.length;
 
-  // 🎤 Most Talkative - Top 3 only
-  if (rank <= 3) {
-    const minutes = Math.floor(playerStats.secondsAllPer60Min / 60);
-    const seconds = Math.floor(playerStats.secondsAllPer60Min % 60);
-    const timeFormatted = `${minutes}m ${seconds}s`;
+  // 🎤 Most Talkative - All eligible players get a ranking achievement
+  const minutes = Math.floor(playerStats.secondsAllPer60Min / 60);
+  const seconds = Math.floor(playerStats.secondsAllPer60Min % 60);
+  const timeFormatted = `${minutes}m ${seconds}s`;
 
-    achievements.push({
-      id: `communication-most-talkative${suffix.toLowerCase().replace(/[()]/g, '').replace(/\s+/g, '-')}`,
-      title: `🎤 Bavard N°${rank}${suffix}`,
-      description: `${rank === 1 ? 'Champion' : rank === 2 ? 'Vice-champion' : '3ème place'} du temps de parole total avec ${timeFormatted} par heure de jeu (minimum ${MIN_GAMES_TALKING} parties avec données)`,
-      type: 'good',
-      category: 'communication',
-      rank: rank,
-      value: playerStats.secondsAllPer60Min,
-      totalRanked: totalRanked,
-      redirectTo: {
-        tab: 'rankings',
-        subTab: 'talkingTime',
-        filters: {
-          moddedGames: suffix.includes('Moddées') ? true : false,
-          minGames: MIN_GAMES_TALKING
-        }
+  achievements.push({
+    id: `communication-most-talkative${suffix.toLowerCase().replace(/[()]/g, '').replace(/\s+/g, '-')}`,
+    title: `🎤 Rang ${rank} Temps de Parole${suffix}`,
+    description: `${rank}${rank === 1 ? 'er' : 'ème'} joueur le plus bavard avec ${timeFormatted} par heure de jeu (minimum ${MIN_GAMES_TALKING} parties avec données)`,
+    type: 'good',
+    category: 'communication',
+    rank: rank,
+    value: playerStats.secondsAllPer60Min,
+    totalRanked: totalRanked,
+    redirectTo: {
+      tab: 'rankings',
+      subTab: 'talkingTime',
+      filters: {
+        moddedGames: suffix.includes('Moddées') ? true : false,
+        minGames: MIN_GAMES_TALKING
       }
-    });
-  }
+    }
+  });
 
   return achievements;
 }
