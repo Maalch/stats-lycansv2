@@ -733,7 +733,7 @@ function getRawGameDataInNewFormat() {
           gameRecord.LegacyData.PlayerVODs[playerId] = playerDetails.vod;
         }
         
-        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows, playerIdMap);
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows, playerIdMap, hasActionsInfo);
       });   
       
       // Add clips for this game
@@ -761,9 +761,7 @@ function getRawGameDataInNewFormat() {
  * Helper function to build player stats from legacy data using pre-fetched player details
  * This version avoids duplicate calls to getPlayerDetailsForGame
  */
-function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows, playerIdMap) {
-  var actionsResult = getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows);
-  
+function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows, playerIdMap, hasActionsInfo) {
   var playerStats = {
     ID: playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null,
     Username: playerName,
@@ -781,10 +779,15 @@ function buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, p
     Votes: getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows),
     SecondsTalkedOutsideMeeting: 0, // Not available in legacy data
     SecondsTalkedDuringMeeting: 0, // Not available in legacy data
-    TotalCollectedLoot: null, // Not available in legacy data
-    Actions: actionsResult.actions,
-    ActionsIncomplete: actionsResult.incomplete
+    TotalCollectedLoot: null // Not available in legacy data
   };
+  
+  // Only add Actions and ActionsIncomplete if game has actions info tracking
+  if (hasActionsInfo) {
+    var actionsResult = getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows);
+    playerStats.Actions = actionsResult.actions;
+    playerStats.ActionsIncomplete = actionsResult.incomplete;
+  }
   
   return playerStats;
 }
@@ -902,36 +905,29 @@ function getVotesForPlayer(playerName, gameId, votesHeaders, votesDataRows) {
 /**
  * Helper function to get actions for a specific game and player
  * Returns an object with:
- *   - actions: array of actions with timing, position, type, name, and target
+ *   - actions: array of actions with timing, position, type, name, and target (includes available actions even if incomplete)
  *   - incomplete: boolean flag indicating if actions are incomplete for this player
- * Only returns actions for games in ACTIONSINFO sheet and players not in INCOMPLETEGAMEPLAYERLIST
+ * Only called for games in ACTIONSINFO sheet
  */
 function getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows) {
   if (!actionsDataRows || actionsDataRows.length === 0) {
     return { actions: [], incomplete: false };
   }
   
-  // Check if this game is in the ACTIONSINFO sheet
-  if (!actionsInfoDataRows || actionsInfoDataRows.length === 0) {
-    return { actions: [], incomplete: false }; // No actionsInfo data means no actions tracking for this game
-  }
-  
-  var actionsInfoRow = actionsInfoDataRows.find(function(row) {
-    var rowGameId = row[findColumnIndex(actionsInfoHeaders, LYCAN_SCHEMA.ACTIONSINFO.COLS.GAMEID)];
-    return rowGameId == gameId;
-  });
-  
-  // If game is not in ACTIONSINFO sheet, no actions tracking for this game
-  if (!actionsInfoRow) {
-    return { actions: [], incomplete: false };
-  }
-  
   // Check if player is in INCOMPLETEGAMEPLAYERLIST for this game
-  var incompletePlayerList = actionsInfoRow[findColumnIndex(actionsInfoHeaders, LYCAN_SCHEMA.ACTIONSINFO.COLS.INCOMPLETEGAMEPLAYERLIST)];
-  if (incompletePlayerList && incompletePlayerList.toString().trim() !== '') {
-    var incompletePlayers = incompletePlayerList.split(',').map(function(p) { return p.trim(); });
-    if (incompletePlayers.indexOf(playerName) !== -1) {
-      return { actions: [], incomplete: true }; // Game has actions info but this player's data is incomplete
+  var isIncomplete = false;
+  if (actionsInfoDataRows && actionsInfoDataRows.length > 0) {
+    var actionsInfoRow = actionsInfoDataRows.find(function(row) {
+      var rowGameId = row[findColumnIndex(actionsInfoHeaders, LYCAN_SCHEMA.ACTIONSINFO.COLS.GAMEID)];
+      return rowGameId == gameId;
+    });
+    
+    if (actionsInfoRow) {
+      var incompletePlayerList = actionsInfoRow[findColumnIndex(actionsInfoHeaders, LYCAN_SCHEMA.ACTIONSINFO.COLS.INCOMPLETEGAMEPLAYERLIST)];
+      if (incompletePlayerList && incompletePlayerList.toString().trim() !== '') {
+        var incompletePlayers = incompletePlayerList.split(',').map(function(p) { return p.trim(); });
+        isIncomplete = incompletePlayers.indexOf(playerName) !== -1;
+      }
     }
   }
   
@@ -976,7 +972,7 @@ function getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows
     }
   });
   
-  return { actions: actions, incomplete: false }; // Game has actions info and this player's data is complete
+  return { actions: actions, incomplete: isIncomplete };
 }
 
 /**
