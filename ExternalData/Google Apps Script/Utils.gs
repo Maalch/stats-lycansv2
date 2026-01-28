@@ -82,6 +82,14 @@ const LYCAN_SCHEMA = {
       TIMINGEND: 'Timing - Fin', //End of action, , formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number.  Maybe be empty if TIMINGSTART is filled
     }
   },
+  ACTIONSINFO: {
+    SHEET: 'Info Actions', //Information about actions (partial information or not)
+    COLS: {
+      GAMEID: 'Game', //Game ID (unique), same as Game v2 and Actions sheet. Only game that have actions info will be listed here
+      INCOMPLETEGAMEPLAYERLIST: 'Partielle game', //List of player(s) that are missing action / power usage in that game. If empty, all players have action / power in that game
+      INCOMPLETEMEETINGPLAYERLIST: 'Partielle meeting', //List of player(s) that are missing council / major / meeting info in that game. If empty, all players have council / major / meeting info in that game
+    }
+  },
   CLIPS: {
     SHEET: 'Clips', //list of clips / best moments of games
     COLS: {
