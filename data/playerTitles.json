@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-28T10:38:39.908Z",
+  "generatedAt": "2026-01-28T10:44:46.196Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -5225,6 +5225,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "winRate_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -6253,16 +6263,6 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
-        },
-        {
-          "id": "campBalance_specialist",
-          "title": "Le·a Spécialiste",
-          "emoji": "🎯",
-          "description": "Excellent dans un camp spécifique",
-          "stat": "campBalance",
-          "category": "SPECIALIST",
-          "priority": 6,
-          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -10374,6 +10374,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_balanced",
+          "title": "Le·a Polyvalent·e",
+          "emoji": "🎭",
+          "description": "Performance équilibrée dans tous les camps",
+          "stat": "campBalance",
+          "category": "BALANCED",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "winRate_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -11042,6 +11052,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {

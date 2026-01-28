@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-28T10:12:27.649Z",
+  "generatedAt": "2026-01-28T10:44:56.227Z",
   "teamName": "Discord Team",
   "totalPlayers": 41,
   "minGamesRequired": 25,
@@ -141,6 +141,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "winRate_average",
@@ -516,6 +526,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "talking_average",
           "title": "Le·a Équilibré·e",
           "emoji": "⚖️",
@@ -799,6 +819,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "winRate_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -981,7 +1011,7 @@
           "id": "lootLoup_extreme_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 824.2779675760615,
           "percentile": 90,
@@ -1108,6 +1138,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -1441,6 +1481,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "winRate_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -1658,6 +1708,28 @@
           ]
         },
         {
+          "id": "taulier",
+          "title": "Le·a Taulier·e",
+          "emoji": "🔑",
+          "description": "Participe beaucoup et excelle dans un camp",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 95.1219512195122,
+          "conditions": [
+            {
+              "stat": "gamesPlayed",
+              "category": "HIGH",
+              "actualValue": 170,
+              "actualPercentile": 95.1219512195122
+            },
+            {
+              "stat": "campBalance",
+              "category": "SPECIALIST",
+              "actualPercentile": 0
+            }
+          ]
+        },
+        {
           "id": "participation_extreme_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -1768,6 +1840,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "winRate_above_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -1781,25 +1863,24 @@
         }
       ],
       "primaryTitle": {
-        "id": "philosophe",
-        "title": "Le·a Philosophe",
-        "emoji": "📚",
-        "description": "Bavard·e mais improductif·ve",
+        "id": "taulier",
+        "title": "Le·a Taulier·e",
+        "emoji": "🔑",
+        "description": "Participe beaucoup et excelle dans un camp",
         "priority": 10,
         "type": "combination",
-        "percentile": 53.75,
+        "percentile": 95.1219512195122,
         "conditions": [
           {
-            "stat": "talking",
+            "stat": "gamesPlayed",
             "category": "HIGH",
-            "actualValue": 977.1916229224361,
-            "actualPercentile": 77.5
+            "actualValue": 170,
+            "actualPercentile": 95.1219512195122
           },
           {
-            "stat": "loot",
-            "category": "LOW",
-            "actualValue": 668.2404843756697,
-            "actualPercentile": 30
+            "stat": "campBalance",
+            "category": "SPECIALIST",
+            "actualPercentile": 0
           }
         ]
       },
@@ -2156,6 +2237,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "loot_average",
           "title": "Le·a Travailleur·se",
           "emoji": "👷",
@@ -2455,13 +2546,23 @@
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 685.765093137935,
           "percentile": 67.5,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "loot_below_average",
@@ -3197,6 +3298,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "loot_above_average",
           "title": "Le·a Travailleur·se",
           "emoji": "👷",
@@ -3642,6 +3753,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -3957,6 +4078,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "winRate_above_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -4129,6 +4260,28 @@
       "gamesPlayed": 122,
       "titles": [
         {
+          "id": "enthusiaste",
+          "title": "L'Enthousiaste",
+          "emoji": "🌟",
+          "description": "Participe beaucoup et gagne autant dans chaque camp",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 87.8048780487805,
+          "conditions": [
+            {
+              "stat": "gamesPlayed",
+              "category": "HIGH",
+              "actualValue": 122,
+              "actualPercentile": 87.8048780487805
+            },
+            {
+              "stat": "campBalance",
+              "category": "BALANCED",
+              "actualPercentile": 0
+            }
+          ]
+        },
+        {
           "id": "participation_extreme_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -4255,13 +4408,23 @@
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 747.1976037810468,
           "percentile": 77.5,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_balanced",
+          "title": "Le·a Polyvalent·e",
+          "emoji": "🎭",
+          "description": "Performance équilibrée dans tous les camps",
+          "stat": "campBalance",
+          "category": "BALANCED",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "winRate_above_average",
@@ -4289,16 +4452,26 @@
         }
       ],
       "primaryTitle": {
-        "id": "killRate_extreme_high",
-        "title": "L'Exterminateur·rice",
-        "emoji": "💀",
-        "description": "Tueur·se en série",
-        "stat": "killRate",
-        "value": 0.7459016393442623,
-        "percentile": 92.6829268292683,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "enthusiaste",
+        "title": "L'Enthousiaste",
+        "emoji": "🌟",
+        "description": "Participe beaucoup et gagne autant dans chaque camp",
+        "priority": 10,
+        "type": "combination",
+        "percentile": 87.8048780487805,
+        "conditions": [
+          {
+            "stat": "gamesPlayed",
+            "category": "HIGH",
+            "actualValue": 122,
+            "actualPercentile": 87.8048780487805
+          },
+          {
+            "stat": "campBalance",
+            "category": "BALANCED",
+            "actualPercentile": 0
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -4606,8 +4779,7 @@
           "percentile": 90.2439024390244,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "VVentus02"
+          "type": "basic"
         },
         {
           "id": "loot_extreme_high",
@@ -4637,7 +4809,7 @@
           "id": "lootLoup_extreme_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 781.4769939691408,
           "percentile": 85,
@@ -4967,7 +5139,7 @@
           "id": "lootLoup_extreme_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 830.2719916085607,
           "percentile": 92.5,
@@ -5083,6 +5255,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "talking_above_average",
@@ -5500,6 +5682,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "role_chasseur",
           "title": "Serial Chasseur",
           "emoji": "🔫",
@@ -5733,8 +5925,7 @@
           "percentile": 85.36585365853658,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "VVentus02"
+          "type": "basic"
         },
         {
           "id": "winRateSolo_high",
@@ -5759,6 +5950,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_balanced",
+          "title": "Le·a Polyvalent·e",
+          "emoji": "🎭",
+          "description": "Performance équilibrée dans tous les camps",
+          "stat": "campBalance",
+          "category": "BALANCED",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -6083,13 +6284,23 @@
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 770.0285939104937,
           "percentile": 82.5,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_balanced",
+          "title": "Le·a Polyvalent·e",
+          "emoji": "🎭",
+          "description": "Performance équilibrée dans tous les camps",
+          "stat": "campBalance",
+          "category": "BALANCED",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "loot_below_average",
@@ -6335,6 +6546,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_balanced",
+          "title": "Le·a Polyvalent·e",
+          "emoji": "🎭",
+          "description": "Performance équilibrée dans tous les camps",
+          "stat": "campBalance",
+          "category": "BALANCED",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "winRate_below_average",
@@ -6674,13 +6895,23 @@
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 765.1084116113232,
           "percentile": 80,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_balanced",
+          "title": "Le·a Polyvalent·e",
+          "emoji": "🎭",
+          "description": "Performance équilibrée dans tous les camps",
+          "stat": "campBalance",
+          "category": "BALANCED",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "winRate_average",
@@ -6977,8 +7208,7 @@
           "percentile": 97.5609756097561,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "VVentus02"
+          "type": "basic"
         },
         {
           "id": "lootVillageois_extreme_high",
@@ -7044,13 +7274,23 @@
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 694.5091974238854,
           "percentile": 70,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "talking_below_average",
@@ -7431,13 +7671,23 @@
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 682.770526282537,
           "percentile": 65,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -7644,7 +7894,7 @@
           "id": "lootLoup_extreme_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 817.0435859418858,
           "percentile": 87.5,
@@ -7783,6 +8033,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -8037,7 +8297,7 @@
           "id": "lootLoup_extreme_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 872.1557139504006,
           "percentile": 97.5,
@@ -8128,6 +8388,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -8417,8 +8687,7 @@
           "percentile": 85.36585365853658,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "VVentus02"
+          "type": "basic"
         },
         {
           "id": "loot_extreme_high",
@@ -8532,13 +8801,23 @@
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 743.261718343366,
           "percentile": 75,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -8846,6 +9125,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "talking_above_average",
@@ -9158,6 +9447,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_balanced",
+          "title": "Le·a Polyvalent·e",
+          "emoji": "🎭",
+          "description": "Performance équilibrée dans tous les camps",
+          "stat": "campBalance",
+          "category": "BALANCED",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -9414,7 +9713,7 @@
           "id": "lootLoup_extreme_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 866.2998075307819,
           "percentile": 95,
@@ -9862,6 +10161,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -10137,7 +10446,7 @@
           "id": "lootLoup_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
-          "description": "Récolte élevée en Loup (camouflage)",
+          "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
           "value": 707.4249994902525,
           "percentile": 72.5,
@@ -10554,6 +10863,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
@@ -10765,8 +11084,7 @@
           "percentile": 95.1219512195122,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "VVentus02"
+          "type": "basic"
         },
         {
           "id": "loot_extreme_low",
@@ -10829,6 +11147,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "talking_above_average",
@@ -11095,6 +11423,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "talking_below_average",
@@ -11717,6 +12055,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_balanced",
+          "title": "Le·a Polyvalent·e",
+          "emoji": "🎭",
+          "description": "Performance équilibrée dans tous les camps",
+          "stat": "campBalance",
+          "category": "BALANCED",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -11991,6 +12339,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "winRate_below_average",
@@ -12275,6 +12633,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "talking_average",
@@ -12606,6 +12974,16 @@
           "type": "basic"
         },
         {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
+        },
+        {
           "id": "loot_below_average",
           "title": "Le·a Travailleur·se",
           "emoji": "👷",
@@ -12872,6 +13250,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "winRate_below_average",
@@ -13198,6 +13586,16 @@
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         }
       ],
       "primaryTitle": {
@@ -13514,6 +13912,16 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "campBalance_specialist",
+          "title": "Le·a Spécialiste",
+          "emoji": "🎯",
+          "description": "Excellent dans un camp spécifique",
+          "stat": "campBalance",
+          "category": "SPECIALIST",
+          "priority": 6,
+          "type": "campBalance"
         },
         {
           "id": "loot_above_average",
