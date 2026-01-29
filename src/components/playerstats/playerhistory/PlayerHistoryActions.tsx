@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
 import { useCombinedFilteredRawData, type Action } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
@@ -294,7 +294,6 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                       return null;
                     }}
                   />
-                  <Legend />
                 </PieChart>
               </ResponsiveContainer>
             </div>
