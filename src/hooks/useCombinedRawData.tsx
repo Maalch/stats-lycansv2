@@ -23,7 +23,7 @@ export interface RoleChange {
 export interface Action {
   Date: string;                   // ISO date string when the action was performed
   Timing: string;                 // Game timing (e.g., "N3" for Night 3, "J6" for Day 6)
-  Position: {                     // Game coordinates where action was performed
+  Position: {                     // Game coordinates where action was performed. null if from google sheet legacy data
     x: number;
     y: number;
     z: number;
@@ -71,9 +71,16 @@ export interface PlayerStat {
   Actions?: Action[];             // Array of actions performed by this player during the game (optional for legacy data)
 }
 
+export interface MinimalPlayerStat {
+  ID?: string | null;             // Steam ID - unique identifier (may be null for legacy data)
+  Username: string;
+  Actions?: Action[];             // Array of actions performed by this player during the game. If the game is not tagged as "use google sheet info", the google sheet info will still be put there so that they can be merged with gamelog info
+}
+
 export interface LegacyData {
   VictoryType: string | null; // E.g., "Votes", "Tous les loups tués", "Domination loups" etc.
   PlayerVODs?: { [playerId: string]: string }; // Per-player VOD links mapped by Steam ID
+  PlayerStats: MinimalPlayerStat[]; // minimal player stats for actions
 }
 
 export interface GameLogEntry {
