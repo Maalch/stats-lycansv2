@@ -1001,14 +1001,37 @@ function getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows
       
       // Only add actions that have at least a timing and action type
       if (timing && timing.toString().trim() !== '' && actionType && actionType.toString().trim() !== '') {
-        actions.push({
-          Date: null, // Date not available in legacy data
-          Timing: timing.toString().trim(),
-          Position: null,
-          ActionType: actionType.toString().trim(),
-          ActionName: combinedActionName,
-          ActionTarget: target && target.toString().trim() !== '' ? target.toString().trim() : null
-        });
+        // Parse target list - split by semicolon if multiple targets
+        var targetList = [];
+        if (target && target.toString().trim() !== '') {
+          var targetStr = target.toString().trim();
+          // Split by semicolon and clean up each target name
+          targetList = targetStr.split(';').map(function(t) { return t.trim(); }).filter(function(t) { return t !== ''; });
+        }
+        
+        // If no targets, create one entry with null target
+        if (targetList.length === 0) {
+          actions.push({
+            Date: null, // Date not available in legacy data
+            Timing: timing.toString().trim(),
+            Position: null,
+            ActionType: actionType.toString().trim(),
+            ActionName: combinedActionName,
+            ActionTarget: null
+          });
+        } else {
+          // Create separate action entry for each target
+          targetList.forEach(function(singleTarget) {
+            actions.push({
+              Date: null, // Date not available in legacy data
+              Timing: timing.toString().trim(),
+              Position: null,
+              ActionType: actionType.toString().trim(),
+              ActionName: combinedActionName,
+              ActionTarget: singleTarget
+            });
+          });
+        }
       }
     }
   });

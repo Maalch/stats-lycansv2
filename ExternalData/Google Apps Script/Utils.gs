@@ -77,7 +77,7 @@ const LYCAN_SCHEMA = {
       ACTIONTYPE: 'ActionType', //Type of action: UsePower, UsePowerDeath, UseGadget, UsePortal, DrinkPotion, HunterShoot, Transform, Untransform, VictimPower, VictimGadget, VictimPotion, VictimChaos, VictimHanté, Sabotage, Sauvetage, TransferBombe, UntransformInfecté, ChooseImitateur, NewMayor, ActionMayor, DestitutionMayor, ActionElector, KillWolf
       ACTIONNAME: 'ActionName - Métier/Pouvoir/Rôle/Meeting', //Name of the action (power)
       ACTIONNAME2: 'ActionName - Effet/Objet/Potion', //Name of the action (object)
-      TARGET: 'Target', //Name of the target player (may be empty if action without target, like Transform)
+      TARGET: 'Target', //List of players name that are targetted (most of time 1 or empty, may be empty if action without target, like Transform)
       TIMING: 'Timing - Début', //Timing of the action, formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number
       TIMINGEND: 'Timing - Fin', //End of action, , formated XY, with X = J/N/M (Day/Night/Meeting) and Y = the day number.  Maybe be empty if TIMINGSTART is filled
     }
