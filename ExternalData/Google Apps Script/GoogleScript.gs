@@ -669,6 +669,18 @@ function getRawGameDataInNewFormat() {
         var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
         var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
         
+        // Check if this game has actions in ACTIONSINFO sheet
+        var hasActionsInfo = false;
+        if (actionsInfoDataRows && actionsInfoDataRows.length > 0) {
+          hasActionsInfo = actionsInfoDataRows.some(function(row) {
+            var rowGameId = row[findColumnIndex(actionsInfoHeaders, LYCAN_SCHEMA.ACTIONSINFO.COLS.GAMEID)];
+            return rowGameId == gameId;
+          });
+        }
+        
+        // Build minimal PlayerStats if game has actions
+        var minimalPlayerStats = [];
+        
         players.forEach(function(playerName) {
           var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
           var playerId = playerIdMap && playerIdMap[playerName] ? playerIdMap[playerName] : null;
@@ -676,9 +688,21 @@ function getRawGameDataInNewFormat() {
           if (playerId && playerDetails && playerDetails.vod && playerDetails.vod !== '') {
             playerVODs[playerId] = playerDetails.vod;
           }
+          
+          // If game has actions, build minimal player stats with actions
+          if (hasActionsInfo) {
+            var actionsResult = getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows);
+            
+            minimalPlayerStats.push({
+              ID: playerId,
+              Username: playerName,
+              Actions: actionsResult.actions,
+              ActionsIncomplete: actionsResult.incomplete
+            });
+          }
         });
         
-        return {
+        var result = {
           Id: gameModId,
           Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
           Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
@@ -690,6 +714,13 @@ function getRawGameDataInNewFormat() {
             FullDataExported: false
           }
         };
+        
+        // Only add PlayerStats if game has actions
+        if (hasActionsInfo) {
+          result.PlayerStats = minimalPlayerStats;
+        }
+        
+        return result;
       }
       
       // Build base game record with new Id format "Ponce-YYYYMMDDHHmmSS"
