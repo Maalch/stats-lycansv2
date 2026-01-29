@@ -702,31 +702,41 @@ function getRawGameDataInNewFormat() {
           }
         });
         
-        var result = {
+        var legacyData = {
+          VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
+          PlayerVODs: playerVODs,
+          GameModId: gameModId.trim(),
+          FullDataExported: false
+        };
+        
+        // Add PlayerStats to LegacyData if game has actions
+        if (hasActionsInfo) {
+          legacyData.PlayerStats = minimalPlayerStats;
+        }
+        
+        return {
           Id: gameModId,
           Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
           Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
           Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
-          LegacyData: {
-            VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-            PlayerVODs: playerVODs,
-            GameModId: gameModId.trim(),
-            FullDataExported: false
-          }
+          LegacyData: legacyData
         };
-        
-        // Only add PlayerStats if game has actions
-        if (hasActionsInfo) {
-          result.PlayerStats = minimalPlayerStats;
-        }
-        
-        return result;
       }
       
       // Build base game record with new Id format "Ponce-YYYYMMDDHHmmSS"
       // When GAMEMODID is set with GSHEETPRIORITY, include GameModId and FullDataExported:true
       // so sync scripts know to skip the matching AWS game and use this GSheet data instead
       var hasGameModIdWithPriority = gsheetPriority && gameModId && gameModId.trim() !== '';
+      
+      // Check if this game has actions in ACTIONSINFO sheet for full export
+      var hasActionsInfo = false;
+      if (actionsInfoDataRows && actionsInfoDataRows.length > 0) {
+        hasActionsInfo = actionsInfoDataRows.some(function(row) {
+          var rowGameId = row[findColumnIndex(actionsInfoHeaders, LYCAN_SCHEMA.ACTIONSINFO.COLS.GAMEID)];
+          return rowGameId == gameId;
+        });
+      }
+      
       var gameRecord = {
         Id: hasGameModIdWithPriority ? gameModId.trim() : ("Ponce-" + legacyDateFragment + "-" + gameId),
         StartDate: isoStart,
