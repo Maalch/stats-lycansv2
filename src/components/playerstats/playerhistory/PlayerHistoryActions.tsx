@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
-import { useCombinedFilteredRawData, type Action } from '../../../hooks/useCombinedRawData';
+import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { CHART_LIMITS } from '../../../config/chartConstants';
+import { getMergedActionsForPlayer, normalizeHunterAction, type MergedAction } from '../../../utils/actionMergeUtils';
 
 interface PlayerHistoryActionsProps {
   selectedPlayerName: string;
@@ -108,33 +109,42 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       totalGamesPlayed++;
       let gameHasTrackedActions = false;
 
-      // Process player actions
-      if (playerStat.Actions && Array.isArray(playerStat.Actions)) {
-        playerStat.Actions.forEach((action: Action) => {
-          const actionType = action.ActionType as TrackedActionType;
+      // Get merged actions from GameLog and LegacyData
+      const mergedActions = getMergedActionsForPlayer(game, playerStat);
+      
+      // Process merged actions
+      mergedActions.forEach((action: MergedAction) => {
+        // Check for hunter shots using normalized helper (handles both formats)
+        const hunterInfo = normalizeHunterAction(action);
+        if (hunterInfo.isHunterShot) {
+          actionTypeCountsMap.HunterShoot++;
+          gameHasTrackedActions = true;
           
-          // Only track our specified action types
-          if (TRACKED_ACTION_TYPES.includes(actionType)) {
-            actionTypeCountsMap[actionType]++;
-            gameHasTrackedActions = true;
-
-            // Track gadget details (exclude "Balle")
-            if (actionType === 'UseGadget' && action.ActionName && action.ActionName !== 'Balle') {
-              gadgetCountsMap[action.ActionName] = (gadgetCountsMap[action.ActionName] || 0) + 1;
-            }
-
-            // Track potion details
-            if (actionType === 'DrinkPotion' && action.ActionName) {
-              potionCountsMap[action.ActionName] = (potionCountsMap[action.ActionName] || 0) + 1;
-            }
-
-            // Track hunter targets
-            if (actionType === 'HunterShoot' && action.ActionTarget) {
-              hunterTargetsMap[action.ActionTarget] = (hunterTargetsMap[action.ActionTarget] || 0) + 1;
-            }
+          // Track hunter targets (LegacyData has ActionTarget, GameLog may not)
+          if (hunterInfo.target) {
+            hunterTargetsMap[hunterInfo.target] = (hunterTargetsMap[hunterInfo.target] || 0) + 1;
           }
-        });
-      }
+          return; // Don't double-count as UseGadget
+        }
+        
+        const actionType = action.ActionType as TrackedActionType;
+        
+        // Only track our specified action types
+        if (TRACKED_ACTION_TYPES.includes(actionType)) {
+          actionTypeCountsMap[actionType]++;
+          gameHasTrackedActions = true;
+
+          // Track gadget details (exclude "Balle" - already handled above)
+          if (actionType === 'UseGadget' && action.ActionName && action.ActionName !== 'Balle') {
+            gadgetCountsMap[action.ActionName] = (gadgetCountsMap[action.ActionName] || 0) + 1;
+          }
+
+          // Track potion details
+          if (actionType === 'DrinkPotion' && action.ActionName) {
+            potionCountsMap[action.ActionName] = (potionCountsMap[action.ActionName] || 0) + 1;
+          }
+        }
+      });
 
       if (gameHasTrackedActions) {
         totalGamesWithActions++;
@@ -174,7 +184,10 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
           const playerStat = game.PlayerStats.find(
             p => p.Username.toLowerCase() === selectedPlayerName.toLowerCase()
           );
-          return playerStat?.Actions?.some(a => a.ActionType === 'Transform');
+          if (!playerStat) return false;
+          // Use merged actions to check for transforms (includes LegacyData)
+          const mergedActions = getMergedActionsForPlayer(game, playerStat);
+          return mergedActions.some(a => a.ActionType === 'Transform');
         }).length)
       : 0;
     const transformationsPerGame = gamesWithTransforms > 0 
