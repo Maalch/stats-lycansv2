@@ -5,7 +5,6 @@ import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { CHART_LIMITS } from '../../../config/chartConstants';
-import { getMergedActionsForPlayer, normalizeHunterAction, type MergedAction } from '../../../utils/actionMergeUtils';
 
 interface PlayerHistoryActionsProps {
   selectedPlayerName: string;
@@ -109,20 +108,19 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       totalGamesPlayed++;
       let gameHasTrackedActions = false;
 
-      // Get merged actions from GameLog and LegacyData
-      const mergedActions = getMergedActionsForPlayer(game, playerStat);
+      // Get actions directly from PlayerStats (already merged from backend)
+      const actions = playerStat.Actions || [];
       
-      // Process merged actions
-      mergedActions.forEach((action: MergedAction) => {
-        // Check for hunter shots using normalized helper (handles both formats)
-        const hunterInfo = normalizeHunterAction(action);
-        if (hunterInfo.isHunterShot) {
+      // Process actions
+      actions.forEach((action) => {
+        // Check for hunter shots (LegacyData format: HunterShoot)
+        if (action.ActionType === 'HunterShoot') {
           actionTypeCountsMap.HunterShoot++;
           gameHasTrackedActions = true;
           
-          // Track hunter targets (LegacyData has ActionTarget, GameLog may not)
-          if (hunterInfo.target) {
-            hunterTargetsMap[hunterInfo.target] = (hunterTargetsMap[hunterInfo.target] || 0) + 1;
+          // Track hunter targets
+          if (action.ActionTarget) {
+            hunterTargetsMap[action.ActionTarget] = (hunterTargetsMap[action.ActionTarget] || 0) + 1;
           }
           return; // Don't double-count as UseGadget
         }
@@ -134,7 +132,7 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
           actionTypeCountsMap[actionType]++;
           gameHasTrackedActions = true;
 
-          // Track gadget details (exclude "Balle" - already handled above)
+          // Track gadget details (exclude "Balle" - weapon reloading, not a tracked action)
           if (actionType === 'UseGadget' && action.ActionName && action.ActionName !== 'Balle') {
             gadgetCountsMap[action.ActionName] = (gadgetCountsMap[action.ActionName] || 0) + 1;
           }
@@ -185,9 +183,9 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
             p => p.Username.toLowerCase() === selectedPlayerName.toLowerCase()
           );
           if (!playerStat) return false;
-          // Use merged actions to check for transforms (includes LegacyData)
-          const mergedActions = getMergedActionsForPlayer(game, playerStat);
-          return mergedActions.some(a => a.ActionType === 'Transform');
+          // Check for transforms in player's actions
+          const actions = playerStat.Actions || [];
+          return actions.some(a => a.ActionType === 'Transform');
         }).length)
       : 0;
     const transformationsPerGame = gamesWithTransforms > 0 
