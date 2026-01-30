@@ -160,6 +160,168 @@ async function ensureDataDirectory() {
   }
 }
 
+// ============================================================================
+// ACTION MERGING UTILITIES
+// Merges player actions from GameLog (AWS - has Date/Position) and 
+// LegacyData (Google Sheets - has richer action types like UsePower, VictimChaos, etc.)
+// ============================================================================
+
+/**
+ * Creates a matching key for deduplication.
+ * Actions are considered duplicates if they have the same:
+ * - ActionType, Timing, ActionName, ActionTarget
+ */
+function createActionMatchKey(action) {
+  return `${action.ActionType}|${action.Timing || ''}|${action.ActionName || ''}|${action.ActionTarget || ''}`;
+}
+
+/**
+ * Compares game timing strings for sorting (e.g., "J1" < "N1" < "M1" < "J2")
+ */
+function compareTiming(timingA, timingB) {
+  if (!timingA && !timingB) return 0;
+  if (!timingA) return 1;
+  if (!timingB) return -1;
+
+  const parsePhase = (t) => {
+    const match = t.match(/^([JNM])(\d+)$/i);
+    if (!match) return { phase: 0, day: 0 };
+    
+    const letter = match[1].toUpperCase();
+    const day = parseInt(match[2], 10);
+    const phaseOrder = { 'J': 1, 'M': 2, 'N': 3 };
+    
+    return { phase: phaseOrder[letter] || 0, day };
+  };
+
+  const a = parsePhase(timingA);
+  const b = parsePhase(timingB);
+
+  if (a.day !== b.day) return a.day - b.day;
+  return a.phase - b.phase;
+}
+
+/**
+ * Merges actions from GameLog and LegacyData for a single player.
+ * 
+ * Strategy:
+ * 1. Start with GameLog actions (they have Date/Position)
+ * 2. Add LegacyData actions that don't exist in GameLog (using count-based matching)
+ * 3. Handle multiple identical actions correctly using occurrence counting
+ * 
+ * @param {Array} gameLogActions - Actions from PlayerStats.Actions (AWS data)
+ * @param {Array} legacyActions - Actions from LegacyData.PlayerStats.Actions (Google Sheets data)
+ * @returns {Array} Merged array of actions
+ */
+function mergePlayerActions(gameLogActions, legacyActions) {
+  const result = [];
+  
+  // Count occurrences of each action key in GameLog
+  const gameLogKeyCounts = new Map();
+  
+  // First pass: Add all GameLog actions (they have Date/Position)
+  if (gameLogActions && Array.isArray(gameLogActions)) {
+    for (const action of gameLogActions) {
+      // IGNORE UseGadget with Balle - it's weapon reloading, not a tracked action
+      if (action.ActionType === 'UseGadget' && action.ActionName === 'Balle') {
+        continue;
+      }
+      
+      const key = createActionMatchKey(action);
+      gameLogKeyCounts.set(key, (gameLogKeyCounts.get(key) || 0) + 1);
+      result.push(action);
+    }
+  }
+
+  // Second pass: Add LegacyData actions that exceed GameLog count for that key
+  // This handles the case of multiple identical actions correctly
+  if (legacyActions && Array.isArray(legacyActions)) {
+    const legacyKeySeenCounts = new Map();
+    
+    for (const action of legacyActions) {
+      const key = createActionMatchKey(action);
+      const seenCount = (legacyKeySeenCounts.get(key) || 0) + 1;
+      legacyKeySeenCounts.set(key, seenCount);
+      
+      const gameLogCount = gameLogKeyCounts.get(key) || 0;
+      
+      if (seenCount > gameLogCount) {
+        // This legacy action has no GameLog counterpart (exceeds count), add it
+        result.push({
+          ...action,
+          // Ensure Date and Position are null for legacy actions
+          Date: action.Date || null,
+          Position: action.Position || null,
+        });
+      }
+      // If seenCount <= gameLogCount, the GameLog already has this occurrence
+    }
+  }
+
+  // Sort by Timing for chronological order
+  return result.sort((a, b) => compareTiming(a.Timing, b.Timing));
+}
+
+/**
+ * Merges LegacyData.PlayerStats actions into main PlayerStats for a game.
+ * Also removes LegacyData.PlayerStats from the game to reduce output size.
+ * 
+ * @param {Object} game - Game object with PlayerStats and optional LegacyData.PlayerStats
+ * @returns {Object} Game with merged actions and cleaned LegacyData
+ */
+function mergeGameActionsAndCleanLegacyData(game) {
+  if (!game.LegacyData?.PlayerStats || !game.PlayerStats) {
+    return game;
+  }
+  
+  // Build a map of legacy players by ID for quick lookup
+  const legacyPlayersByID = new Map();
+  const legacyPlayersByUsername = new Map();
+  
+  for (const legacyPlayer of game.LegacyData.PlayerStats) {
+    if (legacyPlayer.ID) {
+      legacyPlayersByID.set(legacyPlayer.ID, legacyPlayer);
+    }
+    if (legacyPlayer.Username) {
+      legacyPlayersByUsername.set(legacyPlayer.Username.toLowerCase(), legacyPlayer);
+    }
+  }
+  
+  // Merge actions for each player
+  const mergedPlayerStats = game.PlayerStats.map(player => {
+    // Find matching legacy player by Steam ID first, then by username
+    let legacyPlayer = null;
+    if (player.ID) {
+      legacyPlayer = legacyPlayersByID.get(player.ID);
+    }
+    if (!legacyPlayer && player.Username) {
+      legacyPlayer = legacyPlayersByUsername.get(player.Username.toLowerCase());
+    }
+    
+    if (!legacyPlayer?.Actions) {
+      // No legacy actions to merge
+      return player;
+    }
+    
+    // Merge actions
+    const mergedActions = mergePlayerActions(player.Actions, legacyPlayer.Actions);
+    
+    return {
+      ...player,
+      Actions: mergedActions,
+    };
+  });
+  
+  // Remove PlayerStats from LegacyData but keep other fields
+  const { PlayerStats: _removedPlayerStats, ...cleanedLegacyData } = game.LegacyData;
+  
+  return {
+    ...game,
+    PlayerStats: mergedPlayerStats,
+    LegacyData: Object.keys(cleanedLegacyData).length > 0 ? cleanedLegacyData : undefined,
+  };
+}
+
 async function fetchLegacyEndpointData(endpoint) {
   let apiBase = process.env.LYCANS_API_BASE;
   if (!apiBase) {
@@ -304,7 +466,7 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
         
         const gameId = awsGame.Id;
         
-        // Filter: Only process Main Team games (Ponce- and Tsuna- prefixes)
+        // Filter: Only process Main Team games (Ponce-, Tsuna-, khalen- prefixes)
         if (!gameId || (!gameId.startsWith('Ponce-') && !gameId.startsWith('Tsuna-') && !gameId.startsWith('khalen-'))) {
           return; // Skip non-Main Team games
         }
@@ -398,11 +560,23 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
     });
   }
   
-  // Convert map back to array and remove source tracking
+  // Convert map back to array, merge actions, and remove source tracking
+  let actionsMergedCount = 0;
   const allGameStats = Array.from(gamesByIdMap.values()).map(game => {
     const { source, ...gameWithoutSource } = game;
+    
+    // Merge LegacyData.PlayerStats actions into main PlayerStats and clean up
+    if (gameWithoutSource.LegacyData?.PlayerStats) {
+      actionsMergedCount++;
+      return mergeGameActionsAndCleanLegacyData(gameWithoutSource);
+    }
+    
     return gameWithoutSource;
   });
+  
+  if (actionsMergedCount > 0) {
+    console.log(`✓ Merged legacy actions for ${actionsMergedCount} games`);
+  }
   
   // Sort by StartDate to maintain chronological order
   allGameStats.sort((a, b) => new Date(a.StartDate) - new Date(b.StartDate));
