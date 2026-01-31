@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.6.7';
+export const APP_VERSION = '1.7.2';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -15,9 +15,26 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
-    version: 'v1.6.7',
+    version: 'v1.7.2',
+    date: '31/01/2026',
+    description: 'Ajout de statistiques sur les records de kills en une partie/nuit dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'deathStats',
+      text: 'Classements / Morts & Kills'
+    }
+  },
+  {
+    version: 'v1.7.1',
     date: '23/01/2026',
-    description: 'Ajout de titres sur la page des joueurs',
+    description: 'Ajout de titres sur la page des joueurs dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueur / Titres',
+      navigationState: {
+        selectedPlayerSelectionView: 'titles'
+      }
+    }
   },
   {
     version: 'v1.6.6',

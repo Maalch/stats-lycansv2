@@ -30,6 +30,7 @@ export interface UrlState {
   // Navigation filters (simplified - only key filters persisted)
   selectedPlayer?: string;
   selectedGame?: string;
+  selectedGameIds?: string; // Comma-separated list of game IDs
   fromComponent?: string;
 }
 
@@ -66,6 +67,7 @@ export function parseUrlState(): UrlState {
   // Navigation filters
   if (urlParams.has('selectedPlayer')) state.selectedPlayer = urlParams.get('selectedPlayer')!;
   if (urlParams.has('selectedGame')) state.selectedGame = urlParams.get('selectedGame')!;
+  if (urlParams.has('selectedGameIds')) state.selectedGameIds = urlParams.get('selectedGameIds')!;
   if (urlParams.has('fromComponent')) state.fromComponent = urlParams.get('fromComponent')!;
   
   return state;
@@ -137,6 +139,9 @@ export function buildUrlSearch(state: Partial<UrlState>): string {
   }
   if (state.selectedGame) {
     urlParams.set('selectedGame', state.selectedGame);
+  }
+  if (state.selectedGameIds) {
+    urlParams.set('selectedGameIds', state.selectedGameIds);
   }
   if (state.fromComponent) {
     urlParams.set('fromComponent', encodeURIComponent(state.fromComponent));

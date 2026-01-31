@@ -162,6 +162,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       const filters: NavigationFilters = {};
       if (urlState.selectedPlayer) filters.selectedPlayer = decodeURIComponent(urlState.selectedPlayer);
       if (urlState.selectedGame) filters.selectedGame = urlState.selectedGame;
+      if (urlState.selectedGameIds) filters.selectedGameIds = urlState.selectedGameIds.split(',');
       if (urlState.fromComponent) filters.fromComponent = decodeURIComponent(urlState.fromComponent);
       setNavigationFilters(filters);
     }
@@ -176,6 +177,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       const filters: NavigationFilters = {};
       if (urlState.selectedPlayer) filters.selectedPlayer = decodeURIComponent(urlState.selectedPlayer);
       if (urlState.selectedGame) filters.selectedGame = urlState.selectedGame;
+      if (urlState.selectedGameIds) filters.selectedGameIds = urlState.selectedGameIds.split(',');
       if (urlState.fromComponent) filters.fromComponent = decodeURIComponent(urlState.fromComponent);
       setNavigationFilters(filters);
     } else {
@@ -217,6 +219,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       view: 'gameDetails',
       selectedPlayer: filters.selectedPlayer ? encodeURIComponent(filters.selectedPlayer) : undefined,
       selectedGame: filters.selectedGame,
+      selectedGameIds: filters.selectedGameIds ? filters.selectedGameIds.join(',') : undefined,
       fromComponent: filters.fromComponent ? encodeURIComponent(filters.fromComponent) : undefined,
     }, 'push');
   }, []);
@@ -249,6 +252,7 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
       view: undefined,
       selectedPlayer: undefined,
       selectedGame: undefined,
+      selectedGameIds: undefined,
       fromComponent: undefined,
     }, 'replace');
   }, []);
