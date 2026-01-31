@@ -267,7 +267,8 @@ export function GameDetailsChart() {
       }
       filters.push(`${navigationFilters.selectedPlayer} jouant ${campDisplayName}${playerWinModeText}`);
     } else {
-      if (navigationFilters.selectedPlayer) {
+      // Only show selectedPlayer filter if selectedGameIds is not present (selectedGameIds is more specific)
+      if (navigationFilters.selectedPlayer && !navigationFilters.selectedGameIds) {
         const playerWinModeText = navigationFilters.selectedPlayerWinMode === 'wins-only' ? ' (victoires uniquement)' : 
                                  navigationFilters.selectedPlayerWinMode === 'all-assignments' ? ' (toutes parties)' : '';
         filters.push(`Joueur: ${navigationFilters.selectedPlayer}${playerWinModeText}`);
@@ -356,7 +357,7 @@ export function GameDetailsChart() {
             className="lycans-submenu-btn"
             style={{ marginTop: '1rem' }}
           >
-            ← Retour à {navigationFilters.fromComponent}
+            ← Retour à {decodeURIComponent(navigationFilters.fromComponent)}
           </button>
         )}
       </div>
@@ -374,7 +375,7 @@ export function GameDetailsChart() {
               className="lycans-submenu-btn"
               style={{ marginRight: '1rem' }}
             >
-              ← Retour à {navigationFilters.fromComponent}
+              ← Retour à {decodeURIComponent(navigationFilters.fromComponent)}
             </button>
           )}
           <h2>Détails des Parties ({data.length} partie{data.length > 1 ? 's' : ''})</h2>

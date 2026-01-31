@@ -1,12 +1,15 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { getKillDescription } from '../../../hooks/utils/deathStatisticsUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { DEATH_TYPES } from '../../../types/deathTypes';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
-import { minGamesOptions } from '../../../types/api';
+import { minGamesOptions, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
+import { useCombinedFilteredRawData, type GameLogEntry, type PlayerStat } from '../../../hooks/useCombinedRawData';
+import { getPlayerId, getCanonicalPlayerName } from '../../../utils/playerIdentification';
+import { useJoueursData } from '../../../hooks/useJoueursData';
 
 // Extended type for chart data with highlighting info and death type breakdown
 type ChartKillerData = {
@@ -45,6 +48,9 @@ export function KillersView({
 }: KillersViewProps) {
   const { navigateToGameDetails } = useNavigation();
   const { settings } = useSettings();
+  const { gameData: gameLogData } = useCombinedFilteredRawData();
+  const { joueursData } = useJoueursData();
+  const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Helper function to merge hunter kill types when victim camp filter is "Tous les camps"
   const processDeathTypesForDisplay = (deathTypes: DeathTypeCodeType[]): DeathTypeCodeType[] => {
@@ -493,6 +499,252 @@ export function KillersView({
     return null;
   };
 
+  // Calculate max kills per game statistics
+  const maxKillsPerGameData = useMemo(() => {
+    if (!gameLogData) return [];
+
+    // Map to store max kills and associated game IDs for each player
+    const playerMaxKills = new Map<string, {
+      playerName: string;
+      maxKills: number;
+      timesAchieved: number;
+      gameIds: string[];
+    }>();
+
+    gameLogData.forEach((game: GameLogEntry) => {
+      game.PlayerStats.forEach((player: PlayerStat) => {
+        const playerId = getPlayerId(player);
+        const playerName = getCanonicalPlayerName(player);
+
+        // Count how many kills this player made in this game
+        let killsInGame = 0;
+        game.PlayerStats.forEach((victim: PlayerStat) => {
+          if (victim.KillerName === player.Username && victim.DeathTiming) {
+            killsInGame++;
+          }
+        });
+
+        if (killsInGame > 0) {
+          const existing = playerMaxKills.get(playerId);
+          if (!existing) {
+            playerMaxKills.set(playerId, {
+              playerName,
+              maxKills: killsInGame,
+              timesAchieved: 1,
+              gameIds: [game.DisplayedId]
+            });
+          } else if (killsInGame > existing.maxKills) {
+            existing.maxKills = killsInGame;
+            existing.timesAchieved = 1;
+            existing.gameIds = [game.DisplayedId];
+          } else if (killsInGame === existing.maxKills) {
+            existing.timesAchieved++;
+            if (!existing.gameIds.includes(game.DisplayedId)) {
+              existing.gameIds.push(game.DisplayedId);
+            }
+          }
+        }
+      });
+    });
+
+    // Convert to array and sort by max kills (desc), then by times achieved (desc)
+    const sorted = Array.from(playerMaxKills.values())
+      .sort((a, b) => {
+        if (b.maxKills !== a.maxKills) return b.maxKills - a.maxKills;
+        return b.timesAchieved - a.timesAchieved;
+      })
+      .slice(0, 15);
+
+    // Check if highlighted player is in top 15
+    const highlightedInTop15 = settings.highlightedPlayer && 
+      sorted.some(p => p.playerName === settings.highlightedPlayer);
+
+    // Add highlighted player if not in top 15
+    if (settings.highlightedPlayer && !highlightedInTop15) {
+      const highlightedData = Array.from(playerMaxKills.values())
+        .find(p => p.playerName === settings.highlightedPlayer);
+      if (highlightedData) {
+        sorted.push({ ...highlightedData });
+      }
+    }
+
+    return sorted.map((p, index) => ({
+      name: p.playerName,
+      value: p.maxKills,
+      timesAchieved: p.timesAchieved,
+      gameIds: p.gameIds,
+      isHighlightedAddition: index >= 15
+    }));
+  }, [gameLogData, settings.highlightedPlayer]);
+
+  // Calculate max kills per night statistics
+  const maxKillsPerNightData = useMemo(() => {
+    if (!gameLogData) return [];
+
+    // Map to store max kills per night and associated game IDs for each player
+    const playerMaxKills = new Map<string, {
+      playerName: string;
+      maxKills: number;
+      timesAchieved: number;
+      gameIds: string[];
+    }>();
+
+    gameLogData.forEach((game: GameLogEntry) => {
+      // Group kills by player and night
+      const killsByPlayerAndNight = new Map<string, Map<string, number>>();
+
+      game.PlayerStats.forEach((victim: PlayerStat) => {
+        if (victim.KillerName && victim.DeathTiming && victim.DeathTiming.match(/^N\d+$/)) {
+          const killerName = victim.KillerName;
+          const night = victim.DeathTiming;
+
+          if (!killsByPlayerAndNight.has(killerName)) {
+            killsByPlayerAndNight.set(killerName, new Map());
+          }
+          const playerNights = killsByPlayerAndNight.get(killerName)!;
+          playerNights.set(night, (playerNights.get(night) || 0) + 1);
+        }
+      });
+
+      // Find max kills for each player in this game
+      killsByPlayerAndNight.forEach((nights, killerName) => {
+        const maxKillsThisGame = Math.max(...Array.from(nights.values()));
+
+        // Find the corresponding player to get canonical name
+        const killerPlayer = game.PlayerStats.find((p: PlayerStat) => p.Username === killerName);
+        if (!killerPlayer) return;
+
+        const playerId = getPlayerId(killerPlayer);
+        const playerName = getCanonicalPlayerName(killerPlayer);
+
+        const existing = playerMaxKills.get(playerId);
+        if (!existing) {
+          playerMaxKills.set(playerId, {
+            playerName,
+            maxKills: maxKillsThisGame,
+            timesAchieved: 1,
+            gameIds: [game.DisplayedId]
+          });
+        } else if (maxKillsThisGame > existing.maxKills) {
+          existing.maxKills = maxKillsThisGame;
+          existing.timesAchieved = 1;
+          existing.gameIds = [game.DisplayedId];
+        } else if (maxKillsThisGame === existing.maxKills) {
+          existing.timesAchieved++;
+          if (!existing.gameIds.includes(game.DisplayedId)) {
+            existing.gameIds.push(game.DisplayedId);
+          }
+        }
+      });
+    });
+
+    // Convert to array and sort by max kills (desc), then by times achieved (desc)
+    const sorted = Array.from(playerMaxKills.values())
+      .sort((a, b) => {
+        if (b.maxKills !== a.maxKills) return b.maxKills - a.maxKills;
+        return b.timesAchieved - a.timesAchieved;
+      })
+      .slice(0, 15);
+
+    // Check if highlighted player is in top 15
+    const highlightedInTop15 = settings.highlightedPlayer && 
+      sorted.some(p => p.playerName === settings.highlightedPlayer);
+
+    // Add highlighted player if not in top 15
+    if (settings.highlightedPlayer && !highlightedInTop15) {
+      const highlightedData = Array.from(playerMaxKills.values())
+        .find(p => p.playerName === settings.highlightedPlayer);
+      if (highlightedData) {
+        sorted.push({ ...highlightedData });
+      }
+    }
+
+    return sorted.map((p, index) => ({
+      name: p.playerName,
+      value: p.maxKills,
+      timesAchieved: p.timesAchieved,
+      gameIds: p.gameIds,
+      isHighlightedAddition: index >= 15
+    }));
+  }, [gameLogData, settings.highlightedPlayer]);
+
+  const MaxKillsTooltip = ({ active, payload, label, chartType }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      const isHighlightedFromSettings = settings.highlightedPlayer === data.name;
+      const isHighlightedAddition = data.isHighlightedAddition;
+
+      return (
+        <div style={{
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-color)',
+          borderRadius: '8px',
+          padding: '12px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          color: 'var(--text-primary)',
+          fontSize: '0.9rem'
+        }}>
+          <p style={{ 
+            fontWeight: 'bold', 
+            marginBottom: '8px',
+            color: isHighlightedFromSettings ? 'var(--accent-primary)' : 'var(--text-primary)'
+          }}>
+            {label}
+            {isHighlightedAddition && (
+              <span style={{ 
+                color: 'var(--accent-primary)', 
+                fontSize: '0.8rem',
+                fontStyle: 'italic',
+                marginLeft: '4px'
+              }}> (🎯)</span>
+            )}
+          </p>
+          <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+            <strong>{chartType === 'game' ? 'Max kills en une partie' : 'Max kills en une nuit'}:</strong> {data.value}
+          </p>
+          <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
+            <strong>Nombre de fois:</strong> {data.timesAchieved}
+          </p>
+          <p style={{ color: 'var(--text-secondary)', margin: '4px 0', fontSize: '0.8rem' }}>
+            {data.gameIds.length} partie{data.gameIds.length > 1 ? 's' : ''} concernée{data.gameIds.length > 1 ? 's' : ''}
+          </p>
+
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.25rem',
+              fontStyle: 'italic'
+            }}>
+              🎯 Affiché via sélection personnelle
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.25rem',
+              fontStyle: 'italic'
+            }}>
+              🎯 Joueur sélectionné
+            </div>
+          )}
+          <div style={{ 
+            fontSize: '0.8rem', 
+            color: 'var(--accent-primary)', 
+            marginTop: '0.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'pulse 1.5s infinite'
+          }}>
+            🖱️ Cliquez pour voir les parties
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="lycans-graphiques-groupe">
       <div className="lycans-graphique-section">
@@ -686,6 +938,224 @@ export function KillersView({
         </FullscreenChart>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
           Top {Math.min(15, averageKillsData.filter(k => !k.isHighlightedAddition).length)} des tueurs les plus efficaces (sur {totalEligibleForAverage} ayant au moins {minGamesForAverage} partie{minGamesForAverage > 1 ? 's' : ''})
+        </p>
+      </div>
+
+      <div className="lycans-graphique-section">
+        <div>
+          <h3>Record de Kills en une Partie</h3>
+          {maxKillsPerGameData.some(p => p.isHighlightedAddition) && settings.highlightedPlayer && (
+            <p style={{ 
+              fontSize: '0.8rem', 
+              color: 'var(--accent-primary-text)', 
+              fontStyle: 'italic',
+              marginTop: '0.25rem',
+              marginBottom: '0.5rem'
+            }}>
+              🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+            </p>
+          )}
+        </div>
+        <FullscreenChart title="Record de Kills en une Partie">
+          <div style={{ height: 440 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={maxKillsPerGameData}
+                margin={{ top: 60, right: 30, left: 20, bottom: 10 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="name"
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                  interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={10}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      textAnchor="end"
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
+                />
+                <YAxis label={{ 
+                  value: 'Nombre max de kills en une partie', 
+                  angle: 270, 
+                  position: 'left', 
+                  style: { textAnchor: 'middle' } 
+                }} />
+                <Tooltip content={(props) => <MaxKillsTooltip {...props} chartType="game" />} />
+                <Bar
+                  dataKey="value"
+                >
+                  {maxKillsPerGameData.map((entry, index) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                    const isHighlightedAddition = entry.isHighlightedAddition;
+                    
+                    return (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={
+                          playersColor[entry.name] || (
+                            isHighlightedFromSettings ? 'var(--accent-primary)' :
+                            isHighlightedAddition ? 'var(--accent-secondary)' :
+                            'var(--chart-primary)'
+                          )
+                        }
+                        stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
+                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => {
+                          if (entry?.gameIds && entry.gameIds.length > 0) {
+                            const navigationFilters: any = {
+                              fromComponent: 'Statistiques de Mort - Max Kills par Partie'
+                            };
+                            
+                            // Use selectedGame for single game, selectedGameIds for multiple games
+                            if (entry.gameIds.length === 1) {
+                              navigationFilters.selectedGame = entry.gameIds[0];
+                            } else {
+                              navigationFilters.selectedGameIds = entry.gameIds;
+                            }
+                            
+                            if (selectedCamp !== 'Tous les camps') {
+                              navigationFilters.campFilter = {
+                                selectedCamp: selectedCamp,
+                                campFilterMode: 'all-assignments'
+                              };
+                            }
+                            
+                            navigateToGameDetails(navigationFilters);
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  })}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </FullscreenChart>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+          Nombre maximum de kills réalisés en une seule partie
+        </p>
+      </div>
+
+      <div className="lycans-graphique-section">
+        <div>
+          <h3>Record de Kills en une Nuit</h3>
+          {maxKillsPerNightData.some(p => p.isHighlightedAddition) && settings.highlightedPlayer && (
+            <p style={{ 
+              fontSize: '0.8rem', 
+              color: 'var(--accent-primary-text)', 
+              fontStyle: 'italic',
+              marginTop: '0.25rem',
+              marginBottom: '0.5rem'
+            }}>
+              🎯 "{settings.highlightedPlayer}" affiché en plus du top 15
+            </p>
+          )}
+        </div>
+        <FullscreenChart title="Record de Kills en une Nuit">
+          <div style={{ height: 440 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={maxKillsPerNightData}
+                margin={{ top: 60, right: 30, left: 20, bottom: 10 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="name"
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                  interval={0}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={10}
+                      fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
+                      fontSize={settings.highlightedPlayer === payload.value ? 14 : 12}
+                      fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'normal'}
+                      textAnchor="end"
+                      transform={`rotate(-45 ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
+                />
+                <YAxis label={{ 
+                  value: 'Nombre max de kills en une nuit', 
+                  angle: 270, 
+                  position: 'left', 
+                  style: { textAnchor: 'middle' } 
+                }} />
+                <Tooltip content={(props) => <MaxKillsTooltip {...props} chartType="night" />} />
+                <Bar
+                  dataKey="value"
+                >
+                  {maxKillsPerNightData.map((entry, index) => {
+                    const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
+                    const isHighlightedAddition = entry.isHighlightedAddition;
+                    
+                    return (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={
+                          playersColor[entry.name] || (
+                            isHighlightedFromSettings ? 'var(--accent-primary)' :
+                            isHighlightedAddition ? 'var(--accent-secondary)' :
+                            'var(--chart-secondary)'
+                          )
+                        }
+                        stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
+                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
+                        opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => {
+                          if (entry?.gameIds && entry.gameIds.length > 0) {
+                            const navigationFilters: any = {
+                              fromComponent: 'Statistiques de Mort - Max Kills par Nuit'
+                            };
+                            
+                            // Use selectedGame for single game, selectedGameIds for multiple games
+                            if (entry.gameIds.length === 1) {
+                              navigationFilters.selectedGame = entry.gameIds[0];
+                            } else {
+                              navigationFilters.selectedGameIds = entry.gameIds;
+                            }
+                            
+                            if (selectedCamp !== 'Tous les camps') {
+                              navigationFilters.campFilter = {
+                                selectedCamp: selectedCamp,
+                                campFilterMode: 'all-assignments'
+                              };
+                            }
+                            
+                            navigateToGameDetails(navigationFilters);
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  })}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </FullscreenChart>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+          Nombre maximum de kills réalisés en une seule nuit (timing NX)
         </p>
       </div>
     </div>
