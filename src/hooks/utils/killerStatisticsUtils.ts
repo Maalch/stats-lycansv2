@@ -1,6 +1,7 @@
 import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
 import { getPlayerId, getCanonicalPlayerName } from '../../utils/playerIdentification';
 import { DEATH_TYPES, type DeathType } from '../../types/deathTypes';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 
 /**
  * Data structure for max kills per game statistics
@@ -13,9 +14,10 @@ export interface MaxKillsPerGame {
 }
 
 /**
- * Data structure for max kills per night statistics
+ * Data structure for max kills per phase statistics
+ * A phase is any game sequence: Day (J1), Night (N1), Meeting (M1), etc.
  */
-export interface MaxKillsPerNight {
+export interface MaxKillsPerPhase {
   playerName: string;
   maxKills: number;
   timesAchieved: number;
@@ -27,7 +29,7 @@ export interface MaxKillsPerNight {
  */
 export interface KillerStatistics {
   maxKillsPerGame: MaxKillsPerGame[];
-  maxKillsPerNight: MaxKillsPerNight[];
+  maxKillsPerPhase: MaxKillsPerPhase[];
 }
 
 /**
@@ -84,8 +86,15 @@ export function mergeHunterKills(killerData: any, victimCampFilter: string) {
 
 /**
  * Calculate maximum kills per game for all players
+ * @param gameData - Array of game log entries
+ * @param killerCampFilter - Filter for killer's camp (e.g., 'Tous les camps', 'Villageois', 'Loups')
+ * @param victimCampFilter - Filter for victim's camp (e.g., 'Tous les camps', 'Villageois', 'Loups', 'Roles solo')
  */
-export function computeMaxKillsPerGame(gameData: GameLogEntry[]): MaxKillsPerGame[] {
+export function computeMaxKillsPerGame(
+  gameData: GameLogEntry[],
+  killerCampFilter: string = 'Tous les camps',
+  victimCampFilter: string = 'Tous les camps'
+): MaxKillsPerGame[] {
   // Map to store max kills and associated game IDs for each player
   const playerMaxKills = new Map<string, {
     playerName: string;
@@ -99,11 +108,33 @@ export function computeMaxKillsPerGame(gameData: GameLogEntry[]): MaxKillsPerGam
       const playerId = getPlayerId(player);
       const playerName = getCanonicalPlayerName(player);
 
-      // Count how many kills this player made in this game
+      // Check if killer matches the camp filter
+      const killerFinalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+      const killerCamp = getPlayerCampFromRole(killerFinalRole, { regroupVillagers: true, regroupWolfSubRoles: true }, player.Power);
+      
+      if (killerCampFilter !== 'Tous les camps' && killerCamp !== killerCampFilter) {
+        return; // Skip this player if they don't match the killer camp filter
+      }
+
+      // Count how many kills this player made in this game (respecting victim camp filter)
       let killsInGame = 0;
       game.PlayerStats.forEach((victim: PlayerStat) => {
         if (victim.KillerName === player.Username && victim.DeathTiming) {
-          killsInGame++;
+          // Check if victim matches the camp filter
+          const victimFinalRole = getPlayerFinalRole(victim.MainRoleInitial, victim.MainRoleChanges || []);
+          const victimCamp = getPlayerCampFromRole(victimFinalRole, { regroupVillagers: true, regroupWolfSubRoles: true }, victim.Power);
+          
+          // Apply victim camp filter
+          if (victimCampFilter === 'Tous les camps') {
+            killsInGame++;
+          } else if (victimCampFilter === 'Roles solo') {
+            // Solo roles: Amoureux, Vaudou, Idiot du Village, Agent, etc.
+            if (victimCamp !== 'Villageois' && victimCamp !== 'Loups') {
+              killsInGame++;
+            }
+          } else if (victimCamp === victimCampFilter) {
+            killsInGame++;
+          }
         }
       });
 
@@ -139,10 +170,18 @@ export function computeMaxKillsPerGame(gameData: GameLogEntry[]): MaxKillsPerGam
 }
 
 /**
- * Calculate maximum kills per night for all players
+ * Calculate maximum kills per phase for all players
+ * A phase is any game sequence: Day (J1), Night (N1), Meeting (M1), etc.
+ * @param gameData - Array of game log entries
+ * @param killerCampFilter - Filter for killer's camp (e.g., 'Tous les camps', 'Villageois', 'Loups')
+ * @param victimCampFilter - Filter for victim's camp (e.g., 'Tous les camps', 'Villageois', 'Loups', 'Roles solo')
  */
-export function computeMaxKillsPerNight(gameData: GameLogEntry[]): MaxKillsPerNight[] {
-  // Map to store max kills per night and associated game IDs for each player
+export function computeMaxKillsPerPhase(
+  gameData: GameLogEntry[],
+  killerCampFilter: string = 'Tous les camps',
+  victimCampFilter: string = 'Tous les camps'
+): MaxKillsPerPhase[] {
+  // Map to store max kills per phase and associated game IDs for each player
   const playerMaxKills = new Map<string, {
     playerName: string;
     maxKills: number;
@@ -151,25 +190,55 @@ export function computeMaxKillsPerNight(gameData: GameLogEntry[]): MaxKillsPerNi
   }>();
 
   gameData.forEach((game: GameLogEntry) => {
-    // Group kills by player and night
-    const killsByPlayerAndNight = new Map<string, Map<string, number>>();
+    // Group kills by player and phase (with camp filtering)
+    const killsByPlayerAndPhase = new Map<string, Map<string, number>>();
 
     game.PlayerStats.forEach((victim: PlayerStat) => {
-      if (victim.KillerName && victim.DeathTiming && victim.DeathTiming.match(/^N\d+$/)) {
+      // Match any phase: N1, J1, M1, etc. (letter followed by digits)
+      if (victim.KillerName && victim.DeathTiming && victim.DeathTiming.match(/^[A-Z]\d+$/)) {
         const killerName = victim.KillerName;
-        const night = victim.DeathTiming;
+        const phase = victim.DeathTiming;
 
-        if (!killsByPlayerAndNight.has(killerName)) {
-          killsByPlayerAndNight.set(killerName, new Map<string, number>());
+        // Find the killer player to check their camp
+        const killerPlayer = game.PlayerStats.find((p: PlayerStat) => p.Username === killerName);
+        if (!killerPlayer) return;
+
+        // Check if killer matches the camp filter
+        const killerFinalRole = getPlayerFinalRole(killerPlayer.MainRoleInitial, killerPlayer.MainRoleChanges || []);
+        const killerCamp = getPlayerCampFromRole(killerFinalRole, { regroupVillagers: true, regroupWolfSubRoles: true }, killerPlayer.Power);
+        
+        if (killerCampFilter !== 'Tous les camps' && killerCamp !== killerCampFilter) {
+          return; // Skip this kill if killer doesn't match the camp filter
         }
-        const playerNights = killsByPlayerAndNight.get(killerName)!;
-        playerNights.set(night, (playerNights.get(night) || 0) + 1);
+
+        // Check if victim matches the camp filter
+        const victimFinalRole = getPlayerFinalRole(victim.MainRoleInitial, victim.MainRoleChanges || []);
+        const victimCamp = getPlayerCampFromRole(victimFinalRole, { regroupVillagers: true, regroupWolfSubRoles: true }, victim.Power);
+        
+        // Apply victim camp filter
+        let includeKill = false;
+        if (victimCampFilter === 'Tous les camps') {
+          includeKill = true;
+        } else if (victimCampFilter === 'Roles solo') {
+          // Solo roles: Amoureux, Vaudou, Idiot du Village, Agent, etc.
+          includeKill = victimCamp !== 'Villageois' && victimCamp !== 'Loups';
+        } else {
+          includeKill = victimCamp === victimCampFilter;
+        }
+
+        if (!includeKill) return;
+
+        if (!killsByPlayerAndPhase.has(killerName)) {
+          killsByPlayerAndPhase.set(killerName, new Map<string, number>());
+        }
+        const playerPhases = killsByPlayerAndPhase.get(killerName)!;
+        playerPhases.set(phase, (playerPhases.get(phase) || 0) + 1);
       }
     });
 
     // Find max kills for each player in this game
-    killsByPlayerAndNight.forEach((nights, killerName) => {
-      const maxKillsThisGame = Math.max(...Array.from(nights.values()));
+    killsByPlayerAndPhase.forEach((phases, killerName) => {
+      const maxKillsThisGame = Math.max(...Array.from(phases.values()));
 
       // Find the corresponding player to get canonical name
       const killerPlayer = game.PlayerStats.find((p: PlayerStat) => p.Username === killerName);
@@ -209,14 +278,21 @@ export function computeMaxKillsPerNight(gameData: GameLogEntry[]): MaxKillsPerNi
 
 /**
  * Calculate comprehensive killer statistics from game data
+ * @param gameData - Array of game log entries
+ * @param killerCampFilter - Filter for killer's camp (e.g., 'Tous les camps', 'Villageois', 'Loups')
+ * @param victimCampFilter - Filter for victim's camp (e.g., 'Tous les camps', 'Villageois', 'Loups', 'Roles solo')
  */
-export function computeKillerStatistics(gameData: GameLogEntry[]): KillerStatistics | null {
+export function computeKillerStatistics(
+  gameData: GameLogEntry[],
+  killerCampFilter: string = 'Tous les camps',
+  victimCampFilter: string = 'Tous les camps'
+): KillerStatistics | null {
   if (gameData.length === 0) {
     return null;
   }
 
   return {
-    maxKillsPerGame: computeMaxKillsPerGame(gameData),
-    maxKillsPerNight: computeMaxKillsPerNight(gameData)
+    maxKillsPerGame: computeMaxKillsPerGame(gameData, killerCampFilter, victimCampFilter),
+    maxKillsPerPhase: computeMaxKillsPerPhase(gameData, killerCampFilter, victimCampFilter)
   };
 }

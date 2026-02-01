@@ -51,8 +51,8 @@ export function KillersView({
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   
-  // Get killer statistics from hook
-  const { data: killerStats } = useKillerStatisticsFromRaw();
+  // Get killer statistics from hook with camp filters applied
+  const { data: killerStats } = useKillerStatisticsFromRaw(selectedCamp, victimCampFilter);
 
   // Get processed death types for display
   const displayDeathTypes = useMemo(() => {
@@ -103,6 +103,27 @@ export function KillersView({
       title += ' (Total)';
     } else {
       title += ' (Moyenne par Partie)';
+    }
+    
+    return title;
+  };
+
+  // Helper function to generate titles for max kills charts
+  const getMaxKillsChartTitle = (chartType: 'game' | 'phase') => {
+    let title = chartType === 'game' ? 'Record de Kills en une Partie' : 'Record de Kills en une Phase';
+    
+    // Add killer camp filter
+    if (selectedCamp !== 'Tous les camps') {
+      title += ` (${selectedCamp})`;
+    }
+    
+    // Add victim camp filter if not all camps
+    if (victimCampFilter !== 'Tous les camps') {
+      if (victimCampFilter === 'Roles solo') {
+        title += selectedCamp !== 'Tous les camps' ? ' - victimes: Roles solo' : ' (victimes: Roles solo)';
+      } else {
+        title += selectedCamp !== 'Tous les camps' ? ` - victimes: ${victimCampFilter}` : ` (victimes: ${victimCampFilter})`;
+      }
     }
     
     return title;
@@ -491,11 +512,11 @@ export function KillersView({
     }));
   }, [killerStats, settings.highlightedPlayer]);
 
-  // Get max kills per night statistics from hook
-  const maxKillsPerNightData = useMemo(() => {
+  // Get max kills per phase statistics from hook
+  const maxKillsPerPhaseData = useMemo(() => {
     if (!killerStats) return [];
 
-    const sorted = killerStats.maxKillsPerNight.slice(0, 15);
+    const sorted = killerStats.maxKillsPerPhase.slice(0, 15);
 
     // Check if highlighted player is in top 15
     const highlightedInTop15 = settings.highlightedPlayer && 
@@ -503,7 +524,7 @@ export function KillersView({
 
     // Add highlighted player if not in top 15
     if (settings.highlightedPlayer && !highlightedInTop15) {
-      const highlightedData = killerStats.maxKillsPerNight
+      const highlightedData = killerStats.maxKillsPerPhase
         .find(p => p.playerName === settings.highlightedPlayer);
       if (highlightedData) {
         sorted.push({ ...highlightedData });
@@ -551,7 +572,7 @@ export function KillersView({
             )}
           </p>
           <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
-            <strong>{chartType === 'game' ? 'Max kills en une partie' : 'Max kills en une nuit'}:</strong> {data.value}
+            <strong>{chartType === 'game' ? 'Max kills en une partie' : 'Max kills en une phase'}:</strong> {data.value}
           </p>
           <p style={{ color: 'var(--text-primary)', margin: '4px 0' }}>
             <strong>Nombre de fois:</strong> {data.timesAchieved}
@@ -794,7 +815,7 @@ export function KillersView({
 
       <div className="lycans-graphique-section">
         <div>
-          <h3>Record de Kills en une Partie</h3>
+          <h3>{getMaxKillsChartTitle('game')}</h3>
           {maxKillsPerGameData.some(p => p.isHighlightedAddition) && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
@@ -807,7 +828,7 @@ export function KillersView({
             </p>
           )}
         </div>
-        <FullscreenChart title="Record de Kills en une Partie">
+        <FullscreenChart title={getMaxKillsChartTitle('game')}>
           <div style={{ height: 440 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -897,14 +918,17 @@ export function KillersView({
           </div>
         </FullscreenChart>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-          Nombre maximum de kills réalisés en une seule partie
+          {selectedCamp !== 'Tous les camps' || victimCampFilter !== 'Tous les camps' 
+            ? 'Nombre maximum de kills réalisés en une seule partie (avec filtres appliqués)'
+            : 'Nombre maximum de kills réalisés en une seule partie'
+          }
         </p>
       </div>
 
       <div className="lycans-graphique-section">
         <div>
-          <h3>Record de Kills en une Nuit</h3>
-          {maxKillsPerNightData.some(p => p.isHighlightedAddition) && settings.highlightedPlayer && (
+          <h3>{getMaxKillsChartTitle('phase')}</h3>
+          {maxKillsPerPhaseData.some(p => p.isHighlightedAddition) && settings.highlightedPlayer && (
             <p style={{ 
               fontSize: '0.8rem', 
               color: 'var(--accent-primary-text)', 
@@ -916,11 +940,11 @@ export function KillersView({
             </p>
           )}
         </div>
-        <FullscreenChart title="Record de Kills en une Nuit">
+        <FullscreenChart title={getMaxKillsChartTitle('phase')}>
           <div style={{ height: 440 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
-                data={maxKillsPerNightData}
+                data={maxKillsPerPhaseData}
                 margin={{ top: 60, right: 30, left: 20, bottom: 10 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -946,16 +970,16 @@ export function KillersView({
                   )}
                 />
                 <YAxis label={{ 
-                  value: 'Nombre max de kills en une nuit', 
+                  value: 'Nombre max de kills en une phase', 
                   angle: 270, 
                   position: 'left', 
                   style: { textAnchor: 'middle' } 
                 }} />
-                <Tooltip content={(props) => <MaxKillsTooltip {...props} chartType="night" />} />
+                <Tooltip content={(props) => <MaxKillsTooltip {...props} chartType="phase" />} />
                 <Bar
                   dataKey="value"
                 >
-                  {maxKillsPerNightData.map((entry, index) => {
+                  {maxKillsPerPhaseData.map((entry, index) => {
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     
@@ -976,7 +1000,7 @@ export function KillersView({
                         onClick={() => {
                           if (entry?.gameIds && entry.gameIds.length > 0) {
                             const navigationFilters: any = {
-                              fromComponent: 'Statistiques de Mort - Max Kills par Nuit'
+                              fromComponent: 'Statistiques de Mort - Max Kills par Phase'
                             };
                             
                             // Use selectedGame for single game, selectedGameIds for multiple games
@@ -1006,7 +1030,13 @@ export function KillersView({
           </div>
         </FullscreenChart>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-          Nombre maximum de kills réalisés en une seule nuit (timing NX)
+          {selectedCamp !== 'Tous les camps' || victimCampFilter !== 'Tous les camps'
+            ? 'Nombre maximum de kills réalisés en une seule phase avec filtres appliqués'
+            : 'Nombre maximum de kills réalisés en une seule phase'
+          }
+        </p>
+        <p style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', textAlign: 'center', marginTop: '0.25rem', fontStyle: 'italic' }}>
+          Une phase est une séquence de jeu : Jour (J1), Nuit (N1), Meeting (M1), etc.
         </p>
       </div>
     </div>
