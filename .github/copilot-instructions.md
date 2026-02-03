@@ -87,7 +87,7 @@ interface RawGameData {
 **ALWAYS use `src/utils/roleUtils.ts` helpers** for role checking - never compare `MainRoleInitial` directly for elite roles.
 
 ### Villageois Élite / Power System
-The game has evolved its role format. "Chasseur" and "Alchimiste" were previously `MainRoleInitial` values, but are now Powers under the "Villageois Élite" role. New powers "Protecteur" and "Disciple" were also added.
+The game has evolved its role format. "Chasseur" and "Alchimiste" were previously `MainRoleInitial` values, but are now Powers under the "Villageois Élite" role. New powers "Protecteur", "Disciple" and "Inquisiteur" were also added.
 
 **Legacy Format (older games):**
 ```typescript
@@ -101,21 +101,8 @@ The game has evolved its role format. "Chasseur" and "Alchimiste" were previousl
 { MainRoleInitial: "Villageois Élite", Power: "Alchimiste" }
 { MainRoleInitial: "Villageois Élite", Power: "Protecteur" }
 { MainRoleInitial: "Villageois Élite", Power: "Disciple" }
-```
+{ MainRoleInitial: "Villageois Élite", Power: "Inquisiteur" }
 
-### Role Checking Pattern
-```typescript
-import { isHunter, isAlchimiste, isProtecteur, isDisciple, isVillageoisElite, getEffectivePower, VILLAGEOIS_ELITE_POWERS } from '../utils/roleUtils';
-
-// ✅ CORRECT: Use helper functions (handles both formats)
-if (isHunter(player)) { /* Hunter logic */ }
-if (isAlchimiste(player)) { /* Alchimiste logic */ }
-const power = getEffectivePower(player); // Returns 'Chasseur' for both formats
-
-// ❌ WRONG: Direct comparison misses legacy format
-if (player.Power === 'Chasseur') { /* Misses legacy MainRoleInitial: "Chasseur" */ }
-if (player.MainRoleInitial === 'Chasseur') { /* Misses new format */ }
-```
 
 ### Key Role Constants
 ```typescript
@@ -272,7 +259,6 @@ if (!playerInfo) {
 4. **Settings:** Add to `SettingsState` interface → ensure localStorage persistence
 5. **Player Highlighting:** Extend chart data types with `isHighlightedAddition` for special inclusion logic
 6. **Achievements:** Add processor in `src/hooks/utils/achievementProcessors/` → integrate in `scripts/data-sync/generate-achievements.js` → client consumes pre-calculated JSON
-7. **Role-Based Logic:** Use `roleUtils.ts` helpers (`isHunter()`, `isAlchimiste()`, `getEffectivePower()`) - never compare roles directly
 
 ### Base Hook Template
 ```typescript

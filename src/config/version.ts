@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.2';
+export const APP_VERSION = '1.7.3';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,19 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.3',
+    date: '03/02/2026',
+    description: 'Ajout de deux nouvelles séries : "Série sans Survivre" (morts consécutives) et "Série Survivant" (survies consécutives) dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'series',
+      text: 'Classements / Séries',
+      navigationState: {
+        selectedSeriesType: 'deaths'
+      }
+    }
+  },
   {
     version: 'v1.7.2',
     date: '31/01/2026',

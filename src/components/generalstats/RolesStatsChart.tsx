@@ -59,7 +59,7 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
       const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
 
-      // Special handling for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple)
+      // Special handling for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
       // This handles both legacy format (MainRoleInitial === 'Chasseur') and new format (Villageois Élite + Power)
       if (playerCamp === 'Villageois' && isVillageoisElite(playerStat)) {
         const effectivePower = getEffectivePower(playerStat);
@@ -493,6 +493,9 @@ export function RolesStatsChart() {
             }
             if (roleName === 'Disciple' && lycansColorScheme['Disciple']) {
               return lycansColorScheme['Disciple'];
+            }
+            if (roleName === 'Inquisiteur' && lycansColorScheme['Inquisiteur']) {
+              return lycansColorScheme['Inquisiteur'];
             }
             return 'var(--chart-color-1)';
           }

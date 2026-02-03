@@ -28,7 +28,7 @@ export declare function calculateGameDuration(startDate: string, endDate: string
  * @param groupOptions.regroupLovers - Whether to group lover roles
  * @param groupOptions.regroupVillagers - Whether to group villager-type roles
  * @param groupOptions.regroupWolfSubRoles - Whether to group wolf sub-roles
- * @param power - Optional power field for Villageois Élite roles (Chasseur, Alchimiste, Protecteur, Disciple)
+ * @param power - Optional power field for Villageois Élite roles (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
  * @returns The camp name for the role
  */
 export declare function getPlayerCampFromRole(

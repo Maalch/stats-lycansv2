@@ -29,7 +29,7 @@ export function PlayerSeriesChart() {
   const { settings } = useSettings();
   
   // Use navigationState to restore series type selection, fallback to 'villageois'
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses'>(
+  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival'>(
     navigationState.selectedSeriesType || 'villageois'
   );
   // New state for view mode: 'best' (all-time best series) or 'ongoing' (current ongoing series)
@@ -43,7 +43,7 @@ export function PlayerSeriesChart() {
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Helper function to handle series type changes
-  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses') => {
+  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival') => {
     setSelectedSeriesType(newSeriesType);
     updateNavigationState({ selectedSeriesType: newSeriesType });
   };
@@ -84,6 +84,12 @@ export function PlayerSeriesChart() {
         case 'losses':
           fullDataset = seriesData.currentLossSeries;
           break;
+        case 'deaths':
+          fullDataset = seriesData.currentDeathSeries;
+          break;
+        case 'survival':
+          fullDataset = seriesData.currentSurvivalSeries;
+          break;
         default:
           fullDataset = [];
       }
@@ -107,6 +113,12 @@ export function PlayerSeriesChart() {
           break;
         case 'losses':
           fullDataset = seriesData.allLossSeries;
+          break;
+        case 'deaths':
+          fullDataset = seriesData.allDeathSeries;
+          break;
+        case 'survival':
+          fullDataset = seriesData.allSurvivalSeries;
           break;
         default:
           fullDataset = [];
@@ -186,6 +198,14 @@ export function PlayerSeriesChart() {
         return viewMode === 'ongoing'
           ? 'Séries de Défaites En Cours'
           : 'Plus Longues Séries de Défaites';
+      case 'deaths':
+        return viewMode === 'ongoing'
+          ? 'Séries sans Survivre En Cours'
+          : 'Plus Longues Séries sans Survivre';
+      case 'survival':
+        return viewMode === 'ongoing'
+          ? 'Séries Survivant En Cours'
+          : 'Plus Longues Séries Survivant';
       default:
         return '';
     }
@@ -199,7 +219,132 @@ export function PlayerSeriesChart() {
     const isHighlightedFromSettings = settings.highlightedPlayer === data.player;
     const showOngoingIndicator = viewMode === 'best' && data.isOngoing;
     
-    if (selectedSeriesType === 'solo') {
+    // Special handling for deaths and survival series
+    if (selectedSeriesType === 'deaths') {
+      return (
+        <div style={{ 
+          background: 'var(--bg-secondary)', 
+          color: 'var(--text-primary)', 
+          padding: 12, 
+          borderRadius: 6,
+          border: '1px solid var(--border-color)'
+        }}>
+          <div>
+            <strong>{data.player}</strong>
+            {showOngoingIndicator && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
+          </div>
+          <div>Série sans Survivre : {data.seriesLength} parties consécutives {showOngoingIndicator ? '(En cours)' : ''}</div>
+          <div>Du {data.startGame} au {data.endGame}</div>
+          <div>Du {data.startDate} au {data.endDate}</div>
+          {data.campCounts && <div>Camps joués : {formatCampCounts(data.campCounts)}</div>}
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence (hors top 20)
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence
+            </div>
+          )}
+          {showOngoingIndicator && (
+            <div style={{ 
+              fontSize: '0.8rem', 
+              color: '#FF8C00', 
+              marginTop: '0.5rem',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+              🔥 Série en cours - Aucun jeu depuis !
+            </div>
+          )}
+          <div style={{ 
+            fontSize: '0.8rem', 
+            color: 'var(--accent-primary)', 
+            marginTop: '0.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'pulse 1.5s infinite'
+          }}>
+            🖱️ Cliquez pour voir les parties
+          </div>
+        </div>
+      );
+    } else if (selectedSeriesType === 'survival') {
+      return (
+        <div style={{ 
+          background: 'var(--bg-secondary)', 
+          color: 'var(--text-primary)', 
+          padding: 12, 
+          borderRadius: 6,
+          border: '1px solid var(--border-color)'
+        }}>
+          <div>
+            <strong>{data.player}</strong>
+            {showOngoingIndicator && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
+          </div>
+          <div>Série Survivant : {data.seriesLength} parties consécutives {showOngoingIndicator ? '(En cours)' : ''}</div>
+          <div>Du {data.startGame} au {data.endGame}</div>
+          <div>Du {data.startDate} au {data.endDate}</div>
+          {data.campCounts && <div>Camps joués : {formatCampCounts(data.campCounts)}</div>}
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence (hors top 20)
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence
+            </div>
+          )}
+          {showOngoingIndicator && (
+            <div style={{ 
+              fontSize: '0.8rem', 
+              color: '#FF8C00', 
+              marginTop: '0.5rem',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+              🔥 Série en cours - Aucun jeu depuis !
+            </div>
+          )}
+          <div style={{ 
+            fontSize: '0.8rem', 
+            color: 'var(--accent-primary)', 
+            marginTop: '0.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'pulse 1.5s infinite'
+          }}>
+            🖱️ Cliquez pour voir les parties
+          </div>
+        </div>
+      );
+    } else if (selectedSeriesType === 'solo') {
       return (
         <div style={{ 
           background: 'var(--bg-secondary)', 
@@ -489,6 +634,18 @@ export function PlayerSeriesChart() {
         selectedGameIds: data.gameIds,
         fromComponent: 'Séries Rôles Solos'
       });
+    } else if (selectedSeriesType === 'deaths') {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
+        fromComponent: 'Séries sans Survivre'
+      });
+    } else if (selectedSeriesType === 'survival') {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
+        fromComponent: 'Séries Survivant'
+      });
     } else {
       const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loup';
       navigateToGameDetails({
@@ -547,6 +704,18 @@ export function PlayerSeriesChart() {
               Une victoire brise la série.
             </>
           )}
+          {selectedSeriesType === 'deaths' && (
+            <>
+              <strong>Séries sans Survivre :</strong> Parties consécutives où le joueur est mort. 
+              Survivre à une partie brise la série.
+            </>
+          )}
+          {selectedSeriesType === 'survival' && (
+            <>
+              <strong>Séries Survivant :</strong> Parties consécutives où le joueur a survécu (pas mort). 
+              Mourir dans une partie brise la série.
+            </>
+          )}
           <br/>
           <strong>🔥 Séries en cours :</strong> {viewMode === 'ongoing' 
             ? 'Toutes les séries affichées sont actuellement actives' 
@@ -599,6 +768,20 @@ export function PlayerSeriesChart() {
             onClick={() => handleSeriesTypeChange('losses')}
           >
             Séries de Défaites
+          </button>
+          <button
+            type="button"
+            className={`lycans-categorie-btn ${selectedSeriesType === 'deaths' ? 'active' : ''}`}
+            onClick={() => handleSeriesTypeChange('deaths')}
+          >
+            Séries sans Survivre
+          </button>
+          <button
+            type="button"
+            className={`lycans-categorie-btn ${selectedSeriesType === 'survival' ? 'active' : ''}`}
+            onClick={() => handleSeriesTypeChange('survival')}
+          >
+            Séries Survivant
           </button>
         </div>
         

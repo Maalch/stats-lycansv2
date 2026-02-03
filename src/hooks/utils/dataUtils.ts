@@ -82,9 +82,9 @@ export function didCampWin(camp: string, winnerCamp: string): boolean {
   // Special case: Traitor/WolfCub wins if Wolves win, Amoureux can be disambiguous
   if ((camp === "Traître" || camp === "Louveteau") && winnerCamp === "Loup") return true;
   if ((camp === "Amoureux Villageois" || camp === "Amoureux Loup") && winnerCamp === "Amoureux") return true;
-  // Villageois Élite and its powers (Chasseur, Alchimiste, Protecteur, Disciple) count as Villageois
+  // Villageois Élite and its powers (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur) count as Villageois
   if ((camp === "Chasseur" || camp === "Alchimiste" || camp === "Villageois Élite" || 
-       camp === "Protecteur" || camp === "Disciple") && winnerCamp === "Villageois") return true;
+       camp === "Protecteur" || camp === "Disciple" || camp === "Inquisiteur") && winnerCamp === "Villageois") return true;
   return false;
 }
 

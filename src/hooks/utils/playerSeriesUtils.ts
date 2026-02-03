@@ -42,6 +42,30 @@ export interface LossSeries {
   gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
 }
 
+export interface DeathSeries {
+  player: string;
+  seriesLength: number;
+  startGame: string;    // Global chronological game number (e.g., "123")
+  endGame: string;      // Global chronological game number (e.g., "127")
+  startDate: string;
+  endDate: string;
+  campCounts: Record<string, number>; // Count of times each camp was played when dying
+  isOngoing: boolean; // True if the series is still active (player hasn't played since)
+  gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
+}
+
+export interface SurvivalSeries {
+  player: string;
+  seriesLength: number;
+  startGame: string;    // Global chronological game number (e.g., "123")
+  endGame: string;      // Global chronological game number (e.g., "127")
+  startDate: string;
+  endDate: string;
+  campCounts: Record<string, number>; // Count of times each camp was played while surviving
+  isOngoing: boolean; // True if the series is still active (player hasn't played since)
+  gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
+}
+
 export interface PlayerSeriesData {
   // Full datasets for all players with series data
   allVillageoisSeries: CampSeries[];
@@ -50,6 +74,8 @@ export interface PlayerSeriesData {
   allSoloSeries: CampSeries[];
   allWinSeries: WinSeries[];
   allLossSeries: LossSeries[];
+  allDeathSeries: DeathSeries[];
+  allSurvivalSeries: SurvivalSeries[];
   // Current ongoing series for ALL players (not just their best)
   currentVillageoisSeries: CampSeries[];
   currentLoupsSeries: CampSeries[];
@@ -57,6 +83,8 @@ export interface PlayerSeriesData {
   currentSoloSeries: CampSeries[];
   currentWinSeries: WinSeries[];
   currentLossSeries: LossSeries[];
+  currentDeathSeries: DeathSeries[];
+  currentSurvivalSeries: SurvivalSeries[];
   totalGamesAnalyzed: number;
   // Statistics for all players
   averageVillageoisSeries: number;
@@ -65,12 +93,16 @@ export interface PlayerSeriesData {
   averageSoloSeries: number;
   averageWinSeries: number;
   averageLossSeries: number;
+  averageDeathSeries: number;
+  averageSurvivalSeries: number;
   eliteVillageoisCount: number; // Players with 5+ Villageois series
   eliteLoupsCount: number; // Players with 3+ Loups series
   eliteNoWolfCount: number; // Players with 5+ NoWolf series
   eliteSoloCount: number; // Players with 3+ Solo series
   eliteWinCount: number; // Players with 5+ win series
   eliteLossCount: number; // Players with 5+ loss series
+  eliteDeathCount: number; // Players with 5+ death series
+  eliteSurvivalCount: number; // Players with 5+ survival series
   totalPlayersCount: number;
   // Active series counts (all players currently on a streak, not just top 20)
   activeVillageoisCount: number; // Players currently on a Villageois streak
@@ -79,6 +111,8 @@ export interface PlayerSeriesData {
   activeSoloCount: number; // Players currently on a Solo streak
   activeWinCount: number; // Players currently on a win streak
   activeLossCount: number; // Players currently on a loss streak
+  activeDeathCount: number; // Players currently on a death streak
+  activeSurvivalCount: number; // Players currently on a survival streak
   // Record ongoing counts (players currently in their personal best streak)
   ongoingVillageoisCount: number;
   ongoingLoupsCount: number;
@@ -86,6 +120,8 @@ export interface PlayerSeriesData {
   ongoingSoloCount: number;
   ongoingWinCount: number;
   ongoingLossCount: number;
+  ongoingDeathCount: number;
+  ongoingSurvivalCount: number;
 }
 
 interface PlayerSeriesState {
@@ -103,16 +139,25 @@ interface PlayerSeriesState {
   currentLossSeries: number;
   longestLossSeries: LossSeries | null;
   currentLossCamps: string[];
+  currentDeathSeries: number;
+  longestDeathSeries: DeathSeries | null;
+  currentDeathCamps: string[];
+  currentSurvivalSeries: number;
+  longestSurvivalSeries: SurvivalSeries | null;
+  currentSurvivalCamps: string[];
   currentNoWolfCamps: string[]; // Track camps during NoWolf series
   currentSoloCamps: string[]; // Track camps during Solo series
   lastCamp: 'Villageois' | 'Loup' | 'Autres' | null;
   lastWon: boolean;
+  lastDied: boolean;
   villageoisSeriesStart: { game: string; date: string } | null;    // Changed to string
   loupsSeriesStart: { game: string; date: string } | null;          // Changed to string
   noWolfSeriesStart: { game: string; date: string } | null;         // New NoWolf series start
   soloSeriesStart: { game: string; date: string } | null;           // New Solo series start
   winSeriesStart: { game: string; date: string } | null;            // Changed to string
   lossSeriesStart: { game: string; date: string } | null;           // Changed to string
+  deathSeriesStart: { game: string; date: string } | null;
+  survivalSeriesStart: { game: string; date: string } | null;
   // Track game IDs for current series - now DisplayedIds
   currentVillageoisGameIds: string[];
   currentLoupsGameIds: string[];
@@ -120,6 +165,8 @@ interface PlayerSeriesState {
   currentSoloGameIds: string[];
   currentWinGameIds: string[];
   currentLossGameIds: string[];
+  currentDeathGameIds: string[];
+  currentSurvivalGameIds: string[];
 }
 
 /**
@@ -165,22 +212,33 @@ function initializePlayerSeries(playerMap: Map<string, string>): Record<string, 
       currentLossSeries: 0,
       longestLossSeries: null,
       currentLossCamps: [],
+      currentDeathSeries: 0,
+      longestDeathSeries: null,
+      currentDeathCamps: [],
+      currentSurvivalSeries: 0,
+      longestSurvivalSeries: null,
+      currentSurvivalCamps: [],
       currentNoWolfCamps: [],
       currentSoloCamps: [],
       lastCamp: null,
       lastWon: false,
+      lastDied: false,
       villageoisSeriesStart: null,
       loupsSeriesStart: null,
       noWolfSeriesStart: null,
       soloSeriesStart: null,
       winSeriesStart: null,
       lossSeriesStart: null,
+      deathSeriesStart: null,
+      survivalSeriesStart: null,
       currentVillageoisGameIds: [],
       currentLoupsGameIds: [],
       currentNoWolfGameIds: [],
       currentSoloGameIds: [],
       currentWinGameIds: [],
-      currentLossGameIds: []
+      currentLossGameIds: [],
+      currentDeathGameIds: [],
+      currentSurvivalGameIds: []
     };
   });
   
@@ -497,6 +555,106 @@ function processLossSeries(
 }
 
 /**
+ * Process death series for a player
+ * @param displayName - Display name for the player (used in output)
+ */
+function processDeathSeries(
+  playerStats: PlayerSeriesState,
+  displayName: string,
+  playerDied: boolean,
+  actualCamp: string,
+  gameDisplayedId: string,
+  date: string
+): void {
+  if (playerDied) {
+    if (playerStats.currentDeathSeries === 0) {
+      playerStats.deathSeriesStart = { game: gameDisplayedId, date };
+      playerStats.currentDeathGameIds = [];
+    }
+    playerStats.currentDeathSeries++;
+    playerStats.currentDeathCamps.push(actualCamp);
+    playerStats.currentDeathGameIds.push(gameDisplayedId);
+
+    if (
+      !playerStats.longestDeathSeries ||
+      playerStats.currentDeathSeries > playerStats.longestDeathSeries.seriesLength
+    ) {
+      const campCounts: Record<string, number> = {};
+      playerStats.currentDeathCamps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+
+      playerStats.longestDeathSeries = {
+        player: displayName,
+        seriesLength: playerStats.currentDeathSeries,
+        startGame: playerStats.deathSeriesStart!.game,
+        endGame: gameDisplayedId,
+        startDate: playerStats.deathSeriesStart!.date,
+        endDate: date,
+        campCounts,
+        isOngoing: false,
+        gameIds: [...playerStats.currentDeathGameIds]
+      };
+    }
+  } else {
+    playerStats.currentDeathSeries = 0;
+    playerStats.currentDeathCamps = [];
+    playerStats.deathSeriesStart = null;
+    playerStats.currentDeathGameIds = [];
+  }
+}
+
+/**
+ * Process survival series for a player
+ * @param displayName - Display name for the player (used in output)
+ */
+function processSurvivalSeries(
+  playerStats: PlayerSeriesState,
+  displayName: string,
+  playerDied: boolean,
+  actualCamp: string,
+  gameDisplayedId: string,
+  date: string
+): void {
+  if (!playerDied) {
+    if (playerStats.currentSurvivalSeries === 0) {
+      playerStats.survivalSeriesStart = { game: gameDisplayedId, date };
+      playerStats.currentSurvivalGameIds = [];
+    }
+    playerStats.currentSurvivalSeries++;
+    playerStats.currentSurvivalCamps.push(actualCamp);
+    playerStats.currentSurvivalGameIds.push(gameDisplayedId);
+
+    if (
+      !playerStats.longestSurvivalSeries ||
+      playerStats.currentSurvivalSeries > playerStats.longestSurvivalSeries.seriesLength
+    ) {
+      const campCounts: Record<string, number> = {};
+      playerStats.currentSurvivalCamps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+
+      playerStats.longestSurvivalSeries = {
+        player: displayName,
+        seriesLength: playerStats.currentSurvivalSeries,
+        startGame: playerStats.survivalSeriesStart!.game,
+        endGame: gameDisplayedId,
+        startDate: playerStats.survivalSeriesStart!.date,
+        endDate: date,
+        campCounts,
+        isOngoing: false,
+        gameIds: [...playerStats.currentSurvivalGameIds]
+      };
+    }
+  } else {
+    playerStats.currentSurvivalSeries = 0;
+    playerStats.currentSurvivalCamps = [];
+    playerStats.survivalSeriesStart = null;
+    playerStats.currentSurvivalGameIds = [];
+  }
+}
+
+/**
  * Collect and sort series results
  */
 function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState>): {
@@ -506,6 +664,8 @@ function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState
   allSoloSeries: CampSeries[];
   allWinSeries: WinSeries[];
   allLossSeries: LossSeries[];
+  allDeathSeries: DeathSeries[];
+  allSurvivalSeries: SurvivalSeries[];
 } {
   const allVillageoisSeries: CampSeries[] = [];
   const allLoupsSeries: CampSeries[] = [];
@@ -513,6 +673,8 @@ function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState
   const allSoloSeries: CampSeries[] = [];
   const allWinSeries: WinSeries[] = [];
   const allLossSeries: LossSeries[] = [];
+  const allDeathSeries: DeathSeries[] = [];
+  const allSurvivalSeries: SurvivalSeries[] = [];
 
   Object.values(playerCampSeries).forEach(stats => {
     if (stats.longestVillageoisSeries) {
@@ -533,6 +695,12 @@ function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState
     if (stats.longestLossSeries) {
       allLossSeries.push(stats.longestLossSeries);
     }
+    if (stats.longestDeathSeries) {
+      allDeathSeries.push(stats.longestDeathSeries);
+    }
+    if (stats.longestSurvivalSeries) {
+      allSurvivalSeries.push(stats.longestSurvivalSeries);
+    }
   });
 
   // Sort by series length (descending) - no slicing here
@@ -542,6 +710,8 @@ function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState
   allSoloSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   allWinSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   allLossSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  allDeathSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  allSurvivalSeries.sort((a, b) => b.seriesLength - a.seriesLength);
 
   return {
     allVillageoisSeries,
@@ -549,7 +719,9 @@ function collectSeriesResults(playerCampSeries: Record<string, PlayerSeriesState
     allNoWolfSeries,
     allSoloSeries,
     allWinSeries,
-    allLossSeries
+    allLossSeries,
+    allDeathSeries,
+    allSurvivalSeries
   };
 }
 
@@ -566,12 +738,16 @@ function calculatePlayerStatistics(
   averageSoloSeries: number;
   averageWinSeries: number;
   averageLossSeries: number;
+  averageDeathSeries: number;
+  averageSurvivalSeries: number;
   eliteVillageoisCount: number;
   eliteLoupsCount: number;
   eliteNoWolfCount: number;
   eliteSoloCount: number;
   eliteWinCount: number;
   eliteLossCount: number;
+  eliteDeathCount: number;
+  eliteSurvivalCount: number;
 } {
   // Collect ALL players' best series lengths (including 0 for those who never had a series)
   const allVillageoisSeries: number[] = [];
@@ -580,6 +756,8 @@ function calculatePlayerStatistics(
   const allSoloSeries: number[] = [];
   const allWinSeries: number[] = [];
   const allLossSeries: number[] = [];
+  const allDeathSeries: number[] = [];
+  const allSurvivalSeries: number[] = [];
   
   Object.values(playerCampSeries).forEach(stats => {
     // For averages, include the best series length for each player (0 if they never had one)
@@ -589,6 +767,8 @@ function calculatePlayerStatistics(
     allSoloSeries.push(stats.longestSoloSeries?.seriesLength || 0);
     allWinSeries.push(stats.longestWinSeries?.seriesLength || 0);
     allLossSeries.push(stats.longestLossSeries?.seriesLength || 0);
+    allDeathSeries.push(stats.longestDeathSeries?.seriesLength || 0);
+    allSurvivalSeries.push(stats.longestSurvivalSeries?.seriesLength || 0);
   });
 
   // Calculate averages based on ALL players
@@ -616,13 +796,23 @@ function calculatePlayerStatistics(
     ? allLossSeries.reduce((sum, length) => sum + length, 0) / totalPlayers
     : 0;
 
-  // Count elite players (with thresholds: Villageois 5+, Loups 3+, NoWolf 5+, Solo 3+, Wins 5+, Losses 5+)
+  const averageDeathSeries = totalPlayers > 0 
+    ? allDeathSeries.reduce((sum, length) => sum + length, 0) / totalPlayers
+    : 0;
+
+  const averageSurvivalSeries = totalPlayers > 0 
+    ? allSurvivalSeries.reduce((sum, length) => sum + length, 0) / totalPlayers
+    : 0;
+
+  // Count elite players (with thresholds: Villageois 5+, Loups 3+, NoWolf 5+, Solo 3+, Wins 5+, Losses 5+, Deaths 5+, Survival 5+)
   const eliteVillageoisCount = allVillageoisSeries.filter(length => length >= 5).length;
   const eliteLoupsCount = allLoupsSeries.filter(length => length >= 3).length;
   const eliteNoWolfCount = allNoWolfSeries.filter(length => length >= 5).length;
   const eliteSoloCount = allSoloSeries.filter(length => length >= 3).length;
   const eliteWinCount = allWinSeries.filter(length => length >= 5).length;
   const eliteLossCount = allLossSeries.filter(length => length >= 5).length;
+  const eliteDeathCount = allDeathSeries.filter(length => length >= 5).length;
+  const eliteSurvivalCount = allSurvivalSeries.filter(length => length >= 5).length;
 
   return {
     averageVillageoisSeries: Math.round(averageVillageoisSeries * 10) / 10, // Round to 1 decimal
@@ -631,12 +821,16 @@ function calculatePlayerStatistics(
     averageSoloSeries: Math.round(averageSoloSeries * 10) / 10,
     averageWinSeries: Math.round(averageWinSeries * 10) / 10,
     averageLossSeries: Math.round(averageLossSeries * 10) / 10,
+    averageDeathSeries: Math.round(averageDeathSeries * 10) / 10,
+    averageSurvivalSeries: Math.round(averageSurvivalSeries * 10) / 10,
     eliteVillageoisCount,
     eliteLoupsCount,
     eliteNoWolfCount,
     eliteSoloCount,
     eliteWinCount,
-    eliteLossCount
+    eliteLossCount,
+    eliteDeathCount,
+    eliteSurvivalCount
   };
 }
 
@@ -697,6 +891,16 @@ export function computePlayerSeries(
       
       // Process loss series (pass display name for output)
       processLossSeries(playerStats, displayName, playerWon, mainCamp, gameDisplayedId, date);
+
+      // Process death series (pass display name for output)
+      const playerDied = playerStat.DeathTiming !== null;
+      processDeathSeries(playerStats, displayName, playerDied, mainCamp, gameDisplayedId, date);
+      
+      // Process survival series (pass display name for output)
+      processSurvivalSeries(playerStats, displayName, playerDied, mainCamp, gameDisplayedId, date);
+
+      // Update last states
+      playerStats.lastDied = playerDied;
     });
   });
 
@@ -707,7 +911,9 @@ export function computePlayerSeries(
     allNoWolfSeries,
     allSoloSeries,
     allWinSeries,
-    allLossSeries
+    allLossSeries,
+    allDeathSeries,
+    allSurvivalSeries
   } = collectSeriesResults(playerCampSeries);
 
   // Mark ongoing series - a series is ongoing if:
@@ -756,6 +962,20 @@ export function computePlayerSeries(
         stats.currentLossSeries > 0) {
       stats.longestLossSeries.isOngoing = true;
     }
+
+    // Check Death series
+    if (stats.longestDeathSeries && 
+        stats.currentDeathSeries === stats.longestDeathSeries.seriesLength &&
+        stats.currentDeathSeries > 0) {
+      stats.longestDeathSeries.isOngoing = true;
+    }
+
+    // Check Survival series
+    if (stats.longestSurvivalSeries && 
+        stats.currentSurvivalSeries === stats.longestSurvivalSeries.seriesLength &&
+        stats.currentSurvivalSeries > 0) {
+      stats.longestSurvivalSeries.isOngoing = true;
+    }
   });
 
   // Calculate statistics based on ALL players' series data
@@ -771,12 +991,16 @@ export function computePlayerSeries(
   let activeSoloCount = 0;         // Players currently on a Solo streak
   let activeWinCount = 0;          // Players currently on a win streak
   let activeLossCount = 0;         // Players currently on a loss streak
+  let activeDeathCount = 0;        // Players currently on a death streak
+  let activeSurvivalCount = 0;     // Players currently on a survival streak
   let ongoingVillageoisCount = 0;  // Players currently in their personal best Villageois streak
   let ongoingLoupsCount = 0;       // Players currently in their personal best Loups streak
   let ongoingNoWolfCount = 0;      // Players currently in their personal best NoWolf streak
   let ongoingSoloCount = 0;        // Players currently in their personal best Solo streak
   let ongoingWinCount = 0;         // Players currently in their personal best win streak
   let ongoingLossCount = 0;        // Players currently in their personal best loss streak
+  let ongoingDeathCount = 0;       // Players currently in their personal best death streak
+  let ongoingSurvivalCount = 0;    // Players currently in their personal best survival streak
 
   // Collect current ongoing series for ALL players
   const currentVillageoisSeries: CampSeries[] = [];
@@ -785,6 +1009,8 @@ export function computePlayerSeries(
   const currentSoloSeries: CampSeries[] = [];
   const currentWinSeries: WinSeries[] = [];
   const currentLossSeries: LossSeries[] = [];
+  const currentDeathSeries: DeathSeries[] = [];
+  const currentSurvivalSeries: SurvivalSeries[] = [];
 
   Object.entries(playerCampSeries).forEach(([playerId, stats]) => {
     const displayName = stats.longestVillageoisSeries?.player || 
@@ -903,6 +1129,48 @@ export function computePlayerSeries(
       });
     }
 
+    // Death series
+    if (stats.currentDeathSeries > 0) {
+      activeDeathCount++;
+      // Create camp counts from currentDeathCamps
+      const campCounts: Record<string, number> = {};
+      stats.currentDeathCamps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+      currentDeathSeries.push({
+        player: displayName,
+        seriesLength: stats.currentDeathSeries,
+        startGame: stats.deathSeriesStart?.game || '',
+        endGame: stats.currentDeathGameIds[stats.currentDeathGameIds.length - 1] || '',
+        startDate: stats.deathSeriesStart?.date || '',
+        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        campCounts: campCounts,
+        isOngoing: true,
+        gameIds: [...stats.currentDeathGameIds]
+      });
+    }
+
+    // Survival series
+    if (stats.currentSurvivalSeries > 0) {
+      activeSurvivalCount++;
+      // Create camp counts from currentSurvivalCamps
+      const campCounts: Record<string, number> = {};
+      stats.currentSurvivalCamps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+      currentSurvivalSeries.push({
+        player: displayName,
+        seriesLength: stats.currentSurvivalSeries,
+        startGame: stats.survivalSeriesStart?.game || '',
+        endGame: stats.currentSurvivalGameIds[stats.currentSurvivalGameIds.length - 1] || '',
+        startDate: stats.survivalSeriesStart?.date || '',
+        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        campCounts: campCounts,
+        isOngoing: true,
+        gameIds: [...stats.currentSurvivalGameIds]
+      });
+    }
+
     // Count ongoing record series (current streak equals personal best)
     if (stats.longestVillageoisSeries?.isOngoing) {
       ongoingVillageoisCount++;
@@ -922,6 +1190,12 @@ export function computePlayerSeries(
     if (stats.longestLossSeries?.isOngoing) {
       ongoingLossCount++;
     }
+    if (stats.longestDeathSeries?.isOngoing) {
+      ongoingDeathCount++;
+    }
+    if (stats.longestSurvivalSeries?.isOngoing) {
+      ongoingSurvivalCount++;
+    }
   });
 
   // Sort current series by length (descending)
@@ -931,6 +1205,8 @@ export function computePlayerSeries(
   currentSoloSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   currentWinSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   currentLossSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  currentDeathSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  currentSurvivalSeries.sort((a, b) => b.seriesLength - a.seriesLength);
 
   return {
     allVillageoisSeries,
@@ -939,12 +1215,16 @@ export function computePlayerSeries(
     allSoloSeries,
     allWinSeries,
     allLossSeries,
+    allDeathSeries,
+    allSurvivalSeries,
     currentVillageoisSeries,
     currentLoupsSeries,
     currentNoWolfSeries,
     currentSoloSeries,
     currentWinSeries,
     currentLossSeries,
+    currentDeathSeries,
+    currentSurvivalSeries,
     totalGamesAnalyzed: sortedGames.length,
     totalPlayersCount: allPlayers.size,
     activeVillageoisCount,
@@ -953,12 +1233,16 @@ export function computePlayerSeries(
     activeSoloCount,
     activeWinCount,
     activeLossCount,
+    activeDeathCount,
+    activeSurvivalCount,
     ongoingVillageoisCount,
     ongoingLoupsCount,
     ongoingNoWolfCount,
     ongoingSoloCount,
     ongoingWinCount,
     ongoingLossCount,
+    ongoingDeathCount,
+    ongoingSurvivalCount,
     ...statistics
   };
 }

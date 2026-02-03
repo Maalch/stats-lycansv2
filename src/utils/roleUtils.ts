@@ -19,9 +19,9 @@ import type { PlayerStat } from '../hooks/useCombinedRawData';
 /**
  * Powers that are exclusive to Villageois Élite role
  * These were previously standalone MainRoleInitial values (Chasseur, Alchimiste)
- * and now include new powers (Protecteur, Disciple)
+ * and now include new powers (Protecteur, Disciple, Inquisiteur)
  */
-export const VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple'] as const;
+export const VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Inquisiteur'] as const;
 
 /**
  * Legacy roles that are now represented as Villageois Élite + Power
@@ -99,120 +99,6 @@ export function isHunter(player: PlayerStat, finalRole?: string): boolean {
   }
   
   return false;
-}
-
-/**
- * Check if a player is/was an Alchimiste
- * Handles both legacy format (MainRoleInitial === 'Alchimiste') and new format (Power === 'Alchimiste')
- * Also checks final role for role changes during game
- * 
- * @param player - PlayerStat object
- * @param finalRole - Optional: the player's final role after any role changes
- * @returns true if player was an Alchimiste at any point
- */
-export function isAlchimiste(player: PlayerStat, finalRole?: string): boolean {
-  // Legacy format: MainRoleInitial is "Alchimiste"
-  if (player.MainRoleInitial === 'Alchimiste') {
-    return true;
-  }
-  
-  // New format: Villageois Élite with Power "Alchimiste"
-  if (player.MainRoleInitial === 'Villageois Élite' && player.Power === 'Alchimiste') {
-    return true;
-  }
-  
-  // Check final role if provided (for role changes during game)
-  if (finalRole === 'Alchimiste') {
-    return true;
-  }
-  
-  return false;
-}
-
-/**
- * Check if a player is/was a Protecteur
- * Only available in new format (Villageois Élite with Power "Protecteur")
- * 
- * @param player - PlayerStat object
- * @param finalRole - Optional: the player's final role after any role changes
- * @returns true if player was a Protecteur at any point
- */
-export function isProtecteur(player: PlayerStat, finalRole?: string): boolean {
-  // New format only: Villageois Élite with Power "Protecteur"
-  if (player.MainRoleInitial === 'Villageois Élite' && player.Power === 'Protecteur') {
-    return true;
-  }
-  
-  // Check final role if provided (for role changes during game)
-  if (finalRole === 'Protecteur') {
-    return true;
-  }
-  
-  return false;
-}
-
-/**
- * Check if a player is/was a Disciple
- * Only available in new format (Villageois Élite with Power "Disciple")
- * 
- * @param player - PlayerStat object
- * @param finalRole - Optional: the player's final role after any role changes
- * @returns true if player was a Disciple at any point
- */
-export function isDisciple(player: PlayerStat, finalRole?: string): boolean {
-  // New format only: Villageois Élite with Power "Disciple"
-  if (player.MainRoleInitial === 'Villageois Élite' && player.Power === 'Disciple') {
-    return true;
-  }
-  
-  // Check final role if provided (for role changes during game)
-  if (finalRole === 'Disciple') {
-    return true;
-  }
-  
-  return false;
-}
-
-/**
- * Check if a player has a specific Villageois Élite power (handles both formats)
- * 
- * @param player - PlayerStat object
- * @param power - The power to check for (e.g., 'Chasseur', 'Alchimiste', 'Protecteur', 'Disciple')
- * @returns true if player has the specified power
- */
-export function hasElitePower(player: PlayerStat, power: string): boolean {
-  // Legacy format: MainRoleInitial is the power itself (Chasseur/Alchimiste)
-  if (player.MainRoleInitial === power && LEGACY_ELITE_ROLES.includes(power as typeof LEGACY_ELITE_ROLES[number])) {
-    return true;
-  }
-  
-  // New format: Villageois Élite with matching Power
-  if (player.MainRoleInitial === 'Villageois Élite' && player.Power === power) {
-    return true;
-  }
-  
-  return false;
-}
-
-/**
- * Get the display name for a Villageois Élite power
- * This ensures consistent naming across the application
- * 
- * @param player - PlayerStat object
- * @returns The power name for display, or null if not a Villageois Élite
- */
-export function getElitePowerDisplayName(player: PlayerStat): string | null {
-  // New format
-  if (player.MainRoleInitial === 'Villageois Élite' && player.Power) {
-    return player.Power;
-  }
-  
-  // Legacy format
-  if (LEGACY_ELITE_ROLES.includes(player.MainRoleInitial as typeof LEGACY_ELITE_ROLES[number])) {
-    return player.MainRoleInitial;
-  }
-  
-  return null;
 }
 
 /**

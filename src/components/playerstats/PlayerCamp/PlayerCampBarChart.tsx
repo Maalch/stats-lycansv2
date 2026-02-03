@@ -73,7 +73,7 @@ export function PlayerCampPerformanceBarChart({
                 <p style={{ background: 'var(--bg-primary)', padding: '0.75rem', borderRadius: '6px', marginTop: '0.5rem' }}>
                   <strong>ℹ️ {selectedCamp} :</strong>{' '}
                   {selectedCamp === 'Tous les camps' && 'Affiche le meilleur rôle de chaque joueur (toutes catégories confondues).'}
-                  {selectedCamp === 'Camp Villageois' && 'Inclut Villageois, Chasseur, Alchimiste, Protecteur et Disciple.'}
+                  {selectedCamp === 'Camp Villageois' && 'Inclut Villageois, Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur...'}
                   {selectedCamp === 'Camp Loup' && 'Inclut Loup, Traître et Louveteau.'}
                   {selectedCamp === 'Rôles spéciaux' && 'Inclut les rôles solo comme Amoureux, Idiot du Village, Agent, etc.'}
                 </p>
@@ -112,7 +112,7 @@ export function PlayerCampPerformanceBarChart({
                 <p style={{ background: 'var(--bg-primary)', padding: '0.75rem', borderRadius: '6px', marginTop: '0.5rem' }}>
                   <strong>ℹ️ {selectedCamp} :</strong>{' '}
                   {selectedCamp === 'Tous les camps' && 'Affiche le rôle le plus joué par chaque joueur (toutes catégories confondues).'}
-                  {selectedCamp === 'Camp Villageois' && 'Inclut Villageois, Chasseur, Alchimiste, Protecteur et Disciple.'}
+                  {selectedCamp === 'Camp Villageois' && 'Inclut Villageois, Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur...'}
                   {selectedCamp === 'Camp Loup' && 'Inclut Loup, Traître et Louveteau.'}
                   {selectedCamp === 'Rôles spéciaux' && 'Inclut les rôles solo comme Amoureux, Idiot du Village, Agent, etc.'}
                 </p>

@@ -24,6 +24,7 @@ const lycansColorScheme: Record<string, string> = {
   'Alchimiste': '#ff00d4',
   'Protecteur': '#00BFFF',  // Light blue - protective role
   'Disciple': '#43ff43d8',
+  'Inquisiteur': '#ff6347', // Tomato red
   'Camp Loup': '#FF0000',
   'Camp Villageois': '#0096FF',
   'Rôles Spéciaux': '#808080',

@@ -87,7 +87,7 @@ export function calculateGameDuration(startDate, endDate) {
  * 
  * @param {string} roleName - The role name to get the camp for
  * @param {CampGroupOptions} [groupOptions] - An options object with grouping settings
- * @param {string|null} [power] - Optional power field for Villageois Élite roles (Chasseur, Alchimiste, Protecteur, Disciple)
+ * @param {string|null} [power] - Optional power field for Villageois Élite roles (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
  * @returns {string} The camp name for the role
  */
 export function getPlayerCampFromRole(roleName, groupOptions, power = null) {
@@ -110,7 +110,7 @@ export function getPlayerCampFromRole(roleName, groupOptions, power = null) {
   
   // Handle Villager-type roles (including legacy Chasseur/Alchimiste and new powers)
   if (roleName === 'Villageois Élite' || roleName === 'Chasseur' || roleName === 'Alchimiste' || 
-      roleName === 'Protecteur' || roleName === 'Disciple') {
+      roleName === 'Protecteur' || roleName === 'Disciple' || roleName === 'Inquisiteur') {
     const result = regroupVillagers ? 'Villageois' : roleName;
     return result;
   }
@@ -131,7 +131,7 @@ export function getPlayerCampFromRole(roleName, groupOptions, power = null) {
 /**
  * Helper function to get player's main camp from role name
  * @param {string} roleName - The role name
- * @param {string|null} [power] - Optional power for Villageois Élite roles (Chasseur, Alchimiste, Protecteur, Disciple)
+ * @param {string|null} [power] - Optional power for Villageois Élite roles (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
  * @returns {'Villageois' | 'Loup' | 'Autres'}
  */
 export function getPlayerMainCampFromRole(roleName, power = null) {

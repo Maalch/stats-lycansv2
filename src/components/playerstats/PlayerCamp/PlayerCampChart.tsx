@@ -93,6 +93,10 @@ export function PlayerCampChart() {
     if (availableCampNames.includes('Disciple')) {
       orderedCamps.push('Disciple');
     }
+
+    if (availableCampNames.includes('Inquisiteur')) {
+      orderedCamps.push('Inquisiteur');
+    }
       
     // Add Loups (Loup, Traître, Louveteau...) if available
     if (availableCampNames.includes('Camp Loup')) {
@@ -121,7 +125,7 @@ export function PlayerCampChart() {
     
     // Add remaining camps (solo/special roles) alphabetically
     const specialCamps = ['Camp Villageois', 'Camp Loup', 'Rôles spéciaux'];
-    const mainCamps = ['Camp Villageois', 'Villageois', 'Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Camp Loup', 'Loup', 'Traître', 'Louveteau']; 
+    const mainCamps = ['Camp Villageois', 'Villageois', 'Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Inquisiteur', 'Camp Loup', 'Loup', 'Traître', 'Louveteau']; 
     const excludedCamps = [...mainCamps, ...specialCamps];
     
     const otherCamps = availableCampNames
@@ -591,7 +595,7 @@ export function PlayerCampChart() {
               selectedCamp: selectedCamp,
               campFilterMode: 'wins-only',
               excludeWolfSubRoles: selectedCamp === 'Traître' || selectedCamp === 'Louveteau', // Exclude traitor and Louveteau from Loups filtering
-              excludeVillagers: selectedCamp === 'Chasseur' || selectedCamp === 'Alchimiste' || selectedCamp === 'Protecteur' || selectedCamp === 'Disciple'  // Exclude Chasseur, Alchimiste, Protecteur, and Disciple from Villagers filtering
+              excludeVillagers: selectedCamp === 'Chasseur' || selectedCamp === 'Alchimiste' || selectedCamp === 'Protecteur' || selectedCamp === 'Disciple' || selectedCamp === 'Inquisiteur'  // Exclude Chasseur, Alchimiste, Protecteur, Disciple, and Inquisiteur from Villagers filtering
             },
             fromComponent: `Performance des Joueurs - ${selectedCamp}`
           });
@@ -631,7 +635,7 @@ export function PlayerCampChart() {
               selectedCamp: data.camp,
               campFilterMode: 'wins-only',
               excludeWolfSubRoles: data.camp === 'Traître' || data.camp === 'Louveteau',
-              excludeVillagers: data.camp === 'Chasseur' || data.camp === 'Alchimiste' || data.camp === 'Protecteur' || data.camp === 'Disciple'
+              excludeVillagers: data.camp === 'Chasseur' || data.camp === 'Alchimiste' || data.camp === 'Protecteur' || data.camp === 'Disciple' || data.camp === 'Inquisiteur'
             },
             fromComponent: `Performance des Joueurs - Tous les camps`
           });
@@ -721,6 +725,10 @@ export function PlayerCampChart() {
               }
               else if (camp === 'Disciple') {
                 optionText = '     Disciple';
+                isIndented = true;
+              } 
+              else if (camp === 'Inquisiteur') {
+                optionText = '     Inquisiteur';
                 isIndented = true;
               } 
               else if (camp === 'Camp Loup') {
