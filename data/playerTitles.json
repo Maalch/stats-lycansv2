@@ -1,10 +1,10 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-03T14:17:16.162Z",
+  "generatedAt": "2026-02-03T15:29:45.214Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
-  "moddedGamesAnalyzed": 449,
+  "moddedGamesAnalyzed": 452,
   "percentileThresholds": {
     "EXTREME_HIGH": 85,
     "HIGH": 65,
@@ -48,8 +48,7 @@
               "actualValue": 12.5,
               "actualPercentile": 59.45945945945946
             }
-          ],
-          "primaryOwner": "Baout"
+          ]
         },
         {
           "id": "pacifiste",
@@ -58,13 +57,13 @@
           "description": "Gagne sans tuer",
           "priority": 13,
           "type": "combination",
-          "percentile": 60.810810810810814,
+          "percentile": 59.45945945945947,
           "conditions": [
             {
               "stat": "killRate",
               "category": "LOW",
               "actualValue": 0.32894736842105265,
-              "actualPercentile": 24.324324324324326
+              "actualPercentile": 21.62162162162162
             },
             {
               "stat": "winRate",
@@ -97,7 +96,8 @@
           "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Noamouille"
         },
         {
           "id": "winRateLoup_extreme_high",
@@ -155,7 +155,7 @@
           "description": "Taux de kills faible",
           "stat": "killRate",
           "value": 0.32894736842105265,
-          "percentile": 24.324324324324326,
+          "percentile": 21.62162162162162,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -172,25 +172,31 @@
         }
       ],
       "primaryTitle": {
-        "id": "pacifiste",
-        "title": "Le·a Pacifiste",
-        "emoji": "☮️",
-        "description": "Gagne sans tuer",
-        "priority": 13,
+        "id": "adaptable",
+        "title": "L'Adaptable",
+        "emoji": "🦎",
+        "description": "Bon dans tous les camps",
+        "priority": 16,
         "type": "combination",
-        "percentile": 60.810810810810814,
+        "percentile": 81.80761406567858,
         "conditions": [
           {
-            "stat": "killRate",
-            "category": "LOW",
-            "actualValue": 0.32894736842105265,
-            "actualPercentile": 24.324324324324326
+            "stat": "winRateVillageois",
+            "category": "HIGH",
+            "actualValue": 64.15094339622641,
+            "actualPercentile": 89.1891891891892
           },
           {
-            "stat": "winRate",
+            "stat": "winRateLoup",
             "category": "HIGH",
-            "actualValue": 52.6,
-            "actualPercentile": 97.2972972972973
+            "actualValue": 57.14285714285714,
+            "actualPercentile": 96.7741935483871
+          },
+          {
+            "stat": "winRateSolo",
+            "category": "HIGH",
+            "actualValue": 12.5,
+            "actualPercentile": 59.45945945945946
           }
         ]
       },
@@ -257,7 +263,7 @@
         },
         "killRate": {
           "value": 0.32894736842105265,
-          "percentile": 24.324324324324326,
+          "percentile": 21.62162162162162,
           "category": "LOW"
         }
       },
@@ -293,7 +299,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Poachimpa"
+          "primaryOwner": "Kissiffrote"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -327,11 +333,11 @@
           "description": "Ne tue jamais",
           "stat": "killRate",
           "value": 0.1935483870967742,
-          "percentile": 5.405405405405405,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Kissiffrote"
+          "primaryOwner": "Miraaaaaah"
         },
         {
           "id": "winRateVillageois_high",
@@ -364,7 +370,7 @@
           "description": "Meurt souvent Jour 1",
           "stat": "survivalDay1Rate",
           "value": 77.41935483870968,
-          "percentile": 29.72972972972973,
+          "percentile": 32.432432432432435,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -386,7 +392,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.7,
-          "percentile": 48.64864864864865,
+          "percentile": 45.94594594594595,
           "category": "AVERAGE",
           "priority": 3,
           "type": "basic"
@@ -407,7 +413,7 @@
       "percentiles": {
         "winRate": {
           "value": 38.7,
-          "percentile": 48.64864864864865,
+          "percentile": 45.94594594594595,
           "category": "AVERAGE"
         },
         "gamesPlayed": {
@@ -442,7 +448,7 @@
         },
         "campSoloPercent": {
           "value": 16.129032258064516,
-          "percentile": 29.72972972972973,
+          "percentile": 32.432432432432435,
           "category": "LOW"
         },
         "votingAggressiveness": {
@@ -457,12 +463,12 @@
         },
         "survivalDay1Rate": {
           "value": 77.41935483870968,
-          "percentile": 29.72972972972973,
+          "percentile": 32.432432432432435,
           "category": "LOW"
         },
         "killRate": {
           "value": 0.1935483870967742,
-          "percentile": 5.405405405405405,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW"
         }
       },
@@ -531,7 +537,7 @@
           "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 52.94117647058824,
-          "percentile": 70.27027027027027,
+          "percentile": 67.56756756756756,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -543,7 +549,7 @@
           "description": "Voteur·se passif·ve",
           "stat": "votingAggressiveness",
           "value": -7.75,
-          "percentile": 21.62162162162162,
+          "percentile": 18.91891891891892,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -620,7 +626,7 @@
         },
         "winRateVillageois": {
           "value": 52.94117647058824,
-          "percentile": 70.27027027027027,
+          "percentile": 67.56756756756756,
           "category": "HIGH"
         },
         "winRateLoup": {
@@ -650,7 +656,7 @@
         },
         "votingAggressiveness": {
           "value": -7.75,
-          "percentile": 21.62162162162162,
+          "percentile": 18.91891891891892,
           "category": "LOW"
         },
         "votingAccuracy": {
@@ -727,11 +733,11 @@
           "description": "Joue peu de parties",
           "stat": "gamesPlayed",
           "value": 29,
-          "percentile": 5.405405405405405,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Poachimpa"
+          "primaryOwner": "Kissiffrote"
         },
         {
           "id": "winRateVillageois_extreme_high",
@@ -743,7 +749,8 @@
           "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Noamouille"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -838,7 +845,7 @@
         },
         "gamesPlayed": {
           "value": 29,
-          "percentile": 5.405405405405405,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW"
         },
         "winRateVillageois": {
@@ -878,7 +885,7 @@
         },
         "survivalRate": {
           "value": 31.03448275862069,
-          "percentile": 48.64864864864865,
+          "percentile": 45.94594594594595,
           "category": "AVERAGE"
         },
         "survivalDay1Rate": {
@@ -913,29 +920,6 @@
       "playerName": "Noamouille",
       "gamesPlayed": 40,
       "titles": [
-        {
-          "id": "opportuniste",
-          "title": "L'Opportuniste",
-          "emoji": "🎯",
-          "description": "Gagne souvent mais joue peu",
-          "priority": 13,
-          "type": "combination",
-          "percentile": 54.054054054054056,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 47.5,
-              "actualPercentile": 89.1891891891892
-            },
-            {
-              "stat": "gamesPlayed",
-              "category": "LOW",
-              "actualValue": 40,
-              "actualPercentile": 18.91891891891892
-            }
-          ]
-        },
         {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
@@ -1042,7 +1026,7 @@
           "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 15.384615384615385,
-          "percentile": 78.37837837837837,
+          "percentile": 75.67567567567568,
           "category": "HIGH",
           "priority": 6,
           "type": "basic",
@@ -1055,7 +1039,7 @@
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
           "value": 85,
-          "percentile": 72.97297297297297,
+          "percentile": 70.27027027027027,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -1072,27 +1056,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "opportuniste",
-        "title": "L'Opportuniste",
-        "emoji": "🎯",
-        "description": "Gagne souvent mais joue peu",
-        "priority": 13,
-        "type": "combination",
-        "percentile": 54.054054054054056,
-        "conditions": [
-          {
-            "stat": "winRate",
-            "category": "HIGH",
-            "actualValue": 47.5,
-            "actualPercentile": 89.1891891891892
-          },
-          {
-            "stat": "gamesPlayed",
-            "category": "LOW",
-            "actualValue": 40,
-            "actualPercentile": 18.91891891891892
-          }
-        ]
+        "id": "winRateVillageois_extreme_high",
+        "title": "Le·a Protecteur·rice du Village",
+        "emoji": "🦸",
+        "description": "Excellent·e en camp Villageois",
+        "stat": "winRateVillageois",
+        "value": 76.19047619047619,
+        "percentile": 97.2972972972973,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -1117,17 +1090,17 @@
         },
         "winRateSolo": {
           "value": 15.384615384615385,
-          "percentile": 78.37837837837837,
+          "percentile": 75.67567567567568,
           "category": "HIGH"
         },
         "campVillageoisPercent": {
           "value": 52.5,
-          "percentile": 5.405405405405405,
+          "percentile": 8.108108108108109,
           "category": "EXTREME_LOW"
         },
         "campLoupPercent": {
           "value": 15,
-          "percentile": 24.324324324324326,
+          "percentile": 21.62162162162162,
           "category": "LOW"
         },
         "campSoloPercent": {
@@ -1152,7 +1125,7 @@
         },
         "survivalDay1Rate": {
           "value": 85,
-          "percentile": 72.97297297297297,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "killRate": {
@@ -1183,16 +1156,40 @@
       "gamesPlayed": 27,
       "titles": [
         {
+          "id": "opportuniste",
+          "title": "L'Opportuniste",
+          "emoji": "🎯",
+          "description": "Gagne souvent mais joue peu",
+          "priority": 13,
+          "type": "combination",
+          "percentile": 75.67567567567568,
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "HIGH",
+              "actualValue": 44.4,
+              "actualPercentile": 75.67567567567568
+            },
+            {
+              "stat": "gamesPlayed",
+              "category": "LOW",
+              "actualValue": 27,
+              "actualPercentile": 0
+            }
+          ]
+        },
+        {
           "id": "participation_extreme_low",
           "title": "Le·a Occasionnel·le",
           "emoji": "🎲",
           "description": "Joue peu de parties",
           "stat": "gamesPlayed",
           "value": 27,
-          "percentile": 2.7027027027027026,
+          "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Kissiffrote"
         },
         {
           "id": "winRateVillageois_extreme_high",
@@ -1204,7 +1201,8 @@
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Noamouille"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -1243,7 +1241,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Kissiffrote"
+          "primaryOwner": "Miraaaaaah"
         },
         {
           "id": "winRate_high",
@@ -1293,16 +1291,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "participation_extreme_low",
-        "title": "Le·a Occasionnel·le",
-        "emoji": "🎲",
-        "description": "Joue peu de parties",
-        "stat": "gamesPlayed",
-        "value": 27,
-        "percentile": 2.7027027027027026,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "opportuniste",
+        "title": "L'Opportuniste",
+        "emoji": "🎯",
+        "description": "Gagne souvent mais joue peu",
+        "priority": 13,
+        "type": "combination",
+        "percentile": 75.67567567567568,
+        "conditions": [
+          {
+            "stat": "winRate",
+            "category": "HIGH",
+            "actualValue": 44.4,
+            "actualPercentile": 75.67567567567568
+          },
+          {
+            "stat": "gamesPlayed",
+            "category": "LOW",
+            "actualValue": 27,
+            "actualPercentile": 0
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -1312,7 +1321,7 @@
         },
         "gamesPlayed": {
           "value": 27,
-          "percentile": 2.7027027027027026,
+          "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "winRateVillageois": {
@@ -1352,7 +1361,7 @@
         },
         "survivalRate": {
           "value": 29.629629629629626,
-          "percentile": 40.54054054054054,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "survivalDay1Rate": {
@@ -1462,7 +1471,8 @@
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Noamouille"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -1663,7 +1673,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "gamesPlayed": 404,
+      "gamesPlayed": 407,
       "titles": [
         {
           "id": "traitre",
@@ -1672,19 +1682,19 @@
           "description": "Gagnant·e dans tous les camps ennemis des Villageois",
           "priority": 14,
           "type": "combination",
-          "percentile": 87.05318221447254,
+          "percentile": 85.70183086312119,
           "conditions": [
             {
               "stat": "winRateLoup",
               "category": "HIGH",
-              "actualValue": 47.368421052631575,
+              "actualValue": 48.275862068965516,
               "actualPercentile": 90.32258064516128
             },
             {
               "stat": "winRateSolo",
               "category": "HIGH",
-              "actualValue": 16.666666666666664,
-              "actualPercentile": 83.78378378378379
+              "actualValue": 16.39344262295082,
+              "actualPercentile": 81.08108108108108
             }
           ]
         },
@@ -1700,7 +1710,7 @@
             {
               "stat": "gamesPlayed",
               "category": "HIGH",
-              "actualValue": 404,
+              "actualValue": 407,
               "actualPercentile": 97.2972972972973
             },
             {
@@ -1716,7 +1726,7 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 404,
+          "value": 407,
           "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -1729,7 +1739,7 @@
           "emoji": "🐺",
           "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
-          "value": 47.368421052631575,
+          "value": 48.275862068965516,
           "percentile": 90.32258064516128,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -1741,20 +1751,8 @@
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
-          "value": 45.8,
+          "value": 45.7,
           "percentile": 81.08108108108108,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "winRateVillageois_high",
-          "title": "Le·a Protecteur·rice du Village",
-          "emoji": "🦸",
-          "description": "Excellent·e en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 51.56794425087108,
-          "percentile": 67.56756756756756,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -1765,8 +1763,8 @@
           "emoji": "🦊",
           "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
-          "value": 16.666666666666664,
-          "percentile": 83.78378378378379,
+          "value": 16.39344262295082,
+          "percentile": 81.08108108108108,
           "category": "HIGH",
           "priority": 6,
           "type": "basic",
@@ -1778,7 +1776,7 @@
           "emoji": "🗣️",
           "description": "Parle beaucoup (par 60 min de jeu)",
           "stat": "talkingPer60Min",
-          "value": 1079.5627376771065,
+          "value": 1080.1294514984895,
           "percentile": 65.38461538461539,
           "category": "HIGH",
           "priority": 6,
@@ -1790,7 +1788,7 @@
           "emoji": "🎤",
           "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 356.53448633097526,
+          "value": 356.2839992761839,
           "percentile": 84.61538461538461,
           "category": "HIGH",
           "priority": 6,
@@ -1815,7 +1813,7 @@
           "description": "Attend avant de voter",
           "stat": "votingFirst",
           "value": 30.64516129032258,
-          "percentile": 23.333333333333332,
+          "percentile": 20,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -1826,7 +1824,7 @@
           "emoji": "🐺",
           "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
-          "value": 785.047527671683,
+          "value": 781.7823813630116,
           "percentile": 78.26086956521739,
           "category": "HIGH",
           "priority": 6,
@@ -1848,7 +1846,7 @@
           "emoji": "👷",
           "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 780.869321715627,
+          "value": 774.0494477450123,
           "percentile": 52.17391304347826,
           "category": "AVERAGE",
           "priority": 3,
@@ -1862,80 +1860,80 @@
         "description": "Gagnant·e dans tous les camps ennemis des Villageois",
         "priority": 14,
         "type": "combination",
-        "percentile": 87.05318221447254,
+        "percentile": 85.70183086312119,
         "conditions": [
           {
             "stat": "winRateLoup",
             "category": "HIGH",
-            "actualValue": 47.368421052631575,
+            "actualValue": 48.275862068965516,
             "actualPercentile": 90.32258064516128
           },
           {
             "stat": "winRateSolo",
             "category": "HIGH",
-            "actualValue": 16.666666666666664,
-            "actualPercentile": 83.78378378378379
+            "actualValue": 16.39344262295082,
+            "actualPercentile": 81.08108108108108
           }
         ]
       },
       "percentiles": {
         "winRate": {
-          "value": 45.8,
+          "value": 45.7,
           "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "gamesPlayed": {
-          "value": 404,
+          "value": 407,
           "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
-          "value": 51.56794425087108,
-          "percentile": 67.56756756756756,
-          "category": "HIGH"
+          "value": 51.388888888888886,
+          "percentile": 62.16216216216216,
+          "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
-          "value": 47.368421052631575,
+          "value": 48.275862068965516,
           "percentile": 90.32258064516128,
           "category": "EXTREME_HIGH"
         },
         "winRateSolo": {
-          "value": 16.666666666666664,
-          "percentile": 83.78378378378379,
+          "value": 16.39344262295082,
+          "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "campVillageoisPercent": {
-          "value": 71.03960396039604,
-          "percentile": 89.1891891891892,
+          "value": 70.76167076167076,
+          "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH"
         },
         "campLoupPercent": {
-          "value": 14.108910891089108,
+          "value": 14.250614250614252,
           "percentile": 16.216216216216218,
           "category": "LOW"
         },
         "campSoloPercent": {
-          "value": 14.85148514851485,
-          "percentile": 18.91891891891892,
+          "value": 14.987714987714988,
+          "percentile": 21.62162162162162,
           "category": "LOW"
         },
         "talkingPer60Min": {
-          "value": 1079.5627376771065,
+          "value": 1080.1294514984895,
           "percentile": 65.38461538461539,
           "category": "HIGH"
         },
         "talkingOutsidePer60Min": {
-          "value": 723.0282513461311,
+          "value": 723.8454522223057,
           "percentile": 38.46153846153847,
           "category": "BELOW_AVERAGE"
         },
         "talkingDuringPer60Min": {
-          "value": 356.53448633097526,
+          "value": 356.2839992761839,
           "percentile": 84.61538461538461,
           "category": "HIGH"
         },
         "votingAggressiveness": {
-          "value": 1.8449197860962592,
+          "value": 1.706666666666666,
           "percentile": 59.45945945945946,
           "category": "ABOVE_AVERAGE"
         },
@@ -1946,7 +1944,7 @@
         },
         "votingFirst": {
           "value": 30.64516129032258,
-          "percentile": 23.333333333333332,
+          "percentile": 20,
           "category": "LOW"
         },
         "hunterGames": {
@@ -1960,65 +1958,65 @@
           "category": "BELOW_AVERAGE"
         },
         "survivalRate": {
-          "value": 37.12871287128713,
-          "percentile": 64.86486486486487,
+          "value": 36.85503685503686,
+          "percentile": 56.75675675675676,
           "category": "ABOVE_AVERAGE"
         },
         "survivalDay1Rate": {
-          "value": 83.16831683168317,
+          "value": 82.80098280098281,
           "percentile": 56.75675675675676,
           "category": "ABOVE_AVERAGE"
         },
         "killRate": {
-          "value": 0.48514851485148514,
+          "value": 0.48894348894348894,
           "percentile": 54.054054054054056,
           "category": "AVERAGE"
         },
         "lootPer60Min": {
-          "value": 780.869321715627,
+          "value": 774.0494477450123,
           "percentile": 52.17391304347826,
           "category": "AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 837.0038013626339,
+          "value": 837.2673617035192,
           "percentile": 60.86956521739131,
           "category": "ABOVE_AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 785.047527671683,
+          "value": 781.7823813630116,
           "percentile": 78.26086956521739,
           "category": "HIGH"
         }
       },
       "stats": {
-        "winRate": 45.8,
-        "gamesPlayed": 404,
-        "winRateVillageois": 51.56794425087108,
-        "winRateLoup": 47.368421052631575,
-        "winRateSolo": 16.666666666666664,
-        "campVillageoisPercent": 71.03960396039604,
-        "campLoupPercent": 14.108910891089108,
-        "campSoloPercent": 14.85148514851485,
-        "talkingPer60Min": 1079.5627376771065,
-        "talkingOutsidePer60Min": 723.0282513461311,
-        "talkingDuringPer60Min": 356.53448633097526,
-        "votingAggressiveness": 1.8449197860962592,
+        "winRate": 45.7,
+        "gamesPlayed": 407,
+        "winRateVillageois": 51.388888888888886,
+        "winRateLoup": 48.275862068965516,
+        "winRateSolo": 16.39344262295082,
+        "campVillageoisPercent": 70.76167076167076,
+        "campLoupPercent": 14.250614250614252,
+        "campSoloPercent": 14.987714987714988,
+        "talkingPer60Min": 1080.1294514984895,
+        "talkingOutsidePer60Min": 723.8454522223057,
+        "talkingDuringPer60Min": 356.2839992761839,
+        "votingAggressiveness": 1.706666666666666,
         "votingAccuracy": 81.34328358208955,
         "votingFirst": 30.64516129032258,
         "hunterGames": 32,
         "hunterAccuracy": 69.23076923076923,
-        "survivalRate": 37.12871287128713,
-        "survivalDay1Rate": 83.16831683168317,
-        "killRate": 0.48514851485148514,
-        "lootPer60Min": 780.869321715627,
-        "lootVillageoisPer60Min": 837.0038013626339,
-        "lootLoupPer60Min": 785.047527671683
+        "survivalRate": 36.85503685503686,
+        "survivalDay1Rate": 82.80098280098281,
+        "killRate": 0.48894348894348894,
+        "lootPer60Min": 774.0494477450123,
+        "lootVillageoisPer60Min": 837.2673617035192,
+        "lootLoupPer60Min": 781.7823813630116
       }
     },
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "gamesPlayed": 344,
+      "gamesPlayed": 347,
       "titles": [
         {
           "id": "joueur_parfait",
@@ -2032,19 +2030,19 @@
             {
               "stat": "winRate",
               "category": "HIGH",
-              "actualValue": 45.6,
+              "actualValue": 45.5,
               "actualPercentile": 78.37837837837837
             },
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 1276.154305374383,
+              "actualValue": 1280.3138973675425,
               "actualPercentile": 95.65217391304348
             },
             {
               "stat": "survival",
               "category": "HIGH",
-              "actualValue": 52.32558139534884,
+              "actualValue": 52.1613832853026,
               "actualPercentile": 97.2972972972973
             }
           ]
@@ -2061,13 +2059,13 @@
             {
               "stat": "killRate",
               "category": "HIGH",
-              "actualValue": 0.872093023255814,
+              "actualValue": 0.8645533141210374,
               "actualPercentile": 97.2972972972973
             },
             {
               "stat": "survival",
               "category": "HIGH",
-              "actualValue": 52.32558139534884,
+              "actualValue": 52.1613832853026,
               "actualPercentile": 97.2972972972973
             }
           ]
@@ -2084,7 +2082,7 @@
             {
               "stat": "survival",
               "category": "HIGH",
-              "actualValue": 52.32558139534884,
+              "actualValue": 52.1613832853026,
               "actualPercentile": 97.2972972972973
             },
             {
@@ -2107,13 +2105,13 @@
             {
               "stat": "lootVillageois",
               "category": "HIGH",
-              "actualValue": 1352.159400615657,
+              "actualValue": 1355.8002540269977,
               "actualPercentile": 95.65217391304348
             },
             {
               "stat": "winRateVillageois",
               "category": "HIGH",
-              "actualValue": 53.94736842105263,
+              "actualValue": 53.67965367965368,
               "actualPercentile": 72.97297297297297
             }
           ]
@@ -2130,13 +2128,13 @@
             {
               "stat": "talking",
               "category": "HIGH",
-              "actualValue": 1191.2278198441268,
+              "actualValue": 1197.835978810665,
               "actualPercentile": 84.61538461538461
             },
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 1276.154305374383,
+              "actualValue": 1280.3138973675425,
               "actualPercentile": 95.65217391304348
             }
           ]
@@ -2147,7 +2145,7 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 344,
+          "value": 347,
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2160,7 +2158,7 @@
           "emoji": "👂",
           "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 882.788348056585,
+          "value": 887.1344962522672,
           "percentile": 88.46153846153845,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2172,7 +2170,7 @@
           "emoji": "⚖️",
           "description": "Toujours en action",
           "stat": "votingAggressiveness",
-          "value": 19.109874826147433,
+          "value": 19.254143646408842,
           "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2184,7 +2182,7 @@
           "emoji": "🛡️",
           "description": "Survie élevée fin de game",
           "stat": "survivalRate",
-          "value": 52.32558139534884,
+          "value": 52.1613832853026,
           "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2197,7 +2195,7 @@
           "emoji": "💀",
           "description": "Tueur·se en série",
           "stat": "killRate",
-          "value": 0.872093023255814,
+          "value": 0.8645533141210374,
           "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2209,7 +2207,7 @@
           "emoji": "⚒️",
           "description": "Récolte exceptionnelle",
           "stat": "lootPer60Min",
-          "value": 1276.154305374383,
+          "value": 1280.3138973675425,
           "percentile": 95.65217391304348,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2221,7 +2219,7 @@
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 1352.159400615657,
+          "value": 1355.8002540269977,
           "percentile": 95.65217391304348,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2245,7 +2243,7 @@
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
-          "value": 45.6,
+          "value": 45.5,
           "percentile": 78.37837837837837,
           "category": "HIGH",
           "priority": 6,
@@ -2257,7 +2255,7 @@
           "emoji": "🦸",
           "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
-          "value": 53.94736842105263,
+          "value": 53.67965367965368,
           "percentile": 72.97297297297297,
           "category": "HIGH",
           "priority": 6,
@@ -2294,7 +2292,7 @@
           "emoji": "🗣️",
           "description": "Parle beaucoup (par 60 min de jeu)",
           "stat": "talkingPer60Min",
-          "value": 1191.2278198441268,
+          "value": 1197.835978810665,
           "percentile": 84.61538461538461,
           "category": "HIGH",
           "priority": 6,
@@ -2306,8 +2304,8 @@
           "emoji": "🎤",
           "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 308.43947178754166,
-          "percentile": 65.38461538461539,
+          "value": 310.70148255839774,
+          "percentile": 69.23076923076923,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -2318,7 +2316,7 @@
           "emoji": "🏃",
           "description": "Premier·ère voteur·se",
           "stat": "votingFirst",
-          "value": 45.96774193548387,
+          "value": 46.45669291338583,
           "percentile": 66.66666666666666,
           "category": "HIGH",
           "priority": 6,
@@ -2330,7 +2328,7 @@
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 85.46511627906976,
+          "value": 85.30259365994236,
           "percentile": 75.67567567567568,
           "category": "HIGH",
           "priority": 6,
@@ -2349,36 +2347,36 @@
           {
             "stat": "winRate",
             "category": "HIGH",
-            "actualValue": 45.6,
+            "actualValue": 45.5,
             "actualPercentile": 78.37837837837837
           },
           {
             "stat": "loot",
             "category": "HIGH",
-            "actualValue": 1276.154305374383,
+            "actualValue": 1280.3138973675425,
             "actualPercentile": 95.65217391304348
           },
           {
             "stat": "survival",
             "category": "HIGH",
-            "actualValue": 52.32558139534884,
+            "actualValue": 52.1613832853026,
             "actualPercentile": 97.2972972972973
           }
         ]
       },
       "percentiles": {
         "winRate": {
-          "value": 45.6,
+          "value": 45.5,
           "percentile": 78.37837837837837,
           "category": "HIGH"
         },
         "gamesPlayed": {
-          "value": 344,
+          "value": 347,
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
-          "value": 53.94736842105263,
+          "value": 53.67965367965368,
           "percentile": 72.97297297297297,
           "category": "HIGH"
         },
@@ -2393,47 +2391,47 @@
           "category": "HIGH"
         },
         "campVillageoisPercent": {
-          "value": 66.27906976744185,
-          "percentile": 48.64864864864865,
+          "value": 66.57060518731988,
+          "percentile": 54.054054054054056,
           "category": "AVERAGE"
         },
         "campLoupPercent": {
-          "value": 19.767441860465116,
+          "value": 19.596541786743515,
           "percentile": 78.37837837837837,
           "category": "HIGH"
         },
         "campSoloPercent": {
-          "value": 13.953488372093023,
+          "value": 13.8328530259366,
           "percentile": 16.216216216216218,
           "category": "LOW"
         },
         "talkingPer60Min": {
-          "value": 1191.2278198441268,
+          "value": 1197.835978810665,
           "percentile": 84.61538461538461,
           "category": "HIGH"
         },
         "talkingOutsidePer60Min": {
-          "value": 882.788348056585,
+          "value": 887.1344962522672,
           "percentile": 88.46153846153845,
           "category": "EXTREME_HIGH"
         },
         "talkingDuringPer60Min": {
-          "value": 308.43947178754166,
-          "percentile": 65.38461538461539,
+          "value": 310.70148255839774,
+          "percentile": 69.23076923076923,
           "category": "HIGH"
         },
         "votingAggressiveness": {
-          "value": 19.109874826147433,
+          "value": 19.254143646408842,
           "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH"
         },
         "votingAccuracy": {
-          "value": 85.67164179104478,
-          "percentile": 52.77777777777778,
+          "value": 85.50295857988166,
+          "percentile": 50,
           "category": "AVERAGE"
         },
         "votingFirst": {
-          "value": 45.96774193548387,
+          "value": 46.45669291338583,
           "percentile": 66.66666666666666,
           "category": "HIGH"
         },
@@ -2448,27 +2446,27 @@
           "category": "BELOW_AVERAGE"
         },
         "survivalRate": {
-          "value": 52.32558139534884,
+          "value": 52.1613832853026,
           "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH"
         },
         "survivalDay1Rate": {
-          "value": 85.46511627906976,
+          "value": 85.30259365994236,
           "percentile": 75.67567567567568,
           "category": "HIGH"
         },
         "killRate": {
-          "value": 0.872093023255814,
+          "value": 0.8645533141210374,
           "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
-          "value": 1276.154305374383,
+          "value": 1280.3138973675425,
           "percentile": 95.65217391304348,
           "category": "EXTREME_HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 1352.159400615657,
+          "value": 1355.8002540269977,
           "percentile": 95.65217391304348,
           "category": "EXTREME_HIGH"
         },
@@ -2479,34 +2477,34 @@
         }
       },
       "stats": {
-        "winRate": 45.6,
-        "gamesPlayed": 344,
-        "winRateVillageois": 53.94736842105263,
+        "winRate": 45.5,
+        "gamesPlayed": 347,
+        "winRateVillageois": 53.67965367965368,
         "winRateLoup": 38.23529411764706,
         "winRateSolo": 16.666666666666664,
-        "campVillageoisPercent": 66.27906976744185,
-        "campLoupPercent": 19.767441860465116,
-        "campSoloPercent": 13.953488372093023,
-        "talkingPer60Min": 1191.2278198441268,
-        "talkingOutsidePer60Min": 882.788348056585,
-        "talkingDuringPer60Min": 308.43947178754166,
-        "votingAggressiveness": 19.109874826147433,
-        "votingAccuracy": 85.67164179104478,
-        "votingFirst": 45.96774193548387,
+        "campVillageoisPercent": 66.57060518731988,
+        "campLoupPercent": 19.596541786743515,
+        "campSoloPercent": 13.8328530259366,
+        "talkingPer60Min": 1197.835978810665,
+        "talkingOutsidePer60Min": 887.1344962522672,
+        "talkingDuringPer60Min": 310.70148255839774,
+        "votingAggressiveness": 19.254143646408842,
+        "votingAccuracy": 85.50295857988166,
+        "votingFirst": 46.45669291338583,
         "hunterGames": 23,
         "hunterAccuracy": 70.58823529411765,
-        "survivalRate": 52.32558139534884,
-        "survivalDay1Rate": 85.46511627906976,
-        "killRate": 0.872093023255814,
-        "lootPer60Min": 1276.154305374383,
-        "lootVillageoisPer60Min": 1352.159400615657,
+        "survivalRate": 52.1613832853026,
+        "survivalDay1Rate": 85.30259365994236,
+        "killRate": 0.8645533141210374,
+        "lootPer60Min": 1280.3138973675425,
+        "lootVillageoisPer60Min": 1355.8002540269977,
         "lootLoupPer60Min": 1117.656921951647
       }
     },
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "gamesPlayed": 383,
+      "gamesPlayed": 385,
       "titles": [
         {
           "id": "participation_extreme_high",
@@ -2514,7 +2512,7 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 383,
+          "value": 385,
           "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2526,7 +2524,7 @@
           "emoji": "💀",
           "description": "Tueur·se en série",
           "stat": "killRate",
-          "value": 0.7232375979112271,
+          "value": 0.7194805194805195,
           "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -2538,8 +2536,8 @@
           "emoji": "🦊",
           "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
-          "value": 13.846153846153847,
-          "percentile": 70.27027027027027,
+          "value": 13.636363636363635,
+          "percentile": 67.56756756756756,
           "category": "HIGH",
           "priority": 6,
           "type": "basic",
@@ -2551,7 +2549,7 @@
           "emoji": "🧘",
           "description": "Voteur·se passif·ve",
           "stat": "votingAggressiveness",
-          "value": -4.49093444909345,
+          "value": -4.327323162274618,
           "percentile": 32.432432432432435,
           "category": "LOW",
           "priority": 6,
@@ -2563,7 +2561,7 @@
           "emoji": "🧠",
           "description": "Attend avant de voter",
           "stat": "votingFirst",
-          "value": 33.663366336633665,
+          "value": 33.980582524271846,
           "percentile": 33.33333333333333,
           "category": "LOW",
           "priority": 6,
@@ -2587,7 +2585,7 @@
           "emoji": "🛡️",
           "description": "Survie élevée fin de game",
           "stat": "survivalRate",
-          "value": 39.425587467362924,
+          "value": 39.48051948051948,
           "percentile": 72.97297297297297,
           "category": "HIGH",
           "priority": 6,
@@ -2599,7 +2597,7 @@
           "emoji": "🌾",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
-          "value": 868.4007472585195,
+          "value": 862.07209414659,
           "percentile": 69.56521739130434,
           "category": "HIGH",
           "priority": 6,
@@ -2611,7 +2609,7 @@
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 944.120152642365,
+          "value": 930.5435480610226,
           "percentile": 73.91304347826086,
           "category": "HIGH",
           "priority": 6,
@@ -2647,7 +2645,7 @@
           "emoji": "⚖️",
           "description": "Temps de parole normal",
           "stat": "talkingPer60Min",
-          "value": 999.6501171796243,
+          "value": 1001.2004289034995,
           "percentile": 50,
           "category": "AVERAGE",
           "priority": 3,
@@ -2660,7 +2658,7 @@
         "emoji": "🌙",
         "description": "Joue énormément de parties",
         "stat": "gamesPlayed",
-        "value": 383,
+        "value": 385,
         "percentile": 91.8918918918919,
         "category": "EXTREME_HIGH",
         "priority": 8,
@@ -2673,12 +2671,12 @@
           "category": "ABOVE_AVERAGE"
         },
         "gamesPlayed": {
-          "value": 383,
+          "value": 385,
           "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
-          "value": 51.19047619047619,
+          "value": 51.38339920948617,
           "percentile": 59.45945945945946,
           "category": "ABOVE_AVERAGE"
         },
@@ -2688,52 +2686,52 @@
           "category": "ABOVE_AVERAGE"
         },
         "winRateSolo": {
-          "value": 13.846153846153847,
-          "percentile": 70.27027027027027,
+          "value": 13.636363636363635,
+          "percentile": 67.56756756756756,
           "category": "HIGH"
         },
         "campVillageoisPercent": {
-          "value": 65.79634464751958,
-          "percentile": 43.24324324324324,
+          "value": 65.71428571428571,
+          "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
-          "value": 17.232375979112273,
-          "percentile": 51.35135135135135,
+          "value": 17.142857142857142,
+          "percentile": 48.64864864864865,
           "category": "AVERAGE"
         },
         "campSoloPercent": {
-          "value": 16.971279373368144,
-          "percentile": 43.24324324324324,
-          "category": "BELOW_AVERAGE"
+          "value": 17.142857142857142,
+          "percentile": 45.94594594594595,
+          "category": "AVERAGE"
         },
         "talkingPer60Min": {
-          "value": 999.6501171796243,
+          "value": 1001.2004289034995,
           "percentile": 50,
           "category": "AVERAGE"
         },
         "talkingOutsidePer60Min": {
-          "value": 743.6732672408982,
+          "value": 745.7440510755613,
           "percentile": 50,
           "category": "AVERAGE"
         },
         "talkingDuringPer60Min": {
-          "value": 255.97684993872602,
+          "value": 255.4563778279382,
           "percentile": 46.15384615384615,
           "category": "AVERAGE"
         },
         "votingAggressiveness": {
-          "value": -4.49093444909345,
+          "value": -4.327323162274618,
           "percentile": 32.432432432432435,
           "category": "LOW"
         },
         "votingAccuracy": {
-          "value": 86.19246861924687,
-          "percentile": 63.888888888888886,
+          "value": 86.30705394190872,
+          "percentile": 61.111111111111114,
           "category": "ABOVE_AVERAGE"
         },
         "votingFirst": {
-          "value": 33.663366336633665,
+          "value": 33.980582524271846,
           "percentile": 33.33333333333333,
           "category": "LOW"
         },
@@ -2748,27 +2746,27 @@
           "category": "HIGH"
         },
         "survivalRate": {
-          "value": 39.425587467362924,
+          "value": 39.48051948051948,
           "percentile": 72.97297297297297,
           "category": "HIGH"
         },
         "survivalDay1Rate": {
-          "value": 81.4621409921671,
-          "percentile": 48.64864864864865,
+          "value": 81.2987012987013,
+          "percentile": 45.94594594594595,
           "category": "AVERAGE"
         },
         "killRate": {
-          "value": 0.7232375979112271,
+          "value": 0.7194805194805195,
           "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
-          "value": 868.4007472585195,
+          "value": 862.07209414659,
           "percentile": 69.56521739130434,
           "category": "HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 944.120152642365,
+          "value": 930.5435480610226,
           "percentile": 73.91304347826086,
           "category": "HIGH"
         },
@@ -2780,26 +2778,26 @@
       },
       "stats": {
         "winRate": 42.3,
-        "gamesPlayed": 383,
-        "winRateVillageois": 51.19047619047619,
+        "gamesPlayed": 385,
+        "winRateVillageois": 51.38339920948617,
         "winRateLoup": 36.36363636363637,
-        "winRateSolo": 13.846153846153847,
-        "campVillageoisPercent": 65.79634464751958,
-        "campLoupPercent": 17.232375979112273,
-        "campSoloPercent": 16.971279373368144,
-        "talkingPer60Min": 999.6501171796243,
-        "talkingOutsidePer60Min": 743.6732672408982,
-        "talkingDuringPer60Min": 255.97684993872602,
-        "votingAggressiveness": -4.49093444909345,
-        "votingAccuracy": 86.19246861924687,
-        "votingFirst": 33.663366336633665,
+        "winRateSolo": 13.636363636363635,
+        "campVillageoisPercent": 65.71428571428571,
+        "campLoupPercent": 17.142857142857142,
+        "campSoloPercent": 17.142857142857142,
+        "talkingPer60Min": 1001.2004289034995,
+        "talkingOutsidePer60Min": 745.7440510755613,
+        "talkingDuringPer60Min": 255.4563778279382,
+        "votingAggressiveness": -4.327323162274618,
+        "votingAccuracy": 86.30705394190872,
+        "votingFirst": 33.980582524271846,
         "hunterGames": 40,
         "hunterAccuracy": 94.11764705882352,
-        "survivalRate": 39.425587467362924,
-        "survivalDay1Rate": 81.4621409921671,
-        "killRate": 0.7232375979112271,
-        "lootPer60Min": 868.4007472585195,
-        "lootVillageoisPer60Min": 944.120152642365,
+        "survivalRate": 39.48051948051948,
+        "survivalDay1Rate": 81.2987012987013,
+        "killRate": 0.7194805194805195,
+        "lootPer60Min": 862.07209414659,
+        "lootVillageoisPer60Min": 930.5435480610226,
         "lootLoupPer60Min": 799.5849559015645
       }
     },
@@ -2818,8 +2816,7 @@
           "percentile": 11.538461538461538,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Mathy"
+          "type": "basic"
         },
         {
           "id": "votingAggressive_extreme_low",
@@ -2856,8 +2853,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Miraaaaaah"
+          "type": "basic"
         },
         {
           "id": "killRate_extreme_high",
@@ -2932,25 +2928,13 @@
           "type": "basic"
         },
         {
-          "id": "votingAccuracy_high",
-          "title": "Le·a Flaireur·se",
-          "emoji": "👃",
-          "description": "Bon instinct de vote",
-          "stat": "votingAccuracy",
-          "value": 86.79245283018868,
-          "percentile": 66.66666666666666,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
           "description": "Performance stable",
           "stat": "winRate",
           "value": 37.9,
-          "percentile": 43.24324324324324,
+          "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -2971,7 +2955,7 @@
       "percentiles": {
         "winRate": {
           "value": 37.9,
-          "percentile": 43.24324324324324,
+          "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
@@ -3006,7 +2990,7 @@
         },
         "campSoloPercent": {
           "value": 14.953271028037381,
-          "percentile": 21.62162162162162,
+          "percentile": 18.91891891891892,
           "category": "LOW"
         },
         "talkingPer60Min": {
@@ -3021,7 +3005,7 @@
         },
         "talkingDuringPer60Min": {
           "value": 252.20752542341432,
-          "percentile": 38.46153846153847,
+          "percentile": 42.30769230769231,
           "category": "BELOW_AVERAGE"
         },
         "votingAggressiveness": {
@@ -3031,8 +3015,8 @@
         },
         "votingAccuracy": {
           "value": 86.79245283018868,
-          "percentile": 66.66666666666666,
-          "category": "HIGH"
+          "percentile": 63.888888888888886,
+          "category": "ABOVE_AVERAGE"
         },
         "votingFirst": {
           "value": 22.916666666666664,
@@ -3056,7 +3040,7 @@
         },
         "survivalDay1Rate": {
           "value": 81.30841121495327,
-          "percentile": 45.94594594594595,
+          "percentile": 48.64864864864865,
           "category": "AVERAGE"
         },
         "killRate": {
@@ -3129,7 +3113,7 @@
           "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 19.35483870967742,
-          "percentile": 91.8918918918919,
+          "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic",
@@ -3208,18 +3192,6 @@
           "type": "basic"
         },
         {
-          "id": "survival_high",
-          "title": "Le·a Survivant·e",
-          "emoji": "🛡️",
-          "description": "Survie élevée fin de game",
-          "stat": "survivalRate",
-          "value": 37.68844221105528,
-          "percentile": 67.56756756756756,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "killRate_high",
           "title": "Le·a Prédateur·rice",
           "emoji": "🐺",
@@ -3277,7 +3249,7 @@
         },
         "winRateSolo": {
           "value": 19.35483870967742,
-          "percentile": 91.8918918918919,
+          "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH"
         },
         "campVillageoisPercent": {
@@ -3317,7 +3289,7 @@
         },
         "votingAccuracy": {
           "value": 85.91549295774648,
-          "percentile": 61.111111111111114,
+          "percentile": 58.333333333333336,
           "category": "ABOVE_AVERAGE"
         },
         "votingFirst": {
@@ -3337,8 +3309,8 @@
         },
         "survivalRate": {
           "value": 37.68844221105528,
-          "percentile": 67.56756756756756,
-          "category": "HIGH"
+          "percentile": 64.86486486486487,
+          "category": "ABOVE_AVERAGE"
         },
         "survivalDay1Rate": {
           "value": 80.90452261306532,
@@ -3376,7 +3348,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "gamesPlayed": 369,
+      "gamesPlayed": 371,
       "titles": [
         {
           "id": "participation_extreme_high",
@@ -3384,7 +3356,7 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 369,
+          "value": 371,
           "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -3397,7 +3369,7 @@
           "emoji": "💬",
           "description": "Parle énormément",
           "stat": "talkingPer60Min",
-          "value": 1206.4245952048811,
+          "value": 1212.5158123605804,
           "percentile": 88.46153846153845,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -3409,7 +3381,7 @@
           "emoji": "👂",
           "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 877.1758791480389,
+          "value": 878.6651448577486,
           "percentile": 80.76923076923077,
           "category": "HIGH",
           "priority": 6,
@@ -3421,8 +3393,8 @@
           "emoji": "🎤",
           "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 329.24871605684234,
-          "percentile": 76.92307692307693,
+          "value": 333.85066750283187,
+          "percentile": 80.76923076923077,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3433,8 +3405,8 @@
           "emoji": "🧠",
           "description": "Attend avant de voter",
           "stat": "votingFirst",
-          "value": 30.08849557522124,
-          "percentile": 20,
+          "value": 30.701754385964914,
+          "percentile": 23.333333333333332,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -3457,7 +3429,7 @@
           "emoji": "🐺",
           "description": "Taux de kills élevé",
           "stat": "killRate",
-          "value": 0.6422764227642277,
+          "value": 0.6388140161725068,
           "percentile": 78.37837837837837,
           "category": "HIGH",
           "priority": 6,
@@ -3469,7 +3441,7 @@
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 757.5216804161709,
+          "value": 747.5434295658729,
           "percentile": 34.78260869565217,
           "category": "LOW",
           "priority": 6,
@@ -3486,27 +3458,27 @@
           "type": "campBalance"
         },
         {
-          "id": "winRate_above_average",
-          "title": "Le·a Constant·e",
-          "emoji": "📊",
-          "description": "Performance stable",
-          "stat": "winRate",
-          "value": 40.4,
-          "percentile": 56.75675675675676,
-          "category": "ABOVE_AVERAGE",
-          "priority": 4,
-          "type": "basic"
-        },
-        {
           "id": "loot_below_average",
           "title": "Le·a Travailleur·se",
           "emoji": "👷",
           "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 718.5456884693788,
+          "value": 712.7602416286143,
           "percentile": 43.47826086956522,
           "category": "BELOW_AVERAGE",
           "priority": 4,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 40.4,
+          "percentile": 54.054054054054056,
+          "category": "AVERAGE",
+          "priority": 3,
           "type": "basic"
         }
       ],
@@ -3516,7 +3488,7 @@
         "emoji": "💬",
         "description": "Parle énormément",
         "stat": "talkingPer60Min",
-        "value": 1206.4245952048811,
+        "value": 1212.5158123605804,
         "percentile": 88.46153846153845,
         "category": "EXTREME_HIGH",
         "priority": 8,
@@ -3525,16 +3497,16 @@
       "percentiles": {
         "winRate": {
           "value": 40.4,
-          "percentile": 56.75675675675676,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 54.054054054054056,
+          "category": "AVERAGE"
         },
         "gamesPlayed": {
-          "value": 369,
+          "value": 371,
           "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
-          "value": 49.586776859504134,
+          "value": 49.59016393442623,
           "percentile": 54.054054054054056,
           "category": "AVERAGE"
         },
@@ -3549,48 +3521,48 @@
           "category": "AVERAGE"
         },
         "campVillageoisPercent": {
-          "value": 65.58265582655827,
-          "percentile": 40.54054054054054,
+          "value": 65.76819407008087,
+          "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
-          "value": 16.260162601626014,
-          "percentile": 37.83783783783784,
+          "value": 16.172506738544474,
+          "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE"
         },
         "campSoloPercent": {
-          "value": 18.157181571815716,
-          "percentile": 64.86486486486487,
+          "value": 18.059299191374663,
+          "percentile": 62.16216216216216,
           "category": "ABOVE_AVERAGE"
         },
         "talkingPer60Min": {
-          "value": 1206.4245952048811,
+          "value": 1212.5158123605804,
           "percentile": 88.46153846153845,
           "category": "EXTREME_HIGH"
         },
         "talkingOutsidePer60Min": {
-          "value": 877.1758791480389,
+          "value": 878.6651448577486,
           "percentile": 80.76923076923077,
           "category": "HIGH"
         },
         "talkingDuringPer60Min": {
-          "value": 329.24871605684234,
-          "percentile": 76.92307692307693,
+          "value": 333.85066750283187,
+          "percentile": 80.76923076923077,
           "category": "HIGH"
         },
         "votingAggressiveness": {
-          "value": -3.0588235294117663,
-          "percentile": 37.83783783783784,
+          "value": -3.211678832116789,
+          "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE"
         },
         "votingAccuracy": {
-          "value": 85.34482758620689,
+          "value": 85.40772532188842,
           "percentile": 47.22222222222222,
           "category": "AVERAGE"
         },
         "votingFirst": {
-          "value": 30.08849557522124,
-          "percentile": 20,
+          "value": 30.701754385964914,
+          "percentile": 23.333333333333332,
           "category": "LOW"
         },
         "hunterGames": {
@@ -3604,27 +3576,27 @@
           "category": "LOW"
         },
         "survivalRate": {
-          "value": 31.978319783197833,
-          "percentile": 54.054054054054056,
+          "value": 32.075471698113205,
+          "percentile": 51.35135135135135,
           "category": "AVERAGE"
         },
         "survivalDay1Rate": {
-          "value": 84.28184281842819,
+          "value": 84.36657681940702,
           "percentile": 62.16216216216216,
           "category": "ABOVE_AVERAGE"
         },
         "killRate": {
-          "value": 0.6422764227642277,
+          "value": 0.6388140161725068,
           "percentile": 78.37837837837837,
           "category": "HIGH"
         },
         "lootPer60Min": {
-          "value": 718.5456884693788,
+          "value": 712.7602416286143,
           "percentile": 43.47826086956522,
           "category": "BELOW_AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 757.5216804161709,
+          "value": 747.5434295658729,
           "percentile": 34.78260869565217,
           "category": "LOW"
         },
@@ -3636,26 +3608,26 @@
       },
       "stats": {
         "winRate": 40.4,
-        "gamesPlayed": 369,
-        "winRateVillageois": 49.586776859504134,
+        "gamesPlayed": 371,
+        "winRateVillageois": 49.59016393442623,
         "winRateLoup": 36.666666666666664,
         "winRateSolo": 10.44776119402985,
-        "campVillageoisPercent": 65.58265582655827,
-        "campLoupPercent": 16.260162601626014,
-        "campSoloPercent": 18.157181571815716,
-        "talkingPer60Min": 1206.4245952048811,
-        "talkingOutsidePer60Min": 877.1758791480389,
-        "talkingDuringPer60Min": 329.24871605684234,
-        "votingAggressiveness": -3.0588235294117663,
-        "votingAccuracy": 85.34482758620689,
-        "votingFirst": 30.08849557522124,
+        "campVillageoisPercent": 65.76819407008087,
+        "campLoupPercent": 16.172506738544474,
+        "campSoloPercent": 18.059299191374663,
+        "talkingPer60Min": 1212.5158123605804,
+        "talkingOutsidePer60Min": 878.6651448577486,
+        "talkingDuringPer60Min": 333.85066750283187,
+        "votingAggressiveness": -3.211678832116789,
+        "votingAccuracy": 85.40772532188842,
+        "votingFirst": 30.701754385964914,
         "hunterGames": 30,
         "hunterAccuracy": 47.05882352941176,
-        "survivalRate": 31.978319783197833,
-        "survivalDay1Rate": 84.28184281842819,
-        "killRate": 0.6422764227642277,
-        "lootPer60Min": 718.5456884693788,
-        "lootVillageoisPer60Min": 757.5216804161709,
+        "survivalRate": 32.075471698113205,
+        "survivalDay1Rate": 84.36657681940702,
+        "killRate": 0.6388140161725068,
+        "lootPer60Min": 712.7602416286143,
+        "lootVillageoisPer60Min": 747.5434295658729,
         "lootLoupPer60Min": 645.645012484916
       }
     },
@@ -3684,7 +3656,7 @@
           "description": "Mauvais instinct de vote",
           "stat": "votingAccuracy",
           "value": 78.46153846153847,
-          "percentile": 8.333333333333332,
+          "percentile": 11.11111111111111,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -3767,7 +3739,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 36.8,
-          "percentile": 37.83783783783784,
+          "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -3792,7 +3764,7 @@
         "description": "Mauvais instinct de vote",
         "stat": "votingAccuracy",
         "value": 78.46153846153847,
-        "percentile": 8.333333333333332,
+        "percentile": 11.11111111111111,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -3800,7 +3772,7 @@
       "percentiles": {
         "winRate": {
           "value": 36.8,
-          "percentile": 37.83783783783784,
+          "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
@@ -3830,7 +3802,7 @@
         },
         "campLoupPercent": {
           "value": 19.35483870967742,
-          "percentile": 72.97297297297297,
+          "percentile": 75.67567567567568,
           "category": "HIGH"
         },
         "campSoloPercent": {
@@ -3860,7 +3832,7 @@
         },
         "votingAccuracy": {
           "value": 78.46153846153847,
-          "percentile": 8.333333333333332,
+          "percentile": 11.11111111111111,
           "category": "EXTREME_LOW"
         },
         "votingFirst": {
@@ -4005,15 +3977,15 @@
           "type": "campBalance"
         },
         {
-          "id": "winRate_average",
+          "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.5,
-          "percentile": 45.94594594594595,
-          "category": "AVERAGE",
-          "priority": 3,
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
@@ -4032,8 +4004,8 @@
       "percentiles": {
         "winRate": {
           "value": 38.5,
-          "percentile": 45.94594594594595,
-          "category": "AVERAGE"
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
           "value": 65,
@@ -4057,12 +4029,12 @@
         },
         "campVillageoisPercent": {
           "value": 70.76923076923077,
-          "percentile": 86.48648648648648,
+          "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH"
         },
         "campLoupPercent": {
           "value": 16.923076923076923,
-          "percentile": 48.64864864864865,
+          "percentile": 45.94594594594595,
           "category": "AVERAGE"
         },
         "campSoloPercent": {
@@ -4123,35 +4095,6 @@
       "playerName": "Baout",
       "gamesPlayed": 139,
       "titles": [
-        {
-          "id": "adaptable",
-          "title": "L'Adaptable",
-          "emoji": "🦎",
-          "description": "Bon dans tous les camps",
-          "priority": 16,
-          "type": "combination",
-          "percentile": 81.83667538506249,
-          "conditions": [
-            {
-              "stat": "winRateVillageois",
-              "category": "HIGH",
-              "actualValue": 56.97674418604651,
-              "actualPercentile": 83.78378378378379
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 42.857142857142854,
-              "actualPercentile": 80.64516129032258
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 16,
-              "actualPercentile": 81.08108108108108
-            }
-          ]
-        },
         {
           "id": "votingFirst_extreme_high",
           "title": "L'Impulsif·ve",
@@ -4219,7 +4162,7 @@
           "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 16,
-          "percentile": 81.08108108108108,
+          "percentile": 78.37837837837837,
           "category": "HIGH",
           "priority": 6,
           "type": "basic",
@@ -4273,33 +4216,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "adaptable",
-        "title": "L'Adaptable",
-        "emoji": "🦎",
-        "description": "Bon dans tous les camps",
-        "priority": 16,
-        "type": "combination",
-        "percentile": 81.83667538506249,
-        "conditions": [
-          {
-            "stat": "winRateVillageois",
-            "category": "HIGH",
-            "actualValue": 56.97674418604651,
-            "actualPercentile": 83.78378378378379
-          },
-          {
-            "stat": "winRateLoup",
-            "category": "HIGH",
-            "actualValue": 42.857142857142854,
-            "actualPercentile": 80.64516129032258
-          },
-          {
-            "stat": "winRateSolo",
-            "category": "HIGH",
-            "actualValue": 16,
-            "actualPercentile": 81.08108108108108
-          }
-        ]
+        "id": "survivalDay1_extreme_high",
+        "title": "Le·a Prudent·e",
+        "emoji": "🏃",
+        "description": "Survit au Jour 1",
+        "stat": "survivalDay1Rate",
+        "value": 89.92805755395683,
+        "percentile": 97.2972972972973,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -4324,7 +4250,7 @@
         },
         "winRateSolo": {
           "value": 16,
-          "percentile": 81.08108108108108,
+          "percentile": 78.37837837837837,
           "category": "HIGH"
         },
         "campVillageoisPercent": {
@@ -4393,7 +4319,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "gamesPlayed": 338,
+      "gamesPlayed": 340,
       "titles": [
         {
           "id": "manipulateur",
@@ -4413,7 +4339,7 @@
             {
               "stat": "talking",
               "category": "HIGH",
-              "actualValue": 1400.0549876717134,
+              "actualValue": 1397.9290362176862,
               "actualPercentile": 92.3076923076923
             }
           ]
@@ -4436,7 +4362,7 @@
           "emoji": "💬",
           "description": "Parle énormément",
           "stat": "talkingPer60Min",
-          "value": 1400.0549876717134,
+          "value": 1397.9290362176862,
           "percentile": 92.3076923076923,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -4449,7 +4375,7 @@
           "emoji": "👂",
           "description": "Bavard·e hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 960.5294468820006,
+          "value": 958.730897246471,
           "percentile": 92.3076923076923,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -4461,7 +4387,7 @@
           "emoji": "🎤",
           "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 439.5255407897129,
+          "value": 439.1981389712152,
           "percentile": 92.3076923076923,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -4473,7 +4399,7 @@
           "emoji": "⚖️",
           "description": "Toujours en action",
           "stat": "votingAggressiveness",
-          "value": 22.380191693290733,
+          "value": 22.396825396825392,
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -4485,7 +4411,7 @@
           "emoji": "💀",
           "description": "Tueur·se en série",
           "stat": "killRate",
-          "value": 0.7041420118343196,
+          "value": 0.7,
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -4497,8 +4423,8 @@
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
-          "value": 43.8,
-          "percentile": 72.97297297297297,
+          "value": 43.5,
+          "percentile": 70.27027027027027,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4509,7 +4435,7 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 338,
+          "value": 340,
           "percentile": 83.78378378378379,
           "category": "HIGH",
           "priority": 6,
@@ -4521,7 +4447,7 @@
           "emoji": "🛡️",
           "description": "Survie élevée fin de game",
           "stat": "survivalRate",
-          "value": 38.75739644970414,
+          "value": 38.82352941176471,
           "percentile": 70.27027027027027,
           "category": "HIGH",
           "priority": 6,
@@ -4533,7 +4459,7 @@
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 84.91124260355029,
+          "value": 85,
           "percentile": 70.27027027027027,
           "category": "HIGH",
           "priority": 6,
@@ -4545,7 +4471,7 @@
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 911.864630760377,
+          "value": 917.6877696899232,
           "percentile": 69.56521739130434,
           "category": "HIGH",
           "priority": 6,
@@ -4558,7 +4484,7 @@
           "description": "Faible récolte en Loup",
           "stat": "lootLoupPer60Min",
           "value": 444.47007154766874,
-          "percentile": 21.73913043478261,
+          "percentile": 26.08695652173913,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -4579,7 +4505,7 @@
           "emoji": "👷",
           "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 811.0361595215008,
+          "value": 812.1428872528274,
           "percentile": 60.86956521739131,
           "category": "ABOVE_AVERAGE",
           "priority": 4,
@@ -4604,25 +4530,25 @@
           {
             "stat": "talking",
             "category": "HIGH",
-            "actualValue": 1400.0549876717134,
+            "actualValue": 1397.9290362176862,
             "actualPercentile": 92.3076923076923
           }
         ]
       },
       "percentiles": {
         "winRate": {
-          "value": 43.8,
-          "percentile": 72.97297297297297,
+          "value": 43.5,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "gamesPlayed": {
-          "value": 338,
+          "value": 340,
           "percentile": 83.78378378378379,
           "category": "HIGH"
         },
         "winRateVillageois": {
-          "value": 51.541850220264315,
-          "percentile": 64.86486486486487,
+          "value": 51.31578947368421,
+          "percentile": 56.75675675675676,
           "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
@@ -4631,54 +4557,54 @@
           "category": "EXTREME_HIGH"
         },
         "winRateSolo": {
-          "value": 12.903225806451612,
+          "value": 12.698412698412698,
           "percentile": 64.86486486486487,
           "category": "ABOVE_AVERAGE"
         },
         "campVillageoisPercent": {
-          "value": 67.15976331360946,
-          "percentile": 64.86486486486487,
-          "category": "ABOVE_AVERAGE"
+          "value": 67.05882352941175,
+          "percentile": 67.56756756756756,
+          "category": "HIGH"
         },
         "campLoupPercent": {
-          "value": 14.497041420118343,
+          "value": 14.411764705882351,
           "percentile": 18.91891891891892,
           "category": "LOW"
         },
         "campSoloPercent": {
-          "value": 18.34319526627219,
-          "percentile": 70.27027027027027,
+          "value": 18.529411764705884,
+          "percentile": 72.97297297297297,
           "category": "HIGH"
         },
         "talkingPer60Min": {
-          "value": 1400.0549876717134,
+          "value": 1397.9290362176862,
           "percentile": 92.3076923076923,
           "category": "EXTREME_HIGH"
         },
         "talkingOutsidePer60Min": {
-          "value": 960.5294468820006,
+          "value": 958.730897246471,
           "percentile": 92.3076923076923,
           "category": "EXTREME_HIGH"
         },
         "talkingDuringPer60Min": {
-          "value": 439.5255407897129,
+          "value": 439.1981389712152,
           "percentile": 92.3076923076923,
           "category": "EXTREME_HIGH"
         },
         "votingAggressiveness": {
-          "value": 22.380191693290733,
+          "value": 22.396825396825392,
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH"
         },
         "votingAccuracy": {
-          "value": 85.66775244299674,
-          "percentile": 50,
+          "value": 85.76051779935275,
+          "percentile": 52.77777777777778,
           "category": "AVERAGE"
         },
         "votingFirst": {
-          "value": 36.69064748201439,
-          "percentile": 46.666666666666664,
-          "category": "AVERAGE"
+          "value": 36.17021276595745,
+          "percentile": 40,
+          "category": "BELOW_AVERAGE"
         },
         "hunterGames": {
           "value": 25,
@@ -4691,65 +4617,65 @@
           "category": "ABOVE_AVERAGE"
         },
         "survivalRate": {
-          "value": 38.75739644970414,
+          "value": 38.82352941176471,
           "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "survivalDay1Rate": {
-          "value": 84.91124260355029,
+          "value": 85,
           "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "killRate": {
-          "value": 0.7041420118343196,
+          "value": 0.7,
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH"
         },
         "lootPer60Min": {
-          "value": 811.0361595215008,
+          "value": 812.1428872528274,
           "percentile": 60.86956521739131,
           "category": "ABOVE_AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 911.864630760377,
+          "value": 917.6877696899232,
           "percentile": 69.56521739130434,
           "category": "HIGH"
         },
         "lootLoupPer60Min": {
           "value": 444.47007154766874,
-          "percentile": 21.73913043478261,
+          "percentile": 26.08695652173913,
           "category": "LOW"
         }
       },
       "stats": {
-        "winRate": 43.8,
-        "gamesPlayed": 338,
-        "winRateVillageois": 51.541850220264315,
+        "winRate": 43.5,
+        "gamesPlayed": 340,
+        "winRateVillageois": 51.31578947368421,
         "winRateLoup": 46.93877551020408,
-        "winRateSolo": 12.903225806451612,
-        "campVillageoisPercent": 67.15976331360946,
-        "campLoupPercent": 14.497041420118343,
-        "campSoloPercent": 18.34319526627219,
-        "talkingPer60Min": 1400.0549876717134,
-        "talkingOutsidePer60Min": 960.5294468820006,
-        "talkingDuringPer60Min": 439.5255407897129,
-        "votingAggressiveness": 22.380191693290733,
-        "votingAccuracy": 85.66775244299674,
-        "votingFirst": 36.69064748201439,
+        "winRateSolo": 12.698412698412698,
+        "campVillageoisPercent": 67.05882352941175,
+        "campLoupPercent": 14.411764705882351,
+        "campSoloPercent": 18.529411764705884,
+        "talkingPer60Min": 1397.9290362176862,
+        "talkingOutsidePer60Min": 958.730897246471,
+        "talkingDuringPer60Min": 439.1981389712152,
+        "votingAggressiveness": 22.396825396825392,
+        "votingAccuracy": 85.76051779935275,
+        "votingFirst": 36.17021276595745,
         "hunterGames": 25,
         "hunterAccuracy": 77.27272727272727,
-        "survivalRate": 38.75739644970414,
-        "survivalDay1Rate": 84.91124260355029,
-        "killRate": 0.7041420118343196,
-        "lootPer60Min": 811.0361595215008,
-        "lootVillageoisPer60Min": 911.864630760377,
+        "survivalRate": 38.82352941176471,
+        "survivalDay1Rate": 85,
+        "killRate": 0.7,
+        "lootPer60Min": 812.1428872528274,
+        "lootVillageoisPer60Min": 917.6877696899232,
         "lootLoupPer60Min": 444.47007154766874
       }
     },
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "gamesPlayed": 208,
+      "gamesPlayed": 209,
       "titles": [
         {
           "id": "winRateLoup_extreme_low",
@@ -4781,12 +4707,11 @@
           "emoji": "🐑",
           "description": "Ne tue jamais",
           "stat": "killRate",
-          "value": 0.2692307692307692,
-          "percentile": 8.108108108108109,
+          "value": 0.2679425837320574,
+          "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kissiffrote"
+          "type": "basic"
         },
         {
           "id": "winRate_low",
@@ -4794,7 +4719,7 @@
           "emoji": "😢",
           "description": "Taux de victoire faible",
           "stat": "winRate",
-          "value": 36.1,
+          "value": 36.4,
           "percentile": 29.72972972972973,
           "category": "LOW",
           "priority": 6,
@@ -4806,7 +4731,7 @@
           "emoji": "🤫",
           "description": "Parle peu (par 60 min de jeu)",
           "stat": "talkingPer60Min",
-          "value": 910.504141160143,
+          "value": 909.7452297314727,
           "percentile": 23.076923076923077,
           "category": "LOW",
           "priority": 6,
@@ -4818,7 +4743,7 @@
           "emoji": "🎯",
           "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 672.8657741522181,
+          "value": 672.7553646693106,
           "percentile": 23.076923076923077,
           "category": "LOW",
           "priority": 6,
@@ -4830,7 +4755,7 @@
           "emoji": "🤐",
           "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 237.63836700792493,
+          "value": 236.9898650621621,
           "percentile": 30.76923076923077,
           "category": "LOW",
           "priority": 6,
@@ -4843,7 +4768,7 @@
           "description": "Mauvais instinct de vote",
           "stat": "votingAccuracy",
           "value": 79.67479674796748,
-          "percentile": 16.666666666666664,
+          "percentile": 19.444444444444446,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -4854,7 +4779,7 @@
           "emoji": "⚰️",
           "description": "Meurt souvent Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 74.51923076923077,
+          "value": 74.16267942583733,
           "percentile": 16.216216216216218,
           "category": "LOW",
           "priority": 6,
@@ -4866,7 +4791,7 @@
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 889.9724382997939,
+          "value": 893.2008579933738,
           "percentile": 65.21739130434783,
           "category": "HIGH",
           "priority": 6,
@@ -4879,7 +4804,7 @@
           "description": "Faible récolte en Loup",
           "stat": "lootLoupPer60Min",
           "value": 459.6292324191819,
-          "percentile": 26.08695652173913,
+          "percentile": 30.434782608695656,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -4900,7 +4825,7 @@
           "emoji": "👷",
           "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 807.7850342766135,
+          "value": 809.895143541433,
           "percentile": 56.52173913043478,
           "category": "ABOVE_AVERAGE",
           "priority": 4,
@@ -4908,30 +4833,30 @@
         }
       ],
       "primaryTitle": {
-        "id": "hunterAccuracy_extreme_low",
-        "title": "Le·a Chasseur·se Maudit·e",
-        "emoji": "💔",
-        "description": "Tire toujours sur les mauvaises cibles",
-        "stat": "hunterAccuracy",
-        "value": 33.33333333333333,
-        "percentile": 5.555555555555555,
+        "id": "killRate_extreme_low",
+        "title": "L'Agneau",
+        "emoji": "🐑",
+        "description": "Ne tue jamais",
+        "stat": "killRate",
+        "value": 0.2679425837320574,
+        "percentile": 5.405405405405405,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
       },
       "percentiles": {
         "winRate": {
-          "value": 36.1,
+          "value": 36.4,
           "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "gamesPlayed": {
-          "value": 208,
+          "value": 209,
           "percentile": 64.86486486486487,
           "category": "ABOVE_AVERAGE"
         },
         "winRateVillageois": {
-          "value": 46.3768115942029,
+          "value": 46.76258992805755,
           "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
@@ -4946,32 +4871,32 @@
           "category": "AVERAGE"
         },
         "campVillageoisPercent": {
-          "value": 66.34615384615384,
+          "value": 66.50717703349282,
           "percentile": 51.35135135135135,
           "category": "AVERAGE"
         },
         "campLoupPercent": {
-          "value": 15.865384615384615,
-          "percentile": 35.13513513513514,
-          "category": "BELOW_AVERAGE"
+          "value": 15.789473684210526,
+          "percentile": 29.72972972972973,
+          "category": "LOW"
         },
         "campSoloPercent": {
-          "value": 17.78846153846154,
-          "percentile": 56.75675675675676,
-          "category": "ABOVE_AVERAGE"
+          "value": 17.703349282296653,
+          "percentile": 54.054054054054056,
+          "category": "AVERAGE"
         },
         "talkingPer60Min": {
-          "value": 910.504141160143,
+          "value": 909.7452297314727,
           "percentile": 23.076923076923077,
           "category": "LOW"
         },
         "talkingOutsidePer60Min": {
-          "value": 672.8657741522181,
+          "value": 672.7553646693106,
           "percentile": 23.076923076923077,
           "category": "LOW"
         },
         "talkingDuringPer60Min": {
-          "value": 237.63836700792493,
+          "value": 236.9898650621621,
           "percentile": 30.76923076923077,
           "category": "LOW"
         },
@@ -4982,13 +4907,13 @@
         },
         "votingAccuracy": {
           "value": 79.67479674796748,
-          "percentile": 16.666666666666664,
+          "percentile": 19.444444444444446,
           "category": "LOW"
         },
         "votingFirst": {
           "value": 42.857142857142854,
-          "percentile": 56.666666666666664,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 53.333333333333336,
+          "category": "AVERAGE"
         },
         "hunterGames": {
           "value": 11,
@@ -5001,65 +4926,65 @@
           "category": "EXTREME_LOW"
         },
         "survivalRate": {
-          "value": 31.25,
-          "percentile": 51.35135135135135,
+          "value": 31.100478468899524,
+          "percentile": 48.64864864864865,
           "category": "AVERAGE"
         },
         "survivalDay1Rate": {
-          "value": 74.51923076923077,
+          "value": 74.16267942583733,
           "percentile": 16.216216216216218,
           "category": "LOW"
         },
         "killRate": {
-          "value": 0.2692307692307692,
-          "percentile": 8.108108108108109,
+          "value": 0.2679425837320574,
+          "percentile": 5.405405405405405,
           "category": "EXTREME_LOW"
         },
         "lootPer60Min": {
-          "value": 807.7850342766135,
+          "value": 809.895143541433,
           "percentile": 56.52173913043478,
           "category": "ABOVE_AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 889.9724382997939,
+          "value": 893.2008579933738,
           "percentile": 65.21739130434783,
           "category": "HIGH"
         },
         "lootLoupPer60Min": {
           "value": 459.6292324191819,
-          "percentile": 26.08695652173913,
+          "percentile": 30.434782608695656,
           "category": "LOW"
         }
       },
       "stats": {
-        "winRate": 36.1,
-        "gamesPlayed": 208,
-        "winRateVillageois": 46.3768115942029,
+        "winRate": 36.4,
+        "gamesPlayed": 209,
+        "winRateVillageois": 46.76258992805755,
         "winRateLoup": 21.21212121212121,
         "winRateSolo": 10.81081081081081,
-        "campVillageoisPercent": 66.34615384615384,
-        "campLoupPercent": 15.865384615384615,
-        "campSoloPercent": 17.78846153846154,
-        "talkingPer60Min": 910.504141160143,
-        "talkingOutsidePer60Min": 672.8657741522181,
-        "talkingDuringPer60Min": 237.63836700792493,
+        "campVillageoisPercent": 66.50717703349282,
+        "campLoupPercent": 15.789473684210526,
+        "campSoloPercent": 17.703349282296653,
+        "talkingPer60Min": 909.7452297314727,
+        "talkingOutsidePer60Min": 672.7553646693106,
+        "talkingDuringPer60Min": 236.9898650621621,
         "votingAggressiveness": 1.1209439528023637,
         "votingAccuracy": 79.67479674796748,
         "votingFirst": 42.857142857142854,
         "hunterGames": 11,
         "hunterAccuracy": 33.33333333333333,
-        "survivalRate": 31.25,
-        "survivalDay1Rate": 74.51923076923077,
-        "killRate": 0.2692307692307692,
-        "lootPer60Min": 807.7850342766135,
-        "lootVillageoisPer60Min": 889.9724382997939,
+        "survivalRate": 31.100478468899524,
+        "survivalDay1Rate": 74.16267942583733,
+        "killRate": 0.2679425837320574,
+        "lootPer60Min": 809.895143541433,
+        "lootVillageoisPer60Min": 893.2008579933738,
         "lootLoupPer60Min": 459.6292324191819
       }
     },
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "gamesPlayed": 403,
+      "gamesPlayed": 406,
       "titles": [
         {
           "id": "avocat",
@@ -5073,13 +4998,13 @@
             {
               "stat": "talkingOutsideMeeting",
               "category": "LOW",
-              "actualValue": 708.4325817812374,
+              "actualValue": 704.0316250434612,
               "actualPercentile": 26.923076923076923
             },
             {
               "stat": "talkingDuringMeeting",
               "category": "HIGH",
-              "actualValue": 444.2949049538011,
+              "actualValue": 443.8197215231014,
               "actualPercentile": 96.15384615384616
             }
           ]
@@ -5090,7 +5015,7 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 403,
+          "value": 406,
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -5103,7 +5028,7 @@
           "emoji": "🎤",
           "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 444.2949049538011,
+          "value": 443.8197215231014,
           "percentile": 96.15384615384616,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -5115,7 +5040,7 @@
           "emoji": "⚒️",
           "description": "Récolte exceptionnelle",
           "stat": "lootPer60Min",
-          "value": 1006.5861008716693,
+          "value": 1007.7053647343877,
           "percentile": 86.95652173913044,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -5146,25 +5071,12 @@
           "type": "basic"
         },
         {
-          "id": "winRateSolo_high",
-          "title": "L'Électron Libre",
-          "emoji": "🦊",
-          "description": "Excellent·e en rôles Solo",
-          "stat": "winRateSolo",
-          "value": 12.987012987012985,
-          "percentile": 67.56756756756756,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic",
-          "primaryOwner": "PeoBran"
-        },
-        {
           "id": "talking_high",
           "title": "Le·a Bavard·e",
           "emoji": "🗣️",
           "description": "Parle beaucoup (par 60 min de jeu)",
           "stat": "talkingPer60Min",
-          "value": 1152.7274867350386,
+          "value": 1147.8513465665626,
           "percentile": 73.07692307692307,
           "category": "HIGH",
           "priority": 6,
@@ -5176,7 +5088,7 @@
           "emoji": "🎯",
           "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 708.4325817812374,
+          "value": 704.0316250434612,
           "percentile": 26.923076923076923,
           "category": "LOW",
           "priority": 6,
@@ -5188,7 +5100,7 @@
           "emoji": "👃",
           "description": "Bon instinct de vote",
           "stat": "votingAccuracy",
-          "value": 88.92988929889299,
+          "value": 88.6861313868613,
           "percentile": 75,
           "category": "HIGH",
           "priority": 6,
@@ -5212,7 +5124,7 @@
           "emoji": "🛡️",
           "description": "Survie élevée fin de game",
           "stat": "survivalRate",
-          "value": 41.43920595533499,
+          "value": 41.6256157635468,
           "percentile": 81.08108108108108,
           "category": "HIGH",
           "priority": 6,
@@ -5224,8 +5136,8 @@
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 85.8560794044665,
-          "percentile": 83.78378378378379,
+          "value": 85.96059113300493,
+          "percentile": 81.08108108108108,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -5236,7 +5148,7 @@
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 1014.7893618054923,
+          "value": 1016.9304643900116,
           "percentile": 82.6086956521739,
           "category": "HIGH",
           "priority": 6,
@@ -5258,8 +5170,8 @@
           "emoji": "📊",
           "description": "Performance stable",
           "stat": "winRate",
-          "value": 40,
-          "percentile": 54.054054054054056,
+          "value": 39.7,
+          "percentile": 51.35135135135135,
           "category": "AVERAGE",
           "priority": 3,
           "type": "basic"
@@ -5277,30 +5189,30 @@
           {
             "stat": "talkingOutsideMeeting",
             "category": "LOW",
-            "actualValue": 708.4325817812374,
+            "actualValue": 704.0316250434612,
             "actualPercentile": 26.923076923076923
           },
           {
             "stat": "talkingDuringMeeting",
             "category": "HIGH",
-            "actualValue": 444.2949049538011,
+            "actualValue": 443.8197215231014,
             "actualPercentile": 96.15384615384616
           }
         ]
       },
       "percentiles": {
         "winRate": {
-          "value": 40,
-          "percentile": 54.054054054054056,
+          "value": 39.7,
+          "percentile": 51.35135135135135,
           "category": "AVERAGE"
         },
         "gamesPlayed": {
-          "value": 403,
+          "value": 406,
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
-          "value": 48.26254826254826,
+          "value": 48.07692307692308,
           "percentile": 45.94594594594595,
           "category": "AVERAGE"
         },
@@ -5310,53 +5222,53 @@
           "category": "HIGH"
         },
         "winRateSolo": {
-          "value": 12.987012987012985,
-          "percentile": 67.56756756756756,
-          "category": "HIGH"
+          "value": 12.658227848101266,
+          "percentile": 62.16216216216216,
+          "category": "ABOVE_AVERAGE"
         },
         "campVillageoisPercent": {
-          "value": 64.26799007444168,
+          "value": 64.03940886699507,
           "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
-          "value": 16.62531017369727,
-          "percentile": 43.24324324324324,
+          "value": 16.502463054187192,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "campSoloPercent": {
-          "value": 19.106699751861044,
-          "percentile": 78.37837837837837,
+          "value": 19.458128078817737,
+          "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "talkingPer60Min": {
-          "value": 1152.7274867350386,
+          "value": 1147.8513465665626,
           "percentile": 73.07692307692307,
           "category": "HIGH"
         },
         "talkingOutsidePer60Min": {
-          "value": 708.4325817812374,
+          "value": 704.0316250434612,
           "percentile": 26.923076923076923,
           "category": "LOW"
         },
         "talkingDuringPer60Min": {
-          "value": 444.2949049538011,
+          "value": 443.8197215231014,
           "percentile": 96.15384615384616,
           "category": "EXTREME_HIGH"
         },
         "votingAggressiveness": {
-          "value": -2.2738693467336653,
+          "value": -2.0947630922693303,
           "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE"
         },
         "votingAccuracy": {
-          "value": 88.92988929889299,
+          "value": 88.6861313868613,
           "percentile": 75,
           "category": "HIGH"
         },
         "votingFirst": {
-          "value": 38.05309734513274,
-          "percentile": 50,
+          "value": 38.793103448275865,
+          "percentile": 46.666666666666664,
           "category": "AVERAGE"
         },
         "hunterGames": {
@@ -5370,27 +5282,27 @@
           "category": "HIGH"
         },
         "survivalRate": {
-          "value": 41.43920595533499,
+          "value": 41.6256157635468,
           "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "survivalDay1Rate": {
-          "value": 85.8560794044665,
-          "percentile": 83.78378378378379,
+          "value": 85.96059113300493,
+          "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "killRate": {
-          "value": 0.543424317617866,
+          "value": 0.5394088669950738,
           "percentile": 59.45945945945946,
           "category": "ABOVE_AVERAGE"
         },
         "lootPer60Min": {
-          "value": 1006.5861008716693,
+          "value": 1007.7053647343877,
           "percentile": 86.95652173913044,
           "category": "EXTREME_HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 1014.7893618054923,
+          "value": 1016.9304643900116,
           "percentile": 82.6086956521739,
           "category": "HIGH"
         },
@@ -5401,27 +5313,27 @@
         }
       },
       "stats": {
-        "winRate": 40,
-        "gamesPlayed": 403,
-        "winRateVillageois": 48.26254826254826,
+        "winRate": 39.7,
+        "gamesPlayed": 406,
+        "winRateVillageois": 48.07692307692308,
         "winRateLoup": 38.80597014925373,
-        "winRateSolo": 12.987012987012985,
-        "campVillageoisPercent": 64.26799007444168,
-        "campLoupPercent": 16.62531017369727,
-        "campSoloPercent": 19.106699751861044,
-        "talkingPer60Min": 1152.7274867350386,
-        "talkingOutsidePer60Min": 708.4325817812374,
-        "talkingDuringPer60Min": 444.2949049538011,
-        "votingAggressiveness": -2.2738693467336653,
-        "votingAccuracy": 88.92988929889299,
-        "votingFirst": 38.05309734513274,
+        "winRateSolo": 12.658227848101266,
+        "campVillageoisPercent": 64.03940886699507,
+        "campLoupPercent": 16.502463054187192,
+        "campSoloPercent": 19.458128078817737,
+        "talkingPer60Min": 1147.8513465665626,
+        "talkingOutsidePer60Min": 704.0316250434612,
+        "talkingDuringPer60Min": 443.8197215231014,
+        "votingAggressiveness": -2.0947630922693303,
+        "votingAccuracy": 88.6861313868613,
+        "votingFirst": 38.793103448275865,
         "hunterGames": 18,
         "hunterAccuracy": 100,
-        "survivalRate": 41.43920595533499,
-        "survivalDay1Rate": 85.8560794044665,
-        "killRate": 0.543424317617866,
-        "lootPer60Min": 1006.5861008716693,
-        "lootVillageoisPer60Min": 1014.7893618054923,
+        "survivalRate": 41.6256157635468,
+        "survivalDay1Rate": 85.96059113300493,
+        "killRate": 0.5394088669950738,
+        "lootPer60Min": 1007.7053647343877,
+        "lootVillageoisPer60Min": 1016.9304643900116,
         "lootLoupPer60Min": 1008.4524697598655
       }
     },
@@ -5662,7 +5574,7 @@
         },
         "campVillageoisPercent": {
           "value": 66.39344262295081,
-          "percentile": 54.054054054054056,
+          "percentile": 48.64864864864865,
           "category": "AVERAGE"
         },
         "campLoupPercent": {
@@ -5762,7 +5674,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "gamesPlayed": 285,
+      "gamesPlayed": 288,
       "titles": [
         {
           "id": "winRateLoup_extreme_low",
@@ -5770,7 +5682,7 @@
           "emoji": "🐩",
           "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
-          "value": 19.047619047619047,
+          "value": 18.181818181818183,
           "percentile": 9.67741935483871,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -5782,7 +5694,7 @@
           "emoji": "👻",
           "description": "Quasi muet·te",
           "stat": "talkingPer60Min",
-          "value": 805.8029722956916,
+          "value": 806.9208498090436,
           "percentile": 7.6923076923076925,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -5794,7 +5706,7 @@
           "emoji": "🤐",
           "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 176.45818413875423,
+          "value": 179.0311162362922,
           "percentile": 7.6923076923076925,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -5806,10 +5718,22 @@
           "emoji": "🎯",
           "description": "Meurt souvent",
           "stat": "survivalRate",
-          "value": 25.6140350877193,
+          "value": 25.34722222222222,
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_low",
+          "title": "Le·a Looser",
+          "emoji": "😢",
+          "description": "Taux de victoire faible",
+          "stat": "winRate",
+          "value": 36.1,
+          "percentile": 27.027027027027028,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -5818,7 +5742,7 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 285,
+          "value": 288,
           "percentile": 81.08108108108108,
           "category": "HIGH",
           "priority": 6,
@@ -5830,7 +5754,7 @@
           "emoji": "👶",
           "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
-          "value": 2,
+          "value": 1.9607843137254901,
           "percentile": 27.027027027027028,
           "category": "LOW",
           "priority": 6,
@@ -5842,7 +5766,7 @@
           "emoji": "🎯",
           "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 629.3447881569374,
+          "value": 627.8897335727514,
           "percentile": 19.230769230769234,
           "category": "LOW",
           "priority": 6,
@@ -5866,8 +5790,8 @@
           "emoji": "🕊️",
           "description": "Taux de kills faible",
           "stat": "killRate",
-          "value": 0.32280701754385965,
-          "percentile": 21.62162162162162,
+          "value": 0.3298611111111111,
+          "percentile": 24.324324324324326,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -5878,7 +5802,7 @@
           "emoji": "🌾",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
-          "value": 875.2308493255322,
+          "value": 875.5213736742372,
           "percentile": 73.91304347826086,
           "category": "HIGH",
           "priority": 6,
@@ -5905,18 +5829,6 @@
           "category": "SPECIALIST",
           "priority": 6,
           "type": "campBalance"
-        },
-        {
-          "id": "winRate_below_average",
-          "title": "Le·a Constant·e",
-          "emoji": "📊",
-          "description": "Performance stable",
-          "stat": "winRate",
-          "value": 36.5,
-          "percentile": 35.13513513513514,
-          "category": "BELOW_AVERAGE",
-          "priority": 4,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -5925,7 +5837,7 @@
         "emoji": "👻",
         "description": "Quasi muet·te",
         "stat": "talkingPer60Min",
-        "value": 805.8029722956916,
+        "value": 806.9208498090436,
         "percentile": 7.6923076923076925,
         "category": "EXTREME_LOW",
         "priority": 8,
@@ -5933,12 +5845,12 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 36.5,
-          "percentile": 35.13513513513514,
-          "category": "BELOW_AVERAGE"
+          "value": 36.1,
+          "percentile": 27.027027027027028,
+          "category": "LOW"
         },
         "gamesPlayed": {
-          "value": 285,
+          "value": 288,
           "percentile": 81.08108108108108,
           "category": "HIGH"
         },
@@ -5948,47 +5860,47 @@
           "category": "AVERAGE"
         },
         "winRateLoup": {
-          "value": 19.047619047619047,
+          "value": 18.181818181818183,
           "percentile": 9.67741935483871,
           "category": "EXTREME_LOW"
         },
         "winRateSolo": {
-          "value": 2,
+          "value": 1.9607843137254901,
           "percentile": 27.027027027027028,
           "category": "LOW"
         },
         "campVillageoisPercent": {
-          "value": 67.71929824561404,
-          "percentile": 70.27027027027027,
-          "category": "HIGH"
+          "value": 67.01388888888889,
+          "percentile": 64.86486486486487,
+          "category": "ABOVE_AVERAGE"
         },
         "campLoupPercent": {
-          "value": 14.736842105263156,
-          "percentile": 21.62162162162162,
+          "value": 15.277777777777779,
+          "percentile": 27.027027027027028,
           "category": "LOW"
         },
         "campSoloPercent": {
-          "value": 17.543859649122805,
-          "percentile": 54.054054054054056,
-          "category": "AVERAGE"
+          "value": 17.708333333333336,
+          "percentile": 56.75675675675676,
+          "category": "ABOVE_AVERAGE"
         },
         "talkingPer60Min": {
-          "value": 805.8029722956916,
+          "value": 806.9208498090436,
           "percentile": 7.6923076923076925,
           "category": "EXTREME_LOW"
         },
         "talkingOutsidePer60Min": {
-          "value": 629.3447881569374,
+          "value": 627.8897335727514,
           "percentile": 19.230769230769234,
           "category": "LOW"
         },
         "talkingDuringPer60Min": {
-          "value": 176.45818413875423,
+          "value": 179.0311162362922,
           "percentile": 7.6923076923076925,
           "category": "EXTREME_LOW"
         },
         "votingAggressiveness": {
-          "value": 0.216450216450216,
+          "value": 0.06479481641468432,
           "percentile": 48.64864864864865,
           "category": "AVERAGE"
         },
@@ -5998,8 +5910,8 @@
           "category": "BELOW_AVERAGE"
         },
         "votingFirst": {
-          "value": 35.9375,
-          "percentile": 40,
+          "value": 35.38461538461539,
+          "percentile": 36.666666666666664,
           "category": "BELOW_AVERAGE"
         },
         "hunterGames": {
@@ -6013,22 +5925,22 @@
           "category": "LOW"
         },
         "survivalRate": {
-          "value": 25.6140350877193,
+          "value": 25.34722222222222,
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW"
         },
         "survivalDay1Rate": {
-          "value": 78.59649122807018,
-          "percentile": 37.83783783783784,
+          "value": 78.125,
+          "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE"
         },
         "killRate": {
-          "value": 0.32280701754385965,
-          "percentile": 21.62162162162162,
+          "value": 0.3298611111111111,
+          "percentile": 24.324324324324326,
           "category": "LOW"
         },
         "lootPer60Min": {
-          "value": 875.2308493255322,
+          "value": 875.5213736742372,
           "percentile": 73.91304347826086,
           "category": "HIGH"
         },
@@ -6038,34 +5950,34 @@
           "category": "HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 538.7112788629632,
-          "percentile": 47.82608695652174,
-          "category": "AVERAGE"
+          "value": 524.8123045539975,
+          "percentile": 43.47826086956522,
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
-        "winRate": 36.5,
-        "gamesPlayed": 285,
+        "winRate": 36.1,
+        "gamesPlayed": 288,
         "winRateVillageois": 49.22279792746114,
-        "winRateLoup": 19.047619047619047,
-        "winRateSolo": 2,
-        "campVillageoisPercent": 67.71929824561404,
-        "campLoupPercent": 14.736842105263156,
-        "campSoloPercent": 17.543859649122805,
-        "talkingPer60Min": 805.8029722956916,
-        "talkingOutsidePer60Min": 629.3447881569374,
-        "talkingDuringPer60Min": 176.45818413875423,
-        "votingAggressiveness": 0.216450216450216,
+        "winRateLoup": 18.181818181818183,
+        "winRateSolo": 1.9607843137254901,
+        "campVillageoisPercent": 67.01388888888889,
+        "campLoupPercent": 15.277777777777779,
+        "campSoloPercent": 17.708333333333336,
+        "talkingPer60Min": 806.9208498090436,
+        "talkingOutsidePer60Min": 627.8897335727514,
+        "talkingDuringPer60Min": 179.0311162362922,
+        "votingAggressiveness": 0.06479481641468432,
         "votingAccuracy": 82.71604938271605,
-        "votingFirst": 35.9375,
+        "votingFirst": 35.38461538461539,
         "hunterGames": 25,
         "hunterAccuracy": 66.66666666666666,
-        "survivalRate": 25.6140350877193,
-        "survivalDay1Rate": 78.59649122807018,
-        "killRate": 0.32280701754385965,
-        "lootPer60Min": 875.2308493255322,
+        "survivalRate": 25.34722222222222,
+        "survivalDay1Rate": 78.125,
+        "killRate": 0.3298611111111111,
+        "lootPer60Min": 875.5213736742372,
         "lootVillageoisPer60Min": 986.213938860849,
-        "lootLoupPer60Min": 538.7112788629632
+        "lootLoupPer60Min": 524.8123045539975
       }
     },
     "76561198361954746": {
@@ -6135,7 +6047,8 @@
           "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Baout"
         },
         {
           "id": "winRate_high",
@@ -6339,7 +6252,7 @@
         },
         "campVillageoisPercent": {
           "value": 63.84615384615384,
-          "percentile": 29.72972972972973,
+          "percentile": 32.432432432432435,
           "category": "LOW"
         },
         "campLoupPercent": {
@@ -6349,7 +6262,7 @@
         },
         "campSoloPercent": {
           "value": 18.076923076923077,
-          "percentile": 62.16216216216216,
+          "percentile": 64.86486486486487,
           "category": "ABOVE_AVERAGE"
         },
         "talkingPer60Min": {
@@ -6374,7 +6287,7 @@
         },
         "votingAccuracy": {
           "value": 85.84474885844749,
-          "percentile": 58.333333333333336,
+          "percentile": 55.55555555555556,
           "category": "ABOVE_AVERAGE"
         },
         "votingFirst": {
@@ -6419,8 +6332,8 @@
         },
         "lootLoupPer60Min": {
           "value": 536.0080234647355,
-          "percentile": 43.47826086956522,
-          "category": "BELOW_AVERAGE"
+          "percentile": 47.82608695652174,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -6451,7 +6364,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "gamesPlayed": 244,
+      "gamesPlayed": 246,
       "titles": [
         {
           "id": "abeille_ouvriere",
@@ -6483,20 +6396,21 @@
           "description": "Participe beaucoup et gagne autant dans chaque camp",
           "priority": 10,
           "type": "combination",
-          "percentile": 75.67567567567568,
+          "percentile": 72.97297297297297,
           "conditions": [
             {
               "stat": "gamesPlayed",
               "category": "HIGH",
-              "actualValue": 244,
-              "actualPercentile": 75.67567567567568
+              "actualValue": 246,
+              "actualPercentile": 72.97297297297297
             },
             {
               "stat": "campBalance",
               "category": "BALANCED",
               "actualPercentile": 0
             }
-          ]
+          ],
+          "primaryOwner": "Mathy"
         },
         {
           "id": "winRate_extreme_low",
@@ -6504,7 +6418,7 @@
           "emoji": "🪦",
           "description": "Perd presque toujours",
           "stat": "winRate",
-          "value": 30.3,
+          "value": 30.1,
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -6529,8 +6443,8 @@
           "emoji": "🙈",
           "description": "Mauvais instinct de vote",
           "stat": "votingAccuracy",
-          "value": 78.48101265822784,
-          "percentile": 11.11111111111111,
+          "value": 78.61635220125787,
+          "percentile": 13.88888888888889,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
@@ -6554,8 +6468,8 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 244,
-          "percentile": 75.67567567567568,
+          "value": 246,
+          "percentile": 72.97297297297297,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -6566,7 +6480,7 @@
           "emoji": "🐩",
           "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
-          "value": 21.73913043478261,
+          "value": 21.27659574468085,
           "percentile": 16.129032258064516,
           "category": "LOW",
           "priority": 6,
@@ -6578,7 +6492,7 @@
           "emoji": "👶",
           "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
-          "value": 4.444444444444445,
+          "value": 4.3478260869565215,
           "percentile": 32.432432432432435,
           "category": "LOW",
           "priority": 6,
@@ -6590,8 +6504,8 @@
           "emoji": "🎤",
           "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 334.2437317774951,
-          "percentile": 80.76923076923077,
+          "value": 328.6406350328145,
+          "percentile": 76.92307692307693,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -6602,8 +6516,8 @@
           "emoji": "🏃",
           "description": "Premier·ère voteur·se",
           "stat": "votingFirst",
-          "value": 52.702702702702695,
-          "percentile": 83.33333333333334,
+          "value": 51.31578947368421,
+          "percentile": 80,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -6626,7 +6540,7 @@
           "emoji": "🎯",
           "description": "Meurt souvent",
           "stat": "survivalRate",
-          "value": 26.639344262295083,
+          "value": 26.422764227642276,
           "percentile": 21.62162162162162,
           "category": "LOW",
           "priority": 6,
@@ -6638,8 +6552,8 @@
           "emoji": "⚰️",
           "description": "Meurt souvent Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 77.45901639344262,
-          "percentile": 32.432432432432435,
+          "value": 77.23577235772358,
+          "percentile": 29.72972972972973,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -6650,7 +6564,7 @@
           "emoji": "🌾",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
-          "value": 977.8364604758182,
+          "value": 960.8265561117285,
           "percentile": 82.6086956521739,
           "category": "HIGH",
           "priority": 6,
@@ -6662,7 +6576,7 @@
           "emoji": "🐺",
           "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
-          "value": 689.9361620780345,
+          "value": 655.2734858863275,
           "percentile": 65.21739130434783,
           "category": "HIGH",
           "priority": 6,
@@ -6684,8 +6598,8 @@
           "emoji": "⚖️",
           "description": "Temps de parole normal",
           "stat": "talkingPer60Min",
-          "value": 1077.5749815361833,
-          "percentile": 61.53846153846154,
+          "value": 1067.5592440860905,
+          "percentile": 57.692307692307686,
           "category": "ABOVE_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -6716,13 +6630,13 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 30.3,
+          "value": 30.1,
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW"
         },
         "gamesPlayed": {
-          "value": 244,
-          "percentile": 75.67567567567568,
+          "value": 246,
+          "percentile": 72.97297297297297,
           "category": "HIGH"
         },
         "winRateVillageois": {
@@ -6731,58 +6645,58 @@
           "category": "EXTREME_LOW"
         },
         "winRateLoup": {
-          "value": 21.73913043478261,
+          "value": 21.27659574468085,
           "percentile": 16.129032258064516,
           "category": "LOW"
         },
         "winRateSolo": {
-          "value": 4.444444444444445,
+          "value": 4.3478260869565215,
           "percentile": 32.432432432432435,
           "category": "LOW"
         },
         "campVillageoisPercent": {
-          "value": 62.704918032786885,
+          "value": 62.19512195121951,
           "percentile": 18.91891891891892,
           "category": "LOW"
         },
         "campLoupPercent": {
-          "value": 18.852459016393443,
-          "percentile": 67.56756756756756,
+          "value": 19.10569105691057,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "campSoloPercent": {
-          "value": 18.442622950819672,
-          "percentile": 72.97297297297297,
+          "value": 18.69918699186992,
+          "percentile": 75.67567567567568,
           "category": "HIGH"
         },
         "talkingPer60Min": {
-          "value": 1077.5749815361833,
-          "percentile": 61.53846153846154,
+          "value": 1067.5592440860905,
+          "percentile": 57.692307692307686,
           "category": "ABOVE_AVERAGE"
         },
         "talkingOutsidePer60Min": {
-          "value": 743.331249758688,
+          "value": 738.9186090532761,
           "percentile": 46.15384615384615,
           "category": "AVERAGE"
         },
         "talkingDuringPer60Min": {
-          "value": 334.2437317774951,
-          "percentile": 80.76923076923077,
+          "value": 328.6406350328145,
+          "percentile": 76.92307692307693,
           "category": "HIGH"
         },
         "votingAggressiveness": {
-          "value": 4.641148325358849,
+          "value": 4.6080760095011915,
           "percentile": 64.86486486486487,
           "category": "ABOVE_AVERAGE"
         },
         "votingAccuracy": {
-          "value": 78.48101265822784,
-          "percentile": 11.11111111111111,
+          "value": 78.61635220125787,
+          "percentile": 13.88888888888889,
           "category": "EXTREME_LOW"
         },
         "votingFirst": {
-          "value": 52.702702702702695,
-          "percentile": 83.33333333333334,
+          "value": 51.31578947368421,
+          "percentile": 80,
           "category": "HIGH"
         },
         "hunterGames": {
@@ -6796,22 +6710,22 @@
           "category": "HIGH"
         },
         "survivalRate": {
-          "value": 26.639344262295083,
+          "value": 26.422764227642276,
           "percentile": 21.62162162162162,
           "category": "LOW"
         },
         "survivalDay1Rate": {
-          "value": 77.45901639344262,
-          "percentile": 32.432432432432435,
+          "value": 77.23577235772358,
+          "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "killRate": {
-          "value": 0.47950819672131145,
+          "value": 0.483739837398374,
           "percentile": 51.35135135135135,
           "category": "AVERAGE"
         },
         "lootPer60Min": {
-          "value": 977.8364604758182,
+          "value": 960.8265561117285,
           "percentile": 82.6086956521739,
           "category": "HIGH"
         },
@@ -6821,34 +6735,34 @@
           "category": "EXTREME_HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 689.9361620780345,
+          "value": 655.2734858863275,
           "percentile": 65.21739130434783,
           "category": "HIGH"
         }
       },
       "stats": {
-        "winRate": 30.3,
-        "gamesPlayed": 244,
+        "winRate": 30.1,
+        "gamesPlayed": 246,
         "winRateVillageois": 40.52287581699346,
-        "winRateLoup": 21.73913043478261,
-        "winRateSolo": 4.444444444444445,
-        "campVillageoisPercent": 62.704918032786885,
-        "campLoupPercent": 18.852459016393443,
-        "campSoloPercent": 18.442622950819672,
-        "talkingPer60Min": 1077.5749815361833,
-        "talkingOutsidePer60Min": 743.331249758688,
-        "talkingDuringPer60Min": 334.2437317774951,
-        "votingAggressiveness": 4.641148325358849,
-        "votingAccuracy": 78.48101265822784,
-        "votingFirst": 52.702702702702695,
+        "winRateLoup": 21.27659574468085,
+        "winRateSolo": 4.3478260869565215,
+        "campVillageoisPercent": 62.19512195121951,
+        "campLoupPercent": 19.10569105691057,
+        "campSoloPercent": 18.69918699186992,
+        "talkingPer60Min": 1067.5592440860905,
+        "talkingOutsidePer60Min": 738.9186090532761,
+        "talkingDuringPer60Min": 328.6406350328145,
+        "votingAggressiveness": 4.6080760095011915,
+        "votingAccuracy": 78.61635220125787,
+        "votingFirst": 51.31578947368421,
         "hunterGames": 15,
         "hunterAccuracy": 83.33333333333334,
-        "survivalRate": 26.639344262295083,
-        "survivalDay1Rate": 77.45901639344262,
-        "killRate": 0.47950819672131145,
-        "lootPer60Min": 977.8364604758182,
+        "survivalRate": 26.422764227642276,
+        "survivalDay1Rate": 77.23577235772358,
+        "killRate": 0.483739837398374,
+        "lootPer60Min": 960.8265561117285,
         "lootVillageoisPer60Min": 1067.8386532794307,
-        "lootLoupPer60Min": 689.9361620780345
+        "lootLoupPer60Min": 655.2734858863275
       }
     },
     "76561198250955250": {
@@ -6934,7 +6848,7 @@
           "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 14.285714285714285,
-          "percentile": 72.97297297297297,
+          "percentile": 70.27027027027027,
           "category": "HIGH",
           "priority": 6,
           "type": "basic",
@@ -7059,7 +6973,7 @@
         },
         "winRateVillageois": {
           "value": 51.53846153846153,
-          "percentile": 62.16216216216216,
+          "percentile": 64.86486486486487,
           "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
@@ -7069,7 +6983,7 @@
         },
         "winRateSolo": {
           "value": 14.285714285714285,
-          "percentile": 72.97297297297297,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "campVillageoisPercent": {
@@ -7084,8 +6998,8 @@
         },
         "campSoloPercent": {
           "value": 16.990291262135923,
-          "percentile": 45.94594594594595,
-          "category": "AVERAGE"
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE"
         },
         "talkingPer60Min": {
           "value": 1187.6907471851787,
@@ -7186,15 +7100,37 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "Mathy",
-      "gamesPlayed": 243,
+      "gamesPlayed": 246,
       "titles": [
+        {
+          "id": "enthusiaste",
+          "title": "L'Enthousiaste",
+          "emoji": "🌟",
+          "description": "Participe beaucoup et gagne autant dans chaque camp",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 72.97297297297297,
+          "conditions": [
+            {
+              "stat": "gamesPlayed",
+              "category": "HIGH",
+              "actualValue": 246,
+              "actualPercentile": 72.97297297297297
+            },
+            {
+              "stat": "campBalance",
+              "category": "BALANCED",
+              "actualPercentile": 0
+            }
+          ]
+        },
         {
           "id": "talking_extreme_low",
           "title": "Le·a Fantôme",
           "emoji": "👻",
           "description": "Quasi muet·te",
           "stat": "talkingPer60Min",
-          "value": 833.7018989503125,
+          "value": 827.9877871691876,
           "percentile": 11.538461538461538,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -7207,7 +7143,7 @@
           "emoji": "🎯",
           "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 581.0771822711257,
+          "value": 577.0638125167826,
           "percentile": 3.8461538461538463,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -7219,7 +7155,7 @@
           "emoji": "🤷",
           "description": "Vote rarement",
           "stat": "votingAggressiveness",
-          "value": -11.397379912663759,
+          "value": -11.450216450216452,
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -7232,7 +7168,7 @@
           "emoji": "🧠",
           "description": "Attend avant de voter",
           "stat": "votingFirst",
-          "value": 28.35820895522388,
+          "value": 27.941176470588236,
           "percentile": 13.333333333333334,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -7240,25 +7176,12 @@
           "primaryOwner": "Kao"
         },
         {
-          "id": "killRate_extreme_low",
-          "title": "L'Agneau",
-          "emoji": "🐑",
-          "description": "Ne tue jamais",
-          "stat": "killRate",
-          "value": 0.2962962962962963,
-          "percentile": 10.81081081081081,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kissiffrote"
-        },
-        {
           "id": "winRate_low",
           "title": "Le·a Looser",
           "emoji": "😢",
           "description": "Taux de victoire faible",
           "stat": "winRate",
-          "value": 32.1,
+          "value": 32.5,
           "percentile": 16.216216216216218,
           "category": "LOW",
           "priority": 6,
@@ -7270,7 +7193,7 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 243,
+          "value": 246,
           "percentile": 72.97297297297297,
           "category": "HIGH",
           "priority": 6,
@@ -7282,7 +7205,7 @@
           "emoji": "🤡",
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
-          "value": 41.02564102564102,
+          "value": 41.40127388535032,
           "percentile": 18.91891891891892,
           "category": "LOW",
           "priority": 6,
@@ -7294,7 +7217,7 @@
           "emoji": "🐩",
           "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
-          "value": 23.809523809523807,
+          "value": 25,
           "percentile": 22.58064516129032,
           "category": "LOW",
           "priority": 6,
@@ -7318,9 +7241,21 @@
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 85.59670781893004,
+          "value": 85.77235772357723,
           "percentile": 78.37837837837837,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "killRate_low",
+          "title": "Le·a Doux·ce",
+          "emoji": "🕊️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.3089430894308943,
+          "percentile": 16.216216216216218,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -7340,7 +7275,7 @@
           "emoji": "👷",
           "description": "Récolte correcte",
           "stat": "lootPer60Min",
-          "value": 710.448928887078,
+          "value": 710.9122666868986,
           "percentile": 39.130434782608695,
           "category": "BELOW_AVERAGE",
           "priority": 4,
@@ -7348,35 +7283,45 @@
         }
       ],
       "primaryTitle": {
-        "id": "talkingOutsideMeeting_extreme_low",
-        "title": "Le·a Concentré·e",
-        "emoji": "🎯",
-        "description": "Silencieux·se hors meeting",
-        "stat": "talkingOutsidePer60Min",
-        "value": 581.0771822711257,
-        "percentile": 3.8461538461538463,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "enthusiaste",
+        "title": "L'Enthousiaste",
+        "emoji": "🌟",
+        "description": "Participe beaucoup et gagne autant dans chaque camp",
+        "priority": 10,
+        "type": "combination",
+        "percentile": 72.97297297297297,
+        "conditions": [
+          {
+            "stat": "gamesPlayed",
+            "category": "HIGH",
+            "actualValue": 246,
+            "actualPercentile": 72.97297297297297
+          },
+          {
+            "stat": "campBalance",
+            "category": "BALANCED",
+            "actualPercentile": 0
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
-          "value": 32.1,
+          "value": 32.5,
           "percentile": 16.216216216216218,
           "category": "LOW"
         },
         "gamesPlayed": {
-          "value": 243,
+          "value": 246,
           "percentile": 72.97297297297297,
           "category": "HIGH"
         },
         "winRateVillageois": {
-          "value": 41.02564102564102,
+          "value": 41.40127388535032,
           "percentile": 18.91891891891892,
           "category": "LOW"
         },
         "winRateLoup": {
-          "value": 23.809523809523807,
+          "value": 25,
           "percentile": 22.58064516129032,
           "category": "LOW"
         },
@@ -7386,47 +7331,47 @@
           "category": "BELOW_AVERAGE"
         },
         "campVillageoisPercent": {
-          "value": 64.19753086419753,
-          "percentile": 32.432432432432435,
+          "value": 63.82113821138211,
+          "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "campLoupPercent": {
-          "value": 17.28395061728395,
+          "value": 17.88617886178862,
           "percentile": 56.75675675675676,
           "category": "ABOVE_AVERAGE"
         },
         "campSoloPercent": {
-          "value": 18.51851851851852,
-          "percentile": 75.67567567567568,
+          "value": 18.29268292682927,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "talkingPer60Min": {
-          "value": 833.7018989503125,
+          "value": 827.9877871691876,
           "percentile": 11.538461538461538,
           "category": "EXTREME_LOW"
         },
         "talkingOutsidePer60Min": {
-          "value": 581.0771822711257,
+          "value": 577.0638125167826,
           "percentile": 3.8461538461538463,
           "category": "EXTREME_LOW"
         },
         "talkingDuringPer60Min": {
-          "value": 252.62471667918678,
-          "percentile": 42.30769230769231,
+          "value": 250.92397465240498,
+          "percentile": 38.46153846153847,
           "category": "BELOW_AVERAGE"
         },
         "votingAggressiveness": {
-          "value": -11.397379912663759,
+          "value": -11.450216450216452,
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW"
         },
         "votingAccuracy": {
-          "value": 84.92063492063492,
+          "value": 84.25196850393701,
           "percentile": 44.44444444444444,
           "category": "BELOW_AVERAGE"
         },
         "votingFirst": {
-          "value": 28.35820895522388,
+          "value": 27.941176470588236,
           "percentile": 13.333333333333334,
           "category": "EXTREME_LOW"
         },
@@ -7441,59 +7386,59 @@
           "category": "HIGH"
         },
         "survivalRate": {
-          "value": 29.218106995884774,
-          "percentile": 37.83783783783784,
+          "value": 29.67479674796748,
+          "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE"
         },
         "survivalDay1Rate": {
-          "value": 85.59670781893004,
+          "value": 85.77235772357723,
           "percentile": 78.37837837837837,
           "category": "HIGH"
         },
         "killRate": {
-          "value": 0.2962962962962963,
-          "percentile": 10.81081081081081,
-          "category": "EXTREME_LOW"
+          "value": 0.3089430894308943,
+          "percentile": 16.216216216216218,
+          "category": "LOW"
         },
         "lootPer60Min": {
-          "value": 710.448928887078,
+          "value": 710.9122666868986,
           "percentile": 39.130434782608695,
           "category": "BELOW_AVERAGE"
         },
         "lootVillageoisPer60Min": {
-          "value": 789.5036702951771,
+          "value": 790.7325371993476,
           "percentile": 52.17391304347826,
           "category": "AVERAGE"
         },
         "lootLoupPer60Min": {
-          "value": 506.8879900275208,
+          "value": 515.3893036721012,
           "percentile": 39.130434782608695,
           "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
-        "winRate": 32.1,
-        "gamesPlayed": 243,
-        "winRateVillageois": 41.02564102564102,
-        "winRateLoup": 23.809523809523807,
+        "winRate": 32.5,
+        "gamesPlayed": 246,
+        "winRateVillageois": 41.40127388535032,
+        "winRateLoup": 25,
         "winRateSolo": 8.88888888888889,
-        "campVillageoisPercent": 64.19753086419753,
-        "campLoupPercent": 17.28395061728395,
-        "campSoloPercent": 18.51851851851852,
-        "talkingPer60Min": 833.7018989503125,
-        "talkingOutsidePer60Min": 581.0771822711257,
-        "talkingDuringPer60Min": 252.62471667918678,
-        "votingAggressiveness": -11.397379912663759,
-        "votingAccuracy": 84.92063492063492,
-        "votingFirst": 28.35820895522388,
+        "campVillageoisPercent": 63.82113821138211,
+        "campLoupPercent": 17.88617886178862,
+        "campSoloPercent": 18.29268292682927,
+        "talkingPer60Min": 827.9877871691876,
+        "talkingOutsidePer60Min": 577.0638125167826,
+        "talkingDuringPer60Min": 250.92397465240498,
+        "votingAggressiveness": -11.450216450216452,
+        "votingAccuracy": 84.25196850393701,
+        "votingFirst": 27.941176470588236,
         "hunterGames": 13,
         "hunterAccuracy": 83.33333333333334,
-        "survivalRate": 29.218106995884774,
-        "survivalDay1Rate": 85.59670781893004,
-        "killRate": 0.2962962962962963,
-        "lootPer60Min": 710.448928887078,
-        "lootVillageoisPer60Min": 789.5036702951771,
-        "lootLoupPer60Min": 506.8879900275208
+        "survivalRate": 29.67479674796748,
+        "survivalDay1Rate": 85.77235772357723,
+        "killRate": 0.3089430894308943,
+        "lootPer60Min": 710.9122666868986,
+        "lootVillageoisPer60Min": 790.7325371993476,
+        "lootLoupPer60Min": 515.3893036721012
       }
     },
     "76561198076015877": {
@@ -7555,19 +7500,6 @@
           "type": "basic"
         },
         {
-          "id": "votingAccuracy_extreme_low",
-          "title": "L'Aveugle",
-          "emoji": "🙈",
-          "description": "Mauvais instinct de vote",
-          "stat": "votingAccuracy",
-          "value": 79.43925233644859,
-          "percentile": 13.88888888888889,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Kyria"
-        },
-        {
           "id": "hunterAccuracy_extreme_low",
           "title": "Le·a Chasseur·se Maudit·e",
           "emoji": "💔",
@@ -7577,8 +7509,7 @@
           "percentile": 11.11111111111111,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Miraaaaaah"
+          "type": "basic"
         },
         {
           "id": "survival_extreme_low",
@@ -7649,6 +7580,18 @@
           "stat": "talkingDuringPer60Min",
           "value": 225.65142293694547,
           "percentile": 23.076923076923077,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 79.43925233644859,
+          "percentile": 16.666666666666664,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -7823,13 +7766,13 @@
         },
         "votingAggressiveness": {
           "value": -3.15625,
-          "percentile": 35.13513513513514,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "votingAccuracy": {
           "value": 79.43925233644859,
-          "percentile": 13.88888888888889,
-          "category": "EXTREME_LOW"
+          "percentile": 16.666666666666664,
+          "category": "LOW"
         },
         "votingFirst": {
           "value": 48.80952380952381,
@@ -7986,7 +7929,7 @@
           "description": "Taux de victoire faible",
           "stat": "winRate",
           "value": 36.4,
-          "percentile": 32.432432432432435,
+          "percentile": 29.72972972972973,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -8080,7 +8023,7 @@
           "description": "Temps de parole normal",
           "stat": "talkingPer60Min",
           "value": 1074.1689118644056,
-          "percentile": 57.692307692307686,
+          "percentile": 61.53846153846154,
           "category": "ABOVE_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -8112,7 +8055,7 @@
       "percentiles": {
         "winRate": {
           "value": 36.4,
-          "percentile": 32.432432432432435,
+          "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "gamesPlayed": {
@@ -8142,7 +8085,7 @@
         },
         "campLoupPercent": {
           "value": 19.1358024691358,
-          "percentile": 70.27027027027027,
+          "percentile": 72.97297297297297,
           "category": "HIGH"
         },
         "campSoloPercent": {
@@ -8152,7 +8095,7 @@
         },
         "talkingPer60Min": {
           "value": 1074.1689118644056,
-          "percentile": 57.692307692307686,
+          "percentile": 61.53846153846154,
           "category": "ABOVE_AVERAGE"
         },
         "talkingOutsidePer60Min": {
@@ -8192,8 +8135,8 @@
         },
         "survivalRate": {
           "value": 32.71604938271605,
-          "percentile": 56.75675675675676,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 54.054054054054056,
+          "category": "AVERAGE"
         },
         "survivalDay1Rate": {
           "value": 84.5679012345679,
@@ -8490,7 +8433,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Poachimpa"
+          "primaryOwner": "Kissiffrote"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -8504,6 +8447,19 @@
           "priority": 8,
           "type": "basic",
           "primaryOwner": "Raumane"
+        },
+        {
+          "id": "killRate_extreme_low",
+          "title": "L'Agneau",
+          "emoji": "🐑",
+          "description": "Ne tue jamais",
+          "stat": "killRate",
+          "value": 0.30303030303030304,
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "Miraaaaaah"
         },
         {
           "id": "winRate_low",
@@ -8578,18 +8534,6 @@
           "type": "basic"
         },
         {
-          "id": "killRate_low",
-          "title": "Le·a Doux·ce",
-          "emoji": "🕊️",
-          "description": "Taux de kills faible",
-          "stat": "killRate",
-          "value": 0.30303030303030304,
-          "percentile": 16.216216216216218,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "campBalance_balanced",
           "title": "Le·a Polyvalent·e",
           "emoji": "🎭",
@@ -8640,7 +8584,7 @@
         },
         "campLoupPercent": {
           "value": 15.151515151515152,
-          "percentile": 27.027027027027028,
+          "percentile": 24.324324324324326,
           "category": "LOW"
         },
         "campSoloPercent": {
@@ -8675,8 +8619,8 @@
         },
         "killRate": {
           "value": 0.30303030303030304,
-          "percentile": 16.216216216216218,
-          "category": "LOW"
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -8846,7 +8790,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Kissiffrote"
+          "primaryOwner": "Miraaaaaah"
         },
         {
           "id": "lootLoup_extreme_low",
@@ -8997,8 +8941,8 @@
         },
         "campSoloPercent": {
           "value": 16.3265306122449,
-          "percentile": 32.432432432432435,
-          "category": "LOW"
+          "percentile": 35.13513513513514,
+          "category": "BELOW_AVERAGE"
         },
         "talkingPer60Min": {
           "value": 944.0978534032319,
@@ -9087,7 +9031,7 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "gamesPlayed": 26,
+      "gamesPlayed": 29,
       "titles": [
         {
           "id": "participation_extreme_low",
@@ -9095,12 +9039,24 @@
           "emoji": "🎲",
           "description": "Joue peu de parties",
           "stat": "gamesPlayed",
-          "value": 26,
-          "percentile": 0,
+          "value": 29,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRateSolo_extreme_high",
+          "title": "L'Électron Libre",
+          "emoji": "🦊",
+          "description": "Excellent·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 22.22222222222222,
+          "percentile": 91.8918918918919,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
           "type": "basic",
-          "primaryOwner": "Poachimpa"
+          "primaryOwner": "Deujna"
         },
         {
           "id": "talking_extreme_low",
@@ -9108,7 +9064,7 @@
           "emoji": "👻",
           "description": "Quasi muet·te",
           "stat": "talkingPer60Min",
-          "value": 790.8027577025682,
+          "value": 795.9407323799114,
           "percentile": 3.8461538461538463,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -9121,12 +9077,11 @@
           "emoji": "🎯",
           "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 583.964855933216,
+          "value": 592.3027742886151,
           "percentile": 7.6923076923076925,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Mathy"
+          "type": "basic"
         },
         {
           "id": "talkingDuringMeeting_extreme_low",
@@ -9134,7 +9089,7 @@
           "emoji": "🤐",
           "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 206.83790176935236,
+          "value": 203.63795809129627,
           "percentile": 11.538461538461538,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -9146,11 +9101,12 @@
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 88.46153846153845,
-          "percentile": 91.8918918918919,
+          "value": 89.65517241379311,
+          "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Baout"
         },
         {
           "id": "killRate_extreme_low",
@@ -9158,11 +9114,12 @@
           "emoji": "🐑",
           "description": "Ne tue jamais",
           "stat": "killRate",
-          "value": 0.19230769230769232,
-          "percentile": 2.7027027027027026,
+          "value": 0.27586206896551724,
+          "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Miraaaaaah"
         },
         {
           "id": "loot_extreme_low",
@@ -9170,8 +9127,8 @@
           "emoji": "📸",
           "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
-          "value": 542.1072351408001,
-          "percentile": 8.695652173913043,
+          "value": 525.8087471567633,
+          "percentile": 4.3478260869565215,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -9182,21 +9139,21 @@
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 484.8350055491482,
+          "value": 466.97045890405707,
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
         {
-          "id": "winRate_low",
-          "title": "Le·a Looser",
-          "emoji": "😢",
-          "description": "Taux de victoire faible",
-          "stat": "winRate",
-          "value": 34.6,
-          "percentile": 24.324324324324326,
-          "category": "LOW",
+          "id": "winRateVillageois_high",
+          "title": "Le·a Protecteur·rice du Village",
+          "emoji": "🦸",
+          "description": "Excellent·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 53.333333333333336,
+          "percentile": 70.27027027027027,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -9206,9 +9163,33 @@
           "emoji": "🧘",
           "description": "Voteur·se passif·ve",
           "stat": "votingAggressiveness",
-          "value": -7.916666666666664,
-          "percentile": 18.91891891891892,
+          "value": -7.407407407407412,
+          "percentile": 21.62162162162162,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_high",
+          "title": "Le·a Flaireur·se",
+          "emoji": "👃",
+          "description": "Bon instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 87.5,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "survival_high",
+          "title": "Le·a Survivant·e",
+          "emoji": "🛡️",
+          "description": "Survie élevée fin de game",
+          "stat": "survivalRate",
+          "value": 37.93103448275862,
+          "percentile": 67.56756756756756,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -9218,8 +9199,8 @@
           "emoji": "😤",
           "description": "Faible récolte en Loup",
           "stat": "lootLoupPer60Min",
-          "value": 470.36877716178674,
-          "percentile": 30.434782608695656,
+          "value": 443.53252808802415,
+          "percentile": 21.73913043478261,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -9233,15 +9214,27 @@
           "category": "BALANCED",
           "priority": 6,
           "type": "campBalance"
+        },
+        {
+          "id": "winRate_above_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 41.4,
+          "percentile": 56.75675675675676,
+          "category": "ABOVE_AVERAGE",
+          "priority": 4,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "killRate_extreme_low",
-        "title": "L'Agneau",
-        "emoji": "🐑",
-        "description": "Ne tue jamais",
-        "stat": "killRate",
-        "value": 0.19230769230769232,
+        "id": "participation_extreme_low",
+        "title": "Le·a Occasionnel·le",
+        "emoji": "🎲",
+        "description": "Joue peu de parties",
+        "stat": "gamesPlayed",
+        "value": 29,
         "percentile": 2.7027027027027026,
         "category": "EXTREME_LOW",
         "priority": 8,
@@ -9249,122 +9242,122 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 34.6,
-          "percentile": 24.324324324324326,
-          "category": "LOW"
-        },
-        "gamesPlayed": {
-          "value": 26,
-          "percentile": 0,
-          "category": "EXTREME_LOW"
-        },
-        "winRateVillageois": {
-          "value": 50,
+          "value": 41.4,
           "percentile": 56.75675675675676,
           "category": "ABOVE_AVERAGE"
         },
+        "gamesPlayed": {
+          "value": 29,
+          "percentile": 2.7027027027027026,
+          "category": "EXTREME_LOW"
+        },
+        "winRateVillageois": {
+          "value": 53.333333333333336,
+          "percentile": 70.27027027027027,
+          "category": "HIGH"
+        },
         "winRateSolo": {
-          "value": 12.5,
-          "percentile": 59.45945945945946,
-          "category": "ABOVE_AVERAGE"
+          "value": 22.22222222222222,
+          "percentile": 91.8918918918919,
+          "category": "EXTREME_HIGH"
         },
         "campVillageoisPercent": {
-          "value": 53.84615384615385,
-          "percentile": 8.108108108108109,
+          "value": 51.724137931034484,
+          "percentile": 5.405405405405405,
           "category": "EXTREME_LOW"
         },
         "campLoupPercent": {
-          "value": 15.384615384615385,
-          "percentile": 29.72972972972973,
-          "category": "LOW"
+          "value": 17.24137931034483,
+          "percentile": 51.35135135135135,
+          "category": "AVERAGE"
         },
         "campSoloPercent": {
-          "value": 30.76923076923077,
+          "value": 31.03448275862069,
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH"
         },
         "talkingPer60Min": {
-          "value": 790.8027577025682,
+          "value": 795.9407323799114,
           "percentile": 3.8461538461538463,
           "category": "EXTREME_LOW"
         },
         "talkingOutsidePer60Min": {
-          "value": 583.964855933216,
+          "value": 592.3027742886151,
           "percentile": 7.6923076923076925,
           "category": "EXTREME_LOW"
         },
         "talkingDuringPer60Min": {
-          "value": 206.83790176935236,
+          "value": 203.63795809129627,
           "percentile": 11.538461538461538,
           "category": "EXTREME_LOW"
         },
         "votingAggressiveness": {
-          "value": -7.916666666666664,
-          "percentile": 18.91891891891892,
+          "value": -7.407407407407412,
+          "percentile": 21.62162162162162,
           "category": "LOW"
         },
         "votingAccuracy": {
-          "value": 85.71428571428571,
-          "percentile": 55.55555555555556,
-          "category": "ABOVE_AVERAGE"
+          "value": 87.5,
+          "percentile": 66.66666666666666,
+          "category": "HIGH"
         },
         "votingFirst": {
-          "value": 35.714285714285715,
-          "percentile": 36.666666666666664,
-          "category": "BELOW_AVERAGE"
+          "value": 43.75,
+          "percentile": 56.666666666666664,
+          "category": "ABOVE_AVERAGE"
         },
         "survivalRate": {
-          "value": 30.76923076923077,
-          "percentile": 45.94594594594595,
-          "category": "AVERAGE"
+          "value": 37.93103448275862,
+          "percentile": 67.56756756756756,
+          "category": "HIGH"
         },
         "survivalDay1Rate": {
-          "value": 88.46153846153845,
-          "percentile": 91.8918918918919,
+          "value": 89.65517241379311,
+          "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH"
         },
         "killRate": {
-          "value": 0.19230769230769232,
-          "percentile": 2.7027027027027026,
+          "value": 0.27586206896551724,
+          "percentile": 8.108108108108109,
           "category": "EXTREME_LOW"
         },
         "lootPer60Min": {
-          "value": 542.1072351408001,
-          "percentile": 8.695652173913043,
+          "value": 525.8087471567633,
+          "percentile": 4.3478260869565215,
           "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 484.8350055491482,
+          "value": 466.97045890405707,
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "lootLoupPer60Min": {
-          "value": 470.36877716178674,
-          "percentile": 30.434782608695656,
+          "value": 443.53252808802415,
+          "percentile": 21.73913043478261,
           "category": "LOW"
         }
       },
       "stats": {
-        "winRate": 34.6,
-        "gamesPlayed": 26,
-        "winRateVillageois": 50,
+        "winRate": 41.4,
+        "gamesPlayed": 29,
+        "winRateVillageois": 53.333333333333336,
         "winRateLoup": null,
-        "winRateSolo": 12.5,
-        "campVillageoisPercent": 53.84615384615385,
-        "campLoupPercent": 15.384615384615385,
-        "campSoloPercent": 30.76923076923077,
-        "talkingPer60Min": 790.8027577025682,
-        "talkingOutsidePer60Min": 583.964855933216,
-        "talkingDuringPer60Min": 206.83790176935236,
-        "votingAggressiveness": -7.916666666666664,
-        "votingAccuracy": 85.71428571428571,
-        "votingFirst": 35.714285714285715,
-        "survivalRate": 30.76923076923077,
-        "survivalDay1Rate": 88.46153846153845,
-        "killRate": 0.19230769230769232,
-        "lootPer60Min": 542.1072351408001,
-        "lootVillageoisPer60Min": 484.8350055491482,
-        "lootLoupPer60Min": 470.36877716178674
+        "winRateSolo": 22.22222222222222,
+        "campVillageoisPercent": 51.724137931034484,
+        "campLoupPercent": 17.24137931034483,
+        "campSoloPercent": 31.03448275862069,
+        "talkingPer60Min": 795.9407323799114,
+        "talkingOutsidePer60Min": 592.3027742886151,
+        "talkingDuringPer60Min": 203.63795809129627,
+        "votingAggressiveness": -7.407407407407412,
+        "votingAccuracy": 87.5,
+        "votingFirst": 43.75,
+        "survivalRate": 37.93103448275862,
+        "survivalDay1Rate": 89.65517241379311,
+        "killRate": 0.27586206896551724,
+        "lootPer60Min": 525.8087471567633,
+        "lootVillageoisPer60Min": 466.97045890405707,
+        "lootLoupPer60Min": 443.53252808802415
       }
     },
     "76561198155130320": {
@@ -9474,7 +9467,7 @@
           "description": "Excellent·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 14.285714285714285,
-          "percentile": 72.97297297297297,
+          "percentile": 70.27027027027027,
           "category": "HIGH",
           "priority": 6,
           "type": "basic",
@@ -9621,7 +9614,7 @@
         },
         "winRateSolo": {
           "value": 14.285714285714285,
-          "percentile": 72.97297297297297,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "campVillageoisPercent": {
@@ -9676,7 +9669,7 @@
         },
         "survivalDay1Rate": {
           "value": 78.18181818181819,
-          "percentile": 35.13513513513514,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "killRate": {
@@ -9735,13 +9728,13 @@
           "description": "Peine en victoire, survie et récolte",
           "priority": 19,
           "type": "combination",
-          "percentile": 23.305914610262437,
+          "percentile": 22.405013709361537,
           "conditions": [
             {
               "stat": "winRate",
               "category": "LOW",
               "actualValue": 35.1,
-              "actualPercentile": 27.027027027027028
+              "actualPercentile": 24.324324324324326
             },
             {
               "stat": "survival",
@@ -9864,7 +9857,7 @@
           "description": "Taux de victoire faible",
           "stat": "winRate",
           "value": 35.1,
-          "percentile": 27.027027027027028,
+          "percentile": 24.324324324324326,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -9924,7 +9917,7 @@
           "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
           "value": 310.3247871162214,
-          "percentile": 69.23076923076923,
+          "percentile": 65.38461538461539,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -9983,13 +9976,13 @@
         "description": "Peine en victoire, survie et récolte",
         "priority": 19,
         "type": "combination",
-        "percentile": 23.305914610262437,
+        "percentile": 22.405013709361537,
         "conditions": [
           {
             "stat": "winRate",
             "category": "LOW",
             "actualValue": 35.1,
-            "actualPercentile": 27.027027027027028
+            "actualPercentile": 24.324324324324326
           },
           {
             "stat": "survival",
@@ -10008,7 +10001,7 @@
       "percentiles": {
         "winRate": {
           "value": 35.1,
-          "percentile": 27.027027027027028,
+          "percentile": 24.324324324324326,
           "category": "LOW"
         },
         "gamesPlayed": {
@@ -10033,12 +10026,12 @@
         },
         "campVillageoisPercent": {
           "value": 67.54385964912281,
-          "percentile": 67.56756756756756,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "campLoupPercent": {
           "value": 15.789473684210526,
-          "percentile": 32.432432432432435,
+          "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "campSoloPercent": {
@@ -10058,7 +10051,7 @@
         },
         "talkingDuringPer60Min": {
           "value": 310.3247871162214,
-          "percentile": 69.23076923076923,
+          "percentile": 65.38461538461539,
           "category": "HIGH"
         },
         "votingAggressiveness": {
@@ -10192,7 +10185,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Poachimpa"
+          "primaryOwner": "Kissiffrote"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -10230,8 +10223,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Mathy"
+          "type": "basic"
         },
         {
           "id": "talkingDuringMeeting_extreme_low",
@@ -10294,7 +10286,8 @@
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Baout"
         },
         {
           "id": "lootLoup_extreme_low",
@@ -10373,7 +10366,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.9,
-          "percentile": 51.35135135135135,
+          "percentile": 48.64864864864865,
           "category": "AVERAGE",
           "priority": 3,
           "type": "basic"
@@ -10405,7 +10398,7 @@
       "percentiles": {
         "winRate": {
           "value": 38.9,
-          "percentile": 51.35135135135135,
+          "percentile": 48.64864864864865,
           "category": "AVERAGE"
         },
         "gamesPlayed": {
@@ -10435,7 +10428,7 @@
         },
         "campSoloPercent": {
           "value": 19.444444444444446,
-          "percentile": 81.08108108108108,
+          "percentile": 78.37837837837837,
           "category": "HIGH"
         },
         "talkingPer60Min": {
@@ -10525,7 +10518,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "gamesPlayed": 98,
+      "gamesPlayed": 100,
       "titles": [
         {
           "id": "winRate_extreme_low",
@@ -10533,7 +10526,7 @@
           "emoji": "🪦",
           "description": "Perd presque toujours",
           "stat": "winRate",
-          "value": 29.6,
+          "value": 30,
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -10545,11 +10538,24 @@
           "emoji": "🤡",
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
-          "value": 33.33333333333333,
+          "value": 33.84615384615385,
           "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
+        },
+        {
+          "id": "votingAccuracy_extreme_low",
+          "title": "L'Aveugle",
+          "emoji": "🙈",
+          "description": "Mauvais instinct de vote",
+          "stat": "votingAccuracy",
+          "value": 78.43137254901961,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "Kyria"
         },
         {
           "id": "survival_extreme_low",
@@ -10557,7 +10563,7 @@
           "emoji": "🎯",
           "description": "Meurt souvent",
           "stat": "survivalRate",
-          "value": 23.46938775510204,
+          "value": 23,
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -10569,8 +10575,8 @@
           "emoji": "📸",
           "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
-          "value": 529.884266547497,
-          "percentile": 4.3478260869565215,
+          "value": 525.1474739207749,
+          "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -10581,7 +10587,7 @@
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 567.6724213927243,
+          "value": 558.5565236046837,
           "percentile": 8.695652173913043,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -10617,7 +10623,7 @@
           "emoji": "🤐",
           "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 250.87332812593237,
+          "value": 247.34343029087702,
           "percentile": 34.61538461538461,
           "category": "LOW",
           "priority": 6,
@@ -10629,20 +10635,8 @@
           "emoji": "🧘",
           "description": "Voteur·se passif·ve",
           "stat": "votingAggressiveness",
-          "value": -8.362573099415203,
+          "value": -8.218390804597709,
           "percentile": 16.216216216216218,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "votingAccuracy_low",
-          "title": "L'Aveugle",
-          "emoji": "🙈",
-          "description": "Mauvais instinct de vote",
-          "stat": "votingAccuracy",
-          "value": 80,
-          "percentile": 19.444444444444446,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -10653,8 +10647,8 @@
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 85.71428571428571,
-          "percentile": 81.08108108108108,
+          "value": 86,
+          "percentile": 83.78378378378379,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -10675,7 +10669,7 @@
           "emoji": "⚖️",
           "description": "Temps de parole normal",
           "stat": "talkingPer60Min",
-          "value": 998.1573023018889,
+          "value": 997.948922786188,
           "percentile": 46.15384615384615,
           "category": "AVERAGE",
           "priority": 3,
@@ -10688,7 +10682,7 @@
         "emoji": "🤡",
         "description": "Mauvais·e en camp Villageois",
         "stat": "winRateVillageois",
-        "value": 33.33333333333333,
+        "value": 33.84615384615385,
         "percentile": 2.7027027027027026,
         "category": "EXTREME_LOW",
         "priority": 8,
@@ -10696,17 +10690,17 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 29.6,
+          "value": 30,
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW"
         },
         "gamesPlayed": {
-          "value": 98,
+          "value": 100,
           "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE"
         },
         "winRateVillageois": {
-          "value": 33.33333333333333,
+          "value": 33.84615384615385,
           "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW"
         },
@@ -10721,72 +10715,72 @@
           "category": "BELOW_AVERAGE"
         },
         "campVillageoisPercent": {
-          "value": 64.28571428571429,
+          "value": 65,
           "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
-          "value": 19.387755102040817,
-          "percentile": 75.67567567567568,
+          "value": 19,
+          "percentile": 67.56756756756756,
           "category": "HIGH"
         },
         "campSoloPercent": {
-          "value": 16.3265306122449,
-          "percentile": 32.432432432432435,
+          "value": 16,
+          "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "talkingPer60Min": {
-          "value": 998.1573023018889,
+          "value": 997.948922786188,
           "percentile": 46.15384615384615,
           "category": "AVERAGE"
         },
         "talkingOutsidePer60Min": {
-          "value": 747.2839741759565,
+          "value": 750.605492495311,
           "percentile": 53.84615384615385,
           "category": "AVERAGE"
         },
         "talkingDuringPer60Min": {
-          "value": 250.87332812593237,
+          "value": 247.34343029087702,
           "percentile": 34.61538461538461,
           "category": "LOW"
         },
         "votingAggressiveness": {
-          "value": -8.362573099415203,
+          "value": -8.218390804597709,
           "percentile": 16.216216216216218,
           "category": "LOW"
         },
         "votingAccuracy": {
-          "value": 80,
-          "percentile": 19.444444444444446,
-          "category": "LOW"
+          "value": 78.43137254901961,
+          "percentile": 8.333333333333332,
+          "category": "EXTREME_LOW"
         },
         "votingFirst": {
-          "value": 45.45454545454545,
+          "value": 44.642857142857146,
           "percentile": 63.33333333333333,
           "category": "ABOVE_AVERAGE"
         },
         "survivalRate": {
-          "value": 23.46938775510204,
+          "value": 23,
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW"
         },
         "survivalDay1Rate": {
-          "value": 85.71428571428571,
-          "percentile": 81.08108108108108,
+          "value": 86,
+          "percentile": 83.78378378378379,
           "category": "HIGH"
         },
         "killRate": {
-          "value": 0.37755102040816324,
+          "value": 0.37,
           "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE"
         },
         "lootPer60Min": {
-          "value": 529.884266547497,
-          "percentile": 4.3478260869565215,
+          "value": 525.1474739207749,
+          "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 567.6724213927243,
+          "value": 558.5565236046837,
           "percentile": 8.695652173913043,
           "category": "EXTREME_LOW"
         },
@@ -10797,25 +10791,25 @@
         }
       },
       "stats": {
-        "winRate": 29.6,
-        "gamesPlayed": 98,
-        "winRateVillageois": 33.33333333333333,
+        "winRate": 30,
+        "gamesPlayed": 100,
+        "winRateVillageois": 33.84615384615385,
         "winRateLoup": 36.84210526315789,
         "winRateSolo": 6.25,
-        "campVillageoisPercent": 64.28571428571429,
-        "campLoupPercent": 19.387755102040817,
-        "campSoloPercent": 16.3265306122449,
-        "talkingPer60Min": 998.1573023018889,
-        "talkingOutsidePer60Min": 747.2839741759565,
-        "talkingDuringPer60Min": 250.87332812593237,
-        "votingAggressiveness": -8.362573099415203,
-        "votingAccuracy": 80,
-        "votingFirst": 45.45454545454545,
-        "survivalRate": 23.46938775510204,
-        "survivalDay1Rate": 85.71428571428571,
-        "killRate": 0.37755102040816324,
-        "lootPer60Min": 529.884266547497,
-        "lootVillageoisPer60Min": 567.6724213927243,
+        "campVillageoisPercent": 65,
+        "campLoupPercent": 19,
+        "campSoloPercent": 16,
+        "talkingPer60Min": 997.948922786188,
+        "talkingOutsidePer60Min": 750.605492495311,
+        "talkingDuringPer60Min": 247.34343029087702,
+        "votingAggressiveness": -8.218390804597709,
+        "votingAccuracy": 78.43137254901961,
+        "votingFirst": 44.642857142857146,
+        "survivalRate": 23,
+        "survivalDay1Rate": 86,
+        "killRate": 0.37,
+        "lootPer60Min": 525.1474739207749,
+        "lootVillageoisPer60Min": 558.5565236046837,
         "lootLoupPer60Min": 390.2295282095537
       }
     },
@@ -10877,7 +10871,7 @@
           "description": "Bruyant·e et actif·ve mais se trompe de cible",
           "priority": 11,
           "type": "combination",
-          "percentile": 70.96519596519597,
+          "percentile": 71.8911218911219,
           "conditions": [
             {
               "stat": "talking",
@@ -10895,7 +10889,7 @@
               "stat": "votingAccuracy",
               "category": "LOW",
               "actualValue": 80,
-              "actualPercentile": 19.444444444444446
+              "actualPercentile": 22.22222222222222
             }
           ]
         },
@@ -10906,7 +10900,7 @@
           "description": "Parle beaucoup mais vote mal",
           "priority": 10,
           "type": "combination",
-          "percentile": 57.7991452991453,
+          "percentile": 59.188034188034194,
           "conditions": [
             {
               "stat": "talking",
@@ -10918,7 +10912,7 @@
               "stat": "votingAccuracy",
               "category": "LOW",
               "actualValue": 80,
-              "actualPercentile": 19.444444444444446
+              "actualPercentile": 22.22222222222222
             }
           ]
         },
@@ -11028,7 +11022,7 @@
           "description": "Mauvais instinct de vote",
           "stat": "votingAccuracy",
           "value": 80,
-          "percentile": 19.444444444444446,
+          "percentile": 22.22222222222222,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -11142,12 +11136,12 @@
         },
         "votingAccuracy": {
           "value": 80,
-          "percentile": 19.444444444444446,
+          "percentile": 22.22222222222222,
           "category": "LOW"
         },
         "votingFirst": {
           "value": 39.130434782608695,
-          "percentile": 53.333333333333336,
+          "percentile": 50,
           "category": "AVERAGE"
         },
         "survivalRate": {
@@ -11235,10 +11229,11 @@
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
           "value": 88.88888888888889,
-          "percentile": 94.5945945945946,
+          "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Baout"
         },
         {
           "id": "loot_extreme_low",
@@ -11247,7 +11242,7 @@
           "description": "Ne récolte jamais",
           "stat": "lootPer60Min",
           "value": 529.7117917400603,
-          "percentile": 0,
+          "percentile": 8.695652173913043,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -11319,7 +11314,7 @@
           "description": "Premier·ère voteur·se",
           "stat": "votingFirst",
           "value": 52.083333333333336,
-          "percentile": 80,
+          "percentile": 83.33333333333334,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -11377,7 +11372,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 37,
-          "percentile": 40.54054054054054,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -11398,7 +11393,7 @@
       "percentiles": {
         "winRate": {
           "value": 37,
-          "percentile": 40.54054054054054,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
@@ -11428,8 +11423,8 @@
         },
         "campLoupPercent": {
           "value": 16.666666666666664,
-          "percentile": 45.94594594594595,
-          "category": "AVERAGE"
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE"
         },
         "campSoloPercent": {
           "value": 11.11111111111111,
@@ -11463,7 +11458,7 @@
         },
         "votingFirst": {
           "value": 52.083333333333336,
-          "percentile": 80,
+          "percentile": 83.33333333333334,
           "category": "HIGH"
         },
         "survivalRate": {
@@ -11473,7 +11468,7 @@
         },
         "survivalDay1Rate": {
           "value": 88.88888888888889,
-          "percentile": 94.5945945945946,
+          "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH"
         },
         "killRate": {
@@ -11483,7 +11478,7 @@
         },
         "lootPer60Min": {
           "value": 529.7117917400603,
-          "percentile": 0,
+          "percentile": 8.695652173913043,
           "category": "EXTREME_LOW"
         },
         "lootVillageoisPer60Min": {
