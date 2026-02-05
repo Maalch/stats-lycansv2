@@ -129,6 +129,7 @@ export function ActionMetaStatsChart() {
                 type="number"
                 label={{ value: 'Différence du taux de victoire (%)', position: 'bottom', style: { textAnchor: 'middle' } }}
                 domain={[-20, 20]}
+                tickFormatter={(value) => Math.round(value).toString()}
               />
               <YAxis 
                 type="category"
@@ -204,6 +205,7 @@ export function ActionMetaStatsChart() {
                 type="number"
                 label={{ value: 'Différence du taux de victoire (%)', position: 'bottom', style: { textAnchor: 'middle' } }}
                 domain={[-20, 20]}
+                tickFormatter={(value) => Math.round(value).toString()}
               />
               <YAxis 
                 type="category"
@@ -273,7 +275,7 @@ export function ActionMetaStatsChart() {
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
               <XAxis 
                 dataKey="timing"
-                label={{ value: 'Timing de première transformation', position: 'bottom', offset: -10 }}
+                label={{ value: 'Timing de première transformation', position: 'bottom', offset: 0 }}
               />
               <YAxis 
                 label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
