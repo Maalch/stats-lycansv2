@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.3';
+export const APP_VERSION = '1.7.4';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.4',
+    date: '05/02/2026',
+    description: 'Ajout de statistiques sur les Actions en parties moddées (impact des gadgets, potions et timing de transformation des loups) dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'actionMeta',
+      text: 'Stats Parties / Actions (Gadgets & Potions)'
+    }
+  },
   {
     version: 'v1.7.3',
     date: '03/02/2026',

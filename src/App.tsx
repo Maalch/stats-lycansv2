@@ -36,6 +36,7 @@ const GlobalVotingStatsChart = lazy(() => import('./components/generalstats/Glob
 const RolesStatsChart = lazy(() => import('./components/generalstats/RolesStatsChart').then(m => ({ default: m.RolesStatsChart })));
 const TeamCompositionChart = lazy(() => import('./components/generalstats/TeamCompositionChart').then(m => ({ default: m.TeamCompositionChart })));
 const GlobalGameHistoryChart = lazy(() => import('./components/generalstats/GlobalGameHistoryChart').then(m => ({ default: m.GlobalGameHistoryChart })));
+const ActionMetaStatsChart = lazy(() => import('./components/generalstats/ActionMetaStatsChart').then(m => ({ default: m.ActionMetaStatsChart })));
 
 const BRParticipationsChart = lazy(() => import('./components/brstats/BRParticipationsChart').then(m => ({ default: m.BRParticipationsChart })));
 const BRWinRateChart = lazy(() => import('./components/brstats/BRWinRateChart').then(m => ({ default: m.BRWinRateChart })));
@@ -185,6 +186,12 @@ const GENERAL_STATS_MENU = [
     description: 'Statistiques générales des rôles et pouvoirs'
   },
   { 
+    key: 'actionMeta', 
+    label: 'Actions', 
+    component: ActionMetaStatsChart,
+    description: 'Analyse méta des actions (gadgets, potions, transformations)'
+  },
+  { 
     key: 'teamComposition',
     label: 'Compositions',
     component: TeamCompositionChart,
@@ -227,6 +234,7 @@ const GENERAL_STATS_MENU = [
     component: ColorStatisticsChart,
     description: 'Statistiques sur les couleurs des joueurs'
   },
+
 ];
 
 const BR_STATS_MENU = [
