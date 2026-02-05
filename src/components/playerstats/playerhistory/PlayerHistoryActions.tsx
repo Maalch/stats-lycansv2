@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
@@ -57,6 +57,8 @@ interface ActionStatistics {
   gadgetDetails: GadgetStat[];
   potionDetails: PotionStat[];
   hunterTargets: { target: string; count: number }[];
+  hunterMissedShots: number;
+  hunterTotalShots: number;
   transformationsPerGame: number;
   totalGamesWithActions: number;
   totalGamesPlayed: number;
@@ -76,6 +78,8 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
         gadgetDetails: [],
         potionDetails: [],
         hunterTargets: [],
+        hunterMissedShots: 0,
+        hunterTotalShots: 0,
         transformationsPerGame: 0,
         totalGamesWithActions: 0,
         totalGamesPlayed: 0,
@@ -118,7 +122,7 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
           actionTypeCountsMap.HunterShoot++;
           gameHasTrackedActions = true;
           
-          // Track hunter targets
+          // Track hunter targets (successful shots)
           if (action.ActionTarget) {
             hunterTargetsMap[action.ActionTarget] = (hunterTargetsMap[action.ActionTarget] || 0) + 1;
           }
@@ -175,6 +179,11 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       .sort((a, b) => b.count - a.count)
       .slice(0, CHART_LIMITS.TOP_10);
 
+    // Calculate hunter shot statistics
+    const hunterTotalShots = actionTypeCountsMap.HunterShoot;
+    const hunterSuccessfulShots = Object.values(hunterTargetsMap).reduce((sum, count) => sum + count, 0);
+    const hunterMissedShots = hunterTotalShots - hunterSuccessfulShots;
+
     // Calculate average transformations per game (for wolf games)
     const totalTransforms = actionTypeCountsMap.Transform;
     const gamesWithTransforms = totalTransforms > 0 
@@ -197,6 +206,8 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       gadgetDetails,
       potionDetails,
       hunterTargets,
+      hunterMissedShots,
+      hunterTotalShots,
       transformationsPerGame,
       totalGamesWithActions,
       totalGamesPlayed,
@@ -259,58 +270,6 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
           </div>
         )}
       </div>
-
-      {/* Action Types Overview - Pie Chart */}
-      {actionStatistics.actionTypeCounts.length > 0 && (
-        <div className="lycans-graphique-section">
-          <h3>Répartition des Types d'Actions</h3>
-          <FullscreenChart title="Répartition des Types d'Actions">
-            <div style={{ height: 400 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={actionStatistics.actionTypeCounts}
-                    dataKey="count"
-                    nameKey="label"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={120}
-                    label={(entry: any) => {
-                      const pct = entry.percent !== undefined ? entry.percent : 0;
-                      return `${entry.label}: ${entry.count} (${(pct * 100).toFixed(0)}%)`;
-                    }}
-                    labelLine={true}
-                  >
-                    {actionStatistics.actionTypeCounts.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length > 0) {
-                        const dataPoint = payload[0].payload;
-                        return (
-                          <div style={{ 
-                            background: 'var(--bg-secondary)', 
-                            color: 'var(--text-primary)', 
-                            padding: 12, 
-                            borderRadius: 8,
-                            border: '1px solid var(--border-color)'
-                          }}>
-                            <div><strong>{dataPoint.label}</strong></div>
-                            <div>{dataPoint.count} fois</div>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </FullscreenChart>
-        </div>
-      )}
 
       {/* Gadget Details Bar Chart */}
       {actionStatistics.gadgetDetails.length > 0 && (
@@ -431,10 +390,49 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       )}
 
       {/* Hunter Targets Bar Chart */}
-      {actionStatistics.hunterTargets.length > 0 && (
+      {actionStatistics.hunterTotalShots > 0 && (
         <div className="lycans-graphique-section">
-          <h3>Cibles du Chasseur</h3>
-          <FullscreenChart title="Cibles du Chasseur">
+          <h3>Statistiques du Chasseur</h3>
+          
+          {/* Hunter Accuracy Summary */}
+          <div className="lycans-resume-conteneur" style={{ marginBottom: '20px' }}>
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>🎯 Tirs totaux</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
+                {actionStatistics.hunterTotalShots}
+              </div>
+              <p>tirs effectués</p>
+            </div>
+            
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>✅ Tirs réussis</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Chasseur'] || 'var(--chart-color-2)' }}>
+                {actionStatistics.hunterTotalShots - actionStatistics.hunterMissedShots}
+              </div>
+              <p>cibles touchées</p>
+            </div>
+            
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>❌ Tirs manqués</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--text-secondary)' }}>
+                {actionStatistics.hunterMissedShots}
+              </div>
+              <p>tirs sans cible</p>
+            </div>
+            
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>📊 Précision</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Chasseur'] || 'var(--chart-color-2)' }}>
+                {actionStatistics.hunterTotalShots > 0 
+                  ? ((actionStatistics.hunterTotalShots - actionStatistics.hunterMissedShots) / actionStatistics.hunterTotalShots * 100).toFixed(1)
+                  : '0'}%
+              </div>
+              <p>taux de réussite</p>
+            </div>
+          </div>
+          
+          {actionStatistics.hunterTargets.length > 0 && (
+            <FullscreenChart title="Cibles Éliminées par le Chasseur">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -480,6 +478,124 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                         key={`cell-hunter-${index}`} 
                         fill={playersColor[entry.target] || lycansColors['Chasseur'] || `hsl(${120 + index * 15}, 60%, 45%)`}
                       />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
+          )}
+        </div>
+      )}
+
+      {/* Transform/Untransform Statistics */}
+      {(actionStatistics.actionTypeCounts.find(a => a.actionType === 'Transform') || 
+        actionStatistics.actionTypeCounts.find(a => a.actionType === 'Untransform')) && (
+        <div className="lycans-graphique-section">
+          <h3>Habitudes de Transformation (Loup)</h3>
+          
+          {/* Transform/Untransform Summary */}
+          <div className="lycans-resume-conteneur" style={{ marginBottom: '20px' }}>
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>🐺 Transformations</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Loup'] || 'var(--wolf-color)' }}>
+                {actionStatistics.actionTypeCounts.find(a => a.actionType === 'Transform')?.count || 0}
+              </div>
+              <p>transformations totales</p>
+            </div>
+            
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>👤 Détransformations</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-secondary)' }}>
+                {actionStatistics.actionTypeCounts.find(a => a.actionType === 'Untransform')?.count || 0}
+              </div>
+              <p>retours en forme humaine</p>
+            </div>
+            
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>📊 Ratio</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
+                {(() => {
+                  const transforms = actionStatistics.actionTypeCounts.find(a => a.actionType === 'Transform')?.count || 0;
+                  const untransforms = actionStatistics.actionTypeCounts.find(a => a.actionType === 'Untransform')?.count || 0;
+                  if (transforms === 0) return '0%';
+                  return `${((untransforms / transforms) * 100).toFixed(0)}%`;
+                })()}
+              </div>
+              <p>détransformations / transformations</p>
+            </div>
+            
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>🎯 Moyenne / partie</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Loup'] || 'var(--wolf-color)' }}>
+                {actionStatistics.transformationsPerGame.toFixed(1)}
+              </div>
+              <p>transformations par partie loup</p>
+            </div>
+          </div>
+
+          {/* Transform/Untransform Comparison Chart */}
+          <FullscreenChart title="Comparaison Transformations vs Détransformations">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={[
+                    {
+                      name: 'Transformations',
+                      count: actionStatistics.actionTypeCounts.find(a => a.actionType === 'Transform')?.count || 0,
+                      fill: lycansColors['Loup'] || 'var(--wolf-color)',
+                    },
+                    {
+                      name: 'Détransformations',
+                      count: actionStatistics.actionTypeCounts.find(a => a.actionType === 'Untransform')?.count || 0,
+                      fill: 'var(--accent-secondary)',
+                    }
+                  ].filter(d => d.count > 0)}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="name"
+                    fontSize={14}
+                  />
+                  <YAxis 
+                    label={{ value: 'Nombre d\'actions', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                    allowDecimals={false}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const dataPoint = payload[0].payload;
+                        return (
+                          <div style={{ 
+                            background: 'var(--bg-secondary)', 
+                            color: 'var(--text-primary)', 
+                            padding: 12, 
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)'
+                          }}>
+                            <div><strong>{dataPoint.name}</strong></div>
+                            <div>{dataPoint.count} fois</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar dataKey="count">
+                    {[
+                      {
+                        name: 'Transformations',
+                        count: actionStatistics.actionTypeCounts.find(a => a.actionType === 'Transform')?.count || 0,
+                        fill: lycansColors['Loup'] || 'var(--wolf-color)',
+                      },
+                      {
+                        name: 'Détransformations',
+                        count: actionStatistics.actionTypeCounts.find(a => a.actionType === 'Untransform')?.count || 0,
+                        fill: 'var(--accent-secondary)',
+                      }
+                    ].filter(d => d.count > 0).map((entry, index) => (
+                      <Cell key={`cell-transform-${index}`} fill={entry.fill} />
                     ))}
                   </Bar>
                 </BarChart>
