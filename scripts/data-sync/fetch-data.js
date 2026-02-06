@@ -832,7 +832,7 @@ async function main() {
     const awsGameLogs = [];
     if (gameLogUrls.length > 0) {
       console.log(`📦 Fetching ${gameLogUrls.length} AWS game log files...`);
-      console.log(`🔧 Correcting victorious status for disconnected players (${config.name})...`);
+      console.log(`🔧 Correcting victorious status for disconnected players...`);
       
       for (const url of gameLogUrls) {
         try {
