@@ -264,13 +264,27 @@ function computeAllStatistics(moddedGames) {
 
   // Process series data
   if (seriesData) {
-    Object.entries(seriesData).forEach(([playerId, data]) => {
-      if (!aggregatedStats.has(playerId)) return;
-      const agg = aggregatedStats.get(playerId);
-      
-      agg.stats.longestWinSeries = data.longestWinSeries?.seriesLength || 0;
-      agg.stats.longestLossSeries = data.longestLossSeries?.seriesLength || 0;
-    });
+    // Process win series
+    if (seriesData.allWinSeries) {
+      seriesData.allWinSeries.forEach(series => {
+        const playerId = series.player;
+        if (!aggregatedStats.has(playerId)) return;
+        const agg = aggregatedStats.get(playerId);
+        
+        agg.stats.longestWinSeries = series.seriesLength || 0;
+      });
+    }
+    
+    // Process loss series
+    if (seriesData.allLossSeries) {
+      seriesData.allLossSeries.forEach(series => {
+        const playerId = series.player;
+        if (!aggregatedStats.has(playerId)) return;
+        const agg = aggregatedStats.get(playerId);
+        
+        agg.stats.longestLossSeries = series.seriesLength || 0;
+      });
+    }
   }
 
   // Process loot stats if available
