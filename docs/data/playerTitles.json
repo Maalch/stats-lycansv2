@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-06T10:20:09.458Z",
+  "generatedAt": "2026-02-06T12:37:28.406Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -121,7 +121,8 @@
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "votingAggressive_low",
@@ -345,7 +346,7 @@
           "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 56.25,
-          "percentile": 78.37837837837837,
+          "percentile": 75.67567567567568,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -391,7 +392,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.7,
-          "percentile": 51.35135135135135,
+          "percentile": 45.94594594594595,
           "category": "AVERAGE",
           "priority": 3,
           "type": "basic"
@@ -412,7 +413,7 @@
       "percentiles": {
         "winRate": {
           "value": 38.7,
-          "percentile": 51.35135135135135,
+          "percentile": 45.94594594594595,
           "category": "AVERAGE"
         },
         "gamesPlayed": {
@@ -422,7 +423,7 @@
         },
         "winRateVillageois": {
           "value": 56.25,
-          "percentile": 78.37837837837837,
+          "percentile": 75.67567567567568,
           "category": "HIGH"
         },
         "winRateLoup": {
@@ -536,7 +537,7 @@
           "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 52.94117647058824,
-          "percentile": 70.27027027027027,
+          "percentile": 67.56756756756756,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -625,7 +626,7 @@
         },
         "winRateVillageois": {
           "value": 52.94117647058824,
-          "percentile": 70.27027027027027,
+          "percentile": 67.56756756756756,
           "category": "HIGH"
         },
         "winRateLoup": {
@@ -1225,7 +1226,8 @@
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "killRate_extreme_low",
@@ -1679,13 +1681,13 @@
           "description": "Gagnant·e dans tous les camps ennemis des Villageois",
           "priority": 14,
           "type": "combination",
-          "percentile": 84.08892763731473,
+          "percentile": 85.70183086312119,
           "conditions": [
             {
               "stat": "winRateLoup",
               "category": "HIGH",
-              "actualValue": 45.614035087719294,
-              "actualPercentile": 87.09677419354838
+              "actualValue": 47.368421052631575,
+              "actualPercentile": 90.32258064516128
             },
             {
               "stat": "winRateSolo",
@@ -1736,8 +1738,8 @@
           "emoji": "🐺",
           "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
-          "value": 45.614035087719294,
-          "percentile": 87.09677419354838,
+          "value": 47.368421052631575,
+          "percentile": 90.32258064516128,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -1760,7 +1762,7 @@
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
-          "value": 45.1,
+          "value": 45.6,
           "percentile": 78.37837837837837,
           "category": "HIGH",
           "priority": 6,
@@ -1868,13 +1870,13 @@
         "description": "Gagnant·e dans tous les camps ennemis des Villageois",
         "priority": 14,
         "type": "combination",
-        "percentile": 84.08892763731473,
+        "percentile": 85.70183086312119,
         "conditions": [
           {
             "stat": "winRateLoup",
             "category": "HIGH",
-            "actualValue": 45.614035087719294,
-            "actualPercentile": 87.09677419354838
+            "actualValue": 47.368421052631575,
+            "actualPercentile": 90.32258064516128
           },
           {
             "stat": "winRateSolo",
@@ -1886,7 +1888,7 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 45.1,
+          "value": 45.6,
           "percentile": 78.37837837837837,
           "category": "HIGH"
         },
@@ -1896,13 +1898,13 @@
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
-          "value": 51.041666666666664,
-          "percentile": 59.45945945945946,
+          "value": 51.388888888888886,
+          "percentile": 62.16216216216216,
           "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
-          "value": 45.614035087719294,
-          "percentile": 87.09677419354838,
+          "value": 47.368421052631575,
+          "percentile": 90.32258064516128,
           "category": "EXTREME_HIGH"
         },
         "winRateSolo": {
@@ -2032,10 +2034,10 @@
         }
       },
       "stats": {
-        "winRate": 45.1,
+        "winRate": 45.6,
         "gamesPlayed": 406,
-        "winRateVillageois": 51.041666666666664,
-        "winRateLoup": 45.614035087719294,
+        "winRateVillageois": 51.388888888888886,
+        "winRateLoup": 47.368421052631575,
         "winRateSolo": 16.39344262295082,
         "campVillageoisPercent": 70.93596059113301,
         "campLoupPercent": 14.039408866995073,
@@ -2849,7 +2851,7 @@
         },
         "winRateVillageois": {
           "value": 51.38339920948617,
-          "percentile": 64.86486486486487,
+          "percentile": 59.45945945945946,
           "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
@@ -3180,15 +3182,15 @@
           "type": "basic"
         },
         {
-          "id": "winRate_average",
+          "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
           "description": "Performance stable",
           "stat": "winRate",
           "value": 37.9,
-          "percentile": 45.94594594594595,
-          "category": "AVERAGE",
-          "priority": 3,
+          "percentile": 40.54054054054054,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
@@ -3207,8 +3209,8 @@
       "percentiles": {
         "winRate": {
           "value": 37.9,
-          "percentile": 45.94594594594595,
-          "category": "AVERAGE"
+          "percentile": 40.54054054054054,
+          "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
           "value": 214,
@@ -3217,8 +3219,8 @@
         },
         "winRateVillageois": {
           "value": 48.06201550387597,
-          "percentile": 48.64864864864865,
-          "category": "AVERAGE"
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE"
         },
         "winRateLoup": {
           "value": 30.18867924528302,
@@ -3420,7 +3422,7 @@
           "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 56.2962962962963,
-          "percentile": 81.08108108108108,
+          "percentile": 78.37837837837837,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3545,7 +3547,7 @@
         },
         "winRateVillageois": {
           "value": 56.2962962962963,
-          "percentile": 81.08108108108108,
+          "percentile": 78.37837837837837,
           "category": "HIGH"
         },
         "winRateLoup": {
@@ -3825,8 +3827,8 @@
         },
         "winRateVillageois": {
           "value": 49.59016393442623,
-          "percentile": 56.75675675675676,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 54.054054054054056,
+          "category": "AVERAGE"
         },
         "winRateLoup": {
           "value": 36.666666666666664,
@@ -4123,7 +4125,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 36.8,
-          "percentile": 40.54054054054054,
+          "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -4156,7 +4158,7 @@
       "percentiles": {
         "winRate": {
           "value": 36.8,
-          "percentile": 40.54054054054054,
+          "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
@@ -4403,15 +4405,15 @@
           "type": "campBalance"
         },
         {
-          "id": "winRate_average",
+          "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.5,
-          "percentile": 48.64864864864865,
-          "category": "AVERAGE",
-          "priority": 3,
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
@@ -4430,8 +4432,8 @@
       "percentiles": {
         "winRate": {
           "value": 38.5,
-          "percentile": 48.64864864864865,
-          "category": "AVERAGE"
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
           "value": 65,
@@ -4440,8 +4442,8 @@
         },
         "winRateVillageois": {
           "value": 47.82608695652174,
-          "percentile": 45.94594594594595,
-          "category": "AVERAGE"
+          "percentile": 40.54054054054054,
+          "category": "BELOW_AVERAGE"
         },
         "winRateLoup": {
           "value": 27.27272727272727,
@@ -4753,13 +4755,13 @@
           "description": "Loup bavard·e et gagnant·e",
           "priority": 15,
           "type": "combination",
-          "percentile": 91.3151364764268,
+          "percentile": 89.70223325062034,
           "conditions": [
             {
               "stat": "winRateLoup",
               "category": "HIGH",
               "actualValue": 46.93877551020408,
-              "actualPercentile": 90.32258064516128
+              "actualPercentile": 87.09677419354838
             },
             {
               "stat": "talking",
@@ -4776,7 +4778,7 @@
           "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
           "value": 46.93877551020408,
-          "percentile": 90.32258064516128,
+          "percentile": 87.09677419354838,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -4849,7 +4851,7 @@
           "description": "Taux de victoire élevé",
           "stat": "winRate",
           "value": 43.5,
-          "percentile": 72.97297297297297,
+          "percentile": 70.27027027027027,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4944,13 +4946,13 @@
         "description": "Loup bavard·e et gagnant·e",
         "priority": 15,
         "type": "combination",
-        "percentile": 91.3151364764268,
+        "percentile": 89.70223325062034,
         "conditions": [
           {
             "stat": "winRateLoup",
             "category": "HIGH",
             "actualValue": 46.93877551020408,
-            "actualPercentile": 90.32258064516128
+            "actualPercentile": 87.09677419354838
           },
           {
             "stat": "talking",
@@ -4963,7 +4965,7 @@
       "percentiles": {
         "winRate": {
           "value": 43.5,
-          "percentile": 72.97297297297297,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "gamesPlayed": {
@@ -4973,12 +4975,12 @@
         },
         "winRateVillageois": {
           "value": 51.31578947368421,
-          "percentile": 62.16216216216216,
+          "percentile": 56.75675675675676,
           "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
           "value": 46.93877551020408,
-          "percentile": 90.32258064516128,
+          "percentile": 87.09677419354838,
           "category": "EXTREME_HIGH"
         },
         "winRateSolo": {
@@ -5150,8 +5152,8 @@
           "emoji": "🐩",
           "description": "Mauvais·e en camp Loup",
           "stat": "winRateLoup",
-          "value": 18.181818181818183,
-          "percentile": 9.67741935483871,
+          "value": 21.21212121212121,
+          "percentile": 12.903225806451612,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -5187,8 +5189,8 @@
           "emoji": "😢",
           "description": "Taux de victoire faible",
           "stat": "winRate",
-          "value": 35.9,
-          "percentile": 32.432432432432435,
+          "value": 36.4,
+          "percentile": 29.72972972972973,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -5326,8 +5328,8 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 35.9,
-          "percentile": 32.432432432432435,
+          "value": 36.4,
+          "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "gamesPlayed": {
@@ -5337,12 +5339,12 @@
         },
         "winRateVillageois": {
           "value": 46.76258992805755,
-          "percentile": 43.24324324324324,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "winRateLoup": {
-          "value": 18.181818181818183,
-          "percentile": 9.67741935483871,
+          "value": 21.21212121212121,
+          "percentile": 12.903225806451612,
           "category": "EXTREME_LOW"
         },
         "winRateSolo": {
@@ -5472,10 +5474,10 @@
         }
       },
       "stats": {
-        "winRate": 35.9,
+        "winRate": 36.4,
         "gamesPlayed": 209,
         "winRateVillageois": 46.76258992805755,
-        "winRateLoup": 18.181818181818183,
+        "winRateLoup": 21.21212121212121,
         "winRateSolo": 10.81081081081081,
         "campVillageoisPercent": 66.50717703349282,
         "campLoupPercent": 15.789473684210526,
@@ -5692,7 +5694,7 @@
           "emoji": "📊",
           "description": "Performance stable",
           "stat": "winRate",
-          "value": 38.8,
+          "value": 39.8,
           "percentile": 54.054054054054056,
           "category": "AVERAGE",
           "priority": 3,
@@ -5724,7 +5726,7 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 38.8,
+          "value": 39.8,
           "percentile": 54.054054054054056,
           "category": "AVERAGE"
         },
@@ -5734,9 +5736,9 @@
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
-          "value": 46.53846153846154,
-          "percentile": 37.83783783783784,
-          "category": "BELOW_AVERAGE"
+          "value": 48.07692307692308,
+          "percentile": 45.94594594594595,
+          "category": "AVERAGE"
         },
         "winRateLoup": {
           "value": 38.80597014925373,
@@ -5870,9 +5872,9 @@
         }
       },
       "stats": {
-        "winRate": 38.8,
+        "winRate": 39.8,
         "gamesPlayed": 405,
-        "winRateVillageois": 46.53846153846154,
+        "winRateVillageois": 48.07692307692308,
         "winRateLoup": 38.80597014925373,
         "winRateSolo": 12.82051282051282,
         "campVillageoisPercent": 64.19753086419753,
@@ -5939,8 +5941,7 @@
           "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -5949,11 +5950,11 @@
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 35.80246913580247,
-          "percentile": 8.108108108108109,
+          "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Mickalow"
+          "primaryOwner": "Raumane"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -5978,7 +5979,8 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "lootVillageois_extreme_low",
@@ -6135,7 +6137,7 @@
         },
         "winRateVillageois": {
           "value": 35.80246913580247,
-          "percentile": 8.108108108108109,
+          "percentile": 5.405405405405405,
           "category": "EXTREME_LOW"
         },
         "winRateLoup": {
@@ -6343,6 +6345,18 @@
           "type": "basic"
         },
         {
+          "id": "winRate_low",
+          "title": "Le·a Looser",
+          "emoji": "😢",
+          "description": "Taux de victoire faible",
+          "stat": "winRate",
+          "value": 36.2,
+          "percentile": 27.027027027027028,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "participation_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -6435,18 +6449,6 @@
           "category": "SPECIALIST",
           "priority": 6,
           "type": "campBalance"
-        },
-        {
-          "id": "winRate_below_average",
-          "title": "Le·a Constant·e",
-          "emoji": "📊",
-          "description": "Performance stable",
-          "stat": "winRate",
-          "value": 36.2,
-          "percentile": 35.13513513513514,
-          "category": "BELOW_AVERAGE",
-          "priority": 4,
-          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -6464,8 +6466,8 @@
       "percentiles": {
         "winRate": {
           "value": 36.2,
-          "percentile": 35.13513513513514,
-          "category": "BELOW_AVERAGE"
+          "percentile": 27.027027027027028,
+          "category": "LOW"
         },
         "gamesPlayed": {
           "value": 287,
@@ -6474,7 +6476,7 @@
         },
         "winRateVillageois": {
           "value": 49.22279792746114,
-          "percentile": 54.054054054054056,
+          "percentile": 51.35135135135135,
           "category": "AVERAGE"
         },
         "winRateLoup": {
@@ -6763,8 +6765,8 @@
           "emoji": "🏆",
           "description": "Taux de victoire élevé",
           "stat": "winRate",
-          "value": 43.1,
-          "percentile": 67.56756756756756,
+          "value": 43.5,
+          "percentile": 70.27027027027027,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -6787,8 +6789,8 @@
           "emoji": "🦸",
           "description": "Excellent·e en camp Villageois",
           "stat": "winRateVillageois",
-          "value": 56.024096385542165,
-          "percentile": 75.67567567567568,
+          "value": 56.62650602409639,
+          "percentile": 81.08108108108108,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -6933,8 +6935,8 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 43.1,
-          "percentile": 67.56756756756756,
+          "value": 43.5,
+          "percentile": 70.27027027027027,
           "category": "HIGH"
         },
         "gamesPlayed": {
@@ -6943,8 +6945,8 @@
           "category": "HIGH"
         },
         "winRateVillageois": {
-          "value": 56.024096385542165,
-          "percentile": 75.67567567567568,
+          "value": 56.62650602409639,
+          "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "winRateLoup": {
@@ -7079,9 +7081,9 @@
         }
       },
       "stats": {
-        "winRate": 43.1,
+        "winRate": 43.5,
         "gamesPlayed": 260,
-        "winRateVillageois": 56.024096385542165,
+        "winRateVillageois": 56.62650602409639,
         "winRateLoup": 29.78723404255319,
         "winRateSolo": 10.638297872340425,
         "campVillageoisPercent": 63.84615384615384,
@@ -7122,7 +7124,7 @@
           "description": "Récolte bien en Villageois mais perd",
           "priority": 11,
           "type": "combination",
-          "percentile": 50.23501762632198,
+          "percentile": 48.88366627497062,
           "conditions": [
             {
               "stat": "lootVillageois",
@@ -7134,7 +7136,7 @@
               "stat": "winRateVillageois",
               "category": "LOW",
               "actualValue": 40.52287581699346,
-              "actualPercentile": 13.513513513513514
+              "actualPercentile": 10.81081081081081
             }
           ]
         },
@@ -7170,8 +7172,7 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -7180,11 +7181,11 @@
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 40.52287581699346,
-          "percentile": 13.513513513513514,
+          "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Mickalow"
+          "primaryOwner": "Raumane"
         },
         {
           "id": "votingAccuracy_extreme_low",
@@ -7385,7 +7386,7 @@
         "description": "Récolte bien en Villageois mais perd",
         "priority": 11,
         "type": "combination",
-        "percentile": 50.23501762632198,
+        "percentile": 48.88366627497062,
         "conditions": [
           {
             "stat": "lootVillageois",
@@ -7397,7 +7398,7 @@
             "stat": "winRateVillageois",
             "category": "LOW",
             "actualValue": 40.52287581699346,
-            "actualPercentile": 13.513513513513514
+            "actualPercentile": 10.81081081081081
           }
         ]
       },
@@ -7414,7 +7415,7 @@
         },
         "winRateVillageois": {
           "value": 40.52287581699346,
-          "percentile": 13.513513513513514,
+          "percentile": 10.81081081081081,
           "category": "EXTREME_LOW"
         },
         "winRateLoup": {
@@ -7675,18 +7676,6 @@
           "description": "Taux de victoire élevé",
           "stat": "winRate",
           "value": 43.2,
-          "percentile": 70.27027027027027,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "winRateVillageois_high",
-          "title": "Le·a Protecteur·rice du Village",
-          "emoji": "🦸",
-          "description": "Excellent·e en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 51.53846153846153,
           "percentile": 67.56756756756756,
           "category": "HIGH",
           "priority": 6,
@@ -7825,7 +7814,7 @@
       "percentiles": {
         "winRate": {
           "value": 43.2,
-          "percentile": 70.27027027027027,
+          "percentile": 67.56756756756756,
           "category": "HIGH"
         },
         "gamesPlayed": {
@@ -7835,8 +7824,8 @@
         },
         "winRateVillageois": {
           "value": 51.53846153846153,
-          "percentile": 67.56756756756756,
-          "category": "HIGH"
+          "percentile": 64.86486486486487,
+          "category": "ABOVE_AVERAGE"
         },
         "winRateLoup": {
           "value": 41.46341463414634,
@@ -8064,7 +8053,7 @@
           "description": "Taux de victoire faible",
           "stat": "winRate",
           "value": 32.2,
-          "percentile": 18.91891891891892,
+          "percentile": 16.216216216216218,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -8088,7 +8077,7 @@
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 41.40127388535032,
-          "percentile": 21.62162162162162,
+          "percentile": 18.91891891891892,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -8191,7 +8180,7 @@
       "percentiles": {
         "winRate": {
           "value": 32.2,
-          "percentile": 18.91891891891892,
+          "percentile": 16.216216216216218,
           "category": "LOW"
         },
         "gamesPlayed": {
@@ -8201,7 +8190,7 @@
         },
         "winRateVillageois": {
           "value": 41.40127388535032,
-          "percentile": 21.62162162162162,
+          "percentile": 18.91891891891892,
           "category": "LOW"
         },
         "winRateLoup": {
@@ -8402,6 +8391,18 @@
           ]
         },
         {
+          "id": "winRate_extreme_low",
+          "title": "Le·a Maudit·e",
+          "emoji": "🪦",
+          "description": "Perd presque toujours",
+          "stat": "winRate",
+          "value": 30.9,
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateLoup_extreme_low",
           "title": "Loup Débutant·e",
           "emoji": "🐩",
@@ -8448,19 +8449,8 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "winRate_low",
-          "title": "Le·a Looser",
-          "emoji": "😢",
-          "description": "Taux de victoire faible",
-          "stat": "winRate",
-          "value": 30.9,
-          "percentile": 16.216216216216218,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "participation_high",
@@ -8649,8 +8639,8 @@
       "percentiles": {
         "winRate": {
           "value": 30.9,
-          "percentile": 16.216216216216218,
-          "category": "LOW"
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW"
         },
         "gamesPlayed": {
           "value": 220,
@@ -8903,6 +8893,18 @@
           "type": "basic"
         },
         {
+          "id": "winRate_low",
+          "title": "Le·a Looser",
+          "emoji": "😢",
+          "description": "Taux de victoire faible",
+          "stat": "winRate",
+          "value": 36.4,
+          "percentile": 29.72972972972973,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "talkingOutsideMeeting_high",
           "title": "Le·a Chuchoteur·se",
           "emoji": "👂",
@@ -8985,18 +8987,6 @@
           "type": "campBalance"
         },
         {
-          "id": "winRate_below_average",
-          "title": "Le·a Constant·e",
-          "emoji": "📊",
-          "description": "Performance stable",
-          "stat": "winRate",
-          "value": 36.4,
-          "percentile": 37.83783783783784,
-          "category": "BELOW_AVERAGE",
-          "priority": 4,
-          "type": "basic"
-        },
-        {
           "id": "talking_above_average",
           "title": "Le·a Équilibré·e",
           "emoji": "⚖️",
@@ -9035,8 +9025,8 @@
       "percentiles": {
         "winRate": {
           "value": 36.4,
-          "percentile": 37.83783783783784,
-          "category": "BELOW_AVERAGE"
+          "percentile": 29.72972972972973,
+          "category": "LOW"
         },
         "gamesPlayed": {
           "value": 162,
@@ -9045,7 +9035,7 @@
         },
         "winRateVillageois": {
           "value": 48.54368932038835,
-          "percentile": 51.35135135135135,
+          "percentile": 48.64864864864865,
           "category": "AVERAGE"
         },
         "winRateLoup": {
@@ -9226,8 +9216,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -9236,10 +9225,11 @@
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 30.434782608695656,
-          "percentile": 2.7027027027027026,
+          "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Raumane"
         },
         {
           "id": "winRateSolo_extreme_high",
@@ -9339,12 +9329,12 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRateVillageois_extreme_low",
-        "title": "Idiot·e en Formation",
-        "emoji": "🤡",
-        "description": "Mauvais·e en camp Villageois",
-        "stat": "winRateVillageois",
-        "value": 30.434782608695656,
+        "id": "survivalDay1_extreme_low",
+        "title": "La Première Victime",
+        "emoji": "⚰️",
+        "description": "Meurt souvent Jour 1",
+        "stat": "survivalDay1Rate",
+        "value": 71.05263157894737,
         "percentile": 2.7027027027027026,
         "category": "EXTREME_LOW",
         "priority": 8,
@@ -9363,7 +9353,7 @@
         },
         "winRateVillageois": {
           "value": 30.434782608695656,
-          "percentile": 2.7027027027027026,
+          "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "winRateLoup": {
@@ -9458,6 +9448,19 @@
           "primaryOwner": "Kissiffrote"
         },
         {
+          "id": "winRateVillageois_extreme_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 40.909090909090914,
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "Raumane"
+        },
+        {
           "id": "killRate_extreme_low",
           "title": "L'Agneau",
           "emoji": "🐑",
@@ -9476,19 +9479,7 @@
           "description": "Taux de victoire faible",
           "stat": "winRate",
           "value": 33.3,
-          "percentile": 21.62162162162162,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "winRateVillageois_low",
-          "title": "Idiot·e en Formation",
-          "emoji": "🤡",
-          "description": "Mauvais·e en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 40.909090909090914,
-          "percentile": 16.216216216216218,
+          "percentile": 18.91891891891892,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -9579,7 +9570,7 @@
       "percentiles": {
         "winRate": {
           "value": 33.3,
-          "percentile": 21.62162162162162,
+          "percentile": 18.91891891891892,
           "category": "LOW"
         },
         "gamesPlayed": {
@@ -9589,8 +9580,8 @@
         },
         "winRateVillageois": {
           "value": 40.909090909090914,
-          "percentile": 16.216216216216218,
-          "category": "LOW"
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW"
         },
         "winRateSolo": {
           "value": 16.666666666666664,
@@ -9721,8 +9712,7 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -9731,11 +9721,11 @@
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 37.5,
-          "percentile": 10.81081081081081,
+          "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Mickalow"
+          "primaryOwner": "Raumane"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -9796,7 +9786,8 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "killRate_extreme_low",
@@ -9976,7 +9967,7 @@
         },
         "winRateVillageois": {
           "value": 37.5,
-          "percentile": 10.81081081081081,
+          "percentile": 8.108108108108109,
           "category": "EXTREME_LOW"
         },
         "winRateSolo": {
@@ -10244,14 +10235,14 @@
           "type": "basic"
         },
         {
-          "id": "winRate_low",
-          "title": "Le·a Looser",
-          "emoji": "😢",
-          "description": "Taux de victoire faible",
-          "stat": "winRate",
-          "value": 35.7,
-          "percentile": 29.72972972972973,
-          "category": "LOW",
+          "id": "winRateVillageois_high",
+          "title": "Le·a Protecteur·rice du Village",
+          "emoji": "🦸",
+          "description": "Excellent·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 53.333333333333336,
+          "percentile": 70.27027027027027,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -10300,6 +10291,18 @@
           "category": "BALANCED",
           "priority": 6,
           "type": "campBalance"
+        },
+        {
+          "id": "winRate_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 39.3,
+          "percentile": 51.35135135135135,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -10316,9 +10319,9 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 35.7,
-          "percentile": 29.72972972972973,
-          "category": "LOW"
+          "value": 39.3,
+          "percentile": 51.35135135135135,
+          "category": "AVERAGE"
         },
         "gamesPlayed": {
           "value": 28,
@@ -10326,9 +10329,9 @@
           "category": "EXTREME_LOW"
         },
         "winRateVillageois": {
-          "value": 46.666666666666664,
-          "percentile": 40.54054054054054,
-          "category": "BELOW_AVERAGE"
+          "value": 53.333333333333336,
+          "percentile": 70.27027027027027,
+          "category": "HIGH"
         },
         "winRateSolo": {
           "value": 22.22222222222222,
@@ -10447,9 +10450,9 @@
         }
       },
       "stats": {
-        "winRate": 35.7,
+        "winRate": 39.3,
         "gamesPlayed": 28,
-        "winRateVillageois": 46.666666666666664,
+        "winRateVillageois": 53.333333333333336,
         "winRateLoup": null,
         "winRateSolo": 22.22222222222222,
         "campVillageoisPercent": 53.57142857142857,
@@ -10909,13 +10912,13 @@
           "description": "Peine en victoire, survie et récolte",
           "priority": 19,
           "type": "combination",
-          "percentile": 23.305914610262437,
+          "percentile": 22.405013709361537,
           "conditions": [
             {
               "stat": "winRate",
               "category": "LOW",
               "actualValue": 35.1,
-              "actualPercentile": 27.027027027027028
+              "actualPercentile": 24.324324324324326
             },
             {
               "stat": "survival",
@@ -11037,7 +11040,7 @@
           "description": "Taux de victoire faible",
           "stat": "winRate",
           "value": 35.1,
-          "percentile": 27.027027027027028,
+          "percentile": 24.324324324324326,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -11168,13 +11171,13 @@
         "description": "Peine en victoire, survie et récolte",
         "priority": 19,
         "type": "combination",
-        "percentile": 23.305914610262437,
+        "percentile": 22.405013709361537,
         "conditions": [
           {
             "stat": "winRate",
             "category": "LOW",
             "actualValue": 35.1,
-            "actualPercentile": 27.027027027027028
+            "actualPercentile": 24.324324324324326
           },
           {
             "stat": "survival",
@@ -11193,7 +11196,7 @@
       "percentiles": {
         "winRate": {
           "value": 35.1,
-          "percentile": 27.027027027027028,
+          "percentile": 24.324324324324326,
           "category": "LOW"
         },
         "gamesPlayed": {
@@ -11409,19 +11412,6 @@
           ]
         },
         {
-          "id": "winRate_extreme_low",
-          "title": "Le·a Maudit·e",
-          "emoji": "🪦",
-          "description": "Perd presque toujours",
-          "stat": "winRate",
-          "value": 30.6,
-          "percentile": 10.81081081081081,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
-        },
-        {
           "id": "participation_extreme_low",
           "title": "Le·a Occasionnel·le",
           "emoji": "🎲",
@@ -11433,19 +11423,6 @@
           "priority": 8,
           "type": "basic",
           "primaryOwner": "Kissiffrote"
-        },
-        {
-          "id": "winRateVillageois_extreme_low",
-          "title": "Idiot·e en Formation",
-          "emoji": "🤡",
-          "description": "Mauvais·e en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 29.166666666666668,
-          "percentile": 0,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Mickalow"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -11587,6 +11564,18 @@
           "type": "basic"
         },
         {
+          "id": "winRateVillageois_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 41.66666666666667,
+          "percentile": 21.62162162162162,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "votingFirst_high",
           "title": "L'Impulsif·ve",
           "emoji": "🏃",
@@ -11631,6 +11620,18 @@
           "category": "BALANCED",
           "priority": 6,
           "type": "campBalance"
+        },
+        {
+          "id": "winRate_average",
+          "title": "Le·a Constant·e",
+          "emoji": "📊",
+          "description": "Performance stable",
+          "stat": "winRate",
+          "value": 38.9,
+          "percentile": 48.64864864864865,
+          "category": "AVERAGE",
+          "priority": 3,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -11658,9 +11659,9 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 30.6,
-          "percentile": 10.81081081081081,
-          "category": "EXTREME_LOW"
+          "value": 38.9,
+          "percentile": 48.64864864864865,
+          "category": "AVERAGE"
         },
         "gamesPlayed": {
           "value": 36,
@@ -11668,9 +11669,9 @@
           "category": "EXTREME_LOW"
         },
         "winRateVillageois": {
-          "value": 29.166666666666668,
-          "percentile": 0,
-          "category": "EXTREME_LOW"
+          "value": 41.66666666666667,
+          "percentile": 21.62162162162162,
+          "category": "LOW"
         },
         "winRateSolo": {
           "value": 0,
@@ -11789,9 +11790,9 @@
         }
       },
       "stats": {
-        "winRate": 30.6,
+        "winRate": 38.9,
         "gamesPlayed": 36,
-        "winRateVillageois": 29.166666666666668,
+        "winRateVillageois": 41.66666666666667,
         "winRateLoup": null,
         "winRateSolo": 0,
         "campVillageoisPercent": 66.66666666666666,
@@ -11842,11 +11843,10 @@
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 33.84615384615385,
-          "percentile": 5.405405405405405,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Mickalow"
+          "type": "basic"
         },
         {
           "id": "votingAccuracy_extreme_low",
@@ -11992,13 +11992,13 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_low",
-        "title": "Le·a Maudit·e",
-        "emoji": "🪦",
-        "description": "Perd presque toujours",
-        "stat": "winRate",
-        "value": 30,
-        "percentile": 5.405405405405405,
+        "id": "winRateVillageois_extreme_low",
+        "title": "Idiot·e en Formation",
+        "emoji": "🤡",
+        "description": "Mauvais·e en camp Villageois",
+        "stat": "winRateVillageois",
+        "value": 33.84615384615385,
+        "percentile": 2.7027027027027026,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -12016,7 +12016,7 @@
         },
         "winRateVillageois": {
           "value": 33.84615384615385,
-          "percentile": 5.405405405405405,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW"
         },
         "winRateLoup": {
@@ -12182,7 +12182,7 @@
           "description": "Tue beaucoup mais fait perdre son camp",
           "priority": 13,
           "type": "combination",
-          "percentile": 45.94594594594595,
+          "percentile": 44.5945945945946,
           "conditions": [
             {
               "stat": "killRate",
@@ -12194,7 +12194,7 @@
               "stat": "winRate",
               "category": "LOW",
               "actualValue": 33.3,
-              "actualPercentile": 21.62162162162162
+              "actualPercentile": 18.91891891891892
             }
           ]
         },
@@ -12205,7 +12205,7 @@
           "description": "Survit longtemps mais perd quand même",
           "priority": 12,
           "type": "combination",
-          "percentile": 55.4054054054054,
+          "percentile": 54.054054054054056,
           "conditions": [
             {
               "stat": "survival",
@@ -12217,7 +12217,7 @@
               "stat": "winRate",
               "category": "LOW",
               "actualValue": 33.3,
-              "actualPercentile": 21.62162162162162
+              "actualPercentile": 18.91891891891892
             }
           ]
         },
@@ -12272,6 +12272,19 @@
               "actualPercentile": 22.22222222222222
             }
           ]
+        },
+        {
+          "id": "winRateVillageois_extreme_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 40.909090909090914,
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "Raumane"
         },
         {
           "id": "talking_extreme_high",
@@ -12355,7 +12368,7 @@
           "description": "Taux de victoire faible",
           "stat": "winRate",
           "value": 33.3,
-          "percentile": 21.62162162162162,
+          "percentile": 18.91891891891892,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -12368,18 +12381,6 @@
           "stat": "gamesPlayed",
           "value": 45,
           "percentile": 21.62162162162162,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "winRateVillageois_low",
-          "title": "Idiot·e en Formation",
-          "emoji": "🤡",
-          "description": "Mauvais·e en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 40.909090909090914,
-          "percentile": 16.216216216216218,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -12426,7 +12427,7 @@
         "description": "Tue beaucoup mais fait perdre son camp",
         "priority": 13,
         "type": "combination",
-        "percentile": 45.94594594594595,
+        "percentile": 44.5945945945946,
         "conditions": [
           {
             "stat": "killRate",
@@ -12438,14 +12439,14 @@
             "stat": "winRate",
             "category": "LOW",
             "actualValue": 33.3,
-            "actualPercentile": 21.62162162162162
+            "actualPercentile": 18.91891891891892
           }
         ]
       },
       "percentiles": {
         "winRate": {
           "value": 33.3,
-          "percentile": 21.62162162162162,
+          "percentile": 18.91891891891892,
           "category": "LOW"
         },
         "gamesPlayed": {
@@ -12455,8 +12456,8 @@
         },
         "winRateVillageois": {
           "value": 40.909090909090914,
-          "percentile": 16.216216216216218,
-          "category": "LOW"
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW"
         },
         "winRateLoup": {
           "value": 35.714285714285715,
@@ -12794,7 +12795,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 37,
-          "percentile": 43.24324324324324,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -12815,7 +12816,7 @@
       "percentiles": {
         "winRate": {
           "value": 37,
-          "percentile": 43.24324324324324,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
