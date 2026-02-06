@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-06T12:37:41.186Z",
+  "generatedAt": "2026-02-06T13:06:23.649Z",
   "teamName": "Discord Team",
   "totalPlayers": 44,
   "minGamesRequired": 25,
@@ -1127,7 +1127,7 @@
           "title": "L'Aventurier·ère",
           "emoji": "🗺️",
           "description": "Explore toute la carte et gagne",
-          "priority": 13,
+          "priority": 12,
           "type": "combination",
           "percentile": 54.54545454545455,
           "conditions": [
@@ -1268,8 +1268,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 794.0940273311054,
@@ -1318,7 +1318,7 @@
         "title": "L'Aventurier·ère",
         "emoji": "🗺️",
         "description": "Explore toute la carte et gagne",
-        "priority": 13,
+        "priority": 12,
         "type": "combination",
         "percentile": 54.54545454545455,
         "conditions": [
@@ -2931,8 +2931,7 @@
           "percentile": 86.36363636363636,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "twitch.tv/hornicoo"
+          "type": "basic"
         },
         {
           "id": "zoneVillagePecheur_extreme_high",
@@ -2944,8 +2943,7 @@
           "percentile": 93.18181818181817,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Johnny"
+          "type": "basic"
         },
         {
           "id": "zoneDominantPercentage_extreme_high",
@@ -3055,14 +3053,14 @@
         }
       ],
       "primaryTitle": {
-        "id": "talkingDuringMeeting_extreme_low",
-        "title": "Le·a Discret·ète",
-        "emoji": "🤐",
-        "description": "Silencieux·se en meeting",
-        "stat": "talkingDuringPer60Min",
-        "value": 113.89784995040476,
-        "percentile": 9.30232558139535,
-        "category": "EXTREME_LOW",
+        "id": "zoneVillagePecheur_extreme_high",
+        "title": "Le·a Pêcheur·euse",
+        "emoji": "🎣",
+        "description": "Traîne beaucoup au Village Pêcheur",
+        "stat": "zoneVillagePecheur",
+        "value": 24.59016393442623,
+        "percentile": 93.18181818181817,
+        "category": "EXTREME_HIGH",
         "priority": 8,
         "type": "basic"
       },
@@ -3263,6 +3261,29 @@
               "stat": "votingAggressive",
               "category": "HIGH",
               "actualValue": 13.231707317073166,
+              "actualPercentile": 88.63636363636364
+            }
+          ]
+        },
+        {
+          "id": "capitaine_port",
+          "title": "Le·a Capitaine du Port",
+          "emoji": "⚓",
+          "description": "Survit au bord de l'eau",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 86.36363636363637,
+          "conditions": [
+            {
+              "stat": "zoneVillagePecheur",
+              "category": "HIGH",
+              "actualValue": 21.808510638297875,
+              "actualPercentile": 84.0909090909091
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 52.72727272727272,
               "actualPercentile": 88.63636363636364
             }
           ]
@@ -3883,8 +3904,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 792.5628500549859,
@@ -4176,6 +4197,29 @@
           ]
         },
         {
+          "id": "ermite",
+          "title": "L'Ermite",
+          "emoji": "🧙",
+          "description": "Silencieux·se, reclus·e dans les Ruines",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 70.45454545454545,
+          "conditions": [
+            {
+              "stat": "zoneRuines",
+              "category": "HIGH",
+              "actualValue": 9.523809523809524,
+              "actualPercentile": 70.45454545454545
+            },
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 332.743778625256,
+              "actualPercentile": 0
+            }
+          ]
+        },
+        {
           "id": "efficace",
           "title": "L'Efficace",
           "emoji": "🎯",
@@ -4257,8 +4301,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Laulah"
+          "type": "basic"
         },
         {
           "id": "votingAggressive_extreme_low",
@@ -4347,8 +4390,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 886.0169626154277,
@@ -4606,6 +4649,29 @@
       "gamesPlayed": 82,
       "titles": [
         {
+          "id": "campeur",
+          "title": "Le·a Campeur·euse",
+          "emoji": "🏕️",
+          "description": "Reste au même endroit sans récolter",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 58.21881606765327,
+          "conditions": [
+            {
+              "stat": "zoneDominantPercentage",
+              "category": "EXTREME_HIGH",
+              "actualValue": 60.91954022988506,
+              "actualPercentile": 93.18181818181817
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 603.3552877658659,
+              "actualPercentile": 23.25581395348837
+            }
+          ]
+        },
+        {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -4762,16 +4828,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "zoneVillagePrincipal_extreme_high",
-        "title": "Le·a Citadin·e",
-        "emoji": "🏘️",
-        "description": "Traîne beaucoup au Village Principal",
-        "stat": "zoneVillagePrincipal",
-        "value": 60.91954022988506,
-        "percentile": 93.18181818181817,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "campeur",
+        "title": "Le·a Campeur·euse",
+        "emoji": "🏕️",
+        "description": "Reste au même endroit sans récolter",
+        "priority": 12,
+        "type": "combination",
+        "percentile": 58.21881606765327,
+        "conditions": [
+          {
+            "stat": "zoneDominantPercentage",
+            "category": "EXTREME_HIGH",
+            "actualValue": 60.91954022988506,
+            "actualPercentile": 93.18181818181817
+          },
+          {
+            "stat": "loot",
+            "category": "LOW",
+            "actualValue": 603.3552877658659,
+            "actualPercentile": 23.25581395348837
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -5078,8 +5155,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 856.8327093080557,
@@ -5586,8 +5663,7 @@
           "percentile": 88.63636363636364,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "twitch.tv/hornicoo"
+          "type": "basic"
         },
         {
           "id": "zoneDominantPercentage_extreme_high",
@@ -6071,8 +6147,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 836.295248455231,
@@ -6355,7 +6431,7 @@
           "id": "rodeur",
           "title": "Le·a Rôdeur·euse",
           "emoji": "🌙",
-          "description": "Rôde hors des zones principales et survit",
+          "description": "Rôde hors des villages et survit",
           "priority": 12,
           "type": "combination",
           "percentile": 89.77272727272728,
@@ -6815,29 +6891,6 @@
           ]
         },
         {
-          "id": "stratege_territorial",
-          "title": "Le·a Stratège Territorial·e",
-          "emoji": "🎯",
-          "description": "Domine une zone et gagne",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 94.31818181818181,
-          "conditions": [
-            {
-              "stat": "zoneDominantPercentage",
-              "category": "HIGH",
-              "actualValue": 85.71428571428571,
-              "actualPercentile": 97.72727272727273
-            },
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 53.8,
-              "actualPercentile": 90.9090909090909
-            }
-          ]
-        },
-        {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
           "emoji": "👑",
@@ -6897,8 +6950,7 @@
           "percentile": 97.72727272727273,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "twitch.tv/hornicoo"
+          "type": "basic"
         },
         {
           "id": "zoneDominantPercentage_extreme_high",
@@ -7254,8 +7306,7 @@
           "percentile": 2.3255813953488373,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Laulah"
+          "type": "basic"
         },
         {
           "id": "votingAccuracy_extreme_high",
@@ -7917,7 +7968,7 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Johnny"
+          "primaryOwner": "Laulah"
         },
         {
           "id": "participation_low",
@@ -8368,8 +8419,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 798.5680116513729,
@@ -8619,6 +8670,30 @@
               "actualPercentile": 88.63636363636364
             }
           ]
+        },
+        {
+          "id": "embusquer",
+          "title": "L'Embusqué·e",
+          "emoji": "🏹",
+          "description": "Tend des pièges dans les Ruines",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 88.63636363636364,
+          "conditions": [
+            {
+              "stat": "zoneRuines",
+              "category": "HIGH",
+              "actualValue": 21.296296296296298,
+              "actualPercentile": 97.72727272727273
+            },
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.7037037037037037,
+              "actualPercentile": 79.54545454545455
+            }
+          ],
+          "primaryOwner": "Johnny"
         },
         {
           "id": "winRate_extreme_high",
@@ -9439,6 +9514,29 @@
           ]
         },
         {
+          "id": "cueilleur",
+          "title": "Le·a Cueilleur·se",
+          "emoji": "🧺",
+          "description": "Récolte en parcourant toute la carte",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 63.60993657505285,
+          "conditions": [
+            {
+              "stat": "zoneDominantPercentage",
+              "category": "LOW",
+              "actualValue": 44.89795918367347,
+              "actualPercentile": 29.545454545454547
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 1212.3730494978577,
+              "actualPercentile": 97.67441860465115
+            }
+          ]
+        },
+        {
           "id": "avide",
           "title": "L'Avide",
           "emoji": "💰",
@@ -10093,8 +10191,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 884.1003800637405,
@@ -10843,8 +10941,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 840.926358578675,
@@ -11807,6 +11905,29 @@
       "gamesPlayed": 120,
       "titles": [
         {
+          "id": "embusquer",
+          "title": "L'Embusqué·e",
+          "emoji": "🏹",
+          "description": "Tend des pièges dans les Ruines",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 88.63636363636363,
+          "conditions": [
+            {
+              "stat": "zoneRuines",
+              "category": "HIGH",
+              "actualValue": 15.81196581196581,
+              "actualPercentile": 93.18181818181817
+            },
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.725,
+              "actualPercentile": 84.0909090909091
+            }
+          ]
+        },
+        {
           "id": "participation_extreme_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -11840,7 +11961,8 @@
           "percentile": 95.45454545454545,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Laulah"
         },
         {
           "id": "zoneRuines_extreme_high",
@@ -12000,16 +12122,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "zoneVillagePecheur_extreme_high",
-        "title": "Le·a Pêcheur·euse",
-        "emoji": "🎣",
-        "description": "Traîne beaucoup au Village Pêcheur",
-        "stat": "zoneVillagePecheur",
-        "value": 27.350427350427353,
-        "percentile": 95.45454545454545,
-        "category": "EXTREME_HIGH",
-        "priority": 8,
-        "type": "basic"
+        "id": "embusquer",
+        "title": "L'Embusqué·e",
+        "emoji": "🏹",
+        "description": "Tend des pièges dans les Ruines",
+        "priority": 12,
+        "type": "combination",
+        "percentile": 88.63636363636363,
+        "conditions": [
+          {
+            "stat": "zoneRuines",
+            "category": "HIGH",
+            "actualValue": 15.81196581196581,
+            "actualPercentile": 93.18181818181817
+          },
+          {
+            "stat": "killRate",
+            "category": "HIGH",
+            "actualValue": 0.725,
+            "actualPercentile": 84.0909090909091
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -12302,7 +12435,7 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Johnny"
+          "primaryOwner": "Laulah"
         },
         {
           "id": "participation_high",
@@ -12975,6 +13108,30 @@
           ]
         },
         {
+          "id": "campeur",
+          "title": "Le·a Campeur·euse",
+          "emoji": "🏕️",
+          "description": "Reste au même endroit sans récolter",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 58.192389006342495,
+          "conditions": [
+            {
+              "stat": "zoneDominantPercentage",
+              "category": "EXTREME_HIGH",
+              "actualValue": 60.9375,
+              "actualPercentile": 95.45454545454545
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 602.2754675724259,
+              "actualPercentile": 20.930232558139537
+            }
+          ],
+          "primaryOwner": "twitch.tv/hornicoo"
+        },
+        {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
           "emoji": "👶",
@@ -13046,8 +13203,7 @@
           "percentile": 95.45454545454545,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "twitch.tv/hornicoo"
+          "type": "basic"
         },
         {
           "id": "zoneDominantPercentage_extreme_high",
@@ -13717,8 +13873,7 @@
           "percentile": 13.953488372093023,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Laulah"
+          "type": "basic"
         },
         {
           "id": "votingAggressive_extreme_high",
@@ -14165,7 +14320,7 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Johnny"
+          "primaryOwner": "Laulah"
         },
         {
           "id": "zoneDominantPercentage_extreme_low",
@@ -14526,8 +14681,7 @@
           "percentile": 90.9090909090909,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "twitch.tv/hornicoo"
+          "type": "basic"
         },
         {
           "id": "zoneResteCarte_extreme_high",
@@ -15696,7 +15850,7 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "Johnny"
+          "primaryOwner": "Laulah"
         },
         {
           "id": "zoneDominantPercentage_extreme_low",
@@ -16470,8 +16624,7 @@
           "percentile": 6.976744186046512,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Laulah"
+          "type": "basic"
         },
         {
           "id": "votingAggressive_extreme_low",
@@ -16572,8 +16725,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 806.5830460383545,
@@ -16836,8 +16989,7 @@
           "percentile": 11.627906976744185,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Laulah"
+          "type": "basic"
         },
         {
           "id": "survival_extreme_low",
@@ -17237,8 +17389,7 @@
           "percentile": 4.651162790697675,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Laulah"
+          "type": "basic"
         },
         {
           "id": "votingAggressive_extreme_low",

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-06T12:46:14.865Z",
+  "generatedAt": "2026-02-06T13:06:12.365Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -2169,11 +2169,34 @@
           ]
         },
         {
+          "id": "moissonneur",
+          "title": "Le·a Moissonneur·euse",
+          "emoji": "🌾",
+          "description": "Récolte à la Ferme sans relâche",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 89.82608695652175,
+          "conditions": [
+            {
+              "stat": "zoneFerme",
+              "category": "HIGH",
+              "actualValue": 22.115384615384613,
+              "actualPercentile": 84
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 1280.477779925496,
+              "actualPercentile": 95.65217391304348
+            }
+          ]
+        },
+        {
           "id": "aventurier",
           "title": "L'Aventurier·ère",
           "emoji": "🗺️",
           "description": "Explore toute la carte et gagne",
-          "priority": 13,
+          "priority": 12,
           "type": "combination",
           "percentile": 50.54054054054054,
           "conditions": [
@@ -2192,19 +2215,19 @@
           ]
         },
         {
-          "id": "moissonneur",
-          "title": "Le·a Moissonneur·euse",
-          "emoji": "🌾",
-          "description": "Récolte à la Ferme sans relâche",
+          "id": "cueilleur",
+          "title": "Le·a Cueilleur·se",
+          "emoji": "🧺",
+          "description": "Récolte en parcourant toute la carte",
           "priority": 12,
           "type": "combination",
-          "percentile": 89.82608695652175,
+          "percentile": 57.82608695652174,
           "conditions": [
             {
-              "stat": "zoneFerme",
-              "category": "HIGH",
-              "actualValue": 22.115384615384613,
-              "actualPercentile": 84
+              "stat": "zoneDominantPercentage",
+              "category": "LOW",
+              "actualValue": 37.980769230769226,
+              "actualPercentile": 20
             },
             {
               "stat": "loot",
@@ -2767,8 +2790,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 862.07209414659,
@@ -6418,8 +6441,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 863.5622786509643,
@@ -6703,7 +6726,7 @@
           "id": "rodeur",
           "title": "Le·a Rôdeur·euse",
           "emoji": "🌙",
-          "description": "Rôde hors des zones principales et survit",
+          "description": "Rôde hors des villages et survit",
           "priority": 12,
           "type": "combination",
           "percentile": 83.83783783783784,
@@ -7322,8 +7345,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 960.8265561117285,
@@ -7587,6 +7610,29 @@
       "gamesPlayed": 206,
       "titles": [
         {
+          "id": "capitaine_port",
+          "title": "Le·a Capitaine du Port",
+          "emoji": "⚓",
+          "description": "Survit au bord de l'eau",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 87.1891891891892,
+          "conditions": [
+            {
+              "stat": "zoneVillagePecheur",
+              "category": "HIGH",
+              "actualValue": 35.8974358974359,
+              "actualPercentile": 96
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 41.262135922330096,
+              "actualPercentile": 78.37837837837837
+            }
+          ]
+        },
+        {
           "id": "cowboy",
           "title": "Le·a Cow-Boy",
           "emoji": "🤠",
@@ -7755,8 +7801,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 839.9968744302348,
@@ -7789,25 +7835,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "cowboy",
-        "title": "Le·a Cow-Boy",
-        "emoji": "🤠",
-        "description": "Vote vite et souvent",
-        "priority": 10,
+        "id": "capitaine_port",
+        "title": "Le·a Capitaine du Port",
+        "emoji": "⚓",
+        "description": "Survit au bord de l'eau",
+        "priority": 12,
         "type": "combination",
-        "percentile": 92.61261261261262,
+        "percentile": 87.1891891891892,
         "conditions": [
           {
-            "stat": "votingAggressive",
+            "stat": "zoneVillagePecheur",
             "category": "HIGH",
-            "actualValue": 20.160857908847184,
-            "actualPercentile": 91.8918918918919
+            "actualValue": 35.8974358974359,
+            "actualPercentile": 96
           },
           {
-            "stat": "votingFirst",
+            "stat": "survival",
             "category": "HIGH",
-            "actualValue": 73.33333333333333,
-            "actualPercentile": 93.33333333333333
+            "actualValue": 41.262135922330096,
+            "actualPercentile": 78.37837837837837
           }
         ]
       },
@@ -9657,6 +9703,29 @@
       "gamesPlayed": 49,
       "titles": [
         {
+          "id": "ermite",
+          "title": "L'Ermite",
+          "emoji": "🧙",
+          "description": "Silencieux·se, reclus·e dans les Ruines",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 61.30769230769231,
+          "conditions": [
+            {
+              "stat": "zoneRuines",
+              "category": "HIGH",
+              "actualValue": 14.285714285714285,
+              "actualPercentile": 88
+            },
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 944.0978534032319,
+              "actualPercentile": 34.61538461538461
+            }
+          ]
+        },
+        {
           "id": "avide",
           "title": "L'Avide",
           "emoji": "💰",
@@ -9888,8 +9957,8 @@
         },
         {
           "id": "loot_high",
-          "title": "Le·a Fermier·ère",
-          "emoji": "🌾",
+          "title": "Le·a Récolteur·euse",
+          "emoji": "🧺",
           "description": "Récolte élevée",
           "stat": "lootPer60Min",
           "value": 906.7386638209111,
@@ -9932,25 +10001,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "avide",
-        "title": "L'Avide",
-        "emoji": "💰",
-        "description": "Récolte beaucoup mais meurt",
-        "priority": 11,
+        "id": "ermite",
+        "title": "L'Ermite",
+        "emoji": "🧙",
+        "description": "Silencieux·se, reclus·e dans les Ruines",
+        "priority": 12,
         "type": "combination",
-        "percentile": 78.26086956521739,
+        "percentile": 61.30769230769231,
         "conditions": [
           {
-            "stat": "loot",
+            "stat": "zoneRuines",
             "category": "HIGH",
-            "actualValue": 906.7386638209111,
-            "actualPercentile": 78.26086956521739
+            "actualValue": 14.285714285714285,
+            "actualPercentile": 88
           },
           {
-            "stat": "survival",
+            "stat": "talking",
             "category": "LOW",
-            "actualValue": 12.244897959183673,
-            "actualPercentile": 0
+            "actualValue": 944.0978534032319,
+            "actualPercentile": 34.61538461538461
           }
         ]
       },
@@ -11385,6 +11454,29 @@
               "category": "LOW",
               "actualValue": 309.4254441701218,
               "actualPercentile": 0
+            }
+          ]
+        },
+        {
+          "id": "campeur",
+          "title": "Le·a Campeur·euse",
+          "emoji": "🏕️",
+          "description": "Reste au même endroit sans récolter",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 58.869565217391305,
+          "conditions": [
+            {
+              "stat": "zoneDominantPercentage",
+              "category": "EXTREME_HIGH",
+              "actualValue": 62.5,
+              "actualPercentile": 96
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 629.4213227684155,
+              "actualPercentile": 21.73913043478261
             }
           ]
         },
