@@ -1,0 +1,702 @@
+[
+  {
+    "priority": 20,
+    "titles": [
+      {
+        "id": "legende",
+        "title": "La Légende 🏅",
+        "description": "Gagne tout le temps + grosses séries",
+        "conditions": [
+          "Taux de victoire: Très élevé",
+          "Série de victoires: Élevé"
+        ],
+        "priority": 20
+      }
+    ]
+  },
+  {
+    "priority": 19,
+    "titles": [
+      {
+        "id": "mvp",
+        "title": "Le·a MVP ⭐",
+        "description": "Gagne, récolte, et survit",
+        "conditions": [
+          "Taux de victoire: Élevé (min: Au-dessus de la moyenne)",
+          "Récolte: Élevé (min: Au-dessus de la moyenne)",
+          "Survie: Élevé (min: Au-dessus de la moyenne)"
+        ],
+        "priority": 19
+      }
+    ]
+  },
+  {
+    "priority": 18,
+    "titles": [
+      {
+        "id": "adaptable",
+        "title": "L'Adaptable 🦎",
+        "description": "Bon dans tous les camps",
+        "conditions": [
+          "Victoires Villageois: Élevé (min: Au-dessus de la moyenne)",
+          "Victoires Loup: Élevé (min: Au-dessus de la moyenne)",
+          "Victoires Solo: Élevé (min: Au-dessus de la moyenne)"
+        ],
+        "priority": 18
+      },
+      {
+        "id": "machine",
+        "title": "La Machine ⚙️",
+        "description": "Récolte énormément sans dire un mot",
+        "conditions": [
+          "Récolte: Très élevé",
+          "Temps de parole: Très faible"
+        ],
+        "priority": 18
+      },
+      {
+        "id": "loup_solitaire",
+        "title": "Le Loup Solitaire 🐺",
+        "description": "Loup efficace, discret et gagnant",
+        "conditions": [
+          "Récolte Loup: Élevé",
+          "Victoires Loup: Élevé",
+          "Temps de parole: Faible"
+        ],
+        "priority": 18
+      },
+      {
+        "id": "justicier",
+        "title": "Le·a Justicier·ère ⚔️",
+        "description": "Chasseur·se qui tue souvent et survit",
+        "conditions": [
+          "Rôle Chasseur: Élevé",
+          "Taux de kills: Élevé",
+          "Survie: Élevé"
+        ],
+        "priority": 18
+      },
+      {
+        "id": "sniper_elite",
+        "title": "Sniper Elite 🎖️",
+        "description": "Chasseur·se fréquent·e et précis·e",
+        "conditions": [
+          "Rôle Chasseur: Élevé",
+          "Précision chasseur: Élevé"
+        ],
+        "priority": 18
+      }
+    ]
+  },
+  {
+    "priority": 17,
+    "titles": [
+      {
+        "id": "commentateur",
+        "title": "Le·a Commentateur·rice 📻",
+        "description": "Ne fait que parler, ne récolte rien et tue peu",
+        "conditions": [
+          "Temps de parole: Très élevé",
+          "Récolte: Faible",
+          "Taux de kills: Faible"
+        ],
+        "priority": 17
+      },
+      {
+        "id": "pitre",
+        "title": "Le·a Pitre 🎪",
+        "description": "Bavard·e, improductif·ve, meurt souvent",
+        "conditions": [
+          "Temps de parole: Élevé",
+          "Récolte: Faible",
+          "Survie: Faible"
+        ],
+        "priority": 17
+      },
+      {
+        "id": "robot",
+        "title": "Le·a Robot 🤖",
+        "description": "Productif·ve, survit, parle peu",
+        "conditions": [
+          "Récolte: Élevé",
+          "Survie: Élevé",
+          "Temps de parole: Faible"
+        ],
+        "priority": 17
+      }
+    ]
+  },
+  {
+    "priority": 16,
+    "titles": [
+      {
+        "id": "diplomate",
+        "title": "Le·a Diplomate 🤝",
+        "description": "Gagne en survivant sans tuer",
+        "conditions": [
+          "Survie: Élevé",
+          "Taux de kills: Faible",
+          "Taux de victoire: Élevé"
+        ],
+        "priority": 16
+      }
+    ]
+  },
+  {
+    "priority": 15,
+    "titles": [
+      {
+        "id": "alpha_predator",
+        "title": "L'Alpha 🦁",
+        "description": "Tue beaucoup et survit",
+        "conditions": [
+          "Taux de kills: Élevé",
+          "Survie: Élevé"
+        ],
+        "priority": 15
+      },
+      {
+        "id": "infiltrateur",
+        "title": "L'Infiltré·e 🎭",
+        "description": "Excellent·e loup discret·ète",
+        "conditions": [
+          "Victoires Loup: Élevé",
+          "Temps de parole: Faible"
+        ],
+        "priority": 15
+      },
+      {
+        "id": "invisible",
+        "title": "L'Invisible 👁️",
+        "description": "Quasi muet·te mais redoutablement efficace",
+        "conditions": [
+          "Temps de parole: Très faible",
+          "Taux de victoire: Élevé"
+        ],
+        "priority": 15
+      },
+      {
+        "id": "chasseur_maladroit",
+        "title": "Le·a Chasseur·se Maladroit·e 🔫",
+        "description": "Chasseur·se fréquent·e mais imprécis·e",
+        "conditions": [
+          "Rôle Chasseur: Élevé",
+          "Précision chasseur: Faible"
+        ],
+        "priority": 15
+      },
+      {
+        "id": "manipulateur",
+        "title": "Le·a Manipulateur·rice 🐍",
+        "description": "Loup bavard·e et gagnant·e",
+        "conditions": [
+          "Victoires Loup: Élevé",
+          "Temps de parole: Élevé"
+        ],
+        "priority": 15
+      },
+      {
+        "id": "sacrifice",
+        "title": "Le·a Sacrifié·e 🕯️",
+        "description": "Meurt rapidement mais fait gagner son camp",
+        "conditions": [
+          "Survie Jour 1: Faible",
+          "Survie: Faible",
+          "Taux de victoire: Élevé"
+        ],
+        "priority": 15
+      },
+      {
+        "id": "monsieur_madame_tout_le_monde",
+        "title": "Monsieur·Madame Tout-le-Monde 👤",
+        "description": "Performance moyenne partout",
+        "conditions": [
+          "Temps de parole: Moyen",
+          "Récolte: Moyen",
+          "Taux de victoire: Moyen"
+        ],
+        "priority": 15
+      }
+    ]
+  },
+  {
+    "priority": 14,
+    "titles": [
+      {
+        "id": "anarchiste",
+        "title": "L'Anarchiste 🦊",
+        "description": "Maître des rôles solitaires",
+        "conditions": [
+          "Camp Solo: Élevé",
+          "Victoires Solo: Élevé"
+        ],
+        "priority": 14
+      },
+      {
+        "id": "loup_alpha",
+        "title": "Le Loup Alpha 🐺",
+        "description": "Survit et domine en Loup",
+        "conditions": [
+          "Survie: Élevé",
+          "Victoires Loup: Élevé"
+        ],
+        "priority": 14
+      },
+      {
+        "id": "debutant",
+        "title": "Le·a Débutant·e 🆘",
+        "description": "Peine en victoire, survie et récolte",
+        "conditions": [
+          "Taux de victoire: Faible",
+          "Survie: Faible",
+          "Récolte: Faible"
+        ],
+        "priority": 14
+      },
+      {
+        "id": "maitre_ceremonie",
+        "title": "Le·a Maître·sse de Cérémonie 🎙️",
+        "description": "Mène les débats et vote juste",
+        "conditions": [
+          "Parole en meeting: Élevé",
+          "Précision de vote: Élevé",
+          "Vote agressif: Élevé (min: Au-dessus de la moyenne)"
+        ],
+        "priority": 14
+      },
+      {
+        "id": "pacifiste",
+        "title": "Le·a Pacifiste ☮️",
+        "description": "Gagne sans tuer",
+        "conditions": [
+          "Taux de kills: Faible",
+          "Taux de victoire: Élevé"
+        ],
+        "priority": 14
+      },
+      {
+        "id": "politicien",
+        "title": "Le·a Politicien·ne 🎩",
+        "description": "Parle beaucoup, survit, mais ne récolte pas",
+        "conditions": [
+          "Temps de parole: Élevé",
+          "Survie: Élevé",
+          "Récolte: Faible"
+        ],
+        "priority": 14
+      },
+      {
+        "id": "traitre",
+        "title": "Le·a Traître·sse 🦹",
+        "description": "Gagnant·e dans tous les camps ennemis des Villageois",
+        "conditions": [
+          "Victoires Loup: Élevé",
+          "Victoires Solo: Élevé"
+        ],
+        "priority": 14
+      }
+    ]
+  },
+  {
+    "priority": 13,
+    "titles": [
+      {
+        "id": "enthusiaste",
+        "title": "L'Enthousiaste 🌟",
+        "description": "Participe beaucoup et gagne autant dans chaque camp",
+        "conditions": [
+          "Parties jouées: Élevé",
+          "Équilibre des camps: Équilibré"
+        ],
+        "priority": 13
+      },
+      {
+        "id": "opportuniste",
+        "title": "L'Opportuniste 🎯",
+        "description": "Gagne souvent mais joue peu",
+        "conditions": [
+          "Taux de victoire: Élevé",
+          "Parties jouées: Faible"
+        ],
+        "priority": 13
+      },
+      {
+        "id": "tete_brulee",
+        "title": "La Tête Brûlée 💣",
+        "description": "Tue beaucoup mais fait perdre son camp",
+        "conditions": [
+          "Taux de kills: Élevé",
+          "Taux de victoire: Faible"
+        ],
+        "priority": 13
+      },
+      {
+        "id": "citoyen_exemplaire",
+        "title": "Le·a Citoyen·ne Exemplaire 👑",
+        "description": "Récolte et gagne en Villageois",
+        "conditions": [
+          "Récolte Villageois: Élevé",
+          "Victoires Villageois: Élevé"
+        ],
+        "priority": 13
+      },
+      {
+        "id": "lanceur_alerte",
+        "title": "Le·a Lanceur·se d'Alerte 🚨",
+        "description": "Vote juste mais se fait éliminer pour ça",
+        "conditions": [
+          "Précision de vote: Élevé",
+          "Survie: Faible"
+        ],
+        "priority": 13
+      },
+      {
+        "id": "poissard",
+        "title": "Le·a Poissard·e 🌧️",
+        "description": "Perd tout le temps + grosses séries de défaites",
+        "conditions": [
+          "Taux de victoire: Très faible",
+          "Série de défaites: Élevé"
+        ],
+        "priority": 13
+      },
+      {
+        "id": "populiste",
+        "title": "Le·a Populiste 📢",
+        "description": "Bruyant·e et actif·ve mais se trompe de cible",
+        "conditions": [
+          "Temps de parole: Élevé",
+          "Vote agressif: Élevé",
+          "Précision de vote: Faible"
+        ],
+        "priority": 13
+      }
+    ]
+  },
+  {
+    "priority": 12,
+    "titles": [
+      {
+        "id": "cupidon",
+        "title": "Cupidon 💘",
+        "description": "Souvent amoureux et gagnant",
+        "conditions": [
+          "Rôle Amoureux: Élevé",
+          "Taux de victoire: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "en_rodage",
+        "title": "En Rodage 🔧",
+        "description": "Peine dans tous les camps",
+        "conditions": [
+          "Victoires Villageois: Faible",
+          "Victoires Loup: Faible",
+          "Victoires Solo: Faible"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "assassin",
+        "title": "L'Assassin·e 🗡️",
+        "description": "Ignore la récolte, se concentre sur les kills",
+        "conditions": [
+          "Récolte: Faible",
+          "Taux de kills: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "aventurier",
+        "title": "L'Aventurier·ère 🗺️",
+        "description": "Explore toute la carte et gagne",
+        "conditions": [
+          "Concentration zone dominante: Faible",
+          "Taux de victoire: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "embusquer",
+        "title": "L'Embusqué·e 🏹",
+        "description": "Tend des pièges dans les Ruines",
+        "conditions": [
+          "Zone Ruines: Élevé",
+          "Taux de kills: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "ermite",
+        "title": "L'Ermite 🧙",
+        "description": "Silencieux·se, reclus·e dans les Ruines",
+        "conditions": [
+          "Zone Ruines: Élevé",
+          "Temps de parole: Faible"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "campeur",
+        "title": "Le·a Campeur·euse 🏕️",
+        "description": "Reste au même endroit sans récolter",
+        "conditions": [
+          "Concentration zone dominante: Très élevé",
+          "Récolte: Faible"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "capitaine_port",
+        "title": "Le·a Capitaine du Port ⚓",
+        "description": "Survit au bord de l'eau",
+        "conditions": [
+          "Zone Village Pêcheur: Élevé",
+          "Survie: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "couard",
+        "title": "Le·a Couard·e 🐢",
+        "description": "Survit longtemps mais perd quand même",
+        "conditions": [
+          "Survie: Élevé",
+          "Taux de victoire: Faible"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "cueilleur",
+        "title": "Le·a Cueilleur·se 🧺",
+        "description": "Récolte en parcourant toute la carte",
+        "conditions": [
+          "Concentration zone dominante: Faible",
+          "Récolte: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "detective",
+        "title": "Le·a Détective 🔎",
+        "description": "Observe silencieusement et vote juste",
+        "conditions": [
+          "Précision de vote: Élevé",
+          "Temps de parole: Faible"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "martyr",
+        "title": "Le·a Martyr·e ✝️",
+        "description": "Meurt souvent mais fait gagner son camp",
+        "conditions": [
+          "Survie: Faible",
+          "Taux de victoire: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "moissonneur",
+        "title": "Le·a Moissonneur·euse 🌾",
+        "description": "Récolte à la Ferme sans relâche",
+        "conditions": [
+          "Zone Ferme: Élevé",
+          "Récolte: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "phoenix",
+        "title": "Le·a Phoenix 🔥",
+        "description": "Meurt souvent tôt mais survit jusqu'au bout après",
+        "conditions": [
+          "Survie Jour 1: Faible",
+          "Survie: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "rodeur",
+        "title": "Le·a Rôdeur·euse 🌙",
+        "description": "Rôde hors des villages et survit",
+        "conditions": [
+          "Zone Reste Carte: Élevé",
+          "Survie: Élevé"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "taulier",
+        "title": "Le·a Taulier·e 🔑",
+        "description": "Participe beaucoup et excelle dans un camp",
+        "conditions": [
+          "Parties jouées: Élevé",
+          "Équilibre des camps: Spécialiste"
+        ],
+        "priority": 12
+      },
+      {
+        "id": "romeo",
+        "title": "Roméo 💔",
+        "description": "Souvent amoureux mais perd",
+        "conditions": [
+          "Rôle Amoureux: Élevé",
+          "Taux de victoire: Faible"
+        ],
+        "priority": 12
+      }
+    ]
+  },
+  {
+    "priority": 11,
+    "titles": [
+      {
+        "id": "abeille_ouvriere",
+        "title": "L'Abeille Ouvrière 🐝",
+        "description": "Récolte bien en Villageois mais perd",
+        "conditions": [
+          "Récolte Villageois: Élevé",
+          "Victoires Villageois: Faible"
+        ],
+        "priority": 11
+      },
+      {
+        "id": "avide",
+        "title": "L'Avide 💰",
+        "description": "Récolte beaucoup mais meurt",
+        "conditions": [
+          "Récolte: Élevé (min: Au-dessus de la moyenne)",
+          "Survie: Faible (min: En-dessous de la moyenne)"
+        ],
+        "priority": 11
+      },
+      {
+        "id": "avocat",
+        "title": "L'Avocat·e ⚖️",
+        "description": "Silencieux·se hors débats, éloquent·e en meeting",
+        "conditions": [
+          "Parole hors meeting: Faible",
+          "Parole en meeting: Élevé"
+        ],
+        "priority": 11
+      },
+      {
+        "id": "grande_gueule",
+        "title": "La Grande Gueule 🗯️",
+        "description": "Parle trop et meurt Jour 1",
+        "conditions": [
+          "Survie Jour 1: Faible",
+          "Temps de parole: Élevé"
+        ],
+        "priority": 11
+      },
+      {
+        "id": "loup_repere",
+        "title": "Le Loup Repéré 🔦",
+        "description": "Récolte en Loup mais se fait démasquer",
+        "conditions": [
+          "Récolte Loup: Élevé",
+          "Victoires Loup: Faible"
+        ],
+        "priority": 11
+      },
+      {
+        "id": "conspirateur",
+        "title": "Le·a Conspirateur·rice 🗨️",
+        "description": "Bavard·e hors meeting, silencieux·se pendant",
+        "conditions": [
+          "Parole hors meeting: Élevé",
+          "Parole en meeting: Faible"
+        ],
+        "priority": 11
+      },
+      {
+        "id": "prudent",
+        "title": "Le·a Prudent·e 🛡️",
+        "description": "Survit mais récolte peu",
+        "conditions": [
+          "Récolte: Faible (min: En-dessous de la moyenne)",
+          "Survie: Élevé (min: Au-dessus de la moyenne)"
+        ],
+        "priority": 11
+      }
+    ]
+  },
+  {
+    "priority": 10,
+    "titles": [
+      {
+        "id": "efficace",
+        "title": "L'Efficace 🏭",
+        "description": "Silencieux·se mais productif·ve",
+        "conditions": [
+          "Temps de parole: Faible",
+          "Récolte: Élevé"
+        ],
+        "priority": 10
+      },
+      {
+        "id": "hyperactif",
+        "title": "L'Hyperactif·ve ⚡",
+        "description": "Bavard·e ET grande récolte",
+        "conditions": [
+          "Temps de parole: Élevé",
+          "Récolte: Élevé"
+        ],
+        "priority": 10
+      },
+      {
+        "id": "cowboy",
+        "title": "Le·a Cow-Boy 🤠",
+        "description": "Vote vite et souvent",
+        "conditions": [
+          "Vote agressif: Élevé",
+          "Premier voteur: Élevé"
+        ],
+        "priority": 10
+      },
+      {
+        "id": "demagogue",
+        "title": "Le·a Démagogue 📣",
+        "description": "Parle beaucoup mais vote mal",
+        "conditions": [
+          "Temps de parole: Élevé",
+          "Précision de vote: Faible"
+        ],
+        "priority": 10
+      },
+      {
+        "id": "kamikaze",
+        "title": "Le·a Kamikaze 💥",
+        "description": "Tue mais meurt en retour",
+        "conditions": [
+          "Taux de kills: Élevé",
+          "Survie: Faible"
+        ],
+        "priority": 10
+      },
+      {
+        "id": "philosophe",
+        "title": "Le·a Philosophe 📚",
+        "description": "Bavard·e mais improductif·ve",
+        "conditions": [
+          "Temps de parole: Élevé",
+          "Récolte: Faible"
+        ],
+        "priority": 10
+      },
+      {
+        "id": "theoricien",
+        "title": "Le·a Théoricien·ne 🎓",
+        "description": "Parle beaucoup en débat mais vote peu",
+        "conditions": [
+          "Parole en meeting: Élevé",
+          "Vote agressif: Faible"
+        ],
+        "priority": 10
+      }
+    ]
+  }
+]

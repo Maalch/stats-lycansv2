@@ -46,7 +46,7 @@ export const TITLE_DEFINITIONS = {
     low: { title: 'La Cible', emoji: '🎯', description: 'Meurt souvent' }
   },
   survivalDay1: {
-    high: { title: 'Le·a Prudent·e', emoji: '🏃', description: 'Survit au Jour 1' },
+    high: { title: 'Le·a Vigilant·e', emoji: '🏃', description: 'Survit au Jour 1' },
     low: { title: 'La Première Victime', emoji: '⚰️', description: 'Meurt souvent Jour 1' }
   },
 
@@ -213,19 +213,6 @@ export const COMBINATION_TITLES = [
       { stat: 'killRate', category: 'LOW' },
       { stat: 'winRate', category: 'HIGH' }
     ],
-    priority: 13
-  },
-
-  // Low survival + High win rate = The Martyr
-  {
-    id: 'martyr',
-    title: 'Le·a Martyr·e',
-    emoji: '✝️',
-    description: 'Meurt souvent mais fait gagner son camp',
-    conditions: [
-      { stat: 'survival', category: 'LOW' },
-      { stat: 'winRate', category: 'HIGH' }
-    ],
     priority: 14
   },
 
@@ -265,7 +252,7 @@ export const COMBINATION_TITLES = [
       { stat: 'survival', category: 'HIGH' },
       { stat: 'winRateLoup', category: 'HIGH' }
     ],
-    priority: 14
+    priority: 15
   },
 
   // High loot villageois + High win rate villageois = The Model Citizen
@@ -278,7 +265,7 @@ export const COMBINATION_TITLES = [
       { stat: 'lootVillageois', category: 'HIGH' },
       { stat: 'winRateVillageois', category: 'HIGH' }
     ],
-    priority: 13
+    priority: 14
   },
 
   // Extreme high talk + Low loot + Low kills = The Commentator
@@ -295,11 +282,11 @@ export const COMBINATION_TITLES = [
     priority: 17
   },
 
-  // High win rate + High loot + High survival = The Perfect Player
+  // High win rate + High loot + High survival = MVP
   {
-    id: 'joueur_parfait',
-    title: 'Le·a Joueur·se Parfait·e',
-    emoji: '💎',
+    id: 'mvp',
+    title: 'Le·a MVP',
+    emoji: '⭐',
     description: 'Gagne, récolte, et survit',
     conditions: [
       { stat: 'winRate', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
@@ -320,7 +307,7 @@ export const COMBINATION_TITLES = [
       { stat: 'survival', category: 'LOW' },
       { stat: 'loot', category: 'LOW' }
     ],
-    priority: 19
+    priority: 13
   },
 
   // Low loot + High kill rate = The Assassin
@@ -333,14 +320,14 @@ export const COMBINATION_TITLES = [
       { stat: 'loot', category: 'LOW' },
       { stat: 'killRate', category: 'HIGH' }
     ],
-    priority: 12
+    priority: 14
   },
   
   // Low talk + High loot = Efficient
   {
     id: 'efficace',
     title: 'L\'Efficace',
-    emoji: '🎯',
+    emoji: '🏭',
     description: 'Silencieux·se mais productif·ve',
     conditions: [
       { stat: 'talking', category: 'LOW' },
@@ -372,7 +359,7 @@ export const COMBINATION_TITLES = [
       { stat: 'killRate', category: 'HIGH' },
       { stat: 'survival', category: 'HIGH' }
     ],
-    priority: 15
+    priority: 16
   },
 
   // High kills + Low survival = Kamikaze
@@ -398,7 +385,7 @@ export const COMBINATION_TITLES = [
       { stat: 'survivalDay1', category: 'LOW' },
       { stat: 'survival', category: 'HIGH' }
     ],
-    priority: 12
+    priority: 17
   },
 
   // Aggressive voter + First voter = Impulsive
@@ -438,7 +425,7 @@ export const COMBINATION_TITLES = [
       { stat: 'votingAccuracy', category: 'HIGH' },
       { stat: 'votingAggressive', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
     ],
-    priority: 14
+    priority: 16
   },
 
   // High talk + Bad voting = Demagogue
@@ -477,7 +464,7 @@ export const COMBINATION_TITLES = [
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'talking', category: 'HIGH' }
     ],
-    priority: 15
+    priority: 16
   },
 
   // High wolf win rate + High solo win rate = Traître
@@ -516,7 +503,7 @@ export const COMBINATION_TITLES = [
       { stat: 'winRate', category: 'EXTREME_LOW' },
       { stat: 'lossSeries', category: 'HIGH' }
     ],
-    priority: 20
+    priority: 13
   },
 
   // High loot + High survival + Low talk = Robot
@@ -530,7 +517,7 @@ export const COMBINATION_TITLES = [
       { stat: 'survival', category: 'HIGH' },
       { stat: 'talking', category: 'LOW' }
     ],
-    priority: 18
+    priority: 17
   },
 
   // High talk + Low loot + Low survival = Clown
@@ -544,7 +531,7 @@ export const COMBINATION_TITLES = [
       { stat: 'loot', category: 'LOW' },
       { stat: 'survival', category: 'LOW' }
     ],
-    priority: 18
+    priority: 17
   },
 
   // Serial Amoureux + Winner = Cupidon
@@ -570,7 +557,7 @@ export const COMBINATION_TITLES = [
       { stat: 'roleAmoureux', category: 'HIGH' },
       { stat: 'winRate', category: 'LOW' }
     ],
-    priority: 12
+    priority: 11
   },
 
   // Serial Chasseur + Good hunter accuracy = Sniper Elite
@@ -583,7 +570,7 @@ export const COMBINATION_TITLES = [
       { stat: 'roleChasseur', category: 'HIGH' },
       { stat: 'hunterAccuracy', category: 'HIGH' }
     ],
-    priority: 15
+    priority: 18
   },
 
   // Serial Chasseur + Bad hunter accuracy = Clumsy Hunter
@@ -606,10 +593,10 @@ export const COMBINATION_TITLES = [
     emoji: '🔑',
     description: 'Participe beaucoup et excelle dans un camp',
     conditions: [
-      { stat: 'gamesPlayed', category: 'HIGH', minValue: 100 },
+      { stat: 'gamesPlayed', category: 'HIGH' },
       { stat: 'campBalance', category: 'SPECIALIST' }
     ],
-    priority: 10
+    priority: 11
   },
 
   // High participation + balanced camps = The Enthusiast
@@ -619,10 +606,10 @@ export const COMBINATION_TITLES = [
     emoji: '🌟',
     description: 'Participe beaucoup et gagne autant dans chaque camp',
     conditions: [
-      { stat: 'gamesPlayed', category: 'HIGH', minValue: 100 },
+      { stat: 'gamesPlayed', category: 'HIGH' },
       { stat: 'campBalance', category: 'BALANCED' }
     ],
-    priority: 10
+    priority: 12
   },
 
   // High win rate + low participation = The Opportunist
@@ -635,7 +622,7 @@ export const COMBINATION_TITLES = [
       { stat: 'winRate', category: 'HIGH' },
       { stat: 'gamesPlayed', category: 'LOW' }
     ],
-    priority: 13
+    priority: 11
   },
 
   // Balanced win rates across all camps = The Adaptable
@@ -649,21 +636,21 @@ export const COMBINATION_TITLES = [
       { stat: 'winRateLoup', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
       { stat: 'winRateSolo', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
     ],
-    priority: 16
+    priority: 18
   },
 
   // Poor performance across all camps = The Struggling
   {
     id: 'en_rodage',
     title: 'En Rodage',
-    emoji: '⚙️',
+    emoji: '🔧',
     description: 'Peine dans tous les camps',
     conditions: [
       { stat: 'winRateVillageois', category: 'LOW' },
       { stat: 'winRateLoup', category: 'LOW' },
       { stat: 'winRateSolo', category: 'LOW' }
     ],
-    priority: 16
+    priority: 12
   },
 
   // High loot + Low survival = The Greedy
@@ -703,7 +690,7 @@ export const COMBINATION_TITLES = [
       { stat: 'loot', category: 'AVERAGE' },
       { stat: 'winRate', category: 'AVERAGE' }
     ],
-    priority: 5
+    priority: 15
   },
 
   // High voting accuracy + Low survival = Whistleblower
@@ -730,7 +717,7 @@ export const COMBINATION_TITLES = [
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'talking', category: 'LOW' }
     ],
-    priority: 16
+    priority: 18
   },
 
   // Serial Solo + High win rate Solo = Anarchist
@@ -757,7 +744,7 @@ export const COMBINATION_TITLES = [
       { stat: 'killRate', category: 'LOW' },
       { stat: 'winRate', category: 'HIGH' }
     ],
-    priority: 15
+    priority: 16
   },
 
   // High talk + High voting aggressive + Low voting accuracy = Populist
@@ -771,7 +758,7 @@ export const COMBINATION_TITLES = [
       { stat: 'votingAggressive', category: 'HIGH' },
       { stat: 'votingAccuracy', category: 'LOW' }
     ],
-    priority: 11
+    priority: 13
   },
 
   // Serial Chasseur + High kill rate + High survival = Vigilante
@@ -785,7 +772,7 @@ export const COMBINATION_TITLES = [
       { stat: 'killRate', category: 'HIGH' },
       { stat: 'survival', category: 'HIGH' }
     ],
-    priority: 16
+    priority: 18
   },
 
   // Extreme low talk + High win rate = Invisible
@@ -817,7 +804,7 @@ export const COMBINATION_TITLES = [
   // Low survival Day 1 + Low survival + High win rate = Sacrifice
   {
     id: 'sacrifice',
-    title: 'Le·a Sacrifice',
+    title: 'Le·a Sacrifié·e',
     emoji: '🕯️',
     description: 'Meurt rapidement mais fait gagner son camp',
     conditions: [
@@ -825,14 +812,14 @@ export const COMBINATION_TITLES = [
       { stat: 'survival', category: 'LOW' },
       { stat: 'winRate', category: 'HIGH' }
     ],
-    priority: 15
+    priority: 13
   },
 
   // Low survival Day 1 + high talking
   {
     id: 'grande_gueule',
     title: 'La Grande Gueule',
-    emoji: '📢',
+    emoji: '🗯️',
     description: 'Parle trop et meurt Jour 1',
     conditions: [
       { stat: 'survivalDay1', category: 'LOW' },
@@ -897,7 +884,7 @@ export const COMBINATION_TITLES = [
       { stat: 'loot', category: 'EXTREME_HIGH' },
       { stat: 'talking', category: 'EXTREME_LOW' }
     ],
-    priority: 16
+    priority: 18
   },
   // High talk + High survival + Low loot = The Politician
   {
@@ -910,7 +897,7 @@ export const COMBINATION_TITLES = [
       { stat: 'survival', category: 'HIGH' },
       { stat: 'loot', category: 'LOW' }
     ],
-    priority: 14
+    priority: 16
   },
 
   // === ZONE-BASED COMBINATION TITLES ===
@@ -937,7 +924,7 @@ export const COMBINATION_TITLES = [
       { stat: 'zoneFerme', category: 'HIGH' },
       { stat: 'loot', category: 'HIGH' }
     ],
-    priority: 12
+    priority: 11
   },
   // Explorer + high win rate = The Adventurer
   {
@@ -962,7 +949,7 @@ export const COMBINATION_TITLES = [
       { stat: 'zoneRuines', category: 'HIGH' },
       { stat: 'killRate', category: 'HIGH' }
     ],
-    priority: 12
+    priority: 13
   },
   // Ruines + Low Talking = The Hermit
   {
@@ -998,7 +985,7 @@ export const COMBINATION_TITLES = [
       { stat: 'zoneDominantPercentage', category: 'EXTREME_HIGH' },
       { stat: 'loot', category: 'LOW' }
     ],
-    priority: 12
+    priority: 14
   },
   // Explorer + High Loot = The Gatherer
   {

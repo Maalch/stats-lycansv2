@@ -113,6 +113,12 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
                          condition.stat === 'winRateLoup' ? 'Victoires Loup' :
                          condition.stat === 'winRateSolo' ? 'Victoires Solo' :
                          condition.stat === 'hunterAccuracy' ? 'Précision chasseur' :
+                         condition.stat === 'zoneVillagePrincipal' ? 'Village Principal' :
+                         condition.stat === 'zoneFerme' ? 'Ferme' :
+                         condition.stat === 'zoneVillagePecheur' ? 'Village Pêcheur' :
+                         condition.stat === 'zoneRuines' ? 'Ruines' :
+                         condition.stat === 'zoneResteCarte' ? 'Reste de la carte' :
+                         condition.stat === 'zoneDominantPercentage' ? 'Dominance zone' :
                          condition.stat}:
                       </span>
                       <span className={`condition-category ${condition.category?.toLowerCase()}`}>

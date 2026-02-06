@@ -12,7 +12,6 @@ import path from 'path';
 
 // Import compute functions
 import { computePlayerStats } from './compute/compute-player-stats.js';
-import { computePlayerCampPerformance } from './compute/compute-camp-performance.js';
 import { computePlayerSeriesData } from './compute/compute-series-data.js';
 import { computeVotingStatistics } from './compute/compute-voting-stats.js';
 import { computeHunterStatistics } from './compute/compute-hunter-stats.js';
@@ -33,14 +32,12 @@ const MIN_GAMES_FOR_ROLE_TITLES = 10;
 
 // Percentile thresholds for title categories
 const PERCENTILE_THRESHOLDS = {
-  EXTREME_HIGH: 85,   // Top 15% (was 90)
-  HIGH: 65,           // Top 35% (was 75)
-  ABOVE_AVERAGE: 55,  // Top 45% (was 60)
-  AVERAGE_HIGH: 52,
-  AVERAGE_LOW: 48,
-  BELOW_AVERAGE: 45,  // Bottom 55% (was 40)
-  LOW: 35,            // Bottom 35% (was 25)
-  EXTREME_LOW: 15     // Bottom 15% (was 10)
+  EXTREME_HIGH: 85,   // Top 15% 
+  HIGH: 65,           // Top 35% 
+  ABOVE_AVERAGE: 55,  // Top 45% 
+  BELOW_AVERAGE: 45,  // Bottom 55% 
+  LOW: 35,            // Bottom 35% 
+  EXTREME_LOW: 15     // Bottom 15% 
 };
 
 /**
@@ -66,7 +63,6 @@ function getPercentileCategory(percentile) {
   if (percentile >= PERCENTILE_THRESHOLDS.EXTREME_HIGH) return 'EXTREME_HIGH';
   if (percentile >= PERCENTILE_THRESHOLDS.HIGH) return 'HIGH';
   if (percentile >= PERCENTILE_THRESHOLDS.ABOVE_AVERAGE) return 'ABOVE_AVERAGE';
-  if (percentile >= PERCENTILE_THRESHOLDS.AVERAGE_HIGH) return 'AVERAGE';
   if (percentile <= PERCENTILE_THRESHOLDS.EXTREME_LOW) return 'EXTREME_LOW';
   if (percentile <= PERCENTILE_THRESHOLDS.LOW) return 'LOW';
   if (percentile <= PERCENTILE_THRESHOLDS.BELOW_AVERAGE) return 'BELOW_AVERAGE';
@@ -885,7 +881,7 @@ function generateCombinationTitles(percentiles) {
         return acceptableCategories.includes(playerData.category);
       }
       if (condition.category === 'AVERAGE') {
-        return ['AVERAGE', 'AVERAGE_HIGH', 'AVERAGE_LOW'].includes(playerData.category);
+        return playerData.category === 'AVERAGE';
       }
       if (condition.category === 'EXTREME_HIGH') {
         return playerData.category === 'EXTREME_HIGH';
