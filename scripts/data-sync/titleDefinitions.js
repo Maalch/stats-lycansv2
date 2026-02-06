@@ -488,7 +488,8 @@ export const COMBINATION_TITLES = [
     description: 'Gagne tout le temps + grosses séries',
     conditions: [
       { stat: 'winRate', category: 'EXTREME_HIGH' },
-      { stat: 'winSeries', category: 'HIGH' }
+      { stat: 'winSeries', category: 'HIGH' },
+      { stat: 'gamesPlayed', minValue: 100 },
     ],
     priority: 20
   },
