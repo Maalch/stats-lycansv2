@@ -52,7 +52,7 @@ export const TITLE_DEFINITIONS = {
 
   // Loot/Harvest titles
   loot: {
-    high: { title: 'Le·a Fermier·ère', emoji: '🌾', description: 'Récolte élevée' },
+    high: { title: 'Le·a Récolteur·euse', emoji: '🧺', description: 'Récolte élevée' },
     average: { title: 'Le·a Travailleur·se', emoji: '👷', description: 'Récolte correcte' },
     low: { title: 'Le·a Flâneur·se', emoji: '🚶', description: 'Récolte faible' },
     extremeHigh: { title: 'Le·a Stakhanoviste', emoji: '⚒️', description: 'Récolte exceptionnelle' },
@@ -920,24 +920,12 @@ export const COMBINATION_TITLES = [
     id: 'rodeur',
     title: 'Le·a Rôdeur·euse',
     emoji: '🌙',
-    description: 'Rôde hors des zones principales et survit',
+    description: 'Rôde hors des villages et survit',
     conditions: [
       { stat: 'zoneResteCarte', category: 'HIGH' },
       { stat: 'survival', category: 'HIGH' }
     ],
     priority: 12
-  },
-  // Controls a zone and wins = Territorial Strategist
-  {
-    id: 'stratege_territorial',
-    title: 'Le·a Stratège Territorial·e',
-    emoji: '🎯',
-    description: 'Domine une zone et gagne',
-    conditions: [
-      { stat: 'zoneDominantPercentage', category: 'HIGH' },
-      { stat: 'winRate', category: 'HIGH' }
-    ],
-    priority: 11
   },
   // Stays at farm + high loot = The Harvester
   {
@@ -961,6 +949,67 @@ export const COMBINATION_TITLES = [
       { stat: 'zoneDominantPercentage', category: 'LOW' },
       { stat: 'winRate', category: 'HIGH' }
     ],
-    priority: 13
+    priority: 12
+
   },
+  // Ruines + High Kill Rate = The Ambusher
+  {
+    id: 'embusquer',
+    title: 'L\'Embusqué·e',
+    emoji: '🏹',
+    description: 'Tend des pièges dans les Ruines',
+    conditions: [
+      { stat: 'zoneRuines', category: 'HIGH' },
+      { stat: 'killRate', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+  // Ruines + Low Talking = The Hermit
+  {
+    id: 'ermite',
+    title: 'L\'Ermite',
+    emoji: '🧙',
+    description: 'Silencieux·se, reclus·e dans les Ruines',
+    conditions: [
+      { stat: 'zoneRuines', category: 'HIGH' },
+      { stat: 'talking', category: 'LOW' }
+    ],
+    priority: 12
+  },
+  // Village Pêcheur + High Survival = The Harbor Master
+  {
+    id: 'capitaine_port',
+    title: 'Le·a Capitaine du Port',
+    emoji: '⚓',
+    description: 'Survit au bord de l\'eau',
+    conditions: [
+      { stat: 'zoneVillagePecheur', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+  // Casanier (high dominant%) + Low Loot = The Camper
+  {
+    id: 'campeur',
+    title: 'Le·a Campeur·euse',
+    emoji: '🏕️',
+    description: 'Reste au même endroit sans récolter',
+    conditions: [
+      { stat: 'zoneDominantPercentage', category: 'EXTREME_HIGH' },
+      { stat: 'loot', category: 'LOW' }
+    ],
+    priority: 12
+  },
+  // Explorer + High Loot = The Gatherer
+  {
+    id: 'cueilleur',
+    title: 'Le·a Cueilleur·se',
+    emoji: '🧺',
+    description: 'Récolte en parcourant toute la carte',
+    conditions: [
+      { stat: 'zoneDominantPercentage', category: 'LOW' },
+      { stat: 'loot', category: 'HIGH' }
+    ],
+    priority: 12
+  }
 ];
