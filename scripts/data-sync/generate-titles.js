@@ -19,6 +19,7 @@ import { computeHunterStatistics } from './compute/compute-hunter-stats.js';
 import { computeTalkingTimeStats } from './compute/compute-talking-stats.js';
 import { computeDeathStatistics } from './compute/compute-death-stats.js';
 import { computeLootStatistics } from './compute/compute-loot-stats.js';
+import { computeZoneStatistics } from './compute/compute-zone-stats.js';
 
 // Import data source configuration
 import { DATA_SOURCES } from './shared/data-sources.js';
@@ -88,7 +89,6 @@ function computeAllStatistics(moddedGames) {
 
   // Compute all stats using existing compute functions
   const playerStats = computePlayerStats(moddedGames);
-  const campStats = computePlayerCampPerformance(moddedGames);
   const seriesData = computePlayerSeriesData(moddedGames);
   const votingStats = computeVotingStatistics(moddedGames);
   const hunterStats = computeHunterStatistics(moddedGames);
@@ -101,6 +101,14 @@ function computeAllStatistics(moddedGames) {
     lootStats = computeLootStatistics(moddedGames);
   } catch (e) {
     console.log('  ⚠️  Loot statistics not available');
+  }
+
+  // Compute zone stats (Village map only)
+  let zoneStats = null;
+  try {
+    zoneStats = computeZoneStatistics(moddedGames);
+  } catch (e) {
+    console.log('  ⚠️  Zone statistics not available:', e.message);
   }
 
   // Aggregate all stats by player
@@ -283,6 +291,26 @@ function computeAllStatistics(moddedGames) {
         ? player.lootVillageoisPer60Min : null;
       agg.stats.lootLoupPer60Min = (player.lootLoupPer60Min !== undefined && player.lootLoupPer60Min !== null) 
         ? player.lootLoupPer60Min : null;
+    });
+  }
+
+  // Process zone stats (Village map position analysis)
+  if (zoneStats?.playerStats) {
+    zoneStats.playerStats.forEach(player => {
+      const playerId = player.playerId;
+      if (!aggregatedStats.has(playerId)) return;
+      const agg = aggregatedStats.get(playerId);
+
+      // Only set zone stats if player has enough position data points (at least 10)
+      if (player.totalPositions >= 10) {
+        agg.stats.zoneVillagePrincipal = player.zonePercentages['Village Principal'] ?? null;
+        agg.stats.zoneFerme = player.zonePercentages['Ferme'] ?? null;
+        agg.stats.zoneVillagePecheur = player.zonePercentages['Village P\u00eacheur'] ?? null;
+        agg.stats.zoneRuines = player.zonePercentages['Ruines'] ?? null;
+        agg.stats.zoneResteCarte = player.zonePercentages['Reste de la Carte'] ?? null;
+        agg.stats.zoneDominantPercentage = player.dominantZonePercentage ?? null;
+        agg.stats.zoneTotalPositions = player.totalPositions;
+      }
     });
   }
 
@@ -628,7 +656,13 @@ function generateBasicTitles(percentiles) {
     winRateSolo: 'winRateSolo',
     longestWinSeries: 'winSeries',
     longestLossSeries: 'lossSeries',
-    gamesPlayed: 'participation'
+    gamesPlayed: 'participation',
+    zoneVillagePrincipal: 'zoneVillagePrincipal',
+    zoneFerme: 'zoneFerme',
+    zoneVillagePecheur: 'zoneVillagePecheur',
+    zoneRuines: 'zoneRuines',
+    zoneResteCarte: 'zoneResteCarte',
+    zoneDominantPercentage: 'zoneDominantPercentage'
   };
 
   Object.entries(percentiles).forEach(([statName, data]) => {
@@ -806,7 +840,13 @@ function generateCombinationTitles(percentiles) {
     gamesPlayed: 'gamesPlayed',
     roleAmoureux: 'roleAmoureux',
     roleChasseur: 'roleChasseur',
-    campBalance: 'campBalance' // Synthetic stat
+    campBalance: 'campBalance', // Synthetic stat
+    zoneVillagePrincipal: 'zoneVillagePrincipal',
+    zoneFerme: 'zoneFerme',
+    zoneVillagePecheur: 'zoneVillagePecheur',
+    zoneRuines: 'zoneRuines',
+    zoneResteCarte: 'zoneResteCarte',
+    zoneDominantPercentage: 'zoneDominantPercentage'
   };
 
   COMBINATION_TITLES.forEach(combo => {    

@@ -152,6 +152,33 @@ export const TITLE_DEFINITIONS = {
   campBalance: {
     balanced: { title: 'Le·a Polyvalent·e', emoji: '🎭', description: 'Performance équilibrée dans tous les camps' },
     specialist: { title: 'Le·a Spécialiste', emoji: '🎯', description: 'Excellent dans un camp spécifique' }
+  },
+
+  // === ZONE STATS (Village map position analysis) ===
+
+  // Per-zone affinity titles (only extremeHigh is meaningful per zone)
+  zoneVillagePrincipal: {
+    extremeHigh: { title: 'Le·a Citadin·e', emoji: '🏘️', description: 'Traîne beaucoup au Village Principal' }
+  },
+  zoneFerme: {
+    extremeHigh: { title: 'Le·a Fermier·ère', emoji: '🌾', description: 'Traîne beaucoup à la Ferme' }
+  },
+  zoneVillagePecheur: {
+    extremeHigh: { title: 'Le·a Pêcheur·euse', emoji: '🎣', description: 'Traîne beaucoup au Village Pêcheur' }
+  },
+  zoneRuines: {
+    extremeHigh: { title: 'L\'Archéologue', emoji: '🏛️', description: 'Traîne beaucoup aux Ruines' }
+  },
+  zoneResteCarte: {
+    extremeHigh: { title: 'Le·a Nomade', emoji: '🧭', description: 'Traîne beaucoup hors des zones principales' }
+  },
+
+  // Dominant zone concentration (meaningful in both directions)
+  zoneDominantPercentage: {
+    extremeHigh: { title: 'Le·a Casanier·ère', emoji: '🏠', description: 'Toujours dans la même zone' },
+    high: { title: 'L\'Habitué·e', emoji: '🪑', description: 'A un coin préféré' },
+    low: { title: 'Le·a Vagabond·e', emoji: '🗺️', description: 'Se déplace beaucoup entre les zones' },
+    extremeLow: { title: 'L\'Explorateur·ice', emoji: '🧭', description: 'Réparti·e uniformément sur toute la carte' }
   }
 };
 
@@ -884,5 +911,56 @@ export const COMBINATION_TITLES = [
       { stat: 'loot', category: 'LOW' }
     ],
     priority: 14
+  },
+
+  // === ZONE-BASED COMBINATION TITLES ===
+
+  // Survives outside main zones = The Prowler
+  {
+    id: 'rodeur',
+    title: 'Le·a Rôdeur·euse',
+    emoji: '🌙',
+    description: 'Rôde hors des zones principales et survit',
+    conditions: [
+      { stat: 'zoneResteCarte', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+  // Controls a zone and wins = Territorial Strategist
+  {
+    id: 'stratege_territorial',
+    title: 'Le·a Stratège Territorial·e',
+    emoji: '🎯',
+    description: 'Domine une zone et gagne',
+    conditions: [
+      { stat: 'zoneDominantPercentage', category: 'HIGH' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 11
+  },
+  // Stays at farm + high loot = The Harvester
+  {
+    id: 'moissonneur',
+    title: 'Le·a Moissonneur·euse',
+    emoji: '🌾',
+    description: 'Récolte à la Ferme sans relâche',
+    conditions: [
+      { stat: 'zoneFerme', category: 'HIGH' },
+      { stat: 'loot', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+  // Explorer + high win rate = The Adventurer
+  {
+    id: 'aventurier',
+    title: 'L\'Aventurier·ère',
+    emoji: '🗺️',
+    description: 'Explore toute la carte et gagne',
+    conditions: [
+      { stat: 'zoneDominantPercentage', category: 'LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 13
   },
 ];
