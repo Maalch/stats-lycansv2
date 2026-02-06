@@ -340,11 +340,15 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     
     const awsGameLogs = [];
     console.log(`📦 Fetching ${gameLogUrls.length} AWS game log files...`);
+    console.log(`🔧 Correcting victorious status for disconnected players (${config.name})...`);
     
     for (const url of gameLogUrls) {
       try {
         const gameLog = await fetchGameLogData(url);
-        awsGameLogs.push(gameLog);
+          // Correct victorious status for disconnected players and Lover secondary role (Main Team only)
+          let correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog, MAIN_TEAM_FILTER);
+          correctedGameLog = correctLoverSecondaryRole(correctedGameLog, MAIN_TEAM_FILTER);
+          awsGameLogs.push(correctedGameLog);
         
         // Small delay between requests to be respectful to S3
         await new Promise(resolve => setTimeout(resolve, 500));
