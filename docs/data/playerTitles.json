@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-06T15:46:05.028Z",
+  "generatedAt": "2026-02-06T15:53:11.281Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -19,29 +19,6 @@
       "playerName": "BoccA",
       "gamesPlayed": 76,
       "titles": [
-        {
-          "id": "legende",
-          "title": "La Légende",
-          "emoji": "🏅",
-          "description": "Gagne tout le temps + grosses séries",
-          "priority": 20,
-          "type": "combination",
-          "percentile": 83.78378378378379,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "EXTREME_HIGH",
-              "actualValue": 52.6,
-              "actualPercentile": 97.2972972972973
-            },
-            {
-              "stat": "winSeries",
-              "category": "HIGH",
-              "actualValue": 6,
-              "actualPercentile": 70.27027027027027
-            }
-          ]
-        },
         {
           "id": "adaptable",
           "title": "L'Adaptable",
@@ -205,25 +182,31 @@
         }
       ],
       "primaryTitle": {
-        "id": "legende",
-        "title": "La Légende",
-        "emoji": "🏅",
-        "description": "Gagne tout le temps + grosses séries",
-        "priority": 20,
+        "id": "adaptable",
+        "title": "L'Adaptable",
+        "emoji": "🦎",
+        "description": "Bon dans tous les camps",
+        "priority": 18,
         "type": "combination",
-        "percentile": 83.78378378378379,
+        "percentile": 81.80761406567858,
         "conditions": [
           {
-            "stat": "winRate",
-            "category": "EXTREME_HIGH",
-            "actualValue": 52.6,
-            "actualPercentile": 97.2972972972973
+            "stat": "winRateVillageois",
+            "category": "HIGH",
+            "actualValue": 64.15094339622641,
+            "actualPercentile": 89.1891891891892
           },
           {
-            "stat": "winSeries",
+            "stat": "winRateLoup",
             "category": "HIGH",
-            "actualValue": 6,
-            "actualPercentile": 70.27027027027027
+            "actualValue": 57.14285714285714,
+            "actualPercentile": 96.7741935483871
+          },
+          {
+            "stat": "winRateSolo",
+            "category": "HIGH",
+            "actualValue": 12.5,
+            "actualPercentile": 59.45945945945946
           }
         ]
       },
