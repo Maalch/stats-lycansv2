@@ -609,7 +609,7 @@ export const COMBINATION_TITLES = [
       { stat: 'gamesPlayed', category: 'HIGH' },
       { stat: 'campBalance', category: 'BALANCED' }
     ],
-    priority: 12
+    priority: 10
   },
 
   // High win rate + low participation = The Opportunist
