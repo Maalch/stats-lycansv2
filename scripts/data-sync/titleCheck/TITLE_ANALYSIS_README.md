@@ -8,22 +8,22 @@ The `analyze-title-eligibility.js` script analyzes which players are closest to 
 
 ```bash
 # Basic usage (analyze all titles for main team)
-node scripts/data-sync/analyze-title-eligibility.js main
+node scripts/data-sync/titleCheck/analyze-title-eligibility.js main
 
 # Filter by priority (show only high-priority titles)
-node scripts/data-sync/analyze-title-eligibility.js main --priority 18
+node scripts/data-sync/titleCheck/analyze-title-eligibility.js main --priority 18
 
 # Specific titles only
-node scripts/data-sync/analyze-title-eligibility.js main --title legende,sniper_elite,justicier
+node scripts/data-sync/titleCheck/analyze-title-eligibility.js main --title legende,sniper_elite,justicier
 
 # Show more candidates per title
-node scripts/data-sync/analyze-title-eligibility.js main --top 10
+node scripts/data-sync/titleCheck/analyze-title-eligibility.js main --top 10
 
 # JSON output for programmatic consumption
-node scripts/data-sync/analyze-title-eligibility.js main --json
+node scripts/data-sync/titleCheck/analyze-title-eligibility.js main --json
 
 # Discord team data
-node scripts/data-sync/analyze-title-eligibility.js discord --priority 15
+node scripts/data-sync/titleCheck/analyze-title-eligibility.js discord --priority 15
 ```
 
 ## Options

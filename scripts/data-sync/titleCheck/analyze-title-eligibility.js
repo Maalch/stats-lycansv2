@@ -133,6 +133,15 @@ function evaluateCondition(playerPercentiles, roleData, condition) {
   
   // Map condition stat names to actual percentile keys
   const statNameMap = {
+    'talking': 'talkingPer60Min',
+    'talkingOutsideMeeting': 'talkingOutsidePer60Min',
+    'talkingDuringMeeting': 'talkingDuringPer60Min',
+    'loot': 'lootPer60Min',
+    'lootVillageois': 'lootVillageoisPer60Min',
+    'lootLoup': 'lootLoupPer60Min',
+    'survival': 'survivalRate',
+    'survivalDay1': 'survivalDay1Rate',
+    'votingAggressive': 'votingAggressiveness',
     'winSeries': 'longestWinSeries',
     'lossSeries': 'longestLossSeries'
   };
@@ -524,7 +533,10 @@ function computeAllStatistics(moddedGames) {
         ? ((gamesPlayed - day1Deaths) / gamesPlayed) * 100 
         : null;
       
-      agg.stats.killRate = player.totalKills || 0;
+      // Kill rate - get from killerStats
+      const killerData = deathStats.killerStats?.find(k => k.killerId === playerId);
+      const kills = killerData?.kills || 0;
+      agg.stats.killRate = kills / Math.max(gamesPlayed, 1);
     });
   }
 
