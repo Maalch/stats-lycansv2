@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-06T13:06:23.649Z",
+  "generatedAt": "2026-02-08T06:18:30.280Z",
   "teamName": "Discord Team",
   "totalPlayers": 44,
   "minGamesRequired": 25,
@@ -9,8 +9,6 @@
     "EXTREME_HIGH": 85,
     "HIGH": 65,
     "ABOVE_AVERAGE": 55,
-    "AVERAGE_HIGH": 52,
-    "AVERAGE_LOW": 48,
     "BELOW_AVERAGE": 45,
     "LOW": 35,
     "EXTREME_LOW": 15
@@ -131,7 +129,7 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -286,6 +284,16 @@
           "percentile": 63.63636363636363,
           "category": "ABOVE_AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 6,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 757.4623602537866,
           "percentile": 58.139534883720934,
@@ -355,6 +363,8 @@
         "survivalRate": 54.74452554744526,
         "survivalDay1Rate": 90.51094890510949,
         "killRate": 0.5620437956204379,
+        "longestWinSeries": 5,
+        "longestLossSeries": 6,
         "lootPer60Min": 757.4623602537866,
         "lootVillageoisPer60Min": 840.1571837130583,
         "lootLoupPer60Min": 639.4479505940394,
@@ -377,7 +387,7 @@
           "title": "Le·a Débutant·e",
           "emoji": "🆘",
           "description": "Peine en victoire, survie et récolte",
-          "priority": 19,
+          "priority": 13,
           "type": "combination",
           "percentile": 25.968992248062012,
           "conditions": [
@@ -414,6 +424,31 @@
           "type": "basic"
         },
         {
+          "id": "winSeries_extreme_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 7,
+          "percentile": 88.63636363636364,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "Ekaenerys"
+        },
+        {
+          "id": "lossSeries_extreme_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 11,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_low",
           "title": "Le·a Looser",
           "emoji": "😢",
@@ -435,8 +470,7 @@
           "percentile": 65.9090909090909,
           "category": "HIGH",
           "priority": 6,
-          "type": "basic",
-          "primaryOwner": "Ekaenerys"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_low",
@@ -587,7 +621,7 @@
         "title": "Le·a Débutant·e",
         "emoji": "🆘",
         "description": "Peine en victoire, survie et récolte",
-        "priority": 19,
+        "priority": 13,
         "type": "combination",
         "percentile": 25.968992248062012,
         "conditions": [
@@ -697,6 +731,16 @@
           "percentile": 36.36363636363637,
           "category": "BELOW_AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 7,
+          "percentile": 88.63636363636364,
+          "category": "EXTREME_HIGH"
+        },
+        "longestLossSeries": {
+          "value": 11,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH"
+        },
         "lootPer60Min": {
           "value": 640.0230951813337,
           "percentile": 27.906976744186046,
@@ -766,6 +810,8 @@
         "survivalRate": 33.33333333333333,
         "survivalDay1Rate": 88.50574712643679,
         "killRate": 0.3793103448275862,
+        "longestWinSeries": 7,
+        "longestLossSeries": 11,
         "lootPer60Min": 640.0230951813337,
         "lootVillageoisPer60Min": 727.7602504440501,
         "lootLoupPer60Min": 424.50637699927734,
@@ -783,6 +829,18 @@
       "playerName": "Ekaenerys",
       "gamesPlayed": 113,
       "titles": [
+        {
+          "id": "winSeries_extreme_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 7,
+          "percentile": 88.63636363636364,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
         {
           "id": "participation_high",
           "title": "Le·a Noctambule",
@@ -857,7 +915,7 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -939,15 +997,15 @@
         }
       ],
       "primaryTitle": {
-        "id": "participation_high",
-        "title": "Le·a Noctambule",
-        "emoji": "🌙",
-        "description": "Joue énormément de parties",
-        "stat": "gamesPlayed",
-        "value": 113,
-        "percentile": 84.0909090909091,
-        "category": "HIGH",
-        "priority": 6,
+        "id": "winSeries_extreme_high",
+        "title": "En Feu",
+        "emoji": "🔥",
+        "description": "Grosse série de victoires",
+        "stat": "longestWinSeries",
+        "value": 7,
+        "percentile": 88.63636363636364,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
         "type": "basic"
       },
       "percentiles": {
@@ -1036,6 +1094,16 @@
           "percentile": 50,
           "category": "AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 7,
+          "percentile": 88.63636363636364,
+          "category": "EXTREME_HIGH"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 584.5085483756437,
           "percentile": 16.27906976744186,
@@ -1105,6 +1173,8 @@
         "survivalRate": 44.24778761061947,
         "survivalDay1Rate": 92.03539823008849,
         "killRate": 0.49557522123893805,
+        "longestWinSeries": 7,
+        "longestLossSeries": 5,
         "lootPer60Min": 584.5085483756437,
         "lootVillageoisPer60Min": 581.1870828535067,
         "lootLoupPer60Min": 491.63617813863954,
@@ -1262,6 +1332,18 @@
           "stat": "survivalRate",
           "value": 46.478873239436616,
           "percentile": 77.27272727272727,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 8,
+          "percentile": 70.45454545454545,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -1432,6 +1514,16 @@
           "percentile": 52.27272727272727,
           "category": "AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 8,
+          "percentile": 70.45454545454545,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 794.0940273311054,
           "percentile": 67.44186046511628,
@@ -1503,6 +1595,8 @@
         "survivalRate": 46.478873239436616,
         "survivalDay1Rate": 90.14084507042254,
         "killRate": 0.5070422535211268,
+        "longestWinSeries": 5,
+        "longestLossSeries": 8,
         "lootPer60Min": 794.0940273311054,
         "lootVillageoisPer60Min": 830.3429355460157,
         "lootLoupPer60Min": 723.4234097924106,
@@ -1520,35 +1614,6 @@
       "playerName": "Stalbadass",
       "gamesPlayed": 105,
       "titles": [
-        {
-          "id": "pitre",
-          "title": "Le·a Pitre",
-          "emoji": "🎪",
-          "description": "Bavard·e, improductif·ve, meurt souvent",
-          "priority": 18,
-          "type": "combination",
-          "percentile": 40.90909090909091,
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 1132.4696327777056,
-              "actualPercentile": 88.37209302325581
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 547.8137510999723,
-              "actualPercentile": 11.627906976744185
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 32.38095238095238,
-              "actualPercentile": 22.727272727272727
-            }
-          ]
-        },
         {
           "id": "commentateur",
           "title": "Le·a Commentateur·rice",
@@ -1575,6 +1640,35 @@
               "category": "LOW",
               "actualValue": 0.2761904761904762,
               "actualPercentile": 18.181818181818183
+            }
+          ]
+        },
+        {
+          "id": "pitre",
+          "title": "Le·a Pitre",
+          "emoji": "🎪",
+          "description": "Bavard·e, improductif·ve, meurt souvent",
+          "priority": 17,
+          "type": "combination",
+          "percentile": 40.90909090909091,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 1132.4696327777056,
+              "actualPercentile": 88.37209302325581
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 547.8137510999723,
+              "actualPercentile": 11.627906976744185
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 32.38095238095238,
+              "actualPercentile": 22.727272727272727
             }
           ]
         },
@@ -1674,8 +1768,7 @@
           "percentile": 77.27272727272727,
           "category": "HIGH",
           "priority": 6,
-          "type": "basic",
-          "primaryOwner": "Ekaenerys"
+          "type": "basic"
         },
         {
           "id": "winRateSolo_low",
@@ -1799,7 +1892,7 @@
         "title": "Le·a Pitre",
         "emoji": "🎪",
         "description": "Bavard·e, improductif·ve, meurt souvent",
-        "priority": 18,
+        "priority": 17,
         "type": "combination",
         "percentile": 40.90909090909091,
         "conditions": [
@@ -1919,6 +2012,16 @@
           "percentile": 18.181818181818183,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 3,
+          "percentile": 11.363636363636363,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 547.8137510999723,
           "percentile": 11.627906976744185,
@@ -1990,6 +2093,8 @@
         "survivalRate": 32.38095238095238,
         "survivalDay1Rate": 90.47619047619048,
         "killRate": 0.2761904761904762,
+        "longestWinSeries": 3,
+        "longestLossSeries": 5,
         "lootPer60Min": 547.8137510999723,
         "lootVillageoisPer60Min": 576.0149697300805,
         "lootLoupPer60Min": 484.45885733154114,
@@ -2007,6 +2112,28 @@
       "playerName": "Enamore",
       "gamesPlayed": 182,
       "titles": [
+        {
+          "id": "taulier",
+          "title": "Le·a Taulier·e",
+          "emoji": "🔑",
+          "description": "Participe beaucoup et excelle dans un camp",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 95.45454545454545,
+          "conditions": [
+            {
+              "stat": "gamesPlayed",
+              "category": "HIGH",
+              "actualValue": 182,
+              "actualPercentile": 95.45454545454545
+            },
+            {
+              "stat": "campBalance",
+              "category": "SPECIALIST",
+              "actualPercentile": 0
+            }
+          ]
+        },
         {
           "id": "prudent",
           "title": "Le·a Prudent·e",
@@ -2027,28 +2154,6 @@
               "category": "HIGH",
               "actualValue": 42.30769230769231,
               "actualPercentile": 68.18181818181817
-            }
-          ]
-        },
-        {
-          "id": "taulier",
-          "title": "Le·a Taulier·e",
-          "emoji": "🔑",
-          "description": "Participe beaucoup et excelle dans un camp",
-          "priority": 10,
-          "type": "combination",
-          "percentile": 95.45454545454545,
-          "conditions": [
-            {
-              "stat": "gamesPlayed",
-              "category": "HIGH",
-              "actualValue": 182,
-              "actualPercentile": 95.45454545454545
-            },
-            {
-              "stat": "campBalance",
-              "category": "SPECIALIST",
-              "actualPercentile": 0
             }
           ]
         },
@@ -2209,6 +2314,18 @@
           "type": "basic"
         },
         {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 9,
+          "percentile": 81.81818181818183,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -2232,25 +2349,24 @@
         }
       ],
       "primaryTitle": {
-        "id": "prudent",
-        "title": "Le·a Prudent·e",
-        "emoji": "🛡️",
-        "description": "Survit mais récolte peu",
+        "id": "taulier",
+        "title": "Le·a Taulier·e",
+        "emoji": "🔑",
+        "description": "Participe beaucoup et excelle dans un camp",
         "priority": 11,
         "type": "combination",
-        "percentile": 52.69556025369978,
+        "percentile": 95.45454545454545,
         "conditions": [
           {
-            "stat": "loot",
-            "category": "LOW",
-            "actualValue": 679.6470383025278,
-            "actualPercentile": 37.2093023255814
+            "stat": "gamesPlayed",
+            "category": "HIGH",
+            "actualValue": 182,
+            "actualPercentile": 95.45454545454545
           },
           {
-            "stat": "survival",
-            "category": "HIGH",
-            "actualValue": 42.30769230769231,
-            "actualPercentile": 68.18181818181817
+            "stat": "campBalance",
+            "category": "SPECIALIST",
+            "actualPercentile": 0
           }
         ]
       },
@@ -2350,6 +2466,16 @@
           "percentile": 34.090909090909086,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 9,
+          "percentile": 81.81818181818183,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 679.6470383025278,
           "percentile": 37.2093023255814,
@@ -2421,6 +2547,8 @@
         "survivalRate": 42.30769230769231,
         "survivalDay1Rate": 86.26373626373626,
         "killRate": 0.3791208791208791,
+        "longestWinSeries": 5,
+        "longestLossSeries": 9,
         "lootPer60Min": 679.6470383025278,
         "lootVillageoisPer60Min": 724.3001466058781,
         "lootLoupPer60Min": 565.8065031932507,
@@ -2443,7 +2571,7 @@
           "title": "Le·a Populiste",
           "emoji": "📢",
           "description": "Bruyant·e et actif·ve mais se trompe de cible",
-          "priority": 11,
+          "priority": 13,
           "type": "combination",
           "percentile": 91.93974630021141,
           "conditions": [
@@ -2610,8 +2738,7 @@
           "percentile": 79.54545454545455,
           "category": "HIGH",
           "priority": 6,
-          "type": "basic",
-          "primaryOwner": "Ekaenerys"
+          "type": "basic"
         },
         {
           "id": "talkingDuringMeeting_high",
@@ -2634,6 +2761,18 @@
           "value": 31.775700934579437,
           "percentile": 18.181818181818183,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winSeries_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 6,
+          "percentile": 79.54545454545455,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -2677,7 +2816,7 @@
         "title": "Le·a Populiste",
         "emoji": "📢",
         "description": "Bruyant·e et actif·ve mais se trompe de cible",
-        "priority": 11,
+        "priority": 13,
         "type": "combination",
         "percentile": 91.93974630021141,
         "conditions": [
@@ -2787,6 +2926,16 @@
           "percentile": 47.72727272727273,
           "category": "AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 6,
+          "percentile": 79.54545454545455,
+          "category": "HIGH"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 755.4641235722942,
           "percentile": 55.81395348837209,
@@ -2856,6 +3005,8 @@
         "survivalRate": 31.775700934579437,
         "survivalDay1Rate": 81.30841121495327,
         "killRate": 0.42990654205607476,
+        "longestWinSeries": 6,
+        "longestLossSeries": 5,
         "lootPer60Min": 755.4641235722942,
         "lootVillageoisPer60Min": 816.6535418776008,
         "lootLoupPer60Min": 620.4297527613725,
@@ -3006,6 +3157,18 @@
           "type": "basic"
         },
         {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 8,
+          "percentile": 70.45454545454545,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "lootVillageois_low",
           "title": "Le·a Villageois·e Paresseux·se",
           "emoji": "💤",
@@ -3150,6 +3313,16 @@
           "percentile": 45.45454545454545,
           "category": "AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 8,
+          "percentile": 70.45454545454545,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 732.8755516481733,
           "percentile": 48.837209302325576,
@@ -3219,6 +3392,8 @@
         "survivalRate": 36.76470588235294,
         "survivalDay1Rate": 89.70588235294117,
         "killRate": 0.4264705882352941,
+        "longestWinSeries": 5,
+        "longestLossSeries": 8,
         "lootPer60Min": 732.8755516481733,
         "lootVillageoisPer60Min": 706.6729812882193,
         "lootLoupPer60Min": 685.765093137935,
@@ -3241,7 +3416,7 @@
           "title": "Le·a Maître·sse de Cérémonie",
           "emoji": "🎙️",
           "description": "Mène les débats et vote juste",
-          "priority": 14,
+          "priority": 16,
           "type": "combination",
           "percentile": 93.11134601832276,
           "conditions": [
@@ -3435,8 +3610,7 @@
           "percentile": 81.81818181818183,
           "category": "HIGH",
           "priority": 6,
-          "type": "basic",
-          "primaryOwner": "Ekaenerys"
+          "type": "basic"
         },
         {
           "id": "winRateLoup_high",
@@ -3452,7 +3626,7 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -3514,7 +3688,7 @@
         "title": "Le·a Maître·sse de Cérémonie",
         "emoji": "🎙️",
         "description": "Mène les débats et vote juste",
-        "priority": 14,
+        "priority": 16,
         "type": "combination",
         "percentile": 93.11134601832276,
         "conditions": [
@@ -3624,6 +3798,16 @@
           "percentile": 68.18181818181817,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 766.3343261681806,
           "percentile": 60.46511627906976,
@@ -3693,6 +3877,8 @@
         "survivalRate": 52.72727272727272,
         "survivalDay1Rate": 91.81818181818183,
         "killRate": 0.6,
+        "longestWinSeries": 5,
+        "longestLossSeries": 5,
         "lootPer60Min": 766.3343261681806,
         "lootVillageoisPer60Min": 830.4730464103158,
         "lootLoupPer60Min": 544.0205023971014,
@@ -3903,6 +4089,18 @@
           "type": "basic"
         },
         {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 8,
+          "percentile": 70.45454545454545,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_high",
           "title": "Le·a Récolteur·euse",
           "emoji": "🧺",
@@ -4058,6 +4256,16 @@
           "percentile": 31.818181818181817,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 3,
+          "percentile": 11.363636363636363,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 8,
+          "percentile": 70.45454545454545,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 792.5628500549859,
           "percentile": 65.11627906976744,
@@ -4127,6 +4335,8 @@
         "survivalRate": 30.76923076923077,
         "survivalDay1Rate": 88.46153846153845,
         "killRate": 0.34615384615384615,
+        "longestWinSeries": 3,
+        "longestLossSeries": 8,
         "lootPer60Min": 792.5628500549859,
         "lootVillageoisPer60Min": 878.4475527207414,
         "lootLoupPer60Min": 535.7529583580905,
@@ -4149,7 +4359,7 @@
           "title": "Le·a Robot",
           "emoji": "🤖",
           "description": "Productif·ve, survit, parle peu",
-          "priority": 18,
+          "priority": 17,
           "type": "combination",
           "percentile": 90.72410147991545,
           "conditions": [
@@ -4222,7 +4432,7 @@
         {
           "id": "efficace",
           "title": "L'Efficace",
-          "emoji": "🎯",
+          "emoji": "🏭",
           "description": "Silencieux·se mais productif·ve",
           "priority": 10,
           "type": "combination",
@@ -4366,7 +4576,7 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -4383,6 +4593,18 @@
           "description": "Taux de kills élevé",
           "stat": "killRate",
           "value": 0.71875,
+          "percentile": 81.81818181818183,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 9,
           "percentile": 81.81818181818183,
           "category": "HIGH",
           "priority": 6,
@@ -4452,7 +4674,7 @@
         "title": "Le·a Robot",
         "emoji": "🤖",
         "description": "Productif·ve, survit, parle peu",
-        "priority": 18,
+        "priority": 17,
         "type": "combination",
         "percentile": 90.72410147991545,
         "conditions": [
@@ -4562,6 +4784,16 @@
           "percentile": 81.81818181818183,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 9,
+          "percentile": 81.81818181818183,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 886.0169626154277,
           "percentile": 83.72093023255815,
@@ -4631,6 +4863,8 @@
         "survivalRate": 59.375,
         "survivalDay1Rate": 90.625,
         "killRate": 0.71875,
+        "longestWinSeries": 5,
+        "longestLossSeries": 9,
         "lootPer60Min": 886.0169626154277,
         "lootVillageoisPer60Min": 921.0744410175777,
         "lootLoupPer60Min": 457.9169548522503,
@@ -4653,7 +4887,7 @@
           "title": "Le·a Campeur·euse",
           "emoji": "🏕️",
           "description": "Reste au même endroit sans récolter",
-          "priority": 12,
+          "priority": 14,
           "type": "combination",
           "percentile": 58.21881606765327,
           "conditions": [
@@ -4832,7 +5066,7 @@
         "title": "Le·a Campeur·euse",
         "emoji": "🏕️",
         "description": "Reste au même endroit sans récolter",
-        "priority": 12,
+        "priority": 14,
         "type": "combination",
         "percentile": 58.21881606765327,
         "conditions": [
@@ -4936,6 +5170,16 @@
           "percentile": 90.9090909090909,
           "category": "EXTREME_HIGH"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 6,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 603.3552877658659,
           "percentile": 23.25581395348837,
@@ -5005,6 +5249,8 @@
         "survivalRate": 36.58536585365854,
         "survivalDay1Rate": 90.2439024390244,
         "killRate": 0.7317073170731707,
+        "longestWinSeries": 4,
+        "longestLossSeries": 6,
         "lootPer60Min": 603.3552877658659,
         "lootVillageoisPer60Min": 586.6248525668282,
         "lootLoupPer60Min": 340.944854355352,
@@ -5143,11 +5389,35 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
           "value": 93.07692307692308,
+          "percentile": 81.81818181818183,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winSeries_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 6,
+          "percentile": 79.54545454545455,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 9,
           "percentile": 81.81818181818183,
           "category": "HIGH",
           "priority": 6,
@@ -5332,6 +5602,16 @@
           "percentile": 93.18181818181817,
           "category": "EXTREME_HIGH"
         },
+        "longestWinSeries": {
+          "value": 6,
+          "percentile": 79.54545454545455,
+          "category": "HIGH"
+        },
+        "longestLossSeries": {
+          "value": 9,
+          "percentile": 81.81818181818183,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 856.8327093080557,
           "percentile": 79.06976744186046,
@@ -5401,6 +5681,8 @@
         "survivalRate": 49.23076923076923,
         "survivalDay1Rate": 93.07692307692308,
         "killRate": 0.7461538461538462,
+        "longestWinSeries": 6,
+        "longestLossSeries": 9,
         "lootPer60Min": 856.8327093080557,
         "lootVillageoisPer60Min": 890.3361623677523,
         "lootLoupPer60Min": 717.0615409732345,
@@ -5419,9 +5701,9 @@
       "gamesPlayed": 309,
       "titles": [
         {
-          "id": "joueur_parfait",
-          "title": "Le·a Joueur·se Parfait·e",
-          "emoji": "💎",
+          "id": "mvp",
+          "title": "Le·a MVP",
+          "emoji": "⭐",
           "description": "Gagne, récolte, et survit",
           "priority": 19,
           "type": "combination",
@@ -5452,7 +5734,7 @@
           "title": "Le Loup Solitaire",
           "emoji": "🐺",
           "description": "Loup efficace, discret et gagnant",
-          "priority": 16,
+          "priority": 18,
           "type": "combination",
           "percentile": 65.58547531619747,
           "conditions": [
@@ -5481,7 +5763,7 @@
           "title": "L'Alpha",
           "emoji": "🦁",
           "description": "Tue beaucoup et survit",
-          "priority": 15,
+          "priority": 16,
           "type": "combination",
           "percentile": 95.45454545454545,
           "conditions": [
@@ -5496,6 +5778,29 @@
               "category": "HIGH",
               "actualValue": 56.310679611650485,
               "actualPercentile": 95.45454545454545
+            }
+          ]
+        },
+        {
+          "id": "loup_alpha",
+          "title": "Le Loup Alpha",
+          "emoji": "🐺",
+          "description": "Survit et domine en Loup",
+          "priority": 15,
+          "type": "combination",
+          "percentile": 93.77990430622009,
+          "conditions": [
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 56.310679611650485,
+              "actualPercentile": 95.45454545454545
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 41.37931034482759,
+              "actualPercentile": 92.10526315789474
             }
           ]
         },
@@ -5519,29 +5824,6 @@
               "category": "LOW",
               "actualValue": 468.1950178524162,
               "actualPercentile": 16.27906976744186
-            }
-          ]
-        },
-        {
-          "id": "loup_alpha",
-          "title": "Le Loup Alpha",
-          "emoji": "🐺",
-          "description": "Survit et domine en Loup",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 93.77990430622009,
-          "conditions": [
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 56.310679611650485,
-              "actualPercentile": 95.45454545454545
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 41.37931034482759,
-              "actualPercentile": 92.10526315789474
             }
           ]
         },
@@ -5595,7 +5877,7 @@
         },
         {
           "id": "survivalDay1_extreme_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -5751,9 +6033,9 @@
         }
       ],
       "primaryTitle": {
-        "id": "joueur_parfait",
-        "title": "Le·a Joueur·se Parfait·e",
-        "emoji": "💎",
+        "id": "mvp",
+        "title": "Le·a MVP",
+        "emoji": "⭐",
         "description": "Gagne, récolte, et survit",
         "priority": 19,
         "type": "combination",
@@ -5875,6 +6157,16 @@
           "percentile": 95.45454545454545,
           "category": "EXTREME_HIGH"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 1056.5562489673644,
           "percentile": 95.34883720930233,
@@ -5946,6 +6238,8 @@
         "survivalRate": 56.310679611650485,
         "survivalDay1Rate": 93.52750809061489,
         "killRate": 0.7572815533980582,
+        "longestWinSeries": 5,
+        "longestLossSeries": 5,
         "lootPer60Min": 1056.5562489673644,
         "lootVillageoisPer60Min": 1130.769750692831,
         "lootLoupPer60Min": 778.7541563947158,
@@ -6069,8 +6363,7 @@
           "percentile": 72.72727272727273,
           "category": "HIGH",
           "priority": 6,
-          "type": "basic",
-          "primaryOwner": "Ekaenerys"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_low",
@@ -6142,6 +6435,18 @@
           "value": 0.3333333333333333,
           "percentile": 29.545454545454547,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 8,
+          "percentile": 70.45454545454545,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -6289,6 +6594,16 @@
           "percentile": 29.545454545454547,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 8,
+          "percentile": 70.45454545454545,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 836.295248455231,
           "percentile": 74.4186046511628,
@@ -6358,6 +6673,8 @@
         "survivalRate": 35.294117647058826,
         "survivalDay1Rate": 90.19607843137256,
         "killRate": 0.3333333333333333,
+        "longestWinSeries": 4,
+        "longestLossSeries": 8,
         "lootPer60Min": 836.295248455231,
         "lootVillageoisPer60Min": 773.2125117684549,
         "lootLoupPer60Min": 830.2719916085607,
@@ -6380,7 +6697,7 @@
           "title": "Le·a Diplomate",
           "emoji": "🤝",
           "description": "Gagne en survivant sans tuer",
-          "priority": 15,
+          "priority": 16,
           "type": "combination",
           "percentile": 59.090909090909086,
           "conditions": [
@@ -6405,29 +6722,6 @@
           ]
         },
         {
-          "id": "opportuniste",
-          "title": "L'Opportuniste",
-          "emoji": "🎯",
-          "description": "Gagne souvent mais joue peu",
-          "priority": 13,
-          "type": "combination",
-          "percentile": 61.36363636363636,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 60,
-              "actualPercentile": 93.18181818181817
-            },
-            {
-              "stat": "gamesPlayed",
-              "category": "LOW",
-              "actualValue": 45,
-              "actualPercentile": 29.545454545454547
-            }
-          ]
-        },
-        {
           "id": "rodeur",
           "title": "Le·a Rôdeur·euse",
           "emoji": "🌙",
@@ -6447,6 +6741,29 @@
               "category": "HIGH",
               "actualValue": 46.666666666666664,
               "actualPercentile": 81.81818181818183
+            }
+          ]
+        },
+        {
+          "id": "opportuniste",
+          "title": "L'Opportuniste",
+          "emoji": "🎯",
+          "description": "Gagne souvent mais joue peu",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 61.36363636363636,
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "HIGH",
+              "actualValue": 60,
+              "actualPercentile": 93.18181818181817
+            },
+            {
+              "stat": "gamesPlayed",
+              "category": "LOW",
+              "actualValue": 45,
+              "actualPercentile": 29.545454545454547
             }
           ]
         },
@@ -6488,7 +6805,7 @@
         },
         {
           "id": "survivalDay1_extreme_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -6671,7 +6988,7 @@
         "title": "Le·a Diplomate",
         "emoji": "🤝",
         "description": "Gagne en survivant sans tuer",
-        "priority": 15,
+        "priority": 16,
         "type": "combination",
         "percentile": 59.090909090909086,
         "conditions": [
@@ -6781,6 +7098,16 @@
           "percentile": 2.272727272727273,
           "category": "EXTREME_LOW"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 3,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 556.4902501695005,
           "percentile": 13.953488372093023,
@@ -6850,6 +7177,8 @@
         "survivalRate": 46.666666666666664,
         "survivalDay1Rate": 95.55555555555556,
         "killRate": 0.06666666666666667,
+        "longestWinSeries": 5,
+        "longestLossSeries": 3,
         "lootPer60Min": 556.4902501695005,
         "lootVillageoisPer60Min": 578.0219346556648,
         "lootLoupPer60Min": 426.92945873822663,
@@ -6872,7 +7201,7 @@
           "title": "Le·a Phoenix",
           "emoji": "🔥",
           "description": "Meurt souvent tôt mais survit jusqu'au bout après",
-          "priority": 12,
+          "priority": 17,
           "type": "combination",
           "percentile": 54.54545454545455,
           "conditions": [
@@ -7028,7 +7357,7 @@
         "title": "Le·a Phoenix",
         "emoji": "🔥",
         "description": "Meurt souvent tôt mais survit jusqu'au bout après",
-        "priority": 12,
+        "priority": 17,
         "type": "combination",
         "percentile": 54.54545454545455,
         "conditions": [
@@ -7102,6 +7431,16 @@
           "percentile": 86.36363636363636,
           "category": "EXTREME_HIGH"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 2,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
         "zoneVillagePrincipal": {
           "value": 85.71428571428571,
           "percentile": 97.72727272727273,
@@ -7151,6 +7490,8 @@
         "survivalRate": 46.15384615384615,
         "survivalDay1Rate": 88.46153846153845,
         "killRate": 0.7307692307692307,
+        "longestWinSeries": 4,
+        "longestLossSeries": 2,
         "zoneVillagePrincipal": 85.71428571428571,
         "zoneFerme": 0,
         "zoneVillagePecheur": 14.285714285714285,
@@ -7165,6 +7506,29 @@
       "playerName": "Davimithryl",
       "gamesPlayed": 26,
       "titles": [
+        {
+          "id": "poissard",
+          "title": "Le·a Poissard·e",
+          "emoji": "🌧️",
+          "description": "Perd tout le temps + grosses séries de défaites",
+          "priority": 13,
+          "type": "combination",
+          "percentile": 97.72727272727273,
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "EXTREME_LOW",
+              "actualValue": 26.9,
+              "actualPercentile": 0
+            },
+            {
+              "stat": "lossSeries",
+              "category": "HIGH",
+              "actualValue": 12,
+              "actualPercentile": 97.72727272727273
+            }
+          ]
+        },
         {
           "id": "lanceur_alerte",
           "title": "Le·a Lanceur·se d'Alerte",
@@ -7347,6 +7711,18 @@
           "primaryOwner": "Eaglhan"
         },
         {
+          "id": "lossSeries_extreme_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 12,
+          "percentile": 97.72727272727273,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "lootLoup_extreme_high",
           "title": "Le Loup Discret",
           "emoji": "🐺",
@@ -7430,25 +7806,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "lanceur_alerte",
-        "title": "Le·a Lanceur·se d'Alerte",
-        "emoji": "🚨",
-        "description": "Vote juste mais se fait éliminer pour ça",
+        "id": "poissard",
+        "title": "Le·a Poissard·e",
+        "emoji": "🌧️",
+        "description": "Perd tout le temps + grosses séries de défaites",
         "priority": 13,
         "type": "combination",
-        "percentile": 90.69767441860465,
+        "percentile": 97.72727272727273,
         "conditions": [
           {
-            "stat": "votingAccuracy",
-            "category": "HIGH",
-            "actualValue": 91.66666666666666,
-            "actualPercentile": 90.69767441860465
+            "stat": "winRate",
+            "category": "EXTREME_LOW",
+            "actualValue": 26.9,
+            "actualPercentile": 0
           },
           {
-            "stat": "survival",
-            "category": "LOW",
-            "actualValue": 19.230769230769234,
-            "actualPercentile": 0
+            "stat": "lossSeries",
+            "category": "HIGH",
+            "actualValue": 12,
+            "actualPercentile": 97.72727272727273
           }
         ]
       },
@@ -7533,6 +7909,16 @@
           "percentile": 75,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 2,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 12,
+          "percentile": 97.72727272727273,
+          "category": "EXTREME_HIGH"
+        },
         "lootPer60Min": {
           "value": 732.2608106280766,
           "percentile": 46.51162790697674,
@@ -7602,6 +7988,8 @@
         "survivalRate": 19.230769230769234,
         "survivalDay1Rate": 88.46153846153845,
         "killRate": 0.6538461538461539,
+        "longestWinSeries": 2,
+        "longestLossSeries": 12,
         "lootPer60Min": 732.2608106280766,
         "lootVillageoisPer60Min": 705.0471652241563,
         "lootLoupPer60Min": 770.0285939104937,
@@ -7836,6 +8224,16 @@
           "percentile": 72.72727272727273,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 637.7479972133816,
           "percentile": 25.581395348837212,
@@ -7905,6 +8303,8 @@
         "survivalRate": 32.94117647058823,
         "survivalDay1Rate": 87.05882352941177,
         "killRate": 0.6470588235294118,
+        "longestWinSeries": 5,
+        "longestLossSeries": 5,
         "lootPer60Min": 637.7479972133816,
         "lootVillageoisPer60Min": 670.4101538758013,
         "lootLoupPer60Min": 564.0793213713896,
@@ -8235,6 +8635,16 @@
           "percentile": 38.63636363636363,
           "category": "BELOW_AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 3,
+          "percentile": 11.363636363636363,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 4,
+          "percentile": 15.909090909090908,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 755.3370167836156,
           "percentile": 53.48837209302325,
@@ -8304,6 +8714,8 @@
         "survivalRate": 38.63636363636363,
         "survivalDay1Rate": 88.63636363636364,
         "killRate": 0.4090909090909091,
+        "longestWinSeries": 3,
+        "longestLossSeries": 4,
         "lootPer60Min": 755.3370167836156,
         "lootVillageoisPer60Min": 816.8225591063302,
         "lootLoupPer60Min": 657.9152287351945,
@@ -8413,6 +8825,18 @@
           "stat": "killRate",
           "value": 0.6666666666666666,
           "percentile": 77.27272727272727,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winSeries_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 6,
+          "percentile": 79.54545454545455,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -8562,6 +8986,16 @@
           "percentile": 77.27272727272727,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 6,
+          "percentile": 79.54545454545455,
+          "category": "HIGH"
+        },
+        "longestLossSeries": {
+          "value": 6,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 798.5680116513729,
           "percentile": 69.76744186046511,
@@ -8631,6 +9065,8 @@
         "survivalRate": 41.02564102564102,
         "survivalDay1Rate": 89.74358974358975,
         "killRate": 0.6666666666666666,
+        "longestWinSeries": 6,
+        "longestLossSeries": 6,
         "lootPer60Min": 798.5680116513729,
         "lootVillageoisPer60Min": 947.5934178151152,
         "lootLoupPer60Min": 603.3951753527438,
@@ -8676,7 +9112,7 @@
           "title": "L'Embusqué·e",
           "emoji": "🏹",
           "description": "Tend des pièges dans les Ruines",
-          "priority": 12,
+          "priority": 13,
           "type": "combination",
           "percentile": 88.63636363636364,
           "conditions": [
@@ -8853,6 +9289,18 @@
           "type": "basic"
         },
         {
+          "id": "winSeries_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 6,
+          "percentile": 79.54545454545455,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_low",
           "title": "Le·a Flâneur·se",
           "emoji": "🚶",
@@ -9008,6 +9456,16 @@
           "percentile": 79.54545454545455,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 6,
+          "percentile": 79.54545454545455,
+          "category": "HIGH"
+        },
+        "longestLossSeries": {
+          "value": 3,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 673.5981597481565,
           "percentile": 34.883720930232556,
@@ -9077,6 +9535,8 @@
         "survivalRate": 38.88888888888889,
         "survivalDay1Rate": 87.03703703703704,
         "killRate": 0.7037037037037037,
+        "longestWinSeries": 6,
+        "longestLossSeries": 3,
         "lootPer60Min": 673.5981597481565,
         "lootVillageoisPer60Min": 660.6388526162968,
         "lootLoupPer60Min": 682.770526282537,
@@ -9099,7 +9559,7 @@
           "title": "La Machine",
           "emoji": "⚙️",
           "description": "Récolte énormément sans dire un mot",
-          "priority": 16,
+          "priority": 18,
           "type": "combination",
           "percentile": 48.83720930232558,
           "conditions": [
@@ -9262,12 +9722,24 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
           "value": 93.10344827586206,
           "percentile": 84.0909090909091,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 9,
+          "percentile": 81.81818181818183,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -9300,7 +9772,7 @@
         "title": "La Machine",
         "emoji": "⚙️",
         "description": "Récolte énormément sans dire un mot",
-        "priority": 16,
+        "priority": 18,
         "type": "combination",
         "percentile": 48.83720930232558,
         "conditions": [
@@ -9404,6 +9876,16 @@
           "percentile": 40.909090909090914,
           "category": "BELOW_AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 3,
+          "percentile": 11.363636363636363,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 9,
+          "percentile": 81.81818181818183,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 897.9080181331009,
           "percentile": 86.04651162790698,
@@ -9473,6 +9955,8 @@
         "survivalRate": 46.55172413793103,
         "survivalDay1Rate": 93.10344827586206,
         "killRate": 0.41379310344827586,
+        "longestWinSeries": 3,
+        "longestLossSeries": 9,
         "lootPer60Min": 897.9080181331009,
         "lootVillageoisPer60Min": 955.508648643253,
         "lootLoupPer60Min": 817.0435859418858,
@@ -9495,7 +9979,7 @@
           "title": "Le·a Citoyen·ne Exemplaire",
           "emoji": "👑",
           "description": "Récolte et gagne en Villageois",
-          "priority": 13,
+          "priority": 14,
           "type": "combination",
           "percentile": 90.88266384778012,
           "conditions": [
@@ -9562,7 +10046,7 @@
         {
           "id": "grande_gueule",
           "title": "La Grande Gueule",
-          "emoji": "📢",
+          "emoji": "🗯️",
           "description": "Parle trop et meurt Jour 1",
           "priority": 11,
           "type": "combination",
@@ -9766,7 +10250,7 @@
         "title": "Le·a Citoyen·ne Exemplaire",
         "emoji": "👑",
         "description": "Récolte et gagne en Villageois",
-        "priority": 13,
+        "priority": 14,
         "type": "combination",
         "percentile": 90.88266384778012,
         "conditions": [
@@ -9870,6 +10354,16 @@
           "percentile": 65.9090909090909,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 6,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 1212.3730494978577,
           "percentile": 97.67441860465115,
@@ -9939,6 +10433,8 @@
         "survivalRate": 36.986301369863014,
         "survivalDay1Rate": 87.67123287671232,
         "killRate": 0.5753424657534246,
+        "longestWinSeries": 5,
+        "longestLossSeries": 6,
         "lootPer60Min": 1212.3730494978577,
         "lootVillageoisPer60Min": 1266.520060582396,
         "lootLoupPer60Min": 872.1557139504006,
@@ -9961,7 +10457,7 @@
           "title": "L'Adaptable",
           "emoji": "🦎",
           "description": "Bon dans tous les camps",
-          "priority": 16,
+          "priority": 18,
           "type": "combination",
           "percentile": 92.83492822966507,
           "conditions": [
@@ -9990,7 +10486,7 @@
           "title": "Le·a Manipulateur·rice",
           "emoji": "🐍",
           "description": "Loup bavard·e et gagnant·e",
-          "priority": 15,
+          "priority": 16,
           "type": "combination",
           "percentile": 83.56793145654834,
           "conditions": [
@@ -10093,6 +10589,19 @@
           "type": "basic"
         },
         {
+          "id": "winSeries_extreme_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 7,
+          "percentile": 88.63636363636364,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "Ekaenerys"
+        },
+        {
           "id": "zoneRuines_extreme_high",
           "title": "L'Archéologue",
           "emoji": "🏛️",
@@ -10114,8 +10623,7 @@
           "percentile": 75,
           "category": "HIGH",
           "priority": 6,
-          "type": "basic",
-          "primaryOwner": "Ekaenerys"
+          "type": "basic"
         },
         {
           "id": "talking_high",
@@ -10241,7 +10749,7 @@
         "title": "L'Adaptable",
         "emoji": "🦎",
         "description": "Bon dans tous les camps",
-        "priority": 16,
+        "priority": 18,
         "type": "combination",
         "percentile": 92.83492822966507,
         "conditions": [
@@ -10351,6 +10859,16 @@
           "percentile": 86.36363636363636,
           "category": "EXTREME_HIGH"
         },
+        "longestWinSeries": {
+          "value": 7,
+          "percentile": 88.63636363636364,
+          "category": "EXTREME_HIGH"
+        },
+        "longestLossSeries": {
+          "value": 3,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 884.1003800637405,
           "percentile": 81.3953488372093,
@@ -10420,6 +10938,8 @@
         "survivalRate": 39.42307692307692,
         "survivalDay1Rate": 86.53846153846155,
         "killRate": 0.7307692307692307,
+        "longestWinSeries": 7,
+        "longestLossSeries": 3,
         "lootPer60Min": 884.1003800637405,
         "lootVillageoisPer60Min": 890.4402711401151,
         "lootLoupPer60Min": 743.261718343366,
@@ -10708,6 +11228,16 @@
           "percentile": 4.545454545454546,
           "category": "EXTREME_LOW"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 659.5896460552316,
           "percentile": 32.55813953488372,
@@ -10777,6 +11307,8 @@
         "survivalRate": 28.78787878787879,
         "survivalDay1Rate": 83.33333333333334,
         "killRate": 0.09090909090909091,
+        "longestWinSeries": 4,
+        "longestLossSeries": 5,
         "lootPer60Min": 659.5896460552316,
         "lootVillageoisPer60Min": 681.9418098149417,
         "lootLoupPer60Min": 632.3875464720045,
@@ -10929,7 +11461,7 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -11060,6 +11592,16 @@
           "percentile": 59.09090909090909,
           "category": "ABOVE_AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 4,
+          "percentile": 15.909090909090908,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 840.926358578675,
           "percentile": 76.74418604651163,
@@ -11129,6 +11671,8 @@
         "survivalRate": 55.69620253164557,
         "survivalDay1Rate": 92.40506329113924,
         "killRate": 0.5316455696202531,
+        "longestWinSeries": 4,
+        "longestLossSeries": 4,
         "lootPer60Min": 840.926358578675,
         "lootVillageoisPer60Min": 1008.4728349482386,
         "lootLoupPer60Min": 595.1412568188082,
@@ -11205,6 +11749,19 @@
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
+        },
+        {
+          "id": "winSeries_extreme_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 9,
+          "percentile": 97.72727272727273,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "Ekaenerys"
         },
         {
           "id": "loot_extreme_high",
@@ -11292,11 +11849,23 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
           "value": 91.25,
+          "percentile": 70.45454545454545,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 8,
           "percentile": 70.45454545454545,
           "category": "HIGH",
           "priority": 6,
@@ -11412,6 +11981,16 @@
           "percentile": 61.36363636363637,
           "category": "ABOVE_AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 9,
+          "percentile": 97.72727272727273,
+          "category": "EXTREME_HIGH"
+        },
+        "longestLossSeries": {
+          "value": 8,
+          "percentile": 70.45454545454545,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 935.2670270252229,
           "percentile": 93.02325581395348,
@@ -11481,6 +12060,8 @@
         "survivalRate": 47.5,
         "survivalDay1Rate": 91.25,
         "killRate": 0.55,
+        "longestWinSeries": 9,
+        "longestLossSeries": 8,
         "lootPer60Min": 935.2670270252229,
         "lootVillageoisPer60Min": 1020.7964801182497,
         "lootLoupPer60Min": 860.2871913358235,
@@ -11503,7 +12084,7 @@
           "title": "Le·a Pacifiste",
           "emoji": "☮️",
           "description": "Gagne sans tuer",
-          "priority": 13,
+          "priority": 14,
           "type": "combination",
           "percentile": 55.68181818181819,
           "conditions": [
@@ -11606,6 +12187,19 @@
           "priority": 8,
           "type": "basic",
           "primaryOwner": "Carococo"
+        },
+        {
+          "id": "winSeries_extreme_high",
+          "title": "En Feu",
+          "emoji": "🔥",
+          "description": "Grosse série de victoires",
+          "stat": "longestWinSeries",
+          "value": 8,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "Ekaenerys"
         },
         {
           "id": "zoneResteCarte_extreme_high",
@@ -11719,7 +12313,7 @@
         "title": "Le·a Pacifiste",
         "emoji": "☮️",
         "description": "Gagne sans tuer",
-        "priority": 13,
+        "priority": 14,
         "type": "combination",
         "percentile": 55.68181818181819,
         "conditions": [
@@ -11818,6 +12412,16 @@
           "percentile": 13.636363636363635,
           "category": "EXTREME_LOW"
         },
+        "longestWinSeries": {
+          "value": 8,
+          "percentile": 95.45454545454545,
+          "category": "EXTREME_HIGH"
+        },
+        "longestLossSeries": {
+          "value": 2,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 684.2756844819378,
           "percentile": 39.53488372093023,
@@ -11887,6 +12491,8 @@
         "survivalRate": 41.935483870967744,
         "survivalDay1Rate": 83.87096774193549,
         "killRate": 0.25806451612903225,
+        "longestWinSeries": 8,
+        "longestLossSeries": 2,
         "lootPer60Min": 684.2756844819378,
         "lootVillageoisPer60Min": 777.8748731404355,
         "lootLoupPer60Min": 444.74308252756293,
@@ -11909,7 +12515,7 @@
           "title": "L'Embusqué·e",
           "emoji": "🏹",
           "description": "Tend des pièges dans les Ruines",
-          "priority": 12,
+          "priority": 13,
           "type": "combination",
           "percentile": 88.63636363636363,
           "conditions": [
@@ -12062,7 +12668,7 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -12126,7 +12732,7 @@
         "title": "L'Embusqué·e",
         "emoji": "🏹",
         "description": "Tend des pièges dans les Ruines",
-        "priority": 12,
+        "priority": 13,
         "type": "combination",
         "percentile": 88.63636363636363,
         "conditions": [
@@ -12240,6 +12846,16 @@
           "percentile": 84.0909090909091,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 3,
+          "percentile": 11.363636363636363,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 4,
+          "percentile": 15.909090909090908,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 787.5323596421334,
           "percentile": 62.7906976744186,
@@ -12311,6 +12927,8 @@
         "survivalRate": 45.83333333333333,
         "survivalDay1Rate": 91.66666666666666,
         "killRate": 0.725,
+        "longestWinSeries": 3,
+        "longestLossSeries": 4,
         "lootPer60Min": 787.5323596421334,
         "lootVillageoisPer60Min": 811.2717376403705,
         "lootLoupPer60Min": 707.4249994902525,
@@ -12390,7 +13008,7 @@
         },
         {
           "id": "survivalDay1_extreme_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -12447,8 +13065,7 @@
           "percentile": 68.18181818181817,
           "category": "HIGH",
           "priority": 6,
-          "type": "basic",
-          "primaryOwner": "Ekaenerys"
+          "type": "basic"
         },
         {
           "id": "votingAccuracy_high",
@@ -12607,6 +13224,16 @@
           "percentile": 20.454545454545457,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 3,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 920.0004624211418,
           "percentile": 88.37209302325581,
@@ -12676,6 +13303,8 @@
         "survivalRate": 40,
         "survivalDay1Rate": 93.33333333333333,
         "killRate": 0.2777777777777778,
+        "longestWinSeries": 5,
+        "longestLossSeries": 3,
         "lootPer60Min": 920.0004624211418,
         "lootVillageoisPer60Min": 986.5843557096257,
         "lootLoupPer60Min": 653.7214394598988,
@@ -12998,6 +13627,16 @@
           "percentile": 70.45454545454545,
           "category": "HIGH"
         },
+        "longestWinSeries": {
+          "value": 3,
+          "percentile": 11.363636363636363,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 4,
+          "percentile": 15.909090909090908,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 590.7394803884703,
           "percentile": 18.6046511627907,
@@ -13067,6 +13706,8 @@
         "survivalRate": 32,
         "survivalDay1Rate": 80,
         "killRate": 0.64,
+        "longestWinSeries": 3,
+        "longestLossSeries": 4,
         "lootPer60Min": 590.7394803884703,
         "lootVillageoisPer60Min": 772.7535868072152,
         "lootLoupPer60Min": 234.44126730700245,
@@ -13089,7 +13730,7 @@
           "title": "L'Assassin·e",
           "emoji": "🗡️",
           "description": "Ignore la récolte, se concentre sur les kills",
-          "priority": 12,
+          "priority": 14,
           "type": "combination",
           "percentile": 59.328752642706135,
           "conditions": [
@@ -13112,7 +13753,7 @@
           "title": "Le·a Campeur·euse",
           "emoji": "🏕️",
           "description": "Reste au même endroit sans récolter",
-          "priority": 12,
+          "priority": 14,
           "type": "combination",
           "percentile": 58.192389006342495,
           "conditions": [
@@ -13254,6 +13895,18 @@
           "type": "basic"
         },
         {
+          "id": "lossSeries_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 9,
+          "percentile": 81.81818181818183,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "loot_low",
           "title": "Le·a Flâneur·se",
           "emoji": "🚶",
@@ -13293,7 +13946,7 @@
         "title": "L'Assassin·e",
         "emoji": "🗡️",
         "description": "Ignore la récolte, se concentre sur les kills",
-        "priority": 12,
+        "priority": 14,
         "type": "combination",
         "percentile": 59.328752642706135,
         "conditions": [
@@ -13397,6 +14050,16 @@
           "percentile": 97.72727272727273,
           "category": "EXTREME_HIGH"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 9,
+          "percentile": 81.81818181818183,
+          "category": "HIGH"
+        },
         "lootPer60Min": {
           "value": 602.2754675724259,
           "percentile": 20.930232558139537,
@@ -13466,6 +14129,8 @@
         "survivalRate": 40,
         "survivalDay1Rate": 82,
         "killRate": 0.78,
+        "longestWinSeries": 5,
+        "longestLossSeries": 9,
         "lootPer60Min": 602.2754675724259,
         "lootVillageoisPer60Min": 720.4144396608782,
         "lootLoupPer60Min": 336.7499078818187,
@@ -13764,6 +14429,16 @@
           "percentile": 6.8181818181818175,
           "category": "EXTREME_LOW"
         },
+        "longestWinSeries": {
+          "value": 2,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 6,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 697.6289557448513,
           "percentile": 44.18604651162791,
@@ -13833,6 +14508,8 @@
         "survivalRate": 28.8135593220339,
         "survivalDay1Rate": 89.83050847457628,
         "killRate": 0.15254237288135594,
+        "longestWinSeries": 2,
+        "longestLossSeries": 6,
         "lootPer60Min": 697.6289557448513,
         "lootVillageoisPer60Min": 708.7717515391258,
         "lootLoupPer60Min": 634.7988199774705,
@@ -14098,6 +14775,16 @@
           "percentile": 15.909090909090908,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 3,
+          "percentile": 4.545454545454546,
+          "category": "EXTREME_LOW"
+        },
         "lootPer60Min": {
           "value": 481.1855353313097,
           "percentile": 4.651162790697675,
@@ -14167,6 +14854,8 @@
         "survivalRate": 40.74074074074074,
         "survivalDay1Rate": 85.18518518518519,
         "killRate": 0.25925925925925924,
+        "longestWinSeries": 4,
+        "longestLossSeries": 3,
         "lootPer60Min": 481.1855353313097,
         "lootVillageoisPer60Min": 429.51893500514933,
         "lootLoupPer60Min": 619.1981788288858,
@@ -14384,7 +15073,7 @@
         },
         {
           "id": "survivalDay1_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -14498,6 +15187,16 @@
           "percentile": 54.54545454545454,
           "category": "AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 3,
+          "percentile": 11.363636363636363,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 500.98011516717315,
           "percentile": 6.976744186046512,
@@ -14567,6 +15266,8 @@
         "survivalRate": 41.37931034482759,
         "survivalDay1Rate": 93.10344827586206,
         "killRate": 0.5172413793103449,
+        "longestWinSeries": 3,
+        "longestLossSeries": 5,
         "lootPer60Min": 500.98011516717315,
         "lootVillageoisPer60Min": 553.8101257588518,
         "lootLoupPer60Min": 348.8531095122409,
@@ -14883,6 +15584,16 @@
           "percentile": 27.27272727272727,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 5,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
+        "longestLossSeries": {
+          "value": 5,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 459.93142304551253,
           "percentile": 2.3255813953488373,
@@ -14952,6 +15663,8 @@
         "survivalRate": 35.13513513513514,
         "survivalDay1Rate": 81.08108108108108,
         "killRate": 0.32432432432432434,
+        "longestWinSeries": 5,
+        "longestLossSeries": 5,
         "lootPer60Min": 459.93142304551253,
         "lootVillageoisPer60Min": 545.4817749609782,
         "lootLoupPer60Min": 375.1723013532141,
@@ -14972,9 +15685,9 @@
         {
           "id": "en_rodage",
           "title": "En Rodage",
-          "emoji": "⚙️",
+          "emoji": "🔧",
           "description": "Peine dans tous les camps",
-          "priority": 16,
+          "priority": 12,
           "type": "combination",
           "percentile": 33.014354066985646,
           "conditions": [
@@ -15069,8 +15782,7 @@
           "percentile": 70.45454545454545,
           "category": "HIGH",
           "priority": 6,
-          "type": "basic",
-          "primaryOwner": "Ekaenerys"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_low",
@@ -15207,9 +15919,9 @@
       "primaryTitle": {
         "id": "en_rodage",
         "title": "En Rodage",
-        "emoji": "⚙️",
+        "emoji": "🔧",
         "description": "Peine dans tous les camps",
-        "priority": 16,
+        "priority": 12,
         "type": "combination",
         "percentile": 33.014354066985646,
         "conditions": [
@@ -15319,6 +16031,16 @@
           "percentile": 56.81818181818182,
           "category": "ABOVE_AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 7,
+          "percentile": 63.63636363636363,
+          "category": "ABOVE_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 734.1893886806856,
           "percentile": 51.162790697674424,
@@ -15388,6 +16110,8 @@
         "survivalRate": 25.773195876288657,
         "survivalDay1Rate": 85.56701030927834,
         "killRate": 0.5257731958762887,
+        "longestWinSeries": 4,
+        "longestLossSeries": 7,
         "lootPer60Min": 734.1893886806856,
         "lootVillageoisPer60Min": 822.1835429067785,
         "lootLoupPer60Min": 521.5146287795947,
@@ -15407,10 +16131,10 @@
       "titles": [
         {
           "id": "sacrifice",
-          "title": "Le·a Sacrifice",
+          "title": "Le·a Sacrifié·e",
           "emoji": "🕯️",
           "description": "Meurt rapidement mais fait gagner son camp",
-          "priority": 15,
+          "priority": 13,
           "type": "combination",
           "percentile": 32.57575757575757,
           "conditions": [
@@ -15420,29 +16144,6 @@
               "actualValue": 84.21052631578947,
               "actualPercentile": 15.909090909090908
             },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 30.263157894736842,
-              "actualPercentile": 13.636363636363635
-            },
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 47.4,
-              "actualPercentile": 68.18181818181817
-            }
-          ]
-        },
-        {
-          "id": "martyr",
-          "title": "Le·a Martyr·e",
-          "emoji": "✝️",
-          "description": "Meurt souvent mais fait gagner son camp",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 40.90909090909091,
-          "conditions": [
             {
               "stat": "survival",
               "category": "LOW",
@@ -15604,10 +16305,10 @@
       ],
       "primaryTitle": {
         "id": "sacrifice",
-        "title": "Le·a Sacrifice",
+        "title": "Le·a Sacrifié·e",
         "emoji": "🕯️",
         "description": "Meurt rapidement mais fait gagner son camp",
-        "priority": 15,
+        "priority": 13,
         "type": "combination",
         "percentile": 32.57575757575757,
         "conditions": [
@@ -15717,6 +16418,16 @@
           "percentile": 11.363636363636363,
           "category": "EXTREME_LOW"
         },
+        "longestWinSeries": {
+          "value": 3,
+          "percentile": 11.363636363636363,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 4,
+          "percentile": 15.909090909090908,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 695.0671822121577,
           "percentile": 41.86046511627907,
@@ -15786,6 +16497,8 @@
         "survivalRate": 30.263157894736842,
         "survivalDay1Rate": 84.21052631578947,
         "killRate": 0.23684210526315788,
+        "longestWinSeries": 3,
+        "longestLossSeries": 4,
         "lootPer60Min": 695.0671822121577,
         "lootVillageoisPer60Min": 742.7937545483882,
         "lootLoupPer60Min": 569.0453209203453,
@@ -16069,6 +16782,16 @@
           "percentile": 25,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 7,
+          "percentile": 63.63636363636363,
+          "category": "ABOVE_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 657.6146891139607,
           "percentile": 30.23255813953488,
@@ -16138,6 +16861,8 @@
         "survivalRate": 42.028985507246375,
         "survivalDay1Rate": 89.85507246376811,
         "killRate": 0.3188405797101449,
+        "longestWinSeries": 4,
+        "longestLossSeries": 7,
         "lootPer60Min": 657.6146891139607,
         "lootVillageoisPer60Min": 686.4478027723469,
         "lootLoupPer60Min": 320.36744653365866,
@@ -16160,7 +16885,7 @@
           "title": "Le·a Moissonneur·euse",
           "emoji": "🌾",
           "description": "Récolte à la Ferme sans relâche",
-          "priority": 12,
+          "priority": 11,
           "type": "combination",
           "percentile": 88.5306553911205,
           "conditions": [
@@ -16217,7 +16942,7 @@
         },
         {
           "id": "survivalDay1_extreme_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -16376,7 +17101,7 @@
         "title": "Le·a Moissonneur·euse",
         "emoji": "🌾",
         "description": "Récolte à la Ferme sans relâche",
-        "priority": 12,
+        "priority": 11,
         "type": "combination",
         "percentile": 88.5306553911205,
         "conditions": [
@@ -16480,6 +17205,16 @@
           "percentile": 22.727272727272727,
           "category": "LOW"
         },
+        "longestWinSeries": {
+          "value": 2,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 6,
+          "percentile": 50,
+          "category": "AVERAGE"
+        },
         "lootPer60Min": {
           "value": 923.0511235113587,
           "percentile": 90.69767441860465,
@@ -16549,6 +17284,8 @@
         "survivalRate": 36.95652173913043,
         "survivalDay1Rate": 93.47826086956522,
         "killRate": 0.2826086956521739,
+        "longestWinSeries": 2,
+        "longestLossSeries": 6,
         "lootPer60Min": 923.0511235113587,
         "lootVillageoisPer60Min": 953.4114172239535,
         "lootLoupPer60Min": 693.8065189192682,
@@ -16880,6 +17617,16 @@
           "percentile": 43.18181818181818,
           "category": "BELOW_AVERAGE"
         },
+        "longestWinSeries": {
+          "value": 2,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 4,
+          "percentile": 15.909090909090908,
+          "category": "LOW"
+        },
         "lootPer60Min": {
           "value": 806.5830460383545,
           "percentile": 72.09302325581395,
@@ -16949,6 +17696,8 @@
         "survivalRate": 34.61538461538461,
         "survivalDay1Rate": 88.46153846153845,
         "killRate": 0.4230769230769231,
+        "longestWinSeries": 2,
+        "longestLossSeries": 4,
         "lootPer60Min": 806.5830460383545,
         "lootVillageoisPer60Min": 878.9548502025118,
         "lootLoupPer60Min": 534.3859273209323,
@@ -17255,6 +18004,16 @@
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
+        "longestWinSeries": {
+          "value": 4,
+          "percentile": 29.545454545454547,
+          "category": "LOW"
+        },
+        "longestLossSeries": {
+          "value": 7,
+          "percentile": 63.63636363636363,
+          "category": "ABOVE_AVERAGE"
+        },
         "lootPer60Min": {
           "value": 314.7408997542138,
           "percentile": 0,
@@ -17324,6 +18083,8 @@
         "survivalRate": 25,
         "survivalDay1Rate": 78.57142857142857,
         "killRate": 0,
+        "longestWinSeries": 4,
+        "longestLossSeries": 7,
         "lootPer60Min": 314.7408997542138,
         "lootVillageoisPer60Min": 342.9338703499546,
         "lootLoupPer60Min": 213.1994125171744,
@@ -17418,7 +18179,7 @@
         },
         {
           "id": "survivalDay1_extreme_high",
-          "title": "Le·a Prudent·e",
+          "title": "Le·a Vigilant·e",
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
@@ -17440,6 +18201,18 @@
           "priority": 8,
           "type": "basic",
           "primaryOwner": "Carococo"
+        },
+        {
+          "id": "lossSeries_extreme_high",
+          "title": "Glacé·e",
+          "emoji": "❄️",
+          "description": "Grosse série de défaites",
+          "stat": "longestLossSeries",
+          "value": 10,
+          "percentile": 93.18181818181817,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "loot_extreme_low",
@@ -17656,6 +18429,16 @@
           "percentile": 9.090909090909092,
           "category": "EXTREME_LOW"
         },
+        "longestWinSeries": {
+          "value": 2,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "longestLossSeries": {
+          "value": 10,
+          "percentile": 93.18181818181817,
+          "category": "EXTREME_HIGH"
+        },
         "lootPer60Min": {
           "value": 541.6357897764817,
           "percentile": 9.30232558139535,
@@ -17725,6 +18508,8 @@
         "survivalRate": 23.076923076923077,
         "survivalDay1Rate": 96.15384615384616,
         "killRate": 0.15384615384615385,
+        "longestWinSeries": 2,
+        "longestLossSeries": 10,
         "lootPer60Min": 541.6357897764817,
         "lootVillageoisPer60Min": 556.8090761254246,
         "lootLoupPer60Min": 435.15610016326406,
