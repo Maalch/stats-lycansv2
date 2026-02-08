@@ -91,6 +91,14 @@ export const TITLE_DEFINITIONS = {
     extremeLow: { title: 'Le·a Chasseur·se Maudit·e', emoji: '💔', description: 'Tire toujours sur les mauvaises cibles' }
   },
 
+  // Hunter shot accuracy titles (hit vs miss from Actions data)
+  hunterShotAccuracy: {
+    high: { title: 'Le·a Tireur·se d\'Élite', emoji: '🔫', description: 'Touche souvent sa cible' },
+    low: { title: 'Le·a Maladroit·e', emoji: '💨', description: 'Rate souvent ses tirs' },
+    extremeHigh: { title: 'Œil de Faucon', emoji: '🦅', description: 'Ne rate presque jamais' },
+    extremeLow: { title: 'Le·a Stormtrooper', emoji: '⚡', description: 'Rate presque tout' }
+  },
+
   // Win rate titles
   winRate: {
     high: { title: 'Le·a Winner', emoji: '🏆', description: 'Taux de victoire élevé' },
@@ -561,30 +569,30 @@ export const COMBINATION_TITLES = [
     priority: 11
   },
 
-  // Serial Chasseur + Good hunter accuracy = Sniper Elite
+  // Good camp accuracy + Good hunter accuracy = Sniper Elite
   {
     id: 'sniper_elite',
     title: 'Sniper Elite',
     emoji: '🎖️',
-    description: 'Chasseur·se fréquent·e et précis·e',
+    description: 'Chasseur·se ultra précis·e',
     conditions: [
-      { stat: 'roleChasseur', category: 'HIGH' },
+      { stat: 'hunterShotAccuracy', category: 'HIGH' },
       { stat: 'hunterAccuracy', category: 'HIGH' }
     ],
     priority: 18
   },
 
-  // Serial Chasseur + Bad hunter accuracy = Clumsy Hunter
+  // Bad camp accuracy + Good shoot accuracy = Clumsy Hunter
   {
     id: 'chasseur_maladroit',
     title: 'Le·a Chasseur·se Maladroit·e',
     emoji: '🔫',
-    description: 'Chasseur·se fréquent·e mais imprécis·e',
+    description: 'Chasseur·se précis qui touche les mauvaises cibles',
     conditions: [
-      { stat: 'roleChasseur', category: 'HIGH' },
+      { stat: 'hunterShotAccuracy', category: 'HIGH' },
       { stat: 'hunterAccuracy', category: 'LOW' }
     ],
-    priority: 15
+    priority: 14
   },
 
   // High participation + specialist camps = Taulier

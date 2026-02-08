@@ -232,6 +232,12 @@ function computeAllStatistics(moddedGames) {
         agg.stats.hunterGames = gamesAsHunter;
         agg.stats.hunterAccuracy = totalKills > 0 
           ? (goodKills / totalKills) * 100 : null;
+        
+        // Shot accuracy from Actions data (HunterShoot: ActionTarget present = hit)
+        const totalShots = hunterData.totalShots || 0;
+        const shotsHit = hunterData.shotsHit || 0;
+        agg.stats.hunterShotAccuracy = totalShots > 0
+          ? (shotsHit / totalShots) * 100 : null;
       }
     });
   }
@@ -841,6 +847,7 @@ function generateCombinationTitles(percentiles) {
     votingFirst: 'votingFirst',
     votingAccuracy: 'votingAccuracy',
     hunterAccuracy: 'hunterAccuracy',
+    hunterShotAccuracy: 'hunterShotAccuracy',
     winRate: 'winRate',
     winRateVillageois: 'winRateVillageois',
     winRateLoup: 'winRateLoup',

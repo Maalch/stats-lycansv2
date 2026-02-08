@@ -112,7 +112,8 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
                          condition.stat === 'winRateVillageois' ? 'Victoires Villageois' :
                          condition.stat === 'winRateLoup' ? 'Victoires Loup' :
                          condition.stat === 'winRateSolo' ? 'Victoires Solo' :
-                         condition.stat === 'hunterAccuracy' ? 'Précision chasseur' :
+                         condition.stat === 'hunterAccuracy' ? 'Précision cible chasseur' :
+                         condition.stat === 'hunterShotAccuracy' ? 'Précision tir chasseur' :  
                          condition.stat === 'zoneVillagePrincipal' ? 'Village Principal' :
                          condition.stat === 'zoneFerme' ? 'Ferme' :
                          condition.stat === 'zoneVillagePecheur' ? 'Village Pêcheur' :

@@ -75,10 +75,26 @@ export function computeHunterStatistics(gameData, selectedCamp) {
             gamesPlayed: 0,
             victimsCamps: [],
             gameVersions: [],
-            gameModded: []
+            gameModded: [],
+            totalShots: 0,
+            shotsHit: 0,
+            shotsMissed: 0
           };
         }
         hunterKillsMap[hunterId].gamesPlayed++;
+        
+        // Track HunterShoot actions from player's Actions array
+        const actions = player.Actions || [];
+        actions.forEach(action => {
+          if (action.ActionType === 'HunterShoot') {
+            hunterKillsMap[hunterId].totalShots++;
+            if (action.ActionTarget) {
+              hunterKillsMap[hunterId].shotsHit++;
+            } else {
+              hunterKillsMap[hunterId].shotsMissed++;
+            }
+          }
+        });
       }
     });
 
@@ -170,6 +186,12 @@ export function computeHunterStatistics(gameData, selectedCamp) {
       const averageKillsPerGame = data.gamesPlayed > 0 ? totalKills / data.gamesPlayed : 0;
       const averageNonVillageoisKillsPerGame = data.gamesPlayed > 0 ? nonVillageoisKills / data.gamesPlayed : 0;
       
+      // Shot accuracy from Actions data (HunterShoot)
+      const totalShots = data.totalShots || 0;
+      const shotsHit = data.shotsHit || 0;
+      const shotsMissed = data.shotsMissed || 0;
+      const shotAccuracy = totalShots > 0 ? (shotsHit / totalShots) * 100 : null;
+      
       return {
         hunterId: hunterId, // Add hunterId field for matching
         hunterName: displayNameById[hunterId] || hunterId,
@@ -182,7 +204,11 @@ export function computeHunterStatistics(gameData, selectedCamp) {
         killsByDeathType,
         victimsByCamp,
         goodVictimsByCamp,
-        badVictimsByCamp
+        badVictimsByCamp,
+        totalShots,
+        shotsHit,
+        shotsMissed,
+        shotAccuracy
       };
     })
     .sort((a, b) => b.totalKills - a.totalKills);
