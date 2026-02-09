@@ -361,8 +361,14 @@ function computeRoleFrequencies(moddedGames) {
       const freq = roleFrequencies.get(playerId);
       freq.gamesPlayed++;
       
-      const role = player.MainRoleInitial;
+      let role = player.MainRoleInitial;
       const power = player.Power;
+      
+      // Normalize Amoureux role variants (Amoureux Loup, Amoureux Villageois) to just "Amoureux"
+      // This matches the game's victory logic where all lovers are treated as the same role
+      if (role === 'Amoureux Loup' || role === 'Amoureux Villageois') {
+        role = 'Amoureux';
+      }
       
       // Track specific roles
       const effectiveRole = power || role;

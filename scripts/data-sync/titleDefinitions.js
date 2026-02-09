@@ -35,7 +35,7 @@ export const TITLE_DEFINITIONS = {
   // Kill rate titles
   killRate: {
     high: { title: 'Le·a Prédateur·rice', emoji: '🐺', description: 'Taux de kills élevé' },
-    low: { title: 'Le·a Doux·ce', emoji: '🕊️', description: 'Taux de kills faible' },
+    low: { title: 'Le·a Non-Violent·e', emoji: '✌️', description: 'Taux de kills faible' },
     extremeHigh: { title: "L'Exterminateur·rice", emoji: '💀', description: 'Tueur·se en série' },
     extremeLow: { title: "L'Agneau", emoji: '🐑', description: 'Ne tue jamais' }
   },
@@ -215,7 +215,7 @@ export const COMBINATION_TITLES = [
   {
     id: 'pacifiste',
     title: 'Le·a Pacifiste',
-    emoji: '☮️',
+    emoji: '🕊️',
     description: 'Gagne sans tuer',
     conditions: [
       { stat: 'killRate', category: 'LOW' },
@@ -541,32 +541,6 @@ export const COMBINATION_TITLES = [
       { stat: 'survival', category: 'LOW' }
     ],
     priority: 17
-  },
-
-  // Serial Amoureux + Winner = Cupidon
-  {
-    id: 'cupidon',
-    title: 'Cupidon',
-    emoji: '💘',
-    description: 'Souvent amoureux et gagnant',
-    conditions: [
-      { stat: 'roleAmoureux', category: 'HIGH' },
-      { stat: 'winRate', category: 'HIGH' }
-    ],
-    priority: 12
-  },
-
-  // Serial Amoureux + Looser = Romeo
-  {
-    id: 'romeo',
-    title: 'Roméo',
-    emoji: '💔',
-    description: 'Souvent amoureux mais perd',
-    conditions: [
-      { stat: 'roleAmoureux', category: 'HIGH' },
-      { stat: 'winRate', category: 'LOW' }
-    ],
-    priority: 11
   },
 
   // Good camp accuracy + Good hunter accuracy = Sniper Elite
