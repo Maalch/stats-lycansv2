@@ -430,7 +430,7 @@ export const COMBINATION_TITLES = [
     description: 'Mène les débats et vote juste',
     conditions: [
       { stat: 'talkingDuringMeeting', category: 'HIGH' },
-      { stat: 'votingAccuracy', category: 'HIGH' },
+      { stat: 'votingAccuracy', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
       { stat: 'votingAggressive', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
     ],
     priority: 16

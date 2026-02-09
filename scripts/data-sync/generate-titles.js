@@ -300,13 +300,17 @@ function computeAllStatistics(moddedGames) {
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
-      // Only set loot stats if data exists (not 0 from missing data)
+      // Overall loot stat (no minimum games requirement)
       agg.stats.lootPer60Min = (player.lootPer60Min !== undefined && player.lootPer60Min !== null) 
         ? player.lootPer60Min : null;
-      agg.stats.lootVillageoisPer60Min = (player.lootVillageoisPer60Min !== undefined && player.lootVillageoisPer60Min !== null) 
+      
+      // Camp-specific loot stats with minimum games requirement (same as win rates)
+      agg.stats.lootVillageoisPer60Min = (player.villageoisGames > 5 && player.lootVillageoisPer60Min !== undefined && player.lootVillageoisPer60Min !== null) 
         ? player.lootVillageoisPer60Min : null;
-      agg.stats.lootLoupPer60Min = (player.lootLoupPer60Min !== undefined && player.lootLoupPer60Min !== null) 
+      agg.stats.lootLoupPer60Min = (player.loupGames > 5 && player.lootLoupPer60Min !== undefined && player.lootLoupPer60Min !== null) 
         ? player.lootLoupPer60Min : null;
+      agg.stats.lootSoloPer60Min = (player.soloGames > 3 && player.lootSoloPer60Min !== undefined && player.lootSoloPer60Min !== null) 
+        ? player.lootSoloPer60Min : null;
     });
   }
 
@@ -612,8 +616,9 @@ function generatePlayerTitles(aggregatedStats, roleFrequencies) {
     };
   });
 
-  // Filter combination titles to keep only top players
-  filterCombinationTitlesToTopPlayers(playerTitles);
+  // Note: We keep all qualifying titles in the titles array (including combinations)
+  // The uniqueness logic only applies to primary title assignment
+  // This allows players to see all their earned titles as secondary achievements
 
   // Assign unique primary titles
   assignUniquePrimaryTitles(playerTitles);

@@ -59,12 +59,42 @@
   margin: 0;
 }
 
+/* Titles Subsection Headers */
+.titles-subsection-header {
+  margin: 2rem 0 1rem 0;
+  padding: 1rem;
+  background: var(--bg-tertiary);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 8px;
+}
+
+.titles-subsection-header.secondary {
+  border-left-color: rgba(255, 193, 7, 0.6);
+  background: rgba(255, 193, 7, 0.05);
+}
+
+.titles-subsection-header h4 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+}
+
+.titles-subsection-header p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
 /* Titles Grid */
 .titles-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 1rem;
   padding: 0.5rem;
+}
+
+.titles-grid.awarded-elsewhere-grid {
+  opacity: 0.85;
 }
 
 /* Title Card */
@@ -90,6 +120,17 @@
 .title-card.primary {
   border-color: var(--accent-primary);
   background: linear-gradient(135deg, var(--accent-primary-fade) 0%, var(--bg-secondary) 50%);
+}
+
+/* Awarded Elsewhere (qualified but not owner) */
+.title-card.awarded-elsewhere {
+  opacity: 0.9;
+  border-style: dashed;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.05) 0%, var(--bg-secondary) 50%);
+}
+
+.title-card.awarded-elsewhere:hover {
+  opacity: 1;
 }
 
 .title-crown {
