@@ -298,6 +298,7 @@ function getThresholdForCategory(requiredCategory, minCategory) {
 function getStatUnavailableReason(stat) {
   const reasons = {
     hunterAccuracy: 'Requires 10+ games as Chasseur',
+    hunterShotAccuracy: 'Requires 10+ shots taken as Chasseur',
     votingAccuracy: 'Requires 10+ votes cast',
     votingFirst: 'Requires 5+ meetings with votes',
     lootPer60Min: 'Loot data not available in game logs',
@@ -504,12 +505,22 @@ function computeAllStatistics(moddedGames) {
   // Process hunter stats
   if (hunterStats?.hunterStats) {
     hunterStats.hunterStats.forEach(hunterData => {
-      const playerId = hunterData.player;
+      const playerId = hunterData.hunterId; // Fixed: use hunterId not player
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
-      if (hunterData.accuracyRate !== undefined && hunterData.accuracyRate !== null && hunterData.totalHunts >= 10) {
-        agg.stats.hunterAccuracy = hunterData.accuracyRate;
+      // Kill-based accuracy (only if 10+ games as hunter)
+      if (hunterData.gamesPlayedAsHunter >= 10) {
+        const totalKills = hunterData.totalKills || 0;
+        if (totalKills > 0) {
+          const goodKills = hunterData.nonVillageoisKills || 0;
+          agg.stats.hunterAccuracy = (goodKills / totalKills) * 100;
+        }
+      }
+      
+      // Shot accuracy (only if 10+ shots taken)
+      if (hunterData.shotAccuracy !== undefined && hunterData.shotAccuracy !== null && hunterData.totalShots >= 10) {
+        agg.stats.hunterShotAccuracy = hunterData.shotAccuracy;
       }
     });
   }

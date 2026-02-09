@@ -51,28 +51,30 @@ node scripts/data-sync/titleCheck/analyze-title-eligibility.js discord --priorit
 Most high-priority titles cannot be awarded due to missing statistics:
 
 1. **La Légende** (Priority 20)
-   - Available: Win rate data (several players with EXTREME_HIGH: 86-97th percentile)
-   - **Missing**: Win series data (longestWinSeries)
-   - Top candidates: Arkantors (86th %), Noamouille (89th %), BoccA (97th %)
+   - Available: Win rate data ✓, Win series data ✓, Games played ✓
+   - **Status**: All data available but no player meets all 3 thresholds simultaneously
+   - Top candidates: Arkantors (2/3 met, 97%), BoccA (2/3 met, 95%), Baout (1/3 met, 99%)
+   - **Closest**: BoccA and Arkantors both have EXTREME_HIGH win rate + HIGH win series, but game count percentiles don't match the undefined requirement
 
 2. **Le·a MVP** (Priority 19)
-   - Available: Win rate data  
+   - Available: Win rate data ✓
    - **Missing**: Loot stats, Survival stats
    - Top candidates: Ponce (78th % win rate), Khalen (81st %), Monodie (62nd %)
 
 3. **Sniper Elite** (Priority 18)
-   - Problem 1: No players have 12%+ Chasseur games (need HIGH role frequency)
-   - Problem 2: Even players with Chasseur don't have 10+ games to calculate hunter accuracy
-   - **Status**: IMPOSSIBLE - Role assignment RNG prevents qualification
+   - Available: Hunter shot accuracy ✓, Hunter kill accuracy ✓
+   - **Status**: 6 players have data, but no one meets BOTH HIGH thresholds
+   - Top candidates: Lutti (95.3%, has HIGH shot accuracy but ABOVE_AVERAGE kill accuracy), Anaee (81.4%), Khalen (82.2%)
+   - **Challenge**: Requires excellence in both shot accuracy (hits/misses) AND kill targeting (non-Villageois victims)
 
 4. **Le·a Justicier·ère** (Priority 18)
-   - Problem 1: No players have 12%+ Chasseur games
-   - Problem 2: Kill rate shows 0 for all players (likely data computation issue)
-   - **Missing**: Survival stats, correct kill rate calculation
-   - **Status**: IMPOSSIBLE - Multiple blockers
+   - Available: Kill rate ✓, Survival rate ✓
+   - **Blocker**: No players have 12%+ Chasseur games (role frequency requirement)
+   - Top candidates: Khalen (2/3 met, only 4.6% Chasseur), Monodie (2/3 met, 7.8%), Arkantors (2/3 met, 10.1%)
+   - **Status**: IMPOSSIBLE due to role RNG - highest Chasseur frequency is 10.1% (Arkantors)
 
 5. **Le Loup Solitaire** (Priority 18)
-   - Available: Win rate Loup data (several HIGH performers)
+   - Available: Win rate Loup data (several HIGH performers) ✓
    - **Missing**: Loot Loup stats, Talking stats
    - Top candidates have good Loup win rates but lack other data
 
@@ -84,20 +86,22 @@ Most high-priority titles cannot be awarded due to missing statistics:
 
 The following statistics are **not computed** or **not available** in current data:
 
-- ❌ `longestWinSeries` / `longestLossSeries` - Series data
-- ❌ `lootPer60Min` / `lootVillageoisPer60Min` / `lootLoupPer60Min` - All loot stats
-- ❌ `talkingPer60Min` / `talkingOutsidePer60Min` / `talkingDuringPer60Min` - Talking stats
-- ❌ `survivalRate` / `survivalDay1Rate` - Survival stats
-- ⚠️  `killRate` - Shows 0 for all players (computation issue)
-- ⚠️  `hunterAccuracy` - Only available if player has 10+ games as Chasseur (rare)
+- ❌ `lootPer60Min` / `lootVillageoisPer60Min` / `lootLoupPer60Min` - All loot stats (not in game logs)
+- ❌ `talkingPer60Min` / `talkingOutsidePer60Min` / `talkingDuringPer60Min` - Talking stats (not in game logs)
+- ⚠️  `hunterAccuracy` / `hunterShotAccuracy` - Available but requires 10+ games/shots as Chasseur (only 6 players qualify)
 - ⚠️  `votingAccuracy` / `votingAggressiveness` / `votingFirst` - Vote data availability unknown
 
 ### ✅ **Statistics That Work**
 
 - ✓ `winRate` - Overall win rate (working correctly)
 - ✓ `winRateVillageois` / `winRateLoup` / `winRateSolo` - Camp-specific win rates (working)
+- ✓ `longestWinSeries` / `longestLossSeries` - Series data (working correctly)
+- ✓ `survivalRate` / `survivalDay1Rate` - Survival stats (working correctly)
+- ✓ `killRate` - Kill rate per game (working correctly)
 - ✓ `gamesPlayed` - Game count (working)
-- ✓ Role frequency data - Works for roleChasseur checks (but players don't meet thresholds)
+- ✓ `hunterAccuracy` - Kill-based accuracy for hunters with 10+ games (working, 6 players qualify)
+- ✓ `hunterShotAccuracy` - Shot-based accuracy for hunters with 10+ shots (working, 6 players qualify)
+- ✓ Role frequency data - Works for all role checks (but players rarely meet HIGH thresholds due to RNG)
 
 ## Understanding Proximity Scores
 
@@ -135,22 +139,25 @@ For each title, the report shows:
 
 1. ✅ **Award "L'Adaptable"** to top candidate(s) - All data available and 3 players qualify
 2. 🔧 **Fix missing statistics** to enable more titles:
-   - Implement series tracking (win/loss streaks)
-   - Add loot statistics to compute functions
-   - Add talking time statistics
-   - Add survival rate calculations
-   - Fix kill rate calculation (currently shows 0 for everyone)
+   - Add loot statistics to game logs and compute functions
+   - Add talking time statistics to game logs and compute functions
+3. 🎯 **Consider "La Légende" eligibility** - All data exists, need to clarify the `gamesPlayed` requirement (currently undefined category)
 
 ### Future Improvements
 
-3. 📉 **Consider title requirement adjustments**:
-   - "Sniper Elite" and "Le·a Justicier·ère" may need lower Chasseur frequency (8% instead of 12%)
-   - Or reduce minimum hunter accuracy games from 10 to 5
+4. 📉 **Consider title requirement adjustments**:
+   - **"Sniper Elite"**: Current requirements work but are extremely difficult - no player achieves both HIGH thresholds. Consider:
+     - Accepting one HIGH + one ABOVE_AVERAGE threshold, OR
+     - Lowering percentile thresholds slightly
+   - **"Le·a Justicier·ère"**: Impossible due to 12% Chasseur frequency (highest is 10.1%). Consider:
+     - Lowering Chasseur frequency from HIGH (12%) to ABOVE_AVERAGE (8%), OR
+     - Removing role frequency requirement entirely (rely on kill rate + survival only)
    - Role-based titles are inherently difficult due to RNG
 
-4. 🎯 **Add incremental data collection**:
-   - Start tracking series, loot, talking, and survival in new games
-   - Backfill historical data if possible
+5. 🎯 **Implement missing data collection**:
+   - Start tracking loot statistics in game logs
+   - Start tracking talking time in game logs
+   - Backfill historical data if possible from game recordings
 
 ## Technical Details
 
@@ -175,21 +182,30 @@ For each title, the report shows:
 - Analyzes 37 eligible players (25+ games) against 77 combination titles
 - Outputs detailed reports with condition-by-condition breakdowns
 
-## Example: Why "La Légende" Isn't Awarded
+## Example: Why "Sniper Elite" Isn't Awarded
 
 ```
-🏅 La Légende (Priority 20)
+🎖️ Sniper Elite (Priority 18)
 Requirements:
-  1. winRate: EXTREME_HIGH (≥85th percentile)
-  2. winSeries: HIGH (≥65th percentile)
+  1. hunterShotAccuracy: HIGH (≥65th percentile)
+  2. hunterAccuracy: HIGH (≥65th percentile)
 
-Top Candidate: BoccA (76 games)
-  Proximity: 50% (1/2 conditions met)
-  ✓ winRate: 52.6% (97th percentile) ✓✓✓
-  ✗ winSeries: Missing data ❌
+Top Candidate: Lutti (340 games)
+  Proximity: 95.3% (1/2 conditions met)
+  ✓ hunterShotAccuracy: 100% (83rd percentile) ✓✓✓
+  ✗ hunterAccuracy: 77.3% (56th percentile, ABOVE_AVERAGE)
+     Gap: 9 percentile points needed
 
-Diagnosis: Win series data not computed. BoccA has exceptional win rate
-(top 3%) but we can't evaluate win streaks. Need to implement series tracking.
+Diagnosis: Lutti has exceptional shot accuracy (never misses) but their kill 
+targeting accuracy (77% non-Villageois kills) falls just below the HIGH threshold.
+Title requires excellence in BOTH metrics simultaneously, which is extremely rare.
+
+Alternative candidates:
+- Anaee: High shot accuracy (94%, 67th %ile) but low kill accuracy (60%, 28th %ile)
+- Tsuna: High kill accuracy (100%, 83rd %ile) but low shot accuracy (73%, 17th %ile)
+
+No player combines both HIGH thresholds. Consider adjusting requirements to one HIGH 
++ one ABOVE_AVERAGE, or lowering percentile thresholds.
 ```
 
 ## Support
