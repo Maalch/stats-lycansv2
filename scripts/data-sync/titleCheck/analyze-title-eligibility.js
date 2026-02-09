@@ -579,7 +579,7 @@ function computeAllStatistics(moddedGames) {
   // Process loot stats if available
   if (lootStats?.playerStats) {
     lootStats.playerStats.forEach(player => {
-      const playerId = player.player;
+      const playerId = player.playerId; // Use playerId not player for correct matching
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
@@ -592,7 +592,7 @@ function computeAllStatistics(moddedGames) {
   // Process zone stats
   if (zoneStats?.playerStats) {
     zoneStats.playerStats.forEach(player => {
-      const playerId = player.player;
+      const playerId = player.playerId; // Use playerId for correct matching
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       

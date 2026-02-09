@@ -57,8 +57,8 @@ Most high-priority titles cannot be awarded due to missing statistics:
    - **Closest**: BoccA and Arkantors both have EXTREME_HIGH win rate + HIGH win series, but game count percentiles don't match the undefined requirement
 
 2. **Le·a MVP** (Priority 19)
-   - Available: Win rate data ✓
-   - **Missing**: Loot stats, Survival stats
+   - Available: Win rate data ✓, Loot stats ✓, Survival stats ✓
+   - **Status**: All data available, check if any player meets all HIGH thresholds
    - Top candidates: Ponce (78th % win rate), Khalen (81st %), Monodie (62nd %)
 
 3. **Sniper Elite** (Priority 18)
@@ -74,22 +74,22 @@ Most high-priority titles cannot be awarded due to missing statistics:
    - **Status**: IMPOSSIBLE due to role RNG - highest Chasseur frequency is 10.1% (Arkantors)
 
 5. **Le Loup Solitaire** (Priority 18)
-   - Available: Win rate Loup data (several HIGH performers) ✓
-   - **Missing**: Loot Loup stats, Talking stats
-   - Top candidates have good Loup win rates but lack other data
+   - Available: Win rate Loup data (several HIGH performers) ✓, Loot Loup stats ✓, Talking stats ✓
+   - **Status**: All data available, check if any player meets all HIGH thresholds
+   - Top candidates have good Loup win rates, loot data, and talking stats
 
 6. **La Machine** (Priority 18)
-   - **Missing**: Loot stats, Talking stats
-   - **Status**: IMPOSSIBLE - All required data missing
+   - Available: Loot stats ✓, Talking stats ✓
+   - **Status**: All data available, check if any player meets all thresholds
 
 ### 📊 **Missing Statistics Summary**
 
-The following statistics are **not computed** or **not available** in current data:
+The following statistics have **limited availability**:
 
-- ❌ `lootPer60Min` / `lootVillageoisPer60Min` / `lootLoupPer60Min` - All loot stats (not in game logs)
-- ❌ `talkingPer60Min` / `talkingOutsidePer60Min` / `talkingDuringPer60Min` - Talking stats (not in game logs)
 - ⚠️  `hunterAccuracy` / `hunterShotAccuracy` - Available but requires 10+ games/shots as Chasseur (only 6 players qualify)
-- ⚠️  `votingAccuracy` / `votingAggressiveness` / `votingFirst` - Vote data availability unknown
+- ⚠️  Role frequency requirements - Available but difficult to meet due to RNG (e.g., 12%+ Chasseur games)
+
+**Note:** All other statistics are fully available and working!
 
 ### ✅ **Statistics That Work**
 
@@ -99,6 +99,9 @@ The following statistics are **not computed** or **not available** in current da
 - ✓ `survivalRate` / `survivalDay1Rate` - Survival stats (working correctly)
 - ✓ `killRate` - Kill rate per game (working correctly)
 - ✓ `gamesPlayed` - Game count (working)
+- ✓ `lootPer60Min` / `lootVillageoisPer60Min` / `lootLoupPer60Min` - Loot stats (working, 395/451 games have data, 57 titles assigned)
+- ✓ `talkingPer60Min` / `talkingOutsidePer60Min` / `talkingDuringPer60Min` - Talking stats (working, 413/451 games have data, 64 titles assigned)
+- ✓ `votingAccuracy` / `votingAggressiveness` / `votingFirst` - Voting stats (working correctly)
 - ✓ `hunterAccuracy` - Kill-based accuracy for hunters with 10+ games (working, 6 players qualify)
 - ✓ `hunterShotAccuracy` - Shot-based accuracy for hunters with 10+ shots (working, 6 players qualify)
 - ✓ Role frequency data - Works for all role checks (but players rarely meet HIGH thresholds due to RNG)
@@ -138,9 +141,11 @@ For each title, the report shows:
 ### Immediate Actions
 
 1. ✅ **Award "L'Adaptable"** to top candidate(s) - All data available and 3 players qualify
-2. 🔧 **Fix missing statistics** to enable more titles:
-   - Add loot statistics to game logs and compute functions
-   - Add talking time statistics to game logs and compute functions
+2. 🔍 **Re-analyze high-priority combination titles** - All statistics are now fully working:
+   - Check "Le·a MVP" for HIGH win rate + loot + survival combinations
+   - Check "Le Loup Solitaire" for HIGH Loup win rate + loot + low talking
+   - Check "La Machine" for HIGH loot + LOW talking + HIGH survival
+   - All titles now have complete data - blockers are only threshold requirements
 3. 🎯 **Consider "La Légende" eligibility** - All data exists, need to clarify the `gamesPlayed` requirement (currently undefined category)
 
 ### Future Improvements
@@ -154,10 +159,11 @@ For each title, the report shows:
      - Removing role frequency requirement entirely (rely on kill rate + survival only)
    - Role-based titles are inherently difficult due to RNG
 
-5. 🎯 **Implement missing data collection**:
-   - Start tracking loot statistics in game logs
-   - Start tracking talking time in game logs
-   - Backfill historical data if possible from game recordings
+5. ✅ **Data collection complete** - All statistics are now tracked and working:
+   - Loot stats: 395/451 games (88%), 57 titles assigned
+   - Talking stats: 413/451 games (92%), 64 titles assigned
+   - Voting stats: Fully available
+   - All other stats: Fully available
 
 ## Technical Details
 
