@@ -345,9 +345,9 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     for (const url of gameLogUrls) {
       try {
         const gameLog = await fetchGameLogData(url);
-          // Correct victorious status for disconnected players and Lover secondary role (Main Team only)
-          let correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog, MAIN_TEAM_FILTER);
-          correctedGameLog = correctLoverSecondaryRole(correctedGameLog, MAIN_TEAM_FILTER);
+          // Correct victorious status for disconnected players and Lover secondary role
+          let correctedGameLog = correctVictoriousStatusForDisconnectedPlayers(gameLog, config.gameFilter);
+          correctedGameLog = correctLoverSecondaryRole(correctedGameLog, config.gameFilter);
           awsGameLogs.push(correctedGameLog);
         
         // Small delay between requests to be respectful to S3
