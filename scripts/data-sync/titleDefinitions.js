@@ -283,7 +283,7 @@ export const COMBINATION_TITLES = [
     emoji: '📻',
     description: 'Ne fait que parler, ne récolte rien et tue peu',
     conditions: [
-      { stat: 'talking', category: 'EXTREME_HIGH' },
+      { stat: 'talking', category: 'EXTREME_HIGH', minCategory: 'ABOVE_AVERAGE' },
       { stat: 'loot', category: 'LOW' },
       { stat: 'killRate', category: 'LOW' }
     ],
@@ -380,7 +380,7 @@ export const COMBINATION_TITLES = [
       { stat: 'killRate', category: 'HIGH' },
       { stat: 'survival', category: 'LOW' }
     ],
-    priority: 10
+    priority: 12
   },
 
   // Low survival Day 1 + High survival = Phoenix
@@ -390,7 +390,7 @@ export const COMBINATION_TITLES = [
     emoji: '🔥',
     description: 'Meurt souvent tôt mais survit jusqu\'au bout après',
     conditions: [
-      { stat: 'survivalDay1', category: 'LOW' },
+      { stat: 'survivalDay1', category: 'LOW', minCategory: 'BELOW_AVERAGE' },
       { stat: 'survival', category: 'HIGH' }
     ],
     priority: 17

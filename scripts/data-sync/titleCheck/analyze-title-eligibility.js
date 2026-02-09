@@ -151,6 +151,23 @@ function evaluateCondition(playerPercentiles, roleData, condition) {
     stat = statNameMap[stat];
   }
   
+  // Handle minValue conditions (e.g., gamesPlayed >= 100)
+  if (condition.minValue !== undefined) {
+    const playerData = playerPercentiles[stat];
+    const currentValue = playerData ? playerData.value : 0;
+    const met = currentValue >= condition.minValue;
+    
+    return {
+      met,
+      currentValue,
+      currentPercentile: playerData ? playerData.percentile : null,
+      currentCategory: playerData ? playerData.category : null,
+      requiredCategory: `≥${condition.minValue}`,
+      gap: met ? 0 : (condition.minValue - currentValue),
+      reason: null
+    };
+  }
+  
   // Handle role-based conditions
   if (stat.startsWith('role')) {
     if (!roleData) {
@@ -343,9 +360,9 @@ function getRoleNameFromStat(stat) {
 
 /**
  * Calculate how close a player is to earning a title
- * @returns {Object} Proximity score (0-100) and detailed breakdown
+ * @returns {Object} Proximity score (0-100), claim strength, and detailed breakdown
  */
-function calculateTitleProximity(playerPercentiles, roleData, titleConditions) {
+function calculateTitleProximity(playerPercentiles, roleData, titleConditions, priority) {
   const evaluations = titleConditions.map(condition => 
     evaluateCondition(playerPercentiles, roleData, condition)
   );
@@ -372,8 +389,37 @@ function calculateTitleProximity(playerPercentiles, roleData, titleConditions) {
   
   const proximityScore = (totalScore / totalConditions) * 100;
   
+  // Calculate claim strength (matching generate-titles.js logic)
+  // Get average adjusted percentile for claim strength calculation
+  let totalAdjustedPercentile = 0;
+  let percentileCount = 0;
+  
+  evaluations.forEach(evaluation => {
+    if (evaluation.currentPercentile !== null && evaluation.currentPercentile !== undefined) {
+      let adjustedPercentile = evaluation.currentPercentile;
+      
+      // Invert percentile for "bad achievement" categories where lower is better
+      // Check the REQUIRED category, not the current category
+      const isBadAchievement = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(evaluation.requiredCategory);
+      if (isBadAchievement) {
+        adjustedPercentile = 100 - adjustedPercentile;
+      }
+      
+      totalAdjustedPercentile += adjustedPercentile;
+      percentileCount++;
+    }
+  });
+  
+  const avgAdjustedPercentile = percentileCount > 0 ? (totalAdjustedPercentile / percentileCount) : 50;
+  
+  // Calculate claim strength: priority * 1000 + avgAdjustedPercentile * 10
+  // (titleIndex subtraction not applicable here since we're analyzing single titles)
+  const claimStrength = (priority || 0) * 1000 + avgAdjustedPercentile * 10;
+  
   return {
     proximityScore: Math.round(proximityScore * 10) / 10, // Round to 1 decimal
+    claimStrength: Math.round(claimStrength * 10) / 10, // Round to 1 decimal
+    avgAdjustedPercentile: Math.round(avgAdjustedPercentile * 10) / 10,
     metConditions,
     totalConditions,
     evaluations,
@@ -496,8 +542,8 @@ function computeAllStatistics(moddedGames) {
       if (!aggregatedStats.has(playerId)) return;
       const agg = aggregatedStats.get(playerId);
       
-      if (player.firstVotePercentage !== undefined && player.firstVotePercentage !== null) {
-        agg.stats.votingFirst = player.firstVotePercentage;
+      if (player.firstVoteRate !== undefined && player.firstVoteRate !== null && player.totalMeetingsWithVotes >= 5) {
+        agg.stats.votingFirst = player.firstVoteRate;
       }
     });
   }
@@ -534,7 +580,7 @@ function computeAllStatistics(moddedGames) {
       
       const gamesPlayed = agg.gamesPlayed;
       const totalDeaths = player.totalDeaths || 0;
-      const day1Deaths = player.deathsDay1 || 0;
+      const day1Deaths = player.day1Deaths || 0;
       
       agg.stats.survivalRate = gamesPlayed > 0 
         ? ((gamesPlayed - totalDeaths) / gamesPlayed) * 100 
@@ -726,7 +772,7 @@ function analyzeTitleEligibility(aggregatedStats, roleFrequencies, options = {})
     
     playerPercentiles.forEach((playerData, playerId) => {
       const roleData = roleFrequencies.get(playerId);
-      const proximity = calculateTitleProximity(playerData.percentiles, roleData, combo.conditions);
+      const proximity = calculateTitleProximity(playerData.percentiles, roleData, combo.conditions, combo.priority);
       
       candidates.push({
         playerId,
@@ -736,8 +782,15 @@ function analyzeTitleEligibility(aggregatedStats, roleFrequencies, options = {})
       });
     });
     
-    // Sort by proximity score (highest first)
-    candidates.sort((a, b) => b.proximityScore - a.proximityScore);
+    // Sort by claim strength (highest first), matching generate-titles.js behavior
+    // This properly ranks players when multiple have 100% proximity score
+    candidates.sort((a, b) => {
+      if (b.claimStrength !== a.claimStrength) {
+        return b.claimStrength - a.claimStrength;
+      }
+      // Fallback to proximity score if claim strengths are equal
+      return b.proximityScore - a.proximityScore;
+    });
     
     // Take top N
     const topCandidates = candidates.slice(0, topN);
@@ -781,12 +834,13 @@ function formatTextReport(analysis) {
     report += '📋 REQUIREMENTS:\n';
     titleData.conditions.forEach((cond, i) => {
       const minCat = cond.minCategory ? ` (min: ${cond.minCategory})` : '';
-      report += `   ${i + 1}. ${cond.stat}: ${cond.category}${minCat}\n`;
+      const requirement = cond.minValue !== undefined ? `≥${cond.minValue}` : cond.category;
+      report += `   ${i + 1}. ${cond.stat}: ${requirement}${minCat}\n`;
     });
     report += '\n';
 
     // Show top candidates
-    report += `🏆 TOP ${titleData.topCandidates.length} CANDIDATES:\n`;
+    report += `🏆 TOP ${titleData.topCandidates.length} CANDIDATES (sorted by claim strength):\n`;
     if (titleData.topCandidates.length === 0) {
       report += '   ❌ No eligible candidates found\n';
     } else {
@@ -794,6 +848,7 @@ function formatTextReport(analysis) {
         const medal = rank === 0 ? '🥇' : rank === 1 ? '🥈' : rank === 2 ? '🥉' : '  ';
         report += `\n${medal} #${rank + 1}: ${candidate.playerName} (${candidate.gamesPlayed} games)\n`;
         report += `   Proximity Score: ${candidate.proximityScore}% (${candidate.metConditions}/${candidate.totalConditions} conditions met)\n`;
+        report += `   Claim Strength: ${candidate.claimStrength} (avg adjusted %ile: ${candidate.avgAdjustedPercentile})\n`;
         
         if (!candidate.feasible) {
           report += `   ⚠️  Missing required data - title may not be achievable\n`;
@@ -804,8 +859,9 @@ function formatTextReport(analysis) {
           const condition = titleData.conditions[i];
           const checkMark = evaluation.met ? '✓' : '✗';
           const statusColor = evaluation.met ? '' : '';
+          const requirement = condition.minValue !== undefined ? `≥${condition.minValue}` : condition.category;
           
-          report += `   ${checkMark} ${condition.stat} (${condition.category}):\n`;
+          report += `   ${checkMark} ${condition.stat} (${requirement}):\n`;
           
           if (evaluation.met) {
             if (evaluation.currentPercentile !== null) {
