@@ -140,8 +140,7 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
       <div className="titles-header">
         <h3>🏷️ Titres actuels</h3>
         <p className="titles-info">
-          {playerTitles.titles.length} titre{playerTitles.titles.length > 1 ? 's' : ''} • 
-          {playerTitles.gamesPlayed} parties jouées
+          {playerTitles.titles.length} titre{playerTitles.titles.length > 1 ? 's' : ''} • {playerTitles.gamesPlayed} parties jouées
         </p>
       </div>
 
