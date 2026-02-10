@@ -205,6 +205,16 @@ export const TITLE_DEFINITIONS = {
     high: { title: 'Le·a Discret·ète', emoji: '🤫', description: 'Se détransforme fréquemment' },
     low: { title: 'Le Loup Assumé', emoji: '🐺', description: 'Se détransforme rarement' },
     extremeLow: { title: 'Le Loup Permanent', emoji: '🌑', description: 'Reste presque toujours en loup' }
+  },
+
+  // === POTION USAGE STATS ===
+
+  // Potion usage rate (potions drunk per 60 minutes of gameplay)
+  potionUsage: {
+    extremeHigh: { title: 'L\'Alchimiste Amateur·e', emoji: '🧪', description: 'Boit énormément de potions' },
+    high: { title: 'Le·a Potion Addict', emoji: '⚗️', description: 'Boit beaucoup de potions' },
+    low: { title: 'Le·a Sobre', emoji: '💧', description: 'Boit peu de potions' },
+    extremeLow: { title: 'L\'Abstinent·e', emoji: '🚫', description: 'Ne boit presque jamais de potions' }
   }
 };
 
@@ -530,7 +540,7 @@ export const COMBINATION_TITLES = [
       { stat: 'winRate', category: 'EXTREME_LOW' },
       { stat: 'lossSeries', category: 'HIGH' }
     ],
-    priority: 13
+    priority: 12
   },
 
   // High loot + High survival + Low talk = Robot
@@ -651,7 +661,7 @@ export const COMBINATION_TITLES = [
       { stat: 'winRateLoup', category: 'LOW' },
       { stat: 'winRateSolo', category: 'LOW' }
     ],
-    priority: 12
+    priority: 11
   },
 
   // High loot + Low survival = The Greedy
@@ -664,7 +674,7 @@ export const COMBINATION_TITLES = [
       { stat: 'loot', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
       { stat: 'survival', category: 'LOW', minCategory: 'BELOW_AVERAGE' }
     ],
-    priority: 11
+    priority: 12
   },
 
   // Low loot + High survival = The Cautious
@@ -799,7 +809,7 @@ export const COMBINATION_TITLES = [
       { stat: 'talkingDuringMeeting', category: 'HIGH' },
       { stat: 'votingAggressive', category: 'LOW' }
     ],
-    priority: 10
+    priority: 12
   },
 
   // Low survival Day 1 + Low survival + High win rate = Sacrifice
@@ -837,7 +847,7 @@ export const COMBINATION_TITLES = [
       { stat: 'survival', category: 'HIGH' },
       { stat: 'winRate', category: 'LOW' }
     ],
-    priority: 12
+    priority: 11
   },
   // High kills + Low win rate = The Reckless
   {
@@ -1037,6 +1047,54 @@ export const COMBINATION_TITLES = [
       { stat: 'winRateLoup', category: 'HIGH' }
     ],
     priority: 14
-  }
+  },
+  // The Alchemist - High potion usage + High survival
+  {
+    id: 'apothicaire',
+    title: 'L\'Apothicaire',
+    emoji: '⚗️',
+    description: 'Boit beaucoup de potions et survit grâce à elles',
+    conditions: [
+      { stat: 'potionUsage', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 13
+},
+  // The Pharmacy - High potion usage + Low loot (focuses on potions, not harvest)
+{
+  id: 'pharmacien',
+  title: 'Le·a Pharmacien·ne',
+  emoji: '💊',
+  description: 'Ignore la récolte pour se concentrer sur les potions',
+  conditions: [
+    { stat: 'potionUsage', category: 'HIGH' },
+    { stat: 'loot', category: 'LOW' }
+  ],
+  priority: 11
+},
+//The Junkie - High potion usage + Low win rate (potions don't help them win)
+{
+  id: 'accro',
+  title: 'L\'Accro',
+  emoji: '🍾',
+  description: 'Boit des potions mais ça ne l\'aide pas à gagner',
+  conditions: [
+    { stat: 'potionUsage', category: 'HIGH' },
+    { stat: 'winRate', category: 'LOW' }
+  ],
+  priority: 11
+},
+// The Witch - High potion usage + High talking (brews potions and talks about them)
+{
+  id: 'sorciere',
+  title: 'La Sorcière',
+  emoji: '🧙',
+  description: 'Prépare des potions tout en racontant ses recettes',
+  conditions: [
+    { stat: 'potionUsage', category: 'HIGH' },
+    { stat: 'talking', category: 'HIGH' }
+  ],
+  priority: 12
+},
 
 ];

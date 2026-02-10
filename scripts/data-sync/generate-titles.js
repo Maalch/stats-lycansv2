@@ -20,6 +20,7 @@ import { computeDeathStatistics } from './compute/compute-death-stats.js';
 import { computeLootStatistics } from './compute/compute-loot-stats.js';
 import { computeZoneStatistics } from './compute/compute-zone-stats.js';
 import { computeWolfTransformStatistics } from './compute/compute-wolf-transform-stats.js';
+import { computePotionStatistics } from './compute/compute-potion-stats.js';
 
 // Import data source configuration
 import { DATA_SOURCES } from './shared/data-sources.js';
@@ -114,6 +115,14 @@ function computeAllStatistics(moddedGames) {
     wolfTransformStats = computeWolfTransformStatistics(moddedGames);
   } catch (e) {
     console.log('  ⚠️  Wolf transform statistics not available:', e.message);
+  }
+
+  // Compute potion usage stats
+  let potionStats = null;
+  try {
+    potionStats = computePotionStatistics(moddedGames);
+  } catch (e) {
+    console.log('  ⚠️  Potion statistics not available:', e.message);
   }
 
   // Aggregate all stats by player
@@ -354,6 +363,20 @@ function computeAllStatistics(moddedGames) {
       if (player.gamesWithTransformData >= 5 && player.totalNightsAsWolf >= 5) {
         agg.stats.wolfTransformRate = player.transformsPerNight ?? null;
         agg.stats.wolfUntransformRate = player.untransformsPerNight ?? null;
+      }
+    });
+  }
+
+  // Process potion usage stats
+  if (potionStats?.playerStats) {
+    potionStats.playerStats.forEach(player => {
+      const playerId = player.playerId;
+      if (!aggregatedStats.has(playerId)) return;
+      const agg = aggregatedStats.get(playerId);
+
+      // Only set potion stats if player has enough games with potion data (at least 5)
+      if (player.gamesWithPotionData >= 5) {
+        agg.stats.potionsPer60Min = player.potionsPer60Min ?? null;
       }
     });
   }
@@ -715,7 +738,8 @@ function generateBasicTitles(percentiles) {
     zoneResteCarte: 'zoneResteCarte',
     zoneDominantPercentage: 'zoneDominantPercentage',
     wolfTransformRate: 'wolfTransformRate',
-    wolfUntransformRate: 'wolfUntransformRate'
+    wolfUntransformRate: 'wolfUntransformRate',
+    potionsPer60Min: 'potionUsage'
   };
 
   Object.entries(percentiles).forEach(([statName, data]) => {
@@ -902,7 +926,8 @@ function generateCombinationTitles(percentiles) {
     zoneResteCarte: 'zoneResteCarte',
     zoneDominantPercentage: 'zoneDominantPercentage',
     wolfTransformRate: 'wolfTransformRate',
-    wolfUntransformRate: 'wolfUntransformRate'
+    wolfUntransformRate: 'wolfUntransformRate',
+    potionUsage: 'potionsPer60Min'
   };
 
   COMBINATION_TITLES.forEach(combo => {    

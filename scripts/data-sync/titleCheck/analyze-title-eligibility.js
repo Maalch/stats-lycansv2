@@ -28,6 +28,7 @@ import { computeDeathStatistics } from '../compute/compute-death-stats.js';
 import { computeLootStatistics } from '../compute/compute-loot-stats.js';
 import { computeZoneStatistics } from '../compute/compute-zone-stats.js';
 import { computeWolfTransformStatistics } from '../compute/compute-wolf-transform-stats.js';
+import { computePotionStatistics } from '../compute/compute-potion-stats.js';
 
 // Import data source configuration
 import { DATA_SOURCES } from '../shared/data-sources.js';
@@ -146,7 +147,8 @@ function evaluateCondition(playerPercentiles, roleData, condition) {
     'winSeries': 'longestWinSeries',
     'lossSeries': 'longestLossSeries',
     'wolfTransformRate': 'wolfTransformRate',
-    'wolfUntransformRate': 'wolfUntransformRate'
+    'wolfUntransformRate': 'wolfUntransformRate',
+    'potionUsage': 'potionsPer60Min'
   };
   
   // Apply mapping if exists
@@ -334,7 +336,8 @@ function getStatUnavailableReason(stat) {
     zoneResteCarte: 'Requires 10+ data points on Village map',
     zoneDominantPercentage: 'Requires 10+ data points on Village map',
     wolfTransformRate: 'Requires 5+ games as wolf with action data',
-    wolfUntransformRate: 'Requires 5+ games as wolf with action data'
+    wolfUntransformRate: 'Requires 5+ games as wolf with action data',
+    potionsPer60Min: 'Requires 5+ games with potion action data'
   };
   return reasons[stat] || 'Insufficient data for this stat';
 }
@@ -468,6 +471,13 @@ function computeAllStatistics(moddedGames) {
     wolfTransformStats = computeWolfTransformStatistics(moddedGames);
   } catch (e) {
     console.log('  ⚠️  Wolf transform statistics not available');
+  }
+
+  let potionStats = null;
+  try {
+    potionStats = computePotionStatistics(moddedGames);
+  } catch (e) {
+    console.log('  ⚠️  Potion statistics not available');
   }
 
   const aggregatedStats = new Map();
@@ -678,6 +688,20 @@ function computeAllStatistics(moddedGames) {
     });
   }
 
+  // Process potion usage stats
+  if (potionStats?.playerStats) {
+    potionStats.playerStats.forEach(player => {
+      const playerId = player.playerId;
+      if (!aggregatedStats.has(playerId)) return;
+      const agg = aggregatedStats.get(playerId);
+
+      // Only set potion stats if player has enough games with potion data (at least 5)
+      if (player.gamesWithPotionData >= 5) {
+        agg.stats.potionsPer60Min = player.potionsPer60Min ?? null;
+      }
+    });
+  }
+
   return aggregatedStats;
 }
 
@@ -745,6 +769,147 @@ function buildDistributions(eligiblePlayers) {
 // ============================================================================
 // MAIN ANALYSIS FUNCTIONS
 // ============================================================================
+
+/**
+ * Analyze a basic title category and show rankings for each tier
+ */
+function analyzeBasicTitleCategory(aggregatedStats, categoryName, options = {}) {
+  const { topN = 10 } = options;
+
+  console.log(`  Analyzing basic title category: ${categoryName}...`);
+
+  // Check if category exists in TITLE_DEFINITIONS
+  const categoryDef = TITLE_DEFINITIONS[categoryName];
+  if (!categoryDef) {
+    throw new Error(`Title category '${categoryName}' not found in TITLE_DEFINITIONS`);
+  }
+
+  // Filter eligible players (min games requirement)
+  const eligiblePlayers = Array.from(aggregatedStats.entries())
+    .filter(([_, data]) => data.gamesPlayed >= MIN_GAMES_FOR_TITLES);
+
+  console.log(`  ${eligiblePlayers.length} players eligible (${MIN_GAMES_FOR_TITLES}+ games)`);
+
+  // Build distributions for percentile calculations
+  const distributions = buildDistributions(eligiblePlayers);
+
+  // Calculate percentiles for each player
+  const playerPercentiles = new Map();
+  eligiblePlayers.forEach(([playerId, data]) => {
+    const percentiles = {};
+    Object.keys(data.stats).forEach(key => {
+      const value = data.stats[key];
+      if (distributions[key] && value !== null && value !== undefined) {
+        const percentile = calculatePercentile(value, distributions[key]);
+        const category = getPercentileCategory(percentile);
+        percentiles[key] = {
+          value,
+          percentile,
+          category
+        };
+      }
+    });
+    playerPercentiles.set(playerId, percentiles);
+  });
+
+  // Map stat name to actual data key
+  const statNameMap = {
+    'talking': 'talkingPer60Min',
+    'talkingOutsideMeeting': 'talkingOutsidePer60Min',
+    'talkingDuringMeeting': 'talkingDuringPer60Min',
+    'loot': 'lootPer60Min',
+    'lootVillageois': 'lootVillageoisPer60Min',
+    'lootLoup': 'lootLoupPer60Min',
+    'survival': 'survivalRate',
+    'survivalDay1': 'survivalDay1Rate',
+    'votingAggressive': 'votingAggressiveness',
+    'winSeries': 'longestWinSeries',
+    'lossSeries': 'longestLossSeries',
+    'wolfTransformRate': 'wolfTransformRate',
+    'wolfUntransformRate': 'wolfUntransformRate',
+    'potionUsage': 'potionsPer60Min'
+  };
+
+  const statKey = statNameMap[categoryName] || categoryName;
+
+  // Collect players for each tier defined in the category
+  const tierResults = {};
+  const tierNames = {
+    'extremeHigh': 'EXTREME_HIGH',
+    'high': 'HIGH',
+    'aboveAverage': 'ABOVE_AVERAGE',
+    'average': 'AVERAGE',
+    'belowAverage': 'BELOW_AVERAGE',
+    'low': 'LOW',
+    'extremeLow': 'EXTREME_LOW'
+  };
+
+  Object.keys(categoryDef).forEach(tierKey => {
+    const tierCategory = tierNames[tierKey];
+    if (!tierCategory) return;
+
+    const titleInfo = categoryDef[tierKey];
+    const qualifiedPlayers = [];
+
+    eligiblePlayers.forEach(([playerId, data]) => {
+      const percentileData = playerPercentiles.get(playerId)?.[statKey];
+      if (!percentileData) return;
+
+      const { category, percentile, value } = percentileData;
+
+      // Check if player qualifies for this tier
+      let qualifies = false;
+      if (tierCategory === 'AVERAGE') {
+        qualifies = (category === 'AVERAGE');
+      } else if (tierCategory === 'EXTREME_HIGH' || tierCategory === 'EXTREME_LOW') {
+        qualifies = (category === tierCategory);
+      } else if (tierCategory === 'HIGH') {
+        qualifies = (category === 'HIGH' || category === 'EXTREME_HIGH');
+      } else if (tierCategory === 'LOW') {
+        qualifies = (category === 'LOW' || category === 'EXTREME_LOW');
+      } else if (tierCategory === 'ABOVE_AVERAGE') {
+        qualifies = (category === 'ABOVE_AVERAGE' || category === 'HIGH' || category === 'EXTREME_HIGH');
+      } else if (tierCategory === 'BELOW_AVERAGE') {
+        qualifies = (category === 'BELOW_AVERAGE' || category === 'LOW' || category === 'EXTREME_LOW');
+      }
+
+      if (qualifies) {
+        qualifiedPlayers.push({
+          playerId,
+          playerName: data.playerName,
+          value,
+          percentile,
+          category,
+          gamesPlayed: data.gamesPlayed
+        });
+      }
+    });
+
+    // Sort by value (high tiers = descending, low tiers = ascending)
+    const isHighTier = tierCategory.includes('HIGH') || tierCategory.includes('ABOVE');
+    qualifiedPlayers.sort((a, b) => {
+      if (isHighTier) {
+        return b.value - a.value;
+      } else {
+        return a.value - b.value;
+      }
+    });
+
+    tierResults[tierKey] = {
+      tierCategory,
+      titleInfo,
+      qualifiedPlayers: qualifiedPlayers.slice(0, topN),
+      totalQualified: qualifiedPlayers.length
+    };
+  });
+
+  return {
+    categoryName,
+    statKey,
+    tierResults,
+    totalEligible: eligiblePlayers.length
+  };
+}
 
 /**
  * Analyze all titles and find top candidates for each
@@ -849,12 +1014,60 @@ function analyzeTitleEligibility(aggregatedStats, roleFrequencies, options = {})
 }
 
 /**
+ * Format basic title category analysis as human-readable text
+ */
+function formatBasicTitleReport(analysis) {
+  let report = '\n';
+  report += '═══════════════════════════════════════════════════════════════\n';
+  report += '       BASIC TITLE CATEGORY ANALYSIS REPORT\n';
+  report += '═══════════════════════════════════════════════════════════════\n\n';
+
+  report += `📊 Category: ${analysis.categoryName}\n`;
+  report += `📈 Stat Key: ${analysis.statKey}\n`;
+  report += `👥 Total Eligible Players: ${analysis.totalEligible}\n\n`;
+
+  const tierOrder = ['extremeHigh', 'high', 'aboveAverage', 'average', 'belowAverage', 'low', 'extremeLow'];
+
+  tierOrder.forEach(tierKey => {
+    const tierData = analysis.tierResults[tierKey];
+    if (!tierData || !tierData.titleInfo) return;
+
+    const { tierCategory, titleInfo, qualifiedPlayers, totalQualified } = tierData;
+
+    report += '───────────────────────────────────────────────────────────────\n';
+    report += `${titleInfo.emoji} ${titleInfo.title}\n`;
+    report += `   ${titleInfo.description}\n`;
+    report += `   Tier: ${tierCategory} | Qualified: ${totalQualified} players\n`;
+    report += '───────────────────────────────────────────────────────────────\n';
+
+    if (qualifiedPlayers.length === 0) {
+      report += '   No players currently qualify for this tier.\n\n';
+    } else {
+      report += '\n   🏆 Top Qualified Players:\n\n';
+      qualifiedPlayers.forEach((player, index) => {
+        report += `   ${index + 1}. ${player.playerName}\n`;
+        report += `      Value: ${typeof player.value === 'number' ? player.value.toFixed(2) : player.value}\n`;
+        report += `      Percentile: ${player.percentile.toFixed(1)}% (${player.category})\n`;
+        report += `      Games: ${player.gamesPlayed}\n\n`;
+      });
+    }
+  });
+
+  report += '\n';
+  report += '═══════════════════════════════════════════════════════════════\n';
+  report += '                      END OF REPORT\n';
+  report += '═══════════════════════════════════════════════════════════════\n';
+
+  return report;
+}
+
+/**
  * Format analysis results as human-readable text
  */
 function formatTextReport(analysis) {
   let report = '\n';
   report += '═══════════════════════════════════════════════════════════════\n';
-  report += '           TITLE ELIGIBILITY ANALYSIS REPORT\n';
+  report += '      COMBINATION TITLE ELIGIBILITY ANALYSIS REPORT\n';
   report += '═══════════════════════════════════════════════════════════════\n\n';
 
   analysis.forEach((titleData, index) => {
@@ -997,6 +1210,40 @@ async function main() {
   console.log(`📊 Showing top ${options.topN} candidates per title\n`);
 
   try {
+    // Check if analyzing a basic title category
+    const firstTitle = options.specificTitles?.[0];
+    if (firstTitle && TITLE_DEFINITIONS[firstTitle]) {
+      // Basic title category analysis
+      console.log('🎯 Detected basic title category analysis mode\n');
+      
+      const gameLogContent = await fs.readFile(gameLogPath, 'utf8');
+      const gameLogData = JSON.parse(gameLogContent);
+      
+      const allGames = gameLogData.GameStats || [];
+      const moddedGames = allGames.filter(game => game.Modded === true);
+      
+      console.log(`📊 Total games: ${allGames.length}`);
+      console.log(`🎮 Modded games: ${moddedGames.length}\n`);
+
+      const aggregatedStats = computeAllStatistics(moddedGames);
+
+      const analysis = analyzeBasicTitleCategory(
+        aggregatedStats,
+        firstTitle,
+        { topN: options.topN }
+      );
+
+      if (options.jsonOutput) {
+        console.log(JSON.stringify(analysis, null, 2));
+      } else {
+        const report = formatBasicTitleReport(analysis);
+        console.log(report);
+      }
+
+      return;
+    }
+
+    // Original combination title analysis
     // Load game log
     const gameLogContent = await fs.readFile(gameLogPath, 'utf8');
     const gameLogData = JSON.parse(gameLogContent);
