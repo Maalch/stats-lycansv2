@@ -450,6 +450,19 @@ export function GameDetailView({ game }: { game: any }) {
                   >
                     {displayText}
                   </div>
+                  {playerStat.TotalCollectedLoot !== undefined && playerStat.TotalCollectedLoot !== null && (
+                    <div 
+                      className="lycans-player-loot" 
+                      style={{ 
+                        fontSize: '0.85em', 
+                        color: 'var(--text-secondary)', 
+                        marginTop: '4px',
+                        textAlign: 'left'
+                      }}
+                    >
+                      💰 {playerStat.TotalCollectedLoot.toLocaleString()} loot
+                    </div>
+                  )}
                 </div>
               );
             })}
