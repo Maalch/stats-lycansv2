@@ -27,6 +27,7 @@ import { computeTalkingTimeStats } from '../compute/compute-talking-stats.js';
 import { computeDeathStatistics } from '../compute/compute-death-stats.js';
 import { computeLootStatistics } from '../compute/compute-loot-stats.js';
 import { computeZoneStatistics } from '../compute/compute-zone-stats.js';
+import { computeWolfTransformStatistics } from '../compute/compute-wolf-transform-stats.js';
 
 // Import data source configuration
 import { DATA_SOURCES } from '../shared/data-sources.js';
@@ -143,7 +144,9 @@ function evaluateCondition(playerPercentiles, roleData, condition) {
     'survivalDay1': 'survivalDay1Rate',
     'votingAggressive': 'votingAggressiveness',
     'winSeries': 'longestWinSeries',
-    'lossSeries': 'longestLossSeries'
+    'lossSeries': 'longestLossSeries',
+    'wolfTransformRate': 'wolfTransformRate',
+    'wolfUntransformRate': 'wolfUntransformRate'
   };
   
   // Apply mapping if exists
@@ -329,7 +332,9 @@ function getStatUnavailableReason(stat) {
     zoneVillagePecheur: 'Requires 10+ data points on Village map',
     zoneRuines: 'Requires 10+ data points on Village map',
     zoneResteCarte: 'Requires 10+ data points on Village map',
-    zoneDominantPercentage: 'Requires 10+ data points on Village map'
+    zoneDominantPercentage: 'Requires 10+ data points on Village map',
+    wolfTransformRate: 'Requires 5+ games as wolf with action data',
+    wolfUntransformRate: 'Requires 5+ games as wolf with action data'
   };
   return reasons[stat] || 'Insufficient data for this stat';
 }
@@ -456,6 +461,13 @@ function computeAllStatistics(moddedGames) {
     zoneStats = computeZoneStatistics(moddedGames);
   } catch (e) {
     console.log('  ⚠️  Zone statistics not available');
+  }
+
+  let wolfTransformStats = null;
+  try {
+    wolfTransformStats = computeWolfTransformStatistics(moddedGames);
+  } catch (e) {
+    console.log('  ⚠️  Wolf transform statistics not available');
   }
 
   const aggregatedStats = new Map();
@@ -648,6 +660,21 @@ function computeAllStatistics(moddedGames) {
       agg.stats.zoneRuines = player.zoneRuines !== undefined ? player.zoneRuines : null;
       agg.stats.zoneResteCarte = player.zoneResteCarte !== undefined ? player.zoneResteCarte : null;
       agg.stats.zoneDominantPercentage = player.zoneDominantPercentage !== undefined ? player.zoneDominantPercentage : null;
+    });
+  }
+
+  // Process wolf transform stats
+  if (wolfTransformStats?.playerStats) {
+    wolfTransformStats.playerStats.forEach(player => {
+      const playerId = player.playerId;
+      if (!aggregatedStats.has(playerId)) return;
+      const agg = aggregatedStats.get(playerId);
+      
+      // Only include if player has sufficient data (5+ games as wolf with actions, 5+ nights as wolf)
+      if (player.gamesWithTransformData >= 5 && player.totalNightsAsWolf >= 5) {
+        agg.stats.wolfTransformRate = player.transformsPerNight !== undefined ? player.transformsPerNight : null;
+        agg.stats.wolfUntransformRate = player.untransformsPerNight !== undefined ? player.untransformsPerNight : null;
+      }
     });
   }
 

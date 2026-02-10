@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-10T14:33:16.957Z",
+  "generatedAt": "2026-02-10T15:14:39.378Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -2115,6 +2115,30 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.3673469387755102,
+          "percentile": 35,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_low",
+          "title": "Le Loup Assumé",
+          "emoji": "🐺",
+          "description": "Se détransforme rarement",
+          "stat": "wolfUntransformRate",
+          "value": 0.061224489795918366,
+          "percentile": 35,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -2337,6 +2361,16 @@
           "value": 236,
           "percentile": 96,
           "category": "EXTREME_HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0.3673469387755102,
+          "percentile": 35,
+          "category": "LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0.061224489795918366,
+          "percentile": 35,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -2372,7 +2406,9 @@
         "zoneRuines": 9.745762711864407,
         "zoneResteCarte": 8.898305084745763,
         "zoneDominantPercentage": 43.64406779661017,
-        "zoneTotalPositions": 236
+        "zoneTotalPositions": 236,
+        "wolfTransformRate": 0.3673469387755102,
+        "wolfUntransformRate": 0.061224489795918366
       }
     },
     "76561198012951437": {
@@ -2916,6 +2952,30 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.5,
+          "percentile": 65,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_high",
+          "title": "Le·a Discret·ète",
+          "emoji": "🤫",
+          "description": "Se détransforme fréquemment",
+          "stat": "wolfUntransformRate",
+          "value": 0.171875,
+          "percentile": 75,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -3112,6 +3172,16 @@
           "value": 224,
           "percentile": 92,
           "category": "EXTREME_HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0.5,
+          "percentile": 65,
+          "category": "HIGH"
+        },
+        "wolfUntransformRate": {
+          "value": 0.171875,
+          "percentile": 75,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -3147,7 +3217,9 @@
         "zoneRuines": 8.482142857142858,
         "zoneResteCarte": 9.375,
         "zoneDominantPercentage": 37.94642857142857,
-        "zoneTotalPositions": 224
+        "zoneTotalPositions": 224,
+        "wolfTransformRate": 0.5,
+        "wolfUntransformRate": 0.171875
       }
     },
     "76561198125108195": {
@@ -3266,6 +3338,30 @@
           "value": 55.494505494505496,
           "percentile": 88,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_extreme_high",
+          "title": "Le Loup-Garou Frénétique",
+          "emoji": "🐺",
+          "description": "Se transforme très souvent en loup",
+          "stat": "wolfTransformRate",
+          "value": 0.6410256410256411,
+          "percentile": 90,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_extreme_low",
+          "title": "Le Loup Permanent",
+          "emoji": "🌑",
+          "description": "Reste presque toujours en loup",
+          "stat": "wolfUntransformRate",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -3555,6 +3651,16 @@
           "value": 182,
           "percentile": 72,
           "category": "HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0.6410256410256411,
+          "percentile": 90,
+          "category": "EXTREME_HIGH"
+        },
+        "wolfUntransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -3590,7 +3696,9 @@
         "zoneRuines": 3.8461538461538463,
         "zoneResteCarte": 14.835164835164836,
         "zoneDominantPercentage": 55.494505494505496,
-        "zoneTotalPositions": 182
+        "zoneTotalPositions": 182,
+        "wolfTransformRate": 0.6410256410256411,
+        "wolfUntransformRate": 0
       }
     },
     "76561198390111869": {
@@ -3767,6 +3875,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_extreme_high",
+          "title": "Le Loup-Garou Frénétique",
+          "emoji": "🐺",
+          "description": "Se transforme très souvent en loup",
+          "stat": "wolfTransformRate",
+          "value": 0.6166666666666667,
+          "percentile": 85,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "participation_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -3810,6 +3930,18 @@
           "stat": "lootLoupPer60Min",
           "value": 796.5665659502073,
           "percentile": 77.77777777777779,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_high",
+          "title": "Le·a Discret·ète",
+          "emoji": "🤫",
+          "description": "Se détransforme fréquemment",
+          "stat": "wolfUntransformRate",
+          "value": 0.18333333333333332,
+          "percentile": 80,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4025,6 +4157,16 @@
           "value": 202,
           "percentile": 88,
           "category": "EXTREME_HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0.6166666666666667,
+          "percentile": 85,
+          "category": "EXTREME_HIGH"
+        },
+        "wolfUntransformRate": {
+          "value": 0.18333333333333332,
+          "percentile": 80,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -4060,7 +4202,9 @@
         "zoneRuines": 2.4752475247524752,
         "zoneResteCarte": 1.9801980198019802,
         "zoneDominantPercentage": 55.940594059405946,
-        "zoneTotalPositions": 202
+        "zoneTotalPositions": 202,
+        "wolfTransformRate": 0.6166666666666667,
+        "wolfUntransformRate": 0.18333333333333332
       }
     },
     "76561198043736664": {
@@ -4514,6 +4658,18 @@
           "primaryOwner": "Monodie"
         },
         {
+          "id": "wolfUntransformRate_extreme_high",
+          "title": "Le·a Caméléon",
+          "emoji": "🦎",
+          "description": "Se détransforme très souvent",
+          "stat": "wolfUntransformRate",
+          "value": 0.2857142857142857,
+          "percentile": 85,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateLoup_high",
           "title": "Le·a Chef de Meute",
           "emoji": "🐺",
@@ -4843,6 +4999,16 @@
           "value": 197,
           "percentile": 84,
           "category": "HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0.42857142857142855,
+          "percentile": 45,
+          "category": "BELOW_AVERAGE"
+        },
+        "wolfUntransformRate": {
+          "value": 0.2857142857142857,
+          "percentile": 85,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -4878,7 +5044,9 @@
         "zoneRuines": 9.137055837563452,
         "zoneResteCarte": 11.6751269035533,
         "zoneDominantPercentage": 42.13197969543147,
-        "zoneTotalPositions": 197
+        "zoneTotalPositions": 197,
+        "wolfTransformRate": 0.42857142857142855,
+        "wolfUntransformRate": 0.2857142857142857
       }
     },
     "76561198140298176": {
@@ -6106,6 +6274,30 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_extreme_low",
+          "title": "Le Loup Fantôme",
+          "emoji": "👻",
+          "description": "Ne se transforme presque jamais",
+          "stat": "wolfTransformRate",
+          "value": 0.17647058823529413,
+          "percentile": 5,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_extreme_low",
+          "title": "Le Loup Permanent",
+          "emoji": "🌑",
+          "description": "Reste presque toujours en loup",
+          "stat": "wolfUntransformRate",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_high",
           "title": "Le·a Winner",
           "emoji": "🏆",
@@ -6376,6 +6568,16 @@
           "value": 184,
           "percentile": 76,
           "category": "HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0.17647058823529413,
+          "percentile": 5,
+          "category": "EXTREME_LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -6411,7 +6613,9 @@
         "zoneRuines": 9.782608695652174,
         "zoneResteCarte": 15.217391304347828,
         "zoneDominantPercentage": 42.934782608695656,
-        "zoneTotalPositions": 184
+        "zoneTotalPositions": 184,
+        "wolfTransformRate": 0.17647058823529413,
+        "wolfUntransformRate": 0
       }
     },
     "76561199291323199": {
@@ -6572,6 +6776,30 @@
           "value": 51.33333333333333,
           "percentile": 84,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.3055555555555556,
+          "percentile": 20,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_low",
+          "title": "Le Loup Assumé",
+          "emoji": "🐺",
+          "description": "Se détransforme rarement",
+          "stat": "wolfUntransformRate",
+          "value": 0.027777777777777776,
+          "percentile": 20,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -6770,6 +6998,16 @@
           "value": 150,
           "percentile": 60,
           "category": "ABOVE_AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0.3055555555555556,
+          "percentile": 20,
+          "category": "LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0.027777777777777776,
+          "percentile": 20,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -6805,7 +7043,9 @@
         "zoneRuines": 6.666666666666667,
         "zoneResteCarte": 7.333333333333333,
         "zoneDominantPercentage": 51.33333333333333,
-        "zoneTotalPositions": 150
+        "zoneTotalPositions": 150,
+        "wolfTransformRate": 0.3055555555555556,
+        "wolfUntransformRate": 0.027777777777777776
       }
     },
     "76561199060053791": {
@@ -7423,6 +7663,16 @@
           "value": 162,
           "percentile": 68,
           "category": "HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0.45161290322580644,
+          "percentile": 55.00000000000001,
+          "category": "ABOVE_AVERAGE"
+        },
+        "wolfUntransformRate": {
+          "value": 0.08064516129032258,
+          "percentile": 50,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -7458,7 +7708,9 @@
         "zoneRuines": 2.4691358024691357,
         "zoneResteCarte": 15.432098765432098,
         "zoneDominantPercentage": 47.53086419753087,
-        "zoneTotalPositions": 162
+        "zoneTotalPositions": 162,
+        "wolfTransformRate": 0.45161290322580644,
+        "wolfUntransformRate": 0.08064516129032258
       }
     },
     "76561198095017745": {
@@ -7632,6 +7884,30 @@
           "value": 14.285714285714285,
           "percentile": 88,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_extreme_low",
+          "title": "Le Loup Fantôme",
+          "emoji": "👻",
+          "description": "Ne se transforme presque jamais",
+          "stat": "wolfTransformRate",
+          "value": 0.058823529411764705,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_extreme_low",
+          "title": "Le Loup Permanent",
+          "emoji": "🌑",
+          "description": "Reste presque toujours en loup",
+          "stat": "wolfUntransformRate",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -7887,6 +8163,16 @@
           "value": 35,
           "percentile": 20,
           "category": "LOW"
+        },
+        "wolfTransformRate": {
+          "value": 0.058823529411764705,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -7919,7 +8205,9 @@
         "zoneRuines": 14.285714285714285,
         "zoneResteCarte": 8.571428571428571,
         "zoneDominantPercentage": 45.714285714285715,
-        "zoneTotalPositions": 35
+        "zoneTotalPositions": 35,
+        "wolfTransformRate": 0.058823529411764705,
+        "wolfUntransformRate": 0
       }
     },
     "76561198875528482": {
@@ -8423,6 +8711,16 @@
           "value": 114,
           "percentile": 40,
           "category": "BELOW_AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0.42857142857142855,
+          "percentile": 45,
+          "category": "BELOW_AVERAGE"
+        },
+        "wolfUntransformRate": {
+          "value": 0.09523809523809523,
+          "percentile": 55.00000000000001,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -8458,7 +8756,9 @@
         "zoneRuines": 6.140350877192982,
         "zoneResteCarte": 8.771929824561402,
         "zoneDominantPercentage": 41.228070175438596,
-        "zoneTotalPositions": 114
+        "zoneTotalPositions": 114,
+        "wolfTransformRate": 0.42857142857142855,
+        "wolfUntransformRate": 0.09523809523809523
       }
     },
     "76561198361954746": {
@@ -8826,6 +9126,18 @@
           "category": "LOW",
           "priority": 6,
           "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.3448275862068966,
+          "percentile": 30,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
         }
       ],
       "primaryTitle": {
@@ -9022,6 +9334,16 @@
           "value": 133,
           "percentile": 48,
           "category": "AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0.3448275862068966,
+          "percentile": 30,
+          "category": "LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0.06896551724137931,
+          "percentile": 45,
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -9057,7 +9379,9 @@
         "zoneRuines": 6.7669172932330826,
         "zoneResteCarte": 21.804511278195488,
         "zoneDominantPercentage": 35.338345864661655,
-        "zoneTotalPositions": 133
+        "zoneTotalPositions": 133,
+        "wolfTransformRate": 0.3448275862068966,
+        "wolfUntransformRate": 0.06896551724137931
       }
     },
     "76561198109331759": {
@@ -9427,6 +9751,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.5555555555555556,
+          "percentile": 70,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_balanced",
           "title": "Le·a Polyvalent·e",
           "emoji": "🎭",
@@ -9637,6 +9973,16 @@
           "value": 137,
           "percentile": 52,
           "category": "AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0.5555555555555556,
+          "percentile": 70,
+          "category": "HIGH"
+        },
+        "wolfUntransformRate": {
+          "value": 0.1111111111111111,
+          "percentile": 60,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -9672,7 +10018,9 @@
         "zoneRuines": 13.86861313868613,
         "zoneResteCarte": 8.02919708029197,
         "zoneDominantPercentage": 40.14598540145985,
-        "zoneTotalPositions": 137
+        "zoneTotalPositions": 137,
+        "wolfTransformRate": 0.5555555555555556,
+        "wolfUntransformRate": 0.1111111111111111
       }
     },
     "76561198250955250": {
@@ -10019,6 +10367,30 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_extreme_high",
+          "title": "Le Loup-Garou Frénétique",
+          "emoji": "🐺",
+          "description": "Se transforme très souvent en loup",
+          "stat": "wolfTransformRate",
+          "value": 0.6666666666666666,
+          "percentile": 95,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_extreme_high",
+          "title": "Le·a Caméléon",
+          "emoji": "🦎",
+          "description": "Se détransforme très souvent",
+          "stat": "wolfUntransformRate",
+          "value": 0.4074074074074074,
+          "percentile": 95,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_high",
           "title": "Le·a Winner",
           "emoji": "🏆",
@@ -10355,6 +10727,16 @@
           "value": 142,
           "percentile": 56.00000000000001,
           "category": "ABOVE_AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0.6666666666666666,
+          "percentile": 95,
+          "category": "EXTREME_HIGH"
+        },
+        "wolfUntransformRate": {
+          "value": 0.4074074074074074,
+          "percentile": 95,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -10390,7 +10772,9 @@
         "zoneRuines": 14.788732394366196,
         "zoneResteCarte": 5.633802816901409,
         "zoneDominantPercentage": 33.80281690140845,
-        "zoneTotalPositions": 142
+        "zoneTotalPositions": 142,
+        "wolfTransformRate": 0.6666666666666666,
+        "wolfUntransformRate": 0.4074074074074074
       }
     },
     "76561198849250630": {
@@ -10656,6 +11040,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfUntransformRate_high",
+          "title": "Le·a Discret·ète",
+          "emoji": "🤫",
+          "description": "Se détransforme fréquemment",
+          "stat": "wolfUntransformRate",
+          "value": 0.11764705882352941,
+          "percentile": 65,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_balanced",
           "title": "Le·a Polyvalent·e",
           "emoji": "🎭",
@@ -10860,6 +11256,16 @@
           "value": 192,
           "percentile": 80,
           "category": "HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0.39215686274509803,
+          "percentile": 40,
+          "category": "BELOW_AVERAGE"
+        },
+        "wolfUntransformRate": {
+          "value": 0.11764705882352941,
+          "percentile": 65,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -10895,7 +11301,9 @@
         "zoneRuines": 4.166666666666666,
         "zoneResteCarte": 13.020833333333334,
         "zoneDominantPercentage": 49.47916666666667,
-        "zoneTotalPositions": 192
+        "zoneTotalPositions": 192,
+        "wolfTransformRate": 0.39215686274509803,
+        "wolfUntransformRate": 0.11764705882352941
       }
     },
     "76561198076015877": {
@@ -11214,6 +11622,30 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.5714285714285714,
+          "percentile": 75,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_low",
+          "title": "Le Loup Assumé",
+          "emoji": "🐺",
+          "description": "Se détransforme rarement",
+          "stat": "wolfUntransformRate",
+          "value": 0.061224489795918366,
+          "percentile": 35,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_balanced",
           "title": "Le·a Polyvalent·e",
           "emoji": "🎭",
@@ -11424,6 +11856,16 @@
           "value": 159,
           "percentile": 64,
           "category": "ABOVE_AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0.5714285714285714,
+          "percentile": 75,
+          "category": "HIGH"
+        },
+        "wolfUntransformRate": {
+          "value": 0.061224489795918366,
+          "percentile": 35,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -11459,7 +11901,9 @@
         "zoneRuines": 12.578616352201259,
         "zoneResteCarte": 16.352201257861633,
         "zoneDominantPercentage": 38.9937106918239,
-        "zoneTotalPositions": 159
+        "zoneTotalPositions": 159,
+        "wolfTransformRate": 0.5714285714285714,
+        "wolfUntransformRate": 0.061224489795918366
       }
     },
     "76561198056292624": {
@@ -11695,6 +12139,30 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.3333333333333333,
+          "percentile": 25,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_high",
+          "title": "Le·a Discret·ète",
+          "emoji": "🤫",
+          "description": "Se détransforme fréquemment",
+          "stat": "wolfUntransformRate",
+          "value": 0.125,
+          "percentile": 70,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -11893,6 +12361,16 @@
           "value": 110,
           "percentile": 36,
           "category": "BELOW_AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0.3333333333333333,
+          "percentile": 25,
+          "category": "LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0.125,
+          "percentile": 70,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -11928,7 +12406,9 @@
         "zoneRuines": 10.909090909090908,
         "zoneResteCarte": 11.818181818181818,
         "zoneDominantPercentage": 46.36363636363636,
-        "zoneTotalPositions": 110
+        "zoneTotalPositions": 110,
+        "wolfTransformRate": 0.3333333333333333,
+        "wolfUntransformRate": 0.125
       }
     },
     "76561197996828190": {
@@ -13927,6 +14407,30 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_extreme_low",
+          "title": "Le Loup Fantôme",
+          "emoji": "👻",
+          "description": "Ne se transforme presque jamais",
+          "stat": "wolfTransformRate",
+          "value": 0.3,
+          "percentile": 15,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_extreme_low",
+          "title": "Le Loup Permanent",
+          "emoji": "🌑",
+          "description": "Reste presque toujours en loup",
+          "stat": "wolfUntransformRate",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_low",
           "title": "Le·a Looser",
           "emoji": "😢",
@@ -14218,6 +14722,16 @@
           "value": 67,
           "percentile": 28.000000000000004,
           "category": "LOW"
+        },
+        "wolfTransformRate": {
+          "value": 0.3,
+          "percentile": 15,
+          "category": "EXTREME_LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -14250,7 +14764,9 @@
         "zoneRuines": 5.970149253731343,
         "zoneResteCarte": 20.8955223880597,
         "zoneDominantPercentage": 37.3134328358209,
-        "zoneTotalPositions": 67
+        "zoneTotalPositions": 67,
+        "wolfTransformRate": 0.3,
+        "wolfUntransformRate": 0
       }
     },
     "76561199013115670": {
@@ -14884,6 +15400,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfUntransformRate_low",
+          "title": "Le Loup Assumé",
+          "emoji": "🐺",
+          "description": "Se détransforme rarement",
+          "stat": "wolfUntransformRate",
+          "value": 0.02857142857142857,
+          "percentile": 25,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -15068,6 +15596,16 @@
           "value": 122,
           "percentile": 44,
           "category": "BELOW_AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0.4857142857142857,
+          "percentile": 60,
+          "category": "ABOVE_AVERAGE"
+        },
+        "wolfUntransformRate": {
+          "value": 0.02857142857142857,
+          "percentile": 25,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -15100,7 +15638,9 @@
         "zoneRuines": 9.01639344262295,
         "zoneResteCarte": 11.475409836065573,
         "zoneDominantPercentage": 50,
-        "zoneTotalPositions": 122
+        "zoneTotalPositions": 122,
+        "wolfTransformRate": 0.4857142857142857,
+        "wolfUntransformRate": 0.02857142857142857
       }
     },
     "76561198271274269": {
@@ -15340,6 +15880,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfUntransformRate_extreme_high",
+          "title": "Le·a Caméléon",
+          "emoji": "🦎",
+          "description": "Se détransforme très souvent",
+          "stat": "wolfUntransformRate",
+          "value": 0.29411764705882354,
+          "percentile": 90,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRate_low",
           "title": "Le·a Looser",
           "emoji": "😢",
@@ -15383,6 +15935,18 @@
           "stat": "killRate",
           "value": 0.5777777777777777,
           "percentile": 70.27027027027027,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.5882352941176471,
+          "percentile": 80,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -15557,6 +16121,16 @@
           "value": 13,
           "percentile": 0,
           "category": "EXTREME_LOW"
+        },
+        "wolfTransformRate": {
+          "value": 0.5882352941176471,
+          "percentile": 80,
+          "category": "HIGH"
+        },
+        "wolfUntransformRate": {
+          "value": 0.29411764705882354,
+          "percentile": 90,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -15585,7 +16159,9 @@
         "zoneRuines": 0,
         "zoneResteCarte": 15.384615384615385,
         "zoneDominantPercentage": 46.15384615384615,
-        "zoneTotalPositions": 13
+        "zoneTotalPositions": 13,
+        "wolfTransformRate": 0.5882352941176471,
+        "wolfUntransformRate": 0.29411764705882354
       }
     },
     "76561198245459930": {
@@ -15714,6 +16290,18 @@
           "primaryOwner": "Raumane"
         },
         {
+          "id": "wolfTransformRate_extreme_low",
+          "title": "Le Loup Fantôme",
+          "emoji": "👻",
+          "description": "Ne se transforme presque jamais",
+          "stat": "wolfTransformRate",
+          "value": 0.28,
+          "percentile": 10,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "participation_low",
           "title": "Le·a Occasionnel·le",
           "emoji": "🎲",
@@ -15805,6 +16393,18 @@
           "stat": "lootLoupPer60Min",
           "value": 474.08132323106236,
           "percentile": 22.22222222222222,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_low",
+          "title": "Le Loup Assumé",
+          "emoji": "🐺",
+          "description": "Se détransforme rarement",
+          "stat": "wolfUntransformRate",
+          "value": 0.04,
+          "percentile": 30,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -16005,6 +16605,16 @@
           "value": 98,
           "percentile": 32,
           "category": "LOW"
+        },
+        "wolfTransformRate": {
+          "value": 0.28,
+          "percentile": 10,
+          "category": "EXTREME_LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0.04,
+          "percentile": 30,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -16037,7 +16647,9 @@
         "zoneRuines": 10.204081632653061,
         "zoneResteCarte": 15.306122448979592,
         "zoneDominantPercentage": 44.89795918367347,
-        "zoneTotalPositions": 98
+        "zoneTotalPositions": 98,
+        "wolfTransformRate": 0.28,
+        "wolfUntransformRate": 0.04
       }
     }
   }

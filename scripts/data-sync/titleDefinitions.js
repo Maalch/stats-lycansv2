@@ -187,6 +187,24 @@ export const TITLE_DEFINITIONS = {
     high: { title: 'L\'Habitué·e', emoji: '🪑', description: 'A un coin préféré' },
     low: { title: 'Le·a Vagabond·e', emoji: '🗺️', description: 'Se déplace beaucoup entre les zones' },
     extremeLow: { title: 'L\'Explorateur·ice', emoji: '🧭', description: 'Réparti·e uniformément sur toute la carte' }
+  },
+
+  // === WOLF TRANSFORMATION STATS ===
+
+  // Wolf transformation rate (transformations per night as wolf)
+  wolfTransformRate: {
+    extremeHigh: { title: 'Le Loup-Garou Frénétique', emoji: '🐺', description: 'Se transforme très souvent en loup' },
+    high: { title: 'Le·a Transform·é·e', emoji: '🌙', description: 'Se transforme fréquemment' },
+    low: { title: 'Le·a Loup Prudent·e', emoji: '🐕', description: 'Se transforme rarement' },
+    extremeLow: { title: 'Le Loup Fantôme', emoji: '👻', description: 'Ne se transforme presque jamais' }
+  },
+
+  // Wolf untransformation rate (untransformations per night as wolf)
+  wolfUntransformRate: {
+    extremeHigh: { title: 'Le·a Caméléon', emoji: '🦎', description: 'Se détransforme très souvent' },
+    high: { title: 'Le·a Discret·ète', emoji: '🤫', description: 'Se détransforme fréquemment' },
+    low: { title: 'Le Loup Assumé', emoji: '🐺', description: 'Se détransforme rarement' },
+    extremeLow: { title: 'Le Loup Permanent', emoji: '🌑', description: 'Reste presque toujours en loup' }
   }
 };
 
@@ -981,5 +999,44 @@ export const COMBINATION_TITLES = [
       { stat: 'loot', category: 'HIGH' }
     ],
     priority: 12
+  },
+  //High transform rate + High untransform rate = Hyperactive Wolf
+  {
+    id: 'loup_hyperactif',
+    title: 'Le Loup Hyperactif',
+    emoji: '⚡',
+    description: 'Se transforme et détransforme constamment',
+    conditions: [
+      { stat: 'wolfTransformRate', category: 'HIGH' },
+      { stat: 'wolfUntransformRate', category: 'HIGH' }
+    ],
+    priority: 15
+  },
+  // High transform rate + Low untransform rate + High win rate Loup = Aggressive Alpha
+  {
+    id: 'chasseur_nocturne',
+    title: 'Le·a Chasseur·se Nocturne',
+    emoji: '🌙',
+    description: 'Se transforme, reste loup, et domine',
+    conditions: [
+      { stat: 'wolfTransformRate', category: 'HIGH' },
+      { stat: 'wolfUntransformRate', category: 'LOW' },
+      { stat: 'winRateLoup', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+  // Low transform rate + High survival + High win rate Loup = Clever Wolf
+  {
+    id: 'loup_ruse',
+    title: 'Le Loup Rusé',
+    emoji: '🦊',
+    description: 'Reste humain, survit et gagne en Loup',
+    conditions: [
+      { stat: 'wolfTransformRate', category: 'LOW' },
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'winRateLoup', category: 'HIGH' }
+    ],
+    priority: 14
   }
+
 ];

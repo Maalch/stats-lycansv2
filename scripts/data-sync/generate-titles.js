@@ -19,6 +19,7 @@ import { computeTalkingTimeStats } from './compute/compute-talking-stats.js';
 import { computeDeathStatistics } from './compute/compute-death-stats.js';
 import { computeLootStatistics } from './compute/compute-loot-stats.js';
 import { computeZoneStatistics } from './compute/compute-zone-stats.js';
+import { computeWolfTransformStatistics } from './compute/compute-wolf-transform-stats.js';
 
 // Import data source configuration
 import { DATA_SOURCES } from './shared/data-sources.js';
@@ -105,6 +106,14 @@ function computeAllStatistics(moddedGames) {
     zoneStats = computeZoneStatistics(moddedGames);
   } catch (e) {
     console.log('  ⚠️  Zone statistics not available:', e.message);
+  }
+
+  // Compute wolf transform stats
+  let wolfTransformStats = null;
+  try {
+    wolfTransformStats = computeWolfTransformStatistics(moddedGames);
+  } catch (e) {
+    console.log('  ⚠️  Wolf transform statistics not available:', e.message);
   }
 
   // Aggregate all stats by player
@@ -330,6 +339,21 @@ function computeAllStatistics(moddedGames) {
         agg.stats.zoneResteCarte = player.zonePercentages['Reste de la Carte'] ?? null;
         agg.stats.zoneDominantPercentage = player.dominantZonePercentage ?? null;
         agg.stats.zoneTotalPositions = player.totalPositions;
+      }
+    });
+  }
+
+  // Process wolf transform stats
+  if (wolfTransformStats?.playerStats) {
+    wolfTransformStats.playerStats.forEach(player => {
+      const playerId = player.playerId;
+      if (!aggregatedStats.has(playerId)) return;
+      const agg = aggregatedStats.get(playerId);
+
+      // Only set wolf transform stats if player has enough games with transform data (at least 5)
+      if (player.gamesWithTransformData >= 5 && player.totalNightsAsWolf >= 5) {
+        agg.stats.wolfTransformRate = player.transformsPerNight ?? null;
+        agg.stats.wolfUntransformRate = player.untransformsPerNight ?? null;
       }
     });
   }
@@ -689,7 +713,9 @@ function generateBasicTitles(percentiles) {
     zoneVillagePecheur: 'zoneVillagePecheur',
     zoneRuines: 'zoneRuines',
     zoneResteCarte: 'zoneResteCarte',
-    zoneDominantPercentage: 'zoneDominantPercentage'
+    zoneDominantPercentage: 'zoneDominantPercentage',
+    wolfTransformRate: 'wolfTransformRate',
+    wolfUntransformRate: 'wolfUntransformRate'
   };
 
   Object.entries(percentiles).forEach(([statName, data]) => {
@@ -874,7 +900,9 @@ function generateCombinationTitles(percentiles) {
     zoneVillagePecheur: 'zoneVillagePecheur',
     zoneRuines: 'zoneRuines',
     zoneResteCarte: 'zoneResteCarte',
-    zoneDominantPercentage: 'zoneDominantPercentage'
+    zoneDominantPercentage: 'zoneDominantPercentage',
+    wolfTransformRate: 'wolfTransformRate',
+    wolfUntransformRate: 'wolfUntransformRate'
   };
 
   COMBINATION_TITLES.forEach(combo => {    
