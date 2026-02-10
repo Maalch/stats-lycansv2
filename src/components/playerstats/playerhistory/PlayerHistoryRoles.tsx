@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerStatsBase } from '../../../hooks/utils/baseStatsHook';
 import { useNavigation } from '../../../context/NavigationContext';
@@ -306,16 +306,14 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     });
   };
 
-  // Prepare chart data with visibility threshold
-  const chartData = useMemo(() => {
+  // Helper function to prepare chart data with configurable max entries
+  const getChartData = useCallback((maxEntries: number | null) => {
     if (!data) return { villageoisPowers: [], loupPowers: [], secondaryRoles: [] };
 
     // Only show roles with at least 1 appearance
     const MIN_APPEARANCES = 1;
     // For secondary roles, show all if there are any (even with 1 appearance) since they're rarer
     const MIN_SECONDARY_APPEARANCES = 1;
-    // Limit all charts to top 15 entries
-    const MAX_ENTRIES = 15;
 
     // Sort function based on chart mode
     const sortFunction = chartMode === 'winRate' 
@@ -328,24 +326,32 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
       winRateDisplay: Math.max(parseFloat(role.winRate), 1)
     });
 
+    const applyLimit = <T,>(array: T[]) => maxEntries === null ? array : array.slice(0, maxEntries);
+
     return {
-      villageoisPowers: data.villageoisPowers
-        .filter(r => r.appearances >= MIN_APPEARANCES)
-        .map(addWinRateDisplay)
-        .sort(sortFunction)
-        .slice(0, MAX_ENTRIES),
-      loupPowers: data.loupPowers
-        .filter(r => r.appearances >= MIN_APPEARANCES)
-        .map(addWinRateDisplay)
-        .sort(sortFunction)
-        .slice(0, MAX_ENTRIES),
-      secondaryRoles: data.secondaryRoles
-        .filter(r => r.appearances >= MIN_SECONDARY_APPEARANCES)
-        .map(addWinRateDisplay)
-        .sort(sortFunction)
-        .slice(0, MAX_ENTRIES)
+      villageoisPowers: applyLimit(
+        data.villageoisPowers
+          .filter(r => r.appearances >= MIN_APPEARANCES)
+          .map(addWinRateDisplay)
+          .sort(sortFunction)
+      ),
+      loupPowers: applyLimit(
+        data.loupPowers
+          .filter(r => r.appearances >= MIN_APPEARANCES)
+          .map(addWinRateDisplay)
+          .sort(sortFunction)
+      ),
+      secondaryRoles: applyLimit(
+        data.secondaryRoles
+          .filter(r => r.appearances >= MIN_SECONDARY_APPEARANCES)
+          .map(addWinRateDisplay)
+          .sort(sortFunction)
+      )
     };
   }, [data, chartMode]);
+
+  // Get standard view data (top 15)
+  const standardChartData = useMemo(() => getChartData(15), [getChartData]);
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement de l'historique des rôles...</div>;
@@ -359,9 +365,9 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     return <div className="donnees-manquantes">Aucune donnée de rôle disponible</div>;
   }
 
-  const hasVillageoisPowers = chartData.villageoisPowers.length > 0;
-  const hasLoupPowers = chartData.loupPowers.length > 0;
-  const hasSecondaryRoles = chartData.secondaryRoles.length > 0;
+  const hasVillageoisPowers = standardChartData.villageoisPowers.length > 0;
+  const hasLoupPowers = standardChartData.loupPowers.length > 0;
+  const hasSecondaryRoles = standardChartData.secondaryRoles.length > 0;
 
   if (!hasVillageoisPowers && !hasLoupPowers && !hasSecondaryRoles) {
     return <div className="donnees-manquantes">Aucun pouvoir ou rôle secondaire trouvé</div>;
@@ -421,16 +427,16 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
     return null;
   };
 
-  // Common chart render function
+  // Common chart render function with fullscreen support
   const renderRoleChart = (
-    chartDataArray: RoleStats[],
+    dataKey: 'villageoisPowers' | 'loupPowers' | 'secondaryRoles',
     title: string,
     barColor: string,
     onBarClick: (roleName: string) => void,
     getBarColor?: (roleName: string, index: number) => string
   ) => {
     // Use winRateDisplay for chart display in winRate mode (shows 1% minimum for 0%)
-    const dataKey = chartMode === 'appearances' ? 'appearances' : 'winRateDisplay';
+    const chartDataKey = chartMode === 'appearances' ? 'appearances' : 'winRateDisplay';
     const yAxisLabel = chartMode === 'appearances' ? 'Nombre d\'apparitions' : 'Taux de victoire (%)';
     const yAxisDomain = chartMode === 'winRate' ? [0, 100] : undefined;
 
@@ -438,59 +444,67 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
       <div className="lycans-graphique-section">
         <h3>{title}</h3>
         <FullscreenChart title={title}>
-          <div style={{ height: 400 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={chartDataArray}
-                margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="name"
-                  angle={-45}
-                  textAnchor="end"
-                  height={90}
-                  interval={0}
-                  fontSize={14}
-                />
-                <YAxis 
-                  label={{ value: yAxisLabel, angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
-                  domain={yAxisDomain}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar 
-                  dataKey={dataKey}
-                  label={chartMode === 'winRate' ? (props: any) => {
-                    // Add percentage labels on top of bars for win rate mode
-                    const { x, y, width, payload } = props;
-                    if (x === undefined || y === undefined || width === undefined || !payload) return null;
-                    const percentage = payload.winRate || '0';
-                    return (
-                      <text 
-                        x={(x as number) + (width as number) / 2} 
-                        y={(y as number) - 5} 
-                        fill="var(--text-primary)" 
-                        textAnchor="middle" 
-                        fontSize="12"
-                        fontWeight="bold"
-                      >
-                        {percentage}%
-                      </text>
-                    );
-                  } : undefined}
-                >
-                  {chartDataArray.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={getBarColor ? getBarColor(entry.name, index) : barColor}
-                      onClick={() => onBarClick(entry.name)}
-                      style={{ cursor: 'pointer' }}
+          {(isFullscreen) => {
+            // Get data with appropriate limit based on fullscreen state
+            const chartData = getChartData(isFullscreen ? null : 15);
+            const chartDataArray = chartData[dataKey];
+
+            return (
+              <div style={{ height: 400 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={chartDataArray}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis 
+                      dataKey="name"
+                      angle={-45}
+                      textAnchor="end"
+                      height={90}
+                      interval={0}
+                      fontSize={14}
                     />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+                    <YAxis 
+                      label={{ value: yAxisLabel, angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                      domain={yAxisDomain}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Bar 
+                      dataKey={chartDataKey}
+                      label={chartMode === 'winRate' ? (props: any) => {
+                        // Add percentage labels on top of bars for win rate mode
+                        const { x, y, width, payload } = props;
+                        if (x === undefined || y === undefined || width === undefined || !payload) return null;
+                        const percentage = payload.winRate || '0';
+                        return (
+                          <text 
+                            x={(x as number) + (width as number) / 2} 
+                            y={(y as number) - 5} 
+                            fill="var(--text-primary)" 
+                            textAnchor="middle" 
+                            fontSize="12"
+                            fontWeight="bold"
+                          >
+                            {percentage}%
+                          </text>
+                        );
+                      } : undefined}
+                    >
+                      {chartDataArray.map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={getBarColor ? getBarColor(entry.name, index) : barColor}
+                          onClick={() => onBarClick(entry.name)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            );
+          }}
         </FullscreenChart>
       </div>
     );
@@ -524,7 +538,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
 
       <div className="lycans-graphiques-groupe">
         {hasVillageoisPowers && renderRoleChart(
-        chartData.villageoisPowers,
+        'villageoisPowers',
         'Camp Villageois',
         'var(--chart-color-1)',
         (powerName) => {
@@ -562,7 +576,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
       )}
 
       {hasLoupPowers && renderRoleChart(
-        chartData.loupPowers,
+        'loupPowers',
         'Camp Loups',
         'var(--chart-color-2)',
         (powerName) => {
@@ -584,7 +598,7 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
       )}
 
       {hasSecondaryRoles && renderRoleChart(
-        chartData.secondaryRoles,
+        'secondaryRoles',
         'Rôles Secondaires',
         'var(--chart-color-3)',
         (secondaryRoleName) => {
