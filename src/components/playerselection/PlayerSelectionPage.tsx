@@ -21,7 +21,7 @@ import {
   PlayerHistoryTalkingTime,
   type GroupByMethod,
   type CampFilterOption
-} from '../playerstats/playerhistory';
+} from './playerhistory';
 import type { GameLogEntry, Clip } from '../../hooks/useCombinedRawData';
 import { usePlayerClips } from '../../hooks/useClips';
 import { ClipViewer } from '../common/ClipViewer';
