@@ -174,6 +174,8 @@ export function calculateAggressivenessScore(
 
 /**
  * Calculate harvest rate per 60 minutes for a player
+ * Uses player-specific duration (death time if dead, game end time if alive)
+ * to match the loot statistics chart calculation (lootStatsUtils.ts)
  * @param playerIdentifier - Player name or ID to find
  * @param rawGameData - Array of game log entries
  */
@@ -192,14 +194,15 @@ export function calculateHarvestRate(
     );
     
     if (playerStat && playerStat.TotalCollectedLoot !== undefined && playerStat.TotalCollectedLoot !== null) {
-      totalLoot += playerStat.TotalCollectedLoot;
-      gamesWithLoot++;
+      // Use player-specific duration: if player died, use their death time; otherwise use game end time
+      // This matches the calculation in lootStatsUtils.ts for consistent results
+      const endTime = playerStat.DeathDateIrl || game.EndDate;
+      const duration = calculateGameDuration(game.StartDate, endTime);
       
-      if (game.StartDate && game.EndDate) {
-        const duration = calculateGameDuration(game.StartDate, game.EndDate);
-        if (duration) {
-          totalGameDurationSeconds += duration;
-        }
+      if (duration && duration > 0) {
+        totalLoot += playerStat.TotalCollectedLoot;
+        totalGameDurationSeconds += duration;
+        gamesWithLoot++;
       }
     }
   });
