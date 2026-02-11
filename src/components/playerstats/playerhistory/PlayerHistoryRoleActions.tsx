@@ -5,67 +5,10 @@ import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { CHART_LIMITS } from '../../../config/chartConstants';
+import { calculateNightsAsWolf, isWolfRole } from '../../../utils/wolfTransformUtils';
 
 interface PlayerHistoryRoleActionsProps {
   selectedPlayerName: string;
-}
-
-/**
- * Parse timing string to extract the phase and number
- */
-function parseTiming(timing: string | null): { phase: string; number: number } | null {
-  if (!timing || typeof timing !== 'string') return null;
-  
-  const trimmed = timing.trim().toUpperCase();
-  if (trimmed.length < 2) return null;
-  
-  const phase = trimmed.charAt(0);
-  const number = parseInt(trimmed.slice(1), 10);
-  
-  if (!['J', 'N', 'M', 'U'].includes(phase) || isNaN(number) || number < 1) {
-    return null;
-  }
-  
-  return { phase, number };
-}
-
-/**
- * Calculate the number of nights a wolf player could transform in
- */
-function calculateNightsAsWolf(deathTiming: string | null, endTiming: string | null): number {
-  const timing = deathTiming || endTiming;
-  
-  if (!timing) return 0;
-  
-  const parsed = parseTiming(timing);
-  if (!parsed) return 0;
-  
-  const { phase, number } = parsed;
-  
-  // Night phase: player dies DURING this night, count it as an opportunity
-  if (phase === 'N') {
-    return number;
-  }
-  
-  // Day or Meeting phase: player completed all previous nights
-  if (phase === 'J' || phase === 'M') {
-    return number - 1;
-  }
-  
-  // Unknown timing: conservative estimate
-  if (phase === 'U') {
-    return Math.max(0, Math.floor((number - 1) / 2));
-  }
-  
-  return 0;
-}
-
-/**
- * Check if a player has a wolf role that can transform
- */
-function isWolfRole(mainRoleInitial: string): boolean {
-  const wolfRoles = ['Loup'];
-  return wolfRoles.includes(mainRoleInitial);
 }
 
 interface RoleActionStatistics {
