@@ -201,7 +201,7 @@ export const TITLE_DEFINITIONS = {
 
   // Wolf untransformation rate (untransformations per night as wolf)
   wolfUntransformRate: {
-    extremeHigh: { title: 'Le·a Caméléon', emoji: '🦎', description: 'Se détransforme très souvent' },
+    extremeHigh: { title: 'L\'Adaptable', emoji: '🦎', description: 'Se détransforme très souvent' },
     high: { title: 'Le·a Discret·ète', emoji: '🤫', description: 'Se détransforme fréquemment' },
     low: { title: 'Le Loup Assumé', emoji: '🐺', description: 'Se détransforme rarement' },
     extremeLow: { title: 'Le Loup Permanent', emoji: '🌑', description: 'Reste presque toujours en loup' }
@@ -226,17 +226,293 @@ export const TITLE_DEFINITIONS = {
  * Combination title definitions - special titles for stat combinations
  */
 export const COMBINATION_TITLES = [
-  // High talk + High loot = Hyperactive
+
+  // High win rate + Serial Winner = The Legend
   {
-    id: 'hyperactif',
-    title: 'L\'Hyperactif·ve',
-    emoji: '⚡',
-    description: 'Bavard·e ET grande récolte',
+    id: 'legende',
+    title: 'La Légende',
+    emoji: '🏅',
+    description: 'Gagne tout le temps + grosses séries',
+    conditions: [
+      { stat: 'winRate', category: 'EXTREME_HIGH' },
+      { stat: 'winSeries', category: 'HIGH' },
+      { stat: 'gamesPlayed', minValue: 100 },
+    ],
+    priority: 20
+  },
+  // High win rate + High loot + High survival = MVP
+  {
+    id: 'mvp',
+    title: 'Le·a MVP',
+    emoji: '⭐',
+    description: 'Gagne, récolte, et survit',
+    conditions: [
+      { stat: 'winRate', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'loot', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'survival', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
+    ],
+    priority: 19
+  },
+  // Serial Chasseur + High kill rate + High survival = Vigilante
+  {
+    id: 'justicier',
+    title: 'Le·a Justicier·ère',
+    emoji: '⚔️',
+    description: 'Chasseur·se qui vise juste, tue souvent et survit',
+    conditions: [
+      { stat: 'hunterAccuracy', category: 'HIGH' },
+      { stat: 'killRate', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 18
+  },
+  // Good camp accuracy + Good hunter accuracy = Sniper Elite
+  {
+    id: 'sniper_elite',
+    title: 'Sniper Elite',
+    emoji: '🎖️',
+    description: 'Chasseur·se ultra précis·e',
+    conditions: [
+      { stat: 'hunterShotAccuracy', category: 'HIGH' },
+      { stat: 'hunterAccuracy', category: 'HIGH' }
+    ],
+    priority: 18
+  },
+  // Balanced win rates across all camps = The Adaptable
+  {
+    id: 'adaptable',
+    title: 'Le·a Caméléon',
+    emoji: '🦎',
+    description: 'Bon dans tous les camps',
+    conditions: [
+      { stat: 'winRateVillageois', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'winRateLoup', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'winRateSolo', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
+    ],
+    priority: 18
+  },
+  // High loot Loup + High win rate Loup + Low talk = Lone Wolf
+  {
+    id: 'loup_solitaire',
+    title: 'Le Loup Solitaire',
+    emoji: '🐺',
+    description: 'Loup efficace, discret et gagnant',
+    conditions: [
+      { stat: 'lootLoup', category: 'HIGH' },
+      { stat: 'winRateLoup', category: 'HIGH' },
+      { stat: 'talking', category: 'LOW' }
+    ],
+    priority: 18
+  },
+  // Extreme high loot + Extreme low talk = The Machine
+  {
+    id: 'machine',
+    title: 'La Machine',
+    emoji: '⚙️',
+    description: 'Récolte énormément sans dire un mot',
+    conditions: [
+      { stat: 'loot', category: 'EXTREME_HIGH' },
+      { stat: 'talking', category: 'EXTREME_LOW' }
+    ],
+    priority: 18
+  },
+  // Extreme high talk + Low loot + Low kills = The Commentator
+  {
+    id: 'commentateur',
+    title: 'Le·a Commentateur·rice',
+    emoji: '📻',
+    description: 'Ne fait que parler, ne récolte rien et tue peu',
+    conditions: [
+      { stat: 'talking', category: 'EXTREME_HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'loot', category: 'LOW' },
+      { stat: 'killRate', category: 'LOW' }
+    ],
+    priority: 17
+  },
+  // Low survival Day 1 + High survival = Phoenix
+  {
+    id: 'phoenix',
+    title: 'Le·a Phoenix',
+    emoji: '🔥',
+    description: 'Meurt souvent tôt mais survit jusqu\'au bout après',
+    conditions: [
+      { stat: 'survivalDay1', category: 'LOW', minCategory: 'BELOW_AVERAGE' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 17
+  },
+
+  // High loot + High survival + Low talk = Robot
+  {
+    id: 'robot',
+    title: 'Le·a Robot',
+    emoji: '🤖',
+    description: 'Productif·ve, survit, parle peu',
+    conditions: [
+      { stat: 'loot', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'talking', category: 'LOW' }
+    ],
+    priority: 17
+  },
+
+  // High talk + Low loot + Low survival = Clown
+  {
+    id: 'pitre',
+    title: 'Le·a Pitre',
+    emoji: '🎪',
+    description: 'Bavard·e, improductif·ve, meurt souvent',
     conditions: [
       { stat: 'talking', category: 'HIGH' },
-      { stat: 'loot', category: 'HIGH' }
+      { stat: 'loot', category: 'LOW' },
+      { stat: 'survival', category: 'LOW', minCategory: 'BELOW_AVERAGE' }
     ],
-    priority: 10
+    priority: 17
+  },
+
+  // High talk during meeting + Good voting + Aggressive = Master of Ceremony
+  {
+    id: 'maitre_ceremonie',
+    title: 'Le·a Maître·sse de Cérémonie',
+    emoji: '🎙️',
+    description: 'Mène les débats et vote juste',
+    conditions: [
+      { stat: 'talkingDuringMeeting', category: 'HIGH' },
+      { stat: 'votingAccuracy', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'votingAggressive', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
+    ],
+    priority: 16
+  },
+
+  // Super Loup + High talk = Manipulator
+  {
+    id: 'manipulateur',
+    title: 'Le·a Manipulateur·rice',
+    emoji: '🐍',
+    description: 'Loup bavard·e et gagnant·e',
+    conditions: [
+      { stat: 'winRateLoup', category: 'HIGH' },
+      { stat: 'talking', category: 'HIGH' }
+    ],
+    priority: 16
+  },
+
+  // High survival + Low kill rate + High win rate = Diplomat
+  {
+    id: 'diplomate',
+    title: 'Le·a Diplomate',
+    emoji: '🤝',
+    description: 'Gagne en survivant sans tuer',
+    conditions: [
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'killRate', category: 'LOW', minCategory: 'BELOW_AVERAGE'  },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 16
+  },
+  // High talk + High survival + Low loot = The Politician
+  {
+    id: 'politicien',
+    title: 'Le·a Politicien·ne',
+    emoji: '🎩',
+    description: 'Parle beaucoup, survit, mais ne récolte pas',
+    conditions: [
+      { stat: 'talking', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'loot', category: 'LOW' }
+    ],
+    priority: 16
+  },
+
+  // High survival + High win rate loup = The Alpha Wolf
+  {
+    id: 'loup_alpha',
+    title: 'Le Loup Alpha',
+    emoji: '🐺',
+    description: 'Survit et domine en Loup',
+    conditions: [
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'winRateLoup', category: 'HIGH' }
+    ],
+    priority: 15
+  },
+
+  // High kills + High survival = Predator
+  {
+    id: 'alpha_predator',
+    title: 'L\'Alpha',
+    emoji: '🦁',
+    description: 'Tue beaucoup et survit',
+    conditions: [
+      { stat: 'killRate', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 15
+  },
+
+  // Super Loup + Low talk = Perfect Infiltrator
+  {
+    id: 'infiltrateur',
+    title: 'L\'Infiltré·e',
+    emoji: '🎭',
+    description: 'Excellent·e loup discret·ète',
+    conditions: [
+      { stat: 'winRateLoup', category: 'HIGH' },
+      { stat: 'talking', category: 'LOW' }
+    ],
+    priority: 15
+  },
+
+  // Average talk + Average loot + Average win = The Average Joe
+  {
+    id: 'monsieur_madame_tout_le_monde',
+    title: 'Monsieur·Madame Tout-le-Monde',
+    emoji: '👤',
+    description: 'Performance moyenne partout',
+    conditions: [
+      { stat: 'talking', category: 'AVERAGE' },
+      { stat: 'loot', category: 'AVERAGE' },
+      { stat: 'winRate', category: 'AVERAGE' }
+    ],
+    priority: 15
+  },
+
+  // Extreme low talk + High win rate = Invisible
+  {
+    id: 'invisible',
+    title: 'L\'Invisible',
+    emoji: '👁️',
+    description: 'Quasi muet·te mais redoutablement efficace',
+    conditions: [
+      { stat: 'talking', category: 'EXTREME_LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 15
+  },
+  //High transform rate + High untransform rate = Hyperactive Wolf
+  {
+    id: 'loup_hyperactif',
+    title: 'Le Loup Hyperactif',
+    emoji: '⚡',
+    description: 'Se transforme et détransforme constamment',
+    conditions: [
+      { stat: 'wolfTransformRate', category: 'HIGH' },
+      { stat: 'wolfUntransformRate', category: 'HIGH' }
+    ],
+    priority: 15
+  },
+
+  // High wolf win rate + High solo win rate = Traître
+  {
+    id: 'traitre',
+    title: 'Le·a Traître·sse',
+    emoji: '🦹',
+    description: 'Gagnant·e dans tous les camps ennemis des Villageois',
+    conditions: [
+      { stat: 'winRateLoup', category: 'HIGH' },
+      { stat: 'winRateSolo', category: 'HIGH' }
+    ],
+    priority: 14
   },
 
   // Low kills + High win rate = The Pacifist
@@ -252,6 +528,424 @@ export const COMBINATION_TITLES = [
     priority: 14
   },
 
+  // Bad camp accuracy + Good shoot accuracy = Clumsy Hunter
+  {
+    id: 'chasseur_maladroit',
+    title: 'Le·a Chasseur·se Maladroit·e',
+    emoji: '🔫',
+    description: 'Chasseur·se précis qui touche les mauvaises cibles',
+    conditions: [
+      { stat: 'hunterShotAccuracy', category: 'HIGH' },
+      { stat: 'hunterAccuracy', category: 'LOW' }
+    ],
+    priority: 14
+  },
+
+  // High loot villageois + High win rate villageois = The Model Citizen
+  {
+    id: 'citoyen_exemplaire',
+    title: 'Le·a Citoyen·ne Exemplaire',
+    emoji: '👑',
+    description: 'Récolte et gagne en Villageois',
+    conditions: [
+      { stat: 'lootVillageois', category: 'HIGH' },
+      { stat: 'winRateVillageois', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+
+  // Low loot + High kill rate = The Assassin
+  {
+    id: 'assassin',
+    title: 'L\'Assassin·e',
+    emoji: '🗡️',
+    description: 'Ignore la récolte, se concentre sur les kills',
+    conditions: [
+      { stat: 'loot', category: 'LOW' },
+      { stat: 'killRate', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+
+  // Serial Solo + High win rate Solo = Anarchist
+  {
+    id: 'anarchiste',
+    title: 'L\'Anarchiste',
+    emoji: '🦊',
+    description: 'Maître des rôles solitaires',
+    conditions: [
+      { stat: 'campSolo', category: 'HIGH' },
+      { stat: 'winRateSolo', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+  // Casanier (high dominant%) + Low Loot = The Camper
+  {
+    id: 'campeur',
+    title: 'Le·a Campeur·euse',
+    emoji: '🏕️',
+    description: 'Reste au même endroit sans récolter',
+    conditions: [
+      { stat: 'zoneDominantPercentage', category: 'EXTREME_HIGH' },
+      { stat: 'loot', category: 'LOW' }
+    ],
+    priority: 14
+  },
+  // Low transform rate + High survival + High win rate Loup = Clever Wolf
+  {
+    id: 'loup_ruse',
+    title: 'Le Loup Rusé',
+    emoji: '🦊',
+    description: 'Reste humain, survit et gagne en Loup',
+    conditions: [
+      { stat: 'wolfTransformRate', category: 'LOW' },
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'winRateLoup', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+
+  // High talk + High voting aggressive + Low voting accuracy = Populist
+  {
+    id: 'populiste',
+    title: 'Le·a Populiste',
+    emoji: '📢',
+    description: 'Bruyant·e et actif·ve mais se trompe de cible',
+    conditions: [
+      { stat: 'talking', category: 'HIGH' },
+      { stat: 'votingAggressive', category: 'HIGH' },
+      { stat: 'votingAccuracy', category: 'LOW' }
+    ],
+    priority: 13
+  },
+  // Ruines + High Kill Rate = The Ambusher
+  {
+    id: 'embusquer',
+    title: 'L\'Embusqué·e',
+    emoji: '🏹',
+    description: 'Tend des pièges dans les Ruines',
+    conditions: [
+      { stat: 'zoneRuines', category: 'HIGH' },
+      { stat: 'killRate', category: 'HIGH' }
+    ],
+    priority: 13
+  },
+  // High kills + Low win rate = The Reckless
+  {
+    id: 'tete_brulee',
+    title: 'La Tête Brûlée',
+    emoji: '💣',
+    description: 'Tue beaucoup mais fait perdre son camp',
+    conditions: [
+      { stat: 'killRate', category: 'HIGH' },
+      { stat: 'winRate', category: 'LOW' }
+    ],
+    priority: 13
+  },
+
+  // Low everything = The Beginner
+  {
+    id: 'debutant',
+    title: 'Le·a Débutant·e',
+    emoji: '🆘',
+    description: 'Peine en victoire, survie et récolte',
+    conditions: [
+      { stat: 'winRate', category: 'LOW' },
+      { stat: 'survival', category: 'LOW' },
+      { stat: 'loot', category: 'LOW' }
+    ],
+    priority: 13
+  },
+  // The Alchemist - High potion usage + High survival
+  {
+    id: 'apothicaire',
+    title: 'L\'Apothicaire',
+    emoji: '⚗️',
+    description: 'Boit beaucoup de potions et survit grâce à elles',
+    conditions: [
+      { stat: 'potionUsage', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 13
+  },
+
+  // Low survival Day 1 + Low survival + High win rate = Sacrifice
+  {
+    id: 'sacrifice',
+    title: 'Le·a Sacrifié·e',
+    emoji: '🕯️',
+    description: 'Meurt rapidement mais fait gagner son camp',
+    conditions: [
+      { stat: 'survivalDay1', category: 'LOW' },
+      { stat: 'survival', category: 'LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 13
+  },
+
+  // High voting accuracy + Low survival = Whistleblower
+  {
+    id: 'lanceur_alerte',
+    title: 'Le·a Lanceur·se d\'Alerte',
+    emoji: '🚨',
+    description: 'Vote juste mais se fait éliminer pour ça',
+    conditions: [
+      { stat: 'votingAccuracy', category: 'HIGH' },
+      { stat: 'survival', category: 'LOW' }
+    ],
+    priority: 13
+  },
+  // Explorer + high win rate = The Adventurer
+  {
+    id: 'aventurier',
+    title: 'L\'Aventurier·ère',
+    emoji: '🗺️',
+    description: 'Explore toute la carte et gagne',
+    conditions: [
+      { stat: 'zoneDominantPercentage', category: 'LOW' },
+      { stat: 'winRate', category: 'HIGH' }
+    ],
+    priority: 12
+
+  },
+
+  // Ruines + Low Talking = The Hermit
+  {
+    id: 'ermite',
+    title: 'L\'Ermite',
+    emoji: '🧙',
+    description: 'Silencieux·se, reclus·e dans les Ruines',
+    conditions: [
+      { stat: 'zoneRuines', category: 'HIGH' },
+      { stat: 'talking', category: 'LOW' }
+    ],
+    priority: 12
+  },
+  // Village Pêcheur + High Survival = The Harbor Master
+  {
+    id: 'capitaine_port',
+    title: 'Le·a Capitaine du Port',
+    emoji: '⚓',
+    description: 'Survit au bord de l\'eau',
+    conditions: [
+      { stat: 'zoneVillagePecheur', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+
+  // Explorer + High Loot = The Gatherer
+  {
+    id: 'cueilleur',
+    title: 'Le·a Cueilleur·se',
+    emoji: '🧺',
+    description: 'Récolte en parcourant toute la carte',
+    conditions: [
+      { stat: 'zoneDominantPercentage', category: 'LOW' },
+      { stat: 'loot', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+  // High transform rate + Low untransform rate + High win rate Loup = Aggressive Alpha
+  {
+    id: 'chasseur_nocturne',
+    title: 'Le·a Chasseur·se Nocturne',
+    emoji: '🌙',
+    description: 'Se transforme, reste loup, et domine',
+    conditions: [
+      { stat: 'wolfTransformRate', category: 'HIGH' },
+      { stat: 'wolfUntransformRate', category: 'LOW' },
+      { stat: 'winRateLoup', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+  // The Witch - High potion usage + High talking (brews potions and talks about them)
+  {
+    id: 'sorciere',
+    title: 'La Sorcière',
+    emoji: '🧙',
+    description: 'Prépare des potions tout en racontant ses recettes',
+    conditions: [
+      { stat: 'potionUsage', category: 'HIGH' },
+      { stat: 'talking', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+
+
+  // High kills + Low survival = Kamikaze
+  {
+    id: 'kamikaze',
+    title: 'Le·a Kamikaze',
+    emoji: '💥',
+    description: 'Tue mais meurt en retour',
+    conditions: [
+      { stat: 'killRate', category: 'HIGH' },
+      { stat: 'survival', category: 'LOW' }
+    ],
+    priority: 12
+  },
+  // Good voting accuracy + Low talk = Detective
+  {
+    id: 'detective',
+    title: 'Le·a Détective',
+    emoji: '🔎',
+    description: 'Observe silencieusement et vote juste',
+    conditions: [
+      { stat: 'votingAccuracy', category: 'HIGH' },
+      { stat: 'talking', category: 'LOW' }
+    ],
+    priority: 12
+  },
+  // Low win rate + Serial Looser = The Cursed
+  {
+    id: 'poissard',
+    title: 'Le·a Poissard·e',
+    emoji: '🌧️',
+    description: 'Perd tout le temps + grosses séries de défaites',
+    conditions: [
+      { stat: 'winRate', category: 'EXTREME_LOW' },
+      { stat: 'lossSeries', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+
+  // High loot + Low survival = The Greedy
+  {
+    id: 'avide',
+    title: 'L\'Avide',
+    emoji: '💰',
+    description: 'Récolte beaucoup mais meurt',
+    conditions: [
+      { stat: 'loot', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'survival', category: 'LOW', minCategory: 'BELOW_AVERAGE' }
+    ],
+    priority: 12
+  },
+  // High talk during meeting + Low voting aggressive = Theorist
+  {
+    id: 'theoricien',
+    title: 'Le·a Théoricien·ne',
+    emoji: '🎓',
+    description: 'Parle beaucoup en débat mais vote peu',
+    conditions: [
+      { stat: 'talkingDuringMeeting', category: 'HIGH' },
+      { stat: 'votingAggressive', category: 'LOW' }
+    ],
+    priority: 12
+  },
+  // Survives outside main zones = The Prowler
+  {
+    id: 'rodeur',
+    title: 'Le·a Rôdeur·euse',
+    emoji: '🌙',
+    description: 'Rôde hors des villages et survit',
+    conditions: [
+      { stat: 'zoneResteCarte', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+  // Stays at farm + high loot = The Harvester
+  {
+    id: 'moissonneur',
+    title: 'Le·a Moissonneur·euse',
+    emoji: '🌾',
+    description: 'Récolte à la Ferme sans relâche',
+    conditions: [
+      { stat: 'zoneFerme', category: 'HIGH' },
+      { stat: 'loot', category: 'HIGH' }
+    ],
+    priority: 11
+  },
+
+
+  // The Pharmacy - High potion usage + Low loot (focuses on potions, not harvest)
+  {
+    id: 'pharmacien',
+    title: 'Le·a Pharmacien·ne',
+    emoji: '💊',
+    description: 'Ignore la récolte pour se concentrer sur les potions',
+    conditions: [
+      { stat: 'potionUsage', category: 'HIGH' },
+      { stat: 'loot', category: 'LOW' }
+    ],
+    priority: 11
+  },
+  //The Junkie - High potion usage + Low win rate (potions don't help them win)
+  {
+    id: 'accro',
+    title: 'L\'Accro',
+    emoji: '🍾',
+    description: 'Boit des potions mais ça ne l\'aide pas à gagner',
+    conditions: [
+      { stat: 'potionUsage', category: 'HIGH' },
+      { stat: 'winRate', category: 'LOW' }
+    ],
+    priority: 11
+  },
+
+  // Low survival Day 1 + high talking
+  {
+    id: 'grande_gueule',
+    title: 'La Grande Gueule',
+    emoji: '🗯️',
+    description: 'Parle trop et meurt Jour 1',
+    conditions: [
+      { stat: 'survivalDay1', category: 'LOW' },
+      { stat: 'talking', category: 'HIGH' }
+    ],
+    priority: 11
+  },
+  {
+    id: 'couard',
+    title: 'Le·a Couard·e',
+    emoji: '🐢',
+    description: 'Survit longtemps mais perd quand même',
+    conditions: [
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'winRate', category: 'LOW' }
+    ],
+    priority: 11
+  },
+
+  // High loot Villageois + Low win rate Villageois = The Worker Bee
+  {
+    id: 'abeille_ouvriere',
+    title: 'L\'Abeille Ouvrière',
+    emoji: '🐝',
+    description: 'Récolte bien en Villageois mais perd',
+    conditions: [
+      { stat: 'lootVillageois', category: 'HIGH' },
+      { stat: 'winRateVillageois', category: 'LOW' }
+    ],
+    priority: 11
+  },
+  // High loot Loup + Low win rate Loup = The Exposed Wolf
+  {
+    id: 'loup_repere',
+    title: 'Le Loup Repéré',
+    emoji: '🔦',
+    description: 'Récolte en Loup mais se fait démasquer',
+    conditions: [
+      { stat: 'lootLoup', category: 'HIGH' },
+      { stat: 'winRateLoup', category: 'LOW' }
+    ],
+    priority: 11
+  },
+
+  // High participation + specialist camps = Taulier
+  {
+    id: 'taulier',
+    title: 'Le·a Taulier·e',
+    emoji: '🔑',
+    description: 'Participe beaucoup et excelle dans un camp',
+    conditions: [
+      { stat: 'gamesPlayed', category: 'HIGH' },
+      { stat: 'campBalance', category: 'SPECIALIST' }
+    ],
+    priority: 11
+  },
   // High talk outside meeting + Low talk during meeting = The Conspirator
   {
     id: 'conspirateur',
@@ -277,86 +971,97 @@ export const COMBINATION_TITLES = [
     ],
     priority: 11
   },
-
-  // High survival + High win rate loup = The Alpha Wolf
+  // High win rate + low participation = The Opportunist
   {
-    id: 'loup_alpha',
-    title: 'Le Loup Alpha',
-    emoji: '🐺',
-    description: 'Survit et domine en Loup',
+    id: 'opportuniste',
+    title: 'L\'Opportuniste',
+    emoji: '🎯',
+    description: 'Gagne souvent mais joue peu',
     conditions: [
-      { stat: 'survival', category: 'HIGH' },
-      { stat: 'winRateLoup', category: 'HIGH' }
+      { stat: 'winRate', category: 'HIGH' },
+      { stat: 'gamesPlayed', category: 'LOW' }
     ],
-    priority: 15
+    priority: 11
   },
 
-  // High loot villageois + High win rate villageois = The Model Citizen
+  // Poor performance across all camps = The Struggling
   {
-    id: 'citoyen_exemplaire',
-    title: 'Le·a Citoyen·ne Exemplaire',
-    emoji: '👑',
-    description: 'Récolte et gagne en Villageois',
+    id: 'en_rodage',
+    title: 'En Rodage',
+    emoji: '🔧',
+    description: 'Peine dans tous les camps',
     conditions: [
-      { stat: 'lootVillageois', category: 'HIGH' },
-      { stat: 'winRateVillageois', category: 'HIGH' }
+      { stat: 'winRateVillageois', category: 'LOW' },
+      { stat: 'winRateLoup', category: 'LOW' },
+      { stat: 'winRateSolo', category: 'LOW' }
     ],
-    priority: 14
+    priority: 11
   },
 
-  // Extreme high talk + Low loot + Low kills = The Commentator
+  // Low loot + High survival = The Cautious
   {
-    id: 'commentateur',
-    title: 'Le·a Commentateur·rice',
-    emoji: '📻',
-    description: 'Ne fait que parler, ne récolte rien et tue peu',
+    id: 'prudent',
+    title: 'Le·a Prudent·e',
+    emoji: '🛡️',
+    description: 'Survit mais récolte peu',
     conditions: [
-      { stat: 'talking', category: 'EXTREME_HIGH', minCategory: 'ABOVE_AVERAGE' },
-      { stat: 'loot', category: 'LOW' },
-      { stat: 'killRate', category: 'LOW' }
-    ],
-    priority: 17
-  },
-
-  // High win rate + High loot + High survival = MVP
-  {
-    id: 'mvp',
-    title: 'Le·a MVP',
-    emoji: '⭐',
-    description: 'Gagne, récolte, et survit',
-    conditions: [
-      { stat: 'winRate', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
-      { stat: 'loot', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
+      { stat: 'loot', category: 'LOW', minCategory: 'BELOW_AVERAGE' },
       { stat: 'survival', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
     ],
-    priority: 19
+    priority: 11
   },
 
-  // Low everything = The Beginner
+  // Aggressive voter + First voter = Impulsive
   {
-    id: 'debutant',
-    title: 'Le·a Débutant·e',
-    emoji: '🆘',
-    description: 'Peine en victoire, survie et récolte',
+    id: 'cowboy',
+    title: 'Le·a Cow-Boy',
+    emoji: '🤠',
+    description: 'Vote vite et souvent',
     conditions: [
-      { stat: 'winRate', category: 'LOW' },
-      { stat: 'survival', category: 'LOW' },
-      { stat: 'loot', category: 'LOW' }
+      { stat: 'votingAggressive', category: 'HIGH' },
+      { stat: 'votingFirst', category: 'HIGH' }
     ],
-    priority: 13
+    priority: 10
   },
 
-  // Low loot + High kill rate = The Assassin
+  // High talk + Bad voting = Demagogue
   {
-    id: 'assassin',
-    title: 'L\'Assassin·e',
-    emoji: '🗡️',
-    description: 'Ignore la récolte, se concentre sur les kills',
+    id: 'demagogue',
+    title: 'Le·a Démagogue',
+    emoji: '📣',
+    description: 'Parle beaucoup mais vote mal',
     conditions: [
-      { stat: 'loot', category: 'LOW' },
-      { stat: 'killRate', category: 'HIGH' }
+      { stat: 'talking', category: 'HIGH' },
+      { stat: 'votingAccuracy', category: 'LOW' }
     ],
-    priority: 14
+    priority: 10
+  },
+
+  // High participation + balanced camps = The Enthusiast
+  {
+    id: 'enthusiaste',
+    title: 'L\'Enthousiaste',
+    emoji: '🌟',
+    description: 'Participe beaucoup et gagne autant dans chaque camp',
+    conditions: [
+      { stat: 'gamesPlayed', category: 'HIGH' },
+      { stat: 'campBalance', category: 'BALANCED' }
+    ],
+    priority: 10
+  },
+
+
+  // High talk + High loot = Hyperactive
+  {
+    id: 'hyperactif',
+    title: 'L\'Hyperactif·ve',
+    emoji: '⚡',
+    description: 'Bavard·e ET grande récolte',
+    conditions: [
+      { stat: 'talking', category: 'HIGH' },
+      { stat: 'loot', category: 'HIGH' }
+    ],
+    priority: 10
   },
   
   // Low talk + High loot = Efficient
@@ -384,717 +1089,5 @@ export const COMBINATION_TITLES = [
     ],
     priority: 10
   },
-
-  // High kills + High survival = Predator
-  {
-    id: 'alpha_predator',
-    title: 'L\'Alpha',
-    emoji: '🦁',
-    description: 'Tue beaucoup et survit',
-    conditions: [
-      { stat: 'killRate', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' }
-    ],
-    priority: 16
-  },
-
-  // High kills + Low survival = Kamikaze
-  {
-    id: 'kamikaze',
-    title: 'Le·a Kamikaze',
-    emoji: '💥',
-    description: 'Tue mais meurt en retour',
-    conditions: [
-      { stat: 'killRate', category: 'HIGH' },
-      { stat: 'survival', category: 'LOW' }
-    ],
-    priority: 12
-  },
-
-  // Low survival Day 1 + High survival = Phoenix
-  {
-    id: 'phoenix',
-    title: 'Le·a Phoenix',
-    emoji: '🔥',
-    description: 'Meurt souvent tôt mais survit jusqu\'au bout après',
-    conditions: [
-      { stat: 'survivalDay1', category: 'LOW', minCategory: 'BELOW_AVERAGE' },
-      { stat: 'survival', category: 'HIGH' }
-    ],
-    priority: 17
-  },
-
-  // Aggressive voter + First voter = Impulsive
-  {
-    id: 'cowboy',
-    title: 'Le·a Cow-Boy',
-    emoji: '🤠',
-    description: 'Vote vite et souvent',
-    conditions: [
-      { stat: 'votingAggressive', category: 'HIGH' },
-      { stat: 'votingFirst', category: 'HIGH' }
-    ],
-    priority: 10
-  },
-
-  // Good voting accuracy + Low talk = Detective
-  {
-    id: 'detective',
-    title: 'Le·a Détective',
-    emoji: '🔎',
-    description: 'Observe silencieusement et vote juste',
-    conditions: [
-      { stat: 'votingAccuracy', category: 'HIGH' },
-      { stat: 'talking', category: 'LOW' }
-    ],
-    priority: 12
-  },
-
-  // High talk during meeting + Good voting + Aggressive = Master of Ceremony
-  {
-    id: 'maitre_ceremonie',
-    title: 'Le·a Maître·sse de Cérémonie',
-    emoji: '🎙️',
-    description: 'Mène les débats et vote juste',
-    conditions: [
-      { stat: 'talkingDuringMeeting', category: 'HIGH' },
-      { stat: 'votingAccuracy', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
-      { stat: 'votingAggressive', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
-    ],
-    priority: 16
-  },
-
-  // High talk + Bad voting = Demagogue
-  {
-    id: 'demagogue',
-    title: 'Le·a Démagogue',
-    emoji: '📣',
-    description: 'Parle beaucoup mais vote mal',
-    conditions: [
-      { stat: 'talking', category: 'HIGH' },
-      { stat: 'votingAccuracy', category: 'LOW' }
-    ],
-    priority: 10
-  },
-
-  // Super Loup + Low talk = Perfect Infiltrator
-  {
-    id: 'infiltrateur',
-    title: 'L\'Infiltré·e',
-    emoji: '🎭',
-    description: 'Excellent·e loup discret·ète',
-    conditions: [
-      { stat: 'winRateLoup', category: 'HIGH' },
-      { stat: 'talking', category: 'LOW' }
-    ],
-    priority: 15
-  },
-
-  // Super Loup + High talk = Manipulator
-  {
-    id: 'manipulateur',
-    title: 'Le·a Manipulateur·rice',
-    emoji: '🐍',
-    description: 'Loup bavard·e et gagnant·e',
-    conditions: [
-      { stat: 'winRateLoup', category: 'HIGH' },
-      { stat: 'talking', category: 'HIGH' }
-    ],
-    priority: 16
-  },
-
-  // High wolf win rate + High solo win rate = Traître
-  {
-    id: 'traitre',
-    title: 'Le·a Traître·sse',
-    emoji: '🦹',
-    description: 'Gagnant·e dans tous les camps ennemis des Villageois',
-    conditions: [
-      { stat: 'winRateLoup', category: 'HIGH' },
-      { stat: 'winRateSolo', category: 'HIGH' }
-    ],
-    priority: 14
-  },
-
-  // High win rate + Serial Winner = The Legend
-  {
-    id: 'legende',
-    title: 'La Légende',
-    emoji: '🏅',
-    description: 'Gagne tout le temps + grosses séries',
-    conditions: [
-      { stat: 'winRate', category: 'EXTREME_HIGH' },
-      { stat: 'winSeries', category: 'HIGH' },
-      { stat: 'gamesPlayed', minValue: 100 },
-    ],
-    priority: 20
-  },
-
-  // Low win rate + Serial Looser = The Cursed
-  {
-    id: 'poissard',
-    title: 'Le·a Poissard·e',
-    emoji: '🌧️',
-    description: 'Perd tout le temps + grosses séries de défaites',
-    conditions: [
-      { stat: 'winRate', category: 'EXTREME_LOW' },
-      { stat: 'lossSeries', category: 'HIGH' }
-    ],
-    priority: 12
-  },
-
-  // High loot + High survival + Low talk = Robot
-  {
-    id: 'robot',
-    title: 'Le·a Robot',
-    emoji: '🤖',
-    description: 'Productif·ve, survit, parle peu',
-    conditions: [
-      { stat: 'loot', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' },
-      { stat: 'talking', category: 'LOW' }
-    ],
-    priority: 17
-  },
-
-  // High talk + Low loot + Low survival = Clown
-  {
-    id: 'pitre',
-    title: 'Le·a Pitre',
-    emoji: '🎪',
-    description: 'Bavard·e, improductif·ve, meurt souvent',
-    conditions: [
-      { stat: 'talking', category: 'HIGH' },
-      { stat: 'loot', category: 'LOW' },
-      { stat: 'survival', category: 'LOW' }
-    ],
-    priority: 17
-  },
-
-  // Good camp accuracy + Good hunter accuracy = Sniper Elite
-  {
-    id: 'sniper_elite',
-    title: 'Sniper Elite',
-    emoji: '🎖️',
-    description: 'Chasseur·se ultra précis·e',
-    conditions: [
-      { stat: 'hunterShotAccuracy', category: 'HIGH' },
-      { stat: 'hunterAccuracy', category: 'HIGH' }
-    ],
-    priority: 18
-  },
-
-  // Bad camp accuracy + Good shoot accuracy = Clumsy Hunter
-  {
-    id: 'chasseur_maladroit',
-    title: 'Le·a Chasseur·se Maladroit·e',
-    emoji: '🔫',
-    description: 'Chasseur·se précis qui touche les mauvaises cibles',
-    conditions: [
-      { stat: 'hunterShotAccuracy', category: 'HIGH' },
-      { stat: 'hunterAccuracy', category: 'LOW' }
-    ],
-    priority: 14
-  },
-
-  // High participation + specialist camps = Taulier
-  {
-    id: 'taulier',
-    title: 'Le·a Taulier·e',
-    emoji: '🔑',
-    description: 'Participe beaucoup et excelle dans un camp',
-    conditions: [
-      { stat: 'gamesPlayed', category: 'HIGH' },
-      { stat: 'campBalance', category: 'SPECIALIST' }
-    ],
-    priority: 11
-  },
-
-  // High participation + balanced camps = The Enthusiast
-  {
-    id: 'enthusiaste',
-    title: 'L\'Enthousiaste',
-    emoji: '🌟',
-    description: 'Participe beaucoup et gagne autant dans chaque camp',
-    conditions: [
-      { stat: 'gamesPlayed', category: 'HIGH' },
-      { stat: 'campBalance', category: 'BALANCED' }
-    ],
-    priority: 10
-  },
-
-  // High win rate + low participation = The Opportunist
-  {
-    id: 'opportuniste',
-    title: 'L\'Opportuniste',
-    emoji: '🎯',
-    description: 'Gagne souvent mais joue peu',
-    conditions: [
-      { stat: 'winRate', category: 'HIGH' },
-      { stat: 'gamesPlayed', category: 'LOW' }
-    ],
-    priority: 11
-  },
-
-  // Balanced win rates across all camps = The Adaptable
-  {
-    id: 'adaptable',
-    title: 'L\'Adaptable',
-    emoji: '🦎',
-    description: 'Bon dans tous les camps',
-    conditions: [
-      { stat: 'winRateVillageois', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
-      { stat: 'winRateLoup', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
-      { stat: 'winRateSolo', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
-    ],
-    priority: 18
-  },
-
-  // Poor performance across all camps = The Struggling
-  {
-    id: 'en_rodage',
-    title: 'En Rodage',
-    emoji: '🔧',
-    description: 'Peine dans tous les camps',
-    conditions: [
-      { stat: 'winRateVillageois', category: 'LOW' },
-      { stat: 'winRateLoup', category: 'LOW' },
-      { stat: 'winRateSolo', category: 'LOW' }
-    ],
-    priority: 11
-  },
-
-  // High loot + Low survival = The Greedy
-  {
-    id: 'avide',
-    title: 'L\'Avide',
-    emoji: '💰',
-    description: 'Récolte beaucoup mais meurt',
-    conditions: [
-      { stat: 'loot', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
-      { stat: 'survival', category: 'LOW', minCategory: 'BELOW_AVERAGE' }
-    ],
-    priority: 12
-  },
-
-  // Low loot + High survival = The Cautious
-  {
-    id: 'prudent',
-    title: 'Le·a Prudent·e',
-    emoji: '🛡️',
-    description: 'Survit mais récolte peu',
-    conditions: [
-      { stat: 'loot', category: 'LOW', minCategory: 'BELOW_AVERAGE' },
-      { stat: 'survival', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' }
-    ],
-    priority: 11
-  },
-
-  // Average talk + Average loot + Average win = The Average Joe
-  {
-    id: 'monsieur_madame_tout_le_monde',
-    title: 'Monsieur·Madame Tout-le-Monde',
-    emoji: '👤',
-    description: 'Performance moyenne partout',
-    conditions: [
-      { stat: 'talking', category: 'AVERAGE' },
-      { stat: 'loot', category: 'AVERAGE' },
-      { stat: 'winRate', category: 'AVERAGE' }
-    ],
-    priority: 15
-  },
-
-  // High voting accuracy + Low survival = Whistleblower
-  {
-    id: 'lanceur_alerte',
-    title: 'Le·a Lanceur·se d\'Alerte',
-    emoji: '🚨',
-    description: 'Vote juste mais se fait éliminer pour ça',
-    conditions: [
-      { stat: 'votingAccuracy', category: 'HIGH' },
-      { stat: 'survival', category: 'LOW' }
-    ],
-    priority: 13
-  },
-
-  // High loot Loup + High win rate Loup + Low talk = Lone Wolf
-  {
-    id: 'loup_solitaire',
-    title: 'Le Loup Solitaire',
-    emoji: '🐺',
-    description: 'Loup efficace, discret et gagnant',
-    conditions: [
-      { stat: 'lootLoup', category: 'HIGH' },
-      { stat: 'winRateLoup', category: 'HIGH' },
-      { stat: 'talking', category: 'LOW' }
-    ],
-    priority: 18
-  },
-
-  // Serial Solo + High win rate Solo = Anarchist
-  {
-    id: 'anarchiste',
-    title: 'L\'Anarchiste',
-    emoji: '🦊',
-    description: 'Maître des rôles solitaires',
-    conditions: [
-      { stat: 'campSolo', category: 'HIGH' },
-      { stat: 'winRateSolo', category: 'HIGH' }
-    ],
-    priority: 14
-  },
-
-  // High survival + Low kill rate + High win rate = Diplomat
-  {
-    id: 'diplomate',
-    title: 'Le·a Diplomate',
-    emoji: '🤝',
-    description: 'Gagne en survivant sans tuer',
-    conditions: [
-      { stat: 'survival', category: 'HIGH' },
-      { stat: 'killRate', category: 'LOW' },
-      { stat: 'winRate', category: 'HIGH' }
-    ],
-    priority: 16
-  },
-
-  // High talk + High voting aggressive + Low voting accuracy = Populist
-  {
-    id: 'populiste',
-    title: 'Le·a Populiste',
-    emoji: '📢',
-    description: 'Bruyant·e et actif·ve mais se trompe de cible',
-    conditions: [
-      { stat: 'talking', category: 'HIGH' },
-      { stat: 'votingAggressive', category: 'HIGH' },
-      { stat: 'votingAccuracy', category: 'LOW' }
-    ],
-    priority: 13
-  },
-
-  // Serial Chasseur + High kill rate + High survival = Vigilante
-  {
-    id: 'justicier',
-    title: 'Le·a Justicier·ère',
-    emoji: '⚔️',
-    description: 'Chasseur·se qui tue souvent et survit',
-    conditions: [
-      { stat: 'roleChasseur', category: 'HIGH' },
-      { stat: 'killRate', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' }
-    ],
-    priority: 18
-  },
-
-  // Extreme low talk + High win rate = Invisible
-  {
-    id: 'invisible',
-    title: 'L\'Invisible',
-    emoji: '👁️',
-    description: 'Quasi muet·te mais redoutablement efficace',
-    conditions: [
-      { stat: 'talking', category: 'EXTREME_LOW' },
-      { stat: 'winRate', category: 'HIGH' }
-    ],
-    priority: 15
-  },
-
-  // High talk during meeting + Low voting aggressive = Theorist
-  {
-    id: 'theoricien',
-    title: 'Le·a Théoricien·ne',
-    emoji: '🎓',
-    description: 'Parle beaucoup en débat mais vote peu',
-    conditions: [
-      { stat: 'talkingDuringMeeting', category: 'HIGH' },
-      { stat: 'votingAggressive', category: 'LOW' }
-    ],
-    priority: 12
-  },
-
-  // Low survival Day 1 + Low survival + High win rate = Sacrifice
-  {
-    id: 'sacrifice',
-    title: 'Le·a Sacrifié·e',
-    emoji: '🕯️',
-    description: 'Meurt rapidement mais fait gagner son camp',
-    conditions: [
-      { stat: 'survivalDay1', category: 'LOW' },
-      { stat: 'survival', category: 'LOW' },
-      { stat: 'winRate', category: 'HIGH' }
-    ],
-    priority: 13
-  },
-
-  // Low survival Day 1 + high talking
-  {
-    id: 'grande_gueule',
-    title: 'La Grande Gueule',
-    emoji: '🗯️',
-    description: 'Parle trop et meurt Jour 1',
-    conditions: [
-      { stat: 'survivalDay1', category: 'LOW' },
-      { stat: 'talking', category: 'HIGH' }
-    ],
-    priority: 11
-  },
-  {
-    id: 'couard',
-    title: 'Le·a Couard·e',
-    emoji: '🐢',
-    description: 'Survit longtemps mais perd quand même',
-    conditions: [
-      { stat: 'survival', category: 'HIGH' },
-      { stat: 'winRate', category: 'LOW' }
-    ],
-    priority: 11
-  },
-  // High kills + Low win rate = The Reckless
-  {
-    id: 'tete_brulee',
-    title: 'La Tête Brûlée',
-    emoji: '💣',
-    description: 'Tue beaucoup mais fait perdre son camp',
-    conditions: [
-      { stat: 'killRate', category: 'HIGH' },
-      { stat: 'winRate', category: 'LOW' }
-    ],
-    priority: 13
-  },
-  // High loot Villageois + Low win rate Villageois = The Worker Bee
-  {
-    id: 'abeille_ouvriere',
-    title: 'L\'Abeille Ouvrière',
-    emoji: '🐝',
-    description: 'Récolte bien en Villageois mais perd',
-    conditions: [
-      { stat: 'lootVillageois', category: 'HIGH' },
-      { stat: 'winRateVillageois', category: 'LOW' }
-    ],
-    priority: 11
-  },
-  // High loot Loup + Low win rate Loup = The Exposed Wolf
-  {
-    id: 'loup_repere',
-    title: 'Le Loup Repéré',
-    emoji: '🔦',
-    description: 'Récolte en Loup mais se fait démasquer',
-    conditions: [
-      { stat: 'lootLoup', category: 'HIGH' },
-      { stat: 'winRateLoup', category: 'LOW' }
-    ],
-    priority: 11
-  },
-  // Extreme high loot + Extreme low talk = The Machine
-  {
-    id: 'machine',
-    title: 'La Machine',
-    emoji: '⚙️',
-    description: 'Récolte énormément sans dire un mot',
-    conditions: [
-      { stat: 'loot', category: 'EXTREME_HIGH' },
-      { stat: 'talking', category: 'EXTREME_LOW' }
-    ],
-    priority: 18
-  },
-  // High talk + High survival + Low loot = The Politician
-  {
-    id: 'politicien',
-    title: 'Le·a Politicien·ne',
-    emoji: '🎩',
-    description: 'Parle beaucoup, survit, mais ne récolte pas',
-    conditions: [
-      { stat: 'talking', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' },
-      { stat: 'loot', category: 'LOW' }
-    ],
-    priority: 16
-  },
-
-  // === ZONE-BASED COMBINATION TITLES ===
-
-  // Survives outside main zones = The Prowler
-  {
-    id: 'rodeur',
-    title: 'Le·a Rôdeur·euse',
-    emoji: '🌙',
-    description: 'Rôde hors des villages et survit',
-    conditions: [
-      { stat: 'zoneResteCarte', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' }
-    ],
-    priority: 12
-  },
-  // Stays at farm + high loot = The Harvester
-  {
-    id: 'moissonneur',
-    title: 'Le·a Moissonneur·euse',
-    emoji: '🌾',
-    description: 'Récolte à la Ferme sans relâche',
-    conditions: [
-      { stat: 'zoneFerme', category: 'HIGH' },
-      { stat: 'loot', category: 'HIGH' }
-    ],
-    priority: 11
-  },
-  // Explorer + high win rate = The Adventurer
-  {
-    id: 'aventurier',
-    title: 'L\'Aventurier·ère',
-    emoji: '🗺️',
-    description: 'Explore toute la carte et gagne',
-    conditions: [
-      { stat: 'zoneDominantPercentage', category: 'LOW' },
-      { stat: 'winRate', category: 'HIGH' }
-    ],
-    priority: 12
-
-  },
-  // Ruines + High Kill Rate = The Ambusher
-  {
-    id: 'embusquer',
-    title: 'L\'Embusqué·e',
-    emoji: '🏹',
-    description: 'Tend des pièges dans les Ruines',
-    conditions: [
-      { stat: 'zoneRuines', category: 'HIGH' },
-      { stat: 'killRate', category: 'HIGH' }
-    ],
-    priority: 13
-  },
-  // Ruines + Low Talking = The Hermit
-  {
-    id: 'ermite',
-    title: 'L\'Ermite',
-    emoji: '🧙',
-    description: 'Silencieux·se, reclus·e dans les Ruines',
-    conditions: [
-      { stat: 'zoneRuines', category: 'HIGH' },
-      { stat: 'talking', category: 'LOW' }
-    ],
-    priority: 12
-  },
-  // Village Pêcheur + High Survival = The Harbor Master
-  {
-    id: 'capitaine_port',
-    title: 'Le·a Capitaine du Port',
-    emoji: '⚓',
-    description: 'Survit au bord de l\'eau',
-    conditions: [
-      { stat: 'zoneVillagePecheur', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' }
-    ],
-    priority: 12
-  },
-  // Casanier (high dominant%) + Low Loot = The Camper
-  {
-    id: 'campeur',
-    title: 'Le·a Campeur·euse',
-    emoji: '🏕️',
-    description: 'Reste au même endroit sans récolter',
-    conditions: [
-      { stat: 'zoneDominantPercentage', category: 'EXTREME_HIGH' },
-      { stat: 'loot', category: 'LOW' }
-    ],
-    priority: 14
-  },
-  // Explorer + High Loot = The Gatherer
-  {
-    id: 'cueilleur',
-    title: 'Le·a Cueilleur·se',
-    emoji: '🧺',
-    description: 'Récolte en parcourant toute la carte',
-    conditions: [
-      { stat: 'zoneDominantPercentage', category: 'LOW' },
-      { stat: 'loot', category: 'HIGH' }
-    ],
-    priority: 12
-  },
-  //High transform rate + High untransform rate = Hyperactive Wolf
-  {
-    id: 'loup_hyperactif',
-    title: 'Le Loup Hyperactif',
-    emoji: '⚡',
-    description: 'Se transforme et détransforme constamment',
-    conditions: [
-      { stat: 'wolfTransformRate', category: 'HIGH' },
-      { stat: 'wolfUntransformRate', category: 'HIGH' }
-    ],
-    priority: 15
-  },
-  // High transform rate + Low untransform rate + High win rate Loup = Aggressive Alpha
-  {
-    id: 'chasseur_nocturne',
-    title: 'Le·a Chasseur·se Nocturne',
-    emoji: '🌙',
-    description: 'Se transforme, reste loup, et domine',
-    conditions: [
-      { stat: 'wolfTransformRate', category: 'HIGH' },
-      { stat: 'wolfUntransformRate', category: 'LOW' },
-      { stat: 'winRateLoup', category: 'HIGH' }
-    ],
-    priority: 12
-  },
-  // Low transform rate + High survival + High win rate Loup = Clever Wolf
-  {
-    id: 'loup_ruse',
-    title: 'Le Loup Rusé',
-    emoji: '🦊',
-    description: 'Reste humain, survit et gagne en Loup',
-    conditions: [
-      { stat: 'wolfTransformRate', category: 'LOW' },
-      { stat: 'survival', category: 'HIGH' },
-      { stat: 'winRateLoup', category: 'HIGH' }
-    ],
-    priority: 14
-  },
-  // The Alchemist - High potion usage + High survival
-  {
-    id: 'apothicaire',
-    title: 'L\'Apothicaire',
-    emoji: '⚗️',
-    description: 'Boit beaucoup de potions et survit grâce à elles',
-    conditions: [
-      { stat: 'potionUsage', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' }
-    ],
-    priority: 13
-},
-  // The Pharmacy - High potion usage + Low loot (focuses on potions, not harvest)
-{
-  id: 'pharmacien',
-  title: 'Le·a Pharmacien·ne',
-  emoji: '💊',
-  description: 'Ignore la récolte pour se concentrer sur les potions',
-  conditions: [
-    { stat: 'potionUsage', category: 'HIGH' },
-    { stat: 'loot', category: 'LOW' }
-  ],
-  priority: 11
-},
-//The Junkie - High potion usage + Low win rate (potions don't help them win)
-{
-  id: 'accro',
-  title: 'L\'Accro',
-  emoji: '🍾',
-  description: 'Boit des potions mais ça ne l\'aide pas à gagner',
-  conditions: [
-    { stat: 'potionUsage', category: 'HIGH' },
-    { stat: 'winRate', category: 'LOW' }
-  ],
-  priority: 11
-},
-// The Witch - High potion usage + High talking (brews potions and talks about them)
-{
-  id: 'sorciere',
-  title: 'La Sorcière',
-  emoji: '🧙',
-  description: 'Prépare des potions tout en racontant ses recettes',
-  conditions: [
-    { stat: 'potionUsage', category: 'HIGH' },
-    { stat: 'talking', category: 'HIGH' }
-  ],
-  priority: 12
-},
 
 ];
