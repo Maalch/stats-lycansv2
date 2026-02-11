@@ -288,6 +288,7 @@ function mergeGameActionsAndCleanLegacyData(game) {
     return {
       ...player,
       Actions: mergedActions,
+      LegacyActionsIncomplete: legacyPlayer.ActionsIncomplete
     };
   });
   
