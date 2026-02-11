@@ -66,17 +66,24 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
       totalGamesPlayed++;
       let gameHasTrackedActions = false;
       
-      // Check if this game has transformation data available
-      // Data is available in: modded games v0.243+ OR older games that have at least 1 transform action recorded
+      // Check if this player has reliable transformation data
       const gameVersion = parseFloat(game.Version || '0');
       const hasGuaranteedTransformData = game.Modded && gameVersion >= 0.243;
-      const hasActualTransformData = game.PlayerStats.some(p => 
-        (p.Actions || []).some(a => a.ActionType === 'Transform' || a.ActionType === 'Untransform')
-      );
-      const gameHasTransformData = hasGuaranteedTransformData || hasActualTransformData;
+      let playerHasTransformData = false;
       
-      // Calculate nights as wolf if player has wolf role and game has transform data
-      if (isWolfRole(playerStat.MainRoleInitial) && gameHasTransformData) {
+      if (hasGuaranteedTransformData) {
+        // Modded game v0.243+ - always has reliable data
+        playerHasTransformData = true;
+      } else {
+        // Older game - only count if player has transform actions AND data is not incomplete
+        const actions = playerStat.Actions || [];
+        const hasTransformActions = actions.some(a => a.ActionType === 'Transform' || a.ActionType === 'Untransform');
+        const hasIncompleteData = playerStat.LegacyActionsIncomplete === true;
+        playerHasTransformData = hasTransformActions && !hasIncompleteData;
+      }
+      
+      // Calculate nights as wolf if player has wolf role and has reliable transform data
+      if (isWolfRole(playerStat.MainRoleInitial) && playerHasTransformData) {
         const nightsInThisGame = calculateNightsAsWolf(playerStat.DeathTiming, game.EndTiming);
         totalNightsAsWolf += nightsInThisGame;
       }

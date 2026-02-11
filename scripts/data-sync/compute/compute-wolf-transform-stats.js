@@ -19,17 +19,8 @@ export function computeWolfTransformStatistics(games) {
     if (!game.PlayerStats) return;
     
     const endTiming = game.EndTiming;
-    
-    // Check if this game has transformation data available
-    // Data is available in: modded games v0.243+ OR older games that have at least 1 transform action recorded
     const gameVersion = parseFloat(game.Version || '0');
     const hasGuaranteedTransformData = game.Modded && gameVersion >= 0.243;
-    const hasActualTransformData = game.PlayerStats.some(p => 
-      (p.Actions || []).some(a => a.ActionType === 'Transform' || a.ActionType === 'Untransform')
-    );
-    const gameHasTransformData = hasGuaranteedTransformData || hasActualTransformData;
-    
-    if (!gameHasTransformData) return;
     
     game.PlayerStats.forEach(player => {
       const playerId = player.ID || player.Username;
@@ -42,6 +33,21 @@ export function computeWolfTransformStatistics(games) {
       
       // Skip if no nights (died before any transformation opportunity)
       if (nightsAsWolf < 1) return;
+      
+      // Check if this player has reliable transformation data
+      let playerHasTransformData = false;
+      if (hasGuaranteedTransformData) {
+        // Modded game v0.243+ - always has reliable data
+        playerHasTransformData = true;
+      } else {
+        // Older game - only count if player has transform actions AND data is not incomplete
+        const actions = player.Actions || [];
+        const hasTransformActions = actions.some(a => a.ActionType === 'Transform' || a.ActionType === 'Untransform');
+        const hasIncompleteData = player.LegacyActionsIncomplete === true;
+        playerHasTransformData = hasTransformActions && !hasIncompleteData;
+      }
+      
+      if (!playerHasTransformData) return;
       
       // Count transformations and untransformations from Actions
       const actions = player.Actions || [];
@@ -63,15 +69,10 @@ export function computeWolfTransformStatistics(games) {
       
       const stats = playerStatsMap.get(playerId);
       stats.gamesAsWolf++;
-      
-      // Only count games where we have action data (Actions array exists and has data or player definitely has none)
-      // If Actions is undefined and game is old, skip this game for transform stats
-      if (player.Actions !== undefined) {
-        stats.gamesWithTransformData++;
-        stats.totalTransformations += transformCount;
-        stats.totalUntransformations += untransformCount;
-        stats.totalNightsAsWolf += nightsAsWolf;
-      }
+      stats.gamesWithTransformData++;
+      stats.totalTransformations += transformCount;
+      stats.totalUntransformations += untransformCount;
+      stats.totalNightsAsWolf += nightsAsWolf;
     });
   });
   
