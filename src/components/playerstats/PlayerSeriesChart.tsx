@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { usePlayerSeriesFromRaw } from '../../hooks/usePlayerSeriesFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
@@ -7,6 +7,7 @@ import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { useSettings } from '../../context/SettingsContext';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { CHART_LIMITS } from '../../config/chartConstants';
+import { mergeUrlState, parseUrlState } from '../../utils/urlManager';
 
 // Extended type for chart data with highlighting info
 type ChartSeriesData = {
@@ -29,9 +30,14 @@ export function PlayerSeriesChart() {
   const { settings } = useSettings();
   
   // Use navigationState to restore series type selection, fallback to 'villageois'
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival'>(
-    navigationState.selectedSeriesType || 'villageois'
-  );
+  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival'>(() => {
+    // Priority: URL param > NavigationContext > default
+    const urlState = parseUrlState();
+    if (urlState.seriesView && ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival'].includes(urlState.seriesView)) {
+      return urlState.seriesView as 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival';
+    }
+    return navigationState.selectedSeriesType || 'villageois';
+  });
   // New state for view mode: 'best' (all-time best series) or 'ongoing' (current ongoing series)
   const [viewMode, setViewMode] = useState<'best' | 'ongoing'>(
     navigationState.seriesViewMode || 'best'
@@ -46,6 +52,8 @@ export function PlayerSeriesChart() {
   const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival') => {
     setSelectedSeriesType(newSeriesType);
     updateNavigationState({ selectedSeriesType: newSeriesType });
+    // Update URL parameter
+    mergeUrlState({ seriesView: newSeriesType }, 'replace');
   };
 
   // Helper function to handle view mode changes
@@ -53,6 +61,27 @@ export function PlayerSeriesChart() {
     setViewMode(newViewMode);
     updateNavigationState({ seriesViewMode: newViewMode });
   };
+
+  // Listen for URL changes (browser back/forward) and sync to local state
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const urlState = parseUrlState();
+      if (urlState.seriesView && ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival'].includes(urlState.seriesView)) {
+        const newView = urlState.seriesView as 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival';
+        if (newView !== selectedSeriesType) {
+          setSelectedSeriesType(newView);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handleUrlChange);
+    window.addEventListener('urlchange', handleUrlChange);
+
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+      window.removeEventListener('urlchange', handleUrlChange);
+    };
+  }, [selectedSeriesType]);
 
   // Get current data based on selected type and view mode with highlighted player logic
   const { currentData, highlightedPlayerAdded, fullDataset } = useMemo(() => {

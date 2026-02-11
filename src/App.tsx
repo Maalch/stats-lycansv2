@@ -303,6 +303,8 @@ function MainApp() {
       selectedPlayer: undefined,
       selectedGame: undefined,
       fromComponent: undefined,
+      deathStatsView: undefined, // Clear death stats view when changing tabs/subtabs
+      seriesView: undefined, // Clear series view when changing tabs/subtabs
     }, 'push'); // Use pushState to create history entry
   };
 

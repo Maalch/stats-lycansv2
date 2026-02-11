@@ -12,14 +12,29 @@ Base URL: `https://your-domain.com/stats-lycansv2/`
 
 ### Available Parameters
 
+#### Filter Parameters
 | Parameter | Values | Description | Example |
 |-----------|--------|-------------|---------|
-| `filterMode` | `gameType`, `dateRange` | Primary filter mode | `filterMode=gameType` |
-| `gameFilter` | `all`, `modded`, `non-modded` | Game type filter (when filterMode=gameType) | `gameFilter=modded` |
+| `gameTypeEnabled` | `true` | Enable game type filter | `gameTypeEnabled=true` |
+| `gameFilter` | `all`, `modded`, `non-modded` | Game type filter | `gameFilter=modded` |
+| `dateRangeEnabled` | `true` | Enable date range filter | `dateRangeEnabled=true` |
 | `dateStart` | `YYYY-MM-DD` | Start date for date range filter | `dateStart=2024-01-01` |
 | `dateEnd` | `YYYY-MM-DD` | End date for date range filter | `dateEnd=2024-12-31` |
+| `mapNameEnabled` | `true` | Enable map name filter | `mapNameEnabled=true` |
+| `mapNameFilter` | `Village`, `Château`, `Autre` | Map name filter | `mapNameFilter=Village` |
 | `playerFilterMode` | `none`, `include`, `exclude` | Player filter mode | `playerFilterMode=include` |
 | `players` | `Player1,Player2,Player3` | Comma-separated list of players (URL encoded) | `players=Ponce,AmberAerin,Flippy` |
+| `highlightedPlayer` | `PlayerName` | Player to highlight in charts | `highlightedPlayer=Ponce` |
+| `dataSource` | `main`, `discord` | Data source to use | `dataSource=main` |
+
+#### Navigation Parameters
+| Parameter | Values | Description | Example |
+|-----------|--------|-------------|---------|
+| `tab` | `playerSelection`, `rankings`, `general`, `gameDetails`, `clips`, `br` | Main tab selection | `tab=rankings` |
+| `subtab` | Varies by tab | Sub-tab selection | `subtab=deathStats` |
+| `playerSelectionView` | `achievements`, `titles`, `evolution`, `camps`, `kills`, `roles`, `actions`, `roleactions`, `deathmap`, `talkingtime` | Player selection page view | `playerSelectionView=achievements` |
+| `deathStatsView` | `killers`, `deaths`, `hunter`, `survival` | Death statistics chart view | `deathStatsView=deaths` |
+| `seriesView` | `villageois`, `loup`, `nowolf`, `solo`, `wins`, `losses`, `deaths`, `survival` | Player series chart view | `seriesView=wins` |
 
 ## Usage Examples
 
@@ -40,7 +55,22 @@ https://your-domain.com/stats-lycansv2/?filterMode=dateRange&dateStart=2024-01-0
 
 ### Example 4: Complex filter (modded games with specific players)
 ```
-https://your-domain.com/stats-lycansv2/?filterMode=gameType&gameFilter=modded&playerFilterMode=include&players=Ponce%2CAmberAerin
+https://your-domain.com/stats-lycansv2/?gameTypeEnabled=true&gameFilter=modded&playerFilterMode=include&players=Ponce%2CAmberAerin
+```
+
+### Example 5: Navigate to specific chart view
+```
+https://your-domain.com/stats-lycansv2/?tab=rankings&subtab=deathStats&deathStatsView=survival
+```
+
+### Example 6: Navigate with filters applied
+```
+https://your-domain.com/stats-lycansv2/?tab=rankings&subtab=deathStats&deathStatsView=deaths&gameTypeEnabled=true&gameFilter=modded
+```
+
+### Example 7: Navigate to series chart with specific view
+```
+https://your-domain.com/stats-lycansv2/?tab=rankings&subtab=series&seriesView=wins
 ```
 
 ## How to Generate URLs

@@ -24,6 +24,12 @@ export interface UrlState {
   // Player selection view
   playerSelectionView?: string;
   
+  // Death statistics view
+  deathStatsView?: string;
+  
+  // Series view
+  seriesView?: string;
+  
   // Navigation view (from NavigationContext)
   view?: string; // 'gameDetails' | ''
   
@@ -60,6 +66,12 @@ export function parseUrlState(): UrlState {
   
   // Player selection view
   if (urlParams.has('playerSelectionView')) state.playerSelectionView = urlParams.get('playerSelectionView')!;
+  
+  // Death statistics view
+  if (urlParams.has('deathStatsView')) state.deathStatsView = urlParams.get('deathStatsView')!;
+  
+  // Series view
+  if (urlParams.has('seriesView')) state.seriesView = urlParams.get('seriesView')!;
   
   // Navigation view
   if (urlParams.has('view')) state.view = urlParams.get('view')!;
@@ -126,6 +138,16 @@ export function buildUrlSearch(state: Partial<UrlState>): string {
   // Player selection view
   if (state.playerSelectionView && state.playerSelectionView !== 'achievements') {
     urlParams.set('playerSelectionView', state.playerSelectionView);
+  }
+  
+  // Death statistics view
+  if (state.deathStatsView && state.deathStatsView !== 'killers') {
+    urlParams.set('deathStatsView', state.deathStatsView);
+  }
+  
+  // Series view
+  if (state.seriesView && state.seriesView !== 'villageois') {
+    urlParams.set('seriesView', state.seriesView);
   }
   
   // Navigation view

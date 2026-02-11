@@ -7,6 +7,7 @@ import { useFilteredGameLogData } from '../../../hooks/useCombinedRawData';
 
 import { useNavigation } from '../../../context/NavigationContext';
 import { useThemeAdjustedLycansColorScheme } from '../../../types/api';
+import { mergeUrlState, parseUrlState } from '../../../utils/urlManager';
 import { KillersView } from './KillersView';
 import { DeathsView } from './DeathsView';
 import { HunterView } from './HunterView';
@@ -26,6 +27,12 @@ export function DeathStatisticsChart() {
     navigationState.deathStatisticsState?.minGamesForAverage || 25
   );
   const [selectedView, setSelectedView] = useState<'killers' | 'deaths' | 'hunter' | 'survival'>(() => {
+    // Priority: URL param > NavigationContext > default
+    const urlState = parseUrlState();
+    if (urlState.deathStatsView && ['killers', 'deaths', 'hunter', 'survival'].includes(urlState.deathStatsView)) {
+      return urlState.deathStatsView as 'killers' | 'deaths' | 'hunter' | 'survival';
+    }
+    
     const savedView = navigationState.deathStatisticsState?.selectedView as string | undefined;
     // Filter out legacy 'location' value
     if (savedView && savedView !== 'location') {
@@ -62,6 +69,27 @@ export function DeathStatisticsChart() {
       });
     }
   }, [selectedCamp, victimCampFilter, minGamesForAverage, selectedView, navigationState.deathStatisticsState, updateNavigationState]);
+
+  // Listen for URL changes (browser back/forward) and sync to local state
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const urlState = parseUrlState();
+      if (urlState.deathStatsView && ['killers', 'deaths', 'hunter', 'survival'].includes(urlState.deathStatsView)) {
+        const newView = urlState.deathStatsView as 'killers' | 'deaths' | 'hunter' | 'survival';
+        if (newView !== selectedView) {
+          setSelectedView(newView);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handleUrlChange);
+    window.addEventListener('urlchange', handleUrlChange);
+
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+      window.removeEventListener('urlchange', handleUrlChange);
+    };
+  }, [selectedView]);
 
   // Get all unique death types for chart configuration
   const availableDeathTypes = useMemo(() => {
@@ -172,6 +200,8 @@ export function DeathStatisticsChart() {
         focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart
       }
     });
+    // Update URL parameter
+    mergeUrlState({ deathStatsView: newView }, 'replace');
   };
 
   // Calculate summary data for the main component
