@@ -25,9 +25,20 @@ function findPlayerSeriesRank(topSeries, playerId) {
   if (index === -1) return null;
   
   const playerSeries = topSeries[index];
+  const playerValue = playerSeries.seriesLength;
+  
+  // Calculate true rank considering ties
+  // Players with the same value should have the same rank
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    if (topSeries[i].seriesLength > playerValue) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
-    value: playerSeries.seriesLength,
+    rank: rank,
+    value: playerValue,
     series: playerSeries
   };
 }

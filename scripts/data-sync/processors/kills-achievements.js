@@ -59,9 +59,19 @@ function findPlayerKillerRank(topKillers, playerId) {
   if (index === -1) return null;
   
   const playerStats = topKillers[index];
+  const playerValue = playerStats.kills;
+  
+  // Calculate true rank considering ties
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    if (topKillers[i].kills > playerValue) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
-    value: playerStats.kills,
+    rank: rank,
+    value: playerValue,
     stats: playerStats
   };
 }
@@ -78,9 +88,20 @@ function findPlayerDeathRank(topDeaths, playerId, valueType = 'totalDeaths') {
   if (index === -1) return null;
   
   const playerStats = topDeaths[index];
+  const playerValue = valueType === 'totalDeaths' ? playerStats.totalDeaths : playerStats.deathRate;
+  
+  // Calculate true rank considering ties
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    const currentValue = valueType === 'totalDeaths' ? topDeaths[i].totalDeaths : topDeaths[i].deathRate;
+    if (currentValue > playerValue) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
-    value: valueType === 'totalDeaths' ? playerStats.totalDeaths : playerStats.deathRate,
+    rank: rank,
+    value: playerValue,
     stats: playerStats
   };
 }
@@ -96,9 +117,19 @@ function findPlayerSurvivalRank(topSurvivors, playerId) {
   if (index === -1) return null;
   
   const playerStats = topSurvivors[index];
+  const playerValue = playerStats.deathRate;
+  
+  // Calculate true rank considering ties (lower death rate is better)
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    if (topSurvivors[i].deathRate < playerValue) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
-    value: playerStats.deathRate,
+    rank: rank,
+    value: playerValue,
     stats: playerStats
   };
 }
@@ -144,9 +175,19 @@ function findPlayerGoodHunterRank(topGoodHunters, playerId) {
   if (index === -1) return null;
   
   const playerStats = topGoodHunters[index];
+  const playerValue = playerStats.averageNonVillageoisKillsPerGame;
+  
+  // Calculate true rank considering ties
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    if (topGoodHunters[i].averageNonVillageoisKillsPerGame > playerValue) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
-    value: playerStats.averageNonVillageoisKillsPerGame,
+    rank: rank,
+    value: playerValue,
     stats: playerStats
   };
 }
@@ -162,9 +203,19 @@ function findPlayerBadHunterRank(topBadHunters, playerId) {
   if (index === -1) return null;
   
   const playerStats = topBadHunters[index];
+  const playerValue = playerStats.averageVillageoisKills;
+  
+  // Calculate true rank considering ties
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    if (topBadHunters[i].averageVillageoisKills > playerValue) {
+      rank++;
+    }
+  }
+  
   return {
-    rank: index + 1,
-    value: playerStats.averageVillageoisKills,
+    rank: rank,
+    value: playerValue,
     stats: playerStats
   };
 }

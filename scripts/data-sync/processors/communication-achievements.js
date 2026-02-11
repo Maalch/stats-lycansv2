@@ -39,7 +39,16 @@ export function processCommunicationAchievements(talkingStats, playerId, suffix)
   }
 
   const playerStats = sortedByTotalTalking[playerIndex];
-  const rank = playerIndex + 1;
+  const playerValue = playerStats.secondsAllPer60Min;
+  
+  // Calculate true rank considering ties
+  let rank = 1;
+  for (let i = 0; i < playerIndex; i++) {
+    if (sortedByTotalTalking[i].secondsAllPer60Min > playerValue) {
+      rank++;
+    }
+  }
+  
   const totalRanked = sortedByTotalTalking.length;
 
   // 🎤 Most Talkative - All eligible players get a ranking achievement
