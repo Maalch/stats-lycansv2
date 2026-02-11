@@ -6,13 +6,15 @@ A Vite-based React + TypeScript dashboard for visualizing werewolf game statisti
 
 ## Architecture Overview
 
-**Frontend:** React 19 + TypeScript, Vite, Recharts for charts, triple context system (`SettingsContext` + `FullscreenContext` + `NavigationContext`)  
-**Data Pipeline:** Unified `gameLog.json` with transformation layer for backward compatibility + server-side achievements pre-calculation  
+**Frontend:** React 19 + TypeScript, Vite, Recharts 3 for charts, d3-contour/d3-scale-chromatic for heatmaps  
+**State:** Quad context system (`SettingsContext` + `NavigationContext` + `FullscreenContext` + `InfoContext`)  
+**Data Pipeline:** Unified `gameLog.json` → `useCombinedRawData()` transformation → `useCombinedFilteredRawData()` → base hooks  
 **Build System:** Vite outputs to `docs/` for GitHub Pages, inline Node.js scripts copy data files  
-**Data Processing:** Hybrid approach - optimized base hook pattern for real-time stats + pre-calculated achievements JSON for performance  
-**URL Sharing:** Settings persist via localStorage + URL parameters for shareable dashboard states (see `URL_FILTERS.md`)
-**Achievements System:** Server-side generation in `scripts/data-sync/` creates `playerAchievements.json` consumed by client
-**Player Selection:** Dedicated page for player search, selection, and achievement display with interactive navigation
+**Data Processing:** Hybrid approach - optimized base hook pattern for real-time stats + pre-calculated achievements/titles JSON for performance  
+**URL Sharing:** Settings persist via localStorage + URL parameters via centralized `urlManager.ts` (see `URL_FILTERS.md`)  
+**Centralized Utilities:** `dataPath.ts` (data fetching), `logger.ts` (error handling), `chartConstants.ts` (chart limits/min-games)  
+**Achievements System:** Server-side generation in `scripts/data-sync/` creates `playerAchievements.json` consumed by client  
+**Player Selection:** Dedicated page for player search, selection, achievement display, and interactive navigation
 
 ## Critical Workflows
 
@@ -23,10 +25,9 @@ npm run sync-data-aws           # AWS sync for main team (recommended)
 npm run sync-data-discord       # AWS sync for Discord team
 npm run sync-data               # Legacy Google Sheets sync
 npm run generate-achievements   # Standalone achievements generation + copy to public/
-npm run generate-titles         # Standalone titles generation + copy to public/
 ```
 
-**Title Generation:** `node scripts/data-sync/generate-titles.js [main|discord]` - Run from project root, outputs to `/data` or `/data/discord`
+**Note:** `generate-titles` has no npm script — run directly: `cd scripts/data-sync && node generate-titles.js [main|discord]`
 
 **Build Pipeline:** Inline Node.js scripts in `package.json` copy `/data` → `public/data/` (dev) or `docs/data/` (prod)  
 **Data Sync:** 
@@ -39,12 +40,13 @@ npm run generate-titles         # Standalone titles generation + copy to public/
 **Achievement Generation:** `scripts/data-sync/generate-achievements.js` processes all players, creates ranked lists, supports multiple teams via config
 **Title Generation:** `scripts/data-sync/generate-titles.js` generates player titles based on statistics
 
-## Data Architecture Migration (RECENT CHANGE)
+## Data Architecture
 
-**New Primary Source:** `gameLog.json` - unified structure with nested `PlayerStats` arrays  
+**Primary Source:** `gameLog.json` - unified structure with nested `PlayerStats` arrays  
 **Backward Compatibility:** `useCombinedRawData.tsx` transforms new structure to legacy interfaces  
 **Legacy Interfaces:** `RawGameData`, `RawRoleData`, `RawPonceData` still work unchanged  
-**Data Evolution:** Recent format includes detailed vote tracking, color assignments, enhanced death metadata, and comprehensive player stats per game
+**Data Evolution:** Current format includes detailed vote tracking, color assignments, loot totals, player actions (gadgets/potions/sabotage), video clips, and comprehensive player stats per game
+**Centralized Fetching:** Use `fetchDataFile()` / `fetchOptionalDataFile()` from `src/utils/dataPath.ts` — never construct fetch URLs manually
 
 ### Key Data Interfaces
 ```typescript
@@ -52,7 +54,10 @@ npm run generate-titles         # Standalone titles generation + copy to public/
 interface GameLogEntry {
   Id: string; DisplayedId: string; StartDate: string; EndDate: string; MapName: string;
   HarvestGoal: number; HarvestDone: number; EndTiming: string | null;
-  Version: string; Modded: boolean; PlayerStats: PlayerStat[];
+  Version: string; Modded: boolean;
+  Clips: Clip[];                  // Video clips associated with this game
+  LegacyData: LegacyData | null;  // Legacy data (victory type, VODs, merged actions)
+  PlayerStats: PlayerStat[];
 }
 interface PlayerStat {
   ID?: string | null;         // Steam ID - unique identifier (CRITICAL for player identification)
@@ -61,12 +66,30 @@ interface PlayerStat {
   Power: string | null; SecondaryRole: string | null; 
   Victorious: boolean; DeathTiming: string | null; DeathDateIrl: string | null;
   DeathPosition: {x: number; y: number; z: number} | null;
-  DeathType: string | null; KillerName: string | null;
-  Votes: Vote[]; // Array of votes with Target and Date
-  SecondsTalkedOutsideMeeting: number; SecondsTalkedDuringMeeting: number; //number of seconds talked in that game
+  DeathType: DeathType | null; KillerName: string | null;  // DeathType from src/types/deathTypes.ts
+  Votes: Vote[];
+  SecondsTalkedOutsideMeeting: number; SecondsTalkedDuringMeeting: number;
+  TotalCollectedLoot?: number;    // Total loot collected (optional for legacy data)
+  Actions?: Action[];             // Actions performed (gadgets, potions, sabotage)
+  LegacyActionsIncomplete?: boolean; // Flag for incomplete legacy action data
 }
 interface Vote {
-  Target: string; Date: string; // ISO date string when vote was cast
+  Day: number;           // Meeting number (1, 2, 3, etc.) — NOT a date
+  Target: string;        // Player name or "Passé" for abstention
+  Date: string | null;   // ISO date string (may be null for legacy data)
+}
+interface Action {
+  Date: string; Timing: string;   // e.g., "N3" (Night 3), "J6" (Day 6)
+  Position: { x: number; y: number; z: number };
+  ActionType: string;             // "UseGadget", "DrinkPotion", "Sabotage"
+  ActionName: string | null;      // "Diamant", "Invisible", "Vampire"
+  ActionTarget: string | null;
+}
+interface Clip {
+  ClipId: string; ClipUrl: string | null; ClipName: string | null;
+  POVPlayer: string; OthersPlayers: string | null;
+  RelatedClips: string | null; NextClip: string | null;
+  NewName: string | null; AdditionalInfo: string | null; Tags: string[];
 }
 
 interface RoleChange {
@@ -107,7 +130,7 @@ The game has evolved its role format. "Chasseur" and "Alchimiste" were previousl
 ### Key Role Constants
 ```typescript
 // All Villageois Élite powers
-VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple']
+VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Inquisiteur']
 
 // Legacy roles that became powers
 LEGACY_ELITE_ROLES = ['Chasseur', 'Alchimiste']
@@ -161,14 +184,16 @@ const { data, isLoading, error } = usePlayerStatsBase(
 // Located in: src/hooks/utils/baseStatsHook.ts
 ```
 
-### Triple Context System
+### Quad Context System
 ```typescript
-// SettingsContext - persistent filters via localStorage
+// SettingsContext - persistent filters via localStorage + URL params
 const { settings, updateSettings } = useSettings();
-// NavigationContext - drill-down navigation with complex filters
-const { navigateToGameDetails, filters } = useNavigation();
-// FullscreenContext - chart fullscreen state
+// NavigationContext - drill-down navigation, chart state persistence, browser history
+const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
+// FullscreenContext - chart fullscreen overlay state
 const { isFullscreen, toggleFullscreen } = useFullscreen();
+// InfoContext - contextual help bubble toggle (used with InfoBubble component)
+const { activeInfo, toggleInfo } = useInfo();
 ```
 
 ### Navigation Context for Drill-Down
@@ -205,6 +230,10 @@ import { FullscreenChart } from '../common/FullscreenChart';
 <FullscreenChart title="Chart Title">
   <YourChart />
 </FullscreenChart>
+// Also supports render prop for fullscreen-aware rendering:
+<FullscreenChart title="Title">
+  {(isFullscreen: boolean) => <YourChart expanded={isFullscreen} />}
+</FullscreenChart>
 ```
 
 ## Data Flow & Filtering
@@ -228,12 +257,12 @@ const { data: gameLogData } = useGameLogData(); // Fetches from correct source
 const { joueursData } = useJoueursData(); // Fetches matching joueurs.json
 ```
 
-**Key Difference:** Main `joueurs.json` uses `SteamID` field (often null) + has social media. Discord `joueurs.json` uses `ID` field (always populated) + no social media.
+**Key Difference:** Main `joueurs.json` uses `SteamID` field (often null) + has social media (Twitch/YouTube/Image/Couleur). Discord `joueurs.json` uses `ID` field (always populated) + no social media.
 
 **Pattern for Player Lookup:**
 ```typescript
-// Try Steam ID first, fall back to name matching
-let playerInfo = joueursData?.Players?.find(p => p.ID === playerId);
+// Try Steam ID first, fall back to name matching (joueurs.ts Player type uses SteamID field)
+let playerInfo = joueursData?.Players?.find(p => p.SteamID === playerId);
 if (!playerInfo) {
   playerInfo = joueursData?.Players?.find(p => p.Joueur === displayName);
 }
@@ -246,10 +275,11 @@ if (!playerInfo) {
 
 ## Project-Specific Conventions
 
-**Component Structure:** Domain-based folders (`generalstats/`, `playerstats/`, `gamedetails/`, `settings/`, `playerselection/`)  
-**Menu System:** Hierarchical tabs (`MAIN_TABS` → `*_STATS_MENU`) in `App.tsx` with Player Selection as primary tab  
+**Component Structure:** Domain-based folders (`generalstats/`, `playerstats/`, `gamedetails/`, `settings/`, `playerselection/`, `brstats/`, `clips/`)  
+**Menu System:** 6 main tabs in `App.tsx`: `playerSelection` (👤), `rankings` (🏆), `general` (🎯), `gameDetails` (📋), `clips` (🎬), `br` (⚔️) — each with sub-menus (`PLAYER_STATS_MENU`, `GENERAL_STATS_MENU`, `BR_STATS_MENU`)  
 **Testing:** Visual testing via dev server only - no automated test suite  
-**Language:** All UI and data labels in French ("Villageois", "Loups", "Camp victorieux")
+**Language:** All UI and data labels in French ("Villageois", "Loups", "Camp victorieux")  
+**Data Source Gating:** BR tab and some subtabs hidden when `dataSource === 'discord'`
 
 ## Adding Features Workflow
 
@@ -357,10 +387,12 @@ useEffect(() => {
 
 ## Integration Points
 
-**GitHub Actions:** `.github/workflows/update-data.yml` for weekly data sync  
-**Apps Script:** `scripts/data-sync/fetch-data.js` fetches from Google Sheets  
+**GitHub Actions:** 3 workflows — `update-data.yml` (main sync), `update-discorddata.yml` (discord sync), `update-achievements-titles.yml` (weekly generation)  
+**Data Fetching:** `src/utils/dataPath.ts` provides `fetchDataFile()` / `fetchOptionalDataFile()` for centralized, data-source-aware data loading  
+**URL Management:** `src/utils/urlManager.ts` provides `parseUrlState()`, `replaceUrlState()`, `mergeUrlState()` with custom `urlchange` events  
+**Logging:** `src/utils/logger.ts` — environment-aware logging (`error()` always, `warn()`/`info()`/`debug()` dev-only) + `handleFetchError()` + `validateData()`  
 **Build Output:** GitHub Pages serves from `/docs` with custom domain (base path `/`)  
-**Error Handling:** Static file loading only, graceful degradation for missing data
+**Error Handling:** Static file loading only, graceful degradation via `fetchOptionalDataFile()` for missing data
 
 ## Development Patterns
 
@@ -373,7 +405,7 @@ if (!data) return <div>Aucune donnée disponible</div>;
 ```
 
 ### URL Parameters & Sharing
-Complete settings serialization via `generateUrlWithSettings()` enables shareable dashboard states. Settings persist in localStorage with URL parameter override capability. See `SettingsContext.tsx` for implementation details.
+Centralized URL management via `urlManager.ts` with `mergeUrlState('push')` for navigation and `mergeUrlState('replace')` for silent updates. Settings priority: URL params > localStorage > defaults. `NavigationContext` handles `popstate` + custom `urlchange` events for browser back/forward. See `URL_FILTERS.md` for parameter details.
 
 ### Data Filtering Architecture
 **Independent Filters:** System allows combining multiple filter types simultaneously (gameType, dateRange, mapName, playerFilter)  
@@ -397,7 +429,13 @@ const normalizedLootData = useMemo(() => {
 **Pattern:** Place filters only above the charts they apply to. Global filters (camp, date range) should be in `SettingsContext`, chart-specific filters (min games for specific views) should be local state persisted in `NavigationContext`.
 
 ### Theme System
-Uses CSS custom properties (`--accent-primary`, `--chart-primary`) with theme-adjusted colors via `useThemeAdjusted*Color()` hooks for consistent chart styling across light/dark themes.
+Uses CSS custom properties (`--accent-primary`, `--chart-primary`) defined in `src/styles/theme/variables.css`. Theme-adjusted colors via `useThemeAdjustedColors()` hook from `src/utils/themeColors.ts` for consistent chart styling across light/dark themes. CSS organized in `src/styles/` with `base/`, `theme/`, `components/`, `utilities/` subdirectories.
+
+### Chart Constants
+Centralized in `src/config/chartConstants.ts`:
+- `CHART_LIMITS.TOP_10/15/20/25/30` for ranking cutoffs
+- `MIN_GAMES_DEFAULTS.STANDARD(5)/MEDIUM(10)/HIGH(15)` etc. for minimum game thresholds
+- `MIN_GAMES_OPTIONS` arrays for dropdown menus (COMPACT, STANDARD, EXTENDED)
 
 ## Critical Debugging & Data Consistency
 
@@ -555,7 +593,7 @@ TargetedPlayersView.tsx         // Survival rates when targeted
 - **Accuracy Rate:** `(votesForEnemyCamp / totalVotes) * 100` - targeting correctness
 - **Survival Rate:** `((timesTargeted - eliminatedByVote) / timesTargeted) * 100` - resilience when targeted
 
-**Data Requirements:** Uses `PlayerStat.Votes` array with `Target` and `Date` fields from `gameLog.json`
+**Data Requirements:** Uses `PlayerStat.Votes` array with `Day` (meeting number), `Target`, and `Date` fields from `gameLog.json`
 
 ## Player Selection System
 
@@ -608,6 +646,26 @@ const handleAchievementClick = (achievement: Achievement, event: React.MouseEven
 ```
 
 **Integration:** Changelog button in `App.tsx` footer, version display persists across all pages
+
+## Battle Royale Subsystem
+
+**Separate data pipeline** from main gameLog — uses `rawBRData.json` via `useRawBRData()` hook with `fetchOptionalDataFile()` (graceful null for Discord).  
+**Components:** `src/components/brstats/` — `BRParticipationsChart`, `BRWinRateChart`, `BRKillsStatsChart`, `BRMiniChart`  
+**Filtering:** Own filter system via `useFilteredRawBRData()`, Mini BR (2-5 players) filtered from regular stats  
+**Data source:** Only available for main team (`dataSource === 'main'`), BR tab hidden for Discord
+
+## Clips System
+
+**Embedded in game data:** `GameLogEntry.Clips[]` array stores video clips per game  
+**Components:** `src/components/clips/ClipsPage.tsx` + `src/components/common/ClipViewer.tsx` (Twitch embed modal)  
+**Hooks:** `useClips.ts` provides `useAllClips()` and `usePlayerClips(playerName)`  
+**Utilities:** `src/utils/clipUtils.ts` handles Twitch embed URL conversion and display name resolution
+
+## Death Types System
+
+**Centralized constants:** `src/types/deathTypes.ts` provides type-safe `DEATH_TYPES` (25+ types) with `DeathType` union type  
+**Categories:** `DEATH_TYPE_CATEGORIES` groups types (VOTING, WOLF_KILLS, CREATURE_KILLS, HUNTER_KILLS, etc.)  
+**Dual use:** Also exported as `DeathTypeCode` in `src/utils/datasyncExport.js` for Node.js compatibility in data-sync scripts
 
 ## Integration Points & External Systems
 
