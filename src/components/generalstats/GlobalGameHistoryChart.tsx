@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Cell, AreaChart, Area } from 'recharts';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, AreaChart, Area } from 'recharts';
 import { useGlobalGameHistoryFromRaw } from '../../hooks/useGlobalGameHistoryFromRaw';
-import { useNavigation } from '../../context/NavigationContext';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
 
@@ -27,7 +26,6 @@ function classifyWinnerCamp(winnerCamp: string): 'Villageois' | 'Loup' | 'Solo' 
 }
 
 export function GlobalGameHistoryChart() {
-  const { navigateToGameDetails } = useNavigation();
   const { data, isLoading, error } = useGlobalGameHistoryFromRaw();
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
   
@@ -284,85 +282,6 @@ export function GlobalGameHistoryChart() {
       </div>
 
       <div className="lycans-graphiques-groupe">
-        {/* Number of games per period */}
-        <div className="lycans-graphique-section">
-          <h3>Nombre de Parties {groupingLabel}</h3>
-          <FullscreenChart title={`Nombre de Parties ${groupingLabel}`}>
-            <div style={{ height: 400 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={groupedData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="period"
-                    angle={xAxisSettings.angle}
-                    textAnchor="end"
-                    height={xAxisSettings.height}
-                    interval={xAxisSettings.interval}
-                    fontSize={xAxisSettings.fontSize}
-                  />
-                  <YAxis 
-                    label={{ value: 'Nombre de parties', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
-                    allowDecimals={false}
-                  />
-                  <Tooltip
-                    content={({ active, payload }) => {
-                      if (active && payload && payload.length > 0) {
-                        const dataPoint = payload[0].payload;
-                        return (
-                          <div style={{ 
-                            background: 'var(--bg-secondary)', 
-                            color: 'var(--text-primary)', 
-                            padding: 12, 
-                            borderRadius: 8,
-                            border: '1px solid var(--border-color)'
-                          }}>
-                            <div><strong>{dataPoint.period}</strong></div>
-                            <div>Parties: {dataPoint.totalGames}</div>
-                            <div>Joueurs moyens: {dataPoint.averagePlayers}</div>
-                            <div>Durée moyenne: {dataPoint.averageDuration} min</div>
-                            <div style={{ 
-                              fontSize: '0.8rem', 
-                              color: 'var(--accent-primary)', 
-                              marginTop: '0.5rem',
-                              fontWeight: 'bold',
-                              textAlign: 'center'
-                            }}>
-                              🖱️ Cliquez pour voir les parties
-                            </div>
-                          </div>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                  <Bar 
-                    dataKey="totalGames" 
-                    fill="var(--accent-primary)" 
-                    name="Parties"
-                  >
-                    {groupedData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill="var(--accent-primary)"
-                        onClick={() => {
-                          navigateToGameDetails({
-                            selectedDate: entry.period,
-                            fromComponent: `Évolution des Parties ${groupingLabel}`
-                          });
-                        }}
-                        style={{ cursor: 'pointer' }}
-                      />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </FullscreenChart>
-        </div>
-
         {/* Camp Win Rates Evolution */}
         <div className="lycans-graphique-section">
           <h3>Évolution des Victoires par Camp {groupingLabel}</h3>
