@@ -501,7 +501,7 @@ export function PlayerSelectionPage() {
                       className={`lycans-categorie-btn ${selectedView === 'roleactions' ? 'active' : ''}`}
                       onClick={() => handleViewChange('roleactions')}
                     >
-                      Rôles Spéciaux
+                      Actions des Rôles
                     </button>
                     <button
                       type="button"

@@ -18,6 +18,7 @@ const PlayerComparisonChart = lazy(() => import('./components/playerstats/Player
 const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeriesChart').then(m => ({ default: m.PlayerSeriesChart })));
 const TalkingTimeChart = lazy(() => import('./components/playerstats/TalkingTimeChart').then(m => ({ default: m.TalkingTimeChart })));
 const LootStatisticsChart = lazy(() => import('./components/playerstats/LootStatisticsChart').then(m => ({ default: m.LootStatisticsChart })));
+const RoleActionsRankingChart = lazy(() => import('./components/playerstats/RoleActionsRankingChart').then(m => ({ default: m.RoleActionsRankingChart })));
 
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsAndKills/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
@@ -155,6 +156,12 @@ const PLAYER_STATS_MENU = [
     label: 'Récolte', 
     component: LootStatisticsChart,
     description: 'Classement du loot collecté par joueur'
+  },
+  { 
+    key: 'roleActions', 
+    label: 'Actions des Rôles', 
+    component: RoleActionsRankingChart,
+    description: 'Transformations (Loup) et précision (Chasseur)'
   },
   { 
     key: 'comparison', 

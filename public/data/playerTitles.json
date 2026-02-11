@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-10T16:05:03.733Z",
+  "generatedAt": "2026-02-11T09:38:25.367Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -595,6 +595,30 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_extreme_low",
+          "title": "Le Loup Fantôme",
+          "emoji": "👻",
+          "description": "Ne se transforme presque jamais",
+          "stat": "wolfTransformRate",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_extreme_low",
+          "title": "Le Loup Permanent",
+          "emoji": "🌑",
+          "description": "Reste presque toujours en loup",
+          "stat": "wolfUntransformRate",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "winRateVillageois_high",
           "title": "Le·a Protecteur·rice du Village",
           "emoji": "🦸",
@@ -774,6 +798,16 @@
           "value": 12,
           "percentile": 81.08108108108108,
           "category": "HIGH"
+        },
+        "wolfTransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -794,7 +828,9 @@
         "survivalDay1Rate": 83.46456692913385,
         "killRate": 0.6456692913385826,
         "longestWinSeries": 5,
-        "longestLossSeries": 12
+        "longestLossSeries": 12,
+        "wolfTransformRate": 0,
+        "wolfUntransformRate": 0
       }
     },
     "19": {
@@ -2133,26 +2169,14 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_low",
-          "title": "Le·a Loup Prudent·e",
-          "emoji": "🐕",
-          "description": "Se transforme rarement",
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
           "stat": "wolfTransformRate",
-          "value": 0.3673469387755102,
-          "percentile": 35,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "wolfUntransformRate_low",
-          "title": "Le Loup Assumé",
-          "emoji": "🐺",
-          "description": "Se détransforme rarement",
-          "stat": "wolfUntransformRate",
-          "value": 0.061224489795918366,
-          "percentile": 35,
-          "category": "LOW",
+          "value": 0.45,
+          "percentile": 65.21739130434783,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -2381,14 +2405,14 @@
           "category": "EXTREME_HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.3673469387755102,
-          "percentile": 35,
-          "category": "LOW"
+          "value": 0.45,
+          "percentile": 65.21739130434783,
+          "category": "HIGH"
         },
         "wolfUntransformRate": {
-          "value": 0.061224489795918366,
-          "percentile": 35,
-          "category": "LOW"
+          "value": 0.075,
+          "percentile": 47.82608695652174,
+          "category": "AVERAGE"
         },
         "potionsPer60Min": {
           "value": 2.5035164562571754,
@@ -2430,8 +2454,8 @@
         "zoneResteCarte": 8.898305084745763,
         "zoneDominantPercentage": 43.64406779661017,
         "zoneTotalPositions": 236,
-        "wolfTransformRate": 0.3673469387755102,
-        "wolfUntransformRate": 0.061224489795918366,
+        "wolfTransformRate": 0.45,
+        "wolfUntransformRate": 0.075,
         "potionsPer60Min": 2.5035164562571754
       }
     },
@@ -2570,30 +2594,6 @@
             }
           ],
           "primaryOwner": "Baout"
-        },
-        {
-          "id": "loup_hyperactif",
-          "title": "Le Loup Hyperactif",
-          "emoji": "⚡",
-          "description": "Se transforme et détransforme constamment",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 70,
-          "conditions": [
-            {
-              "stat": "wolfTransformRate",
-              "category": "HIGH",
-              "actualValue": 0.5,
-              "actualPercentile": 65
-            },
-            {
-              "stat": "wolfUntransformRate",
-              "category": "HIGH",
-              "actualValue": 0.171875,
-              "actualPercentile": 75
-            }
-          ],
-          "primaryOwner": "MartinPonK"
         },
         {
           "id": "citoyen_exemplaire",
@@ -3060,25 +3060,13 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_high",
-          "title": "Le·a Transform·é·e",
-          "emoji": "🌙",
-          "description": "Se transforme fréquemment",
-          "stat": "wolfTransformRate",
-          "value": 0.5,
-          "percentile": 65,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "wolfUntransformRate_high",
           "title": "Le·a Discret·ète",
           "emoji": "🤫",
           "description": "Se détransforme fréquemment",
           "stat": "wolfUntransformRate",
-          "value": 0.171875,
-          "percentile": 75,
+          "value": 0.13924050632911392,
+          "percentile": 69.56521739130434,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3280,13 +3268,13 @@
           "category": "EXTREME_HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.5,
-          "percentile": 65,
-          "category": "HIGH"
+          "value": 0.4050632911392405,
+          "percentile": 43.47826086956522,
+          "category": "BELOW_AVERAGE"
         },
         "wolfUntransformRate": {
-          "value": 0.171875,
-          "percentile": 75,
+          "value": 0.13924050632911392,
+          "percentile": 69.56521739130434,
           "category": "HIGH"
         },
         "potionsPer60Min": {
@@ -3329,8 +3317,8 @@
         "zoneResteCarte": 9.375,
         "zoneDominantPercentage": 37.94642857142857,
         "zoneTotalPositions": 224,
-        "wolfTransformRate": 0.5,
-        "wolfUntransformRate": 0.171875,
+        "wolfTransformRate": 0.4050632911392405,
+        "wolfUntransformRate": 0.13924050632911392,
         "potionsPer60Min": 3.849664350098445
       }
     },
@@ -3449,18 +3437,6 @@
           "stat": "zoneDominantPercentage",
           "value": 55.494505494505496,
           "percentile": 88,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "wolfTransformRate_extreme_high",
-          "title": "Le Loup-Garou Frénétique",
-          "emoji": "🐺",
-          "description": "Se transforme très souvent en loup",
-          "stat": "wolfTransformRate",
-          "value": 0.6410256410256411,
-          "percentile": 90,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -3765,9 +3741,9 @@
           "category": "HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.6410256410256411,
-          "percentile": 90,
-          "category": "EXTREME_HIGH"
+          "value": 0.43859649122807015,
+          "percentile": 56.52173913043478,
+          "category": "ABOVE_AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0,
@@ -3814,7 +3790,7 @@
         "zoneResteCarte": 14.835164835164836,
         "zoneDominantPercentage": 55.494505494505496,
         "zoneTotalPositions": 182,
-        "wolfTransformRate": 0.6410256410256411,
+        "wolfTransformRate": 0.43859649122807015,
         "wolfUntransformRate": 0,
         "potionsPer60Min": 2.589050382279918
       }
@@ -3831,19 +3807,19 @@
           "description": "Se transforme et détransforme constamment",
           "priority": 15,
           "type": "combination",
-          "percentile": 82.5,
+          "percentile": 82.6086956521739,
           "conditions": [
             {
               "stat": "wolfTransformRate",
               "category": "HIGH",
-              "actualValue": 0.6166666666666667,
-              "actualPercentile": 85
+              "actualValue": 0.578125,
+              "actualPercentile": 82.6086956521739
             },
             {
               "stat": "wolfUntransformRate",
               "category": "HIGH",
-              "actualValue": 0.18333333333333332,
-              "actualPercentile": 80
+              "actualValue": 0.171875,
+              "actualPercentile": 82.6086956521739
             }
           ],
           "primaryOwner": "MartinPonK"
@@ -4017,18 +3993,6 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_extreme_high",
-          "title": "Le Loup-Garou Frénétique",
-          "emoji": "🐺",
-          "description": "Se transforme très souvent en loup",
-          "stat": "wolfTransformRate",
-          "value": 0.6166666666666667,
-          "percentile": 85,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "participation_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -4077,13 +4041,25 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.578125,
+          "percentile": 82.6086956521739,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "wolfUntransformRate_high",
           "title": "Le·a Discret·ète",
           "emoji": "🤫",
           "description": "Se détransforme fréquemment",
           "stat": "wolfUntransformRate",
-          "value": 0.18333333333333332,
-          "percentile": 80,
+          "value": 0.171875,
+          "percentile": 82.6086956521739,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4313,13 +4289,13 @@
           "category": "EXTREME_HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.6166666666666667,
-          "percentile": 85,
-          "category": "EXTREME_HIGH"
+          "value": 0.578125,
+          "percentile": 82.6086956521739,
+          "category": "HIGH"
         },
         "wolfUntransformRate": {
-          "value": 0.18333333333333332,
-          "percentile": 80,
+          "value": 0.171875,
+          "percentile": 82.6086956521739,
           "category": "HIGH"
         },
         "potionsPer60Min": {
@@ -4362,8 +4338,8 @@
         "zoneResteCarte": 1.9801980198019802,
         "zoneDominantPercentage": 55.940594059405946,
         "zoneTotalPositions": 202,
-        "wolfTransformRate": 0.6166666666666667,
-        "wolfUntransformRate": 0.18333333333333332,
+        "wolfTransformRate": 0.578125,
+        "wolfUntransformRate": 0.171875,
         "potionsPer60Min": 2.660024844363357
       }
     },
@@ -4606,6 +4582,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.22727272727272727,
+          "percentile": 26.08695652173913,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "potionUsage_high",
           "title": "Le·a Potion Addict",
           "emoji": "⚗️",
@@ -4762,6 +4750,16 @@
           "percentile": 21.62162162162162,
           "category": "LOW"
         },
+        "wolfTransformRate": {
+          "value": 0.22727272727272727,
+          "percentile": 26.08695652173913,
+          "category": "LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0.09090909090909091,
+          "percentile": 60.86956521739131,
+          "category": "ABOVE_AVERAGE"
+        },
         "potionsPer60Min": {
           "value": 2.758375236533071,
           "percentile": 74.07407407407408,
@@ -4791,6 +4789,8 @@
         "killRate": 0.6683417085427136,
         "longestWinSeries": 6,
         "longestLossSeries": 6,
+        "wolfTransformRate": 0.22727272727272727,
+        "wolfUntransformRate": 0.09090909090909091,
         "potionsPer60Min": 2.758375236533071
       }
     },
@@ -4865,7 +4865,7 @@
           "description": "Se détransforme très souvent",
           "stat": "wolfUntransformRate",
           "value": 0.2857142857142857,
-          "percentile": 85,
+          "percentile": 86.95652173913044,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -5215,12 +5215,12 @@
         },
         "wolfTransformRate": {
           "value": 0.42857142857142855,
-          "percentile": 45,
-          "category": "BELOW_AVERAGE"
+          "percentile": 47.82608695652174,
+          "category": "AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.2857142857142857,
-          "percentile": 85,
+          "percentile": 86.95652173913044,
           "category": "EXTREME_HIGH"
         },
         "potionsPer60Min": {
@@ -5342,6 +5342,30 @@
           "stat": "zoneDominantPercentage",
           "value": 35,
           "percentile": 4,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_extreme_low",
+          "title": "Le Loup Fantôme",
+          "emoji": "👻",
+          "description": "Ne se transforme presque jamais",
+          "stat": "wolfTransformRate",
+          "value": 0.15384615384615385,
+          "percentile": 13.043478260869565,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_extreme_low",
+          "title": "Le Loup Permanent",
+          "emoji": "🌑",
+          "description": "Reste presque toujours en loup",
+          "stat": "wolfUntransformRate",
+          "value": 0,
+          "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -5594,6 +5618,16 @@
           "percentile": 4,
           "category": "EXTREME_LOW"
         },
+        "wolfTransformRate": {
+          "value": 0.15384615384615385,
+          "percentile": 13.043478260869565,
+          "category": "EXTREME_LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
         "potionsPer60Min": {
           "value": 0.5411035807529456,
           "percentile": 3.7037037037037033,
@@ -5630,6 +5664,8 @@
         "zoneResteCarte": 20,
         "zoneDominantPercentage": 35,
         "zoneTotalPositions": 20,
+        "wolfTransformRate": 0.15384615384615385,
+        "wolfUntransformRate": 0,
         "potionsPer60Min": 0.5411035807529456
       }
     },
@@ -5966,6 +6002,35 @@
           "primaryOwner": "Ponce"
         },
         {
+          "id": "loup_ruse",
+          "title": "Le Loup Rusé",
+          "emoji": "🦊",
+          "description": "Reste humain, survit et gagne en Loup",
+          "priority": 14,
+          "type": "combination",
+          "percentile": 82.21447253705318,
+          "conditions": [
+            {
+              "stat": "wolfTransformRate",
+              "category": "LOW",
+              "actualValue": 0,
+              "actualPercentile": 0
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 41.726618705035975,
+              "actualPercentile": 83.78378378378379
+            },
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 42.857142857142854,
+              "actualPercentile": 80.64516129032258
+            }
+          ]
+        },
+        {
           "id": "cowboy",
           "title": "Le·a Cow-Boy",
           "emoji": "🤠",
@@ -6021,6 +6086,30 @@
           "value": 8,
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_extreme_low",
+          "title": "Le Loup Fantôme",
+          "emoji": "👻",
+          "description": "Ne se transforme presque jamais",
+          "stat": "wolfTransformRate",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_extreme_low",
+          "title": "Le Loup Permanent",
+          "emoji": "🌑",
+          "description": "Reste presque toujours en loup",
+          "stat": "wolfUntransformRate",
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -6222,6 +6311,16 @@
           "value": 9,
           "percentile": 51.35135135135135,
           "category": "AVERAGE"
+        },
+        "wolfTransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -6240,7 +6339,9 @@
         "survivalDay1Rate": 89.92805755395683,
         "killRate": 0.5611510791366906,
         "longestWinSeries": 8,
-        "longestLossSeries": 9
+        "longestLossSeries": 9,
+        "wolfTransformRate": 0,
+        "wolfUntransformRate": 0
       }
     },
     "76561198372242900": {
@@ -6386,13 +6487,13 @@
           "description": "Reste humain, survit et gagne en Loup",
           "priority": 14,
           "type": "combination",
-          "percentile": 55.19761697181051,
+          "percentile": 59.328051754419214,
           "conditions": [
             {
               "stat": "wolfTransformRate",
               "category": "LOW",
-              "actualValue": 0.17647058823529413,
-              "actualPercentile": 5
+              "actualValue": 0.2,
+              "actualPercentile": 17.391304347826086
             },
             {
               "stat": "survival",
@@ -6586,18 +6687,6 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_extreme_low",
-          "title": "Le Loup Fantôme",
-          "emoji": "👻",
-          "description": "Ne se transforme presque jamais",
-          "stat": "wolfTransformRate",
-          "value": 0.17647058823529413,
-          "percentile": 5,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "wolfUntransformRate_extreme_low",
           "title": "Le Loup Permanent",
           "emoji": "🌑",
@@ -6666,6 +6755,18 @@
           "value": 917.6877696899232,
           "percentile": 73.91304347826086,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.2,
+          "percentile": 17.391304347826086,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -6894,9 +6995,9 @@
           "category": "HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.17647058823529413,
-          "percentile": 5,
-          "category": "EXTREME_LOW"
+          "value": 0.2,
+          "percentile": 17.391304347826086,
+          "category": "LOW"
         },
         "wolfUntransformRate": {
           "value": 0,
@@ -6943,7 +7044,7 @@
         "zoneResteCarte": 15.217391304347828,
         "zoneDominantPercentage": 42.934782608695656,
         "zoneTotalPositions": 184,
-        "wolfTransformRate": 0.17647058823529413,
+        "wolfTransformRate": 0.2,
         "wolfUntransformRate": 0,
         "potionsPer60Min": 2.822107022873903
       }
@@ -7115,8 +7216,8 @@
           "emoji": "🐕",
           "description": "Se transforme rarement",
           "stat": "wolfTransformRate",
-          "value": 0.3055555555555556,
-          "percentile": 20,
+          "value": 0.21568627450980393,
+          "percentile": 21.73913043478261,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -7127,8 +7228,8 @@
           "emoji": "🐺",
           "description": "Se détransforme rarement",
           "stat": "wolfUntransformRate",
-          "value": 0.027777777777777776,
-          "percentile": 20,
+          "value": 0.0196078431372549,
+          "percentile": 30.434782608695656,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -7330,13 +7431,13 @@
           "category": "ABOVE_AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.3055555555555556,
-          "percentile": 20,
+          "value": 0.21568627450980393,
+          "percentile": 21.73913043478261,
           "category": "LOW"
         },
         "wolfUntransformRate": {
-          "value": 0.027777777777777776,
-          "percentile": 20,
+          "value": 0.0196078431372549,
+          "percentile": 30.434782608695656,
           "category": "LOW"
         },
         "potionsPer60Min": {
@@ -7379,8 +7480,8 @@
         "zoneResteCarte": 7.333333333333333,
         "zoneDominantPercentage": 51.33333333333333,
         "zoneTotalPositions": 150,
-        "wolfTransformRate": 0.3055555555555556,
-        "wolfUntransformRate": 0.027777777777777776,
+        "wolfTransformRate": 0.21568627450980393,
+        "wolfUntransformRate": 0.0196078431372549,
         "potionsPer60Min": 2.2272241621155637
       }
     },
@@ -7801,6 +7902,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.4745762711864407,
+          "percentile": 73.91304347826086,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -8013,14 +8126,14 @@
           "category": "HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.45161290322580644,
-          "percentile": 55.00000000000001,
-          "category": "ABOVE_AVERAGE"
+          "value": 0.4745762711864407,
+          "percentile": 73.91304347826086,
+          "category": "HIGH"
         },
         "wolfUntransformRate": {
-          "value": 0.08064516129032258,
-          "percentile": 50,
-          "category": "AVERAGE"
+          "value": 0.0847457627118644,
+          "percentile": 56.52173913043478,
+          "category": "ABOVE_AVERAGE"
         },
         "potionsPer60Min": {
           "value": 1.1514543436980333,
@@ -8062,8 +8175,8 @@
         "zoneResteCarte": 15.432098765432098,
         "zoneDominantPercentage": 47.53086419753087,
         "zoneTotalPositions": 162,
-        "wolfTransformRate": 0.45161290322580644,
-        "wolfUntransformRate": 0.08064516129032258,
+        "wolfTransformRate": 0.4745762711864407,
+        "wolfUntransformRate": 0.0847457627118644,
         "potionsPer60Min": 1.1514543436980333
       }
     },
@@ -8247,8 +8360,8 @@
           "emoji": "👻",
           "description": "Ne se transforme presque jamais",
           "stat": "wolfTransformRate",
-          "value": 0.058823529411764705,
-          "percentile": 0,
+          "value": 0.08333333333333333,
+          "percentile": 8.695652173913043,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -8519,8 +8632,8 @@
           "category": "LOW"
         },
         "wolfTransformRate": {
-          "value": 0.058823529411764705,
-          "percentile": 0,
+          "value": 0.08333333333333333,
+          "percentile": 8.695652173913043,
           "category": "EXTREME_LOW"
         },
         "wolfUntransformRate": {
@@ -8565,7 +8678,7 @@
         "zoneResteCarte": 8.571428571428571,
         "zoneDominantPercentage": 45.714285714285715,
         "zoneTotalPositions": 35,
-        "wolfTransformRate": 0.058823529411764705,
+        "wolfTransformRate": 0.08333333333333333,
         "wolfUntransformRate": 0,
         "potionsPer60Min": 2.5069553866832885
       }
@@ -8862,6 +8975,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.3103448275862069,
+          "percentile": 30.434782608695656,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -9074,14 +9199,14 @@
           "category": "BELOW_AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.42857142857142855,
-          "percentile": 45,
-          "category": "BELOW_AVERAGE"
+          "value": 0.3103448275862069,
+          "percentile": 30.434782608695656,
+          "category": "LOW"
         },
         "wolfUntransformRate": {
-          "value": 0.09523809523809523,
-          "percentile": 55.00000000000001,
-          "category": "ABOVE_AVERAGE"
+          "value": 0.06896551724137931,
+          "percentile": 39.130434782608695,
+          "category": "BELOW_AVERAGE"
         },
         "potionsPer60Min": {
           "value": 2.478485133057455,
@@ -9123,8 +9248,8 @@
         "zoneResteCarte": 8.771929824561402,
         "zoneDominantPercentage": 41.228070175438596,
         "zoneTotalPositions": 114,
-        "wolfTransformRate": 0.42857142857142855,
-        "wolfUntransformRate": 0.09523809523809523,
+        "wolfTransformRate": 0.3103448275862069,
+        "wolfUntransformRate": 0.06896551724137931,
         "potionsPer60Min": 2.478485133057455
       }
     },
@@ -9500,8 +9625,8 @@
           "emoji": "🐕",
           "description": "Se transforme rarement",
           "stat": "wolfTransformRate",
-          "value": 0.3448275862068966,
-          "percentile": 30,
+          "value": 0.37037037037037035,
+          "percentile": 34.78260869565217,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -9715,13 +9840,13 @@
           "category": "AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.3448275862068966,
-          "percentile": 30,
+          "value": 0.37037037037037035,
+          "percentile": 34.78260869565217,
           "category": "LOW"
         },
         "wolfUntransformRate": {
-          "value": 0.06896551724137931,
-          "percentile": 45,
+          "value": 0.07407407407407407,
+          "percentile": 43.47826086956522,
           "category": "BELOW_AVERAGE"
         },
         "potionsPer60Min": {
@@ -9764,8 +9889,8 @@
         "zoneResteCarte": 21.804511278195488,
         "zoneDominantPercentage": 35.338345864661655,
         "zoneTotalPositions": 133,
-        "wolfTransformRate": 0.3448275862068966,
-        "wolfUntransformRate": 0.06896551724137931,
+        "wolfTransformRate": 0.37037037037037035,
+        "wolfUntransformRate": 0.07407407407407407,
         "potionsPer60Min": 2.0452876685743133
       }
     },
@@ -10142,8 +10267,8 @@
           "emoji": "🌙",
           "description": "Se transforme fréquemment",
           "stat": "wolfTransformRate",
-          "value": 0.5555555555555556,
-          "percentile": 70,
+          "value": 0.45454545454545453,
+          "percentile": 69.56521739130434,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -10373,13 +10498,13 @@
           "category": "AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.5555555555555556,
-          "percentile": 70,
+          "value": 0.45454545454545453,
+          "percentile": 69.56521739130434,
           "category": "HIGH"
         },
         "wolfUntransformRate": {
-          "value": 0.1111111111111111,
-          "percentile": 60,
+          "value": 0.09090909090909091,
+          "percentile": 60.86956521739131,
           "category": "ABOVE_AVERAGE"
         },
         "potionsPer60Min": {
@@ -10422,8 +10547,8 @@
         "zoneResteCarte": 8.02919708029197,
         "zoneDominantPercentage": 40.14598540145985,
         "zoneTotalPositions": 137,
-        "wolfTransformRate": 0.5555555555555556,
-        "wolfUntransformRate": 0.1111111111111111,
+        "wolfTransformRate": 0.45454545454545453,
+        "wolfUntransformRate": 0.09090909090909091,
         "potionsPer60Min": 1.6265503972870856
       }
     },
@@ -10576,19 +10701,19 @@
           "description": "Se transforme et détransforme constamment",
           "priority": 15,
           "type": "combination",
-          "percentile": 95,
+          "percentile": 95.65217391304348,
           "conditions": [
             {
               "stat": "wolfTransformRate",
               "category": "HIGH",
-              "actualValue": 0.6666666666666666,
-              "actualPercentile": 95
+              "actualValue": 0.8181818181818182,
+              "actualPercentile": 95.65217391304348
             },
             {
               "stat": "wolfUntransformRate",
               "category": "HIGH",
-              "actualValue": 0.4074074074074074,
-              "actualPercentile": 95
+              "actualValue": 0.5,
+              "actualPercentile": 95.65217391304348
             }
           ],
           "primaryOwner": "MartinPonK"
@@ -10846,8 +10971,8 @@
           "emoji": "🐺",
           "description": "Se transforme très souvent en loup",
           "stat": "wolfTransformRate",
-          "value": 0.6666666666666666,
-          "percentile": 95,
+          "value": 0.8181818181818182,
+          "percentile": 95.65217391304348,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -10858,8 +10983,8 @@
           "emoji": "🦎",
           "description": "Se détransforme très souvent",
           "stat": "wolfUntransformRate",
-          "value": 0.4074074074074074,
-          "percentile": 95,
+          "value": 0.5,
+          "percentile": 95.65217391304348,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -11215,13 +11340,13 @@
           "category": "ABOVE_AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.6666666666666666,
-          "percentile": 95,
+          "value": 0.8181818181818182,
+          "percentile": 95.65217391304348,
           "category": "EXTREME_HIGH"
         },
         "wolfUntransformRate": {
-          "value": 0.4074074074074074,
-          "percentile": 95,
+          "value": 0.5,
+          "percentile": 95.65217391304348,
           "category": "EXTREME_HIGH"
         },
         "potionsPer60Min": {
@@ -11264,8 +11389,8 @@
         "zoneResteCarte": 5.633802816901409,
         "zoneDominantPercentage": 33.80281690140845,
         "zoneTotalPositions": 142,
-        "wolfTransformRate": 0.6666666666666666,
-        "wolfUntransformRate": 0.4074074074074074,
+        "wolfTransformRate": 0.8181818181818182,
+        "wolfUntransformRate": 0.5,
         "potionsPer60Min": 4.758631831946614
       }
     },
@@ -11583,8 +11708,8 @@
           "emoji": "🤫",
           "description": "Se détransforme fréquemment",
           "stat": "wolfUntransformRate",
-          "value": 0.11764705882352941,
-          "percentile": 65,
+          "value": 0.15384615384615385,
+          "percentile": 73.91304347826086,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -11808,13 +11933,13 @@
           "category": "HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.39215686274509803,
-          "percentile": 40,
-          "category": "BELOW_AVERAGE"
+          "value": 0.4358974358974359,
+          "percentile": 52.17391304347826,
+          "category": "AVERAGE"
         },
         "wolfUntransformRate": {
-          "value": 0.11764705882352941,
-          "percentile": 65,
+          "value": 0.15384615384615385,
+          "percentile": 73.91304347826086,
           "category": "HIGH"
         },
         "potionsPer60Min": {
@@ -11857,8 +11982,8 @@
         "zoneResteCarte": 13.020833333333334,
         "zoneDominantPercentage": 49.47916666666667,
         "zoneTotalPositions": 192,
-        "wolfTransformRate": 0.39215686274509803,
-        "wolfUntransformRate": 0.11764705882352941,
+        "wolfTransformRate": 0.4358974358974359,
+        "wolfUntransformRate": 0.15384615384615385,
         "potionsPer60Min": 2.9518648563483056
       }
     },
@@ -12058,6 +12183,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_extreme_high",
+          "title": "Le Loup-Garou Frénétique",
+          "emoji": "🐺",
+          "description": "Se transforme très souvent en loup",
+          "stat": "wolfTransformRate",
+          "value": 0.717948717948718,
+          "percentile": 91.30434782608695,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "participation_high",
           "title": "Le·a Noctambule",
           "emoji": "🌙",
@@ -12173,30 +12310,6 @@
           "stat": "zoneDominantPercentage",
           "value": 38.9937106918239,
           "percentile": 24,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "wolfTransformRate_high",
-          "title": "Le·a Transform·é·e",
-          "emoji": "🌙",
-          "description": "Se transforme fréquemment",
-          "stat": "wolfTransformRate",
-          "value": 0.5714285714285714,
-          "percentile": 75,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "wolfUntransformRate_low",
-          "title": "Le Loup Assumé",
-          "emoji": "🐺",
-          "description": "Se détransforme rarement",
-          "stat": "wolfUntransformRate",
-          "value": 0.061224489795918366,
-          "percentile": 35,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -12426,14 +12539,14 @@
           "category": "ABOVE_AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.5714285714285714,
-          "percentile": 75,
-          "category": "HIGH"
+          "value": 0.717948717948718,
+          "percentile": 91.30434782608695,
+          "category": "EXTREME_HIGH"
         },
         "wolfUntransformRate": {
-          "value": 0.061224489795918366,
-          "percentile": 35,
-          "category": "LOW"
+          "value": 0.07692307692307693,
+          "percentile": 52.17391304347826,
+          "category": "AVERAGE"
         },
         "potionsPer60Min": {
           "value": 1.7314794078701157,
@@ -12475,8 +12588,8 @@
         "zoneResteCarte": 16.352201257861633,
         "zoneDominantPercentage": 38.9937106918239,
         "zoneTotalPositions": 159,
-        "wolfTransformRate": 0.5714285714285714,
-        "wolfUntransformRate": 0.061224489795918366,
+        "wolfTransformRate": 0.717948717948718,
+        "wolfUntransformRate": 0.07692307692307693,
         "potionsPer60Min": 1.7314794078701157
       }
     },
@@ -12781,25 +12894,13 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_low",
-          "title": "Le·a Loup Prudent·e",
-          "emoji": "🐕",
-          "description": "Se transforme rarement",
-          "stat": "wolfTransformRate",
-          "value": 0.3333333333333333,
-          "percentile": 25,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "wolfUntransformRate_high",
           "title": "Le·a Discret·ète",
           "emoji": "🤫",
           "description": "Se détransforme fréquemment",
           "stat": "wolfUntransformRate",
-          "value": 0.125,
-          "percentile": 70,
+          "value": 0.16666666666666666,
+          "percentile": 78.26086956521739,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -13017,13 +13118,13 @@
           "category": "BELOW_AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.3333333333333333,
-          "percentile": 25,
-          "category": "LOW"
+          "value": 0.4444444444444444,
+          "percentile": 60.86956521739131,
+          "category": "ABOVE_AVERAGE"
         },
         "wolfUntransformRate": {
-          "value": 0.125,
-          "percentile": 70,
+          "value": 0.16666666666666666,
+          "percentile": 78.26086956521739,
           "category": "HIGH"
         },
         "potionsPer60Min": {
@@ -13066,8 +13167,8 @@
         "zoneResteCarte": 11.818181818181818,
         "zoneDominantPercentage": 46.36363636363636,
         "zoneTotalPositions": 110,
-        "wolfTransformRate": 0.3333333333333333,
-        "wolfUntransformRate": 0.125,
+        "wolfTransformRate": 0.4444444444444444,
+        "wolfUntransformRate": 0.16666666666666666,
         "potionsPer60Min": 2.6821103416665477
       }
     },
@@ -15145,18 +15246,6 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_extreme_low",
-          "title": "Le Loup Fantôme",
-          "emoji": "👻",
-          "description": "Ne se transforme presque jamais",
-          "stat": "wolfTransformRate",
-          "value": 0.3,
-          "percentile": 15,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "wolfUntransformRate_extreme_low",
           "title": "Le Loup Permanent",
           "emoji": "🌑",
@@ -15474,9 +15563,9 @@
           "category": "LOW"
         },
         "wolfTransformRate": {
-          "value": 0.3,
-          "percentile": 15,
-          "category": "EXTREME_LOW"
+          "value": 0.4,
+          "percentile": 39.130434782608695,
+          "category": "BELOW_AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0,
@@ -15520,7 +15609,7 @@
         "zoneResteCarte": 20.8955223880597,
         "zoneDominantPercentage": 37.3134328358209,
         "zoneTotalPositions": 67,
-        "wolfTransformRate": 0.3,
+        "wolfTransformRate": 0.4,
         "wolfUntransformRate": 0,
         "potionsPer60Min": 1.5351756253099291
       }
@@ -16162,13 +16251,25 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.4857142857142857,
+          "percentile": 78.26086956521739,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "wolfUntransformRate_low",
           "title": "Le Loup Assumé",
           "emoji": "🐺",
           "description": "Se détransforme rarement",
           "stat": "wolfUntransformRate",
           "value": 0.02857142857142857,
-          "percentile": 25,
+          "percentile": 34.78260869565217,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -16361,12 +16462,12 @@
         },
         "wolfTransformRate": {
           "value": 0.4857142857142857,
-          "percentile": 60,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 78.26086956521739,
+          "category": "HIGH"
         },
         "wolfUntransformRate": {
           "value": 0.02857142857142857,
-          "percentile": 25,
+          "percentile": 34.78260869565217,
           "category": "LOW"
         },
         "potionsPer60Min": {
@@ -16447,19 +16548,19 @@
           "description": "Se transforme et détransforme constamment",
           "priority": 15,
           "type": "combination",
-          "percentile": 85,
+          "percentile": 89.13043478260869,
           "conditions": [
             {
               "stat": "wolfTransformRate",
               "category": "HIGH",
               "actualValue": 0.5882352941176471,
-              "actualPercentile": 80
+              "actualPercentile": 86.95652173913044
             },
             {
               "stat": "wolfUntransformRate",
               "category": "HIGH",
               "actualValue": 0.29411764705882354,
-              "actualPercentile": 90
+              "actualPercentile": 91.30434782608695
             }
           ]
         },
@@ -16671,13 +16772,25 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_extreme_high",
+          "title": "Le Loup-Garou Frénétique",
+          "emoji": "🐺",
+          "description": "Se transforme très souvent en loup",
+          "stat": "wolfTransformRate",
+          "value": 0.5882352941176471,
+          "percentile": 86.95652173913044,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "wolfUntransformRate_extreme_high",
           "title": "Le·a Caméléon",
           "emoji": "🦎",
           "description": "Se détransforme très souvent",
           "stat": "wolfUntransformRate",
           "value": 0.29411764705882354,
-          "percentile": 90,
+          "percentile": 91.30434782608695,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -16731,18 +16844,6 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_high",
-          "title": "Le·a Transform·é·e",
-          "emoji": "🌙",
-          "description": "Se transforme fréquemment",
-          "stat": "wolfTransformRate",
-          "value": 0.5882352941176471,
-          "percentile": 80,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -16760,19 +16861,19 @@
         "description": "Se transforme et détransforme constamment",
         "priority": 15,
         "type": "combination",
-        "percentile": 85,
+        "percentile": 89.13043478260869,
         "conditions": [
           {
             "stat": "wolfTransformRate",
             "category": "HIGH",
             "actualValue": 0.5882352941176471,
-            "actualPercentile": 80
+            "actualPercentile": 86.95652173913044
           },
           {
             "stat": "wolfUntransformRate",
             "category": "HIGH",
             "actualValue": 0.29411764705882354,
-            "actualPercentile": 90
+            "actualPercentile": 91.30434782608695
           }
         ]
       },
@@ -16909,12 +17010,12 @@
         },
         "wolfTransformRate": {
           "value": 0.5882352941176471,
-          "percentile": 80,
-          "category": "HIGH"
+          "percentile": 86.95652173913044,
+          "category": "EXTREME_HIGH"
         },
         "wolfUntransformRate": {
           "value": 0.29411764705882354,
-          "percentile": 90,
+          "percentile": 91.30434782608695,
           "category": "EXTREME_HIGH"
         },
         "potionsPer60Min": {
@@ -17080,18 +17181,6 @@
           "primaryOwner": "Raumane"
         },
         {
-          "id": "wolfTransformRate_extreme_low",
-          "title": "Le Loup Fantôme",
-          "emoji": "👻",
-          "description": "Ne se transforme presque jamais",
-          "stat": "wolfTransformRate",
-          "value": 0.28,
-          "percentile": 10,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "participation_low",
           "title": "Le·a Occasionnel·le",
           "emoji": "🎲",
@@ -17183,18 +17272,6 @@
           "stat": "lootLoupPer60Min",
           "value": 474.08132323106236,
           "percentile": 22.22222222222222,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "wolfUntransformRate_low",
-          "title": "Le Loup Assumé",
-          "emoji": "🐺",
-          "description": "Se détransforme rarement",
-          "stat": "wolfUntransformRate",
-          "value": 0.04,
-          "percentile": 30,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -17408,16 +17485,6 @@
           "percentile": 32,
           "category": "LOW"
         },
-        "wolfTransformRate": {
-          "value": 0.28,
-          "percentile": 10,
-          "category": "EXTREME_LOW"
-        },
-        "wolfUntransformRate": {
-          "value": 0.04,
-          "percentile": 30,
-          "category": "LOW"
-        },
         "potionsPer60Min": {
           "value": 1.85789985654359,
           "percentile": 25.925925925925924,
@@ -17455,8 +17522,6 @@
         "zoneResteCarte": 15.306122448979592,
         "zoneDominantPercentage": 44.89795918367347,
         "zoneTotalPositions": 98,
-        "wolfTransformRate": 0.28,
-        "wolfUntransformRate": 0.04,
         "potionsPer60Min": 1.85789985654359
       }
     }

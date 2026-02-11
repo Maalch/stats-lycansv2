@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.5';
+export const APP_VERSION = '1.7.6';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -15,12 +15,22 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: 'v1.7.6',
+    date: '11/02/2026',
+    description: 'Ajout de classements sur les actions de rôles : fréquence de transformation et comportement de détransformation des Loups, précision des tirs de Chasseur dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'roleActions',
+      text: 'Classements / Actions des Rôles'
+    }
+  },
+  {
     version: 'v1.7.5',
     date: '11/02/2026',
-    description: 'Ajout de statistiques individuelles sur les actions de rôles spéciaux (Chasseur et Loup) dans',
+    description: 'Ajout de statistiques individuelles sur les actions Chasseur et Loup dans',
     link: {
       mainTab: 'playerSelection',
-      text: 'Joueur / Rôles Spéciaux',
+      text: 'Joueur / Actions des Rôles',
       navigationState: {
         selectedPlayerSelectionView: 'roleactions'
       }

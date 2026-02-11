@@ -6,6 +6,7 @@ import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor 
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { CHART_LIMITS } from '../../../config/chartConstants';
 import { calculateNightsAsWolf, isWolfRole } from '../../../utils/wolfTransformUtils';
+import { compareVersion } from '../../../hooks/utils/dataUtils';
 
 interface PlayerHistoryRoleActionsProps {
   selectedPlayerName: string;
@@ -67,8 +68,7 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
       let gameHasTrackedActions = false;
       
       // Check if this player has reliable transformation data
-      const gameVersion = parseFloat(game.Version || '0');
-      const hasGuaranteedTransformData = game.Modded && gameVersion >= 0.243;
+      const hasGuaranteedTransformData = game.Modded && compareVersion(game.Version || '0', '0.243');
       let playerHasTransformData = false;
       
       if (hasGuaranteedTransformData) {

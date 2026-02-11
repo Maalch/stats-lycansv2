@@ -96,6 +96,12 @@ export interface LootStatsState {
   view?: string; // 'normalized' or 'total'
 }
 
+export interface RoleActionsRankingState {
+  minWolfGames: number;
+  minHunterGames: number;
+  sortOrder?: 'highest' | 'lowest';
+}
+
 export interface DeathLocationState {
   selectedCamp: string;
   selectedDeathTypes?: string[]; // Array of selected death type codes for multi-select filtering
@@ -129,6 +135,7 @@ export interface NavigationState {
   talkingTimeState?: TalkingTimeState;
   lootStatsState?: LootStatsState;
   deathLocationState?: DeathLocationState;
+  roleActionsRankingState?: RoleActionsRankingState;
 }
 
 interface NavigationContextType {

@@ -6,6 +6,7 @@
  */
 
 import { parseTiming, calculateNightsAsWolf, isWolfRole } from '../shared/wolf-transform-utils.js';
+import { compareVersion } from '../shared/sync-utils.js';
 
 /**
  * Compute wolf transformation statistics for all players
@@ -19,8 +20,7 @@ export function computeWolfTransformStatistics(games) {
     if (!game.PlayerStats) return;
     
     const endTiming = game.EndTiming;
-    const gameVersion = parseFloat(game.Version || '0');
-    const hasGuaranteedTransformData = game.Modded && gameVersion >= 0.243;
+    const hasGuaranteedTransformData = game.Modded && compareVersion(game.Version || '0', '0.243');
     
     game.PlayerStats.forEach(player => {
       const playerId = player.ID || player.Username;
