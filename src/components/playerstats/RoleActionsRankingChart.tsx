@@ -230,11 +230,18 @@ export function RoleActionsRankingChart() {
   const { hunterAccuracyData, hunterHighlightedAdded } = useMemo(() => {
     const eligiblePlayers = playerStats.filter(p => p.hunterGamesPlayed >= minHunterGames && p.hunterTotalShots > 0);
     
-    const sortedPlayers = [...eligiblePlayers].sort((a, b) => 
-      sortOrder === 'highest' 
+    const sortedPlayers = [...eligiblePlayers].sort((a, b) => {
+      const accuracyDiff = sortOrder === 'highest' 
         ? b.hunterAccuracy - a.hunterAccuracy 
-        : a.hunterAccuracy - b.hunterAccuracy
-    ).slice(0, CHART_LIMITS.TOP_20);
+        : a.hunterAccuracy - b.hunterAccuracy;
+      
+      // If accuracy is the same, order by total shots (more shots first as tiebreaker)
+      if (accuracyDiff === 0) {
+        return b.hunterTotalShots - a.hunterTotalShots;
+      }
+      
+      return accuracyDiff;
+    }).slice(0, CHART_LIMITS.TOP_20);
 
     const highlightedInTop = settings.highlightedPlayer && 
       sortedPlayers.some(p => p.player === settings.highlightedPlayer);
