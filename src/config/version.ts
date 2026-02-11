@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.4';
+export const APP_VERSION = '1.7.5';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,18 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.5',
+    date: '11/02/2026',
+    description: 'Ajout de statistiques individuelles sur les actions de rôles spéciaux (Chasseur et Loup) dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueur / Rôles Spéciaux',
+      navigationState: {
+        selectedPlayerSelectionView: 'roleactions'
+      }
+    }
+  },
   {
     version: 'v1.7.4',
     date: '05/02/2026',
