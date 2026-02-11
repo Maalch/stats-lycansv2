@@ -1,6 +1,5 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { generateAllPlayerAchievements } from './generate-achievements.js';
 import { 
   fetchStatsListUrls, 
   fetchGameLogData,
@@ -184,9 +183,10 @@ function compareTiming(timingA, timingB) {
  * Merges actions from GameLog and LegacyData for a single player.
  * 
  * Strategy:
- * 1. Start with GameLog actions (they have Date/Position)
- * 2. Add LegacyData actions that don't exist in GameLog (using count-based matching)
- * 3. Handle multiple identical actions correctly using occurrence counting
+ * 1. Handle Sabotage actions specially - merge GameLog positions with Legacy ActionNames by Timing
+ * 2. Start with GameLog actions (they have Date/Position)
+ * 3. Add LegacyData actions that don't exist in GameLog (using count-based matching)
+ * 4. Handle multiple identical actions correctly using occurrence counting
  * 
  * @param {Array} gameLogActions - Actions from PlayerStats.Actions (AWS data)
  * @param {Array} legacyActions - Actions from LegacyData.PlayerStats.Actions (Google Sheets data)
@@ -195,20 +195,119 @@ function compareTiming(timingA, timingB) {
 function mergePlayerActions(gameLogActions, legacyActions) {
   const result = [];
   
+  // === SPECIAL HANDLING FOR SABOTAGE ACTIONS ===
+  // Sabotage actions are split across two sources:
+  // - GameLog: Has Date/Position but ActionName is null
+  // - Legacy: Has ActionName but Position is null
+  // We merge them by matching on Timing
+  
+  const gameLogSabotagesByTiming = new Map();
+  const legacySabotagesByTiming = new Map();
+  const usedGameLogSabotageIndices = new Set();
+  const usedLegacySabotageIndices = new Set();
+  
+  // Collect GameLog sabotages (with positions)
+  if (gameLogActions && Array.isArray(gameLogActions)) {
+    gameLogActions.forEach((action, index) => {
+      if (action.ActionType === 'Sabotage' && action.Position && !action.ActionName) {
+        if (!gameLogSabotagesByTiming.has(action.Timing)) {
+          gameLogSabotagesByTiming.set(action.Timing, []);
+        }
+        gameLogSabotagesByTiming.get(action.Timing).push({ action, index });
+      }
+    });
+  }
+  
+  // Collect Legacy sabotages (with names)
+  if (legacyActions && Array.isArray(legacyActions)) {
+    legacyActions.forEach((action, index) => {
+      if (action.ActionType === 'Sabotage' && action.ActionName && !action.Position) {
+        if (!legacySabotagesByTiming.has(action.Timing)) {
+          legacySabotagesByTiming.set(action.Timing, []);
+        }
+        legacySabotagesByTiming.get(action.Timing).push({ action, index });
+      }
+    });
+  }
+  
+  // Merge sabotages by timing
+  const mergedSabotages = [];
+  gameLogSabotagesByTiming.forEach((gameLogSabs, timing) => {
+    const legacySabs = legacySabotagesByTiming.get(timing) || [];
+    
+    // Match pairs: GameLog position + Legacy name
+    const pairCount = Math.min(gameLogSabs.length, legacySabs.length);
+    
+    for (let i = 0; i < pairCount; i++) {
+      const gameLogEntry = gameLogSabs[i];
+      const legacyEntry = legacySabs[i];
+      
+      // Create merged sabotage with both position and name
+      mergedSabotages.push({
+        ...gameLogEntry.action,
+        ActionName: legacyEntry.action.ActionName, // Add the name from Legacy
+      });
+      
+      usedGameLogSabotageIndices.add(gameLogEntry.index);
+      usedLegacySabotageIndices.add(legacyEntry.index);
+    }
+    
+    // Handle remaining unpaired GameLog sabotages (have position, no name)
+    for (let i = pairCount; i < gameLogSabs.length; i++) {
+      mergedSabotages.push(gameLogSabs[i].action);
+      usedGameLogSabotageIndices.add(gameLogSabs[i].index);
+    }
+    
+    // Handle remaining unpaired Legacy sabotages (have name, no position)
+    for (let i = pairCount; i < legacySabs.length; i++) {
+      mergedSabotages.push({
+        ...legacySabs[i].action,
+        Date: null,
+        Position: null,
+      });
+      usedLegacySabotageIndices.add(legacySabs[i].index);
+    }
+  });
+  
+  // Add unmatched Legacy sabotages (timings that don't exist in GameLog)
+  legacySabotagesByTiming.forEach((legacySabs, timing) => {
+    if (!gameLogSabotagesByTiming.has(timing)) {
+      legacySabs.forEach((entry) => {
+        mergedSabotages.push({
+          ...entry.action,
+          Date: null,
+          Position: null,
+        });
+        usedLegacySabotageIndices.add(entry.index);
+      });
+    }
+  });
+  
+  // === STANDARD ACTION HANDLING (non-Sabotage or complete Sabotage entries) ===
+  
   // Count occurrences of each action key in GameLog
   const gameLogKeyCounts = new Map();
   
   // First pass: Add all GameLog actions (they have Date/Position)
   if (gameLogActions && Array.isArray(gameLogActions)) {
+    let actionIndex = 0;
     for (const action of gameLogActions) {
       // IGNORE UseGadget with Balle - it's weapon reloading, not a tracked action
       if (action.ActionType === 'UseGadget' && action.ActionName === 'Balle') {
+        actionIndex++;
+        continue;
+      }
+      
+      // Skip sabotages that were already merged
+      if (action.ActionType === 'Sabotage' && usedGameLogSabotageIndices.has(actionIndex)) {
+        actionIndex++;
         continue;
       }
       
       const key = createActionMatchKey(action);
       gameLogKeyCounts.set(key, (gameLogKeyCounts.get(key) || 0) + 1);
       result.push(action);
+      actionIndex++;
     }
   }
 
@@ -216,8 +315,15 @@ function mergePlayerActions(gameLogActions, legacyActions) {
   // This handles the case of multiple identical actions correctly
   if (legacyActions && Array.isArray(legacyActions)) {
     const legacyKeySeenCounts = new Map();
+    let actionIndex = 0;
     
     for (const action of legacyActions) {
+      // Skip sabotages that were already merged
+      if (action.ActionType === 'Sabotage' && usedLegacySabotageIndices.has(actionIndex)) {
+        actionIndex++;
+        continue;
+      }
+      
       const key = createActionMatchKey(action);
       const seenCount = (legacyKeySeenCounts.get(key) || 0) + 1;
       legacyKeySeenCounts.set(key, seenCount);
@@ -234,8 +340,12 @@ function mergePlayerActions(gameLogActions, legacyActions) {
         });
       }
       // If seenCount <= gameLogCount, the GameLog already has this occurrence
+      actionIndex++;
     }
   }
+  
+  // Add all merged sabotages
+  result.push(...mergedSabotages);
 
   // Sort by Timing for chronological order
   return result.sort((a, b) => compareTiming(a.Timing, b.Timing));
