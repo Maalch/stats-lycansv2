@@ -141,12 +141,12 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
   if (!playerStatsData || !rawGameData) return [];
 
   const achievements = [];
-  const relationships = computePlayerRelationships(playerId, playerStatsData, rawGameData, 10);
+  const relationships = computePlayerRelationships(playerId, playerStatsData, rawGameData, 15);
 
   if (relationships.length === 0) return achievements;
 
-  // 1. Best mate (highest same camp win rate, min. 10 games together)
-  const mateRelationships = relationships.filter(r => r.sameCampGames >= 10);
+  // 1. Best mate (highest same camp win rate, min. 15 games together)
+  const mateRelationships = relationships.filter(r => r.sameCampGames >= 15);
   if (mateRelationships.length > 0) {
     const bestMate = mateRelationships.reduce((best, current) => 
       current.sameCampWinRate > best.sameCampWinRate ? current : best
@@ -155,7 +155,7 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
     achievements.push(createComparisonAchievement(
       `best-mate-${suffix ? 'modded' : 'all'}`,
       `🤝 Meilleur Coéquipier${suffix}`,
-      `Meilleur duo avec ${bestMate.otherPlayerName}: ${bestMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${bestMate.sameCampWins}/${bestMate.sameCampGames} parties, min. 10)`,
+      `Meilleur duo avec ${bestMate.otherPlayerName}: ${bestMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${bestMate.sameCampWins}/${bestMate.sameCampGames} parties, min. 15)`,
       'good',
       bestMate.sameCampWinRate,
       {
@@ -181,7 +181,7 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
       achievements.push(createComparisonAchievement(
         `worst-mate-${suffix ? 'modded' : 'all'}`,
         `💔 Pire Coéquipier${suffix}`,
-        `Duo le moins efficace avec ${worstMate.otherPlayerName}: ${worstMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${worstMate.sameCampWins}/${worstMate.sameCampGames} parties, min. 10)`,
+        `Duo le moins efficace avec ${worstMate.otherPlayerName}: ${worstMate.sameCampWinRate.toFixed(1)}% de victoires en équipe (${worstMate.sameCampWins}/${worstMate.sameCampGames} parties, min. 15)`,
         'bad',
         worstMate.sameCampWinRate,
         {
@@ -193,8 +193,8 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
     }
   }
 
-  // 3. Best matchup (highest opposing win rate, min. 10 games against)
-  const opponentRelationships = relationships.filter(r => r.opposingCampGames >= 10);
+  // 3. Best matchup (highest opposing win rate, min. 15 games against)
+  const opponentRelationships = relationships.filter(r => r.opposingCampGames >= 15);
   if (opponentRelationships.length > 0) {
     const bestMatchup = opponentRelationships.reduce((best, current) => 
       current.opposingWinRate > best.opposingWinRate ? current : best
@@ -203,7 +203,7 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
     achievements.push(createComparisonAchievement(
       `best-matchup-${suffix ? 'modded' : 'all'}`,
       `⚔️ Meilleur Face-à-Face${suffix}`,
-      `Domination contre ${bestMatchup.otherPlayerName}: ${bestMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${bestMatchup.opposingWins}/${bestMatchup.opposingCampGames} parties, min. 10)`,
+      `Domination contre ${bestMatchup.otherPlayerName}: ${bestMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${bestMatchup.opposingWins}/${bestMatchup.opposingCampGames} parties, min. 15)`,
       'good',
       bestMatchup.opposingWinRate,
       {
@@ -229,7 +229,7 @@ export function processComparisonAchievements(playerStatsData, rawGameData, play
       achievements.push(createComparisonAchievement(
         `worst-matchup-${suffix ? 'modded' : 'all'}`,
         `💀 Pire Face-à-Face${suffix}`,
-        `Faiblesse contre ${worstMatchup.otherPlayerName}: ${worstMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${worstMatchup.opposingWins}/${worstMatchup.opposingCampGames} parties, min. 10)`,
+        `Faiblesse contre ${worstMatchup.otherPlayerName}: ${worstMatchup.opposingWinRate.toFixed(1)}% de victoires en affrontement (${worstMatchup.opposingWins}/${worstMatchup.opposingCampGames} parties, min. 15)`,
         'bad',
         worstMatchup.opposingWinRate,
         {
