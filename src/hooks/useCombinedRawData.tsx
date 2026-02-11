@@ -81,6 +81,7 @@ export interface LegacyData {
   VictoryType: string | null; // E.g., "Votes", "Tous les loups tués", "Domination loups" etc.
   PlayerVODs?: { [playerId: string]: string }; // Per-player VOD links mapped by Steam ID
   PlayerStats: MinimalPlayerStat[]; // minimal player stats for actions
+  ActionsIncomplete?: boolean; // Flag to indicate if actions data is incomplete (e.g., for older games without proper tagging)
 }
 
 export interface GameLogEntry {

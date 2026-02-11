@@ -108,27 +108,6 @@ async function loadExistingGameLog() {
 }
 
 /**
- * Build a set of existing AWS game IDs for quick lookup
- * @param {Object} existingGameLog - Existing game log data
- * @returns {Set} - Set of existing game IDs (AWS games only)
- */
-function buildExistingAwsGameIds(existingGameLog) {
-  const gameIds = new Set();
-  
-  if (existingGameLog?.GameStats) {
-    existingGameLog.GameStats.forEach(game => {
-      // Only track games that came from AWS (have Version field and no LegacyData without FullDataExported)
-      const isAWSGame = game.Version && (!game.LegacyData || game.LegacyData?.FullDataExported === false);
-      if (isAWSGame && MAIN_TEAM_FILTER(game.Id)) {
-        gameIds.add(game.Id);
-      }
-    });
-  }
-  
-  return gameIds;
-}
-
-/**
  * Check if a game is within the recent time window and should be updated
  * @param {Object} game - Game data
  * @param {Date} cutoffDate - Cutoff date for recent games

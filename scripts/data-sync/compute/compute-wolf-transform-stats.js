@@ -20,15 +20,22 @@ export function computeWolfTransformStatistics(games) {
     
     const endTiming = game.EndTiming;
     
+    // Check if this game has transformation data available
+    // Data is available in: modded games v0.243+ OR older games that have at least 1 transform action recorded
+    const gameVersion = parseFloat(game.Version || '0');
+    const hasGuaranteedTransformData = game.Modded && gameVersion >= 0.243;
+    const hasActualTransformData = game.PlayerStats.some(p => 
+      (p.Actions || []).some(a => a.ActionType === 'Transform' || a.ActionType === 'Untransform')
+    );
+    const gameHasTransformData = hasGuaranteedTransformData || hasActualTransformData;
+    
+    if (!gameHasTransformData) return;
+    
     game.PlayerStats.forEach(player => {
       const playerId = player.ID || player.Username;
       
       // Only process wolf roles
       if (!isWolfRole(player.MainRoleInitial)) return;
-      
-      // Only process modded games v0.217+ where Transform/Untransform data is available
-      const gameVersion = parseFloat(game.Version || '0');
-      if (!game.Modded || gameVersion < 0.217) return;
       
       // Calculate nights this player was alive as wolf
       const nightsAsWolf = calculateNightsAsWolf(player.DeathTiming, endTiming);
