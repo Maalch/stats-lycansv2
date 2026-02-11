@@ -43,29 +43,37 @@ export function calculateNightsAsWolf(deathTiming: string | null, endTiming: str
   
   const { phase, number } = parsed;
   
-  // Calculate nights played:
-  // - N1 death: 0 nights completed (died during first night)
-  // - J1 death: 0 nights (died during first day, before any night)
-  // - M1 death: 0 nights (died during first meeting)
-  // - N2 death: 1 night completed (lived through N1, died during N2)
-  // - J2 death: 1 night completed (lived through N1)
-  // - M2 death: 1 night completed
-  // - N3 death: 2 nights completed
-  // And so on...
+  // Calculate nights played based on game flow: N1 → M1 → J1 → N2 → M2 → J2 → N3 → M3 ...
+  // 
+  // Night phase (N): Player dies DURING this night
+  // - N1 death: 1 night opportunity (they're in N1, can transform before dying)
+  // - N2 death: 2 night opportunities (N1 complete + N2 partial)
+  // - N3 death: 3 night opportunities (N1, N2 complete + N3 partial)
+  // 
+  // Meeting phase (M): Player dies DURING meeting (AFTER the night of same number)
+  // - M1 death: 1 night completed (lived through N1, died in meeting)
+  // - M2 death: 2 nights completed (lived through N1, N2, died in meeting)
+  // - M3 death: 3 nights completed (lived through N1, N2, N3, died in meeting)
+  // 
+  // Day phase (J): Player dies DURING day (AFTER the night and meeting of same number)
+  // - J1 death: 1 night completed (lived through N1, M1, died during day)
+  // - J2 death: 2 nights completed (lived through N1, N2, M1, M2, died during day)
   
-  // Night phase: player dies DURING this night, so they completed (number - 1) full nights
+  // Night phase: player is IN this night, count it as an opportunity
   if (phase === 'N') {
-    // If they die during N1, they had 1 opportunity to transform (during N1)
-    // If they die during N2, they had 2 opportunities (N1 + part of N2)
-    return number; // Count the night they're in as an opportunity
+    return number;
   }
   
-  // Day or Meeting phase: player completed all previous nights
-  // J2 = lived through N1 = 1 night opportunity
-  // M2 = lived through N1 = 1 night opportunity
-  // J3 = lived through N1, N2 = 2 night opportunities
-  if (phase === 'J' || phase === 'M') {
-    return number - 1; // Number of complete nights before this day/meeting
+  // Meeting phase: player has completed all nights up to and including this number
+  // M1 happens AFTER N1, so M1 death = lived through N1
+  if (phase === 'M') {
+    return number;
+  }
+  
+  // Day phase: player has completed all nights up to and including this number
+  // J1 happens AFTER N1 and M1, so J1 death = lived through N1
+  if (phase === 'J') {
+    return number;
   }
   
   // Unknown timing (U): estimate based on day number
