@@ -85,7 +85,7 @@ function calculateNightsAsWolf(deathTiming, endTiming) {
  * @returns {boolean} - True if player can transform as wolf
  */
 function isWolfRole(mainRoleInitial) {
-  const wolfRoles = ['Loup', 'Traître', 'Louveteau'];
+  const wolfRoles = ['Loup'];
   return wolfRoles.includes(mainRoleInitial);
 }
 
@@ -107,6 +107,10 @@ export function computeWolfTransformStatistics(games) {
       
       // Only process wolf roles
       if (!isWolfRole(player.MainRoleInitial)) return;
+      
+      // Only process modded games v0.217+ where Transform/Untransform data is available
+      const gameVersion = parseFloat(game.Version || '0');
+      if (!game.Modded || gameVersion < 0.217) return;
       
       // Calculate nights this player was alive as wolf
       const nightsAsWolf = calculateNightsAsWolf(player.DeathTiming, endTiming);
