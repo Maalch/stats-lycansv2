@@ -359,14 +359,6 @@ export function DeathStatisticsChart() {
           error={survivalError}
         />
       )}
-
-      {/* Insights section using lycans styling */}
-      <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>
-        <p>
-          <strong>Note : </strong> 
-          {`Données en cours de récupération (données partielles).`}
-        </p>
-      </div>
     </div>
   );
 }
