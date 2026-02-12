@@ -10,6 +10,8 @@ export interface PlayerLootStats {
   gamesPlayed: number;
   totalLoot: number;
   averageLoot: number;
+  maxLootInGame: number; // Highest loot collected in a single game
+  recordGameId: string; // Game ID where the record loot was achieved
   totalGameDurationSeconds: number; // Total game time for normalization
   lootPer60Min: number; // Normalized loot collection rate per 60 minutes
 }
@@ -58,6 +60,8 @@ export function computeLootStats(gameData: GameLogEntry[], campFilter: CampFilte
     displayName: string;
     gamesPlayed: number;
     totalLoot: number;
+    maxLootInGame: number;
+    recordGameId: string;
     totalGameDurationSeconds: number;
   }>();
 
@@ -102,6 +106,8 @@ export function computeLootStats(gameData: GameLogEntry[], campFilter: CampFilte
           displayName,
           gamesPlayed: 0,
           totalLoot: 0,
+          maxLootInGame: 0,
+          recordGameId: game.DisplayedId,
           totalGameDurationSeconds: 0
         });
       }
@@ -109,6 +115,13 @@ export function computeLootStats(gameData: GameLogEntry[], campFilter: CampFilte
       const stats = playerMap.get(playerId)!;
       stats.gamesPlayed++;
       stats.totalLoot += player.TotalCollectedLoot;
+      
+      // Track the game ID where the record loot was achieved
+      if (player.TotalCollectedLoot > stats.maxLootInGame) {
+        stats.maxLootInGame = player.TotalCollectedLoot;
+        stats.recordGameId = game.DisplayedId;
+      }
+      
       stats.totalGameDurationSeconds += playerGameDuration;
     });
   });
@@ -126,6 +139,8 @@ export function computeLootStats(gameData: GameLogEntry[], campFilter: CampFilte
       gamesPlayed: stats.gamesPlayed,
       totalLoot: stats.totalLoot,
       averageLoot: stats.gamesPlayed > 0 ? stats.totalLoot / stats.gamesPlayed : 0,
+      maxLootInGame: stats.maxLootInGame,
+      recordGameId: stats.recordGameId,
       totalGameDurationSeconds: stats.totalGameDurationSeconds,
       lootPer60Min: stats.totalLoot * normalizationFactor
     };

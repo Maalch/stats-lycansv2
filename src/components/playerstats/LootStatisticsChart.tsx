@@ -90,6 +90,48 @@ export function LootStatisticsChart() {
     };
   }, [lootData, settings.highlightedPlayer]);
 
+  // Data processing with highlighting support - for record loot per game
+  const { recordLootChartData, highlightedPlayerAddedRecord } = useMemo(() => {
+    if (!lootData?.playerStats) {
+      return {
+        recordLootChartData: [],
+        highlightedPlayerAddedRecord: false
+      };
+    }
+
+    const stats = lootData.playerStats;
+
+    // Sort by max loot in game and take top 20 (no minimum games filter for record)
+    const sortedPlayers = stats
+      .sort((a, b) => b.maxLootInGame - a.maxLootInGame)
+      .slice(0, CHART_LIMITS.TOP_20);
+
+    // Check if highlighted player is in top 20
+    const highlightedInTop20 = settings.highlightedPlayer && 
+      sortedPlayers.some(p => p.player === settings.highlightedPlayer);
+
+    // Add highlighted player if not in top 20
+    let finalChartData: ChartLootStat[] = [...sortedPlayers];
+    let playerAdded = false;
+
+    if (settings.highlightedPlayer && !highlightedInTop20) {
+      const highlightedPlayerData = stats.find(p => p.player === settings.highlightedPlayer);
+
+      if (highlightedPlayerData) {
+        finalChartData.push({
+          ...highlightedPlayerData,
+          isHighlightedAddition: true
+        });
+        playerAdded = true;
+      }
+    }
+
+    return {
+      recordLootChartData: finalChartData,
+      highlightedPlayerAddedRecord: playerAdded
+    };
+  }, [lootData, settings.highlightedPlayer]);
+
   // Data processing with highlighting support - for normalized loot per 60 minutes
   const { normalizedLootChartData, highlightedPlayerAddedNormalized } = useMemo(() => {
     if (!lootData?.playerStats) {
@@ -306,7 +348,10 @@ export function LootStatisticsChart() {
                           }
                           strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                           opacity={isHighlightedAddition ? 0.8 : 1}
-                          onClick={() => navigateToGameDetails({ selectedPlayer: entry.player })}
+                          onClick={() => navigateToGameDetails({ 
+                            selectedPlayer: entry.player,
+                            fromComponent: 'Total Loot Collecté'
+                          })}
                           onMouseEnter={() => setHighlightedPlayer(entry.player)}
                           onMouseLeave={() => setHighlightedPlayer(null)}
                           style={{ cursor: 'pointer' }}
@@ -502,7 +547,10 @@ export function LootStatisticsChart() {
                           }
                           strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
                           opacity={isHighlightedAddition ? 0.8 : 1}
-                          onClick={() => navigateToGameDetails({ selectedPlayer: entry.player })}
+                          onClick={() => navigateToGameDetails({ 
+                            selectedPlayer: entry.player,
+                            fromComponent: 'Taux de Récolte (par 60 min)'
+                          })}
                           onMouseEnter={() => setHighlightedPlayer(entry.player)}
                           onMouseLeave={() => setHighlightedPlayer(null)}
                           style={{ cursor: 'pointer' }}
@@ -520,6 +568,192 @@ export function LootStatisticsChart() {
           </p>
           <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center', fontStyle: 'italic', marginTop: '0.25rem' }}>
             Taux normalisé par 60 minutes de jeu · Calculé sur {lootData.gamesWithLootData} parties avec données
+          </p>
+        </div>
+
+        {/* Record Loot Per Game Chart */}
+        <div className="lycans-graphique-section">
+          <div>
+            <h3>Record de Loot par Partie</h3>
+            {highlightedPlayerAddedRecord && settings.highlightedPlayer && (
+              <p style={{ 
+                fontSize: '0.8rem', 
+                color: 'var(--accent-primary-text)', 
+                fontStyle: 'italic',
+                marginTop: '0.25rem',
+                marginBottom: '0.5rem'
+              }}>
+                🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+              </p>
+            )}
+          </div>
+
+          <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <label htmlFor="camp-filter-select-record" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              Camp:
+            </label>
+            <select
+              id="camp-filter-select-record"
+              value={campFilter}
+              onChange={(e) => setCampFilter(e.target.value as CampFilter)}
+              style={{
+                background: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+                borderRadius: '4px',
+                padding: '0.25rem 0.5rem',
+                fontSize: '0.9rem'
+              }}
+            >
+              <option value="all">Tous les camps</option>
+              <option value="villageois">Camp Villageois</option>
+              <option value="loup">Camp Loup</option>
+              <option value="autres">Autres (Solo)</option>
+            </select>
+          </div>
+
+          <FullscreenChart title="Record de Loot par Partie">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={recordLootChartData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="player"
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                    interval={0}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
+                        fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
+                        fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
+                  />
+                  <YAxis 
+                    label={{ 
+                      value: 'Loot record en une partie', 
+                      angle: 270, 
+                      position: 'left', 
+                      offset: 15,
+                      style: { textAnchor: 'middle' } 
+                    }}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const d = payload[0].payload as ChartLootStat;
+                        const isHighlightedAddition = d.isHighlightedAddition;
+
+                        return (
+                          <div
+                            style={{
+                              background: 'var(--bg-secondary)',
+                              border: '1px solid var(--border-color)',
+                              borderRadius: '4px',
+                              padding: '8px',
+                              fontSize: '0.85rem'
+                            }}
+                          >
+                            <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{d.player}</div>
+                            <div>Parties jouées: {d.gamesPlayed}</div>
+                            <div style={{ marginTop: '4px', paddingTop: '4px', borderTop: '1px solid var(--border-color)' }}>
+                              <strong>Record de loot:</strong>
+                            </div>
+                            <div>{d.maxLootInGame.toLocaleString()} loot en une partie</div>
+                            <div style={{ marginTop: '4px', paddingTop: '4px', borderTop: '1px solid var(--border-color)' }}>
+                              <strong>Statistiques globales:</strong>
+                            </div>
+                            <div>Total: {d.totalLoot.toLocaleString()}</div>
+                            <div>Moyenne par partie: {d.averageLoot.toFixed(1)}</div>
+                            {isHighlightedAddition && (
+                              <div style={{ 
+                                marginTop: '4px', 
+                                paddingTop: '4px', 
+                                borderTop: '1px solid var(--accent-primary)',
+                                color: 'var(--accent-primary)',
+                                fontStyle: 'italic'
+                              }}>
+                                🎯 Affiché via sélection personnelle
+                              </div>
+                            )}
+                            <div style={{ 
+                              fontSize: '0.8rem', 
+                              color: 'var(--accent-primary)', 
+                              marginTop: '0.5rem',
+                              fontWeight: 'bold',
+                              textAlign: 'center',
+                              animation: 'pulse 1.5s infinite'
+                            }}>
+                              🖱️ Cliquez pour voir la partie record
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar dataKey="maxLootInGame">
+                    {recordLootChartData.map((entry, index) => {
+                      const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
+                      const isHoveredPlayer = highlightedPlayer === entry.player;
+                      const isHighlightedAddition = entry.isHighlightedAddition;
+
+                      const playerColor = playersColor[entry.player] || 'var(--chart-primary)';
+
+                      return (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={
+                            isHighlightedFromSettings ? 'var(--accent-primary)' :
+                            isHighlightedAddition ? 'var(--accent-secondary)' :
+                            playerColor
+                          }
+                          stroke={
+                            isHighlightedFromSettings ? "var(--accent-primary)" :
+                            isHoveredPlayer ? "#000000" : 
+                            "none"
+                          }
+                          strokeWidth={
+                            isHighlightedFromSettings ? 3 :
+                            isHoveredPlayer ? 2 : 
+                            0
+                          }
+                          strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                          opacity={isHighlightedAddition ? 0.8 : 1}
+                          onClick={() => navigateToGameDetails({ 
+                            selectedPlayer: entry.player, 
+                            selectedGame: entry.recordGameId,
+                            fromComponent: 'Record de Loot'
+                          })}
+                          onMouseEnter={() => setHighlightedPlayer(entry.player)}
+                          onMouseLeave={() => setHighlightedPlayer(null)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      );
+                    })}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
+
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
+            Top {recordLootChartData.length} des joueurs (tous joueurs inclus)
+          </p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center', fontStyle: 'italic', marginTop: '0.25rem' }}>
+            Meilleur score de loot collecté en une seule partie · Calculé sur {lootData.gamesWithLootData} parties avec données
           </p>
         </div>
       </div>

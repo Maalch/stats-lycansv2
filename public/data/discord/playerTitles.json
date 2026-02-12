@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-11T13:12:05.537Z",
+  "generatedAt": "2026-02-11T16:45:10.281Z",
   "teamName": "Discord Team",
   "totalPlayers": 44,
   "minGamesRequired": 25,
@@ -1608,29 +1608,6 @@
           "primaryOwner": "potedeo"
         },
         {
-          "id": "rodeur",
-          "title": "Le·a Rôdeur·euse",
-          "emoji": "🌙",
-          "description": "Rôde hors des villages et survit",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 82.95454545454545,
-          "conditions": [
-            {
-              "stat": "zoneResteCarte",
-              "category": "HIGH",
-              "actualValue": 14.814814814814813,
-              "actualPercentile": 88.63636363636364
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 46.478873239436616,
-              "actualPercentile": 77.27272727272727
-            }
-          ]
-        },
-        {
           "id": "aventurier",
           "title": "L'Aventurier·ère",
           "emoji": "🗺️",
@@ -1701,6 +1678,29 @@
           ]
         },
         {
+          "id": "rodeur",
+          "title": "Le·a Rôdeur·euse",
+          "emoji": "🌙",
+          "description": "Rôde hors des villages et survit",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 82.95454545454545,
+          "conditions": [
+            {
+              "stat": "zoneResteCarte",
+              "category": "HIGH",
+              "actualValue": 14.814814814814813,
+              "actualPercentile": 88.63636363636364
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 46.478873239436616,
+              "actualPercentile": 77.27272727272727
+            }
+          ]
+        },
+        {
           "id": "taulier",
           "title": "Le·a Taulier·e",
           "emoji": "🔑",
@@ -1724,29 +1724,6 @@
           "primaryOwner": "Timaki"
         },
         {
-          "id": "efficace",
-          "title": "L'Efficace",
-          "emoji": "🏭",
-          "description": "Silencieux·se mais productif·ve",
-          "priority": 10,
-          "type": "combination",
-          "percentile": 48.837209302325576,
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "LOW",
-              "actualValue": 564.1965052035766,
-              "actualPercentile": 30.23255813953488
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 794.0940273311054,
-              "actualPercentile": 67.44186046511628
-            }
-          ]
-        },
-        {
           "id": "cowboy",
           "title": "Le·a Cow-Boy",
           "emoji": "🤠",
@@ -1766,6 +1743,29 @@
               "category": "HIGH",
               "actualValue": 55.04587155963303,
               "actualPercentile": 76.74418604651163
+            }
+          ]
+        },
+        {
+          "id": "efficace",
+          "title": "L'Efficace",
+          "emoji": "🏭",
+          "description": "Silencieux·se mais productif·ve",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 48.837209302325576,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 564.1965052035766,
+              "actualPercentile": 30.23255813953488
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 794.0940273311054,
+              "actualPercentile": 67.44186046511628
             }
           ]
         },
@@ -2241,7 +2241,8 @@
               "actualValue": 32.38095238095238,
               "actualPercentile": 22.727272727272727
             }
-          ]
+          ],
+          "primaryOwner": "twitch.tv/hornicoo"
         },
         {
           "id": "taulier",
@@ -2335,8 +2336,7 @@
           "percentile": 11.627906976744185,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Frakkazak"
+          "type": "basic"
         },
         {
           "id": "lootVillageois_extreme_low",
@@ -2480,17 +2480,17 @@
         }
       ],
       "primaryTitle": {
-        "id": "pitre",
-        "title": "Le·a Pitre",
-        "emoji": "🎪",
-        "description": "Bavard·e, improductif·ve, meurt souvent",
+        "id": "commentateur",
+        "title": "Le·a Commentateur·rice",
+        "emoji": "📻",
+        "description": "Ne fait que parler, ne récolte rien et tue peu",
         "priority": 17,
         "type": "combination",
-        "percentile": 40.90909090909091,
+        "percentile": 39.3939393939394,
         "conditions": [
           {
             "stat": "talking",
-            "category": "HIGH",
+            "category": "EXTREME_HIGH",
             "actualValue": 1132.4696327777056,
             "actualPercentile": 88.37209302325581
           },
@@ -2501,10 +2501,10 @@
             "actualPercentile": 11.627906976744185
           },
           {
-            "stat": "survival",
+            "stat": "killRate",
             "category": "LOW",
-            "actualValue": 32.38095238095238,
-            "actualPercentile": 22.727272727272727
+            "actualValue": 0.2761904761904762,
+            "actualPercentile": 18.181818181818183
           }
         ]
       },
@@ -2903,6 +2903,29 @@
           "primaryOwner": "Kid"
         },
         {
+          "id": "grande_gueule",
+          "title": "La Grande Gueule",
+          "emoji": "🗯️",
+          "description": "Parle trop et meurt Jour 1",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 50.8985200845666,
+          "conditions": [
+            {
+              "stat": "survivalDay1",
+              "category": "LOW",
+              "actualValue": 86.26373626373626,
+              "actualPercentile": 22.727272727272727
+            },
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 998.9412366252832,
+              "actualPercentile": 79.06976744186046
+            }
+          ]
+        },
+        {
           "id": "taulier",
           "title": "Le·a Taulier·e",
           "emoji": "🔑",
@@ -2948,29 +2971,6 @@
             }
           ],
           "primaryOwner": "Ekaenerys"
-        },
-        {
-          "id": "grande_gueule",
-          "title": "La Grande Gueule",
-          "emoji": "🗯️",
-          "description": "Parle trop et meurt Jour 1",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 50.8985200845666,
-          "conditions": [
-            {
-              "stat": "survivalDay1",
-              "category": "LOW",
-              "actualValue": 86.26373626373626,
-              "actualPercentile": 22.727272727272727
-            },
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 998.9412366252832,
-              "actualPercentile": 79.06976744186046
-            }
-          ]
         },
         {
           "id": "demagogue",
@@ -3531,29 +3531,6 @@
           "primaryOwner": "Acuado"
         },
         {
-          "id": "taulier",
-          "title": "Le·a Taulier·e",
-          "emoji": "🔑",
-          "description": "Participe beaucoup et excelle dans un camp",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 79.54545454545455,
-          "conditions": [
-            {
-              "stat": "gamesPlayed",
-              "category": "HIGH",
-              "actualValue": 107,
-              "actualPercentile": 79.54545454545455
-            },
-            {
-              "stat": "campBalance",
-              "category": "SPECIALIST",
-              "actualPercentile": 0
-            }
-          ],
-          "primaryOwner": "Timaki"
-        },
-        {
           "id": "grande_gueule",
           "title": "La Grande Gueule",
           "emoji": "🗯️",
@@ -3575,6 +3552,29 @@
               "actualPercentile": 90.69767441860465
             }
           ]
+        },
+        {
+          "id": "taulier",
+          "title": "Le·a Taulier·e",
+          "emoji": "🔑",
+          "description": "Participe beaucoup et excelle dans un camp",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 79.54545454545455,
+          "conditions": [
+            {
+              "stat": "gamesPlayed",
+              "category": "HIGH",
+              "actualValue": 107,
+              "actualPercentile": 79.54545454545455
+            },
+            {
+              "stat": "campBalance",
+              "category": "SPECIALIST",
+              "actualPercentile": 0
+            }
+          ],
+          "primaryOwner": "Timaki"
         },
         {
           "id": "cowboy",
@@ -4465,7 +4465,7 @@
         },
         {
           "id": "adaptable",
-          "title": "L'Adaptable",
+          "title": "Le·a Caméléon",
           "emoji": "🦎",
           "description": "Bon dans tous les camps",
           "priority": 18,
@@ -4492,30 +4492,6 @@
             }
           ],
           "primaryOwner": "Lhuun"
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 16,
-          "type": "combination",
-          "percentile": 78.4090909090909,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6,
-              "actualPercentile": 68.18181818181817
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 52.72727272727272,
-              "actualPercentile": 88.63636363636364
-            }
-          ],
-          "primaryOwner": "VVentus02"
         },
         {
           "id": "maitre_ceremonie",
@@ -4593,6 +4569,30 @@
             }
           ],
           "primaryOwner": "Johnny"
+        },
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "percentile": 78.4090909090909,
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.6,
+              "actualPercentile": 68.18181818181817
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 52.72727272727272,
+              "actualPercentile": 88.63636363636364
+            }
+          ],
+          "primaryOwner": "VVentus02"
         },
         {
           "id": "traitre",
@@ -5282,6 +5282,30 @@
           "primaryOwner": "Acuado"
         },
         {
+          "id": "abeille_ouvriere",
+          "title": "L'Abeille Ouvrière",
+          "emoji": "🐝",
+          "description": "Récolte bien en Villageois mais perd",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 47.78270509977827,
+          "conditions": [
+            {
+              "stat": "lootVillageois",
+              "category": "HIGH",
+              "actualValue": 878.4475527207414,
+              "actualPercentile": 68.29268292682927
+            },
+            {
+              "stat": "winRateVillageois",
+              "category": "LOW",
+              "actualValue": 54.285714285714285,
+              "actualPercentile": 27.27272727272727
+            }
+          ],
+          "primaryOwner": "Lithia"
+        },
+        {
           "id": "en_rodage",
           "title": "En Rodage",
           "emoji": "🔧",
@@ -5310,30 +5334,6 @@
             }
           ],
           "primaryOwner": "QuicheLoLardon"
-        },
-        {
-          "id": "abeille_ouvriere",
-          "title": "L'Abeille Ouvrière",
-          "emoji": "🐝",
-          "description": "Récolte bien en Villageois mais perd",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 47.78270509977827,
-          "conditions": [
-            {
-              "stat": "lootVillageois",
-              "category": "HIGH",
-              "actualValue": 878.4475527207414,
-              "actualPercentile": 68.29268292682927
-            },
-            {
-              "stat": "winRateVillageois",
-              "category": "LOW",
-              "actualValue": 54.285714285714285,
-              "actualPercentile": 27.27272727272727
-            }
-          ],
-          "primaryOwner": "Lithia"
         },
         {
           "id": "efficace",
@@ -5822,7 +5822,7 @@
           "title": "L'Alpha",
           "emoji": "🦁",
           "description": "Tue beaucoup et survit",
-          "priority": 16,
+          "priority": 15,
           "type": "combination",
           "percentile": 89.77272727272728,
           "conditions": [
@@ -5840,30 +5840,6 @@
             }
           ],
           "primaryOwner": "VVentus02"
-        },
-        {
-          "id": "tete_brulee",
-          "title": "La Tête Brûlée",
-          "emoji": "💣",
-          "description": "Tue beaucoup mais fait perdre son camp",
-          "priority": 13,
-          "type": "combination",
-          "percentile": 46.59090909090909,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.71875,
-              "actualPercentile": 81.81818181818183
-            },
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 34.4,
-              "actualPercentile": 11.363636363636363
-            }
-          ],
-          "primaryOwner": "Yoshikuri"
         },
         {
           "id": "embusquer",
@@ -5890,28 +5866,28 @@
           "primaryOwner": "Zest"
         },
         {
-          "id": "poissard",
-          "title": "Le·a Poissard·e",
-          "emoji": "🌧️",
-          "description": "Perd tout le temps + grosses séries de défaites",
-          "priority": 12,
+          "id": "tete_brulee",
+          "title": "La Tête Brûlée",
+          "emoji": "💣",
+          "description": "Tue beaucoup mais fait perdre son camp",
+          "priority": 13,
           "type": "combination",
           "percentile": 46.59090909090909,
           "conditions": [
             {
-              "stat": "winRate",
-              "category": "EXTREME_LOW",
-              "actualValue": 34.4,
-              "actualPercentile": 11.363636363636363
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.71875,
+              "actualPercentile": 81.81818181818183
             },
             {
-              "stat": "lossSeries",
-              "category": "HIGH",
-              "actualValue": 9,
-              "actualPercentile": 81.81818181818183
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 34.4,
+              "actualPercentile": 11.363636363636363
             }
           ],
-          "primaryOwner": "Eaglhan"
+          "primaryOwner": "Yoshikuri"
         },
         {
           "id": "ermite",
@@ -5961,27 +5937,28 @@
           ]
         },
         {
-          "id": "couard",
-          "title": "Le·a Couard·e",
-          "emoji": "🐢",
-          "description": "Survit longtemps mais perd quand même",
-          "priority": 11,
+          "id": "poissard",
+          "title": "Le·a Poissard·e",
+          "emoji": "🌧️",
+          "description": "Perd tout le temps + grosses séries de défaites",
+          "priority": 12,
           "type": "combination",
-          "percentile": 54.54545454545455,
+          "percentile": 46.59090909090909,
           "conditions": [
             {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 59.375,
-              "actualPercentile": 97.72727272727273
-            },
-            {
               "stat": "winRate",
-              "category": "LOW",
+              "category": "EXTREME_LOW",
               "actualValue": 34.4,
               "actualPercentile": 11.363636363636363
+            },
+            {
+              "stat": "lossSeries",
+              "category": "HIGH",
+              "actualValue": 9,
+              "actualPercentile": 81.81818181818183
             }
-          ]
+          ],
+          "primaryOwner": "Eaglhan"
         },
         {
           "id": "moissonneur",
@@ -6003,6 +5980,29 @@
               "category": "HIGH",
               "actualValue": 886.0169626154277,
               "actualPercentile": 83.72093023255815
+            }
+          ]
+        },
+        {
+          "id": "couard",
+          "title": "Le·a Couard·e",
+          "emoji": "🐢",
+          "description": "Survit longtemps mais perd quand même",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 54.54545454545455,
+          "conditions": [
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 59.375,
+              "actualPercentile": 97.72727272727273
+            },
+            {
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 34.4,
+              "actualPercentile": 11.363636363636363
             }
           ]
         },
@@ -6442,6 +6442,35 @@
       "gamesPlayed": 82,
       "titles": [
         {
+          "id": "pitre",
+          "title": "Le·a Pitre",
+          "emoji": "🎪",
+          "description": "Bavard·e, improductif·ve, meurt souvent",
+          "priority": 17,
+          "type": "combination",
+          "percentile": 44.67935165609584,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 940.2595503999524,
+              "actualPercentile": 74.4186046511628
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 603.3552877658659,
+              "actualPercentile": 23.25581395348837
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 36.58536585365854,
+              "actualPercentile": 36.36363636363637
+            }
+          ]
+        },
+        {
           "id": "assassin",
           "title": "L'Assassin·e",
           "emoji": "🗡️",
@@ -6486,7 +6515,8 @@
               "actualValue": 603.3552877658659,
               "actualPercentile": 23.25581395348837
             }
-          ]
+          ],
+          "primaryOwner": "Frakkazak"
         },
         {
           "id": "populiste",
@@ -6519,29 +6549,6 @@
           "primaryOwner": "Kid"
         },
         {
-          "id": "philosophe",
-          "title": "Le·a Philosophe",
-          "emoji": "📚",
-          "description": "Bavard·e mais improductif·ve",
-          "priority": 10,
-          "type": "combination",
-          "percentile": 48.83720930232558,
-          "conditions": [
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 940.2595503999524,
-              "actualPercentile": 74.4186046511628
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 603.3552877658659,
-              "actualPercentile": 23.25581395348837
-            }
-          ]
-        },
-        {
           "id": "demagogue",
           "title": "Le·a Démagogue",
           "emoji": "📣",
@@ -6561,6 +6568,29 @@
               "category": "LOW",
               "actualValue": 76.47058823529412,
               "actualPercentile": 11.627906976744185
+            }
+          ]
+        },
+        {
+          "id": "philosophe",
+          "title": "Le·a Philosophe",
+          "emoji": "📚",
+          "description": "Bavard·e mais improductif·ve",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 48.83720930232558,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 940.2595503999524,
+              "actualPercentile": 74.4186046511628
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 603.3552877658659,
+              "actualPercentile": 23.25581395348837
             }
           ]
         },
@@ -6720,25 +6750,31 @@
         }
       ],
       "primaryTitle": {
-        "id": "campeur",
-        "title": "Le·a Campeur·euse",
-        "emoji": "🏕️",
-        "description": "Reste au même endroit sans récolter",
-        "priority": 14,
+        "id": "pitre",
+        "title": "Le·a Pitre",
+        "emoji": "🎪",
+        "description": "Bavard·e, improductif·ve, meurt souvent",
+        "priority": 17,
         "type": "combination",
-        "percentile": 58.21881606765327,
+        "percentile": 44.67935165609584,
         "conditions": [
           {
-            "stat": "zoneDominantPercentage",
-            "category": "EXTREME_HIGH",
-            "actualValue": 60.91954022988506,
-            "actualPercentile": 93.18181818181817
+            "stat": "talking",
+            "category": "HIGH",
+            "actualValue": 940.2595503999524,
+            "actualPercentile": 74.4186046511628
           },
           {
             "stat": "loot",
             "category": "LOW",
             "actualValue": 603.3552877658659,
             "actualPercentile": 23.25581395348837
+          },
+          {
+            "stat": "survival",
+            "category": "LOW",
+            "actualValue": 36.58536585365854,
+            "actualPercentile": 36.36363636363637
           }
         ]
       },
@@ -6964,29 +7000,6 @@
           "primaryOwner": "Nales"
         },
         {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 16,
-          "type": "combination",
-          "percentile": 89.77272727272727,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.7461538461538462,
-              "actualPercentile": 93.18181818181817
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 49.23076923076923,
-              "actualPercentile": 86.36363636363636
-            }
-          ]
-        },
-        {
           "id": "loup_alpha",
           "title": "Le Loup Alpha",
           "emoji": "🐺",
@@ -7009,6 +7022,29 @@
             }
           ],
           "primaryOwner": "Johnny"
+        },
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "percentile": 89.77272727272727,
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.7461538461538462,
+              "actualPercentile": 93.18181818181817
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 49.23076923076923,
+              "actualPercentile": 86.36363636363636
+            }
+          ]
         },
         {
           "id": "traitre",
@@ -7082,6 +7118,29 @@
           "primaryOwner": "Nocxy"
         },
         {
+          "id": "cueilleur",
+          "title": "Le·a Cueilleur·se",
+          "emoji": "🧺",
+          "description": "Récolte en parcourant toute la carte",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 46.35306553911205,
+          "conditions": [
+            {
+              "stat": "zoneDominantPercentage",
+              "category": "LOW",
+              "actualValue": 40.95238095238095,
+              "actualPercentile": 13.636363636363635
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 856.8327093080557,
+              "actualPercentile": 79.06976744186046
+            }
+          ]
+        },
+        {
           "id": "rodeur",
           "title": "Le·a Rôdeur·euse",
           "emoji": "🌙",
@@ -7104,29 +7163,6 @@
             }
           ],
           "primaryOwner": "Gaëtan R"
-        },
-        {
-          "id": "cueilleur",
-          "title": "Le·a Cueilleur·se",
-          "emoji": "🧺",
-          "description": "Récolte en parcourant toute la carte",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 46.35306553911205,
-          "conditions": [
-            {
-              "stat": "zoneDominantPercentage",
-              "category": "LOW",
-              "actualValue": 40.95238095238095,
-              "actualPercentile": 13.636363636363635
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 856.8327093080557,
-              "actualPercentile": 79.06976744186046
-            }
-          ]
         },
         {
           "id": "moissonneur",
@@ -7393,7 +7429,7 @@
         "title": "L'Alpha",
         "emoji": "🦁",
         "description": "Tue beaucoup et survit",
-        "priority": 16,
+        "priority": 15,
         "type": "combination",
         "percentile": 89.77272727272727,
         "conditions": [
@@ -7638,7 +7674,7 @@
         },
         {
           "id": "adaptable",
-          "title": "L'Adaptable",
+          "title": "Le·a Caméléon",
           "emoji": "🦎",
           "description": "Bon dans tous les camps",
           "priority": 18,
@@ -7727,30 +7763,6 @@
           "primaryOwner": "potedeo"
         },
         {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 16,
-          "type": "combination",
-          "percentile": 95.45454545454545,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.7572815533980582,
-              "actualPercentile": 95.45454545454545
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 56.310679611650485,
-              "actualPercentile": 95.45454545454545
-            }
-          ],
-          "primaryOwner": "VVentus02"
-        },
-        {
           "id": "loup_alpha",
           "title": "Le Loup Alpha",
           "emoji": "🐺",
@@ -7773,6 +7785,30 @@
             }
           ],
           "primaryOwner": "Johnny"
+        },
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "percentile": 95.45454545454545,
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.7572815533980582,
+              "actualPercentile": 95.45454545454545
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 56.310679611650485,
+              "actualPercentile": 95.45454545454545
+            }
+          ],
+          "primaryOwner": "VVentus02"
         },
         {
           "id": "infiltrateur",
@@ -7799,6 +7835,29 @@
           "primaryOwner": "esudrak"
         },
         {
+          "id": "traitre",
+          "title": "Le·a Traître·sse",
+          "emoji": "🦹",
+          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
+          "priority": 14,
+          "type": "combination",
+          "percentile": 83.55263157894737,
+          "conditions": [
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 41.37931034482759,
+              "actualPercentile": 92.10526315789474
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 21.568627450980394,
+              "actualPercentile": 75
+            }
+          ]
+        },
+        {
           "id": "citoyen_exemplaire",
           "title": "Le·a Citoyen·ne Exemplaire",
           "emoji": "👑",
@@ -7821,29 +7880,6 @@
             }
           ],
           "primaryOwner": "TTanjun"
-        },
-        {
-          "id": "traitre",
-          "title": "Le·a Traître·sse",
-          "emoji": "🦹",
-          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 83.55263157894737,
-          "conditions": [
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 41.37931034482759,
-              "actualPercentile": 92.10526315789474
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 21.568627450980394,
-              "actualPercentile": 75
-            }
-          ]
         },
         {
           "id": "detective",
@@ -8412,29 +8448,6 @@
           "primaryOwner": "Edjadada"
         },
         {
-          "id": "avocat",
-          "title": "L'Avocat·e",
-          "emoji": "⚖️",
-          "description": "Silencieux·se hors débats, éloquent·e en meeting",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 58.13953488372093,
-          "conditions": [
-            {
-              "stat": "talkingOutsideMeeting",
-              "category": "LOW",
-              "actualValue": 419.6748834246303,
-              "actualPercentile": 34.883720930232556
-            },
-            {
-              "stat": "talkingDuringMeeting",
-              "category": "HIGH",
-              "actualValue": 319.0552364674213,
-              "actualPercentile": 81.3953488372093
-            }
-          ]
-        },
-        {
           "id": "taulier",
           "title": "Le·a Taulier·e",
           "emoji": "🔑",
@@ -8456,6 +8469,29 @@
             }
           ],
           "primaryOwner": "Timaki"
+        },
+        {
+          "id": "avocat",
+          "title": "L'Avocat·e",
+          "emoji": "⚖️",
+          "description": "Silencieux·se hors débats, éloquent·e en meeting",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 58.13953488372093,
+          "conditions": [
+            {
+              "stat": "talkingOutsideMeeting",
+              "category": "LOW",
+              "actualValue": 419.6748834246303,
+              "actualPercentile": 34.883720930232556
+            },
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "HIGH",
+              "actualValue": 319.0552364674213,
+              "actualPercentile": 81.3953488372093
+            }
+          ]
         },
         {
           "id": "en_rodage",
@@ -9112,8 +9148,7 @@
           "percentile": 13.953488372093023,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Frakkazak"
+          "type": "basic"
         },
         {
           "id": "lootVillageois_extreme_low",
@@ -9504,7 +9539,7 @@
           "title": "L'Alpha",
           "emoji": "🦁",
           "description": "Tue beaucoup et survit",
-          "priority": 16,
+          "priority": 15,
           "type": "combination",
           "percentile": 80.68181818181819,
           "conditions": [
@@ -9833,27 +9868,28 @@
       "gamesPlayed": 26,
       "titles": [
         {
-          "id": "lanceur_alerte",
-          "title": "Le·a Lanceur·se d'Alerte",
-          "emoji": "🚨",
-          "description": "Vote juste mais se fait éliminer pour ça",
+          "id": "embusquer",
+          "title": "L'Embusqué·e",
+          "emoji": "🏹",
+          "description": "Tend des pièges dans les Ruines",
           "priority": 13,
           "type": "combination",
-          "percentile": 90.69767441860465,
+          "percentile": 71.5909090909091,
           "conditions": [
             {
-              "stat": "votingAccuracy",
+              "stat": "zoneRuines",
               "category": "HIGH",
-              "actualValue": 91.66666666666666,
-              "actualPercentile": 90.69767441860465
+              "actualValue": 9.090909090909092,
+              "actualPercentile": 68.18181818181817
             },
             {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 19.230769230769234,
-              "actualPercentile": 0
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.6538461538461539,
+              "actualPercentile": 75
             }
-          ]
+          ],
+          "primaryOwner": "Zest"
         },
         {
           "id": "tete_brulee",
@@ -9880,13 +9916,36 @@
           "primaryOwner": "Yoshikuri"
         },
         {
-          "id": "embusquer",
-          "title": "L'Embusqué·e",
-          "emoji": "🏹",
-          "description": "Tend des pièges dans les Ruines",
+          "id": "lanceur_alerte",
+          "title": "Le·a Lanceur·se d'Alerte",
+          "emoji": "🚨",
+          "description": "Vote juste mais se fait éliminer pour ça",
           "priority": 13,
           "type": "combination",
-          "percentile": 71.5909090909091,
+          "percentile": 90.69767441860465,
+          "conditions": [
+            {
+              "stat": "votingAccuracy",
+              "category": "HIGH",
+              "actualValue": 91.66666666666666,
+              "actualPercentile": 90.69767441860465
+            },
+            {
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 19.230769230769234,
+              "actualPercentile": 0
+            }
+          ]
+        },
+        {
+          "id": "ermite",
+          "title": "L'Ermite",
+          "emoji": "🧙",
+          "description": "Silencieux·se, reclus·e dans les Ruines",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 35.2536997885835,
           "conditions": [
             {
               "stat": "zoneRuines",
@@ -9895,13 +9954,13 @@
               "actualPercentile": 68.18181818181817
             },
             {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6538461538461539,
-              "actualPercentile": 75
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 338.8678723750711,
+              "actualPercentile": 2.3255813953488373
             }
           ],
-          "primaryOwner": "Zest"
+          "primaryOwner": "Reivilo1978"
         },
         {
           "id": "kamikaze",
@@ -9974,30 +10033,6 @@
             }
           ],
           "primaryOwner": "Eaglhan"
-        },
-        {
-          "id": "ermite",
-          "title": "L'Ermite",
-          "emoji": "🧙",
-          "description": "Silencieux·se, reclus·e dans les Ruines",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 35.2536997885835,
-          "conditions": [
-            {
-              "stat": "zoneRuines",
-              "category": "HIGH",
-              "actualValue": 9.090909090909092,
-              "actualPercentile": 68.18181818181817
-            },
-            {
-              "stat": "talking",
-              "category": "LOW",
-              "actualValue": 338.8678723750711,
-              "actualPercentile": 2.3255813953488373
-            }
-          ],
-          "primaryOwner": "Reivilo1978"
         },
         {
           "id": "winRate_extreme_low",
@@ -10783,29 +10818,6 @@
       "gamesPlayed": 44,
       "titles": [
         {
-          "id": "theoricien",
-          "title": "Le·a Théoricien·ne",
-          "emoji": "🎓",
-          "description": "Parle beaucoup en débat mais vote peu",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 54.28118393234672,
-          "conditions": [
-            {
-              "stat": "talkingDuringMeeting",
-              "category": "HIGH",
-              "actualValue": 310.2735902440205,
-              "actualPercentile": 76.74418604651163
-            },
-            {
-              "stat": "votingAggressive",
-              "category": "LOW",
-              "actualValue": -14.125,
-              "actualPercentile": 31.818181818181817
-            }
-          ]
-        },
-        {
           "id": "sorciere",
           "title": "La Sorcière",
           "emoji": "🧙",
@@ -10828,6 +10840,29 @@
             }
           ],
           "primaryOwner": "Luluxurious"
+        },
+        {
+          "id": "theoricien",
+          "title": "Le·a Théoricien·ne",
+          "emoji": "🎓",
+          "description": "Parle beaucoup en débat mais vote peu",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 54.28118393234672,
+          "conditions": [
+            {
+              "stat": "talkingDuringMeeting",
+              "category": "HIGH",
+              "actualValue": 310.2735902440205,
+              "actualPercentile": 76.74418604651163
+            },
+            {
+              "stat": "votingAggressive",
+              "category": "LOW",
+              "actualValue": -14.125,
+              "actualPercentile": 31.818181818181817
+            }
+          ]
         },
         {
           "id": "demagogue",
@@ -11735,7 +11770,7 @@
       "titles": [
         {
           "id": "adaptable",
-          "title": "L'Adaptable",
+          "title": "Le·a Caméléon",
           "emoji": "🦎",
           "description": "Bon dans tous les camps",
           "priority": 18,
@@ -11840,6 +11875,29 @@
           ]
         },
         {
+          "id": "traitre",
+          "title": "Le·a Traître·sse",
+          "emoji": "🦹",
+          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
+          "priority": 14,
+          "type": "combination",
+          "percentile": 93.48684210526315,
+          "conditions": [
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 40,
+              "actualPercentile": 89.47368421052632
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 50,
+              "actualPercentile": 97.5
+            }
+          ]
+        },
+        {
           "id": "assassin",
           "title": "L'Assassin·e",
           "emoji": "🗡️",
@@ -11862,29 +11920,6 @@
             }
           ],
           "primaryOwner": "Tomill"
-        },
-        {
-          "id": "traitre",
-          "title": "Le·a Traître·sse",
-          "emoji": "🦹",
-          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 93.48684210526315,
-          "conditions": [
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 40,
-              "actualPercentile": 89.47368421052632
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 50,
-              "actualPercentile": 97.5
-            }
-          ]
         },
         {
           "id": "embusquer",
@@ -12463,30 +12498,6 @@
           "primaryOwner": "potedeo"
         },
         {
-          "id": "detective",
-          "title": "Le·a Détective",
-          "emoji": "🔎",
-          "description": "Observe silencieusement et vote juste",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 46.51162790697674,
-          "conditions": [
-            {
-              "stat": "votingAccuracy",
-              "category": "HIGH",
-              "actualValue": 89.36170212765957,
-              "actualPercentile": 81.3953488372093
-            },
-            {
-              "stat": "talking",
-              "category": "LOW",
-              "actualValue": 441.95591255024874,
-              "actualPercentile": 11.627906976744185
-            }
-          ],
-          "primaryOwner": "Staro"
-        },
-        {
           "id": "ermite",
           "title": "L'Ermite",
           "emoji": "🧙",
@@ -12511,27 +12522,28 @@
           "primaryOwner": "Reivilo1978"
         },
         {
-          "id": "efficace",
-          "title": "L'Efficace",
-          "emoji": "🏭",
-          "description": "Silencieux·se mais productif·ve",
-          "priority": 10,
+          "id": "detective",
+          "title": "Le·a Détective",
+          "emoji": "🔎",
+          "description": "Observe silencieusement et vote juste",
+          "priority": 12,
           "type": "combination",
-          "percentile": 48.83720930232558,
+          "percentile": 46.51162790697674,
           "conditions": [
+            {
+              "stat": "votingAccuracy",
+              "category": "HIGH",
+              "actualValue": 89.36170212765957,
+              "actualPercentile": 81.3953488372093
+            },
             {
               "stat": "talking",
               "category": "LOW",
               "actualValue": 441.95591255024874,
               "actualPercentile": 11.627906976744185
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 897.9080181331009,
-              "actualPercentile": 86.04651162790698
             }
-          ]
+          ],
+          "primaryOwner": "Staro"
         },
         {
           "id": "cowboy",
@@ -12553,6 +12565,29 @@
               "category": "HIGH",
               "actualValue": 53.191489361702125,
               "actualPercentile": 74.4186046511628
+            }
+          ]
+        },
+        {
+          "id": "efficace",
+          "title": "L'Efficace",
+          "emoji": "🏭",
+          "description": "Silencieux·se mais productif·ve",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 48.83720930232558,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "LOW",
+              "actualValue": 441.95591255024874,
+              "actualPercentile": 11.627906976744185
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 897.9080181331009,
+              "actualPercentile": 86.04651162790698
             }
           ]
         },
@@ -12991,30 +13026,6 @@
           "primaryOwner": "Kid"
         },
         {
-          "id": "avide",
-          "title": "L'Avide",
-          "emoji": "💰",
-          "description": "Récolte beaucoup mais meurt",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 70.42811839323467,
-          "conditions": [
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 1212.3730494978577,
-              "actualPercentile": 97.67441860465115
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 36.986301369863014,
-              "actualPercentile": 43.18181818181818
-            }
-          ],
-          "primaryOwner": "Acuado"
-        },
-        {
           "id": "aventurier",
           "title": "L'Aventurier·ère",
           "emoji": "🗺️",
@@ -13085,27 +13096,28 @@
           "primaryOwner": "Luluxurious"
         },
         {
-          "id": "grande_gueule",
-          "title": "La Grande Gueule",
-          "emoji": "🗯️",
-          "description": "Parle trop et meurt Jour 1",
-          "priority": 11,
+          "id": "avide",
+          "title": "L'Avide",
+          "emoji": "💰",
+          "description": "Récolte beaucoup mais meurt",
+          "priority": 12,
           "type": "combination",
-          "percentile": 54.28118393234672,
+          "percentile": 70.42811839323467,
           "conditions": [
             {
-              "stat": "survivalDay1",
-              "category": "LOW",
-              "actualValue": 87.67123287671232,
-              "actualPercentile": 31.818181818181817
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 1212.3730494978577,
+              "actualPercentile": 97.67441860465115
             },
             {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 962.8841587753215,
-              "actualPercentile": 76.74418604651163
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 36.986301369863014,
+              "actualPercentile": 43.18181818181818
             }
-          ]
+          ],
+          "primaryOwner": "Acuado"
         },
         {
           "id": "moissonneur",
@@ -13131,25 +13143,25 @@
           ]
         },
         {
-          "id": "hyperactif",
-          "title": "L'Hyperactif·ve",
-          "emoji": "⚡",
-          "description": "Bavard·e ET grande récolte",
-          "priority": 10,
+          "id": "grande_gueule",
+          "title": "La Grande Gueule",
+          "emoji": "🗯️",
+          "description": "Parle trop et meurt Jour 1",
+          "priority": 11,
           "type": "combination",
-          "percentile": 87.20930232558139,
+          "percentile": 54.28118393234672,
           "conditions": [
+            {
+              "stat": "survivalDay1",
+              "category": "LOW",
+              "actualValue": 87.67123287671232,
+              "actualPercentile": 31.818181818181817
+            },
             {
               "stat": "talking",
               "category": "HIGH",
               "actualValue": 962.8841587753215,
               "actualPercentile": 76.74418604651163
-            },
-            {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 1212.3730494978577,
-              "actualPercentile": 97.67441860465115
             }
           ]
         },
@@ -13196,6 +13208,29 @@
               "category": "LOW",
               "actualValue": 67.27272727272727,
               "actualPercentile": 2.3255813953488373
+            }
+          ]
+        },
+        {
+          "id": "hyperactif",
+          "title": "L'Hyperactif·ve",
+          "emoji": "⚡",
+          "description": "Bavard·e ET grande récolte",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 87.20930232558139,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 962.8841587753215,
+              "actualPercentile": 76.74418604651163
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 1212.3730494978577,
+              "actualPercentile": 97.67441860465115
             }
           ]
         },
@@ -13594,7 +13629,7 @@
       "titles": [
         {
           "id": "adaptable",
-          "title": "L'Adaptable",
+          "title": "Le·a Caméléon",
           "emoji": "🦎",
           "description": "Bon dans tous les camps",
           "priority": 18,
@@ -13646,6 +13681,29 @@
           "primaryOwner": "Akunoto"
         },
         {
+          "id": "traitre",
+          "title": "Le·a Traître·sse",
+          "emoji": "🦹",
+          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
+          "priority": 14,
+          "type": "combination",
+          "percentile": 94.93421052631578,
+          "conditions": [
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 58.82352941176471,
+              "actualPercentile": 97.36842105263158
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 30.76923076923077,
+              "actualPercentile": 92.5
+            }
+          ]
+        },
+        {
           "id": "citoyen_exemplaire",
           "title": "Le·a Citoyen·ne Exemplaire",
           "emoji": "👑",
@@ -13668,29 +13726,6 @@
             }
           ],
           "primaryOwner": "TTanjun"
-        },
-        {
-          "id": "traitre",
-          "title": "Le·a Traître·sse",
-          "emoji": "🦹",
-          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 94.93421052631578,
-          "conditions": [
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 58.82352941176471,
-              "actualPercentile": 97.36842105263158
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 30.76923076923077,
-              "actualPercentile": 92.5
-            }
-          ]
         },
         {
           "id": "embusquer",
@@ -13741,29 +13776,6 @@
           "primaryOwner": "Luluxurious"
         },
         {
-          "id": "taulier",
-          "title": "Le·a Taulier·e",
-          "emoji": "🔑",
-          "description": "Participe beaucoup et excelle dans un camp",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 75,
-          "conditions": [
-            {
-              "stat": "gamesPlayed",
-              "category": "HIGH",
-              "actualValue": 104,
-              "actualPercentile": 75
-            },
-            {
-              "stat": "campBalance",
-              "category": "SPECIALIST",
-              "actualPercentile": 0
-            }
-          ],
-          "primaryOwner": "Timaki"
-        },
-        {
           "id": "grande_gueule",
           "title": "La Grande Gueule",
           "emoji": "🗯️",
@@ -13787,27 +13799,27 @@
           ]
         },
         {
-          "id": "hyperactif",
-          "title": "L'Hyperactif·ve",
-          "emoji": "⚡",
-          "description": "Bavard·e ET grande récolte",
-          "priority": 10,
+          "id": "taulier",
+          "title": "Le·a Taulier·e",
+          "emoji": "🔑",
+          "description": "Participe beaucoup et excelle dans un camp",
+          "priority": 11,
           "type": "combination",
-          "percentile": 75.5813953488372,
+          "percentile": 75,
           "conditions": [
             {
-              "stat": "talking",
+              "stat": "gamesPlayed",
               "category": "HIGH",
-              "actualValue": 894.8700183621669,
-              "actualPercentile": 69.76744186046511
+              "actualValue": 104,
+              "actualPercentile": 75
             },
             {
-              "stat": "loot",
-              "category": "HIGH",
-              "actualValue": 884.1003800637405,
-              "actualPercentile": 81.3953488372093
+              "stat": "campBalance",
+              "category": "SPECIALIST",
+              "actualPercentile": 0
             }
-          ]
+          ],
+          "primaryOwner": "Timaki"
         },
         {
           "id": "cowboy",
@@ -13829,6 +13841,29 @@
               "category": "HIGH",
               "actualValue": 51.11111111111111,
               "actualPercentile": 72.09302325581395
+            }
+          ]
+        },
+        {
+          "id": "hyperactif",
+          "title": "L'Hyperactif·ve",
+          "emoji": "⚡",
+          "description": "Bavard·e ET grande récolte",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 75.5813953488372,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 894.8700183621669,
+              "actualPercentile": 69.76744186046511
+            },
+            {
+              "stat": "loot",
+              "category": "HIGH",
+              "actualValue": 884.1003800637405,
+              "actualPercentile": 81.3953488372093
             }
           ]
         },
@@ -14049,7 +14084,7 @@
       ],
       "primaryTitle": {
         "id": "adaptable",
-        "title": "L'Adaptable",
+        "title": "Le·a Caméléon",
         "emoji": "🦎",
         "description": "Bon dans tous les camps",
         "priority": 18,
@@ -14754,7 +14789,7 @@
         },
         {
           "id": "adaptable",
-          "title": "L'Adaptable",
+          "title": "Le·a Caméléon",
           "emoji": "🦎",
           "description": "Bon dans tous les camps",
           "priority": 18,
@@ -14830,6 +14865,29 @@
           "primaryOwner": "Johnny"
         },
         {
+          "id": "traitre",
+          "title": "Le·a Traître·sse",
+          "emoji": "🦹",
+          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
+          "priority": 14,
+          "type": "combination",
+          "percentile": 85.65789473684211,
+          "conditions": [
+            {
+              "stat": "winRateLoup",
+              "category": "HIGH",
+              "actualValue": 33.33333333333333,
+              "actualPercentile": 76.31578947368422
+            },
+            {
+              "stat": "winRateSolo",
+              "category": "HIGH",
+              "actualValue": 33.33333333333333,
+              "actualPercentile": 95
+            }
+          ]
+        },
+        {
           "id": "citoyen_exemplaire",
           "title": "Le·a Citoyen·ne Exemplaire",
           "emoji": "👑",
@@ -14852,29 +14910,6 @@
             }
           ],
           "primaryOwner": "TTanjun"
-        },
-        {
-          "id": "traitre",
-          "title": "Le·a Traître·sse",
-          "emoji": "🦹",
-          "description": "Gagnant·e dans tous les camps ennemis des Villageois",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 85.65789473684211,
-          "conditions": [
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 33.33333333333333,
-              "actualPercentile": 76.31578947368422
-            },
-            {
-              "stat": "winRateSolo",
-              "category": "HIGH",
-              "actualValue": 33.33333333333333,
-              "actualPercentile": 95
-            }
-          ]
         },
         {
           "id": "loup_ruse",
@@ -14931,30 +14966,6 @@
           "primaryOwner": "Nocxy"
         },
         {
-          "id": "rodeur",
-          "title": "Le·a Rôdeur·euse",
-          "emoji": "🌙",
-          "description": "Rôde hors des villages et survit",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 84.0909090909091,
-          "conditions": [
-            {
-              "stat": "zoneResteCarte",
-              "category": "HIGH",
-              "actualValue": 12.149532710280374,
-              "actualPercentile": 75
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 55.69620253164557,
-              "actualPercentile": 93.18181818181817
-            }
-          ],
-          "primaryOwner": "Gaëtan R"
-        },
-        {
           "id": "sorciere",
           "title": "La Sorcière",
           "emoji": "🧙",
@@ -14977,6 +14988,30 @@
             }
           ],
           "primaryOwner": "Luluxurious"
+        },
+        {
+          "id": "rodeur",
+          "title": "Le·a Rôdeur·euse",
+          "emoji": "🌙",
+          "description": "Rôde hors des villages et survit",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 84.0909090909091,
+          "conditions": [
+            {
+              "stat": "zoneResteCarte",
+              "category": "HIGH",
+              "actualValue": 12.149532710280374,
+              "actualPercentile": 75
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 55.69620253164557,
+              "actualPercentile": 93.18181818181817
+            }
+          ],
+          "primaryOwner": "Gaëtan R"
         },
         {
           "id": "hyperactif",
@@ -15462,7 +15497,7 @@
         },
         {
           "id": "adaptable",
-          "title": "L'Adaptable",
+          "title": "Le·a Caméléon",
           "emoji": "🦎",
           "description": "Bon dans tous les camps",
           "priority": 18,
@@ -15514,30 +15549,6 @@
           ]
         },
         {
-          "id": "rodeur",
-          "title": "Le·a Rôdeur·euse",
-          "emoji": "🌙",
-          "description": "Rôde hors des villages et survit",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 78.4090909090909,
-          "conditions": [
-            {
-              "stat": "zoneResteCarte",
-              "category": "HIGH",
-              "actualValue": 12.096774193548388,
-              "actualPercentile": 72.72727272727273
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 47.5,
-              "actualPercentile": 84.0909090909091
-            }
-          ],
-          "primaryOwner": "Gaëtan R"
-        },
-        {
           "id": "capitaine_port",
           "title": "Le·a Capitaine du Port",
           "emoji": "⚓",
@@ -15584,6 +15595,30 @@
             }
           ],
           "primaryOwner": "Luluxurious"
+        },
+        {
+          "id": "rodeur",
+          "title": "Le·a Rôdeur·euse",
+          "emoji": "🌙",
+          "description": "Rôde hors des villages et survit",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 78.4090909090909,
+          "conditions": [
+            {
+              "stat": "zoneResteCarte",
+              "category": "HIGH",
+              "actualValue": 12.096774193548388,
+              "actualPercentile": 72.72727272727273
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 47.5,
+              "actualPercentile": 84.0909090909091
+            }
+          ],
+          "primaryOwner": "Gaëtan R"
         },
         {
           "id": "hyperactif",
@@ -16020,6 +16055,29 @@
           ]
         },
         {
+          "id": "grande_gueule",
+          "title": "La Grande Gueule",
+          "emoji": "🗯️",
+          "description": "Parle trop et meurt Jour 1",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 39.37632135306554,
+          "conditions": [
+            {
+              "stat": "survivalDay1",
+              "category": "LOW",
+              "actualValue": 83.87096774193549,
+              "actualPercentile": 13.636363636363635
+            },
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 816.7063984332158,
+              "actualPercentile": 65.11627906976744
+            }
+          ]
+        },
+        {
           "id": "conspirateur",
           "title": "Le·a Conspirateur·rice",
           "emoji": "🗨️",
@@ -16089,29 +16147,6 @@
             }
           ],
           "primaryOwner": "Ekaenerys"
-        },
-        {
-          "id": "grande_gueule",
-          "title": "La Grande Gueule",
-          "emoji": "🗯️",
-          "description": "Parle trop et meurt Jour 1",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 39.37632135306554,
-          "conditions": [
-            {
-              "stat": "survivalDay1",
-              "category": "LOW",
-              "actualValue": 83.87096774193549,
-              "actualPercentile": 13.636363636363635
-            },
-            {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 816.7063984332158,
-              "actualPercentile": 65.11627906976744
-            }
-          ]
         },
         {
           "id": "winRate_extreme_high",
@@ -16528,30 +16563,6 @@
           "primaryOwner": "Nales"
         },
         {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 16,
-          "type": "combination",
-          "percentile": 78.4090909090909,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.725,
-              "actualPercentile": 84.0909090909091
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 45.83333333333333,
-              "actualPercentile": 72.72727272727273
-            }
-          ],
-          "primaryOwner": "VVentus02"
-        },
-        {
           "id": "manipulateur",
           "title": "Le·a Manipulateur·rice",
           "emoji": "🐍",
@@ -16597,6 +16608,30 @@
               "actualPercentile": 73.68421052631578
             }
           ]
+        },
+        {
+          "id": "alpha_predator",
+          "title": "L'Alpha",
+          "emoji": "🦁",
+          "description": "Tue beaucoup et survit",
+          "priority": 15,
+          "type": "combination",
+          "percentile": 78.4090909090909,
+          "conditions": [
+            {
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.725,
+              "actualPercentile": 84.0909090909091
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 45.83333333333333,
+              "actualPercentile": 72.72727272727273
+            }
+          ],
+          "primaryOwner": "VVentus02"
         },
         {
           "id": "embusquer",
@@ -17568,7 +17603,7 @@
               "actualPercentile": 20.454545454545457
             }
           ],
-          "primaryOwner": "Stalbadass"
+          "primaryOwner": "twitch.tv/hornicoo"
         },
         {
           "id": "assassin",
@@ -17593,36 +17628,6 @@
             }
           ],
           "primaryOwner": "Tomill"
-        },
-        {
-          "id": "debutant",
-          "title": "Le·a Débutant·e",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 13,
-          "type": "combination",
-          "percentile": 19.837914023960536,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 36,
-              "actualPercentile": 20.454545454545457
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 32,
-              "actualPercentile": 20.454545454545457
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 590.7394803884703,
-              "actualPercentile": 18.6046511627907
-            }
-          ],
-          "primaryOwner": "YUKARI"
         },
         {
           "id": "populiste",
@@ -17678,28 +17683,34 @@
           ]
         },
         {
-          "id": "kamikaze",
-          "title": "Le·a Kamikaze",
-          "emoji": "💥",
-          "description": "Tue mais meurt en retour",
-          "priority": 12,
+          "id": "debutant",
+          "title": "Le·a Débutant·e",
+          "emoji": "🆘",
+          "description": "Peine en victoire, survie et récolte",
+          "priority": 13,
           "type": "combination",
-          "percentile": 45.45454545454545,
+          "percentile": 19.837914023960536,
           "conditions": [
             {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.64,
-              "actualPercentile": 70.45454545454545
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 36,
+              "actualPercentile": 20.454545454545457
             },
             {
               "stat": "survival",
               "category": "LOW",
               "actualValue": 32,
               "actualPercentile": 20.454545454545457
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 590.7394803884703,
+              "actualPercentile": 18.6046511627907
             }
           ],
-          "primaryOwner": "Sonnette"
+          "primaryOwner": "YUKARI"
         },
         {
           "id": "sorciere",
@@ -17726,27 +17737,28 @@
           "primaryOwner": "Luluxurious"
         },
         {
-          "id": "grande_gueule",
-          "title": "La Grande Gueule",
-          "emoji": "🗯️",
-          "description": "Parle trop et meurt Jour 1",
-          "priority": 11,
+          "id": "kamikaze",
+          "title": "Le·a Kamikaze",
+          "emoji": "💥",
+          "description": "Tue mais meurt en retour",
+          "priority": 12,
           "type": "combination",
-          "percentile": 37.182875264270606,
+          "percentile": 45.45454545454545,
           "conditions": [
             {
-              "stat": "survivalDay1",
-              "category": "LOW",
-              "actualValue": 80,
-              "actualPercentile": 2.272727272727273
+              "stat": "killRate",
+              "category": "HIGH",
+              "actualValue": 0.64,
+              "actualPercentile": 70.45454545454545
             },
             {
-              "stat": "talking",
-              "category": "HIGH",
-              "actualValue": 921.2910385258409,
-              "actualPercentile": 72.09302325581395
+              "stat": "survival",
+              "category": "LOW",
+              "actualValue": 32,
+              "actualPercentile": 20.454545454545457
             }
-          ]
+          ],
+          "primaryOwner": "Sonnette"
         },
         {
           "id": "pharmacien",
@@ -17796,25 +17808,25 @@
           "primaryOwner": "bellinoob"
         },
         {
-          "id": "philosophe",
-          "title": "Le·a Philosophe",
-          "emoji": "📚",
-          "description": "Bavard·e mais improductif·ve",
-          "priority": 10,
+          "id": "grande_gueule",
+          "title": "La Grande Gueule",
+          "emoji": "🗯️",
+          "description": "Parle trop et meurt Jour 1",
+          "priority": 11,
           "type": "combination",
-          "percentile": 45.348837209302324,
+          "percentile": 37.182875264270606,
           "conditions": [
+            {
+              "stat": "survivalDay1",
+              "category": "LOW",
+              "actualValue": 80,
+              "actualPercentile": 2.272727272727273
+            },
             {
               "stat": "talking",
               "category": "HIGH",
               "actualValue": 921.2910385258409,
               "actualPercentile": 72.09302325581395
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 590.7394803884703,
-              "actualPercentile": 18.6046511627907
             }
           ]
         },
@@ -17861,6 +17873,29 @@
               "category": "LOW",
               "actualValue": 80,
               "actualPercentile": 25.581395348837212
+            }
+          ]
+        },
+        {
+          "id": "philosophe",
+          "title": "Le·a Philosophe",
+          "emoji": "📚",
+          "description": "Bavard·e mais improductif·ve",
+          "priority": 10,
+          "type": "combination",
+          "percentile": 45.348837209302324,
+          "conditions": [
+            {
+              "stat": "talking",
+              "category": "HIGH",
+              "actualValue": 921.2910385258409,
+              "actualPercentile": 72.09302325581395
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 590.7394803884703,
+              "actualPercentile": 18.6046511627907
             }
           ]
         },
@@ -18326,7 +18361,7 @@
               "actualPercentile": 20.930232558139537
             }
           ],
-          "primaryOwner": "twitch.tv/hornicoo"
+          "primaryOwner": "Frakkazak"
         },
         {
           "id": "tete_brulee",
@@ -19385,8 +19420,7 @@
           "percentile": 4.651162790697675,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Frakkazak"
+          "type": "basic"
         },
         {
           "id": "winRate_high",
@@ -19791,8 +19825,7 @@
           "percentile": 6.976744186046512,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Frakkazak"
+          "type": "basic"
         },
         {
           "id": "lootVillageois_extreme_low",
@@ -20128,8 +20161,7 @@
               "actualValue": 459.93142304551253,
               "actualPercentile": 2.3255813953488373
             }
-          ],
-          "primaryOwner": "twitch.tv/hornicoo"
+          ]
         },
         {
           "id": "lanceur_alerte",
@@ -20383,16 +20415,27 @@
         }
       ],
       "primaryTitle": {
-        "id": "loot_extreme_low",
-        "title": "Le·a Touriste",
-        "emoji": "📸",
-        "description": "Ne récolte jamais",
-        "stat": "lootPer60Min",
-        "value": 459.93142304551253,
-        "percentile": 2.3255813953488373,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "campeur",
+        "title": "Le·a Campeur·euse",
+        "emoji": "🏕️",
+        "description": "Reste au même endroit sans récolter",
+        "priority": 14,
+        "type": "combination",
+        "percentile": 46.61733615221987,
+        "conditions": [
+          {
+            "stat": "zoneDominantPercentage",
+            "category": "EXTREME_HIGH",
+            "actualValue": 58.620689655172406,
+            "actualPercentile": 90.9090909090909
+          },
+          {
+            "stat": "loot",
+            "category": "LOW",
+            "actualValue": 459.93142304551253,
+            "actualPercentile": 2.3255813953488373
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
@@ -20600,6 +20643,29 @@
           "primaryOwner": "Edjadada"
         },
         {
+          "id": "accro",
+          "title": "L'Accro",
+          "emoji": "🍾",
+          "description": "Boit des potions mais ça ne l'aide pas à gagner",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 52.743902439024396,
+          "conditions": [
+            {
+              "stat": "potionUsage",
+              "category": "HIGH",
+              "actualValue": 4.246756570177835,
+              "actualPercentile": 80.48780487804879
+            },
+            {
+              "stat": "winRate",
+              "category": "LOW",
+              "actualValue": 38.1,
+              "actualPercentile": 25
+            }
+          ]
+        },
+        {
           "id": "taulier",
           "title": "Le·a Taulier·e",
           "emoji": "🔑",
@@ -20651,29 +20717,6 @@
             }
           ],
           "primaryOwner": "QuicheLoLardon"
-        },
-        {
-          "id": "accro",
-          "title": "L'Accro",
-          "emoji": "🍾",
-          "description": "Boit des potions mais ça ne l'aide pas à gagner",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 52.743902439024396,
-          "conditions": [
-            {
-              "stat": "potionUsage",
-              "category": "HIGH",
-              "actualValue": 4.246756570177835,
-              "actualPercentile": 80.48780487804879
-            },
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 38.1,
-              "actualPercentile": 25
-            }
-          ]
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -21556,6 +21599,29 @@
       "gamesPlayed": 69,
       "titles": [
         {
+          "id": "capitaine_port",
+          "title": "Le·a Capitaine du Port",
+          "emoji": "⚓",
+          "description": "Survit au bord de l'eau",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 78.4090909090909,
+          "conditions": [
+            {
+              "stat": "zoneVillagePecheur",
+              "category": "HIGH",
+              "actualValue": 24.285714285714285,
+              "actualPercentile": 90.9090909090909
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 42.028985507246375,
+              "actualPercentile": 65.9090909090909
+            }
+          ]
+        },
+        {
           "id": "rodeur",
           "title": "Le·a Rôdeur·euse",
           "emoji": "🌙",
@@ -21578,29 +21644,6 @@
             }
           ],
           "primaryOwner": "Gaëtan R"
-        },
-        {
-          "id": "capitaine_port",
-          "title": "Le·a Capitaine du Port",
-          "emoji": "⚓",
-          "description": "Survit au bord de l'eau",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 78.4090909090909,
-          "conditions": [
-            {
-              "stat": "zoneVillagePecheur",
-              "category": "HIGH",
-              "actualValue": 24.285714285714285,
-              "actualPercentile": 90.9090909090909
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 42.028985507246375,
-              "actualPercentile": 65.9090909090909
-            }
-          ]
         },
         {
           "id": "prudent",
@@ -22086,30 +22129,6 @@
           "primaryOwner": "Acuado"
         },
         {
-          "id": "abeille_ouvriere",
-          "title": "L'Abeille Ouvrière",
-          "emoji": "🐝",
-          "description": "Récolte bien en Villageois mais perd",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 42.59977827050997,
-          "conditions": [
-            {
-              "stat": "lootVillageois",
-              "category": "HIGH",
-              "actualValue": 953.4114172239535,
-              "actualPercentile": 82.92682926829268
-            },
-            {
-              "stat": "winRateVillageois",
-              "category": "LOW",
-              "actualValue": 39.285714285714285,
-              "actualPercentile": 2.272727272727273
-            }
-          ],
-          "primaryOwner": "Lithia"
-        },
-        {
           "id": "moissonneur",
           "title": "Le·a Moissonneur·euse",
           "emoji": "🌾",
@@ -22155,6 +22174,30 @@
             }
           ],
           "primaryOwner": "bellinoob"
+        },
+        {
+          "id": "abeille_ouvriere",
+          "title": "L'Abeille Ouvrière",
+          "emoji": "🐝",
+          "description": "Récolte bien en Villageois mais perd",
+          "priority": 11,
+          "type": "combination",
+          "percentile": 42.59977827050997,
+          "conditions": [
+            {
+              "stat": "lootVillageois",
+              "category": "HIGH",
+              "actualValue": 953.4114172239535,
+              "actualPercentile": 82.92682926829268
+            },
+            {
+              "stat": "winRateVillageois",
+              "category": "LOW",
+              "actualValue": 39.285714285714285,
+              "actualPercentile": 2.272727272727273
+            }
+          ],
+          "primaryOwner": "Lithia"
         },
         {
           "id": "efficace",
@@ -23279,8 +23322,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Frakkazak"
+          "type": "basic"
         },
         {
           "id": "lootVillageois_extreme_low",
@@ -23822,8 +23864,7 @@
           "percentile": 9.30232558139535,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Frakkazak"
+          "type": "basic"
         },
         {
           "id": "lootVillageois_extreme_low",

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.6';
+export const APP_VERSION = '1.7.7';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.7',
+    date: '12/02/2026',
+    description: 'Ajout de statistiques sur le record de loot collecté en une partie dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'lootStats',
+      text: 'Classements / Récolte'
+    }
+  },
   {
     version: 'v1.7.6',
     date: '11/02/2026',
