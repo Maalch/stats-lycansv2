@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-11T16:44:59.029Z",
+  "generatedAt": "2026-02-12T15:23:30.843Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -2334,7 +2334,7 @@
         },
         "zoneVillagePrincipal": {
           "value": 43.64406779661017,
-          "percentile": 44,
+          "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
         "zoneFerme": {
@@ -2354,12 +2354,12 @@
         },
         "zoneResteCarte": {
           "value": 8.898305084745763,
-          "percentile": 28.000000000000004,
+          "percentile": 24,
           "category": "LOW"
         },
         "zoneDominantPercentage": {
           "value": 43.64406779661017,
-          "percentile": 44,
+          "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
         "zoneTotalPositions": {
@@ -2369,8 +2369,8 @@
         },
         "wolfTransformRate": {
           "value": 0.6,
-          "percentile": 52.94117647058824,
-          "category": "AVERAGE"
+          "percentile": 58.82352941176471,
+          "category": "ABOVE_AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.1,
@@ -2559,6 +2559,29 @@
           "primaryOwner": "Noamouille"
         },
         {
+          "id": "loup_hyperactif",
+          "title": "Le Loup Hyperactif",
+          "emoji": "⚡",
+          "description": "Se transforme et détransforme constamment",
+          "priority": 15,
+          "type": "combination",
+          "percentile": 70.58823529411765,
+          "conditions": [
+            {
+              "stat": "wolfTransformRate",
+              "category": "HIGH",
+              "actualValue": 0.64,
+              "actualPercentile": 70.58823529411765
+            },
+            {
+              "stat": "wolfUntransformRate",
+              "category": "HIGH",
+              "actualValue": 0.22,
+              "actualPercentile": 70.58823529411765
+            }
+          ]
+        },
+        {
           "id": "traitre",
           "title": "Le·a Traître·sse",
           "emoji": "🦹",
@@ -2635,13 +2658,13 @@
           "description": "Explore toute la carte et gagne",
           "priority": 12,
           "type": "combination",
-          "percentile": 50.54054054054054,
+          "percentile": 52.54054054054054,
           "conditions": [
             {
               "stat": "zoneDominantPercentage",
               "category": "LOW",
-              "actualValue": 37.94642857142857,
-              "actualPercentile": 20
+              "actualValue": 39.351851851851855,
+              "actualPercentile": 24
             },
             {
               "stat": "winRate",
@@ -2658,13 +2681,13 @@
           "description": "Survit au bord de l'eau",
           "priority": 12,
           "type": "combination",
-          "percentile": 82.64864864864865,
+          "percentile": 84.64864864864865,
           "conditions": [
             {
               "stat": "zoneVillagePecheur",
               "category": "HIGH",
-              "actualValue": 22.767857142857142,
-              "actualPercentile": 68
+              "actualValue": 23.61111111111111,
+              "actualPercentile": 72
             },
             {
               "stat": "survival",
@@ -2681,13 +2704,13 @@
           "description": "Récolte en parcourant toute la carte",
           "priority": 12,
           "type": "combination",
-          "percentile": 57.82608695652174,
+          "percentile": 59.82608695652174,
           "conditions": [
             {
               "stat": "zoneDominantPercentage",
               "category": "LOW",
-              "actualValue": 37.94642857142857,
-              "actualPercentile": 20
+              "actualValue": 39.351851851851855,
+              "actualPercentile": 24
             },
             {
               "stat": "loot",
@@ -2729,13 +2752,13 @@
           "description": "Récolte à la Ferme sans relâche",
           "priority": 11,
           "type": "combination",
-          "percentile": 89.82608695652175,
+          "percentile": 87.82608695652175,
           "conditions": [
             {
               "stat": "zoneFerme",
               "category": "HIGH",
-              "actualValue": 21.428571428571427,
-              "actualPercentile": 84
+              "actualValue": 18.51851851851852,
+              "actualPercentile": 80
             },
             {
               "stat": "loot",
@@ -3015,9 +3038,21 @@
           "emoji": "🗺️",
           "description": "Se déplace beaucoup entre les zones",
           "stat": "zoneDominantPercentage",
-          "value": 37.94642857142857,
-          "percentile": 20,
+          "value": 39.351851851851855,
+          "percentile": 24,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.64,
+          "percentile": 70.58823529411765,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -3195,44 +3230,44 @@
           "category": "EXTREME_HIGH"
         },
         "zoneVillagePrincipal": {
-          "value": 37.94642857142857,
-          "percentile": 20,
+          "value": 39.351851851851855,
+          "percentile": 24,
           "category": "LOW"
         },
         "zoneFerme": {
-          "value": 21.428571428571427,
-          "percentile": 84,
+          "value": 18.51851851851852,
+          "percentile": 80,
           "category": "HIGH"
         },
         "zoneVillagePecheur": {
-          "value": 22.767857142857142,
-          "percentile": 68,
+          "value": 23.61111111111111,
+          "percentile": 72,
           "category": "HIGH"
         },
         "zoneRuines": {
-          "value": 8.482142857142858,
+          "value": 8.796296296296296,
           "percentile": 52,
           "category": "AVERAGE"
         },
         "zoneResteCarte": {
-          "value": 9.375,
+          "value": 9.722222222222223,
           "percentile": 32,
           "category": "LOW"
         },
         "zoneDominantPercentage": {
-          "value": 37.94642857142857,
-          "percentile": 20,
+          "value": 39.351851851851855,
+          "percentile": 24,
           "category": "LOW"
         },
         "zoneTotalPositions": {
-          "value": 224,
+          "value": 216,
           "percentile": 92,
           "category": "EXTREME_HIGH"
         },
         "wolfTransformRate": {
           "value": 0.64,
-          "percentile": 64.70588235294117,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 70.58823529411765,
+          "category": "HIGH"
         },
         "wolfUntransformRate": {
           "value": 0.22,
@@ -3272,13 +3307,13 @@
         "lootVillageoisPer60Min": 1320.767550634747,
         "lootLoupPer60Min": 1077.4740055277384,
         "lootSoloPer60Min": 1115.1124674422174,
-        "zoneVillagePrincipal": 37.94642857142857,
-        "zoneFerme": 21.428571428571427,
-        "zoneVillagePecheur": 22.767857142857142,
-        "zoneRuines": 8.482142857142858,
-        "zoneResteCarte": 9.375,
-        "zoneDominantPercentage": 37.94642857142857,
-        "zoneTotalPositions": 224,
+        "zoneVillagePrincipal": 39.351851851851855,
+        "zoneFerme": 18.51851851851852,
+        "zoneVillagePecheur": 23.61111111111111,
+        "zoneRuines": 8.796296296296296,
+        "zoneResteCarte": 9.722222222222223,
+        "zoneDominantPercentage": 39.351851851851855,
+        "zoneTotalPositions": 216,
         "wolfTransformRate": 0.64,
         "wolfUntransformRate": 0.22,
         "potionsPer60Min": 3.849664350098445
@@ -3747,7 +3782,7 @@
         },
         "zoneResteCarte": {
           "value": 14.835164835164836,
-          "percentile": 56.00000000000001,
+          "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
         "zoneDominantPercentage": {
@@ -3757,7 +3792,7 @@
         },
         "zoneTotalPositions": {
           "value": 182,
-          "percentile": 72,
+          "percentile": 76,
           "category": "HIGH"
         },
         "wolfTransformRate": {
@@ -3820,29 +3855,6 @@
       "playerName": "Kao",
       "gamesPlayed": 222,
       "titles": [
-        {
-          "id": "loup_hyperactif",
-          "title": "Le Loup Hyperactif",
-          "emoji": "⚡",
-          "description": "Se transforme et détransforme constamment",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 79.41176470588235,
-          "conditions": [
-            {
-              "stat": "wolfTransformRate",
-              "category": "HIGH",
-              "actualValue": 0.7551020408163265,
-              "actualPercentile": 82.35294117647058
-            },
-            {
-              "stat": "wolfUntransformRate",
-              "category": "HIGH",
-              "actualValue": 0.22448979591836735,
-              "actualPercentile": 76.47058823529412
-            }
-          ]
-        },
         {
           "id": "taulier",
           "title": "Le·a Taulier·e",
@@ -3981,20 +3993,8 @@
           "emoji": "🏘️",
           "description": "Traîne beaucoup au Village Principal",
           "stat": "zoneVillagePrincipal",
-          "value": 55.940594059405946,
+          "value": 57.692307692307686,
           "percentile": 92,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "zoneVillagePecheur_extreme_high",
-          "title": "Le·a Pêcheur·euse",
-          "emoji": "🎣",
-          "description": "Traîne beaucoup au Village Pêcheur",
-          "stat": "zoneVillagePecheur",
-          "value": 25.742574257425744,
-          "percentile": 88,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -4005,7 +4005,7 @@
           "emoji": "🏠",
           "description": "Toujours dans la même zone",
           "stat": "zoneDominantPercentage",
-          "value": 55.940594059405946,
+          "value": 57.692307692307686,
           "percentile": 92,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -4060,18 +4060,6 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_high",
-          "title": "Le·a Transform·é·e",
-          "emoji": "🌙",
-          "description": "Se transforme fréquemment",
-          "stat": "wolfTransformRate",
-          "value": 0.7551020408163265,
-          "percentile": 82.35294117647058,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "wolfUntransformRate_high",
           "title": "Le·a Discret·ète",
           "emoji": "🤫",
@@ -4119,25 +4107,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "loup_hyperactif",
-        "title": "Le Loup Hyperactif",
-        "emoji": "⚡",
-        "description": "Se transforme et détransforme constamment",
-        "priority": 15,
+        "id": "efficace",
+        "title": "L'Efficace",
+        "emoji": "🏭",
+        "description": "Silencieux·se mais productif·ve",
+        "priority": 10,
         "type": "combination",
-        "percentile": 79.41176470588235,
+        "percentile": 53.34448160535117,
         "conditions": [
           {
-            "stat": "wolfTransformRate",
-            "category": "HIGH",
-            "actualValue": 0.7551020408163265,
-            "actualPercentile": 82.35294117647058
+            "stat": "talking",
+            "category": "LOW",
+            "actualValue": 873.3562029908339,
+            "actualPercentile": 15.384615384615385
           },
           {
-            "stat": "wolfUntransformRate",
+            "stat": "loot",
             "category": "HIGH",
-            "actualValue": 0.22448979591836735,
-            "actualPercentile": 76.47058823529412
+            "actualValue": 1015.3845533953264,
+            "actualPercentile": 91.30434782608695
           }
         ]
       },
@@ -4273,44 +4261,44 @@
           "category": "EXTREME_HIGH"
         },
         "zoneVillagePrincipal": {
-          "value": 55.940594059405946,
+          "value": 57.692307692307686,
           "percentile": 92,
           "category": "EXTREME_HIGH"
         },
         "zoneFerme": {
-          "value": 13.861386138613863,
+          "value": 15.384615384615385,
           "percentile": 36,
           "category": "BELOW_AVERAGE"
         },
         "zoneVillagePecheur": {
-          "value": 25.742574257425744,
-          "percentile": 88,
-          "category": "EXTREME_HIGH"
+          "value": 21.978021978021978,
+          "percentile": 68,
+          "category": "HIGH"
         },
         "zoneRuines": {
-          "value": 2.4752475247524752,
+          "value": 2.7472527472527473,
           "percentile": 24,
           "category": "LOW"
         },
         "zoneResteCarte": {
-          "value": 1.9801980198019802,
+          "value": 2.197802197802198,
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "zoneDominantPercentage": {
-          "value": 55.940594059405946,
+          "value": 57.692307692307686,
           "percentile": 92,
           "category": "EXTREME_HIGH"
         },
         "zoneTotalPositions": {
-          "value": 202,
-          "percentile": 88,
-          "category": "EXTREME_HIGH"
+          "value": 182,
+          "percentile": 76,
+          "category": "HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.7551020408163265,
-          "percentile": 82.35294117647058,
-          "category": "HIGH"
+          "value": 0.5918367346938775,
+          "percentile": 52.94117647058824,
+          "category": "AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.22448979591836735,
@@ -4350,14 +4338,14 @@
         "lootVillageoisPer60Min": 1086.2648749828527,
         "lootLoupPer60Min": 796.5665659502073,
         "lootSoloPer60Min": 1410.334739182275,
-        "zoneVillagePrincipal": 55.940594059405946,
-        "zoneFerme": 13.861386138613863,
-        "zoneVillagePecheur": 25.742574257425744,
-        "zoneRuines": 2.4752475247524752,
-        "zoneResteCarte": 1.9801980198019802,
-        "zoneDominantPercentage": 55.940594059405946,
-        "zoneTotalPositions": 202,
-        "wolfTransformRate": 0.7551020408163265,
+        "zoneVillagePrincipal": 57.692307692307686,
+        "zoneFerme": 15.384615384615385,
+        "zoneVillagePecheur": 21.978021978021978,
+        "zoneRuines": 2.7472527472527473,
+        "zoneResteCarte": 2.197802197802198,
+        "zoneDominantPercentage": 57.692307692307686,
+        "zoneTotalPositions": 182,
+        "wolfTransformRate": 0.5918367346938775,
         "wolfUntransformRate": 0.22448979591836735,
         "potionsPer60Min": 2.660024844363357
       }
@@ -5179,12 +5167,12 @@
         },
         "zoneFerme": {
           "value": 17.258883248730964,
-          "percentile": 64,
+          "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
         "zoneVillagePecheur": {
           "value": 19.796954314720814,
-          "percentile": 64,
+          "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
         "zoneRuines": {
@@ -5204,8 +5192,8 @@
         },
         "zoneTotalPositions": {
           "value": 197,
-          "percentile": 84,
-          "category": "HIGH"
+          "percentile": 88,
+          "category": "EXTREME_HIGH"
         },
         "wolfTransformRate": {
           "value": 0.5806451612903226,
@@ -6385,7 +6373,7 @@
             {
               "stat": "zoneRuines",
               "category": "HIGH",
-              "actualValue": 9.782608695652174,
+              "actualValue": 10.112359550561797,
               "actualPercentile": 68
             },
             {
@@ -6800,38 +6788,38 @@
           "category": "BELOW_AVERAGE"
         },
         "zoneVillagePrincipal": {
-          "value": 42.934782608695656,
-          "percentile": 40,
+          "value": 43.82022471910113,
+          "percentile": 44,
           "category": "BELOW_AVERAGE"
         },
         "zoneFerme": {
-          "value": 16.847826086956523,
-          "percentile": 60,
+          "value": 17.415730337078653,
+          "percentile": 64,
           "category": "ABOVE_AVERAGE"
         },
         "zoneVillagePecheur": {
-          "value": 15.217391304347828,
+          "value": 15.730337078651685,
           "percentile": 24,
           "category": "LOW"
         },
         "zoneRuines": {
-          "value": 9.782608695652174,
+          "value": 10.112359550561797,
           "percentile": 68,
           "category": "HIGH"
         },
         "zoneResteCarte": {
-          "value": 15.217391304347828,
-          "percentile": 60,
-          "category": "ABOVE_AVERAGE"
+          "value": 12.921348314606742,
+          "percentile": 48,
+          "category": "AVERAGE"
         },
         "zoneDominantPercentage": {
-          "value": 42.934782608695656,
-          "percentile": 40,
+          "value": 43.82022471910113,
+          "percentile": 44,
           "category": "BELOW_AVERAGE"
         },
         "zoneTotalPositions": {
-          "value": 184,
-          "percentile": 76,
+          "value": 178,
+          "percentile": 72,
           "category": "HIGH"
         },
         "potionsPer60Min": {
@@ -6867,13 +6855,13 @@
         "lootVillageoisPer60Min": 917.6877696899232,
         "lootLoupPer60Min": 444.47007154766874,
         "lootSoloPer60Min": 656.1524058566256,
-        "zoneVillagePrincipal": 42.934782608695656,
-        "zoneFerme": 16.847826086956523,
-        "zoneVillagePecheur": 15.217391304347828,
-        "zoneRuines": 9.782608695652174,
-        "zoneResteCarte": 15.217391304347828,
-        "zoneDominantPercentage": 42.934782608695656,
-        "zoneTotalPositions": 184,
+        "zoneVillagePrincipal": 43.82022471910113,
+        "zoneFerme": 17.415730337078653,
+        "zoneVillagePecheur": 15.730337078651685,
+        "zoneRuines": 10.112359550561797,
+        "zoneResteCarte": 12.921348314606742,
+        "zoneDominantPercentage": 43.82022471910113,
+        "zoneTotalPositions": 178,
         "potionsPer60Min": 2.822107022873903
       }
     },
@@ -7245,7 +7233,7 @@
         },
         "zoneResteCarte": {
           "value": 7.333333333333333,
-          "percentile": 8,
+          "percentile": 12,
           "category": "EXTREME_LOW"
         },
         "zoneDominantPercentage": {
@@ -8217,6 +8205,18 @@
           "primaryOwner": "Raumane"
         },
         {
+          "id": "zoneVillagePecheur_extreme_high",
+          "title": "Le·a Pêcheur·euse",
+          "emoji": "🎣",
+          "description": "Traîne beaucoup au Village Pêcheur",
+          "stat": "zoneVillagePecheur",
+          "value": 25.71428571428571,
+          "percentile": 88,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "zoneRuines_extreme_high",
           "title": "L'Archéologue",
           "emoji": "🏛️",
@@ -8458,8 +8458,8 @@
         },
         "zoneVillagePecheur": {
           "value": 25.71428571428571,
-          "percentile": 84,
-          "category": "HIGH"
+          "percentile": 88,
+          "category": "EXTREME_HIGH"
         },
         "zoneRuines": {
           "value": 14.285714285714285,
@@ -8538,7 +8538,7 @@
             {
               "stat": "zoneDominantPercentage",
               "category": "LOW",
-              "actualValue": 41.228070175438596,
+              "actualValue": 41.964285714285715,
               "actualPercentile": 32
             },
             {
@@ -8581,13 +8581,13 @@
           "description": "Récolte à la Ferme sans relâche",
           "priority": 11,
           "type": "combination",
-          "percentile": 74.78260869565217,
+          "percentile": 76.78260869565217,
           "conditions": [
             {
               "stat": "zoneFerme",
               "category": "HIGH",
-              "actualValue": 18.421052631578945,
-              "actualPercentile": 80
+              "actualValue": 18.75,
+              "actualPercentile": 84
             },
             {
               "stat": "loot",
@@ -8641,7 +8641,8 @@
               "actualValue": 847.174270353344,
               "actualPercentile": 69.56521739130434
             }
-          ]
+          ],
+          "primaryOwner": "Kao"
         },
         {
           "id": "winRateLoup_extreme_low",
@@ -8805,7 +8806,7 @@
           "emoji": "🗺️",
           "description": "Se déplace beaucoup entre les zones",
           "stat": "zoneDominantPercentage",
-          "value": 41.228070175438596,
+          "value": 41.964285714285715,
           "percentile": 32,
           "category": "LOW",
           "priority": 6,
@@ -8841,13 +8842,13 @@
         "description": "Récolte à la Ferme sans relâche",
         "priority": 11,
         "type": "combination",
-        "percentile": 74.78260869565217,
+        "percentile": 76.78260869565217,
         "conditions": [
           {
             "stat": "zoneFerme",
             "category": "HIGH",
-            "actualValue": 18.421052631578945,
-            "actualPercentile": 80
+            "actualValue": 18.75,
+            "actualPercentile": 84
           },
           {
             "stat": "loot",
@@ -8989,44 +8990,44 @@
           "category": "ABOVE_AVERAGE"
         },
         "zoneVillagePrincipal": {
-          "value": 41.228070175438596,
+          "value": 41.964285714285715,
           "percentile": 32,
           "category": "LOW"
         },
         "zoneFerme": {
-          "value": 18.421052631578945,
-          "percentile": 80,
+          "value": 18.75,
+          "percentile": 84,
           "category": "HIGH"
         },
         "zoneVillagePecheur": {
-          "value": 25.438596491228072,
+          "value": 24.107142857142858,
           "percentile": 80,
           "category": "HIGH"
         },
         "zoneRuines": {
-          "value": 6.140350877192982,
+          "value": 6.25,
           "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
         "zoneResteCarte": {
-          "value": 8.771929824561402,
-          "percentile": 24,
+          "value": 8.928571428571429,
+          "percentile": 28.000000000000004,
           "category": "LOW"
         },
         "zoneDominantPercentage": {
-          "value": 41.228070175438596,
+          "value": 41.964285714285715,
           "percentile": 32,
           "category": "LOW"
         },
         "zoneTotalPositions": {
-          "value": 114,
+          "value": 112,
           "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
         "wolfTransformRate": {
           "value": 0.6,
-          "percentile": 52.94117647058824,
-          "category": "AVERAGE"
+          "percentile": 58.82352941176471,
+          "category": "ABOVE_AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.13333333333333333,
@@ -9066,13 +9067,13 @@
         "lootVillageoisPer60Min": 942.077488453988,
         "lootLoupPer60Min": 568.2461705848672,
         "lootSoloPer60Min": 695.1323272690868,
-        "zoneVillagePrincipal": 41.228070175438596,
-        "zoneFerme": 18.421052631578945,
-        "zoneVillagePecheur": 25.438596491228072,
-        "zoneRuines": 6.140350877192982,
-        "zoneResteCarte": 8.771929824561402,
-        "zoneDominantPercentage": 41.228070175438596,
-        "zoneTotalPositions": 114,
+        "zoneVillagePrincipal": 41.964285714285715,
+        "zoneFerme": 18.75,
+        "zoneVillagePecheur": 24.107142857142858,
+        "zoneRuines": 6.25,
+        "zoneResteCarte": 8.928571428571429,
+        "zoneDominantPercentage": 41.964285714285715,
+        "zoneTotalPositions": 112,
         "wolfTransformRate": 0.6,
         "wolfUntransformRate": 0.13333333333333333,
         "potionsPer60Min": 2.478485133057455
@@ -9628,7 +9629,7 @@
         },
         "zoneVillagePecheur": {
           "value": 19.548872180451127,
-          "percentile": 60,
+          "percentile": 56.00000000000001,
           "category": "ABOVE_AVERAGE"
         },
         "zoneRuines": {
@@ -10080,7 +10081,7 @@
           "description": "Se transforme fréquemment",
           "stat": "wolfTransformRate",
           "value": 0.6521739130434783,
-          "percentile": 70.58823529411765,
+          "percentile": 76.47058823529412,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -10296,8 +10297,8 @@
         },
         "zoneResteCarte": {
           "value": 8.02919708029197,
-          "percentile": 12,
-          "category": "EXTREME_LOW"
+          "percentile": 16,
+          "category": "LOW"
         },
         "zoneDominantPercentage": {
           "value": 40.14598540145985,
@@ -10311,7 +10312,7 @@
         },
         "wolfTransformRate": {
           "value": 0.6521739130434783,
-          "percentile": 70.58823529411765,
+          "percentile": 76.47058823529412,
           "category": "HIGH"
         },
         "wolfUntransformRate": {
@@ -10527,8 +10528,7 @@
               "actualValue": 0.5,
               "actualPercentile": 94.11764705882352
             }
-          ],
-          "primaryOwner": "Kao"
+          ]
         },
         {
           "id": "traitre",
@@ -10589,7 +10589,7 @@
             {
               "stat": "zoneDominantPercentage",
               "category": "LOW",
-              "actualValue": 33.80281690140845,
+              "actualValue": 34.04255319148936,
               "actualPercentile": 0
             },
             {
@@ -10612,7 +10612,7 @@
             {
               "stat": "zoneVillagePecheur",
               "category": "HIGH",
-              "actualValue": 33.80281690140845,
+              "actualValue": 33.33333333333333,
               "actualPercentile": 96
             },
             {
@@ -10635,7 +10635,7 @@
             {
               "stat": "zoneDominantPercentage",
               "category": "LOW",
-              "actualValue": 33.80281690140845,
+              "actualValue": 34.04255319148936,
               "actualPercentile": 0
             },
             {
@@ -10747,7 +10747,7 @@
           "emoji": "🎣",
           "description": "Traîne beaucoup au Village Pêcheur",
           "stat": "zoneVillagePecheur",
-          "value": 33.80281690140845,
+          "value": 33.33333333333333,
           "percentile": 96,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -10759,7 +10759,7 @@
           "emoji": "🏛️",
           "description": "Traîne beaucoup aux Ruines",
           "stat": "zoneRuines",
-          "value": 14.788732394366196,
+          "value": 14.893617021276595,
           "percentile": 96,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -10771,7 +10771,7 @@
           "emoji": "🧭",
           "description": "Réparti·e uniformément sur toute la carte",
           "stat": "zoneDominantPercentage",
-          "value": 33.80281690140845,
+          "value": 34.04255319148936,
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -11117,37 +11117,37 @@
           "category": "HIGH"
         },
         "zoneVillagePrincipal": {
-          "value": 33.80281690140845,
+          "value": 34.04255319148936,
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "zoneFerme": {
-          "value": 11.971830985915492,
+          "value": 12.056737588652481,
           "percentile": 20,
           "category": "LOW"
         },
         "zoneVillagePecheur": {
-          "value": 33.80281690140845,
+          "value": 33.33333333333333,
           "percentile": 96,
           "category": "EXTREME_HIGH"
         },
         "zoneRuines": {
-          "value": 14.788732394366196,
+          "value": 14.893617021276595,
           "percentile": 96,
           "category": "EXTREME_HIGH"
         },
         "zoneResteCarte": {
-          "value": 5.633802816901409,
-          "percentile": 4,
+          "value": 5.673758865248227,
+          "percentile": 8,
           "category": "EXTREME_LOW"
         },
         "zoneDominantPercentage": {
-          "value": 33.80281690140845,
+          "value": 34.04255319148936,
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "zoneTotalPositions": {
-          "value": 142,
+          "value": 141,
           "percentile": 56.00000000000001,
           "category": "ABOVE_AVERAGE"
         },
@@ -11194,13 +11194,13 @@
         "lootVillageoisPer60Min": 843.5590359997483,
         "lootLoupPer60Min": 729.7685737786821,
         "lootSoloPer60Min": 913.4880732942721,
-        "zoneVillagePrincipal": 33.80281690140845,
-        "zoneFerme": 11.971830985915492,
-        "zoneVillagePecheur": 33.80281690140845,
-        "zoneRuines": 14.788732394366196,
-        "zoneResteCarte": 5.633802816901409,
-        "zoneDominantPercentage": 33.80281690140845,
-        "zoneTotalPositions": 142,
+        "zoneVillagePrincipal": 34.04255319148936,
+        "zoneFerme": 12.056737588652481,
+        "zoneVillagePecheur": 33.33333333333333,
+        "zoneRuines": 14.893617021276595,
+        "zoneResteCarte": 5.673758865248227,
+        "zoneDominantPercentage": 34.04255319148936,
+        "zoneTotalPositions": 141,
         "wolfTransformRate": 0.8181818181818182,
         "wolfUntransformRate": 0.5,
         "potionsPer60Min": 4.758631831946614
@@ -11721,7 +11721,7 @@
         },
         "zoneVillagePecheur": {
           "value": 17.1875,
-          "percentile": 44,
+          "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
         "zoneRuines": {
@@ -11731,7 +11731,7 @@
         },
         "zoneResteCarte": {
           "value": 13.020833333333334,
-          "percentile": 48,
+          "percentile": 52,
           "category": "AVERAGE"
         },
         "zoneDominantPercentage": {
@@ -11741,7 +11741,7 @@
         },
         "zoneTotalPositions": {
           "value": 192,
-          "percentile": 80,
+          "percentile": 84,
           "category": "HIGH"
         },
         "wolfTransformRate": {
@@ -12109,7 +12109,7 @@
           "description": "Se déplace beaucoup entre les zones",
           "stat": "zoneDominantPercentage",
           "value": 38.9937106918239,
-          "percentile": 24,
+          "percentile": 20,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -12121,7 +12121,7 @@
           "description": "Se transforme fréquemment",
           "stat": "wolfTransformRate",
           "value": 0.717948717948718,
-          "percentile": 76.47058823529412,
+          "percentile": 82.35294117647058,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -12329,7 +12329,7 @@
         },
         "zoneVillagePrincipal": {
           "value": 38.9937106918239,
-          "percentile": 24,
+          "percentile": 20,
           "category": "LOW"
         },
         "zoneFerme": {
@@ -12354,7 +12354,7 @@
         },
         "zoneDominantPercentage": {
           "value": 38.9937106918239,
-          "percentile": 24,
+          "percentile": 20,
           "category": "LOW"
         },
         "zoneTotalPositions": {
@@ -12364,7 +12364,7 @@
         },
         "wolfTransformRate": {
           "value": 0.717948717948718,
-          "percentile": 76.47058823529412,
+          "percentile": 82.35294117647058,
           "category": "HIGH"
         },
         "wolfUntransformRate": {
@@ -12913,13 +12913,13 @@
         },
         "zoneFerme": {
           "value": 13.636363636363635,
-          "percentile": 32,
+          "percentile": 28.000000000000004,
           "category": "LOW"
         },
         "zoneVillagePecheur": {
           "value": 17.272727272727273,
-          "percentile": 48,
-          "category": "AVERAGE"
+          "percentile": 44,
+          "category": "BELOW_AVERAGE"
         },
         "zoneRuines": {
           "value": 10.909090909090908,
@@ -13617,7 +13617,8 @@
               "actualValue": 906.7386638209111,
               "actualPercentile": 78.26086956521739
             }
-          ]
+          ],
+          "primaryOwner": "Kao"
         },
         {
           "id": "winRate_extreme_low",
@@ -13986,7 +13987,7 @@
         },
         "zoneVillagePecheur": {
           "value": 25,
-          "percentile": 76,
+          "percentile": 84,
           "category": "HIGH"
         },
         "zoneRuines": {
@@ -14422,7 +14423,7 @@
         },
         "zoneVillagePecheur": {
           "value": 23.684210526315788,
-          "percentile": 72,
+          "percentile": 76,
           "category": "HIGH"
         },
         "zoneRuines": {
@@ -14432,8 +14433,8 @@
         },
         "zoneResteCarte": {
           "value": 13.157894736842104,
-          "percentile": 52,
-          "category": "AVERAGE"
+          "percentile": 56.00000000000001,
+          "category": "ABOVE_AVERAGE"
         },
         "zoneDominantPercentage": {
           "value": 47.368421052631575,
@@ -15374,8 +15375,8 @@
         },
         "zoneVillagePecheur": {
           "value": 17.91044776119403,
-          "percentile": 56.00000000000001,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 52,
+          "category": "AVERAGE"
         },
         "zoneRuines": {
           "value": 5.970149253731343,
@@ -15466,7 +15467,7 @@
             {
               "stat": "zoneDominantPercentage",
               "category": "EXTREME_HIGH",
-              "actualValue": 62.5,
+              "actualValue": 60,
               "actualPercentile": 96
             },
             {
@@ -15630,7 +15631,7 @@
           "emoji": "🏘️",
           "description": "Traîne beaucoup au Village Principal",
           "stat": "zoneVillagePrincipal",
-          "value": 62.5,
+          "value": 60,
           "percentile": 96,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -15642,7 +15643,7 @@
           "emoji": "🏠",
           "description": "Toujours dans la même zone",
           "stat": "zoneDominantPercentage",
-          "value": 62.5,
+          "value": 60,
           "percentile": 96,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -15743,7 +15744,7 @@
           {
             "stat": "zoneDominantPercentage",
             "category": "EXTREME_HIGH",
-            "actualValue": 62.5,
+            "actualValue": 60,
             "actualPercentile": 96
           },
           {
@@ -15856,19 +15857,19 @@
           "category": "LOW"
         },
         "zoneVillagePrincipal": {
-          "value": 62.5,
+          "value": 60,
           "percentile": 96,
           "category": "EXTREME_HIGH"
         },
         "zoneFerme": {
-          "value": 12.5,
-          "percentile": 28.000000000000004,
+          "value": 15,
+          "percentile": 32,
           "category": "LOW"
         },
         "zoneVillagePecheur": {
-          "value": 16.666666666666664,
-          "percentile": 32,
-          "category": "LOW"
+          "value": 20,
+          "percentile": 64,
+          "category": "ABOVE_AVERAGE"
         },
         "zoneRuines": {
           "value": 0,
@@ -15876,18 +15877,18 @@
           "category": "EXTREME_LOW"
         },
         "zoneResteCarte": {
-          "value": 8.333333333333332,
-          "percentile": 16,
-          "category": "LOW"
+          "value": 5,
+          "percentile": 4,
+          "category": "EXTREME_LOW"
         },
         "zoneDominantPercentage": {
-          "value": 62.5,
+          "value": 60,
           "percentile": 96,
           "category": "EXTREME_HIGH"
         },
         "zoneTotalPositions": {
-          "value": 24,
-          "percentile": 12,
+          "value": 20,
+          "percentile": 4,
           "category": "EXTREME_LOW"
         },
         "potionsPer60Min": {
@@ -15920,13 +15921,13 @@
         "lootVillageoisPer60Min": 664.5833787610098,
         "lootLoupPer60Min": null,
         "lootSoloPer60Min": null,
-        "zoneVillagePrincipal": 62.5,
-        "zoneFerme": 12.5,
-        "zoneVillagePecheur": 16.666666666666664,
+        "zoneVillagePrincipal": 60,
+        "zoneFerme": 15,
+        "zoneVillagePecheur": 20,
         "zoneRuines": 0,
-        "zoneResteCarte": 8.333333333333332,
-        "zoneDominantPercentage": 62.5,
-        "zoneTotalPositions": 24,
+        "zoneResteCarte": 5,
+        "zoneDominantPercentage": 60,
+        "zoneTotalPositions": 20,
         "potionsPer60Min": 2.6426086070429657
       }
     },
@@ -17267,7 +17268,7 @@
         },
         "zoneVillagePecheur": {
           "value": 17.346938775510203,
-          "percentile": 52,
+          "percentile": 48,
           "category": "AVERAGE"
         },
         "zoneRuines": {
