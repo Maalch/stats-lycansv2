@@ -57,6 +57,7 @@ export interface PlayersGeneralState {
   minGamesForWinRate: number;
   winRateOrder: 'best' | 'worst';
   focusChart?: 'participation' | 'winRate'; // Which chart to focus on when navigating
+  selectedMonth?: string; // "YYYY-MM" for monthly ranking view
 }
 
 export interface DeathStatisticsState {

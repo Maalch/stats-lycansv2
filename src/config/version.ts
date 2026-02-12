@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.7';
+export const APP_VERSION = '1.7.8';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.8',
+    date: '12/02/2026',
+    description: 'Ajout d\'un classement mensuel par taux de victoire dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'playersGeneral',
+      text: 'Classements / Participations & Victoires'
+    }
+  },
   {
     version: 'v1.7.7',
     date: '12/02/2026',
