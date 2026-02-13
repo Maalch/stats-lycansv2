@@ -166,6 +166,20 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                     height={90}
                     interval={0}
                     fontSize={14}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={14}
+                        fontStyle="italic"
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
                   />
                   <YAxis 
                     label={{ value: 'Nombre de kills', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
@@ -240,6 +254,20 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                     height={90}
                     interval={0}
                     fontSize={14}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={14}
+                        fontStyle="italic"
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
                   />
                   <YAxis 
                     label={{ value: 'Nombre de kills', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
@@ -314,6 +342,20 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                     height={120}
                     interval={0}
                     fontSize={12}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={12}
+                        fontStyle="italic"
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
                   />
                   <YAxis 
                     label={{ value: 'Nombre de morts', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 

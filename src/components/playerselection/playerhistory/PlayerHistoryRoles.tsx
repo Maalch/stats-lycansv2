@@ -464,6 +464,20 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
                       height={90}
                       interval={0}
                       fontSize={14}
+                      tick={({ x, y, payload }) => (
+                        <text
+                          x={x}
+                          y={y}
+                          dy={16}
+                          textAnchor="end"
+                          fill="var(--text-secondary)"
+                          fontSize={14}
+                          fontStyle="italic"
+                          transform={`rotate(-45 ${x} ${y})`}
+                        >
+                          {payload.value}
+                        </text>
+                      )}
                     />
                     <YAxis 
                       label={{ value: yAxisLabel, angle: 270, position: 'left', style: { textAnchor: 'middle' } }}

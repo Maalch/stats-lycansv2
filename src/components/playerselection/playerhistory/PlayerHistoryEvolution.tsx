@@ -207,6 +207,20 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod, cam
                   height={xAxisSettings.height}
                   interval={xAxisSettings.interval}
                   fontSize={xAxisSettings.fontSize}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                      fill="var(--text-secondary)"
+                      fontSize={xAxisSettings.fontSize}
+                      fontStyle="italic"
+                      transform={`rotate(${xAxisSettings.angle} ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
                 />
                 <YAxis 
                   label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
@@ -275,6 +289,20 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod, cam
                   height={xAxisSettings.height}
                   interval={xAxisSettings.interval}
                   fontSize={xAxisSettings.fontSize}
+                  tick={({ x, y, payload }) => (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                      fill="var(--text-secondary)"
+                      fontSize={xAxisSettings.fontSize}
+                      fontStyle="italic"
+                      transform={`rotate(${xAxisSettings.angle} ${x} ${y})`}
+                    >
+                      {payload.value}
+                    </text>
+                  )}
                 />
                 <YAxis 
                   label={{ value: 'Nombre de parties', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 

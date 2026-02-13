@@ -214,6 +214,20 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                     height={80}
                     interval={0}
                     fontSize={12}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={12}
+                        fontStyle="italic"
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
                   />
                   <YAxis 
                     label={{ value: 'Utilisations', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
@@ -283,6 +297,20 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                     height={80}
                     interval={0}
                     fontSize={12}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={12}
+                        fontStyle="italic"
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
                   />
                   <YAxis 
                     label={{ value: 'Consommations', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 

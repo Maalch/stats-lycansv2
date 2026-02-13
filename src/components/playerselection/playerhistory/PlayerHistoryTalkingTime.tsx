@@ -331,7 +331,20 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
                       <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
                       <XAxis 
                         dataKey="role" 
-                        tick={{ fill: 'var(--text-primary)', fontSize: 12 }}
+                        tick={({ x, y, payload }) => (
+                          <text
+                            x={x}
+                            y={y}
+                            dy={16}
+                            textAnchor="end"
+                            fill="var(--text-secondary)"
+                            fontSize={12}
+                            fontStyle="italic"
+                            transform={`rotate(-20 ${x} ${y})`}
+                          >
+                            {payload.value}
+                          </text>
+                        )}
                         interval={0}
                         angle={-20}
                         textAnchor="end"
