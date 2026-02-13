@@ -98,13 +98,13 @@ A cache file (`playerStatsCache.json`) is created in each data directory (e.g., 
 
 ```bash
 # Normal mode (uses cache if available)
-node scripts/data-sync/generate-Rankings.js main
+node scripts/data-sync/generate-rankings.js main
 
 # Force full recalculation (ignores cache)
-node scripts/data-sync/generate-Rankings.js main --force-full
+node scripts/data-sync/generate-rankings.js main --force-full
 
 # Different data source
-node scripts/data-sync/generate-Rankings.js discord
+node scripts/data-sync/generate-rankings.js discord
 ```
 
 ### Integrated with Data Sync

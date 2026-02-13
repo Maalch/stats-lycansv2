@@ -6,7 +6,7 @@ This folder contains scripts for syncing and processing Lycans game data and gen
 
 - **`fetch-data-unified.js`** - Unified AWS data synchronization script (supports multiple teams)
 - **`fetch-data.js`** - Legacy-only data synchronization script (Google Sheets API)
-- **`generate-Rankings.js`** - Standalone script for generating player Rankings from game data
+- **`generate-rankings.js`** - Standalone script for generating player Rankings from game data
 - **`shared/data-sources.js`** - Configuration for different data sources/teams
 - **`shared/sync-utils.js`** - Shared utility functions for data syncing
 - **`package.json`** - Node.js dependencies for the scripts
@@ -79,14 +79,14 @@ export const DATA_SOURCES = {
 
 Then run: `node fetch-data-unified.js newTeam`
 
-### generate-Rankings.js
+### generate-rankings.js
 
 A standalone script that generates player Rankings from existing game data. This can be run independently to update Rankings without fetching fresh data.
 
 **Usage:**
 ```bash
 cd scripts/data-sync
-node generate-Rankings.js
+node generate-rankings.js
 ```
 
 ## Generated Data
@@ -140,7 +140,7 @@ Each Ranking includes:
 The Rankings generation is integrated into:
 
 1. **`npm run sync-data`** - Full data sync including Rankings
-2. **`npm run generate-Rankings`** - Standalone Rankings generation + copy to public folder
+2. **`npm run generate-rankings`** - Standalone Rankings generation + copy to public folder
 3. **GitHub Actions** - Weekly automated data sync (including Rankings)
 
 ## Performance Benefits

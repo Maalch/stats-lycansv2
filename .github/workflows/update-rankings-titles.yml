@@ -22,7 +22,7 @@ on:
         type: boolean
 
 jobs:
-  update-Rankings-titles:
+  update-rankings-titles:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -57,10 +57,10 @@ jobs:
           echo "🏆 Generating Rankings for Main Team..."
           if [ "${{ inputs.force_recalculation }}" == "true" ]; then
             echo "🔄 Mode: FULL RECALCULATION (forced)"
-            node scripts/data-sync/generate-Rankings.js main --force-full
+            node scripts/data-sync/generate-rankings.js main --force-full
           else
             echo "🔄 Mode: INCREMENTAL"
-            node scripts/data-sync/generate-Rankings.js main
+            node scripts/data-sync/generate-rankings.js main
           fi
           echo "✅ Main Team Rankings generated"
 
@@ -82,10 +82,10 @@ jobs:
           if [ -f "data/discord/gameLog.json" ]; then
             if [ "${{ inputs.force_recalculation }}" == "true" ]; then
               echo "🔄 Mode: FULL RECALCULATION (forced)"
-              node scripts/data-sync/generate-Rankings.js discord --force-full
+              node scripts/data-sync/generate-rankings.js discord --force-full
             else
               echo "🔄 Mode: INCREMENTAL"
-              node scripts/data-sync/generate-Rankings.js discord
+              node scripts/data-sync/generate-rankings.js discord
             fi
             echo "✅ Discord Team Rankings generated"
           else

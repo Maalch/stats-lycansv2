@@ -208,7 +208,7 @@ stats-lycansv2/
 │   └── data-sync/
 │       ├── fetch-data-unified.js    # Unified AWS sync (main/discord)
 │       ├── fetch-data.js            # Legacy sync script
-│       ├── generate-Rankings.js # Ranking generator
+│       ├── generate-rankings.js # Ranking generator
 │       ├── compute-stats.js         # Statistics computation
 │       ├── helpers.js               # Helper functions
 │       ├── shared/

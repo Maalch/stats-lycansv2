@@ -538,7 +538,7 @@ async function main(sourceKey = 'main', forceFullRecalculation = false) {
 }
 
 // Run if this script is executed directly (not imported)
-if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith('generate-Rankings.js')) {
+if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith('generate-rankings.js')) {
   // Parse command line arguments
   const args = process.argv.slice(2);
   

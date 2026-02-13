@@ -70,7 +70,7 @@ npm run preview          # Preview production build locally
 npm run sync-data-aws           # AWS sync for main team (recommended)
 npm run sync-data-discord       # AWS sync for Discord team
 npm run sync-data               # Legacy Google Sheets sync (deprecated)
-npm run generate-Rankings   # Standalone Rankings generation
+npm run generate-rankings   # Standalone Rankings generation
 ```
 
 ### Adding New Statistics
@@ -146,7 +146,7 @@ stats-lycansv2/
 ├── scripts/
 │   └── data-sync/          # Data synchronization scripts
 │       ├── fetch-data-unified.js    # AWS sync (primary)
-│       └── generate-Rankings.js # Ranking generation
+│       └── generate-rankings.js # Ranking generation
 ├── docs/                   # Production build output (GitHub Pages)
 └── public/                 # Static assets for development
 ```
@@ -172,7 +172,7 @@ npm run sync-data-discord    # Discord team → /data/discord
 npm run sync-data
 
 # Standalone Ranking generation
-npm run generate-Rankings
+npm run generate-rankings
 ```
 
 ### Data Sources

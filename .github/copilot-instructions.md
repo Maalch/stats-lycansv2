@@ -24,7 +24,7 @@ npm run build                   # TypeScript check + Vite build + copy data to d
 npm run sync-data-aws           # AWS sync for main team (recommended)
 npm run sync-data-discord       # AWS sync for Discord team
 npm run sync-data               # Legacy Google Sheets sync
-npm run generate-Rankings   # Standalone Rankings generation + copy to public/
+npm run generate-rankings   # Standalone Rankings generation + copy to public/
 ```
 
 **Note:** `generate-titles` has no npm script — run directly: `cd scripts/data-sync && node generate-titles.js [main|discord]`
@@ -34,10 +34,10 @@ npm run generate-Rankings   # Standalone Rankings generation + copy to public/
   - Primary: AWS-based sync via `fetch-data-unified.js` (supports multiple teams via `shared/data-sources.js` config)
   - Legacy: Google Sheets sync via `fetch-data.js` (deprecated but maintained for backward compatibility)
   - Game data sync: Mon/Tue/Thu at 8 PM UTC via `update-data.yml` and `update-discorddata.yml`
-  - Rankings & Titles: Weekly on Sunday at 6 AM UTC via `update-Rankings-titles.yml`
+  - Rankings & Titles: Weekly on Sunday at 6 AM UTC via `update-rankings-titles.yml`
   
 **Environment:** No env vars needed locally - all data from static files. `STATS_LIST_URL` (AWS) and `LYCANS_API_BASE` (Google Sheets) secrets on GitHub Actions only.  
-**Ranking Generation:** `scripts/data-sync/generate-Rankings.js` processes all players, creates ranked lists, supports multiple teams via config
+**Ranking Generation:** `scripts/data-sync/generate-rankings.js` processes all players, creates ranked lists, supports multiple teams via config
 **Title Generation:** `scripts/data-sync/generate-titles.js` generates player titles based on statistics
 
 ## Data Architecture
@@ -288,7 +288,7 @@ if (!playerInfo) {
 3. **Navigation:** Integrate with `NavigationContext` for chart drill-downs
 4. **Settings:** Add to `SettingsState` interface → ensure localStorage persistence
 5. **Player Highlighting:** Extend chart data types with `isHighlightedAddition` for special inclusion logic
-6. **Rankings:** Add processor in `src/hooks/utils/RankingProcessors/` → integrate in `scripts/data-sync/generate-Rankings.js` → client consumes pre-calculated JSON
+6. **Rankings:** Add processor in `src/hooks/utils/RankingProcessors/` → integrate in `scripts/data-sync/generate-rankings.js` → client consumes pre-calculated JSON
 
 ### Base Hook Template
 ```typescript
@@ -387,7 +387,7 @@ useEffect(() => {
 
 ## Integration Points
 
-**GitHub Actions:** 3 workflows — `update-data.yml` (main sync), `update-discorddata.yml` (discord sync), `update-Rankings-titles.yml` (weekly generation)  
+**GitHub Actions:** 3 workflows — `update-data.yml` (main sync), `update-discorddata.yml` (discord sync), `update-rankings-titles.yml` (weekly generation)  
 **Data Fetching:** `src/utils/dataPath.ts` provides `fetchDataFile()` / `fetchOptionalDataFile()` for centralized, data-source-aware data loading  
 **URL Management:** `src/utils/urlManager.ts` provides `parseUrlState()`, `replaceUrlState()`, `mergeUrlState()` with custom `urlchange` events  
 **Logging:** `src/utils/logger.ts` — environment-aware logging (`error()` always, `warn()`/`info()`/`debug()` dev-only) + `handleFetchError()` + `validateData()`  
@@ -489,7 +489,7 @@ deathStats.playerDeathStats.forEach((player) => {
 
 ## Rankings System Architecture
 
-**Server-Side Generation:** `scripts/data-sync/generate-Rankings.js` processes `gameLog.json` → creates `playerRankings.json`  
+**Server-Side Generation:** `scripts/data-sync/generate-rankings.js` processes `gameLog.json` → creates `playerRankings.json`  
 **Client-Side Consumption:** `usePlayerRankings()` hook loads pre-calculated Rankings, falling back to real-time calculation for missing data  
 **Ranking Structure:** Each player has `allGamesRankings` + `moddedOnlyRankings` arrays with rank, value, and navigation metadata  
 **Performance:** Pre-calculation eliminates client-side ranking computation for 70+ players across 500+ games
@@ -509,7 +509,7 @@ export function processNewRankings(playerStats: PlayerStat[], playerName: string
 }
 ```
 
-**Integration:** Add new processors to both `generate-Rankings.js` and `usePlayerRankings.tsx` → Rankings auto-generate during data sync
+**Integration:** Add new processors to both `generate-rankings.js` and `usePlayerRankings.tsx` → Rankings auto-generate during data sync
 
 ### Ranking Categories Implemented
 - **General:** Participations, win rates (good/bad Rankings)  
@@ -672,7 +672,7 @@ const handleRankingClick = (Ranking: Ranking, event: React.MouseEvent) => {
 **GitHub Actions:** 
   - `.github/workflows/update-data.yml` - Main team game data sync (Mon/Tue/Thu at 8 PM UTC)
   - `.github/workflows/update-discorddata.yml` - Discord team game data sync (Mon/Thu/Sat at 4 AM UTC)
-  - `.github/workflows/update-Rankings-titles.yml` - Weekly Rankings & titles generation (Sunday at 6 AM UTC)
+  - `.github/workflows/update-rankings-titles.yml` - Weekly Rankings & titles generation (Sunday at 6 AM UTC)
   - Manual triggers via workflow_dispatch with `full_sync` option for data sync, `force_recalculation` for Rankings/titles
   
 **Data Sources:**
@@ -695,8 +695,8 @@ node fetch-data-unified.js discord   # Discord team to /data/discord
 **Rankings & Titles Generation:**
 ```bash
 # Generate Rankings (supports incremental updates via cache)
-node generate-Rankings.js main           # Incremental update
-node generate-Rankings.js discord -f     # Force full recalculation
+node generate-rankings.js main           # Incremental update
+node generate-rankings.js discord -f     # Force full recalculation
 
 # Generate titles
 node generate-titles.js main
