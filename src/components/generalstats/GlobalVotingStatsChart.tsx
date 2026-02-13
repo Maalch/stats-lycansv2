@@ -150,7 +150,13 @@ export function GlobalVotingStatsChart() {
               }}
               labelStyle={{ color: 'var(--text-primary)', fontWeight: 'bold' }}
               itemStyle={{ color: 'var(--text-primary)' }}
-              formatter={(value: number) => `${value.toFixed(1)}%`}
+              formatter={(value) => {
+                const numericValue = typeof value === 'number' ? value : Number(value);
+                if (Number.isNaN(numericValue)) {
+                  return `${value}%`;
+                }
+                return `${numericValue.toFixed(1)}%`;
+              }}
             />
             <Legend 
               wrapperStyle={{ paddingTop: '20px' }}
@@ -226,9 +232,13 @@ export function GlobalVotingStatsChart() {
               }}
               labelStyle={{ color: 'var(--text-primary)', fontWeight: 'bold' }}
               itemStyle={{ color: 'var(--text-primary)' }}
-              formatter={(value: number, name: string) => {
+              formatter={(value, name) => {
+                const numericValue = typeof value === 'number' ? value : Number(value);
                 const displayName = name === 'accuracyRate' ? 'Vote Camp Opposé' : 'Tir Allié';
-                return [`${value.toFixed(1)}%`, displayName];
+                if (Number.isNaN(numericValue)) {
+                  return [`${value}%`, displayName];
+                }
+                return [`${numericValue.toFixed(1)}%`, displayName];
               }}
             />
             <Legend 

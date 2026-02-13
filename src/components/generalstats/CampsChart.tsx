@@ -162,9 +162,11 @@ export function CampsChart() {
                         }
                       }}
                       style={{ cursor: 'pointer' }}
-                      label={({ camp, winRate }) => 
-                        camp === 'Autres' ? `Autres: ${winRate}%` : `${camp}: ${winRate}%`
-                      }
+                      label={({ payload }) => {
+                        if (!payload) return '';
+                        const { camp, winRate } = payload as { camp: string; winRate: string };
+                        return camp === 'Autres' ? `Autres: ${winRate}%` : `${camp}: ${winRate}%`;
+                      }}
                     >
                       {groupedVictoryData.map((entree, indice) => (
                         <Cell 

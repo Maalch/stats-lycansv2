@@ -194,10 +194,13 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
                       border: '1px solid var(--border-color)',
                       borderRadius: '8px'
                     }}
-                    formatter={(value: number, name: string) => [
-                      formatSecondsToMinutesSeconds(value),
-                      name
-                    ]}
+                    formatter={(value, name) => {
+                      const numericValue = typeof value === 'number' ? value : Number(value);
+                      const displayValue = Number.isNaN(numericValue)
+                        ? `${value}`
+                        : formatSecondsToMinutesSeconds(numericValue);
+                      return [displayValue, name];
+                    }}
                     labelFormatter={(label) => {
                       const campData = campComparisonData.find(c => c.camp === label);
                       return `${label} (${campData?.gamesPlayed || 0} parties)`;
@@ -300,7 +303,12 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
                     border: '1px solid var(--border-color)',
                     borderRadius: '8px'
                   }}
-                  formatter={(value: number) => formatSecondsToMinutesSeconds(value)}
+                  formatter={(value) => {
+                    const numericValue = typeof value === 'number' ? value : Number(value);
+                    return Number.isNaN(numericValue)
+                      ? `${value}`
+                      : formatSecondsToMinutesSeconds(numericValue);
+                  }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -343,7 +351,13 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
                           border: '1px solid var(--border-color)',
                           borderRadius: '8px'
                         }}
-                        formatter={(value: number) => [formatSecondsToMinutesSeconds(value), 'Temps de parole']}
+                        formatter={(value) => {
+                          const numericValue = typeof value === 'number' ? value : Number(value);
+                          const displayValue = Number.isNaN(numericValue)
+                            ? `${value}`
+                            : formatSecondsToMinutesSeconds(numericValue);
+                          return [displayValue, 'Temps de parole'];
+                        }}
                         labelFormatter={(label) => {
                           const roleData = roleBreakdownData.find(r => r.role === label);
                           return `${label} (${roleData?.gamesPlayed || 0} parties)`;
