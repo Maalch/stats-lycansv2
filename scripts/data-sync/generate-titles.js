@@ -451,16 +451,16 @@ function assignUniquePrimaryTitles(playerTitles) {
     player.titles.forEach((title, titleIndex) => {
       // Calculate claim strength based on:
       // 1. Priority (higher is better)
-      // 2. Percentile (adjusted for "bad" vs "good" achievements)
-      //    - For bad achievements (LOW, EXTREME_LOW, BELOW_AVERAGE): lower percentile = stronger claim
-      //    - For good achievements (HIGH, EXTREME_HIGH, ABOVE_AVERAGE): higher percentile = stronger claim
+      // 2. Percentile (adjusted for "bad" vs "good" rankings)
+      //    - For bad rankings (LOW, EXTREME_LOW, BELOW_AVERAGE): lower percentile = stronger claim
+      //    - For good rankings (HIGH, EXTREME_HIGH, ABOVE_AVERAGE): higher percentile = stronger claim
       // 3. Title position (earlier in list is better)
       
       let adjustedPercentile = title.percentile || 50;
       
-      // Invert percentile for "bad achievement" categories where lower is better
-      const isBadAchievement = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(title.category);
-      if (isBadAchievement) {
+      // Invert percentile for "bad ranking" categories where lower is better
+      const isBadRanking = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(title.category);
+      if (isBadRanking) {
         adjustedPercentile = 100 - adjustedPercentile;
       }
       
@@ -671,7 +671,7 @@ function generatePlayerTitles(aggregatedStats, roleFrequencies) {
 
   // Note: We keep all qualifying titles in the titles array (including combinations)
   // The uniqueness logic only applies to primary title assignment
-  // This allows players to see all their earned titles as secondary achievements
+  // This allows players to see all their earned titles as secondary rankings
 
   // Assign unique primary titles
   assignUniquePrimaryTitles(playerTitles);

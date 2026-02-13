@@ -64,7 +64,7 @@ export function DeathStatisticsChart() {
           victimCampFilter,
           minGamesForAverage,
           selectedView,
-          focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart from achievement navigation
+          focusChart: navigationState.deathStatisticsState?.focusChart // Preserve focus chart from ranking navigation
         }
       });
     }

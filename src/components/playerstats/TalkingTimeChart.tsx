@@ -24,7 +24,7 @@ export function TalkingTimeChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
 
-  // Use navigationState to restore state from achievement navigation, with fallbacks to defaults
+  // Use navigationState to restore state from ranking navigation, with fallbacks to defaults
   const [minGames, setMinGames] = useState<number>(
     navigationState.talkingTimeState?.minGames || MIN_GAMES_DEFAULTS.STANDARD
   );

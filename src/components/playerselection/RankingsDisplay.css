@@ -149,7 +149,7 @@
   box-shadow: 0 2px 8px rgba(205, 127, 50, 0.4);
 }
 
-.top3-achievement-title {
+.top3-ranking-title {
   color: var(--text-primary);
   font-size: 1rem;
   font-weight: 700;
@@ -157,7 +157,7 @@
   line-height: 1.3;
 }
 
-.top3-achievement-description {
+.top3-ranking-description {
   color: var(--text-secondary);
   font-size: 0.85rem;
   line-height: 1.5;
@@ -349,7 +349,7 @@
   border-color: #e9a661;
 }
 
-/* Achievement Header */
+/* Ranking Header */
 .ranking-header {
   display: flex;
   justify-content: space-between;
@@ -394,7 +394,7 @@
   color: #fff;
 }
 
-/* Achievement Description */
+/* Ranking Description */
 .ranking-description {
   color: var(--text-secondary);
   font-size: 0.85rem;
@@ -456,11 +456,11 @@
     font-size: 2.5rem;
   }
   
-  .top3-achievement-title {
+  .top3-ranking-title {
     font-size: 1rem;
   }
   
-  .top3-achievement-description {
+  .top3-ranking-description {
     font-size: 0.85rem;
   }
   

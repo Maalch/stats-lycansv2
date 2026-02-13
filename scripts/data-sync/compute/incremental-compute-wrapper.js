@@ -10,7 +10,6 @@ import { computeVotingStatistics } from './compute-voting-stats.js';
 import { computeHunterStatistics } from './compute-hunter-stats.js';
 import { computeMapStats } from './compute-map-stats.js';
 import { computePlayerCampPerformance } from './compute-camp-performance.js';
-import { computeLootStats } from '../processors/loot-achievements.js';
 
 /**
  * For most compute functions that deal with cumulative statistics,
@@ -19,7 +18,7 @@ import { computeLootStats } from '../processors/loot-achievements.js';
  * The main performance gain comes from:
  * 1. Not re-running compute functions for unchanged datasets (modded vs all)
  * 2. Caching intermediate player stats (done in cache-manager)
- * 3. Only re-generating achievements for affected players (done in generate-achievements)
+ * 3. Only re-generating rankings for affected players (done in generate-rankings)
  * 
  * Future optimization: These could be made truly incremental by storing
  * intermediate state, but the complexity isn't worth it for now since
@@ -74,16 +73,4 @@ export function updateMapStatsIncremental(cachedStats, allGames) {
  */
 export function updatePlayerCampPerformanceIncremental(cachedStats, allGames) {
   return computePlayerCampPerformance(allGames);
-}
-
-/**
- * Wrapper for loot statistics - just re-runs on all games
- * Note: Loot stats are computed within the achievements processor,
- * but this wrapper is provided for API consistency
- * @param {Object} cachedStats - Unused for now
- * @param {Array} allGames - All games (existing + new)
- * @returns {Array} - Loot statistics
- */
-export function updateLootStatsIncremental(cachedStats, allGames) {
-  return computeLootStats(allGames);
 }

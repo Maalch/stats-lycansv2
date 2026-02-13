@@ -406,10 +406,10 @@ function calculateTitleProximity(playerPercentiles, roleData, titleConditions, p
     if (evaluation.currentPercentile !== null && evaluation.currentPercentile !== undefined) {
       let adjustedPercentile = evaluation.currentPercentile;
       
-      // Invert percentile for "bad achievement" categories where lower is better
+      // Invert percentile for "bad ranking" categories where lower is better
       // Check the REQUIRED category, not the current category
-      const isBadAchievement = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(evaluation.requiredCategory);
-      if (isBadAchievement) {
+      const isBadRanking = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(evaluation.requiredCategory);
+      if (isBadRanking) {
         adjustedPercentile = 100 - adjustedPercentile;
       }
       

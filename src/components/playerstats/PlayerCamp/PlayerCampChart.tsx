@@ -394,7 +394,7 @@ export function PlayerCampChart() {
             playerCamp: uniqueKey // Keep this for unique identification when needed
           };
           
-          // For Tous les Camps, track only the BEST performance per player (matching achievement logic)
+          // For Tous les Camps, track only the BEST performance per player (matching ranking logic)
           const currentBest = playerBestPerformance.get(player.player);
           if (!currentBest || performanceData.performanceNum > currentBest.performanceNum) {
             playerBestPerformance.set(player.player, performanceData);
@@ -445,7 +445,7 @@ export function PlayerCampChart() {
 
       if (!highlightedPlayerData) return dataArray;
 
-      // For Tous les Camps, add only the BEST performance (matching achievement logic)
+      // For Tous les Camps, add only the BEST performance (matching ranking logic)
       if (isTousLesCamps) {
         let bestPerformance: ChartPlayerCampPerformance | null = null;
         

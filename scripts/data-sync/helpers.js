@@ -1,5 +1,5 @@
 /**
- * Helper functions for achievement generation
+ * Helper functions for ranking generation
  */
 
 /**
@@ -67,37 +67,6 @@ export function findPlayerCampRank(sortedPlayers, playerId) {
   };
 }
 
-
-/**
- * Helper to create achievement object
- * @param {string} id - Unique achievement ID
- * @param {string} title - Achievement title
- * @param {string} description - Achievement description
- * @param {'good'|'bad'} type - Achievement type
- * @param {number} rank - Player rank
- * @param {number} value - Achievement value
- * @param {number} totalRanked - Total number of players ranked in this category
- * @param {Object} redirectTo - Navigation target
- * @param {string} category - Achievement category
- * @returns {Object} - Achievement object
- */
-export function createAchievement(id, title, description, type, rank, value, totalRanked, redirectTo, category = 'general') {
-  return {
-    id,
-    title,
-    description,
-    type,
-    category,
-    rank,
-    value,
-    totalRanked,
-    redirectTo: redirectTo || {
-      tab: 'rankings',
-      subTab: 'playersGeneral'
-    }
-  };
-}
-
 /**
  * Helper function to find a player's rank in a map-based sorted list
  * Handles ties properly - players with the same win rate get the same rank
@@ -126,116 +95,5 @@ export function findPlayerMapRank(sortedPlayers, playerId, mapType) {
     rank: rank,
     value: playerValue,
     games: mapType === 'village' ? playerData.villageGames : playerData.chateauGames
-  };
-}
-
-/**
- * Helper to create comparison achievement
- * @param {string} id - Unique achievement ID
- * @param {string} title - Achievement title
- * @param {string} description - Achievement description
- * @param {'good'|'bad'} type - Achievement type
- * @param {number} value - Achievement value
- * @param {Object} redirectTo - Navigation target
- * @returns {Object} - Achievement object
- */
-export function createComparisonAchievement(id, title, description, type, value, redirectTo) {
-  return {
-    id,
-    title,
-    description,
-    type,
-    category: 'comparison',
-    value,
-    redirectTo: redirectTo || {
-      tab: 'rankings',
-      subTab: 'playerComparison'
-    }
-  };
-}
-
-/**
- * Helper to create kills achievement
- * @param {string} id - Unique achievement ID
- * @param {string} title - Achievement title
- * @param {string} description - Achievement description
- * @param {'good'|'bad'} type - Achievement type
- * @param {number} rank - Player rank
- * @param {number} value - Achievement value
- * @param {number} totalRanked - Total number of players ranked
- * @param {Object} redirectTo - Navigation target
- * @returns {Object} - Achievement object
- */
-export function createKillsAchievement(id, title, description, type, rank, value, totalRanked, redirectTo) {
-  return {
-    id,
-    title,
-    description,
-    type,
-    category: 'kills',
-    rank,
-    value,
-    totalRanked,
-    redirectTo: redirectTo || {
-      tab: 'rankings',
-      subTab: 'deathStats'
-    }
-  };
-}
-
-
-/**
- * Helper to create performance achievement object
- * @param {string} id - Achievement ID
- * @param {string} title - Achievement title
- * @param {string} description - Achievement description
- * @param {'good'|'bad'} type - Achievement type
- * @param {number} rank - Player rank
- * @param {number} value - Achievement value
- * @param {number} totalRanked - Total number of players ranked in this category
- * @param {Object} redirectTo - Navigation target
- * @param {string} category - Achievement category
- * @returns {Object} - Achievement object
- */
-export function createPerformanceAchievement(id, title, description, type, rank, value, totalRanked, redirectTo, category = 'performance') {
-  return {
-    id,
-    title,
-    description,
-    type,
-    category,
-    rank,
-    value,
-    totalRanked,
-    redirectTo: redirectTo || {
-      tab: 'rankings',
-      subTab: 'playersGeneral'
-    }
-  };
-}
-
-/**
- * Helper to create series achievement object
- * @param {string} id - Achievement ID
- * @param {string} title - Achievement title
- * @param {string} description - Achievement description
- * @param {'good'|'bad'} type - Achievement type
- * @param {number} rank - Player rank
- * @param {number} value - Achievement value
- * @param {number} totalRanked - Total number of players ranked in this category
- * @param {Object} redirectTo - Navigation target
- * @returns {Object} - Achievement object
- */
-export function createSeriesAchievement(id, title, description, type, rank, value, totalRanked, redirectTo) {
-  return {
-    id,
-    title,
-    description,
-    type,
-    category: 'series',
-    rank,
-    value,
-    totalRanked,
-    redirectTo
   };
 }

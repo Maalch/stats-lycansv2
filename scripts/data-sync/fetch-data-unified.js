@@ -7,7 +7,7 @@
  * - Only fetches and adds new games
  * - Updates games from the last 6 hours (to ensure completeness)
  * 
- * Note: Achievements and titles are generated separately via update-achievements-titles.yml
+ * Note: Rankings and titles are generated separately via update-rankings-titles.yml
  */
 import path from 'path';
 import fs from 'fs/promises';

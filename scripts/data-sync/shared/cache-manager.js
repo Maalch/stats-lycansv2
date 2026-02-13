@@ -1,5 +1,5 @@
 /**
- * Cache manager for incremental achievements generation
+ * Cache manager for incremental rankings generation
  * 
  * This module handles loading, saving, and managing the player statistics cache
  * to enable incremental processing of new games without recomputing everything.

@@ -24,7 +24,7 @@ export function PlayersGeneralStatisticsChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { settings } = useSettings();
   
-  // Use navigationState to restore state from achievement navigation, with fallbacks to defaults
+  // Use navigationState to restore state from ranking navigation, with fallbacks to defaults
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(
     navigationState.playersGeneralState?.minGamesForWinRate || MIN_GAMES_DEFAULTS.MEDIUM
   );
@@ -51,7 +51,7 @@ export function PlayersGeneralStatisticsChart() {
         playersGeneralState: {
           minGamesForWinRate,
           winRateOrder,
-          focusChart: currentNavState?.focusChart, // Preserve focus chart from achievement navigation
+          focusChart: currentNavState?.focusChart, // Preserve focus chart from ranking navigation
           selectedMonth: selectedMonth || undefined
         }
       });
