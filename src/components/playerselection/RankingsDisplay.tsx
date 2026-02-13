@@ -715,8 +715,8 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
                     <div className="top3-rank-badge">
                       #{Ranking.rank}{Ranking.totalRanked ? `/${Ranking.totalRanked}` : ''}
                     </div>
-                    <h6 className="top3-Ranking-title">{Ranking.title}</h6>
-                    <p className="top3-Ranking-description">{Ranking.description}</p>
+                    <h6 className="top3-ranking-title">{Ranking.title}</h6>
+                    <p className="top3-ranking-description">{Ranking.description}</p>
                   </div>
                   <div className="top3-sparkles">
                     <span className="sparkle sparkle-1">✨</span>
@@ -751,7 +751,7 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
                 return (
                   <div
                     key={Ranking.id}
-                    className={`Ranking-card ${isBad ? 'bad' : 'good'} ${rankClass}`}
+                    className={`ranking-card ${isBad ? 'bad' : 'good'} ${rankClass}`}
                     onClick={(e) => handleRankingClick(Ranking, e)}
                     title={getRankingTooltip(Ranking)}
                     style={{ 
@@ -760,18 +760,18 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
                       borderLeftWidth: '4px'
                     }}
                   >
-                    <div className="Ranking-header">
-                      <span className="Ranking-title">
+                    <div className="ranking-header">
+                      <span className="ranking-title">
                         {isBad && '💀 '}{Ranking.title}
                       </span>
                       <span 
-                        className="Ranking-rank"
+                        className="ranking-rank"
                         style={gradientColor ? { backgroundColor: gradientColor } : {}}
                       >
                         #{Ranking.rank}{Ranking.totalRanked ? `/${Ranking.totalRanked}` : ''}
                       </span>
                     </div>
-                    <p className="Ranking-description">{Ranking.description}</p>
+                    <p className="ranking-description">{Ranking.description}</p>
                   </div>
                 );
               })}
@@ -780,21 +780,21 @@ export function RankingsDisplay({ rankings, title, emptyMessage, rankingType = '
       )}
 
       {comparisonRankings.length > 0 && (
-        <div className="rankings-section comparison-Rankings">
+        <div className="rankings-section comparison-rankings">
           <h5>📊 Statistiques Coéquipiers et Face-à-Face</h5>
           <div className="rankings-grid">
             {comparisonRankings.map((Ranking) => (
               <div
                 key={Ranking.id}
-                className="Ranking-card comparison"
+                className="ranking-card comparison"
                 onClick={(e) => handleRankingClick(Ranking, e)}
                 title={getRankingTooltip(Ranking)}
               >
-                <div className="Ranking-header">
-                  <span className="Ranking-title">{Ranking.title}</span>
+                <div className="ranking-header">
+                  <span className="ranking-title">{Ranking.title}</span>
                 </div>
                 <p 
-                  className="Ranking-description"
+                  className="ranking-description"
                   dangerouslySetInnerHTML={{ __html: highlightPlayerNames(Ranking.description) }}
                 />
               </div>
