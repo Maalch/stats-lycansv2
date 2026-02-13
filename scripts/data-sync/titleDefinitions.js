@@ -112,7 +112,7 @@ export const TITLE_DEFINITIONS = {
     low: { title: 'Idiot·e en Formation', emoji: '🤡', description: 'Mauvais·e en camp Villageois' }
   },
   winRateLoup: {
-    high: { title: 'Le·a Chef de Meute', emoji: '🐺', description: 'Excellent·e en camp Loup' },
+    high: { title: 'Le·a Chef·fe de Meute', emoji: '🐺', description: 'Excellent·e en camp Loup' },
     low: { title: 'Loup Débutant·e', emoji: '🐩', description: 'Mauvais·e en camp Loup' }
   },
   winRateSolo: {
@@ -332,7 +332,7 @@ export const COMBINATION_TITLES = [
   // Low survival Day 1 + High survival = Phoenix
   {
     id: 'phoenix',
-    title: 'Le·a Phoenix',
+    title: 'Le Phoenix',
     emoji: '🔥',
     description: 'Meurt souvent tôt mais survit jusqu\'au bout après',
     conditions: [
@@ -557,7 +557,7 @@ export const COMBINATION_TITLES = [
   // Low loot + High kill rate = The Assassin
   {
     id: 'assassin',
-    title: 'L\'Assassin·e',
+    title: 'L\'Assassin',
     emoji: '🗡️',
     description: 'Ignore la récolte, se concentre sur les kills',
     conditions: [
@@ -762,7 +762,7 @@ export const COMBINATION_TITLES = [
   // The Witch - High potion usage + High talking (brews potions and talks about them)
   {
     id: 'sorciere',
-    title: 'La Sorcière',
+    title: 'Le·a Sorcièr·e',
     emoji: '🧙',
     description: 'Prépare des potions tout en racontant ses recettes',
     conditions: [
@@ -1014,7 +1014,7 @@ export const COMBINATION_TITLES = [
   // Aggressive voter + First voter = Impulsive
   {
     id: 'cowboy',
-    title: 'Le·a Cow-Boy',
+    title: 'Le Cow-Boy',
     emoji: '🤠',
     description: 'Vote vite et souvent',
     conditions: [
