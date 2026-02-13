@@ -1,12 +1,12 @@
 # Data Sync Scripts
 
-This folder contains scripts for syncing and processing Lycans game data and generating pre-calculated achievements.
+This folder contains scripts for syncing and processing Lycans game data and generating pre-calculated Rankings.
 
 ## Files
 
 - **`fetch-data-unified.js`** - Unified AWS data synchronization script (supports multiple teams)
 - **`fetch-data.js`** - Legacy-only data synchronization script (Google Sheets API)
-- **`generate-achievements.js`** - Standalone script for generating player achievements from game data
+- **`generate-Rankings.js`** - Standalone script for generating player Rankings from game data
 - **`shared/data-sources.js`** - Configuration for different data sources/teams
 - **`shared/sync-utils.js`** - Shared utility functions for data syncing
 - **`package.json`** - Node.js dependencies for the scripts
@@ -57,7 +57,7 @@ npm run sync-data-discord
 - Configuration-based team support
 - Automatic game filtering per team
 - Auto-generates joueurs.json for teams (when configured)
-- Generates player achievements automatically
+- Generates player Rankings automatically
 - Creates unified `gameLog.json` format
 - Outputs to team-specific directories
 
@@ -79,19 +79,19 @@ export const DATA_SOURCES = {
 
 Then run: `node fetch-data-unified.js newTeam`
 
-### generate-achievements.js
+### generate-Rankings.js
 
-A standalone script that generates player achievements from existing game data. This can be run independently to update achievements without fetching fresh data.
+A standalone script that generates player Rankings from existing game data. This can be run independently to update Rankings without fetching fresh data.
 
 **Usage:**
 ```bash
 cd scripts/data-sync
-node generate-achievements.js
+node generate-Rankings.js
 ```
 
 ## Generated Data
 
-### playerAchievements.json
+### playerRankings.json
 
 Structure:
 ```json
@@ -100,32 +100,32 @@ Structure:
   "totalPlayers": 74,
   "totalGames": 537,
   "totalModdedGames": 257,
-  "achievements": {
+  "Rankings": {
     "PlayerName": {
       "playerId": "PlayerName",
-      "allGamesAchievements": [...],
-      "moddedOnlyAchievements": [...]
+      "allGamesRankings": [...],
+      "moddedOnlyRankings": [...]
     }
   }
 }
 ```
 
-### Achievement Types
+### Ranking Types
 
-Currently generates **General Achievements** and **History Achievements**:
+Currently generates **General Rankings** and **History Rankings**:
 
-#### General Achievements (🏆🎯)
+#### General Rankings (🏆🎯)
 - **🎯 Top 10 Participations** - Most active players by game count
 - **🏆 Top 10 Win Rate (min. 10 games)** - Best win rates with minimum games
 - **🌟 Top 10 Win Rate Expert (min. 50 games)** - Best win rates for experienced players
 - **💀 Top 10 Worst Win Rate (min. 10 games)** - Lowest win rates with minimum games
 - **☠️ Top 10 Worst Win Rate Expert (min. 50 games)** - Lowest win rates for experienced players
 
-#### History Achievements (🏘️🏰)
+#### History Rankings (🏘️🏰)
 - **🏘️ Top 10 Village** - Best win rates on Village map (min. 10 games)
 - **🏰 Top 10 Château** - Best win rates on Château map (min. 10 games)
 
-Each achievement includes:
+Each Ranking includes:
 - `id` - Unique identifier
 - `title` - Display title with emoji and rank
 - `description` - Detailed description with rank and value
@@ -137,26 +137,26 @@ Each achievement includes:
 
 ## Integration
 
-The achievements generation is integrated into:
+The Rankings generation is integrated into:
 
-1. **`npm run sync-data`** - Full data sync including achievements
-2. **`npm run generate-achievements`** - Standalone achievements generation + copy to public folder
-3. **GitHub Actions** - Weekly automated data sync (including achievements)
+1. **`npm run sync-data`** - Full data sync including Rankings
+2. **`npm run generate-Rankings`** - Standalone Rankings generation + copy to public folder
+3. **GitHub Actions** - Weekly automated data sync (including Rankings)
 
 ## Performance Benefits
 
-By pre-calculating achievements server-side, we:
+By pre-calculating Rankings server-side, we:
 - Reduce client-side computation load
 - Ensure consistent rankings across all users
 - Enable faster page loads for the player selection interface
-- Centralize achievement logic for easier maintenance and updates
+- Centralize Ranking logic for easier maintenance and updates
 
 ## Future Enhancements
 
-Planned achievement categories:
+Planned Ranking categories:
 - **Performance** - Camp-specific win rates and specializations
 - **Series** - Win/loss streaks and momentum
 - **Kills** - Death statistics and elimination patterns
 - **Comparison** - Head-to-head records between players
 
-Each category will have its own processor module following the same pattern as `generalAchievements.js` and `historyAchievements.js`.
+Each category will have its own processor module following the same pattern as `generalRankings.js` and `historyRankings.js`.

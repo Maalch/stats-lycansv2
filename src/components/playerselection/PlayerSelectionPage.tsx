@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { useGameLogData } from '../../hooks/useCombinedRawData';
-import { usePreCalculatedPlayerAchievements } from '../../hooks/usePreCalculatedPlayerAchievements';
+import { usePreCalculatedPlayerRankings } from '../../hooks/usePreCalculatedPlayerRankings';
 import { usePlayerGameHistoryFromRaw } from '../../hooks/usePlayerGameHistoryFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
@@ -9,7 +9,7 @@ import { usePlayerTitles } from '../../hooks/usePlayerTitles';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { formatCumulativeDuration } from '../../utils/durationFormatters';
-import { AchievementsDisplay } from './AchievementsDisplay';
+import { RankingsDisplay } from './RankingsDisplay';
 import { 
   PlayerHistoryEvolution, 
   PlayerHistoryCamp, 
@@ -50,7 +50,7 @@ export function PlayerSelectionPage() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
   const { data: gameLogData, isLoading, error } = useGameLogData();
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
-  const { data: playerAchievements, isLoading: achievementsLoading, error: achievementsError } = usePreCalculatedPlayerAchievements(settings.highlightedPlayer);
+  const { data: playerRankings, isLoading: rankingsLoading, error: rankingsError } = usePreCalculatedPlayerRankings(settings.highlightedPlayer);
   const { playerData: playerTitles, isLoading: titlesLoading } = usePlayerTitles(settings.highlightedPlayer);
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
@@ -60,8 +60,8 @@ export function PlayerSelectionPage() {
   const { clips: playerClips } = usePlayerClips(settings.highlightedPlayer);
   const { clips: allClips } = useAllClips();
   
-  // Initialize achievementFilter based on global gameFilter setting
-  const [achievementFilter, setAchievementFilter] = useState<'all' | 'modded'>(() => {
+  // Initialize rankingFilter based on global gameFilter setting
+  const [rankingFilter, setRankingFilter] = useState<'all' | 'modded'>(() => {
     // Check if independent filters are enabled and gameTypeEnabled is true
     if (settings.useIndependentFilters && settings.independentFilters?.gameTypeEnabled) {
       return settings.independentFilters.gameFilter === 'modded' ? 'modded' : 'all';
@@ -80,32 +80,32 @@ export function PlayerSelectionPage() {
     return settings.gameFilter === 'modded';
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
-  // Use URL/settings to restore view selection, fallback to navigationState, then 'achievements'
-  const [selectedView, setSelectedView] = useState<'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions'>(
-    settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView || 'achievements'
+  // Use URL/settings to restore view selection, fallback to navigationState, then 'rankings'
+  const [selectedView, setSelectedView] = useState<'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions'>(
+    settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView || 'rankings'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
   const [campFilter, setCampFilter] = useState<CampFilterOption>('all');
 
-  // Sync achievementFilter with global gameFilter when it changes
+  // Sync rankingFilter with global gameFilter when it changes
   useEffect(() => {
     // Check if independent filters are enabled and gameTypeEnabled is true
     if (settings.useIndependentFilters && settings.independentFilters?.gameTypeEnabled) {
       const newFilter = settings.independentFilters.gameFilter === 'modded' ? 'modded' : 'all';
-      setAchievementFilter(newFilter);
+      setRankingFilter(newFilter);
     } else if (!settings.useIndependentFilters) {
       // Fallback to legacy gameFilter
       const newFilter = settings.gameFilter === 'modded' ? 'modded' : 'all';
-      setAchievementFilter(newFilter);
+      setRankingFilter(newFilter);
     }
   }, [settings.gameFilter, settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter]);
   
-  // Force achievementFilter to 'modded' when in modded-only mode
+  // Force rankingFilter to 'modded' when in modded-only mode
   useEffect(() => {
-    if (isModdedOnlyMode && achievementFilter !== 'modded') {
-      setAchievementFilter('modded');
+    if (isModdedOnlyMode && rankingFilter !== 'modded') {
+      setRankingFilter('modded');
     }
-  }, [isModdedOnlyMode, achievementFilter]);
+  }, [isModdedOnlyMode, rankingFilter]);
 
   // Sync selectedView with URL/settings changes (for shareable URLs and external navigation)
   useEffect(() => {
@@ -219,7 +219,7 @@ export function PlayerSelectionPage() {
   };
 
   // Helper function to handle view changes and sync with navigation state and settings (for URL)
-  const handleViewChange = (newView: 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime' ) => {
+  const handleViewChange = (newView: 'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime' ) => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
     updateSettings({ selectedPlayerSelectionView: newView, tab: 'playerSelection' });
@@ -456,8 +456,8 @@ export function PlayerSelectionPage() {
                   <div className="lycans-categories-selection" style={{ marginBottom: '1rem' }}>
                     <button
                       type="button"
-                      className={`lycans-categorie-btn ${selectedView === 'achievements' ? 'active' : ''}`}
-                      onClick={() => handleViewChange('achievements')}
+                      className={`lycans-categorie-btn ${selectedView === 'rankings' ? 'active' : ''}`}
+                      onClick={() => handleViewChange('rankings')}
                     >
                       Classement
                     </button>
@@ -526,44 +526,44 @@ export function PlayerSelectionPage() {
                     </button>
                   </div>
 
-                  {/* Achievements Display */}
-                  {selectedView === 'achievements' && (
-                    <div className="achievements-section">
-                      {achievementsLoading ? (
-                        <div className="achievements-loading">
+                  {/* Rankings Display */}
+                  {selectedView === 'rankings' && (
+                    <div className="rankings-section">
+                      {rankingsLoading ? (
+                        <div className="rankings-loading">
                           <div className="loading-spinner"></div>
                           <p>Chargement des classements...</p>
                         </div>
-                      ) : achievementsError ? (
-                        <div className="achievements-error">
-                          <p>❌ Erreur lors du chargement des classements: {achievementsError}</p>
+                      ) : rankingsError ? (
+                        <div className="rankings-error">
+                          <p>❌ Erreur lors du chargement des classements: {rankingsError}</p>
                         </div>
-                      ) : playerAchievements ? (
-                        <AchievementsDisplay
-                          achievements={achievementFilter === 'all' 
-                            ? playerAchievements.allGamesAchievements 
-                            : playerAchievements.moddedOnlyAchievements
+                      ) : playerRankings ? (
+                        <RankingsDisplay
+                          rankings={rankingFilter === 'all' 
+                            ? playerRankings.allGamesRankings 
+                            : playerRankings.moddedOnlyRankings
                           }
-                          title={achievementFilter === 'all' 
+                          title={rankingFilter === 'all' 
                             ? 'Classements - Toutes les parties' 
                             : 'Classements - Parties moddées'
                           }
                           emptyMessage="Aucun classement dans cette catégorie"
-                          achievementType={achievementFilter}
+                          rankingType={rankingFilter}
                         />
                       ) : (
-                        <div className="achievements-empty">
+                        <div className="rankings-empty">
                           <p>Aucun classement disponible pour ce joueur</p>
                         </div>
                       )}
-                      <div className="achievements-filter">
+                      <div className="rankings-filter">
                         {!isModdedOnlyMode && (
                           <button
                             type="button"
-                            className={`filter-btn ${achievementFilter === 'all' ? 'active' : ''}`}
+                            className={`filter-btn ${rankingFilter === 'all' ? 'active' : ''}`}
                             onClick={(e) => {
                               e.stopPropagation();
-                              setAchievementFilter('all');
+                              setRankingFilter('all');
                             }}
                           >
                             Toutes les parties
@@ -571,10 +571,10 @@ export function PlayerSelectionPage() {
                         )}
                         <button
                           type="button"
-                          className={`filter-btn ${achievementFilter === 'modded' ? 'active' : ''}`}
+                          className={`filter-btn ${rankingFilter === 'modded' ? 'active' : ''}`}
                           onClick={(e) => {
                             e.stopPropagation();
-                            setAchievementFilter('modded');
+                            setRankingFilter('modded');
                           }}
                           disabled={isModdedOnlyMode}
                         >

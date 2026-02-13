@@ -73,10 +73,10 @@ jobs:
             echo "🔄 Sync mode: INCREMENTAL"
           fi
           
-          # Run the command (achievements are generated separately in update-achievements-titles.yml)
+          # Run the command (rankings are generated separately in update-rankings-titles.yml)
           $CMD
           echo "✅ Data fetch completed"
-          echo "ℹ️  Note: Achievements and titles are generated weekly via update-achievements-titles.yml"
+          echo "ℹ️  Note: Rankings and titles are generated weekly via update-rankings-titles.yml"
           
       - name: Validate data files
         run: |
@@ -86,7 +86,7 @@ jobs:
             exit 1
           fi
           
-          # Check for required data files (achievements and cache are generated separately)
+          # Check for required data files (rankings and cache are generated separately)
           REQUIRED_FILES=("data/index.json" "data/gameLog.json" "data/rawBRData.json" "data/joueurs.json")
           for file in "${REQUIRED_FILES[@]}"; do
             if [ ! -f "$file" ]; then
@@ -154,5 +154,5 @@ jobs:
           echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
           echo "- Sources: Legacy Google Sheets API + AWS S3 Lycans Stats bucket"
           echo "- Data types: Game logs, Battle Royale data, Player information"
-          echo "- Note: Achievements and titles are generated weekly via update-achievements-titles.yml"
+          echo "- Note: Rankings and titles are generated weekly via update-rankings-titles.yml"
           ls -la data/ || echo "No data directory found"

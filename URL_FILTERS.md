@@ -32,7 +32,7 @@ Base URL: `https://your-domain.com/stats-lycansv2/`
 |-----------|--------|-------------|---------|
 | `tab` | `playerSelection`, `rankings`, `general`, `gameDetails`, `clips`, `br` | Main tab selection | `tab=rankings` |
 | `subtab` | Varies by tab | Sub-tab selection | `subtab=deathStats` |
-| `playerSelectionView` | `achievements`, `titles`, `evolution`, `camps`, `kills`, `roles`, `actions`, `roleactions`, `deathmap`, `talkingtime` | Player selection page view | `playerSelectionView=achievements` |
+| `playerSelectionView` | `rankings`, `titles`, `evolution`, `camps`, `kills`, `roles`, `actions`, `roleactions`, `deathmap`, `talkingtime` | Player selection page view | `playerSelectionView=rankings` |
 | `deathStatsView` | `killers`, `deaths`, `hunter`, `survival` | Death statistics chart view | `deathStatsView=deaths` |
 | `seriesView` | `villageois`, `loup`, `nowolf`, `solo`, `wins`, `losses`, `deaths`, `survival` | Player series chart view | `seriesView=wins` |
 

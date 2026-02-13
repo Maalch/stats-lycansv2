@@ -2,7 +2,7 @@
 
 # Copilot Instructions for `stats-lycansv2`
 
-A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Recently migrated from multiple JSON files to a unified `gameLog.json` structure while maintaining backward compatibility. Features a sophisticated achievements system with server-side pre-calculation and comprehensive player highlighting across all charts.
+A Vite-based React + TypeScript dashboard for visualizing werewolf game statistics. Recently migrated from multiple JSON files to a unified `gameLog.json` structure while maintaining backward compatibility. Features a sophisticated Rankings system with server-side pre-calculation and comprehensive player highlighting across all charts.
 
 ## Architecture Overview
 
@@ -10,11 +10,11 @@ A Vite-based React + TypeScript dashboard for visualizing werewolf game statisti
 **State:** Quad context system (`SettingsContext` + `NavigationContext` + `FullscreenContext` + `InfoContext`)  
 **Data Pipeline:** Unified `gameLog.json` → `useCombinedRawData()` transformation → `useCombinedFilteredRawData()` → base hooks  
 **Build System:** Vite outputs to `docs/` for GitHub Pages, inline Node.js scripts copy data files  
-**Data Processing:** Hybrid approach - optimized base hook pattern for real-time stats + pre-calculated achievements/titles JSON for performance  
+**Data Processing:** Hybrid approach - optimized base hook pattern for real-time stats + pre-calculated Rankings/titles JSON for performance  
 **URL Sharing:** Settings persist via localStorage + URL parameters via centralized `urlManager.ts` (see `URL_FILTERS.md`)  
 **Centralized Utilities:** `dataPath.ts` (data fetching), `logger.ts` (error handling), `chartConstants.ts` (chart limits/min-games)  
-**Achievements System:** Server-side generation in `scripts/data-sync/` creates `playerAchievements.json` consumed by client  
-**Player Selection:** Dedicated page for player search, selection, achievement display, and interactive navigation
+**Rankings System:** Server-side generation in `scripts/data-sync/` creates `playerRankings.json` consumed by client  
+**Player Selection:** Dedicated page for player search, selection, Ranking display, and interactive navigation
 
 ## Critical Workflows
 
@@ -24,7 +24,7 @@ npm run build                   # TypeScript check + Vite build + copy data to d
 npm run sync-data-aws           # AWS sync for main team (recommended)
 npm run sync-data-discord       # AWS sync for Discord team
 npm run sync-data               # Legacy Google Sheets sync
-npm run generate-achievements   # Standalone achievements generation + copy to public/
+npm run generate-Rankings   # Standalone Rankings generation + copy to public/
 ```
 
 **Note:** `generate-titles` has no npm script — run directly: `cd scripts/data-sync && node generate-titles.js [main|discord]`
@@ -34,10 +34,10 @@ npm run generate-achievements   # Standalone achievements generation + copy to p
   - Primary: AWS-based sync via `fetch-data-unified.js` (supports multiple teams via `shared/data-sources.js` config)
   - Legacy: Google Sheets sync via `fetch-data.js` (deprecated but maintained for backward compatibility)
   - Game data sync: Mon/Tue/Thu at 8 PM UTC via `update-data.yml` and `update-discorddata.yml`
-  - Achievements & Titles: Weekly on Sunday at 6 AM UTC via `update-achievements-titles.yml`
+  - Rankings & Titles: Weekly on Sunday at 6 AM UTC via `update-Rankings-titles.yml`
   
 **Environment:** No env vars needed locally - all data from static files. `STATS_LIST_URL` (AWS) and `LYCANS_API_BASE` (Google Sheets) secrets on GitHub Actions only.  
-**Achievement Generation:** `scripts/data-sync/generate-achievements.js` processes all players, creates ranked lists, supports multiple teams via config
+**Ranking Generation:** `scripts/data-sync/generate-Rankings.js` processes all players, creates ranked lists, supports multiple teams via config
 **Title Generation:** `scripts/data-sync/generate-titles.js` generates player titles based on statistics
 
 ## Data Architecture
@@ -288,7 +288,7 @@ if (!playerInfo) {
 3. **Navigation:** Integrate with `NavigationContext` for chart drill-downs
 4. **Settings:** Add to `SettingsState` interface → ensure localStorage persistence
 5. **Player Highlighting:** Extend chart data types with `isHighlightedAddition` for special inclusion logic
-6. **Achievements:** Add processor in `src/hooks/utils/achievementProcessors/` → integrate in `scripts/data-sync/generate-achievements.js` → client consumes pre-calculated JSON
+6. **Rankings:** Add processor in `src/hooks/utils/RankingProcessors/` → integrate in `scripts/data-sync/generate-Rankings.js` → client consumes pre-calculated JSON
 
 ### Base Hook Template
 ```typescript
@@ -359,7 +359,7 @@ interface ChartPlayerStat extends PlayerStat {
 
 ### Chart-Specific Filter Persistence Pattern
 ```typescript
-// Charts with local filters should persist state via NavigationContext for achievement navigation
+// Charts with local filters should persist state via NavigationContext for Ranking navigation
 const { navigationState, updateNavigationState } = useNavigation();
 
 // Initialize from navigationState with fallback to defaults
@@ -383,11 +383,11 @@ useEffect(() => {
 }, [minGames, campFilter, updateNavigationState]);
 ```
 
-**Critical:** Each chart with local filters should have its own state key in `NavigationState` (e.g., `lootStatsState`, `deathStatisticsState`) to preserve filter values when navigating from achievements.
+**Critical:** Each chart with local filters should have its own state key in `NavigationState` (e.g., `lootStatsState`, `deathStatisticsState`) to preserve filter values when navigating from Rankings.
 
 ## Integration Points
 
-**GitHub Actions:** 3 workflows — `update-data.yml` (main sync), `update-discorddata.yml` (discord sync), `update-achievements-titles.yml` (weekly generation)  
+**GitHub Actions:** 3 workflows — `update-data.yml` (main sync), `update-discorddata.yml` (discord sync), `update-Rankings-titles.yml` (weekly generation)  
 **Data Fetching:** `src/utils/dataPath.ts` provides `fetchDataFile()` / `fetchOptionalDataFile()` for centralized, data-source-aware data loading  
 **URL Management:** `src/utils/urlManager.ts` provides `parseUrlState()`, `replaceUrlState()`, `mergeUrlState()` with custom `urlchange` events  
 **Logging:** `src/utils/logger.ts` — environment-aware logging (`error()` always, `warn()`/`info()`/`debug()` dev-only) + `handleFetchError()` + `validateData()`  
@@ -487,33 +487,33 @@ deathStats.playerDeathStats.forEach((player) => {
 2. **Game Counting:** Apply the same camp filter logic for both death counting and game counting to avoid rate calculation errors
 3. **Player Lookup:** Always try Steam ID lookup first, then fall back to name matching for compatibility with both data sources
 
-## Achievements System Architecture
+## Rankings System Architecture
 
-**Server-Side Generation:** `scripts/data-sync/generate-achievements.js` processes `gameLog.json` → creates `playerAchievements.json`  
-**Client-Side Consumption:** `usePlayerAchievements()` hook loads pre-calculated achievements, falling back to real-time calculation for missing data  
-**Achievement Structure:** Each player has `allGamesAchievements` + `moddedOnlyAchievements` arrays with rank, value, and navigation metadata  
+**Server-Side Generation:** `scripts/data-sync/generate-Rankings.js` processes `gameLog.json` → creates `playerRankings.json`  
+**Client-Side Consumption:** `usePlayerRankings()` hook loads pre-calculated Rankings, falling back to real-time calculation for missing data  
+**Ranking Structure:** Each player has `allGamesRankings` + `moddedOnlyRankings` arrays with rank, value, and navigation metadata  
 **Performance:** Pre-calculation eliminates client-side ranking computation for 70+ players across 500+ games
 
-### Achievement Processor Pattern
+### Ranking Processor Pattern
 ```typescript
 // Server-side JavaScript (in data-sync/)
-export function processNewAchievements(playerStats, playerName, suffix) {
-  const achievements = [];
+export function processNewRankings(playerStats, playerName, suffix) {
+  const Rankings = [];
   // Ranking logic here
-  return achievements;
+  return Rankings;
 }
 
-// Client-side TypeScript (in src/hooks/utils/achievementProcessors/)  
-export function processNewAchievements(playerStats: PlayerStat[], playerName: string, suffix: string): Achievement[] {
+// Client-side TypeScript (in src/hooks/utils/RankingProcessors/)  
+export function processNewRankings(playerStats: PlayerStat[], playerName: string, suffix: string): Ranking[] {
   // Same logic, TypeScript types
 }
 ```
 
-**Integration:** Add new processors to both `generate-achievements.js` and `usePlayerAchievements.tsx` → achievements auto-generate during data sync
+**Integration:** Add new processors to both `generate-Rankings.js` and `usePlayerRankings.tsx` → Rankings auto-generate during data sync
 
-### Achievement Categories Implemented
-- **General:** Participations, win rates (good/bad achievements)  
-- **History:** Map-specific performance (Village 🏘️, Château 🏰 achievements)
+### Ranking Categories Implemented
+- **General:** Participations, win rates (good/bad Rankings)  
+- **History:** Map-specific performance (Village 🏘️, Château 🏰 Rankings)
 - **Comparison:** Player relationship stats, wolf/lover pairing performance
 - **Kills:** Death statistics, survival rates, kill counts by role
 - **Series:** Consecutive wins, camp streaks, role performance chains
@@ -529,10 +529,10 @@ export function processNewAchievements(playerStats: PlayerStat[], playerName: st
 
 **Claim Strength Algorithm (CRITICAL):**
 ```javascript
-// Bad achievements (EXTREME_LOW, LOW, BELOW_AVERAGE): lower percentile = stronger claim
-// Good achievements (EXTREME_HIGH, HIGH, ABOVE_AVERAGE): higher percentile = stronger claim
-const isBadAchievement = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(title.category);
-const adjustedPercentile = isBadAchievement ? (100 - percentile) : percentile;
+// Bad Rankings (EXTREME_LOW, LOW, BELOW_AVERAGE): lower percentile = stronger claim
+// Good Rankings (EXTREME_HIGH, HIGH, ABOVE_AVERAGE): higher percentile = stronger claim
+const isBadRanking = ['EXTREME_LOW', 'LOW', 'BELOW_AVERAGE'].includes(title.category);
+const adjustedPercentile = isBadRanking ? (100 - percentile) : percentile;
 const claimStrength = (priority * 1000) + (adjustedPercentile * 10) - titleIndex;
 ```
 
@@ -597,32 +597,32 @@ TargetedPlayersView.tsx         // Survival rates when targeted
 
 ## Player Selection System
 
-**New Feature (2024):** Centralized player search and selection interface with integrated achievements display
+**New Feature (2024):** Centralized player search and selection interface with integrated Rankings display
 
 ### Player Selection Architecture
 ```typescript
 // Located in: src/components/playerselection/
 PlayerSelectionPage.tsx     // Main interface with search and player cards
-AchievementsDisplay.tsx     // Interactive achievement cards with navigation
+RankingsDisplay.tsx     // Interactive Ranking cards with navigation
 PlayerSelectionPage.css     // Styled components with animations
 ```
 
-**Key Features:** Real-time player search, achievement filtering (all games vs. modded), clickable achievements that navigate to relevant statistics with proper filter states, player highlighting persistence across all charts.
+**Key Features:** Real-time player search, Ranking filtering (all games vs. modded), clickable Rankings that navigate to relevant statistics with proper filter states, player highlighting persistence across all charts.
 
-**Data Source:** `usePreCalculatedPlayerAchievements()` loads from `/data/playerAchievements.json`
+**Data Source:** `usePreCalculatedPlayerRankings()` loads from `/data/playerRankings.json`
 
-### Achievement Navigation Pattern
+### Ranking Navigation Pattern
 ```typescript
-// Achievements are clickable and automatically set appropriate filters
-const handleAchievementClick = (achievement: Achievement, event: React.MouseEvent) => {
+// Rankings are clickable and automatically set appropriate filters
+const handleRankingClick = (Ranking: Ranking, event: React.MouseEvent) => {
   // Reset filters, preserve highlighted player, navigate to specific chart
   clearNavigation();
-  updateSettings({ /* appropriate filters for achievement */ });
-  navigateToTab(achievement.redirectTo.tab);
+  updateSettings({ /* appropriate filters for Ranking */ });
+  navigateToTab(Ranking.redirectTo.tab);
 }
 ```
 
-**Critical:** Achievements automatically configure filters (modded games, map filters, minimum games) based on the achievement context when clicked.
+**Critical:** Rankings automatically configure filters (modded games, map filters, minimum games) based on the Ranking context when clicked.
 
 ## Changelog System
 
@@ -672,8 +672,8 @@ const handleAchievementClick = (achievement: Achievement, event: React.MouseEven
 **GitHub Actions:** 
   - `.github/workflows/update-data.yml` - Main team game data sync (Mon/Tue/Thu at 8 PM UTC)
   - `.github/workflows/update-discorddata.yml` - Discord team game data sync (Mon/Thu/Sat at 4 AM UTC)
-  - `.github/workflows/update-achievements-titles.yml` - Weekly achievements & titles generation (Sunday at 6 AM UTC)
-  - Manual triggers via workflow_dispatch with `full_sync` option for data sync, `force_recalculation` for achievements/titles
+  - `.github/workflows/update-Rankings-titles.yml` - Weekly Rankings & titles generation (Sunday at 6 AM UTC)
+  - Manual triggers via workflow_dispatch with `full_sync` option for data sync, `force_recalculation` for Rankings/titles
   
 **Data Sources:**
   - Primary: AWS S3 bucket game logs (via `fetch-data-unified.js`)
@@ -687,16 +687,16 @@ const handleAchievementClick = (achievement: Achievement, event: React.MouseEven
 
 **Unified AWS Sync (`fetch-data-unified.js`):**
 ```bash
-# Supports multiple teams via configuration (game data only, no achievements)
+# Supports multiple teams via configuration (game data only, no Rankings)
 node fetch-data-unified.js main      # Main team to /data
 node fetch-data-unified.js discord   # Discord team to /data/discord
 ```
 
-**Achievements & Titles Generation:**
+**Rankings & Titles Generation:**
 ```bash
-# Generate achievements (supports incremental updates via cache)
-node generate-achievements.js main           # Incremental update
-node generate-achievements.js discord -f     # Force full recalculation
+# Generate Rankings (supports incremental updates via cache)
+node generate-Rankings.js main           # Incremental update
+node generate-Rankings.js discord -f     # Force full recalculation
 
 # Generate titles
 node generate-titles.js main

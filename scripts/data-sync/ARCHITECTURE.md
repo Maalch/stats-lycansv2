@@ -33,7 +33,7 @@
 │  │ gameLog.json │  │ gameLog.json │  │gameLog_TeamDiscord   │  │
 │  │ rawBRData    │  │ (placeholders│  │.json                 │  │
 │  │ joueurs.json │  │  for legacy) │  │ (placeholders)       │  │
-│  │ achievements │  │ achievements │  │ achievements_Team    │  │
+│  │ Rankings │  │ Rankings │  │ Rankings_Team    │  │
 │  │              │  │              │  │ Discord.json         │  │
 │  └──────────────┘  └──────────────┘  └──────────────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
@@ -92,14 +92,14 @@
 │                                                            │
 │  Main Data Files:                                          │
 │  ├── gameLog.json                                          │
-│  ├── playerAchievements.json                              │
+│  ├── playerRankings.json                              │
 │  ├── rawBRData.json                                        │
 │  ├── joueurs.json                                          │
 │  └── index.json                                            │
 │                                                            │
 │  Discord Team Files (with _TeamDiscord suffix):            │
 │  ├── gameLog_TeamDiscord.json                             │
-│  ├── playerAchievements_TeamDiscord.json                  │
+│  ├── playerRankings_TeamDiscord.json                  │
 │  ├── rawBRData_TeamDiscord.json                           │
 │  ├── joueurs_TeamDiscord.json                             │
 │  └── index_TeamDiscord.json                               │
@@ -128,7 +128,7 @@
 6. Unified data saved to gameLog_TeamDiscord.json
    │
    ▼
-7. Achievements generated → playerAchievements_TeamDiscord.json
+7. Rankings generated → playerRankings_TeamDiscord.json
    │
    ▼
 8. Placeholder files created for compatibility
@@ -208,13 +208,13 @@ stats-lycansv2/
 │   └── data-sync/
 │       ├── fetch-data-unified.js    # Unified AWS sync (main/discord)
 │       ├── fetch-data.js            # Legacy sync script
-│       ├── generate-achievements.js # Achievement generator
+│       ├── generate-Rankings.js # Ranking generator
 │       ├── compute-stats.js         # Statistics computation
 │       ├── helpers.js               # Helper functions
 │       ├── shared/
 │       │   ├── data-sources.js      # Team configurations
 │       │   └── sync-utils.js        # Shared sync utilities
-│       ├── processors/              # Achievement processors
+│       ├── processors/              # Ranking processors
 │       ├── package.json             # Script dependencies
 │       ├── README.md                # Scripts overview
 │       ├── OPTIMIZATION.md          # Optimization guide
@@ -222,13 +222,13 @@ stats-lycansv2/
 │
 ├── data/                            # Main team data directory
 │   ├── gameLog.json                 # Main game data
-│   ├── playerAchievements.json      # Main achievements
+│   ├── playerRankings.json      # Main Rankings
 │   ├── joueurs.json                 # Player data (placeholder)
 │   ├── discord/                     # Discord team subdirectory
 │   │   ├── gameLog.json             # Discord team games
-│   │   ├── playerAchievements.json  # Discord achievements
+│   │   ├── playerRankings.json  # Discord Rankings
 │   │   └── joueurs.json             # Discord players
-│   ├── playerAchievements_TeamDiscord.json  # Discord achievements
+│   ├── playerRankings_TeamDiscord.json  # Discord Rankings
 │   └── ...                          # Other data files
 │
 ├── docs/                            # Built for GitHub Pages
@@ -251,7 +251,7 @@ stats-lycansv2/
 │ Output File   │ gameLog.json │ gameLog.json │ gameLog_Team...  │
 │ BR Data       │ ✅ Yes       │ ⚠️ Placeholder│ ⚠️ Placeholder   │
 │ Player Data   │ ✅ Yes       │ ⚠️ Placeholder│ ⚠️ Placeholder   │
-│ Achievements  │ ✅ Yes       │ ✅ Yes       │ ✅ Yes           │
+│ Rankings  │ ✅ Yes       │ ✅ Yes       │ ✅ Yes           │
 │ Workflow      │ update-data  │ update-data  │ update-discord   │
 │ Schedule      │ 4 AM UTC     │ 4 AM UTC     │ 5 AM UTC         │
 │ Conflicts     │ With AWS     │ With Legacy  │ None (separate)  │

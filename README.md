@@ -1,6 +1,6 @@
 # Stats Lycans v2
 
-A comprehensive React + TypeScript dashboard for visualizing werewolf game statistics. Features advanced player analytics, achievements system, voting behavior analysis, and interactive data exploration with full URL-based state sharing.
+A comprehensive React + TypeScript dashboard for visualizing werewolf game statistics. Features advanced player analytics, Rankings system, voting behavior analysis, and interactive data exploration with full URL-based state sharing.
 
 Built with in-game data logging (thanks to SoldatFlippy) and manual data curation (thanks to AmberAerin).
 
@@ -21,14 +21,14 @@ Built with in-game data logging (thanks to SoldatFlippy) and manual data curatio
 
 ### Core Analytics
 - **Player Statistics Dashboard:** Win rates, participation counts, role performance, camp-specific metrics
-- **Achievements System:** 70+ unique achievements across multiple categories (General, History, Comparison, Kills, Series)
+- **Rankings System:** 70+ unique Rankings across multiple categories (General, History, Comparison, Kills, Series)
 - **Voting Behavior Analysis:** Aggressiveness scoring, targeting accuracy, survival rates when targeted
 - **Death Analytics:** Death type distribution, location heatmaps, killer statistics, survival rates
 - **Game Details View:** Comprehensive per-game breakdowns with player lineups, roles, and outcomes
 - **Battle Royale Stats:** Dedicated BR mode analytics with kills, placements, and win rates
 
 ### Advanced Features
-- **Player Selection Interface:** Centralized player search with integrated achievement displays and clickable navigation
+- **Player Selection Interface:** Centralized player search with integrated Ranking displays and clickable navigation
 - **Multi-Source Data Support:** Main team and Discord team data with automatic source switching
 - **URL-Based State Sharing:** Complete dashboard state serialization for shareable links
 - **Interactive Drill-Down Navigation:** Click any player in any chart to explore their specific statistics
@@ -70,7 +70,7 @@ npm run preview          # Preview production build locally
 npm run sync-data-aws           # AWS sync for main team (recommended)
 npm run sync-data-discord       # AWS sync for Discord team
 npm run sync-data               # Legacy Google Sheets sync (deprecated)
-npm run generate-achievements   # Standalone achievements generation
+npm run generate-Rankings   # Standalone Rankings generation
 ```
 
 ### Adding New Statistics
@@ -98,7 +98,7 @@ See [.github/copilot-instructions.md](.github/copilot-instructions.md) for detai
 - **Workflows:**
   - `.github/workflows/update-data.yml` — Main team AWS sync
   - `.github/workflows/update-discorddata.yml` — Discord team AWS sync
-- **Manual Triggers:** Available via workflow_dispatch with `full_sync` and `force_achievements_recalc` options
+- **Manual Triggers:** Available via workflow_dispatch with `full_sync` and `force_Rankings_recalc` options
 
 ## Architecture
 
@@ -117,7 +117,7 @@ See [.github/copilot-instructions.md](.github/copilot-instructions.md) for detai
 ### Data Pipeline
 - **Primary Source:** `gameLog.json` — Unified game data structure
 - **Transformation Layer:** Backward compatibility with legacy interfaces
-- **Pre-Calculation:** Server-side achievements generation for performance
+- **Pre-Calculation:** Server-side Rankings generation for performance
 - **Multi-Source Support:** Main team and Discord team data switching
 
 ## Project Structure
@@ -129,7 +129,7 @@ stats-lycansv2/
 │   │   ├── generalstats/   # Overall game statistics
 │   │   ├── playerstats/    # Player-specific analytics
 │   │   ├── gamedetails/    # Per-game breakdowns
-│   │   ├── playerselection/ # Player search & achievements
+│   │   ├── playerselection/ # Player search & Rankings
 │   │   ├── settings/       # Configuration interface
 │   │   └── common/         # Shared components (FullscreenChart, etc.)
 │   ├── context/            # React contexts (Settings, Navigation, Fullscreen)
@@ -141,12 +141,12 @@ stats-lycansv2/
 ├── data/                   # Main team data files
 │   ├── gameLog.json        # Unified game data
 │   ├── joueurs.json        # Player registry
-│   ├── playerAchievements.json  # Pre-calculated achievements
+│   ├── playerRankings.json  # Pre-calculated Rankings
 │   └── discord/            # Discord team data
 ├── scripts/
 │   └── data-sync/          # Data synchronization scripts
 │       ├── fetch-data-unified.js    # AWS sync (primary)
-│       └── generate-achievements.js # Achievement generation
+│       └── generate-Rankings.js # Ranking generation
 ├── docs/                   # Production build output (GitHub Pages)
 └── public/                 # Static assets for development
 ```
@@ -159,7 +159,7 @@ GitHub Actions runs data synchronization automatically:
 - **Schedule:** Monday, Tuesday, Thursday at 8 PM UTC
 - **Main Team:** `.github/workflows/update-data.yml`
 - **Discord Team:** `.github/workflows/update-discorddata.yml`
-- **Manual Triggers:** Available with `full_sync` and `force_achievements_recalc` options
+- **Manual Triggers:** Available with `full_sync` and `force_Rankings_recalc` options
 
 ### Manual Sync
 
@@ -171,8 +171,8 @@ npm run sync-data-discord    # Discord team → /data/discord
 # Legacy: Google Sheets sync (deprecated)
 npm run sync-data
 
-# Standalone achievement generation
-npm run generate-achievements
+# Standalone Ranking generation
+npm run generate-Rankings
 ```
 
 ### Data Sources

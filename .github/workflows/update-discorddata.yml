@@ -60,13 +60,13 @@ jobs:
           fi
           
           echo "✅ Discord Team data fetch completed"
-          echo "ℹ️  Note: Achievements and titles are generated weekly via update-achievements-titles.yml"
+          echo "ℹ️  Note: Rankings and titles are generated weekly via update-rankings-titles.yml"
           
       - name: Validate Discord Team data files
         run: |
           echo "🔍 Validating Discord Team data files..."
           
-          # Check for required Discord Team data files in discord folder (achievements are generated separately)
+          # Check for required Discord Team data files in discord folder (rankings are generated separately)
           REQUIRED_FILES=(
             "data/discord/gameLog.json" 
             "data/discord/index.json" 
@@ -134,5 +134,5 @@ jobs:
           echo "- Source: AWS S3 Discord Team bucket"
           echo "- Output folder: data/discord/"
           echo "- Data types: Game logs, Player data, Index"
-          echo "- Note: Achievements and titles are generated weekly via update-achievements-titles.yml"
+          echo "- Note: Rankings and titles are generated weekly via update-rankings-titles.yml"
           ls -la data/discord/ 2>/dev/null || echo "No Discord Team data files found"

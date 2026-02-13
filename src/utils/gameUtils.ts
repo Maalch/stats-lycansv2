@@ -94,7 +94,7 @@ export function getWinnerCampFromGame(game: GameLogEntry): string {
   }
   
   // Use getPlayerCampFromRole with regroupWolfSubRoles: true to handle Traître/Louveteau->Loup grouping
-  // This matches the logic used in the achievements generation
+  // This matches the logic used in the rankings generation
   const winnerCamps = winners.map(w => 
     getPlayerCampFromRole(getPlayerFinalRole(w.MainRoleInitial, w.MainRoleChanges || []), { regroupWolfSubRoles: true })
   );

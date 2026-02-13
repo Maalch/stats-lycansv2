@@ -136,7 +136,7 @@ export function buildUrlSearch(state: Partial<UrlState>): string {
   }
   
   // Player selection view
-  if (state.playerSelectionView && state.playerSelectionView !== 'achievements') {
+  if (state.playerSelectionView && state.playerSelectionView !== 'rankings') {
     urlParams.set('playerSelectionView', state.playerSelectionView);
   }
   

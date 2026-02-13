@@ -48,7 +48,7 @@ export interface SettingsState {
   subtab: string | null;
   
   // PlayerSelection view type (for URL persistence)
-  selectedPlayerSelectionView?: 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime';
+  selectedPlayerSelectionView?: 'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime';
 }
 
 interface SettingsContextType {
@@ -175,8 +175,8 @@ function urlStateToSettings(urlState: UrlState): Partial<SettingsState> {
   }
   
   // Parse selectedPlayerSelectionView
-  if (urlState.playerSelectionView && ['achievements', 'titles', 'evolution', 'camps', 'kills', 'roles', 'deathmap', 'talkingtime', 'actions', 'roleactions'].includes(urlState.playerSelectionView)) {
-    settings.selectedPlayerSelectionView = urlState.playerSelectionView as 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions';
+  if (urlState.playerSelectionView && ['rankings', 'titles', 'evolution', 'camps', 'kills', 'roles', 'deathmap', 'talkingtime', 'actions', 'roleactions'].includes(urlState.playerSelectionView)) {
+    settings.selectedPlayerSelectionView = urlState.playerSelectionView as 'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions';
   }
 
   return settings;
@@ -243,7 +243,7 @@ function updateUrlFromSettings(settings: SettingsState) {
   }
   
   // PlayerSelection view type (automatically add tab if not set)
-  if (settings.selectedPlayerSelectionView && settings.selectedPlayerSelectionView !== 'achievements') {
+  if (settings.selectedPlayerSelectionView && settings.selectedPlayerSelectionView !== 'rankings') {
     // Ensure tab parameter is present when playerSelectionView is set
     if (!settings.tab) {
       urlState.tab = 'playerSelection';
@@ -362,7 +362,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     }
     
     // PlayerSelection view type (automatically add tab if not set)
-    if (targetSettings.selectedPlayerSelectionView && targetSettings.selectedPlayerSelectionView !== 'achievements') {
+    if (targetSettings.selectedPlayerSelectionView && targetSettings.selectedPlayerSelectionView !== 'rankings') {
       // Ensure tab parameter is present when playerSelectionView is set
       if (!targetSettings.tab) {
         urlState.tab = 'playerSelection';

@@ -31,7 +31,7 @@ export function getDataFileUrl(dataSource: DataSource, filename: string): string
 export const DATA_FILES = {
   GAME_LOG: 'gameLog.json',
   JOUEURS: 'joueurs.json',
-  PLAYER_ACHIEVEMENTS: 'playerAchievements.json',
+  PLAYER_RANKINGS: 'playerRankings.json',
   RAW_BR_DATA: 'rawBRData.json',
   INDEX: 'index.json',
   GAME_LOG_LEGACY: 'gameLog-Legacy.json',
