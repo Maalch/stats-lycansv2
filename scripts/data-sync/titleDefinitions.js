@@ -643,19 +643,6 @@ export const COMBINATION_TITLES = [
     priority: 13
   },
 
-  // Low everything = The Beginner
-  {
-    id: 'debutant',
-    title: 'Le·a Débutant·e',
-    emoji: '🆘',
-    description: 'Peine en victoire, survie et récolte',
-    conditions: [
-      { stat: 'winRate', category: 'LOW' },
-      { stat: 'survival', category: 'LOW' },
-      { stat: 'loot', category: 'LOW' }
-    ],
-    priority: 13
-  },
   // The Alchemist - High potion usage + High survival
   {
     id: 'apothicaire',
@@ -834,6 +821,18 @@ export const COMBINATION_TITLES = [
     ],
     priority: 12
   },
+    // The Pharmacy - High potion usage + Low loot (focuses on potions, not harvest)
+  {
+    id: 'pharmacien',
+    title: 'Le·a Pharmacien·ne',
+    emoji: '💊',
+    description: 'Ignore la récolte pour se concentrer sur les potions',
+    conditions: [
+      { stat: 'potionUsage', category: 'HIGH' },
+      { stat: 'loot', category: 'LOW' }
+    ],
+    priority: 12
+  },
   // Survives outside main zones = The Prowler
   {
     id: 'rodeur',
@@ -859,15 +858,15 @@ export const COMBINATION_TITLES = [
     priority: 11
   },
 
-
-  // The Pharmacy - High potion usage + Low loot (focuses on potions, not harvest)
+  // Low everything = The Beginner
   {
-    id: 'pharmacien',
-    title: 'Le·a Pharmacien·ne',
-    emoji: '💊',
-    description: 'Ignore la récolte pour se concentrer sur les potions',
+    id: 'debutant',
+    title: 'Le·a Débutant·e',
+    emoji: '🆘',
+    description: 'Peine en victoire, survie et récolte',
     conditions: [
-      { stat: 'potionUsage', category: 'HIGH' },
+      { stat: 'winRate', category: 'LOW' },
+      { stat: 'survival', category: 'LOW' },
       { stat: 'loot', category: 'LOW' }
     ],
     priority: 11
