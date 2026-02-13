@@ -28,6 +28,8 @@ import { ClipViewer } from '../common/ClipViewer';
 import { findRelatedClips, findNextClip } from '../../utils/clipUtils';
 import { useAllClips } from '../../hooks/useClips';
 import { PlayerTitlesDisplay } from './PlayerTitlesDisplay';
+import { PlayerAchievementsDisplay } from './PlayerAchievementsDisplay';
+import { usePlayerAchievements } from '../../hooks/usePlayerAchievements';
 import './PlayerSelectionPage.css';
 import './PlayerTitlesDisplay.css';
 
@@ -52,6 +54,7 @@ export function PlayerSelectionPage() {
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerRankings, isLoading: rankingsLoading, error: rankingsError } = usePreCalculatedPlayerRankings(settings.highlightedPlayer);
   const { playerData: playerTitles, isLoading: titlesLoading } = usePlayerTitles(settings.highlightedPlayer);
+  const { playerData: playerAchievements, achievementsWithProgress, categories: achievementCategories, isLoading: achievementsLoading } = usePlayerAchievements(settings.highlightedPlayer);
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
@@ -81,7 +84,7 @@ export function PlayerSelectionPage() {
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
   // Use URL/settings to restore view selection, fallback to navigationState, then 'rankings'
-  const [selectedView, setSelectedView] = useState<'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions'>(
+  const [selectedView, setSelectedView] = useState<'rankings' | 'titles' | 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions'>(
     settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView || 'rankings'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
@@ -219,7 +222,7 @@ export function PlayerSelectionPage() {
   };
 
   // Helper function to handle view changes and sync with navigation state and settings (for URL)
-  const handleViewChange = (newView: 'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime' ) => {
+  const handleViewChange = (newView: 'rankings' | 'titles' | 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime' ) => {
     setSelectedView(newView);
     updateNavigationState({ selectedPlayerSelectionView: newView });
     updateSettings({ selectedPlayerSelectionView: newView, tab: 'playerSelection' });
@@ -468,6 +471,14 @@ export function PlayerSelectionPage() {
                     >
                       Titres
                     </button>
+                    {/* Hidden until fully ready - accessible via URL: ?selectedPlayerSelectionView=achievements */}
+                    {/* <button
+                      type="button"
+                      className={`lycans-categorie-btn ${selectedView === 'achievements' ? 'active' : ''}`}
+                      onClick={() => handleViewChange('achievements')}
+                    >
+                      Succès
+                    </button> */}
                     <button
                       type="button"
                       className={`lycans-categorie-btn ${selectedView === 'evolution' ? 'active' : ''}`}
@@ -589,6 +600,16 @@ export function PlayerSelectionPage() {
                     <PlayerTitlesDisplay 
                       playerTitles={playerTitles}
                       titlesLoading={titlesLoading}
+                    />
+                  )}
+
+                  {/* Achievements Display */}
+                  {selectedView === 'achievements' && (
+                    <PlayerAchievementsDisplay
+                      achievementsWithProgress={achievementsWithProgress}
+                      playerAchievements={playerAchievements}
+                      categories={achievementCategories}
+                      isLoading={achievementsLoading}
                     />
                   )}
 

@@ -122,7 +122,7 @@ export interface NavigationState {
   selectedSeriesType?: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival';
   seriesViewMode?: 'best' | 'ongoing';
   // PlayerSelectionPage state
-  selectedPlayerSelectionView?: 'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime' ;
+  selectedPlayerSelectionView?: 'rankings' | 'titles' | 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime' ;
   
   // Grouped state - all properties in each group must be provided together
   campPerformanceState?: CampPerformanceState;

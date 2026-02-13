@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.9';
+export const APP_VERSION = '1.8.0';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.8.0',
+    date: '14/02/2026',
+    description: 'Nouveau système de Succès ! 30 accomplissements permanents à débloquer avec 4 niveaux (⭐/⭐⭐/⭐⭐⭐/🐺) dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueurs / Succès',
+      navigationState: { selectedPlayerSelectionView: 'achievements' }
+    }
+  },
   {
     version: 'v1.7.9',
     date: '13/02/2026',

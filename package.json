@@ -12,6 +12,7 @@
     "sync-data-aws": "cd scripts/data-sync && npm install && node fetch-data-unified.js main",
     "sync-data-discord": "cd scripts/data-sync && npm install && node fetch-data-unified.js discord",
     "generate-rankings": "cd scripts/data-sync && node generate-rankings.js && cd ../.. && npm run copy-data-dev",
+    "generate-achievements": "cd scripts/data-sync && node generate-achievements.js && cd ../.. && npm run copy-data-dev",
     "verify-actions": "node scripts/verify-actions.js",
     "lint": "eslint .",
     "preview": "vite preview"

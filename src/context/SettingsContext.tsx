@@ -48,7 +48,7 @@ export interface SettingsState {
   subtab: string | null;
   
   // PlayerSelection view type (for URL persistence)
-  selectedPlayerSelectionView?: 'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime';
+  selectedPlayerSelectionView?: 'rankings' | 'titles' | 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime';
 }
 
 interface SettingsContextType {
@@ -175,8 +175,8 @@ function urlStateToSettings(urlState: UrlState): Partial<SettingsState> {
   }
   
   // Parse selectedPlayerSelectionView
-  if (urlState.playerSelectionView && ['rankings', 'titles', 'evolution', 'camps', 'kills', 'roles', 'deathmap', 'talkingtime', 'actions', 'roleactions'].includes(urlState.playerSelectionView)) {
-    settings.selectedPlayerSelectionView = urlState.playerSelectionView as 'rankings' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions';
+  if (urlState.playerSelectionView && ['rankings', 'titles', 'achievements', 'evolution', 'camps', 'kills', 'roles', 'deathmap', 'talkingtime', 'actions', 'roleactions'].includes(urlState.playerSelectionView)) {
+    settings.selectedPlayerSelectionView = urlState.playerSelectionView as 'rankings' | 'titles' | 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions';
   }
 
   return settings;

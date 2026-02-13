@@ -64,8 +64,9 @@ export function parseUrlState(): UrlState {
   if (urlParams.has('tab')) state.tab = urlParams.get('tab')!;
   if (urlParams.has('subtab')) state.subtab = urlParams.get('subtab')!;
   
-  // Player selection view
+  // Player selection view (support both parameter names for compatibility)
   if (urlParams.has('playerSelectionView')) state.playerSelectionView = urlParams.get('playerSelectionView')!;
+  if (urlParams.has('selectedPlayerSelectionView')) state.playerSelectionView = urlParams.get('selectedPlayerSelectionView')!;
   
   // Death statistics view
   if (urlParams.has('deathStatsView')) state.deathStatsView = urlParams.get('deathStatsView')!;

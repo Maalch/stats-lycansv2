@@ -1,4 +1,4 @@
-name: Update Rankings & Titles
+name: Update Rankings, Titles & Achievements
 
 on:
   schedule:
@@ -71,8 +71,15 @@ jobs:
           node scripts/data-sync/generate-titles.js main
           echo "✅ Main Team titles generated"
 
+      - name: Generate achievements (Main Team)
+        if: ${{ inputs.team == 'all' || inputs.team == 'main' || inputs.team == '' }}
+        run: |
+          echo "🏅 Generating achievements for Main Team..."
+          node scripts/data-sync/generate-achievements.js main
+          echo "✅ Main Team achievements generated"
+
       # ========================================
-      # DISCORD TEAM - Rankings & Titles
+      # DISCORD TEAM - Rankings, Titles & Achievements
       # ========================================
       - name: Generate Rankings (Discord Team)
         if: ${{ inputs.team == 'all' || inputs.team == 'discord' || inputs.team == '' }}
@@ -100,6 +107,18 @@ jobs:
           if [ -f "data/discord/gameLog.json" ]; then
             node scripts/data-sync/generate-titles.js discord
             echo "✅ Discord Team titles generated"
+          else
+            echo "⚠️  Discord Team data not found, skipping..."
+          fi
+
+      - name: Generate achievements (Discord Team)
+        if: ${{ inputs.team == 'all' || inputs.team == 'discord' || inputs.team == '' }}
+        run: |
+          echo "🏅 Generating achievements for Discord Team..."
+          # Check if discord data exists
+          if [ -f "data/discord/gameLog.json" ]; then
+            node scripts/data-sync/generate-achievements.js discord
+            echo "✅ Discord Team achievements generated"
           else
             echo "⚠️  Discord Team data not found, skipping..."
           fi
@@ -175,6 +194,32 @@ jobs:
             echo "ℹ️  Discord Team: No titles file (data may not exist)"
           fi
           
+          # Validate Main Team achievements
+          if [ -f "data/playerAchievements.json" ]; then
+            if jq empty "data/playerAchievements.json" 2>/dev/null; then
+              PLAYER_COUNT=$(jq '.totalPlayers' data/playerAchievements.json)
+              echo "✅ Main Team: playerAchievements.json valid ($PLAYER_COUNT players)"
+            else
+              echo "❌ Main Team: Invalid JSON in playerAchievements.json"
+              exit 1
+            fi
+          else
+            echo "⚠️  Main Team: playerAchievements.json not found"
+          fi
+          
+          # Validate Discord Team achievements (optional)
+          if [ -f "data/discord/playerAchievements.json" ]; then
+            if jq empty "data/discord/playerAchievements.json" 2>/dev/null; then
+              PLAYER_COUNT=$(jq '.totalPlayers' data/discord/playerAchievements.json)
+              echo "✅ Discord Team: playerAchievements.json valid ($PLAYER_COUNT players)"
+            else
+              echo "❌ Discord Team: Invalid JSON in playerAchievements.json"
+              exit 1
+            fi
+          else
+            echo "ℹ️  Discord Team: No achievements file (data may not exist)"
+          fi
+          
           echo "✅ All files validated successfully"
 
       # ========================================
@@ -186,6 +231,7 @@ jobs:
           cp data/playerRankings.json docs/data/playerRankings.json 2>/dev/null || true
           cp data/playerTitles.json docs/data/playerTitles.json 2>/dev/null || true
           cp data/playerStatsCache.json docs/data/playerStatsCache.json 2>/dev/null || true
+          cp data/playerAchievements.json docs/data/playerAchievements.json 2>/dev/null || true
           echo "✅ Copied Main Team files to docs/data/"
           
           # Copy Discord Team files if exists
@@ -194,6 +240,7 @@ jobs:
             cp data/discord/playerRankings.json docs/data/discord/playerRankings.json 2>/dev/null || true
             cp data/discord/playerTitles.json docs/data/discord/playerTitles.json 2>/dev/null || true
             cp data/discord/playerStatsCache.json docs/data/discord/playerStatsCache.json 2>/dev/null || true
+            cp data/discord/playerAchievements.json docs/data/discord/playerAchievements.json 2>/dev/null || true
             echo "✅ Copied Discord Team files to docs/data/discord/"
           fi
 
@@ -202,18 +249,20 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Stage all ranking, title, and cache files
+          # Stage all ranking, title, achievement, and cache files
           git add data/playerRankings.json docs/data/playerRankings.json 2>/dev/null || true
           git add data/playerTitles.json docs/data/playerTitles.json 2>/dev/null || true
+          git add data/playerAchievements.json docs/data/playerAchievements.json 2>/dev/null || true
           git add data/playerStatsCache.json docs/data/playerStatsCache.json 2>/dev/null || true
           git add data/discord/playerRankings.json docs/data/discord/playerRankings.json 2>/dev/null || true
           git add data/discord/playerTitles.json docs/data/discord/playerTitles.json 2>/dev/null || true
+          git add data/discord/playerAchievements.json docs/data/discord/playerAchievements.json 2>/dev/null || true
           git add data/discord/playerStatsCache.json docs/data/discord/playerStatsCache.json 2>/dev/null || true
           
           if ! git diff --cached --quiet; then
-            git commit -m "chore: update rankings and titles $(date '+%Y-%m-%d %H:%M:%S')"
+            git commit -m "chore: update rankings, titles and achievements $(date '+%Y-%m-%d %H:%M:%S')"
             git push
-            echo "✅ rankings and titles updated and pushed successfully"
+            echo "✅ rankings, titles and achievements updated and pushed successfully"
           else
             echo "ℹ️  No changes detected - skipping commit"
           fi
@@ -221,7 +270,7 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "🔍 Rankings & Titles Workflow Summary:"
+          echo "🔍 Rankings, Titles & Achievements Workflow Summary:"
           echo "- Team(s) processed: ${{ inputs.team || 'all' }}"
           echo "- Mode: ${{ inputs.force_recalculation == 'true' && 'FULL RECALCULATION' || 'INCREMENTAL' }}"
           echo "- Timestamp: $(date '+%Y-%m-%d %H:%M:%S UTC')"
@@ -239,6 +288,11 @@ jobs:
             echo "   - Titles: $TITLES_PLAYERS players"
             echo "   - Modded games analyzed: $MODDED_GAMES"
           fi
+          if [ -f "data/playerAchievements.json" ]; then
+            ACH_PLAYERS=$(jq '.totalPlayers' data/playerAchievements.json)
+            ACH_GAMES=$(jq '.totalGames' data/playerAchievements.json)
+            echo "   - Achievements: $ACH_PLAYERS players ($ACH_GAMES games analyzed)"
+          fi
           
           # Show Discord Team summary
           if [ -f "data/discord/playerRankings.json" ]; then
@@ -250,9 +304,13 @@ jobs:
               TITLES_PLAYERS=$(jq '.totalPlayers' data/discord/playerTitles.json)
               echo "   - Titles: $TITLES_PLAYERS players"
             fi
+            if [ -f "data/discord/playerAchievements.json" ]; then
+              ACH_PLAYERS=$(jq '.totalPlayers' data/discord/playerAchievements.json)
+              echo "   - Achievements: $ACH_PLAYERS players"
+            fi
           fi
           
           echo ""
           echo "📁 Files updated:"
-          ls -la data/playerRankings.json data/playerTitles.json 2>/dev/null || echo "  No Main Team files"
-          ls -la data/discord/playerRankings.json data/discord/playerTitles.json 2>/dev/null || echo "  No Discord Team files"
+          ls -la data/playerRankings.json data/playerTitles.json data/playerAchievements.json 2>/dev/null || echo "  No Main Team files"
+          ls -la data/discord/playerRankings.json data/discord/playerTitles.json data/discord/playerAchievements.json 2>/dev/null || echo "  No Discord Team files"
