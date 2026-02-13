@@ -23,6 +23,7 @@ interface RoleData {
   villageoisPowers: RoleStats[];
   loupPowers: RoleStats[];
   secondaryRoles: RoleStats[];
+  villageoisEliteCombinations: RoleStats[];
 }
 
 /**
@@ -36,12 +37,18 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
   const villageoisPowersMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>();
   const loupPowersMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number; roleBreakdown: Map<string, number> }>();
   const secondaryRolesMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>();
+  const villageoisEliteCombinationsMap = new Map<string, { appearances: number; wins: number; winsWithoutRoleChange: number; gamesWithoutRoleChange: number }>();
 
   gameData.forEach((game) => {
     // Only consider modded games for power statistics
     if (!game.Modded) {
       return;
     }
+
+    // Track Villageois Élite combinations for this game
+    const villageoisElitePowers: string[] = [];
+    let villageoisWon = false;
+    let anyEliteRoleChanged = false;
 
     game.PlayerStats.forEach((playerStat) => {
       // Skip games where the player's role is "Inconnu"
@@ -59,11 +66,22 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
       const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
 
+      // Track Villageois victories for combination stats
+      if (playerCamp === 'Villageois' && playerStat.Victorious) {
+        villageoisWon = true;
+      }
+
       // Special handling for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
       // This handles both legacy format (MainRoleInitial === 'Chasseur') and new format (Villageois Élite + Power)
       if (playerCamp === 'Villageois' && isVillageoisElite(playerStat)) {
         const effectivePower = getEffectivePower(playerStat);
         if (effectivePower && VILLAGEOIS_ELITE_POWERS.includes(effectivePower as typeof VILLAGEOIS_ELITE_POWERS[number])) {
+          // Add to combination tracking
+          villageoisElitePowers.push(effectivePower);
+          if (roleChanged) {
+            anyEliteRoleChanged = true;
+          }
+
           const currentStats = villageoisPowersMap.get(effectivePower) || { 
             appearances: 0, 
             wins: 0, 
@@ -176,6 +194,27 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
         });
       }
     });
+
+    // Process Villageois Élite combination for this game
+    if (villageoisElitePowers.length > 0) {
+      // Sort powers alphabetically and create combination string
+      const sortedPowers = [...villageoisElitePowers].sort();
+      const combinationName = sortedPowers.join(' + ');
+      
+      const currentStats = villageoisEliteCombinationsMap.get(combinationName) || {
+        appearances: 0,
+        wins: 0,
+        winsWithoutRoleChange: 0,
+        gamesWithoutRoleChange: 0
+      };
+      
+      villageoisEliteCombinationsMap.set(combinationName, {
+        appearances: currentStats.appearances + 1,
+        wins: currentStats.wins + (villageoisWon ? 1 : 0),
+        winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!anyEliteRoleChanged && villageoisWon ? 1 : 0),
+        gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!anyEliteRoleChanged ? 1 : 0)
+      });
+    }
   });
 
   // Convert maps to sorted arrays
@@ -236,7 +275,8 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
   return {
     villageoisPowers: mapToArrayVillageois(villageoisPowersMap),
     loupPowers: mapToArrayLoup(loupPowersMap),
-    secondaryRoles: mapToArraySecondary(secondaryRolesMap)
+    secondaryRoles: mapToArraySecondary(secondaryRolesMap),
+    villageoisEliteCombinations: mapToArrayVillageois(villageoisEliteCombinationsMap)
   };
 }
 
@@ -275,7 +315,7 @@ export function RolesStatsChart() {
 
   // Prepare chart data with sorting based on mode (full dataset, no slicing)
   const chartData = useMemo(() => {
-    if (!data) return { villageoisPowers: [], loupPowers: [], secondaryRoles: [] };
+    if (!data) return { villageoisPowers: [], loupPowers: [], secondaryRoles: [], villageoisEliteCombinations: [] };
 
     // Sort function based on chart mode
     const sortFunction = chartMode === 'winRate' 
@@ -285,7 +325,8 @@ export function RolesStatsChart() {
     return {
       villageoisPowers: [...data.villageoisPowers].sort(sortFunction),
       loupPowers: [...data.loupPowers].sort(sortFunction),
-      secondaryRoles: [...data.secondaryRoles].sort(sortFunction)
+      secondaryRoles: [...data.secondaryRoles].sort(sortFunction),
+      villageoisEliteCombinations: [...data.villageoisEliteCombinations].sort(sortFunction)
     };
   }, [data, chartMode]);
 
@@ -304,8 +345,9 @@ export function RolesStatsChart() {
   const hasVillageoisPowers = chartData.villageoisPowers.length > 0;
   const hasLoupPowers = chartData.loupPowers.length > 0;
   const hasSecondaryRoles = chartData.secondaryRoles.length > 0;
+  const hasVillageoisEliteCombinations = chartData.villageoisEliteCombinations.length > 0;
 
-  if (!hasVillageoisPowers && !hasLoupPowers && !hasSecondaryRoles) {
+  if (!hasVillageoisPowers && !hasLoupPowers && !hasSecondaryRoles && !hasVillageoisEliteCombinations) {
     return <div className="donnees-manquantes">Aucun pouvoir ou rôle secondaire trouvé</div>;
   }
 
@@ -520,6 +562,22 @@ export function RolesStatsChart() {
             }
             return 'var(--chart-color-1)';
           }
+        )}
+
+        {hasVillageoisEliteCombinations && renderRoleChart(
+          chartData.villageoisEliteCombinations,
+          'Combinaisons de Villageois Élite',
+          'var(--chart-color-4)',
+          (combinationName) => {
+            navigateToGameDetails({
+              campFilter: {
+                selectedCamp: 'Villageois',
+                campFilterMode: chartMode === 'winRate' ? 'wins-only' : 'all-assignments'
+              },
+              fromComponent: `Statistiques des Rôles - Combinaison: ${combinationName}`
+            });
+          },
+          () => 'var(--chart-color-4)'
         )}
 
         {hasLoupPowers && renderRoleChart(

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.8';
+export const APP_VERSION = '1.7.9';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.9',
+    date: '13/02/2026',
+    description: 'Ajout d\'un graphique sur les combinaisons de Villageois Élite (quels pouvoirs apparaissent ensemble en partie et leur taux de victoire) dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'rolesStats',
+      text: 'Stats Parties / Rôles'
+    }
+  },
   {
     version: 'v1.7.8',
     date: '12/02/2026',
