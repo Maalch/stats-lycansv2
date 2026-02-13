@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useFilteredRawBRData } from '../../hooks/useRawBRData';
 import { useSettings } from '../../context/SettingsContext';
@@ -372,43 +372,50 @@ export function BRKillsStatsChart() {
                     return null;
                   }}
                 />
-                <Bar dataKey={killsView === 'average' ? 'averageScore' : 'totalScore'} name={killsView === 'average' ? 'Kill moyen par partie' : 'Kills totaux'}>
-                  {(killsView === 'average' ? stats.topPlayersByAverageScore : stats.topPlayersByTotalScore).map((entry, index) => {
+                <Bar
+                  dataKey={killsView === 'average' ? 'averageScore' : 'totalScore'}
+                  name={killsView === 'average' ? 'Kill moyen par partie' : 'Kills totaux'}
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as { name: string; isHighlightedAddition?: boolean };
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHoveredPlayer = hoveredPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
                     return (
-                      <Cell 
-                        key={`cell-${index}`}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
                         fill={
                           isHighlightedFromSettings ? 'var(--accent-primary)' :
                           isHighlightedAddition ? 'var(--accent-secondary)' :
                           getPlayerColor(entry.name)
                         }
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : isHoveredPlayer 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onMouseEnter={() => setHoveredPlayer(entry.name)}
                         onMouseLeave={() => setHoveredPlayer(null)}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </FullscreenChart>
@@ -429,7 +436,10 @@ export function BRKillsStatsChart() {
             <ResponsiveContainer width="100%" height={400}>
               <PieChart>
                 <Pie
-                  data={stats.scoreData}
+                  data={stats.scoreData.map((entry, index) => ({
+                    ...entry,
+                    fill: chartColors[index % chartColors.length]
+                  }))}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
@@ -458,11 +468,7 @@ export function BRKillsStatsChart() {
                   outerRadius={140}
                   fill="#8884d8"
                   dataKey="count"
-                >
-                  {stats.scoreData.map((_entry, index) => (
-                    <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-                  ))}
-                </Pie>
+                />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0) {
@@ -544,14 +550,24 @@ export function BRKillsStatsChart() {
                     return null;
                   }}
                 />
-                <Bar dataKey="count" name="Victoires">
-                  {stats.winnerScoreData.map((_entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={chartColors[index % chartColors.length]} 
-                    />
-                  ))}
-                </Bar>
+                <Bar
+                  dataKey="count"
+                  name="Victoires"
+                  shape={(props) => {
+                    const { x, y, width, height, index } = props;
+                    const fillColor = chartColors[(index ?? 0) % chartColors.length];
+
+                    return (
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={fillColor}
+                      />
+                    );
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </FullscreenChart>

@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { PieChart, Pie, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Rectangle } from 'recharts';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { useHarvestStatsFromRaw } from '../../hooks/useHarvestStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
@@ -63,15 +63,16 @@ export function HarvestProgressChart() {
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
-                    data={distributionDonnees}
+                    data={distributionDonnees.map((entry, indice) => ({
+                      ...entry,
+                      fill: lycansRecolteCouleurs[indice % lycansRecolteCouleurs.length]
+                    }))}
                     cx="50%"
                     cy="50%"
                     labelLine={true}
                     label={(entry: any) => `${entry.nom}: ${((entry.percent ?? 0) * 100).toFixed(0)}%`}
                     outerRadius={80}
                     fill="#8884d8"
-                    dataKey="valeur"
-                    nameKey="nom"
                     onClick={(data: any) => {
                       if (data && data.nom) {
                         navigateToGameDetails({
@@ -81,11 +82,9 @@ export function HarvestProgressChart() {
                       }
                     }}
                     style={{ cursor: 'pointer' }}
-                  >
-                    {distributionDonnees.map((_, indice) => (
-                      <Cell key={`cellule-${indice}`} fill={lycansRecolteCouleurs[indice % lycansRecolteCouleurs.length]} />
-                    ))}
-                  </Pie>
+                    dataKey="valeur"
+                    nameKey="nom"
+                  />
                   <Tooltip
                     content={({ active, payload }) => {
                       if (active && payload && payload.length > 0) {
@@ -179,25 +178,33 @@ export function HarvestProgressChart() {
                   <Bar 
                     dataKey="moyenne" 
                     name="Moyenne de Récolte"
-                    onClick={(data: any) => {
-                      if (data && data.camp) {
-                        navigateToGameDetails({
-                          campFilter: {
-                            selectedCamp: data.camp,
-                            campFilterMode: 'wins-only'
-                          },
-                          fromComponent: 'Moyenne de Récolte par Camp'
-                        });
-                      }
-                    }}
                     style={{ cursor: 'pointer' }}
-                  >
-                    {moyenneParCamp.map((entry) => (
-                      <Cell key={`cell-${entry.camp}`}
-                        fill={lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp)}
-                      />
-                    ))}
-                  </Bar>
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as { camp: string };
+                      const fillColor = lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp);
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={fillColor}
+                          onClick={() => {
+                            navigateToGameDetails({
+                              campFilter: {
+                                selectedCamp: entry.camp,
+                                campFilterMode: 'wins-only'
+                              },
+                              fromComponent: 'Moyenne de Récolte par Camp'
+                            });
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>

@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceArea } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
@@ -681,37 +681,38 @@ export function DeathLocationView({
                   <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
                   <Scatter 
                     data={aggregatedLocationData}
-                    onClick={(data) => handleDeathClick(data)}
-                    onMouseEnter={(data) => setHoveredDeath(data as DeathLocationData)}
-                    onMouseLeave={() => setHoveredDeath(null)}
                     style={{ cursor: 'pointer' }}
                     isAnimationActive={false}
-                  >
-                    {aggregatedLocationData.map((entry, index) => {
-                      // Check if any death in this cluster belongs to the highlighted player
+                    shape={(props) => {
+                      const { cx, cy, payload } = props as any;
+                      const entry = payload as any;
+
                       const hasHighlightedPlayer = entry.allDeaths.some(
                         (d: DeathLocationData) => settings.highlightedPlayer === d.playerName
                       );
                       const isHovered = hoveredDeath && entry.clusterIndex === (hoveredDeath as any).clusterIndex;
-                      
-                      // Size scales with number of deaths (logarithmic to avoid huge dots)
-                      // Base: 5 for 1 death, grows with log scale
+
                       const sizeScale = Math.min(Math.log2(entry.deathCount + 1) * 3 + 4, 18);
                       const baseSize = Math.round(sizeScale);
                       const highlightedSize = baseSize + 2;
-                      
+                      const radius = hasHighlightedPlayer ? highlightedSize : isHovered ? baseSize + 1 : baseSize;
+
                       return (
-                        <Cell
-                          key={`cell-${index}`}
+                        <circle
+                          cx={cx}
+                          cy={cy}
+                          r={radius}
                           fill={hasHighlightedPlayer ? 'var(--accent-primary-text)' : getDeathColor(entry.deathType)}
                           stroke={hasHighlightedPlayer || isHovered ? 'white' : entry.deathCount > 1 ? 'rgba(255,255,255,0.6)' : 'none'}
                           strokeWidth={hasHighlightedPlayer ? 3 : isHovered ? 2 : entry.deathCount > 1 ? 1.5 : 0}
                           opacity={hasHighlightedPlayer ? 1 : 0.8}
-                          r={hasHighlightedPlayer ? highlightedSize : isHovered ? baseSize + 1 : baseSize}
+                          onClick={() => handleDeathClick(entry)}
+                          onMouseEnter={() => setHoveredDeath(entry as DeathLocationData)}
+                          onMouseLeave={() => setHoveredDeath(null)}
                         />
                       );
-                    })}
-                  </Scatter>
+                    }}
+                  />
                 </ScatterChart>
               </ResponsiveContainer>
             </div>

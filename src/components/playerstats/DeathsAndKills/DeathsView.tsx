@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
@@ -85,6 +85,7 @@ export function DeathsView({
     });
     
     let highlightedPlayerAddedDeaths = false;
+
     
     if (settings.highlightedPlayer && !highlightedPlayerInDeathsTop15) {
       const highlightedPlayer = deathStats.playerDeathStats.find((p: any) => p.playerName === settings.highlightedPlayer);
@@ -557,54 +558,57 @@ export function DeathsView({
                 <Tooltip content={<SurvivalRateTooltip />} />
                 <Bar
                   dataKey="value"
-                  onClick={(data) => {
-                    const navigationFilters: any = {
-                      selectedPlayer: data?.name,
-                      fromComponent: 'Statistiques de Mort'
-                    };
-                    
-                    // If a specific camp is selected, add camp filter
-                    if (selectedCamp !== 'Tous les camps') {
-                      navigationFilters.campFilter = {
-                        selectedCamp: selectedCamp,
-                        campFilterMode: 'all-assignments'
-                      };
-                    }
-                    
-                    navigateToGameDetails(navigationFilters);
-                  }}
-                  onMouseEnter={(data: any) => setHoveredPlayer(data?.name || null)}
-                  onMouseLeave={() => setHoveredPlayer(null)}
                   style={{ cursor: 'pointer' }}
-                >
-                  {survivalRateData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartPlayerDeathData;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
                     return (
-                      <Cell
-                        key={`cell-${index}`}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
                         fill={playersColor[entry.name] || 'var(--chart-primary)'}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : hoveredPlayer === entry.name 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : hoveredPlayer === entry.name
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : hoveredPlayer === entry.name 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : hoveredPlayer === entry.name
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => {
+                          const navigationFilters: any = {
+                            selectedPlayer: entry?.name,
+                            fromComponent: 'Statistiques de Mort'
+                          };
+
+                          if (selectedCamp !== 'Tous les camps') {
+                            navigationFilters.campFilter = {
+                              selectedCamp: selectedCamp,
+                              campFilterMode: 'all-assignments'
+                            };
+                          }
+
+                          navigateToGameDetails(navigationFilters);
+                        }}
+                        onMouseEnter={() => setHoveredPlayer(entry?.name || null)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

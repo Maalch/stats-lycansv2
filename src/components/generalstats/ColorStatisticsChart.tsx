@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { useColorStatsFromRaw } from '../../hooks/useColorStatsFromRaw';
 import { useCombinedFilteredRawData } from '../../hooks/useCombinedRawData';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -119,19 +119,28 @@ export function ColorStatisticsChart() {
                 return null;
               }}
             />
-            <Bar dataKey="winRate">
-              {winRateChartData.map((entry, index) => (
-                <Cell 
-                  key={`cell-${index}`} 
-                  fill={entry.displayColor}
-                  stroke={hoveredColor === entry.color ? 'var(--text-primary)' : 'none'}
-                  strokeWidth={hoveredColor === entry.color ? 2 : 0}
-                  onMouseEnter={() => setHoveredColor(entry.color)}
-                  onMouseLeave={() => setHoveredColor(null)}
-                  style={{ cursor: 'pointer' }}
-                />
-              ))}
-            </Bar>
+            <Bar
+              dataKey="winRate"
+              shape={(props) => {
+                const { x, y, width, height, payload } = props;
+                const entry = payload as { color: string; displayColor: string };
+
+                return (
+                  <Rectangle
+                    x={x}
+                    y={y}
+                    width={width}
+                    height={height}
+                    fill={entry.displayColor}
+                    stroke={hoveredColor === entry.color ? 'var(--text-primary)' : 'none'}
+                    strokeWidth={hoveredColor === entry.color ? 2 : 0}
+                    onMouseEnter={() => setHoveredColor(entry.color)}
+                    onMouseLeave={() => setHoveredColor(null)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                );
+              }}
+            />
           </BarChart>
         </ResponsiveContainer>
       </FullscreenChart>
@@ -186,19 +195,28 @@ export function ColorStatisticsChart() {
                 return null;
               }}
             />
-            <Bar dataKey="avgPlayersPerGame">
-              {usageChartData.map((entry, index) => (
-                <Cell 
-                  key={`cell-${index}`} 
-                  fill={entry.displayColor}
-                  stroke={hoveredColor === entry.color ? 'var(--text-primary)' : 'none'}
-                  strokeWidth={hoveredColor === entry.color ? 2 : 0}
-                  onMouseEnter={() => setHoveredColor(entry.color)}
-                  onMouseLeave={() => setHoveredColor(null)}
-                  style={{ cursor: 'pointer' }}
-                />
-              ))}
-            </Bar>
+            <Bar
+              dataKey="avgPlayersPerGame"
+              shape={(props) => {
+                const { x, y, width, height, payload } = props;
+                const entry = payload as { color: string; displayColor: string };
+
+                return (
+                  <Rectangle
+                    x={x}
+                    y={y}
+                    width={width}
+                    height={height}
+                    fill={entry.displayColor}
+                    stroke={hoveredColor === entry.color ? 'var(--text-primary)' : 'none'}
+                    strokeWidth={hoveredColor === entry.color ? 2 : 0}
+                    onMouseEnter={() => setHoveredColor(entry.color)}
+                    onMouseLeave={() => setHoveredColor(null)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                );
+              }}
+            />
           </BarChart>
         </ResponsiveContainer>
       </FullscreenChart>

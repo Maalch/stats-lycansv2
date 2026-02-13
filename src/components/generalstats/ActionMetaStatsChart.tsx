@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle, ReferenceLine } from 'recharts';
 import { useActionMetaStatsFromRaw } from '../../hooks/useActionMetaStatsFromRaw';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
@@ -160,14 +160,26 @@ export function ActionMetaStatsChart() {
                   return null;
                 }}
               />
-              <Bar dataKey="delta">
-                {filteredGadgetStats.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.delta > 0 ? 'var(--success-color, #82ca9d)' : 'var(--danger-color, #ff6b6b)'}
-                  />
-                ))}
-              </Bar>
+              <Bar
+                dataKey="delta"
+                shape={(props) => {
+                  const { x, y, width, height, payload } = props;
+                  const entry = payload as { delta: number };
+                  const fillColor = entry.delta > 0
+                    ? 'var(--success-color, #82ca9d)'
+                    : 'var(--danger-color, #ff6b6b)';
+
+                  return (
+                    <Rectangle
+                      x={x}
+                      y={y}
+                      width={width}
+                      height={height}
+                      fill={fillColor}
+                    />
+                  );
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -236,14 +248,26 @@ export function ActionMetaStatsChart() {
                   return null;
                 }}
               />
-              <Bar dataKey="delta">
-                {filteredPotionStats.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.delta > 0 ? 'var(--success-color, #82ca9d)' : 'var(--danger-color, #ff6b6b)'}
-                  />
-                ))}
-              </Bar>
+              <Bar
+                dataKey="delta"
+                shape={(props) => {
+                  const { x, y, width, height, payload } = props;
+                  const entry = payload as { delta: number };
+                  const fillColor = entry.delta > 0
+                    ? 'var(--success-color, #82ca9d)'
+                    : 'var(--danger-color, #ff6b6b)';
+
+                  return (
+                    <Rectangle
+                      x={x}
+                      y={y}
+                      width={width}
+                      height={height}
+                      fill={fillColor}
+                    />
+                  );
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -303,11 +327,7 @@ export function ActionMetaStatsChart() {
                   return null;
                 }}
               />
-              <Bar dataKey="winRate" fill={lycansColors['Loup'] || 'var(--wolf-color)'}>
-                {actionMetaStats.wolfTransformTiming.map((_, index) => (
-                  <Cell key={`cell-${index}`} />
-                ))}
-              </Bar>
+              <Bar dataKey="winRate" fill={lycansColors['Loup'] || 'var(--wolf-color)'} />
             </BarChart>
           </ResponsiveContainer>
         </div>

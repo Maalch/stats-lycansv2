@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Cell,
+  Rectangle,
 } from 'recharts';
 import { useTeamCompositionStatsFromRaw } from '../../hooks/useTeamCompositionStatsFromRaw';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -250,22 +250,34 @@ export function TeamCompositionChart() {
                         return null;
                       }}
                     />
-                    <Bar dataKey="mostCommonAppearances" name="Parties" radius={[4, 4, 0, 0]}>
-                      {overviewData.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          cursor={entry.hasEnoughData ? 'pointer' : 'default'}
-                          fill={entry.hasEnoughData ? COLORS.bar : COLORS.barInactive}
-                          opacity={entry.hasEnoughData ? 1 : 0.3}
-                          onClick={() => {
-                            if (entry.hasEnoughData) {
-                              setSelectedPlayerCount(entry.playerCount);
-                              setViewMode('detailed');
-                            }
-                          }}
-                        />
-                      ))}
-                    </Bar>
+                    <Bar
+                      dataKey="mostCommonAppearances"
+                      name="Parties"
+                      radius={[4, 4, 0, 0]}
+                      shape={(props) => {
+                        const { x, y, width, height, payload } = props;
+                        const entry = payload as any;
+                        const fillColor = entry.hasEnoughData ? COLORS.bar : COLORS.barInactive;
+
+                        return (
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
+                            cursor={entry.hasEnoughData ? 'pointer' : 'default'}
+                            fill={fillColor}
+                            opacity={entry.hasEnoughData ? 1 : 0.3}
+                            onClick={() => {
+                              if (entry.hasEnoughData) {
+                                setSelectedPlayerCount(entry.playerCount);
+                                setViewMode('detailed');
+                              }
+                            }}
+                          />
+                        );
+                      }}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

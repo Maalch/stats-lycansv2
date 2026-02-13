@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { useLootStats } from '../../hooks/useLootStats';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
@@ -320,8 +320,11 @@ export function LootStatisticsChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="totalLoot">
-                    {totalLootChartData.map((entry, index) => {
+                  <Bar
+                    dataKey="totalLoot"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as ChartLootStat;
                       const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                       const isHoveredPlayer = highlightedPlayer === entry.player;
                       const isHighlightedAddition = entry.isHighlightedAddition;
@@ -329,26 +332,29 @@ export function LootStatisticsChart() {
                       const playerColor = playersColor[entry.player] || 'var(--chart-primary)';
 
                       return (
-                        <Cell
-                          key={`cell-${index}`}
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
                           fill={
                             isHighlightedFromSettings ? 'var(--accent-primary)' :
                             isHighlightedAddition ? 'var(--accent-secondary)' :
                             playerColor
                           }
                           stroke={
-                            isHighlightedFromSettings ? "var(--accent-primary)" :
-                            isHoveredPlayer ? "#000000" : 
-                            "none"
+                            isHighlightedFromSettings ? 'var(--accent-primary)' :
+                            isHoveredPlayer ? '#000000' :
+                            'none'
                           }
                           strokeWidth={
                             isHighlightedFromSettings ? 3 :
-                            isHoveredPlayer ? 2 : 
+                            isHoveredPlayer ? 2 :
                             0
                           }
-                          strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                          strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                           opacity={isHighlightedAddition ? 0.8 : 1}
-                          onClick={() => navigateToGameDetails({ 
+                          onClick={() => navigateToGameDetails({
                             selectedPlayer: entry.player,
                             fromComponent: 'Total Loot Collecté'
                           })}
@@ -357,8 +363,8 @@ export function LootStatisticsChart() {
                           style={{ cursor: 'pointer' }}
                         />
                       );
-                    })}
-                  </Bar>
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -519,8 +525,11 @@ export function LootStatisticsChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="lootPer60Min">
-                    {normalizedLootChartData.map((entry, index) => {
+                  <Bar
+                    dataKey="lootPer60Min"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as ChartLootStat;
                       const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                       const isHoveredPlayer = highlightedPlayer === entry.player;
                       const isHighlightedAddition = entry.isHighlightedAddition;
@@ -528,26 +537,29 @@ export function LootStatisticsChart() {
                       const playerColor = playersColor[entry.player] || 'var(--chart-primary)';
 
                       return (
-                        <Cell
-                          key={`cell-${index}`}
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
                           fill={
                             isHighlightedFromSettings ? 'var(--accent-primary)' :
                             isHighlightedAddition ? 'var(--accent-secondary)' :
                             playerColor
                           }
                           stroke={
-                            isHighlightedFromSettings ? "var(--accent-primary)" :
-                            isHoveredPlayer ? "#000000" : 
-                            "none"
+                            isHighlightedFromSettings ? 'var(--accent-primary)' :
+                            isHoveredPlayer ? '#000000' :
+                            'none'
                           }
                           strokeWidth={
                             isHighlightedFromSettings ? 3 :
-                            isHoveredPlayer ? 2 : 
+                            isHoveredPlayer ? 2 :
                             0
                           }
-                          strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                          strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                           opacity={isHighlightedAddition ? 0.8 : 1}
-                          onClick={() => navigateToGameDetails({ 
+                          onClick={() => navigateToGameDetails({
                             selectedPlayer: entry.player,
                             fromComponent: 'Taux de Récolte (par 60 min)'
                           })}
@@ -556,8 +568,8 @@ export function LootStatisticsChart() {
                           style={{ cursor: 'pointer' }}
                         />
                       );
-                    })}
-                  </Bar>
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -704,8 +716,11 @@ export function LootStatisticsChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="maxLootInGame">
-                    {recordLootChartData.map((entry, index) => {
+                  <Bar
+                    dataKey="maxLootInGame"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as ChartLootStat;
                       const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                       const isHoveredPlayer = highlightedPlayer === entry.player;
                       const isHighlightedAddition = entry.isHighlightedAddition;
@@ -713,27 +728,30 @@ export function LootStatisticsChart() {
                       const playerColor = playersColor[entry.player] || 'var(--chart-primary)';
 
                       return (
-                        <Cell
-                          key={`cell-${index}`}
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
                           fill={
                             isHighlightedFromSettings ? 'var(--accent-primary)' :
                             isHighlightedAddition ? 'var(--accent-secondary)' :
                             playerColor
                           }
                           stroke={
-                            isHighlightedFromSettings ? "var(--accent-primary)" :
-                            isHoveredPlayer ? "#000000" : 
-                            "none"
+                            isHighlightedFromSettings ? 'var(--accent-primary)' :
+                            isHoveredPlayer ? '#000000' :
+                            'none'
                           }
                           strokeWidth={
                             isHighlightedFromSettings ? 3 :
-                            isHoveredPlayer ? 2 : 
+                            isHoveredPlayer ? 2 :
                             0
                           }
-                          strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                          strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                           opacity={isHighlightedAddition ? 0.8 : 1}
-                          onClick={() => navigateToGameDetails({ 
-                            selectedPlayer: entry.player, 
+                          onClick={() => navigateToGameDetails({
+                            selectedPlayer: entry.player,
                             selectedGame: entry.recordGameId,
                             fromComponent: 'Record de Loot'
                           })}
@@ -742,8 +760,8 @@ export function LootStatisticsChart() {
                           style={{ cursor: 'pointer' }}
                         />
                       );
-                    })}
-                  </Bar>
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, PieChart, Pie, Cell, Legend
+  ResponsiveContainer, PieChart, Pie, Legend, Rectangle
 } from 'recharts';
 import { usePlayerTalkingTimeStats } from '../../../hooks/usePlayerTalkingTimeStats';
 import { getRoleBreakdownTopN } from '../../../hooks/utils/playerTalkingTimeUtils';
@@ -39,8 +39,8 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
     if (!data) return [];
 
     return [
-      { name: 'En réunion', value: data.totalSecondsDuring, color: '#2196F3' },
-      { name: 'Hors réunion', value: data.totalSecondsOutside, color: '#FF9800' }
+      { name: 'En réunion', value: data.totalSecondsDuring, fill: '#2196F3' },
+      { name: 'Hors réunion', value: data.totalSecondsOutside, fill: '#FF9800' }
     ];
   }, [data]);
 
@@ -292,11 +292,7 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
                   outerRadius={100}
                   dataKey="value"
                   label={(entry: any) => `${entry.name}: ${((entry.percent || 0) * 100).toFixed(1)}%`}
-                >
-                  {meetingDistributionData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
+                />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: 'var(--bg-secondary)',
@@ -363,14 +359,27 @@ export function PlayerHistoryTalkingTime({ selectedPlayerName }: PlayerHistoryTa
                           return `${label} (${roleData?.gamesPlayed || 0} parties)`;
                         }}
                       />
-                      <Bar dataKey="secondsPer60Min" fill="var(--accent-primary, #8884d8)">
-                        {roleBreakdownData.map((entry, index) => (
-                          <Cell 
-                            key={`cell-${index}`}
-                            fill={lycansColorScheme[entry.role as keyof typeof lycansColorScheme] || lycansColorScheme.Villageois}
-                          />
-                        ))}
-                      </Bar>
+                      <Bar
+                        dataKey="secondsPer60Min"
+                        fill="var(--accent-primary, #8884d8)"
+                        shape={(props) => {
+                          const { x, y, width, height, payload } = props;
+                          const entry = payload as { role: string };
+                          const fillColor =
+                            lycansColorScheme[entry.role as keyof typeof lycansColorScheme] ||
+                            lycansColorScheme.Villageois;
+
+                          return (
+                            <Rectangle
+                              x={x}
+                              y={y}
+                              width={width}
+                              height={height}
+                              fill={fillColor}
+                            />
+                          );
+                        }}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

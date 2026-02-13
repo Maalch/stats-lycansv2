@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Rectangle } from 'recharts';
 import { usePlayerGameHistoryFromRaw } from '../../../hooks/usePlayerGameHistoryFromRaw';
 import { useNavigation } from '../../../context/NavigationContext';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../../types/api';
@@ -13,6 +13,50 @@ export function PlayerHistoryCamp({ selectedPlayerName }: PlayerHistoryCampProps
   const { navigateToGameDetails } = useNavigation();
   const { data, isLoading, error } = usePlayerGameHistoryFromRaw(selectedPlayerName);
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
+
+  const handleCampClick = (entry: any) => {
+    if (entry.name === 'Autres') {
+      const smallCampNames = (entry as any)._details?.map((detail: any) => detail.name) || [];
+      navigateToGameDetails({
+        selectedPlayer: selectedPlayerName,
+        campFilter: {
+          selectedCamp: 'Autres',
+          campFilterMode: 'all-assignments',
+          _smallCamps: smallCampNames
+        },
+        fromComponent: 'Distribution par Camps'
+      });
+    } else if (entry.name === 'Traître' || entry.name === 'Louveteau') {
+      navigateToGameDetails({
+        selectedPlayer: selectedPlayerName,
+        campFilter: {
+          selectedCamp: entry.name,
+          campFilterMode: 'all-assignments',
+          excludeWolfSubRoles: true
+        },
+        fromComponent: 'Distribution par Camps'
+      });
+    } else if (entry.name === 'Loup') {
+      navigateToGameDetails({
+        selectedPlayer: selectedPlayerName,
+        campFilter: {
+          selectedCamp: 'Loup',
+          campFilterMode: 'all-assignments',
+          excludeWolfSubRoles: true
+        },
+        fromComponent: 'Distribution par Camps'
+      });
+    } else {
+      navigateToGameDetails({
+        selectedPlayer: selectedPlayerName,
+        campFilter: {
+          selectedCamp: entry.name,
+          campFilterMode: 'all-assignments'
+        },
+        fromComponent: 'Distribution par Camps'
+      });
+    }
+  };
 
   // Prepare camp distribution data for pie chart
   const campDistributionData = useMemo(() => {
@@ -63,6 +107,15 @@ export function PlayerHistoryCamp({ selectedPlayerName }: PlayerHistoryCampProps
     return large;
   }, [campDistributionData]);
 
+  const groupedCampDistributionWithColors = useMemo(() => {
+    return groupedCampDistributionData.map((entry, index) => ({
+      ...entry,
+      fill: entry.name === 'Autres'
+        ? lycansOtherCategoryColor
+        : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
+    }));
+  }, [groupedCampDistributionData, lycansColorScheme]);
+
   if (isLoading) {
     return <div className="donnees-attente">Chargement de l'historique du joueur...</div>;
   }
@@ -83,7 +136,7 @@ export function PlayerHistoryCamp({ selectedPlayerName }: PlayerHistoryCampProps
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                data={groupedCampDistributionData}
+                data={groupedCampDistributionWithColors}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -96,66 +149,8 @@ export function PlayerHistoryCamp({ selectedPlayerName }: PlayerHistoryCampProps
                     ? `Autres : ${entry.value} (${(pct * 100).toFixed(1)}%)`  
                     : `${entry.name}: ${entry.value} (${(pct * 100).toFixed(1)}%)`;
                 }}
-              >
-                {groupedCampDistributionData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={
-                      entry.name === 'Autres'
-                        ? lycansOtherCategoryColor
-                        : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
-                    }
-                    onClick={() => {
-                      if (entry.name === 'Autres') {
-                        // For "Autres", we'll navigate to show all games from the small camps
-                        // Pass the list of small camps in the navigation
-                        const smallCampNames = (entry as any)._details?.map((detail: any) => detail.name) || [];
-                        navigateToGameDetails({
-                          selectedPlayer: selectedPlayerName,
-                          campFilter: {
-                            selectedCamp: 'Autres',
-                            campFilterMode: 'all-assignments',
-                            _smallCamps: smallCampNames
-                          },
-                          fromComponent: 'Distribution par Camps'
-                        });
-                      } else if (entry.name === 'Traître' || entry.name === 'Louveteau') {
-                        // Special handling for wolf sub roles, add excludeWolfSubRoles flag
-                        navigateToGameDetails({
-                          selectedPlayer: selectedPlayerName,
-                          campFilter: {
-                            selectedCamp: entry.name,
-                            campFilterMode: 'all-assignments',
-                            excludeWolfSubRoles: true
-                          },
-                          fromComponent: 'Distribution par Camps'
-                        });
-                      } else if (entry.name === 'Loup') {
-                        // When clicking on Loups, exclude sub roles games to show only regular wolf games
-                        navigateToGameDetails({
-                          selectedPlayer: selectedPlayerName,
-                          campFilter: {
-                            selectedCamp: 'Loup',
-                            campFilterMode: 'all-assignments',
-                            excludeWolfSubRoles: true
-                          },
-                          fromComponent: 'Distribution par Camps'
-                        });
-                      } else {
-                        navigateToGameDetails({
-                          selectedPlayer: selectedPlayerName,
-                          campFilter: {
-                            selectedCamp: entry.name,
-                            campFilterMode: 'all-assignments'
-                          },
-                          fromComponent: 'Distribution par Camps'
-                        });
-                      }
-                    }}
-                    style={{ cursor: 'pointer' }}
-                  />
-                ))}
-              </Pie>
+                onClick={(entry: any) => handleCampClick(entry)}
+              />
               <Tooltip
                 content={({ active, payload }) => {
                   if (active && payload && payload.length > 0) {
@@ -276,54 +271,58 @@ export function PlayerHistoryCamp({ selectedPlayerName }: PlayerHistoryCampProps
                     return null;
                   }}
                 />
-                <Bar dataKey="winRateDisplay">
-                  {campDistributionData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={
-                        // Use a dimmed color for camps with 0 wins to indicate they have no victories
-                        parseFloat(entry.winRate) === 0
-                          ? `${lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}50`
-                          : lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`
-                      }
-                      onClick={() => {
-                        // Special handling for Wolf sub roles and Loups camps
-                        if (entry.name === 'Traître' || entry.name === 'Louveteau') {
-                          navigateToGameDetails({
-                            selectedPlayer: selectedPlayerName,
-                            campFilter: {
-                              selectedCamp: entry.name,
-                              campFilterMode: 'all-assignments',
-                              excludeWolfSubRoles: true
-                            },
-                            fromComponent: 'Performance par Camp'
-                          });
-                        } else if (entry.name === 'Loup') {
-                          // When clicking on Loups, exclude traitor games to show only regular wolf games
-                          navigateToGameDetails({
-                            selectedPlayer: selectedPlayerName,
-                            campFilter: {
-                              selectedCamp: entry.name,
-                              campFilterMode: 'all-assignments',
-                              excludeWolfSubRoles: true
-                            },
-                            fromComponent: 'Performance par Camp'
-                          });
-                        } else {
-                          navigateToGameDetails({
-                            selectedPlayer: selectedPlayerName,
-                            campFilter: {
-                              selectedCamp: entry.name,
-                              campFilterMode: 'all-assignments',
-                            },
-                            fromComponent: 'Performance par Camp'
-                          });
-                        }
-                      }}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  ))}
-                </Bar>
+                <Bar
+                  dataKey="winRateDisplay"
+                  shape={(props) => {
+                    const { x, y, width, height, payload, index } = props;
+                    const entry = payload as any;
+                    const baseColor = lycansColorScheme[entry.name as keyof typeof lycansColorScheme] || `var(--chart-color-${((index ?? 0) % 6) + 1})`;
+                    const fillColor = parseFloat(entry.winRate) === 0 ? `${baseColor}50` : baseColor;
+
+                    return (
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={fillColor}
+                        onClick={() => {
+                          if (entry.name === 'Traître' || entry.name === 'Louveteau') {
+                            navigateToGameDetails({
+                              selectedPlayer: selectedPlayerName,
+                              campFilter: {
+                                selectedCamp: entry.name,
+                                campFilterMode: 'all-assignments',
+                                excludeWolfSubRoles: true
+                              },
+                              fromComponent: 'Performance par Camp'
+                            });
+                          } else if (entry.name === 'Loup') {
+                            navigateToGameDetails({
+                              selectedPlayer: selectedPlayerName,
+                              campFilter: {
+                                selectedCamp: entry.name,
+                                campFilterMode: 'all-assignments',
+                                excludeWolfSubRoles: true
+                              },
+                              fromComponent: 'Performance par Camp'
+                            });
+                          } else {
+                            navigateToGameDetails({
+                              selectedPlayer: selectedPlayerName,
+                              campFilter: {
+                                selectedCamp: entry.name,
+                                campFilterMode: 'all-assignments'
+                              },
+                              fromComponent: 'Performance par Camp'
+                            });
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

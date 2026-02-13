@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect, useCallback } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { usePlayerStatsBase } from '../../../hooks/utils/baseStatsHook';
 import { useNavigation } from '../../../context/NavigationContext';
 import { FullscreenChart } from '../../common/FullscreenChart';
@@ -473,7 +473,6 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
                     <Bar 
                       dataKey={chartDataKey}
                       label={chartMode === 'winRate' ? (props: any) => {
-                        // Add percentage labels on top of bars for win rate mode
                         const { x, y, width, payload } = props;
                         if (x === undefined || y === undefined || width === undefined || !payload) return null;
                         const percentage = payload.winRate || '0';
@@ -490,16 +489,24 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
                           </text>
                         );
                       } : undefined}
-                    >
-                      {chartDataArray.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={getBarColor ? getBarColor(entry.name, index) : barColor}
-                          onClick={() => onBarClick(entry.name)}
-                          style={{ cursor: 'pointer' }}
-                        />
-                      ))}
-                    </Bar>
+                      shape={(props) => {
+                        const { x, y, width, height, payload, index } = props;
+                        const entry = payload as { name: string };
+                        const fillColor = getBarColor ? getBarColor(entry.name, index ?? 0) : barColor;
+
+                        return (
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
+                            fill={fillColor}
+                            onClick={() => onBarClick(entry.name)}
+                            style={{ cursor: 'pointer' }}
+                          />
+                        );
+                      }}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

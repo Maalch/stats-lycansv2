@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  Cell
+  Rectangle
 } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useFilteredVotingStatistics } from '../../../hooks/useVotingStatisticsFromRaw';
@@ -263,41 +263,46 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
                   dataKey="votingRate" 
                   style={{ cursor: 'pointer' }}
                   onClick={handlePlayerClick}
-                >
-                  {voteRateChartData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartPlayerStat;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.playerName;
                     const isHoveredPlayer = highlightedPlayer === entry.playerName;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
+                    const fillColor = playersColor[entry.playerName] || 'var(--chart-primary)';
+
                     return (
-                      <Cell
-                        key={`cell-voterate-${index}`}
-                        fill={
-                          playersColor[entry.playerName] || 'var(--chart-primary)'
-                        }
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={fillColor}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? 'var(--accent-primary)' 
-                            : isHoveredPlayer 
-                              ? 'var(--text-primary)' 
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
                               : 'transparent'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => handlePlayerClick(entry)}
                         onMouseEnter={() => setHighlightedPlayer(entry.playerName)}
                         onMouseLeave={() => setHighlightedPlayer(null)}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -429,41 +434,46 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
                   dataKey="skippingRate" 
                   style={{ cursor: 'pointer' }}
                   onClick={handlePlayerClick}
-                >
-                  {skipRateChartData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartPlayerStat;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.playerName;
                     const isHoveredPlayer = highlightedPlayer === entry.playerName;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
+                    const fillColor = playersColor[entry.playerName] || 'var(--chart-secondary)';
+
                     return (
-                      <Cell
-                        key={`cell-skiprate-${index}`}
-                        fill={
-                          playersColor[entry.playerName] || 'var(--chart-secondary)'
-                        }
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={fillColor}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? 'var(--accent-primary)' 
-                            : isHoveredPlayer 
-                              ? 'var(--text-primary)' 
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
                               : 'transparent'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => handlePlayerClick(entry)}
                         onMouseEnter={() => setHighlightedPlayer(entry.playerName)}
                         onMouseLeave={() => setHighlightedPlayer(null)}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -595,41 +605,46 @@ export function VotingBehaviorCharts({ minMeetings }: VotingBehaviorChartsProps)
                   dataKey="abstentionRate" 
                   style={{ cursor: 'pointer' }}
                   onClick={handlePlayerClick}
-                >
-                  {abstentionRateChartData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartPlayerStat;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.playerName;
                     const isHoveredPlayer = highlightedPlayer === entry.playerName;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
+                    const fillColor = playersColor[entry.playerName] || 'var(--chart-tertiary)';
+
                     return (
-                      <Cell
-                        key={`cell-abstention-${index}`}
-                        fill={
-                          playersColor[entry.playerName] || 'var(--chart-tertiary)'
-                        }
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={fillColor}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? 'var(--accent-primary)' 
-                            : isHoveredPlayer 
-                              ? 'var(--text-primary)' 
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
                               : 'transparent'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => handlePlayerClick(entry)}
                         onMouseEnter={() => setHighlightedPlayer(entry.playerName)}
                         onMouseLeave={() => setHighlightedPlayer(null)}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

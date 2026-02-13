@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { usePlayerGameHistoryFromRaw } from '../../../hooks/usePlayerGameHistoryFromRaw';
 import { useNavigation } from '../../../context/NavigationContext';
 import { FullscreenChart } from '../../common/FullscreenChart';
@@ -313,38 +313,62 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod, cam
                     return null;
                   }}
                 />
-                <Bar dataKey="victories" stackId="games" fill="var(--accent-tertiary)" name="Victoires">
-                  {groupedData.map((entry, index) => (
-                    <Cell
-                      key={`cell-victories-${index}`}
-                      fill="var(--accent-tertiary)"
-                      onClick={() => {
-                        navigateToGameDetails({
-                          selectedPlayer: selectedPlayerName,
-                          selectedDate: entry.period,
-                          fromComponent: `Historique Joueur - Victoires ${groupingLabel}`
-                        });
-                      }}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  ))}
-                </Bar>
-                <Bar dataKey="defeats" stackId="games" fill="var(--chart-color-4)" name="Défaites">
-                  {groupedData.map((entry, index) => (
-                    <Cell
-                      key={`cell-defeats-${index}`}
-                      fill="var(--chart-color-4)"
-                      onClick={() => {
-                        navigateToGameDetails({
-                          selectedPlayer: selectedPlayerName,
-                          selectedDate: entry.period,
-                          fromComponent: `Historique Joueur - Défaites ${groupingLabel}`
-                        });
-                      }}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  ))}
-                </Bar>
+                <Bar
+                  dataKey="victories"
+                  stackId="games"
+                  fill="var(--accent-tertiary)"
+                  name="Victoires"
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as { period: string };
+
+                    return (
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill="var(--accent-tertiary)"
+                        onClick={() => {
+                          navigateToGameDetails({
+                            selectedPlayer: selectedPlayerName,
+                            selectedDate: entry.period,
+                            fromComponent: `Historique Joueur - Victoires ${groupingLabel}`
+                          });
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  }}
+                />
+                <Bar
+                  dataKey="defeats"
+                  stackId="games"
+                  fill="var(--chart-color-4)"
+                  name="Défaites"
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as { period: string };
+
+                    return (
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill="var(--chart-color-4)"
+                        onClick={() => {
+                          navigateToGameDetails({
+                            selectedPlayer: selectedPlayerName,
+                            selectedDate: entry.period,
+                            fromComponent: `Historique Joueur - Défaites ${groupingLabel}`
+                          });
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    );
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

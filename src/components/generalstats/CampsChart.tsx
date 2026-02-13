@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Rectangle } from 'recharts';
 import { useCampWinStatsFromRaw } from '../../hooks/useCampWinStatsFromRaw';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -32,6 +32,28 @@ export function CampsChart() {
       winRateNum: typeof camp.winRate === 'string' ? parseFloat(camp.winRate) : camp.winRate
     })) || [];
   }, [victoriesDonnees]);
+
+  const handleVictoryCampClick = (entry: any) => {
+    if (entry.camp === 'Autres' && entry._details) {
+      const smallCamps = entry._details.map((detail: any) => detail.camp);
+      navigateToGameDetails({
+        campFilter: {
+          selectedCamp: 'Autres',
+          campFilterMode: 'wins-only',
+          _smallCamps: smallCamps
+        },
+        fromComponent: 'Répartition des Victoires par Camp'
+      });
+    } else {
+      navigateToGameDetails({
+        campFilter: {
+          selectedCamp: entry.camp,
+          campFilterMode: 'wins-only'
+        },
+        fromComponent: 'Répartition des Victoires par Camp'
+      });
+    }
+  };
 
   // Group small slices for victory distribution pie chart
   const groupedVictoryData = useMemo(() => {
@@ -89,7 +111,6 @@ export function CampsChart() {
   if (!victoriesDonnees) {
     return <div className="donnees-manquantes">Aucune donnée de camp disponible</div>;
   }
-
   return (
     <div className="lycans-camps-container">
       <h2>Statistiques des Camps</h2>
@@ -128,37 +149,20 @@ export function CampsChart() {
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={groupedVictoryData}
+                      data={groupedVictoryData.map((entry) => ({
+                        ...entry,
+                        fill: entry.camp === 'Autres'
+                          ? lycansOtherCategoryColor
+                          : lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || lycansDefaultColor
+                      }))}
                       cx="50%"
                       cy="50%"
-                      labelLine={false}
                       outerRadius={140}
                       fill="#8884d8"
                       dataKey="winRateNum"
-                      nameKey="camp"
                       onClick={(data: any) => {
                         if (data && data.camp) {
-                          if (data.camp === 'Autres' && (data as any)._details) {
-                            // For "Autres", pass the small camps details
-                            const smallCamps = (data as any)._details.map((detail: any) => detail.camp);
-                            navigateToGameDetails({
-                              campFilter: {
-                                selectedCamp: 'Autres',
-                                campFilterMode: 'wins-only',
-                                _smallCamps: smallCamps
-                              },
-                              fromComponent: 'Répartition des Victoires par Camp'
-                            });
-                          } else {
-                            // For regular camps
-                            navigateToGameDetails({
-                              campFilter: {
-                                selectedCamp: data.camp,
-                                campFilterMode: 'wins-only'
-                              },
-                              fromComponent: 'Répartition des Victoires par Camp'
-                            });
-                          }
+                          handleVictoryCampClick(data);
                         }
                       }}
                       style={{ cursor: 'pointer' }}
@@ -168,40 +172,6 @@ export function CampsChart() {
                         return camp === 'Autres' ? `Autres: ${winRate}%` : `${camp}: ${winRate}%`;
                       }}
                     >
-                      {groupedVictoryData.map((entree, indice) => (
-                        <Cell 
-                          key={`cellule-camp-${indice}`} 
-                          fill={
-                            entree.camp === 'Autres'
-                              ? lycansOtherCategoryColor
-                              : lycansColorScheme[entree.camp as keyof typeof lycansColorScheme] || lycansDefaultColor
-                          }
-                          onClick={() => {
-                            if (entree.camp === 'Autres' && (entree as any)._details) {
-                              // For "Autres", pass the small camps details
-                              const smallCamps = (entree as any)._details.map((detail: any) => detail.camp);
-                              navigateToGameDetails({
-                                campFilter: {
-                                  selectedCamp: 'Autres',
-                                  campFilterMode: 'wins-only',
-                                  _smallCamps: smallCamps
-                                },
-                                fromComponent: 'Répartition des Victoires par Camp'
-                              });
-                            } else {
-                              // For regular camps
-                              navigateToGameDetails({
-                                campFilter: {
-                                  selectedCamp: entree.camp,
-                                  campFilterMode: 'wins-only'
-                                },
-                                fromComponent: 'Répartition des Victoires par Camp'
-                              });
-                            }
-                          }}
-                          style={{ cursor: 'pointer' }}
-                        />
-                      ))}
                     </Pie>
                     <Tooltip
                       content={({ active, payload }) => {
@@ -355,38 +325,34 @@ export function CampsChart() {
                       />
                       <Bar 
                         dataKey="winRateNum"
-                        onClick={(data: any) => {
-                          if (data && data.camp) {
-                            navigateToGameDetails({
-                              campFilter: {
-                                selectedCamp: data.camp,
-                                campFilterMode: 'all-assignments',
-                                _smallCamps: [] as string[]
-                              },
-                              fromComponent: 'Taux de Victoire Moyen par Camp'
-                            });
-                          }
-                        }}
                         style={{ cursor: 'pointer' }}
-                      >
-                        {campAveragesData.map((entry, index) => (
-                          <Cell 
-                            key={`cell-${index}`} 
-                            fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
-                            onClick={() => {
-                              navigateToGameDetails({
-                                campFilter: {
-                                  selectedCamp: entry.camp,
-                                  campFilterMode: 'all-assignments',
-                                  _smallCamps: [] as string[]
-                                },
-                                fromComponent: 'Taux de Victoire Moyen par Camp'
-                              });
-                            }}
-                            style={{ cursor: 'pointer' }}
-                          />
-                        ))}
-                      </Bar>
+                        shape={(props) => {
+                          const { x, y, width, height, payload, index } = props;
+                          const entry = payload as { camp: string };
+                          const fillColor = lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${((index ?? 0) % 6) + 1})`;
+
+                          return (
+                            <Rectangle
+                              x={x}
+                              y={y}
+                              width={width}
+                              height={height}
+                              fill={fillColor}
+                              onClick={() => {
+                                navigateToGameDetails({
+                                  campFilter: {
+                                    selectedCamp: entry.camp,
+                                    campFilterMode: 'all-assignments',
+                                    _smallCamps: [] as string[]
+                                  },
+                                  fromComponent: 'Taux de Victoire Moyen par Camp'
+                                });
+                              }}
+                              style={{ cursor: 'pointer' }}
+                            />
+                          );
+                        }}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -463,38 +429,34 @@ export function CampsChart() {
                       />
                       <Bar 
                         dataKey="totalGames"
-                        onClick={(data: any) => {
-                          if (data && data.camp) {
-                            navigateToGameDetails({
-                              campFilter: {
-                                selectedCamp: data.camp,
-                                campFilterMode: 'all-assignments',
-                                _smallCamps: [] as string[]
-                              },
-                              fromComponent: 'Distribution des Parties par Camp'
-                            });
-                          }
-                        }}
                         style={{ cursor: 'pointer' }}
-                      >
-                        {campDistributionData.map((entry, index) => (
-                          <Cell 
-                            key={`cell-${index}`} 
-                            fill={lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`}
-                            onClick={() => {
-                              navigateToGameDetails({
-                                campFilter: {
-                                  selectedCamp: entry.camp,
-                                  campFilterMode: 'all-assignments',
-                                  _smallCamps: [] as string[]
-                                },
-                                fromComponent: 'Distribution des Parties par Camp'
-                              });
-                            }}
-                            style={{ cursor: 'pointer' }}
-                          />
-                        ))}
-                      </Bar>
+                        shape={(props) => {
+                          const { x, y, width, height, payload, index } = props;
+                          const entry = payload as { camp: string };
+                          const fillColor = lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${((index ?? 0) % 6) + 1})`;
+
+                          return (
+                            <Rectangle
+                              x={x}
+                              y={y}
+                              width={width}
+                              height={height}
+                              fill={fillColor}
+                              onClick={() => {
+                                navigateToGameDetails({
+                                  campFilter: {
+                                    selectedCamp: entry.camp,
+                                    campFilterMode: 'all-assignments',
+                                    _smallCamps: [] as string[]
+                                  },
+                                  fromComponent: 'Distribution des Parties par Camp'
+                                });
+                              }}
+                              style={{ cursor: 'pointer' }}
+                            />
+                          );
+                        }}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

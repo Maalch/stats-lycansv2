@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, LabelList, Cell, PieChart, Pie, ComposedChart, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, LabelList, Rectangle, PieChart, Pie, ComposedChart, Legend } from 'recharts';
 import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
 import { useGameTimeAnalysisFromRaw } from '../../hooks/useGameTimeAnalysisFromRaw';
 import { useCampWinRateByGameTime } from '../../hooks/useCampWinRateByGameTime';
@@ -360,26 +360,33 @@ export function GameDurationInsights() {
                     dataKey="moyenne" 
                     name="moyenne" 
                     isAnimationActive={false}
-                    onClick={(data: any) => {
-                      if (data && data.camp) {
-                        navigateToGameDetails({
-                          campFilter: {
-                            selectedCamp: data.camp,
-                            campFilterMode: 'wins-only'
-                          },
-                          fromComponent: 'Durée Moyenne par Camp Victorieux'
-                        });
-                      }
-                    }}
                     style={{ cursor: 'pointer' }}
-                  >
-                    {
-                      dureesParCamp.map((entry) => (
-                        <Cell key={`cell-${entry.camp}`}
-                          fill={lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp)}
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as { camp: string };
+                      const fillColor = lycansColorScheme[entry.camp] || lycansOtherCategoryColor || getRandomColor(entry.camp);
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={fillColor}
+                          onClick={() => {
+                            navigateToGameDetails({
+                              campFilter: {
+                                selectedCamp: entry.camp,
+                                campFilterMode: 'wins-only'
+                              },
+                              fromComponent: 'Durée Moyenne par Camp Victorieux'
+                            });
+                          }}
+                          style={{ cursor: 'pointer' }}
                         />
-                      ))
-                    }
+                      );
+                    }}
+                  >
                     <LabelList
                       dataKey="moyenne"
                       position="top"
@@ -505,7 +512,13 @@ export function GameDurationInsights() {
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
-                        data={tempsJeuDonnees.phaseDistribution as any}
+                        data={tempsJeuDonnees.phaseDistribution.map((entry: any) => ({
+                          ...entry,
+                          fill: entry.phase === 'Jour' ? '#FFD700' :
+                            entry.phase === 'Nuit' ? '#4169E1' :
+                            entry.phase === 'Meeting' ? '#FF6347' :
+                            getRandomColor(entry.phase)
+                        }))}
                         cx="50%"
                         cy="50%"
                         labelLine={false}
@@ -513,19 +526,7 @@ export function GameDurationInsights() {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="count"
-                      >
-                        {tempsJeuDonnees.phaseDistribution.map((entry, index) => (
-                          <Cell 
-                            key={`cell-${index}`} 
-                            fill={
-                              entry.phase === 'Jour' ? '#FFD700' :
-                              entry.phase === 'Nuit' ? '#4169E1' :
-                              entry.phase === 'Meeting' ? '#FF6347' :
-                              getRandomColor(entry.phase)
-                            } 
-                          />
-                        ))}
-                      </Pie>
+                      />
                       <Tooltip
                         content={({ active, payload }) => {
                           if (active && payload && payload.length > 0) {
@@ -673,26 +674,35 @@ export function GameDurationInsights() {
                       <Bar 
                         dataKey="count" 
                         name="Nombre de Parties"
-                        onClick={(data: any) => {
-                          // Navigate to games that ended with this specific timing
-                          navigateToGameDetails({
-                            fromComponent: `Analyse des Temps de Jeu - Timing ${formatTiming(data.timing)}`
-                          });
-                        }}
                         style={{ cursor: 'pointer' }}
-                      >
-                        {tempsJeuDonnees.endTimingDistribution.map((entry, index) => (
-                          <Cell 
-                            key={`cell-${index}`}
-                            fill={
-                              entry.phase === 'Jour' ? '#FFD700' :
-                              entry.phase === 'Nuit' ? '#4169E1' :
-                              entry.phase === 'Meeting' ? '#FF6347' :
-                              getRandomColor(entry.timing)
-                            }
-                          />
-                        ))}
-                      </Bar>
+                        shape={(props) => {
+                          const { x, y, width, height, payload } = props;
+                          const entry = payload as { timing: string; phase: string };
+                          const fillColor = entry.phase === 'Jour'
+                            ? '#FFD700'
+                            : entry.phase === 'Nuit'
+                              ? '#4169E1'
+                              : entry.phase === 'Meeting'
+                                ? '#FF6347'
+                                : getRandomColor(entry.timing);
+
+                          return (
+                            <Rectangle
+                              x={x}
+                              y={y}
+                              width={width}
+                              height={height}
+                              fill={fillColor}
+                              onClick={() => {
+                                navigateToGameDetails({
+                                  fromComponent: `Analyse des Temps de Jeu - Timing ${formatTiming(entry.timing)}`
+                                });
+                              }}
+                              style={{ cursor: 'pointer' }}
+                            />
+                          );
+                        }}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

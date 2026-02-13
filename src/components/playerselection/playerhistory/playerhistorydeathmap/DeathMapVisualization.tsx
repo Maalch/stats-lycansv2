@@ -1,4 +1,4 @@
-import { ResponsiveContainer, ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip, Scatter, Cell, ReferenceArea } from 'recharts';
+import { ResponsiveContainer, ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip, Scatter, ReferenceArea } from 'recharts';
 import { FullscreenChart } from '../../../common/FullscreenChart';
 import { type DeathType, getDeathTypeLabel } from '../../../../types/deathTypes';
 import { type MapImageConfig } from '../../../../hooks/utils/deathLocationUtils';
@@ -350,27 +350,29 @@ export function DeathMapVisualization({
                 <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter 
                   data={clusteredData}
-                  onClick={(data) => handleLocationClick(data)}
                   style={{ cursor: 'pointer' }}
                   isAnimationActive={false}
-                >
-                  {clusteredData.map((entry, index) => {
-                    // Size scales with count
+                  shape={(props) => {
+                    const { cx, cy, payload } = props as any;
+                    const entry = payload as ClusteredDataPoint;
+
                     const sizeScale = Math.min(Math.log2(entry.count + 1) * 3 + 5, 18);
-                    const baseSize = Math.round(sizeScale);
-                    
+                    const radius = Math.round(sizeScale);
+
                     return (
-                      <Cell
-                        key={`cell-${index}`}
+                      <circle
+                        cx={cx}
+                        cy={cy}
+                        r={radius}
                         fill={getDeathColor(entry.deathType, entry.camp)}
                         stroke={entry.count > 1 ? 'white' : 'rgba(255,255,255,0.5)'}
                         strokeWidth={entry.count > 1 ? 2 : 1}
                         opacity={0.85}
-                        r={baseSize}
+                        onClick={() => handleLocationClick(entry)}
                       />
                     );
-                  })}
-                </Scatter>
+                  }}
+                />
               </ScatterChart>
             </ResponsiveContainer>
           </div>

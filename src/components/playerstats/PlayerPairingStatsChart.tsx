@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { usePlayerPairingStatsFromRaw } from '../../hooks/usePlayerPairingStatsFromRaw';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
@@ -337,40 +337,51 @@ export function PlayerPairingStatsChart() {
                         return null;
                       }}
                     />
-                    <Bar dataKey="appearances" name="Apparitions">
-                      {topWolfPairsByAppearances.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={`url(#${entry.gradientId})`}
-                          stroke={
-                            (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
-                            (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
-                              ? 'var(--accent-primary)'
-                              : entry.isHighlightedAddition
-                              ? 'var(--accent-secondary)'
-                              : 'transparent'
-                          }
-                          strokeWidth={
-                            (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
-                            (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
-                              ? 3
-                              : entry.isHighlightedAddition
-                              ? 2
-                              : 0
-                          }
-                          onClick={() => {
-                            navigateToGameDetails({
-                              playerPairFilter: {
-                                selectedPlayerPair: entry.players,
-                                selectedPairRole: 'wolves'
-                              },
-                              fromComponent: 'Paires de Loups les Plus Fréquentes'
-                            });
-                          }}
-                          style={{ cursor: 'pointer' }}
-                        />
-                      ))}
-                    </Bar>
+                    <Bar
+                      dataKey="appearances"
+                      name="Apparitions"
+                      shape={(props) => {
+                        const { x, y, width, height, payload } = props;
+                        const entry = payload as any;
+                        const isHighlightedPair =
+                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!));
+
+                        return (
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
+                            fill={`url(#${entry.gradientId})`}
+                            stroke={
+                              isHighlightedPair
+                                ? 'var(--accent-primary)'
+                                : entry.isHighlightedAddition
+                                  ? 'var(--accent-secondary)'
+                                  : 'transparent'
+                            }
+                            strokeWidth={
+                              isHighlightedPair
+                                ? 3
+                                : entry.isHighlightedAddition
+                                  ? 2
+                                  : 0
+                            }
+                            onClick={() => {
+                              navigateToGameDetails({
+                                playerPairFilter: {
+                                  selectedPlayerPair: entry.players,
+                                  selectedPairRole: 'wolves'
+                                },
+                                fromComponent: 'Paires de Loups les Plus Fréquentes'
+                              });
+                            }}
+                            style={{ cursor: 'pointer' }}
+                          />
+                        );
+                      }}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -483,41 +494,52 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="winRateDisplay" name="Taux de victoire (%)">
-                    {topWolfPairsByWinRate.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={`url(#${entry.gradientId})`}
-                        fillOpacity={parseFloat(entry.winRate) === 0 ? 0.3 : 1}
-                        stroke={
-                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
-                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
-                            ? 'var(--accent-primary)'
-                            : entry.isHighlightedAddition
-                            ? 'var(--accent-secondary)'
-                            : 'transparent'
-                        }
-                        strokeWidth={
-                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
-                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
-                            ? 3
-                            : entry.isHighlightedAddition
-                            ? 2
-                            : 0
-                        }
-                        onClick={() => {
-                          navigateToGameDetails({
-                            playerPairFilter: {
-                              selectedPlayerPair: entry.players,
-                              selectedPairRole: 'wolves'
-                            },
-                            fromComponent: 'Paires de Loups les Plus Performantes'
-                          });
-                        }}
-                        style={{ cursor: 'pointer' }}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="winRateDisplay"
+                    name="Taux de victoire (%)"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as any;
+                      const isHighlightedPair =
+                        (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                        (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!));
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={`url(#${entry.gradientId})`}
+                          fillOpacity={parseFloat(entry.winRate) === 0 ? 0.3 : 1}
+                          stroke={
+                            isHighlightedPair
+                              ? 'var(--accent-primary)'
+                              : entry.isHighlightedAddition
+                                ? 'var(--accent-secondary)'
+                                : 'transparent'
+                          }
+                          strokeWidth={
+                            isHighlightedPair
+                              ? 3
+                              : entry.isHighlightedAddition
+                                ? 2
+                                : 0
+                          }
+                          onClick={() => {
+                            navigateToGameDetails({
+                              playerPairFilter: {
+                                selectedPlayerPair: entry.players,
+                                selectedPairRole: 'wolves'
+                              },
+                              fromComponent: 'Paires de Loups les Plus Performantes'
+                            });
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -624,40 +646,51 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="appearances" name="Apparitions">
-                    {topLoverPairsByAppearances.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={`url(#${entry.gradientId})`}
-                        stroke={
-                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
-                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
-                            ? 'var(--accent-primary)'
-                            : entry.isHighlightedAddition
-                            ? 'var(--accent-secondary)'
-                            : 'transparent'
-                        }
-                        strokeWidth={
-                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
-                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
-                            ? 3
-                            : entry.isHighlightedAddition
-                            ? 2
-                            : 0
-                        }
-                        onClick={() => {
-                          navigateToGameDetails({
-                            playerPairFilter: {
-                              selectedPlayerPair: entry.players,
-                              selectedPairRole: 'lovers'
-                            },
-                            fromComponent: 'Paires d\'Amoureux les Plus Fréquentes'
-                          });
-                        }}
-                        style={{ cursor: 'pointer' }}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="appearances"
+                    name="Apparitions"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as any;
+                      const isHighlightedPair =
+                        (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                        (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!));
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={`url(#${entry.gradientId})`}
+                          stroke={
+                            isHighlightedPair
+                              ? 'var(--accent-primary)'
+                              : entry.isHighlightedAddition
+                                ? 'var(--accent-secondary)'
+                                : 'transparent'
+                          }
+                          strokeWidth={
+                            isHighlightedPair
+                              ? 3
+                              : entry.isHighlightedAddition
+                                ? 2
+                                : 0
+                          }
+                          onClick={() => {
+                            navigateToGameDetails({
+                              playerPairFilter: {
+                                selectedPlayerPair: entry.players,
+                                selectedPairRole: 'lovers'
+                              },
+                              fromComponent: 'Paires d\'Amoureux les Plus Fréquentes'
+                            });
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -780,41 +813,52 @@ export function PlayerPairingStatsChart() {
                       return null;
                     }}
                   />
-                  <Bar dataKey="winRateDisplay" name="Taux de victoire (%)">
-                    {topLoverPairsByWinRate.map((entry, index) => (
-                      <Cell 
-                        key={`cell-${index}`} 
-                        fill={`url(#${entry.gradientId})`}
-                        fillOpacity={parseFloat(entry.winRate) === 0 ? 0.3 : 1}
-                        stroke={
-                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
-                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
-                            ? 'var(--accent-primary)'
-                            : entry.isHighlightedAddition
-                            ? 'var(--accent-secondary)'
-                            : 'transparent'
-                        }
-                        strokeWidth={
-                          (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
-                          (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!))
-                            ? 3
-                            : entry.isHighlightedAddition
-                            ? 2
-                            : 0
-                        }
-                        onClick={() => {
-                          navigateToGameDetails({
-                            playerPairFilter: {
-                              selectedPlayerPair: entry.players,
-                              selectedPairRole: 'lovers'
-                            },
-                            fromComponent: 'Paires d\'Amoureux les Plus Performantes'
-                          });
-                        }}
-                        style={{ cursor: 'pointer' }}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="winRateDisplay"
+                    name="Taux de victoire (%)"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as any;
+                      const isHighlightedPair =
+                        (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                        (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!));
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={`url(#${entry.gradientId})`}
+                          fillOpacity={parseFloat(entry.winRate) === 0 ? 0.3 : 1}
+                          stroke={
+                            isHighlightedPair
+                              ? 'var(--accent-primary)'
+                              : entry.isHighlightedAddition
+                                ? 'var(--accent-secondary)'
+                                : 'transparent'
+                          }
+                          strokeWidth={
+                            isHighlightedPair
+                              ? 3
+                              : entry.isHighlightedAddition
+                                ? 2
+                                : 0
+                          }
+                          onClick={() => {
+                            navigateToGameDetails({
+                              playerPairFilter: {
+                                selectedPlayerPair: entry.players,
+                                selectedPairRole: 'lovers'
+                              },
+                              fromComponent: 'Paires d\'Amoureux les Plus Performantes'
+                            });
+                          }}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>

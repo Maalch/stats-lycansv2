@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useFilteredRawBRData, useFilteredRawBRGlobalData } from '../../hooks/useRawBRData';
 import { useSettings } from '../../context/SettingsContext';
@@ -237,43 +237,51 @@ export function BRWinRateChart() {
                     return null;
                   }}
                 />
-                <Bar dataKey="wins" name="Victoires" fill="var(--chart-color-2)">
-                  {stats.topPlayersByWins.map((entry, index) => {
+                <Bar
+                  dataKey="wins"
+                  name="Victoires"
+                  fill="var(--chart-color-2)"
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as { name: string; isHighlightedAddition?: boolean };
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHoveredPlayer = hoveredPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
                     return (
-                      <Cell 
-                        key={`cell-wins-${index}`}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
                         fill={
                           isHighlightedFromSettings ? 'var(--accent-primary)' :
                           isHighlightedAddition ? 'var(--accent-secondary)' :
                           getPlayerColor(entry.name)
                         }
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : isHoveredPlayer 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onMouseEnter={() => setHoveredPlayer(entry.name)}
                         onMouseLeave={() => setHoveredPlayer(null)}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </FullscreenChart>
@@ -402,43 +410,50 @@ export function BRWinRateChart() {
                   return null;
                 }}
               />
-              <Bar dataKey="winRate" name="Taux de victoire (%)">
-                {stats.topPlayersByWinRate.map((entry, index) => {
+              <Bar
+                dataKey="winRate"
+                name="Taux de victoire (%)"
+                shape={(props) => {
+                  const { x, y, width, height, payload } = props;
+                  const entry = payload as { name: string; isHighlightedAddition?: boolean };
                   const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                   const isHoveredPlayer = hoveredPlayer === entry.name;
                   const isHighlightedAddition = entry.isHighlightedAddition;
-                  
+
                   return (
-                    <Cell 
-                      key={`cell-winrate-${index}`}
+                    <Rectangle
+                      x={x}
+                      y={y}
+                      width={width}
+                      height={height}
                       fill={
                         isHighlightedFromSettings ? 'var(--accent-primary)' :
                         isHighlightedAddition ? 'var(--accent-secondary)' :
                         getPlayerColor(entry.name)
                       }
                       stroke={
-                        isHighlightedFromSettings 
-                          ? "var(--accent-primary)" 
-                          : isHoveredPlayer 
-                            ? "var(--text-primary)" 
-                            : "none"
+                        isHighlightedFromSettings
+                          ? 'var(--accent-primary)'
+                          : isHoveredPlayer
+                            ? 'var(--text-primary)'
+                            : 'none'
                       }
                       strokeWidth={
-                        isHighlightedFromSettings 
-                          ? 3 
-                          : isHoveredPlayer 
-                            ? 2 
+                        isHighlightedFromSettings
+                          ? 3
+                          : isHoveredPlayer
+                            ? 2
                             : 0
                       }
-                      strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                      strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                       opacity={isHighlightedAddition ? 0.8 : 1}
                       onMouseEnter={() => setHoveredPlayer(entry.name)}
                       onMouseLeave={() => setHoveredPlayer(null)}
                       style={{ cursor: 'pointer' }}
                     />
                   );
-                })}
-              </Bar>
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </FullscreenChart>

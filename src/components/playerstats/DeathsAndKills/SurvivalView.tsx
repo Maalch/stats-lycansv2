@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { getTopSurvivorsForDay, getWorstSurvivorsForDay, type SurvivalStatistics } from '../../../hooks/utils/survivalStatisticsUtils';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
@@ -403,31 +403,35 @@ export function SurvivalView({
                   dataKey="value" 
                   name="Taux de survie"
                   cursor="pointer"
-                >
-                  {highestSurvivalData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartSurvivalData;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHoveredPlayer = highlightedPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
                     return (
-                      <Cell 
-                        key={`cell-highest-${index}`}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
                         fill={playersColor[entry.name] || 'var(--chart-primary)'}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : isHoveredPlayer 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => handleBarClick(entry.name)}
                         onMouseEnter={() => setHighlightedPlayer(entry.name)}
@@ -435,8 +439,8 @@ export function SurvivalView({
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -497,31 +501,35 @@ export function SurvivalView({
                   dataKey="value" 
                   name="Taux de survie"
                   cursor="pointer"
-                >
-                  {lowestSurvivalData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartSurvivalData;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHoveredPlayer = highlightedPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
                     return (
-                      <Cell 
-                        key={`cell-lowest-${index}`}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
                         fill={playersColor[entry.name] || 'var(--chart-color-4)'}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : isHoveredPlayer 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => handleBarClick(entry.name)}
                         onMouseEnter={() => setHighlightedPlayer(entry.name)}
@@ -529,8 +537,8 @@ export function SurvivalView({
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

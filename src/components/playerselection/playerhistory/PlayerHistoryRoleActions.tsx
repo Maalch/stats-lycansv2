@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Rectangle } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
@@ -255,14 +255,25 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
                         return null;
                       }}
                     />
-                    <Bar dataKey="count" fill={lycansColors['Chasseur'] || 'var(--chart-color-2)'}>
-                      {roleActionStatistics.hunterTargets.map((entry, index) => (
-                        <Cell 
-                          key={`cell-hunter-${index}`} 
-                          fill={playersColor[entry.target] || lycansColors['Chasseur'] || `hsl(${120 + index * 15}, 60%, 45%)`}
-                        />
-                      ))}
-                    </Bar>
+                    <Bar
+                      dataKey="count"
+                      fill={lycansColors['Chasseur'] || 'var(--chart-color-2)'}
+                      shape={(props) => {
+                        const { x, y, width, height, payload, index } = props;
+                        const entry = payload as { target: string };
+                        const fillColor = playersColor[entry.target] || lycansColors['Chasseur'] || `hsl(${120 + (index ?? 0) * 15}, 60%, 45%)`;
+
+                        return (
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
+                            fill={fillColor}
+                          />
+                        );
+                      }}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { getKillDescription } from '../../../hooks/utils/deathStatisticsUtils';
 import { type DeathTypeCodeType } from '../../../utils/datasyncExport';
 import { DEATH_TYPES } from '../../../types/deathTypes';
@@ -866,21 +866,25 @@ export function KillersView({
                 <Tooltip content={(props) => <MaxKillsTooltip {...props} chartType="game" />} />
                 <Bar
                   dataKey="value"
-                >
-                  {maxKillsPerGameData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as any;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
+                    const fillColor = playersColor[entry.name] || (
+                      isHighlightedFromSettings ? 'var(--accent-primary)' :
+                      isHighlightedAddition ? 'var(--accent-secondary)' :
+                      'var(--chart-primary)'
+                    );
+
                     return (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={
-                          playersColor[entry.name] || (
-                            isHighlightedFromSettings ? 'var(--accent-primary)' :
-                            isHighlightedAddition ? 'var(--accent-secondary)' :
-                            'var(--chart-primary)'
-                          )
-                        }
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={fillColor}
                         stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
                         strokeWidth={isHighlightedFromSettings ? 3 : 0}
                         strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
@@ -890,29 +894,28 @@ export function KillersView({
                             const navigationFilters: any = {
                               fromComponent: 'Statistiques de Mort - Max Kills par Partie'
                             };
-                            
-                            // Use selectedGame for single game, selectedGameIds for multiple games
+
                             if (entry.gameIds.length === 1) {
                               navigationFilters.selectedGame = entry.gameIds[0];
                             } else {
                               navigationFilters.selectedGameIds = entry.gameIds;
                             }
-                            
+
                             if (selectedCamp !== 'Tous les camps') {
                               navigationFilters.campFilter = {
                                 selectedCamp: selectedCamp,
                                 campFilterMode: 'all-assignments'
                               };
                             }
-                            
+
                             navigateToGameDetails(navigationFilters);
                           }
                         }}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -978,21 +981,25 @@ export function KillersView({
                 <Tooltip content={(props) => <MaxKillsTooltip {...props} chartType="phase" />} />
                 <Bar
                   dataKey="value"
-                >
-                  {maxKillsPerPhaseData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as any;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
+                    const fillColor = playersColor[entry.name] || (
+                      isHighlightedFromSettings ? 'var(--accent-primary)' :
+                      isHighlightedAddition ? 'var(--accent-secondary)' :
+                      'var(--chart-secondary)'
+                    );
+
                     return (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={
-                          playersColor[entry.name] || (
-                            isHighlightedFromSettings ? 'var(--accent-primary)' :
-                            isHighlightedAddition ? 'var(--accent-secondary)' :
-                            'var(--chart-secondary)'
-                          )
-                        }
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={fillColor}
                         stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
                         strokeWidth={isHighlightedFromSettings ? 3 : 0}
                         strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
@@ -1002,29 +1009,28 @@ export function KillersView({
                             const navigationFilters: any = {
                               fromComponent: 'Statistiques de Mort - Max Kills par Phase'
                             };
-                            
-                            // Use selectedGame for single game, selectedGameIds for multiple games
+
                             if (entry.gameIds.length === 1) {
                               navigationFilters.selectedGame = entry.gameIds[0];
                             } else {
                               navigationFilters.selectedGameIds = entry.gameIds;
                             }
-                            
+
                             if (selectedCamp !== 'Tous les camps') {
                               navigationFilters.campFilter = {
                                 selectedCamp: selectedCamp,
                                 campFilterMode: 'all-assignments'
                               };
                             }
-                            
+
                             navigateToGameDetails(navigationFilters);
                           }
                         }}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

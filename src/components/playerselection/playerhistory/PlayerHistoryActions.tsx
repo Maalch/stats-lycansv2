@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { CHART_LIMITS } from '../../../config/chartConstants';
@@ -239,14 +239,24 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                       return null;
                     }}
                   />
-                  <Bar dataKey="count" fill="var(--chart-color-1)">
-                    {actionStatistics.gadgetDetails.map((_, index) => (
-                      <Cell 
-                        key={`cell-gadget-${index}`} 
-                        fill={`hsl(${200 + index * 20}, 70%, 50%)`}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="count"
+                    fill="var(--chart-color-1)"
+                    shape={(props) => {
+                      const { x, y, width, height, index } = props;
+                      const fillColor = `hsl(${200 + (index ?? 0) * 20}, 70%, 50%)`;
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={fillColor}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -298,14 +308,24 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                       return null;
                     }}
                   />
-                  <Bar dataKey="count" fill="var(--chart-color-3)">
-                    {actionStatistics.potionDetails.map((_, index) => (
-                      <Cell 
-                        key={`cell-potion-${index}`} 
-                        fill={`hsl(${40 + index * 15}, 80%, 55%)`}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="count"
+                    fill="var(--chart-color-3)"
+                    shape={(props) => {
+                      const { x, y, width, height, index } = props;
+                      const fillColor = `hsl(${40 + (index ?? 0) * 15}, 80%, 55%)`;
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={fillColor}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>

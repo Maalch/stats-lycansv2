@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { InfoBubble } from '../../common/InfoBubble';
 
@@ -248,30 +248,31 @@ export function PlayerCampPerformanceBarChart({
                 dataKey={viewMode === 'performance' ? 'performanceNum' : 'playPercentage'}
                 style={{ cursor: 'pointer' }}
                 onClick={onBarClick}
-              >
-                {chartData.map((entry, index) => {
+                shape={(props) => {
+                  const { x, y, width, height, payload, index } = props;
+                  const entry = payload as ChartPlayerCampPerformance;
                   const isHighlightedFromSettings = highlightedPlayer === entry.player;
                   const isHighlightedAddition = entry.isHighlightedAddition;
-                  
-                  let fillColor: string;
-                  if (selectedCamp === 'Tous les camps') {
-                    fillColor = lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${(index % 6) + 1})`;
-                  } else {
-                    fillColor = playersColor[entry.player] || 'var(--accent-primary)';
-                  }
-                  
+
+                  const fillColor = selectedCamp === 'Tous les camps'
+                    ? (lycansColorScheme[entry.camp as keyof typeof lycansColorScheme] || `var(--chart-color-${((index ?? 0) % 6) + 1})`)
+                    : (playersColor[entry.player] || 'var(--accent-primary)');
+
                   return (
-                    <Cell
-                      key={`cell-${index}`}
+                    <Rectangle
+                      x={x}
+                      y={y}
+                      width={width}
+                      height={height}
                       fill={fillColor}
                       stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'transparent'}
                       strokeWidth={isHighlightedFromSettings ? 3 : 0}
-                      strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                      strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                       opacity={isHighlightedAddition ? 0.8 : 1}
                     />
                   );
-                })}
-              </Bar>
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { usePlayerStatsBase } from '../../hooks/utils/baseStatsHook';
 import { useNavigation } from '../../context/NavigationContext';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -431,16 +431,24 @@ export function RolesStatsChart() {
                           </text>
                         );
                       } : undefined}
-                    >
-                      {displayData.map((entry, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={getBarColor ? getBarColor(entry.name, index) : barColor}
-                          onClick={() => onBarClick(entry.name)}
-                          style={{ cursor: 'pointer' }}
-                        />
-                      ))}
-                    </Bar>
+                      shape={(props) => {
+                        const { x, y, width, height, payload, index } = props;
+                        const entry = payload as RoleStats;
+                        const fillColor = getBarColor ? getBarColor(entry.name, index ?? 0) : barColor;
+
+                        return (
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
+                            fill={fillColor}
+                            onClick={() => onBarClick(entry.name)}
+                            style={{ cursor: 'pointer' }}
+                          />
+                        );
+                      }}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

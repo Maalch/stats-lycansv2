@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Rectangle } from 'recharts';
 import { useCombinedFilteredRawData } from '../../hooks/useCombinedRawData';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
@@ -423,22 +423,26 @@ export function MonthlyRankingView({ selectedMonth, onMonthChange }: MonthlyRank
                   dataKey="winPercent"
                   name="Taux de Victoire"
                   fill="#8884d8"
-                >
-                  {chartData.map((entry) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as MonthlyPlayerStat;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                     const isHoveredPlayer = hoveredPlayer === entry.player;
                     const isHighlightedAddition = entry.isHighlightedAddition;
 
                     return (
-                      <Cell
-                        key={`cell-monthly-${entry.player}`}
-                        fill={playersColor[entry.player] || "#8884d8"}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={playersColor[entry.player] || '#8884d8'}
                         stroke={
                           isHighlightedFromSettings
-                            ? "var(--accent-primary)"
+                            ? 'var(--accent-primary)'
                             : isHoveredPlayer
-                              ? "var(--text-primary)"
-                              : "none"
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
                           isHighlightedFromSettings
@@ -447,7 +451,7 @@ export function MonthlyRankingView({ selectedMonth, onMonthChange }: MonthlyRank
                               ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => {
                           navigateToGameDetails({
@@ -461,8 +465,8 @@ export function MonthlyRankingView({ selectedMonth, onMonthChange }: MonthlyRank
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
                 <ReferenceLine
                   y={parseFloat(averageWinRate)}
                   stroke="red"

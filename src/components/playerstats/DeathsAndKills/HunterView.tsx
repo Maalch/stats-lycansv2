@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
@@ -364,47 +364,52 @@ export function HunterView({
                 <Bar
                   dataKey="averageNonVillageoisKillsPerGame"
                   fill="var(--chart-primary)"
-                  onClick={(data: any) => {
-                    if (data?.hunterName) {
-                      navigateToGameDetails({
-                        selectedPlayer: data.hunterName,
-                        campFilter: { selectedCamp: 'Chasseur', campFilterMode: 'all-assignments' },
-                        fromComponent: 'Statistiques de Mort - Bons Chasseurs'
-                      });
-                    }
-                  }}
-                  onMouseEnter={(data: any) => setHoveredPlayer(data?.hunterName || null)}
-                  onMouseLeave={() => setHoveredPlayer(null)}
                   style={{ cursor: 'pointer' }}
-                >
-                  {finalBestHuntersData.map((entry: any, index: number) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as any;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.hunterName;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
                     return (
-                      <Cell 
-                        key={`cell-${index}`}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
                         fill={playersColor[entry.hunterName] || lycansColors['Chasseur'] || '#8884d8'}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : hoveredPlayer === entry.hunterName 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : hoveredPlayer === entry.hunterName
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : hoveredPlayer === entry.hunterName 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : hoveredPlayer === entry.hunterName
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => {
+                          if (entry?.hunterName) {
+                            navigateToGameDetails({
+                              selectedPlayer: entry.hunterName,
+                              campFilter: { selectedCamp: 'Chasseur', campFilterMode: 'all-assignments' },
+                              fromComponent: 'Statistiques de Mort - Bons Chasseurs'
+                            });
+                          }
+                        }}
+                        onMouseEnter={() => setHoveredPlayer(entry.hunterName || null)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -469,47 +474,52 @@ export function HunterView({
                 <Bar
                   dataKey="averageVillageoisKills"
                   fill="var(--chart-primary)"
-                  onClick={(data: any) => {
-                    if (data?.hunterName) {
-                      navigateToGameDetails({
-                        selectedPlayer: data.hunterName,
-                        campFilter: { selectedCamp: 'Chasseur', campFilterMode: 'all-assignments' },
-                        fromComponent: 'Statistiques de Mort - Mauvais Chasseurs'
-                      });
-                    }
-                  }}
-                  onMouseEnter={(data: any) => setHoveredPlayer(data?.hunterName || null)}
-                  onMouseLeave={() => setHoveredPlayer(null)}
                   style={{ cursor: 'pointer' }}
-                >
-                  {finalBadHuntersData.map((entry: any, index: number) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as any;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.hunterName;
                     const isHighlightedAddition = entry.isHighlightedAddition;
-                    
+
                     return (
-                      <Cell 
-                        key={`cell-${index}`}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
                         fill={playersColor[entry.hunterName] || lycansColors['Chasseur'] || '#8884d8'}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : hoveredPlayer === entry.hunterName 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : hoveredPlayer === entry.hunterName
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : hoveredPlayer === entry.hunterName 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : hoveredPlayer === entry.hunterName
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
+                        onClick={() => {
+                          if (entry?.hunterName) {
+                            navigateToGameDetails({
+                              selectedPlayer: entry.hunterName,
+                              campFilter: { selectedCamp: 'Chasseur', campFilterMode: 'all-assignments' },
+                              fromComponent: 'Statistiques de Mort - Mauvais Chasseurs'
+                            });
+                          }
+                        }}
+                        onMouseEnter={() => setHoveredPlayer(entry.hunterName || null)}
+                        onMouseLeave={() => setHoveredPlayer(null)}
+                        style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

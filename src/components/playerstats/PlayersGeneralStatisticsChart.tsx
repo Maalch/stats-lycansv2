@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Rectangle } from 'recharts';
 import { usePlayerStatsFromRaw } from '../../hooks/usePlayerStatsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
@@ -275,45 +275,49 @@ export function PlayersGeneralStatisticsChart() {
                   dataKey="gamesPlayed"
                   name="Parties jouées"
                   fill="#00C49F"
-                >
-                  {participationData.map((entry) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartPlayerStat;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                     const isHoveredPlayer = highlightedPlayer === entry.player;
-                    const isHighlightedAddition = (entry as ChartPlayerStat).isHighlightedAddition;
-                    
+                    const isHighlightedAddition = entry.isHighlightedAddition;
+
                     return (
-                      <Cell
-                        key={`cell-participation-${entry.player}`}
-                        fill={playersColor[entry.player] || "#00C49F"}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={playersColor[entry.player] || '#00C49F'}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : isHoveredPlayer 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => {
                           navigateToGameDetails({
                             selectedPlayer: entry.player,
                             fromComponent: 'Statistiques Joueurs'
                           });
-                        }} 
+                        }}
                         onMouseEnter={() => setHighlightedPlayer(entry.player)}
                         onMouseLeave={() => setHighlightedPlayer(null)}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -478,31 +482,35 @@ export function PlayersGeneralStatisticsChart() {
                   dataKey="winPercent"
                   name="Taux de Victoire"
                   fill="#8884d8"
-                >
-                  {winRateData.map((entry) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartPlayerStat;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                     const isHoveredPlayer = highlightedPlayer === entry.player;
-                    const isHighlightedAddition = (entry as ChartPlayerStat).isHighlightedAddition;
-                    
+                    const isHighlightedAddition = entry.isHighlightedAddition;
+
                     return (
-                      <Cell
-                        key={`cell-winrate-${entry.player}`}
-                        fill={playersColor[entry.player] || "#8884d8"}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={playersColor[entry.player] || '#8884d8'}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : isHoveredPlayer 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => {
                           navigateToGameDetails({
@@ -510,14 +518,14 @@ export function PlayersGeneralStatisticsChart() {
                             selectedPlayerWinMode: 'wins-only',
                             fromComponent: 'Taux de Victoire'
                           });
-                        }} 
+                        }}
                         onMouseEnter={() => setHighlightedPlayer(entry.player)}
                         onMouseLeave={() => setHighlightedPlayer(null)}
                         style={{ cursor: 'pointer' }}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               {/* Add the average win rate reference line */}
               <ReferenceLine
                 y={parseFloat(averageWinRate)}

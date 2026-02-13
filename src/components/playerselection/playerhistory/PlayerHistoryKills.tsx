@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor, useThemeAdjustedLycansColorScheme } from '../../../types/api';
@@ -191,14 +191,24 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                       return null;
                     }}
                   />
-                  <Bar dataKey="kills">
-                    {killStatistics.playersKilled.map((entry, index) => (
-                      <Cell 
-                        key={`cell-killed-${index}`} 
-                        fill={playersColor[entry.player] || "var(--chart-color-3)"}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="kills"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as { player: string };
+                      const fillColor = playersColor[entry.player] || 'var(--chart-color-3)';
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={fillColor}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -255,14 +265,24 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                       return null;
                     }}
                   />
-                  <Bar dataKey="kills">
-                    {killStatistics.killedBy.map((entry, index) => (
-                      <Cell 
-                        key={`cell-killer-${index}`} 
-                        fill={playersColor[entry.player] || "var(--chart-color-4)"}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="kills"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as { player: string };
+                      const fillColor = playersColor[entry.player] || 'var(--chart-color-4)';
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={fillColor}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>

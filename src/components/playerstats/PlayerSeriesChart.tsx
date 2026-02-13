@@ -1,5 +1,5 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { usePlayerSeriesFromRaw } from '../../hooks/usePlayerSeriesFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useJoueursData } from '../../hooks/useJoueursData';
@@ -900,40 +900,43 @@ export function PlayerSeriesChart() {
                        selectedSeriesType === 'solo' ? '#9C27B0' : 
                        selectedSeriesType === 'wins' ? '#8884d8' : 
                        '#dc3545'}
-                >
-                  {currentData.map((entry, index) => {
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartSeriesData;
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                     const isHoveredPlayer = hoveredPlayer === entry.player;
-                    const isHighlightedAddition = (entry as ChartSeriesData).isHighlightedAddition;
-                    
-                    // Get the player's base color first
-                    const baseColor = playersColor[entry.player] || 
-                      (selectedSeriesType === 'villageois' ? '#82ca9d' : 
-                       selectedSeriesType === 'loup' ? '#FF8042' : 
+                    const isHighlightedAddition = entry.isHighlightedAddition;
+
+                    const baseColor = playersColor[entry.player] ||
+                      (selectedSeriesType === 'villageois' ? '#82ca9d' :
+                       selectedSeriesType === 'loup' ? '#FF8042' :
                        selectedSeriesType === 'nowolf' ? '#FFA500' :
-                       selectedSeriesType === 'solo' ? '#9C27B0' : 
-                       selectedSeriesType === 'wins' ? '#8884d8' : 
+                       selectedSeriesType === 'solo' ? '#9C27B0' :
+                       selectedSeriesType === 'wins' ? '#8884d8' :
                        '#dc3545');
-                    
+
                     return (
-                      <Cell
-                        key={`cell-${selectedSeriesType}-${index}`}
+                      <Rectangle
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
                         fill={baseColor}
                         stroke={
-                          isHighlightedFromSettings 
-                            ? "var(--accent-primary)" 
-                            : isHoveredPlayer 
-                              ? "var(--text-primary)" 
-                              : "none"
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHoveredPlayer
+                              ? 'var(--text-primary)'
+                              : 'none'
                         }
                         strokeWidth={
-                          isHighlightedFromSettings 
-                            ? 3 
-                            : isHoveredPlayer 
-                              ? 2 
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHoveredPlayer
+                              ? 2
                               : 0
                         }
-                        strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                        strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => handleBarClick(entry)}
                         onMouseEnter={() => setHoveredPlayer(entry.player)}
@@ -942,8 +945,8 @@ export function PlayerSeriesChart() {
                         className={viewMode === 'best' && entry.isOngoing ? 'lycans-ongoing-series' : ''}
                       />
                     );
-                  })}
-                </Bar>
+                  }}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
