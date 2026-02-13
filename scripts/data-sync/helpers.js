@@ -97,3 +97,146 @@ export function findPlayerMapRank(sortedPlayers, playerId, mapType) {
     games: mapType === 'village' ? playerData.villageGames : playerData.chateauGames
   };
 }
+
+
+/**
+ * Helper to create ranking object
+ * @param {string} id - Unique ranking ID
+ * @param {string} title - Ranking title
+ * @param {string} description - Ranking description
+ * @param {'good'|'bad'} type - Ranking type
+ * @param {number} rank - Player rank
+ * @param {number} value - Ranking value
+ * @param {number} totalRanked - Total number of players ranked in this category
+ * @param {Object} redirectTo - Navigation target
+ * @param {string} category - Ranking category
+ * @returns {Object} - Ranking object
+ */
+export function createRanking(id, title, description, type, rank, value, totalRanked, redirectTo, category = 'general') {
+  return {
+    id,
+    title,
+    description,
+    type,
+    category,
+    rank,
+    value,
+    totalRanked,
+    redirectTo: redirectTo || {
+      tab: 'rankings',
+      subTab: 'playersGeneral'
+    }
+  };
+}
+
+
+/**
+ * Helper to create comparison ranking
+ * @param {string} id - Unique ranking ID
+ * @param {string} title - Ranking title
+ * @param {string} description - Ranking description
+ * @param {'good'|'bad'} type - Ranking type
+ * @param {number} value - Ranking value
+ * @param {Object} redirectTo - Navigation target
+ * @returns {Object} - Ranking object
+ */
+export function createComparisonRanking(id, title, description, type, value, redirectTo) {
+  return {
+    id,
+    title,
+    description,
+    type,
+    category: 'comparison',
+    value,
+    redirectTo: redirectTo || {
+      tab: 'rankings',
+      subTab: 'playerComparison'
+    }
+  };
+}
+
+/**
+ * Helper to create kills ranking
+ * @param {string} id - Unique ranking ID
+ * @param {string} title - Ranking title
+ * @param {string} description - Ranking description
+ * @param {'good'|'bad'} type - Ranking type
+ * @param {number} rank - Player rank
+ * @param {number} value - Ranking value
+ * @param {number} totalRanked - Total number of players ranked
+ * @param {Object} redirectTo - Navigation target
+ * @returns {Object} - Ranking object
+ */
+export function createKillsRanking(id, title, description, type, rank, value, totalRanked, redirectTo) {
+  return {
+    id,
+    title,
+    description,
+    type,
+    category: 'kills',
+    rank,
+    value,
+    totalRanked,
+    redirectTo: redirectTo || {
+      tab: 'rankings',
+      subTab: 'deathStats'
+    }
+  };
+}
+
+
+/**
+ * Helper to create performance ranking object
+ * @param {string} id - Ranking ID
+ * @param {string} title - Ranking title
+ * @param {string} description - Ranking description
+ * @param {'good'|'bad'} type - Ranking type
+ * @param {number} rank - Player rank
+ * @param {number} value - Ranking value
+ * @param {number} totalRanked - Total number of players ranked in this category
+ * @param {Object} redirectTo - Navigation target
+ * @param {string} category - Ranking category
+ * @returns {Object} - Ranking object
+ */
+export function createPerformanceRanking(id, title, description, type, rank, value, totalRanked, redirectTo, category = 'performance') {
+  return {
+    id,
+    title,
+    description,
+    type,
+    category,
+    rank,
+    value,
+    totalRanked,
+    redirectTo: redirectTo || {
+      tab: 'rankings',
+      subTab: 'playersGeneral'
+    }
+  };
+}
+
+/**
+ * Helper to create series ranking object
+ * @param {string} id - Ranking ID
+ * @param {string} title - Ranking title
+ * @param {string} description - Ranking description
+ * @param {'good'|'bad'} type - Ranking type
+ * @param {number} rank - Player rank
+ * @param {number} value - Ranking value
+ * @param {number} totalRanked - Total number of players ranked in this category
+ * @param {Object} redirectTo - Navigation target
+ * @returns {Object} - Ranking object
+ */
+export function createSeriesRanking(id, title, description, type, rank, value, totalRanked, redirectTo) {
+  return {
+    id,
+    title,
+    description,
+    type,
+    category: 'series',
+    rank,
+    value,
+    totalRanked,
+    redirectTo
+  };
+}
