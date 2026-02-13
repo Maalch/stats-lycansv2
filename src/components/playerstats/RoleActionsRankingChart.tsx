@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { useCombinedFilteredRawData } from '../../hooks/useCombinedRawData';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
@@ -431,31 +431,37 @@ export function RoleActionsRankingChart() {
                         return null;
                       }}
                     />
-                    <Bar dataKey="transformsPerNight">
-                      {transformsPerNightData.map((entry, index) => {
+                    <Bar
+                      dataKey="transformsPerNight"
+                      shape={(props) => {
+                        const { x, y, width, height, payload } = props;
+                        const entry = payload as PlayerRoleActionStats;
                         const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                         const isHoveredPlayer = highlightedPlayer === entry.player;
                         const isHighlightedAddition = entry.isHighlightedAddition;
                         const playerColor = playersColor[entry.player] || lycansColors['Loup'] || 'var(--wolf-color)';
 
                         return (
-                          <Cell
-                            key={`cell-transform-${index}`}
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
                             fill={
                               isHighlightedFromSettings ? 'var(--accent-primary)' :
                               isHighlightedAddition ? 'var(--accent-secondary)' :
                               playerColor
                             }
-                            stroke={isHighlightedFromSettings ? "var(--accent-primary)" : isHoveredPlayer ? "#000000" : "none"}
+                            stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : isHoveredPlayer ? '#000000' : 'none'}
                             strokeWidth={isHighlightedFromSettings ? 3 : isHoveredPlayer ? 2 : 0}
-                            strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                            strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                             opacity={isHighlightedAddition ? 0.8 : 1}
                             onMouseEnter={() => setHighlightedPlayer(entry.player)}
                             onMouseLeave={() => setHighlightedPlayer(null)}
                           />
                         );
-                      })}
-                    </Bar>
+                      }}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -551,31 +557,37 @@ export function RoleActionsRankingChart() {
                         return null;
                       }}
                     />
-                    <Bar dataKey="untransformPerTransform">
-                      {untransformsData.map((entry, index) => {
+                    <Bar
+                      dataKey="untransformPerTransform"
+                      shape={(props) => {
+                        const { x, y, width, height, payload } = props;
+                        const entry = payload as PlayerRoleActionStats;
                         const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                         const isHoveredPlayer = highlightedPlayer === entry.player;
                         const isHighlightedAddition = entry.isHighlightedAddition;
                         const playerColor = playersColor[entry.player] || 'var(--accent-secondary)';
 
                         return (
-                          <Cell
-                            key={`cell-untransform-${index}`}
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
                             fill={
                               isHighlightedFromSettings ? 'var(--accent-primary)' :
                               isHighlightedAddition ? 'var(--accent-secondary)' :
                               playerColor
                             }
-                            stroke={isHighlightedFromSettings ? "var(--accent-primary)" : isHoveredPlayer ? "#000000" : "none"}
+                            stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : isHoveredPlayer ? '#000000' : 'none'}
                             strokeWidth={isHighlightedFromSettings ? 3 : isHoveredPlayer ? 2 : 0}
-                            strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                            strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                             opacity={isHighlightedAddition ? 0.8 : 1}
                             onMouseEnter={() => setHighlightedPlayer(entry.player)}
                             onMouseLeave={() => setHighlightedPlayer(null)}
                           />
                         );
-                      })}
-                    </Bar>
+                      }}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -699,31 +711,37 @@ export function RoleActionsRankingChart() {
                         return null;
                       }}
                     />
-                    <Bar dataKey="hunterAccuracy">
-                      {hunterAccuracyData.map((entry, index) => {
+                    <Bar
+                      dataKey="hunterAccuracy"
+                      shape={(props) => {
+                        const { x, y, width, height, payload } = props;
+                        const entry = payload as PlayerRoleActionStats;
                         const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
                         const isHoveredPlayer = highlightedPlayer === entry.player;
                         const isHighlightedAddition = entry.isHighlightedAddition;
                         const playerColor = playersColor[entry.player] || lycansColors['Chasseur'] || 'var(--chart-color-2)';
 
                         return (
-                          <Cell
-                            key={`cell-hunter-${index}`}
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
                             fill={
                               isHighlightedFromSettings ? 'var(--accent-primary)' :
                               isHighlightedAddition ? 'var(--accent-secondary)' :
                               playerColor
                             }
-                            stroke={isHighlightedFromSettings ? "var(--accent-primary)" : isHoveredPlayer ? "#000000" : "none"}
+                            stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : isHoveredPlayer ? '#000000' : 'none'}
                             strokeWidth={isHighlightedFromSettings ? 3 : isHoveredPlayer ? 2 : 0}
-                            strokeDasharray={isHighlightedAddition ? "5,5" : "none"}
+                            strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                             opacity={isHighlightedAddition ? 0.8 : 1}
                             onMouseEnter={() => setHighlightedPlayer(entry.player)}
                             onMouseLeave={() => setHighlightedPlayer(null)}
                           />
                         );
-                      })}
-                    </Bar>
+                      }}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
