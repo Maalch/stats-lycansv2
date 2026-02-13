@@ -304,6 +304,19 @@ export function CampsChart() {
                         height={90}
                         interval={0}
                         fontSize={11}
+                        tick={({ x, y, payload }) => (
+                          <text
+                            x={x}
+                            y={y}
+                            dy={14}
+                            textAnchor="end"
+                            fill="var(--text-secondary)"
+                            fontSize={11}
+                            transform={`rotate(-45 ${x} ${y})`}
+                          >
+                            {payload.value}
+                          </text>
+                        )}
                       />
                       <YAxis 
                         label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
@@ -397,6 +410,19 @@ export function CampsChart() {
                         height={90}
                         interval={0}
                         fontSize={11}
+                        tick={({ x, y, payload }) => (
+                          <text
+                            x={x}
+                            y={y}
+                            dy={16}
+                            textAnchor="end"
+                            fill="var(--text-secondary)"
+                            fontSize={11}
+                            transform={`rotate(-45 ${x} ${y})`}
+                          >
+                            {payload.value}
+                          </text>
+                        )}
                       />
                       <YAxis 
                         label={{ value: 'Nombre de parties', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}

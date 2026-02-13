@@ -135,6 +135,19 @@ export function GlobalVotingStatsChart() {
               textAnchor="end"
               height={100}
               stroke="var(--text-secondary)"
+              tick={({ x, y, payload }) => (
+                <text
+                  x={x}
+                  y={y}
+                  dy={16}
+                  textAnchor="end"
+                  fill="var(--text-secondary)"
+                  fontSize={13}
+                  transform={`rotate(-45 ${x} ${y})`}
+                >
+                  {payload.value}
+                </text>
+              )}
             />
             <YAxis 
               label={{ value: 'Taux (%)', angle: -90, position: 'insideLeft' }}
@@ -217,6 +230,19 @@ export function GlobalVotingStatsChart() {
               textAnchor="end"
               height={100}
               stroke="var(--text-secondary)"
+              tick={({ x, y, payload }) => (
+                <text
+                  x={x}
+                  y={y}
+                  dy={16}
+                  textAnchor="end"
+                  fill="var(--text-secondary)"
+                  fontSize={16}
+                  transform={`rotate(-45 ${x} ${y})`}
+                >
+                  {payload.value}
+                </text>
+              )}
             />
             <YAxis 
               label={{ value: 'Taux (%)', angle: -90, position: 'insideLeft' }}

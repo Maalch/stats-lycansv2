@@ -131,6 +131,19 @@ export function HarvestProgressChart() {
                     textAnchor="end" 
                     height={80} 
                     interval={0}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={12}
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
                   />
                   <YAxis 
                     label={{ value: 'Moyenne de Récolte (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}

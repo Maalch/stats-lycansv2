@@ -97,6 +97,19 @@ export function VictoryTypesChart() {
                       height={80}
                       interval={0}
                       fontSize={11}
+                      tick={({ x, y, payload }) => (
+                        <text
+                          x={x}
+                          y={y}
+                          dy={16}
+                          textAnchor="end"
+                          fill="var(--text-secondary)"
+                          fontSize={11}
+                          transform={`rotate(-45 ${x} ${y})`}
+                        >
+                          {payload.value}
+                        </text>
+                      )}
                     />
                     <YAxis 
                       label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }}
@@ -204,6 +217,19 @@ export function VictoryTypesChart() {
                       height={120}
                       interval={0}
                       fontSize={10}
+                      tick={({ x, y, payload }) => (
+                        <text
+                          x={x}
+                          y={y}
+                          dy={16}
+                          textAnchor="end"
+                          fill="var(--text-secondary)"
+                          fontSize={10}
+                          transform={`rotate(-45 ${x} ${y})`}
+                        >
+                          {payload.value}
+                        </text>
+                      )}
                     />
                     <YAxis 
                       label={{ value: 'Nombre de parties', angle: -90, position: 'insideLeft' }}

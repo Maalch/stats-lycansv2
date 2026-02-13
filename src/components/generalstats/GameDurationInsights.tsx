@@ -313,6 +313,19 @@ export function GameDurationInsights() {
                     textAnchor="end" 
                     height={80} 
                     interval={0}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={13}
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
                   />
                   <YAxis 
                     label={{ value: 'Durée Moyenne (minutes)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
@@ -613,8 +626,20 @@ export function GameDurationInsights() {
                         textAnchor="end"
                         height={80}
                         interval={0}
-                        tickFormatter={(value) => formatTiming(value)}
                         label={{ value: 'Timing de Fin', position: 'insideBottom', offset: -40 }}
+                        tick={({ x, y, payload }) => (
+                          <text
+                            x={x}
+                            y={y}
+                            dy={16}
+                            textAnchor="end"
+                            fill="var(--text-secondary)"
+                            fontSize={13}
+                            transform={`rotate(-45 ${x} ${y})`}
+                          >
+                            {formatTiming(payload.value)}
+                          </text>
+                        )}
                       />
                       <YAxis 
                         label={{ value: 'Nombre de Parties', angle: 270, position: 'insideLeft', style: { textAnchor: 'middle' } }}

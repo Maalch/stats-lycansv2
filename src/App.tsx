@@ -27,7 +27,7 @@ const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsA
 const VotingStatisticsChart = lazy(() => import('./components/playerstats/Voting/VotingStatisticsChart').then(m => ({ default: m.VotingStatisticsChart })));
 
 // Color statistics components
-const ColorStatisticsChart = lazy(() => import('./components/playerstats/ColorStatisticsChart').then(m => ({ default: m.ColorStatisticsChart })));
+const ColorStatisticsChart = lazy(() => import('./components/generalstats/ColorStatisticsChart').then(m => ({ default: m.ColorStatisticsChart })));
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));

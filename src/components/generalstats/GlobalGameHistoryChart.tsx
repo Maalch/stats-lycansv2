@@ -206,10 +206,10 @@ export function GlobalGameHistoryChart() {
 
   // Helper for responsive X-axis
   const getResponsiveXAxisSettings = (dataLength: number) => {
-    if (dataLength <= 15) return { fontSize: 12, angle: -45, height: 80, interval: 0 };
-    if (dataLength <= 30) return { fontSize: 12, angle: -45, height: 85, interval: 1 };
-    if (dataLength <= 50) return { fontSize: 12, angle: -60, height: 95, interval: 2 };
-    return { fontSize: 12, angle: -75, height: 105, interval: Math.floor(dataLength / 12) };
+    if (dataLength <= 15) return { fontSize: 12, angle: -45, height: 80, interval: 0, tickMargin: 13 };
+    if (dataLength <= 30) return { fontSize: 12, angle: -45, height: 85, interval: 1, tickMargin: 13 };
+    if (dataLength <= 50) return { fontSize: 12, angle: -60, height: 95, interval: 2, tickMargin: 15 };
+    return { fontSize: 12, angle: -75, height: 105, interval: Math.floor(dataLength / 12), tickMargin: 17 };
   };
 
   const xAxisSettings = getResponsiveXAxisSettings(groupedData.length);
@@ -300,6 +300,7 @@ export function GlobalGameHistoryChart() {
                     height={xAxisSettings.height}
                     interval={xAxisSettings.interval}
                     fontSize={xAxisSettings.fontSize}
+                    tickMargin={xAxisSettings.tickMargin}
                   />
                   <YAxis 
                     label={{ value: 'Taux de victoire (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
@@ -383,6 +384,7 @@ export function GlobalGameHistoryChart() {
                     height={xAxisSettings.height}
                     interval={xAxisSettings.interval}
                     fontSize={xAxisSettings.fontSize}
+                    tickMargin={xAxisSettings.tickMargin}
                   />
                   <YAxis 
                     label={{ value: 'Nombre de victoires', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
@@ -445,6 +447,7 @@ export function GlobalGameHistoryChart() {
                     height={xAxisSettings.height}
                     interval={xAxisSettings.interval}
                     fontSize={xAxisSettings.fontSize}
+                    tickMargin={xAxisSettings.tickMargin}
                   />
                   <YAxis 
                     label={{ value: 'Joueurs moyens', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
@@ -502,6 +505,7 @@ export function GlobalGameHistoryChart() {
                     height={xAxisSettings.height}
                     interval={xAxisSettings.interval}
                     fontSize={xAxisSettings.fontSize}
+                    tickMargin={xAxisSettings.tickMargin}
                   />
                   <YAxis 
                     label={{ value: 'Durée moyenne (min)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
