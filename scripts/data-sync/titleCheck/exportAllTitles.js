@@ -1,6 +1,6 @@
-// Script to export all available combination titles with details, sorted by priority
+// Script to export all available titles (simple + combination) with details, sorted by priority
 
-import { COMBINATION_TITLES } from '../titleDefinitions.js';
+import { TITLE_DEFINITIONS, COMBINATION_TITLES } from '../titleDefinitions.js';
 import fs from 'fs';
 
 // Helper to translate stat names to French
@@ -77,19 +77,101 @@ function formatConditions(conditions) {
   });
 }
 
-// Prepare export array
-const exportTitles = COMBINATION_TITLES
+// Process simple titles from TITLE_DEFINITIONS
+const simpleTitles = [];
+Object.entries(TITLE_DEFINITIONS).forEach(([statKey, statTitles]) => {
+  Object.entries(statTitles).forEach(([category, titleData]) => {
+    // Skip if not a title object
+    if (!titleData.title) return;
+    
+    // Convert category to percentile category format
+    const categoryMap = {
+      extremeHigh: 'EXTREME_HIGH',
+      extremeLow: 'EXTREME_LOW',
+      high: 'HIGH',
+      low: 'LOW',
+      average: 'AVERAGE',
+      aboveAverage: 'ABOVE_AVERAGE',
+      belowAverage: 'BELOW_AVERAGE',
+      balanced: 'BALANCED',
+      specialist: 'SPECIALIST',
+      villageois: 'VILLAGEOIS',
+      loup: 'LOUP',
+      solo: 'SOLO',
+      chasseur: 'CHASSEUR',
+      alchimiste: 'ALCHIMISTE',
+      amoureux: 'AMOUREUX',
+      agent: 'AGENT',
+      espion: 'ESPION',
+      idiot: 'IDIOT',
+      chasseurDePrime: 'CHASSEUR_DE_PRIME',
+      contrebandier: 'CONTREBANDIER',
+      bete: 'BETE',
+      vaudou: 'VAUDOU',
+      scientifique: 'SCIENTIFIQUE'
+    };
+    
+    // Priority assignment based on category (matching generate-titles.js logic)
+    const priorityMap = {
+      extremeHigh: 8,
+      extremeLow: 8,
+      high: 6,
+      low: 6,
+      aboveAverage: 4,
+      belowAverage: 4,
+      average: 3,
+      balanced: 6,
+      specialist: 6,
+      // Role titles
+      villageois: 3,
+      loup: 3,
+      solo: 3,
+      chasseur: 3,
+      alchimiste: 3,
+      amoureux: 3,
+      agent: 3,
+      espion: 3,
+      idiot: 3,
+      chasseurDePrime: 3,
+      contrebandier: 3,
+      bete: 3,
+      vaudou: 3,
+      scientifique: 3
+    };
+    
+    const statName = statNamesFr[statKey] || statKey;
+    const categoryFormatted = categoryNamesFr[categoryMap[category]] || category;
+    const priority = priorityMap[category] || 5;
+    
+    simpleTitles.push({
+      title: `${titleData.title} ${titleData.emoji}`,
+      description: titleData.description,
+      type: 'simple',
+      conditions: [`${statName}: ${categoryFormatted}`],
+      priority: priority
+    });
+  });
+});
+
+// Process combination titles
+const combinationTitles = COMBINATION_TITLES
   .map(t => ({
     title: `${t.title} ${t.emoji}`,
     description: t.description,
+    type: 'combination',
     conditions: formatConditions(t.conditions),
     priority: t.priority
-  }))
+  }));
+
+// Combine all titles
+const allTitles = [...simpleTitles, ...combinationTitles]
   .sort((a, b) => b.priority - a.priority);
 
 // Output as JSON file
-fs.writeFileSync('allTitlesExport.json', JSON.stringify(exportTitles, null, 2), 'utf-8');
+fs.writeFileSync('allTitlesExport.json', JSON.stringify(allTitles, null, 2), 'utf-8');
 
-console.log(`✅ Exported ${exportTitles.length} titles to allTitlesExport.json`);
-console.log('\nFirst 3 titles:');
-console.log(JSON.stringify(exportTitles.slice(0, 3), null, 2));
+console.log(`✅ Exported ${allTitles.length} titles to allTitlesExport.json`);
+console.log(`   - ${simpleTitles.length} simple titles`);
+console.log(`   - ${combinationTitles.length} combination titles`);
+console.log('\nFirst 5 titles:');
+console.log(JSON.stringify(allTitles.slice(0, 5), null, 2));

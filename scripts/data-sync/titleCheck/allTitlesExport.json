@@ -2,6 +2,7 @@
   {
     "title": "La Légende 🏅",
     "description": "Gagne tout le temps + grosses séries",
+    "type": "combination",
     "conditions": [
       "Taux de victoire: Très élevé",
       "Série de victoires: Élevé",
@@ -12,6 +13,7 @@
   {
     "title": "Le·a MVP ⭐",
     "description": "Gagne, récolte, et survit",
+    "type": "combination",
     "conditions": [
       "Taux de victoire: Élevé (min: Au-dessus de la moyenne)",
       "Récolte: Élevé (min: Au-dessus de la moyenne)",
@@ -22,6 +24,7 @@
   {
     "title": "Le·a Justicier·ère ⚔️",
     "description": "Chasseur·se qui vise juste, tue souvent et survit",
+    "type": "combination",
     "conditions": [
       "Précision chasseur: Élevé",
       "Taux de kills: Élevé",
@@ -32,6 +35,7 @@
   {
     "title": "Sniper Elite 🎖️",
     "description": "Chasseur·se ultra précis·e",
+    "type": "combination",
     "conditions": [
       "Précision de tir (chasseur): Élevé",
       "Précision chasseur: Élevé"
@@ -41,6 +45,7 @@
   {
     "title": "Le·a Caméléon 🦎",
     "description": "Bon dans tous les camps",
+    "type": "combination",
     "conditions": [
       "Victoires Villageois: Élevé (min: Au-dessus de la moyenne)",
       "Victoires Loup: Élevé (min: Au-dessus de la moyenne)",
@@ -51,6 +56,7 @@
   {
     "title": "Le Loup Solitaire 🐺",
     "description": "Loup efficace, discret et gagnant",
+    "type": "combination",
     "conditions": [
       "Récolte Loup: Élevé",
       "Victoires Loup: Élevé",
@@ -61,6 +67,7 @@
   {
     "title": "La Machine ⚙️",
     "description": "Récolte énormément sans dire un mot",
+    "type": "combination",
     "conditions": [
       "Récolte: Très élevé",
       "Temps de parole: Très faible"
@@ -70,6 +77,7 @@
   {
     "title": "Le·a Commentateur·rice 📻",
     "description": "Ne fait que parler, ne récolte rien et tue peu",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Très élevé (min: Au-dessus de la moyenne)",
       "Récolte: Faible",
@@ -78,8 +86,9 @@
     "priority": 17
   },
   {
-    "title": "Le·a Phoenix 🔥",
+    "title": "Le Phoenix 🔥",
     "description": "Meurt souvent tôt mais survit jusqu'au bout après",
+    "type": "combination",
     "conditions": [
       "Survie Jour 1: Faible (min: En-dessous de la moyenne)",
       "Survie: Élevé"
@@ -89,6 +98,7 @@
   {
     "title": "Le·a Robot 🤖",
     "description": "Productif·ve, survit, parle peu",
+    "type": "combination",
     "conditions": [
       "Récolte: Élevé",
       "Survie: Élevé",
@@ -99,6 +109,7 @@
   {
     "title": "Le·a Pitre 🎪",
     "description": "Bavard·e, improductif·ve, meurt souvent",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Élevé",
       "Récolte: Faible",
@@ -109,6 +120,7 @@
   {
     "title": "Le·a Maître·sse de Cérémonie 🎙️",
     "description": "Mène les débats et vote juste",
+    "type": "combination",
     "conditions": [
       "Parole en meeting: Élevé",
       "Précision de vote: Élevé (min: Au-dessus de la moyenne)",
@@ -119,6 +131,7 @@
   {
     "title": "Le·a Manipulateur·rice 🐍",
     "description": "Loup bavard·e et gagnant·e",
+    "type": "combination",
     "conditions": [
       "Victoires Loup: Élevé",
       "Temps de parole: Élevé"
@@ -128,6 +141,7 @@
   {
     "title": "Le·a Diplomate 🤝",
     "description": "Gagne en survivant sans tuer",
+    "type": "combination",
     "conditions": [
       "Survie: Élevé",
       "Taux de kills: Faible (min: En-dessous de la moyenne)",
@@ -138,6 +152,7 @@
   {
     "title": "Le·a Politicien·ne 🎩",
     "description": "Parle beaucoup, survit, mais ne récolte pas",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Élevé",
       "Survie: Élevé",
@@ -148,6 +163,7 @@
   {
     "title": "Le Loup Alpha 🐺",
     "description": "Survit et domine en Loup",
+    "type": "combination",
     "conditions": [
       "Survie: Élevé",
       "Victoires Loup: Élevé"
@@ -157,6 +173,7 @@
   {
     "title": "L'Alpha 🦁",
     "description": "Tue beaucoup et survit",
+    "type": "combination",
     "conditions": [
       "Taux de kills: Élevé",
       "Survie: Élevé"
@@ -166,6 +183,7 @@
   {
     "title": "L'Infiltré·e 🎭",
     "description": "Excellent·e loup discret·ète",
+    "type": "combination",
     "conditions": [
       "Victoires Loup: Élevé",
       "Temps de parole: Faible"
@@ -175,6 +193,7 @@
   {
     "title": "Monsieur·Madame Tout-le-Monde 👤",
     "description": "Performance moyenne partout",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Moyen",
       "Récolte: Moyen",
@@ -185,6 +204,7 @@
   {
     "title": "L'Invisible 👁️",
     "description": "Quasi muet·te mais redoutablement efficace",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Très faible",
       "Taux de victoire: Élevé"
@@ -194,6 +214,7 @@
   {
     "title": "Le Loup Hyperactif ⚡",
     "description": "Se transforme et détransforme constamment",
+    "type": "combination",
     "conditions": [
       "Taux de transformation en loup: Élevé",
       "Taux de retour après transformation: Élevé"
@@ -203,6 +224,7 @@
   {
     "title": "Le·a Traître·sse 🦹",
     "description": "Gagnant·e dans tous les camps ennemis des Villageois",
+    "type": "combination",
     "conditions": [
       "Victoires Loup: Élevé",
       "Victoires Solo: Élevé"
@@ -212,6 +234,7 @@
   {
     "title": "Le·a Pacifiste 🕊️",
     "description": "Gagne sans tuer",
+    "type": "combination",
     "conditions": [
       "Taux de kills: Faible",
       "Taux de victoire: Élevé"
@@ -221,6 +244,7 @@
   {
     "title": "Le·a Chasseur·se Maladroit·e 🔫",
     "description": "Chasseur·se précis qui touche les mauvaises cibles",
+    "type": "combination",
     "conditions": [
       "Précision de tir (chasseur): Élevé",
       "Précision chasseur: Faible"
@@ -230,6 +254,7 @@
   {
     "title": "Le·a Citoyen·ne Exemplaire 👑",
     "description": "Récolte et gagne en Villageois",
+    "type": "combination",
     "conditions": [
       "Récolte Villageois: Élevé",
       "Victoires Villageois: Élevé"
@@ -237,8 +262,9 @@
     "priority": 14
   },
   {
-    "title": "L'Assassin·e 🗡️",
+    "title": "L'Assassin 🗡️",
     "description": "Ignore la récolte, se concentre sur les kills",
+    "type": "combination",
     "conditions": [
       "Récolte: Faible",
       "Taux de kills: Élevé"
@@ -248,6 +274,7 @@
   {
     "title": "L'Anarchiste 🦊",
     "description": "Maître des rôles solitaires",
+    "type": "combination",
     "conditions": [
       "Camp Solo: Élevé",
       "Victoires Solo: Élevé"
@@ -257,6 +284,7 @@
   {
     "title": "Le·a Campeur·euse 🏕️",
     "description": "Reste au même endroit sans récolter",
+    "type": "combination",
     "conditions": [
       "Concentration zone dominante: Très élevé",
       "Récolte: Faible"
@@ -266,6 +294,7 @@
   {
     "title": "Le Loup Rusé 🦊",
     "description": "Reste humain, survit et gagne en Loup",
+    "type": "combination",
     "conditions": [
       "Taux de transformation en loup: Faible",
       "Survie: Élevé",
@@ -276,6 +305,7 @@
   {
     "title": "Le·a Populiste 📢",
     "description": "Bruyant·e et actif·ve mais se trompe de cible",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Élevé",
       "Vote agressif: Élevé",
@@ -286,6 +316,7 @@
   {
     "title": "L'Embusqué·e 🏹",
     "description": "Tend des pièges dans les Ruines",
+    "type": "combination",
     "conditions": [
       "Zone Ruines: Élevé",
       "Taux de kills: Élevé"
@@ -295,6 +326,7 @@
   {
     "title": "La Tête Brûlée 💣",
     "description": "Tue beaucoup mais fait perdre son camp",
+    "type": "combination",
     "conditions": [
       "Taux de kills: Élevé",
       "Taux de victoire: Faible"
@@ -302,18 +334,9 @@
     "priority": 13
   },
   {
-    "title": "Le·a Débutant·e 🆘",
-    "description": "Peine en victoire, survie et récolte",
-    "conditions": [
-      "Taux de victoire: Faible",
-      "Survie: Faible",
-      "Récolte: Faible"
-    ],
-    "priority": 13
-  },
-  {
     "title": "L'Apothicaire ⚗️",
     "description": "Boit beaucoup de potions et survit grâce à elles",
+    "type": "combination",
     "conditions": [
       "Utilisation de potions: Élevé",
       "Survie: Élevé"
@@ -323,6 +346,7 @@
   {
     "title": "Le·a Sacrifié·e 🕯️",
     "description": "Meurt rapidement mais fait gagner son camp",
+    "type": "combination",
     "conditions": [
       "Survie Jour 1: Faible",
       "Survie: Faible",
@@ -333,6 +357,7 @@
   {
     "title": "Le·a Lanceur·se d'Alerte 🚨",
     "description": "Vote juste mais se fait éliminer pour ça",
+    "type": "combination",
     "conditions": [
       "Précision de vote: Élevé",
       "Survie: Faible"
@@ -342,6 +367,7 @@
   {
     "title": "L'Aventurier·ère 🗺️",
     "description": "Explore toute la carte et gagne",
+    "type": "combination",
     "conditions": [
       "Concentration zone dominante: Faible",
       "Taux de victoire: Élevé"
@@ -351,6 +377,7 @@
   {
     "title": "L'Ermite 🧙",
     "description": "Silencieux·se, reclus·e dans les Ruines",
+    "type": "combination",
     "conditions": [
       "Zone Ruines: Élevé",
       "Temps de parole: Faible"
@@ -360,6 +387,7 @@
   {
     "title": "Le·a Capitaine du Port ⚓",
     "description": "Survit au bord de l'eau",
+    "type": "combination",
     "conditions": [
       "Zone Village Pêcheur: Élevé",
       "Survie: Élevé"
@@ -369,6 +397,7 @@
   {
     "title": "Le·a Cueilleur·se 🧺",
     "description": "Récolte en parcourant toute la carte",
+    "type": "combination",
     "conditions": [
       "Concentration zone dominante: Faible",
       "Récolte: Élevé"
@@ -378,6 +407,7 @@
   {
     "title": "Le·a Chasseur·se Nocturne 🌙",
     "description": "Se transforme, reste loup, et domine",
+    "type": "combination",
     "conditions": [
       "Taux de transformation en loup: Élevé",
       "Taux de retour après transformation: Faible",
@@ -386,8 +416,9 @@
     "priority": 12
   },
   {
-    "title": "La Sorcière 🧙",
+    "title": "Le·a Sorcièr·e 🧙",
     "description": "Prépare des potions tout en racontant ses recettes",
+    "type": "combination",
     "conditions": [
       "Utilisation de potions: Élevé",
       "Temps de parole: Élevé"
@@ -397,6 +428,7 @@
   {
     "title": "Le·a Kamikaze 💥",
     "description": "Tue mais meurt en retour",
+    "type": "combination",
     "conditions": [
       "Taux de kills: Élevé",
       "Survie: Faible"
@@ -406,6 +438,7 @@
   {
     "title": "Le·a Détective 🔎",
     "description": "Observe silencieusement et vote juste",
+    "type": "combination",
     "conditions": [
       "Précision de vote: Élevé",
       "Temps de parole: Faible"
@@ -415,6 +448,7 @@
   {
     "title": "Le·a Poissard·e 🌧️",
     "description": "Perd tout le temps + grosses séries de défaites",
+    "type": "combination",
     "conditions": [
       "Taux de victoire: Très faible",
       "Série de défaites: Élevé"
@@ -424,6 +458,7 @@
   {
     "title": "L'Avide 💰",
     "description": "Récolte beaucoup mais meurt",
+    "type": "combination",
     "conditions": [
       "Récolte: Élevé (min: Au-dessus de la moyenne)",
       "Survie: Faible (min: En-dessous de la moyenne)"
@@ -433,6 +468,7 @@
   {
     "title": "Le·a Théoricien·ne 🎓",
     "description": "Parle beaucoup en débat mais vote peu",
+    "type": "combination",
     "conditions": [
       "Parole en meeting: Élevé",
       "Vote agressif: Faible"
@@ -440,8 +476,19 @@
     "priority": 12
   },
   {
+    "title": "Le·a Pharmacien·ne 💊",
+    "description": "Ignore la récolte pour se concentrer sur les potions",
+    "type": "combination",
+    "conditions": [
+      "Utilisation de potions: Élevé",
+      "Récolte: Faible"
+    ],
+    "priority": 12
+  },
+  {
     "title": "Le·a Rôdeur·euse 🌙",
     "description": "Rôde hors des villages et survit",
+    "type": "combination",
     "conditions": [
       "Zone Reste Carte: Élevé",
       "Survie: Élevé"
@@ -451,6 +498,7 @@
   {
     "title": "Le·a Moissonneur·euse 🌾",
     "description": "Récolte à la Ferme sans relâche",
+    "type": "combination",
     "conditions": [
       "Zone Ferme: Élevé",
       "Récolte: Élevé"
@@ -458,10 +506,12 @@
     "priority": 11
   },
   {
-    "title": "Le·a Pharmacien·ne 💊",
-    "description": "Ignore la récolte pour se concentrer sur les potions",
+    "title": "Le·a Débutant·e 🆘",
+    "description": "Peine en victoire, survie et récolte",
+    "type": "combination",
     "conditions": [
-      "Utilisation de potions: Élevé",
+      "Taux de victoire: Faible",
+      "Survie: Faible",
       "Récolte: Faible"
     ],
     "priority": 11
@@ -469,6 +519,7 @@
   {
     "title": "L'Accro 🍾",
     "description": "Boit des potions mais ça ne l'aide pas à gagner",
+    "type": "combination",
     "conditions": [
       "Utilisation de potions: Élevé",
       "Taux de victoire: Faible"
@@ -478,6 +529,7 @@
   {
     "title": "La Grande Gueule 🗯️",
     "description": "Parle trop et meurt Jour 1",
+    "type": "combination",
     "conditions": [
       "Survie Jour 1: Faible",
       "Temps de parole: Élevé"
@@ -487,6 +539,7 @@
   {
     "title": "Le·a Couard·e 🐢",
     "description": "Survit longtemps mais perd quand même",
+    "type": "combination",
     "conditions": [
       "Survie: Élevé",
       "Taux de victoire: Faible"
@@ -496,6 +549,7 @@
   {
     "title": "L'Abeille Ouvrière 🐝",
     "description": "Récolte bien en Villageois mais perd",
+    "type": "combination",
     "conditions": [
       "Récolte Villageois: Élevé",
       "Victoires Villageois: Faible"
@@ -505,6 +559,7 @@
   {
     "title": "Le Loup Repéré 🔦",
     "description": "Récolte en Loup mais se fait démasquer",
+    "type": "combination",
     "conditions": [
       "Récolte Loup: Élevé",
       "Victoires Loup: Faible"
@@ -514,6 +569,7 @@
   {
     "title": "Le·a Taulier·e 🔑",
     "description": "Participe beaucoup et excelle dans un camp",
+    "type": "combination",
     "conditions": [
       "Parties jouées: Élevé",
       "Équilibre des camps: Spécialiste"
@@ -523,6 +579,7 @@
   {
     "title": "Le·a Conspirateur·rice 🗨️",
     "description": "Bavard·e hors meeting, silencieux·se pendant",
+    "type": "combination",
     "conditions": [
       "Parole hors meeting: Élevé",
       "Parole en meeting: Faible"
@@ -532,6 +589,7 @@
   {
     "title": "L'Avocat·e ⚖️",
     "description": "Silencieux·se hors débats, éloquent·e en meeting",
+    "type": "combination",
     "conditions": [
       "Parole hors meeting: Faible",
       "Parole en meeting: Élevé"
@@ -541,6 +599,7 @@
   {
     "title": "L'Opportuniste 🎯",
     "description": "Gagne souvent mais joue peu",
+    "type": "combination",
     "conditions": [
       "Taux de victoire: Élevé",
       "Parties jouées: Faible"
@@ -550,6 +609,7 @@
   {
     "title": "En Rodage 🔧",
     "description": "Peine dans tous les camps",
+    "type": "combination",
     "conditions": [
       "Victoires Villageois: Faible",
       "Victoires Loup: Faible",
@@ -560,6 +620,7 @@
   {
     "title": "Le·a Prudent·e 🛡️",
     "description": "Survit mais récolte peu",
+    "type": "combination",
     "conditions": [
       "Récolte: Faible (min: En-dessous de la moyenne)",
       "Survie: Élevé (min: Au-dessus de la moyenne)"
@@ -567,8 +628,9 @@
     "priority": 11
   },
   {
-    "title": "Le·a Cow-Boy 🤠",
+    "title": "Le Cow-Boy 🤠",
     "description": "Vote vite et souvent",
+    "type": "combination",
     "conditions": [
       "Vote agressif: Élevé",
       "Premier voteur: Élevé"
@@ -578,6 +640,7 @@
   {
     "title": "Le·a Démagogue 📣",
     "description": "Parle beaucoup mais vote mal",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Élevé",
       "Précision de vote: Faible"
@@ -587,6 +650,7 @@
   {
     "title": "L'Enthousiaste 🌟",
     "description": "Participe beaucoup et gagne autant dans chaque camp",
+    "type": "combination",
     "conditions": [
       "Parties jouées: Élevé",
       "Équilibre des camps: Équilibré"
@@ -596,6 +660,7 @@
   {
     "title": "L'Hyperactif·ve ⚡",
     "description": "Bavard·e ET grande récolte",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Élevé",
       "Récolte: Élevé"
@@ -605,6 +670,7 @@
   {
     "title": "L'Efficace 🏭",
     "description": "Silencieux·se mais productif·ve",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Faible",
       "Récolte: Élevé"
@@ -614,10 +680,857 @@
   {
     "title": "Le·a Philosophe 📚",
     "description": "Bavard·e mais improductif·ve",
+    "type": "combination",
     "conditions": [
       "Temps de parole: Élevé",
       "Récolte: Faible"
     ],
     "priority": 10
+  },
+  {
+    "title": "Le Moulin à Paroles 💬",
+    "description": "Parle énormément",
+    "type": "simple",
+    "conditions": [
+      "Temps de parole: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Fantôme 👻",
+    "description": "Quasi muet·te",
+    "type": "simple",
+    "conditions": [
+      "Temps de parole: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Exterminateur·rice 💀",
+    "description": "Tueur·se en série",
+    "type": "simple",
+    "conditions": [
+      "Taux de kills: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Agneau 🐑",
+    "description": "Ne tue jamais",
+    "type": "simple",
+    "conditions": [
+      "Taux de kills: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Stakhanoviste ⚒️",
+    "description": "Récolte exceptionnelle",
+    "type": "simple",
+    "conditions": [
+      "Récolte: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Touriste 📸",
+    "description": "Ne récolte jamais",
+    "type": "simple",
+    "conditions": [
+      "Récolte: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Tribun·e ⚖️",
+    "description": "Toujours en action",
+    "type": "simple",
+    "conditions": [
+      "Vote agressif: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Indécis·e 🤷",
+    "description": "Vote rarement",
+    "type": "simple",
+    "conditions": [
+      "Vote agressif: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Exécuteur·rice ⚔️",
+    "description": "Chasseur·se parfait·e",
+    "type": "simple",
+    "conditions": [
+      "Précision chasseur: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Chasseur·se Maudit·e 💔",
+    "description": "Tire toujours sur les mauvaises cibles",
+    "type": "simple",
+    "conditions": [
+      "Précision chasseur: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Œil de Faucon 🦅",
+    "description": "Ne rate presque jamais",
+    "type": "simple",
+    "conditions": [
+      "Précision de tir (chasseur): Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Stormtrooper ⚡",
+    "description": "Rate presque tout",
+    "type": "simple",
+    "conditions": [
+      "Précision de tir (chasseur): Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Inarrêtable 👑",
+    "description": "Gagne presque toujours",
+    "type": "simple",
+    "conditions": [
+      "Taux de victoire: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Maudit·e 🪦",
+    "description": "Perd presque toujours",
+    "type": "simple",
+    "conditions": [
+      "Taux de victoire: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Citadin·e 🏘️",
+    "description": "Traîne beaucoup au Village Principal",
+    "type": "simple",
+    "conditions": [
+      "Zone Village Principal: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Fermier·ère 🌾",
+    "description": "Traîne beaucoup à la Ferme",
+    "type": "simple",
+    "conditions": [
+      "Zone Ferme: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Pêcheur·euse 🎣",
+    "description": "Traîne beaucoup au Village Pêcheur",
+    "type": "simple",
+    "conditions": [
+      "Zone Village Pêcheur: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Archéologue 🏛️",
+    "description": "Traîne beaucoup aux Ruines",
+    "type": "simple",
+    "conditions": [
+      "Zone Ruines: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Nomade 🧭",
+    "description": "Traîne beaucoup hors des zones principales",
+    "type": "simple",
+    "conditions": [
+      "Zone Reste Carte: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Casanier·ère 🏠",
+    "description": "Toujours dans la même zone",
+    "type": "simple",
+    "conditions": [
+      "Concentration zone dominante: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Explorateur·ice 🧭",
+    "description": "Réparti·e uniformément sur toute la carte",
+    "type": "simple",
+    "conditions": [
+      "Concentration zone dominante: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le Loup-Garou Frénétique 🐺",
+    "description": "Se transforme très souvent en loup",
+    "type": "simple",
+    "conditions": [
+      "Taux de transformation en loup: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le Loup Fantôme 👻",
+    "description": "Ne se transforme presque jamais",
+    "type": "simple",
+    "conditions": [
+      "Taux de transformation en loup: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Adaptable 🦎",
+    "description": "Se détransforme très souvent",
+    "type": "simple",
+    "conditions": [
+      "Taux de retour après transformation: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le Loup Permanent 🌑",
+    "description": "Reste presque toujours en loup",
+    "type": "simple",
+    "conditions": [
+      "Taux de retour après transformation: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Alchimiste Amateur·e 🧪",
+    "description": "Boit énormément de potions",
+    "type": "simple",
+    "conditions": [
+      "Utilisation de potions: Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "L'Abstinent·e 🚫",
+    "description": "Ne boit presque jamais de potions",
+    "type": "simple",
+    "conditions": [
+      "Utilisation de potions: Très faible"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Bavard·e 🗣️",
+    "description": "Parle beaucoup (par 60 min de jeu)",
+    "type": "simple",
+    "conditions": [
+      "Temps de parole: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Silencieux·se 🤫",
+    "description": "Parle peu (par 60 min de jeu)",
+    "type": "simple",
+    "conditions": [
+      "Temps de parole: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Chuchoteur·se 👂",
+    "description": "Bavard·e hors meeting",
+    "type": "simple",
+    "conditions": [
+      "Parole hors meeting: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Concentré·e 🎯",
+    "description": "Silencieux·se hors meeting",
+    "type": "simple",
+    "conditions": [
+      "Parole hors meeting: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "L'Orateur·rice 🎤",
+    "description": "Bavard·e en meeting",
+    "type": "simple",
+    "conditions": [
+      "Parole en meeting: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Discret·ète 🤐",
+    "description": "Silencieux·se en meeting",
+    "type": "simple",
+    "conditions": [
+      "Parole en meeting: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Prédateur·rice 🐺",
+    "description": "Taux de kills élevé",
+    "type": "simple",
+    "conditions": [
+      "Taux de kills: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Non-Violent·e ✌️",
+    "description": "Taux de kills faible",
+    "type": "simple",
+    "conditions": [
+      "Taux de kills: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Survivant·e 🛡️",
+    "description": "Survie élevée fin de game",
+    "type": "simple",
+    "conditions": [
+      "Survie: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "La Cible 🎯",
+    "description": "Meurt souvent",
+    "type": "simple",
+    "conditions": [
+      "Survie: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Vigilant·e 🏃",
+    "description": "Survit au Jour 1",
+    "type": "simple",
+    "conditions": [
+      "Survie Jour 1: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "La Première Victime ⚰️",
+    "description": "Meurt souvent Jour 1",
+    "type": "simple",
+    "conditions": [
+      "Survie Jour 1: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Récolteur·euse 🧺",
+    "description": "Récolte élevée",
+    "type": "simple",
+    "conditions": [
+      "Récolte: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Flâneur·se 🚶",
+    "description": "Récolte faible",
+    "type": "simple",
+    "conditions": [
+      "Récolte: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Citoyen·ne Modèle 🏘️",
+    "description": "Récolte excellente en Villageois",
+    "type": "simple",
+    "conditions": [
+      "Récolte Villageois: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Villageois·e Paresseux·se 💤",
+    "description": "Faible récolte en Villageois",
+    "type": "simple",
+    "conditions": [
+      "Récolte Villageois: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le Loup Discret 🐺",
+    "description": "Récolte élevée en Loup",
+    "type": "simple",
+    "conditions": [
+      "Récolte Loup: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le Loup Impatient 😤",
+    "description": "Faible récolte en Loup",
+    "type": "simple",
+    "conditions": [
+      "Récolte Loup: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "L'Agitateur·rice 📢",
+    "description": "Voteur·se agressif·ve",
+    "type": "simple",
+    "conditions": [
+      "Vote agressif: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Sage 🧘",
+    "description": "Voteur·se passif·ve",
+    "type": "simple",
+    "conditions": [
+      "Vote agressif: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "L'Impulsif·ve 🏃",
+    "description": "Premier·ère voteur·se",
+    "type": "simple",
+    "conditions": [
+      "Premier voteur: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Stratège 🧠",
+    "description": "Attend avant de voter",
+    "type": "simple",
+    "conditions": [
+      "Premier voteur: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Flaireur·se 👃",
+    "description": "Bon instinct de vote",
+    "type": "simple",
+    "conditions": [
+      "Précision de vote: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "L'Aveugle 🙈",
+    "description": "Mauvais instinct de vote",
+    "type": "simple",
+    "conditions": [
+      "Précision de vote: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Sniper 🎯",
+    "description": "Bon·ne chasseur·se (tue des ennemis)",
+    "type": "simple",
+    "conditions": [
+      "Précision chasseur: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Myope 👓",
+    "description": "Mauvais·e chasseur·se (tue des alliés)",
+    "type": "simple",
+    "conditions": [
+      "Précision chasseur: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Tireur·se d'Élite 🔫",
+    "description": "Touche souvent sa cible",
+    "type": "simple",
+    "conditions": [
+      "Précision de tir (chasseur): Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Maladroit·e 💨",
+    "description": "Rate souvent ses tirs",
+    "type": "simple",
+    "conditions": [
+      "Précision de tir (chasseur): Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Winner 🏆",
+    "description": "Taux de victoire élevé",
+    "type": "simple",
+    "conditions": [
+      "Taux de victoire: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Looser 😢",
+    "description": "Taux de victoire faible",
+    "type": "simple",
+    "conditions": [
+      "Taux de victoire: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Protecteur·rice du Village 🦸",
+    "description": "Excellent·e en camp Villageois",
+    "type": "simple",
+    "conditions": [
+      "Victoires Villageois: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Idiot·e en Formation 🤡",
+    "description": "Mauvais·e en camp Villageois",
+    "type": "simple",
+    "conditions": [
+      "Victoires Villageois: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Chef·fe de Meute 🐺",
+    "description": "Excellent·e en camp Loup",
+    "type": "simple",
+    "conditions": [
+      "Victoires Loup: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Loup Débutant·e 🐩",
+    "description": "Mauvais·e en camp Loup",
+    "type": "simple",
+    "conditions": [
+      "Victoires Loup: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "L'Électron Libre 🦊",
+    "description": "Excellent·e en rôles Solo",
+    "type": "simple",
+    "conditions": [
+      "Victoires Solo: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "L'Enfant Perdu·e 👶",
+    "description": "Mauvais·e en rôles Solo",
+    "type": "simple",
+    "conditions": [
+      "Victoires Solo: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "En Feu 🔥",
+    "description": "Grosse série de victoires",
+    "type": "simple",
+    "conditions": [
+      "Série de victoires: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Glacé·e ❄️",
+    "description": "Grosse série de défaites",
+    "type": "simple",
+    "conditions": [
+      "Série de défaites: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Noctambule 🌙",
+    "description": "Joue énormément de parties",
+    "type": "simple",
+    "conditions": [
+      "participation: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Occasionnel·le 🎲",
+    "description": "Joue peu de parties",
+    "type": "simple",
+    "conditions": [
+      "participation: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Polyvalent·e 🎭",
+    "description": "Performance équilibrée dans tous les camps",
+    "type": "simple",
+    "conditions": [
+      "Équilibre des camps: Équilibré"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Spécialiste 🎯",
+    "description": "Excellent dans un camp spécifique",
+    "type": "simple",
+    "conditions": [
+      "Équilibre des camps: Spécialiste"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "L'Habitué·e 🪑",
+    "description": "A un coin préféré",
+    "type": "simple",
+    "conditions": [
+      "Concentration zone dominante: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Vagabond·e 🗺️",
+    "description": "Se déplace beaucoup entre les zones",
+    "type": "simple",
+    "conditions": [
+      "Concentration zone dominante: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Transform·é·e 🌙",
+    "description": "Se transforme fréquemment",
+    "type": "simple",
+    "conditions": [
+      "Taux de transformation en loup: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Loup Prudent·e 🐕",
+    "description": "Se transforme rarement",
+    "type": "simple",
+    "conditions": [
+      "Taux de transformation en loup: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Discret·ète 🤫",
+    "description": "Se détransforme fréquemment",
+    "type": "simple",
+    "conditions": [
+      "Taux de retour après transformation: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le Loup Assumé 🐺",
+    "description": "Se détransforme rarement",
+    "type": "simple",
+    "conditions": [
+      "Taux de retour après transformation: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Potion Addict ⚗️",
+    "description": "Boit beaucoup de potions",
+    "type": "simple",
+    "conditions": [
+      "Utilisation de potions: Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Sobre 💧",
+    "description": "Boit peu de potions",
+    "type": "simple",
+    "conditions": [
+      "Utilisation de potions: Faible"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Équilibré·e ⚖️",
+    "description": "Temps de parole normal",
+    "type": "simple",
+    "conditions": [
+      "Temps de parole: Moyen"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Le·a Travailleur·se 👷",
+    "description": "Récolte correcte",
+    "type": "simple",
+    "conditions": [
+      "Récolte: Moyen"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Le·a Constant·e 📊",
+    "description": "Performance stable",
+    "type": "simple",
+    "conditions": [
+      "Taux de victoire: Moyen"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Villageois·e 🏘️",
+    "description": "Joue souvent Villageois",
+    "type": "simple",
+    "conditions": [
+      "campAssignment: villageois"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Loup 🌙",
+    "description": "Joue souvent Loup",
+    "type": "simple",
+    "conditions": [
+      "campAssignment: loup"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Solo 🎭",
+    "description": "Joue souvent en Solo",
+    "type": "simple",
+    "conditions": [
+      "campAssignment: solo"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Chasseur 🔫",
+    "description": "Joue souvent Chasseur",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: chasseur"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Alchimiste ⚗️",
+    "description": "Joue souvent Alchimiste",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: alchimiste"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Amoureux 💕",
+    "description": "Joue souvent Amoureux",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: amoureux"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Agent 🕵️",
+    "description": "Joue souvent Agent",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: agent"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Espion 🔍",
+    "description": "Joue souvent Espion",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: espion"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Idiot 🃏",
+    "description": "Joue souvent Idiot du Village",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: idiot"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Bounty Hunter 💰",
+    "description": "Joue souvent Chasseur de Prime",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: chasseurDePrime"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Contrebandier 📦",
+    "description": "Joue souvent Contrebandier",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: contrebandier"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Bête 🦁",
+    "description": "Joue souvent La Bête",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: bete"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Vaudou 🎃",
+    "description": "Joue souvent Vaudou",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: vaudou"
+    ],
+    "priority": 3
+  },
+  {
+    "title": "Serial Scientifique 🔬",
+    "description": "Joue souvent Scientifique",
+    "type": "simple",
+    "conditions": [
+      "roleAssignment: scientifique"
+    ],
+    "priority": 3
   }
 ]
