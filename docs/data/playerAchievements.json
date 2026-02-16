@@ -1,9 +1,9 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-15T06:14:16.773Z",
+  "generatedAt": "2026-02-16T13:09:32.931Z",
   "teamName": "Main Team",
-  "totalPlayers": 88,
-  "totalGames": 750,
+  "totalPlayers": 100,
+  "totalGames": 756,
   "categories": {
     "victories": {
       "label": "Victoires",
@@ -8876,7 +8876,7 @@
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 263,
+          "currentValue": 266,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -8941,7 +8941,7 @@
         },
         {
           "id": "defeats-villageois",
-          "currentValue": 205,
+          "currentValue": 207,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -8969,7 +8969,7 @@
         },
         {
           "id": "defeats-loup",
-          "currentValue": 72,
+          "currentValue": 73,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -8986,7 +8986,7 @@
             "stars": 3,
             "threshold": 100
           },
-          "progress": 0.72
+          "progress": 0.73
         },
         {
           "id": "vegan-wolf",
@@ -9077,7 +9077,7 @@
         },
         {
           "id": "death-turn1",
-          "currentValue": 102,
+          "currentValue": 103,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -9174,7 +9174,7 @@
         },
         {
           "id": "ponce-fesses",
-          "currentValue": 240,
+          "currentValue": 243,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -9189,12 +9189,12 @@
             {
               "stars": 3,
               "threshold": 100,
-              "unlockedAtGame": "Ponce-20260210131441"
+              "unlockedAtGame": "Tsuna-20260213224056"
             },
             {
               "stars": 4,
               "threshold": 200,
-              "unlockedAtGame": "Ponce-20260210131441"
+              "unlockedAtGame": "Tsuna-20260213224056"
             }
           ],
           "nextLevel": null,
@@ -9223,7 +9223,7 @@
         },
         {
           "id": "hunter-kill-villager",
-          "currentValue": 3,
+          "currentValue": 4,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -9235,11 +9235,11 @@
             "stars": 2,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "hunter-killed-by-wolf",
-          "currentValue": 26,
+          "currentValue": 28,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -17702,7 +17702,7 @@
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 10,
+          "currentValue": 11,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -17714,7 +17714,7 @@
             "stars": 2,
             "threshold": 50
           },
-          "progress": 0.2
+          "progress": 0.22
         },
         {
           "id": "victories-loup",
@@ -17727,8 +17727,18 @@
           "progress": 0.4
         },
         {
+          "id": "victories-solo",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "defeats-villageois",
-          "currentValue": 14,
+          "currentValue": 16,
           "unlockedLevels": [
             {
               "stars": 1,
@@ -17740,7 +17750,7 @@
             "stars": 2,
             "threshold": 50
           },
-          "progress": 0.28
+          "progress": 0.32
         },
         {
           "id": "defeats-loup",
@@ -18668,20 +18678,10 @@
     "76561198353315250": {
       "playerId": "76561198353315250",
       "playerName": "AxRuby",
-      "totalUnlocked": 1,
+      "totalUnlocked": 2,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "stars": 1,
-            "threshold": 10
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "defeats-villageois",
           "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
@@ -18691,14 +18691,24 @@
           "progress": 0.4
         },
         {
-          "id": "defeats-loup",
-          "currentValue": 1,
+          "id": "defeats-villageois",
+          "currentValue": 7,
           "unlockedLevels": [],
           "nextLevel": {
             "stars": 1,
             "threshold": 10
           },
-          "progress": 0.1
+          "progress": 0.7
+        },
+        {
+          "id": "defeats-loup",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
         },
         {
           "id": "death-turn1",
@@ -18731,6 +18741,16 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "ponce-fesses",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 25
+          },
+          "progress": 0.04
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [
@@ -18745,6 +18765,22 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "only-passer",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213211926"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -19180,6 +19216,716 @@
               "stars": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20260203132327"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        }
+      ]
+    },
+    "76561199522671468": {
+      "playerId": "76561199522671468",
+      "playerName": "czerio",
+      "totalUnlocked": 1,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "victories-solo",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "defeats-loup",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "assassin-potion-kill-enemy",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213224056"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        }
+      ]
+    },
+    "76561198979055156": {
+      "playerId": "76561198979055156",
+      "playerName": "tomas_oak",
+      "totalUnlocked": 1,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "victories-loup",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
+          "id": "ponce-fesses",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 25
+          },
+          "progress": 0.04
+        },
+        {
+          "id": "assassin-potion-kill-ally",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213224056"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        }
+      ]
+    },
+    "76561198317875273": {
+      "playerId": "76561198317875273",
+      "playerName": "Kezako",
+      "totalUnlocked": 3,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
+          "id": "defeats-loup",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "voted-as-villager",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "avenger-death",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "ponce-fesses",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 25
+          },
+          "progress": 0.12
+        },
+        {
+          "id": "misunderstood",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213205847"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "false-guilty",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213205847"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213205847"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        }
+      ]
+    },
+    "76561199034935923": {
+      "playerId": "76561199034935923",
+      "playerName": "Luli",
+      "totalUnlocked": 1,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "defeats-loup",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "ponce-fesses",
+          "currentValue": 7,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 25
+          },
+          "progress": 0.28
+        },
+        {
+          "id": "hunter-killed-by-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213205847"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        }
+      ]
+    },
+    "76561198130150095": {
+      "playerId": "76561198130150095",
+      "playerName": "Jey",
+      "totalUnlocked": 0,
+      "achievements": [
+        {
+          "id": "defeats-villageois",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        }
+      ]
+    },
+    "76561199156801622": {
+      "playerId": "76561199156801622",
+      "playerName": "Withrow",
+      "totalUnlocked": 0,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        }
+      ]
+    },
+    "76561198119091750": {
+      "playerId": "76561198119091750",
+      "playerName": "Riri et son ptit Ricard ☣☣",
+      "totalUnlocked": 0,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
+          "id": "victories-solo",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        }
+      ]
+    },
+    "76561198368973338": {
+      "playerId": "76561198368973338",
+      "playerName": "Luronk",
+      "totalUnlocked": 0,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "victories-loup",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
+          "id": "ponce-fesses",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 25
+          },
+          "progress": 0.08
+        }
+      ]
+    },
+    "76561198894012177": {
+      "playerId": "76561198894012177",
+      "playerName": "SilkY_SkunK_",
+      "totalUnlocked": 1,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "defeats-loup",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "voted-as-villager",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "ponce-fesses",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 25
+          },
+          "progress": 0.04
+        },
+        {
+          "id": "false-guilty",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213224056"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        }
+      ]
+    },
+    "76561199013710190": {
+      "playerId": "76561199013710190",
+      "playerName": "LucklessArt",
+      "totalUnlocked": 2,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
+          "id": "starvation",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213215419"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "death-turn1",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "assassin-potion-kill-enemy",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213213102"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        }
+      ]
+    },
+    "76561199041819656": {
+      "playerId": "76561199041819656",
+      "playerName": "BoccA",
+      "totalUnlocked": 0,
+      "achievements": [
+        {
+          "id": "victories-loup",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "defeats-loup",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "ponce-fesses",
+          "currentValue": 6,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 25
+          },
+          "progress": 0.24
+        }
+      ]
+    },
+    "76561198068454343": {
+      "playerId": "76561198068454343",
+      "playerName": "Neogamma",
+      "totalUnlocked": 2,
+      "achievements": [
+        {
+          "id": "victories-villageois",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "defeats-villageois",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "defeats-loup",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
+          "id": "ponce-fesses",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "stars": 1,
+            "threshold": 25
+          },
+          "progress": 0.08
+        },
+        {
+          "id": "assassin-potion-kill-ally",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213213102"
+            }
+          ],
+          "nextLevel": {
+            "stars": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "stars": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20260213205847"
             }
           ],
           "nextLevel": {

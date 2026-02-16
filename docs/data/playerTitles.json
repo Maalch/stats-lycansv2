@@ -1,10 +1,10 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-15T06:14:16.434Z",
+  "generatedAt": "2026-02-16T13:09:32.559Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
-  "moddedGamesAnalyzed": 459,
+  "moddedGamesAnalyzed": 465,
   "percentileThresholds": {
     "EXTREME_HIGH": 85,
     "HIGH": 65,
@@ -256,8 +256,8 @@
         },
         "campSoloPercent": {
           "value": 21.052631578947366,
-          "percentile": 86.48648648648648,
-          "category": "EXTREME_HIGH"
+          "percentile": 83.78378378378379,
+          "category": "HIGH"
         },
         "votingAggressiveness": {
           "value": -5.535714285714281,
@@ -351,7 +351,7 @@
           "description": "Vote rarement",
           "stat": "votingAggressiveness",
           "value": -28.200000000000003,
-          "percentile": 2.7027027027027026,
+          "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -421,20 +421,20 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.7,
-          "percentile": 40.54054054054054,
+          "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
         }
       ],
       "primaryTitle": {
-        "id": "votingAggressive_extreme_low",
-        "title": "L'Indécis·e",
-        "emoji": "🤷",
-        "description": "Vote rarement",
-        "stat": "votingAggressiveness",
-        "value": -28.200000000000003,
-        "percentile": 2.7027027027027026,
+        "id": "killRate_extreme_low",
+        "title": "L'Agneau",
+        "emoji": "🐑",
+        "description": "Ne tue jamais",
+        "stat": "killRate",
+        "value": 0.1935483870967742,
+        "percentile": 5.405405405405405,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -442,7 +442,7 @@
       "percentiles": {
         "winRate": {
           "value": 38.7,
-          "percentile": 40.54054054054054,
+          "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
@@ -482,7 +482,7 @@
         },
         "votingAggressiveness": {
           "value": -28.200000000000003,
-          "percentile": 2.7027027027027026,
+          "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "survivalRate": {
@@ -885,8 +885,7 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "DevGirl_"
+          "type": "basic"
         },
         {
           "id": "votingAccuracy_extreme_high",
@@ -895,7 +894,7 @@
           "description": "Bon instinct de vote",
           "stat": "votingAccuracy",
           "value": 100,
-          "percentile": 94.44444444444444,
+          "percentile": 97.22222222222221,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -986,7 +985,7 @@
         },
         "campLoupPercent": {
           "value": 13.793103448275861,
-          "percentile": 10.81081081081081,
+          "percentile": 13.513513513513514,
           "category": "EXTREME_LOW"
         },
         "campSoloPercent": {
@@ -1001,7 +1000,7 @@
         },
         "votingAccuracy": {
           "value": 100,
-          "percentile": 94.44444444444444,
+          "percentile": 97.22222222222221,
           "category": "EXTREME_HIGH"
         },
         "survivalRate": {
@@ -1083,7 +1082,7 @@
           "description": "Gagne souvent mais joue peu",
           "priority": 11,
           "type": "combination",
-          "percentile": 54.054054054054056,
+          "percentile": 52.70270270270271,
           "conditions": [
             {
               "stat": "winRate",
@@ -1095,7 +1094,7 @@
               "stat": "gamesPlayed",
               "category": "LOW",
               "actualValue": 40,
-              "actualPercentile": 18.91891891891892
+              "actualPercentile": 16.216216216216218
             }
           ],
           "primaryOwner": "Heimdalle"
@@ -1155,7 +1154,7 @@
           "description": "Bon instinct de vote",
           "stat": "votingAccuracy",
           "value": 96.96969696969697,
-          "percentile": 91.66666666666666,
+          "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -1192,7 +1191,7 @@
           "description": "Joue peu de parties",
           "stat": "gamesPlayed",
           "value": 40,
-          "percentile": 18.91891891891892,
+          "percentile": 16.216216216216218,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -1273,7 +1272,7 @@
         },
         "gamesPlayed": {
           "value": 40,
-          "percentile": 18.91891891891892,
+          "percentile": 16.216216216216218,
           "category": "LOW"
         },
         "winRateVillageois": {
@@ -1313,7 +1312,7 @@
         },
         "votingAccuracy": {
           "value": 96.96969696969697,
-          "percentile": 91.66666666666666,
+          "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH"
         },
         "survivalRate": {
@@ -1472,7 +1471,8 @@
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "DevGirl_"
         },
         {
           "id": "winRate_high",
@@ -1995,13 +1995,13 @@
           "description": "Participe beaucoup et excelle dans un camp",
           "priority": 11,
           "type": "combination",
-          "percentile": 97.2972972972973,
+          "percentile": 94.5945945945946,
           "conditions": [
             {
               "stat": "gamesPlayed",
               "category": "HIGH",
               "actualValue": 414,
-              "actualPercentile": 97.2972972972973
+              "actualPercentile": 94.5945945945946
             },
             {
               "stat": "campBalance",
@@ -2018,7 +2018,7 @@
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
           "value": 414,
-          "percentile": 97.2972972972973,
+          "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -2132,18 +2132,6 @@
           "type": "basic"
         },
         {
-          "id": "wolfUntransformRate_low",
-          "title": "Le Loup Assumé",
-          "emoji": "🐺",
-          "description": "Se détransforme rarement",
-          "stat": "wolfUntransformRate",
-          "value": 0.1,
-          "percentile": 29.411764705882355,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
           "id": "campBalance_specialist",
           "title": "Le·a Spécialiste",
           "emoji": "🎯",
@@ -2209,7 +2197,7 @@
         },
         "gamesPlayed": {
           "value": 414,
-          "percentile": 97.2972972972973,
+          "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
@@ -2279,12 +2267,12 @@
         },
         "hunterAccuracy": {
           "value": 69.23076923076923,
-          "percentile": 38.88888888888889,
+          "percentile": 44.44444444444444,
           "category": "BELOW_AVERAGE"
         },
         "hunterShotAccuracy": {
           "value": 71.42857142857143,
-          "percentile": 6.666666666666667,
+          "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "survivalRate": {
@@ -2329,7 +2317,7 @@
         },
         "lootSoloPer60Min": {
           "value": 495.5793069099332,
-          "percentile": 5,
+          "percentile": 4.761904761904762,
           "category": "EXTREME_LOW"
         },
         "zoneVillagePrincipal": {
@@ -2339,7 +2327,7 @@
         },
         "zoneFerme": {
           "value": 11.864406779661017,
-          "percentile": 16,
+          "percentile": 20,
           "category": "LOW"
         },
         "zoneVillagePecheur": {
@@ -2354,7 +2342,7 @@
         },
         "zoneResteCarte": {
           "value": 8.898305084745763,
-          "percentile": 24,
+          "percentile": 20,
           "category": "LOW"
         },
         "zoneDominantPercentage": {
@@ -2369,13 +2357,13 @@
         },
         "wolfTransformRate": {
           "value": 0.6,
-          "percentile": 58.82352941176471,
+          "percentile": 57.89473684210527,
           "category": "ABOVE_AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.1,
-          "percentile": 29.411764705882355,
-          "category": "LOW"
+          "percentile": 36.84210526315789,
+          "category": "BELOW_AVERAGE"
         },
         "potionsPer60Min": {
           "value": 2.5035164562571754,
@@ -2565,19 +2553,19 @@
           "description": "Se transforme et détransforme constamment",
           "priority": 15,
           "type": "combination",
-          "percentile": 70.58823529411765,
+          "percentile": 73.68421052631578,
           "conditions": [
             {
               "stat": "wolfTransformRate",
               "category": "HIGH",
               "actualValue": 0.64,
-              "actualPercentile": 70.58823529411765
+              "actualPercentile": 73.68421052631578
             },
             {
               "stat": "wolfUntransformRate",
               "category": "HIGH",
               "actualValue": 0.22,
-              "actualPercentile": 70.58823529411765
+              "actualPercentile": 73.68421052631578
             }
           ]
         },
@@ -2635,13 +2623,13 @@
           "description": "Boit beaucoup de potions et survit grâce à elles",
           "priority": 13,
           "type": "combination",
-          "percentile": 93.0930930930931,
+          "percentile": 94.94494494494495,
           "conditions": [
             {
               "stat": "potionUsage",
               "category": "HIGH",
-              "actualValue": 3.849664350098445,
-              "actualPercentile": 88.88888888888889
+              "actualValue": 3.945110573654605,
+              "actualPercentile": 92.5925925925926
             },
             {
               "stat": "survival",
@@ -2728,13 +2716,13 @@
           "description": "Prépare des potions tout en racontant ses recettes",
           "priority": 12,
           "type": "combination",
-          "percentile": 88.67521367521367,
+          "percentile": 90.52706552706553,
           "conditions": [
             {
               "stat": "potionUsage",
               "category": "HIGH",
-              "actualValue": 3.849664350098445,
-              "actualPercentile": 88.88888888888889
+              "actualValue": 3.945110573654605,
+              "actualPercentile": 92.5925925925926
             },
             {
               "stat": "talking",
@@ -2752,13 +2740,13 @@
           "description": "Récolte à la Ferme sans relâche",
           "priority": 11,
           "type": "combination",
-          "percentile": 87.82608695652175,
+          "percentile": 85.82608695652175,
           "conditions": [
             {
               "stat": "zoneFerme",
               "category": "HIGH",
               "actualValue": 18.51851851851852,
-              "actualPercentile": 80
+              "actualPercentile": 76
             },
             {
               "stat": "loot",
@@ -2776,7 +2764,7 @@
           "description": "Vote vite et souvent",
           "priority": 10,
           "type": "combination",
-          "percentile": 77.92792792792793,
+          "percentile": 79.5945945945946,
           "conditions": [
             {
               "stat": "votingAggressive",
@@ -2788,7 +2776,7 @@
               "stat": "votingFirst",
               "category": "HIGH",
               "actualValue": 46.42857142857143,
-              "actualPercentile": 66.66666666666666
+              "actualPercentile": 70
             }
           ]
         },
@@ -2930,8 +2918,8 @@
           "emoji": "🧪",
           "description": "Boit énormément de potions",
           "stat": "potionsPer60Min",
-          "value": 3.849664350098445,
-          "percentile": 88.88888888888889,
+          "value": 3.945110573654605,
+          "percentile": 92.5925925925926,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -3003,7 +2991,7 @@
           "description": "Premier·ère voteur·se",
           "stat": "votingFirst",
           "value": 46.42857142857143,
-          "percentile": 66.66666666666666,
+          "percentile": 70,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3051,7 +3039,7 @@
           "description": "Se transforme fréquemment",
           "stat": "wolfTransformRate",
           "value": 0.64,
-          "percentile": 70.58823529411765,
+          "percentile": 73.68421052631578,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3063,7 +3051,7 @@
           "description": "Se détransforme fréquemment",
           "stat": "wolfUntransformRate",
           "value": 0.22,
-          "percentile": 70.58823529411765,
+          "percentile": 73.68421052631578,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -3126,8 +3114,8 @@
         },
         "campVillageoisPercent": {
           "value": 66.66666666666666,
-          "percentile": 54.054054054054056,
-          "category": "AVERAGE"
+          "percentile": 56.75675675675676,
+          "category": "ABOVE_AVERAGE"
         },
         "campLoupPercent": {
           "value": 19.491525423728813,
@@ -3166,7 +3154,7 @@
         },
         "votingFirst": {
           "value": 46.42857142857143,
-          "percentile": 66.66666666666666,
+          "percentile": 70,
           "category": "HIGH"
         },
         "hunterGames": {
@@ -3176,11 +3164,11 @@
         },
         "hunterAccuracy": {
           "value": 70.58823529411765,
-          "percentile": 44.44444444444444,
-          "category": "BELOW_AVERAGE"
+          "percentile": 50,
+          "category": "AVERAGE"
         },
         "hunterShotAccuracy": {
-          "value": 90.9090909090909,
+          "value": 91.66666666666666,
           "percentile": 26.666666666666668,
           "category": "LOW"
         },
@@ -3226,7 +3214,7 @@
         },
         "lootSoloPer60Min": {
           "value": 1115.1124674422174,
-          "percentile": 85,
+          "percentile": 85.71428571428571,
           "category": "EXTREME_HIGH"
         },
         "zoneVillagePrincipal": {
@@ -3236,7 +3224,7 @@
         },
         "zoneFerme": {
           "value": 18.51851851851852,
-          "percentile": 80,
+          "percentile": 76,
           "category": "HIGH"
         },
         "zoneVillagePecheur": {
@@ -3266,17 +3254,17 @@
         },
         "wolfTransformRate": {
           "value": 0.64,
-          "percentile": 70.58823529411765,
+          "percentile": 73.68421052631578,
           "category": "HIGH"
         },
         "wolfUntransformRate": {
           "value": 0.22,
-          "percentile": 70.58823529411765,
+          "percentile": 73.68421052631578,
           "category": "HIGH"
         },
         "potionsPer60Min": {
-          "value": 3.849664350098445,
-          "percentile": 88.88888888888889,
+          "value": 3.945110573654605,
+          "percentile": 92.5925925925926,
           "category": "EXTREME_HIGH"
         }
       },
@@ -3297,7 +3285,7 @@
         "votingFirst": 46.42857142857143,
         "hunterGames": 23,
         "hunterAccuracy": 70.58823529411765,
-        "hunterShotAccuracy": 90.9090909090909,
+        "hunterShotAccuracy": 91.66666666666666,
         "survivalRate": 52.54237288135594,
         "survivalDay1Rate": 85.87570621468926,
         "killRate": 0.8531073446327684,
@@ -3316,7 +3304,7 @@
         "zoneTotalPositions": 216,
         "wolfTransformRate": 0.64,
         "wolfUntransformRate": 0.22,
-        "potionsPer60Min": 3.849664350098445
+        "potionsPer60Min": 3.945110573654605
       }
     },
     "76561198125108195": {
@@ -3361,13 +3349,13 @@
           "description": "Chasseur·se qui vise juste, tue souvent et survit",
           "priority": 18,
           "type": "combination",
-          "percentile": 82.73273273273274,
+          "percentile": 84.58458458458459,
           "conditions": [
             {
               "stat": "hunterAccuracy",
               "category": "HIGH",
               "actualValue": 94.11764705882352,
-              "actualPercentile": 83.33333333333334
+              "actualPercentile": 88.88888888888889
             },
             {
               "stat": "killRate",
@@ -3420,6 +3408,18 @@
           "type": "basic"
         },
         {
+          "id": "hunterAccuracy_extreme_high",
+          "title": "L'Exécuteur·rice",
+          "emoji": "⚔️",
+          "description": "Chasseur·se parfait·e",
+          "stat": "hunterAccuracy",
+          "value": 94.11764705882352,
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "killRate_extreme_high",
           "title": "L'Exterminateur·rice",
           "emoji": "💀",
@@ -3450,7 +3450,7 @@
           "description": "Traîne beaucoup au Village Principal",
           "stat": "zoneVillagePrincipal",
           "value": 55.494505494505496,
-          "percentile": 88,
+          "percentile": 92,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -3462,7 +3462,7 @@
           "description": "Toujours dans la même zone",
           "stat": "zoneDominantPercentage",
           "value": 55.494505494505496,
-          "percentile": 88,
+          "percentile": 92,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -3474,7 +3474,7 @@
           "description": "Se transforme très souvent en loup",
           "stat": "wolfTransformRate",
           "value": 0.8064516129032258,
-          "percentile": 88.23529411764706,
+          "percentile": 89.47368421052632,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -3512,18 +3512,6 @@
           "value": 33.94495412844037,
           "percentile": 33.33333333333333,
           "category": "LOW",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "hunterAccuracy_high",
-          "title": "Le·a Sniper",
-          "emoji": "🎯",
-          "description": "Bon·ne chasseur·se (tue des ennemis)",
-          "stat": "hunterAccuracy",
-          "value": 94.11764705882352,
-          "percentile": 83.33333333333334,
-          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -3607,13 +3595,13 @@
         "description": "Chasseur·se qui vise juste, tue souvent et survit",
         "priority": 18,
         "type": "combination",
-        "percentile": 82.73273273273274,
+        "percentile": 84.58458458458459,
         "conditions": [
           {
             "stat": "hunterAccuracy",
             "category": "HIGH",
             "actualValue": 94.11764705882352,
-            "actualPercentile": 83.33333333333334
+            "actualPercentile": 88.88888888888889
           },
           {
             "stat": "killRate",
@@ -3657,8 +3645,8 @@
         },
         "campVillageoisPercent": {
           "value": 65.39440203562341,
-          "percentile": 43.24324324324324,
-          "category": "BELOW_AVERAGE"
+          "percentile": 45.94594594594595,
+          "category": "AVERAGE"
         },
         "campLoupPercent": {
           "value": 17.302798982188293,
@@ -3707,8 +3695,8 @@
         },
         "hunterAccuracy": {
           "value": 94.11764705882352,
-          "percentile": 83.33333333333334,
-          "category": "HIGH"
+          "percentile": 88.88888888888889,
+          "category": "EXTREME_HIGH"
         },
         "hunterShotAccuracy": {
           "value": 100,
@@ -3757,18 +3745,18 @@
         },
         "lootSoloPer60Min": {
           "value": 623.0678524065127,
-          "percentile": 20,
+          "percentile": 23.809523809523807,
           "category": "LOW"
         },
         "zoneVillagePrincipal": {
           "value": 55.494505494505496,
-          "percentile": 88,
+          "percentile": 92,
           "category": "EXTREME_HIGH"
         },
         "zoneFerme": {
           "value": 10.989010989010989,
-          "percentile": 12,
-          "category": "EXTREME_LOW"
+          "percentile": 16,
+          "category": "LOW"
         },
         "zoneVillagePecheur": {
           "value": 14.835164835164836,
@@ -3777,7 +3765,7 @@
         },
         "zoneRuines": {
           "value": 3.8461538461538463,
-          "percentile": 28.000000000000004,
+          "percentile": 24,
           "category": "LOW"
         },
         "zoneResteCarte": {
@@ -3787,7 +3775,7 @@
         },
         "zoneDominantPercentage": {
           "value": 55.494505494505496,
-          "percentile": 88,
+          "percentile": 92,
           "category": "EXTREME_HIGH"
         },
         "zoneTotalPositions": {
@@ -3797,7 +3785,7 @@
         },
         "wolfTransformRate": {
           "value": 0.8064516129032258,
-          "percentile": 88.23529411764706,
+          "percentile": 89.47368421052632,
           "category": "EXTREME_HIGH"
         },
         "wolfUntransformRate": {
@@ -3923,8 +3911,7 @@
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "DevGirl_"
+          "type": "basic"
         },
         {
           "id": "hunterAccuracy_extreme_low",
@@ -3994,7 +3981,7 @@
           "description": "Traîne beaucoup au Village Principal",
           "stat": "zoneVillagePrincipal",
           "value": 57.692307692307686,
-          "percentile": 92,
+          "percentile": 96,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -4006,7 +3993,7 @@
           "description": "Toujours dans la même zone",
           "stat": "zoneDominantPercentage",
           "value": 57.692307692307686,
-          "percentile": 92,
+          "percentile": 96,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -4066,19 +4053,7 @@
           "description": "Se détransforme fréquemment",
           "stat": "wolfUntransformRate",
           "value": 0.22448979591836735,
-          "percentile": 76.47058823529412,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "potionUsage_high",
-          "title": "Le·a Potion Addict",
-          "emoji": "⚗️",
-          "description": "Boit beaucoup de potions",
-          "stat": "potionsPer60Min",
-          "value": 2.660024844363357,
-          "percentile": 66.66666666666666,
+          "percentile": 78.94736842105263,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -4100,7 +4075,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.7,
-          "percentile": 40.54054054054054,
+          "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -4132,7 +4107,7 @@
       "percentiles": {
         "winRate": {
           "value": 38.7,
-          "percentile": 40.54054054054054,
+          "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
@@ -4152,7 +4127,7 @@
         },
         "winRateSolo": {
           "value": 9.090909090909092,
-          "percentile": 40.54054054054054,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "campVillageoisPercent": {
@@ -4257,12 +4232,12 @@
         },
         "lootSoloPer60Min": {
           "value": 1410.334739182275,
-          "percentile": 90,
+          "percentile": 90.47619047619048,
           "category": "EXTREME_HIGH"
         },
         "zoneVillagePrincipal": {
           "value": 57.692307692307686,
-          "percentile": 92,
+          "percentile": 96,
           "category": "EXTREME_HIGH"
         },
         "zoneFerme": {
@@ -4277,7 +4252,7 @@
         },
         "zoneRuines": {
           "value": 2.7472527472527473,
-          "percentile": 24,
+          "percentile": 20,
           "category": "LOW"
         },
         "zoneResteCarte": {
@@ -4287,7 +4262,7 @@
         },
         "zoneDominantPercentage": {
           "value": 57.692307692307686,
-          "percentile": 92,
+          "percentile": 96,
           "category": "EXTREME_HIGH"
         },
         "zoneTotalPositions": {
@@ -4297,18 +4272,18 @@
         },
         "wolfTransformRate": {
           "value": 0.5918367346938775,
-          "percentile": 52.94117647058824,
+          "percentile": 52.63157894736842,
           "category": "AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.22448979591836735,
-          "percentile": 76.47058823529412,
+          "percentile": 78.94736842105263,
           "category": "HIGH"
         },
         "potionsPer60Min": {
           "value": 2.660024844363357,
-          "percentile": 66.66666666666666,
-          "category": "HIGH"
+          "percentile": 62.96296296296296,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -4712,8 +4687,8 @@
         },
         "hunterAccuracy": {
           "value": 71.42857142857143,
-          "percentile": 50,
-          "category": "AVERAGE"
+          "percentile": 55.55555555555556,
+          "category": "ABOVE_AVERAGE"
         },
         "hunterShotAccuracy": {
           "value": 100,
@@ -4846,8 +4821,8 @@
           "emoji": "🦎",
           "description": "Se détransforme très souvent",
           "stat": "wolfUntransformRate",
-          "value": 0.3870967741935484,
-          "percentile": 88.23529411764706,
+          "value": 0.37142857142857144,
+          "percentile": 89.47368421052632,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -4961,6 +4936,18 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.5428571428571428,
+          "percentile": 31.57894736842105,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "potionUsage_low",
           "title": "Le·a Sobre",
           "emoji": "💧",
@@ -5057,7 +5044,7 @@
         },
         "campVillageoisPercent": {
           "value": 65.96306068601582,
-          "percentile": 48.64864864864865,
+          "percentile": 51.35135135135135,
           "category": "AVERAGE"
         },
         "campLoupPercent": {
@@ -5157,52 +5144,52 @@
         },
         "lootSoloPer60Min": {
           "value": 655.9556531342805,
-          "percentile": 40,
+          "percentile": 42.857142857142854,
           "category": "BELOW_AVERAGE"
         },
         "zoneVillagePrincipal": {
-          "value": 42.13197969543147,
+          "value": 42.05128205128205,
           "percentile": 36,
           "category": "BELOW_AVERAGE"
         },
         "zoneFerme": {
-          "value": 17.258883248730964,
-          "percentile": 60,
+          "value": 17.435897435897434,
+          "percentile": 64,
           "category": "ABOVE_AVERAGE"
         },
         "zoneVillagePecheur": {
-          "value": 19.796954314720814,
-          "percentile": 60,
+          "value": 20,
+          "percentile": 64,
           "category": "ABOVE_AVERAGE"
         },
         "zoneRuines": {
-          "value": 9.137055837563452,
-          "percentile": 60,
-          "category": "ABOVE_AVERAGE"
+          "value": 8.717948717948717,
+          "percentile": 48,
+          "category": "AVERAGE"
         },
         "zoneResteCarte": {
-          "value": 11.6751269035533,
+          "value": 11.794871794871794,
           "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
         "zoneDominantPercentage": {
-          "value": 42.13197969543147,
+          "value": 42.05128205128205,
           "percentile": 36,
           "category": "BELOW_AVERAGE"
         },
         "zoneTotalPositions": {
-          "value": 197,
+          "value": 195,
           "percentile": 88,
           "category": "EXTREME_HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.5806451612903226,
-          "percentile": 41.17647058823529,
-          "category": "BELOW_AVERAGE"
+          "value": 0.5428571428571428,
+          "percentile": 31.57894736842105,
+          "category": "LOW"
         },
         "wolfUntransformRate": {
-          "value": 0.3870967741935484,
-          "percentile": 88.23529411764706,
+          "value": 0.37142857142857144,
+          "percentile": 89.47368421052632,
           "category": "EXTREME_HIGH"
         },
         "potionsPer60Min": {
@@ -5238,15 +5225,15 @@
         "lootVillageoisPer60Min": 747.4207817755798,
         "lootLoupPer60Min": 645.645012484916,
         "lootSoloPer60Min": 655.9556531342805,
-        "zoneVillagePrincipal": 42.13197969543147,
-        "zoneFerme": 17.258883248730964,
-        "zoneVillagePecheur": 19.796954314720814,
-        "zoneRuines": 9.137055837563452,
-        "zoneResteCarte": 11.6751269035533,
-        "zoneDominantPercentage": 42.13197969543147,
-        "zoneTotalPositions": 197,
-        "wolfTransformRate": 0.5806451612903226,
-        "wolfUntransformRate": 0.3870967741935484,
+        "zoneVillagePrincipal": 42.05128205128205,
+        "zoneFerme": 17.435897435897434,
+        "zoneVillagePecheur": 20,
+        "zoneRuines": 8.717948717948717,
+        "zoneResteCarte": 11.794871794871794,
+        "zoneDominantPercentage": 42.05128205128205,
+        "zoneTotalPositions": 195,
+        "wolfTransformRate": 0.5428571428571428,
+        "wolfUntransformRate": 0.37142857142857144,
         "potionsPer60Min": 2.1276072123074448
       }
     },
@@ -5265,8 +5252,7 @@
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "DevGirl_"
+          "type": "basic"
         },
         {
           "id": "votingAccuracy_extreme_low",
@@ -5299,7 +5285,7 @@
           "description": "Chasseur·se parfait·e",
           "stat": "hunterAccuracy",
           "value": 100,
-          "percentile": 88.88888888888889,
+          "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -5383,7 +5369,7 @@
           "description": "Taux de kills faible",
           "stat": "killRate",
           "value": 0.3548387096774194,
-          "percentile": 29.72972972972973,
+          "percentile": 32.432432432432435,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -5458,7 +5444,7 @@
         },
         "winRateSolo": {
           "value": 10,
-          "percentile": 43.24324324324324,
+          "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE"
         },
         "campVillageoisPercent": {
@@ -5513,7 +5499,7 @@
         },
         "hunterAccuracy": {
           "value": 100,
-          "percentile": 88.88888888888889,
+          "percentile": 94.44444444444444,
           "category": "EXTREME_HIGH"
         },
         "survivalRate": {
@@ -5528,7 +5514,7 @@
         },
         "killRate": {
           "value": 0.3548387096774194,
-          "percentile": 29.72972972972973,
+          "percentile": 32.432432432432435,
           "category": "LOW"
         },
         "longestWinSeries": {
@@ -5676,7 +5662,7 @@
           "description": "Bon instinct de vote",
           "stat": "votingAccuracy",
           "value": 88.37209302325581,
-          "percentile": 72.22222222222221,
+          "percentile": 75,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -5688,7 +5674,7 @@
           "description": "Taux de kills faible",
           "stat": "killRate",
           "value": 0.35384615384615387,
-          "percentile": 27.027027027027028,
+          "percentile": 29.72972972972973,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -5722,7 +5708,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.5,
-          "percentile": 37.83783783783784,
+          "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -5743,7 +5729,7 @@
       "percentiles": {
         "winRate": {
           "value": 38.5,
-          "percentile": 37.83783783783784,
+          "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
@@ -5788,7 +5774,7 @@
         },
         "votingAccuracy": {
           "value": 88.37209302325581,
-          "percentile": 72.22222222222221,
+          "percentile": 75,
           "category": "HIGH"
         },
         "votingFirst": {
@@ -5808,7 +5794,7 @@
         },
         "killRate": {
           "value": 0.35384615384615387,
-          "percentile": 27.027027027027028,
+          "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "longestWinSeries": {
@@ -6396,7 +6382,7 @@
             {
               "stat": "potionUsage",
               "category": "HIGH",
-              "actualValue": 2.822107022873903,
+              "actualValue": 2.9076254175064458,
               "actualPercentile": 77.77777777777779
             },
             {
@@ -6419,7 +6405,7 @@
             {
               "stat": "potionUsage",
               "category": "HIGH",
-              "actualValue": 2.822107022873903,
+              "actualValue": 2.9076254175064458,
               "actualPercentile": 77.77777777777779
             },
             {
@@ -6599,12 +6585,24 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_high",
+          "title": "Le·a Transform·é·e",
+          "emoji": "🌙",
+          "description": "Se transforme fréquemment",
+          "stat": "wolfTransformRate",
+          "value": 0.6153846153846154,
+          "percentile": 68.42105263157895,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "potionUsage_high",
           "title": "Le·a Potion Addict",
           "emoji": "⚗️",
           "description": "Boit beaucoup de potions",
           "stat": "potionsPer60Min",
-          "value": 2.822107022873903,
+          "value": 2.9076254175064458,
           "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
@@ -6734,7 +6732,7 @@
         },
         "hunterAccuracy": {
           "value": 77.27272727272727,
-          "percentile": 55.55555555555556,
+          "percentile": 61.111111111111114,
           "category": "ABOVE_AVERAGE"
         },
         "hunterShotAccuracy": {
@@ -6784,8 +6782,8 @@
         },
         "lootSoloPer60Min": {
           "value": 656.1524058566256,
-          "percentile": 45,
-          "category": "BELOW_AVERAGE"
+          "percentile": 47.61904761904761,
+          "category": "AVERAGE"
         },
         "zoneVillagePrincipal": {
           "value": 43.82022471910113,
@@ -6794,12 +6792,12 @@
         },
         "zoneFerme": {
           "value": 17.415730337078653,
-          "percentile": 64,
+          "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
         "zoneVillagePecheur": {
           "value": 15.730337078651685,
-          "percentile": 24,
+          "percentile": 28.000000000000004,
           "category": "LOW"
         },
         "zoneRuines": {
@@ -6822,8 +6820,18 @@
           "percentile": 72,
           "category": "HIGH"
         },
+        "wolfTransformRate": {
+          "value": 0.6153846153846154,
+          "percentile": 68.42105263157895,
+          "category": "HIGH"
+        },
+        "wolfUntransformRate": {
+          "value": 0.15384615384615385,
+          "percentile": 57.89473684210527,
+          "category": "ABOVE_AVERAGE"
+        },
         "potionsPer60Min": {
-          "value": 2.822107022873903,
+          "value": 2.9076254175064458,
           "percentile": 77.77777777777779,
           "category": "HIGH"
         }
@@ -6862,7 +6870,9 @@
         "zoneResteCarte": 12.921348314606742,
         "zoneDominantPercentage": 43.82022471910113,
         "zoneTotalPositions": 178,
-        "potionsPer60Min": 2.822107022873903
+        "wolfTransformRate": 0.6153846153846154,
+        "wolfUntransformRate": 0.15384615384615385,
+        "potionsPer60Min": 2.9076254175064458
       }
     },
     "76561199291323199": {
@@ -6916,7 +6926,8 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "DevGirl_"
         },
         {
           "id": "winRate_low",
@@ -7033,7 +7044,7 @@
           "description": "Se transforme rarement",
           "stat": "wolfTransformRate",
           "value": 0.5238095238095238,
-          "percentile": 17.647058823529413,
+          "percentile": 21.052631578947366,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -7045,7 +7056,7 @@
           "description": "Se détransforme rarement",
           "stat": "wolfUntransformRate",
           "value": 0.047619047619047616,
-          "percentile": 17.647058823529413,
+          "percentile": 15.789473684210526,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -7113,7 +7124,7 @@
         },
         "campVillageoisPercent": {
           "value": 65.43778801843318,
-          "percentile": 45.94594594594595,
+          "percentile": 48.64864864864865,
           "category": "AVERAGE"
         },
         "campLoupPercent": {
@@ -7153,7 +7164,7 @@
         },
         "votingFirst": {
           "value": 40,
-          "percentile": 50,
+          "percentile": 53.333333333333336,
           "category": "AVERAGE"
         },
         "hunterGames": {
@@ -7208,7 +7219,7 @@
         },
         "lootSoloPer60Min": {
           "value": 821.7461972419136,
-          "percentile": 65,
+          "percentile": 66.66666666666666,
           "category": "HIGH"
         },
         "zoneVillagePrincipal": {
@@ -7218,22 +7229,22 @@
         },
         "zoneFerme": {
           "value": 18,
-          "percentile": 76,
+          "percentile": 72,
           "category": "HIGH"
         },
         "zoneVillagePecheur": {
           "value": 16.666666666666664,
-          "percentile": 32,
-          "category": "LOW"
+          "percentile": 40,
+          "category": "BELOW_AVERAGE"
         },
         "zoneRuines": {
           "value": 6.666666666666667,
-          "percentile": 44,
+          "percentile": 40,
           "category": "BELOW_AVERAGE"
         },
         "zoneResteCarte": {
           "value": 7.333333333333333,
-          "percentile": 12,
+          "percentile": 8,
           "category": "EXTREME_LOW"
         },
         "zoneDominantPercentage": {
@@ -7248,12 +7259,12 @@
         },
         "wolfTransformRate": {
           "value": 0.5238095238095238,
-          "percentile": 17.647058823529413,
+          "percentile": 21.052631578947366,
           "category": "LOW"
         },
         "wolfUntransformRate": {
           "value": 0.047619047619047616,
-          "percentile": 17.647058823529413,
+          "percentile": 15.789473684210526,
           "category": "LOW"
         },
         "potionsPer60Min": {
@@ -7304,7 +7315,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "gamesPlayed": 413,
+      "gamesPlayed": 419,
       "titles": [
         {
           "id": "mvp",
@@ -7318,19 +7329,19 @@
             {
               "stat": "winRate",
               "category": "HIGH",
-              "actualValue": 40.7,
+              "actualValue": 40.8,
               "actualPercentile": 56.75675675675676
             },
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 981.9990925898015,
+              "actualValue": 972.3196408975656,
               "actualPercentile": 86.95652173913044
             },
             {
               "stat": "survival",
               "category": "HIGH",
-              "actualValue": 41.404358353510894,
+              "actualValue": 41.527446300715994,
               "actualPercentile": 81.08108108108108
             }
           ],
@@ -7343,19 +7354,19 @@
           "description": "Loup bavard·e et gagnant·e",
           "priority": 16,
           "type": "combination",
-          "percentile": 75.24813895781637,
+          "percentile": 71.712158808933,
           "conditions": [
             {
               "stat": "winRateLoup",
               "category": "HIGH",
-              "actualValue": 39.705882352941174,
-              "actualPercentile": 77.41935483870968
+              "actualValue": 39.130434782608695,
+              "actualPercentile": 74.19354838709677
             },
             {
               "stat": "talking",
               "category": "HIGH",
-              "actualValue": 1154.8316140090851,
-              "actualPercentile": 73.07692307692307
+              "actualValue": 1141.8885557036383,
+              "actualPercentile": 69.23076923076923
             }
           ],
           "primaryOwner": "Lutti"
@@ -7367,19 +7378,19 @@
           "description": "Survit et domine en Loup",
           "priority": 15,
           "type": "combination",
-          "percentile": 79.25021795989538,
+          "percentile": 77.63731473408893,
           "conditions": [
             {
               "stat": "survival",
               "category": "HIGH",
-              "actualValue": 41.404358353510894,
+              "actualValue": 41.527446300715994,
               "actualPercentile": 81.08108108108108
             },
             {
               "stat": "winRateLoup",
               "category": "HIGH",
-              "actualValue": 39.705882352941174,
-              "actualPercentile": 77.41935483870968
+              "actualValue": 39.130434782608695,
+              "actualPercentile": 74.19354838709677
             }
           ],
           "primaryOwner": "Baout"
@@ -7391,13 +7402,13 @@
           "description": "Gagnant·e dans tous les camps ennemis des Villageois",
           "priority": 14,
           "type": "combination",
-          "percentile": 73.84481255448998,
+          "percentile": 72.23190932868351,
           "conditions": [
             {
               "stat": "winRateLoup",
               "category": "HIGH",
-              "actualValue": 39.705882352941174,
-              "actualPercentile": 77.41935483870968
+              "actualValue": 39.130434782608695,
+              "actualPercentile": 74.19354838709677
             },
             {
               "stat": "winRateSolo",
@@ -7407,35 +7418,6 @@
             }
           ],
           "primaryOwner": "Ponce"
-        },
-        {
-          "id": "loup_ruse",
-          "title": "Le Loup Rusé",
-          "emoji": "🦊",
-          "description": "Reste humain, survit et gagne en Loup",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 62.6374002085577,
-          "conditions": [
-            {
-              "stat": "wolfTransformRate",
-              "category": "LOW",
-              "actualValue": 0.56,
-              "actualPercentile": 29.411764705882355
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 41.404358353510894,
-              "actualPercentile": 81.08108108108108
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 39.705882352941174,
-              "actualPercentile": 77.41935483870968
-            }
-          ]
         },
         {
           "id": "rodeur",
@@ -7449,13 +7431,13 @@
             {
               "stat": "zoneResteCarte",
               "category": "HIGH",
-              "actualValue": 15.432098765432098,
+              "actualValue": 15.69767441860465,
               "actualPercentile": 72
             },
             {
               "stat": "survival",
               "category": "HIGH",
-              "actualValue": 41.404358353510894,
+              "actualValue": 41.527446300715994,
               "actualPercentile": 81.08108108108108
             }
           ]
@@ -7467,18 +7449,18 @@
           "description": "Récolte à la Ferme sans relâche",
           "priority": 11,
           "type": "combination",
-          "percentile": 77.47826086956522,
+          "percentile": 85.47826086956522,
           "conditions": [
             {
               "stat": "zoneFerme",
               "category": "HIGH",
-              "actualValue": 17.901234567901234,
-              "actualPercentile": 68
+              "actualValue": 21.511627906976745,
+              "actualPercentile": 84
             },
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 981.9990925898015,
+              "actualValue": 972.3196408975656,
               "actualPercentile": 86.95652173913044
             }
           ],
@@ -7491,13 +7473,13 @@
           "description": "Participe beaucoup et excelle dans un camp",
           "priority": 11,
           "type": "combination",
-          "percentile": 94.5945945945946,
+          "percentile": 97.2972972972973,
           "conditions": [
             {
               "stat": "gamesPlayed",
               "category": "HIGH",
-              "actualValue": 413,
-              "actualPercentile": 94.5945945945946
+              "actualValue": 419,
+              "actualPercentile": 97.2972972972973
             },
             {
               "stat": "campBalance",
@@ -7519,13 +7501,13 @@
             {
               "stat": "talkingOutsideMeeting",
               "category": "LOW",
-              "actualValue": 704.0069976024186,
+              "actualValue": 692.5156175115836,
               "actualPercentile": 26.923076923076923
             },
             {
               "stat": "talkingDuringMeeting",
               "category": "HIGH",
-              "actualValue": 450.8246164066666,
+              "actualValue": 449.37293819205473,
               "actualPercentile": 96.15384615384616
             }
           ]
@@ -7537,18 +7519,18 @@
           "description": "Bavard·e ET grande récolte",
           "priority": 10,
           "type": "combination",
-          "percentile": 80.01672240802675,
+          "percentile": 78.09364548494983,
           "conditions": [
             {
               "stat": "talking",
               "category": "HIGH",
-              "actualValue": 1154.8316140090851,
-              "actualPercentile": 73.07692307692307
+              "actualValue": 1141.8885557036383,
+              "actualPercentile": 69.23076923076923
             },
             {
               "stat": "loot",
               "category": "HIGH",
-              "actualValue": 981.9990925898015,
+              "actualValue": 972.3196408975656,
               "actualPercentile": 86.95652173913044
             }
           ]
@@ -7559,8 +7541,8 @@
           "emoji": "🌙",
           "description": "Joue énormément de parties",
           "stat": "gamesPlayed",
-          "value": 413,
-          "percentile": 94.5945945945946,
+          "value": 419,
+          "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -7571,20 +7553,8 @@
           "emoji": "🎤",
           "description": "Bavard·e en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 450.8246164066666,
+          "value": 449.37293819205473,
           "percentile": 96.15384615384616,
-          "category": "EXTREME_HIGH",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "hunterAccuracy_extreme_high",
-          "title": "L'Exécuteur·rice",
-          "emoji": "⚔️",
-          "description": "Chasseur·se parfait·e",
-          "stat": "hunterAccuracy",
-          "value": 100,
-          "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -7607,7 +7577,7 @@
           "emoji": "⚒️",
           "description": "Récolte exceptionnelle",
           "stat": "lootPer60Min",
-          "value": 981.9990925898015,
+          "value": 972.3196408975656,
           "percentile": 86.95652173913044,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -7619,7 +7589,7 @@
           "emoji": "🐺",
           "description": "Récolte élevée en Loup",
           "stat": "lootLoupPer60Min",
-          "value": 984.2409172835332,
+          "value": 963.4596426179905,
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -7631,8 +7601,8 @@
           "emoji": "🚫",
           "description": "Ne boit presque jamais de potions",
           "stat": "potionsPer60Min",
-          "value": 1.1514543436980333,
-          "percentile": 11.11111111111111,
+          "value": 1.1672582424729163,
+          "percentile": 7.4074074074074066,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -7643,8 +7613,8 @@
           "emoji": "🐺",
           "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
-          "value": 39.705882352941174,
-          "percentile": 77.41935483870968,
+          "value": 39.130434782608695,
+          "percentile": 74.19354838709677,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -7667,8 +7637,8 @@
           "emoji": "🗣️",
           "description": "Parle beaucoup (par 60 min de jeu)",
           "stat": "talkingPer60Min",
-          "value": 1154.8316140090851,
-          "percentile": 73.07692307692307,
+          "value": 1141.8885557036383,
+          "percentile": 69.23076923076923,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -7679,7 +7649,7 @@
           "emoji": "🎯",
           "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 704.0069976024186,
+          "value": 692.5156175115836,
           "percentile": 26.923076923076923,
           "category": "LOW",
           "priority": 6,
@@ -7691,9 +7661,21 @@
           "emoji": "👃",
           "description": "Bon instinct de vote",
           "stat": "votingAccuracy",
-          "value": 88.42105263157895,
-          "percentile": 75,
+          "value": 87.71331058020478,
+          "percentile": 72.22222222222221,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_low",
+          "title": "Le·a Myope",
+          "emoji": "👓",
+          "description": "Mauvais·e chasseur·se (tue des alliés)",
+          "stat": "hunterAccuracy",
+          "value": 66.66666666666666,
+          "percentile": 33.33333333333333,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -7703,7 +7685,7 @@
           "emoji": "🛡️",
           "description": "Survie élevée fin de game",
           "stat": "survivalRate",
-          "value": 41.404358353510894,
+          "value": 41.527446300715994,
           "percentile": 81.08108108108108,
           "category": "HIGH",
           "priority": 6,
@@ -7715,7 +7697,7 @@
           "emoji": "🏃",
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
-          "value": 85.95641646489103,
+          "value": 85.91885441527445,
           "percentile": 81.08108108108108,
           "category": "HIGH",
           "priority": 6,
@@ -7727,33 +7709,9 @@
           "emoji": "🏘️",
           "description": "Récolte excellente en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 990.5715483906495,
+          "value": 982.2672175288078,
           "percentile": 82.6086956521739,
           "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "zoneDominantPercentage_high",
-          "title": "L'Habitué·e",
-          "emoji": "🪑",
-          "description": "A un coin préféré",
-          "stat": "zoneDominantPercentage",
-          "value": 47.53086419753087,
-          "percentile": 68,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "wolfTransformRate_low",
-          "title": "Le·a Loup Prudent·e",
-          "emoji": "🐕",
-          "description": "Se transforme rarement",
-          "stat": "wolfTransformRate",
-          "value": 0.56,
-          "percentile": 29.411764705882355,
-          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -7763,8 +7721,8 @@
           "emoji": "🐺",
           "description": "Se détransforme rarement",
           "stat": "wolfUntransformRate",
-          "value": 0.1,
-          "percentile": 29.411764705882355,
+          "value": 0.09090909090909091,
+          "percentile": 31.57894736842105,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -7785,7 +7743,7 @@
           "emoji": "📊",
           "description": "Performance stable",
           "stat": "winRate",
-          "value": 40.7,
+          "value": 40.8,
           "percentile": 56.75675675675676,
           "category": "ABOVE_AVERAGE",
           "priority": 4,
@@ -7793,53 +7751,47 @@
         }
       ],
       "primaryTitle": {
-        "id": "loup_ruse",
-        "title": "Le Loup Rusé",
-        "emoji": "🦊",
-        "description": "Reste humain, survit et gagne en Loup",
-        "priority": 14,
+        "id": "rodeur",
+        "title": "Le·a Rôdeur·euse",
+        "emoji": "🌙",
+        "description": "Rôde hors des villages et survit",
+        "priority": 12,
         "type": "combination",
-        "percentile": 62.6374002085577,
+        "percentile": 76.54054054054055,
         "conditions": [
           {
-            "stat": "wolfTransformRate",
-            "category": "LOW",
-            "actualValue": 0.56,
-            "actualPercentile": 29.411764705882355
+            "stat": "zoneResteCarte",
+            "category": "HIGH",
+            "actualValue": 15.69767441860465,
+            "actualPercentile": 72
           },
           {
             "stat": "survival",
             "category": "HIGH",
-            "actualValue": 41.404358353510894,
+            "actualValue": 41.527446300715994,
             "actualPercentile": 81.08108108108108
-          },
-          {
-            "stat": "winRateLoup",
-            "category": "HIGH",
-            "actualValue": 39.705882352941174,
-            "actualPercentile": 77.41935483870968
           }
         ]
       },
       "percentiles": {
         "winRate": {
-          "value": 40.7,
+          "value": 40.8,
           "percentile": 56.75675675675676,
           "category": "ABOVE_AVERAGE"
         },
         "gamesPlayed": {
-          "value": 413,
-          "percentile": 94.5945945945946,
+          "value": 419,
+          "percentile": 97.2972972972973,
           "category": "EXTREME_HIGH"
         },
         "winRateVillageois": {
-          "value": 48.87218045112782,
-          "percentile": 43.24324324324324,
-          "category": "BELOW_AVERAGE"
+          "value": 49.07749077490775,
+          "percentile": 45.94594594594595,
+          "category": "AVERAGE"
         },
         "winRateLoup": {
-          "value": 39.705882352941174,
-          "percentile": 77.41935483870968,
+          "value": 39.130434782608695,
+          "percentile": 74.19354838709677,
           "category": "HIGH"
         },
         "winRateSolo": {
@@ -7848,77 +7800,77 @@
           "category": "HIGH"
         },
         "campVillageoisPercent": {
-          "value": 64.40677966101694,
-          "percentile": 35.13513513513514,
+          "value": 64.67780429594272,
+          "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
-          "value": 16.46489104116223,
+          "value": 16.467780429594274,
           "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE"
         },
         "campSoloPercent": {
-          "value": 19.128329297820823,
+          "value": 18.85441527446301,
           "percentile": 78.37837837837837,
           "category": "HIGH"
         },
         "talkingPer60Min": {
-          "value": 1154.8316140090851,
-          "percentile": 73.07692307692307,
+          "value": 1141.8885557036383,
+          "percentile": 69.23076923076923,
           "category": "HIGH"
         },
         "talkingOutsidePer60Min": {
-          "value": 704.0069976024186,
+          "value": 692.5156175115836,
           "percentile": 26.923076923076923,
           "category": "LOW"
         },
         "talkingDuringPer60Min": {
-          "value": 450.8246164066666,
+          "value": 449.37293819205473,
           "percentile": 96.15384615384616,
           "category": "EXTREME_HIGH"
         },
         "votingAggressiveness": {
-          "value": -1.3608748481166408,
+          "value": -0.6818181818181799,
           "percentile": 45.94594594594595,
           "category": "AVERAGE"
         },
         "votingAccuracy": {
-          "value": 88.42105263157895,
-          "percentile": 75,
+          "value": 87.71331058020478,
+          "percentile": 72.22222222222221,
           "category": "HIGH"
         },
         "votingFirst": {
-          "value": 42.51968503937008,
-          "percentile": 56.666666666666664,
+          "value": 44.44444444444444,
+          "percentile": 63.33333333333333,
           "category": "ABOVE_AVERAGE"
         },
         "hunterGames": {
-          "value": 19,
+          "value": 22,
           "percentile": 50,
           "category": "AVERAGE"
         },
         "hunterAccuracy": {
-          "value": 100,
-          "percentile": 88.88888888888889,
-          "category": "EXTREME_HIGH"
-        },
-        "hunterShotAccuracy": {
-          "value": 75,
-          "percentile": 20,
+          "value": 66.66666666666666,
+          "percentile": 33.33333333333333,
           "category": "LOW"
         },
+        "hunterShotAccuracy": {
+          "value": 71.42857142857143,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
         "survivalRate": {
-          "value": 41.404358353510894,
+          "value": 41.527446300715994,
           "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "survivalDay1Rate": {
-          "value": 85.95641646489103,
+          "value": 85.91885441527445,
           "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "killRate": {
-          "value": 0.5351089588377724,
+          "value": 0.5369928400954654,
           "percentile": 59.45945945945946,
           "category": "ABOVE_AVERAGE"
         },
@@ -7933,113 +7885,113 @@
           "category": "AVERAGE"
         },
         "lootPer60Min": {
-          "value": 981.9990925898015,
+          "value": 972.3196408975656,
           "percentile": 86.95652173913044,
           "category": "EXTREME_HIGH"
         },
         "lootVillageoisPer60Min": {
-          "value": 990.5715483906495,
+          "value": 982.2672175288078,
           "percentile": 82.6086956521739,
           "category": "HIGH"
         },
         "lootLoupPer60Min": {
-          "value": 984.2409172835332,
+          "value": 963.4596426179905,
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
         },
         "lootSoloPer60Min": {
           "value": 931.1591376604504,
-          "percentile": 75,
+          "percentile": 76.19047619047619,
           "category": "HIGH"
         },
         "zoneVillagePrincipal": {
-          "value": 47.53086419753087,
-          "percentile": 68,
-          "category": "HIGH"
+          "value": 44.76744186046512,
+          "percentile": 48,
+          "category": "AVERAGE"
         },
         "zoneFerme": {
-          "value": 17.901234567901234,
-          "percentile": 68,
+          "value": 21.511627906976745,
+          "percentile": 84,
           "category": "HIGH"
         },
         "zoneVillagePecheur": {
-          "value": 16.666666666666664,
-          "percentile": 32,
+          "value": 15.69767441860465,
+          "percentile": 24,
           "category": "LOW"
         },
         "zoneRuines": {
-          "value": 2.4691358024691357,
-          "percentile": 20,
+          "value": 2.3255813953488373,
+          "percentile": 16,
           "category": "LOW"
         },
         "zoneResteCarte": {
-          "value": 15.432098765432098,
+          "value": 15.69767441860465,
           "percentile": 72,
           "category": "HIGH"
         },
         "zoneDominantPercentage": {
-          "value": 47.53086419753087,
-          "percentile": 68,
-          "category": "HIGH"
+          "value": 44.76744186046512,
+          "percentile": 48,
+          "category": "AVERAGE"
         },
         "zoneTotalPositions": {
-          "value": 162,
+          "value": 172,
           "percentile": 68,
           "category": "HIGH"
         },
         "wolfTransformRate": {
-          "value": 0.56,
-          "percentile": 29.411764705882355,
-          "category": "LOW"
+          "value": 0.5636363636363636,
+          "percentile": 42.10526315789473,
+          "category": "BELOW_AVERAGE"
         },
         "wolfUntransformRate": {
-          "value": 0.1,
-          "percentile": 29.411764705882355,
+          "value": 0.09090909090909091,
+          "percentile": 31.57894736842105,
           "category": "LOW"
         },
         "potionsPer60Min": {
-          "value": 1.1514543436980333,
-          "percentile": 11.11111111111111,
+          "value": 1.1672582424729163,
+          "percentile": 7.4074074074074066,
           "category": "EXTREME_LOW"
         }
       },
       "stats": {
-        "winRate": 40.7,
-        "gamesPlayed": 413,
-        "winRateVillageois": 48.87218045112782,
-        "winRateLoup": 39.705882352941174,
+        "winRate": 40.8,
+        "gamesPlayed": 419,
+        "winRateVillageois": 49.07749077490775,
+        "winRateLoup": 39.130434782608695,
         "winRateSolo": 13.924050632911392,
-        "campVillageoisPercent": 64.40677966101694,
-        "campLoupPercent": 16.46489104116223,
-        "campSoloPercent": 19.128329297820823,
-        "talkingPer60Min": 1154.8316140090851,
-        "talkingOutsidePer60Min": 704.0069976024186,
-        "talkingDuringPer60Min": 450.8246164066666,
-        "votingAggressiveness": -1.3608748481166408,
-        "votingAccuracy": 88.42105263157895,
-        "votingFirst": 42.51968503937008,
-        "hunterGames": 19,
-        "hunterAccuracy": 100,
-        "hunterShotAccuracy": 75,
-        "survivalRate": 41.404358353510894,
-        "survivalDay1Rate": 85.95641646489103,
-        "killRate": 0.5351089588377724,
+        "campVillageoisPercent": 64.67780429594272,
+        "campLoupPercent": 16.467780429594274,
+        "campSoloPercent": 18.85441527446301,
+        "talkingPer60Min": 1141.8885557036383,
+        "talkingOutsidePer60Min": 692.5156175115836,
+        "talkingDuringPer60Min": 449.37293819205473,
+        "votingAggressiveness": -0.6818181818181799,
+        "votingAccuracy": 87.71331058020478,
+        "votingFirst": 44.44444444444444,
+        "hunterGames": 22,
+        "hunterAccuracy": 66.66666666666666,
+        "hunterShotAccuracy": 71.42857142857143,
+        "survivalRate": 41.527446300715994,
+        "survivalDay1Rate": 85.91885441527445,
+        "killRate": 0.5369928400954654,
         "longestWinSeries": 9,
         "longestLossSeries": 9,
-        "lootPer60Min": 981.9990925898015,
-        "lootVillageoisPer60Min": 990.5715483906495,
-        "lootLoupPer60Min": 984.2409172835332,
+        "lootPer60Min": 972.3196408975656,
+        "lootVillageoisPer60Min": 982.2672175288078,
+        "lootLoupPer60Min": 963.4596426179905,
         "lootSoloPer60Min": 931.1591376604504,
-        "zoneVillagePrincipal": 47.53086419753087,
-        "zoneFerme": 17.901234567901234,
-        "zoneVillagePecheur": 16.666666666666664,
-        "zoneRuines": 2.4691358024691357,
-        "zoneResteCarte": 15.432098765432098,
-        "zoneDominantPercentage": 47.53086419753087,
-        "zoneTotalPositions": 162,
-        "wolfTransformRate": 0.56,
-        "wolfUntransformRate": 0.1,
-        "potionsPer60Min": 1.1514543436980333
+        "zoneVillagePrincipal": 44.76744186046512,
+        "zoneFerme": 21.511627906976745,
+        "zoneVillagePecheur": 15.69767441860465,
+        "zoneRuines": 2.3255813953488373,
+        "zoneResteCarte": 15.69767441860465,
+        "zoneDominantPercentage": 44.76744186046512,
+        "zoneTotalPositions": 172,
+        "wolfTransformRate": 0.5636363636363636,
+        "wolfUntransformRate": 0.09090909090909091,
+        "potionsPer60Min": 1.1672582424729163
       }
     },
     "76561198095017745": {
@@ -8367,7 +8319,7 @@
         },
         "campVillageoisPercent": {
           "value": 66.39344262295081,
-          "percentile": 51.35135135135135,
+          "percentile": 54.054054054054056,
           "category": "AVERAGE"
         },
         "campLoupPercent": {
@@ -8447,8 +8399,8 @@
         },
         "zoneVillagePrincipal": {
           "value": 45.714285714285715,
-          "percentile": 52,
-          "category": "AVERAGE"
+          "percentile": 56.00000000000001,
+          "category": "ABOVE_AVERAGE"
         },
         "zoneFerme": {
           "value": 5.714285714285714,
@@ -8467,13 +8419,13 @@
         },
         "zoneResteCarte": {
           "value": 8.571428571428571,
-          "percentile": 20,
+          "percentile": 16,
           "category": "LOW"
         },
         "zoneDominantPercentage": {
           "value": 45.714285714285715,
-          "percentile": 52,
-          "category": "AVERAGE"
+          "percentile": 56.00000000000001,
+          "category": "ABOVE_AVERAGE"
         },
         "zoneTotalPositions": {
           "value": 35,
@@ -8537,7 +8489,7 @@
             {
               "stat": "zoneDominantPercentage",
               "category": "LOW",
-              "actualValue": 41.964285714285715,
+              "actualValue": 41.81818181818181,
               "actualPercentile": 32
             },
             {
@@ -8580,13 +8532,13 @@
           "description": "Récolte à la Ferme sans relâche",
           "priority": 11,
           "type": "combination",
-          "percentile": 76.78260869565217,
+          "percentile": 74.78260869565217,
           "conditions": [
             {
               "stat": "zoneFerme",
               "category": "HIGH",
-              "actualValue": 18.75,
-              "actualPercentile": 84
+              "actualValue": 19.090909090909093,
+              "actualPercentile": 80
             },
             {
               "stat": "loot",
@@ -8710,7 +8662,7 @@
           "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 2,
-          "percentile": 27.027027027027028,
+          "percentile": 24.324324324324326,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -8805,7 +8757,7 @@
           "emoji": "🗺️",
           "description": "Se déplace beaucoup entre les zones",
           "stat": "zoneDominantPercentage",
-          "value": 41.964285714285715,
+          "value": 41.81818181818181,
           "percentile": 32,
           "category": "LOW",
           "priority": 6,
@@ -8841,13 +8793,13 @@
         "description": "Récolte à la Ferme sans relâche",
         "priority": 11,
         "type": "combination",
-        "percentile": 76.78260869565217,
+        "percentile": 74.78260869565217,
         "conditions": [
           {
             "stat": "zoneFerme",
             "category": "HIGH",
-            "actualValue": 18.75,
-            "actualPercentile": 84
+            "actualValue": 19.090909090909093,
+            "actualPercentile": 80
           },
           {
             "stat": "loot",
@@ -8880,7 +8832,7 @@
         },
         "winRateSolo": {
           "value": 2,
-          "percentile": 27.027027027027028,
+          "percentile": 24.324324324324326,
           "category": "LOW"
         },
         "campVillageoisPercent": {
@@ -8939,9 +8891,9 @@
           "category": "LOW"
         },
         "hunterShotAccuracy": {
-          "value": 69.23076923076923,
-          "percentile": 0,
-          "category": "EXTREME_LOW"
+          "value": 76.47058823529412,
+          "percentile": 20,
+          "category": "LOW"
         },
         "survivalRate": {
           "value": 25.423728813559322,
@@ -8985,52 +8937,52 @@
         },
         "lootSoloPer60Min": {
           "value": 695.1323272690868,
-          "percentile": 55.00000000000001,
+          "percentile": 57.14285714285714,
           "category": "ABOVE_AVERAGE"
         },
         "zoneVillagePrincipal": {
-          "value": 41.964285714285715,
+          "value": 41.81818181818181,
           "percentile": 32,
           "category": "LOW"
         },
         "zoneFerme": {
-          "value": 18.75,
-          "percentile": 84,
-          "category": "HIGH"
-        },
-        "zoneVillagePecheur": {
-          "value": 24.107142857142858,
+          "value": 19.090909090909093,
           "percentile": 80,
           "category": "HIGH"
         },
+        "zoneVillagePecheur": {
+          "value": 23.636363636363637,
+          "percentile": 76,
+          "category": "HIGH"
+        },
         "zoneRuines": {
-          "value": 6.25,
-          "percentile": 40,
+          "value": 6.363636363636363,
+          "percentile": 36,
           "category": "BELOW_AVERAGE"
         },
         "zoneResteCarte": {
-          "value": 8.928571428571429,
-          "percentile": 28.000000000000004,
+          "value": 9.090909090909092,
+          "percentile": 24,
           "category": "LOW"
         },
         "zoneDominantPercentage": {
-          "value": 41.964285714285715,
+          "value": 41.81818181818181,
           "percentile": 32,
           "category": "LOW"
         },
         "zoneTotalPositions": {
-          "value": 112,
-          "percentile": 40,
+          "value": 110,
+          "percentile": 36,
           "category": "BELOW_AVERAGE"
         },
         "wolfTransformRate": {
           "value": 0.6,
-          "percentile": 58.82352941176471,
+          "percentile": 57.89473684210527,
           "category": "ABOVE_AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.13333333333333333,
-          "percentile": 52.94117647058824,
+          "percentile": 52.63157894736842,
           "category": "AVERAGE"
         },
         "potionsPer60Min": {
@@ -9056,7 +9008,7 @@
         "votingFirst": 35.294117647058826,
         "hunterGames": 26,
         "hunterAccuracy": 66.66666666666666,
-        "hunterShotAccuracy": 69.23076923076923,
+        "hunterShotAccuracy": 76.47058823529412,
         "survivalRate": 25.423728813559322,
         "survivalDay1Rate": 78.30508474576271,
         "killRate": 0.3288135593220339,
@@ -9066,13 +9018,13 @@
         "lootVillageoisPer60Min": 942.077488453988,
         "lootLoupPer60Min": 568.2461705848672,
         "lootSoloPer60Min": 695.1323272690868,
-        "zoneVillagePrincipal": 41.964285714285715,
-        "zoneFerme": 18.75,
-        "zoneVillagePecheur": 24.107142857142858,
-        "zoneRuines": 6.25,
-        "zoneResteCarte": 8.928571428571429,
-        "zoneDominantPercentage": 41.964285714285715,
-        "zoneTotalPositions": 112,
+        "zoneVillagePrincipal": 41.81818181818181,
+        "zoneFerme": 19.090909090909093,
+        "zoneVillagePecheur": 23.636363636363637,
+        "zoneRuines": 6.363636363636363,
+        "zoneResteCarte": 9.090909090909092,
+        "zoneDominantPercentage": 41.81818181818181,
+        "zoneTotalPositions": 110,
         "wolfTransformRate": 0.6,
         "wolfUntransformRate": 0.13333333333333333,
         "potionsPer60Min": 2.478485133057455
@@ -9090,13 +9042,13 @@
           "description": "Parle beaucoup, survit, mais ne récolte pas",
           "priority": 16,
           "type": "combination",
-          "percentile": 58.44707583838019,
+          "percentile": 59.729127120431464,
           "conditions": [
             {
               "stat": "talking",
               "category": "HIGH",
               "actualValue": 1147.7051507393826,
-              "actualPercentile": 69.23076923076923
+              "actualPercentile": 73.07692307692307
             },
             {
               "stat": "survival",
@@ -9203,7 +9155,8 @@
               "actualValue": 39.61538461538461,
               "actualPercentile": 75.67567567567568
             }
-          ]
+          ],
+          "primaryOwner": "Tsuna"
         },
         {
           "id": "prudent",
@@ -9235,13 +9188,13 @@
           "description": "Bavard·e mais improductif·ve",
           "priority": 10,
           "type": "combination",
-          "percentile": 49.83277591973244,
+          "percentile": 51.75585284280936,
           "conditions": [
             {
               "stat": "talking",
               "category": "HIGH",
               "actualValue": 1147.7051507393826,
-              "actualPercentile": 69.23076923076923
+              "actualPercentile": 73.07692307692307
             },
             {
               "stat": "loot",
@@ -9258,7 +9211,7 @@
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
           "value": 86.15384615384616,
-          "percentile": 89.1891891891892,
+          "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -9342,7 +9295,7 @@
           "description": "Parle beaucoup (par 60 min de jeu)",
           "stat": "talkingPer60Min",
           "value": 1147.7051507393826,
-          "percentile": 69.23076923076923,
+          "percentile": 73.07692307692307,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -9444,12 +9397,36 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.5,
+          "percentile": 15.789473684210526,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_low",
+          "title": "Le Loup Assumé",
+          "emoji": "🐺",
+          "description": "Se détransforme rarement",
+          "stat": "wolfUntransformRate",
+          "value": 0.08333333333333333,
+          "percentile": 26.31578947368421,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "potionUsage_low",
           "title": "Le·a Sobre",
           "emoji": "💧",
           "description": "Boit peu de potions",
           "stat": "potionsPer60Min",
-          "value": 2.0452876685743133,
+          "value": 2.0861934219458,
           "percentile": 29.629629629629626,
           "category": "LOW",
           "priority": 6,
@@ -9463,13 +9440,13 @@
         "description": "Parle beaucoup, survit, mais ne récolte pas",
         "priority": 16,
         "type": "combination",
-        "percentile": 58.44707583838019,
+        "percentile": 59.729127120431464,
         "conditions": [
           {
             "stat": "talking",
             "category": "HIGH",
             "actualValue": 1147.7051507393826,
-            "actualPercentile": 69.23076923076923
+            "actualPercentile": 73.07692307692307
           },
           {
             "stat": "survival",
@@ -9528,7 +9505,7 @@
         },
         "talkingPer60Min": {
           "value": 1147.7051507393826,
-          "percentile": 69.23076923076923,
+          "percentile": 73.07692307692307,
           "category": "HIGH"
         },
         "talkingOutsidePer60Min": {
@@ -9578,7 +9555,7 @@
         },
         "survivalDay1Rate": {
           "value": 86.15384615384616,
-          "percentile": 89.1891891891892,
+          "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH"
         },
         "killRate": {
@@ -9613,8 +9590,8 @@
         },
         "lootSoloPer60Min": {
           "value": 653.0611331254208,
-          "percentile": 35,
-          "category": "LOW"
+          "percentile": 38.095238095238095,
+          "category": "BELOW_AVERAGE"
         },
         "zoneVillagePrincipal": {
           "value": 35.338345864661655,
@@ -9628,13 +9605,13 @@
         },
         "zoneVillagePecheur": {
           "value": 19.548872180451127,
-          "percentile": 56.00000000000001,
+          "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
         "zoneRuines": {
           "value": 6.7669172932330826,
-          "percentile": 48,
-          "category": "AVERAGE"
+          "percentile": 44,
+          "category": "BELOW_AVERAGE"
         },
         "zoneResteCarte": {
           "value": 21.804511278195488,
@@ -9652,17 +9629,17 @@
           "category": "AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.5714285714285714,
-          "percentile": 35.294117647058826,
-          "category": "BELOW_AVERAGE"
+          "value": 0.5,
+          "percentile": 15.789473684210526,
+          "category": "LOW"
         },
         "wolfUntransformRate": {
-          "value": 0.11428571428571428,
-          "percentile": 41.17647058823529,
-          "category": "BELOW_AVERAGE"
+          "value": 0.08333333333333333,
+          "percentile": 26.31578947368421,
+          "category": "LOW"
         },
         "potionsPer60Min": {
-          "value": 2.0452876685743133,
+          "value": 2.0861934219458,
           "percentile": 29.629629629629626,
           "category": "LOW"
         }
@@ -9701,9 +9678,9 @@
         "zoneResteCarte": 21.804511278195488,
         "zoneDominantPercentage": 35.338345864661655,
         "zoneTotalPositions": 133,
-        "wolfTransformRate": 0.5714285714285714,
-        "wolfUntransformRate": 0.11428571428571428,
-        "potionsPer60Min": 2.0452876685743133
+        "wolfTransformRate": 0.5,
+        "wolfUntransformRate": 0.08333333333333333,
+        "potionsPer60Min": 2.0861934219458
       }
     },
     "76561198109331759": {
@@ -9836,7 +9813,7 @@
           "description": "Peine dans tous les camps",
           "priority": 11,
           "type": "combination",
-          "percentile": 19.79075850043592,
+          "percentile": 18.88985759953502,
           "conditions": [
             {
               "stat": "winRateVillageois",
@@ -9854,7 +9831,7 @@
               "stat": "winRateSolo",
               "category": "LOW",
               "actualValue": 4.3478260869565215,
-              "actualPercentile": 32.432432432432435
+              "actualPercentile": 29.72972972972973
             }
           ]
         },
@@ -9983,7 +9960,7 @@
           "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 4.3478260869565215,
-          "percentile": 32.432432432432435,
+          "percentile": 29.72972972972973,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -10019,7 +9996,7 @@
           "description": "Bon·ne chasseur·se (tue des ennemis)",
           "stat": "hunterAccuracy",
           "value": 83.33333333333334,
-          "percentile": 72.22222222222221,
+          "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -10079,7 +10056,7 @@
           "description": "Se transforme fréquemment",
           "stat": "wolfTransformRate",
           "value": 0.6521739130434783,
-          "percentile": 76.47058823529412,
+          "percentile": 78.94736842105263,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -10165,7 +10142,7 @@
         },
         "winRateSolo": {
           "value": 4.3478260869565215,
-          "percentile": 32.432432432432435,
+          "percentile": 29.72972972972973,
           "category": "LOW"
         },
         "campVillageoisPercent": {
@@ -10220,7 +10197,7 @@
         },
         "hunterAccuracy": {
           "value": 83.33333333333334,
-          "percentile": 72.22222222222221,
+          "percentile": 77.77777777777779,
           "category": "HIGH"
         },
         "hunterShotAccuracy": {
@@ -10270,7 +10247,7 @@
         },
         "lootSoloPer60Min": {
           "value": 1023.6879830405103,
-          "percentile": 80,
+          "percentile": 80.95238095238095,
           "category": "HIGH"
         },
         "zoneVillagePrincipal": {
@@ -10295,8 +10272,8 @@
         },
         "zoneResteCarte": {
           "value": 8.02919708029197,
-          "percentile": 16,
-          "category": "LOW"
+          "percentile": 12,
+          "category": "EXTREME_LOW"
         },
         "zoneDominantPercentage": {
           "value": 40.14598540145985,
@@ -10310,12 +10287,12 @@
         },
         "wolfTransformRate": {
           "value": 0.6521739130434783,
-          "percentile": 76.47058823529412,
+          "percentile": 78.94736842105263,
           "category": "HIGH"
         },
         "wolfUntransformRate": {
           "value": 0.13043478260869565,
-          "percentile": 47.05882352941176,
+          "percentile": 47.368421052631575,
           "category": "AVERAGE"
         },
         "potionsPer60Min": {
@@ -10405,7 +10382,7 @@
           "description": "Bon dans tous les camps",
           "priority": 18,
           "type": "combination",
-          "percentile": 68.87532693984308,
+          "percentile": 69.95059575704737,
           "conditions": [
             {
               "stat": "winRateVillageois",
@@ -10417,7 +10394,7 @@
               "stat": "winRateLoup",
               "category": "HIGH",
               "actualValue": 39.53488372093023,
-              "actualPercentile": 74.19354838709677
+              "actualPercentile": 77.41935483870968
             },
             {
               "stat": "winRateSolo",
@@ -10464,13 +10441,13 @@
           "description": "Loup bavard·e et gagnant·e",
           "priority": 16,
           "type": "combination",
-          "percentile": 77.48138957816377,
+          "percentile": 79.09429280397023,
           "conditions": [
             {
               "stat": "winRateLoup",
               "category": "HIGH",
               "actualValue": 39.53488372093023,
-              "actualPercentile": 74.19354838709677
+              "actualPercentile": 77.41935483870968
             },
             {
               "stat": "talking",
@@ -10488,7 +10465,7 @@
           "description": "Survit et domine en Loup",
           "priority": 15,
           "type": "combination",
-          "percentile": 76.28596338273758,
+          "percentile": 77.89886660854403,
           "conditions": [
             {
               "stat": "survival",
@@ -10500,7 +10477,7 @@
               "stat": "winRateLoup",
               "category": "HIGH",
               "actualValue": 39.53488372093023,
-              "actualPercentile": 74.19354838709677
+              "actualPercentile": 77.41935483870968
             }
           ],
           "primaryOwner": "Baout"
@@ -10512,19 +10489,19 @@
           "description": "Se transforme et détransforme constamment",
           "priority": 15,
           "type": "combination",
-          "percentile": 94.11764705882352,
+          "percentile": 94.73684210526315,
           "conditions": [
             {
               "stat": "wolfTransformRate",
               "category": "HIGH",
               "actualValue": 0.8181818181818182,
-              "actualPercentile": 94.11764705882352
+              "actualPercentile": 94.73684210526315
             },
             {
               "stat": "wolfUntransformRate",
               "category": "HIGH",
               "actualValue": 0.5,
-              "actualPercentile": 94.11764705882352
+              "actualPercentile": 94.73684210526315
             }
           ]
         },
@@ -10535,13 +10512,13 @@
           "description": "Gagnant·e dans tous les camps ennemis des Villageois",
           "priority": 14,
           "type": "combination",
-          "percentile": 70.88055797733216,
+          "percentile": 72.49346120313862,
           "conditions": [
             {
               "stat": "winRateLoup",
               "category": "HIGH",
               "actualValue": 39.53488372093023,
-              "actualPercentile": 74.19354838709677
+              "actualPercentile": 77.41935483870968
             },
             {
               "stat": "winRateSolo",
@@ -10782,7 +10759,7 @@
           "description": "Se transforme très souvent en loup",
           "stat": "wolfTransformRate",
           "value": 0.8181818181818182,
-          "percentile": 94.11764705882352,
+          "percentile": 94.73684210526315,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -10794,7 +10771,7 @@
           "description": "Se détransforme très souvent",
           "stat": "wolfUntransformRate",
           "value": 0.5,
-          "percentile": 94.11764705882352,
+          "percentile": 94.73684210526315,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -10830,7 +10807,7 @@
           "description": "Excellent·e en camp Loup",
           "stat": "winRateLoup",
           "value": 39.53488372093023,
-          "percentile": 74.19354838709677,
+          "percentile": 77.41935483870968,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -10890,6 +10867,18 @@
           "description": "Bon instinct de vote",
           "stat": "votingAccuracy",
           "value": 87.43169398907104,
+          "percentile": 66.66666666666666,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterAccuracy_high",
+          "title": "Le·a Sniper",
+          "emoji": "🎯",
+          "description": "Bon·ne chasseur·se (tue des ennemis)",
+          "stat": "hunterAccuracy",
+          "value": 80,
           "percentile": 66.66666666666666,
           "category": "HIGH",
           "priority": 6,
@@ -11001,7 +10990,7 @@
         },
         "winRateLoup": {
           "value": 39.53488372093023,
-          "percentile": 74.19354838709677,
+          "percentile": 77.41935483870968,
           "category": "HIGH"
         },
         "winRateSolo": {
@@ -11061,8 +11050,8 @@
         },
         "hunterAccuracy": {
           "value": 80,
-          "percentile": 61.111111111111114,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 66.66666666666666,
+          "category": "HIGH"
         },
         "hunterShotAccuracy": {
           "value": 100,
@@ -11111,7 +11100,7 @@
         },
         "lootSoloPer60Min": {
           "value": 913.4880732942721,
-          "percentile": 70,
+          "percentile": 71.42857142857143,
           "category": "HIGH"
         },
         "zoneVillagePrincipal": {
@@ -11121,7 +11110,7 @@
         },
         "zoneFerme": {
           "value": 12.056737588652481,
-          "percentile": 20,
+          "percentile": 24,
           "category": "LOW"
         },
         "zoneVillagePecheur": {
@@ -11136,7 +11125,7 @@
         },
         "zoneResteCarte": {
           "value": 5.673758865248227,
-          "percentile": 8,
+          "percentile": 4,
           "category": "EXTREME_LOW"
         },
         "zoneDominantPercentage": {
@@ -11151,12 +11140,12 @@
         },
         "wolfTransformRate": {
           "value": 0.8181818181818182,
-          "percentile": 94.11764705882352,
+          "percentile": 94.73684210526315,
           "category": "EXTREME_HIGH"
         },
         "wolfUntransformRate": {
           "value": 0.5,
-          "percentile": 94.11764705882352,
+          "percentile": 94.73684210526315,
           "category": "EXTREME_HIGH"
         },
         "potionsPer60Min": {
@@ -11341,8 +11330,7 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "DevGirl_"
+          "type": "basic"
         },
         {
           "id": "votingFirst_extreme_low",
@@ -11388,7 +11376,7 @@
           "description": "Mauvais·e en camp Villageois",
           "stat": "winRateVillageois",
           "value": 41.358024691358025,
-          "percentile": 18.91891891891892,
+          "percentile": 21.62162162162162,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -11424,7 +11412,7 @@
           "description": "Bon·ne chasseur·se (tue des ennemis)",
           "stat": "hunterAccuracy",
           "value": 83.33333333333334,
-          "percentile": 72.22222222222221,
+          "percentile": 77.77777777777779,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -11514,14 +11502,14 @@
           "type": "basic"
         },
         {
-          "id": "wolfTransformRate_low",
-          "title": "Le·a Loup Prudent·e",
-          "emoji": "🐕",
-          "description": "Se transforme rarement",
-          "stat": "wolfTransformRate",
-          "value": 0.5483870967741935,
-          "percentile": 23.52941176470588,
-          "category": "LOW",
+          "id": "wolfUntransformRate_high",
+          "title": "Le·a Discret·ète",
+          "emoji": "🤫",
+          "description": "Se détransforme fréquemment",
+          "stat": "wolfUntransformRate",
+          "value": 0.1935483870967742,
+          "percentile": 68.42105263157895,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -11584,7 +11572,7 @@
         },
         "winRateVillageois": {
           "value": 41.358024691358025,
-          "percentile": 18.91891891891892,
+          "percentile": 21.62162162162162,
           "category": "LOW"
         },
         "winRateLoup": {
@@ -11594,7 +11582,7 @@
         },
         "winRateSolo": {
           "value": 8.695652173913043,
-          "percentile": 37.83783783783784,
+          "percentile": 35.13513513513514,
           "category": "BELOW_AVERAGE"
         },
         "campVillageoisPercent": {
@@ -11649,7 +11637,7 @@
         },
         "hunterAccuracy": {
           "value": 83.33333333333334,
-          "percentile": 72.22222222222221,
+          "percentile": 77.77777777777779,
           "category": "HIGH"
         },
         "hunterShotAccuracy": {
@@ -11699,7 +11687,7 @@
         },
         "lootSoloPer60Min": {
           "value": 624.6563594937572,
-          "percentile": 25,
+          "percentile": 28.57142857142857,
           "category": "LOW"
         },
         "zoneVillagePrincipal": {
@@ -11714,12 +11702,12 @@
         },
         "zoneVillagePecheur": {
           "value": 17.1875,
-          "percentile": 40,
+          "percentile": 44,
           "category": "BELOW_AVERAGE"
         },
         "zoneRuines": {
           "value": 4.166666666666666,
-          "percentile": 32,
+          "percentile": 28.000000000000004,
           "category": "LOW"
         },
         "zoneResteCarte": {
@@ -11739,13 +11727,13 @@
         },
         "wolfTransformRate": {
           "value": 0.5483870967741935,
-          "percentile": 23.52941176470588,
-          "category": "LOW"
+          "percentile": 36.84210526315789,
+          "category": "BELOW_AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.1935483870967742,
-          "percentile": 64.70588235294117,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 68.42105263157895,
+          "category": "HIGH"
         },
         "potionsPer60Min": {
           "value": 2.9518648563483056,
@@ -11857,7 +11845,7 @@
           "description": "Peine dans tous les camps",
           "priority": 11,
           "type": "combination",
-          "percentile": 19.99418773612322,
+          "percentile": 19.09328683522232,
           "conditions": [
             {
               "stat": "winRateVillageois",
@@ -11875,7 +11863,7 @@
               "stat": "winRateSolo",
               "category": "LOW",
               "actualValue": 2.5,
-              "actualPercentile": 29.72972972972973
+              "actualPercentile": 27.027027027027028
             }
           ]
         },
@@ -12017,7 +12005,7 @@
           "description": "Mauvais·e en rôles Solo",
           "stat": "winRateSolo",
           "value": 2.5,
-          "percentile": 29.72972972972973,
+          "percentile": 27.027027027027028,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -12055,18 +12043,6 @@
           "value": 51.61290322580645,
           "percentile": 83.33333333333334,
           "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "killRate_low",
-          "title": "Le·a Non-Violent·e",
-          "emoji": "✌️",
-          "description": "Taux de kills faible",
-          "stat": "killRate",
-          "value": 0.35964912280701755,
-          "percentile": 32.432432432432435,
-          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -12112,21 +12088,9 @@
           "emoji": "🌙",
           "description": "Se transforme fréquemment",
           "stat": "wolfTransformRate",
-          "value": 0.717948717948718,
-          "percentile": 82.35294117647058,
+          "value": 0.7142857142857143,
+          "percentile": 84.21052631578947,
           "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "wolfUntransformRate_low",
-          "title": "Le Loup Assumé",
-          "emoji": "🐺",
-          "description": "Se détransforme rarement",
-          "stat": "wolfUntransformRate",
-          "value": 0.07692307692307693,
-          "percentile": 23.52941176470588,
-          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -12211,12 +12175,12 @@
         },
         "winRateSolo": {
           "value": 2.5,
-          "percentile": 29.72972972972973,
+          "percentile": 27.027027027027028,
           "category": "LOW"
         },
         "campVillageoisPercent": {
           "value": 65.35087719298247,
-          "percentile": 40.54054054054054,
+          "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
@@ -12286,8 +12250,8 @@
         },
         "killRate": {
           "value": 0.35964912280701755,
-          "percentile": 32.432432432432435,
-          "category": "LOW"
+          "percentile": 35.13513513513514,
+          "category": "BELOW_AVERAGE"
         },
         "longestWinSeries": {
           "value": 4,
@@ -12316,8 +12280,8 @@
         },
         "lootSoloPer60Min": {
           "value": 584.1458327560524,
-          "percentile": 15,
-          "category": "EXTREME_LOW"
+          "percentile": 19.047619047619047,
+          "category": "LOW"
         },
         "zoneVillagePrincipal": {
           "value": 38.9937106918239,
@@ -12331,8 +12295,8 @@
         },
         "zoneVillagePecheur": {
           "value": 16.352201257861633,
-          "percentile": 28.000000000000004,
-          "category": "LOW"
+          "percentile": 36,
+          "category": "BELOW_AVERAGE"
         },
         "zoneRuines": {
           "value": 12.578616352201259,
@@ -12355,14 +12319,14 @@
           "category": "ABOVE_AVERAGE"
         },
         "wolfTransformRate": {
-          "value": 0.717948717948718,
-          "percentile": 82.35294117647058,
+          "value": 0.7142857142857143,
+          "percentile": 84.21052631578947,
           "category": "HIGH"
         },
         "wolfUntransformRate": {
-          "value": 0.07692307692307693,
-          "percentile": 23.52941176470588,
-          "category": "LOW"
+          "value": 0.11904761904761904,
+          "percentile": 42.10526315789473,
+          "category": "BELOW_AVERAGE"
         },
         "potionsPer60Min": {
           "value": 1.7314794078701157,
@@ -12404,8 +12368,8 @@
         "zoneResteCarte": 16.352201257861633,
         "zoneDominantPercentage": 38.9937106918239,
         "zoneTotalPositions": 159,
-        "wolfTransformRate": 0.717948717948718,
-        "wolfUntransformRate": 0.07692307692307693,
+        "wolfTransformRate": 0.7142857142857143,
+        "wolfUntransformRate": 0.11904761904761904,
         "potionsPer60Min": 1.7314794078701157
       }
     },
@@ -12421,13 +12385,13 @@
           "description": "Prépare des potions tout en racontant ses recettes",
           "priority": 12,
           "type": "combination",
-          "percentile": 67.87749287749287,
+          "percentile": 66.02564102564102,
           "conditions": [
             {
               "stat": "potionUsage",
               "category": "HIGH",
               "actualValue": 2.6821103416665477,
-              "actualPercentile": 70.37037037037037
+              "actualPercentile": 66.66666666666666
             },
             {
               "stat": "talking",
@@ -12444,13 +12408,13 @@
           "description": "Ignore la récolte pour se concentrer sur les potions",
           "priority": 12,
           "type": "combination",
-          "percentile": 43.88083735909822,
+          "percentile": 42.028985507246375,
           "conditions": [
             {
               "stat": "potionUsage",
               "category": "HIGH",
               "actualValue": 2.6821103416665477,
-              "actualPercentile": 70.37037037037037
+              "actualPercentile": 66.66666666666666
             },
             {
               "stat": "loot",
@@ -12468,13 +12432,13 @@
           "description": "Boit des potions mais ça ne l'aide pas à gagner",
           "priority": 11,
           "type": "combination",
-          "percentile": 51.4014014014014,
+          "percentile": 49.549549549549546,
           "conditions": [
             {
               "stat": "potionUsage",
               "category": "HIGH",
               "actualValue": 2.6821103416665477,
-              "actualPercentile": 70.37037037037037
+              "actualPercentile": 66.66666666666666
             },
             {
               "stat": "winRate",
@@ -12597,7 +12561,7 @@
           "description": "Ne se transforme presque jamais",
           "stat": "wolfTransformRate",
           "value": 0.4444444444444444,
-          "percentile": 5.88235294117647,
+          "percentile": 5.263157894736842,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -12669,7 +12633,7 @@
           "description": "Bon·ne chasseur·se (tue des ennemis)",
           "stat": "hunterAccuracy",
           "value": 81.81818181818183,
-          "percentile": 66.66666666666666,
+          "percentile": 72.22222222222221,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -12729,7 +12693,7 @@
           "description": "Boit beaucoup de potions",
           "stat": "potionsPer60Min",
           "value": 2.6821103416665477,
-          "percentile": 70.37037037037037,
+          "percentile": 66.66666666666666,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -12752,13 +12716,13 @@
         "description": "Prépare des potions tout en racontant ses recettes",
         "priority": 12,
         "type": "combination",
-        "percentile": 67.87749287749287,
+        "percentile": 66.02564102564102,
         "conditions": [
           {
             "stat": "potionUsage",
             "category": "HIGH",
             "actualValue": 2.6821103416665477,
-            "actualPercentile": 70.37037037037037
+            "actualPercentile": 66.66666666666666
           },
           {
             "stat": "talking",
@@ -12796,7 +12760,7 @@
         },
         "campVillageoisPercent": {
           "value": 64.70588235294117,
-          "percentile": 37.83783783783784,
+          "percentile": 40.54054054054054,
           "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
@@ -12846,7 +12810,7 @@
         },
         "hunterAccuracy": {
           "value": 81.81818181818183,
-          "percentile": 66.66666666666666,
+          "percentile": 72.22222222222221,
           "category": "HIGH"
         },
         "hunterShotAccuracy": {
@@ -12901,18 +12865,18 @@
         },
         "zoneVillagePrincipal": {
           "value": 46.36363636363636,
-          "percentile": 60,
+          "percentile": 64,
           "category": "ABOVE_AVERAGE"
         },
         "zoneFerme": {
           "value": 13.636363636363635,
-          "percentile": 28.000000000000004,
+          "percentile": 32,
           "category": "LOW"
         },
         "zoneVillagePecheur": {
           "value": 17.272727272727273,
-          "percentile": 44,
-          "category": "BELOW_AVERAGE"
+          "percentile": 48,
+          "category": "AVERAGE"
         },
         "zoneRuines": {
           "value": 10.909090909090908,
@@ -12926,7 +12890,7 @@
         },
         "zoneDominantPercentage": {
           "value": 46.36363636363636,
-          "percentile": 60,
+          "percentile": 64,
           "category": "ABOVE_AVERAGE"
         },
         "zoneTotalPositions": {
@@ -12936,17 +12900,17 @@
         },
         "wolfTransformRate": {
           "value": 0.4444444444444444,
-          "percentile": 5.88235294117647,
+          "percentile": 5.263157894736842,
           "category": "EXTREME_LOW"
         },
         "wolfUntransformRate": {
           "value": 0.16666666666666666,
-          "percentile": 58.82352941176471,
+          "percentile": 63.1578947368421,
           "category": "ABOVE_AVERAGE"
         },
         "potionsPer60Min": {
           "value": 2.6821103416665477,
-          "percentile": 70.37037037037037,
+          "percentile": 66.66666666666666,
           "category": "HIGH"
         }
       },
@@ -13030,6 +12994,19 @@
           "type": "basic"
         },
         {
+          "id": "participation_extreme_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 38,
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic",
+          "primaryOwner": "PeoBran"
+        },
+        {
           "id": "winRateVillageois_extreme_low",
           "title": "Idiot·e en Formation",
           "emoji": "🤡",
@@ -13087,18 +13064,6 @@
           "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
-        },
-        {
-          "id": "participation_low",
-          "title": "Le·a Occasionnel·le",
-          "emoji": "🎲",
-          "description": "Joue peu de parties",
-          "stat": "gamesPlayed",
-          "value": 38,
-          "percentile": 16.216216216216218,
-          "category": "LOW",
-          "priority": 6,
           "type": "basic"
         },
         {
@@ -13177,8 +13142,8 @@
         },
         "gamesPlayed": {
           "value": 38,
-          "percentile": 16.216216216216218,
-          "category": "LOW"
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW"
         },
         "winRateVillageois": {
           "value": 30.434782608695656,
@@ -13207,8 +13172,8 @@
         },
         "campSoloPercent": {
           "value": 21.052631578947366,
-          "percentile": 86.48648648648648,
-          "category": "EXTREME_HIGH"
+          "percentile": 83.78378378378379,
+          "category": "HIGH"
         },
         "votingAggressiveness": {
           "value": -4.745762711864414,
@@ -13288,18 +13253,6 @@
           "type": "basic"
         },
         {
-          "id": "winRateVillageois_extreme_low",
-          "title": "Idiot·e en Formation",
-          "emoji": "🤡",
-          "description": "Mauvais·e en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 40.909090909090914,
-          "percentile": 13.513513513513514,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
-        },
-        {
           "id": "winRateSolo_extreme_high",
           "title": "L'Électron Libre",
           "emoji": "🦊",
@@ -13319,6 +13272,18 @@
           "stat": "winRate",
           "value": 33.3,
           "percentile": 18.91891891891892,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "winRateVillageois_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 40.909090909090914,
+          "percentile": 16.216216216216218,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -13407,8 +13372,8 @@
         },
         "winRateVillageois": {
           "value": 40.909090909090914,
-          "percentile": 13.513513513513514,
-          "category": "EXTREME_LOW"
+          "percentile": 16.216216216216218,
+          "category": "LOW"
         },
         "winRateSolo": {
           "value": 16.666666666666664,
@@ -13417,8 +13382,8 @@
         },
         "campVillageoisPercent": {
           "value": 66.66666666666666,
-          "percentile": 54.054054054054056,
-          "category": "AVERAGE"
+          "percentile": 56.75675675675676,
+          "category": "ABOVE_AVERAGE"
         },
         "campLoupPercent": {
           "value": 15.151515151515152,
@@ -13573,13 +13538,13 @@
           "description": "Boit des potions mais ça ne l'aide pas à gagner",
           "priority": 11,
           "type": "combination",
-          "percentile": 50.350350350350354,
+          "percentile": 48.4984984984985,
           "conditions": [
             {
               "stat": "potionUsage",
               "category": "HIGH",
               "actualValue": 3.8915822481584166,
-              "actualPercentile": 92.5925925925926
+              "actualPercentile": 88.88888888888889
             },
             {
               "stat": "winRate",
@@ -13708,7 +13673,8 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "DevGirl_"
         },
         {
           "id": "zoneRuines_extreme_high",
@@ -13753,7 +13719,7 @@
           "description": "Boit énormément de potions",
           "stat": "potionsPer60Min",
           "value": 3.8915822481584166,
-          "percentile": 92.5925925925926,
+          "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -13965,7 +13931,7 @@
         },
         "lootSoloPer60Min": {
           "value": 1539.5586384742119,
-          "percentile": 95,
+          "percentile": 95.23809523809523,
           "category": "EXTREME_HIGH"
         },
         "zoneVillagePrincipal": {
@@ -14000,12 +13966,12 @@
         },
         "zoneTotalPositions": {
           "value": 28,
-          "percentile": 16,
-          "category": "LOW"
+          "percentile": 12,
+          "category": "EXTREME_LOW"
         },
         "potionsPer60Min": {
           "value": 3.8915822481584166,
-          "percentile": 92.5925925925926,
+          "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
         }
       },
@@ -14177,7 +14143,8 @@
           "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "DevGirl_"
         },
         {
           "id": "loot_extreme_low",
@@ -14210,8 +14177,8 @@
           "emoji": "🚫",
           "description": "Ne boit presque jamais de potions",
           "stat": "potionsPer60Min",
-          "value": 1.0940591524354142,
-          "percentile": 7.4074074074074066,
+          "value": 1.276402344507983,
+          "percentile": 11.11111111111111,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -14248,6 +14215,18 @@
           "stat": "votingAccuracy",
           "value": 87.5,
           "percentile": 69.44444444444444,
+          "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "zoneDominantPercentage_high",
+          "title": "L'Habitué·e",
+          "emoji": "🪑",
+          "description": "A un coin préféré",
+          "stat": "zoneDominantPercentage",
+          "value": 47.368421052631575,
+          "percentile": 68,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -14401,13 +14380,13 @@
         },
         "lootSoloPer60Min": {
           "value": 708.7367417350899,
-          "percentile": 60,
+          "percentile": 61.904761904761905,
           "category": "ABOVE_AVERAGE"
         },
         "zoneVillagePrincipal": {
           "value": 47.368421052631575,
-          "percentile": 64,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 68,
+          "category": "HIGH"
         },
         "zoneFerme": {
           "value": 15.789473684210526,
@@ -14416,7 +14395,7 @@
         },
         "zoneVillagePecheur": {
           "value": 23.684210526315788,
-          "percentile": 76,
+          "percentile": 80,
           "category": "HIGH"
         },
         "zoneRuines": {
@@ -14431,8 +14410,8 @@
         },
         "zoneDominantPercentage": {
           "value": 47.368421052631575,
-          "percentile": 64,
-          "category": "ABOVE_AVERAGE"
+          "percentile": 68,
+          "category": "HIGH"
         },
         "zoneTotalPositions": {
           "value": 38,
@@ -14440,8 +14419,8 @@
           "category": "LOW"
         },
         "potionsPer60Min": {
-          "value": 1.0940591524354142,
-          "percentile": 7.4074074074074066,
+          "value": 1.276402344507983,
+          "percentile": 11.11111111111111,
           "category": "EXTREME_LOW"
         }
       },
@@ -14476,7 +14455,7 @@
         "zoneResteCarte": 13.157894736842104,
         "zoneDominantPercentage": 47.368421052631575,
         "zoneTotalPositions": 38,
-        "potionsPer60Min": 1.0940591524354142
+        "potionsPer60Min": 1.276402344507983
       }
     },
     "76561198155130320": {
@@ -15165,7 +15144,7 @@
           "description": "Premier·ère voteur·se",
           "stat": "votingFirst",
           "value": 47.91666666666667,
-          "percentile": 73.33333333333333,
+          "percentile": 76.66666666666667,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -15308,7 +15287,7 @@
         },
         "votingFirst": {
           "value": 47.91666666666667,
-          "percentile": 73.33333333333333,
+          "percentile": 76.66666666666667,
           "category": "HIGH"
         },
         "survivalRate": {
@@ -15353,7 +15332,7 @@
         },
         "lootSoloPer60Min": {
           "value": 683.4077488437631,
-          "percentile": 50,
+          "percentile": 52.38095238095239,
           "category": "AVERAGE"
         },
         "zoneVillagePrincipal": {
@@ -15363,18 +15342,18 @@
         },
         "zoneFerme": {
           "value": 17.91044776119403,
-          "percentile": 72,
+          "percentile": 68,
           "category": "HIGH"
         },
         "zoneVillagePecheur": {
           "value": 17.91044776119403,
-          "percentile": 52,
-          "category": "AVERAGE"
+          "percentile": 56.00000000000001,
+          "category": "ABOVE_AVERAGE"
         },
         "zoneRuines": {
           "value": 5.970149253731343,
-          "percentile": 36,
-          "category": "BELOW_AVERAGE"
+          "percentile": 32,
+          "category": "LOW"
         },
         "zoneResteCarte": {
           "value": 20.8955223880597,
@@ -15446,7 +15425,7 @@
     "76561199013115670": {
       "playerId": "76561199013115670",
       "playerName": "SpicY",
-      "gamesPlayed": 36,
+      "gamesPlayed": 42,
       "titles": [
         {
           "id": "campeur",
@@ -15455,19 +15434,42 @@
           "description": "Reste au même endroit sans récolter",
           "priority": 14,
           "type": "combination",
-          "percentile": 58.869565217391305,
+          "percentile": 54.869565217391305,
           "conditions": [
             {
               "stat": "zoneDominantPercentage",
               "category": "EXTREME_HIGH",
-              "actualValue": 60,
-              "actualPercentile": 96
+              "actualValue": 54.83870967741935,
+              "actualPercentile": 88
             },
             {
               "stat": "loot",
               "category": "LOW",
-              "actualValue": 629.4213227684155,
+              "actualValue": 623.4357389301589,
               "actualPercentile": 21.73913043478261
+            }
+          ]
+        },
+        {
+          "id": "apothicaire",
+          "title": "L'Apothicaire",
+          "emoji": "⚗️",
+          "description": "Boit beaucoup de potions et survit grâce à elles",
+          "priority": 13,
+          "type": "combination",
+          "percentile": 82.48248248248248,
+          "conditions": [
+            {
+              "stat": "potionUsage",
+              "category": "HIGH",
+              "actualValue": 2.722426807555279,
+              "actualPercentile": 70.37037037037037
+            },
+            {
+              "stat": "survival",
+              "category": "HIGH",
+              "actualValue": 47.61904761904761,
+              "actualPercentile": 94.5945945945946
             }
           ]
         },
@@ -15478,22 +15480,46 @@
           "description": "Observe silencieusement et vote juste",
           "priority": 12,
           "type": "combination",
-          "percentile": 94.44444444444444,
+          "percentile": 88.88888888888889,
           "conditions": [
             {
               "stat": "votingAccuracy",
               "category": "HIGH",
-              "actualValue": 100,
-              "actualPercentile": 94.44444444444444
+              "actualValue": 94.73684210526315,
+              "actualPercentile": 88.88888888888889
             },
             {
               "stat": "talking",
               "category": "LOW",
-              "actualValue": 309.4254441701218,
+              "actualValue": 587.4997050704292,
               "actualPercentile": 0
             }
           ],
           "primaryOwner": "Kissiffrote"
+        },
+        {
+          "id": "pharmacien",
+          "title": "Le·a Pharmacien·ne",
+          "emoji": "💊",
+          "description": "Ignore la récolte pour se concentrer sur les potions",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 46.05475040257649,
+          "conditions": [
+            {
+              "stat": "potionUsage",
+              "category": "HIGH",
+              "actualValue": 2.722426807555279,
+              "actualPercentile": 70.37037037037037
+            },
+            {
+              "stat": "loot",
+              "category": "LOW",
+              "actualValue": 623.4357389301589,
+              "actualPercentile": 21.73913043478261
+            }
+          ],
+          "primaryOwner": "Mathy"
         },
         {
           "id": "prudent",
@@ -15507,42 +15533,28 @@
             {
               "stat": "loot",
               "category": "LOW",
-              "actualValue": 629.4213227684155,
+              "actualValue": 623.4357389301589,
               "actualPercentile": 21.73913043478261
             },
             {
               "stat": "survival",
               "category": "HIGH",
-              "actualValue": 50,
+              "actualValue": 47.61904761904761,
               "actualPercentile": 94.5945945945946
             }
           ]
         },
         {
-          "id": "participation_extreme_low",
-          "title": "Le·a Occasionnel·le",
-          "emoji": "🎲",
-          "description": "Joue peu de parties",
-          "stat": "gamesPlayed",
-          "value": 36,
+          "id": "winRateVillageois_extreme_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 40.74074074074074,
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "PeoBran"
-        },
-        {
-          "id": "winRateSolo_extreme_low",
-          "title": "L'Enfant Perdu·e",
-          "emoji": "👶",
-          "description": "Mauvais·e en rôles Solo",
-          "stat": "winRateSolo",
-          "value": 0,
-          "percentile": 0,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Brybry"
+          "type": "basic"
         },
         {
           "id": "talking_extreme_low",
@@ -15550,7 +15562,7 @@
           "emoji": "👻",
           "description": "Quasi muet·te",
           "stat": "talkingPer60Min",
-          "value": 309.4254441701218,
+          "value": 587.4997050704292,
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -15562,7 +15574,7 @@
           "emoji": "🎯",
           "description": "Silencieux·se hors meeting",
           "stat": "talkingOutsidePer60Min",
-          "value": 250.0868690847025,
+          "value": 417.25728203797246,
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -15574,7 +15586,7 @@
           "emoji": "🤐",
           "description": "Silencieux·se en meeting",
           "stat": "talkingDuringPer60Min",
-          "value": 59.33857508541933,
+          "value": 170.24242303245677,
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
@@ -15586,12 +15598,11 @@
           "emoji": "🤷",
           "description": "Vote rarement",
           "stat": "votingAggressiveness",
-          "value": -29.315068493150683,
-          "percentile": 0,
+          "value": -22.441860465116278,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "DevGirl_"
+          "type": "basic"
         },
         {
           "id": "votingAccuracy_extreme_high",
@@ -15599,8 +15610,8 @@
           "emoji": "👃",
           "description": "Bon instinct de vote",
           "stat": "votingAccuracy",
-          "value": 100,
-          "percentile": 94.44444444444444,
+          "value": 94.73684210526315,
+          "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -15611,7 +15622,7 @@
           "emoji": "🛡️",
           "description": "Survie élevée fin de game",
           "stat": "survivalRate",
-          "value": 50,
+          "value": 47.61904761904761,
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH",
           "priority": 8,
@@ -15619,13 +15630,25 @@
           "primaryOwner": "Fukano"
         },
         {
+          "id": "survivalDay1_extreme_high",
+          "title": "Le·a Vigilant·e",
+          "emoji": "🏃",
+          "description": "Survit au Jour 1",
+          "stat": "survivalDay1Rate",
+          "value": 88.09523809523809,
+          "percentile": 91.8918918918919,
+          "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
           "id": "zoneVillagePrincipal_extreme_high",
           "title": "Le·a Citadin·e",
           "emoji": "🏘️",
           "description": "Traîne beaucoup au Village Principal",
           "stat": "zoneVillagePrincipal",
-          "value": 60,
-          "percentile": 96,
+          "value": 54.83870967741935,
+          "percentile": 88,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -15636,45 +15659,33 @@
           "emoji": "🏠",
           "description": "Toujours dans la même zone",
           "stat": "zoneDominantPercentage",
-          "value": 60,
-          "percentile": 96,
+          "value": 54.83870967741935,
+          "percentile": 88,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
         },
         {
-          "id": "winRateVillageois_low",
-          "title": "Idiot·e en Formation",
-          "emoji": "🤡",
-          "description": "Mauvais·e en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 41.66666666666667,
-          "percentile": 21.62162162162162,
+          "id": "participation_low",
+          "title": "Le·a Occasionnel·le",
+          "emoji": "🎲",
+          "description": "Joue peu de parties",
+          "stat": "gamesPlayed",
+          "value": 42,
+          "percentile": 18.91891891891892,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
         {
-          "id": "votingFirst_high",
-          "title": "L'Impulsif·ve",
-          "emoji": "🏃",
-          "description": "Premier·ère voteur·se",
-          "stat": "votingFirst",
-          "value": 50,
-          "percentile": 76.66666666666667,
-          "category": "HIGH",
-          "priority": 6,
-          "type": "basic"
-        },
-        {
-          "id": "survivalDay1_high",
-          "title": "Le·a Vigilant·e",
-          "emoji": "🏃",
-          "description": "Survit au Jour 1",
-          "stat": "survivalDay1Rate",
-          "value": 86.11111111111111,
-          "percentile": 83.78378378378379,
-          "category": "HIGH",
+          "id": "killRate_low",
+          "title": "Le·a Non-Violent·e",
+          "emoji": "✌️",
+          "description": "Taux de kills faible",
+          "stat": "killRate",
+          "value": 0.3333333333333333,
+          "percentile": 27.027027027027028,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -15684,7 +15695,7 @@
           "emoji": "🚶",
           "description": "Récolte faible",
           "stat": "lootPer60Min",
-          "value": 629.4213227684155,
+          "value": 623.4357389301589,
           "percentile": 21.73913043478261,
           "category": "LOW",
           "priority": 6,
@@ -15696,9 +15707,21 @@
           "emoji": "💤",
           "description": "Faible récolte en Villageois",
           "stat": "lootVillageoisPer60Min",
-          "value": 664.5833787610098,
+          "value": 641.7842647489297,
           "percentile": 21.73913043478261,
           "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "potionUsage_high",
+          "title": "Le·a Potion Addict",
+          "emoji": "⚗️",
+          "description": "Boit beaucoup de potions",
+          "stat": "potionsPer60Min",
+          "value": 2.722426807555279,
+          "percentile": 70.37037037037037,
+          "category": "HIGH",
           "priority": 6,
           "type": "basic"
         },
@@ -15713,15 +15736,15 @@
           "type": "campBalance"
         },
         {
-          "id": "winRate_average",
+          "id": "winRate_below_average",
           "title": "Le·a Constant·e",
           "emoji": "📊",
           "description": "Performance stable",
           "stat": "winRate",
-          "value": 38.9,
-          "percentile": 48.64864864864865,
-          "category": "AVERAGE",
-          "priority": 3,
+          "value": 38.1,
+          "percentile": 37.83783783783784,
+          "category": "BELOW_AVERAGE",
+          "priority": 4,
           "type": "basic"
         }
       ],
@@ -15732,102 +15755,102 @@
         "description": "Reste au même endroit sans récolter",
         "priority": 14,
         "type": "combination",
-        "percentile": 58.869565217391305,
+        "percentile": 54.869565217391305,
         "conditions": [
           {
             "stat": "zoneDominantPercentage",
             "category": "EXTREME_HIGH",
-            "actualValue": 60,
-            "actualPercentile": 96
+            "actualValue": 54.83870967741935,
+            "actualPercentile": 88
           },
           {
             "stat": "loot",
             "category": "LOW",
-            "actualValue": 629.4213227684155,
+            "actualValue": 623.4357389301589,
             "actualPercentile": 21.73913043478261
           }
         ]
       },
       "percentiles": {
         "winRate": {
-          "value": 38.9,
-          "percentile": 48.64864864864865,
-          "category": "AVERAGE"
+          "value": 38.1,
+          "percentile": 37.83783783783784,
+          "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
-          "value": 36,
-          "percentile": 13.513513513513514,
-          "category": "EXTREME_LOW"
-        },
-        "winRateVillageois": {
-          "value": 41.66666666666667,
-          "percentile": 21.62162162162162,
+          "value": 42,
+          "percentile": 18.91891891891892,
           "category": "LOW"
         },
-        "winRateSolo": {
-          "value": 0,
-          "percentile": 0,
+        "winRateVillageois": {
+          "value": 40.74074074074074,
+          "percentile": 13.513513513513514,
           "category": "EXTREME_LOW"
         },
+        "winRateSolo": {
+          "value": 10,
+          "percentile": 40.54054054054054,
+          "category": "BELOW_AVERAGE"
+        },
         "campVillageoisPercent": {
-          "value": 66.66666666666666,
-          "percentile": 54.054054054054056,
-          "category": "AVERAGE"
+          "value": 64.28571428571429,
+          "percentile": 35.13513513513514,
+          "category": "BELOW_AVERAGE"
         },
         "campLoupPercent": {
-          "value": 13.88888888888889,
-          "percentile": 13.513513513513514,
+          "value": 11.904761904761903,
+          "percentile": 10.81081081081081,
           "category": "EXTREME_LOW"
         },
         "campSoloPercent": {
-          "value": 19.444444444444446,
-          "percentile": 81.08108108108108,
-          "category": "HIGH"
+          "value": 23.809523809523807,
+          "percentile": 89.1891891891892,
+          "category": "EXTREME_HIGH"
         },
         "talkingPer60Min": {
-          "value": 309.4254441701218,
+          "value": 587.4997050704292,
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "talkingOutsidePer60Min": {
-          "value": 250.0868690847025,
+          "value": 417.25728203797246,
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "talkingDuringPer60Min": {
-          "value": 59.33857508541933,
+          "value": 170.24242303245677,
           "percentile": 0,
           "category": "EXTREME_LOW"
         },
         "votingAggressiveness": {
-          "value": -29.315068493150683,
-          "percentile": 0,
+          "value": -22.441860465116278,
+          "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW"
         },
         "votingAccuracy": {
-          "value": 100,
-          "percentile": 94.44444444444444,
+          "value": 94.73684210526315,
+          "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
         },
         "votingFirst": {
-          "value": 50,
-          "percentile": 76.66666666666667,
-          "category": "HIGH"
+          "value": 38.46153846153847,
+          "percentile": 46.666666666666664,
+          "category": "AVERAGE"
         },
         "survivalRate": {
-          "value": 50,
+          "value": 47.61904761904761,
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH"
         },
         "survivalDay1Rate": {
-          "value": 86.11111111111111,
-          "percentile": 83.78378378378379,
-          "category": "HIGH"
+          "value": 88.09523809523809,
+          "percentile": 91.8918918918919,
+          "category": "EXTREME_HIGH"
         },
         "killRate": {
-          "value": 0.3888888888888889,
-          "percentile": 35.13513513513514,
-          "category": "BELOW_AVERAGE"
+          "value": 0.3333333333333333,
+          "percentile": 27.027027027027028,
+          "category": "LOW"
         },
         "longestWinSeries": {
           "value": 2,
@@ -15840,88 +15863,93 @@
           "category": "EXTREME_LOW"
         },
         "lootPer60Min": {
-          "value": 629.4213227684155,
+          "value": 623.4357389301589,
           "percentile": 21.73913043478261,
           "category": "LOW"
         },
         "lootVillageoisPer60Min": {
-          "value": 664.5833787610098,
+          "value": 641.7842647489297,
           "percentile": 21.73913043478261,
           "category": "LOW"
         },
+        "lootSoloPer60Min": {
+          "value": 577.6141713652182,
+          "percentile": 14.285714285714285,
+          "category": "EXTREME_LOW"
+        },
         "zoneVillagePrincipal": {
-          "value": 60,
-          "percentile": 96,
+          "value": 54.83870967741935,
+          "percentile": 88,
           "category": "EXTREME_HIGH"
         },
         "zoneFerme": {
-          "value": 15,
+          "value": 9.67741935483871,
+          "percentile": 12,
+          "category": "EXTREME_LOW"
+        },
+        "zoneVillagePecheur": {
+          "value": 16.129032258064516,
           "percentile": 32,
           "category": "LOW"
         },
-        "zoneVillagePecheur": {
-          "value": 20,
-          "percentile": 64,
+        "zoneRuines": {
+          "value": 9.67741935483871,
+          "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
-        "zoneRuines": {
-          "value": 0,
-          "percentile": 0,
-          "category": "EXTREME_LOW"
-        },
         "zoneResteCarte": {
-          "value": 5,
-          "percentile": 4,
-          "category": "EXTREME_LOW"
+          "value": 9.67741935483871,
+          "percentile": 28.000000000000004,
+          "category": "LOW"
         },
         "zoneDominantPercentage": {
-          "value": 60,
-          "percentile": 96,
+          "value": 54.83870967741935,
+          "percentile": 88,
           "category": "EXTREME_HIGH"
         },
         "zoneTotalPositions": {
-          "value": 20,
-          "percentile": 4,
-          "category": "EXTREME_LOW"
+          "value": 31,
+          "percentile": 16,
+          "category": "LOW"
         },
         "potionsPer60Min": {
-          "value": 2.6426086070429657,
-          "percentile": 62.96296296296296,
-          "category": "ABOVE_AVERAGE"
+          "value": 2.722426807555279,
+          "percentile": 70.37037037037037,
+          "category": "HIGH"
         }
       },
       "stats": {
-        "winRate": 38.9,
-        "gamesPlayed": 36,
-        "winRateVillageois": 41.66666666666667,
+        "winRate": 38.1,
+        "gamesPlayed": 42,
+        "winRateVillageois": 40.74074074074074,
         "winRateLoup": null,
-        "winRateSolo": 0,
-        "campVillageoisPercent": 66.66666666666666,
-        "campLoupPercent": 13.88888888888889,
-        "campSoloPercent": 19.444444444444446,
-        "talkingPer60Min": 309.4254441701218,
-        "talkingOutsidePer60Min": 250.0868690847025,
-        "talkingDuringPer60Min": 59.33857508541933,
-        "votingAggressiveness": -29.315068493150683,
-        "votingAccuracy": 100,
-        "votingFirst": 50,
-        "survivalRate": 50,
-        "survivalDay1Rate": 86.11111111111111,
-        "killRate": 0.3888888888888889,
+        "winRateSolo": 10,
+        "campVillageoisPercent": 64.28571428571429,
+        "campLoupPercent": 11.904761904761903,
+        "campSoloPercent": 23.809523809523807,
+        "talkingPer60Min": 587.4997050704292,
+        "talkingOutsidePer60Min": 417.25728203797246,
+        "talkingDuringPer60Min": 170.24242303245677,
+        "votingAggressiveness": -22.441860465116278,
+        "votingAccuracy": 94.73684210526315,
+        "votingFirst": 38.46153846153847,
+        "survivalRate": 47.61904761904761,
+        "survivalDay1Rate": 88.09523809523809,
+        "killRate": 0.3333333333333333,
         "longestWinSeries": 2,
         "longestLossSeries": 4,
-        "lootPer60Min": 629.4213227684155,
-        "lootVillageoisPer60Min": 664.5833787610098,
+        "lootPer60Min": 623.4357389301589,
+        "lootVillageoisPer60Min": 641.7842647489297,
         "lootLoupPer60Min": null,
-        "lootSoloPer60Min": null,
-        "zoneVillagePrincipal": 60,
-        "zoneFerme": 15,
-        "zoneVillagePecheur": 20,
-        "zoneRuines": 0,
-        "zoneResteCarte": 5,
-        "zoneDominantPercentage": 60,
-        "zoneTotalPositions": 20,
-        "potionsPer60Min": 2.6426086070429657
+        "lootSoloPer60Min": 577.6141713652182,
+        "zoneVillagePrincipal": 54.83870967741935,
+        "zoneFerme": 9.67741935483871,
+        "zoneVillagePecheur": 16.129032258064516,
+        "zoneRuines": 9.67741935483871,
+        "zoneResteCarte": 9.67741935483871,
+        "zoneDominantPercentage": 54.83870967741935,
+        "zoneTotalPositions": 31,
+        "potionsPer60Min": 2.722426807555279
       }
     },
     "76561198160286790": {
@@ -16050,7 +16078,7 @@
           "description": "Ne se transforme presque jamais",
           "stat": "wolfTransformRate",
           "value": 0.4857142857142857,
-          "percentile": 11.76470588235294,
+          "percentile": 10.526315789473683,
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
@@ -16062,9 +16090,21 @@
           "description": "Reste presque toujours en loup",
           "stat": "wolfUntransformRate",
           "value": 0.02857142857142857,
-          "percentile": 11.76470588235294,
+          "percentile": 10.526315789473683,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRateSolo_low",
+          "title": "L'Enfant Perdu·e",
+          "emoji": "👶",
+          "description": "Mauvais·e en rôles Solo",
+          "stat": "winRateSolo",
+          "value": 5.555555555555555,
+          "percentile": 32.432432432432435,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -16161,8 +16201,8 @@
         },
         "winRateSolo": {
           "value": 5.555555555555555,
-          "percentile": 35.13513513513514,
-          "category": "BELOW_AVERAGE"
+          "percentile": 32.432432432432435,
+          "category": "LOW"
         },
         "campVillageoisPercent": {
           "value": 62.96296296296296,
@@ -16206,8 +16246,8 @@
         },
         "votingFirst": {
           "value": 42.42424242424242,
-          "percentile": 53.333333333333336,
-          "category": "AVERAGE"
+          "percentile": 56.666666666666664,
+          "category": "ABOVE_AVERAGE"
         },
         "survivalRate": {
           "value": 23.14814814814815,
@@ -16251,7 +16291,7 @@
         },
         "lootSoloPer60Min": {
           "value": 550.3628090025827,
-          "percentile": 10,
+          "percentile": 9.523809523809524,
           "category": "EXTREME_LOW"
         },
         "zoneVillagePrincipal": {
@@ -16291,12 +16331,12 @@
         },
         "wolfTransformRate": {
           "value": 0.4857142857142857,
-          "percentile": 11.76470588235294,
+          "percentile": 10.526315789473683,
           "category": "EXTREME_LOW"
         },
         "wolfUntransformRate": {
           "value": 0.02857142857142857,
-          "percentile": 11.76470588235294,
+          "percentile": 10.526315789473683,
           "category": "EXTREME_LOW"
         },
         "potionsPer60Min": {
@@ -16443,7 +16483,8 @@
               "actualValue": 46.666666666666664,
               "actualPercentile": 89.1891891891892
             }
-          ]
+          ],
+          "primaryOwner": "Tsuna"
         },
         {
           "id": "couard",
@@ -16490,18 +16531,6 @@
               "actualPercentile": 19.444444444444446
             }
           ]
-        },
-        {
-          "id": "winRateVillageois_extreme_low",
-          "title": "Idiot·e en Formation",
-          "emoji": "🤡",
-          "description": "Mauvais·e en camp Villageois",
-          "stat": "winRateVillageois",
-          "value": 40.909090909090914,
-          "percentile": 13.513513513513514,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic"
         },
         {
           "id": "talking_extreme_high",
@@ -16601,6 +16630,18 @@
           "type": "basic"
         },
         {
+          "id": "winRateVillageois_low",
+          "title": "Idiot·e en Formation",
+          "emoji": "🤡",
+          "description": "Mauvais·e en camp Villageois",
+          "stat": "winRateVillageois",
+          "value": 40.909090909090914,
+          "percentile": 16.216216216216218,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "votingAccuracy_low",
           "title": "L'Aveugle",
           "emoji": "🙈",
@@ -16631,7 +16672,7 @@
           "description": "Se détransforme fréquemment",
           "stat": "wolfUntransformRate",
           "value": 0.29411764705882354,
-          "percentile": 82.35294117647058,
+          "percentile": 84.21052631578947,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -16689,8 +16730,8 @@
         },
         "winRateVillageois": {
           "value": 40.909090909090914,
-          "percentile": 13.513513513513514,
-          "category": "EXTREME_LOW"
+          "percentile": 16.216216216216218,
+          "category": "LOW"
         },
         "winRateLoup": {
           "value": 35.714285714285715,
@@ -16714,7 +16755,7 @@
         },
         "campSoloPercent": {
           "value": 20,
-          "percentile": 83.78378378378379,
+          "percentile": 81.08108108108108,
           "category": "HIGH"
         },
         "talkingPer60Min": {
@@ -16744,7 +16785,7 @@
         },
         "votingFirst": {
           "value": 39.130434782608695,
-          "percentile": 46.666666666666664,
+          "percentile": 50,
           "category": "AVERAGE"
         },
         "survivalRate": {
@@ -16774,7 +16815,7 @@
         },
         "zoneVillagePrincipal": {
           "value": 46.15384615384615,
-          "percentile": 56.00000000000001,
+          "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
         "zoneFerme": {
@@ -16799,7 +16840,7 @@
         },
         "zoneDominantPercentage": {
           "value": 46.15384615384615,
-          "percentile": 56.00000000000001,
+          "percentile": 60,
           "category": "ABOVE_AVERAGE"
         },
         "zoneTotalPositions": {
@@ -16809,12 +16850,12 @@
         },
         "wolfTransformRate": {
           "value": 0.5882352941176471,
-          "percentile": 47.05882352941176,
+          "percentile": 47.368421052631575,
           "category": "AVERAGE"
         },
         "wolfUntransformRate": {
           "value": 0.29411764705882354,
-          "percentile": 82.35294117647058,
+          "percentile": 84.21052631578947,
           "category": "HIGH"
         },
         "potionsPer60Min": {
@@ -16890,7 +16931,7 @@
           "description": "Vote vite et souvent",
           "priority": 10,
           "type": "combination",
-          "percentile": 68.78378378378378,
+          "percentile": 70.45045045045045,
           "conditions": [
             {
               "stat": "votingAggressive",
@@ -16902,7 +16943,7 @@
               "stat": "votingFirst",
               "category": "HIGH",
               "actualValue": 47.368421052631575,
-              "actualPercentile": 70
+              "actualPercentile": 73.33333333333333
             }
           ]
         },
@@ -16937,7 +16978,7 @@
           "description": "Survit au Jour 1",
           "stat": "survivalDay1Rate",
           "value": 87.09677419354838,
-          "percentile": 91.8918918918919,
+          "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH",
           "priority": 8,
           "type": "basic"
@@ -16952,7 +16993,8 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "DevGirl_"
         },
         {
           "id": "loot_extreme_low",
@@ -17058,7 +17100,7 @@
           "description": "Premier·ère voteur·se",
           "stat": "votingFirst",
           "value": 47.368421052631575,
-          "percentile": 70,
+          "percentile": 73.33333333333333,
           "category": "HIGH",
           "priority": 6,
           "type": "basic"
@@ -17076,12 +17118,36 @@
           "type": "basic"
         },
         {
+          "id": "wolfTransformRate_low",
+          "title": "Le·a Loup Prudent·e",
+          "emoji": "🐕",
+          "description": "Se transforme rarement",
+          "stat": "wolfTransformRate",
+          "value": 0.5263157894736842,
+          "percentile": 26.31578947368421,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "wolfUntransformRate_low",
+          "title": "Le Loup Assumé",
+          "emoji": "🐺",
+          "description": "Se détransforme rarement",
+          "stat": "wolfUntransformRate",
+          "value": 0.05263157894736842,
+          "percentile": 21.052631578947366,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
           "id": "potionUsage_low",
           "title": "Le·a Sobre",
           "emoji": "💧",
           "description": "Boit peu de potions",
           "stat": "potionsPer60Min",
-          "value": 1.85789985654359,
+          "value": 1.9906069891538465,
           "percentile": 25.925925925925924,
           "category": "LOW",
           "priority": 6,
@@ -17104,7 +17170,7 @@
           "description": "Performance stable",
           "stat": "winRate",
           "value": 38.7,
-          "percentile": 40.54054054054054,
+          "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE",
           "priority": 4,
           "type": "basic"
@@ -17136,7 +17202,7 @@
       "percentiles": {
         "winRate": {
           "value": 38.7,
-          "percentile": 40.54054054054054,
+          "percentile": 43.24324324324324,
           "category": "BELOW_AVERAGE"
         },
         "gamesPlayed": {
@@ -17201,7 +17267,7 @@
         },
         "votingFirst": {
           "value": 47.368421052631575,
-          "percentile": 70,
+          "percentile": 73.33333333333333,
           "category": "HIGH"
         },
         "survivalRate": {
@@ -17211,7 +17277,7 @@
         },
         "survivalDay1Rate": {
           "value": 87.09677419354838,
-          "percentile": 91.8918918918919,
+          "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH"
         },
         "killRate": {
@@ -17246,22 +17312,22 @@
         },
         "lootSoloPer60Min": {
           "value": 627.4531914966568,
-          "percentile": 30,
+          "percentile": 33.33333333333333,
           "category": "LOW"
         },
         "zoneVillagePrincipal": {
           "value": 44.89795918367347,
-          "percentile": 48,
+          "percentile": 52,
           "category": "AVERAGE"
         },
         "zoneFerme": {
           "value": 12.244897959183673,
-          "percentile": 24,
+          "percentile": 28.000000000000004,
           "category": "LOW"
         },
         "zoneVillagePecheur": {
           "value": 17.346938775510203,
-          "percentile": 48,
+          "percentile": 52,
           "category": "AVERAGE"
         },
         "zoneRuines": {
@@ -17276,7 +17342,7 @@
         },
         "zoneDominantPercentage": {
           "value": 44.89795918367347,
-          "percentile": 48,
+          "percentile": 52,
           "category": "AVERAGE"
         },
         "zoneTotalPositions": {
@@ -17284,8 +17350,18 @@
           "percentile": 32,
           "category": "LOW"
         },
+        "wolfTransformRate": {
+          "value": 0.5263157894736842,
+          "percentile": 26.31578947368421,
+          "category": "LOW"
+        },
+        "wolfUntransformRate": {
+          "value": 0.05263157894736842,
+          "percentile": 21.052631578947366,
+          "category": "LOW"
+        },
         "potionsPer60Min": {
-          "value": 1.85789985654359,
+          "value": 1.9906069891538465,
           "percentile": 25.925925925925924,
           "category": "LOW"
         }
@@ -17321,7 +17397,9 @@
         "zoneResteCarte": 15.306122448979592,
         "zoneDominantPercentage": 44.89795918367347,
         "zoneTotalPositions": 98,
-        "potionsPer60Min": 1.85789985654359
+        "wolfTransformRate": 0.5263157894736842,
+        "wolfUntransformRate": 0.05263157894736842,
+        "potionsPer60Min": 1.9906069891538465
       }
     }
   }
