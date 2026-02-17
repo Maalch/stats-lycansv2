@@ -9,8 +9,8 @@ import { CHART_LIMITS } from '../../config/chartConstants';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { FullscreenChart } from '../common/FullscreenChart';
 
-// Threshold: player must have played at least 35% of month's games to be ranked
-const MIN_PARTICIPATION_RATIO = 0.35;
+// Threshold: player must have played at least 40% of month's games to be ranked
+const MIN_PARTICIPATION_RATIO = 0.40;
 
 interface MonthlyPlayerStat {
   player: string;
