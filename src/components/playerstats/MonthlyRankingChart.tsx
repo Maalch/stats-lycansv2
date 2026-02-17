@@ -326,8 +326,15 @@ export function MonthlyRankingChart() {
 
   const handleStepBackward = useCallback(() => {
     setIsPlaying(false);
-    setCurrentGameIndex(prev => Math.max(1, prev - 1));
-  }, []);
+    if (!currentMonthData) return;
+    setCurrentGameIndex(prev => {
+      if (prev === 0) {
+        // Wrap around from all-games view to second-to-last game (or first game if only 1 game)
+        return Math.max(1, currentMonthData.totalGames - 1);
+      }
+      return Math.max(1, prev - 1);
+    });
+  }, [currentMonthData]);
 
   const handleStepForward = useCallback(() => {
     setIsPlaying(false);
@@ -454,16 +461,16 @@ export function MonthlyRankingChart() {
             }}>
               <button
                 onClick={handleStepBackward}
-                disabled={currentGameIndex <= 1}
+                disabled={!currentMonthData || currentMonthData.totalGames === 0}
                 style={{
                   background: 'var(--bg-secondary)',
-                  color: currentGameIndex > 1 ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  color: (currentMonthData && currentMonthData.totalGames > 0) ? 'var(--text-primary)' : 'var(--text-secondary)',
                   border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   padding: '0.4rem 0.8rem',
                   fontSize: '0.9rem',
-                  cursor: currentGameIndex > 1 ? 'pointer' : 'not-allowed',
-                  opacity: currentGameIndex > 1 ? 1 : 0.5
+                  cursor: (currentMonthData && currentMonthData.totalGames > 0) ? 'pointer' : 'not-allowed',
+                  opacity: (currentMonthData && currentMonthData.totalGames > 0) ? 1 : 0.5
                 }}
               >
                 ◀ Précédente
