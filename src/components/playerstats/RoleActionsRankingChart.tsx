@@ -475,7 +475,7 @@ export function RoleActionsRankingChart() {
             <div>
               <h3>🐺 Détransformations par Transformation (Loup)</h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
-                Ratio de retour à forme humaine. Élevé = joueur qui se détransforme souvent (+prudent). Bas = reste transformé longtemps (+agressif).
+                Ratio de retour à forme humaine. Élevé = joueur qui se détransforme souvent. Bas = reste transformé longtemps.
               </p>
               {untransformsHighlightedAdded && settings.highlightedPlayer && (
                 <p style={{ 
