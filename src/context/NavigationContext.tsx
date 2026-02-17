@@ -57,7 +57,6 @@ export interface PlayersGeneralState {
   minGamesForWinRate: number;
   winRateOrder: 'best' | 'worst';
   focusChart?: 'participation' | 'winRate'; // Which chart to focus on when navigating
-  selectedMonth?: string; // "YYYY-MM" for monthly ranking view
 }
 
 export interface DeathStatisticsState {
@@ -108,6 +107,12 @@ export interface DeathLocationState {
   selectedDeathTypes?: string[]; // Array of selected death type codes for multi-select filtering
 }
 
+export interface MonthlyRankingState {
+  selectedMonth?: string; // "YYYY-MM" for monthly ranking view
+  currentGameIndex?: number; // 0 = show all games, >0 = show first N games (for animation)
+  playSpeed?: number; // Animation speed in milliseconds (500, 1000, 2000)
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -137,6 +142,7 @@ export interface NavigationState {
   lootStatsState?: LootStatsState;
   deathLocationState?: DeathLocationState;
   roleActionsRankingState?: RoleActionsRankingState;
+  monthlyRankingState?: MonthlyRankingState;
 }
 
 interface NavigationContextType {

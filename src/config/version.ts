@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.9';
+export const APP_VERSION = '1.7.10';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -26,6 +26,16 @@ export const CHANGELOG: ChangelogEntry[] = [
     }
   },
   */
+  {
+    version: 'v1.7.10',
+    date: '17/02/2026',
+    description: 'Ajout d\'une animation partie par partie sur le classement mensuel (bouton Play pour voir l\'évolution des classements au fil du mois) dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'monthlyRanking',
+      text: 'Classements / Classements Mensuels'
+    }
+  },
   {
     version: 'v1.7.9',
     date: '13/02/2026',

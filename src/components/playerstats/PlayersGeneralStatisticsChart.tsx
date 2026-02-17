@@ -9,7 +9,6 @@ import { minGamesOptions } from '../../types/api';
 import { MIN_GAMES_DEFAULTS, CHART_LIMITS } from '../../config/chartConstants';
 import type { PlayerStat } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
-import { MonthlyRankingView } from './MonthlyRankingView';
 
 // Extended type for chart data with highlighting info
 type ChartPlayerStat = PlayerStat & {
@@ -32,9 +31,6 @@ export function PlayersGeneralStatisticsChart() {
     navigationState.playersGeneralState?.winRateOrder || 'best'
   );
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<string | null>(
-    navigationState.playersGeneralState?.selectedMonth || null
-  );
 
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
@@ -45,18 +41,16 @@ export function PlayersGeneralStatisticsChart() {
     const currentNavState = navigationState.playersGeneralState;
     if (!currentNavState || 
         currentNavState.minGamesForWinRate !== minGamesForWinRate ||
-        currentNavState.winRateOrder !== winRateOrder ||
-        currentNavState.selectedMonth !== selectedMonth) {
+        currentNavState.winRateOrder !== winRateOrder) {
       updateNavigationState({
         playersGeneralState: {
           minGamesForWinRate,
           winRateOrder,
-          focusChart: currentNavState?.focusChart, // Preserve focus chart from ranking navigation
-          selectedMonth: selectedMonth || undefined
+          focusChart: currentNavState?.focusChart // Preserve focus chart from ranking navigation
         }
       });
     }
-  }, [minGamesForWinRate, winRateOrder, selectedMonth, updateNavigationState]);
+  }, [minGamesForWinRate, winRateOrder, updateNavigationState]);
 
   // Optimized data processing - combine multiple operations to reduce iterations
   const { participationData, winRateData, averageWinRate, totalEligiblePlayers, highlightedPlayerInParticipation, highlightedPlayerInWinRate } = useMemo(() => {
@@ -547,11 +541,6 @@ export function PlayersGeneralStatisticsChart() {
             Top {winRateData.length} des joueurs (sur {totalEligiblePlayers} ayant au moins {minGamesForWinRate} partie{minGamesForWinRate > 1 ? 's' : ''})
           </p>
         </div>
-
-        <MonthlyRankingView
-          selectedMonth={selectedMonth}
-          onMonthChange={setSelectedMonth}
-        />
       </div>
     </div>
   );

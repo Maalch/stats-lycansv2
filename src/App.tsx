@@ -19,6 +19,7 @@ const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeri
 const TalkingTimeChart = lazy(() => import('./components/playerstats/TalkingTimeChart').then(m => ({ default: m.TalkingTimeChart })));
 const LootStatisticsChart = lazy(() => import('./components/playerstats/LootStatisticsChart').then(m => ({ default: m.LootStatisticsChart })));
 const RoleActionsRankingChart = lazy(() => import('./components/playerstats/RoleActionsRankingChart').then(m => ({ default: m.RoleActionsRankingChart })));
+const MonthlyRankingChart = lazy(() => import('./components/playerstats/MonthlyRankingChart').then(m => ({ default: m.MonthlyRankingChart })));
 
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsAndKills/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
@@ -116,6 +117,13 @@ const PLAYER_STATS_MENU = [
     description: 'Classement par participations et victoires'
   },
   { 
+    key: 'monthlyRanking', 
+    label: 'Classements Mensuels', 
+    component: MonthlyRankingChart,
+    description: 'Classement des joueurs par mois (min. 40% de participation)'
+  },
+
+  { 
     key: 'campStats', 
     label: 'Camps & Rôles', 
     component: PlayerCampChart,
@@ -168,9 +176,7 @@ const PLAYER_STATS_MENU = [
     label: 'Face à Face', 
     component: PlayerComparisonChart,
     description: 'Comparaison détaillée entre deux joueurs'
-  },
-
-
+  }
 ];
 
 const GENERAL_STATS_MENU = [
