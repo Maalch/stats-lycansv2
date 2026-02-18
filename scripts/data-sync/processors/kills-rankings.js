@@ -135,6 +135,86 @@ function findPlayerSurvivalRank(topSurvivors, playerId) {
 }
 
 /**
+ * Helper function to find players with highest death rates
+ * @param {Array} playerDeathStats - Array of player death statistics
+ * @param {number} minGames - Minimum games required
+ * @returns {Array} - All players sorted by death rate (highest first)
+ */
+function findTopDeathRates(playerDeathStats, minGames = 25) {
+  return playerDeathStats
+    .filter(player => player.gamesPlayed >= minGames)
+    .sort((a, b) => b.deathRate - a.deathRate);
+}
+
+/**
+ * Helper function to find player's rank in death rate ranking
+ * @param {Array} topDeathRates - Top death rates array (sorted by highest death rate)
+ * @param {string} playerId - Player ID (Steam ID) to find
+ * @returns {Object|null} - Rank info or null
+ */
+function findPlayerDeathRateRank(topDeathRates, playerId) {
+  const index = topDeathRates.findIndex(player => player.player === playerId);
+  if (index === -1) return null;
+  
+  const playerStats = topDeathRates[index];
+  const playerValue = playerStats.deathRate;
+  
+  // Calculate true rank considering ties (higher death rate = higher rank)
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    if (topDeathRates[i].deathRate > playerValue) {
+      rank++;
+    }
+  }
+  
+  return {
+    rank: rank,
+    value: playerValue,
+    stats: playerStats
+  };
+}
+
+/**
+ * Helper function to find top Day 1 survivors (highest Day 1 survival rate)
+ * @param {Array} playerDeathStats - Array of player death statistics
+ * @param {number} minGames - Minimum games required
+ * @returns {Array} - All players sorted by Day 1 survival rate (highest first)
+ */
+function findTopDay1Survivors(playerDeathStats, minGames = 25) {
+  return playerDeathStats
+    .filter(player => player.gamesPlayed >= minGames && player.survivalDay1Rate !== null && player.survivalDay1Rate !== undefined)
+    .sort((a, b) => b.survivalDay1Rate - a.survivalDay1Rate);
+}
+
+/**
+ * Helper function to find player's rank in Day 1 survival ranking
+ * @param {Array} topDay1Survivors - Top Day 1 survivors array (sorted by highest survival rate)
+ * @param {string} playerId - Player ID (Steam ID) to find
+ * @returns {Object|null} - Rank info or null
+ */
+function findPlayerDay1SurvivalRank(topDay1Survivors, playerId) {
+  const index = topDay1Survivors.findIndex(player => player.player === playerId);
+  if (index === -1) return null;
+  
+  const playerStats = topDay1Survivors[index];
+  const playerValue = playerStats.survivalDay1Rate;
+  
+  // Calculate true rank considering ties (higher survival rate = higher rank)
+  let rank = 1;
+  for (let i = 0; i < index; i++) {
+    if (topDay1Survivors[i].survivalDay1Rate > playerValue) {
+      rank++;
+    }
+  }
+  
+  return {
+    rank: rank,
+    value: playerValue,
+    stats: playerStats
+  };
+}
+
+/**
  * Helper function to find top hunters (good hunters - non-Villageois kills)
  * @param {Array} hunterStats - Array of hunter statistics
  * @param {number} minGames - Minimum games required
@@ -235,27 +315,7 @@ export function processKillsRankings(deathStats, hunterStats, playerId, suffix) 
 
   // GOOD Rankings (Killer Rankings)
 
-  // 1. Killers ranking (total kills)
-  const topKillers = findTopKillers(deathStats.killerStats, 1, 'kills');
-  const killerRank = findPlayerKillerRank(topKillers, playerId);
-  if (killerRank) {
-    Rankings.push(createKillsRanking(
-      `top-killer-${suffix ? 'modded' : 'all'}`,
-      `⚔️ Top ${killerRank.rank} Tueur${suffix}`,
-      `${killerRank.rank}${killerRank.rank === 1 ? 'er' : 'ème'} plus grand tueur avec ${killerRank.value} éliminations`,
-      'good',
-      killerRank.rank,
-      killerRank.value,
-      topKillers.length,
-      {
-        tab: 'rankings',
-        subTab: 'deathStats',
-        chartSection: 'killers'
-      }
-    ));
-  }
-
-  // 2. Killers ranking (average per game, min. 20 games)
+  // 1. Killers ranking (average per game, min. 20 games)
   const topKillersAverage = findTopKillers(deathStats.killerStats, 20, 'averageKillsPerGame');
   const killerAverageRank = findPlayerKillerRank(topKillersAverage, playerId);
   if (killerAverageRank) {
@@ -319,27 +379,47 @@ export function processKillsRankings(deathStats, hunterStats, playerId, suffix) 
 
   // BAD Rankings (Death Rankings)
 
-  // 5. Most killed ranking (total deaths)
-  const topDeaths = findTopDeaths(deathStats.playerDeathStats, 'totalDeaths', 1);
-  const deathRank = findPlayerDeathRank(topDeaths, playerId, 'totalDeaths');
-  if (deathRank) {
+  // 5. Highest death rate ranking (deaths per game, min. 25 games)
+  const topDeathRates = findTopDeathRates(deathStats.playerDeathStats, 25);
+  const deathRateRank = findPlayerDeathRateRank(topDeathRates, playerId);
+  if (deathRateRank) {
     Rankings.push(createKillsRanking(
-      `top-killed-${suffix ? 'modded' : 'all'}`,
-      `💀 Top ${deathRank.rank} Victime${suffix}`,
-      `${deathRank.rank}${deathRank.rank === 1 ? 'ère' : 'ème'} joueur le plus éliminé avec ${deathRank.value} morts`,
+      `top-death-rate-${suffix ? 'modded' : 'all'}`,
+      `☠️ Top ${deathRateRank.rank} Taux de Mortalité${suffix}`,
+      `${deathRateRank.rank}${deathRateRank.rank === 1 ? 'er' : 'ème'} taux de mortalité le plus élevé: ${deathRateRank.value.toFixed(2)} morts par partie (min. 25 parties)`,
       'bad',
-      deathRank.rank,
-      deathRank.value,
-      topDeaths.length,
+      deathRateRank.rank,
+      parseFloat(deathRateRank.value.toFixed(2)),
+      topDeathRates.length,
       {
         tab: 'rankings',
         subTab: 'deathStats',
-        chartSection: 'deaths'
+        chartSection: 'death-rate'
       }
     ));
   }
 
-  // 6. Bad hunters ranking (average Villageois kills per game, min. 5 games as hunter)
+  // 6. Day 1 survival rate ranking (best Day 1 survival, min. 25 games)
+  const topDay1Survivors = findTopDay1Survivors(deathStats.playerDeathStats, 25);
+  const day1SurvivalRank = findPlayerDay1SurvivalRank(topDay1Survivors, playerId);
+  if (day1SurvivalRank) {
+    Rankings.push(createKillsRanking(
+      `top-day1-survivor-${suffix ? 'modded' : 'all'}`,
+      `🌅 Top ${day1SurvivalRank.rank} Survie Jour 1${suffix}`,
+      `${day1SurvivalRank.rank}${day1SurvivalRank.rank === 1 ? 'er' : 'ème'} meilleur taux de survie Jour 1: ${day1SurvivalRank.value.toFixed(1)}% (min. 25 parties)`,
+      'good',
+      day1SurvivalRank.rank,
+      parseFloat(day1SurvivalRank.value.toFixed(1)),
+      topDay1Survivors.length,
+      {
+        tab: 'rankings',
+        subTab: 'deathStats',
+        chartSection: 'day1-survivors'
+      }
+    ));
+  }
+
+  // 7. Bad hunters ranking (average Villageois kills per game, min. 5 games as hunter)
   if (hunterStats && hunterStats.hunterStats) {
     const topBadHunters = findTopBadHunters(hunterStats.hunterStats, 5);
     const badHunterRank = findPlayerBadHunterRank(topBadHunters, playerId);

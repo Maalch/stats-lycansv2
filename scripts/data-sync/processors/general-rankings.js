@@ -16,22 +16,7 @@ export function processGeneralRankings(playerStats, playerId, suffix) {
 
   if (!playerStats || playerStats.length === 0) return Rankings;
 
-  // 1. Participations ranking
-  const byParticipations = [...playerStats].sort((a, b) => b.gamesPlayed - a.gamesPlayed);
-  const participationRank = findPlayerRank(byParticipations, playerId, p => p.gamesPlayed);
-  if (participationRank) {
-    Rankings.push(createRanking(
-      `participation-${suffix ? 'modded' : 'all'}`,
-      `📊 Rang ${participationRank.rank} Participations${suffix}`,
-      `${participationRank.rank}${participationRank.rank === 1 ? 'er' : 'ème'} joueur le plus actif avec ${participationRank.value} parties`,
-      'good',
-      participationRank.rank,
-      participationRank.value,
-      byParticipations.length
-    ));
-  }
-
-  // 2. Best win rate ranking (min. 10 games)
+  // 1. Best win rate ranking (min. 10 games)
   const eligibleFor10Games = playerStats.filter(p => p.gamesPlayed >= 10);
   const byWinRate10 = [...eligibleFor10Games].sort((a, b) => parseFloat(b.winPercent) - parseFloat(a.winPercent));
   const winRate10Rank = findPlayerRank(byWinRate10, playerId, p => parseFloat(p.winPercent));
