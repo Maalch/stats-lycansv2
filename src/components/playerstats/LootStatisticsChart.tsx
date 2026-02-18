@@ -193,9 +193,9 @@ export function LootStatisticsChart() {
 
   return (
     <div className="lycans-players-stats">
-      <h2>Statistiques de Récolte de Loot</h2>
+      <h2>Statistiques de Récolte</h2>
       <p className="lycans-stats-info">
-        {lootData.gamesWithLootData} parties avec données de loot collecté. 
+        {lootData.gamesWithLootData} parties avec données de récolte. 
       </p>
 
       <div className="lycans-graphiques-groupe">
