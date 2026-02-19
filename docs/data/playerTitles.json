@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-18T10:03:12.359Z",
+  "generatedAt": "2026-02-19T10:51:31.438Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -8080,8 +8080,7 @@
               "actualValue": 13,
               "actualPercentile": 86.48648648648648
             }
-          ],
-          "primaryOwner": "CHLOE"
+          ]
         },
         {
           "id": "debutant",
@@ -8110,7 +8109,8 @@
               "actualValue": 552.7810057931831,
               "actualPercentile": 17.391304347826086
             }
-          ]
+          ],
+          "primaryOwner": "Raumane"
         },
         {
           "id": "en_rodage",
@@ -8139,7 +8139,8 @@
               "actualValue": 0,
               "actualPercentile": 0
             }
-          ]
+          ],
+          "primaryOwner": "CHLOE"
         },
         {
           "id": "winRate_extreme_low",
@@ -8151,8 +8152,7 @@
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -8310,31 +8310,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "debutant",
-        "title": "Le·a Débutant·e",
-        "emoji": "🆘",
-        "description": "Peine en victoire, survie et récolte",
-        "priority": 11,
+        "id": "poissard",
+        "title": "Le·a Poissard·e",
+        "emoji": "🌧️",
+        "description": "Perd tout le temps + grosses séries de défaites",
+        "priority": 12,
         "type": "combination",
-        "percentile": 17.508813160987074,
+        "percentile": 45.945945945945944,
         "conditions": [
           {
             "stat": "winRate",
-            "category": "LOW",
+            "category": "EXTREME_LOW",
             "actualValue": 29.9,
             "actualPercentile": 5.405405405405405
           },
           {
-            "stat": "survival",
-            "category": "LOW",
-            "actualValue": 27.559055118110237,
-            "actualPercentile": 29.72972972972973
-          },
-          {
-            "stat": "loot",
-            "category": "LOW",
-            "actualValue": 552.7810057931831,
-            "actualPercentile": 17.391304347826086
+            "stat": "lossSeries",
+            "category": "HIGH",
+            "actualValue": 13,
+            "actualPercentile": 86.48648648648648
           }
         ]
       },
@@ -9739,7 +9733,7 @@
               "actualPercentile": 89.1891891891892
             }
           ],
-          "primaryOwner": "CHLOE"
+          "primaryOwner": "Craco"
         },
         {
           "id": "avide",
@@ -9861,7 +9855,8 @@
               "actualValue": 4.3478260869565215,
               "actualPercentile": 32.432432432432435
             }
-          ]
+          ],
+          "primaryOwner": "CHLOE"
         },
         {
           "id": "enthusiaste",
@@ -9895,8 +9890,7 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -11201,9 +11195,33 @@
     },
     "76561198849250630": {
       "playerId": "76561198849250630",
-      "playerName": "Mathy",
+      "playerName": "MathyMoon",
       "gamesPlayed": 263,
       "titles": [
+        {
+          "id": "poissard",
+          "title": "Le·a Poissard·e",
+          "emoji": "🌧️",
+          "description": "Perd tout le temps + grosses séries de défaites",
+          "priority": 12,
+          "type": "combination",
+          "percentile": 41.891891891891895,
+          "conditions": [
+            {
+              "stat": "winRate",
+              "category": "EXTREME_LOW",
+              "actualValue": 31.6,
+              "actualPercentile": 13.513513513513514
+            },
+            {
+              "stat": "lossSeries",
+              "category": "HIGH",
+              "actualValue": 11,
+              "actualPercentile": 70.27027027027027
+            }
+          ],
+          "primaryOwner": "Craco"
+        },
         {
           "id": "pharmacien",
           "title": "Le·a Pharmacien·ne",
@@ -11234,7 +11252,7 @@
           "description": "Boit des potions mais ça ne l'aide pas à gagner",
           "priority": 11,
           "type": "combination",
-          "percentile": 41.44144144144144,
+          "percentile": 40.09009009009009,
           "conditions": [
             {
               "stat": "potionUsage",
@@ -11245,8 +11263,8 @@
             {
               "stat": "winRate",
               "category": "LOW",
-              "actualValue": 31.9,
-              "actualPercentile": 16.216216216216218
+              "actualValue": 31.6,
+              "actualPercentile": 13.513513513513514
             }
           ]
         },
@@ -11271,6 +11289,18 @@
               "actualPercentile": 0
             }
           ]
+        },
+        {
+          "id": "winRate_extreme_low",
+          "title": "Le·a Maudit·e",
+          "emoji": "🪦",
+          "description": "Perd presque toujours",
+          "stat": "winRate",
+          "value": 31.6,
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW",
+          "priority": 8,
+          "type": "basic"
         },
         {
           "id": "talking_extreme_low",
@@ -11335,18 +11365,6 @@
           "priority": 8,
           "type": "basic",
           "primaryOwner": "Miraaaaaah"
-        },
-        {
-          "id": "winRate_low",
-          "title": "Le·a Looser",
-          "emoji": "😢",
-          "description": "Taux de victoire faible",
-          "stat": "winRate",
-          "value": 31.9,
-          "percentile": 16.216216216216218,
-          "category": "LOW",
-          "priority": 6,
-          "type": "basic"
         },
         {
           "id": "participation_high",
@@ -11540,9 +11558,9 @@
       },
       "percentiles": {
         "winRate": {
-          "value": 31.9,
-          "percentile": 16.216216216216218,
-          "category": "LOW"
+          "value": 31.6,
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW"
         },
         "gamesPlayed": {
           "value": 263,
@@ -11560,7 +11578,7 @@
           "category": "LOW"
         },
         "winRateSolo": {
-          "value": 8.51063829787234,
+          "value": 6.382978723404255,
           "percentile": 37.83783783783784,
           "category": "BELOW_AVERAGE"
         },
@@ -11721,11 +11739,11 @@
         }
       },
       "stats": {
-        "winRate": 31.9,
+        "winRate": 31.6,
         "gamesPlayed": 263,
         "winRateVillageois": 41.17647058823529,
         "winRateLoup": 21.73913043478261,
-        "winRateSolo": 8.51063829787234,
+        "winRateSolo": 6.382978723404255,
         "campVillageoisPercent": 64.63878326996198,
         "campLoupPercent": 17.490494296577946,
         "campSoloPercent": 17.870722433460077,
@@ -11765,42 +11783,19 @@
       "gamesPlayed": 233,
       "titles": [
         {
-          "id": "poissard",
-          "title": "Le·a Poissard·e",
-          "emoji": "🌧️",
-          "description": "Perd tout le temps + grosses séries de défaites",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 55.40540540540541,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "EXTREME_LOW",
-              "actualValue": 31.8,
-              "actualPercentile": 13.513513513513514
-            },
-            {
-              "stat": "lossSeries",
-              "category": "HIGH",
-              "actualValue": 18,
-              "actualPercentile": 97.2972972972973
-            }
-          ]
-        },
-        {
           "id": "debutant",
           "title": "Le·a Débutant·e",
           "emoji": "🆘",
           "description": "Peine en victoire, survie et récolte",
           "priority": 11,
           "type": "combination",
-          "percentile": 9.753231492361927,
+          "percentile": 10.654132393262827,
           "conditions": [
             {
               "stat": "winRate",
               "category": "LOW",
               "actualValue": 31.8,
-              "actualPercentile": 13.513513513513514
+              "actualPercentile": 16.216216216216218
             },
             {
               "stat": "survival",
@@ -11815,7 +11810,7 @@
               "actualPercentile": 13.043478260869565
             }
           ],
-          "primaryOwner": "Craco"
+          "primaryOwner": "Raumane"
         },
         {
           "id": "en_rodage",
@@ -11867,19 +11862,6 @@
               "actualPercentile": 0
             }
           ]
-        },
-        {
-          "id": "winRate_extreme_low",
-          "title": "Le·a Maudit·e",
-          "emoji": "🪦",
-          "description": "Perd presque toujours",
-          "stat": "winRate",
-          "value": 31.8,
-          "percentile": 13.513513513513514,
-          "category": "EXTREME_LOW",
-          "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
         },
         {
           "id": "winRateLoup_extreme_low",
@@ -11951,6 +11933,18 @@
           "percentile": 13.043478260869565,
           "category": "EXTREME_LOW",
           "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "winRate_low",
+          "title": "Le·a Looser",
+          "emoji": "😢",
+          "description": "Taux de victoire faible",
+          "stat": "winRate",
+          "value": 31.8,
+          "percentile": 16.216216216216218,
+          "category": "LOW",
+          "priority": 6,
           "type": "basic"
         },
         {
@@ -12121,33 +12115,39 @@
         }
       ],
       "primaryTitle": {
-        "id": "poissard",
-        "title": "Le·a Poissard·e",
-        "emoji": "🌧️",
-        "description": "Perd tout le temps + grosses séries de défaites",
-        "priority": 12,
+        "id": "en_rodage",
+        "title": "En Rodage",
+        "emoji": "🔧",
+        "description": "Peine dans tous les camps",
+        "priority": 11,
         "type": "combination",
-        "percentile": 55.40540540540541,
+        "percentile": 20.89508863702412,
         "conditions": [
           {
-            "stat": "winRate",
-            "category": "EXTREME_LOW",
-            "actualValue": 31.8,
-            "actualPercentile": 13.513513513513514
+            "stat": "winRateVillageois",
+            "category": "LOW",
+            "actualValue": 44.44444444444444,
+            "actualPercentile": 29.72972972972973
           },
           {
-            "stat": "lossSeries",
-            "category": "HIGH",
-            "actualValue": 18,
-            "actualPercentile": 97.2972972972973
+            "stat": "winRateLoup",
+            "category": "LOW",
+            "actualValue": 12.5,
+            "actualPercentile": 3.225806451612903
+          },
+          {
+            "stat": "winRateSolo",
+            "category": "LOW",
+            "actualValue": 2.5,
+            "actualPercentile": 29.72972972972973
           }
         ]
       },
       "percentiles": {
         "winRate": {
           "value": 31.8,
-          "percentile": 13.513513513513514,
-          "category": "EXTREME_LOW"
+          "percentile": 16.216216216216218,
+          "category": "LOW"
         },
         "gamesPlayed": {
           "value": 233,
@@ -12899,8 +12899,7 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -13495,8 +13494,7 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "Raumane"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -15454,7 +15452,7 @@
               "actualPercentile": 26.08695652173913
             }
           ],
-          "primaryOwner": "Mathy"
+          "primaryOwner": "MathyMoon"
         },
         {
           "id": "prudent",
@@ -15930,8 +15928,7 @@
               "actualValue": 511.7920855473382,
               "actualPercentile": 0
             }
-          ],
-          "primaryOwner": "Craco"
+          ]
         },
         {
           "id": "winRate_extreme_low",
@@ -16101,16 +16098,33 @@
         }
       ],
       "primaryTitle": {
-        "id": "winRate_extreme_low",
-        "title": "Le·a Maudit·e",
-        "emoji": "🪦",
-        "description": "Perd presque toujours",
-        "stat": "winRate",
-        "value": 29.7,
-        "percentile": 2.7027027027027026,
-        "category": "EXTREME_LOW",
-        "priority": 8,
-        "type": "basic"
+        "id": "debutant",
+        "title": "Le·a Débutant·e",
+        "emoji": "🆘",
+        "description": "Peine en victoire, survie et récolte",
+        "priority": 11,
+        "type": "combination",
+        "percentile": 4.054054054054054,
+        "conditions": [
+          {
+            "stat": "winRate",
+            "category": "LOW",
+            "actualValue": 29.7,
+            "actualPercentile": 2.7027027027027026
+          },
+          {
+            "stat": "survival",
+            "category": "LOW",
+            "actualValue": 22.88135593220339,
+            "actualPercentile": 5.405405405405405
+          },
+          {
+            "stat": "loot",
+            "category": "LOW",
+            "actualValue": 511.7920855473382,
+            "actualPercentile": 0
+          }
+        ]
       },
       "percentiles": {
         "winRate": {
