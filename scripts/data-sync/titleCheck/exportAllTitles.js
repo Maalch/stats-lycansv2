@@ -5,8 +5,6 @@ import fs from 'fs';
 
 // Helper to translate stat names to French
 const statNamesFr = {
-  talking: 'Temps de parole',
-  loot: 'Récolte',
   killRate: 'Taux de kills',
   killRateVillageois: 'Taux de kills Villageois',
   killRateLoup: 'Taux de kills Loup',
@@ -22,13 +20,11 @@ const statNamesFr = {
   survivalAtMeetingVillageois: 'Survie au meeting (Villageois)',
   survivalAtMeetingLoup: 'Survie au meeting (Loup)',
   survivalAtMeetingSolo: 'Survie au meeting (Solo)',
+  talking: 'Temps de parole',
   talkingOutsideMeeting: 'Parole hors meeting',
   talkingDuringMeeting: 'Parole en meeting',
-  talkingPer60Min: 'Temps de parole (par 60 min)',
-  lootPer60Min: 'Récolte (par 60 min)',
-  lootVillageoisPer60Min: 'Récolte Villageois (par 60 min)',
+  loot: 'Récolte',
   lootVillageois: 'Récolte Villageois',
-  lootLoupPer60Min: 'Récolte Loup (par 60 min)',
   lootLoup: 'Récolte Loup',
   votingAggressive: 'Vote agressif',
   votingFirst: 'Premier voteur',
@@ -48,7 +44,6 @@ const statNamesFr = {
   campBalance: 'Équilibre des camps',
   wolfTransformRate: 'Taux de transformation en loup',
   wolfUntransformRate: 'Taux de retour après transformation',
-  potionsPer60Min: 'Utilisation de potions (par 60 min)',
   potionUsage: 'Utilisation de potions',
   zoneVillagePrincipal: 'Zone Village Principal',
   zoneFerme: 'Zone Ferme',
