@@ -56,8 +56,6 @@ const statNamesFr = {
   winRateSolo: 'Victoires Solo',
   winSeries: 'Série de victoires',
   lossSeries: 'Série de défaites',
-  roleChasseur: 'Rôle Chasseur',
-  roleAmoureux: 'Rôle Amoureux',
   campSolo: 'Camp Solo',
   gamesPlayed: 'Parties jouées',
   campBalance: 'Équilibre des camps',

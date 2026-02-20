@@ -77,48 +77,133 @@ export function buildDistributions(eligiblePlayers) {
 }
 
 // ============================================================================
-// BASIC STAT-BASED TITLES
+// UNIFIED STAT REGISTRY
 // ============================================================================
 
-const STAT_TO_TITLE_MAP = {
-  talkingPer60Min: 'talking',
-  talkingOutsidePer60Min: 'talkingOutsideMeeting',
-  talkingDuringPer60Min: 'talkingDuringMeeting',
-  killRate: 'killRate',
-  survivalRate: 'survival',
-  survivalDay1Rate: 'survivalDay1',
-  survivalRateVillageois: 'survivalVillageois',
-  survivalRateLoup: 'survivalLoup',
-  survivalRateSolo: 'survivalSolo',
-  survivalDay1RateVillageois: 'survivalDay1Villageois',
-  survivalDay1RateLoup: 'survivalDay1Loup',
-  survivalDay1RateSolo: 'survivalDay1Solo',
-  lootPer60Min: 'loot',
-  lootVillageoisPer60Min: 'lootVillageois',
-  lootLoupPer60Min: 'lootLoup',
-  lootObjectiveWinRateVillageois: 'lootObjectiveWinRateVillageois',
-  votingAggressiveness: 'votingAggressive',
-  votingFirst: 'votingFirst',
-  votingAccuracy: 'votingAccuracy',
-  hunterAccuracy: 'hunterAccuracy',
-  hunterShotAccuracy: 'hunterShotAccuracy',
-  winRate: 'winRate',
-  winRateVillageois: 'winRateVillageois',
-  winRateLoup: 'winRateLoup',
-  winRateSolo: 'winRateSolo',
-  longestWinSeries: 'winSeries',
-  longestLossSeries: 'lossSeries',
-  gamesPlayed: 'participation',
-  zoneVillagePrincipal: 'zoneVillagePrincipal',
-  zoneFerme: 'zoneFerme',
-  zoneVillagePecheur: 'zoneVillagePecheur',
-  zoneRuines: 'zoneRuines',
-  zoneResteCarte: 'zoneResteCarte',
-  zoneDominantPercentage: 'zoneDominantPercentage',
-  wolfTransformRate: 'wolfTransformRate',
-  wolfUntransformRate: 'wolfUntransformRate',
-  potionsPer60Min: 'potionUsage'
-};
+/**
+ * Single source of truth for all title-related stat mappings.
+ * Each entry defines:
+ *   - statKey:        the actual key in data.stats / percentiles (e.g. 'talkingPer60Min')
+ *   - titleDefKey:    the TITLE_DEFINITIONS lookup key for basic titles (null if combo-only)
+ *   - conditionAlias: the friendly name used in combination title conditions (null if basic-only)
+ *
+ * When statKey === conditionAlias the alias is still listed explicitly for discoverability.
+ * Virtual entries (no real stat) use statKey = null.
+ */
+const TITLE_STAT_REGISTRY = [
+  // --- Talking ---
+  { statKey: 'talkingPer60Min',                  titleDefKey: 'talking',                conditionAlias: 'talking' },
+  { statKey: 'talkingOutsidePer60Min',            titleDefKey: 'talkingOutsideMeeting',  conditionAlias: 'talkingOutsideMeeting' },
+  { statKey: 'talkingDuringPer60Min',             titleDefKey: 'talkingDuringMeeting',   conditionAlias: 'talkingDuringMeeting' },
+  // Camp-specific talking (combination titles only)
+  { statKey: 'talkingVillageoisPer60Min',         titleDefKey: null,                     conditionAlias: 'talkingVillageois' },
+  { statKey: 'talkingOutsideVillageoisPer60Min',  titleDefKey: null,                     conditionAlias: 'talkingOutsideVillageois' },
+  { statKey: 'talkingDuringVillageoisPer60Min',   titleDefKey: null,                     conditionAlias: 'talkingDuringVillageois' },
+  { statKey: 'talkingLoupPer60Min',               titleDefKey: null,                     conditionAlias: 'talkingLoup' },
+  { statKey: 'talkingOutsideLoupPer60Min',        titleDefKey: null,                     conditionAlias: 'talkingOutsideLoup' },
+  { statKey: 'talkingDuringLoupPer60Min',         titleDefKey: null,                     conditionAlias: 'talkingDuringLoup' },
+  { statKey: 'talkingSoloPer60Min',               titleDefKey: null,                     conditionAlias: 'talkingSolo' },
+  { statKey: 'talkingOutsideSoloPer60Min',        titleDefKey: null,                     conditionAlias: 'talkingOutsideSolo' },
+  { statKey: 'talkingDuringSoloPer60Min',         titleDefKey: null,                     conditionAlias: 'talkingDuringSolo' },
+
+  // --- Kill Rate ---
+  { statKey: 'killRate',              titleDefKey: 'killRate', conditionAlias: 'killRate' },
+  { statKey: 'killRateVillageois',    titleDefKey: null,       conditionAlias: 'killRateVillageois' },
+  { statKey: 'killRateLoup',          titleDefKey: null,       conditionAlias: 'killRateLoup' },
+  { statKey: 'killRateSolo',          titleDefKey: null,       conditionAlias: 'killRateSolo' },
+
+  // --- Survival ---
+  { statKey: 'survivalRate',                titleDefKey: 'survival',               conditionAlias: 'survival' },
+  { statKey: 'survivalDay1Rate',            titleDefKey: 'survivalDay1',           conditionAlias: 'survivalDay1' },
+  { statKey: 'survivalRateVillageois',      titleDefKey: 'survivalVillageois',     conditionAlias: 'survivalVillageois' },      // BUGFIX: was missing from CONDITION_STAT_MAP
+  { statKey: 'survivalRateLoup',            titleDefKey: 'survivalLoup',           conditionAlias: 'survivalLoup' },            // BUGFIX: was missing from CONDITION_STAT_MAP
+  { statKey: 'survivalRateSolo',            titleDefKey: 'survivalSolo',           conditionAlias: 'survivalSolo' },
+  { statKey: 'survivalDay1RateVillageois',  titleDefKey: 'survivalDay1Villageois', conditionAlias: 'survivalDay1Villageois' },
+  { statKey: 'survivalDay1RateLoup',        titleDefKey: 'survivalDay1Loup',       conditionAlias: 'survivalDay1Loup' },
+  { statKey: 'survivalDay1RateSolo',        titleDefKey: 'survivalDay1Solo',       conditionAlias: 'survivalDay1Solo' },
+  // Survival at meeting (combination titles only)
+  { statKey: 'survivalAtMeetingVillageois', titleDefKey: null,                     conditionAlias: 'survivalAtMeetingVillageois' },
+  { statKey: 'survivalAtMeetingLoup',       titleDefKey: null,                     conditionAlias: 'survivalAtMeetingLoup' },
+  { statKey: 'survivalAtMeetingSolo',       titleDefKey: null,                     conditionAlias: 'survivalAtMeetingSolo' },
+
+  // --- Loot ---
+  { statKey: 'lootPer60Min',                    titleDefKey: 'loot',                           conditionAlias: 'loot' },
+  { statKey: 'lootVillageoisPer60Min',           titleDefKey: 'lootVillageois',                 conditionAlias: 'lootVillageois' },
+  { statKey: 'lootLoupPer60Min',                 titleDefKey: 'lootLoup',                       conditionAlias: 'lootLoup' },
+  { statKey: 'lootObjectiveWinRateVillageois',   titleDefKey: 'lootObjectiveWinRateVillageois', conditionAlias: 'lootObjectiveWinRateVillageois' },
+
+  // --- Voting ---
+  { statKey: 'votingAggressiveness',          titleDefKey: 'votingAggressive', conditionAlias: 'votingAggressive' },
+  { statKey: 'votingFirst',                   titleDefKey: 'votingFirst',      conditionAlias: 'votingFirst' },
+  { statKey: 'votingAccuracy',                titleDefKey: 'votingAccuracy',   conditionAlias: 'votingAccuracy' },
+  // Camp-specific voting (combination titles only)
+  { statKey: 'votingAggressivenessVillageois', titleDefKey: null, conditionAlias: 'votingAggressiveVillageois' },
+  { statKey: 'votingAggressivenessLoup',       titleDefKey: null, conditionAlias: 'votingAggressiveLoup' },
+  { statKey: 'votingAggressivenessSolo',       titleDefKey: null, conditionAlias: 'votingAggressiveSolo' },
+  { statKey: 'votingFirstVillageois',          titleDefKey: null, conditionAlias: 'votingFirstVillageois' },
+  { statKey: 'votingFirstLoup',                titleDefKey: null, conditionAlias: 'votingFirstLoup' },
+  { statKey: 'votingFirstSolo',                titleDefKey: null, conditionAlias: 'votingFirstSolo' },
+  { statKey: 'votingAccuracyVillageois',       titleDefKey: null, conditionAlias: 'votingAccuracyVillageois' },
+  { statKey: 'votingAccuracyLoup',             titleDefKey: null, conditionAlias: 'votingAccuracyLoup' },
+  { statKey: 'votingAccuracySolo',             titleDefKey: null, conditionAlias: 'votingAccuracySolo' },
+
+  // --- Hunter ---
+  { statKey: 'hunterAccuracy',     titleDefKey: 'hunterAccuracy',     conditionAlias: 'hunterAccuracy' },
+  { statKey: 'hunterShotAccuracy', titleDefKey: 'hunterShotAccuracy', conditionAlias: 'hunterShotAccuracy' },
+
+  // --- Win Rate ---
+  { statKey: 'winRate',           titleDefKey: 'winRate',           conditionAlias: 'winRate' },
+  { statKey: 'winRateVillageois', titleDefKey: 'winRateVillageois', conditionAlias: 'winRateVillageois' },
+  { statKey: 'winRateLoup',       titleDefKey: 'winRateLoup',       conditionAlias: 'winRateLoup' },
+  { statKey: 'winRateSolo',       titleDefKey: 'winRateSolo',       conditionAlias: 'winRateSolo' },
+
+  // --- Series ---
+  { statKey: 'longestWinSeries',  titleDefKey: 'winSeries',  conditionAlias: 'winSeries' },
+  { statKey: 'longestLossSeries', titleDefKey: 'lossSeries', conditionAlias: 'lossSeries' },
+
+  // --- General ---
+  { statKey: 'gamesPlayed', titleDefKey: 'participation', conditionAlias: 'gamesPlayed' },
+
+  // --- Zones ---
+  { statKey: 'zoneVillagePrincipal',  titleDefKey: 'zoneVillagePrincipal',  conditionAlias: 'zoneVillagePrincipal' },
+  { statKey: 'zoneFerme',             titleDefKey: 'zoneFerme',             conditionAlias: 'zoneFerme' },
+  { statKey: 'zoneVillagePecheur',    titleDefKey: 'zoneVillagePecheur',    conditionAlias: 'zoneVillagePecheur' },
+  { statKey: 'zoneRuines',            titleDefKey: 'zoneRuines',            conditionAlias: 'zoneRuines' },
+  { statKey: 'zoneResteCarte',        titleDefKey: 'zoneResteCarte',        conditionAlias: 'zoneResteCarte' },
+  { statKey: 'zoneDominantPercentage', titleDefKey: 'zoneDominantPercentage', conditionAlias: 'zoneDominantPercentage' },
+
+  // --- Wolf Transform ---
+  { statKey: 'wolfTransformRate',   titleDefKey: 'wolfTransformRate',   conditionAlias: 'wolfTransformRate' },
+  { statKey: 'wolfUntransformRate', titleDefKey: 'wolfUntransformRate', conditionAlias: 'wolfUntransformRate' },
+
+  // --- Potions ---
+  { statKey: 'potionsPer60Min', titleDefKey: 'potionUsage', conditionAlias: 'potionUsage' },
+
+  // --- Camp Assignment (threshold-based, no basic title via percentiles) ---
+  { statKey: 'campVillageoisPercent', titleDefKey: null, conditionAlias: null },
+  { statKey: 'campLoupPercent',       titleDefKey: null, conditionAlias: null },
+  { statKey: 'campSoloPercent',       titleDefKey: null, conditionAlias: 'campSolo' },  // BUGFIX: was missing from CONDITION_STAT_MAP
+
+  // --- Virtual entries (no real stat key, used in combination conditions only) ---
+  { statKey: null, titleDefKey: null, conditionAlias: 'campBalance' },
+];
+
+// Derived lookup maps (computed once at module load)
+const statToTitleMap = Object.fromEntries(
+  TITLE_STAT_REGISTRY
+    .filter(e => e.statKey && e.titleDefKey)
+    .map(e => [e.statKey, e.titleDefKey])
+);
+
+const conditionToStatMap = Object.fromEntries(
+  TITLE_STAT_REGISTRY
+    .filter(e => e.conditionAlias)
+    .map(e => [e.conditionAlias, e.statKey ?? e.conditionAlias])
+);
+
+// ============================================================================
+// BASIC STAT-BASED TITLES
+// ============================================================================
 
 /**
  * Generate basic stat-based titles
@@ -129,7 +214,7 @@ export function generateBasicTitles(percentiles) {
   const titles = [];
 
   Object.entries(percentiles).forEach(([statName, data]) => {
-    const titleKey = STAT_TO_TITLE_MAP[statName];
+    const titleKey = statToTitleMap[statName];
     if (!titleKey || !TITLE_DEFINITIONS[titleKey]) return;
 
     const titleDef = TITLE_DEFINITIONS[titleKey];
@@ -222,67 +307,6 @@ export function generateCampBalanceTitles(percentiles) {
 // COMBINATION TITLES
 // ============================================================================
 
-/** Maps condition stat names (used in titleDefinitions) to percentile keys */
-const CONDITION_STAT_MAP = {
-  talking: 'talkingPer60Min',
-  talkingOutsideMeeting: 'talkingOutsidePer60Min',
-  talkingDuringMeeting: 'talkingDuringPer60Min',
-  // Camp-specific talking (for combination titles only)
-  talkingVillageois: 'talkingVillageoisPer60Min',
-  talkingOutsideVillageois: 'talkingOutsideVillageoisPer60Min',
-  talkingDuringVillageois: 'talkingDuringVillageoisPer60Min',
-  talkingLoup: 'talkingLoupPer60Min',
-  talkingOutsideLoup: 'talkingOutsideLoupPer60Min',
-  talkingDuringLoup: 'talkingDuringLoupPer60Min',
-  talkingSolo: 'talkingSoloPer60Min',
-  talkingOutsideSolo: 'talkingOutsideSoloPer60Min',
-  talkingDuringSolo: 'talkingDuringSoloPer60Min',
-  loot: 'lootPer60Min',
-  lootVillageois: 'lootVillageoisPer60Min',
-  lootLoup: 'lootLoupPer60Min',
-  lootObjectiveWinRateVillageois: 'lootObjectiveWinRateVillageois',
-  killRate: 'killRate',
-  killRateVillageois: 'killRateVillageois',
-  killRateLoup: 'killRateLoup',
-  killRateSolo: 'killRateSolo',
-  survival: 'survivalRate',
-  survivalDay1: 'survivalDay1Rate',
-  votingAggressive: 'votingAggressiveness',
-  // Camp-specific voting (for combination titles only)
-  votingAggressiveVillageois: 'votingAggressivenessVillageois',
-  votingAggressiveLoup: 'votingAggressivenessLoup',
-  votingAggressiveSolo: 'votingAggressivenessSolo',
-  votingFirst: 'votingFirst',
-  votingFirstVillageois: 'votingFirstVillageois',
-  votingFirstLoup: 'votingFirstLoup',
-  votingFirstSolo: 'votingFirstSolo',
-  votingAccuracy: 'votingAccuracy',
-  votingAccuracyVillageois: 'votingAccuracyVillageois',
-  votingAccuracyLoup: 'votingAccuracyLoup',
-  votingAccuracySolo: 'votingAccuracySolo',
-  hunterAccuracy: 'hunterAccuracy',
-  hunterShotAccuracy: 'hunterShotAccuracy',
-  winRate: 'winRate',
-  winRateVillageois: 'winRateVillageois',
-  winRateLoup: 'winRateLoup',
-  winRateSolo: 'winRateSolo',
-  winSeries: 'longestWinSeries',
-  lossSeries: 'longestLossSeries',
-  gamesPlayed: 'gamesPlayed',
-  roleAmoureux: 'roleAmoureux',
-  roleChasseur: 'roleChasseur',
-  campBalance: 'campBalance',
-  zoneVillagePrincipal: 'zoneVillagePrincipal',
-  zoneFerme: 'zoneFerme',
-  zoneVillagePecheur: 'zoneVillagePecheur',
-  zoneRuines: 'zoneRuines',
-  zoneResteCarte: 'zoneResteCarte',
-  zoneDominantPercentage: 'zoneDominantPercentage',
-  wolfTransformRate: 'wolfTransformRate',
-  wolfUntransformRate: 'wolfUntransformRate',
-  potionUsage: 'potionsPer60Min'
-};
-
 /**
  * Generate combination titles based on multiple stats
  * @param {Object} percentiles
@@ -293,7 +317,7 @@ export function generateCombinationTitles(percentiles) {
 
   COMBINATION_TITLES.forEach(combo => {
     const conditionsMet = combo.conditions.every(condition => {
-      const statKey = CONDITION_STAT_MAP[condition.stat] || condition.stat;
+      const statKey = conditionToStatMap[condition.stat] || condition.stat;
       const playerData = percentiles[statKey];
 
       if (!playerData) {
@@ -322,8 +346,8 @@ export function generateCombinationTitles(percentiles) {
       const conditionsData = combo.conditions.map(c => ({
         stat: c.stat,
         category: c.category,
-        actualValue: percentiles[CONDITION_STAT_MAP[c.stat] || c.stat]?.value,
-        actualPercentile: percentiles[CONDITION_STAT_MAP[c.stat] || c.stat]?.percentile || 0
+        actualValue: percentiles[conditionToStatMap[c.stat] || c.stat]?.value,
+        actualPercentile: percentiles[conditionToStatMap[c.stat] || c.stat]?.percentile || 0
       }));
       const validPercentiles = conditionsData.map(c => c.actualPercentile).filter(p => p > 0);
       const averagePercentile = validPercentiles.length > 0
