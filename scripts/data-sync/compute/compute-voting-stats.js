@@ -17,6 +17,7 @@ export function computeVotingStatistics(gameData) {
   const playerAccuracyMap = new Map();
   const playerTargetMap = new Map();
   const playerFirstVoteMap = new Map(); // Track first/early voting behavior
+  const playerMeetingSurvivalMap = new Map(); // Track meeting survival per camp
 
   // Helper to determine if a player was alive at a meeting
   function wasPlayerAliveAtMeeting(player, meetingNumber) {
@@ -94,6 +95,15 @@ export function computeVotingStatistics(gameData) {
           timesEarlyVote: 0 // Top 33% of voters
         });
       }
+
+      if (!playerMeetingSurvivalMap.has(playerId)) {
+        playerMeetingSurvivalMap.set(playerId, {
+          playerName: playerName,
+          villageois: { meetingsParticipated: 0, deathsAtMeetings: 0 },
+          loups: { meetingsParticipated: 0, deathsAtMeetings: 0 },
+          solo: { meetingsParticipated: 0, deathsAtMeetings: 0 }
+        });
+      }
     });
 
     // Find max meeting number
@@ -157,6 +167,33 @@ export function computeVotingStatistics(gameData) {
         const accuracy = playerAccuracyMap.get(playerId);
         behavior.totalMeetings++;
         accuracy.totalMeetings++;
+
+        // Track meeting survival stats per camp
+        const playerRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+        const playerCamp = getPlayerCampFromRole(playerRole, { regroupWolfSubRoles: true });
+        const meetingSurvivalStats = playerMeetingSurvivalMap.get(playerId);
+        
+        if (meetingSurvivalStats) {
+          // Player was alive at this meeting
+          if (playerCamp === 'Villageois') {
+            meetingSurvivalStats.villageois.meetingsParticipated++;
+          } else if (playerCamp === 'Loup') {
+            meetingSurvivalStats.loups.meetingsParticipated++;
+          } else {
+            meetingSurvivalStats.solo.meetingsParticipated++;
+          }
+          
+          // Check if player died at this meeting
+          if (player.DeathTiming === `M${meetingNum}`) {
+            if (playerCamp === 'Villageois') {
+              meetingSurvivalStats.villageois.deathsAtMeetings++;
+            } else if (playerCamp === 'Loup') {
+              meetingSurvivalStats.loups.deathsAtMeetings++;
+            } else {
+              meetingSurvivalStats.solo.deathsAtMeetings++;
+            }
+          }
+        }
 
         // Find player's vote in this meeting
         const playerVote = votesInMeeting.find(v => v.voterId === playerId);
@@ -303,10 +340,40 @@ export function computeVotingStatistics(gameData) {
     };
   });
 
+  const playerMeetingSurvivalStats = Array.from(playerMeetingSurvivalMap.entries()).map(([playerId, data]) => {
+    // Calculate survival rate at meetings for each camp
+    const survivalAtMeetingVillageois = data.villageois.meetingsParticipated > 0
+      ? ((data.villageois.meetingsParticipated - data.villageois.deathsAtMeetings) / data.villageois.meetingsParticipated) * 100
+      : null;
+    
+    const survivalAtMeetingLoup = data.loups.meetingsParticipated > 0
+      ? ((data.loups.meetingsParticipated - data.loups.deathsAtMeetings) / data.loups.meetingsParticipated) * 100
+      : null;
+    
+    const survivalAtMeetingSolo = data.solo.meetingsParticipated > 0
+      ? ((data.solo.meetingsParticipated - data.solo.deathsAtMeetings) / data.solo.meetingsParticipated) * 100
+      : null;
+
+    return {
+      player: playerId,
+      playerName: data.playerName,
+      villageoisMeetings: data.villageois.meetingsParticipated,
+      villageoisDeathsAtMeetings: data.villageois.deathsAtMeetings,
+      survivalAtMeetingVillageois,
+      loupMeetings: data.loups.meetingsParticipated,
+      loupDeathsAtMeetings: data.loups.deathsAtMeetings,
+      survivalAtMeetingLoup,
+      soloMeetings: data.solo.meetingsParticipated,
+      soloDeathsAtMeetings: data.solo.deathsAtMeetings,
+      survivalAtMeetingSolo
+    };
+  });
+
   return {
     playerBehaviorStats,
     playerAccuracyStats,
     playerTargetStats,
-    playerFirstVoteStats
+    playerFirstVoteStats,
+    playerMeetingSurvivalStats
   };
 }

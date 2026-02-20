@@ -233,6 +233,26 @@ function computeAllStatistics(moddedGames) {
     });
   }
 
+  // Process meeting survival stats
+  if (votingStats?.playerMeetingSurvivalStats) {
+    votingStats.playerMeetingSurvivalStats.forEach(player => {
+      const playerId = player.player;
+      if (!aggregatedStats.has(playerId)) return;
+      const agg = aggregatedStats.get(playerId);
+      
+      // Add meeting survival rates for each camp (only if player has played enough meetings in that camp)
+      if (player.villageoisMeetings >= 5 && player.survivalAtMeetingVillageois !== null) {
+        agg.stats.survivalAtMeetingVillageois = player.survivalAtMeetingVillageois;
+      }
+      if (player.loupMeetings >= 5 && player.survivalAtMeetingLoup !== null) {
+        agg.stats.survivalAtMeetingLoup = player.survivalAtMeetingLoup;
+      }
+      if (player.soloMeetings >= 3 && player.survivalAtMeetingSolo !== null) {
+        agg.stats.survivalAtMeetingSolo = player.survivalAtMeetingSolo;
+      }
+    });
+  }
+
   // Process hunter stats
   if (hunterStats?.hunterStats) {
     hunterStats.hunterStats.forEach(hunterData => {

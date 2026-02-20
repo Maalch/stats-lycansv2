@@ -593,7 +593,49 @@ export const COMBINATION_TITLES = [
     ],
     priority: 14
   },
+/* Need the following category : talking per camp, loot per camp, voting accuracy per camp, survival per camp
+  // Low talking + High kill rate Loup + High untransform rate = Stealthy Wolf
+  {
+    id: 'loup_incognito',
+    title: 'Le Loup Incognito',
+    emoji: '🕵️',
+    description: 'Loup discret, efficace et adaptable',
+    conditions: [
+      { stat: 'talking', category: 'LOW' },
+      { stat: 'killRateLoup', category: 'HIGH' },
+      { stat: 'wolfUntransformRate', category: 'HIGH' }
+    ],
+    priority: 14
+  },
 
+  // High win rate Villageois + High loot Villageois + High voting accuracy = Model Villager
+  {
+    id: 'villageois_modele',
+    title: 'Le Villageois Modèle',
+    emoji: '⭐',
+    description: 'Villageois exemplaire: gagne, récolte et vote bien',
+    conditions: [
+      { stat: 'winRateVillageois', category: 'HIGH' },
+      { stat: 'lootVillageois', category: 'HIGH' },
+      { stat: 'votingAccuracy', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+
+  // High win rate Loup + High kill rate Loup + High survival = Model Wolf
+  {
+    id: 'loup_modele',
+    title: 'Le Loup Modèle',
+    emoji: '🐺',
+    description: 'Loup parfait: gagne, tue et survit',
+    conditions: [
+      { stat: 'winRateLoup', category: 'HIGH' },
+      { stat: 'killRateLoup', category: 'HIGH' },
+      { stat: 'survival', category: 'HIGH' }
+    ],
+    priority: 14
+  },
+*/
   // High talk + High voting aggressive + Low voting accuracy = Populist
   {
     id: 'populiste',
@@ -748,6 +790,33 @@ export const COMBINATION_TITLES = [
     ],
     priority: 12
   },
+/*
+  // High loot Villageois + High win rate Villageois = Optimized Harvester
+  {
+    id: 'recolteur_opti',
+    title: 'Le Récolteur Opti',
+    emoji: '🌾',
+    description: 'Récolte efficace et victoires en Villageois',
+    conditions: [
+      { stat: 'lootVillageois', category: 'HIGH' },
+      { stat: 'winRateVillageois', category: 'HIGH' }
+    ],
+    priority: 12
+  },
+
+  // High survival + Low voting accuracy = Wolf in Sheep's Clothing
+  {
+    id: 'loup_villageois',
+    title: 'Le Loup Villageois',
+    emoji: '🐑',
+    description: 'Survit bien mais vote mal',
+    conditions: [
+      { stat: 'survival', category: 'HIGH' },
+      { stat: 'votingAccuracy', category: 'LOW' }
+    ],
+    priority: 12
+  },
+  */
 
 
   // High kills + Low survival (but different focus) = Berserker
