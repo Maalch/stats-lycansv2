@@ -166,17 +166,8 @@
     "type": "combination",
     "conditions": [
       "Survie: Élevé",
-      "Victoires Loup: Élevé"
-    ],
-    "priority": 15
-  },
-  {
-    "title": "L'Alpha 🦁",
-    "description": "Tue beaucoup et survit",
-    "type": "combination",
-    "conditions": [
-      "Taux de kills: Élevé",
-      "Survie: Élevé"
+      "Victoires Loup: Élevé",
+      "Taux de kills Loup: Élevé"
     ],
     "priority": 15
   },
@@ -236,8 +227,9 @@
     "description": "Gagne sans tuer",
     "type": "combination",
     "conditions": [
-      "Taux de kills: Faible",
-      "Taux de victoire: Élevé"
+      "Taux de kills Loup: Faible",
+      "Taux de transformation en loup: Faible",
+      "Victoires Loup: Élevé"
     ],
     "priority": 14
   },
@@ -292,12 +284,23 @@
     "priority": 14
   },
   {
-    "title": "Le Loup Rusé 🦊",
+    "title": "Le·a Loup·ve Déguisé·e 🦊",
     "description": "Reste humain, survit et gagne en Loup",
     "type": "combination",
     "conditions": [
       "Taux de transformation en loup: Faible",
       "Survie: Élevé",
+      "Victoires Loup: Élevé"
+    ],
+    "priority": 14
+  },
+  {
+    "title": "Le·a Chasseur·se Nocturne 🌙",
+    "description": "Se transforme, reste loup, et domine",
+    "type": "combination",
+    "conditions": [
+      "Taux de transformation en loup: Élevé",
+      "Taux de retour après transformation: Faible",
       "Victoires Loup: Élevé"
     ],
     "priority": 14
@@ -360,7 +363,8 @@
     "type": "combination",
     "conditions": [
       "Précision de vote: Élevé",
-      "Survie: Faible"
+      "Survie: Faible",
+      "Survie au meeting (Villageois): Faible"
     ],
     "priority": 13
   },
@@ -405,17 +409,6 @@
     "priority": 12
   },
   {
-    "title": "Le·a Chasseur·se Nocturne 🌙",
-    "description": "Se transforme, reste loup, et domine",
-    "type": "combination",
-    "conditions": [
-      "Taux de transformation en loup: Élevé",
-      "Taux de retour après transformation: Faible",
-      "Victoires Loup: Élevé"
-    ],
-    "priority": 12
-  },
-  {
     "title": "Le·a Sorcièr·e 🧙",
     "description": "Prépare des potions tout en racontant ses recettes",
     "type": "combination",
@@ -426,8 +419,8 @@
     "priority": 12
   },
   {
-    "title": "Le·a Kamikaze 💥",
-    "description": "Tue mais meurt en retour",
+    "title": "Le·a Berserker ⚔️",
+    "description": "Tue beaucoup mais meurt souvent",
     "type": "combination",
     "conditions": [
       "Taux de kills: Élevé",
@@ -446,12 +439,14 @@
     "priority": 12
   },
   {
-    "title": "Le·a Poissard·e 🌧️",
+    "title": "Le·a Malchanceux·se 🌧️",
     "description": "Perd tout le temps + grosses séries de défaites",
     "type": "combination",
     "conditions": [
-      "Taux de victoire: Très faible",
-      "Série de défaites: Élevé"
+      "Taux de victoire: Faible",
+      "Série de défaites: Élevé",
+      "Survie: Faible",
+      "Parties jouées: undefined (min: 50)"
     ],
     "priority": 12
   },
@@ -512,12 +507,13 @@
     "conditions": [
       "Taux de victoire: Faible",
       "Survie: Faible",
-      "Récolte: Faible"
+      "Récolte: Faible",
+      "Parties jouées: Faible"
     ],
     "priority": 11
   },
   {
-    "title": "L'Accro 🍾",
+    "title": "L'Experimentateur 🧪",
     "description": "Boit des potions mais ça ne l'aide pas à gagner",
     "type": "combination",
     "conditions": [
@@ -537,7 +533,7 @@
     "priority": 11
   },
   {
-    "title": "Le·a Couard·e 🐢",
+    "title": "Le·a Peureux·se 🐢",
     "description": "Survit longtemps mais perd quand même",
     "type": "combination",
     "conditions": [
@@ -547,7 +543,7 @@
     "priority": 11
   },
   {
-    "title": "L'Abeille Ouvrière 🐝",
+    "title": "Le·a Travailleur·se 🐝",
     "description": "Récolte bien en Villageois mais perd",
     "type": "combination",
     "conditions": [
@@ -607,7 +603,7 @@
     "priority": 11
   },
   {
-    "title": "En Rodage 🔧",
+    "title": "L'Apprenti 🔧",
     "description": "Peine dans tous les camps",
     "type": "combination",
     "conditions": [
@@ -638,7 +634,7 @@
     "priority": 10
   },
   {
-    "title": "Le·a Démagogue 📣",
+    "title": "Le·a Baratineur·se 📣",
     "description": "Parle beaucoup mais vote mal",
     "type": "combination",
     "conditions": [
