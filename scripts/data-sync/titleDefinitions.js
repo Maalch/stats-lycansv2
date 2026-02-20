@@ -56,8 +56,8 @@ export const TITLE_DEFINITIONS = {
     low: { title: "L'Agneau Sacrifié·e", emoji: '🐑', description: 'Meurt souvent en camp Villageois' }
   },
   survivalLoup: {
-    high: { title: 'Le·a Loup Fantôme', emoji: '👻', description: 'Survie élevée en camp Loup' },
-    low: { title: 'Le·a Loup Imprudent·e', emoji: '💀', description: 'Meurt souvent en camp Loup' }
+    high: { title: 'Le·a Loup·ve Fantôme', emoji: '👻', description: 'Survie élevée en camp Loup' },
+    low: { title: 'Le·a Loup·ve Imprudent·e', emoji: '💀', description: 'Meurt souvent en camp Loup' }
   },
   survivalSolo: {
     high: { title: "L'Intouchable", emoji: '🌟', description: 'Survie élevée en Solo' },
@@ -70,8 +70,8 @@ export const TITLE_DEFINITIONS = {
     low: { title: "L'Agneau du Premier Jour", emoji: '🌅', description: 'Meurt souvent Jour 1 en Villageois' }
   },
   survivalDay1Loup: {
-    high: { title: 'Le·a Loup Prudent·e', emoji: '🌙', description: 'Survit souvent au Jour 1 en Loup' },
-    low: { title: 'Le·a Loup Démasqué·e', emoji: '🔍', description: 'Souvent éliminé·e Jour 1 en Loup' }
+    high: { title: 'Le·a Loup·ve Prudent·e', emoji: '🌙', description: 'Survit souvent au Jour 1 en Loup' },
+    low: { title: 'Le·a Loup·ve Démasqué·e', emoji: '🔍', description: 'Souvent éliminé·e Jour 1 en Loup' }
   },
   survivalDay1Solo: {
     high: { title: "L'Électron Résistant·e", emoji: '⚡', description: 'Survit souvent au Jour 1 en Solo' },
@@ -80,7 +80,7 @@ export const TITLE_DEFINITIONS = {
 
   // Loot/Harvest titles
   loot: {
-    high: { title: 'Le·a Récolteur·euse', emoji: '🧺', description: 'Récolte élevée' },
+    high: { title: 'Le·a Récolteur·se', emoji: '🧺', description: 'Récolte élevée' },
     average: { title: 'Le·a Travailleur·se', emoji: '👷', description: 'Récolte correcte' },
     low: { title: 'Le·a Flâneur·se', emoji: '🚶', description: 'Récolte faible' },
     extremeHigh: { title: 'Le·a Stakhanoviste', emoji: '⚒️', description: 'Récolte exceptionnelle' },
@@ -91,8 +91,8 @@ export const TITLE_DEFINITIONS = {
     low: { title: 'Le·a Villageois·e Paresseux·se', emoji: '💤', description: 'Faible récolte en Villageois' }
   },
   lootLoup: {
-    high: { title: 'Le Loup Discret', emoji: '🐺', description: 'Récolte élevée en Loup' },
-    low: { title: 'Le Loup Impatient', emoji: '😤', description: 'Faible récolte en Loup' }
+    high: { title: 'Le·a Loup·ve Discret·e', emoji: '🐺', description: 'Récolte élevée en Loup' },
+    low: { title: 'Le·a Loup·ve Impatient·e', emoji: '😤', description: 'Faible récolte en Loup' }
   },
 
   // Voting behavior titles
@@ -113,7 +113,7 @@ export const TITLE_DEFINITIONS = {
 
   // Hunter accuracy titles
   hunterAccuracy: {
-    high: { title: 'Le·a Sniper', emoji: '🎯', description: 'Bon·ne chasseur·se (tue des ennemis)' },
+    high: { title: 'Le·a Sniper·euse', emoji: '🎯', description: 'Bon·ne chasseur·se (tue des ennemis)' },
     low: { title: 'Le·a Myope', emoji: '👓', description: 'Mauvais·e chasseur·se (tue des alliés)' },
     extremeHigh: { title: "L'Exécuteur·rice", emoji: '⚔️', description: 'Chasseur·se parfait·e' },
     extremeLow: { title: 'Le·a Chasseur·se Maudit·e', emoji: '💔', description: 'Tire toujours sur les mauvaises cibles' }
@@ -129,19 +129,19 @@ export const TITLE_DEFINITIONS = {
 
   // Win rate titles
   winRate: {
-    high: { title: 'Le·a Winner', emoji: '🏆', description: 'Taux de victoire élevé' },
+    high: { title: 'Le·a Winner·euse', emoji: '🏆', description: 'Taux de victoire élevé' },
     average: { title: 'Le·a Constant·e', emoji: '📊', description: 'Performance stable' },
-    low: { title: 'Le·a Looser', emoji: '😢', description: 'Taux de victoire faible' },
+    low: { title: 'Le·a Looser·euse', emoji: '😢', description: 'Taux de victoire faible' },
     extremeHigh: { title: "L'Inarrêtable", emoji: '👑', description: 'Gagne presque toujours' },
     extremeLow: { title: 'Le·a Maudit·e', emoji: '🪦', description: 'Perd presque toujours' }
   },
   winRateVillageois: {
     high: { title: 'Le·a Protecteur·rice du Village', emoji: '🦸', description: 'Excellent·e en camp Villageois' },
-    low: { title: 'Idiot·e en Formation', emoji: '🤡', description: 'Mauvais·e en camp Villageois' }
+    low: { title: 'Le·a Villageois·e Débutant·e', emoji: '🤡', description: 'Mauvais·e en camp Villageois' }
   },
   winRateLoup: {
     high: { title: 'Le·a Chef·fe de Meute', emoji: '🐺', description: 'Excellent·e en camp Loup' },
-    low: { title: 'Loup Débutant·e', emoji: '🐩', description: 'Mauvais·e en camp Loup' }
+    low: { title: 'Le·a Loup·ve Débutant·e', emoji: '🐩', description: 'Mauvais·e en camp Loup' }
   },
   winRateSolo: {
     high: { title: "L'Électron Libre", emoji: '🦊', description: 'Excellent·e en rôles Solo' },
@@ -150,28 +150,28 @@ export const TITLE_DEFINITIONS = {
 
   // Series titles
   winSeries: {
-    high: { title: 'En Feu', emoji: '🔥', description: 'Grosse série de victoires' }
+    high: { title: 'La Torche', emoji: '🔥', description: 'Grosse série de victoires' }
   },
   lossSeries: {
-    high: { title: 'Glacé·e', emoji: '❄️', description: 'Grosse série de défaites' }
+    high: { title: 'Le Glacier', emoji: '❄️', description: 'Grosse série de défaites' }
   },
 
   // === UNCONTROLLABLE STATS (Role assignment luck) ===
   
   campAssignment: {
     villageois: { title: 'Serial Villageois·e', emoji: '🏘️', description: 'Joue souvent Villageois' },
-    loup: { title: 'Serial Loup', emoji: '🌙', description: 'Joue souvent Loup' },
+    loup: { title: 'Serial Loup·ve', emoji: '🌙', description: 'Joue souvent Loup' },
     solo: { title: 'Serial Solo', emoji: '🎭', description: 'Joue souvent en Solo' }
   },
-
+  
   roleAssignment: {
-    chasseur: { title: 'Serial Chasseur', emoji: '🔫', description: 'Joue souvent Chasseur' },
+    chasseur: { title: 'Serial Chasseur·se', emoji: '🔫', description: 'Joue souvent Chasseur' },
     alchimiste: { title: 'Serial Alchimiste', emoji: '⚗️', description: 'Joue souvent Alchimiste' },
     amoureux: { title: 'Serial Amoureux', emoji: '💕', description: 'Joue souvent Amoureux' },
     agent: { title: 'Serial Agent', emoji: '🕵️', description: 'Joue souvent Agent' },
     espion: { title: 'Serial Espion', emoji: '🔍', description: 'Joue souvent Espion' },
-    idiot: { title: 'Serial Idiot', emoji: '🃏', description: 'Joue souvent Idiot du Village' },
-    chasseurDePrime: { title: 'Serial Bounty Hunter', emoji: '💰', description: 'Joue souvent Chasseur de Prime' },
+    idiot: { title: 'Serial Idiot du Village', emoji: '🃏', description: 'Joue souvent Idiot du Village' },
+    chasseurDePrime: { title: 'Serial Chasseur de Primes', emoji: '💰', description: 'Joue souvent Chasseur de Prime' },
     contrebandier: { title: 'Serial Contrebandier', emoji: '📦', description: 'Joue souvent Contrebandier' },
     bete: { title: 'Serial Bête', emoji: '🦁', description: 'Joue souvent La Bête' },
     vaudou: { title: 'Serial Vaudou', emoji: '🎃', description: 'Joue souvent Vaudou' },
@@ -223,16 +223,16 @@ export const TITLE_DEFINITIONS = {
   wolfTransformRate: {
     extremeHigh: { title: 'Le Loup-Garou Frénétique', emoji: '🐺', description: 'Se transforme très souvent en loup' },
     high: { title: 'Le·a Transform·é·e', emoji: '🌙', description: 'Se transforme fréquemment' },
-    low: { title: 'Le·a Loup Prudent·e', emoji: '🐕', description: 'Se transforme rarement' },
-    extremeLow: { title: 'Le Loup Fantôme', emoji: '👻', description: 'Ne se transforme presque jamais' }
+    low: { title: 'Le·a Loup·ve Prudent·e', emoji: '🐕', description: 'Se transforme rarement' },
+    extremeLow: { title: 'Le·a Loup·ve Fantôme', emoji: '👻', description: 'Ne se transforme presque jamais' }
   },
 
   // Wolf untransformation rate (untransformations per night as wolf)
   wolfUntransformRate: {
     extremeHigh: { title: 'L\'Adaptable', emoji: '🦎', description: 'Se détransforme très souvent' },
     high: { title: 'Le·a Discret·ète', emoji: '🤫', description: 'Se détransforme fréquemment' },
-    low: { title: 'Le Loup Assumé', emoji: '🐺', description: 'Se détransforme rarement' },
-    extremeLow: { title: 'Le Loup Permanent', emoji: '🌑', description: 'Reste presque toujours en loup' }
+    low: { title: 'Le·a Loup·ve Assumé·e', emoji: '🐺', description: 'Se détransforme rarement' },
+    extremeLow: { title: 'Le·a Loup·ve Permanent·e', emoji: '🌑', description: 'Reste presque toujours en loup' }
   },
 
   // === POTION USAGE STATS ===
@@ -297,7 +297,7 @@ export const COMBINATION_TITLES = [
   // Good camp accuracy + Good hunter accuracy = Sniper Elite
   {
     id: 'sniper_elite',
-    title: 'Sniper Elite',
+    title: 'Le·a Sniper·euse d\'Élite',
     emoji: '🎖️',
     description: 'Chasseur·se ultra précis·e',
     conditions: [
@@ -322,9 +322,9 @@ export const COMBINATION_TITLES = [
   // High loot Loup + High win rate Loup + Low talk = Lone Wolf
   {
     id: 'loup_solitaire',
-    title: 'Le Loup Solitaire',
+    title: 'Le·a Loup·ve Solitaire',
     emoji: '🐺',
-    description: 'Loup efficace, discret et gagnant',
+    description: 'Loup·ve efficace, discret et gagnant',
     conditions: [
       { stat: 'lootLoup', category: 'HIGH' },
       { stat: 'winRateLoup', category: 'HIGH' },
@@ -455,7 +455,7 @@ export const COMBINATION_TITLES = [
   // High survival + High win rate loup = The Alpha Wolf
   {
     id: 'loup_alpha',
-    title: 'Le Loup Alpha',
+    title: 'Le·a Loup·ve Alpha',
     emoji: '🐺',
     description: 'Survit et domine en Loup',
     conditions: [
@@ -508,7 +508,7 @@ export const COMBINATION_TITLES = [
   //High transform rate + High untransform rate = Hyperactive Wolf
   {
     id: 'loup_hyperactif',
-    title: 'Le Loup Hyperactif',
+    title: 'Le·a Loup·ve Hyperactif·ve',
     emoji: '⚡',
     description: 'Se transforme et détransforme constamment',
     conditions: [
@@ -599,7 +599,7 @@ export const COMBINATION_TITLES = [
   // Casanier (high dominant%) + Low Loot = The Camper
   {
     id: 'campeur',
-    title: 'Le·a Campeur·euse',
+    title: 'Le·a Campeur·se',
     emoji: '🏕️',
     description: 'Reste au même endroit sans récolter',
     conditions: [
@@ -621,13 +621,17 @@ export const COMBINATION_TITLES = [
     ],
     priority: 14
   },
-/* Need the following category : talking per camp, loot per camp, voting accuracy per camp, survival per camp
+/* Need the following category : 
+  - talking per camp
+  - loot per camp
+  - voting accuracy per camp
+
   // Low talking + High kill rate Loup + High untransform rate = Stealthy Wolf
   {
     id: 'loup_incognito',
-    title: 'Le Loup Incognito',
+    title: 'Le·a Loup·ve Incognito',
     emoji: '🕵️',
-    description: 'Loup discret, efficace et adaptable',
+    description: 'Loup·ve discret·e, efficace et adaptable',
     conditions: [
       { stat: 'talking', category: 'LOW' },
       { stat: 'killRateLoup', category: 'HIGH' },
@@ -639,9 +643,9 @@ export const COMBINATION_TITLES = [
   // High win rate Villageois + High loot Villageois + High voting accuracy = Model Villager
   {
     id: 'villageois_modele',
-    title: 'Le Villageois Modèle',
+    title: 'Le·a Villageois·se Modèle',
     emoji: '⭐',
-    description: 'Villageois exemplaire: gagne, récolte et vote bien',
+    description: 'Villageois·e exemplaire: gagne, récolte et vote bien',
     conditions: [
       { stat: 'winRateVillageois', category: 'HIGH' },
       { stat: 'lootVillageois', category: 'HIGH' },
@@ -653,9 +657,9 @@ export const COMBINATION_TITLES = [
   // High win rate Loup + High kill rate Loup + High survival = Model Wolf
   {
     id: 'loup_modele',
-    title: 'Le Loup Modèle',
+    title: 'Le·a Loup·ve Modèle',
     emoji: '🐺',
-    description: 'Loup parfait: gagne, tue et survit',
+    description: 'Loup·ve parfait·e: gagne, tue et survit',
     conditions: [
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'killRateLoup', category: 'HIGH' },
@@ -822,7 +826,7 @@ export const COMBINATION_TITLES = [
   // High loot Villageois + High win rate Villageois = Optimized Harvester
   {
     id: 'recolteur_opti',
-    title: 'Le Récolteur Opti',
+    title: 'Le·a Récolteur·se Opti',
     emoji: '🌾',
     description: 'Récolte efficace et victoires en Villageois',
     conditions: [
@@ -835,7 +839,7 @@ export const COMBINATION_TITLES = [
   // High survival + Low voting accuracy = Wolf in Sheep's Clothing
   {
     id: 'loup_villageois',
-    title: 'Le Loup Villageois',
+    title: 'Le·a Loup·ve Villageois·e',
     emoji: '🐑',
     description: 'Survit bien mais vote mal',
     conditions: [
@@ -1013,9 +1017,9 @@ export const COMBINATION_TITLES = [
   // High loot Loup + Low win rate Loup = The Exposed Wolf
   {
     id: 'loup_repere',
-    title: 'Le Loup Repéré',
+    title: 'Le·a Loup·ve Repéré·e',
     emoji: '🔦',
-    description: 'Récolte en Loup mais se fait démasquer',
+    description: 'Récolte en Loup·ve mais se fait démasquer',
     conditions: [
       { stat: 'lootLoup', category: 'HIGH' },
       { stat: 'winRateLoup', category: 'LOW' }
