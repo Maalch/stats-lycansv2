@@ -60,7 +60,11 @@ export function computeVotingStatistics(gameData) {
           totalMeetings: 0,
           totalVotes: 0,
           totalSkips: 0,
-          totalAbstentions: 0
+          totalAbstentions: 0,
+          // Camp-specific behavior
+          villageois: { meetings: 0, votes: 0, skips: 0, abstentions: 0 },
+          loup: { meetings: 0, votes: 0, skips: 0, abstentions: 0 },
+          solo: { meetings: 0, votes: 0, skips: 0, abstentions: 0 }
         });
       }
       
@@ -70,7 +74,11 @@ export function computeVotingStatistics(gameData) {
           totalMeetings: 0,
           totalVotes: 0,
           votesForEnemyCamp: 0,
-          votesForOwnCamp: 0
+          votesForOwnCamp: 0,
+          // Camp-specific accuracy
+          villageois: { votes: 0, votesForEnemy: 0 },
+          loup: { votes: 0, votesForEnemy: 0 },
+          solo: { votes: 0, votesForEnemy: 0 }
         });
       }
       
@@ -92,7 +100,11 @@ export function computeVotingStatistics(gameData) {
           playerName: playerName,
           totalMeetingsWithVotes: 0,
           timesFirstToVote: 0,
-          timesEarlyVote: 0 // Top 33% of voters
+          timesEarlyVote: 0, // Top 33% of voters
+          // Camp-specific first vote
+          villageois: { totalMeetingsWithVotes: 0, timesEarlyVote: 0 },
+          loup: { totalMeetingsWithVotes: 0, timesEarlyVote: 0 },
+          solo: { totalMeetingsWithVotes: 0, timesEarlyVote: 0 }
         });
       }
 
@@ -147,6 +159,10 @@ export function computeVotingStatistics(gameData) {
             }
             if (index < earlyVoteThreshold) {
               firstVoteStats.timesEarlyVote++;
+              // Camp-specific early vote
+              const vCamp = getPlayerCampFromRole(voteData.voterRole, { regroupWolfSubRoles: true });
+              const vCampKey = vCamp === 'Villageois' ? 'villageois' : vCamp === 'Loup' ? 'loup' : 'solo';
+              firstVoteStats[vCampKey].timesEarlyVote++;
             }
           }
         });
@@ -156,6 +172,10 @@ export function computeVotingStatistics(gameData) {
           const firstVoteStats = playerFirstVoteMap.get(voteData.voterId);
           if (firstVoteStats) {
             firstVoteStats.totalMeetingsWithVotes++;
+            // Camp-specific meeting count
+            const vCamp = getPlayerCampFromRole(voteData.voterRole, { regroupWolfSubRoles: true });
+            const vCampKey = vCamp === 'Villageois' ? 'villageois' : vCamp === 'Loup' ? 'loup' : 'solo';
+            firstVoteStats[vCampKey].totalMeetingsWithVotes++;
           }
         });
       }
@@ -197,16 +217,21 @@ export function computeVotingStatistics(gameData) {
 
         // Find player's vote in this meeting
         const playerVote = votesInMeeting.find(v => v.voterId === playerId);
-        
+        const campKey = playerCamp === 'Villageois' ? 'villageois' : playerCamp === 'Loup' ? 'loup' : 'solo';
+        behavior[campKey].meetings++;
+
         if (!playerVote) {
           // No vote = abstention
           behavior.totalAbstentions++;
+          behavior[campKey].abstentions++;
         } else if (playerVote.vote.Target === 'Passé') {
           // Skip vote
           behavior.totalSkips++;
+          behavior[campKey].skips++;
         } else {
           // Real vote
           behavior.totalVotes++;
+          behavior[campKey].votes++;
           accuracy.totalVotes++;
 
           // Check accuracy (voting for enemy camp vs own camp)
@@ -219,8 +244,11 @@ export function computeVotingStatistics(gameData) {
             
             if (voterCamp !== targetCamp) {
               accuracy.votesForEnemyCamp++;
+              accuracy[campKey].votes++;
+              accuracy[campKey].votesForEnemy++;
             } else {
               accuracy.votesForOwnCamp++;
+              accuracy[campKey].votes++;
             }
           }
         }
@@ -272,6 +300,14 @@ export function computeVotingStatistics(gameData) {
     const abstentionRate = data.totalMeetings > 0 ? (data.totalAbstentions / data.totalMeetings) * 100 : 0;
     const aggressivenessScore = votingRate - (skippingRate * 0.5) - (abstentionRate * 0.7);
 
+    const computeCampAggr = (campData) => {
+      if (campData.meetings === 0) return null;
+      const vr = (campData.votes / campData.meetings) * 100;
+      const sr = (campData.skips / campData.meetings) * 100;
+      const ar = (campData.abstentions / campData.meetings) * 100;
+      return vr - (sr * 0.5) - (ar * 0.7);
+    };
+
     return {
       player: playerId, // Use playerId as the main player identifier
       playerName: data.playerName,
@@ -282,7 +318,14 @@ export function computeVotingStatistics(gameData) {
       votingRate,
       skippingRate,
       abstentionRate,
-      aggressivenessScore
+      aggressivenessScore,
+      // Camp-specific aggressiveness
+      aggressivenessVillageois: computeCampAggr(data.villageois),
+      aggressivenessLoup: computeCampAggr(data.loup),
+      aggressivenessSolo: computeCampAggr(data.solo),
+      meetingsVillageois: data.villageois.meetings,
+      meetingsLoup: data.loup.meetings,
+      meetingsSolo: data.solo.meetings
     };
   });
 
@@ -298,7 +341,14 @@ export function computeVotingStatistics(gameData) {
       votesForEnemyCamp: data.votesForEnemyCamp,
       votesForOwnCamp: data.votesForOwnCamp,
       accuracyRate,
-      friendlyFireRate
+      friendlyFireRate,
+      // Camp-specific accuracy
+      accuracyVillageois: data.villageois.votes > 0 ? (data.villageois.votesForEnemy / data.villageois.votes) * 100 : null,
+      accuracyLoup: data.loup.votes > 0 ? (data.loup.votesForEnemy / data.loup.votes) * 100 : null,
+      accuracySolo: data.solo.votes > 0 ? (data.solo.votesForEnemy / data.solo.votes) * 100 : null,
+      votesVillageois: data.villageois.votes,
+      votesLoup: data.loup.votes,
+      votesSolo: data.solo.votes
     };
   });
 
@@ -336,7 +386,17 @@ export function computeVotingStatistics(gameData) {
       timesFirstToVote: data.timesFirstToVote,
       timesEarlyVote: data.timesEarlyVote,
       firstVoteRate,
-      earlyVoteRate
+      earlyVoteRate,
+      // Camp-specific early vote rates
+      earlyVoteRateVillageois: data.villageois.totalMeetingsWithVotes > 0
+        ? (data.villageois.timesEarlyVote / data.villageois.totalMeetingsWithVotes) * 100 : null,
+      earlyVoteRateLoup: data.loup.totalMeetingsWithVotes > 0
+        ? (data.loup.timesEarlyVote / data.loup.totalMeetingsWithVotes) * 100 : null,
+      earlyVoteRateSolo: data.solo.totalMeetingsWithVotes > 0
+        ? (data.solo.timesEarlyVote / data.solo.totalMeetingsWithVotes) * 100 : null,
+      meetingsWithVotesVillageois: data.villageois.totalMeetingsWithVotes,
+      meetingsWithVotesLoup: data.loup.totalMeetingsWithVotes,
+      meetingsWithVotesSolo: data.solo.totalMeetingsWithVotes
     };
   });
 

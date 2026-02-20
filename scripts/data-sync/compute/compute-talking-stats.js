@@ -2,7 +2,7 @@
  * Talking time statistics computation (server-side)
  */
 
-import { getPlayerId, getCanonicalPlayerName, calculateGameDuration } from '../../../src/utils/datasyncExport.js';
+import { getPlayerId, getCanonicalPlayerName, calculateGameDuration, getPlayerMainCampFromRole } from '../../../src/utils/datasyncExport.js';
 
 /**
  * Check if a game has talking time data
@@ -55,6 +55,8 @@ export function computeTalkingTimeStats(gameData) {
         return;
       }
 
+      const camp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
+
       if (!playerMap.has(playerId)) {
         playerMap.set(playerId, {
           playerId,
@@ -62,7 +64,20 @@ export function computeTalkingTimeStats(gameData) {
           gamesPlayed: 0,
           totalSecondsOutside: 0,
           totalSecondsDuring: 0,
-          totalGameDurationSeconds: 0
+          totalGameDurationSeconds: 0,
+          // Camp-specific talking stats
+          villageoisGames: 0,
+          villageoisSecondsOutside: 0,
+          villageoisSecondsDuring: 0,
+          villageoisDuration: 0,
+          loupGames: 0,
+          loupSecondsOutside: 0,
+          loupSecondsDuring: 0,
+          loupDuration: 0,
+          soloGames: 0,
+          soloSecondsOutside: 0,
+          soloSecondsDuring: 0,
+          soloDuration: 0
         });
       }
 
@@ -71,6 +86,26 @@ export function computeTalkingTimeStats(gameData) {
       stats.totalSecondsOutside += player.SecondsTalkedOutsideMeeting || 0;
       stats.totalSecondsDuring += player.SecondsTalkedDuringMeeting || 0;
       stats.totalGameDurationSeconds += playerGameDuration;
+
+      // Update camp-specific stats
+      const outside = player.SecondsTalkedOutsideMeeting || 0;
+      const during = player.SecondsTalkedDuringMeeting || 0;
+      if (camp === 'Villageois') {
+        stats.villageoisGames++;
+        stats.villageoisSecondsOutside += outside;
+        stats.villageoisSecondsDuring += during;
+        stats.villageoisDuration += playerGameDuration;
+      } else if (camp === 'Loup') {
+        stats.loupGames++;
+        stats.loupSecondsOutside += outside;
+        stats.loupSecondsDuring += during;
+        stats.loupDuration += playerGameDuration;
+      } else {
+        stats.soloGames++;
+        stats.soloSecondsOutside += outside;
+        stats.soloSecondsDuring += during;
+        stats.soloDuration += playerGameDuration;
+      }
     });
   });
 
@@ -83,6 +118,10 @@ export function computeTalkingTimeStats(gameData) {
       ? 3600 / stats.totalGameDurationSeconds 
       : 0;
 
+    const villageoisNormFactor = stats.villageoisDuration > 0 ? 3600 / stats.villageoisDuration : 0;
+    const loupNormFactor = stats.loupDuration > 0 ? 3600 / stats.loupDuration : 0;
+    const soloNormFactor = stats.soloDuration > 0 ? 3600 / stats.soloDuration : 0;
+
     return {
       playerId: stats.playerId,
       player: stats.displayName,
@@ -93,7 +132,20 @@ export function computeTalkingTimeStats(gameData) {
       totalGameDurationSeconds: stats.totalGameDurationSeconds,
       secondsOutsidePer60Min: stats.totalSecondsOutside * normalizationFactor,
       secondsDuringPer60Min: stats.totalSecondsDuring * normalizationFactor,
-      secondsAllPer60Min: totalSecondsAll * normalizationFactor
+      secondsAllPer60Min: totalSecondsAll * normalizationFactor,
+      // Camp-specific stats
+      villageoisGames: stats.villageoisGames,
+      secondsOutsideVillageoisPer60Min: stats.villageoisSecondsOutside * villageoisNormFactor,
+      secondsDuringVillageoisPer60Min: stats.villageoisSecondsDuring * villageoisNormFactor,
+      secondsAllVillageoisPer60Min: (stats.villageoisSecondsOutside + stats.villageoisSecondsDuring) * villageoisNormFactor,
+      loupGames: stats.loupGames,
+      secondsOutsideLoupPer60Min: stats.loupSecondsOutside * loupNormFactor,
+      secondsDuringLoupPer60Min: stats.loupSecondsDuring * loupNormFactor,
+      secondsAllLoupPer60Min: (stats.loupSecondsOutside + stats.loupSecondsDuring) * loupNormFactor,
+      soloGames: stats.soloGames,
+      secondsOutsideSoloPer60Min: stats.soloSecondsOutside * soloNormFactor,
+      secondsDuringSoloPer60Min: stats.soloSecondsDuring * soloNormFactor,
+      secondsAllSoloPer60Min: (stats.soloSecondsOutside + stats.soloSecondsDuring) * soloNormFactor
     };
   });
 

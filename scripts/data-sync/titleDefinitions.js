@@ -90,6 +90,12 @@ export const TITLE_DEFINITIONS = {
     high: { title: 'Le·a Citoyen·ne Modèle', emoji: '🏘️', description: 'Récolte excellente en Villageois' },
     low: { title: 'Le·a Villageois·e Paresseux·se', emoji: '💤', description: 'Faible récolte en Villageois' }
   },
+  lootObjectiveWinRateVillageois: {
+    extremeHigh: { title: 'Le·a Héros·ïne de la Récolte', emoji: '🌾', description: 'Atteint presque toujours l\'objectif de récolte en Villageois' },
+    high: { title: 'Le·a Récolteur·se Exemplaire', emoji: '🧺', description: 'Atteint souvent l\'objectif de récolte en Villageois' },
+    low: { title: 'Le·a Poids Mort', emoji: '⚓', description: 'Échoue souvent l\'objectif de récolte en Villageois' },
+    extremeLow: { title: 'Le·a Saboteur·se de la Récolte', emoji: '🪓', description: 'N\'atteint presque jamais l\'objectif de récolte en Villageois' }
+  },
   lootLoup: {
     high: { title: 'Le·a Loup·ve Discret·e', emoji: '🐺', description: 'Récolte élevée en Loup·ve' },
     low: { title: 'Le·a Loup·ve Impatient·e', emoji: '😤', description: 'Faible récolte en Loup·ve' }
@@ -328,7 +334,7 @@ export const COMBINATION_TITLES = [
     conditions: [
       { stat: 'lootLoup', category: 'HIGH' },
       { stat: 'winRateLoup', category: 'HIGH' },
-      { stat: 'talking', category: 'LOW' }
+      { stat: 'talkingLoup', category: 'LOW' }
     ],
     priority: 18
   },
@@ -420,7 +426,7 @@ export const COMBINATION_TITLES = [
     description: 'Loup·ve bavard·e et gagnant·e',
     conditions: [
       { stat: 'winRateLoup', category: 'HIGH' },
-      { stat: 'talking', category: 'HIGH' }
+      { stat: 'talkingLoup', category: 'HIGH' }
     ],
     priority: 16
   },
@@ -459,7 +465,7 @@ export const COMBINATION_TITLES = [
     emoji: '🐺',
     description: 'Survit et domine en Loup·ve',
     conditions: [
-      { stat: 'survival', category: 'HIGH' },
+      { stat: 'survivalLoup', category: 'HIGH' },
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'killRateLoup', category: 'HIGH' }
     ],
@@ -474,7 +480,7 @@ export const COMBINATION_TITLES = [
     description: 'Excellent·e Loup·ve discret·ète',
     conditions: [
       { stat: 'winRateLoup', category: 'HIGH' },
-      { stat: 'talking', category: 'LOW' }
+      { stat: 'talkingLoup', category: 'LOW' }
     ],
     priority: 15
   },
@@ -616,16 +622,11 @@ export const COMBINATION_TITLES = [
     description: 'Reste humain, survit et gagne en Loup·ve',
     conditions: [
       { stat: 'wolfTransformRate', category: 'LOW' },
-      { stat: 'survival', category: 'HIGH' },
+      { stat: 'survivalLoup', category: 'HIGH' },
       { stat: 'winRateLoup', category: 'HIGH' }
     ],
     priority: 14
   },
-/* Need the following category : 
-  - talking per camp
-  - loot per camp
-  - voting accuracy per camp
-
   // Low talking + High kill rate Loup + High untransform rate = Stealthy Wolf
   {
     id: 'loup_incognito',
@@ -633,23 +634,23 @@ export const COMBINATION_TITLES = [
     emoji: '🕵️',
     description: 'Loup·ve discret·e, efficace et adaptable',
     conditions: [
-      { stat: 'talking', category: 'LOW' },
+      { stat: 'talkingLoup', category: 'LOW' },
       { stat: 'killRateLoup', category: 'HIGH' },
       { stat: 'wolfUntransformRate', category: 'HIGH' }
     ],
     priority: 14
   },
 
-  // High win rate Villageois + High loot Villageois + High voting accuracy = Model Villager
+  // High win rate Villageois + High loot objective Villageois + High voting accuracy = Model Villager
   {
     id: 'villageois_modele',
     title: 'Le·a Villageois·se Modèle',
     emoji: '⭐',
-    description: 'Villageois·e exemplaire: gagne, récolte et vote bien',
+    description: 'Villageois·e exemplaire: gagne, atteint l\'objectif et vote bien',
     conditions: [
       { stat: 'winRateVillageois', category: 'HIGH' },
       { stat: 'lootVillageois', category: 'HIGH' },
-      { stat: 'votingAccuracy', category: 'HIGH' }
+      { stat: 'votingAccuracyVillageois', category: 'HIGH' }
     ],
     priority: 14
   },
@@ -663,11 +664,10 @@ export const COMBINATION_TITLES = [
     conditions: [
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'killRateLoup', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' }
+      { stat: 'survivalLoup', category: 'HIGH' }
     ],
     priority: 14
   },
-*/
   // High talk + High voting aggressive + Low voting accuracy = Populist
   {
     id: 'populiste',
@@ -740,8 +740,8 @@ export const COMBINATION_TITLES = [
     emoji: '🚨',
     description: 'Vote juste mais se fait éliminer pour ça',
     conditions: [
-      { stat: 'votingAccuracy', category: 'HIGH' },
-      { stat: 'survival', category: 'LOW' },
+      { stat: 'votingAccuracyVillageois', category: 'HIGH' },
+      { stat: 'survivalVillageois', category: 'LOW' },
       { stat: 'survivalAtMeetingVillageois', category: 'LOW' }
     ],
     priority: 13
@@ -822,7 +822,7 @@ export const COMBINATION_TITLES = [
     ],
     priority: 12
   },
-/*
+
   // High loot Villageois + High win rate Villageois = Optimized Harvester
   {
     id: 'recolteur_opti',
@@ -831,7 +831,7 @@ export const COMBINATION_TITLES = [
     description: 'Récolte efficace et victoires en Villageois',
     conditions: [
       { stat: 'lootVillageois', category: 'HIGH' },
-      { stat: 'winRateVillageois', category: 'HIGH' }
+      { stat: 'lootObjectiveWinRateVillageois', category: 'HIGH' }
     ],
     priority: 12
   },
@@ -843,12 +843,11 @@ export const COMBINATION_TITLES = [
     emoji: '🐑',
     description: 'Survit bien mais vote mal',
     conditions: [
-      { stat: 'survival', category: 'HIGH' },
-      { stat: 'votingAccuracy', category: 'LOW' }
+      { stat: 'survivalLoup', category: 'HIGH' },
+      { stat: 'votingAccuracyLoup', category: 'LOW' }
     ],
     priority: 12
   },
-  */
 
 
   // High kills + Low survival (but different focus) = Berserker

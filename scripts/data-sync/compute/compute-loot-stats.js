@@ -89,6 +89,7 @@ export function computeLootStatistics(gameData) {
           villageoisGames: 0,
           villageoisLoot: 0,
           villageoisDuration: 0,
+          villageoisHarvestObjectiveMet: 0, // Games where HarvestDone >= HarvestGoal as Villageois
           loupGames: 0,
           loupLoot: 0,
           loupDuration: 0,
@@ -108,6 +109,10 @@ export function computeLootStatistics(gameData) {
         stats.villageoisGames++;
         stats.villageoisLoot += playerLoot;
         stats.villageoisDuration += playerGameDuration;
+        // Track whether harvest objective was completed this game
+        if (game.HarvestGoal > 0 && game.HarvestDone >= game.HarvestGoal) {
+          stats.villageoisHarvestObjectiveMet++;
+        }
       } else if (camp === 'Loup') {
         stats.loupGames++;
         stats.loupLoot += playerLoot;
@@ -150,6 +155,9 @@ export function computeLootStatistics(gameData) {
       villageoisGames: stats.villageoisGames,
       villageoisLoot: stats.villageoisLoot,
       lootVillageoisPer60Min: stats.villageoisLoot * villageoisNormFactor,
+      lootObjectiveWinRateVillageois: stats.villageoisGames > 0
+        ? (stats.villageoisHarvestObjectiveMet / stats.villageoisGames) * 100
+        : null,
       loupGames: stats.loupGames,
       loupLoot: stats.loupLoot,
       lootLoupPer60Min: stats.loupLoot * loupNormFactor,

@@ -103,6 +103,25 @@ export function computeAllStatistics(moddedGames) {
       agg.stats.talkingPer60Min = player.secondsAllPer60Min ?? null;
       agg.stats.talkingOutsidePer60Min = player.secondsOutsidePer60Min ?? null;
       agg.stats.talkingDuringPer60Min = player.secondsDuringPer60Min ?? null;
+      // Camp-specific talking stats (require min games per camp)
+      agg.stats.talkingVillageoisPer60Min = (player.villageoisGames > 5 && player.secondsAllVillageoisPer60Min != null)
+        ? player.secondsAllVillageoisPer60Min : null;
+      agg.stats.talkingOutsideVillageoisPer60Min = (player.villageoisGames > 5 && player.secondsOutsideVillageoisPer60Min != null)
+        ? player.secondsOutsideVillageoisPer60Min : null;
+      agg.stats.talkingDuringVillageoisPer60Min = (player.villageoisGames > 5 && player.secondsDuringVillageoisPer60Min != null)
+        ? player.secondsDuringVillageoisPer60Min : null;
+      agg.stats.talkingLoupPer60Min = (player.loupGames > 5 && player.secondsAllLoupPer60Min != null)
+        ? player.secondsAllLoupPer60Min : null;
+      agg.stats.talkingOutsideLoupPer60Min = (player.loupGames > 5 && player.secondsOutsideLoupPer60Min != null)
+        ? player.secondsOutsideLoupPer60Min : null;
+      agg.stats.talkingDuringLoupPer60Min = (player.loupGames > 5 && player.secondsDuringLoupPer60Min != null)
+        ? player.secondsDuringLoupPer60Min : null;
+      agg.stats.talkingSoloPer60Min = (player.soloGames > 3 && player.secondsAllSoloPer60Min != null)
+        ? player.secondsAllSoloPer60Min : null;
+      agg.stats.talkingOutsideSoloPer60Min = (player.soloGames > 3 && player.secondsOutsideSoloPer60Min != null)
+        ? player.secondsOutsideSoloPer60Min : null;
+      agg.stats.talkingDuringSoloPer60Min = (player.soloGames > 3 && player.secondsDuringSoloPer60Min != null)
+        ? player.secondsDuringSoloPer60Min : null;
     });
   }
 
@@ -114,6 +133,16 @@ export function computeAllStatistics(moddedGames) {
       const agg = aggregatedStats.get(playerId);
       if (player.aggressivenessScore !== undefined && player.aggressivenessScore !== null) {
         agg.stats.votingAggressiveness = player.aggressivenessScore;
+      }
+      // Camp-specific aggressiveness (require min meetings per camp)
+      if (player.meetingsVillageois >= 5 && player.aggressivenessVillageois != null) {
+        agg.stats.votingAggressivenessVillageois = player.aggressivenessVillageois;
+      }
+      if (player.meetingsLoup >= 5 && player.aggressivenessLoup != null) {
+        agg.stats.votingAggressivenessLoup = player.aggressivenessLoup;
+      }
+      if (player.meetingsSolo >= 3 && player.aggressivenessSolo != null) {
+        agg.stats.votingAggressivenessSolo = player.aggressivenessSolo;
       }
     });
   }
@@ -128,6 +157,16 @@ export function computeAllStatistics(moddedGames) {
       if (totalVotes >= 10 && player.accuracyRate !== undefined && player.accuracyRate !== null) {
         agg.stats.votingAccuracy = player.accuracyRate;
       }
+      // Camp-specific accuracy (require min votes per camp)
+      if (player.votesVillageois >= 5 && player.accuracyVillageois != null) {
+        agg.stats.votingAccuracyVillageois = player.accuracyVillageois;
+      }
+      if (player.votesLoup >= 5 && player.accuracyLoup != null) {
+        agg.stats.votingAccuracyLoup = player.accuracyLoup;
+      }
+      if (player.votesSolo >= 3 && player.accuracySolo != null) {
+        agg.stats.votingAccuracySolo = player.accuracySolo;
+      }
     });
   }
 
@@ -140,6 +179,16 @@ export function computeAllStatistics(moddedGames) {
       const totalMeetingsWithVotes = player.totalMeetingsWithVotes || 0;
       if (totalMeetingsWithVotes >= 5 && player.earlyVoteRate !== undefined && player.earlyVoteRate !== null) {
         agg.stats.votingFirst = player.earlyVoteRate;
+      }
+      // Camp-specific voting first (require min meetings per camp)
+      if (player.meetingsWithVotesVillageois >= 5 && player.earlyVoteRateVillageois != null) {
+        agg.stats.votingFirstVillageois = player.earlyVoteRateVillageois;
+      }
+      if (player.meetingsWithVotesLoup >= 5 && player.earlyVoteRateLoup != null) {
+        agg.stats.votingFirstLoup = player.earlyVoteRateLoup;
+      }
+      if (player.meetingsWithVotesSolo >= 3 && player.earlyVoteRateSolo != null) {
+        agg.stats.votingFirstSolo = player.earlyVoteRateSolo;
       }
     });
   }
@@ -224,6 +273,8 @@ export function computeAllStatistics(moddedGames) {
       agg.stats.lootPer60Min = player.lootPer60Min ?? null;
       agg.stats.lootVillageoisPer60Min = (player.villageoisGames > 5 && player.lootVillageoisPer60Min != null)
         ? player.lootVillageoisPer60Min : null;
+      agg.stats.lootObjectiveWinRateVillageois = (player.villageoisGames > 5 && player.lootObjectiveWinRateVillageois != null)
+        ? player.lootObjectiveWinRateVillageois : null;
       agg.stats.lootLoupPer60Min = (player.loupGames > 5 && player.lootLoupPer60Min != null)
         ? player.lootLoupPer60Min : null;
       agg.stats.lootSoloPer60Min = (player.soloGames > 3 && player.lootSoloPer60Min != null)
