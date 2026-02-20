@@ -411,6 +411,12 @@ function computeAllStatistics(moddedGames) {
       agg.stats.killRateVillageois = campData.killRateVillageois;
       agg.stats.killRateLoup = campData.killRateLoup;
       agg.stats.killRateSolo = campData.killRateSolo;
+      agg.stats.survivalRateVillageois = campData.survivalRateVillageois ?? null;
+      agg.stats.survivalRateLoup = campData.survivalRateLoup ?? null;
+      agg.stats.survivalRateSolo = campData.survivalRateSolo ?? null;
+      agg.stats.survivalDay1RateVillageois = campData.survivalDay1RateVillageois ?? null;
+      agg.stats.survivalDay1RateLoup = campData.survivalDay1RateLoup ?? null;
+      agg.stats.survivalDay1RateSolo = campData.survivalDay1RateSolo ?? null;
     });
   }
 
@@ -754,6 +760,12 @@ function generateBasicTitles(percentiles) {
     killRate: 'killRate',
     survivalRate: 'survival',
     survivalDay1Rate: 'survivalDay1',
+    survivalRateVillageois: 'survivalVillageois',
+    survivalRateLoup: 'survivalLoup',
+    survivalRateSolo: 'survivalSolo',
+    survivalDay1RateVillageois: 'survivalDay1Villageois',
+    survivalDay1RateLoup: 'survivalDay1Loup',
+    survivalDay1RateSolo: 'survivalDay1Solo',
     lootPer60Min: 'loot',
     lootVillageoisPer60Min: 'lootVillageois',
     lootLoupPer60Min: 'lootLoup',

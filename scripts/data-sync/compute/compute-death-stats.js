@@ -226,9 +226,9 @@ export function computeDeathStatistics(gameData) {
     };
   }).sort((a, b) => b.totalDeaths - a.totalDeaths);
 
-  // Compute camp-specific kill rates
-  // Track kills made while playing each camp
-  const campKills = new Map(); // playerId -> { villageois: {kills, games}, loups: {kills, games}, solo: {kills, games} }
+  // Compute camp-specific kill/survival rates
+  // Track kills, deaths and day-1 deaths made while playing each camp
+  const campKills = new Map(); // playerId -> { villageois: {kills, games, deaths, day1Deaths}, loups: {...}, solo: {...} }
   
   gameData.forEach(game => {
     if (!game.PlayerStats) return;
@@ -247,9 +247,9 @@ export function computeDeathStatistics(gameData) {
     playerRolesInGame.forEach((camp, playerId) => {
       if (!campKills.has(playerId)) {
         campKills.set(playerId, {
-          villageois: { kills: 0, games: 0 },
-          loups: { kills: 0, games: 0 },
-          solo: { kills: 0, games: 0 }
+          villageois: { kills: 0, games: 0, deaths: 0, day1Deaths: 0 },
+          loups: { kills: 0, games: 0, deaths: 0, day1Deaths: 0 },
+          solo: { kills: 0, games: 0, deaths: 0, day1Deaths: 0 }
         });
       }
       const playerCampData = campKills.get(playerId);
@@ -259,6 +259,35 @@ export function computeDeathStatistics(gameData) {
         playerCampData.loups.games++;
       } else {
         playerCampData.solo.games++;
+      }
+    });
+
+    // Track deaths per camp in this game
+    game.PlayerStats.forEach(player => {
+      const playerId = getPlayerId(player);
+      const camp = playerRolesInGame.get(playerId);
+      if (!camp) return;
+      const playerCampData = campKills.get(playerId);
+      if (!playerCampData) return;
+
+      const deathType = player.DeathType;
+      const isDead = deathType &&
+        deathType !== 'N/A' &&
+        deathType !== DeathTypeCode.SURVIVOR &&
+        deathType !== '';
+
+      if (isDead) {
+        const isD1 = isDay1Death(player.DeathTiming);
+        if (camp === 'Villageois') {
+          playerCampData.villageois.deaths++;
+          if (isD1) playerCampData.villageois.day1Deaths++;
+        } else if (camp === 'Loup') {
+          playerCampData.loups.deaths++;
+          if (isD1) playerCampData.loups.day1Deaths++;
+        } else {
+          playerCampData.solo.deaths++;
+          if (isD1) playerCampData.solo.day1Deaths++;
+        }
       }
     });
     
@@ -285,9 +314,9 @@ export function computeDeathStatistics(gameData) {
             
             if (!campKills.has(killerId)) {
               campKills.set(killerId, {
-                villageois: { kills: 0, games: 0 },
-                loups: { kills: 0, games: 0 },
-                solo: { kills: 0, games: 0 }
+                villageois: { kills: 0, games: 0, deaths: 0, day1Deaths: 0 },
+                loups: { kills: 0, games: 0, deaths: 0, day1Deaths: 0 },
+                solo: { kills: 0, games: 0, deaths: 0, day1Deaths: 0 }
               });
             }
             
@@ -315,7 +344,19 @@ export function computeDeathStatistics(gameData) {
       killRateLoup: campData.loups.games >= 5 
         ? campData.loups.kills / campData.loups.games : null,
       killRateSolo: campData.solo.games >= 3 
-        ? campData.solo.kills / campData.solo.games : null
+        ? campData.solo.kills / campData.solo.games : null,
+      survivalRateVillageois: campData.villageois.games >= 5
+        ? ((campData.villageois.games - campData.villageois.deaths) / campData.villageois.games) * 100 : null,
+      survivalRateLoup: campData.loups.games >= 5
+        ? ((campData.loups.games - campData.loups.deaths) / campData.loups.games) * 100 : null,
+      survivalRateSolo: campData.solo.games >= 3
+        ? ((campData.solo.games - campData.solo.deaths) / campData.solo.games) * 100 : null,
+      survivalDay1RateVillageois: campData.villageois.games >= 5
+        ? ((campData.villageois.games - campData.villageois.day1Deaths) / campData.villageois.games) * 100 : null,
+      survivalDay1RateLoup: campData.loups.games >= 5
+        ? ((campData.loups.games - campData.loups.day1Deaths) / campData.loups.games) * 100 : null,
+      survivalDay1RateSolo: campData.solo.games >= 3
+        ? ((campData.solo.games - campData.solo.deaths) / campData.solo.games) * 100 : null
     });
   });
 

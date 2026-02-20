@@ -50,6 +50,34 @@ export const TITLE_DEFINITIONS = {
     low: { title: 'La Première Victime', emoji: '⚰️', description: 'Meurt souvent Jour 1' }
   },
 
+  // Camp-specific survival titles
+  survivalVillageois: {
+    high: { title: 'Le·a Gardien·ne du Village', emoji: '🏡', description: 'Survie élevée en camp Villageois' },
+    low: { title: "L'Agneau Sacrifié·e", emoji: '🐑', description: 'Meurt souvent en camp Villageois' }
+  },
+  survivalLoup: {
+    high: { title: 'Le·a Loup Fantôme', emoji: '👻', description: 'Survie élevée en camp Loup' },
+    low: { title: 'Le·a Loup Imprudent·e', emoji: '💀', description: 'Meurt souvent en camp Loup' }
+  },
+  survivalSolo: {
+    high: { title: "L'Intouchable", emoji: '🌟', description: 'Survie élevée en Solo' },
+    low: { title: "L'Outsider Éphémère", emoji: '💨', description: 'Meurt souvent en Solo' }
+  },
+
+  // Camp-specific Day 1 survival titles
+  survivalDay1Villageois: {
+    high: { title: 'Le·a Vigilant·e du Village', emoji: '🏃‍♀️', description: 'Survit souvent au Jour 1 en Villageois' },
+    low: { title: "L'Agneau du Premier Jour", emoji: '🌅', description: 'Meurt souvent Jour 1 en Villageois' }
+  },
+  survivalDay1Loup: {
+    high: { title: 'Le·a Loup Prudent·e', emoji: '🌙', description: 'Survit souvent au Jour 1 en Loup' },
+    low: { title: 'Le·a Loup Démasqué·e', emoji: '🔍', description: 'Souvent éliminé·e Jour 1 en Loup' }
+  },
+  survivalDay1Solo: {
+    high: { title: "L'Électron Résistant·e", emoji: '⚡', description: 'Survit souvent au Jour 1 en Solo' },
+    low: { title: 'La Comète Filante', emoji: '☄️', description: 'Souvent éliminé·e Jour 1 en Solo' }
+  },
+
   // Loot/Harvest titles
   loot: {
     high: { title: 'Le·a Récolteur·euse', emoji: '🧺', description: 'Récolte élevée' },
