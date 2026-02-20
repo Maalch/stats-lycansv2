@@ -341,7 +341,7 @@ export function MeetingSurvivalView({
       <div className="lycans-section-description" style={{ marginTop: '1.5rem' }}>
         <p>
           Les statistiques de survie aux meetings montrent le pourcentage de fois qu'un joueur survit après la réunion parmi tous les meetings auxquels il a participé. 
-          Un joueur "participe" à un meeting s'il était vivant au début de celui-ci. Un joueur "meurt en meeting" si son DeathTiming commence par "M" (comme M1, M2, etc.).
+          Un joueur "participe" à un meeting s'il était vivant au début de celui-ci. Seules les morts par vote comptent ici.
         </p>
         <p>
           {highlightedPlayerAdded && 'Les joueurs mis en évidence apparaissent même s\'ils ne sont pas dans le top 20.'}
