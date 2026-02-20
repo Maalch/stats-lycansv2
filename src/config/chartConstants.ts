@@ -47,6 +47,8 @@ export const MIN_GAMES_OPTIONS = {
   STANDARD: [3, 5, 15, 25, 50, 100] as const,
   /** Extended options for large datasets */
   EXTENDED: [3, 5, 10, 20, 25, 50, 75, 100, 150, 200] as const,
+  /** Meetings options, big  datasets */
+  MEETINGS: [3, 10, 25, 50, 100, 250, 400, 800] as const,
 } as const;
 
 // Pagination defaults

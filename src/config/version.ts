@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.10';
+export const APP_VERSION = '1.7.11';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -26,6 +26,24 @@ export const CHANGELOG: ChangelogEntry[] = [
     }
   },
   */
+  {
+    version: 'v1.7.11',
+    date: '20/02/2026',
+    description: 'Ajout d\'un classement par taux de survie aux meetings dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'deathStats',
+      text: 'Classements / Morts & Kills',
+      navigationState: {
+        selectedPlayerSelectionView: 'deaths',
+        deathStatisticsState: {
+          selectedCamp: 'Tous les camps',
+          minGamesForAverage: 50,
+          selectedView: 'meetingSurvival'
+        }
+      }
+    }
+  },
   {
     version: 'v1.7.10',
     date: '17/02/2026',

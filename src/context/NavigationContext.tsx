@@ -63,7 +63,7 @@ export interface DeathStatisticsState {
   selectedCamp: string;
   victimCampFilter?: string;
   minGamesForAverage: number;
-  selectedView?: 'killers' | 'deaths' | 'hunter' | 'survival'; // Which view is currently displayed
+  selectedView?: 'killers' | 'deaths' | 'hunter' | 'survival' | 'meetingSurvival'; // Which view is currently displayed
   focusChart?: 'totalKills' | 'averageKills' | 'totalDeaths' | 'survivalRate'; // Which chart to focus on when navigating
 }
 

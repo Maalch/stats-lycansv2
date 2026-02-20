@@ -27,7 +27,7 @@ export function computeVotingStatistics(gameData) {
     
     if (deathTiming.startsWith('M')) {
       const deathMeeting = parseInt(deathTiming.substring(1));
-      return meetingNumber < deathMeeting;
+      return meetingNumber <= deathMeeting;
     }
     
     if (deathTiming.startsWith('N') || deathTiming.startsWith('J')) {
