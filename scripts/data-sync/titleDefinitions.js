@@ -70,8 +70,8 @@ export const TITLE_DEFINITIONS = {
     low: { title: "L'Agneau du Premier Jour", emoji: '🌅', description: 'Meurt souvent Jour 1 en Villageois' }
   },
   survivalDay1Loup: {
-    high: { title: 'Le·a Loup·ve Prudent·e', emoji: '🌙', description: 'Survit souvent au Jour 1 en Loup' },
-    low: { title: 'Le·a Loup·ve Démasqué·e', emoji: '🔍', description: 'Souvent éliminé·e Jour 1 en Loup' }
+    high: { title: 'Le·a Loup·ve Prudent·e', emoji: '🌙', description: 'Survit souvent au Jour 1 en Loup·ve' },
+    low: { title: 'Le·a Loup·ve Démasqué·e', emoji: '🔍', description: 'Souvent éliminé·e Jour 1 en Loup·ve' }
   },
   survivalDay1Solo: {
     high: { title: "L'Électron Résistant·e", emoji: '⚡', description: 'Survit souvent au Jour 1 en Solo' },
@@ -91,8 +91,8 @@ export const TITLE_DEFINITIONS = {
     low: { title: 'Le·a Villageois·e Paresseux·se', emoji: '💤', description: 'Faible récolte en Villageois' }
   },
   lootLoup: {
-    high: { title: 'Le·a Loup·ve Discret·e', emoji: '🐺', description: 'Récolte élevée en Loup' },
-    low: { title: 'Le·a Loup·ve Impatient·e', emoji: '😤', description: 'Faible récolte en Loup' }
+    high: { title: 'Le·a Loup·ve Discret·e', emoji: '🐺', description: 'Récolte élevée en Loup·ve' },
+    low: { title: 'Le·a Loup·ve Impatient·e', emoji: '😤', description: 'Faible récolte en Loup·ve' }
   },
 
   // Voting behavior titles
@@ -221,7 +221,7 @@ export const TITLE_DEFINITIONS = {
 
   // Wolf transformation rate (transformations per night as wolf)
   wolfTransformRate: {
-    extremeHigh: { title: 'Le Loup-Garou Frénétique', emoji: '🐺', description: 'Se transforme très souvent en loup' },
+    extremeHigh: { title: 'Le Loup-Garou Frénétique', emoji: '🐺', description: 'Se transforme très souvent en Loup·ve' },
     high: { title: 'Le·a Transform·é·e', emoji: '🌙', description: 'Se transforme fréquemment' },
     low: { title: 'Le·a Loup·ve Prudent·e', emoji: '🐕', description: 'Se transforme rarement' },
     extremeLow: { title: 'Le·a Loup·ve Fantôme', emoji: '👻', description: 'Ne se transforme presque jamais' }
@@ -232,7 +232,7 @@ export const TITLE_DEFINITIONS = {
     extremeHigh: { title: 'L\'Adaptable', emoji: '🦎', description: 'Se détransforme très souvent' },
     high: { title: 'Le·a Discret·ète', emoji: '🤫', description: 'Se détransforme fréquemment' },
     low: { title: 'Le·a Loup·ve Assumé·e', emoji: '🐺', description: 'Se détransforme rarement' },
-    extremeLow: { title: 'Le·a Loup·ve Permanent·e', emoji: '🌑', description: 'Reste presque toujours en loup' }
+    extremeLow: { title: 'Le·a Loup·ve Permanent·e', emoji: '🌑', description: 'Reste presque toujours en Loup·ve' }
   },
 
   // === POTION USAGE STATS ===
@@ -417,7 +417,7 @@ export const COMBINATION_TITLES = [
     id: 'manipulateur',
     title: 'Le·a Manipulateur·rice',
     emoji: '🐍',
-    description: 'Loup bavard·e et gagnant·e',
+    description: 'Loup·ve bavard·e et gagnant·e',
     conditions: [
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'talking', category: 'HIGH' }
@@ -457,7 +457,7 @@ export const COMBINATION_TITLES = [
     id: 'loup_alpha',
     title: 'Le·a Loup·ve Alpha',
     emoji: '🐺',
-    description: 'Survit et domine en Loup',
+    description: 'Survit et domine en Loup·ve',
     conditions: [
       { stat: 'survival', category: 'HIGH' },
       { stat: 'winRateLoup', category: 'HIGH' },
@@ -471,7 +471,7 @@ export const COMBINATION_TITLES = [
     id: 'infiltrateur',
     title: 'L\'Infiltré·e',
     emoji: '🎭',
-    description: 'Excellent·e loup discret·ète',
+    description: 'Excellent·e Loup·ve discret·ète',
     conditions: [
       { stat: 'winRateLoup', category: 'HIGH' },
       { stat: 'talking', category: 'LOW' }
@@ -613,7 +613,7 @@ export const COMBINATION_TITLES = [
     id: 'loup_deguise',
     title: 'Le·a Loup·ve Déguisé·e',
     emoji: '🦊',
-    description: 'Reste humain, survit et gagne en Loup',
+    description: 'Reste humain, survit et gagne en Loup·ve',
     conditions: [
       { stat: 'wolfTransformRate', category: 'LOW' },
       { stat: 'survival', category: 'HIGH' },
@@ -802,7 +802,7 @@ export const COMBINATION_TITLES = [
     id: 'chasseur_nocturne',
     title: 'Le·a Chasseur·se Nocturne',
     emoji: '🌙',
-    description: 'Se transforme, reste loup, et domine',
+    description: 'Se transforme, reste Loup·ve, et domine',
     conditions: [
       { stat: 'wolfTransformRate', category: 'HIGH' },
       { stat: 'wolfUntransformRate', category: 'LOW' },
