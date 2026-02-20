@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { useSettings } from '../../../context/SettingsContext';
 import { useNavigation } from '../../../context/NavigationContext';
@@ -472,19 +472,18 @@ export function MeetingSurvivalView({
             <Bar 
               dataKey="value" 
               fill="var(--chart-primary)"
-              onMouseEnter={(data: any) => setHighlightedPlayer(data.name)}
-              onMouseLeave={() => setHighlightedPlayer(null)}
-              onClick={handleBarClick}
-              shape={(props: any) => <Rectangle {...props} style={{ cursor: 'pointer' }} />}
-            >
-              {survivalData.map((entry, index) => {
+              shape={(props: any) => {
+                const { x, y, width, height, payload } = props;
+                const entry = payload as ChartMeetingSurvivalData;
                 const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                 const isHighlightedAddition = entry.isHighlightedAddition;
                 const isHovered = highlightedPlayer === entry.name;
-                
                 return (
-                  <Cell 
-                    key={`cell-${index}`}
+                  <Rectangle
+                    x={x}
+                    y={y}
+                    width={width}
+                    height={height}
                     fill={
                       isHighlightedFromSettings ? 'var(--accent-primary)' :
                       isHighlightedAddition ? 'var(--accent-secondary)' :
@@ -495,16 +494,20 @@ export function MeetingSurvivalView({
                     strokeWidth={isHighlightedFromSettings ? 3 : 0}
                     strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                     opacity={isHighlightedAddition ? 0.8 : 1}
+                    onClick={() => handleBarClick(entry)}
+                    onMouseEnter={() => setHighlightedPlayer(entry.name)}
+                    onMouseLeave={() => setHighlightedPlayer(null)}
+                    style={{ cursor: 'pointer' }}
                   />
                 );
-              })}
-            </Bar>
+              }}
+            />
           </BarChart>
         </ResponsiveContainer>
       </FullscreenChart>
 
       {/* Raw vote deaths record chart */}
-      <div style={{ marginTop: '3rem' }}>
+      <div>
         <div className="lycans-section-description" style={{ marginBottom: '1rem' }}>
           <h3 style={{ color: 'var(--text-primary)', marginBottom: '0.5rem' }}>🏆 Record de morts en meeting</h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: 0 }}>
@@ -560,23 +563,23 @@ export function MeetingSurvivalView({
               <Bar
                 dataKey="value"
                 fill="var(--danger, #e05252)"
-                onMouseEnter={(data: any) => setHighlightedPlayer(data.name)}
-                onMouseLeave={() => setHighlightedPlayer(null)}
-                onClick={handleBarClick}
-                shape={(props: any) => <Rectangle {...props} style={{ cursor: 'pointer' }} />}
                 label={{
                   position: 'top',
                   fill: 'var(--text-secondary)',
                   fontSize: 11
                 }}
-              >
-                {rawDeathsData.map((entry, index) => {
+                shape={(props: any) => {
+                  const { x, y, width, height, payload } = props;
+                  const entry = payload as ChartRawDeathsData;
                   const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                   const isHighlightedAddition = entry.isHighlightedAddition;
                   const isHovered = highlightedPlayer === entry.name;
                   return (
-                    <Cell
-                      key={`cell-deaths-${index}`}
+                    <Rectangle
+                      x={x}
+                      y={y}
+                      width={width}
+                      height={height}
                       fill={
                         isHighlightedFromSettings ? 'var(--accent-primary)' :
                         isHighlightedAddition ? 'var(--accent-secondary)' :
@@ -587,10 +590,14 @@ export function MeetingSurvivalView({
                       strokeWidth={isHighlightedFromSettings ? 3 : 0}
                       strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                       opacity={isHighlightedAddition ? 0.8 : 1}
+                      onClick={() => handleBarClick(entry)}
+                      onMouseEnter={() => setHighlightedPlayer(entry.name)}
+                      onMouseLeave={() => setHighlightedPlayer(null)}
+                      style={{ cursor: 'pointer' }}
                     />
                   );
-                })}
-              </Bar>
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </FullscreenChart>
