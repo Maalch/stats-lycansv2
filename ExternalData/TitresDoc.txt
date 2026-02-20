@@ -1,0 +1,180 @@
+# Titres de Joueurs - Documentation
+
+## Table des Titres
+
+| Ordre | État | Priorité | Camp | Liens | Titre | Description | Conditions | Condition 1 | Critère 1 | Condition 2 | Critère 2 | Condition 3 | Critère 3 | Condition 4 | Critère 4 |
+|-------|------|----------|------|-------|-------|-------------|------------|-------------|-----------|-------------|-----------|-------------|-----------|-------------|-----------|
+| 0 | Sur le site | 20 | Tous | Victoire, Série, Parties | La Légende | Gagne tout le temps + grosses séries | 3 | Taux de victoire | Très élevé : 85 (Top 15%) | Série de victoires | Élevé : 65 (Top 35%) | Parties jouées | Undefined (min: 100) | | |
+| 1 | Sur le site | 19 | Tous | Victoire, Récolte, Survie | Le·a MVP | Gagne, récolte, et survit | 3 | Taux de victoire | Élevé : 65 (Top 35%) | Récolte | Élevé : 65 (Top 35%) | Survie | Élevé : 65 (Top 35%) | | |
+| 2 | Sur le site | 18 | Villageois | Rôle, Kills, Survie | Le·a Justicier·ère | Chasseur·se qui vise juste, tue souvent et survit | 3 | Précision chasseur | Élevé : 65 (Top 35%) | Taux de kills | Élevé : 65 (Top 35%) | Survie | Élevé : 65 (Top 35%) | | |
+| 3 | Sur le site | 18 | Villageois | Rôle | Sniper Elite | Chasseur·se ultra précis·e | 2 | Précision de tir (chasseur) | Élevé : 65 (Top 35%) | Précision chasseur | Élevé : 65 (Top 35%) | | | | |
+| 4 | Sur le site | 18 | Tous | Victoire | Le·a Caméléon | Bon dans tous les camps | 3 | Victoires Villageois | Élevé : 65 (Top 35%) | Victoires Loup | Élevé : 65 (Top 35%) | Victoires Solo | Élevé : 65 (Top 35%) | | |
+| 5 | Sur le site | 18 | Loup | Récolte, Victoire, Parole | Le Loup Solitaire | Loup efficace, discret et gagnant | 3 | Récolte Loup | Élevé : 65 (Top 35%) | Victoires Loup | Élevé : 65 (Top 35%) | Temps de parole | Faible : 35 (Top 65%) | | |
+| 6 | Sur le site | 18 | Tous | Récolte, Parole | La Machine | Récolte énormément sans dire un mot | 2 | Récolte | Très élevé : 85 (Top 15%) | Temps de parole | Très faible : 15 (Top 85%) | | | | |
+| 7 | Sur le site | 17 | Tous | Parole, Récolte, Kills | Le·a Commentateur·rice | Ne fait que parler, ne récolte rien et tue peu | 3 | Temps de parole | Très élevé : 85 (Top 15%) | Récolte | Faible : 35 (Top 65%) | Taux de kills | Faible : 35 (Top 65%) | | |
+| 8 | Sur le site | 17 | Tous | Survie | Le Phoenix | Meurt souvent tôt mais survit jusqu'au bout après | 2 | Survie Jour 1 | Faible : 35 (Top 65%) | Survie | Élevé : 65 (Top 35%) | | | | |
+| 9 | Sur le site | 17 | Tous | Récolte, Survie, Parole | Le·a Robot | Productif·ve, survit, parle peu | 3 | Récolte | Élevé : 65 (Top 35%) | Survie | Élevé : 65 (Top 35%) | Temps de parole | Faible : 35 (Top 65%) | | |
+| 10 | Sur le site | 17 | Tous | Parole, Récolte, Survie | Le·a Pitre | Bavard·e, improductif·ve, meurt souvent | 3 | Temps de parole | Élevé : 65 (Top 35%) | Récolte | Faible : 35 (Top 65%) | Survie | Faible : 35 (Top 65%) | | |
+| 11 | Sur le site | 16 | Tous | Parole, Vote | Le·a Maître·sse de Cérémonie | Mène les débats et vote juste | 3 | Parole en meeting | Élevé : 65 (Top 35%) | Précision de vote | Élevé : 65 (Top 35%) | Vote agressif | Élevé : 65 (Top 35%) | | |
+| 12 | Sur le site | 16 | Loup | Victoire, Parole | Le·a Manipulateur·rice | Loup bavard·e et gagnant·e | 2 | Victoires Loup | Élevé : 65 (Top 35%) | Temps de parole | Élevé : 65 (Top 35%) | | | | |
+| 13 | Sur le site | 16 | Tous | Survie, Kills, Victoire | Le·a Diplomate | Gagne en survivant sans tuer | 3 | Survie | Élevé : 65 (Top 35%) | Taux de kills | Faible : 35 (Top 65%) | Taux de victoire | Élevé : 65 (Top 35%) | | |
+| 14 | Sur le site | 16 | Tous | Parole, Récolte, Survie | Le·a Politicien·ne | Parle beaucoup, survit, mais ne récolte pas | 3 | Temps de parole | Élevé : 65 (Top 35%) | Récolte | Faible : 35 (Top 65%) | Survie | Élevé : 65 (Top 35%) | | |
+| 15 | Sur le site | 15 | Loup | Survie, Victoire | Le Loup Alpha | Survit et domine en Loup | 3 | Survie | Élevé : 65 (Top 35%) | Victoires Loup | Élevé : 65 (Top 35%) | Taux de kills | Élevé : 65 (Top 35%) | | |
+| 17 | Sur le site | 15 | Loup | Victoire, Parole | L'Infiltré·e | Excellent·e loup discret·ète | 2 | Victoires Loup | Élevé : 65 (Top 35%) | Temps de parole | Faible : 35 (Top 65%) | | | | |
+| 18 | Sur le site | 15 | Tous | Parole, Récolte, Victoire | Monsieur·Madame Tout-le-Monde | Performance moyenne partout | 3 | Temps de parole | Moyen : 50 (Top 50%) | Récolte | Moyen : 50 (Top 50%) | Taux de victoire | Moyen : 50 (Top 50%) | | |
+| 19 | Sur le site | 15 | Tous | Parole, Victoire | L'Invisible | Quasi muet·te mais redoutablement efficace | 2 | Temps de parole | Très faible : 15 (Top 85%) | Taux de victoire | Élevé : 65 (Top 35%) | | | | |
+| 20 | Sur le site | 15 | Loup | Transfo | Le Loup Hyperactif | Se transforme et détransforme constamment | 2 | Taux de transformation en loup | Élevé : 65 (Top 35%) | Taux de retour après transformation | Élevé : 65 (Top 35%) | | | | |
+| 21 | Sur le site | 14 | Loup, Solo | Victoire | Le·a Traître·sse | Gagnant·e dans tous les camps ennemis villageois | 2 | Victoires Loup | Élevé : 65 (Top 35%) | Victoires Solo | Élevé : 65 (Top 35%) | | | | |
+| 22 | Sur le site | 14 | Tous | Kills, Victoire | Le·a Pacifiste | Gagne sans tuer | 3 | Taux de kills | Faible : 35 (Top 65%) | Taux de kills loup | Faible : 35 (Top 65%) | Taux de transformation en loup | Faible : 35 (Top 65%) | Victoires Loup | Élevé : 65 (Top 35%) |
+| 23 | Sur le site | 14 | Villageois | Rôle | Le·a Chasseur·se Maladroit·e | Chasseur·se précis qui touche les mauvaises cibles | 2 | Précision de tir (chasseur) | Élevé : 65 (Top 35%) | Précision chasseur | Faible : 35 (Top 65%) | | | | |
+| 24 | Sur le site | 14 | Villageois | Récolte, Victoire | Le·a Citoyen·ne Exemplaire | Récolte et gagne en villageois | 2 | Récolte Villageois | Élevé : 65 (Top 35%) | Victoires Villageois | Élevé : 65 (Top 35%) | | | | |
+| 25 | Sur le site | 14 | Tous | Récolte, Kills | L'Assassin | Ignore la récolte, se concentre sur les kills | 2 | Récolte | Faible : 35 (Top 65%) | Taux de kills | Élevé : 65 (Top 35%) | | | | |
+| 26 | Sur le site | 14 | Solo | Victoire | L'Anarchiste | Maître des rôles solitaires | 2 | Camp Solo | Élevé : 65 (Top 35%) | Victoires Solo | Élevé : 65 (Top 35%) | | | | |
+| 27 | Sur le site | 14 | Tous | Map, Récolte | Le·a Campeur·euse | Reste au même endroit sans récolter | 2 | Concentration zone dominante | Très élevé : 85 (Top 15%) | Récolte | Faible : 35 (Top 65%) | | | | |
+| 28 | Sur le site | 14 | Loup | Transfo, Survie, Victoire | Le·a Loup·ve Déguisé·e | Reste humain, survit et gagne en Loup | 3 | Taux de transformation en loup | Faible : 35 (Top 65%) | Survie | Élevé : 65 (Top 35%) | Victoires Loup | Élevé : 65 (Top 35%) | | |
+| 29 | Sur le site | 13 | Tous | Parole, Vote | Le·a Populiste | Bruyant·e et actif·ve mais se trompe de cible | 3 | Temps de parole | Élevé : 65 (Top 35%) | Vote agressif | Élevé : 65 (Top 35%) | Précision de vote | Faible : 35 (Top 65%) | | |
+| 30 | Sur le site | 13 | Tous | Map, Kills | L'Embusqué·e | Tend des pièges dans les Ruines | 2 | Zone Ruines | Élevé : 65 (Top 35%) | Taux de kills | Élevé : 65 (Top 35%) | | | | |
+| 31 | Sur le site | 13 | Tous | Kills, Victoire | La Tête Brûlée | Tue beaucoup mais fait perdre son camp | 2 | Taux de kills | Élevé : 65 (Top 35%) | Taux de victoire | Faible : 35 (Top 65%) | | | | |
+| 32 | Sur le site | 13 | Tous | Potions, Survie | L'Apothicaire | Boit beaucoup de potions et survit grâce à elles | 2 | Utilisation de potions | Élevé : 65 (Top 35%) | Survie | Élevé : 65 (Top 35%) | | | | |
+| 33 | Sur le site | 13 | Tous | Survie, Victoire | Le·a Sacrifié·e | Meurt rapidement mais fait gagner son camp | 3 | Survie Jour 1 | Faible : 35 (Top 65%) | Survie | Faible : 35 (Top 65%) | Taux de victoire | Élevé : 65 (Top 35%) | | |
+| 34 | Sur le site | 13 | Tous | Vote, Survie | Le·a Lanceur·se d'Alerte | Vote juste mais se fait éliminer pour ça | 3 | Précision de vote | Élevé : 65 (Top 35%) | Survie | Faible : 35 (Top 65%) | Survie au vote | Faible : 35 (Top 65%) | | |
+| 35 | Sur le site | 12 | Tous | Map, Victoire | L'Aventurier·ère | Explore toute la carte et gagne | 2 | Concentration zone dominante | Faible : 35 (Top 65%) | Taux de victoire | Élevé : 65 (Top 35%) | | | | |
+| 36 | Sur le site | 12 | Tous | Map, Parole | L'Ermite | Silencieux·se, reclus·e dans les Ruines | 2 | Zone Ruines | Élevé : 65 (Top 35%) | Temps de parole | Faible : 35 (Top 65%) | | | | |
+| 37 | Sur le site | 12 | Tous | Map, Survie | Le·a Capitaine du Port | Survit au bord de l'eau | 2 | Zone Village Pêcheur | Élevé : 65 (Top 35%) | Survie | Élevé : 65 (Top 35%) | | | | |
+| 38 | Sur le site | 12 | Tous | Map, Récolte | Le·a Cueilleur·se | Récolte en parcourant toute la carte | 2 | Concentration zone dominante | Faible : 35 (Top 65%) | Récolte | Élevé : 65 (Top 35%) | | | | |
+| 39 | Sur le site | 14 | Loup | Transfo, Victoire | Le·a Chasseur·se Nocturne | Se transforme, reste loup et domine | 3 | Taux de transformation en loup | Élevé : 65 (Top 35%) | Taux de retour après transformation | Faible : 35 (Top 65%) | Victoires Loup | Élevé : 65 (Top 35%) | | |
+| 40 | Sur le site | 12 | Tous | Potions, Parole | Le·a Sorcier·ère | Prépare des potions tout en racontant ses recettes | 2 | Utilisation de potions | Élevé : 65 (Top 35%) | Temps de parole | Élevé : 65 (Top 35%) | | | | |
+| 41 | Sur le site | 12 | Tous | Kills, Survie | Le·a Berserker | Tue mais meurt en retour | 2 | Taux de kills | Élevé : 65 (Top 35%) | Survie | Faible : 35 (Top 65%) | | | | |
+| 42 | Sur le site | 12 | Tous | Vote, Parole | Le·a Détective | Observe silencieusement et vote juste | 2 | Précision de vote | Élevé : 65 (Top 35%) | Temps de parole | Faible : 35 (Top 65%) | | | | |
+| 43 | Sur le site | 12 | Tous | Victoire, Série | Le·a Malchanceux·se | Perd tout le temps + grosse séries de défaites | 2 | Taux de victoire | Faible : 35 (Top 65%) | Série de défaites | Élevé : 65 (Top 35%) | Survie | Faible : 35 (Top 65%) | Parties jouées | Moyen : 50 (Top 50%) |
+| 44 | Sur le site | 12 | Tous | Récolte, Survie | L'Avide | Récolte beaucoup mais meurt | 2 | Récolte | Élevé : 65 (Top 35%) | Survie | Faible : 35 (Top 65%) | | | | |
+| 45 | Sur le site | 12 | Tous | Parole, Vote | Le·a Théoricien·ne | Parle beaucoup en débat mais vote peu | 2 | Parole en meeting | Élevé : 65 (Top 35%) | Vote agressif | Faible : 35 (Top 65%) | | | | |
+| 46 | Sur le site | 12 | Tous | Potions, Récolte | Le·a Pharmacien·ne | Ignore la récolte pour se concentrer sur les potions | 2 | Utilisation de potions | Élevé : 65 (Top 35%) | Récolte | Faible : 35 (Top 65%) | | | | |
+| 47 | Sur le site | 12 | Tous | Map, Survie | Le·a Rôdeur·se | Rôde hors des villages et survit | 2 | Zone Reste Carte | Élevé : 65 (Top 35%) | Survie | Élevé : 65 (Top 35%) | | | | |
+| 48 | Sur le site | 11 | Tous | Map, Récolte | Le·a Moissonneur·se | Récolte à la Ferme sans relâche | 2 | Zone Ferme | Élevé : 65 (Top 35%) | Récolte | Élevé : 65 (Top 35%) | | | | |
+| 49 | Sur le site | 11 | Tous | Victoire, Survie, Récolte | Le·a Débutant·e | Peine en victoire, survie et récolte | 3 | Taux de victoire | Faible : 35 (Top 65%) | Survie | Faible : 35 (Top 65%) | Récolte | Faible : 35 (Top 65%) | Parties jouées | Faible : 35 (Top 65%) |
+| 50 | Sur le site | 11 | Tous | Potions, Victoire | L'Experimentateur | Boit des potions mais ça ne l'aide pas à gagner | 2 | Utilisation de potions | Élevé : 65 (Top 35%) | Taux de victoire | Faible : 35 (Top 65%) | | | | |
+| 51 | Sur le site | 11 | Tous | Survie, Parole | La Grande Gueule | Parle trop et meurt souvent Jour 1 | 2 | Survie Jour 1 | Faible : 35 (Top 65%) | Temps de parole | Élevé : 65 (Top 35%) | | | | |
+| 52 | Sur le site | 11 | Tous | Survie, Victoire | Le·a Peureux·se | Survit longtemps mais perd quand même | 2 | Survie | Élevé : 65 (Top 35%) | Taux de victoire | Faible : 35 (Top 65%) | | | | |
+| 53 | Sur le site | 11 | Villageois | Récolte, Victoire | Le·a Travailleur·se | Récolte bien en Villageois mais perd | 2 | Récolte Villageois | Élevé : 65 (Top 35%) | Victoires Villageois | Faible : 35 (Top 65%) | | | | |
+| 54 | Sur le site | 11 | Loup | Récolte, Victoire | Le Loup repéré | Récolte en Loup mais se fait démasquer | 2 | Récolte Loup | Élevé : 65 (Top 35%) | Victoires Loup | Faible : 35 (Top 65%) | | | | |
+| 55 | Sur le site | 11 | Tous | Parties | Le·a Taulier·e | Participe beaucoup et excelle dans un camp | 2 | Parties jouées | Élevé : 65 (Top 35%) | Équilibre des camps | Spécialiste | | | | |
+| 56 | Sur le site | 11 | Tous | Parole | Le·a Conspirateur·rice | Bavard·e hors meeting, silencieux·se pendant | 2 | Parole hors meeting | Élevé : 65 (Top 35%) | Parole en meeting | Faible : 35 (Top 65%) | | | | |
+| 57 | Sur le site | 11 | Tous | Parole | L'Avocat·e | Siliencieux·se hors débats, éloquent·e en meeting | 2 | Parole hors meeting | Faible : 35 (Top 65%) | Parole en meeting | Élevé : 65 (Top 35%) | | | | |
+| 58 | Sur le site | 11 | Tous | Victoire, Parties | L'Opportuniste | Gagne souvent mais joue peu | 2 | Taux de victoire | Élevé : 65 (Top 35%) | Parties jouées | Faible : 35 (Top 65%) | | | | |
+| 59 | Sur le site | 11 | Tous | Victoire | L'Apprenti | Peine dans tous les camps | 3 | Victoires Villageois | Faible : 35 (Top 65%) | Victoires Loup | Faible : 35 (Top 65%) | Victoires Solo | Faible : 35 (Top 65%) | | |
+| 60 | Sur le site | 11 | Tous | Récolte, Survie | Le·a Prudent·e | Survit mais récolte peu | 2 | Récolte | Faible : 35 (Top 65%) | Survie | Élevé : 65 (Top 35%) | | | | |
+| 61 | Sur le site | 10 | Tous | Vote | Le Cow-Boy | Vote vite et souvent | 2 | Vote agressif | Élevé : 65 (Top 35%) | Premier voteur | Élevé : 65 (Top 35%) | | | | |
+| 62 | Sur le site | 10 | Tous | Parole, Vote | Le·a Baratineur·se | Parle beaucoup mais vote mal | 2 | Temps de parole | Élevé : 65 (Top 35%) | Précision de vote | Faible : 35 (Top 65%) | | | | |
+| 63 | Sur le site | 10 | Tous | Parties | L'Enthousiaste | Participe beaucoup et gagne autant dans chaque camp | 2 | Parties jouées | Élevé : 65 (Top 35%) | Équilibre des camps | Équilibré | | | | |
+| 64 | Sur le site | 10 | Tous | Parole, Récolte | L'Hyperactif·ve | Bavard·e et grande récolte | 2 | Temps de parole | Élevé : 65 (Top 35%) | Récolte | Élevé : 65 (Top 35%) | | | | |
+| 65 | Sur le site | 10 | Tous | Parole, Récolte | L'Efficace | Silencieux·se mais productif·ve | 2 | Temps de parole | Faible : 35 (Top 65%) | Récolte | Élevé : 65 (Top 35%) | | | | |
+| 66 | Sur le site | 10 | Tous | Parole, Récolte | Le·a Philosophe | Bavard·e mais improductif·ve | 2 | Temps de parole | Élevé : 65 (Top 35%) | Récolte | Faible : 35 (Top 65%) | | | | |
+| 67 | Sur le site | 8 | Tous | | Le Moulin à Paroles | Parle énormément | 1 | Temps de parole | Très élevé : 85 (Top 15%) | | | | | | |
+| 68 | Sur le site | 8 | Tous | | Le·a Fantôme | Quasi muet·te | 1 | Temps de parole | Très faible : 15 (Top 85%) | | | | | | |
+| 69 | Sur le site | 8 | Tous | | L'Exterminateur·rice | Tueur·se en série | 1 | Taux de kills | Très élevé : 85 (Top 15%) | | | | | | |
+| 70 | Sur le site | 8 | Tous | | L'Agneau | Ne tue jamais | 1 | Taux de kills | Très faible : 15 (Top 85%) | | | | | | |
+| 71 | Sur le site | 8 | Tous | | Le·a Stakhanoviste | Récolte exceptionnelle | 1 | Récolte | Très élevé : 85 (Top 15%) | | | | | | |
+| 72 | Sur le site | 8 | Tous | | Le·a Touriste | Ne récolte jamais | 1 | Récolte | Très faible : 15 (Top 85%) | | | | | | |
+| 73 | Sur le site | 8 | Tous | | Le·a Tribun·e | Toujours en action | 1 | Vote agressif | Très élevé : 85 (Top 15%) | | | | | | |
+| 74 | Sur le site | 8 | Tous | | L'Indécis·e | Vote rarement | 1 | Vote agressif | Très faible : 15 (Top 85%) | | | | | | |
+| 75 | Sur le site | 8 | Villageois | | L'Exécuteur·rice | Chasseur·se parfait·e | 1 | Précision chasseur | Très élevé : 85 (Top 15%) | | | | | | |
+| 76 | Sur le site | 8 | Villageois | | Le·a Chasseur·se maudit·e | Tire toujours sur les mauvaises cibles | 1 | Précision chasseur | Très faible : 15 (Top 85%) | | | | | | |
+| 77 | Sur le site | 8 | Villageois | | Oeil de Faucon | Ne rate presque jamais | 1 | Précision de tir (chasseur) | Très élevé : 85 (Top 15%) | | | | | | |
+| 78 | Sur le site | 8 | Villageois | | Le·a Stormtrooper | Rate presque tout | 1 | Précision de tir (chasseur) | Très faible : 15 (Top 85%) | | | | | | |
+| 79 | Sur le site | 8 | Tous | | L'Inarrêtable | Gagne presque toujours | 1 | Taux de victoire | Très élevé : 85 (Top 15%) | | | | | | |
+| 80 | Sur le site | 8 | Tous | | Le·a Maudit·e | Perd presque toujours | 1 | Taux de victoire | Très faible : 15 (Top 85%) | | | | | | |
+| 81 | Sur le site | 8 | Tous | | Le·a Citadin·e | Traîne beaucoup au Village Principal | 1 | Zone Village Principal | Très élevé : 85 (Top 15%) | | | | | | |
+| 82 | Sur le site | 8 | Tous | | Le·a Fermier·ère | Traîne beaucoup à la Ferme | 1 | Zone Ferme | Très élevé : 85 (Top 15%) | | | | | | |
+| 83 | Sur le site | 8 | Tous | | Le·a Pêcheur·euse | Traîne beaucoup au Village Pêcheur | 1 | Zone Village Pêcheur | Très élevé : 85 (Top 15%) | | | | | | |
+| 84 | Sur le site | 8 | Tous | | L'Archéologue | Traîne beaucoup aux Ruines | 1 | Zone Ruines | Très élevé : 85 (Top 15%) | | | | | | |
+| 85 | Sur le site | 8 | Tous | | Le·a Nomade | Traîne beaucoup hors des zones principales | 1 | Zone Reste Carte | Très élevé : 85 (Top 15%) | | | | | | |
+| 86 | Sur le site | 8 | Tous | | Le·a Casanier·ère | Toujours dans la même zone | 1 | Concentration zone dominante | Très élevé : 85 (Top 15%) | | | | | | |
+| 87 | Sur le site | 8 | Tous | | L'Explorateur·ice | Réparti·e uniformément sur toute la carte | 1 | Concentration zone dominante | Très faible : 15 (Top 85%) | | | | | | |
+| 88 | Sur le site | 8 | Loup | | Le Loup-Garou Frénétique | Se transforme très souvent en loup | 1 | Taux de transformation en loup | Très élevé : 85 (Top 15%) | | | | | | |
+| 89 | Sur le site | 8 | Loup | | Le Loup Fantôme | Ne se transforme presque jamais | 1 | Taux de transformation en loup | Très faible : 15 (Top 85%) | | | | | | |
+| 90 | Sur le site | 8 | Loup | | L'Adaptable | Se détransforme très souvent | 1 | Taux de retour après transformation | Très élevé : 85 (Top 15%) | | | | | | |
+| 91 | Sur le site | 8 | Loup | | Le Loup Permanent | Reste presque toujours en loup | 1 | Taux de retour après transformation | Très faible : 15 (Top 85%) | | | | | | |
+| 92 | Sur le site | 8 | Tous | | L'Alchimiste Amateur·e | Boit énormément de potions | 1 | Utilisation de potions | Très élevé : 85 (Top 15%) | | | | | | |
+| 93 | Sur le site | 8 | Tous | | L'Abstinent·e | Ne boit presque jamais de potions | 1 | Utilisation de potions | Très faible : 15 (Top 85%) | | | | | | |
+| 94 | Sur le site | 6 | Tous | | Le·a Bavard·e | Parle beaucoup (par 60 min de jeu) | 1 | Temps de parole | Élevé : 65 (Top 35%) | | | | | | |
+| 95 | Sur le site | 6 | Tous | | Le·a Silencieux·se | Parle beaucoup (par 60 min de jeu) | 1 | Temps de parole | Faible : 35 (Top 65%) | | | | | | |
+| 96 | Sur le site | 6 | Tous | | Le·a Chuchoteur·se | Bavard·e hors meeting | 1 | Parole hors meeting | Élevé : 65 (Top 35%) | | | | | | |
+| 97 | Sur le site | 6 | Tous | | Le·a Concentré·e | Silencieux·se hors meeting | 1 | Parole hors meeting | Faible : 35 (Top 65%) | | | | | | |
+| 98 | Sur le site | 6 | Tous | | L'Orateur·rice | Bavard·e en meeting | 1 | Parole en meeting | Élevé : 65 (Top 35%) | | | | | | |
+| 99 | Sur le site | 6 | Tous | | Le·a Discret·ète | Silencieux·se en meeting | 1 | Parole en meeting | Faible : 35 (Top 65%) | | | | | | |
+| 100 | Sur le site | 6 | Tous | | Le·a Prédateur·rice | Taux de kills élevé | 1 | Taux de kills | Élevé : 65 (Top 35%) | | | | | | |
+| 101 | Sur le site | 6 | Tous | | Le·a Non-Violent·e | Taux de kills faible | 1 | Taux de kills | Faible : 35 (Top 65%) | | | | | | |
+| 102 | Sur le site | 6 | Tous | | Le·a Survivant·e | Survie élevée fin de game | 1 | Survie | Élevé : 65 (Top 35%) | | | | | | |
+| 103 | Sur le site | 6 | Tous | | La Cible | Meurt souvent | 1 | Survie | Faible : 35 (Top 65%) | | | | | | |
+| 104 | Sur le site | 6 | Tous | | Le·a Vigilant·e | Survit au Jour 1 | 1 | Survie Jour 1 | Faible : 35 (Top 65%) | | | | | | |
+| 105 | Sur le site | 6 | Tous | | La Première Victime | Meurt souvent Jour 1 | 1 | Survie Jour 1 | Faible : 35 (Top 65%) | | | | | | |
+| 106 | Sur le site | 6 | Tous | | Le·a Récolteur·euse | Récolte élevée | 1 | Récolte | Élevé : 65 (Top 35%) | | | | | | |
+| 107 | Sur le site | 6 | Tous | | Le·a Flâneur·se | Récolte faible | 1 | Récolte | Faible : 35 (Top 65%) | | | | | | |
+| 108 | Sur le site | 6 | Villageois | | Le·a Citoyen·ne Modèle | Récolte excellente en Villageois | 1 | Récolte Villageois | Élevé : 65 (Top 35%) | | | | | | |
+| 109 | Sur le site | 6 | Villageois | | Le·a Villageois·e Paresseux·se | Faible récolte en Villageois | 1 | Récolte Villageois | Faible : 35 (Top 65%) | | | | | | |
+| 110 | Sur le site | 6 | Loup | | Le Loup Discret | Récolte élevée en Loup | 1 | Récolte Loup | Élevé : 65 (Top 35%) | | | | | | |
+| 111 | Sur le site | 6 | Loup | | Le Loup Impatient | Faible récolte en Loup | 1 | Récolte Loup | Faible : 35 (Top 65%) | | | | | | |
+| 112 | Sur le site | 6 | Tous | | L'Agitateur·rice | Voteur·se agressif·ve | 1 | Vote agressif | Élevé : 65 (Top 35%) | | | | | | |
+| 113 | Sur le site | 6 | Tous | | Le·a Sage | Voteur·se passif·ve | 1 | Vote agressif | Faible : 35 (Top 65%) | | | | | | |
+| 114 | Sur le site | 6 | Tous | | L'Impulsif·ve | Premier·ère voteur·se | 1 | Premier voteur | Élevé : 65 (Top 35%) | | | | | | |
+| 115 | Sur le site | 6 | Tous | | Le·a Stratège | Attend avant de voter | 1 | Premier voteur | Faible : 35 (Top 65%) | | | | | | |
+| 116 | Sur le site | 6 | Tous | | Le·a Flaireur·se | Bon instinct de vote | 1 | Précision de vote | Élevé : 65 (Top 35%) | | | | | | |
+| 117 | Sur le site | 6 | Tous | | L'Aveugle | Mauvais instinct de vote | 1 | Précision de vote | Faible : 35 (Top 65%) | | | | | | |
+| 118 | Sur le site | 6 | Villageois | | Le·a Sniper | Bon·ne chasseur·se (tue des ennemis) | 1 | Précision chasseur | Élevé : 65 (Top 35%) | | | | | | |
+| 119 | Sur le site | 6 | Villageois | | Le·a Myope | Mauvais·e chasseur·se (tue des alliés) | 1 | Précision chasseur | Faible : 35 (Top 65%) | | | | | | |
+| 120 | Sur le site | 6 | Villageois | | Le·a Tireur·se d'Elite | Touche souvent sa cible | 1 | Précision de tir (chasseur) | Élevé : 65 (Top 35%) | | | | | | |
+| 121 | Sur le site | 6 | Villageois | | Le·a Maladroit·e | Rate souvent ses tirs | 1 | Précision de tir (chasseur) | Faible : 35 (Top 65%) | | | | | | |
+| 122 | Sur le site | 6 | Tous | | Le·a Winner | Taux de victoire élevé | 1 | Taux de victoire | Élevé : 65 (Top 35%) | | | | | | |
+| 123 | Sur le site | 6 | Tous | | Le·a Looser | Taux de victoire faible | 1 | Taux de victoire | Faible : 35 (Top 65%) | | | | | | |
+| 124 | Sur le site | 6 | Villageois | | Le·a Protecteur·rice du Village | Excellent·e en camp Villageois | 1 | Victoires Villageois | Élevé : 65 (Top 35%) | | | | | | |
+| 125 | Sur le site | 6 | Villageois | | Idiot·e en Formation | Mauvais·e en camp Villageois | 1 | Victoires Villageois | Faible : 35 (Top 65%) | | | | | | |
+| 126 | Sur le site | 6 | Loup | | Le·a Chef·fe de Meute | Excellent·e en camp Loup | 1 | Victoires Loup | Élevé : 65 (Top 35%) | | | | | | |
+| 127 | Sur le site | 6 | Loup | | Loup Débutant·e | Mauvais·e en camp Loup | 1 | Victoires Loup | Faible : 35 (Top 65%) | | | | | | |
+| 128 | Sur le site | 6 | Solo | | L'Electron libre | Excellent·e en rôles solo | 1 | Victoires Solo | Élevé : 65 (Top 35%) | | | | | | |
+| 129 | Sur le site | 6 | Solo | | L'Enfant Perdu·e | Mauvais·e en rôles solo | 1 | Victoires Solo | Faible : 35 (Top 65%) | | | | | | |
+| 130 | Sur le site | 6 | Tous | | En feu | Grosse série de victoires | 1 | Série de victoires | Élevé : 65 (Top 35%) | | | | | | |
+| 131 | Sur le site | 6 | Tous | | Glacé·e | Grosse série de défaites | 1 | Série de défaites | Élevé : 65 (Top 35%) | | | | | | |
+| 132 | Sur le site | 6 | Tous | | Le·a Noctambule | Joue énormément de parties | 1 | Participation | Élevé : 65 (Top 35%) | | | | | | |
+| 133 | Sur le site | 6 | Tous | | Le·a Occassionel·le | Joue peu de parties | 1 | Participation | Faible : 35 (Top 65%) | | | | | | |
+| 134 | Sur le site | 6 | Tous | | Le·a Polyvalent·e | Performance équilibrée dans tous les camps | 1 | Équilibre des camps | Équilibré | | | | | | |
+| 135 | Sur le site | 6 | Tous | | Le·a Spécialiste | Excellent dans un camp spécifique | 1 | Équilibre des camps | Spécialiste | | | | | | |
+| 136 | Sur le site | 6 | Tous | | L'Habitué·e | A un coin préféré | 1 | Concentration zone dominante | Élevé : 65 (Top 35%) | | | | | | |
+| 137 | Sur le site | 6 | Tous | | Le·a Vagabond·e | Se déplace beaucoup entre les zones | 1 | Concentration zone dominante | Faible : 35 (Top 65%) | | | | | | |
+| 138 | Sur le site | 6 | Tous | | Le·a Transformé·e | Se transforme fréquemment | 1 | Taux de transformation en loup | Élevé : 65 (Top 35%) | | | | | | |
+| 139 | Sur le site | 6 | Tous | | Le·a Loup Prudent·e | Se transforme rarement | 1 | Taux de transformation en loup | Faible : 35 (Top 65%) | | | | | | |
+| 140 | Sur le site | 6 | Tous | | Le·a Discret·ète | Se détransforme fréquemment | 1 | Taux de retour après transformation | Élevé : 65 (Top 35%) | | | | | | |
+| 141 | Sur le site | 6 | Tous | | Le Loup Assumé | Se détransforme rarement | 1 | Taux de retour après transformation | Faible : 35 (Top 65%) | | | | | | |
+| 142 | Sur le site | 6 | Tous | | Le·a Potion Addict | Boit beaucoup de potions | 1 | Utilisation de potions | Élevé : 65 (Top 35%) | | | | | | |
+| 143 | Sur le site | 6 | Tous | | Le·a Sobre | Boit peu de potions | 1 | Utilisation de potions | Faible : 35 (Top 65%) | | | | | | |
+| 144 | Sur le site | 3 | Tous | | Le·a Equilibré·e | Temps de parole normal | 1 | Temps de parole | Moyen : 50 (Top 50%) | | | | | | |
+| 145 | Sur le site | 3 | Tous | | Le·a Traveilleur·se | Récolte correcte | 1 | Récolte | Moyen : 50 (Top 50%) | | | | | | |
+| 146 | Sur le site | 3 | Tous | | Le·a Constant·e | Performance stable | 1 | Taux de victoire | Moyen : 50 (Top 50%) | | | | | | |
+| 147 | Sur le site | 3 | Villageois | | Serial Villageois·e | Joue souvent villageois | 1 | Camp Assigné | Villageois | | | | | | |
+| 148 | Sur le site | 3 | Loup | | Serial Loup | Joue souvent Loup | 1 | Camp Assigné | Loup | | | | | | |
+| 149 | Sur le site | 3 | Solo | | Serial Solo | Joue souvent en Solo | 1 | Camp Assigné | Solo | | | | | | |
+| 150 | Sur le site | 3 | Villageois | | Serial Chasseur | Joue souvent Chasseur | 1 | Rôle Assigné | Chasseur | | | | | | |
+| 151 | Sur le site | 3 | Villageois | | Serial Alchimiste | Joue souvent Alchimiste | 1 | Rôle Assigné | Alchimiste | | | | | | |
+| 152 | Sur le site | 3 | Solo | | Serial Amoureux | Joue souvent Amoureux | 1 | Rôle Assigné | Amoureux | | | | | | |
+| 153 | Sur le site | 3 | Solo | | Serial Agent | Joue souvent Agent | 1 | Rôle Assigné | Agent | | | | | | |
+| 154 | Sur le site | 3 | Solo | | Serial Espion | Joue souvent Espion | 1 | Rôle Assigné | Espion | | | | | | |
+| 155 | Sur le site | 3 | Solo | | Serial Idiot | Joue souvent Idiot du Village | 1 | Rôle Assigné | Idiot du village | | | | | | |
+| 156 | Sur le site | 3 | Solo | | Serial Bounty Hunter | Joue souvent Chasseur de Prime | 1 | Rôle Assigné | Chasseur de Prime | | | | | | |
+| 157 | Sur le site | 3 | Solo | | Serial Contrebandier | Joue souvent Contrebandier | 1 | Rôle Assigné | Contrebandier | | | | | | |
+| 158 | Sur le site | 3 | Solo | | Serial Bête | Joue souvent La Bête | 1 | Rôle Assigné | La Bête | | | | | | |
+| 159 | Sur le site | 3 | Solo | | Serial Vaudou | Joue souvent Vaudou | 1 | Rôle Assigné | Vaudou | | | | | | |
+| 160 | Sur le site | 3 | Solo | | Serial Scientifique | Joue souvent Scientifique | 1 | Rôle Assigné | Scientifique | | | | | | |
+
+## Nouveaux Titres (À Intégrer)
+
+| État | Priorité | Camp | Liens | Titre | Description | Conditions | Condition 1 | Critère 1 | Condition 2 | Critère 2 | Condition 3 | Critère 3 |
+|------|----------|------|-------|-------|-------------|------------|-------------|-----------|-------------|-----------|-------------|-----------|
+| NEW | 12 | Villageois | | Le Récolteur Opti | | 2 | Récolte Villageois | Élevé : 65 (Top 35%) | Victoires récolte | Élevé : 65 (Top 35%) | | |
+| NEW | 14 | Loup | | Le Loup Incognito | | 3 | Temps de parole loup | Faible : 35 (Top 65%) | Taux de kills loup | Élevé : 65 (Top 35%) | Taux de retour après transformation | Élevé : 65 (Top 35%) |
+| NEW | 14 | Villageois | | Le Villageois Modèle | | 3 | Victoires Villageois | Élevé : 65 (Top 35%) | Récolte Villageois | Élevé : 65 (Top 35%) | Précision de vote villageois | Élevé : 65 (Top 35%) |
+| NEW | 14 | Loup | | Le Loup Modèle | | 3 | Victoires Loup | Élevé : 65 (Top 35%) | Taux de kills loup | Élevé : 65 (Top 35%) | Survie loup | Élevé : 65 (Top 35%) |
+| NEW | 12 | Loup | | Le Loup Villageois | | 2 | Survie loup | Élevé : 65 (Top 35%) | Précison de vote loup | Faible : 35 (Top 65%) | | |
+
+---
+
+**Note:** Ce document contient la liste complète des titres de joueurs pour le système de statistiques Lycans. Les titres sont organisés par priorité et conditions d'attribution.

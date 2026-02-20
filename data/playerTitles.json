@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-02-19T10:51:31.438Z",
+  "generatedAt": "2026-02-20T08:38:01.903Z",
   "teamName": "Main Team",
   "totalPlayers": 37,
   "minGamesRequired": 25,
@@ -49,30 +49,6 @@
           ]
         },
         {
-          "id": "pacifiste",
-          "title": "Le·a Pacifiste",
-          "emoji": "🕊️",
-          "description": "Gagne sans tuer",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 59.45945945945947,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "LOW",
-              "actualValue": 0.32894736842105265,
-              "actualPercentile": 21.62162162162162
-            },
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 52.6,
-              "actualPercentile": 97.2972972972973
-            }
-          ],
-          "primaryOwner": "Poachimpa"
-        },
-        {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
           "emoji": "👑",
@@ -94,7 +70,8 @@
           "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Noamouille"
         },
         {
           "id": "winRateLoup_extreme_high",
@@ -118,7 +95,8 @@
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "votingAggressive_low",
@@ -177,6 +155,16 @@
           "category": "SPECIALIST",
           "priority": 6,
           "type": "campBalance"
+        },
+        {
+          "id": "campAssignment_solo",
+          "title": "Serial Solo",
+          "emoji": "🎭",
+          "description": "Joue souvent en Solo",
+          "stat": "campSoloPercent",
+          "value": 21.052631578947366,
+          "priority": 3,
+          "type": "campAssignment"
         },
         {
           "id": "role_amoureux",
@@ -293,6 +281,21 @@
           "value": 5,
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.05660377358490566,
+          "percentile": 35.13513513513514,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 2.4285714285714284,
+          "percentile": 69.6969696969697,
+          "category": "HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.3125,
+          "percentile": 29.72972972972973,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -310,7 +313,10 @@
         "survivalDay1Rate": 72.36842105263158,
         "killRate": 0.32894736842105265,
         "longestWinSeries": 6,
-        "longestLossSeries": 5
+        "longestLossSeries": 5,
+        "killRateVillageois": 0.05660377358490566,
+        "killRateLoup": 2.4285714285714284,
+        "killRateSolo": 0.3125
       }
     },
     "13": {
@@ -329,7 +335,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "PeoBran"
+          "primaryOwner": "Heimdalle"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -509,6 +515,21 @@
           "value": 6,
           "percentile": 21.62162162162162,
           "category": "LOW"
+        },
+        "killRateVillageois": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "killRateLoup": {
+          "value": 0.4,
+          "percentile": 3.0303030303030303,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 0.4,
+          "percentile": 45.94594594594595,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -525,7 +546,10 @@
         "survivalDay1Rate": 77.41935483870968,
         "killRate": 0.1935483870967742,
         "longestWinSeries": 4,
-        "longestLossSeries": 6
+        "longestLossSeries": 6,
+        "killRateVillageois": 0,
+        "killRateLoup": 0.4,
+        "killRateSolo": 0.4
       }
     },
     "17": {
@@ -533,30 +557,6 @@
       "playerName": "Fukano",
       "gamesPlayed": 127,
       "titles": [
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 86.48648648648648,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6456692913385826,
-              "actualPercentile": 81.08108108108108
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 47.24409448818898,
-              "actualPercentile": 91.8918918918919
-            }
-          ],
-          "primaryOwner": "Noamouille"
-        },
         {
           "id": "winRateSolo_extreme_low",
           "title": "L'Enfant Perdu·e",
@@ -773,6 +773,21 @@
           "value": 12,
           "percentile": 81.08108108108108,
           "category": "HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.1411764705882353,
+          "percentile": 83.78378378378379,
+          "category": "HIGH"
+        },
+        "killRateLoup": {
+          "value": 2.0357142857142856,
+          "percentile": 45.45454545454545,
+          "category": "AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0.9285714285714286,
+          "percentile": 89.1891891891892,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -793,7 +808,10 @@
         "survivalDay1Rate": 83.46456692913385,
         "killRate": 0.6456692913385826,
         "longestWinSeries": 5,
-        "longestLossSeries": 12
+        "longestLossSeries": 12,
+        "killRateVillageois": 0.1411764705882353,
+        "killRateLoup": 2.0357142857142856,
+        "killRateSolo": 0.9285714285714286
       }
     },
     "19": {
@@ -822,7 +840,8 @@
               "actualValue": 29,
               "actualPercentile": 5.405405405405405
             }
-          ]
+          ],
+          "primaryOwner": "Poachimpa"
         },
         {
           "id": "winRate_extreme_high",
@@ -846,8 +865,7 @@
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic",
-          "primaryOwner": "PeoBran"
+          "type": "basic"
         },
         {
           "id": "winRateVillageois_extreme_high",
@@ -859,7 +877,8 @@
           "percentile": 91.8918918918919,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Noamouille"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -934,27 +953,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "opportuniste",
-        "title": "L'Opportuniste",
-        "emoji": "🎯",
-        "description": "Gagne souvent mais joue peu",
-        "priority": 11,
-        "type": "combination",
-        "percentile": 48.64864864864865,
-        "conditions": [
-          {
-            "stat": "winRate",
-            "category": "HIGH",
-            "actualValue": 48.3,
-            "actualPercentile": 91.8918918918919
-          },
-          {
-            "stat": "gamesPlayed",
-            "category": "LOW",
-            "actualValue": 29,
-            "actualPercentile": 5.405405405405405
-          }
-        ]
+        "id": "participation_extreme_low",
+        "title": "Le·a Occasionnel·le",
+        "emoji": "🎲",
+        "description": "Joue peu de parties",
+        "stat": "gamesPlayed",
+        "value": 29,
+        "percentile": 5.405405405405405,
+        "category": "EXTREME_LOW",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -1026,6 +1034,16 @@
           "value": 5,
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW"
+        },
+        "killRateVillageois": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 1.2,
+          "percentile": 97.2972972972973,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -1043,7 +1061,10 @@
         "survivalDay1Rate": 75.86206896551724,
         "killRate": 0.5862068965517241,
         "longestWinSeries": 3,
-        "longestLossSeries": 5
+        "longestLossSeries": 5,
+        "killRateVillageois": 0,
+        "killRateLoup": null,
+        "killRateSolo": 1.2
       }
     },
     "36": {
@@ -1051,29 +1072,6 @@
       "playerName": "Noamouille",
       "gamesPlayed": 40,
       "titles": [
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 90.54054054054055,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.775,
-              "actualPercentile": 94.5945945945946
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 45,
-              "actualPercentile": 86.48648648648648
-            }
-          ]
-        },
         {
           "id": "opportuniste",
           "title": "L'Opportuniste",
@@ -1096,7 +1094,7 @@
               "actualPercentile": 18.91891891891892
             }
           ],
-          "primaryOwner": "Heimdalle"
+          "primaryOwner": "Poachimpa"
         },
         {
           "id": "winRate_extreme_high",
@@ -1230,6 +1228,16 @@
           "type": "campBalance"
         },
         {
+          "id": "campAssignment_solo",
+          "title": "Serial Solo",
+          "emoji": "🎭",
+          "description": "Joue souvent en Solo",
+          "stat": "campSoloPercent",
+          "value": 32.5,
+          "priority": 3,
+          "type": "campAssignment"
+        },
+        {
           "id": "role_amoureux",
           "title": "Serial Amoureux",
           "emoji": "💕",
@@ -1241,27 +1249,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "alpha_predator",
-        "title": "L'Alpha",
-        "emoji": "🦁",
-        "description": "Tue beaucoup et survit",
-        "priority": 15,
-        "type": "combination",
-        "percentile": 90.54054054054055,
-        "conditions": [
-          {
-            "stat": "killRate",
-            "category": "HIGH",
-            "actualValue": 0.775,
-            "actualPercentile": 94.5945945945946
-          },
-          {
-            "stat": "survival",
-            "category": "HIGH",
-            "actualValue": 45,
-            "actualPercentile": 86.48648648648648
-          }
-        ]
+        "id": "winRateVillageois_extreme_high",
+        "title": "Le·a Protecteur·rice du Village",
+        "emoji": "🦸",
+        "description": "Excellent·e en camp Villageois",
+        "stat": "winRateVillageois",
+        "value": 76.19047619047619,
+        "percentile": 97.2972972972973,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -1338,6 +1335,21 @@
           "value": 10,
           "percentile": 62.16216216216216,
           "category": "ABOVE_AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.23809523809523808,
+          "percentile": 97.2972972972973,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateLoup": {
+          "value": 2.1666666666666665,
+          "percentile": 48.484848484848484,
+          "category": "AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 1,
+          "percentile": 91.8918918918919,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -1355,7 +1367,10 @@
         "survivalDay1Rate": 85,
         "killRate": 0.775,
         "longestWinSeries": 3,
-        "longestLossSeries": 10
+        "longestLossSeries": 10,
+        "killRateVillageois": 0.23809523809523808,
+        "killRateLoup": 2.1666666666666665,
+        "killRateSolo": 1
       }
     },
     "39": {
@@ -1363,29 +1378,6 @@
       "playerName": "Poachimpa",
       "gamesPlayed": 27,
       "titles": [
-        {
-          "id": "pacifiste",
-          "title": "Le·a Pacifiste",
-          "emoji": "🕊️",
-          "description": "Gagne sans tuer",
-          "priority": 14,
-          "type": "combination",
-          "percentile": 45.94594594594595,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "LOW",
-              "actualValue": 0.2962962962962963,
-              "actualPercentile": 16.216216216216218
-            },
-            {
-              "stat": "winRate",
-              "category": "HIGH",
-              "actualValue": 44.4,
-              "actualPercentile": 75.67567567567568
-            }
-          ]
-        },
         {
           "id": "opportuniste",
           "title": "L'Opportuniste",
@@ -1407,8 +1399,7 @@
               "actualValue": 27,
               "actualPercentile": 0
             }
-          ],
-          "primaryOwner": "Heimdalle"
+          ]
         },
         {
           "id": "participation_extreme_low",
@@ -1421,7 +1412,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "PeoBran"
+          "primaryOwner": "Heimdalle"
         },
         {
           "id": "winRateVillageois_extreme_high",
@@ -1433,7 +1424,8 @@
           "percentile": 94.5945945945946,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Noamouille"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -1457,7 +1449,8 @@
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "winRate_high",
@@ -1516,28 +1509,38 @@
           "category": "SPECIALIST",
           "priority": 6,
           "type": "campBalance"
+        },
+        {
+          "id": "campAssignment_solo",
+          "title": "Serial Solo",
+          "emoji": "🎭",
+          "description": "Joue souvent en Solo",
+          "stat": "campSoloPercent",
+          "value": 25.925925925925924,
+          "priority": 3,
+          "type": "campAssignment"
         }
       ],
       "primaryTitle": {
-        "id": "pacifiste",
-        "title": "Le·a Pacifiste",
-        "emoji": "🕊️",
-        "description": "Gagne sans tuer",
-        "priority": 14,
+        "id": "opportuniste",
+        "title": "L'Opportuniste",
+        "emoji": "🎯",
+        "description": "Gagne souvent mais joue peu",
+        "priority": 11,
         "type": "combination",
-        "percentile": 45.94594594594595,
+        "percentile": 75.67567567567568,
         "conditions": [
-          {
-            "stat": "killRate",
-            "category": "LOW",
-            "actualValue": 0.2962962962962963,
-            "actualPercentile": 16.216216216216218
-          },
           {
             "stat": "winRate",
             "category": "HIGH",
             "actualValue": 44.4,
             "actualPercentile": 75.67567567567568
+          },
+          {
+            "stat": "gamesPlayed",
+            "category": "LOW",
+            "actualValue": 27,
+            "actualPercentile": 0
           }
         ]
       },
@@ -1611,6 +1614,16 @@
           "value": 6,
           "percentile": 21.62162162162162,
           "category": "LOW"
+        },
+        "killRateVillageois": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 0.14285714285714285,
+          "percentile": 16.216216216216218,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -1628,7 +1641,10 @@
         "survivalDay1Rate": 74.07407407407408,
         "killRate": 0.2962962962962963,
         "longestWinSeries": 3,
-        "longestLossSeries": 6
+        "longestLossSeries": 6,
+        "killRateVillageois": 0,
+        "killRateLoup": null,
+        "killRateSolo": 0.14285714285714285
       }
     },
     "52": {
@@ -1666,30 +1682,6 @@
           ]
         },
         {
-          "id": "lanceur_alerte",
-          "title": "Le·a Lanceur·se d'Alerte",
-          "emoji": "🚨",
-          "description": "Vote juste mais se fait éliminer pour ça",
-          "priority": 13,
-          "type": "combination",
-          "percentile": 44.294294294294296,
-          "conditions": [
-            {
-              "stat": "votingAccuracy",
-              "category": "HIGH",
-              "actualValue": 91.66666666666666,
-              "actualPercentile": 77.77777777777779
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 23.809523809523807,
-              "actualPercentile": 10.81081081081081
-            }
-          ],
-          "primaryOwner": "Mickalow"
-        },
-        {
           "id": "winRate_extreme_high",
           "title": "L'Inarrêtable",
           "emoji": "👑",
@@ -1711,7 +1703,8 @@
           "percentile": 86.48648648648648,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Noamouille"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -1917,6 +1910,21 @@
           "value": 3.260213322600121,
           "percentile": 85.18518518518519,
           "category": "EXTREME_HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.11290322580645161,
+          "percentile": 78.37837837837837,
+          "category": "HIGH"
+        },
+        "killRateLoup": {
+          "value": 3,
+          "percentile": 87.87878787878788,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.07692307692307693,
+          "percentile": 10.81081081081081,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -1935,7 +1943,10 @@
         "killRate": 0.4166666666666667,
         "longestWinSeries": 5,
         "longestLossSeries": 6,
-        "potionsPer60Min": 3.260213322600121
+        "potionsPer60Min": 3.260213322600121,
+        "killRateVillageois": 0.11290322580645161,
+        "killRateLoup": 3,
+        "killRateSolo": 0.07692307692307693
       }
     },
     "76561198034021995": {
@@ -2040,6 +2051,18 @@
           "value": 45.90163934426229,
           "percentile": 87.09677419354838,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "hunterShotAccuracy_extreme_low",
+          "title": "Le·a Stormtrooper",
+          "emoji": "⚡",
+          "description": "Rate presque tout",
+          "stat": "hunterShotAccuracy",
+          "value": 61.53846153846154,
+          "percentile": 0,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -2401,6 +2424,21 @@
           "value": 2.5346208803387116,
           "percentile": 59.25925925925925,
           "category": "ABOVE_AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.07357859531772576,
+          "percentile": 48.64864864864865,
+          "category": "AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 2.5737704918032787,
+          "percentile": 75.75757575757575,
+          "category": "HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.515625,
+          "percentile": 62.16216216216216,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -2439,7 +2477,10 @@
         "zoneTotalPositions": 274,
         "wolfTransformRate": 0.5897435897435898,
         "wolfUntransformRate": 0.07692307692307693,
-        "potionsPer60Min": 2.5346208803387116
+        "potionsPer60Min": 2.5346208803387116,
+        "killRateVillageois": 0.07357859531772576,
+        "killRateLoup": 2.5737704918032787,
+        "killRateSolo": 0.515625
       }
     },
     "76561198012951437": {
@@ -2537,7 +2578,7 @@
           "description": "Survit et domine en Loup",
           "priority": 15,
           "type": "combination",
-          "percentile": 85.74542284219703,
+          "percentile": 87.46664553116166,
           "conditions": [
             {
               "stat": "survival",
@@ -2550,33 +2591,15 @@
               "category": "HIGH",
               "actualValue": 38.57142857142858,
               "actualPercentile": 74.19354838709677
-            }
-          ],
-          "primaryOwner": "Baout"
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 97.2972972972973,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.8434065934065934,
-              "actualPercentile": 97.2972972972973
             },
             {
-              "stat": "survival",
+              "stat": "killRateLoup",
               "category": "HIGH",
-              "actualValue": 53.02197802197802,
-              "actualPercentile": 97.2972972972973
+              "actualValue": 3.257142857142857,
+              "actualPercentile": 90.9090909090909
             }
           ],
-          "primaryOwner": "Noamouille"
+          "primaryOwner": "Tsuna"
         },
         {
           "id": "loup_hyperactif",
@@ -2809,7 +2832,8 @@
               "actualValue": 47.79874213836478,
               "actualPercentile": 66.66666666666666
             }
-          ]
+          ],
+          "primaryOwner": "Baout"
         },
         {
           "id": "hyperactif",
@@ -3036,6 +3060,18 @@
           "value": 47.79874213836478,
           "percentile": 66.66666666666666,
           "category": "HIGH",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterShotAccuracy_low",
+          "title": "Le·a Maladroit·e",
+          "emoji": "💨",
+          "description": "Rate souvent ses tirs",
+          "stat": "hunterShotAccuracy",
+          "value": 91.66666666666666,
+          "percentile": 26.666666666666668,
+          "category": "LOW",
           "priority": 6,
           "type": "basic"
         },
@@ -3297,6 +3333,21 @@
           "value": 3.944298967083867,
           "percentile": 92.5925925925926,
           "category": "EXTREME_HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.16182572614107885,
+          "percentile": 89.1891891891892,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateLoup": {
+          "value": 3.257142857142857,
+          "percentile": 90.9090909090909,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.7547169811320755,
+          "percentile": 81.08108108108108,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -3335,7 +3386,10 @@
         "zoneTotalPositions": 238,
         "wolfTransformRate": 0.6346153846153846,
         "wolfUntransformRate": 0.23076923076923078,
-        "potionsPer60Min": 3.944298967083867
+        "potionsPer60Min": 3.944298967083867,
+        "killRateVillageois": 0.16182572614107885,
+        "killRateLoup": 3.257142857142857,
+        "killRateSolo": 0.7547169811320755
       }
     },
     "76561198125108195": {
@@ -3431,30 +3485,6 @@
             }
           ],
           "primaryOwner": "BoccA"
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 83.78378378378379,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.7344913151364765,
-              "actualPercentile": 91.8918918918919
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 39.45409429280397,
-              "actualPercentile": 75.67567567567568
-            }
-          ],
-          "primaryOwner": "Noamouille"
         },
         {
           "id": "participation_extreme_high",
@@ -3858,6 +3888,21 @@
           "value": 2.508287218395406,
           "percentile": 55.55555555555556,
           "category": "ABOVE_AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.13409961685823754,
+          "percentile": 81.08108108108108,
+          "category": "HIGH"
+        },
+        "killRateLoup": {
+          "value": 3.295774647887324,
+          "percentile": 96.96969696969697,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.38028169014084506,
+          "percentile": 37.83783783783784,
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -3896,7 +3941,10 @@
         "zoneTotalPositions": 196,
         "wolfTransformRate": 0.8285714285714286,
         "wolfUntransformRate": 0,
-        "potionsPer60Min": 2.508287218395406
+        "potionsPer60Min": 2.508287218395406,
+        "killRateVillageois": 0.13409961685823754,
+        "killRateLoup": 3.295774647887324,
+        "killRateSolo": 0.38028169014084506
       }
     },
     "76561198390111869": {
@@ -4392,6 +4440,21 @@
           "value": 2.711726687108291,
           "percentile": 70.37037037037037,
           "category": "HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.09929078014184398,
+          "percentile": 72.97297297297297,
+          "category": "HIGH"
+        },
+        "killRateLoup": {
+          "value": 2.4107142857142856,
+          "percentile": 66.66666666666666,
+          "category": "HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.37142857142857144,
+          "percentile": 35.13513513513514,
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -4430,7 +4493,10 @@
         "zoneTotalPositions": 216,
         "wolfTransformRate": 0.5918367346938775,
         "wolfUntransformRate": 0.22448979591836735,
-        "potionsPer60Min": 2.711726687108291
+        "potionsPer60Min": 2.711726687108291,
+        "killRateVillageois": 0.09929078014184398,
+        "killRateLoup": 2.4107142857142856,
+        "killRateSolo": 0.37142857142857144
       }
     },
     "76561198043736664": {
@@ -4498,7 +4564,7 @@
           "description": "Survit et domine en Loup",
           "priority": 15,
           "type": "combination",
-          "percentile": 67.65475152571926,
+          "percentile": 72.37589495654011,
           "conditions": [
             {
               "stat": "survival",
@@ -4511,33 +4577,15 @@
               "category": "HIGH",
               "actualValue": 36.36363636363637,
               "actualPercentile": 67.74193548387096
-            }
-          ],
-          "primaryOwner": "Baout"
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 75.67567567567568,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6683417085427136,
-              "actualPercentile": 83.78378378378379
             },
             {
-              "stat": "survival",
+              "stat": "killRateLoup",
               "category": "HIGH",
-              "actualValue": 37.68844221105528,
-              "actualPercentile": 67.56756756756756
+              "actualValue": 2.6363636363636362,
+              "actualPercentile": 81.81818181818183
             }
           ],
-          "primaryOwner": "Noamouille"
+          "primaryOwner": "Tsuna"
         },
         {
           "id": "infiltrateur",
@@ -4904,6 +4952,21 @@
           "value": 2.758375236533071,
           "percentile": 77.77777777777779,
           "category": "HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.17777777777777778,
+          "percentile": 94.5945945945946,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateLoup": {
+          "value": 2.6363636363636362,
+          "percentile": 81.81818181818183,
+          "category": "HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.7096774193548387,
+          "percentile": 72.97297297297297,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -4929,7 +4992,10 @@
         "killRate": 0.6683417085427136,
         "longestWinSeries": 6,
         "longestLossSeries": 6,
-        "potionsPer60Min": 2.758375236533071
+        "potionsPer60Min": 2.758375236533071,
+        "killRateVillageois": 0.17777777777777778,
+        "killRateLoup": 2.6363636363636362,
+        "killRateSolo": 0.7096774193548387
       }
     },
     "76561198045789440": {
@@ -4968,6 +5034,18 @@
           "value": 389,
           "percentile": 89.1891891891892,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "hunterShotAccuracy_extreme_low",
+          "title": "Le·a Stormtrooper",
+          "emoji": "⚡",
+          "description": "Rate presque tout",
+          "stat": "hunterShotAccuracy",
+          "value": 72.72727272727273,
+          "percentile": 13.333333333333334,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -5328,6 +5406,21 @@
           "value": 2.125293068531656,
           "percentile": 33.33333333333333,
           "category": "LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.1124031007751938,
+          "percentile": 75.67567567567568,
+          "category": "HIGH"
+        },
+        "killRateLoup": {
+          "value": 2.540983606557377,
+          "percentile": 72.72727272727273,
+          "category": "HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.8,
+          "percentile": 86.48648648648648,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -5366,7 +5459,10 @@
         "zoneTotalPositions": 217,
         "wolfTransformRate": 0.5277777777777778,
         "wolfUntransformRate": 0.3611111111111111,
-        "potionsPer60Min": 2.125293068531656
+        "potionsPer60Min": 2.125293068531656,
+        "killRateVillageois": 0.1124031007751938,
+        "killRateLoup": 2.540983606557377,
+        "killRateSolo": 0.8
       }
     },
     "76561198140298176": {
@@ -5700,6 +5796,21 @@
           "value": 0.5411035807529456,
           "percentile": 3.7037037037037033,
           "category": "EXTREME_LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.0380952380952381,
+          "percentile": 27.027027027027028,
+          "category": "LOW"
+        },
+        "killRateLoup": {
+          "value": 1.6333333333333333,
+          "percentile": 24.242424242424242,
+          "category": "LOW"
+        },
+        "killRateSolo": {
+          "value": 0.1,
+          "percentile": 13.513513513513514,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -5732,7 +5843,10 @@
         "zoneResteCarte": 20,
         "zoneDominantPercentage": 35,
         "zoneTotalPositions": 20,
-        "potionsPer60Min": 0.5411035807529456
+        "potionsPer60Min": 0.5411035807529456,
+        "killRateVillageois": 0.0380952380952381,
+        "killRateLoup": 1.6333333333333333,
+        "killRateSolo": 0.1
       }
     },
     "76561197997304949": {
@@ -5939,6 +6053,21 @@
           "value": 11,
           "percentile": 70.27027027027027,
           "category": "HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.043478260869565216,
+          "percentile": 29.72972972972973,
+          "category": "LOW"
+        },
+        "killRateLoup": {
+          "value": 1.9090909090909092,
+          "percentile": 42.42424242424242,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -5957,7 +6086,10 @@
         "survivalDay1Rate": 81.53846153846153,
         "killRate": 0.35384615384615387,
         "longestWinSeries": 4,
-        "longestLossSeries": 11
+        "longestLossSeries": 11,
+        "killRateVillageois": 0.043478260869565216,
+        "killRateLoup": 1.9090909090909092,
+        "killRateSolo": 0
       }
     },
     "76561198256660482": {
@@ -5994,29 +6126,6 @@
             }
           ],
           "primaryOwner": "BoccA"
-        },
-        {
-          "id": "loup_alpha",
-          "title": "Le Loup Alpha",
-          "emoji": "🐺",
-          "description": "Survit et domine en Loup",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 80.86312118570183,
-          "conditions": [
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 41.726618705035975,
-              "actualPercentile": 81.08108108108108
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 42.857142857142854,
-              "actualPercentile": 80.64516129032258
-            }
-          ]
         },
         {
           "id": "traitre",
@@ -6185,25 +6294,25 @@
         }
       ],
       "primaryTitle": {
-        "id": "loup_alpha",
-        "title": "Le Loup Alpha",
-        "emoji": "🐺",
-        "description": "Survit et domine en Loup",
-        "priority": 15,
+        "id": "cowboy",
+        "title": "Le Cow-Boy",
+        "emoji": "🤠",
+        "description": "Vote vite et souvent",
+        "priority": 10,
         "type": "combination",
-        "percentile": 80.86312118570183,
+        "percentile": 81.17117117117118,
         "conditions": [
           {
-            "stat": "survival",
+            "stat": "votingAggressive",
             "category": "HIGH",
-            "actualValue": 41.726618705035975,
-            "actualPercentile": 81.08108108108108
+            "actualValue": 9.186046511627909,
+            "actualPercentile": 75.67567567567568
           },
           {
-            "stat": "winRateLoup",
+            "stat": "votingFirst",
             "category": "HIGH",
-            "actualValue": 42.857142857142854,
-            "actualPercentile": 80.64516129032258
+            "actualValue": 57.14285714285714,
+            "actualPercentile": 86.66666666666667
           }
         ]
       },
@@ -6287,6 +6396,21 @@
           "value": 9,
           "percentile": 51.35135135135135,
           "category": "AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.09302325581395349,
+          "percentile": 70.27027027027027,
+          "category": "HIGH"
+        },
+        "killRateLoup": {
+          "value": 2.1785714285714284,
+          "percentile": 51.515151515151516,
+          "category": "AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0.36,
+          "percentile": 32.432432432432435,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -6305,7 +6429,10 @@
         "survivalDay1Rate": 89.92805755395683,
         "killRate": 0.5611510791366906,
         "longestWinSeries": 8,
-        "longestLossSeries": 9
+        "longestLossSeries": 9,
+        "killRateVillageois": 0.09302325581395349,
+        "killRateLoup": 2.1785714285714284,
+        "killRateSolo": 0.36
       }
     },
     "76561198372242900": {
@@ -6403,7 +6530,7 @@
           "description": "Survit et domine en Loup",
           "priority": 15,
           "type": "combination",
-          "percentile": 81.64777680906712,
+          "percentile": 85.74498251917606,
           "conditions": [
             {
               "stat": "survival",
@@ -6416,33 +6543,15 @@
               "category": "HIGH",
               "actualValue": 48,
               "actualPercentile": 90.32258064516128
-            }
-          ],
-          "primaryOwner": "Baout"
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 79.72972972972973,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.6942857142857143,
-              "actualPercentile": 86.48648648648648
             },
             {
-              "stat": "survival",
+              "stat": "killRateLoup",
               "category": "HIGH",
-              "actualValue": 39.42857142857143,
-              "actualPercentile": 72.97297297297297
+              "actualValue": 3.28,
+              "actualPercentile": 93.93939393939394
             }
           ],
-          "primaryOwner": "Noamouille"
+          "primaryOwner": "Tsuna"
         },
         {
           "id": "apothicaire",
@@ -6930,6 +7039,21 @@
           "value": 2.7295298475821874,
           "percentile": 74.07407407407408,
           "category": "HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.1440677966101695,
+          "percentile": 86.48648648648648,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateLoup": {
+          "value": 3.28,
+          "percentile": 93.93939393939394,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.703125,
+          "percentile": 70.27027027027027,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -6968,7 +7092,10 @@
         "zoneTotalPositions": 202,
         "wolfTransformRate": 0.6666666666666666,
         "wolfUntransformRate": 0.13333333333333333,
-        "potionsPer60Min": 2.7295298475821874
+        "potionsPer60Min": 2.7295298475821874,
+        "killRateVillageois": 0.1440677966101695,
+        "killRateLoup": 3.28,
+        "killRateSolo": 0.703125
       }
     },
     "76561199291323199": {
@@ -7354,6 +7481,21 @@
           "value": 2.2272241621155637,
           "percentile": 40.74074074074074,
           "category": "BELOW_AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.035211267605633804,
+          "percentile": 24.324324324324326,
+          "category": "LOW"
+        },
+        "killRateLoup": {
+          "value": 0.9444444444444444,
+          "percentile": 6.0606060606060606,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 0.46153846153846156,
+          "percentile": 51.35135135135135,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -7392,7 +7534,10 @@
         "zoneTotalPositions": 150,
         "wolfTransformRate": 0.5238095238095238,
         "wolfUntransformRate": 0.047619047619047616,
-        "potionsPer60Min": 2.2272241621155637
+        "potionsPer60Min": 2.2272241621155637,
+        "killRateVillageois": 0.035211267605633804,
+        "killRateLoup": 0.9444444444444444,
+        "killRateSolo": 0.46153846153846156
       }
     },
     "76561199060053791": {
@@ -7461,7 +7606,7 @@
           "description": "Survit et domine en Loup",
           "priority": 15,
           "type": "combination",
-          "percentile": 78.98866608544029,
+          "percentile": 80.94193900645514,
           "conditions": [
             {
               "stat": "survival",
@@ -7474,9 +7619,14 @@
               "category": "HIGH",
               "actualValue": 38.57142857142858,
               "actualPercentile": 74.19354838709677
+            },
+            {
+              "stat": "killRateLoup",
+              "category": "HIGH",
+              "actualValue": 2.657142857142857,
+              "actualPercentile": 84.84848484848484
             }
-          ],
-          "primaryOwner": "Baout"
+          ]
         },
         {
           "id": "traitre",
@@ -7627,6 +7777,18 @@
           "value": 100,
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH",
+          "priority": 8,
+          "type": "basic"
+        },
+        {
+          "id": "hunterShotAccuracy_extreme_low",
+          "title": "Le·a Stormtrooper",
+          "emoji": "⚡",
+          "description": "Rate presque tout",
+          "stat": "hunterShotAccuracy",
+          "value": 68.75,
+          "percentile": 6.666666666666667,
+          "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic"
         },
@@ -7811,25 +7973,31 @@
         }
       ],
       "primaryTitle": {
-        "id": "rodeur",
-        "title": "Le·a Rôdeur·euse",
-        "emoji": "🌙",
-        "description": "Rôde hors des villages et survit",
-        "priority": 12,
+        "id": "loup_alpha",
+        "title": "Le Loup Alpha",
+        "emoji": "🐺",
+        "description": "Survit et domine en Loup",
+        "priority": 15,
         "type": "combination",
-        "percentile": 79.8918918918919,
+        "percentile": 80.94193900645514,
         "conditions": [
-          {
-            "stat": "zoneResteCarte",
-            "category": "HIGH",
-            "actualValue": 16.57142857142857,
-            "actualPercentile": 76
-          },
           {
             "stat": "survival",
             "category": "HIGH",
             "actualValue": 41.843971631205676,
             "actualPercentile": 83.78378378378379
+          },
+          {
+            "stat": "winRateLoup",
+            "category": "HIGH",
+            "actualValue": 38.57142857142858,
+            "actualPercentile": 74.19354838709677
+          },
+          {
+            "stat": "killRateLoup",
+            "category": "HIGH",
+            "actualValue": 2.657142857142857,
+            "actualPercentile": 84.84848484848484
           }
         ]
       },
@@ -8013,6 +8181,21 @@
           "value": 1.1011853872136945,
           "percentile": 7.4074074074074066,
           "category": "EXTREME_LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.01098901098901099,
+          "percentile": 16.216216216216218,
+          "category": "LOW"
+        },
+        "killRateLoup": {
+          "value": 2.657142857142857,
+          "percentile": 84.84848484848484,
+          "category": "HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.475,
+          "percentile": 56.75675675675676,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -8051,7 +8234,10 @@
         "zoneTotalPositions": 175,
         "wolfTransformRate": 0.5517241379310345,
         "wolfUntransformRate": 0.08620689655172414,
-        "potionsPer60Min": 1.1011853872136945
+        "potionsPer60Min": 1.1011853872136945,
+        "killRateVillageois": 0.01098901098901099,
+        "killRateLoup": 2.657142857142857,
+        "killRateSolo": 0.475
       }
     },
     "76561198095017745": {
@@ -8060,61 +8246,8 @@
       "gamesPlayed": 127,
       "titles": [
         {
-          "id": "poissard",
-          "title": "Le·a Poissard·e",
-          "emoji": "🌧️",
-          "description": "Perd tout le temps + grosses séries de défaites",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 45.945945945945944,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "EXTREME_LOW",
-              "actualValue": 29.9,
-              "actualPercentile": 5.405405405405405
-            },
-            {
-              "stat": "lossSeries",
-              "category": "HIGH",
-              "actualValue": 13,
-              "actualPercentile": 86.48648648648648
-            }
-          ]
-        },
-        {
-          "id": "debutant",
-          "title": "Le·a Débutant·e",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 17.508813160987074,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 29.9,
-              "actualPercentile": 5.405405405405405
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 27.559055118110237,
-              "actualPercentile": 29.72972972972973
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 552.7810057931831,
-              "actualPercentile": 17.391304347826086
-            }
-          ],
-          "primaryOwner": "Raumane"
-        },
-        {
-          "id": "en_rodage",
-          "title": "En Rodage",
+          "id": "apprenti",
+          "title": "L'Apprenti",
           "emoji": "🔧",
           "description": "Peine dans tous les camps",
           "priority": 11,
@@ -8152,7 +8285,8 @@
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Raumane"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -8164,7 +8298,8 @@
           "percentile": 5.405405405405405,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "PeoBran"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -8188,7 +8323,8 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "lossSeries_extreme_high",
@@ -8310,27 +8446,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "poissard",
-        "title": "Le·a Poissard·e",
-        "emoji": "🌧️",
-        "description": "Perd tout le temps + grosses séries de défaites",
-        "priority": 12,
-        "type": "combination",
-        "percentile": 45.945945945945944,
-        "conditions": [
-          {
-            "stat": "winRate",
-            "category": "EXTREME_LOW",
-            "actualValue": 29.9,
-            "actualPercentile": 5.405405405405405
-          },
-          {
-            "stat": "lossSeries",
-            "category": "HIGH",
-            "actualValue": 13,
-            "actualPercentile": 86.48648648648648
-          }
-        ]
+        "id": "zoneRuines_extreme_high",
+        "title": "L'Archéologue",
+        "emoji": "🏛️",
+        "description": "Traîne beaucoup aux Ruines",
+        "stat": "zoneRuines",
+        "value": 16.666666666666664,
+        "percentile": 96,
+        "category": "EXTREME_HIGH",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -8482,6 +8607,21 @@
           "value": 2.1566967493412905,
           "percentile": 37.03703703703704,
           "category": "BELOW_AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.060240963855421686,
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 1.5,
+          "percentile": 18.181818181818183,
+          "category": "LOW"
+        },
+        "killRateSolo": {
+          "value": 0.7142857142857143,
+          "percentile": 75.67567567567568,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -8515,7 +8655,10 @@
         "zoneResteCarte": 9.523809523809524,
         "zoneDominantPercentage": 45.23809523809524,
         "zoneTotalPositions": 42,
-        "potionsPer60Min": 2.1566967493412905
+        "potionsPer60Min": 2.1566967493412905,
+        "killRateVillageois": 0.060240963855421686,
+        "killRateLoup": 1.5,
+        "killRateSolo": 0.7142857142857143
       }
     },
     "76561198875528482": {
@@ -8686,6 +8829,18 @@
           "stat": "votingFirst",
           "value": 32.89473684210527,
           "percentile": 33.33333333333333,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterShotAccuracy_low",
+          "title": "Le·a Maladroit·e",
+          "emoji": "💨",
+          "description": "Rate souvent ses tirs",
+          "stat": "hunterShotAccuracy",
+          "value": 76.47058823529412,
+          "percentile": 20,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -8965,6 +9120,21 @@
           "value": 2.3705284446210566,
           "percentile": 48.148148148148145,
           "category": "AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.0784313725490196,
+          "percentile": 54.054054054054056,
+          "category": "AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 1.3673469387755102,
+          "percentile": 12.121212121212121,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 0.39215686274509803,
+          "percentile": 40.54054054054054,
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -9003,7 +9173,10 @@
         "zoneTotalPositions": 135,
         "wolfTransformRate": 0.5909090909090909,
         "wolfUntransformRate": 0.13636363636363635,
-        "potionsPer60Min": 2.3705284446210566
+        "potionsPer60Min": 2.3705284446210566,
+        "killRateVillageois": 0.0784313725490196,
+        "killRateLoup": 1.3673469387755102,
+        "killRateSolo": 0.39215686274509803
       }
     },
     "76561198361954746": {
@@ -9039,30 +9212,6 @@
               "actualPercentile": 30.434782608695656
             }
           ]
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 70.27027027027027,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.5814814814814815,
-              "actualPercentile": 70.27027027027027
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 39.25925925925926,
-              "actualPercentile": 70.27027027027027
-            }
-          ],
-          "primaryOwner": "Noamouille"
         },
         {
           "id": "assassin",
@@ -9154,8 +9303,7 @@
               "actualValue": 39.25925925925926,
               "actualPercentile": 70.27027027027027
             }
-          ],
-          "primaryOwner": "Tsuna"
+          ]
         },
         {
           "id": "prudent",
@@ -9356,6 +9504,18 @@
           "stat": "hunterAccuracy",
           "value": 60,
           "percentile": 27.77777777777778,
+          "category": "LOW",
+          "priority": 6,
+          "type": "basic"
+        },
+        {
+          "id": "hunterShotAccuracy_low",
+          "title": "Le·a Maladroit·e",
+          "emoji": "💨",
+          "description": "Rate souvent ses tirs",
+          "stat": "hunterShotAccuracy",
+          "value": 94.11764705882352,
+          "percentile": 33.33333333333333,
           "category": "LOW",
           "priority": 6,
           "type": "basic"
@@ -9642,6 +9802,21 @@
           "value": 2.0706673808028944,
           "percentile": 29.629629629629626,
           "category": "LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.07471264367816093,
+          "percentile": 51.35135135135135,
+          "category": "AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 2.6041666666666665,
+          "percentile": 78.78787878787878,
+          "category": "HIGH"
+        },
+        "killRateSolo": {
+          "value": 0.3958333333333333,
+          "percentile": 43.24324324324324,
+          "category": "BELOW_AVERAGE"
         }
       },
       "stats": {
@@ -9680,7 +9855,10 @@
         "zoneTotalPositions": 152,
         "wolfTransformRate": 0.5098039215686274,
         "wolfUntransformRate": 0.09803921568627451,
-        "potionsPer60Min": 2.0706673808028944
+        "potionsPer60Min": 2.0706673808028944,
+        "killRateVillageois": 0.07471264367816093,
+        "killRateLoup": 2.6041666666666665,
+        "killRateSolo": 0.3958333333333333
       }
     },
     "76561198109331759": {
@@ -9710,30 +9888,6 @@
               "actualPercentile": 82.6086956521739
             }
           ]
-        },
-        {
-          "id": "poissard",
-          "title": "Le·a Poissard·e",
-          "emoji": "🌧️",
-          "description": "Perd tout le temps + grosses séries de défaites",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 48.64864864864865,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "EXTREME_LOW",
-              "actualValue": 30.1,
-              "actualPercentile": 8.108108108108109
-            },
-            {
-              "stat": "lossSeries",
-              "category": "HIGH",
-              "actualValue": 15,
-              "actualPercentile": 89.1891891891892
-            }
-          ],
-          "primaryOwner": "Craco"
         },
         {
           "id": "avide",
@@ -9783,8 +9937,8 @@
           ]
         },
         {
-          "id": "abeille_ouvriere",
-          "title": "L'Abeille Ouvrière",
+          "id": "travailleur",
+          "title": "Le·a Travailleur·se",
           "emoji": "🐝",
           "description": "Récolte bien en Villageois mais perd",
           "priority": 11,
@@ -9829,8 +9983,8 @@
           ]
         },
         {
-          "id": "en_rodage",
-          "title": "En Rodage",
+          "id": "apprenti",
+          "title": "L'Apprenti",
           "emoji": "🔧",
           "description": "Peine dans tous les camps",
           "priority": 11,
@@ -9890,7 +10044,8 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Raumane"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -9902,7 +10057,8 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "PeoBran"
         },
         {
           "id": "votingAccuracy_extreme_low",
@@ -10334,6 +10490,21 @@
           "value": 1.6265503972870856,
           "percentile": 18.51851851851852,
           "category": "LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.08496732026143791,
+          "percentile": 59.45945945945946,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 1.8085106382978724,
+          "percentile": 33.33333333333333,
+          "category": "LOW"
+        },
+        "killRateSolo": {
+          "value": 0.45652173913043476,
+          "percentile": 48.64864864864865,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -10372,7 +10543,10 @@
         "zoneTotalPositions": 137,
         "wolfTransformRate": 0.6521739130434783,
         "wolfUntransformRate": 0.13043478260869565,
-        "potionsPer60Min": 1.6265503972870856
+        "potionsPer60Min": 1.6265503972870856,
+        "killRateVillageois": 0.08496732026143791,
+        "killRateLoup": 1.8085106382978724,
+        "killRateSolo": 0.45652173913043476
       }
     },
     "76561198250955250": {
@@ -10463,54 +10637,6 @@
             }
           ],
           "primaryOwner": "Lutti"
-        },
-        {
-          "id": "loup_alpha",
-          "title": "Le Loup Alpha",
-          "emoji": "🐺",
-          "description": "Survit et domine en Loup",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 74.67306015693111,
-          "conditions": [
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 39.91031390134529,
-              "actualPercentile": 78.37837837837837
-            },
-            {
-              "stat": "winRateLoup",
-              "category": "HIGH",
-              "actualValue": 37.77777777777778,
-              "actualPercentile": 70.96774193548387
-            }
-          ],
-          "primaryOwner": "Baout"
-        },
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 77.02702702702703,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.5874439461883408,
-              "actualPercentile": 75.67567567567568
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 39.91031390134529,
-              "actualPercentile": 78.37837837837837
-            }
-          ],
-          "primaryOwner": "Noamouille"
         },
         {
           "id": "loup_hyperactif",
@@ -10719,7 +10845,8 @@
               "actualValue": 69.23076923076923,
               "actualPercentile": 90
             }
-          ]
+          ],
+          "primaryOwner": "Baout"
         },
         {
           "id": "hyperactif",
@@ -10790,7 +10917,8 @@
           "percentile": 92,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Craco"
         },
         {
           "id": "zoneDominantPercentage_extreme_low",
@@ -11152,6 +11280,21 @@
           "value": 4.625489114958529,
           "percentile": 96.29629629629629,
           "category": "EXTREME_HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.05673758865248227,
+          "percentile": 37.83783783783784,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 2.2,
+          "percentile": 54.54545454545454,
+          "category": "AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0.6486486486486487,
+          "percentile": 67.56756756756756,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -11190,7 +11333,10 @@
         "zoneTotalPositions": 162,
         "wolfTransformRate": 0.8846153846153846,
         "wolfUntransformRate": 0.5,
-        "potionsPer60Min": 4.625489114958529
+        "potionsPer60Min": 4.625489114958529,
+        "killRateVillageois": 0.05673758865248227,
+        "killRateLoup": 2.2,
+        "killRateSolo": 0.6486486486486487
       }
     },
     "76561198849250630": {
@@ -11198,30 +11344,6 @@
       "playerName": "MathyMoon",
       "gamesPlayed": 263,
       "titles": [
-        {
-          "id": "poissard",
-          "title": "Le·a Poissard·e",
-          "emoji": "🌧️",
-          "description": "Perd tout le temps + grosses séries de défaites",
-          "priority": 12,
-          "type": "combination",
-          "percentile": 41.891891891891895,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "EXTREME_LOW",
-              "actualValue": 31.6,
-              "actualPercentile": 13.513513513513514
-            },
-            {
-              "stat": "lossSeries",
-              "category": "HIGH",
-              "actualValue": 11,
-              "actualPercentile": 70.27027027027027
-            }
-          ],
-          "primaryOwner": "Craco"
-        },
         {
           "id": "pharmacien",
           "title": "Le·a Pharmacien·ne",
@@ -11246,9 +11368,9 @@
           ]
         },
         {
-          "id": "accro",
-          "title": "L'Accro",
-          "emoji": "🍾",
+          "id": "experimentateur",
+          "title": "L'Experimentateur",
+          "emoji": "🧪",
           "description": "Boit des potions mais ça ne l'aide pas à gagner",
           "priority": 11,
           "type": "combination",
@@ -11300,7 +11422,8 @@
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Raumane"
         },
         {
           "id": "talking_extreme_low",
@@ -11736,6 +11859,21 @@
           "value": 2.681193922186366,
           "percentile": 66.66666666666666,
           "category": "HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.058823529411764705,
+          "percentile": 40.54054054054054,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 0.9565217391304348,
+          "percentile": 9.090909090909092,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 0.46808510638297873,
+          "percentile": 54.054054054054056,
+          "category": "AVERAGE"
         }
       },
       "stats": {
@@ -11774,7 +11912,10 @@
         "zoneTotalPositions": 214,
         "wolfTransformRate": 0.5294117647058824,
         "wolfUntransformRate": 0.17647058823529413,
-        "potionsPer60Min": 2.681193922186366
+        "potionsPer60Min": 2.681193922186366,
+        "killRateVillageois": 0.058823529411764705,
+        "killRateLoup": 0.9565217391304348,
+        "killRateSolo": 0.46808510638297873
       }
     },
     "76561198076015877": {
@@ -11783,38 +11924,8 @@
       "gamesPlayed": 233,
       "titles": [
         {
-          "id": "debutant",
-          "title": "Le·a Débutant·e",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 10.654132393262827,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 31.8,
-              "actualPercentile": 16.216216216216218
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 16.738197424892704,
-              "actualPercentile": 2.7027027027027026
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 550.7358991303491,
-              "actualPercentile": 13.043478260869565
-            }
-          ],
-          "primaryOwner": "Raumane"
-        },
-        {
-          "id": "en_rodage",
-          "title": "En Rodage",
+          "id": "apprenti",
+          "title": "L'Apprenti",
           "emoji": "🔧",
           "description": "Peine dans tous les camps",
           "priority": 11,
@@ -11909,7 +12020,8 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "lossSeries_extreme_high",
@@ -12115,8 +12227,8 @@
         }
       ],
       "primaryTitle": {
-        "id": "en_rodage",
-        "title": "En Rodage",
+        "id": "apprenti",
+        "title": "L'Apprenti",
         "emoji": "🔧",
         "description": "Peine dans tous les camps",
         "priority": 11,
@@ -12323,6 +12435,21 @@
           "value": 1.6611329023293315,
           "percentile": 22.22222222222222,
           "category": "LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.0718954248366013,
+          "percentile": 45.94594594594595,
+          "category": "AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 1.575,
+          "percentile": 21.21212121212121,
+          "category": "LOW"
+        },
+        "killRateSolo": {
+          "value": 0.2,
+          "percentile": 21.62162162162162,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -12361,7 +12488,10 @@
         "zoneTotalPositions": 168,
         "wolfTransformRate": 0.7272727272727273,
         "wolfUntransformRate": 0.13636363636363635,
-        "potionsPer60Min": 1.6611329023293315
+        "potionsPer60Min": 1.6611329023293315,
+        "killRateVillageois": 0.0718954248366013,
+        "killRateLoup": 1.575,
+        "killRateSolo": 0.2
       }
     },
     "76561198056292624": {
@@ -12413,7 +12543,8 @@
               "actualValue": 69.76744186046511,
               "actualPercentile": 93.33333333333333
             }
-          ]
+          ],
+          "primaryOwner": "Baout"
         },
         {
           "id": "philosophe",
@@ -12820,6 +12951,21 @@
           "value": 2.5660535386556327,
           "percentile": 62.96296296296296,
           "category": "ABOVE_AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.16379310344827586,
+          "percentile": 91.8918918918919,
+          "category": "EXTREME_HIGH"
+        },
+        "killRateLoup": {
+          "value": 1.71875,
+          "percentile": 27.27272727272727,
+          "category": "LOW"
+        },
+        "killRateSolo": {
+          "value": 0.2413793103448276,
+          "percentile": 24.324324324324326,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -12858,7 +13004,10 @@
         "zoneTotalPositions": 125,
         "wolfTransformRate": 0.4444444444444444,
         "wolfUntransformRate": 0.16666666666666666,
-        "potionsPer60Min": 2.5660535386556327
+        "potionsPer60Min": 2.5660535386556327,
+        "killRateVillageois": 0.16379310344827586,
+        "killRateLoup": 1.71875,
+        "killRateSolo": 0.2413793103448276
       }
     },
     "76561197996828190": {
@@ -12866,29 +13015,6 @@
       "playerName": "Mickalow",
       "gamesPlayed": 38,
       "titles": [
-        {
-          "id": "lanceur_alerte",
-          "title": "Le·a Lanceur·se d'Alerte",
-          "emoji": "🚨",
-          "description": "Vote juste mais se fait éliminer pour ça",
-          "priority": 13,
-          "type": "combination",
-          "percentile": 53.9039039039039,
-          "conditions": [
-            {
-              "stat": "votingAccuracy",
-              "category": "HIGH",
-              "actualValue": 94.73684210526315,
-              "actualPercentile": 88.88888888888889
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 26.31578947368421,
-              "actualPercentile": 18.91891891891892
-            }
-          ]
-        },
         {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
@@ -12899,7 +13025,8 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Raumane"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -12911,7 +13038,8 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "PeoBran"
         },
         {
           "id": "winRateSolo_extreme_high",
@@ -13008,6 +13136,16 @@
           "type": "campBalance"
         },
         {
+          "id": "campAssignment_solo",
+          "title": "Serial Solo",
+          "emoji": "🎭",
+          "description": "Joue souvent en Solo",
+          "stat": "campSoloPercent",
+          "value": 21.052631578947366,
+          "priority": 3,
+          "type": "campAssignment"
+        },
+        {
           "id": "role_amoureux",
           "title": "Serial Amoureux",
           "emoji": "💕",
@@ -13019,27 +13157,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "lanceur_alerte",
-        "title": "Le·a Lanceur·se d'Alerte",
-        "emoji": "🚨",
-        "description": "Vote juste mais se fait éliminer pour ça",
-        "priority": 13,
-        "type": "combination",
-        "percentile": 53.9039039039039,
-        "conditions": [
-          {
-            "stat": "votingAccuracy",
-            "category": "HIGH",
-            "actualValue": 94.73684210526315,
-            "actualPercentile": 88.88888888888889
-          },
-          {
-            "stat": "survival",
-            "category": "LOW",
-            "actualValue": 26.31578947368421,
-            "actualPercentile": 18.91891891891892
-          }
-        ]
+        "id": "survivalDay1_extreme_low",
+        "title": "La Première Victime",
+        "emoji": "⚰️",
+        "description": "Meurt souvent Jour 1",
+        "stat": "survivalDay1Rate",
+        "value": 71.05263157894737,
+        "percentile": 2.7027027027027026,
+        "category": "EXTREME_LOW",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -13121,6 +13248,21 @@
           "value": 10,
           "percentile": 62.16216216216216,
           "category": "ABOVE_AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.08695652173913043,
+          "percentile": 62.16216216216216,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 1.8571428571428572,
+          "percentile": 36.36363636363637,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0.625,
+          "percentile": 64.86486486486487,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -13139,7 +13281,10 @@
         "survivalDay1Rate": 71.05263157894737,
         "killRate": 0.5263157894736842,
         "longestWinSeries": 4,
-        "longestLossSeries": 10
+        "longestLossSeries": 10,
+        "killRateVillageois": 0.08695652173913043,
+        "killRateLoup": 1.8571428571428572,
+        "killRateSolo": 0.625
       }
     },
     "76561197987657681": {
@@ -13157,7 +13302,8 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Heimdalle"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -13255,13 +13401,13 @@
         }
       ],
       "primaryTitle": {
-        "id": "participation_extreme_low",
-        "title": "Le·a Occasionnel·le",
-        "emoji": "🎲",
-        "description": "Joue peu de parties",
-        "stat": "gamesPlayed",
-        "value": 33,
-        "percentile": 10.81081081081081,
+        "id": "winRateVillageois_extreme_low",
+        "title": "Idiot·e en Formation",
+        "emoji": "🤡",
+        "description": "Mauvais·e en camp Villageois",
+        "stat": "winRateVillageois",
+        "value": 40.909090909090914,
+        "percentile": 13.513513513513514,
         "category": "EXTREME_LOW",
         "priority": 8,
         "type": "basic"
@@ -13341,6 +13487,21 @@
           "value": 6,
           "percentile": 21.62162162162162,
           "category": "LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.09090909090909091,
+          "percentile": 64.86486486486487,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 0.2,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 1.1666666666666667,
+          "percentile": 94.5945945945946,
+          "category": "EXTREME_HIGH"
         }
       },
       "stats": {
@@ -13359,7 +13520,10 @@
         "survivalDay1Rate": 75.75757575757575,
         "killRate": 0.30303030303030304,
         "longestWinSeries": 2,
-        "longestLossSeries": 6
+        "longestLossSeries": 6,
+        "killRateVillageois": 0.09090909090909091,
+        "killRateLoup": 0.2,
+        "killRateSolo": 1.1666666666666667
       }
     },
     "76561198052560531": {
@@ -13439,9 +13603,9 @@
           ]
         },
         {
-          "id": "accro",
-          "title": "L'Accro",
-          "emoji": "🍾",
+          "id": "experimentateur",
+          "title": "L'Experimentateur",
+          "emoji": "🧪",
           "description": "Boit des potions mais ça ne l'aide pas à gagner",
           "priority": 11,
           "type": "combination",
@@ -13494,7 +13658,8 @@
           "percentile": 10.81081081081081,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Raumane"
         },
         {
           "id": "winRateVillageois_extreme_low",
@@ -13506,7 +13671,8 @@
           "percentile": 8.108108108108109,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "PeoBran"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -13566,7 +13732,8 @@
           "percentile": 0,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Mickalow"
         },
         {
           "id": "killRate_extreme_low",
@@ -13603,7 +13770,8 @@
           "percentile": 88,
           "category": "EXTREME_HIGH",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "Craco"
         },
         {
           "id": "zoneResteCarte_extreme_high",
@@ -13710,6 +13878,16 @@
           "category": "BALANCED",
           "priority": 6,
           "type": "campBalance"
+        },
+        {
+          "id": "campAssignment_villageois",
+          "title": "Serial Villageois·e",
+          "emoji": "🏘️",
+          "description": "Joue souvent Villageois",
+          "stat": "campVillageoisPercent",
+          "value": 81.63265306122449,
+          "priority": 3,
+          "type": "campAssignment"
         },
         {
           "id": "role_alchimiste",
@@ -13890,6 +14068,16 @@
           "value": 3.8915822481584166,
           "percentile": 88.88888888888889,
           "category": "EXTREME_HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 0.75,
+          "percentile": 78.37837837837837,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -13923,7 +14111,10 @@
         "zoneResteCarte": 21.428571428571427,
         "zoneDominantPercentage": 35.714285714285715,
         "zoneTotalPositions": 28,
-        "potionsPer60Min": 3.8915822481584166
+        "potionsPer60Min": 3.8915822481584166,
+        "killRateVillageois": 0,
+        "killRateLoup": null,
+        "killRateSolo": 0.75
       }
     },
     "76561198317172114": {
@@ -13989,7 +14180,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "PeoBran"
+          "primaryOwner": "Heimdalle"
         },
         {
           "id": "winRateSolo_extreme_high",
@@ -14171,6 +14362,16 @@
           "category": "AVERAGE",
           "priority": 3,
           "type": "basic"
+        },
+        {
+          "id": "campAssignment_solo",
+          "title": "Serial Solo",
+          "emoji": "🎭",
+          "description": "Joue souvent en Solo",
+          "stat": "campSoloPercent",
+          "value": 32.142857142857146,
+          "priority": 3,
+          "type": "campAssignment"
         }
       ],
       "primaryTitle": {
@@ -14341,6 +14542,16 @@
           "value": 1.276402344507983,
           "percentile": 11.11111111111111,
           "category": "EXTREME_LOW"
+        },
+        "killRateVillageois": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "killRateSolo": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -14374,7 +14585,10 @@
         "zoneResteCarte": 13.157894736842104,
         "zoneDominantPercentage": 47.368421052631575,
         "zoneTotalPositions": 38,
-        "potionsPer60Min": 1.276402344507983
+        "potionsPer60Min": 1.276402344507983,
+        "killRateVillageois": 0,
+        "killRateLoup": null,
+        "killRateSolo": 0
       }
     },
     "76561198155130320": {
@@ -14428,30 +14642,6 @@
             }
           ],
           "primaryOwner": "Ponce"
-        },
-        {
-          "id": "lanceur_alerte",
-          "title": "Le·a Lanceur·se d'Alerte",
-          "emoji": "🚨",
-          "description": "Vote juste mais se fait éliminer pour ça",
-          "priority": 13,
-          "type": "combination",
-          "percentile": 53.82882882882883,
-          "conditions": [
-            {
-              "stat": "votingAccuracy",
-              "category": "HIGH",
-              "actualValue": 93.33333333333333,
-              "actualPercentile": 83.33333333333334
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 27.27272727272727,
-              "actualPercentile": 24.324324324324326
-            }
-          ],
-          "primaryOwner": "Mickalow"
         },
         {
           "id": "detective",
@@ -14838,6 +15028,21 @@
           "value": 0,
           "percentile": 0,
           "category": "EXTREME_LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.02631578947368421,
+          "percentile": 21.62162162162162,
+          "category": "LOW"
+        },
+        "killRateLoup": {
+          "value": 2.3,
+          "percentile": 60.60606060606061,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0.2857142857142857,
+          "percentile": 27.027027027027028,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -14871,7 +15076,10 @@
         "zoneResteCarte": 40,
         "zoneDominantPercentage": 50,
         "zoneTotalPositions": 20,
-        "potionsPer60Min": 0
+        "potionsPer60Min": 0,
+        "killRateVillageois": 0.02631578947368421,
+        "killRateLoup": 2.3,
+        "killRateSolo": 0.2857142857142857
       }
     },
     "76561198076478013": {
@@ -14903,8 +15111,8 @@
           ]
         },
         {
-          "id": "demagogue",
-          "title": "Le·a Démagogue",
+          "id": "baratineur",
+          "title": "Le·a Baratineur·se",
           "emoji": "📣",
           "description": "Parle beaucoup mais vote mal",
           "priority": 10,
@@ -15317,6 +15525,21 @@
           "value": 1.5351756253099291,
           "percentile": 14.814814814814813,
           "category": "EXTREME_LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.09090909090909091,
+          "percentile": 64.86486486486487,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 2.2777777777777777,
+          "percentile": 57.57575757575758,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0.7894736842105263,
+          "percentile": 83.78378378378379,
+          "category": "HIGH"
         }
       },
       "stats": {
@@ -15352,7 +15575,10 @@
         "zoneTotalPositions": 67,
         "wolfTransformRate": 0.4,
         "wolfUntransformRate": 0,
-        "potionsPer60Min": 1.5351756253099291
+        "potionsPer60Min": 1.5351756253099291,
+        "killRateVillageois": 0.09090909090909091,
+        "killRateLoup": 2.2777777777777777,
+        "killRateSolo": 0.7894736842105263
       }
     },
     "76561199013115670": {
@@ -15489,7 +15715,7 @@
           "category": "EXTREME_LOW",
           "priority": 8,
           "type": "basic",
-          "primaryOwner": "PeoBran"
+          "primaryOwner": "Heimdalle"
         },
         {
           "id": "winRateSolo_extreme_low",
@@ -15860,6 +16086,21 @@
           "value": 2.882845753137781,
           "percentile": 81.48148148148148,
           "category": "HIGH"
+        },
+        "killRateVillageois": {
+          "value": 0.08333333333333333,
+          "percentile": 56.75675675675676,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRateLoup": {
+          "value": 2.4,
+          "percentile": 63.63636363636363,
+          "category": "ABOVE_AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -15893,7 +16134,10 @@
         "zoneResteCarte": 5.263157894736842,
         "zoneDominantPercentage": 57.89473684210527,
         "zoneTotalPositions": 19,
-        "potionsPer60Min": 2.882845753137781
+        "potionsPer60Min": 2.882845753137781,
+        "killRateVillageois": 0.08333333333333333,
+        "killRateLoup": 2.4,
+        "killRateSolo": 0
       }
     },
     "76561198160286790": {
@@ -15901,35 +16145,6 @@
       "playerName": "Raumane",
       "gamesPlayed": 118,
       "titles": [
-        {
-          "id": "debutant",
-          "title": "Le·a Débutant·e",
-          "emoji": "🆘",
-          "description": "Peine en victoire, survie et récolte",
-          "priority": 11,
-          "type": "combination",
-          "percentile": 4.054054054054054,
-          "conditions": [
-            {
-              "stat": "winRate",
-              "category": "LOW",
-              "actualValue": 29.7,
-              "actualPercentile": 2.7027027027027026
-            },
-            {
-              "stat": "survival",
-              "category": "LOW",
-              "actualValue": 22.88135593220339,
-              "actualPercentile": 5.405405405405405
-            },
-            {
-              "stat": "loot",
-              "category": "LOW",
-              "actualValue": 511.7920855473382,
-              "actualPercentile": 0
-            }
-          ]
-        },
         {
           "id": "winRate_extreme_low",
           "title": "Le·a Maudit·e",
@@ -15952,7 +16167,8 @@
           "percentile": 2.7027027027027026,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "PeoBran"
         },
         {
           "id": "votingAccuracy_extreme_low",
@@ -16098,33 +16314,16 @@
         }
       ],
       "primaryTitle": {
-        "id": "debutant",
-        "title": "Le·a Débutant·e",
-        "emoji": "🆘",
-        "description": "Peine en victoire, survie et récolte",
-        "priority": 11,
-        "type": "combination",
-        "percentile": 4.054054054054054,
-        "conditions": [
-          {
-            "stat": "winRate",
-            "category": "LOW",
-            "actualValue": 29.7,
-            "actualPercentile": 2.7027027027027026
-          },
-          {
-            "stat": "survival",
-            "category": "LOW",
-            "actualValue": 22.88135593220339,
-            "actualPercentile": 5.405405405405405
-          },
-          {
-            "stat": "loot",
-            "category": "LOW",
-            "actualValue": 511.7920855473382,
-            "actualPercentile": 0
-          }
-        ]
+        "id": "winRate_extreme_low",
+        "title": "Le·a Maudit·e",
+        "emoji": "🪦",
+        "description": "Perd presque toujours",
+        "stat": "winRate",
+        "value": 29.7,
+        "percentile": 2.7027027027027026,
+        "category": "EXTREME_LOW",
+        "priority": 8,
+        "type": "basic"
       },
       "percentiles": {
         "winRate": {
@@ -16291,6 +16490,21 @@
           "value": 2.4469785666892676,
           "percentile": 51.85185185185185,
           "category": "AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0.0547945205479452,
+          "percentile": 32.432432432432435,
+          "category": "LOW"
+        },
+        "killRateLoup": {
+          "value": 1.7391304347826086,
+          "percentile": 30.303030303030305,
+          "category": "LOW"
+        },
+        "killRateSolo": {
+          "value": 0.18181818181818182,
+          "percentile": 18.91891891891892,
+          "category": "LOW"
         }
       },
       "stats": {
@@ -16326,7 +16540,10 @@
         "zoneTotalPositions": 140,
         "wolfTransformRate": 0.5,
         "wolfUntransformRate": 0.02631578947368421,
-        "potionsPer60Min": 2.4469785666892676
+        "potionsPer60Min": 2.4469785666892676,
+        "killRateVillageois": 0.0547945205479452,
+        "killRateLoup": 1.7391304347826086,
+        "killRateSolo": 0.18181818181818182
       }
     },
     "76561198271274269": {
@@ -16334,30 +16551,6 @@
       "playerName": "MartinPonK",
       "gamesPlayed": 45,
       "titles": [
-        {
-          "id": "alpha_predator",
-          "title": "L'Alpha",
-          "emoji": "🦁",
-          "description": "Tue beaucoup et survit",
-          "priority": 15,
-          "type": "combination",
-          "percentile": 78.37837837837839,
-          "conditions": [
-            {
-              "stat": "killRate",
-              "category": "HIGH",
-              "actualValue": 0.5777777777777777,
-              "actualPercentile": 67.56756756756756
-            },
-            {
-              "stat": "survival",
-              "category": "HIGH",
-              "actualValue": 46.666666666666664,
-              "actualPercentile": 89.1891891891892
-            }
-          ],
-          "primaryOwner": "Noamouille"
-        },
         {
           "id": "populiste",
           "title": "Le·a Populiste",
@@ -16431,12 +16624,11 @@
               "actualValue": 46.666666666666664,
               "actualPercentile": 89.1891891891892
             }
-          ],
-          "primaryOwner": "Tsuna"
+          ]
         },
         {
-          "id": "couard",
-          "title": "Le·a Couard·e",
+          "id": "peureux",
+          "title": "Le·a Peureux·se",
           "emoji": "🐢",
           "description": "Survit longtemps mais perd quand même",
           "priority": 11,
@@ -16458,8 +16650,8 @@
           ]
         },
         {
-          "id": "demagogue",
-          "title": "Le·a Démagogue",
+          "id": "baratineur",
+          "title": "Le·a Baratineur·se",
           "emoji": "📣",
           "description": "Parle beaucoup mais vote mal",
           "priority": 10,
@@ -16490,7 +16682,8 @@
           "percentile": 13.513513513513514,
           "category": "EXTREME_LOW",
           "priority": 8,
-          "type": "basic"
+          "type": "basic",
+          "primaryOwner": "PeoBran"
         },
         {
           "id": "talking_extreme_high",
@@ -16634,6 +16827,16 @@
           "category": "SPECIALIST",
           "priority": 6,
           "type": "campBalance"
+        },
+        {
+          "id": "campAssignment_solo",
+          "title": "Serial Solo",
+          "emoji": "🎭",
+          "description": "Joue souvent en Solo",
+          "stat": "campSoloPercent",
+          "value": 20,
+          "priority": 3,
+          "type": "campAssignment"
         }
       ],
       "primaryTitle": {
@@ -16810,6 +17013,21 @@
           "value": 2.24512620519622,
           "percentile": 44.44444444444444,
           "category": "BELOW_AVERAGE"
+        },
+        "killRateVillageois": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
+        },
+        "killRateLoup": {
+          "value": 1.8571428571428572,
+          "percentile": 36.36363636363637,
+          "category": "BELOW_AVERAGE"
+        },
+        "killRateSolo": {
+          "value": 0,
+          "percentile": 0,
+          "category": "EXTREME_LOW"
         }
       },
       "stats": {
@@ -16841,7 +17059,10 @@
         "zoneTotalPositions": 13,
         "wolfTransformRate": 0.5882352941176471,
         "wolfUntransformRate": 0.29411764705882354,
-        "potionsPer60Min": 2.24512620519622
+        "potionsPer60Min": 2.24512620519622,
+        "killRateVillageois": 0,
+        "killRateLoup": 1.8571428571428572,
+        "killRateSolo": 0
       }
     },
     "76561198245459930": {
@@ -17276,6 +17497,21 @@
           "value": 1.8604850071233001,
           "percentile": 25.925925925925924,
           "category": "LOW"
+        },
+        "killRateVillageois": {
+          "value": 0.018867924528301886,
+          "percentile": 18.91891891891892,
+          "category": "LOW"
+        },
+        "killRateLoup": {
+          "value": 1.4,
+          "percentile": 15.151515151515152,
+          "category": "LOW"
+        },
+        "killRateSolo": {
+          "value": 0.5,
+          "percentile": 59.45945945945946,
+          "category": "ABOVE_AVERAGE"
         }
       },
       "stats": {
@@ -17311,7 +17547,10 @@
         "zoneTotalPositions": 111,
         "wolfTransformRate": 0.55,
         "wolfUntransformRate": 0.05,
-        "potionsPer60Min": 1.8604850071233001
+        "potionsPer60Min": 1.8604850071233001,
+        "killRateVillageois": 0.018867924528301886,
+        "killRateLoup": 1.4,
+        "killRateSolo": 0.5
       }
     }
   }

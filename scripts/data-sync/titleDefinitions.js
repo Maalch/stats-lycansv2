@@ -432,20 +432,8 @@ export const COMBINATION_TITLES = [
     description: 'Survit et domine en Loup',
     conditions: [
       { stat: 'survival', category: 'HIGH' },
-      { stat: 'winRateLoup', category: 'HIGH' }
-    ],
-    priority: 15
-  },
-
-  // High kills + High survival = Predator
-  {
-    id: 'alpha_predator',
-    title: 'L\'Alpha',
-    emoji: '🦁',
-    description: 'Tue beaucoup et survit',
-    conditions: [
-      { stat: 'killRate', category: 'HIGH' },
-      { stat: 'survival', category: 'HIGH' }
+      { stat: 'winRateLoup', category: 'HIGH' },
+      { stat: 'killRateLoup', category: 'HIGH' }
     ],
     priority: 15
   },
@@ -515,15 +503,16 @@ export const COMBINATION_TITLES = [
     priority: 14
   },
 
-  // Low kills + High win rate = The Pacifist
+  // Low kill rate + Low wolf kill rate + Low transform rate + High wolf win rate = The Pacifist
   {
     id: 'pacifiste',
     title: 'Le·a Pacifiste',
     emoji: '🕊️',
     description: 'Gagne sans tuer',
     conditions: [
-      { stat: 'killRate', category: 'LOW' },
-      { stat: 'winRate', category: 'HIGH' }
+      { stat: 'killRateLoup', category: 'LOW' },
+      { stat: 'wolfTransformRate', category: 'LOW' },
+      { stat: 'winRateLoup', category: 'HIGH' }
     ],
     priority: 14
   },
@@ -591,10 +580,10 @@ export const COMBINATION_TITLES = [
     ],
     priority: 14
   },
-  // Low transform rate + High survival + High win rate Loup = Clever Wolf
+  // Low transform rate + High survival + High win rate Loup = Disguised Wolf
   {
-    id: 'loup_ruse',
-    title: 'Le Loup Rusé',
+    id: 'loup_deguise',
+    title: 'Le·a Loup·ve Déguisé·e',
     emoji: '🦊',
     description: 'Reste humain, survit et gagne en Loup',
     conditions: [
@@ -670,7 +659,7 @@ export const COMBINATION_TITLES = [
     priority: 13
   },
 
-  // High voting accuracy + Low survival = Whistleblower
+  // High voting accuracy + Low survival + Low meeting survival as Villageois = Whistleblower
   {
     id: 'lanceur_alerte',
     title: 'Le·a Lanceur·se d\'Alerte',
@@ -678,7 +667,8 @@ export const COMBINATION_TITLES = [
     description: 'Vote juste mais se fait éliminer pour ça',
     conditions: [
       { stat: 'votingAccuracy', category: 'HIGH' },
-      { stat: 'survival', category: 'LOW' }
+      { stat: 'survival', category: 'LOW' },
+      { stat: 'survivalAtMeetingVillageois', category: 'LOW' }
     ],
     priority: 13
   },
@@ -744,7 +734,7 @@ export const COMBINATION_TITLES = [
       { stat: 'wolfUntransformRate', category: 'LOW' },
       { stat: 'winRateLoup', category: 'HIGH' }
     ],
-    priority: 12
+    priority: 14
   },
   // The Witch - High potion usage + High talking (brews potions and talks about them)
   {
@@ -760,12 +750,12 @@ export const COMBINATION_TITLES = [
   },
 
 
-  // High kills + Low survival = Kamikaze
+  // High kills + Low survival (but different focus) = Berserker
   {
-    id: 'kamikaze',
-    title: 'Le·a Kamikaze',
-    emoji: '💥',
-    description: 'Tue mais meurt en retour',
+    id: 'berserker',
+    title: 'Le·a Berserker',
+    emoji: '⚔️',
+    description: 'Tue beaucoup mais meurt souvent',
     conditions: [
       { stat: 'killRate', category: 'HIGH' },
       { stat: 'survival', category: 'LOW' }
@@ -784,15 +774,17 @@ export const COMBINATION_TITLES = [
     ],
     priority: 12
   },
-  // Low win rate + Serial Looser = The Cursed
+  // Low win rate + Loss series + Low survival + Medium games = The Unlucky
   {
-    id: 'poissard',
-    title: 'Le·a Poissard·e',
+    id: 'malchanceux',
+    title: 'Le·a Malchanceux·se',
     emoji: '🌧️',
     description: 'Perd tout le temps + grosses séries de défaites',
     conditions: [
-      { stat: 'winRate', category: 'EXTREME_LOW' },
-      { stat: 'lossSeries', category: 'HIGH' }
+      { stat: 'winRate', category: 'LOW' },
+      { stat: 'lossSeries', category: 'HIGH' },
+      { stat: 'survival', category: 'LOW' },
+      { stat: 'gamesPlayed', minValue: 50 },
     ],
     priority: 12
   },
@@ -867,15 +859,16 @@ export const COMBINATION_TITLES = [
     conditions: [
       { stat: 'winRate', category: 'LOW' },
       { stat: 'survival', category: 'LOW' },
-      { stat: 'loot', category: 'LOW' }
+      { stat: 'loot', category: 'LOW' },
+      { stat: 'gamesPlayed', category: 'LOW' }
     ],
     priority: 11
   },
-  //The Junkie - High potion usage + Low win rate (potions don't help them win)
+  //The Experimenter - High potion usage + Low win rate (potions don't help them win)
   {
-    id: 'accro',
-    title: 'L\'Accro',
-    emoji: '🍾',
+    id: 'experimentateur',
+    title: 'L\'Experimentateur',
+    emoji: '🧪',
     description: 'Boit des potions mais ça ne l\'aide pas à gagner',
     conditions: [
       { stat: 'potionUsage', category: 'HIGH' },
@@ -897,8 +890,8 @@ export const COMBINATION_TITLES = [
     priority: 11
   },
   {
-    id: 'couard',
-    title: 'Le·a Couard·e',
+    id: 'peureux',
+    title: 'Le·a Peureux·se',
     emoji: '🐢',
     description: 'Survit longtemps mais perd quand même',
     conditions: [
@@ -908,10 +901,10 @@ export const COMBINATION_TITLES = [
     priority: 11
   },
 
-  // High loot Villageois + Low win rate Villageois = The Worker Bee
+  // High loot Villageois + Low win rate Villageois = The Worker
   {
-    id: 'abeille_ouvriere',
-    title: 'L\'Abeille Ouvrière',
+    id: 'travailleur',
+    title: 'Le·a Travailleur·se',
     emoji: '🐝',
     description: 'Récolte bien en Villageois mais perd',
     conditions: [
@@ -983,10 +976,10 @@ export const COMBINATION_TITLES = [
     priority: 11
   },
 
-  // Poor performance across all camps = The Struggling
+  // Poor performance across all camps = The Apprentice
   {
-    id: 'en_rodage',
-    title: 'En Rodage',
+    id: 'apprenti',
+    title: 'L\'Apprenti',
     emoji: '🔧',
     description: 'Peine dans tous les camps',
     conditions: [
@@ -1023,10 +1016,10 @@ export const COMBINATION_TITLES = [
     priority: 10
   },
 
-  // High talk + Bad voting = Demagogue
+  // High talk + Bad voting = Sweet Talker
   {
-    id: 'demagogue',
-    title: 'Le·a Démagogue',
+    id: 'baratineur',
+    title: 'Le·a Baratineur·se',
     emoji: '📣',
     description: 'Parle beaucoup mais vote mal',
     conditions: [

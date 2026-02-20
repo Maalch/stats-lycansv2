@@ -381,6 +381,19 @@ function computeAllStatistics(moddedGames) {
     });
   }
 
+  // Process camp-specific kill rates from death stats
+  if (deathStats?.campKillRates) {
+    deathStats.campKillRates.forEach(campData => {
+      const playerId = campData.player;
+      if (!aggregatedStats.has(playerId)) return;
+      const agg = aggregatedStats.get(playerId);
+      
+      agg.stats.killRateVillageois = campData.killRateVillageois;
+      agg.stats.killRateLoup = campData.killRateLoup;
+      agg.stats.killRateSolo = campData.killRateSolo;
+    });
+  }
+
   return aggregatedStats;
 }
 
@@ -644,6 +657,10 @@ function generatePlayerTitles(aggregatedStats, roleFrequencies) {
     const comboTitles = generateCombinationTitles(data.percentiles);
     titles.push(...comboTitles);
     
+    // Generate camp assignment titles
+    const campAssignmentTitles = generateCampAssignmentTitles(data.stats);
+    titles.push(...campAssignmentTitles);
+    
     // Generate role-based titles
     const roleData = roleFrequencies.get(playerId);
     if (roleData && roleData.gamesPlayed >= MIN_GAMES_FOR_ROLE_TITLES) {
@@ -724,6 +741,7 @@ function generateBasicTitles(percentiles) {
     votingFirst: 'votingFirst',
     votingAccuracy: 'votingAccuracy',
     hunterAccuracy: 'hunterAccuracy',
+    hunterShotAccuracy: 'hunterShotAccuracy',
     winRate: 'winRate',
     winRateVillageois: 'winRateVillageois',
     winRateLoup: 'winRateLoup',
@@ -902,6 +920,9 @@ function generateCombinationTitles(percentiles) {
     lootVillageois: 'lootVillageoisPer60Min',
     lootLoup: 'lootLoupPer60Min',
     killRate: 'killRate',
+    killRateVillageois: 'killRateVillageois',
+    killRateLoup: 'killRateLoup',
+    killRateSolo: 'killRateSolo',
     survival: 'survivalRate',
     survivalDay1: 'survivalDay1Rate',
     votingAggressive: 'votingAggressiveness',
@@ -1011,6 +1032,60 @@ function generateCombinationTitles(percentiles) {
     }
   });
 
+  return titles;
+}
+
+/**
+ * Generate camp assignment titles (uncontrollable - based on luck of role assignment)
+ * @param {Object} stats - Player's stats object with camp percentages
+ * @returns {Array} - Array of camp assignment title objects
+ */
+function generateCampAssignmentTitles(stats) {
+  const titles = [];
+  
+  // Threshold for "Serial" titles - player plays this camp significantly more than expected
+  // Expected: ~60% Villageois, ~30% Loup, ~10% Solo (approximate game balance)
+  // Award title if 15+ percentage points above expected
+  const VILLAGEOIS_THRESHOLD = 75; // Expected ~60%, so 75%+ is notable
+  const LOUP_THRESHOLD = 45;       // Expected ~30%, so 45%+ is notable  
+  const SOLO_THRESHOLD = 20;       // Expected ~10%, so 20%+ is notable
+  
+  if (stats.campVillageoisPercent !== undefined && stats.campVillageoisPercent >= VILLAGEOIS_THRESHOLD) {
+    const titleDef = TITLE_DEFINITIONS.campAssignment.villageois;
+    titles.push({
+      id: 'campAssignment_villageois',
+      ...titleDef,
+      stat: 'campVillageoisPercent',
+      value: stats.campVillageoisPercent,
+      priority: 3,
+      type: 'campAssignment'
+    });
+  }
+  
+  if (stats.campLoupPercent !== undefined && stats.campLoupPercent >= LOUP_THRESHOLD) {
+    const titleDef = TITLE_DEFINITIONS.campAssignment.loup;
+    titles.push({
+      id: 'campAssignment_loup',
+      ...titleDef,
+      stat: 'campLoupPercent',
+      value: stats.campLoupPercent,
+      priority: 3,
+      type: 'campAssignment'
+    });
+  }
+  
+  if (stats.campSoloPercent !== undefined && stats.campSoloPercent >= SOLO_THRESHOLD) {
+    const titleDef = TITLE_DEFINITIONS.campAssignment.solo;
+    titles.push({
+      id: 'campAssignment_solo',
+      ...titleDef,
+      stat: 'campSoloPercent',
+      value: stats.campSoloPercent,
+      priority: 3,
+      type: 'campAssignment'
+    });
+  }
+  
   return titles;
 }
 

@@ -2,7 +2,7 @@
  * Death statistics computation functions
  */
 
-import { getPlayerId, DeathTypeCode } from '../../../src/utils/datasyncExport.js';
+import { getPlayerId, getPlayerCampFromRole, DeathTypeCode } from '../../../src/utils/datasyncExport.js';
 
 /**
  * Extract deaths from a single game
@@ -226,12 +226,106 @@ export function computeDeathStatistics(gameData) {
     };
   }).sort((a, b) => b.totalDeaths - a.totalDeaths);
 
+  // Compute camp-specific kill rates
+  // Track kills made while playing each camp
+  const campKills = new Map(); // playerId -> { villageois: {kills, games}, loups: {kills, games}, solo: {kills, games} }
+  
+  gameData.forEach(game => {
+    if (!game.PlayerStats) return;
+    
+    // Build a map of player roles in this game
+    const playerRolesInGame = new Map();
+    game.PlayerStats.forEach(player => {
+      const playerId = getPlayerId(player);
+      const role = player.MainRoleInitial;
+      const power = player.Power;
+      const camp = getPlayerCampFromRole(role, { regroupWolfSubRoles: true }, power);
+      playerRolesInGame.set(playerId, camp);
+    });
+    
+    // Track games played per camp
+    playerRolesInGame.forEach((camp, playerId) => {
+      if (!campKills.has(playerId)) {
+        campKills.set(playerId, {
+          villageois: { kills: 0, games: 0 },
+          loups: { kills: 0, games: 0 },
+          solo: { kills: 0, games: 0 }
+        });
+      }
+      const playerCampData = campKills.get(playerId);
+      if (camp === 'Villageois') {
+        playerCampData.villageois.games++;
+      } else if (camp === 'Loup') {
+        playerCampData.loups.games++;
+      } else {
+        playerCampData.solo.games++;
+      }
+    });
+    
+    // Track kills made in this game
+    game.PlayerStats.forEach(player => {
+      // Check if this player killed someone (same logic as extractKillsFromGame)
+      if (player.DeathType && player.DeathType !== 'N/A' && player.KillerName) {
+        const deathType = player.DeathType;
+        
+        if (
+          deathType !== DeathTypeCode.VOTED &&
+          deathType !== DeathTypeCode.STARVATION &&
+          deathType !== DeathTypeCode.FALL &&
+          deathType !== DeathTypeCode.BY_AVATAR_CHAIN &&
+          deathType !== DeathTypeCode.SURVIVOR &&
+          deathType !== '' &&
+          deathType !== DeathTypeCode.UNKNOWN
+        ) {
+          // Find the killer in this game
+          const killer = game.PlayerStats.find(p => p.Username === player.KillerName);
+          if (killer) {
+            const killerId = getPlayerId(killer);
+            const killerCamp = playerRolesInGame.get(killerId);
+            
+            if (!campKills.has(killerId)) {
+              campKills.set(killerId, {
+                villageois: { kills: 0, games: 0 },
+                loups: { kills: 0, games: 0 },
+                solo: { kills: 0, games: 0 }
+              });
+            }
+            
+            const playerCampData = campKills.get(killerId);
+            if (killerCamp === 'Villageois') {
+              playerCampData.villageois.kills++;
+            } else if (killerCamp === 'Loup') {
+              playerCampData.loups.kills++;
+            } else {
+              playerCampData.solo.kills++;
+            }
+          }
+        }
+      }
+    });
+  });
+  
+  // Build camp kill rate stats
+  const campKillRates = [];
+  campKills.forEach((campData, playerId) => {
+    campKillRates.push({
+      player: playerId,
+      killRateVillageois: campData.villageois.games >= 5 
+        ? campData.villageois.kills / campData.villageois.games : null,
+      killRateLoup: campData.loups.games >= 5 
+        ? campData.loups.kills / campData.loups.games : null,
+      killRateSolo: campData.solo.games >= 3 
+        ? campData.solo.kills / campData.solo.games : null
+    });
+  });
+
   return {
     totalDeaths,
     totalGames,
     averageDeathsPerGame: totalGames > 0 ? totalDeaths / totalGames : 0,
     killerStats,
     playerDeathStats,
+    campKillRates,
     mostDeadlyKiller: killerStats.length > 0 ? killerStats[0].killerName : null
   };
 }
