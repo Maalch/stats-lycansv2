@@ -60,7 +60,7 @@
     "conditions": [
       "Récolte Loup: Élevé",
       "Victoires Loup: Élevé",
-      "Temps de parole: Faible"
+      "Temps de parole (Loup): Faible"
     ],
     "priority": 18
   },
@@ -130,11 +130,11 @@
   },
   {
     "title": "Le·a Manipulateur·rice 🐍",
-    "description": "Loup bavard·e et gagnant·e",
+    "description": "Loup·ve bavard·e et gagnant·e",
     "type": "combination",
     "conditions": [
       "Victoires Loup: Élevé",
-      "Temps de parole: Élevé"
+      "Temps de parole (Loup): Élevé"
     ],
     "priority": 16
   },
@@ -162,10 +162,10 @@
   },
   {
     "title": "Le·a Loup·ve Alpha 🐺",
-    "description": "Survit et domine en Loup",
+    "description": "Survit et domine en Loup·ve",
     "type": "combination",
     "conditions": [
-      "Survie: Élevé",
+      "Survie Loup: Élevé",
       "Victoires Loup: Élevé",
       "Taux de kills Loup: Élevé"
     ],
@@ -173,11 +173,11 @@
   },
   {
     "title": "L'Infiltré·e 🎭",
-    "description": "Excellent·e loup discret·ète",
+    "description": "Excellent·e Loup·ve discret·ète",
     "type": "combination",
     "conditions": [
       "Victoires Loup: Élevé",
-      "Temps de parole: Faible"
+      "Temps de parole (Loup): Faible"
     ],
     "priority": 15
   },
@@ -285,18 +285,51 @@
   },
   {
     "title": "Le·a Loup·ve Déguisé·e 🦊",
-    "description": "Reste humain, survit et gagne en Loup",
+    "description": "Reste humain, survit et gagne en Loup·ve",
     "type": "combination",
     "conditions": [
       "Taux de transformation en loup: Faible",
-      "Survie: Élevé",
+      "Survie Loup: Élevé",
       "Victoires Loup: Élevé"
     ],
     "priority": 14
   },
   {
+    "title": "Le·a Loup·ve Incognito 🕵️",
+    "description": "Loup·ve discret·e, efficace et adaptable",
+    "type": "combination",
+    "conditions": [
+      "Temps de parole (Loup): Faible",
+      "Taux de kills Loup: Élevé",
+      "Taux de retour après transformation: Élevé"
+    ],
+    "priority": 14
+  },
+  {
+    "title": "Le·a Villageois·se Modèle ⭐",
+    "description": "Villageois·e exemplaire: gagne, atteint l'objectif et vote bien",
+    "type": "combination",
+    "conditions": [
+      "Victoires Villageois: Élevé",
+      "Récolte Villageois: Élevé",
+      "Précision de vote (Villageois): Élevé"
+    ],
+    "priority": 14
+  },
+  {
+    "title": "Le·a Loup·ve Modèle 🐺",
+    "description": "Loup·ve parfait·e: gagne, tue et survit",
+    "type": "combination",
+    "conditions": [
+      "Victoires Loup: Élevé",
+      "Taux de kills Loup: Élevé",
+      "Survie Loup: Élevé"
+    ],
+    "priority": 14
+  },
+  {
     "title": "Le·a Chasseur·se Nocturne 🌙",
-    "description": "Se transforme, reste loup, et domine",
+    "description": "Se transforme, reste Loup·ve, et domine",
     "type": "combination",
     "conditions": [
       "Taux de transformation en loup: Élevé",
@@ -362,8 +395,8 @@
     "description": "Vote juste mais se fait éliminer pour ça",
     "type": "combination",
     "conditions": [
-      "Précision de vote: Élevé",
-      "Survie: Faible",
+      "Précision de vote (Villageois): Élevé",
+      "Survie Villageois: Faible",
       "Survie au meeting (Villageois): Faible"
     ],
     "priority": 13
@@ -415,6 +448,26 @@
     "conditions": [
       "Utilisation de potions: Élevé",
       "Temps de parole: Élevé"
+    ],
+    "priority": 12
+  },
+  {
+    "title": "Le·a Récolteur·se Opti 🌾",
+    "description": "Récolte efficace et victoires en Villageois",
+    "type": "combination",
+    "conditions": [
+      "Récolte Villageois: Élevé",
+      "Objectif récolte (Villageois): Élevé"
+    ],
+    "priority": 12
+  },
+  {
+    "title": "Le·a Loup·ve Villageois·e 🐑",
+    "description": "Survit bien mais vote mal",
+    "type": "combination",
+    "conditions": [
+      "Survie Loup: Élevé",
+      "Précision de vote (Loup): Faible"
     ],
     "priority": 12
   },
@@ -738,6 +791,24 @@
     "priority": 8
   },
   {
+    "title": "Le·a Héros·ïne de la Récolte 🌾",
+    "description": "Atteint presque toujours l'objectif de récolte en Villageois",
+    "type": "simple",
+    "conditions": [
+      "Objectif récolte (Villageois): Très élevé"
+    ],
+    "priority": 8
+  },
+  {
+    "title": "Le·a Saboteur·se de la Récolte 🪓",
+    "description": "N'atteint presque jamais l'objectif de récolte en Villageois",
+    "type": "simple",
+    "conditions": [
+      "Objectif récolte (Villageois): Très faible"
+    ],
+    "priority": 8
+  },
+  {
     "title": "Le·a Tribun·e ⚖️",
     "description": "Toujours en action",
     "type": "simple",
@@ -874,7 +945,7 @@
   },
   {
     "title": "Le Loup-Garou Frénétique 🐺",
-    "description": "Se transforme très souvent en loup",
+    "description": "Se transforme très souvent en Loup·ve",
     "type": "simple",
     "conditions": [
       "Taux de transformation en loup: Très élevé"
@@ -901,7 +972,7 @@
   },
   {
     "title": "Le·a Loup·ve Permanent·e 🌑",
-    "description": "Reste presque toujours en loup",
+    "description": "Reste presque toujours en Loup·ve",
     "type": "simple",
     "conditions": [
       "Taux de retour après transformation: Très faible"
@@ -1108,7 +1179,7 @@
   },
   {
     "title": "Le·a Loup·ve Prudent·e 🌙",
-    "description": "Survit souvent au Jour 1 en Loup",
+    "description": "Survit souvent au Jour 1 en Loup·ve",
     "type": "simple",
     "conditions": [
       "Survie Jour 1 (Loup): Élevé"
@@ -1117,7 +1188,7 @@
   },
   {
     "title": "Le·a Loup·ve Démasqué·e 🔍",
-    "description": "Souvent éliminé·e Jour 1 en Loup",
+    "description": "Souvent éliminé·e Jour 1 en Loup·ve",
     "type": "simple",
     "conditions": [
       "Survie Jour 1 (Loup): Faible"
@@ -1179,8 +1250,26 @@
     "priority": 6
   },
   {
+    "title": "Le·a Récolteur·se Exemplaire 🧺",
+    "description": "Atteint souvent l'objectif de récolte en Villageois",
+    "type": "simple",
+    "conditions": [
+      "Objectif récolte (Villageois): Élevé"
+    ],
+    "priority": 6
+  },
+  {
+    "title": "Le·a Poids Mort ⚓",
+    "description": "Échoue souvent l'objectif de récolte en Villageois",
+    "type": "simple",
+    "conditions": [
+      "Objectif récolte (Villageois): Faible"
+    ],
+    "priority": 6
+  },
+  {
     "title": "Le·a Loup·ve Discret·e 🐺",
-    "description": "Récolte élevée en Loup",
+    "description": "Récolte élevée en Loup·ve",
     "type": "simple",
     "conditions": [
       "Récolte Loup: Élevé"
@@ -1189,7 +1278,7 @@
   },
   {
     "title": "Le·a Loup·ve Impatient·e 😤",
-    "description": "Faible récolte en Loup",
+    "description": "Faible récolte en Loup·ve",
     "type": "simple",
     "conditions": [
       "Récolte Loup: Faible"
