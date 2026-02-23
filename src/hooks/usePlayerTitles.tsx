@@ -1,6 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useSettings } from '../context/SettingsContext';
 
+export interface TitleCondition {
+  stat: string;
+  category: string;
+  actualValue?: number;
+  actualPercentile?: number;
+}
+
+export interface NearMissCondition extends TitleCondition {
+  met: boolean;
+  requiredPercentile?: number;
+  gap?: number;
+}
+
 export interface PlayerTitle {
   id: string;
   title: string;
@@ -13,12 +26,19 @@ export interface PlayerTitle {
   percentile?: number;
   category?: string;
   primaryOwner?: string; // Player name who has this title as primary
-  conditions?: Array<{
-    stat: string;
-    category: string;
-    actualValue?: number;
-    actualPercentile?: number;
-  }>;
+  conditions?: TitleCondition[];
+}
+
+export interface NearMissTitle {
+  id: string;
+  title: string;
+  emoji: string;
+  description: string;
+  priority: number;
+  type: 'nearMiss';
+  conditionsMet: number;
+  conditionsTotal: number;
+  conditions: NearMissCondition[];
 }
 
 export interface PlayerTitleData {
@@ -27,6 +47,7 @@ export interface PlayerTitleData {
   gamesPlayed: number;
   titles: PlayerTitle[];
   primaryTitle: PlayerTitle | null;
+  nearMissTitles?: NearMissTitle[];
   percentiles?: Record<string, any>;
   stats?: Record<string, any>;
 }
