@@ -10,17 +10,86 @@ interface PlayerTitlesDisplayProps {
 /** Map a stat key to its French display name */
 function getStatLabel(stat: string): string {
   const labels: Record<string, string> = {
-    winRate: 'Victoires', loot: 'Récolte', lootVillageois: 'Récolte (Villageois)',
-    lootLoup: 'Récolte (Loup)', survival: 'Survie', killRate: 'Kills',
-    talking: 'Parole', talkingOutsideMeeting: 'Parole (hors débats)',
-    talkingDuringMeeting: 'Parole (meeting)', votingAggressive: 'Vote agressif',
-    votingAccuracy: 'Précision vote', votingFirst: 'Vote rapide',
-    survivalDay1: 'Survie J1', winRateVillageois: 'Victoires Villageois',
-    winRateLoup: 'Victoires Loup', winRateSolo: 'Victoires Solo',
-    hunterAccuracy: 'Précision cible chasseur', hunterShotAccuracy: 'Précision tir chasseur',
-    zoneVillagePrincipal: 'Village Principal', zoneFerme: 'Ferme',
-    zoneVillagePecheur: 'Village Pêcheur', zoneRuines: 'Ruines',
-    zoneResteCarte: 'Reste de la carte', zoneDominantPercentage: 'Dominance zone',
+    // Kill stats
+    killRate: 'Kills',
+    killRateVillageois: 'Kills (Villageois)',
+    killRateLoup: 'Kills (Loup)',
+    killRateSolo: 'Kills (Solo)',
+    
+    // Survival stats
+    survival: 'Survie',
+    survivalVillageois: 'Survie (Villageois)',
+    survivalLoup: 'Survie (Loup)',
+    survivalSolo: 'Survie (Solo)',
+    survivalDay1: 'Survie J1',
+    survivalDay1Villageois: 'Survie J1 (Villageois)',
+    survivalDay1Loup: 'Survie J1 (Loup)',
+    survivalDay1Solo: 'Survie J1 (Solo)',
+    survivalAtMeetingVillageois: 'Survie au meeting (Villageois)',
+    survivalAtMeetingLoup: 'Survie au meeting (Loup)',
+    survivalAtMeetingSolo: 'Survie au meeting (Solo)',
+    
+    // Talking stats
+    talking: 'Parole',
+    talkingOutsideMeeting: 'Parole (hors débats)',
+    talkingDuringMeeting: 'Parole (meeting)',
+    talkingVillageois: 'Parole (Villageois)',
+    talkingOutsideVillageois: 'Parole hors meeting (Villageois)',
+    talkingDuringVillageois: 'Parole en meeting (Villageois)',
+    talkingLoup: 'Parole (Loup)',
+    talkingOutsideLoup: 'Parole hors meeting (Loup)',
+    talkingDuringLoup: 'Parole en meeting (Loup)',
+    talkingSolo: 'Parole (Solo)',
+    talkingOutsideSolo: 'Parole hors meeting (Solo)',
+    talkingDuringSolo: 'Parole en meeting (Solo)',
+    
+    // Loot stats
+    loot: 'Récolte',
+    lootVillageois: 'Récolte (Villageois)',
+    lootLoup: 'Récolte (Loup)',
+    lootObjectiveWinRateVillageois: 'Objectif récolte (Villageois)',
+    
+    // Voting stats
+    votingAggressive: 'Vote agressif',
+    votingAggressiveVillageois: 'Vote agressif (Villageois)',
+    votingAggressiveLoup: 'Vote agressif (Loup)',
+    votingAggressiveSolo: 'Vote agressif (Solo)',
+    votingFirst: 'Vote rapide',
+    votingFirstVillageois: 'Premier voteur (Villageois)',
+    votingFirstLoup: 'Premier voteur (Loup)',
+    votingFirstSolo: 'Premier voteur (Solo)',
+    votingAccuracy: 'Précision vote',
+    votingAccuracyVillageois: 'Précision vote (Villageois)',
+    votingAccuracyLoup: 'Précision vote (Loup)',
+    votingAccuracySolo: 'Précision vote (Solo)',
+    
+    // Win rate stats
+    winRate: 'Victoires',
+    winRateVillageois: 'Victoires (Villageois)',
+    winRateLoup: 'Victoires (Loup)',
+    winRateSolo: 'Victoires (Solo)',
+    winSeries: 'Série de victoires',
+    lossSeries: 'Série de défaites',
+    
+    // Hunter stats
+    hunterAccuracy: 'Précision cible chasseur',
+    hunterShotAccuracy: 'Précision tir chasseur',
+    
+    // Zone stats
+    zoneVillagePrincipal: 'Village Principal',
+    zoneFerme: 'Ferme',
+    zoneVillagePecheur: 'Village Pêcheur',
+    zoneRuines: 'Ruines',
+    zoneResteCarte: 'Reste de la carte',
+    zoneDominantPercentage: 'Dominance zone',
+    
+    // Other stats
+    campSolo: 'Camp Solo',
+    campBalance: 'Équilibre des camps',
+    gamesPlayed: 'Parties jouées',
+    wolfTransformRate: 'Taux transformation loup',
+    wolfUntransformRate: 'Taux retour après transformation',
+    potionUsage: 'Utilisation potions',
   };
   return labels[stat] || stat;
 }
