@@ -51,7 +51,7 @@ export function MeetingSurvivalView({
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   const [highlightedPlayer, setHighlightedPlayer] = useState<string | null>(null);
-  const [minMeetings, setMinMeetings] = useState<number>(5);
+  const [minMeetings, setMinMeetings] = useState<number>(50);
   const [sortOrder, setSortOrder] = useState<'highest' | 'lowest'>('highest');
 
   // Minimum meetings options
