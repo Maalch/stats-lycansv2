@@ -303,7 +303,7 @@ export function GameDetailsChart() {
     if (navigationFilters.playerPairFilter) {
       const { selectedPlayerPair, selectedPairRole } = navigationFilters.playerPairFilter;
       const pairText = selectedPlayerPair.join(' & ');
-      const roleText = selectedPairRole === 'wolves' ? 'loups' : 'amoureux';
+      const roleText = selectedPairRole === 'wolves' ? 'loups' : selectedPairRole === 'agents' ? 'agents' : 'amoureux';
       filters.push(`Paire ${roleText}: ${pairText}`);
     }
     if (navigationFilters.multiPlayerFilter) {

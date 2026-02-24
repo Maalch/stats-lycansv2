@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.11';
+export const APP_VERSION = '1.7.12';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,17 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.12',
+    date: '24/02/2026',
+    description: 'Ajout des paires d\'Agents (fréquence et taux de victoire individuel de chaque agent) dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'pairing',
+      text: 'Classements / Paires de Joueurs',
+      navigationState: { selectedPairingTab: 'agents' }
+    }
+  },
   /*{
     
     version: 'v1.8.0',

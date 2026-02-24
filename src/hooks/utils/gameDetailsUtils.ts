@@ -743,6 +743,17 @@ export function filterByPlayerPairFromGameLog(
           return getPlayerCampFromRole(getPlayerFinalRole(playerStat?.MainRoleInitial || '', playerStat?.MainRoleChanges || [])) === 'Amoureux';
         });
 
+      case 'agents':
+        // Check if both players are agents in this game
+        return selectedPlayerPair.every(player => {
+          const term = player.toLowerCase();
+          const playerStat = game.PlayerStats.find(p => {
+            const id = (p.ID ?? p.Username).toLowerCase();
+            return p.Username.toLowerCase() === term || id === term;
+          });
+          return getPlayerFinalRole(playerStat?.MainRoleInitial || '', playerStat?.MainRoleChanges || []) === 'Agent';
+        });
+
       default:
         return true;
     }

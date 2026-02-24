@@ -213,6 +213,17 @@ export interface PlayerPairStat {
   players: string[];
 }
 
+export interface AgentPlayerPairStat extends PlayerPairStat {
+  /** Wins for player 1 (first in players array) */
+  player1Wins: number;
+  /** Wins for player 2 (second in players array) */
+  player2Wins: number;
+  /** Win rate for player 1 */
+  player1WinRate: string;
+  /** Win rate for player 2 */
+  player2WinRate: string;
+}
+
 export interface PlayerPairingStatsData {
   wolfPairs: {
     totalGames: number;
@@ -221,6 +232,10 @@ export interface PlayerPairingStatsData {
   loverPairs: {
     totalGames: number;
     pairs: PlayerPairStat[];
+  };
+  agentPairs: {
+    totalGames: number;
+    pairs: AgentPlayerPairStat[];
   };
 }
 

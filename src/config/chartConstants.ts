@@ -67,6 +67,8 @@ export const CHART_DEFAULTS = {
   MIN_WOLF_APPEARANCES: 2,
   /** Minimum lover appearances for pairing stats */
   MIN_LOVER_APPEARANCES: 1,
+  /** Minimum agent appearances for pairing stats */
+  MIN_AGENT_APPEARANCES: 1,
   /** Default cluster radius for death maps */
   CLUSTER_RADIUS: 20,
   /** Minimum games to include in camp performance */
