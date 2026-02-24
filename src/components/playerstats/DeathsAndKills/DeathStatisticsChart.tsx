@@ -292,11 +292,38 @@ export function DeathStatisticsChart() {
               }}
             >
               <option value="Tous les camps">Tous les camps</option>
-              {availableCamps?.map(camp => (
-                <option key={camp} value={camp}>
-                  {camp}
-                </option>
-              ))}
+              {/* Villageois group */}
+              {availableCamps?.includes('Villageois') && (
+                <optgroup label="Villageois">
+                  <option value="Villageois">Tous les Villageois</option>
+                  <option value="Chasseur">↳ Chasseur</option>
+                  <option value="Alchimiste">↳ Alchimiste</option>
+                  <option value="Protecteur">↳ Protecteur</option>
+                  <option value="Disciple">↳ Disciple</option>
+                  <option value="Inquisiteur">↳ Inquisiteur</option>
+                </optgroup>
+              )}
+              {/* Loup group */}
+              {availableCamps?.includes('Loup') && (
+                <optgroup label="Loup">
+                  <option value="Loup">Tous les Loups</option>
+                  {availableCamps?.includes('Traître') && <option value="Traître">↳ Traître</option>}
+                  {availableCamps?.includes('Louveteau') && <option value="Louveteau">↳ Louveteau</option>}
+                </optgroup>
+              )}
+              {/* Rôles Solo group */}
+              {(() => {
+                const WOLF_SUBS = ['Traître', 'Louveteau'];
+                const MAIN_CAMPS = ['Villageois', 'Loup'];
+                const soloRoles = availableCamps?.filter(c => !MAIN_CAMPS.includes(c) && !WOLF_SUBS.includes(c)) ?? [];
+                return soloRoles.length > 0 ? (
+                  <optgroup label="Rôles Solo">
+                    {soloRoles.map(camp => (
+                      <option key={camp} value={camp}>{camp}</option>
+                    ))}
+                  </optgroup>
+                ) : null;
+              })()}
             </select>
           </div>
 
