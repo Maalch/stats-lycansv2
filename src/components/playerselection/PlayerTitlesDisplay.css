@@ -85,11 +85,25 @@
   border: 1px solid var(--border-color);
   cursor: pointer;
   transition: all 0.2s ease;
+  font-family: inherit;
+  color: inherit;
 }
 
 .titles-summary-item:hover {
   border-color: var(--accent-primary);
   transform: translateY(-1px);
+}
+
+.titles-summary-item.active-filter {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary-dark, #2563eb) 100%);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.titles-summary-item.active-filter .titles-summary-value,
+.titles-summary-item.active-filter .titles-summary-label {
+  color: white;
 }
 
 .titles-summary-item.primary-summary {
@@ -196,7 +210,7 @@
 
 .titles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 1rem;
   padding: 0.5rem;
 }
@@ -230,7 +244,7 @@
 
 /* Awarded Elsewhere (qualified but not owner) */
 .title-card.awarded-elsewhere {
-  border-style: dashed;
+  border-style: dotted;
   border-color: #e67e22;
   background: linear-gradient(135deg, rgba(230, 126, 34, 0.05) 0%, var(--bg-secondary) 50%);
 }
@@ -238,6 +252,14 @@
 .title-card.awarded-elsewhere:hover {
   border-color: #e67e22;
   box-shadow: 0 8px 24px rgba(230, 126, 34, 0.2);
+}
+
+/* Override left border for awarded-elsewhere cards to be dotted too */
+.title-card.awarded-elsewhere.combination,
+.title-card.awarded-elsewhere.role,
+.title-card.awarded-elsewhere.basic {
+  border-left-style: dotted;
+  border-left-width: 4px;
 }
 
 .title-crown {

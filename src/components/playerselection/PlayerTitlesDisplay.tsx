@@ -102,6 +102,9 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
     nearMiss: false,
   });
 
+  // Filter state: which section to show (null = show all)
+  const [activeFilter, setActiveFilter] = useState<'owned' | 'reconquer' | 'nearMiss' | null>(null);
+
   // Which title card has its conditions expanded (only one at a time)
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
@@ -111,6 +114,17 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
 
   const toggleCardConditions = (titleId: string) => {
     setExpandedCardId(prev => prev === titleId ? null : titleId);
+  };
+
+  const handleFilterClick = (filterKey: 'owned' | 'reconquer' | 'nearMiss') => {
+    if (activeFilter === filterKey) {
+      // Clicking the active filter removes it
+      setActiveFilter(null);
+    } else {
+      // Set new filter and expand the corresponding section
+      setActiveFilter(filterKey);
+      setExpandedSections(prev => ({ ...prev, [filterKey]: true }));
+    }
   };
 
   if (titlesLoading) {
@@ -325,26 +339,38 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
             <span className="titles-summary-label">{playerTitles.primaryTitle.emoji} {playerTitles.primaryTitle.title}</span>
           </div>
         )}
-        <div className="titles-summary-item" onClick={() => { setExpandedSections(prev => ({ ...prev, owned: true })); }}>
+        <button
+          type="button"
+          className={`titles-summary-item ${activeFilter === 'owned' ? 'active-filter' : ''}`}
+          onClick={() => handleFilterClick('owned')}
+        >
           <span className="titles-summary-value">{ownedTitles.length}</span>
           <span className="titles-summary-label">✨ Détenus</span>
-        </div>
+        </button>
         {awardedElsewhere.length > 0 && (
-          <div className="titles-summary-item" onClick={() => { setExpandedSections(prev => ({ ...prev, reconquer: true })); }}>
+          <button
+            type="button"
+            className={`titles-summary-item ${activeFilter === 'reconquer' ? 'active-filter' : ''}`}
+            onClick={() => handleFilterClick('reconquer')}
+          >
             <span className="titles-summary-value">{awardedElsewhere.length}</span>
             <span className="titles-summary-label">🏆 À reconquérir</span>
-          </div>
+          </button>
         )}
         {nearMissTitles.length > 0 && (
-          <div className="titles-summary-item" onClick={() => { setExpandedSections(prev => ({ ...prev, nearMiss: true })); }}>
+          <button
+            type="button"
+            className={`titles-summary-item ${activeFilter === 'nearMiss' ? 'active-filter' : ''}`}
+            onClick={() => handleFilterClick('nearMiss')}
+          >
             <span className="titles-summary-value">{nearMissTitles.length}</span>
             <span className="titles-summary-label">🎯 À portée</span>
-          </div>
+          </button>
         )}
       </div>
 
       {/* Section 1: Owned Titles */}
-      {ownedTitles.length > 0 && renderAccordionSection(
+      {ownedTitles.length > 0 && (!activeFilter || activeFilter === 'owned') && renderAccordionSection(
         'owned', '✨', 'Vos Titres', ownedTitles.length,
         'Titres que vous possédez ou partagez',
         'owned',
@@ -354,7 +380,7 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
       )}
 
       {/* Section 2: Titles to Reconquer */}
-      {awardedElsewhere.length > 0 && renderAccordionSection(
+      {awardedElsewhere.length > 0 && (!activeFilter || activeFilter === 'reconquer') && renderAccordionSection(
         'reconquer', '🏆', 'Titres à reconquérir', awardedElsewhere.length,
         'Ces titres auraient pu être les vôtres — battez-vous pour les récupérer !',
         'reconquer',
@@ -364,7 +390,7 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
       )}
 
       {/* Section 3: Near-Miss Titles */}
-      {nearMissTitles.length > 0 && renderAccordionSection(
+      {nearMissTitles.length > 0 && (!activeFilter || activeFilter === 'nearMiss') && renderAccordionSection(
         'nearMiss', '🎯', 'Titres à portée', nearMissTitles.length,
         'Vous êtes proche de remplir les conditions pour ces titres',
         'near-miss',
