@@ -1,4 +1,4 @@
-import type { GameLogEntry, PlayerStat } from '../useCombinedRawData';
+import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { DEATH_TYPES, type DeathType, isValidDeathType } from '../../types/deathTypes';
 import { mainCampOrder } from '../../types/api';

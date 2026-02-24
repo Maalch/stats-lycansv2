@@ -27,14 +27,16 @@ function findPlayerSeriesRank(topSeries, playerId) {
   const playerSeries = topSeries[index];
   const playerValue = playerSeries.seriesLength;
   
-  // Calculate true rank considering ties
-  // Players with the same value should have the same rank
-  let rank = 1;
-  for (let i = 0; i < index; i++) {
+  // Calculate rank using standard competition ranking (1, 1, 1, 4)
+  // Count how many players have a strictly better value
+  let betterCount = 0;
+  for (let i = 0; i < topSeries.length; i++) {
     if (topSeries[i].seriesLength > playerValue) {
-      rank++;
+      betterCount++;
     }
   }
+  
+  const rank = betterCount + 1;
   
   return {
     rank: rank,
@@ -88,7 +90,7 @@ export function processSeriesRankings(seriesData, playerId, suffix) {
     Rankings.push(createSeriesRanking(
       `villageois-series-${suffix ? 'modded' : 'all'}`,
       `🏘️ Top ${villageoisRank.rank} Série Villageois${suffix}`,
-      `${villageoisRank.rank}${villageoisRank.rank === 1 ? 'ère' : 'ème'} plus longue série Villageois: ${villageoisRank.value} parties consécutives (min. 3)`,
+      `${villageoisRank.rank}${villageoisRank.rank === 1 ? 'ère' : 'ème'} plus longue série Villageois: ${villageoisRank.value} parties consécutives`,
       'good',
       villageoisRank.rank,
       villageoisRank.value,
@@ -108,7 +110,7 @@ export function processSeriesRankings(seriesData, playerId, suffix) {
     Rankings.push(createSeriesRanking(
       `loup-series-${suffix ? 'modded' : 'all'}`,
       `🐺 Top ${loupRank.rank} Série Loup${suffix}`,
-      `${loupRank.rank}${loupRank.rank === 1 ? 'ère' : 'ème'} plus longue série Loup: ${loupRank.value} parties consécutives (min. 2)`,
+      `${loupRank.rank}${loupRank.rank === 1 ? 'ère' : 'ème'} plus longue série Loup: ${loupRank.value} parties consécutives`,
       'good',
       loupRank.rank,
       loupRank.value,
@@ -128,7 +130,7 @@ export function processSeriesRankings(seriesData, playerId, suffix) {
     Rankings.push(createSeriesRanking(
       `win-series-${suffix ? 'modded' : 'all'}`,
       `🏆 Top ${winRank.rank} Série de Victoires${suffix}`,
-      `${winRank.rank}${winRank.rank === 1 ? 'ère' : 'ème'} plus longue série de victoires: ${winRank.value} parties consécutives (min. 3)`,
+      `${winRank.rank}${winRank.rank === 1 ? 'ère' : 'ème'} plus longue série de victoires: ${winRank.value} parties consécutives`,
       'good',
       winRank.rank,
       winRank.value,
@@ -148,7 +150,7 @@ export function processSeriesRankings(seriesData, playerId, suffix) {
     Rankings.push(createSeriesRanking(
       `loss-series-${suffix ? 'modded' : 'all'}`,
       `💀 Top ${lossRank.rank} Série de Défaites${suffix}`,
-      `${lossRank.rank}${lossRank.rank === 1 ? 'ère' : 'ème'} plus longue série de défaites: ${lossRank.value} parties consécutives (min. 3)`,
+      `${lossRank.rank}${lossRank.rank === 1 ? 'ère' : 'ème'} plus longue série de défaites: ${lossRank.value} parties consécutives`,
       'bad',
       lossRank.rank,
       lossRank.value,
