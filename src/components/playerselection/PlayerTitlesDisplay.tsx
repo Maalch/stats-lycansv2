@@ -95,13 +95,6 @@ function getStatLabel(stat: string): string {
 }
 
 export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitlesDisplayProps) {
-  // Accordion state: which sections are expanded
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-    owned: true,
-    reconquer: false,
-    nearMiss: false,
-  });
-
   // Filter state: which section to show (null = show all)
   const [activeFilter, setActiveFilter] = useState<'owned' | 'reconquer' | 'nearMiss' | null>(null);
 
@@ -117,9 +110,8 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
       // Clicking the active filter removes it
       setActiveFilter(null);
     } else {
-      // Set new filter and expand the corresponding section
+      // Set new filter
       setActiveFilter(filterKey);
-      setExpandedSections(prev => ({ ...prev, [filterKey]: true }));
     }
   };
 
@@ -289,7 +281,6 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
 
   // ---- Accordion section renderer ----
   const renderAccordionSection = (
-    key: string,
     icon: string,
     label: string,
     count: number,
@@ -302,11 +293,9 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
         <h4>{icon} {label} ({count})</h4>
         <p className="titles-accordion-subtitle">{subtitle}</p>
       </div>
-      {expandedSections[key] && (
-        <div className="titles-accordion-content">
-          {children}
-        </div>
-      )}
+      <div className="titles-accordion-content">
+        {children}
+      </div>
     </div>
   );
 
@@ -360,7 +349,7 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
 
       {/* Section 1: Owned Titles */}
       {ownedTitles.length > 0 && (!activeFilter || activeFilter === 'owned') && renderAccordionSection(
-        'owned', '✨', 'Vos Titres', ownedTitles.length,
+        '✨', 'Vos Titres', ownedTitles.length,
         'Titres que vous possédez ou partagez',
         'owned',
         <div className="titles-grid">
@@ -370,7 +359,7 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
 
       {/* Section 2: Titles to Reconquer */}
       {awardedElsewhere.length > 0 && (!activeFilter || activeFilter === 'reconquer') && renderAccordionSection(
-        'reconquer', '🏆', 'Titres à reconquérir', awardedElsewhere.length,
+        '🏆', 'Titres à reconquérir', awardedElsewhere.length,
         'Ces titres auraient pu être les vôtres — battez-vous pour les récupérer !',
         'reconquer',
         <div className="titles-grid">
@@ -380,7 +369,7 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
 
       {/* Section 3: Near-Miss Titles */}
       {nearMissTitles.length > 0 && (!activeFilter || activeFilter === 'nearMiss') && renderAccordionSection(
-        'nearMiss', '🎯', 'Titres à portée', nearMissTitles.length,
+        '🎯', 'Titres à portée', nearMissTitles.length,
         'Vous êtes proche de remplir les conditions pour ces titres',
         'near-miss',
         <div className="titles-grid">
