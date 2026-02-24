@@ -108,10 +108,6 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
   // Which title card has its conditions expanded (only one at a time)
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
-  const toggleSection = (key: string) => {
-    setExpandedSections(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
   const toggleCardConditions = (titleId: string) => {
     setExpandedCardId(prev => prev === titleId ? null : titleId);
   };
@@ -302,14 +298,7 @@ export function PlayerTitlesDisplay({ playerTitles, titlesLoading }: PlayerTitle
     children: React.ReactNode
   ) => (
     <div className={`titles-accordion ${variant}`}>
-      <div
-        className="titles-accordion-header"
-        onClick={() => toggleSection(key)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleSection(key); }}
-      >
-        <span className={`titles-accordion-arrow ${expandedSections[key] ? 'expanded' : ''}`}>▶</span>
+      <div className="titles-accordion-header">
         <h4>{icon} {label} ({count})</h4>
         <p className="titles-accordion-subtitle">{subtitle}</p>
       </div>
