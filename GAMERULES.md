@@ -98,7 +98,8 @@ At the end of each night phase, players gather for a meeting (council/vote phase
 
 **Communication During Meetings:**
 - Players can speak freely during meetings without restrictions
-- If a Mayor is present, they have special abilities:
+- A Mayor is elected at random of the start of each meeting; players can change the mayor if a majority of players decide to do so.
+- If a Mayor is present (option before the game), they have special abilities:
   - Can silence a player for a few seconds
   - Can give the floor exclusively to a single player for a few seconds
 
@@ -309,9 +310,9 @@ Possessor: He can freely choose a player and see through their eyes. Once per ha
 
 Saboteur: He can see items (gadgets and potions) more easily, and he can secretly sabotage them while they're on the ground or held by someone. A player attempting to use a sabotaged item will have a nasty surprise!
 
-Bomber: He can give a ticking bomb to a player. It starts ticking shortly after the day or night starts, but can be given to another player before it explodes!
+Bomber: He can give a ticking bomb to a player. It starts ticking shortly after the day or night starts, but can be given to another player before it explodes! When exploding, the bomb reduces the health of the player, killing him if too low (else, only injuring him. Health can be restored with food loots on the map)
 
-Seer: He knows which sides his target is on (villagers, wolves, solo). During meetings he can try to guess a villager's job: if he succeeds the villager dies shortly afterwards, but if he fails he loses the Seer power!
+Seer: He knows which sides his target is on (villagers, wolves, solo). During meetings he can try to guess a villager's job: if he succeeds the villager dies shortly afterwards, but if he fails he will have a health/speec debuff for the next day and night.
 
 Poacher: He has a rifle. Its bullets do not kill the target but place a tracker on them, making them easier to find for all transformed Wolves until the end of the game.
 
