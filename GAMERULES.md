@@ -124,6 +124,7 @@ Players can find and use various items throughout the game. **Each player can on
 The player hosting the game can choose to enable or disable specific potions/scrolls or items before the game starts.
 
 **POTIONS:**
+Il y a un nombre fixes de types de potions (configurés avant le début de la partie). Chaque type a une couleur spécifique, définie aléatoirement avant chaque partie. Les joueurs ne savent pas les effets de chaque couleur avant de boire une potion (à part le Villageois Alchimiste, qui connait les effets de chaque couleur)
 
 - **Potion Audition+ (Enhanced Hearing):** Allows hearing other players from further away, hear wolves' kills (special sound) from any distance, and see wolf kills on the minimap until the next meeting. Duration: ~30 seconds.
 
@@ -180,6 +181,8 @@ The player hosting the game can choose to enable or disable specific potions/scr
 - **Longue-Vue (Telescope):** Allows seeing further when used. The object is not destroyed when used (rarely used item).
 
 - **Grenade:** A throwable item that stuns and pushes back players around its point of impact.
+
+- **Parchemins:** Même effet que les potions, mais l'effet est affiché sur le parchemin, et ne peut être utilisé uniquement sur un autre joueur, pas sur soi même.
 
 **************************************************** Wolf Sub-Roles ****************************************************
 
