@@ -89,6 +89,10 @@ At the end of each night phase, players gather for a meeting (council/vote phase
   2. Pass (neutral vote)
   3. Not vote (abstain)
 
+- Each player can see how the other players have voted (the players' avatars point to the player they have voted for).
+
+- On the right-hand side of the screen, each player's total number of votes is also displayed (as well as the total number of "Pass" votes).
+
 **Vote Resolution:**
 - Once the timer expires or all players have voted/passed, the votes are tallied
 - The player with the most votes against them is eliminated immediately and exits the game (unless they are the Village Idiot, who wins in this scenario)
