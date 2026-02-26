@@ -195,6 +195,7 @@ En plus des pouvoirs et des rôles secondaires, les Loups peuvent avoir deux sou
 Elite Villager roles are special Villager roles with enhanced abilities. Only **two Elite Villagers can be present per game** (chosen randomly at the beginning).
 
 **Chasseur (Hunter):**
+A un fusil, mais a besoin de balles pour le recharger
 - Has a firearm that requires bullets to use
 - Bullets can be found randomly on the map
 - Starts the game with a loaded rifle
@@ -202,139 +203,269 @@ Elite Villager roles are special Villager roles with enhanced abilities. Only **
 - Shooting mechanics:
   - Against a player in human form: **instant kill** (works on villagers, wolves, and solo roles)
   - Against a transformed wolf: **damages the wolf's health**
-    - If wolf health drops below ~25%: wolf can no longer run
-    - If wolf health reaches 0: wolf dies
-- Note: Players can only carry one item at a time (bullet, potion, scroll, trap, grenade, etc.)
 
 **Alchimiste (Alchemist):**
+Connait les effets des potions, peut transformer le loot en potions blanches
 - Starts the game with one Potion
 - Knows the effects of all three different potion types in the game (unlike other players)
-- Can create potions after gathering enough ingredients
 - Created potions are "white" potions with short, random positive effects
 
-**Disciple:**
-- Can place a beacon at their current location
-- Receives one charge per day
-- Protective mechanism:
-  - If attacked by a wolf while having at least one charge: player is stunned and teleported to their beacon
-  - Transformed wolves see them as another player (disguise effect)
-
 **Protecteur (Protector):**
+Peut se protéger et accélérer lui-même et d'autres joueurs
 - Can protect a target or themselves from wolf attacks until the next meeting
 - Requires 3 seconds of preparation time to activate protection
 - Receives one charge per day
 - Can obtain additional charges by harvesting resources
 - Limitation: Each player can only be protected once per game
 
+**Disciple:**
+Résiste à des attaques de loup, peut les berner pour créer une distraction
+- Can place a beacon at their current location
+- Receives one charge per day
+- Protective mechanism:
+  - If attacked by a wolf while having at least one charge: player is stunned and teleported to their beacon
+  - Transformed wolves see them as another player (disguise effect)
+
+**Inquisiteur (Inquisitor):**
+En meeting, peut tenter d'identifier les meurtriers récents
+
+**Avatar:**
+A plusieurs avantages, mais renforce les loups s'il meurt
+
 **************************************************** Solo Roles ****************************************************
 
-Il existe également des "rôle solo" qui ont leurs propres objectifs de victoire et ne sont ni avec les loups, ni avec les Villageois. Voici la liste:
+Il existe également des "rôles solo" qui ont leurs propres objectifs de victoire et ne sont ni avec les loups, ni avec les Villageois. Voici la liste:
 
-**************************************************** Solo roles****************************************************
+**Idiot du Village:**
+Gagne en se faisant voter en meeting
 
-Idiot du Village: He wins if he gets voted out during a meeting or killed by the hunter (any time). He gets hungry slower but staying inactive makes him very hungry.
+**Agent:**
+Gagne en éliminant l'autre Agent et en évitant que la partie ne se termine
 
-Agent: If this solo role is picked, there will be two agents. They can identify each other and also identify Wolves. Each Agent can eliminate the other. He wins by being amongst the last survivors at the start or end of a meeting, provided the other Agent is dead.
+**Espion:**
+Gagne en espionnant des cibles désignées
 
-Espion: He gets two targets to spy on (red names in the player list). Once he Spies on someone, he gets new targets shortly afterwards. He wins if he manages to Spy enough times, but anyone Spied upon will be warned of this at the next meeting!
+**Scientifique:**
+Gagne en observant des loups qui sont transformés
 
-Scientifique: He wins by attaining 100% Research. His Research increases by being close to a transformed Wolf, or by witnessing a Wolf kill or transformation. The more risks he takes, the faster he gains Research.
+**Amoureux:**
+Villageois + Loup. Gagnent en survivant ensemble
 
-Contrebandier: He wins by collecting ressource on his own. He has a specific ressource objectif each day else he dies. Once he collectes a certain total amount of ressources, he's hunted by everyone for a night. During that night, his role is revealed, and everyonce can kill him. If he survived that night, he wins.
+**La Bête:**
+Gagne en marquant tous les joueurs puis en les tuant après sa transformation
 
-Amoureux: Actually a duo role. They win by surviving and killing most other players. One Lover is always a Villager and the other a Wolf. The Villager cannot heal naturally and only the Wolf's kills can heal him, but they can communicate directly and help each other through telepathy.
+**Chasseur de Primes:**
+Gagne en éliminant les cibles désignées, possède un fusil
 
-La Bête: Few things are known about the Beast. It is said that it can Mark other players and then go on a rampage...
+**Vaudou:**
+Gagne en réanimant des joueurs en zombies
 
-Chasseur de Prime: He gets specific targets to eliminate, and he has a silenced rifle.
+**Contrebandier:**
+Gagne en récoltant beaucoup puis en survivant
 
-Vaudou: Réanime des corps de villageois morts pour travailler pour lui.
+**Cannibale:**
+Rôle solo rare avec des objectifs spécifiques de victoire
 
 
 **************************************************** Secondary roles (given in addition to the main role) ****************************************************
 
+Les rôles secondaires sont donnés en plus du rôle principal. Ils peuvent être assignés aux Villageois comme aux Loups, avec parfois des effets différents selon le camp.
+
     Most active powers for secondary roles have a cooldown
 
-Howler: He can increase the range of his voice and slow down nearby people while he's talking. If he's in Wolf form, he will instead stun ALL villagers and slow them down.
+**Howler (Hurleur):**
+- Villageois: Pendant son pouvoir, sa voix a plus de portée et étourdit les joueurs proches
+- Loup: En forme de loup, son pouvoir étourdit tous les joueurs
 
-Alcoholic: Negative and neutral potion effects are replaced with random positive ones. He can use his power to change a gadget (such as traps) into a potion. In addition, an Alcoholic Wolf can take and drink potions while in Wolf form to heal himself!
+**Alcoholic / Brasseur (Alcoolique):**
+- Villageois: Peut changer son objet en potion. Les potions ont un effet plus bénéfique sur lui
+- Loup: Peut changer son objet en potion et les boire en forme de loup pour se soigner
 
-Detective: He can Inspect someone to know whether they've killed since the latest night (or, if he's a Wolf, to know their roles). In addition, he knows who the Hunter is.
+**Sprinter / Coureur:**
+- Villageois: Peut sacrifier sa santé pour courir plus vite pendant quelques secondes
+- Loup: En forme de loup, peut sprinter pour aller très vite
 
-Sprinter: He can activate Sprint at will to become faster, but this rapidly drains his hunger bar. In addition, a Sprinter Wolf can, in wolf form, Chase to get really fast for a short moment.
+**Infected (Infecté):**
+- Villageois: Peut retirer ses effets négatifs ; force le loup qui le tue à se détransformer après un délai
+- Loup: En forme de loup, peut faire flatuler tous les joueurs proches
 
-Infected: If he's a Villager and is killed by a Wolf, he forces that Wolf to untransform after a while (the Wolf is notified of this). If he's a Wolf, in wolf form, he can Infect nearby villagers to make them fart and find them more easily!
+**Teleporter (Téléporteur):**
+- Villageois/Loup: Peut placer une balise puis s'y téléporter après un court temps de préparation
 
-Teleporter: He can set up an invisible beacon, then at any time he can teleport to it after a 3 seconds delay.
+**Engineer (Ingénieur):**
+- Villageois/Loup: Peut créer des gadgets et est également plus efficace contre leurs effets
 
-Engineer: He can create a random gadget. In addition, traps have less duration on him and he disarms them faster, he breaks locks faster, and smoke bombs have a lower radius for him.
+**Stealther (Furtif):**
+- Villageois: Peut devenir invisible et camoufler ses bruits de pas
+- Loup: En forme de loup, peut empêcher les joueurs d'entendre la musique de loup
 
-Stealther: In human form, he can become Stealthed to be invisible and have silent footsteps, but he can't run in this state. In Wolf form he instead becomes undetectable (no scary effect).
+**Politician (Politicien):**
+- Villageois: Peut assommer sa cible au prochain meeting ; ne peut pas être voté (si villageois)
+- Loup: Peut assommer sa cible au prochain meeting
 
-Politician: During daytime, he can cause a player to be stunned during the next meeting, unable to talk or vote. In addition, if he's a Villager and would be voted out then someone else dies instead!
+**Metabolic (Métabolique):**
+- Villageois: La nourriture le soigne davantage, il a une meilleure affinité aux effets divers
+- Loup: Peut maudire une cible pour qu'elle perde rapidement sa santé pendant la nuit
 
-Metabolic: If he's a Villager, any food he loots will heal him for more health. If he's a Wolf, he can secretly mark someone during the day to make them starve during the next night!
+**Illusionist (Illusionniste):**
+- Villageois: Peut brièvement aveugler tous les loups transformés à n'importe quelle distance
+- Loup: Peut mélanger l'apparence humaine de tous les joueurs
 
-Illusionist: If he's a Villager, he can blind all transformed Wolves for a short time. If he's a Wolf, he can shuffle the appearence of all players!
+**Sherif (Shérif):**
+- Villageois: Peut tenter de tuer un joueur, mais meurt à sa place si ce joueur est villageois
+- Loup: Peut devenir plus résistant aux balles du Chasseur
 
-Sherif: Using a bullet, he can attempt to kill someone... but if their target is on the Villager side, then the Sherif dies instead! In addition, a Sherif Wolf is slightly resistant to bullets and can still run for a few seconds after being hit by one.
+**Gambler / Farceur (Trickster/Joueur):**
+- Villageois: Peut inverser la position d'une cible avec celle d'un joueur aléatoire
+- Loup: En forme de loup, peut inverser sa position avec celle d'un joueur aléatoire
 
-Trickster: He can switch his target's position with a random player's. In Wolf form, this effect applies to himself instead.
+**Medium:**
+- Villageois: Est averti quand un joueur meurt. Peut obtenir une liste de tueurs potentiels d'un cadavre
+- Loup: Est averti quand un joueur meurt et connaît le rôle secondaire des joueurs
 
-Medium: He's warned everytime a player dies. If he's a Wolf, he also knows everyone's secondary role.
+**Astral:**
+- Villageois/Loup: Peut envoyer son esprit hors de son corps pour explorer les environs
 
-Astral: His action range (opening doors, looting items) is increased, including his kill and sabotage range if he's a Wolf. He can also project his mind to analyze the situation from up, like a Giant potion's effect, but this consumes health.
+**Ranger / Traqueur (SecondaryRole):**
+- Villageois: Voit les loups transformés sur la minimap ainsi que leurs traces de pas
+- Loup: Peut chercher les traces de pas récentes pour trouver des victimes à tuer
 
-Ranger: He can see the footsteps left by Wolves. He can also spend a little time to look for the nearby footsteps of other players.
+**Pisteur (SecondaryRole):**
+- Villageois/Loup: Peut traquer les autres joueurs et voir leurs traces de pas récentes
 
-Scavenger: In human form, he can scavenge a player's corpse to heal a little and find an item. In Wolf form, he can devour a player's corpse to heal.
+**Scavenger (Charognard):**
+- Villageois: Commence avec un objet ; peut fouiller les cadavres pour se soigner et trouver un objet
+- Loup: En forme de loup, peut dévorer les cadavres pour se soigner
 
-Magician: He can memorize potion / scroll effects and reuse them on his target. The cooldown depends on the effect.
+**Blue Mage (Mage Bleu):**
+- Villageois/Loup: Peut infliger à sa cible le dernier effet reçu
 
-Actor: He can feign death to fool Wolves or villagers.
+**Actor (Acteur):**
+- Villageois: Peut feindre la mort pour berner les loups
+- Loup: Peut feindre la mort pour cacher sa présence et attirer des victimes
 
-Scribe: He can create scrolls or change their effect.
+**Scribe:**
+- Villageois/Loup: Peut créer des parchemins et modifier leur effet
 
-Carabineer: He has a rifle that knocks back the target and stuns or slows them. The rifle recharges automatically after a while.
+**Carabineer (Carabinier):**
+- Villageois: A un fusil qui repousse et ralentit sa cible
+- Loup: A un fusil qui repousse et étourdit sa cible
 
-**************************************************** Wolf powers ****************************************************
+**Forger / Faussaire:**
+- Villageois/Loup: Voit les objets possédés par les joueurs, peut les copier ou les voler
 
-Necromancer: Once only, during a night, he can resurrect a targeted corpse. This player becomes a Wolf who transforms immediately, but he's mute and dies when the night ends.
+**Imitator (Imitateur):**
+- Villageois/Loup: Choisit un nouveau rôle secondaire chaque jour
 
-Shapeshifter: He can freely choose a player and disguise himself as them. His human form is changed until the next meeting. In Wolf form he can also temporarily appear as the chosen human form.
+**Merchant (Marchand):**
+- Villageois/Loup: Peut acheter diverses choses en récupérant des pièces réparties sur la carte
 
-Deceiver: If he's present, illusions of transformations will be created through the night, confusing the villagers. He also an active power that gives his target a random negative effect during the next meeting.
+**Telepath (Télépathe):**
+- Villageois/Loup: Peut communiquer avec l'autre Télépathe, qui est forcément un allié
 
-Tracker: He can toggle his power to know the proximity of the closest player: the redder, the closer. He's slower while tracking.
+**Détective:**
+- Villageois/Loup: Peut inspecter quelqu'un pour savoir s'il a tué récemment (ou, s'il est Loup, connaître son rôle). Sait qui est le Chasseur
 
-Warlock: He can curse someone to transform them into Wolf form during the night. However their actual role does not change and they cannot kill.
+**Voyant (SecondaryRole):**
+- Villageois/Loup: Connait l'état de santé des joueurs et peut voir certains indices
 
-Possessor: He can freely choose a player and see through their eyes. Once per half-day he can also force them to use certain items.
+**************************************************** Wolf powers (Pouvoirs Loup exclusifs) ****************************************************
 
-Saboteur: He can see items (gadgets and potions) more easily, and he can secretly sabotage them while they're on the ground or held by someone. A player attempting to use a sabotaged item will have a nasty surprise!
+Ces pouvoirs sont assignés via le champ "Power" uniquement aux Loups.
 
-Bomber: He can give a ticking bomb to a player. It starts ticking shortly after the day or night starts, but can be given to another player before it explodes! When exploding, the bomb reduces the health of the player, killing him if too low (else, only injuring him. Health can be restored with food loots on the map)
+**Necromancer (Nécromancien):**
+Peut ressusciter un cadavre en loup
 
-Seer: He knows which sides his target is on (villagers, wolves, solo). During meetings he can try to guess a villager's job: if he succeeds the villager dies shortly afterwards, but if he fails he will have a health/speec debuff for the next day and night.
+**Deceiver / Dupeur (Trompeur):**
+Créé des illusions de transformation et peut pourrir le meeting d'une cible
 
-Poacher: He has a rifle. Its bullets do not kill the target but place a tracker on them, making them easier to find for all transformed Wolves until the end of the game.
+**Saboteur:**
+Peut piéger les objets au sol ou directement possédés par d'autres joueurs
 
-**************************************************** Villager powers ****************************************************
+**Tracker / Pisteur (Wolf Power):**
+Peut ralentir pour savoir quand il est proche d'une proie
 
-Peasant: Everytime he hears a Wolf killing someone at night while not holding any item, he gets a random defensive gadget.
+**Warlock (Sorcier):**
+Peut changer sa forme humaine et forcer un autre joueur à se transformer en faux loup la nuit suivante
 
-Guard: If the Hunter dies, he can take the rifle from his corpse and become a Hunter. He is also warned when the Hunter's corpse is nearby.
+**Possessor (Possesseur):**
+Peut posséder un autre joueur et se transformer à sa position
 
-Priest: After collecting enough loot, he can protect a target until the end of the day. The first time the target is attacked by a Wolf, they will be protected and the Wolf will be knocked down and stunned.
+**Bomber (Artificier):**
+Peut placer une bombe à retardement sur un joueur
 
-Exorcist: After collecting enough loot, he can mark a player in human form. If that player is a Wolf and transforms during this night, their vision will be impaired and they will get hungry faster. Alternatively, he can use his power on a transformed Wolf to blind them.
+**Seer / Devin (Voyant Loup):**
+Connait l'état de santé des joueurs, et peut tuer un villageois s'il devine son métier
 
-Forensics: He can scan a corpse to learn the main role (villager, wolf, cannibal...) they had.
+**Poacher (Braconnier):**
+Possède un fusil dont les tirs rendent la cible plus facile à trouver pour les loups
 
-Avenger: Once enough players are dead, he can kill a single player in human form or stun / finish off a transformed Wolf.
+**Ritualist (Ritualiste):**
+Charge son pouvoir en étant proche d'autres joueurs, peut l'utiliser pour maudire tout le monde
 
-Barkeep: On the second day, he learns that one of the surviving players is not a Wolf (but they could be a traitor or solo role). If that player dies, he will gain the info on another player on the next day.
+**Predator (Prédateur):**
+Est entendu de moins loin et peut choisir une proie pour la nuit
 
-Survivalist: The first time a Wolf attacks him, he doesn't die immediately but is temporarily Saveable. Nearby non-transformed players are alerted with a sound and a flash, and he has an icon above him. If he isn't saved in time or if the night ends, he dies.
+**Sneak / Sournois (Discret):**
+Sa détransformation le téléporte à sa balise. Peut choisir de se transformer lentement mais silencieusement
 
-Guardian Angel: Once dead, and once per day, he can use his power on a spectated Villager to heal them and make their footsteps unheard by transformed Wolves.
+**Shapeshifter (Métamorphe):**
+Peut choisir librement un joueur et se déguiser en lui. Sa forme humaine est changée jusqu'au prochain meeting
+
+**Enragé:**
+Pouvoir Loup spécial avec des effets de rage
+
+**Isolateur:**
+Peut isoler des joueurs pour les séparer du groupe
+
+**************************************************** Villager powers (Pouvoirs Villageois exclusifs) ****************************************************
+
+Ces pouvoirs sont assignés via le champ "Power" uniquement aux Villageois Élite.
+
+**Peasant (Paysan):**
+Charge son pouvoir en étant proche d'autres joueurs, peut l'utiliser pour se cacher des loups
+
+**Exorcist (Exorciste):**
+Peut placer des détecteurs qui handicapent les loups transformés
+
+**Forensics / Médecin légiste (Légiste):**
+Peut connaître le rôle qu'avait un cadavre ciblé
+
+**Avenger (Vengeur):**
+Peut tuer un joueur en forme humaine ou étourdir un loup, après avoir entendu un loup assez longtemps
+
+**Investigator (Enquêteur):**
+Peut enquêter pour savoir que certains joueurs ne sont pas des loups
+
+**Survivalist (Survivaliste):**
+Peut permettre à un joueur d'être sauvé s'il est attaqué par un loup ; commence avec cet effet
+
+**Priest (Prêtre):**
+Peut protéger un joueur d'une attaque de loup
+
+**Summoner (Invocateur):**
+Charge son pouvoir en étant bas en vie, puis peut invoquer un esprit vengeur
+
+**Guardian Angel (Ange Gardien):**
+Une fois mort, et une fois par jour, il peut utiliser son pouvoir sur un Villageois observé pour le soigner et rendre ses pas inaudibles aux Loups transformés
+
+**Detective / Mentaliste (Power):**
+Peut détecter des informations utiles sur des joueurs
+
+**Scout (Éclaireur):**
+Peut placer des radars qui détectent les loups transformés
+
+**Ranger / Traqueur:**
+Voit les loups transformés sur la minimap ainsi que leurs traces de pas
+
+**Magician (Magicien Power):**
+Peut créer des illusions pour embrouiller les loups
+
+**Mystic (Mystique):**
+Peut activer son pouvoir pour devenir capable de bannir les loups transformés
+
+**Garde:**
+Si le Chasseur meurt, il peut prendre le fusil de son cadavre et devenir Chasseur. Est averti quand le cadavre du Chasseur est proche
+
+**Réparateur:**
+Peut réparer des éléments sur la carte
