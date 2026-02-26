@@ -15,7 +15,7 @@ export function MonthlyRankingTimeline({
 }: MonthlyRankingTimelineProps) {
   // When currentGameIndex is 0 (show all), slider should be at the end
   const sliderValue = currentGameIndex === 0 ? totalGames : currentGameIndex;
-  const progress = totalGames > 0 ? (sliderValue / totalGames) * 100 : 0;
+  const progress = totalGames > 1 ? ((sliderValue - 1) / (totalGames - 1)) * 100 : 100;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isPlaying) {
@@ -44,13 +44,11 @@ export function MonthlyRankingTimeline({
         }}
       />
       <div className="monthly-timeline-labels">
-        <span>Partie 1</span>
         <span className="monthly-timeline-current">
           {currentGameIndex === 0
             ? `Toutes les ${totalGames} parties`
             : `Partie ${currentGameIndex} / ${totalGames}`}
         </span>
-        <span>Partie {totalGames}</span>
       </div>
     </div>
   );

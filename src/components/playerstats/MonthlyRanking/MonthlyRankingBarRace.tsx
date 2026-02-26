@@ -67,12 +67,11 @@ export function MonthlyRankingBarRace({
 }: MonthlyRankingBarRaceProps) {
   const rowHeight = isFullscreen ? ROW_HEIGHT_FS : ROW_HEIGHT;
 
-  // Compute scale: use 100 as max or the highest win rate, whichever makes a cleaner visual
+  // Compute scale: leader always fills 100% of the track
   const maxPercent = useMemo(() => {
     if (players.length === 0) return 100;
     const highest = Math.max(...players.map(p => p.winPercent));
-    // Clamp between 50 and 100 for visual balance
-    return Math.max(50, Math.min(100, Math.ceil(highest / 10) * 10));
+    return Math.max(1, highest);
   }, [players]);
 
   const containerHeight = players.length * rowHeight;
