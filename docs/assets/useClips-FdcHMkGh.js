@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:docs/assets/useClips-CX-LgZQY.js
-import{r as a,i as e}from"./index-BxRRYSf2.js";import{b as p}from"./ClipViewer-K-_g7sAJ.js";function n(){const{data:r,isLoading:s,error:i}=e();return{clips:a.useMemo(()=>{if(!r)return[];const l=[];return r.forEach(t=>{t.Clips&&Array.isArray(t.Clips)&&l.push(...t.Clips)}),l},[r]),isLoading:s,error:i}}function C(r){const{clips:s,isLoading:i,error:o}=n();return{clips:a.useMemo(()=>r?p(s,r):[],[s,r]),isLoading:i,error:o}}export{C as a,n as u};
-========
-import{r as a,h as e}from"./index-9DrA1pQo.js";import{b as p}from"./ClipViewer-DiRKH96u.js";function n(){const{data:r,isLoading:s,error:i}=e();return{clips:a.useMemo(()=>{if(!r)return[];const l=[];return r.forEach(t=>{t.Clips&&Array.isArray(t.Clips)&&l.push(...t.Clips)}),l},[r]),isLoading:s,error:i}}function C(r){const{clips:s,isLoading:i,error:o}=n();return{clips:a.useMemo(()=>r?p(s,r):[],[s,r]),isLoading:i,error:o}}export{C as a,n as u};
->>>>>>>> 59df23957b30d402b6fabd17d3074bf5ec919056:docs/assets/useClips-FdcHMkGh.js

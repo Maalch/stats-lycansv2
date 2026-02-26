@@ -19,7 +19,7 @@ const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeri
 const TalkingTimeChart = lazy(() => import('./components/playerstats/TalkingTimeChart').then(m => ({ default: m.TalkingTimeChart })));
 const LootStatisticsChart = lazy(() => import('./components/playerstats/LootStatisticsChart').then(m => ({ default: m.LootStatisticsChart })));
 const RoleActionsRankingChart = lazy(() => import('./components/playerstats/RoleActionsRankingChart').then(m => ({ default: m.RoleActionsRankingChart })));
-const MonthlyRankingChart = lazy(() => import('./components/playerstats/MonthlyRankingChart').then(m => ({ default: m.MonthlyRankingChart })));
+const MonthlyRankingChart = lazy(() => import('./components/playerstats/MonthlyRanking/MonthlyRankingChart').then(m => ({ default: m.MonthlyRankingChart })));
 
 // Death statistics components
 const DeathStatisticsChart = lazy(() => import('./components/playerstats/DeathsAndKills/DeathStatisticsChart').then(m => ({ default: m.DeathStatisticsChart })));
