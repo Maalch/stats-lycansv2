@@ -2,7 +2,7 @@ import { usePlayerStatsBase } from './utils/baseStatsHook';
 import { computePlayerPairingStats } from './utils/playerPairingUtils';
 
 // Re-export interfaces for convenience
-export type { PlayerPairingStatsData, PlayerPairStat } from '../types/api';
+export type { PlayerPairingStatsData, PlayerPairStat, AgentPlayerPairStat } from '../types/api';
 
 /**
  * Hook pour calculer les statistiques de paires de joueurs (loups et amoureux) à partir des données brutes filtrées.

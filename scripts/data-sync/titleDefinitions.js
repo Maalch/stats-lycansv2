@@ -20,7 +20,7 @@ export const TITLE_DEFINITIONS = {
     high: { title: 'Le·a Bavard·e', emoji: '🗣️', description: 'Parle beaucoup (par 60 min de jeu)' },
     average: { title: 'Le·a Équilibré·e', emoji: '⚖️', description: 'Temps de parole normal' },
     low: { title: 'Le·a Silencieux·se', emoji: '🤫', description: 'Parle peu (par 60 min de jeu)' },
-    extremeHigh: { title: 'Le Moulin à Paroles', emoji: '💬', description: 'Parle énormément' },
+    extremeHigh: { title: 'Le·a Moulin à Paroles', emoji: '💬', description: 'Parle énormément' },
     extremeLow: { title: 'Le·a Fantôme', emoji: '👻', description: 'Quasi muet·te' }
   },
   talkingOutsideMeeting: {
@@ -52,12 +52,12 @@ export const TITLE_DEFINITIONS = {
 
   // Camp-specific survival titles
   survivalVillageois: {
-    high: { title: 'Le·a Gardien·ne du Village', emoji: '🏡', description: 'Survie élevée en camp Villageois' },
-    low: { title: "L'Agneau Sacrifié·e", emoji: '🐑', description: 'Meurt souvent en camp Villageois' }
+    high: { title: 'Le·a Gardien·ne du Village', emoji: '🏡', description: 'Survie élevée en Villageois·e' },
+    low: { title: "L'Agneau Sacrifié·e", emoji: '🐑', description: 'Meurt souvent en Villageois·e' }
   },
   survivalLoup: {
-    high: { title: 'Le·a Loup·ve Fantôme', emoji: '👻', description: 'Survie élevée en camp Loup' },
-    low: { title: 'Le·a Loup·ve Imprudent·e', emoji: '💀', description: 'Meurt souvent en camp Loup' }
+    high: { title: 'Le·a Loup·ve Fantôme', emoji: '👻', description: 'Survie élevée en Loup·ve' },
+    low: { title: 'Le·a Loup·ve Imprudent·e', emoji: '💀', description: 'Meurt souvent en Loup·ve' }
   },
   survivalSolo: {
     high: { title: "L'Intouchable", emoji: '🌟', description: 'Survie élevée en Solo' },
@@ -66,8 +66,8 @@ export const TITLE_DEFINITIONS = {
 
   // Camp-specific Day 1 survival titles
   survivalDay1Villageois: {
-    high: { title: 'Le·a Vigilant·e du Village', emoji: '🏃‍♀️', description: 'Survit souvent au Jour 1 en Villageois' },
-    low: { title: "L'Agneau du Premier Jour", emoji: '🌅', description: 'Meurt souvent Jour 1 en Villageois' }
+    high: { title: 'Le·a Vigilant·e du Village', emoji: '🏃‍♀️', description: 'Survit souvent au Jour 1 en Villageois·e' },
+    low: { title: "L'Agneau du Premier Jour", emoji: '🌅', description: 'Meurt souvent Jour 1 en Villageois·e' }
   },
   survivalDay1Loup: {
     high: { title: 'Le·a Loup·ve Prudent·e', emoji: '🌙', description: 'Survit souvent au Jour 1 en Loup·ve' },
@@ -87,14 +87,14 @@ export const TITLE_DEFINITIONS = {
     extremeLow: { title: 'Le·a Touriste', emoji: '📸', description: 'Ne récolte jamais' }
   },
   lootVillageois: {
-    high: { title: 'Le·a Citoyen·ne Modèle', emoji: '🏘️', description: 'Récolte excellente en Villageois' },
-    low: { title: 'Le·a Villageois·e Paresseux·se', emoji: '💤', description: 'Faible récolte en Villageois' }
+    high: { title: 'Le·a Citoyen·ne Modèle', emoji: '🏘️', description: 'Récolte excellente en Villageois·e' },
+    low: { title: 'Le·a Villageois·e Paresseux·se', emoji: '💤', description: 'Faible récolte en Villageois·e' }
   },
   lootObjectiveWinRateVillageois: {
-    extremeHigh: { title: 'Le·a Héros·ïne de la Récolte', emoji: '🌾', description: 'Atteint presque toujours l\'objectif de récolte en Villageois' },
-    high: { title: 'Le·a Récolteur·se Exemplaire', emoji: '🧺', description: 'Atteint souvent l\'objectif de récolte en Villageois' },
-    low: { title: 'Le·a Poids Mort', emoji: '⚓', description: 'Échoue souvent l\'objectif de récolte en Villageois' },
-    extremeLow: { title: 'Le·a Saboteur·se de la Récolte', emoji: '🪓', description: 'N\'atteint presque jamais l\'objectif de récolte en Villageois' }
+    extremeHigh: { title: 'Le·a Héros·ïne de la Récolte', emoji: '🌾', description: 'Atteint presque toujours l\'objectif de récolte en Villageois·e' },
+    high: { title: 'Le·a Récolteur·se Exemplaire', emoji: '🧺', description: 'Atteint souvent l\'objectif de récolte en Villageois·e' },
+    low: { title: 'Le·a Poids Mort', emoji: '⚓', description: 'Échoue souvent l\'objectif de récolte en Villageois·e' },
+    extremeLow: { title: 'Le·a Saboteur·se de la Récolte', emoji: '🪓', description: 'N\'atteint presque jamais l\'objectif de récolte en Villageois·e' }
   },
   lootLoup: {
     high: { title: 'Le·a Loup·ve Discret·e', emoji: '🐺', description: 'Récolte élevée en Loup·ve' },
@@ -129,7 +129,7 @@ export const TITLE_DEFINITIONS = {
   hunterShotAccuracy: {
     high: { title: 'Le·a Tireur·se d\'Élite', emoji: '🔫', description: 'Touche souvent sa cible' },
     low: { title: 'Le·a Maladroit·e', emoji: '💨', description: 'Rate souvent ses tirs' },
-    extremeHigh: { title: 'Œil de Faucon', emoji: '🦅', description: 'Ne rate presque jamais' },
+    extremeHigh: { title: 'L\'Œil de Faucon', emoji: '🦅', description: 'Ne rate presque jamais' },
     extremeLow: { title: 'Le·a Stormtrooper', emoji: '⚡', description: 'Rate presque tout' }
   },
 
@@ -165,20 +165,20 @@ export const TITLE_DEFINITIONS = {
   // === UNCONTROLLABLE STATS (Role assignment luck) ===
   
   campAssignment: {
-    villageois: { title: 'Serial Villageois·e', emoji: '🏘️', description: 'Joue souvent Villageois' },
-    loup: { title: 'Serial Loup·ve', emoji: '🌙', description: 'Joue souvent Loup' },
+    villageois: { title: 'Serial Villageois·e', emoji: '🏘️', description: 'Joue souvent Villageois·e' },
+    loup: { title: 'Serial Loup·ve', emoji: '🌙', description: 'Joue souvent Loup·ve' },
     solo: { title: 'Serial Solo', emoji: '🎭', description: 'Joue souvent en Solo' }
   },
   
   roleAssignment: {
-    chasseur: { title: 'Serial Chasseur·se', emoji: '🔫', description: 'Joue souvent Chasseur' },
+    chasseur: { title: 'Serial Chasseur·se', emoji: '🔫', description: 'Joue souvent Chasseur·se' },
     alchimiste: { title: 'Serial Alchimiste', emoji: '⚗️', description: 'Joue souvent Alchimiste' },
-    amoureux: { title: 'Serial Amoureux', emoji: '💕', description: 'Joue souvent Amoureux' },
-    agent: { title: 'Serial Agent', emoji: '🕵️', description: 'Joue souvent Agent' },
-    espion: { title: 'Serial Espion', emoji: '🔍', description: 'Joue souvent Espion' },
-    idiot: { title: 'Serial Idiot du Village', emoji: '🃏', description: 'Joue souvent Idiot du Village' },
-    chasseurDePrime: { title: 'Serial Chasseur de Primes', emoji: '💰', description: 'Joue souvent Chasseur de Prime' },
-    contrebandier: { title: 'Serial Contrebandier', emoji: '📦', description: 'Joue souvent Contrebandier' },
+    amoureux: { title: 'Serial Amoureux·se', emoji: '💕', description: 'Joue souvent Amoureux·se' },
+    agent: { title: 'Serial Agent·e', emoji: '🕵️', description: 'Joue souvent Agent·e' },
+    espion: { title: 'Serial Espion·ne', emoji: '🔍', description: 'Joue souvent Espion·ne' },
+    idiot: { title: 'Serial Idiot·e du Village', emoji: '🃏', description: 'Joue souvent Idiot·e du Village' },
+    chasseurDePrime: { title: 'Serial Chasseur·se de Primes', emoji: '💰', description: 'Joue souvent Chasseur·se de Primes' },
+    contrebandier: { title: 'Serial Contrebandier·ère', emoji: '📦', description: 'Joue souvent Contrebandier·ère' },
     bete: { title: 'Serial Bête', emoji: '🦁', description: 'Joue souvent La Bête' },
     vaudou: { title: 'Serial Vaudou', emoji: '🎃', description: 'Joue souvent Vaudou' },
     scientifique: { title: 'Serial Scientifique', emoji: '🔬', description: 'Joue souvent Scientifique' }
@@ -206,7 +206,7 @@ export const TITLE_DEFINITIONS = {
     extremeHigh: { title: 'Le·a Fermier·ère', emoji: '🌾', description: 'Traîne beaucoup à la Ferme' }
   },
   zoneVillagePecheur: {
-    extremeHigh: { title: 'Le·a Pêcheur·euse', emoji: '🎣', description: 'Traîne beaucoup au Village Pêcheur' }
+    extremeHigh: { title: 'Le·a Pêcheur·se', emoji: '🎣', description: 'Traîne beaucoup au Village Pêcheur' }
   },
   zoneRuines: {
     extremeHigh: { title: 'L\'Archéologue', emoji: '🏛️', description: 'Traîne beaucoup aux Ruines' }
@@ -227,8 +227,8 @@ export const TITLE_DEFINITIONS = {
 
   // Wolf transformation rate (transformations per night as wolf)
   wolfTransformRate: {
-    extremeHigh: { title: 'Le Loup-Garou Frénétique', emoji: '🐺', description: 'Se transforme très souvent en Loup·ve' },
-    high: { title: 'Le·a Transform·é·e', emoji: '🌙', description: 'Se transforme fréquemment' },
+    extremeHigh: { title: 'Le·a Loup·ve Frénétique', emoji: '🐺', description: 'Se transforme très souvent en Loup·ve' },
+    high: { title: 'Le·a Transformé·e', emoji: '🌙', description: 'Se transforme fréquemment' },
     low: { title: 'Le·a Loup·ve Prudent·e', emoji: '🐕', description: 'Se transforme rarement' },
     extremeLow: { title: 'Le·a Loup·ve Fantôme', emoji: '👻', description: 'Ne se transforme presque jamais' }
   },
@@ -245,7 +245,7 @@ export const TITLE_DEFINITIONS = {
 
   // Potion usage rate (potions drunk per 60 minutes of gameplay)
   potionUsage: {
-    extremeHigh: { title: 'L\'Alchimiste Amateur·e', emoji: '🧪', description: 'Boit énormément de potions' },
+    extremeHigh: { title: 'L\'Alchimiste Amateur·rice', emoji: '🧪', description: 'Boit énormément de potions' },
     high: { title: 'Le·a Potion Addict', emoji: '⚗️', description: 'Boit beaucoup de potions' },
     low: { title: 'Le·a Sobre', emoji: '💧', description: 'Boit peu de potions' },
     extremeLow: { title: 'L\'Abstinent·e', emoji: '🚫', description: 'Ne boit presque jamais de potions' }
@@ -266,7 +266,7 @@ export const COMBINATION_TITLES = [
     id: 'legende',
     title: 'La Légende',
     emoji: '🏅',
-    description: 'Gagne tout le temps + grosses séries',
+    description: 'Gagne tout le temps et grosses séries',
     conditions: [
       { stat: 'winRate', category: 'EXTREME_HIGH' },
       { stat: 'winSeries', category: 'HIGH' },
@@ -317,7 +317,7 @@ export const COMBINATION_TITLES = [
     id: 'adaptable',
     title: 'Le·a Caméléon',
     emoji: '🦎',
-    description: 'Bon dans tous les camps',
+    description: 'Bon·ne dans tous les camps',
     conditions: [
       { stat: 'winRateVillageois', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
       { stat: 'winRateLoup', category: 'HIGH', minCategory: 'ABOVE_AVERAGE' },
@@ -330,7 +330,7 @@ export const COMBINATION_TITLES = [
     id: 'loup_solitaire',
     title: 'Le·a Loup·ve Solitaire',
     emoji: '🐺',
-    description: 'Loup·ve efficace, discret et gagnant',
+    description: 'Loup·ve efficace, discret·ète et gagnant·e',
     conditions: [
       { stat: 'lootLoup', category: 'HIGH' },
       { stat: 'winRateLoup', category: 'HIGH' },
@@ -569,7 +569,7 @@ export const COMBINATION_TITLES = [
     id: 'citoyen_exemplaire',
     title: 'Le·a Citoyen·ne Exemplaire',
     emoji: '👑',
-    description: 'Récolte et gagne en Villageois',
+    description: 'Récolte et gagne en Villageois·e',
     conditions: [
       { stat: 'lootVillageois', category: 'HIGH' },
       { stat: 'winRateVillageois', category: 'HIGH' }
@@ -619,7 +619,7 @@ export const COMBINATION_TITLES = [
     id: 'loup_deguise',
     title: 'Le·a Loup·ve Déguisé·e',
     emoji: '🦊',
-    description: 'Reste humain, survit et gagne en Loup·ve',
+    description: 'Reste en humain·e, survit et gagne en Loup·ve',
     conditions: [
       { stat: 'wolfTransformRate', category: 'LOW' },
       { stat: 'survivalLoup', category: 'HIGH' },
@@ -632,7 +632,7 @@ export const COMBINATION_TITLES = [
     id: 'loup_incognito',
     title: 'Le·a Loup·ve Incognito',
     emoji: '🕵️',
-    description: 'Loup·ve discret·e, efficace et adaptable',
+    description: 'Loup·ve discret·ète, efficace et adaptable',
     conditions: [
       { stat: 'talkingLoup', category: 'LOW' },
       { stat: 'killRateLoup', category: 'HIGH' },
@@ -813,7 +813,7 @@ export const COMBINATION_TITLES = [
   // The Witch - High potion usage + High talking (brews potions and talks about them)
   {
     id: 'sorciere',
-    title: 'Le·a Sorcièr·e',
+    title: 'Le·a Sorcier·ère',
     emoji: '🧙',
     description: 'Prépare des potions tout en racontant ses recettes',
     conditions: [
@@ -828,7 +828,7 @@ export const COMBINATION_TITLES = [
     id: 'recolteur_opti',
     title: 'Le·a Récolteur·se Opti',
     emoji: '🌾',
-    description: 'Récolte efficace et victoires en Villageois',
+    description: 'Récolte efficace et victoires en Villageois·e',
     conditions: [
       { stat: 'lootVillageois', category: 'HIGH' },
       { stat: 'lootObjectiveWinRateVillageois', category: 'HIGH' }
@@ -879,7 +879,7 @@ export const COMBINATION_TITLES = [
     id: 'malchanceux',
     title: 'Le·a Malchanceux·se',
     emoji: '🌧️',
-    description: 'Perd tout le temps + grosses séries de défaites',
+    description: 'Perd tout le temps et grosse séries de défaites',
     conditions: [
       { stat: 'winRate', category: 'LOW' },
       { stat: 'lossSeries', category: 'HIGH' },
@@ -967,7 +967,7 @@ export const COMBINATION_TITLES = [
   //The Experimenter - High potion usage + Low win rate (potions don't help them win)
   {
     id: 'experimentateur',
-    title: 'L\'Experimentateur',
+    title: 'L\'Experimentateur·rice',
     emoji: '🧪',
     description: 'Boit des potions mais ça ne l\'aide pas à gagner',
     conditions: [
@@ -1006,7 +1006,7 @@ export const COMBINATION_TITLES = [
     id: 'travailleur',
     title: 'Le·a Travailleur·se',
     emoji: '🐝',
-    description: 'Récolte bien en Villageois mais perd',
+    description: 'Récolte bien en Villageois·e mais perd',
     conditions: [
       { stat: 'lootVillageois', category: 'HIGH' },
       { stat: 'winRateVillageois', category: 'LOW' }
@@ -1029,7 +1029,7 @@ export const COMBINATION_TITLES = [
   // High participation + specialist camps = Taulier
   {
     id: 'taulier',
-    title: 'Le·a Taulier·e',
+    title: 'Le·a Taulier·ère',
     emoji: '🔑',
     description: 'Participe beaucoup et excelle dans un camp',
     conditions: [
@@ -1079,7 +1079,7 @@ export const COMBINATION_TITLES = [
   // Poor performance across all camps = The Apprentice
   {
     id: 'apprenti',
-    title: 'L\'Apprenti',
+    title: 'L\'Apprenti·e',
     emoji: '🔧',
     description: 'Peine dans tous les camps',
     conditions: [
@@ -1148,7 +1148,7 @@ export const COMBINATION_TITLES = [
     id: 'hyperactif',
     title: 'L\'Hyperactif·ve',
     emoji: '⚡',
-    description: 'Bavard·e ET grande récolte',
+    description: 'Bavard·e et grande récolte',
     conditions: [
       { stat: 'talking', category: 'HIGH' },
       { stat: 'loot', category: 'HIGH' }

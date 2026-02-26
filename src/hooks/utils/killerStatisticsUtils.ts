@@ -3,6 +3,36 @@ import { getPlayerId, getCanonicalPlayerName } from '../../utils/playerIdentific
 import { DEATH_TYPES, type DeathType } from '../../types/deathTypes';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 
+// Villageois Élite powers (handles both new format and legacy format)
+const ELITE_POWERS_LIST = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Inquisiteur'];
+const LEGACY_ELITE_ROLES_LIST = ['Chasseur', 'Alchimiste'];
+
+/**
+ * Get the effective Villageois Élite power of a player (handles both formats).
+ * Returns null for non-elite players.
+ */
+function getEffectivePowerForPlayer(player: PlayerStat): string | null {
+  if (player.MainRoleInitial === 'Villageois Élite') return player.Power || null;
+  if (LEGACY_ELITE_ROLES_LIST.includes(player.MainRoleInitial)) return player.MainRoleInitial;
+  return null;
+}
+
+/**
+ * Check if a player matches a camp/role filter.
+ * Handles both regular camp names and specific Villageois Élite power names.
+ */
+function matchesKillerRoleFilter(player: PlayerStat, campFilter: string): boolean {
+  if (campFilter === 'Tous les camps') return true;
+  // Check if this is a specific Villageois Élite power filter
+  if (ELITE_POWERS_LIST.includes(campFilter)) {
+    return getEffectivePowerForPlayer(player) === campFilter;
+  }
+  // Standard camp filter using final role
+  const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+  const camp = getPlayerCampFromRole(finalRole, { regroupVillagers: true, regroupWolfSubRoles: true }, player.Power);
+  return camp === campFilter;
+}
+
 /**
  * Data structure for max kills per game statistics
  */
@@ -108,12 +138,9 @@ export function computeMaxKillsPerGame(
       const playerId = getPlayerId(player);
       const playerName = getCanonicalPlayerName(player);
 
-      // Check if killer matches the camp filter
-      const killerFinalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
-      const killerCamp = getPlayerCampFromRole(killerFinalRole, { regroupVillagers: true, regroupWolfSubRoles: true }, player.Power);
-      
-      if (killerCampFilter !== 'Tous les camps' && killerCamp !== killerCampFilter) {
-        return; // Skip this player if they don't match the killer camp filter
+      // Check if killer matches the camp/role filter (supports Villageois Élite powers)
+      if (!matchesKillerRoleFilter(player, killerCampFilter)) {
+        return; // Skip this player if they don't match the killer camp/role filter
       }
 
       // Count how many kills this player made in this game (respecting victim camp filter)
@@ -203,12 +230,9 @@ export function computeMaxKillsPerPhase(
         const killerPlayer = game.PlayerStats.find((p: PlayerStat) => p.Username === killerName);
         if (!killerPlayer) return;
 
-        // Check if killer matches the camp filter
-        const killerFinalRole = getPlayerFinalRole(killerPlayer.MainRoleInitial, killerPlayer.MainRoleChanges || []);
-        const killerCamp = getPlayerCampFromRole(killerFinalRole, { regroupVillagers: true, regroupWolfSubRoles: true }, killerPlayer.Power);
-        
-        if (killerCampFilter !== 'Tous les camps' && killerCamp !== killerCampFilter) {
-          return; // Skip this kill if killer doesn't match the camp filter
+        // Check if killer matches the camp/role filter (supports Villageois Élite powers)
+        if (!matchesKillerRoleFilter(killerPlayer, killerCampFilter)) {
+          return; // Skip this kill if killer doesn't match the camp/role filter
         }
 
         // Check if victim matches the camp filter

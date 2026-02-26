@@ -2,7 +2,7 @@
  * Pure computation functions for player pairing statistics
  */
 
-import type { PlayerPairingStatsData, PlayerPairStat } from '../../types/api';
+import type { PlayerPairingStatsData, PlayerPairStat, AgentPlayerPairStat } from '../../types/api';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import type { GameLogEntry } from '../useCombinedRawData';
 import { getPlayerId } from '../../utils/playerIdentification';
@@ -14,6 +14,18 @@ export interface ChartPlayerPairStat extends PlayerPairStat {
   isHighlightedAddition?: boolean;
   winRateNum?: number;
   winRateDisplay?: number;
+  gradientId?: string;
+}
+
+/**
+ * Extended interface for agent pair chart display
+ */
+export interface ChartAgentPairStat extends AgentPlayerPairStat {
+  isHighlightedAddition?: boolean;
+  winRateNum?: number;
+  winRateDisplay?: number;
+  player1WinRateNum?: number;
+  player2WinRateNum?: number;
   gradientId?: string;
 }
 
@@ -101,8 +113,17 @@ export function computePlayerPairingStats(
     players: string[];
   }> = {};
 
+  const agentPairStats: Record<string, {
+    appearances: number;
+    wins: number;
+    player1Wins: number;
+    player2Wins: number;
+    players: string[];
+  }> = {};
+
   let totalGamesWithMultipleWolves = 0;
   let totalGamesWithLovers = 0;
+  let totalGamesWithAgents = 0;
 
   // Process each game
   gameData.forEach(game => {
@@ -189,6 +210,61 @@ export function computePlayerPairingStats(
         }
       }
     }
+
+    // Process agent pairs
+    const agents = game.PlayerStats.filter(player => {
+      const finalRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+      return finalRole === 'Agent';
+    });
+
+    if (agents.length >= 2) {
+      totalGamesWithAgents++;
+
+      // Generate agent pairs (should be exactly one pair per game)
+      for (let i = 0; i < agents.length; i++) {
+        for (let j = i + 1; j < agents.length; j++) {
+          const agent1Id = getPlayerId(agents[i]);
+          const agent2Id = getPlayerId(agents[j]);
+          const agent1Name = agents[i].Username;
+          const agent2Name = agents[j].Username;
+
+          // Create a consistent key for the pair using IDs (alphabetical order)
+          const sortedIds = [agent1Id, agent2Id].sort();
+          const pairKey = sortedIds.join(" & ");
+
+          // Determine consistent player order based on sorted IDs
+          const isAgent1First = sortedIds[0] === agent1Id;
+          const firstName = isAgent1First ? agent1Name : agent2Name;
+          const secondName = isAgent1First ? agent2Name : agent1Name;
+          const firstAgent = isAgent1First ? agents[i] : agents[j];
+          const secondAgent = isAgent1First ? agents[j] : agents[i];
+
+          if (!agentPairStats[pairKey]) {
+            agentPairStats[pairKey] = {
+              appearances: 0,
+              wins: 0,
+              player1Wins: 0,
+              player2Wins: 0,
+              players: [firstName, secondName]
+            };
+          } else {
+            agentPairStats[pairKey].players = [firstName, secondName];
+          }
+
+          agentPairStats[pairKey].appearances++;
+
+          // Track individual wins (only one agent can win per game)
+          if (firstAgent.Victorious) {
+            agentPairStats[pairKey].player1Wins++;
+            agentPairStats[pairKey].wins++;
+          }
+          if (secondAgent.Victorious) {
+            agentPairStats[pairKey].player2Wins++;
+            agentPairStats[pairKey].wins++;
+          }
+        }
+      }
+    }
   });
 
   // Calculate win rates and convert to arrays
@@ -224,6 +300,27 @@ export function computePlayerPairingStats(
   wolfPairArray.sort((a, b) => b.appearances - a.appearances);
   loverPairArray.sort((a, b) => b.appearances - a.appearances);
 
+  const agentPairArray: AgentPlayerPairStat[] = Object.keys(agentPairStats).map(key => {
+    const stats = agentPairStats[key];
+    const winRate = stats.appearances > 0 ? (stats.wins / stats.appearances * 100).toFixed(2) : "0.00";
+    const player1WinRate = stats.appearances > 0 ? (stats.player1Wins / stats.appearances * 100).toFixed(2) : "0.00";
+    const player2WinRate = stats.appearances > 0 ? (stats.player2Wins / stats.appearances * 100).toFixed(2) : "0.00";
+    const pairLabel = stats.players.join(" & ");
+    return {
+      pair: pairLabel,
+      appearances: stats.appearances,
+      wins: stats.wins,
+      winRate: winRate,
+      players: stats.players,
+      player1Wins: stats.player1Wins,
+      player2Wins: stats.player2Wins,
+      player1WinRate: player1WinRate,
+      player2WinRate: player2WinRate
+    };
+  });
+
+  agentPairArray.sort((a, b) => b.appearances - a.appearances);
+
   return {
     wolfPairs: {
       totalGames: totalGamesWithMultipleWolves,
@@ -232,6 +329,10 @@ export function computePlayerPairingStats(
     loverPairs: {
       totalGames: totalGamesWithLovers,
       pairs: loverPairArray
+    },
+    agentPairs: {
+      totalGames: totalGamesWithAgents,
+      pairs: agentPairArray
     }
   };
 }

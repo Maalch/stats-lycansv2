@@ -371,6 +371,171 @@ export function generateCombinationTitles(percentiles) {
 }
 
 // ============================================================================
+// NEAR-MISS TITLES (almost qualified)
+// ============================================================================
+
+/**
+ * Get the minimum required percentile for a given category.
+ * Used to compute how far a player is from qualifying.
+ * @param {string} category - e.g. 'HIGH', 'LOW', 'EXTREME_HIGH'
+ * @returns {number} The percentile threshold boundary
+ */
+function getRequiredPercentile(category) {
+  switch (category) {
+    case 'EXTREME_HIGH': return PERCENTILE_THRESHOLDS.EXTREME_HIGH;
+    case 'HIGH':         return PERCENTILE_THRESHOLDS.HIGH;
+    case 'ABOVE_AVERAGE':return PERCENTILE_THRESHOLDS.ABOVE_AVERAGE;
+    case 'EXTREME_LOW':  return PERCENTILE_THRESHOLDS.EXTREME_LOW;
+    case 'LOW':          return PERCENTILE_THRESHOLDS.LOW;
+    case 'BELOW_AVERAGE':return PERCENTILE_THRESHOLDS.BELOW_AVERAGE;
+    default:             return 50;
+  }
+}
+
+/**
+ * Check if a single condition is met (same logic as generateCombinationTitles)
+ * @param {Object} condition
+ * @param {Object} percentiles
+ * @returns {boolean}
+ */
+function isConditionMet(condition, percentiles) {
+  const statKey = conditionToStatMap[condition.stat] || condition.stat;
+  const playerData = percentiles[statKey];
+
+  if (!playerData) {
+    if (condition.stat === 'campBalance') return checkCampBalance(percentiles, condition.category);
+    if (condition.stat === 'gamesPlayed' && condition.minValue) {
+      return (percentiles.gamesPlayed?.value ?? 0) >= condition.minValue;
+    }
+    return false;
+  }
+
+  if (condition.minValue && playerData.value < condition.minValue) return false;
+
+  const minCategory = condition.minCategory;
+  switch (condition.category) {
+    case 'HIGH':        return ['HIGH', 'EXTREME_HIGH', ...(minCategory ? ['ABOVE_AVERAGE'] : [])].includes(playerData.category);
+    case 'LOW':         return ['LOW', 'EXTREME_LOW', ...(minCategory ? ['BELOW_AVERAGE'] : [])].includes(playerData.category);
+    case 'AVERAGE':     return playerData.category === 'AVERAGE';
+    case 'EXTREME_HIGH':return playerData.category === 'EXTREME_HIGH';
+    case 'EXTREME_LOW': return playerData.category === 'EXTREME_LOW';
+    case 'BALANCED':    return checkCampBalance(percentiles, 'BALANCED');
+    default:            return playerData.category === condition.category;
+  }
+}
+
+/**
+ * Compute gap between player's actual percentile and the required threshold.
+ * For HIGH/EXTREME_HIGH/ABOVE_AVERAGE categories: player needs to go UP.
+ * For LOW/EXTREME_LOW/BELOW_AVERAGE categories: player needs to go DOWN.
+ * @param {Object} condition
+ * @param {Object} percentiles
+ * @returns {number} Positive gap = how far the player needs to move
+ */
+function computeConditionGap(condition, percentiles) {
+  const statKey = conditionToStatMap[condition.stat] || condition.stat;
+  const playerData = percentiles[statKey];
+  if (!playerData) return 50; // No data → max gap
+
+  const required = getRequiredPercentile(condition.category);
+  const actual = playerData.percentile;
+
+  // For "high" categories, player needs percentile >= threshold → gap = threshold - actual
+  if (['HIGH', 'EXTREME_HIGH', 'ABOVE_AVERAGE'].includes(condition.category)) {
+    return Math.max(0, required - actual);
+  }
+  // For "low" categories, player needs percentile <= threshold → gap = actual - threshold
+  if (['LOW', 'EXTREME_LOW', 'BELOW_AVERAGE'].includes(condition.category)) {
+    return Math.max(0, actual - required);
+  }
+  // For AVERAGE, player needs to be in the middle band
+  if (condition.category === 'AVERAGE') {
+    if (actual > PERCENTILE_THRESHOLDS.ABOVE_AVERAGE) return actual - PERCENTILE_THRESHOLDS.ABOVE_AVERAGE;
+    if (actual < PERCENTILE_THRESHOLDS.BELOW_AVERAGE) return PERCENTILE_THRESHOLDS.BELOW_AVERAGE - actual;
+    return 0;
+  }
+  return 50;
+}
+
+/**
+ * Generate near-miss titles: combination titles where the player is close to qualifying.
+ * Criteria:
+ * - For combos with 3+ conditions: player meets N-1 conditions
+ * - For combos with 2 conditions: player meets 1, and the failing one is within 10 percentile pts
+ * - Exclude combos the player already qualifies for
+ * @param {Object} percentiles
+ * @param {Set<string>} qualifiedIds - IDs of titles the player already has
+ * @returns {Array}
+ */
+export function generateNearMissTitles(percentiles, qualifiedIds) {
+  const nearMisses = [];
+  const NEAR_MISS_GAP_THRESHOLD = 10; // Max gap for 2-condition combos
+
+  COMBINATION_TITLES.forEach(combo => {
+    // Skip already-qualified titles
+    if (qualifiedIds.has(combo.id)) return;
+
+    const conditionResults = combo.conditions.map(condition => {
+      const met = isConditionMet(condition, percentiles);
+      const statKey = conditionToStatMap[condition.stat] || condition.stat;
+      const playerData = percentiles[statKey];
+      const gap = met ? 0 : computeConditionGap(condition, percentiles);
+
+      return {
+        stat: condition.stat,
+        category: condition.category,
+        met,
+        actualValue: playerData?.value,
+        actualPercentile: playerData?.percentile || 0,
+        requiredPercentile: getRequiredPercentile(condition.category),
+        gap
+      };
+    });
+
+    const metCount = conditionResults.filter(c => c.met).length;
+    const totalCount = conditionResults.length;
+    const unmetConditions = conditionResults.filter(c => !c.met);
+
+    let isNearMiss = false;
+
+    if (totalCount >= 3 && metCount >= totalCount - 1) {
+      // 3+ conditions: meeting all but one
+      isNearMiss = true;
+    } else if (totalCount === 2 && metCount === 1) {
+      // 2 conditions: meeting one, and the other is within gap threshold
+      const maxGap = Math.max(...unmetConditions.map(c => c.gap));
+      isNearMiss = maxGap <= NEAR_MISS_GAP_THRESHOLD;
+    }
+
+    if (isNearMiss) {
+      nearMisses.push({
+        id: combo.id,
+        title: combo.title,
+        emoji: combo.emoji,
+        description: combo.description,
+        priority: combo.priority,
+        type: 'nearMiss',
+        conditionsMet: metCount,
+        conditionsTotal: totalCount,
+        conditions: conditionResults
+      });
+    }
+  });
+
+  // Sort by: most conditions met first, then smallest gap
+  nearMisses.sort((a, b) => {
+    const ratioA = a.conditionsMet / a.conditionsTotal;
+    const ratioB = b.conditionsMet / b.conditionsTotal;
+    if (ratioA !== ratioB) return ratioB - ratioA;
+    const maxGapA = Math.max(...a.conditions.filter(c => !c.met).map(c => c.gap));
+    const maxGapB = Math.max(...b.conditions.filter(c => !c.met).map(c => c.gap));
+    return maxGapA - maxGapB;
+  });
+
+  return nearMisses;
+}
+
+// ============================================================================
 // CAMP ASSIGNMENT TITLES
 // ============================================================================
 
@@ -540,12 +705,17 @@ export function generatePlayerTitles(aggregatedStats, roleFrequencies) {
       .sort((a, b) => (b.priority || 0) - (a.priority || 0))
       .filter((t, i, self) => i === self.findIndex(s => s.id === t.id));
 
+    // Build near-miss titles (exclude already-qualified combo IDs)
+    const qualifiedIds = new Set(titles.map(t => t.id));
+    const nearMissTitles = generateNearMissTitles(data.percentiles, qualifiedIds);
+
     playerTitles[playerId] = {
       playerId,
       playerName: data.playerName,
       gamesPlayed: data.gamesPlayed,
       titles,
       primaryTitle: null,
+      nearMissTitles,
       percentiles: data.percentiles,
       stats: data.stats
     };

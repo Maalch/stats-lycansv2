@@ -5,6 +5,21 @@
 import { getPlayerId, getPlayerMainCampFromRole } from '../../../src/utils/datasyncExport.js';
 
 /**
+ * Get the final role of a player after considering role changes
+ * @param {Object} playerStat - Player stat object
+ * @returns {string} - Final main role
+ */
+function getFinalMainRole(playerStat) {
+  // If there are role changes, use the last one
+  if (playerStat.MainRoleChanges && playerStat.MainRoleChanges.length > 0) {
+    const lastChange = playerStat.MainRoleChanges[playerStat.MainRoleChanges.length - 1];
+    return lastChange.NewMainRole;
+  }
+  // Otherwise use the initial role
+  return playerStat.MainRoleInitial;
+}
+
+/**
  * Get all unique players from game data
  * @param {Array} gameData - Array of game log entries
  * @returns {Map} - Map of player ID to player name
@@ -412,7 +427,9 @@ export function computePlayerSeriesData(gameData) {
         
         if (playerStats) {
           const playerWon = playerStat.Victorious;
-          const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+          // Get final role after considering role changes
+          const finalMainRole = getFinalMainRole(playerStat);
+          const mainCamp = getPlayerMainCampFromRole(finalMainRole, playerStat.Power);
           
           // Process camp series
           processCampSeries(playerStats, playerId, playerName, mainCamp, gameDisplayedId, date);
@@ -558,7 +575,9 @@ export function updatePlayerSeriesDataIncremental(cachedSeriesState, newGames, e
         playerStats.playerName = playerName;
         
         const playerWon = playerStat.Victorious;
-        const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+        // Get final role after considering role changes
+        const finalMainRole = getFinalMainRole(playerStat);
+        const mainCamp = getPlayerMainCampFromRole(finalMainRole, playerStat.Power);
         
         // Process camp series
         processCampSeries(playerStats, playerId, playerName, mainCamp, gameDisplayedId, date);

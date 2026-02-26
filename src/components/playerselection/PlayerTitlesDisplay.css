@@ -42,7 +42,7 @@
 /* Titles Header */
 .titles-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid var(--border-color);
 }
@@ -59,45 +59,142 @@
   margin: 0;
 }
 
-/* Titles Subsection Headers */
-.titles-subsection-header {
-  margin: 2rem 0 1rem 0;
+/* ============================================================================
+   SUMMARY BAR
+   ============================================================================ */
+
+.titles-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
   padding: 1rem;
+  margin-bottom: 1.5rem;
   background: var(--bg-tertiary);
-  border-left: 4px solid var(--accent-primary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.titles-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  background: var(--bg-secondary);
   border-radius: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  color: inherit;
 }
 
-.titles-subsection-header.secondary {
-  border-left-color: rgba(255, 193, 7, 0.6);
-  background: rgba(255, 193, 7, 0.05);
+.titles-summary-item:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-1px);
 }
 
-.titles-subsection-header h4 {
-  margin: 0 0 0.3rem 0;
-  font-size: 1.3rem;
+.titles-summary-item.active-filter {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary-dark, #2563eb) 100%);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.titles-summary-item.active-filter .titles-summary-value,
+.titles-summary-item.active-filter .titles-summary-label {
+  color: white;
+}
+
+.titles-summary-item.primary-summary {
+  background: linear-gradient(135deg, var(--accent-primary-fade) 0%, var(--bg-secondary) 100%);
+  border-color: var(--accent-primary);
+  cursor: default;
+}
+
+.titles-summary-item.primary-summary:hover {
+  transform: none;
+}
+
+.titles-summary-emoji {
+  font-size: 1.1rem;
+}
+
+.titles-summary-value {
+  font-size: 1.2rem;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
-.titles-subsection-header p {
-  margin: 0;
-  font-size: 0.9rem;
+.titles-summary-label {
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
-/* Titles Grid */
+/* ============================================================================
+   ACCORDION SECTIONS
+   ============================================================================ */
+
+.titles-accordion {
+  margin-bottom: 1rem;
+}
+
+.titles-accordion-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg-tertiary);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 8px;
+  user-select: none;
+}
+
+.titles-accordion.reconquer .titles-accordion-header {
+  border-left-color: #e67e22;
+  background: rgba(230, 126, 34, 0.08);
+}
+
+.titles-accordion.near-miss .titles-accordion-header {
+  border-left-color: #3498db;
+  background: rgba(52, 152, 219, 0.08);
+}
+
+.titles-accordion-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.titles-accordion-subtitle {
+  width: 100%;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.titles-accordion-content {
+  padding-top: 0.5rem;
+}
+
+/* ============================================================================
+   TITLES GRID
+   ============================================================================ */
+
 .titles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 1rem;
   padding: 0.5rem;
 }
 
-.titles-grid.awarded-elsewhere-grid {
-  opacity: 0.85;
-}
+/* ============================================================================
+   TITLE CARD
+   ============================================================================ */
 
-/* Title Card */
 .title-card {
   position: relative;
   display: flex;
@@ -107,7 +204,6 @@
   border: 2px solid var(--border-color);
   border-radius: 12px;
   transition: all 0.3s ease;
-  cursor: help;
 }
 
 .title-card:hover {
@@ -116,7 +212,7 @@
   border-color: var(--accent-primary);
 }
 
-/* Primary Title (first one) */
+/* Primary Title */
 .title-card.primary {
   border-color: var(--accent-primary);
   background: linear-gradient(135deg, var(--accent-primary-fade) 0%, var(--bg-secondary) 50%);
@@ -124,13 +220,22 @@
 
 /* Awarded Elsewhere (qualified but not owner) */
 .title-card.awarded-elsewhere {
-  opacity: 0.9;
-  border-style: dashed;
-  background: linear-gradient(135deg, rgba(255, 193, 7, 0.05) 0%, var(--bg-secondary) 50%);
+  border-style: dotted;
+  border-color: #e67e22;
+  background: linear-gradient(135deg, rgba(230, 126, 34, 0.05) 0%, var(--bg-secondary) 50%);
 }
 
 .title-card.awarded-elsewhere:hover {
-  opacity: 1;
+  border-color: #e67e22;
+  box-shadow: 0 8px 24px rgba(230, 126, 34, 0.2);
+}
+
+/* Override left border for awarded-elsewhere cards to be dotted too */
+.title-card.awarded-elsewhere.combination,
+.title-card.awarded-elsewhere.role,
+.title-card.awarded-elsewhere.basic {
+  border-left-style: dotted;
+  border-left-width: 4px;
 }
 
 .title-crown {
@@ -153,6 +258,19 @@
 
 .title-card.basic {
   border-left: 4px solid #95e1d3;
+}
+
+/* Near-Miss Card Variant */
+.title-card.near-miss {
+  border: 2px dashed rgba(52, 152, 219, 0.5);
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, var(--bg-secondary) 50%);
+  opacity: 0.92;
+}
+
+.title-card.near-miss:hover {
+  opacity: 1;
+  border-color: #3498db;
+  box-shadow: 0 8px 24px rgba(52, 152, 219, 0.2);
 }
 
 /* Title Rank Badge */
@@ -232,60 +350,66 @@
 .title-primary-owner {
   display: inline-block;
   padding: 0.4rem 0.6rem;
-  background: rgba(255, 193, 7, 0.15);
+  background: rgba(230, 126, 34, 0.15);
   color: var(--text-secondary);
   border-radius: 6px;
   font-size: 0.8rem;
-  border: 1px solid rgba(255, 193, 7, 0.3);
+  border: 1px solid rgba(230, 126, 34, 0.3);
   margin-top: 0.2rem;
 }
 
 .title-primary-owner strong {
-  color: var(--accent-secondary);
+  color: #e67e22;
   font-weight: 600;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .titles-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .title-card {
-    padding: 1rem;
-  }
-  
-  .title-card .title-emoji {
-    font-size: 2.5rem;
-  }
-  
-  .title-name {
-    font-size: 1.1rem;
-  }
+/* ============================================================================
+   CONDITIONS TOGGLE (click-to-expand)
+   ============================================================================ */
+
+.title-conditions-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+  margin-top: 0.2rem;
 }
 
-/* Animation */
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.title-conditions-toggle:hover {
+  background: var(--accent-submenu);
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
 }
 
-/* Conditions Breakdown for Combination Titles */
+.title-conditions-toggle .toggle-arrow {
+  display: inline-block;
+  font-size: 0.65rem;
+  transition: transform 0.2s ease;
+}
+
+.title-conditions-toggle.expanded .toggle-arrow {
+  transform: rotate(90deg);
+}
+
+/* ============================================================================
+   CONDITIONS BREAKDOWN (inside cards)
+   ============================================================================ */
+
 .title-conditions-breakdown {
-  margin-top: 0.8rem;
-  padding-top: 0.8rem;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
   border-top: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-}
-
-.breakdown-header {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.2rem;
+  gap: 0.3rem;
 }
 
 .condition-item {
@@ -293,7 +417,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.85rem;
-  padding: 0.3rem 0;
+  padding: 0.25rem 0;
 }
 
 .condition-stat {
@@ -349,4 +473,102 @@
   color: var(--text-tertiary);
   font-size: 0.75rem;
   margin-left: auto;
+}
+
+/* ============================================================================
+   NEAR-MISS SPECIFIC STYLES
+   ============================================================================ */
+
+.near-miss-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.3rem;
+}
+
+.near-miss-progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.near-miss-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.near-miss-progress-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.near-miss-conditions {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.near-miss-conditions .condition-item.met {
+  opacity: 0.7;
+}
+
+.near-miss-conditions .condition-item.unmet {
+  opacity: 1;
+}
+
+.condition-status {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.condition-gap {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #e74c3c;
+  white-space: nowrap;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .titles-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .title-card {
+    padding: 1rem;
+  }
+  
+  .title-card .title-emoji {
+    font-size: 2.5rem;
+  }
+  
+  .title-name {
+    font-size: 1.1rem;
+  }
+
+  .titles-summary {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .titles-accordion-header h4 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

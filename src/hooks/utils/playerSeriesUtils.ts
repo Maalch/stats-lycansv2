@@ -5,7 +5,6 @@
 
 import { getPlayerFinalRole, getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 import { getPlayerId } from '../../utils/playerIdentification';
-import { formatLycanDate } from './dataUtils';
 import type { GameLogEntry } from '../useCombinedRawData';
 
 // Import types
@@ -201,6 +200,15 @@ function collectCurrentSeriesAndCounts(
   const currentDeathSeries: DeathSeries[] = [];
   const currentSurvivalSeries: SurvivalSeries[] = [];
 
+  // Build a lookup from DisplayedId → formatted StartDate (matching the format used by processors)
+  const gameDateByDisplayedId = new Map<string, string>();
+  sortedGames.forEach(game => {
+    gameDateByDisplayedId.set(
+      game.DisplayedId,
+      new Date(game.StartDate).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    );
+  });
+
   Object.entries(playerCampSeries).forEach(([playerId, stats]) => {
     const displayName = stats.longestVillageoisSeries?.player || 
                        stats.longestLoupsSeries?.player || 
@@ -228,7 +236,7 @@ function collectCurrentSeriesAndCounts(
         startGame: stats.villageoisSeriesStart?.game || '',
         endGame: stats.currentVillageoisGameIds[stats.currentVillageoisGameIds.length - 1] || '',
         startDate: stats.villageoisSeriesStart?.date || '',
-        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        endDate: gameDateByDisplayedId.get(stats.currentVillageoisGameIds[stats.currentVillageoisGameIds.length - 1] || '') || '',
         isOngoing: true,
         gameIds: [...stats.currentVillageoisGameIds]
       });
@@ -244,7 +252,7 @@ function collectCurrentSeriesAndCounts(
         startGame: stats.loupsSeriesStart?.game || '',
         endGame: stats.currentLoupsGameIds[stats.currentLoupsGameIds.length - 1] || '',
         startDate: stats.loupsSeriesStart?.date || '',
-        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        endDate: gameDateByDisplayedId.get(stats.currentLoupsGameIds[stats.currentLoupsGameIds.length - 1] || '') || '',
         isOngoing: true,
         gameIds: [...stats.currentLoupsGameIds]
       });
@@ -260,7 +268,7 @@ function collectCurrentSeriesAndCounts(
         startGame: stats.noWolfSeriesStart?.game || '',
         endGame: stats.currentNoWolfGameIds[stats.currentNoWolfGameIds.length - 1] || '',
         startDate: stats.noWolfSeriesStart?.date || '',
-        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        endDate: gameDateByDisplayedId.get(stats.currentNoWolfGameIds[stats.currentNoWolfGameIds.length - 1] || '') || '',
         campCounts: createCampCounts(stats.currentNoWolfCamps),
         isOngoing: true,
         gameIds: [...stats.currentNoWolfGameIds]
@@ -277,7 +285,7 @@ function collectCurrentSeriesAndCounts(
         startGame: stats.soloSeriesStart?.game || '',
         endGame: stats.currentSoloGameIds[stats.currentSoloGameIds.length - 1] || '',
         startDate: stats.soloSeriesStart?.date || '',
-        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        endDate: gameDateByDisplayedId.get(stats.currentSoloGameIds[stats.currentSoloGameIds.length - 1] || '') || '',
         campCounts: createCampCounts(stats.currentSoloCamps),
         isOngoing: true,
         gameIds: [...stats.currentSoloGameIds]
@@ -293,7 +301,7 @@ function collectCurrentSeriesAndCounts(
         startGame: stats.winSeriesStart?.game || '',
         endGame: stats.currentWinGameIds[stats.currentWinGameIds.length - 1] || '',
         startDate: stats.winSeriesStart?.date || '',
-        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        endDate: gameDateByDisplayedId.get(stats.currentWinGameIds[stats.currentWinGameIds.length - 1] || '') || '',
         campCounts: createCampCounts(stats.currentWinCamps),
         isOngoing: true,
         gameIds: [...stats.currentWinGameIds]
@@ -309,7 +317,7 @@ function collectCurrentSeriesAndCounts(
         startGame: stats.lossSeriesStart?.game || '',
         endGame: stats.currentLossGameIds[stats.currentLossGameIds.length - 1] || '',
         startDate: stats.lossSeriesStart?.date || '',
-        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        endDate: gameDateByDisplayedId.get(stats.currentLossGameIds[stats.currentLossGameIds.length - 1] || '') || '',
         campCounts: createCampCounts(stats.currentLossCamps),
         isOngoing: true,
         gameIds: [...stats.currentLossGameIds]
@@ -325,7 +333,7 @@ function collectCurrentSeriesAndCounts(
         startGame: stats.deathSeriesStart?.game || '',
         endGame: stats.currentDeathGameIds[stats.currentDeathGameIds.length - 1] || '',
         startDate: stats.deathSeriesStart?.date || '',
-        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        endDate: gameDateByDisplayedId.get(stats.currentDeathGameIds[stats.currentDeathGameIds.length - 1] || '') || '',
         campCounts: createCampCounts(stats.currentDeathCamps),
         isOngoing: true,
         gameIds: [...stats.currentDeathGameIds]
@@ -341,7 +349,7 @@ function collectCurrentSeriesAndCounts(
         startGame: stats.survivalSeriesStart?.game || '',
         endGame: stats.currentSurvivalGameIds[stats.currentSurvivalGameIds.length - 1] || '',
         startDate: stats.survivalSeriesStart?.date || '',
-        endDate: formatLycanDate(sortedGames[sortedGames.length - 1]?.EndDate || ''),
+        endDate: gameDateByDisplayedId.get(stats.currentSurvivalGameIds[stats.currentSurvivalGameIds.length - 1] || '') || '',
         campCounts: createCampCounts(stats.currentSurvivalCamps),
         isOngoing: true,
         gameIds: [...stats.currentSurvivalGameIds]

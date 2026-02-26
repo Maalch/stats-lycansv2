@@ -599,7 +599,7 @@ function MainApp() {
               </div>
 
               <footer className="lycans-dashboard-footer">
-                <p>Soldat Flippy - AmberAerin - Maalch - 2025</p>
+                <p>Soldat Flippy - AmberAerin - Maalch - 2026</p>
                 <p>
                   <a 
                     href="mailto:admin@lycanstracker.fr" 

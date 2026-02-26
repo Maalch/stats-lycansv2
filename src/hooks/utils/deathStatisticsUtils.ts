@@ -5,6 +5,37 @@ import { mainCampOrder } from '../../types/api';
 import { getPlayerId } from '../../utils/playerIdentification';
 import { compareVersion } from './dataUtils';
 
+// Villageois Élite powers (handles both new format and legacy format)
+const ELITE_POWERS_LIST = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Inquisiteur'];
+const LEGACY_ELITE_ROLES_LIST = ['Chasseur', 'Alchimiste'];
+
+/**
+ * Get the effective Villageois Élite power of a player (handles both formats).
+ * Returns null for non-elite players.
+ */
+function getEffectivePowerForPlayer(player: { MainRoleInitial: string; Power?: string | null }): string | null {
+  if (player.MainRoleInitial === 'Villageois Élite') return player.Power || null;
+  if (LEGACY_ELITE_ROLES_LIST.includes(player.MainRoleInitial)) return player.MainRoleInitial;
+  return null;
+}
+
+/**
+ * Check if a player matches a camp/role filter.
+ * Handles both regular camp names and specific Villageois Élite power names.
+ */
+function matchesRoleFilter(player: { MainRoleInitial: string; Power?: string | null }, campFilter: string): boolean {
+  if (campFilter === 'Tous les camps') return true;
+  if (ELITE_POWERS_LIST.includes(campFilter)) {
+    return getEffectivePowerForPlayer(player) === campFilter;
+  }
+  const camp = getPlayerCampFromRole(player.MainRoleInitial, {
+    regroupLovers: true,
+    regroupVillagers: true,
+    regroupWolfSubRoles: false
+  });
+  return camp === campFilter;
+}
+
 /**
  * Normalize death types by merging SURVIVALIST_NOT_SAVED into BY_WOLF
  * and converting null/undefined to UNKNOWN
@@ -264,18 +295,12 @@ export function extractDeathsFromGame(game: GameLogEntry, campFilter?: string): 
     .filter(death => {
       if (!campFilter || campFilter === 'Tous les camps') return true;
       
-      // Find the victim's camp using MainRoleInitial
-  const victimPlayer = game.PlayerStats.find(p => p.Username === death.playerName);
+      // Find the victim's player data
+      const victimPlayer = game.PlayerStats.find(p => p.Username === death.playerName);
       if (!victimPlayer) return false;
       
-      const victimCamp = getPlayerCampFromRole(victimPlayer.MainRoleInitial, {
-        regroupLovers: true,
-        regroupVillagers: true,
-        regroupWolfSubRoles: false
-      });
-      
-      // Only include deaths where the victim is from the selected camp
-      return victimCamp === campFilter;
+      // Use matchesRoleFilter to support both camp names and Villageois Élite powers
+      return matchesRoleFilter(victimPlayer, campFilter);
     });
 }
 
@@ -289,6 +314,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string, vi
   victimName: string;     // Display name
   deathType: DeathType;
   killerCamp: string;
+  killerPower: string | null; // Effective power (for Villageois Élite filtering)
   victimCamp: string;
 }> {
   const kills: Array<{
@@ -298,6 +324,7 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string, vi
     victimName: string;
     deathType: DeathType;
     killerCamp: string;
+    killerPower: string | null;
     victimCamp: string;
   }> = [];
   
@@ -351,15 +378,20 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string, vi
         victimName: player.Username,
         deathType: normalizeDeathTypeForStats(player.DeathType)!,
         killerCamp,
+        killerPower: getEffectivePowerForPlayer(killerPlayer),
         victimCamp
       });
     }
   });
   
-  // Filter by killer camp if specified
+  // Filter by killer camp/role if specified (supports Villageois Élite powers)
   let filteredKills = kills;
   if (campFilter && campFilter !== 'Tous les camps') {
-    filteredKills = filteredKills.filter(kill => kill.killerCamp === campFilter);
+    if (ELITE_POWERS_LIST.includes(campFilter)) {
+      filteredKills = filteredKills.filter(kill => kill.killerPower === campFilter);
+    } else {
+      filteredKills = filteredKills.filter(kill => kill.killerCamp === campFilter);
+    }
   }
   
   // Filter by victim camp if specified
@@ -425,18 +457,9 @@ export function computeDeathStatistics(gameData: GameLogEntry[], campFilter?: st
       if (!campFilter || campFilter === 'Tous les camps') {
         // No filter: count all games
         playerGameCountsById[playerId] = (playerGameCountsById[playerId] || 0) + 1;
-      } else {
-        // Filter active: only count games where player was in the filtered camp
-        // Use MainRoleInitial for consistency with the new role detection logic
-        const playerCamp = getPlayerCampFromRole(player.MainRoleInitial, {
-          regroupLovers: true,
-          regroupVillagers: true,
-          regroupWolfSubRoles: false
-        });
-        
-        if (playerCamp === campFilter) {
-          playerGameCountsById[playerId] = (playerGameCountsById[playerId] || 0) + 1;
-        }
+      } else if (matchesRoleFilter(player, campFilter)) {
+        // Filter active (including Villageois Élite power filters): only count relevant games
+        playerGameCountsById[playerId] = (playerGameCountsById[playerId] || 0) + 1;
       }
     });
   });

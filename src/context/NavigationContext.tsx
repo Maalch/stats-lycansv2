@@ -4,7 +4,7 @@ import { mergeUrlState, parseUrlState } from '../utils/urlManager';
 
 export interface PlayerPairFilter {
   selectedPlayerPair: string[]; // Array of exactly 2 players (e.g., ["Player1", "Player2"])
-  selectedPairRole: 'wolves' | 'lovers'; // Role the pair played together
+  selectedPairRole: 'wolves' | 'lovers' | 'agents'; // Role the pair played together
 }
 
 export interface MultiPlayerFilter {
@@ -119,7 +119,7 @@ export interface NavigationState {
   groupingMethod?: 'session' | 'month';
   selectedViewType?: 'performance' | 'camp' | 'map' | 'kills';
   // PlayerPairingStatsChart state
-  selectedPairingTab?: 'wolves' | 'lovers';
+  selectedPairingTab?: 'wolves' | 'lovers' | 'agents';
   selectedPairingPlayers?: string[]; // Array of 1 or 2 player names for pairing filter
   // DeathStatisticsChart state
   deathStatsSelectedCamp?: string;
