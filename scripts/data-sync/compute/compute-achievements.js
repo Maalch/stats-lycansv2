@@ -882,12 +882,13 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
           // Find the game where this threshold was crossed
           const thresholdGameId = gameIds.length >= level.threshold ? gameIds[level.threshold - 1] : gameIds[gameIds.length - 1];
           unlockedLevels.push({
-            stars: level.stars,
+            tier: level.tier,
+            subLevel: level.subLevel,
             threshold: level.threshold,
             unlockedAtGame: thresholdGameId || null,
           });
         } else if (!nextLevel) {
-          nextLevel = { stars: level.stars, threshold: level.threshold };
+          nextLevel = { tier: level.tier, subLevel: level.subLevel, threshold: level.threshold };
         }
       }
       

@@ -4,7 +4,19 @@
  * Unlike Rankings (comparative) and Titles (percentile-based), achievements are
  * permanent unlockable rewards triggered by absolute thresholds.
  * 
- * Level tiers: ⭐ (1) / ⭐⭐ (2) / ⭐⭐⭐ (3) / 🐺 (4)
+ * ## Tier System (Paliers)
+ * 
+ * Each tier can have up to 3 sub-levels. Not all achievements need all tiers/sub-levels.
+ * 
+ * | Tier    | Color  | Max Sub-levels | Difficulty    |
+ * |---------|--------|----------------|---------------|
+ * | bronze  | 🥉     | 3              | Débutant      |
+ * | argent  | 🥈     | 3              | Intermédiaire |
+ * | or      | 🥇     | 3              | Difficile     |
+ * | lycans  | 🐺     | 1              | Expert        |
+ * 
+ * Example - Victories Villageois:
+ *   Bronze: 1, 5, 10  |  Argent: 30, 50, 70  |  Or: 100, 130, 160  |  Lycans: 200
  * 
  * Each achievement has:
  * - id: unique string identifier
@@ -15,8 +27,18 @@
  * - category: grouping category
  * - evaluator: key in EVALUATORS map (compute-achievements.js)
  * - evaluatorParams: extra config for the evaluator
- * - levels: array of { stars, threshold } — not all achievements have 4 levels
+ * - levels: array of { tier, subLevel, threshold }
  */
+
+/**
+ * Achievement tier definitions
+ */
+export const ACHIEVEMENT_TIERS = {
+  bronze: { label: 'Bronze', emoji: '🥉', color: '#CD7F32', order: 1, maxSubLevels: 3 },
+  argent: { label: 'Argent', emoji: '🥈', color: '#C0C0C0', order: 2, maxSubLevels: 3 },
+  or:     { label: 'Or',     emoji: '🥇', color: '#FFD700', order: 3, maxSubLevels: 3 },
+  lycans: { label: 'Lycans', emoji: '🐺', color: '#8B0000', order: 4, maxSubLevels: 1 },
+};
 
 /**
  * Achievement categories
@@ -49,10 +71,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'campWins',
     evaluatorParams: { camp: 'Villageois' },
     levels: [
-      { stars: 1, threshold: 10 },
-      { stars: 2, threshold: 50 },
-      { stars: 3, threshold: 100 },
-      { stars: 4, threshold: 200 },
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 30 - 50 - 70
+      { tier: 'argent', subLevel: 1, threshold: 30 },
+      { tier: 'argent', subLevel: 2, threshold: 50 },
+      { tier: 'argent', subLevel: 3, threshold: 70 },
+      // Or: 100 - 130 - 160
+      { tier: 'or', subLevel: 1, threshold: 100 },
+      { tier: 'or', subLevel: 2, threshold: 130 },
+      { tier: 'or', subLevel: 3, threshold: 160 },
+      // Lycans: 200
+      { tier: 'lycans', subLevel: 1, threshold: 200 },
     ],
   },
   {
@@ -65,10 +97,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'campWins',
     evaluatorParams: { camp: 'Loup' },
     levels: [
-      { stars: 1, threshold: 10 },
-      { stars: 2, threshold: 50 },
-      { stars: 3, threshold: 100 },
-      { stars: 4, threshold: 200 },
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 30 - 50 - 70
+      { tier: 'argent', subLevel: 1, threshold: 30 },
+      { tier: 'argent', subLevel: 2, threshold: 50 },
+      { tier: 'argent', subLevel: 3, threshold: 70 },
+      // Or: 100 - 130 - 160
+      { tier: 'or', subLevel: 1, threshold: 100 },
+      { tier: 'or', subLevel: 2, threshold: 130 },
+      { tier: 'or', subLevel: 3, threshold: 160 },
+      // Lycans: 200
+      { tier: 'lycans', subLevel: 1, threshold: 200 },
     ],
   },
   {
@@ -81,10 +123,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'soloWins',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 5 },
-      { stars: 2, threshold: 10 },
-      { stars: 3, threshold: 15 },
-      { stars: 4, threshold: 30 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
   {
@@ -97,10 +143,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'campLosses',
     evaluatorParams: { camp: 'Villageois' },
     levels: [
-      { stars: 1, threshold: 10 },
-      { stars: 2, threshold: 50 },
-      { stars: 3, threshold: 100 },
-      { stars: 4, threshold: 200 },
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 30 - 50 - 70
+      { tier: 'argent', subLevel: 1, threshold: 30 },
+      { tier: 'argent', subLevel: 2, threshold: 50 },
+      { tier: 'argent', subLevel: 3, threshold: 70 },
+      // Or: 100 - 130 - 160
+      { tier: 'or', subLevel: 1, threshold: 100 },
+      { tier: 'or', subLevel: 2, threshold: 130 },
+      { tier: 'or', subLevel: 3, threshold: 160 },
+      // Lycans: 200
+      { tier: 'lycans', subLevel: 1, threshold: 200 },
     ],
   },
   {
@@ -113,42 +169,60 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'campLosses',
     evaluatorParams: { camp: 'Loup' },
     levels: [
-      { stars: 1, threshold: 10 },
-      { stars: 2, threshold: 50 },
-      { stars: 3, threshold: 100 },
-      { stars: 4, threshold: 200 },
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 30 - 50 - 70
+      { tier: 'argent', subLevel: 1, threshold: 30 },
+      { tier: 'argent', subLevel: 2, threshold: 50 },
+      { tier: 'argent', subLevel: 3, threshold: 70 },
+      // Or: 100 - 130 - 160
+      { tier: 'or', subLevel: 1, threshold: 100 },
+      { tier: 'or', subLevel: 2, threshold: 130 },
+      { tier: 'or', subLevel: 3, threshold: 160 },
+      // Lycans: 200
+      { tier: 'lycans', subLevel: 1, threshold: 200 },
     ],
   },
   {
     id: 'vegan-wolf',
     name: 'Je suis Vegan',
     description: 'Vous avez eu la victoire sans rien faire, bravo',
-    explanation: 'Gagner une partie en loup sans tuer personne',
+    explanation: 'Gagner X parties en Loup sans tuer',
     emoji: '🥬',
     category: 'victories',
     evaluator: 'wolfWinNoKills',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
-      { stars: 4, threshold: 20 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
     ],
   },
   {
     id: 'last-wolf',
     name: 'Le dernier loup',
     description: 'Vous n\'avez besoin de personne pour gagner… Vous seul survivez.',
-    explanation: 'Gagner X parties en étant l\'unique survivant et donc le dernier loup',
-    emoji: '🏚️',
+    explanation: 'Gagner X parties en étant l\'unique survivant et donc le dernier Loup',
+    emoji: '🏘️',
     category: 'victories',
     evaluator: 'lastWolfStanding',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
-      { stars: 4, threshold: 20 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 25
+      { tier: 'lycans', subLevel: 1, threshold: 25 },
     ],
   },
   {
@@ -161,7 +235,12 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'winOnAllMaps',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3 (3 victoires sur chaque map)
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
 
@@ -178,85 +257,112 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'deathByType',
     evaluatorParams: { deathType: 'FALL' },
     levels: [
-      { stars: 1, threshold: 1 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Lycans: 5 (rare event)
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
   {
     id: 'starvation',
     name: 'Famine Fatale',
     description: 'Manger, c\'est surfait',
-    explanation: 'Mourir de faim',
+    explanation: 'Mourir X fois de faim',
     emoji: '🍽️',
     category: 'deaths',
     evaluator: 'deathByType',
     evaluatorParams: { deathType: 'STARVATION' },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Lycans: 10 (rare event)
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
     id: 'romeo-juliette',
     name: 'Roméo & Juliette',
     description: 'Vous ne pouviez pas survivre sans votre moitié',
-    explanation: 'Mourir à cause de la mort de son amoureux (LOVER_DEATH)',
+    explanation: 'Mourir X fois à cause de la mort de son amoureux',
     emoji: '💔',
     category: 'deaths',
     evaluator: 'deathByType',
     evaluatorParams: { deathType: 'LOVER_DEATH' },
     levels: [
-      { stars: 1, threshold: 5 },
-      { stars: 2, threshold: 15 },
-      { stars: 3, threshold: 30 },
-      { stars: 4, threshold: 50 },
+      // Bronze: 10
+      { tier: 'bronze', subLevel: 1, threshold: 10 },
+      // Argent: 20
+      { tier: 'argent', subLevel: 1, threshold: 20 },
+      // Or: 35
+      { tier: 'or', subLevel: 1, threshold: 35 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
   {
     id: 'death-turn1',
     name: 'Bon, je reviens !',
     description: 'Vous êtes mort·e certes mais vous avez au moins eu le temps d\'aller faire un truc',
-    explanation: 'Mourir la première nuit (DeathTiming = "N1")',
+    explanation: 'Mourir X fois la première nuit',
     emoji: '⏱️',
     category: 'deaths',
     evaluator: 'deathOnTiming',
     evaluatorParams: { timing: 'N1' },
     levels: [
-      { stars: 1, threshold: 5 },
-      { stars: 2, threshold: 15 },
-      { stars: 3, threshold: 30 },
-      { stars: 4, threshold: 50 },
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 30 - 50 - 70
+      { tier: 'argent', subLevel: 1, threshold: 30 },
+      { tier: 'argent', subLevel: 2, threshold: 50 },
+      { tier: 'argent', subLevel: 3, threshold: 70 },
+      // Or: 100
+      { tier: 'or', subLevel: 1, threshold: 100 },
+      // Lycans: 150
+      { tier: 'lycans', subLevel: 1, threshold: 150 },
     ],
   },
   {
     id: 'voted-as-villager',
     name: 'Coupable par défaut',
-    description: 'Malgré que vous soyez dans le camp des gentils, personne ne vous croit',
-    explanation: 'Être éjecté d\'un meeting en étant camp Villageois',
+    description: 'Vous avez beau crier que vous êtes gentil, personne ne vous croit...',
+    explanation: 'Être X fois éjecté d\'un meeting en étant Villageois',
     emoji: '🗳️',
     category: 'deaths',
     evaluator: 'votedAsCamp',
     evaluatorParams: { camp: 'Villageois' },
     levels: [
-      { stars: 1, threshold: 5 },
-      { stars: 2, threshold: 15 },
-      { stars: 3, threshold: 30 },
-      { stars: 4, threshold: 50 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
   {
     id: 'wolf-killed-by-beast',
     name: 'C\'est Bête',
     description: 'Un loup tué par La Bête... L\'ironie du sort',
-    explanation: 'Mourir en Loup par La Bête (BY_BEAST)',
+    explanation: 'Mourir X fois en Loup par La Bête',
     emoji: '🦁',
     category: 'deaths',
     evaluator: 'roleDeathByType',
     evaluatorParams: { roleCamp: 'Loup', deathType: 'BY_BEAST' },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 3 },
-      { stars: 3, threshold: 5 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Lycans: 10 (rare event)
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -269,24 +375,30 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'deathByType',
     evaluatorParams: { deathType: 'BOMB' },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Lycans: 5 (rare event)
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
   {
     id: 'crushed',
     name: 'Au ras des pâquerettes',
     description: 'Difficile quand on est petit d\'éviter les pas des géants',
-    explanation: 'Mourir X fois écrasé·e',
+    explanation: 'Mourir X fois écrasé',
     emoji: '🪨',
     category: 'deaths',
     evaluator: 'deathByType',
     evaluatorParams: { deathType: 'CRUSHED' },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 3 },
-      { stars: 3, threshold: 5 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -299,10 +411,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'killerDiedSameDay',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 3 },
-      { stars: 2, threshold: 10 },
-      { stars: 3, threshold: 20 },
-      { stars: 4, threshold: 40 },
+      // Bronze: 10
+      { tier: 'bronze', subLevel: 1, threshold: 10 },
+      // Argent: 20
+      { tier: 'argent', subLevel: 1, threshold: 20 },
+      // Or: 35
+      { tier: 'or', subLevel: 1, threshold: 35 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
 
@@ -313,96 +429,126 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'ponce-fesses',
     name: 'Ponce fesses',
     description: 'Comme un certain streameur, tu ponces des culs',
-    explanation: 'Avoir fait 100 kills en loup (cumulé)',
+    explanation: 'Faire X kills en Loup',
     emoji: '🍑',
     category: 'kills',
     evaluator: 'wolfKills',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 25 },
-      { stars: 2, threshold: 50 },
-      { stars: 3, threshold: 100 },
-      { stars: 4, threshold: 200 },
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 30 - 50 - 70
+      { tier: 'argent', subLevel: 1, threshold: 30 },
+      { tier: 'argent', subLevel: 2, threshold: 50 },
+      { tier: 'argent', subLevel: 3, threshold: 70 },
+      // Or: 100 - 130 - 160
+      { tier: 'or', subLevel: 1, threshold: 100 },
+      { tier: 'or', subLevel: 2, threshold: 130 },
+      { tier: 'or', subLevel: 3, threshold: 160 },
+      // Lycans: 200
+      { tier: 'lycans', subLevel: 1, threshold: 200 },
     ],
   },
   {
     id: 'hunter-kill-enemy',
     name: 'Justice du Chasseur',
-    description: 'Votre balle a trouvé sa cible... la bonne cette fois',
-    explanation: 'En tant que Chasseur, tuer un joueur d\'un camp adverse',
+    description: 'Votre balle a trouvé sa cible... La bonne cette fois',
+    explanation: 'Tuer X fois un joueur ennemi en étant Chasseur',
     emoji: '🎯',
     category: 'kills',
     evaluator: 'hunterKillsEnemy',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
-      { stars: 4, threshold: 20 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 35
+      { tier: 'lycans', subLevel: 1, threshold: 35 },
     ],
   },
   {
     id: 'hunter-kill-villager',
     name: 'Tir ami',
-    description: 'C\'est un villageois que vous avez touché...',
-    explanation: 'En tant que Chasseur, tuer un joueur du camp Villageois',
+    description: 'Vous avez tué quelqu\'un et c\'était pas un loup...',
+    explanation: 'Tuer X fois un Villageois en étant Chasseur',
     emoji: '😬',
     category: 'kills',
     evaluator: 'hunterKillsAlly',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
-      { stars: 4, threshold: 20 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 35
+      { tier: 'lycans', subLevel: 1, threshold: 35 },
     ],
   },
   {
     id: 'hunter-double-kill',
     name: 'Farmeur de loups',
     description: 'Un loup c\'est bien, deux loups c\'est mieux',
-    explanation: 'En tant que chasseur, tuer deux loups/ennemis dans une seule partie',
+    explanation: 'Tuer X fois deux Loups dans une même game en étant Chasseur',
     emoji: '🏹',
     category: 'kills',
     evaluator: 'hunterMultiKillsInGame',
     evaluatorParams: { minKills: 2 },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 3 },
-      { stars: 3, threshold: 5 },
-      { stars: 4, threshold: 10 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
     id: 'hunter-killed-by-wolf',
     name: 'Le Loup, c\'est Khalen',
     description: 'Un loup vous a tué alors que vous êtes chasseur... Il évite les balles ?',
-    explanation: 'Être chasseur et être tué par un loup',
+    explanation: 'Mourir X fois en Chasseur par un Loup',
     emoji: '🐺',
     category: 'kills',
     evaluator: 'hunterKilledByWolf',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
-      { stars: 4, threshold: 20 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 35
+      { tier: 'lycans', subLevel: 1, threshold: 35 },
     ],
   },
   {
     id: 'assassin-potion-kill-enemy',
     name: 'Cocktail Mortel',
-    description: 'La chimie au service de la justice',
-    explanation: 'Tuer un joueur d\'un camp adverse avec une potion assassin',
+    description: 'La chimie au service de la justice...',
+    explanation: 'Tuer X fois un joueur ennemi avec une potion assassin',
     emoji: '🧪',
     category: 'kills',
     evaluator: 'assassinPotionKills',
     evaluatorParams: { targetCamp: 'enemy' },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
-      { stars: 4, threshold: 20 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 7
+      { tier: 'or', subLevel: 1, threshold: 7 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
@@ -415,26 +561,34 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'assassinPotionKills',
     evaluatorParams: { targetCamp: 'ally' },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 3 },
-      { stars: 3, threshold: 5 },
-      { stars: 4, threshold: 10 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 7
+      { tier: 'or', subLevel: 1, threshold: 7 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
     id: 'victim-of-love',
     name: 'Victime de l\'Amour',
     description: 'Pour que l\'Amour existe, vous avez dû périr',
-    explanation: 'Être tué par le loup amoureux (loup qui est aussi Amoureux)',
+    explanation: 'Mourir X fois par un Amoureux Loup',
     emoji: '💘',
     category: 'kills',
     evaluator: 'killedByLoverWolf',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 3 },
-      { stars: 2, threshold: 10 },
-      { stars: 3, threshold: 20 },
-      { stars: 4, threshold: 40 },
+      // Bronze: 10
+      { tier: 'bronze', subLevel: 1, threshold: 10 },
+      // Argent: 20
+      { tier: 'argent', subLevel: 1, threshold: 20 },
+      // Or: 35
+      { tier: 'or', subLevel: 1, threshold: 35 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
 
@@ -445,43 +599,58 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'agent-117',
     name: '117',
     description: 'Bravo, vous avez tout de suite été capté',
-    explanation: 'Être tué aux votes en tant qu\'Agent',
+    explanation: 'Mourir X fois aux votes en étant Agent',
     emoji: '🕵️',
     category: 'roles',
     evaluator: 'agentVoted',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 7
+      { tier: 'or', subLevel: 1, threshold: 7 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
     id: 'louveteau-orphan',
     name: 'Le Louveteau Orphelin',
-    description: 'Tous les loups sont morts mais vous, petit louveteau, vous avez tenu bon',
-    explanation: 'Gagner en tant que Louveteau après la mort de tous les autres loups',
+    description: 'Vous étiez trop jeune pour mourir',
+    explanation: 'Gagner X fois en Louveteau après la mort des autres Loups',
     emoji: '🐶',
     category: 'roles',
     evaluator: 'louveteauOrphanWin',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 3 },
-      { stars: 3, threshold: 5 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 4
+      { tier: 'or', subLevel: 1, threshold: 4 },
+      // Lycans: 8
+      { tier: 'lycans', subLevel: 1, threshold: 8 },
     ],
   },
   {
     id: 'solo-master',
     name: 'Je maîtrise le solo',
-    description: 'Maître de chaque rôle solitaire',
-    explanation: 'Avoir au moins une victoire avec chaque rôle solo (Amoureux, Idiot du Village, Agent, etc.)',
+    description: 'Vous savez comment gagner avec chaque rôle',
+    explanation: 'Avoir X victoires avec chaque rôle solo',
     emoji: '👑',
     category: 'roles',
     evaluator: 'winWithAllSoloRoles',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
+      // Bronze: 1 win with each solo role
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2 wins with each
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Lycans: 5 wins with each
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
 
@@ -491,77 +660,101 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'bavard',
     name: 'M. / Mme Bavard',
-    description: 'Vous avez beaucoup de choses à dire, visiblement',
-    explanation: 'Parler au moins 50% du temps total lors d\'une partie',
+    description: 'Vous avez beaucoup de choses à dire visiblement',
+    explanation: 'Avoir X fois parlé au moins 50 % du temps sur une partie',
     emoji: '🗣️',
     category: 'social',
     evaluator: 'talkingPercentage',
     evaluatorParams: { minPercentage: 50 },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 25
+      { tier: 'or', subLevel: 1, threshold: 25 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
   {
     id: 'misunderstood',
     name: 'L\'Incompris',
-    description: 'Vous avez vu juste mais personne ne vous a cru... et c\'est vous qui payez',
-    explanation: 'Voter correctement pour un loup/rôle solo au conseil mais se faire voter à la place',
+    description: 'Vous l\'aviez dit pourtant que vous étiez innocent...',
+    explanation: 'Voter X fois pour un Loup/rôle solo mais se faire voter à la place en étant Villageois',
     emoji: '🤷',
     category: 'social',
     evaluator: 'correctVoteButVoted',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
-      { stars: 4, threshold: 20 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 35
+      { tier: 'lycans', subLevel: 1, threshold: 35 },
     ],
   },
   {
     id: 'false-guilty',
     name: 'Faux Coupable',
-    description: 'Malgré votre innocence, tout le village s\'est retourné contre vous',
-    explanation: 'Être voté à l\'unanimité alors que vous êtes villageois',
+    description: 'Dommage, vous n\'étiez pas l\'idiot du village...',
+    explanation: 'Être X fois voté à l\'unanimité en tant que Villageois',
     emoji: '😤',
     category: 'social',
     evaluator: 'unanimousVoteAsVillager',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 3 },
-      { stars: 3, threshold: 5 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 35
+      { tier: 'lycans', subLevel: 1, threshold: 35 },
     ],
   },
   {
     id: 'only-passer',
     name: 'Au cas où, je passe',
-    description: 'Être le seul joueur à passer dans un meeting... Courage !',
-    explanation: 'Être le seul joueur à passer (voter "Passé") lors d\'un meeting',
+    description: 'Vous vous méfiez de la fourberie des loups',
+    explanation: 'Être X fois le seul joueur à passer dans un meeting',
     emoji: '🙈',
     category: 'social',
     evaluator: 'onlyPasserInMeeting',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 5 },
-      { stars: 3, threshold: 10 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 35
+      { tier: 'lycans', subLevel: 1, threshold: 35 },
     ],
   },
   {
     id: 'kill-surprise',
     name: 'Kill surprise',
-    description: 'Être le seul à voter pour un joueur... et il est éliminé. Surprise !',
-    explanation: 'Être le seul votant pour un joueur qui se fait éliminer au vote',
+    description: 'Allez, au dernier moment, ça passe !',
+    explanation: 'Être X fois le seul joueur à voter dans un meeting',
     emoji: '😱',
     category: 'social',
     evaluator: 'soleVoterElimination',
     evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 3 },
-      { stars: 3, threshold: 5 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 35
+      { tier: 'lycans', subLevel: 1, threshold: 35 },
     ],
   },
   {
@@ -572,11 +765,16 @@ export const ACHIEVEMENT_DEFINITIONS = [
     emoji: '🏛️',
     category: 'social',
     evaluator: 'consecutiveCorrectVotes',
-    evaluatorParams: { minConsecutive: 5 },
+    evaluatorParams: { minConsecutive: 3 },
     levels: [
-      { stars: 1, threshold: 1 },
-      { stars: 2, threshold: 3 },
-      { stars: 3, threshold: 5 },
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 35
+      { tier: 'lycans', subLevel: 1, threshold: 35 },
     ],
   },
 
@@ -587,13 +785,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'colors-of-lycans',
     name: 'United Colors of Lycans',
     description: 'L\'arc-en-ciel des victoires',
-    explanation: 'Jouer et gagner des parties dans au moins 5 couleurs différentes',
+    explanation: 'Avoir gagné une partie avec au moins X couleurs différentes',
     emoji: '🌈',
     category: 'special',
     evaluator: 'winInColors',
-    evaluatorParams: { minColors: 5 },
+    evaluatorParams: {},
     levels: [
-      { stars: 1, threshold: 1 },
+      // Bronze: 1 - 2 - 3 couleurs
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 2 },
+      { tier: 'bronze', subLevel: 3, threshold: 3 },
+      // Argent: 4 - 5 - 6 couleurs
+      { tier: 'argent', subLevel: 1, threshold: 4 },
+      { tier: 'argent', subLevel: 2, threshold: 5 },
+      { tier: 'argent', subLevel: 3, threshold: 6 },
+      // Or: 7 - 8 - 9 couleurs
+      { tier: 'or', subLevel: 1, threshold: 7 },
+      { tier: 'or', subLevel: 2, threshold: 8 },
+      { tier: 'or', subLevel: 3, threshold: 9 },
+      // Lycans: 12 couleurs (toutes!)
+      { tier: 'lycans', subLevel: 1, threshold: 12 },
     ],
   },
 ];

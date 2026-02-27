@@ -2,13 +2,18 @@
  * Achievement System Types
  * 
  * Mirrors the JSON structure output by generate-achievements.js.
- * Achievements are permanent, level-based rewards (⭐ / ⭐⭐ / ⭐⭐⭐ / 🐺).
+ * Achievements use tier-based progression: Bronze (🥉), Argent (🥈), Or (🥇), Lycans (🐺).
  */
+
+/** Tier names */
+export type AchievementTier = 'bronze' | 'argent' | 'or' | 'lycans';
 
 /** A single level within an achievement */
 export interface AchievementLevel {
-  /** Star tier: 1 = ⭐, 2 = ⭐⭐, 3 = ⭐⭐⭐, 4 = 🐺 */
-  stars: 1 | 2 | 3 | 4;
+  /** Tier name: bronze, argent, or, lycans */
+  tier: AchievementTier;
+  /** Sub-level within the tier (1-3 for most, 1 for lycans) */
+  subLevel: number;
   /** Threshold value to unlock this level */
   threshold: number;
 }
@@ -27,7 +32,8 @@ export interface AchievementDefinition {
 
 /** An unlocked level for a player's achievement */
 export interface UnlockedLevel {
-  stars: 1 | 2 | 3 | 4;
+  tier: AchievementTier;
+  subLevel: number;
   threshold: number;
   /** Game ID where this level was first crossed */
   unlockedAtGame: string | null;

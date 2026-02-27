@@ -4,6 +4,8 @@ import type {
   AchievementWithProgress,
   AchievementCategory,
   PlayerAchievements,
+  AchievementLevel,
+  AchievementTier,
 } from '../../types/achievements';
 
 interface PlayerAchievementsDisplayProps {
@@ -13,21 +15,30 @@ interface PlayerAchievementsDisplayProps {
   isLoading: boolean;
 }
 
-/** Render star indicators for an achievement */
-function renderStars(
-  levels: AchievementWithProgress['levels'],
+/** Tier display configuration */
+const TIER_CONFIG: Record<AchievementTier, { emoji: string; label: string }> = {
+  bronze: { emoji: '🥉', label: 'Bronze' },
+  argent: { emoji: '🥈', label: 'Argent' },
+  or: { emoji: '🥇', label: 'Or' },
+  lycans: { emoji: '🐺', label: 'Lycans' },
+};
+
+/** Render tier indicators for an achievement */
+function renderTiers(
+  levels: AchievementLevel[],
   unlockedCount: number
 ) {
   return levels.map((level, i) => {
     const isUnlocked = i < unlockedCount;
-    const isLycan = level.stars === 4;
+    const config = TIER_CONFIG[level.tier];
+    const isLycans = level.tier === 'lycans';
     return (
       <span
-        key={level.stars}
-        className={`achievement-star ${isUnlocked ? 'unlocked' : ''} ${isLycan ? 'lycan' : ''}`}
-        title={`${isLycan ? '🐺 Lycan' : '⭐'.repeat(level.stars)} — ${level.threshold}`}
+        key={`${level.tier}-${level.subLevel}`}
+        className={`achievement-star ${isUnlocked ? 'unlocked' : ''} ${isLycans ? 'lycan' : ''}`}
+        title={`${config.label} ${level.subLevel} — ${level.threshold}`}
       >
-        {isLycan ? '🐺' : '⭐'}
+        {config.emoji}
       </span>
     );
   });
@@ -71,12 +82,12 @@ export function PlayerAchievementsDisplay({
   const totalLevels = achievementsWithProgress.reduce((sum, a) => sum + a.levels.length, 0);
   const totalUnlocked = playerAchievements?.totalUnlocked || 0;
 
-  // Count unlocked by star tier
-  const starCounts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+  // Count unlocked by tier
+  const tierCounts: Record<AchievementTier, number> = { bronze: 0, argent: 0, or: 0, lycans: 0 };
   if (playerAchievements) {
     for (const ach of playerAchievements.achievements) {
       for (const level of ach.unlockedLevels) {
-        starCounts[level.stars as 1 | 2 | 3 | 4]++;
+        tierCounts[level.tier]++;
       }
     }
   }
@@ -140,28 +151,28 @@ export function PlayerAchievementsDisplay({
           <span className="achievements-summary-value">{totalUnlocked}</span>
           <span className="achievements-summary-label">/ {totalLevels} niveaux</span>
         </div>
-        {starCounts[1] > 0 && (
+        {tierCounts.bronze > 0 && (
           <div className="achievements-summary-item">
-            <span>⭐</span>
-            <span className="achievements-summary-value">{starCounts[1]}</span>
+            <span>🥉</span>
+            <span className="achievements-summary-value">{tierCounts.bronze}</span>
           </div>
         )}
-        {starCounts[2] > 0 && (
+        {tierCounts.argent > 0 && (
           <div className="achievements-summary-item">
-            <span>⭐⭐</span>
-            <span className="achievements-summary-value">{starCounts[2]}</span>
+            <span>🥈</span>
+            <span className="achievements-summary-value">{tierCounts.argent}</span>
           </div>
         )}
-        {starCounts[3] > 0 && (
+        {tierCounts.or > 0 && (
           <div className="achievements-summary-item">
-            <span>⭐⭐⭐</span>
-            <span className="achievements-summary-value">{starCounts[3]}</span>
+            <span>🥇</span>
+            <span className="achievements-summary-value">{tierCounts.or}</span>
           </div>
         )}
-        {starCounts[4] > 0 && (
+        {tierCounts.lycans > 0 && (
           <div className="achievements-summary-item">
             <span>🐺</span>
-            <span className="achievements-summary-value">{starCounts[4]}</span>
+            <span className="achievements-summary-value">{tierCounts.lycans}</span>
           </div>
         )}
       </div>
@@ -237,9 +248,9 @@ export function PlayerAchievementsDisplay({
                       <p className="achievement-explanation">{achievement.explanation}</p>
                     )}
 
-                    {/* Stars */}
+                    {/* Tiers */}
                     <div className="achievement-stars">
-                      {renderStars(achievement.levels, unlockedCount)}
+                      {renderTiers(achievement.levels, unlockedCount)}
                     </div>
 
                     {/* Progress */}
