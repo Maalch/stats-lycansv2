@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.12';
+export const APP_VERSION = '1.7.13';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.13',
+    date: '26/02/2026',
+    description: 'Amélioration du visuel du classement mensuel : barres horizontales, et pour chaque partie ajout d\'un lien, du camp et des joueurs vainqueurs dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'monthlyRanking',
+      text: 'Classements / Classements Mensuels'
+    }
+  },
   {
     version: 'v1.7.12',
     date: '24/02/2026',
