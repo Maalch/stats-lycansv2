@@ -581,6 +581,15 @@ export interface CampVotingStats {
 }
 
 /**
+ * Camp-based elimination statistics (players eliminated by vote)
+ */
+export interface CampEliminationStats {
+  campName: string;              // 'Villageois', 'Loup', or 'Solo Rôles'
+  eliminations: number;          // Total players eliminated from this camp
+  percentage: number;            // % of all vote eliminations
+}
+
+/**
  * Global voting statistics across all games
  */
 export interface GlobalVotingStats {
@@ -593,6 +602,8 @@ export interface GlobalVotingStats {
   averageAbstentionRate: number;
   meetingDayStats: MeetingDayStats[];
   campVotingStats: CampVotingStats[];
+  campEliminationStats: CampEliminationStats[];
+  totalEliminations: number;     // Total players eliminated by vote
 }
 
 /**
@@ -611,6 +622,13 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
     votesForOppositeCamp: number;
     votesForOwnCamp: number;
   }>();
+
+  // Track eliminations by camp (grouped into 3 categories)
+  const campEliminationMap = new Map<string, number>();
+  campEliminationMap.set('Villageois', 0);
+  campEliminationMap.set('Loup', 0);
+  campEliminationMap.set('Solo Rôles', 0);
+  let totalEliminationCount = 0;
 
   let totalMeetings = 0;
   let totalVotes = 0;
@@ -713,6 +731,30 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
 
           campVotingMap.set(voterCamp, campStats);
         });
+
+      // Track players eliminated by vote in this meeting
+      const eliminatedPlayers = game.PlayerStats.filter(player => 
+        player.DeathType === DEATH_TYPES.VOTED && 
+        player.DeathTiming === `M${meetingNum}`
+      );
+
+      eliminatedPlayers.forEach(player => {
+        totalEliminationCount++;
+        const playerRole = getPlayerFinalRole(player.MainRoleInitial, player.MainRoleChanges || []);
+        const playerCamp = getPlayerCampFromRole(playerRole, { regroupWolfSubRoles: true });
+        
+        // Group into 3 categories: Villageois, Loup, or Solo Rôles
+        let groupedCamp: string;
+        if (playerCamp === 'Villageois') {
+          groupedCamp = 'Villageois';
+        } else if (playerCamp === 'Loup') {
+          groupedCamp = 'Loup';
+        } else {
+          groupedCamp = 'Solo Rôles';
+        }
+        
+        campEliminationMap.set(groupedCamp, (campEliminationMap.get(groupedCamp) || 0) + 1);
+      });
     }
   });
 
@@ -739,6 +781,16 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
     }))
     .sort((a, b) => b.accuracyRate - a.accuracyRate);
 
+  // Convert camp elimination map to array (sorted by elimination count)
+  const campEliminationStats: CampEliminationStats[] = Array.from(campEliminationMap.entries())
+    .filter(([_, count]) => count > 0)  // Only include camps with eliminations
+    .map(([campName, eliminations]) => ({
+      campName,
+      eliminations,
+      percentage: totalEliminationCount > 0 ? (eliminations / totalEliminationCount) * 100 : 0
+    }))
+    .sort((a, b) => b.eliminations - a.eliminations);
+
   return {
     totalMeetings,
     totalVotes,
@@ -748,7 +800,9 @@ export function calculateGlobalVotingStats(games: GameLogEntry[]): GlobalVotingS
     averageSkipRate: meetingCount > 0 ? totalSkipRateSum / meetingCount : 0,
     averageAbstentionRate: meetingCount > 0 ? totalAbstentionRateSum / meetingCount : 0,
     meetingDayStats,
-    campVotingStats
+    campVotingStats,
+    campEliminationStats,
+    totalEliminations: totalEliminationCount
   };
 }
 

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { 
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
-  ResponsiveContainer, Legend 
+  ResponsiveContainer, Legend, PieChart, Pie 
 } from 'recharts';
 import { useGlobalVotingStatsFromRaw } from '../../hooks/useGlobalVotingStatsFromRaw';
 import { FullscreenChart } from '../common/FullscreenChart';
-import { useThemeAdjustedLycansColorScheme } from '../../types/api';
+import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor } from '../../types/api';
 
 export function GlobalVotingStatsChart() {
   const { data, isLoading, error } = useGlobalVotingStatsFromRaw();
@@ -40,6 +40,22 @@ export function GlobalVotingStatsChart() {
         totalVotes: camp.totalVotes
       }));
   }, [data]);
+
+  // Prepare data for camp elimination pie chart
+  const campEliminationData = useMemo(() => {
+    if (!data?.campEliminationStats) return [];
+    
+    return data.campEliminationStats.map(camp => ({
+      name: camp.campName,
+      value: camp.eliminations,
+      percentage: camp.percentage,
+      fill: camp.campName === 'Villageois' 
+        ? lycansColorScheme.Villageois 
+        : camp.campName === 'Loup' 
+          ? lycansColorScheme.Loup 
+          : lycansOtherCategoryColor
+    }));
+  }, [data, lycansColorScheme]);
 
   if (isLoading) {
     return <div style={{ padding: '2rem', textAlign: 'center' }}>Chargement des statistiques de vote...</div>;
@@ -291,6 +307,69 @@ export function GlobalVotingStatsChart() {
         </ResponsiveContainer>
         </FullscreenChart>
       </div>
+
+      {/* Camp Elimination Distribution */}
+      {campEliminationData.length > 0 && (
+        <div className="lycans-graphique-section">
+          <div>
+            <h3>⚰️ Répartition des Éliminations par Camp</h3>
+          </div>
+          <p style={{ 
+            fontSize: '0.85rem', 
+            color: 'var(--text-secondary)', 
+            textAlign: 'center', 
+            marginBottom: '1rem' 
+          }}>
+            Distribution des {data?.totalEliminations || 0} joueurs éliminés par vote selon leur camp. Les rôles solo (Amoureux, Agent, etc.) sont regroupés en "Solo Rôles".
+          </p>
+          <FullscreenChart title="Répartition des Éliminations par Camp">
+            <ResponsiveContainer width="100%" height={400}>
+              <PieChart>
+                <Pie
+                  data={campEliminationData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={140}
+                  dataKey="value"
+                  label={({ payload }) => {
+                    const p = payload as { name: string; percentage: number };
+                    return `${p.name}: ${p.percentage.toFixed(1)}%`;
+                  }}
+                  labelLine={true}
+                />
+                <Tooltip 
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const data = payload[0].payload;
+                      return (
+                        <div style={{ 
+                          background: 'var(--bg-secondary)', 
+                          color: 'var(--text-primary)', 
+                          padding: '12px', 
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-color)'
+                        }}>
+                          <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>{data.name}</div>
+                          <div>Éliminations: <strong>{data.value}</strong></div>
+                          <div>Pourcentage: <strong>{data.percentage.toFixed(1)}%</strong></div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Legend 
+                  wrapperStyle={{ paddingTop: '20px' }}
+                  formatter={(value) => {
+                    const entry = campEliminationData.find(d => d.name === value);
+                    return `${value} (${entry?.value || 0})`;
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </FullscreenChart>
+        </div>
+      )}
     </div>
   );
 }

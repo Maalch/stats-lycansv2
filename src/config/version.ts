@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.13';
+export const APP_VERSION = '1.7.14';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.14',
+    date: '27/02/2026',
+    description: 'Ajout d\'un graphique sur la répartition des éliminations par vote selon le camp (Villageois, Loup, Solo Rôles) dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'globalVoting',
+      text: 'Stats Parties / Votes'
+    }
+  },
   {
     version: 'v1.7.13',
     date: '26/02/2026',
