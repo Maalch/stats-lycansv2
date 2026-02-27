@@ -812,6 +812,296 @@ const EVALUATORS = {
     }
     return { value, gameIds };
   },
+
+  /**
+   * Count kills where the killer and victim had the same color
+   * Any kill type counts (wolf kills, hunter kills, potion kills, etc.)
+   */
+  sameColorKills(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+    const countedKillsPerGame = new Map(); // game.Id -> count of same-color kills
+    
+    for (const { game, playerStat } of playerGames) {
+      // Player's color in this game
+      const playerColor = playerStat.Color;
+      if (!playerColor) continue;
+      
+      // Find all victims killed by this player
+      let killsInGame = 0;
+      for (const victim of game.PlayerStats) {
+        if (!victim.KillerName) continue;
+        if (victim.KillerName !== playerStat.Username) continue;
+        
+        // Check if victim had the same color
+        if (victim.Color === playerColor) {
+          killsInGame++;
+        }
+      }
+      
+      if (killsInGame > 0) {
+        value += killsInGame;
+        if (!countedKillsPerGame.has(game.Id)) {
+          gameIds.push(game.Id);
+          countedKillsPerGame.set(game.Id, killsInGame);
+        } else {
+          countedKillsPerGame.set(game.Id, countedKillsPerGame.get(game.Id) + killsInGame);
+        }
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count deaths in all Village map zones
+   * Returns the minimum death count across all 5 zones
+   * (if you died 3 times in each zone, value = 3)
+   * Only counts games played on Village map
+   */
+  deathsInAllZones(playerGames, allGames, playerId, params) {
+    // Village map coordinate offsets (from deathLocationUtils.ts)
+    const VILLAGE_OFFSETS = {
+      x: 166.35,
+      z: 176.22,
+      multiplier: 5.45
+    };
+    
+    // Zone detection based on adjusted coordinates (from PlayerHistoryDeathMap.tsx)
+    function getVillageZone(adjustedX, adjustedZ) {
+      // Village Principal: South area
+      if (adjustedZ >= -250 && adjustedZ <= 100 && adjustedX >= -450 && adjustedX <= -120) {
+        return 'Village Principal';
+      }
+      // Ferme: West area
+      if (adjustedZ >= -550 && adjustedZ <= -250 && adjustedX >= -150 && adjustedX <= 150) {
+        return 'Ferme';
+      }
+      // Village Pêcheur: East area
+      if (adjustedZ >= 150 && adjustedZ <= 500 && adjustedX >= -320 && adjustedX <= 80) {
+        return 'Village Pêcheur';
+      }
+      // Ruines: North area
+      if (adjustedZ >= -220 && adjustedZ <= 200 && adjustedX >= 100 && adjustedX <= 450) {
+        return 'Ruines';
+      }
+      // Reste de la Carte: Rest of the map
+      return 'Reste de la Carte';
+    }
+    
+    // Track deaths per zone
+    const zoneDeaths = {
+      'Village Principal': { count: 0, gameIds: [] },
+      'Ferme': { count: 0, gameIds: [] },
+      'Village Pêcheur': { count: 0, gameIds: [] },
+      'Ruines': { count: 0, gameIds: [] },
+      'Reste de la Carte': { count: 0, gameIds: [] },
+    };
+    
+    const allZones = Object.keys(zoneDeaths);
+    
+    for (const { game, playerStat } of playerGames) {
+      // Only count Village map games
+      if (game.MapName !== 'Village') continue;
+      
+      // Player must have died with position data
+      if (!playerStat.DeathPosition) continue;
+      if (!playerStat.DeathType || playerStat.DeathType === 'SURVIVOR') continue;
+      
+      const { x, z } = playerStat.DeathPosition;
+      
+      // Apply coordinate transformation
+      const adjustedX = (x - VILLAGE_OFFSETS.x) * VILLAGE_OFFSETS.multiplier;
+      const adjustedZ = ((z - VILLAGE_OFFSETS.z) * VILLAGE_OFFSETS.multiplier) * -1;
+      
+      const zone = getVillageZone(adjustedX, adjustedZ);
+      
+      zoneDeaths[zone].count++;
+      zoneDeaths[zone].gameIds.push(game.Id);
+    }
+    
+    // The achievement value is the minimum deaths across all zones
+    // This ensures player died at least X times in EACH zone
+    const minDeaths = Math.min(...allZones.map(z => zoneDeaths[z].count));
+    
+    // Build gameIds list: collect game IDs up to minDeaths from each zone
+    const gameIds = [];
+    const gameIdSet = new Set();
+    
+    for (const zone of allZones) {
+      const zoneGameIds = zoneDeaths[zone].gameIds.slice(0, minDeaths);
+      for (const gid of zoneGameIds) {
+        if (!gameIdSet.has(gid)) {
+          gameIds.push(gid);
+          gameIdSet.add(gid);
+        }
+      }
+    }
+    
+    return { value: minDeaths, gameIds };
+  },
+
+  /**
+   * Count solo camp losses (Amoureux, Agent, Idiot du Village, etc.)
+   */
+  soloLosses(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+    for (const { game, playerStat } of playerGames) {
+      if (playerStat.Victorious) continue;
+      if (isSoloCamp(playerStat.MainRoleInitial, playerStat.Power)) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count deaths as a wolf killed by an Amoureux Loup (another wolf)
+   */
+  wolfKilledByAmoureuxLoup(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+    
+    for (const { game, playerStat } of playerGames) {
+      // Player must be a wolf who died by wolf
+      if (!isWolfCamp(playerStat)) continue;
+      if (playerStat.DeathType !== DeathTypeCode.BY_WOLF) continue;
+      if (!playerStat.KillerName) continue;
+      
+      // Find the killer in this game
+      const killer = game.PlayerStats.find(p => p.Username === playerStat.KillerName);
+      if (!killer) continue;
+      
+      // Check if killer was Amoureux Loup (wolf who is also a lover)
+      const isAmoureuxLoup = killer.MainRoleInitial === 'Amoureux Loup' ||
+                             (isWolfCamp(killer) && killer.SecondaryRole === 'Amoureux');
+      if (isAmoureuxLoup) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Return minimum wins per map (for "win X times on each map")
+   */
+  winsOnAllMaps(playerGames, allGames, playerId, params) {
+    // Gather all unique maps from all games
+    const allMaps = new Set();
+    for (const game of allGames) {
+      if (game.MapName) allMaps.add(game.MapName);
+    }
+    
+    // Count wins per map
+    const winsPerMap = {};
+    for (const mapName of allMaps) {
+      winsPerMap[mapName] = { count: 0, gameIds: [] };
+    }
+    
+    for (const { game, playerStat } of playerGames) {
+      if (playerStat.Victorious && game.MapName && winsPerMap[game.MapName]) {
+        winsPerMap[game.MapName].count++;
+        winsPerMap[game.MapName].gameIds.push(game.Id);
+      }
+    }
+    
+    // Return minimum wins across all maps
+    const mapCounts = Object.values(winsPerMap).map(m => m.count);
+    const minWins = mapCounts.length > 0 ? Math.min(...mapCounts) : 0;
+    
+    // Build gameIds list: collect game IDs up to minWins from each map
+    const gameIds = [];
+    const gameIdSet = new Set();
+    
+    for (const mapName of allMaps) {
+      const mapGameIds = winsPerMap[mapName].gameIds.slice(0, minWins);
+      for (const gid of mapGameIds) {
+        if (!gameIdSet.has(gid)) {
+          gameIds.push(gid);
+          gameIdSet.add(gid);
+        }
+      }
+    }
+    
+    return { value: minWins, gameIds };
+  },
+
+  /**
+   * Count deaths as Idiot du Village by a hunter bullet
+   */
+  idiotKilledByHunter(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+    
+    for (const { game, playerStat } of playerGames) {
+      if (playerStat.MainRoleInitial !== 'Idiot du Village') continue;
+      
+      const isHunterKill = playerStat.DeathType === DeathTypeCode.BULLET ||
+                           playerStat.DeathType === DeathTypeCode.BULLET_HUMAN ||
+                           playerStat.DeathType === DeathTypeCode.BULLET_WOLF;
+      if (isHunterKill) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count sabotages performed as wolf
+   */
+  wolfSabotages(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+    const countedGames = new Set();
+    
+    for (const { game, playerStat } of playerGames) {
+      if (!isWolfCamp(playerStat)) continue;
+      
+      const actions = playerStat.Actions || [];
+      const sabotages = actions.filter(a => a.ActionType === 'Sabotage');
+      
+      if (sabotages.length > 0) {
+        value += sabotages.length;
+        if (!countedGames.has(game.Id)) {
+          gameIds.push(game.Id);
+          countedGames.add(game.Id);
+        }
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count games lost by harvest as wolf without making any kills
+   */
+  wolfLossHarvestNoKills(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+    
+    for (const { game, playerStat } of playerGames) {
+      // Must be a wolf who lost
+      if (playerStat.Victorious) continue;
+      if (!isWolfCamp(playerStat)) continue;
+      
+      // Game must have ended by harvest (HarvestDone >= HarvestGoal)
+      if (game.HarvestDone < game.HarvestGoal) continue;
+      
+      // Check if this wolf made any kills
+      const madeKills = game.PlayerStats.some(victim =>
+        victim.KillerName === playerStat.Username &&
+        victim.DeathType === DeathTypeCode.BY_WOLF
+      );
+      
+      if (!madeKills) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+    return { value, gameIds };
+  },
 };
 
 // ============================================================================

@@ -134,6 +134,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'defeats-solo',
+    name: 'Solo Looser',
+    description: 'En vrai, les alliés, c\'est sympa quand même...',
+    explanation: 'Perdre X parties en camp solo (Amoureux, Idiot du Village, Agent, etc.)',
+    emoji: '🎭',
+    category: 'victories',
+    evaluator: 'soloLosses',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+  {
     id: 'defeats-villageois',
     name: 'L\'important, c\'est de participer (Villageois)',
     description: 'Vous avez perdu mais au moins, vous avez tenté',
@@ -206,6 +226,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'wolf-loss-harvest-no-kills',
+    name: 'Le loup trop gentil',
+    description: 'Vous ne vouliez vraiment blesser personne...',
+    explanation: 'Perdre X parties à la récolte en Loup sans avoir tué personne',
+    emoji: '🌾',
+    category: 'victories',
+    evaluator: 'wolfLossHarvestNoKills',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+  {
     id: 'last-wolf',
     name: 'Le dernier loup',
     description: 'Vous n\'avez besoin de personne pour gagner… Vous seul survivez.',
@@ -243,6 +283,46 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 5 },
       // Lycans: 10
       { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
+    id: 'map-farmer',
+    name: 'Map Farmer',
+    description: 'C\'est bon, vous connaissez les maps',
+    explanation: 'Avoir X victoires sur chaque map',
+    emoji: '🌽',
+    category: 'maps',
+    evaluator: 'winsOnAllMaps',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
+    id: 'wolf-sabotages',
+    name: 'Sabotez-les tous !',
+    description: 'Puits, chaudron, portails, bûches... Vous les connaissez tous',
+    explanation: 'Faire X Sabotages en étant Loup',
+    emoji: '🛠️',
+    category: 'maps',
+    evaluator: 'wolfSabotages',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 15
+      { tier: 'argent', subLevel: 1, threshold: 15 },
+      // Or: 30
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
 
@@ -376,6 +456,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'wolf-killed-by-amoureux-loup',
+    name: 'C\'est l\'Amour',
+    description: 'Un loup tué par un autre loup... C\'est le ponpon',
+    explanation: 'Mourir X fois en Loup par un Amoureux Loup',
+    emoji: '💔',
+    category: 'deaths',
+    evaluator: 'wolfKilledByAmoureuxLoup',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
+    ],
+  },
+  {
     id: 'exploded',
     name: 'C\'est moi la bombe !',
     description: 'Ce n\'est pas la taille qui compte, c\'est l\'explosion',
@@ -433,6 +533,46 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 30 },
       // Lycans: 50
       { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+  {
+    id: 'deaths-all-zones',
+    name: 'Sans Cimetière Fixe',
+    description: 'On ne sait plus où mettre votre corps...',
+    explanation: 'Mourir X fois dans chacune des 5 zones de la carte Village',
+    emoji: '🪦',
+    category: 'deaths',
+    evaluator: 'deathsInAllZones',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
+    ],
+  },
+  {
+    id: 'idiot-killed-by-hunter',
+    name: 'Tir orienté',
+    description: 'Vous savez vous mettre au bon endroit...',
+    explanation: 'Mourir X fois par un tir du Chasseur en étant Idiot du Village',
+    emoji: '🤡',
+    category: 'deaths',
+    evaluator: 'idiotKilledByHunter',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
     ],
   },
 
@@ -526,6 +666,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'hunter-triple-kill',
+    name: 'Maître des loups',
+    description: 'Un, deux, trois... Aucun loup ne vous arrête',
+    explanation: 'Tuer X fois trois Loups dans une même game en étant Chasseur',
+    emoji: '👑',
+    category: 'kills',
+    evaluator: 'hunterMultiKillsInGame',
+    evaluatorParams: { minKills: 3 },
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
     id: 'hunter-killed-by-wolf',
     name: 'Le Loup, c\'est Khalen',
     description: 'Un loup vous a tué alors que vous êtes chasseur... Il évite les balles ?',
@@ -603,6 +763,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 30 },
       // Lycans: 50
       { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+  {
+    id: 'same-color-kills',
+    name: 'C\'est MA couleur !',
+    description: 'Vous voulez être le·a seul·e à la mode, ça se comprend...',
+    explanation: 'Tuer X fois une personne qui porte la même couleur que vous',
+    emoji: '🎨',
+    category: 'kills',
+    evaluator: 'sameColorKills',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
 
