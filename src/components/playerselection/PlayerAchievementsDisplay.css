@@ -196,26 +196,62 @@
   line-height: 1.3;
 }
 
-/* Star Display */
+/* Star Display — SVG colored stars grouped by tier */
 .achievement-stars {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.15rem;
   margin-top: 0.2rem;
+  flex-wrap: wrap;
 }
 
-.achievement-star {
-  font-size: 1rem;
-  opacity: 0.3;
-  transition: opacity 0.3s ease;
+.achievement-tier-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
 }
 
-.achievement-star.unlocked {
+.achievement-tier-separator {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background: var(--border-color);
+  margin: 0 0.25rem;
+  opacity: 0.5;
+}
+
+/* SVG star base */
+.achievement-star-svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  flex-shrink: 0;
+}
+
+.achievement-star-svg:not(.unlocked) {
+  opacity: 0.45;
+  filter: saturate(0.3);
+}
+
+.achievement-star-svg.unlocked {
   opacity: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
 }
 
-.achievement-star.lycan {
-  font-size: 1.1rem;
+.achievement-card:hover .achievement-star-svg.unlocked {
+  transform: scale(1.1);
+}
+
+/* Lycans emoji star */
+.achievement-star-svg.lycans {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.achievement-star-svg.lycans:not(.unlocked) {
+  filter: grayscale(0.8);
+  opacity: 0.35;
 }
 
 /* Progress Bar */

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import './PlayerAchievementsDisplay.css';
+import { AchievementStar } from './AchievementStar';
 import type {
   AchievementWithProgress,
   AchievementCategory,
@@ -16,32 +17,74 @@ interface PlayerAchievementsDisplayProps {
 }
 
 /** Tier display configuration */
-const TIER_CONFIG: Record<AchievementTier, { emoji: string; label: string }> = {
-  bronze: { emoji: '🥉', label: 'Bronze' },
-  argent: { emoji: '🥈', label: 'Argent' },
-  or: { emoji: '🥇', label: 'Or' },
-  lycans: { emoji: '🐺', label: 'Lycans' },
+const TIER_LABELS: Record<AchievementTier, string> = {
+  bronze: 'Bronze',
+  argent: 'Argent',
+  or: 'Or',
+  lycans: 'Lycans',
 };
 
-/** Render tier indicators for an achievement */
+/** Tier summary emojis for the summary bar */
+const TIER_SUMMARY_EMOJI: Record<AchievementTier, string> = {
+  bronze: '🥉',
+  argent: '🥈',
+  or: '🥇',
+  lycans: '🐺',
+};
+
+/**
+ * Group levels by tier for visual separation.
+ * Returns [[bronze levels], [argent levels], [or levels], [lycans levels]]
+ */
+function groupLevelsByTier(levels: AchievementLevel[]): { tier: AchievementTier; levels: AchievementLevel[] }[] {
+  const groups: { tier: AchievementTier; levels: AchievementLevel[] }[] = [];
+  let currentTier: AchievementTier | null = null;
+  let currentGroup: AchievementLevel[] = [];
+
+  for (const level of levels) {
+    if (level.tier !== currentTier) {
+      if (currentGroup.length > 0 && currentTier) {
+        groups.push({ tier: currentTier, levels: currentGroup });
+      }
+      currentTier = level.tier;
+      currentGroup = [level];
+    } else {
+      currentGroup.push(level);
+    }
+  }
+  if (currentGroup.length > 0 && currentTier) {
+    groups.push({ tier: currentTier, levels: currentGroup });
+  }
+  return groups;
+}
+
+/** Render tier indicators for an achievement — colored stars grouped by tier with separators */
 function renderTiers(
   levels: AchievementLevel[],
   unlockedCount: number
 ) {
-  return levels.map((level, i) => {
-    const isUnlocked = i < unlockedCount;
-    const config = TIER_CONFIG[level.tier];
-    const isLycans = level.tier === 'lycans';
-    return (
-      <span
-        key={`${level.tier}-${level.subLevel}`}
-        className={`achievement-star ${isUnlocked ? 'unlocked' : ''} ${isLycans ? 'lycan' : ''}`}
-        title={`${config.label} ${level.subLevel} — ${level.threshold}`}
-      >
-        {config.emoji}
-      </span>
-    );
-  });
+  const tierGroups = groupLevelsByTier(levels);
+  let levelIndex = 0;
+
+  return tierGroups.map((group, groupIdx) => (
+    <span key={group.tier} className="achievement-tier-group">
+      {groupIdx > 0 && <span className="achievement-tier-separator" />}
+      {group.levels.map((level) => {
+        const isUnlocked = levelIndex < unlockedCount;
+        const title = `${TIER_LABELS[level.tier]} ${level.subLevel} — ${level.threshold}`;
+        levelIndex++;
+        return (
+          <AchievementStar
+            key={`${level.tier}-${level.subLevel}`}
+            tier={level.tier}
+            filled={isUnlocked}
+            size={18}
+            title={title}
+          />
+        );
+      })}
+    </span>
+  ));
 }
 
 export function PlayerAchievementsDisplay({
@@ -151,30 +194,18 @@ export function PlayerAchievementsDisplay({
           <span className="achievements-summary-value">{totalUnlocked}</span>
           <span className="achievements-summary-label">/ {totalLevels} niveaux</span>
         </div>
-        {tierCounts.bronze > 0 && (
-          <div className="achievements-summary-item">
-            <span>🥉</span>
-            <span className="achievements-summary-value">{tierCounts.bronze}</span>
-          </div>
-        )}
-        {tierCounts.argent > 0 && (
-          <div className="achievements-summary-item">
-            <span>🥈</span>
-            <span className="achievements-summary-value">{tierCounts.argent}</span>
-          </div>
-        )}
-        {tierCounts.or > 0 && (
-          <div className="achievements-summary-item">
-            <span>🥇</span>
-            <span className="achievements-summary-value">{tierCounts.or}</span>
-          </div>
-        )}
-        {tierCounts.lycans > 0 && (
-          <div className="achievements-summary-item">
-            <span>🐺</span>
-            <span className="achievements-summary-value">{tierCounts.lycans}</span>
-          </div>
-        )}
+        {(Object.entries(tierCounts) as [AchievementTier, number][])
+          .filter(([, count]) => count > 0)
+          .map(([tier, count]) => (
+            <div key={tier} className="achievements-summary-item">
+              {tier !== 'lycans' ? (
+                <AchievementStar tier={tier} filled={true} size={20} />
+              ) : (
+                <span>{TIER_SUMMARY_EMOJI[tier]}</span>
+              )}
+              <span className="achievements-summary-value">{count}</span>
+            </div>
+          ))}
       </div>
 
       {/* Category Filters */}

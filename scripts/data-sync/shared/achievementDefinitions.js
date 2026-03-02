@@ -399,20 +399,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'deathOnTiming',
     evaluatorParams: { timing: 'N1' },
     levels: [
-      // Bronze: 1 - 5 - 10
+      // Bronze: 1 - 3 - 5
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 30 - 50 - 70
-      { tier: 'argent', subLevel: 1, threshold: 30 },
-      { tier: 'argent', subLevel: 2, threshold: 50 },
-      { tier: 'argent', subLevel: 3, threshold: 70 },
-      // Or: 100 - 150 - 200
-      { tier: 'or', subLevel: 1, threshold: 100 },
-      { tier: 'or', subLevel: 2, threshold: 150 },
-      { tier: 'or', subLevel: 3, threshold: 200 },
-      // Lycans: 300
-      { tier: 'lycans', subLevel: 1, threshold: 300 },
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 10 - 15 - 20
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      { tier: 'argent', subLevel: 2, threshold: 15 },
+      { tier: 'argent', subLevel: 3, threshold: 20 },
+      // Or: 30 - 40 - 50
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 40 },
+      { tier: 'or', subLevel: 3, threshold: 50 },
+      // Lycans: 75
+      { tier: 'lycans', subLevel: 1, threshold: 75 },
     ],
   },
   {
@@ -675,14 +675,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'hunterMultiKillsInGame',
     evaluatorParams: { minKills: 3 },
     levels: [
-      // Bronze: 1
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 2
-      { tier: 'argent', subLevel: 1, threshold: 2 },
-      // Or: 3
-      { tier: 'or', subLevel: 1, threshold: 3 },
-      // Lycans: 5
-      { tier: 'lycans', subLevel: 1, threshold: 5 },
+      // Lycans: 1 — exploit unique, complété dès la première réalisation
+      { tier: 'lycans', subLevel: 1, threshold: 1 },
     ],
   },
   {
@@ -999,10 +993,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 7 },
       { tier: 'or', subLevel: 2, threshold: 8 },
       { tier: 'or', subLevel: 3, threshold: 9 },
-      // Lycans: 10 - 11 - 12 couleurs (toutes!)
-      { tier: 'lycans', subLevel: 1, threshold: 10 },
-      { tier: 'lycans', subLevel: 2, threshold: 11 },
-      { tier: 'lycans', subLevel: 3, threshold: 12 },
+      // Lycans: 12 couleurs (toutes!)
+      { tier: 'lycans', subLevel: 1, threshold: 12 },
     ],
   },
 ];
