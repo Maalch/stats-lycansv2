@@ -138,6 +138,7 @@ function generateAllPlayerRankings(gameLogData, returnCache = false) {
     cache.allGames.hunterStats = allGamesHunterStats;
     cache.allGames.campStats = allGamesCampStats;
     cache.allGames.votingStats = allGamesVotingStats;
+    cache.allGames.talkingStats = allGamesTalkingStats;
     
     cache.moddedGames.totalGames = moddedGames.length;
     cache.moddedGames.playerStats = convertPlayerStatsToCache(moddedOnlyStats.playerStats);
@@ -147,6 +148,7 @@ function generateAllPlayerRankings(gameLogData, returnCache = false) {
     cache.moddedGames.hunterStats = moddedOnlyHunterStats;
     cache.moddedGames.campStats = moddedOnlyCampStats;
     cache.moddedGames.votingStats = moddedOnlyVotingStats;
+    cache.moddedGames.talkingStats = moddedOnlyTalkingStats;
     
     return { Rankings, updatedCache: cache };
   }
