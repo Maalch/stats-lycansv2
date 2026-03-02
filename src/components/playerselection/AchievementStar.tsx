@@ -4,9 +4,8 @@
  * Based on team discussion: colored stars (bronze/silver/gold) with
  * filled = unlocked, outlined = locked. Lycans tier uses wolf emoji.
  * 
- * Two star variants:
- * - 5-pointed star for bronze & gold
- * - 6-pointed star for silver (to visually differentiate)
+ * All three tiers (bronze, argent, or) use the same 5-pointed star shape,
+ * differentiated only by color. Lycans tier uses wolf emoji.
  */
 
 import type { AchievementTier } from '../../types/achievements';
@@ -38,7 +37,7 @@ interface AchievementStarProps {
 }
 
 /**
- * 5-pointed star SVG path (used for bronze and gold)
+ * 5-pointed star SVG path (used for all non-lycans tiers: bronze, argent, gold)
  * Centered in a 24x24 viewBox
  */
 function FivePointStar({ fill, stroke, strokeWidth }: { fill: string; stroke: string; strokeWidth: number }) {
@@ -54,26 +53,9 @@ function FivePointStar({ fill, stroke, strokeWidth }: { fill: string; stroke: st
 }
 
 /**
- * 6-pointed star SVG path (used for silver/argent to differentiate from bronze/gold)
- * Centered in a 24x24 viewBox
- */
-function SixPointStar({ fill, stroke, strokeWidth }: { fill: string; stroke: string; strokeWidth: number }) {
-  return (
-    <path
-      d="M12 1l3.46 6h6.93l-3.47 6 3.47 6h-6.93L12 25l-3.46-6H1.61l3.47-6-3.47-6h6.93L12 1z"
-      fill={fill}
-      stroke={stroke}
-      strokeWidth={strokeWidth}
-      strokeLinejoin="round"
-    />
-  );
-}
-
-/**
  * Renders a single colored star for an achievement tier.
- * - Bronze & Gold: 5-pointed star
- * - Silver: 6-pointed star (per discussion: differentiate by shape too)
- * - Lycans: Wolf emoji span (unchanged)
+ * - Bronze, Argent & Or: same 5-pointed star, differentiated by color
+ * - Lycans: Wolf emoji span
  */
 export function AchievementStar({ tier, filled, size = 18, title }: AchievementStarProps) {
   // Lycans tier uses wolf emoji
@@ -90,8 +72,8 @@ export function AchievementStar({ tier, filled, size = 18, title }: AchievementS
   }
 
   const colors = TIER_COLORS[tier];
-  const StarShape = tier === 'argent' ? SixPointStar : FivePointStar;
-  const viewBox = tier === 'argent' ? '-0.5 -0.5 25 27' : '0 0 24 24';
+  const StarShape = FivePointStar;
+  const viewBox = '0 0 24 24';
 
   return (
     <svg
