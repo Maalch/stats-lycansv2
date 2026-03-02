@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-02T15:37:30.115Z",
+  "generatedAt": "2026-03-02T16:02:20.525Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 767,
@@ -628,47 +628,47 @@
         {
           "tier": "bronze",
           "subLevel": 2,
-          "threshold": 5
+          "threshold": 3
         },
         {
           "tier": "bronze",
           "subLevel": 3,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
           "threshold": 10
         },
         {
           "tier": "argent",
+          "subLevel": 2,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 20
+        },
+        {
+          "tier": "or",
           "subLevel": 1,
           "threshold": 30
         },
         {
-          "tier": "argent",
+          "tier": "or",
           "subLevel": 2,
+          "threshold": 40
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
           "threshold": 50
-        },
-        {
-          "tier": "argent",
-          "subLevel": 3,
-          "threshold": 70
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 100
-        },
-        {
-          "tier": "or",
-          "subLevel": 2,
-          "threshold": 150
-        },
-        {
-          "tier": "or",
-          "subLevel": 3,
-          "threshold": 200
         },
         {
           "tier": "lycans",
           "subLevel": 1,
-          "threshold": 300
+          "threshold": 75
         }
       ]
     },
@@ -1071,24 +1071,9 @@
       "category": "kills",
       "levels": [
         {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 2
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
           "tier": "lycans",
           "subLevel": 1,
-          "threshold": 5
+          "threshold": 1
         }
       ]
     },
@@ -1568,16 +1553,6 @@
         {
           "tier": "lycans",
           "subLevel": 1,
-          "threshold": 10
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 2,
-          "threshold": 11
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 3,
           "threshold": 12
         }
       ]
@@ -1661,9 +1636,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "avenger-death",
@@ -1790,16 +1765,16 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         }
       ]
     },
     "3": {
       "playerId": "3",
       "playerName": "Antoine",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -1905,11 +1880,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20241206000000-250"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241206000000-260"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -2064,9 +2045,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.6666666666666666
         },
         {
           "id": "ponce-fesses",
@@ -2167,7 +2148,7 @@
     "8": {
       "playerId": "8",
       "playerName": "BoccA",
-      "totalUnlocked": 24,
+      "totalUnlocked": 27,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -2376,18 +2357,36 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250114000000-310"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231219000000-15"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250114000000-310"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250304000000-362"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250401000000-387"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250411000000-402"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 30
           },
@@ -2702,7 +2701,7 @@
     "10": {
       "playerId": "10",
       "playerName": "Covfefe",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -2808,11 +2807,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231228000000-24"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231228000000-35"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -2879,7 +2884,7 @@
     "11": {
       "playerId": "11",
       "playerName": "Crocodyle",
-      "totalUnlocked": 7,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -2962,11 +2967,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231013000000-1"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231013000000-10"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -3087,9 +3098,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.6666666666666666
         },
         {
           "id": "ponce-fesses",
@@ -3125,7 +3136,7 @@
     "13": {
       "playerId": "13",
       "playerName": "DevGirl_",
-      "totalUnlocked": 13,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3284,11 +3295,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250501000000-417"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250716000000-473"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.8
@@ -3407,7 +3424,7 @@
     "14": {
       "playerId": "14",
       "playerName": "DFG",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3464,13 +3481,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231013000000-3"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20231013000000-6"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.5
@@ -3664,9 +3687,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.6666666666666666
         },
         {
           "id": "avenger-death",
@@ -3812,9 +3835,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "voted-as-villager",
@@ -3890,7 +3913,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 47,
+      "totalUnlocked": 50,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4184,28 +4207,46 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240717000000-181"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240703000000-174"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240717000000-181"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240821000000-217"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20241217000000-281"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250110000000-298"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20250411000000-404"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 2,
-            "threshold": 50
+            "threshold": 40
           },
-          "progress": 0.76
+          "progress": 0.95
         },
         {
           "id": "voted-as-villager",
@@ -4493,7 +4534,7 @@
     "18": {
       "playerId": "18",
       "playerName": "GoB",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4616,13 +4657,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231219000000-21"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20240813000000-202"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.9
@@ -4724,7 +4771,7 @@
     "19": {
       "playerId": "19",
       "playerName": "Heimdalle",
-      "totalUnlocked": 17,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4882,13 +4929,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240329000000-115"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20250207000000-330"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.9
@@ -5051,9 +5104,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "ponce-fesses",
@@ -5239,9 +5292,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "ponce-fesses",
@@ -5272,7 +5325,7 @@
     "24": {
       "playerId": "24",
       "playerName": "Ketchopi",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5377,11 +5430,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250114000000-308"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-314"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -5442,7 +5501,7 @@
     "26": {
       "playerId": "26",
       "playerName": "Koka",
-      "totalUnlocked": 21,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5635,22 +5694,34 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240522000000-149"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240507000000-131"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240522000000-149"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20241210000000-267"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250128000000-323"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 3,
+            "threshold": 20
           },
-          "progress": 0.5666666666666667
+          "progress": 0.85
         },
         {
           "id": "avenger-death",
@@ -5760,7 +5831,7 @@
     "27": {
       "playerId": "27",
       "playerName": "Leaprima",
-      "totalUnlocked": 15,
+      "totalUnlocked": 16,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5907,22 +5978,28 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240924000000-233"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240924000000-230"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240924000000-233"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20241231000000-285"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 2,
+            "threshold": 15
           },
-          "progress": 0.4
+          "progress": 0.8
         },
         {
           "id": "ponce-fesses",
@@ -6038,9 +6115,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         }
       ]
     },
@@ -6146,9 +6223,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "ponce-fesses",
@@ -6185,7 +6262,7 @@
     "30": {
       "playerId": "30",
       "playerName": "Lydiaam",
-      "totalUnlocked": 13,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6336,13 +6413,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240726000000-191"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20240726000000-195"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.6
@@ -6409,7 +6492,7 @@
     "31": {
       "playerId": "31",
       "playerName": "LyeGaia",
-      "totalUnlocked": 22,
+      "totalUnlocked": 24,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6567,22 +6650,34 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240116000000-44"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231228000000-34"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-44"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240405000000-122"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20241206000000-253"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 3,
+            "threshold": 20
           },
-          "progress": 0.5666666666666667
+          "progress": 0.85
         },
         {
           "id": "voted-as-villager",
@@ -6724,7 +6819,7 @@
     "32": {
       "playerId": "32",
       "playerName": "Maechi",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6835,13 +6930,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240229000000-80"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20240229000000-84"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.7
@@ -6966,9 +7067,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.6666666666666666
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -6997,7 +7098,7 @@
     "34": {
       "playerId": "34",
       "playerName": "Nahomay",
-      "totalUnlocked": 24,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7160,22 +7261,34 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240206000000-63"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240116000000-42"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240206000000-63"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240329000000-104"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240405000000-118"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 3,
+            "threshold": 20
           },
-          "progress": 0.6333333333333333
+          "progress": 0.95
         },
         {
           "id": "avenger-death",
@@ -7322,7 +7435,7 @@
     "35": {
       "playerId": "35",
       "playerName": "Naka",
-      "totalUnlocked": 18,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7456,18 +7569,36 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20231228000000-26"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231219000000-18"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-26"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20231228000000-32"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240229000000-79"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240507000000-131"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 30
           },
@@ -7599,7 +7730,7 @@
     "36": {
       "playerId": "36",
       "playerName": "Noamouille",
-      "totalUnlocked": 18,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7756,13 +7887,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250311000000-375"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20250318000000-379"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.5
@@ -7944,7 +8081,7 @@
     "38": {
       "playerId": "38",
       "playerName": "Pelerine",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8072,13 +8209,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250716000000-482"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20250805000000-513"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.5
@@ -8139,7 +8282,7 @@
     "39": {
       "playerId": "39",
       "playerName": "Poachimpa",
-      "totalUnlocked": 12,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8273,13 +8416,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250304000000-364"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20250311000000-369"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.7
@@ -8335,7 +8484,7 @@
     "40": {
       "playerId": "40",
       "playerName": "Pressea",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8398,13 +8547,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241206000000-258"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20241206000000-260"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.5
@@ -8477,9 +8632,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.6666666666666666
         },
         {
           "id": "kill-surprise",
@@ -8497,7 +8652,7 @@
     "43": {
       "playerId": "43",
       "playerName": "Sakor",
-      "totalUnlocked": 15,
+      "totalUnlocked": 16,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8608,22 +8763,28 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240405000000-124"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231013000000-9"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240405000000-124"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20241206000000-260"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 2,
+            "threshold": 15
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "voted-as-villager",
@@ -8809,9 +8970,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "ponce-fesses",
@@ -8869,7 +9030,7 @@
     "45": {
       "playerId": "45",
       "playerName": "Skyyart",
-      "totalUnlocked": 5,
+      "totalUnlocked": 6,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8928,11 +9089,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20241206000000-250"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241206000000-252"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.8
@@ -9030,9 +9197,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "voted-as-villager",
@@ -9120,7 +9287,7 @@
     "49": {
       "playerId": "49",
       "playerName": "Wingo",
-      "totalUnlocked": 29,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9301,18 +9468,36 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20231228000000-34"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231228000000-28"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-34"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240130000000-56"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240329000000-110"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240726000000-191"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 30
           },
@@ -9651,7 +9836,7 @@
     "51": {
       "playerId": "51",
       "playerName": "Yoona",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9791,11 +9976,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250513000000-431"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250619000000-451"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -9891,7 +10082,7 @@
     "52": {
       "playerId": "52",
       "playerName": "Zarcross",
-      "totalUnlocked": 24,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10085,22 +10276,34 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250513000000-427"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250422000000-407"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250513000000-427"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250527000000-441"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250911000000-539"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 3,
+            "threshold": 20
           },
-          "progress": 0.6333333333333333
+          "progress": 0.95
         },
         {
           "id": "voted-as-villager",
@@ -10296,7 +10499,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 92,
+      "totalUnlocked": 95,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10705,46 +10908,60 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20231228000000-30"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231228000000-25"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-30"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240116000000-47"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240206000000-73"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240321000000-100"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20240507000000-135"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20240924000000-221"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "Ponce-20241205000000-248"
             },
             {
-              "tier": "argent",
-              "subLevel": 3,
-              "threshold": 70,
-              "unlockedAtGame": "Ponce-20250218000000-338"
-            },
-            {
-              "tier": "or",
+              "tier": "lycans",
               "subLevel": 1,
-              "threshold": 100,
-              "unlockedAtGame": "Ponce-20250923000000-557"
+              "threshold": 75,
+              "unlockedAtGame": "Ponce-20250304000000-366"
             }
           ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 2,
-            "threshold": 150
-          },
-          "progress": 0.8133333333333334
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "voted-as-villager",
@@ -11257,7 +11474,7 @@
     "76561198054824482": {
       "playerId": "76561198054824482",
       "playerName": "Gom4rt",
-      "totalUnlocked": 16,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11393,11 +11610,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231013000000-4"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241206000000-261"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -11535,7 +11758,7 @@
     "76561198065697406": {
       "playerId": "76561198065697406",
       "playerName": "Onutrem",
-      "totalUnlocked": 27,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11710,18 +11933,36 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240116000000-45"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240116000000-40"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-45"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240206000000-65"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240329000000-111"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20241206000000-252"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 30
           },
@@ -11923,7 +12164,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 86,
+      "totalUnlocked": 90,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12323,40 +12564,60 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240116000000-47"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231228000000-34"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-47"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240206000000-65"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240229000000-81"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240507000000-128"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20240924000000-222"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20241217000000-280"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "Ponce-20250207000000-330"
             },
             {
-              "tier": "argent",
-              "subLevel": 3,
-              "threshold": 70,
-              "unlockedAtGame": "Ponce-20250716000000-479"
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 75,
+              "unlockedAtGame": "Ponce-20250923000000-556"
             }
           ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 1,
-            "threshold": 100
-          },
-          "progress": 0.95
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "voted-as-villager",
@@ -12855,7 +13116,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 86,
+      "totalUnlocked": 90,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13235,40 +13496,60 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20231228000000-26"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231219000000-13"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-26"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240229000000-75"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240321000000-98"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240329000000-112"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20240726000000-197"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20241205000000-246"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "Ponce-20250225000000-353"
             },
             {
-              "tier": "argent",
-              "subLevel": 3,
-              "threshold": 70,
-              "unlockedAtGame": "Ponce-20250826000000-524"
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 75,
+              "unlockedAtGame": "Ponce-20251009120237"
             }
           ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 1,
-            "threshold": 100
-          },
-          "progress": 0.9
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "voted-as-villager",
@@ -13773,7 +14054,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 77,
+      "totalUnlocked": 80,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14196,46 +14477,60 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20231228000000-28"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231219000000-21"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-28"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240116000000-50"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240229000000-89"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240329000000-115"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20240813000000-200"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20241210000000-264"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "Ponce-20250128000000-327"
             },
             {
-              "tier": "argent",
-              "subLevel": 3,
-              "threshold": 70,
-              "unlockedAtGame": "Ponce-20250513000000-428"
-            },
-            {
-              "tier": "or",
+              "tier": "lycans",
               "subLevel": 1,
-              "threshold": 100,
-              "unlockedAtGame": "khalen-20260113114218"
+              "threshold": 75,
+              "unlockedAtGame": "Ponce-20250729000000-497"
             }
           ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 2,
-            "threshold": 150
-          },
-          "progress": 0.6933333333333334
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "voted-as-villager",
@@ -14638,7 +14933,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 83,
+      "totalUnlocked": 86,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15031,40 +15326,58 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240116000000-42"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231228000000-30"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-42"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240717000000-182"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240924000000-225"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240924000000-240"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20250207000000-330"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
-              "threshold": 50,
-              "unlockedAtGame": "Ponce-20250722000000-492"
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20250401000000-394"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 3,
-              "threshold": 70,
-              "unlockedAtGame": "khalen-20260224131059"
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250722000000-492"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 100
+            "threshold": 75
           },
-          "progress": 0.7
+          "progress": 0.9333333333333333
         },
         {
           "id": "voted-as-villager",
@@ -15522,7 +15835,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 67,
+      "totalUnlocked": 71,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15860,34 +16173,58 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240116000000-53"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240116000000-49"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-53"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240229000000-79"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240329000000-110"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240522000000-148"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20240924000000-239"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20250218000000-344"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "Ponce-20250805000000-513"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
-            "subLevel": 3,
-            "threshold": 70
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 75
           },
-          "progress": 0.9714285714285714
+          "progress": 0.9066666666666666
         },
         {
           "id": "voted-as-villager",
@@ -16352,7 +16689,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 63,
+      "totalUnlocked": 67,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16689,34 +17026,58 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240507000000-137"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240229000000-87"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240507000000-137"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240717000000-183"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240821000000-218"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240924000000-236"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20250318000000-383"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20250722000000-490"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "khalen-20251209123037"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
-            "subLevel": 3,
-            "threshold": 70
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 75
           },
-          "progress": 0.8428571428571429
+          "progress": 0.7866666666666666
         },
         {
           "id": "voted-as-villager",
@@ -17118,7 +17479,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 56,
+      "totalUnlocked": 60,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17429,25 +17790,49 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240703000000-175"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240522000000-152"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240703000000-175"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20241210000000-264"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20241231000000-290"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250114000000-312"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20250501000000-418"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20250805000000-510"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
-            "subLevel": 2,
+            "tier": "or",
+            "subLevel": 3,
             "threshold": 50
           },
           "progress": 0.92
@@ -17835,7 +18220,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 63,
+      "totalUnlocked": 66,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18142,40 +18527,58 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240522000000-149"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240522000000-147"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240522000000-149"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240821000000-211"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240924000000-226"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20241210000000-271"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20250318000000-381"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
-              "threshold": 50,
-              "unlockedAtGame": "Ponce-20250729000000-505"
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20250513000000-430"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 3,
-              "threshold": 70,
-              "unlockedAtGame": "Ponce-20260203144119"
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250729000000-505"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 100
+            "threshold": 75
           },
-          "progress": 0.7
+          "progress": 0.9333333333333333
         },
         {
           "id": "voted-as-villager",
@@ -18591,7 +18994,7 @@
     "76561198018650146": {
       "playerId": "76561198018650146",
       "playerName": "TPK",
-      "totalUnlocked": 20,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18726,22 +19129,28 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240405000000-127"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240405000000-124"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20240618000000-163"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 2,
+            "threshold": 15
           },
-          "progress": 0.36666666666666664
+          "progress": 0.7333333333333333
         },
         {
           "id": "voted-as-villager",
@@ -18927,7 +19336,7 @@
     "76561197997304949": {
       "playerId": "76561197997304949",
       "playerName": "Brybry",
-      "totalUnlocked": 23,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19127,22 +19536,34 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240821000000-212"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240813000000-202"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240821000000-212"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250110000000-301"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250619000000-448"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 3,
+            "threshold": 20
           },
-          "progress": 0.6
+          "progress": 0.9
         },
         {
           "id": "avenger-death",
@@ -19314,7 +19735,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 71,
+      "totalUnlocked": 74,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19663,40 +20084,58 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20241210000000-273"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241210000000-270"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241210000000-273"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250110000000-293"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250114000000-308"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250207000000-328"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20250318000000-383"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
-              "threshold": 50,
-              "unlockedAtGame": "Ponce-20250826000000-526"
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20250710000000-465"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 3,
-              "threshold": 70,
-              "unlockedAtGame": "Ponce-20260203144119"
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250826000000-526"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 100
+            "threshold": 75
           },
-          "progress": 0.71
+          "progress": 0.9466666666666667
         },
         {
           "id": "voted-as-villager",
@@ -20121,7 +20560,7 @@
     "76561198140298176": {
       "playerId": "76561198140298176",
       "playerName": "Kyria",
-      "totalUnlocked": 39,
+      "totalUnlocked": 42,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20379,28 +20818,46 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20241210000000-272"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241205000000-247"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241210000000-272"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250110000000-294"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250128000000-322"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250722000000-490"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20251009142833"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 2,
-            "threshold": 50
+            "threshold": 40
           },
-          "progress": 0.72
+          "progress": 0.9
         },
         {
           "id": "voted-as-villager",
@@ -20654,7 +21111,7 @@
     "76561197972377069": {
       "playerId": "76561197972377069",
       "playerName": "BERLU",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20737,11 +21194,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20241206000000-251"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251125124356"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -20819,7 +21282,7 @@
     "76561198256660482": {
       "playerId": "76561198256660482",
       "playerName": "Baout",
-      "totalUnlocked": 36,
+      "totalUnlocked": 38,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21088,22 +21551,34 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250311000000-373"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250225000000-351"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250311000000-373"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250422000000-415"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260224132758"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 3,
+            "threshold": 20
           },
-          "progress": 0.5
+          "progress": 0.75
         },
         {
           "id": "voted-as-villager",
@@ -21355,7 +21830,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 43,
+      "totalUnlocked": 47,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21651,34 +22126,58 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250128000000-320"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-310"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250128000000-320"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250218000000-339"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250311000000-369"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250318000000-381"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20251028000000-599"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20260106135015"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "Ponce-20260203141837"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
-            "subLevel": 3,
-            "threshold": 70
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 75
           },
-          "progress": 0.7428571428571429
+          "progress": 0.6933333333333334
         },
         {
           "id": "voted-as-villager",
@@ -21945,7 +22444,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 29,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22151,18 +22650,36 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250225000000-353"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250225000000-349"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250225000000-353"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250722000000-486"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250805000000-512"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20251028000000-605"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 30
           },
@@ -22358,7 +22875,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 58,
+      "totalUnlocked": 62,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22672,34 +23189,58 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250207000000-332"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250207000000-329"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250207000000-332"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250218000000-344"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250304000000-359"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250318000000-381"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20250513000000-429"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20251028000000-601"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "Ponce-20251202123802"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
-            "subLevel": 3,
-            "threshold": 70
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 75
           },
-          "progress": 0.8428571428571429
+          "progress": 0.7866666666666666
         },
         {
           "id": "voted-as-villager",
@@ -23096,7 +23637,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 50,
+      "totalUnlocked": 53,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23369,28 +23910,46 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250716000000-484"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250716000000-477"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250716000000-484"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250911000000-538"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20251104121949"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20251125141435"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20260127142946"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 2,
-            "threshold": 50
+            "threshold": 40
           },
-          "progress": 0.62
+          "progress": 0.775
         },
         {
           "id": "voted-as-villager",
@@ -23716,7 +24275,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 49,
+      "totalUnlocked": 52,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24000,28 +24559,46 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250318000000-381"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250304000000-364"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250318000000-381"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250513000000-425"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250729000000-499"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Tsuna-20251111113550"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20260210111925"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 2,
-            "threshold": 50
+            "threshold": 40
           },
-          "progress": 0.64
+          "progress": 0.8
         },
         {
           "id": "voted-as-villager",
@@ -24181,18 +24758,14 @@
           "currentValue": 1,
           "unlockedLevels": [
             {
-              "tier": "bronze",
+              "tier": "lycans",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250513000000-432"
             }
           ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 2
-          },
-          "progress": 0.5
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -24363,7 +24936,7 @@
     "76561198019060909": {
       "playerId": "76561198019060909",
       "playerName": "Reivil",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24473,13 +25046,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250311000000-373"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20250916000000-547"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.7
@@ -24540,7 +25119,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 49,
+      "totalUnlocked": 53,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24812,34 +25391,58 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250501000000-422"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250501000000-419"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250501000000-422"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250527000000-438"
             },
             {
               "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250716000000-478"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250826000000-521"
+            },
+            {
+              "tier": "or",
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "Ponce-20251028000000-602"
             },
             {
-              "tier": "argent",
+              "tier": "or",
               "subLevel": 2,
+              "threshold": 40,
+              "unlockedAtGame": "Ponce-20251125141435"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
               "threshold": 50,
               "unlockedAtGame": "khalen-20260113124124"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
-            "subLevel": 3,
-            "threshold": 70
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 75
           },
-          "progress": 0.8
+          "progress": 0.7466666666666667
         },
         {
           "id": "voted-as-villager",
@@ -25188,7 +25791,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 41,
+      "totalUnlocked": 44,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25447,18 +26050,36 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250619000000-448"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250527000000-439"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250619000000-448"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250826000000-524"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20251028000000-603"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20251230113308"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 30
           },
@@ -25759,7 +26380,7 @@
     "76561197996828190": {
       "playerId": "76561197996828190",
       "playerName": "Mickalow",
-      "totalUnlocked": 17,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25921,13 +26542,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250923000000-556"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20251014121305"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.7
@@ -26098,7 +26725,7 @@
     "76561197987657681": {
       "playerId": "76561197987657681",
       "playerName": "PeoBran",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26272,13 +26899,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250722000000-492"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20250916000000-548"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.7
@@ -26385,7 +27018,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 13,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26514,22 +27147,34 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250923000000-556"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250923000000-552"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250923000000-556"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20251202125720"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20251230160612"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 3,
+            "threshold": 20
           },
-          "progress": 0.5333333333333333
+          "progress": 0.8
         },
         {
           "id": "voted-as-villager",
@@ -26631,7 +27276,7 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "totalUnlocked": 11,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26766,11 +27411,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20251223130848"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260113144819"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -26866,7 +27517,7 @@
     "76561198155130320": {
       "playerId": "76561198155130320",
       "playerName": "MaMaPaprika",
-      "totalUnlocked": 20,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27029,22 +27680,28 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250902000000-533"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250826000000-523"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250902000000-533"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20260106124853"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 2,
+            "threshold": 15
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "exploded",
@@ -27167,7 +27824,7 @@
     "76561198076478013": {
       "playerId": "76561198076478013",
       "playerName": "Areliann",
-      "totalUnlocked": 28,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27360,18 +28017,36 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250916000000-547"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250902000000-534"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250916000000-547"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20250930000000-565"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20251202123802"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260113114218"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
             "threshold": 30
           },
@@ -27562,7 +28237,7 @@
     "76561199013115670": {
       "playerId": "76561199013115670",
       "playerName": "SpicY",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27702,13 +28377,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251028000000-605"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "khalen-20260120114742"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.5
@@ -27814,7 +28495,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 29,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28023,22 +28704,34 @@
             {
               "tier": "bronze",
               "subLevel": 2,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251125133535"
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251023114908"
             },
             {
               "tier": "bronze",
               "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251125133535"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20260127125055"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260217141704"
             }
           ],
           "nextLevel": {
             "tier": "argent",
-            "subLevel": 1,
-            "threshold": 30
+            "subLevel": 3,
+            "threshold": 20
           },
-          "progress": 0.5
+          "progress": 0.75
         },
         {
           "id": "voted-as-villager",
@@ -28366,9 +29059,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.6666666666666666
         },
         {
           "id": "voted-as-villager",
@@ -28559,9 +29252,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "hunter-kill-enemy",
@@ -28766,7 +29459,7 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28883,11 +29576,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20260127153752"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260217144943"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.8
@@ -28959,7 +29658,7 @@
     "76561198271274269": {
       "playerId": "76561198271274269",
       "playerName": "MartinPonK",
-      "totalUnlocked": 16,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29123,13 +29822,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20251111132522"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20251125124356"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.5
@@ -29224,7 +29929,7 @@
     "76561198353315250": {
       "playerId": "76561198353315250",
       "playerName": "AxRuby",
-      "totalUnlocked": 5,
+      "totalUnlocked": 6,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29311,11 +30016,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20251125133535"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251125141435"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.6
@@ -29365,7 +30076,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 22,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29541,13 +30252,19 @@
             {
               "tier": "bronze",
               "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260113120242"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20260203115806"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 3,
+            "tier": "argent",
+            "subLevel": 1,
             "threshold": 10
           },
           "progress": 0.7
@@ -29768,7 +30485,7 @@
     "76561199098154286": {
       "playerId": "76561199098154286",
       "playerName": "Grim_the_turtle",
-      "totalUnlocked": 5,
+      "totalUnlocked": 6,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29844,11 +30561,17 @@
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "khalen-20260113144819"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260127142946"
             }
           ],
           "nextLevel": {
             "tier": "bronze",
-            "subLevel": 2,
+            "subLevel": 3,
             "threshold": 5
           },
           "progress": 0.8
@@ -30149,9 +30872,9 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
           "id": "ponce-fesses",
