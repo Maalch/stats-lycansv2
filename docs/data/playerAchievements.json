@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-03T15:36:27.123Z",
+  "generatedAt": "2026-03-03T16:07:49.713Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 776,
@@ -1065,6 +1065,37 @@
       "requiresBRData": false
     },
     {
+      "id": "villageois-double-ally-kill",
+      "name": "Oups",
+      "description": "Alors, vous vous êtes trompés d'alliés...",
+      "explanation": "Faire X parties en tuant deux alliés hors meeting en étant Villageois",
+      "emoji": "🤦",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 15
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "hunter-double-kill",
       "name": "Farmeur de loups",
       "description": "Un loup c'est bien, deux loups c'est mieux",
@@ -1231,6 +1262,98 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 50
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "amoureux-loup-kills-lover",
+      "name": "Un chouya fusionnel",
+      "description": "Vous l'aimez tellement que... Vous l'avez croqué",
+      "explanation": "Tuer X fois son amoureux en étant Amoureux Loup",
+      "emoji": "🐺❤️",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "amoureux-loup-total-kills",
+      "name": "C'est pour toi mon amour UwU",
+      "description": "Vous tuez uniquement par passion. Elle vous fait dépasser les limites.",
+      "explanation": "Faire X kills en Amoureux Loup",
+      "emoji": "🐺💕",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 5
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 20
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 30
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 40
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 60
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 80
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 100
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 200
         }
       ],
       "requiresBRData": false
@@ -1973,6 +2096,67 @@
       "requiresBRData": true
     },
     {
+      "id": "br-lucky-luke",
+      "name": "Lucky Luke",
+      "description": "Vous tirez plus vite que votre ombre, c'est prouvé",
+      "explanation": "Faire X parties à 5 kills ou plus en mode BR",
+      "emoji": "🤠",
+      "category": "br",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 5
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 20
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 25
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 35
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 40
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 50
+        }
+      ],
+      "requiresBRData": true
+    },
+    {
       "id": "br-one-shot-victory",
       "name": "Un tir, une victoire",
       "description": "Économe mais efficace",
@@ -2038,7 +2222,7 @@
     "1": {
       "playerId": "1",
       "playerName": "Aayley",
-      "totalUnlocked": 7,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -2161,6 +2345,24 @@
             "threshold": 10
           },
           "progress": 0.2
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-423"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "same-color-kills",
@@ -2892,7 +3094,7 @@
     "8": {
       "playerId": "8",
       "playerName": "BoccA",
-      "totalUnlocked": 34,
+      "totalUnlocked": 35,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3270,6 +3472,24 @@
             "threshold": 20
           },
           "progress": 0.55
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-309"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "same-color-kills",
@@ -4140,7 +4360,7 @@
     "13": {
       "playerId": "13",
       "playerName": "DevGirl_",
-      "totalUnlocked": 16,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4402,6 +4622,24 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-419"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "false-guilty",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -4594,7 +4832,7 @@
     "15": {
       "playerId": "15",
       "playerName": "Drakony",
-      "totalUnlocked": 12,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4787,6 +5025,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-339"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-participations",
@@ -5031,7 +5287,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 67,
+      "totalUnlocked": 71,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5556,6 +5812,36 @@
           "progress": 0.5
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 12,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250401000000-393"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250501000000-416"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250501000000-416"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.6
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -5820,6 +6106,24 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "br-lucky-luke",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-70"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -6063,7 +6367,7 @@
     "19": {
       "playerId": "19",
       "playerName": "Heimdalle",
-      "totalUnlocked": 28,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6298,6 +6602,30 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-369"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250916000000-547"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -6446,6 +6774,24 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "br-lucky-luke",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-82"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -6983,7 +7329,7 @@
     "26": {
       "playerId": "26",
       "playerName": "Koka",
-      "totalUnlocked": 29,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7278,6 +7624,30 @@
             "threshold": 10
           },
           "progress": 0.4
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-352"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250225000000-352"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "only-passer",
@@ -9652,7 +10022,7 @@
     "36": {
       "playerId": "36",
       "playerName": "Noamouille",
-      "totalUnlocked": 20,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9966,6 +10336,36 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 13,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-310"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250411000000-402"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250411000000-402"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.65
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -10244,7 +10644,7 @@
     "39": {
       "playerId": "39",
       "playerName": "Poachimpa",
-      "totalUnlocked": 15,
+      "totalUnlocked": 16,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10429,6 +10829,24 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250318000000-383"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "same-color-kills",
@@ -11014,7 +11432,7 @@
     "44": {
       "playerId": "44",
       "playerName": "Shaunz",
-      "totalUnlocked": 7,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11155,6 +11573,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-421"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "same-color-kills",
@@ -11534,7 +11970,7 @@
     "49": {
       "playerId": "49",
       "playerName": "Wingo",
-      "totalUnlocked": 39,
+      "totalUnlocked": 40,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12048,6 +12484,24 @@
             "threshold": 6
           },
           "progress": 0.8333333333333334
+        },
+        {
+          "id": "br-lucky-luke",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-45"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -12473,7 +12927,7 @@
     "52": {
       "playerId": "52",
       "playerName": "Zarcross",
-      "totalUnlocked": 33,
+      "totalUnlocked": 34,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12831,6 +13285,24 @@
           "progress": 0.6
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250411000000-400"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -12992,7 +13464,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 136,
+      "totalUnlocked": 142,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13733,6 +14205,24 @@
           "progress": 0.7
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240522000000-149"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 30,
           "unlockedLevels": [
@@ -13829,6 +14319,42 @@
             "threshold": 30
           },
           "progress": 0.8
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 26,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-307"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250401000000-385"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20260203141837"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20260203141837"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 30
+          },
+          "progress": 0.8666666666666667
         },
         {
           "id": "same-color-kills",
@@ -14245,6 +14771,24 @@
           "progress": 0.95
         },
         {
+          "id": "br-lucky-luke",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-20"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "br-one-shot-victory",
           "currentValue": 10,
           "unlockedLevels": [
@@ -14297,7 +14841,7 @@
     "76561198054824482": {
       "playerId": "76561198054824482",
       "playerName": "Gom4rt",
-      "totalUnlocked": 20,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14542,6 +15086,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251014112328"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "same-color-kills",
@@ -15143,7 +15705,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 120,
+      "totalUnlocked": 127,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15868,6 +16430,24 @@
           "progress": 0.9333333333333333
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-348"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-double-kill",
           "currentValue": 3,
           "unlockedLevels": [
@@ -15988,6 +16568,48 @@
             "threshold": 20
           },
           "progress": 0.75
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 36,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-323"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250527000000-443"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251223124715"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20251223124715"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20251223124715"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 40
+          },
+          "progress": 0.9
         },
         {
           "id": "same-color-kills",
@@ -16349,6 +16971,24 @@
           "progress": 0.7333333333333333
         },
         {
+          "id": "br-lucky-luke",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-9"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-one-shot-victory",
           "currentValue": 1,
           "unlockedLevels": [
@@ -16371,7 +17011,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 123,
+      "totalUnlocked": 130,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17056,6 +17696,24 @@
           "progress": 0.7
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240405000000-121"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-double-kill",
           "currentValue": 2,
           "unlockedLevels": [
@@ -17162,6 +17820,48 @@
             "threshold": 20
           },
           "progress": 0.75
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 32,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250411000000-401"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250513000000-428"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260217114703"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260217114703"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 30,
+              "unlockedAtGame": "khalen-20260217114703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 40
+          },
+          "progress": 0.8
         },
         {
           "id": "same-color-kills",
@@ -17558,6 +18258,24 @@
           "progress": 0.75
         },
         {
+          "id": "br-lucky-luke",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-54"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "br-one-shot-victory",
           "currentValue": 3,
           "unlockedLevels": [
@@ -17592,7 +18310,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 113,
+      "totalUnlocked": 116,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18351,6 +19069,36 @@
           "progress": 0.7666666666666667
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 19,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-317"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250513000000-430"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250826000000-526"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.95
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -18753,7 +19501,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 111,
+      "totalUnlocked": 116,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19509,6 +20257,36 @@
           "progress": 0.9
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 17,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-350"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260127142946"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260217135951"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.85
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 15,
           "unlockedLevels": [
@@ -19871,13 +20649,37 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "br-lucky-luke",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-50"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "BR-154"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.5
         }
       ]
     },
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 98,
+      "totalUnlocked": 100,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20597,6 +21399,30 @@
           "progress": 0.65
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 8,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250401000000-394"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260303123611"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.8
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -20977,7 +21803,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 91,
+      "totalUnlocked": 92,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21581,6 +22407,24 @@
           "progress": 0.6
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251104125404"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 19,
           "unlockedLevels": [
@@ -22007,7 +22851,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 79,
+      "totalUnlocked": 84,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22526,6 +23370,24 @@
           "progress": 0.5
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-375"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "hunter-double-kill",
           "currentValue": 2,
           "unlockedLevels": [
@@ -22632,6 +23494,36 @@
             "threshold": 20
           },
           "progress": 0.6
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 14,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-337"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250805000000-511"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250805000000-511"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.7
         },
         {
           "id": "same-color-kills",
@@ -22928,13 +23820,31 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "br-lucky-luke",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-15"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 81,
+      "totalUnlocked": 85,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23587,6 +24497,42 @@
           "progress": 0.9
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 22,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-318"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250826000000-521"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260303142940"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260303142940"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 30
+          },
+          "progress": 0.7333333333333333
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 9,
           "unlockedLevels": [
@@ -23870,7 +24816,7 @@
     "76561198018650146": {
       "playerId": "76561198018650146",
       "playerName": "TPK",
-      "totalUnlocked": 30,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24155,6 +25101,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-636"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "same-color-kills",
@@ -24873,7 +25837,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 101,
+      "totalUnlocked": 105,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25581,6 +26545,36 @@
           "progress": 0.95
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 16,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-320"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250619000000-449"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251230122057"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.8
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 16,
           "unlockedLevels": [
@@ -25916,6 +26910,24 @@
           "progress": 0.5
         },
         {
+          "id": "br-lucky-luke",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-89"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-one-shot-victory",
           "currentValue": 2,
           "unlockedLevels": [
@@ -25944,7 +26956,7 @@
     "76561198140298176": {
       "playerId": "76561198140298176",
       "playerName": "Kyria",
-      "totalUnlocked": 52,
+      "totalUnlocked": 53,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26407,6 +27419,24 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-314"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "same-color-kills",
@@ -27491,7 +28521,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 59,
+      "totalUnlocked": 63,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27995,6 +29025,24 @@
           "progress": 0.4
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251028000000-601"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 7,
           "unlockedLevels": [
@@ -28047,6 +29095,36 @@
             "threshold": 20
           },
           "progress": 0.8
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250304000000-363"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260120134259"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260120134259"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.5
         },
         {
           "id": "only-passer",
@@ -28247,7 +29325,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 46,
+      "totalUnlocked": 47,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28646,6 +29724,24 @@
           "progress": 0.7
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251202133134"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -28844,7 +29940,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 88,
+      "totalUnlocked": 91,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29522,6 +30618,36 @@
           "progress": 0.8
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 17,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250304000000-367"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250902000000-531"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251023134242"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.85
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -29846,7 +30972,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 72,
+      "totalUnlocked": 76,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -30385,6 +31511,36 @@
           "progress": 0.3
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 13,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250624000000-457"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260224115846"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260224115846"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.65
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 22,
           "unlockedLevels": [
@@ -30660,6 +31816,24 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "br-lucky-luke",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-208"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-one-shot-victory",
           "currentValue": 1,
           "unlockedLevels": [
@@ -30682,7 +31856,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 65,
+      "totalUnlocked": 68,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31261,6 +32435,36 @@
           "progress": 0.75
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 17,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250304000000-365"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250513000000-431"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260120122045"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.85
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -31470,7 +32674,7 @@
     "76561198019060909": {
       "playerId": "76561198019060909",
       "playerName": "Reivil",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31638,6 +32842,24 @@
           "progress": 0.3
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216121842"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -31653,7 +32875,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 59,
+      "totalUnlocked": 61,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32174,6 +33396,24 @@
           "progress": 0.6
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127113339"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 12,
           "unlockedLevels": [
@@ -32250,6 +33490,24 @@
             "threshold": 20
           },
           "progress": 0.9
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-519"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "agent-117",
@@ -32407,7 +33665,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 54,
+      "totalUnlocked": 56,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32844,6 +34102,24 @@
           "progress": 0.4
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-double-kill",
           "currentValue": 2,
           "unlockedLevels": [
@@ -32925,6 +34201,24 @@
             "threshold": 10
           },
           "progress": 0.4
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250619000000-447"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "same-color-kills",
@@ -33116,7 +34410,7 @@
     "76561197996828190": {
       "playerId": "76561197996828190",
       "playerName": "Mickalow",
-      "totalUnlocked": 25,
+      "totalUnlocked": 28,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33424,6 +34718,30 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250923000000-553"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251028000000-599"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "misunderstood",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -33556,13 +34874,31 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "br-lucky-luke",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "BR-85"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
     "76561197987657681": {
       "playerId": "76561197987657681",
       "playerName": "PeoBran",
-      "totalUnlocked": 21,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33840,6 +35176,24 @@
           "progress": 0.3
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023123056"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -33951,7 +35305,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 23,
+      "totalUnlocked": 24,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34170,6 +35524,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023142100"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "same-color-kills",
@@ -34657,7 +36029,7 @@
     "76561198155130320": {
       "playerId": "76561198155130320",
       "playerName": "MaMaPaprika",
-      "totalUnlocked": 23,
+      "totalUnlocked": 24,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34938,6 +36310,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-520"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -35022,7 +36412,7 @@
     "76561198076478013": {
       "playerId": "76561198076478013",
       "playerName": "Areliann",
-      "totalUnlocked": 41,
+      "totalUnlocked": 42,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35407,6 +36797,24 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250902000000-529"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "same-color-kills",
@@ -35902,7 +37310,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 38,
+      "totalUnlocked": 39,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36315,6 +37723,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260217112455"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "same-color-kills",
@@ -37133,7 +38559,7 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 16,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37339,6 +38765,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260217141704"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "only-passer",
@@ -37988,7 +39432,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 27,
+      "totalUnlocked": 28,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38343,6 +39787,24 @@
             "threshold": 10
           },
           "progress": 0.4
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216112826"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "same-color-kills",
