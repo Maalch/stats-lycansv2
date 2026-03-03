@@ -24,6 +24,19 @@ import { getPlayerId, getPlayerMainCampFromRole, getPlayerCampFromRole, getPlaye
 // ============================================================================
 
 /**
+ * Get player's camp accounting for role transformations.
+ * For Louveteau, always use MainRoleInitial even if they transformed to Loup.
+ * For other roles, use the final role after transformations.
+ * This ensures consistency with PlayerHistoryCamp calculations.
+ */
+function getPlayerCampForAchievement(playerStat) {
+  const roleForCamp = playerStat.MainRoleInitial === 'Louveteau'
+    ? playerStat.MainRoleInitial
+    : getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+  return getPlayerCampFromRole(roleForCamp);
+}
+
+/**
  * Check if a role is a "solo" camp (not Villageois, not Loup)
  */
 function isSoloCamp(role, power) {
@@ -46,7 +59,7 @@ function isHunterRole(player) {
  * Check if player was a wolf (Loup camp)
  */
 function isWolfCamp(player) {
-  const camp = getPlayerMainCampFromRole(player.MainRoleInitial, player.Power);
+  const camp = getPlayerCampForAchievement(player);
   return camp === 'Loup';
 }
 
@@ -83,7 +96,7 @@ const EVALUATORS = {
     let value = 0;
     for (const { game, playerStat } of playerGames) {
       if (!playerStat.Victorious) continue;
-      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+      const mainCamp = getPlayerCampForAchievement(playerStat);
       const campMatch = (params.camp === 'Villageois' && mainCamp === 'Villageois') ||
                         (params.camp === 'Loup' && mainCamp === 'Loup');
       if (campMatch) {
@@ -102,7 +115,7 @@ const EVALUATORS = {
     let value = 0;
     for (const { game, playerStat } of playerGames) {
       if (playerStat.Victorious) continue;
-      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+      const mainCamp = getPlayerCampForAchievement(playerStat);
       const campMatch = (params.camp === 'Villageois' && mainCamp === 'Villageois') ||
                         (params.camp === 'Loup' && mainCamp === 'Loup');
       if (campMatch) {
@@ -167,7 +180,7 @@ const EVALUATORS = {
     let value = 0;
     for (const { game, playerStat } of playerGames) {
       if (playerStat.DeathType !== DeathTypeCode.VOTED) continue;
-      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+      const mainCamp = getPlayerCampForAchievement(playerStat);
       const campMatch = (params.camp === 'Villageois' && mainCamp === 'Villageois') ||
                         (params.camp === 'Loup' && mainCamp === 'Loup');
       if (campMatch) {
@@ -187,7 +200,7 @@ const EVALUATORS = {
     let value = 0;
     for (const { game, playerStat } of playerGames) {
       if (playerStat.DeathType !== params.deathType) continue;
-      const mainCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+      const mainCamp = getPlayerCampForAchievement(playerStat);
       const campMatch = (params.roleCamp === 'Loup' && mainCamp === 'Loup') ||
                         (params.roleCamp === 'Villageois' && mainCamp === 'Villageois');
       if (campMatch) {
@@ -334,8 +347,8 @@ const EVALUATORS = {
         if (victim.KillerName !== playerStat.Username) continue;
         
         // Check if victim is from an enemy camp
-        const hunterCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
-        const victimCamp = getPlayerMainCampFromRole(victim.MainRoleInitial, victim.Power);
+        const hunterCamp = getPlayerCampForAchievement(playerStat);
+        const victimCamp = getPlayerCampForAchievement(victim);
         
         if (hunterCamp !== victimCamp) {
           value++;
@@ -362,8 +375,8 @@ const EVALUATORS = {
         if (!isHunterKill) continue;
         if (victim.KillerName !== playerStat.Username) continue;
         
-        const hunterCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
-        const victimCamp = getPlayerMainCampFromRole(victim.MainRoleInitial, victim.Power);
+        const hunterCamp = getPlayerCampForAchievement(playerStat);
+        const victimCamp = getPlayerCampForAchievement(victim);
         
         if (hunterCamp === victimCamp) {
           value++;
@@ -386,7 +399,7 @@ const EVALUATORS = {
       if (!isHunterRole(playerStat)) continue;
       
       let enemyKillsInGame = 0;
-      const hunterCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+      const hunterCamp = getPlayerCampForAchievement(playerStat);
       
       for (const victim of game.PlayerStats) {
         const isHunterKill = victim.DeathType === DeathTypeCode.BULLET ||
@@ -395,7 +408,7 @@ const EVALUATORS = {
         if (!isHunterKill) continue;
         if (victim.KillerName !== playerStat.Username) continue;
         
-        const victimCamp = getPlayerMainCampFromRole(victim.MainRoleInitial, victim.Power);
+        const victimCamp = getPlayerCampForAchievement(victim);
         if (hunterCamp !== victimCamp) {
           enemyKillsInGame++;
         }
@@ -437,8 +450,8 @@ const EVALUATORS = {
         if (victim.DeathType !== DeathTypeCode.ASSASSIN) continue;
         if (victim.KillerName !== playerStat.Username) continue;
         
-        const killerCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
-        const victimCamp = getPlayerMainCampFromRole(victim.MainRoleInitial, victim.Power);
+        const killerCamp = getPlayerCampForAchievement(playerStat);
+        const victimCamp = getPlayerCampForAchievement(victim);
         
         if (params.targetCamp === 'enemy' && killerCamp !== victimCamp) {
           value++;
@@ -591,7 +604,7 @@ const EVALUATORS = {
       // Player must have been voted out
       if (playerStat.DeathType !== DeathTypeCode.VOTED) continue;
       
-      const playerCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+      const playerCamp = getPlayerCampForAchievement(playerStat);
       if (playerCamp !== 'Villageois') continue;
       
       // Check if any of the player's votes targeted an enemy
@@ -605,7 +618,7 @@ const EVALUATORS = {
         const targetPlayer = game.PlayerStats.find(p => p.Username === vote.Target);
         if (!targetPlayer) continue;
         
-        const targetCamp = getPlayerMainCampFromRole(targetPlayer.MainRoleInitial, targetPlayer.Power);
+        const targetCamp = getPlayerCampForAchievement(targetPlayer);
         if (targetCamp !== 'Villageois') {
           votedCorrectly = true;
           break;
@@ -630,7 +643,7 @@ const EVALUATORS = {
     for (const { game, playerStat } of playerGames) {
       if (playerStat.DeathType !== DeathTypeCode.VOTED) continue;
       
-      const playerCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+      const playerCamp = getPlayerCampForAchievement(playerStat);
       if (playerCamp !== 'Villageois') continue;
       
       // Find the meeting day when the player was voted out
@@ -748,7 +761,7 @@ const EVALUATORS = {
     const minConsecutive = params.minConsecutive || 5;
     
     for (const { game, playerStat } of playerGames) {
-      const playerCamp = getPlayerMainCampFromRole(playerStat.MainRoleInitial, playerStat.Power);
+      const playerCamp = getPlayerCampForAchievement(playerStat);
       if (playerCamp !== 'Villageois') continue;
       
       const votes = (playerStat.Votes || []).sort((a, b) => a.Day - b.Day);
@@ -767,7 +780,7 @@ const EVALUATORS = {
           continue;
         }
         
-        const targetCamp = getPlayerMainCampFromRole(targetPlayer.MainRoleInitial, targetPlayer.Power);
+        const targetCamp = getPlayerCampForAchievement(targetPlayer);
         if (targetCamp !== 'Villageois') {
           // Correct vote (voted for enemy)
           consecutive++;
