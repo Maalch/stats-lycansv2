@@ -10,9 +10,9 @@
 | Sur le site | | Battle Royale | Combattant du BR | Vous êtes un habitué de l'arène | Participer à X parties en Battle Royale | 1 - 10 - 25 | 50 - 100 - 150 | 200 - 300 - 400 | 500 |
 | Sur le site | | Battle Royale | BR Tueur en série | Le sang coule à flots dans l'arène | Faire X kills au total en Battle Royale | 10 - 25 - 50 | 100 - 200 - 300 | 500 - 750 - 1000 | 1500 |
 | Sur le site | | Battle Royale | Carnage | Un vrai massacre dans l'arène ! | Faire X kills dans une seule partie BR | 3 - 4 - 5 | 6 - 7 - 8 | 9 - 10 - 11 | 12 |
-| NEW | | Amoureux | Un chouya fusionnel | Vous l'aimez tellement que... Vous l'avez croqué | Tuer X fois son amoureux en étant Amoureux Loup | 1 | 3 | 5 | 10 |
-| NEW | | Villageois | Oups | Alors, vous vous êtes trompés d'alliés... | Faire X parties en tuant deux alliés hors meeting en étant Villageois | 1 | 5 | 10 | 15 |
-| NEW | | Amoureux | C'est pour toi mon amour UwU | Vous tuez uniquement par passion. Elle vous fait dépasser les limites. | Faire X kills en Amoureux Loup | 1 - 5 - 10 | 20 - 30 - 40 | 60 - 80 - 100 | 200 |
+| Sur le site | | Amoureux | Un chouya fusionnel | Vous l'aimez tellement que... Vous l'avez croqué | Tuer X fois son amoureux en étant Amoureux Loup | 1 | 3 | 5 | 10 |
+| Sur le site | | Villageois | Oups | Alors, vous vous êtes trompés d'alliés... | Faire X parties en tuant deux alliés hors meeting en étant Villageois | 1 | 5 | 10 | 15 |
+| Sur le site | | Amoureux | C'est pour toi mon amour UwU | Vous tuez uniquement par passion. Elle vous fait dépasser les limites. | Faire X kills en Amoureux Loup | 1 - 5 - 10 | 20 - 30 - 40 | 60 - 80 - 100 | 200 |
 | NEW | | Tous | Revenu de Loin | La vengeance est un plat qui se mange froid... | Faire X kills en Zombie | 5 | 10 | 15 | 30 |
 | NEW | | Amoureux | Moi aussi je participe ! | Vous aussi vous apportez votre part à l'édifice | Avoir X fois tué un ennemi hors meeting en étant Amoureux Villageois | 1 | 3 | 5 | 10 |
 | NEW | | Amoureux | Pas de concurrence | La meilleure défense, c'est l'attaque | Avoir X fois tué deux Loups en étant Amoureux Loup | 1 | 3 | 5 | 10 |

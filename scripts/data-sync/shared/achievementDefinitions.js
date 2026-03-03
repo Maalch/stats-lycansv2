@@ -647,6 +647,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'villageois-double-ally-kill',
+    name: 'Oups',
+    description: 'Alors, vous vous êtes trompés d\'alliés...',
+    explanation: 'Faire X parties en tuant deux alliés hors meeting en étant Villageois',
+    emoji: '🤦',
+    category: 'kills',
+    evaluator: 'villageoisDoubleAllyKill',
+    evaluatorParams: { minKills: 2 },
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
+    ],
+  },
+  {
     id: 'hunter-double-kill',
     name: 'Farmeur de loups',
     description: 'Un loup c\'est bien, deux loups c\'est mieux',
@@ -758,6 +778,52 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 30 },
       // Lycans: 50
       { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+  {
+    id: 'amoureux-loup-kills-lover',
+    name: 'Un chouya fusionnel',
+    description: 'Vous l\'aimez tellement que... Vous l\'avez croqué',
+    explanation: 'Tuer X fois son amoureux en étant Amoureux Loup',
+    emoji: '🐺❤️',
+    category: 'kills',
+    evaluator: 'amoureuxLoupKillsLover',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
+    id: 'amoureux-loup-total-kills',
+    name: 'C\'est pour toi mon amour UwU',
+    description: 'Vous tuez uniquement par passion. Elle vous fait dépasser les limites.',
+    explanation: 'Faire X kills en Amoureux Loup',
+    emoji: '🐺💕',
+    category: 'kills',
+    evaluator: 'amoureuxLoupTotalKills',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 20 - 30 - 40
+      { tier: 'argent', subLevel: 1, threshold: 20 },
+      { tier: 'argent', subLevel: 2, threshold: 30 },
+      { tier: 'argent', subLevel: 3, threshold: 40 },
+      // Or: 60 - 80 - 100
+      { tier: 'or', subLevel: 1, threshold: 60 },
+      { tier: 'or', subLevel: 2, threshold: 80 },
+      { tier: 'or', subLevel: 3, threshold: 100 },
+      // Lycans: 200
+      { tier: 'lycans', subLevel: 1, threshold: 200 },
     ],
   },
   {
