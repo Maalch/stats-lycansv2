@@ -30,11 +30,11 @@ export function PlayerSeriesChart() {
   const { settings } = useSettings();
   
   // Use navigationState to restore series type selection, fallback to 'villageois'
-  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival'>(() => {
+  const [selectedSeriesType, setSelectedSeriesType] = useState<'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1'>(() => {
     // Priority: URL param > NavigationContext > default
     const urlState = parseUrlState();
-    if (urlState.seriesView && ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival'].includes(urlState.seriesView)) {
-      return urlState.seriesView as 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival';
+    if (urlState.seriesView && ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival', 'deathT1'].includes(urlState.seriesView)) {
+      return urlState.seriesView as 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1';
     }
     return navigationState.selectedSeriesType || 'villageois';
   });
@@ -49,7 +49,7 @@ export function PlayerSeriesChart() {
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Helper function to handle series type changes
-  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival') => {
+  const handleSeriesTypeChange = (newSeriesType: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1') => {
     setSelectedSeriesType(newSeriesType);
     updateNavigationState({ selectedSeriesType: newSeriesType });
     // Update URL parameter
@@ -66,8 +66,8 @@ export function PlayerSeriesChart() {
   useEffect(() => {
     const handleUrlChange = () => {
       const urlState = parseUrlState();
-      if (urlState.seriesView && ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival'].includes(urlState.seriesView)) {
-        const newView = urlState.seriesView as 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival';
+      if (urlState.seriesView && ['villageois', 'loup', 'nowolf', 'solo', 'wins', 'losses', 'deaths', 'survival', 'deathT1'].includes(urlState.seriesView)) {
+        const newView = urlState.seriesView as 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1';
         if (newView !== selectedSeriesType) {
           setSelectedSeriesType(newView);
         }
@@ -119,6 +119,9 @@ export function PlayerSeriesChart() {
         case 'survival':
           fullDataset = seriesData.currentSurvivalSeries;
           break;
+        case 'deathT1':
+          fullDataset = seriesData.currentDeathT1Series;
+          break;
         default:
           fullDataset = [];
       }
@@ -148,6 +151,9 @@ export function PlayerSeriesChart() {
           break;
         case 'survival':
           fullDataset = seriesData.allSurvivalSeries;
+          break;
+        case 'deathT1':
+          fullDataset = seriesData.allDeathT1Series;
           break;
         default:
           fullDataset = [];
@@ -235,6 +241,10 @@ export function PlayerSeriesChart() {
         return viewMode === 'ongoing'
           ? 'Séries Survivant En Cours'
           : 'Plus Longues Séries Survivant';
+      case 'deathT1':
+        return viewMode === 'ongoing'
+          ? 'Séries Mort T1 En Cours'
+          : 'Plus Longues Séries Mort T1';
       default:
         return '';
     }
@@ -573,6 +583,68 @@ export function PlayerSeriesChart() {
           </div>
         </div>
       );
+    } else if (selectedSeriesType === 'deathT1') {
+      return (
+        <div style={{ 
+          background: 'var(--bg-secondary)', 
+          color: 'var(--text-primary)', 
+          padding: 12, 
+          borderRadius: 6,
+          border: '1px solid var(--border-color)'
+        }}>
+          <div>
+            <strong>{data.player}</strong>
+            {showOngoingIndicator && <span style={{ marginLeft: '8px', fontSize: '1.2em' }}>🔥</span>}
+          </div>
+          <div>Série Mort T1 : {data.seriesLength} parties consécutives {showOngoingIndicator ? '(En cours)' : ''}</div>
+          <div>Du {data.startGame} au {data.endGame}</div>
+          <div>Du {data.startDate} au {data.endDate}</div>
+          {data.campCounts && <div>Camps joués : {formatCampCounts(data.campCounts)}</div>}
+          {isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence (hors top 20)
+            </div>
+          )}
+          {isHighlightedFromSettings && !isHighlightedAddition && (
+            <div style={{ 
+              fontSize: '0.75rem', 
+              color: 'var(--accent-primary)', 
+              marginTop: '0.5rem',
+              fontStyle: 'italic',
+              textAlign: 'center'
+            }}>
+              🎯 Joueur mis en évidence
+            </div>
+          )}
+          {showOngoingIndicator && (
+            <div style={{ 
+              fontSize: '0.8rem', 
+              color: '#FF8C00', 
+              marginTop: '0.5rem',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+              🔥 Série en cours - Aucun jeu depuis !
+            </div>
+          )}
+          <div style={{ 
+            fontSize: '0.8rem', 
+            color: 'var(--accent-primary)', 
+            marginTop: '0.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'pulse 1.5s infinite'
+          }}>
+            🖱️ Cliquez pour voir les parties
+          </div>
+        </div>
+      );
     } else {
       return (
         <div style={{ 
@@ -675,6 +747,12 @@ export function PlayerSeriesChart() {
         selectedGameIds: data.gameIds,
         fromComponent: 'Séries Survivant'
       });
+    } else if (selectedSeriesType === 'deathT1') {
+      navigateToGameDetails({
+        selectedPlayer: data.player,
+        selectedGameIds: data.gameIds,
+        fromComponent: 'Séries Mort T1'
+      });
     } else {
       const campFilter = selectedSeriesType === 'villageois' ? 'Villageois' : 'Loup';
       navigateToGameDetails({
@@ -745,6 +823,12 @@ export function PlayerSeriesChart() {
               Mourir dans une partie brise la série.
             </>
           )}
+          {selectedSeriesType === 'deathT1' && (
+            <>
+              <strong>Séries Mort T1 :</strong> Parties consécutives où le joueur est mort au premier tour (DeathTiming = J1, N1 ou M1). 
+              Survivre ou mourir après le T1 brise la série.
+            </>
+          )}
           <br/>
           <strong>🔥 Séries en cours :</strong> {viewMode === 'ongoing' 
             ? 'Toutes les séries affichées sont actuellement actives' 
@@ -811,6 +895,13 @@ export function PlayerSeriesChart() {
             onClick={() => handleSeriesTypeChange('survival')}
           >
             Séries Survivant
+          </button>
+          <button
+            type="button"
+            className={`lycans-categorie-btn ${selectedSeriesType === 'deathT1' ? 'active' : ''}`}
+            onClick={() => handleSeriesTypeChange('deathT1')}
+          >
+            Séries Mort T1
           </button>
         </div>
         
@@ -1012,6 +1103,9 @@ export function PlayerSeriesChart() {
                      selectedSeriesType === 'nowolf' ? seriesData.averageNoWolfSeries :
                      selectedSeriesType === 'solo' ? seriesData.averageSoloSeries :
                      selectedSeriesType === 'wins' ? seriesData.averageWinSeries :
+                     selectedSeriesType === 'deaths' ? seriesData.averageDeathSeries :
+                     selectedSeriesType === 'survival' ? seriesData.averageSurvivalSeries :
+                     selectedSeriesType === 'deathT1' ? seriesData.averageDeathT1Series :
                      seriesData.averageLossSeries}
                   </div>
                   <p>parties en moyenne</p>
@@ -1028,6 +1122,9 @@ export function PlayerSeriesChart() {
                      selectedSeriesType === 'nowolf' ? seriesData.activeNoWolfCount :
                      selectedSeriesType === 'solo' ? seriesData.activeSoloCount :
                      selectedSeriesType === 'wins' ? seriesData.activeWinCount :
+                     selectedSeriesType === 'deaths' ? seriesData.activeDeathCount :
+                     selectedSeriesType === 'survival' ? seriesData.activeSurvivalCount :
+                     selectedSeriesType === 'deathT1' ? seriesData.activeDeathT1Count :
                      seriesData.activeLossCount}
                   </div>
                   <p>séries encore actives</p>
@@ -1037,6 +1134,9 @@ export function PlayerSeriesChart() {
                       selectedSeriesType === 'nowolf' ? seriesData.activeNoWolfCount :
                       selectedSeriesType === 'solo' ? seriesData.activeSoloCount :
                       selectedSeriesType === 'wins' ? seriesData.activeWinCount :
+                      selectedSeriesType === 'deaths' ? seriesData.activeDeathCount :
+                      selectedSeriesType === 'survival' ? seriesData.activeSurvivalCount :
+                      selectedSeriesType === 'deathT1' ? seriesData.activeDeathT1Count :
                       seriesData.activeLossCount) > 0 ? 
                       'Joueurs actuellement dans une série de ce type' : 
                       'Aucune série active de ce type'}

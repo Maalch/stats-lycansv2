@@ -63,6 +63,18 @@ export interface SurvivalSeries {
   gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
 }
 
+export interface DeathT1Series {
+  player: string;
+  seriesLength: number;
+  startGame: string;    // Global chronological game number (e.g., "123")
+  endGame: string;      // Global chronological game number (e.g., "127")
+  startDate: string;
+  endDate: string;
+  campCounts: Record<string, number>; // Count of times each camp was played when dying in T1
+  isOngoing: boolean; // True if the series is still active (player hasn't played since)
+  gameIds: string[]; // List of global chronological game numbers (e.g., ["123", "124", "125"])
+}
+
 export interface PlayerSeriesData {
   // Full datasets for all players with series data
   allVillageoisSeries: CampSeries[];
@@ -73,6 +85,7 @@ export interface PlayerSeriesData {
   allLossSeries: LossSeries[];
   allDeathSeries: DeathSeries[];
   allSurvivalSeries: SurvivalSeries[];
+  allDeathT1Series: DeathT1Series[];
   // Current ongoing series for ALL players (not just their best)
   currentVillageoisSeries: CampSeries[];
   currentLoupsSeries: CampSeries[];
@@ -82,6 +95,7 @@ export interface PlayerSeriesData {
   currentLossSeries: LossSeries[];
   currentDeathSeries: DeathSeries[];
   currentSurvivalSeries: SurvivalSeries[];
+  currentDeathT1Series: DeathT1Series[];
   totalGamesAnalyzed: number;
   // Statistics for all players
   averageVillageoisSeries: number;
@@ -92,6 +106,7 @@ export interface PlayerSeriesData {
   averageLossSeries: number;
   averageDeathSeries: number;
   averageSurvivalSeries: number;
+  averageDeathT1Series: number;
   eliteVillageoisCount: number; // Players with 5+ Villageois series
   eliteLoupsCount: number; // Players with 3+ Loups series
   eliteNoWolfCount: number; // Players with 5+ NoWolf series
@@ -100,6 +115,7 @@ export interface PlayerSeriesData {
   eliteLossCount: number; // Players with 5+ loss series
   eliteDeathCount: number; // Players with 5+ death series
   eliteSurvivalCount: number; // Players with 5+ survival series
+  eliteDeathT1Count: number; // Players with 3+ deathT1 series
   totalPlayersCount: number;
   // Active series counts (all players currently on a streak, not just top 20)
   activeVillageoisCount: number; // Players currently on a Villageois streak
@@ -110,6 +126,7 @@ export interface PlayerSeriesData {
   activeLossCount: number; // Players currently on a loss streak
   activeDeathCount: number; // Players currently on a death streak
   activeSurvivalCount: number; // Players currently on a survival streak
+  activeDeathT1Count: number; // Players currently on a deathT1 streak
   // Record ongoing counts (players currently in their personal best streak)
   ongoingVillageoisCount: number;
   ongoingLoupsCount: number;
@@ -119,6 +136,7 @@ export interface PlayerSeriesData {
   ongoingLossCount: number;
   ongoingDeathCount: number;
   ongoingSurvivalCount: number;
+  ongoingDeathT1Count: number;
 }
 
 export interface PlayerSeriesState {
@@ -142,6 +160,9 @@ export interface PlayerSeriesState {
   currentSurvivalSeries: number;
   longestSurvivalSeries: SurvivalSeries | null;
   currentSurvivalCamps: string[];
+  currentDeathT1Series: number;
+  longestDeathT1Series: DeathT1Series | null;
+  currentDeathT1Camps: string[];
   currentNoWolfCamps: string[]; // Track camps during NoWolf series
   currentSoloCamps: string[]; // Track camps during Solo series
   lastCamp: 'Villageois' | 'Loup' | 'Autres' | null;
@@ -155,6 +176,7 @@ export interface PlayerSeriesState {
   lossSeriesStart: { game: string; date: string } | null;
   deathSeriesStart: { game: string; date: string } | null;
   survivalSeriesStart: { game: string; date: string } | null;
+  deathT1SeriesStart: { game: string; date: string } | null;
   // Track game IDs for current series - now DisplayedIds
   currentVillageoisGameIds: string[];
   currentLoupsGameIds: string[];
@@ -164,4 +186,5 @@ export interface PlayerSeriesState {
   currentLossGameIds: string[];
   currentDeathGameIds: string[];
   currentSurvivalGameIds: string[];
+  currentDeathT1GameIds: string[];
 }

@@ -124,7 +124,7 @@ export interface NavigationState {
   // DeathStatisticsChart state
   deathStatsSelectedCamp?: string;
   // PlayerSeriesChart state
-  selectedSeriesType?: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival';
+  selectedSeriesType?: 'villageois' | 'loup' | 'nowolf' | 'solo' | 'wins' | 'losses' | 'deaths' | 'survival' | 'deathT1';
   seriesViewMode?: 'best' | 'ongoing';
   // PlayerSelectionPage state
   selectedPlayerSelectionView?: 'rankings' | 'titles' | 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'actions' | 'roleactions' | 'deathmap' | 'talkingtime' ;

@@ -412,3 +412,56 @@ export function processSurvivalSeries(
     playerStats.currentSurvivalGameIds = [];
   }
 }
+
+/**
+ * Process DeathT1 series for a player (consecutive games dying on T1: J1, N1 or M1)
+ * @param displayName - Display name for the player (used in output)
+ * @param deathTiming - The DeathTiming field from PlayerStat (e.g. "J1", "N1", "M1", "J2", null...)
+ */
+export function processDeathT1Series(
+  playerStats: PlayerSeriesState,
+  displayName: string,
+  deathTiming: string | null,
+  actualCamp: string,
+  gameDisplayedId: string,
+  date: string
+): void {
+  const diedAtT1 = deathTiming === 'J1' || deathTiming === 'N1' || deathTiming === 'M1';
+
+  if (diedAtT1) {
+    if (playerStats.currentDeathT1Series === 0) {
+      playerStats.deathT1SeriesStart = { game: gameDisplayedId, date };
+      playerStats.currentDeathT1GameIds = [];
+    }
+    playerStats.currentDeathT1Series++;
+    playerStats.currentDeathT1Camps.push(actualCamp);
+    playerStats.currentDeathT1GameIds.push(gameDisplayedId);
+
+    if (
+      !playerStats.longestDeathT1Series ||
+      playerStats.currentDeathT1Series > playerStats.longestDeathT1Series.seriesLength
+    ) {
+      const campCounts: Record<string, number> = {};
+      playerStats.currentDeathT1Camps.forEach(camp => {
+        campCounts[camp] = (campCounts[camp] || 0) + 1;
+      });
+
+      playerStats.longestDeathT1Series = {
+        player: displayName,
+        seriesLength: playerStats.currentDeathT1Series,
+        startGame: playerStats.deathT1SeriesStart!.game,
+        endGame: gameDisplayedId,
+        startDate: playerStats.deathT1SeriesStart!.date,
+        endDate: date,
+        campCounts,
+        isOngoing: false,
+        gameIds: [...playerStats.currentDeathT1GameIds]
+      };
+    }
+  } else {
+    playerStats.currentDeathT1Series = 0;
+    playerStats.currentDeathT1Camps = [];
+    playerStats.deathT1SeriesStart = null;
+    playerStats.currentDeathT1GameIds = [];
+  }
+}

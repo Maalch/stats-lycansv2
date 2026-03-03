@@ -8,7 +8,8 @@ import type {
   WinSeries, 
   LossSeries, 
   DeathSeries, 
-  SurvivalSeries 
+  SurvivalSeries,
+  DeathT1Series
 } from './playerSeriesTypes';
 
 /**
@@ -23,6 +24,7 @@ export function collectSeriesResults(playerCampSeries: Record<string, PlayerSeri
   allLossSeries: LossSeries[];
   allDeathSeries: DeathSeries[];
   allSurvivalSeries: SurvivalSeries[];
+  allDeathT1Series: DeathT1Series[];
 } {
   const allVillageoisSeries: CampSeries[] = [];
   const allLoupsSeries: CampSeries[] = [];
@@ -32,6 +34,7 @@ export function collectSeriesResults(playerCampSeries: Record<string, PlayerSeri
   const allLossSeries: LossSeries[] = [];
   const allDeathSeries: DeathSeries[] = [];
   const allSurvivalSeries: SurvivalSeries[] = [];
+  const allDeathT1Series: DeathT1Series[] = [];
 
   Object.values(playerCampSeries).forEach(stats => {
     if (stats.longestVillageoisSeries) {
@@ -58,6 +61,9 @@ export function collectSeriesResults(playerCampSeries: Record<string, PlayerSeri
     if (stats.longestSurvivalSeries) {
       allSurvivalSeries.push(stats.longestSurvivalSeries);
     }
+    if (stats.longestDeathT1Series) {
+      allDeathT1Series.push(stats.longestDeathT1Series);
+    }
   });
 
   // Sort by series length (descending) - no slicing here
@@ -69,6 +75,7 @@ export function collectSeriesResults(playerCampSeries: Record<string, PlayerSeri
   allLossSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   allDeathSeries.sort((a, b) => b.seriesLength - a.seriesLength);
   allSurvivalSeries.sort((a, b) => b.seriesLength - a.seriesLength);
+  allDeathT1Series.sort((a, b) => b.seriesLength - a.seriesLength);
 
   return {
     allVillageoisSeries,
@@ -78,7 +85,8 @@ export function collectSeriesResults(playerCampSeries: Record<string, PlayerSeri
     allWinSeries,
     allLossSeries,
     allDeathSeries,
-    allSurvivalSeries
+    allSurvivalSeries,
+    allDeathT1Series
   };
 }
 
@@ -97,6 +105,7 @@ export function calculatePlayerStatistics(
   averageLossSeries: number;
   averageDeathSeries: number;
   averageSurvivalSeries: number;
+  averageDeathT1Series: number;
   eliteVillageoisCount: number;
   eliteLoupsCount: number;
   eliteNoWolfCount: number;
@@ -105,6 +114,7 @@ export function calculatePlayerStatistics(
   eliteLossCount: number;
   eliteDeathCount: number;
   eliteSurvivalCount: number;
+  eliteDeathT1Count: number;
 } {
   // Collect ALL players' best series lengths (including 0 for those who never had a series)
   const allVillageoisSeries: number[] = [];
@@ -115,6 +125,7 @@ export function calculatePlayerStatistics(
   const allLossSeries: number[] = [];
   const allDeathSeries: number[] = [];
   const allSurvivalSeries: number[] = [];
+  const allDeathT1Series: number[] = [];
   
   Object.values(playerCampSeries).forEach(stats => {
     // For averages, include the best series length for each player (0 if they never had one)
@@ -126,6 +137,7 @@ export function calculatePlayerStatistics(
     allLossSeries.push(stats.longestLossSeries?.seriesLength || 0);
     allDeathSeries.push(stats.longestDeathSeries?.seriesLength || 0);
     allSurvivalSeries.push(stats.longestSurvivalSeries?.seriesLength || 0);
+    allDeathT1Series.push(stats.longestDeathT1Series?.seriesLength || 0);
   });
 
   // Calculate averages based on ALL players
@@ -161,6 +173,10 @@ export function calculatePlayerStatistics(
     ? allSurvivalSeries.reduce((sum, length) => sum + length, 0) / totalPlayers
     : 0;
 
+  const averageDeathT1Series = totalPlayers > 0 
+    ? allDeathT1Series.reduce((sum, length) => sum + length, 0) / totalPlayers
+    : 0;
+
   // Count elite players (with thresholds: Villageois 5+, Loups 3+, NoWolf 5+, Solo 3+, Wins 5+, Losses 5+, Deaths 5+, Survival 5+)
   const eliteVillageoisCount = allVillageoisSeries.filter(length => length >= 5).length;
   const eliteLoupsCount = allLoupsSeries.filter(length => length >= 3).length;
@@ -170,6 +186,7 @@ export function calculatePlayerStatistics(
   const eliteLossCount = allLossSeries.filter(length => length >= 5).length;
   const eliteDeathCount = allDeathSeries.filter(length => length >= 5).length;
   const eliteSurvivalCount = allSurvivalSeries.filter(length => length >= 5).length;
+  const eliteDeathT1Count = allDeathT1Series.filter(length => length >= 3).length;
 
   return {
     averageVillageoisSeries: Math.round(averageVillageoisSeries * 10) / 10, // Round to 1 decimal
@@ -180,6 +197,7 @@ export function calculatePlayerStatistics(
     averageLossSeries: Math.round(averageLossSeries * 10) / 10,
     averageDeathSeries: Math.round(averageDeathSeries * 10) / 10,
     averageSurvivalSeries: Math.round(averageSurvivalSeries * 10) / 10,
+    averageDeathT1Series: Math.round(averageDeathT1Series * 10) / 10,
     eliteVillageoisCount,
     eliteLoupsCount,
     eliteNoWolfCount,
@@ -187,6 +205,7 @@ export function calculatePlayerStatistics(
     eliteWinCount,
     eliteLossCount,
     eliteDeathCount,
-    eliteSurvivalCount
+    eliteSurvivalCount,
+    eliteDeathT1Count
   };
 }
