@@ -3,7 +3,7 @@
 | Etat | Liens | Catégorie | Nom | Description | Condition | Palier Bronze | Palier Argent | Palier Or | Palier Lycans |
 |------|-------|-----------|-----|-------------|-----------|---------------|---------------|-----------|---------------|
 | Sur le site | | Battle Royale | Pacifique | Tuer c'est mal... Même quand c'est le principe... | Faire une partie BR avec 0 kill | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
-| NEW | | Battle Royale | Lucky Luke | Vous tirez plus vite que votre ombre, c'est prouvé | Faire X parties à 5 kills ou plus en mode BR | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
+| Sur le site | | Battle Royale | Lucky Luke | Vous tirez plus vite que votre ombre, c'est prouvé | Faire X parties à 5 kills ou plus en mode BR | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
 | Sur le site | | Battle Royale | Tuer n'est pas gagner | Tuer, c'est bien (dans le jeu), gagner c'est mieux... | Avoir le plus de kills dans un BR mais perdre quand même | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
 | Sur le site | | Battle Royale | Un tir, une victoire | Économe mais efficace | Gagner un BR avec exactement 1 kill | 1 - 2 - 3 | 5 - 7 - 10 | 15 - 20 - 25 | 40 |
 | Sur le site | | Battle Royale | Roi du BR | Seul contre tous, vous avez triomphé | Gagner X parties en Battle Royale | 1 - 5 - 10 | 20 - 35 - 50 | 75 - 100 - 150 | 200 |

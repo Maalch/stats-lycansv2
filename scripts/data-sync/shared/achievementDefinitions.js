@@ -1165,6 +1165,33 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'br-lucky-luke',
+    name: 'Lucky Luke',
+    description: 'Vous tirez plus vite que votre ombre, c\'est prouvé',
+    explanation: 'Faire X parties à 5 kills ou plus en mode BR',
+    emoji: '🤠',
+    category: 'br',
+    evaluator: 'brLuckyLuke',
+    evaluatorParams: {},
+    requiresBRData: true,
+    levels: [
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 15 - 20 - 25
+      { tier: 'argent', subLevel: 1, threshold: 15 },
+      { tier: 'argent', subLevel: 2, threshold: 20 },
+      { tier: 'argent', subLevel: 3, threshold: 25 },
+      // Or: 30 - 35 - 40
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 35 },
+      { tier: 'or', subLevel: 3, threshold: 40 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+  {
     id: 'br-one-shot-victory',
     name: 'Un tir, une victoire',
     description: 'Économe mais efficace',

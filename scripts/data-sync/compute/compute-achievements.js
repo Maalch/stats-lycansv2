@@ -1241,6 +1241,21 @@ const BR_EVALUATORS = {
   },
 
   /**
+   * Count BR games where player had 5 or more kills
+   */
+  brLuckyLuke(playerBRGames, brData) {
+    const gameIds = [];
+    let value = 0;
+    for (const entry of playerBRGames) {
+      if (entry.Score >= 5) {
+        value++;
+        gameIds.push(`BR-${entry.Game}`);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
    * Count BR victories with exactly 1 kill
    */
   brOneShotVictory(playerBRGames, brData) {
