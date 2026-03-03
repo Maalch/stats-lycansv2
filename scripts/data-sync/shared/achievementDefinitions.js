@@ -50,7 +50,8 @@ export const ACHIEVEMENT_CATEGORIES = {
   roles: { label: 'Rôles', emoji: '🎭', order: 4 },
   social: { label: 'Social', emoji: '💬', order: 5 },
   maps: { label: 'Cartes', emoji: '🗺️', order: 6 },
-  special: { label: 'Spécial', emoji: '✨', order: 7 },
+  br: { label: 'Battle Royale', emoji: '⚔️', order: 7 },
+  special: { label: 'Spécial', emoji: '✨', order: 8 },
 };
 
 /**
@@ -995,6 +996,199 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 3, threshold: 9 },
       // Lycans: 12 couleurs (toutes!)
       { tier: 'lycans', subLevel: 1, threshold: 12 },
+    ],
+  },
+
+  // ============================================================================
+  // BATTLE ROYALE (main team only - no BR data for Discord)
+  // ============================================================================
+  {
+    id: 'br-victories',
+    name: 'Roi du BR',
+    description: 'Seul contre tous, vous avez triomphé',
+    explanation: 'Gagner X parties en Battle Royale',
+    emoji: '👑',
+    category: 'br',
+    evaluator: 'brWins',
+    evaluatorParams: {},
+    requiresBRData: true,
+    levels: [
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 20 - 35 - 50
+      { tier: 'argent', subLevel: 1, threshold: 20 },
+      { tier: 'argent', subLevel: 2, threshold: 35 },
+      { tier: 'argent', subLevel: 3, threshold: 50 },
+      // Or: 75 - 100 - 150
+      { tier: 'or', subLevel: 1, threshold: 75 },
+      { tier: 'or', subLevel: 2, threshold: 100 },
+      { tier: 'or', subLevel: 3, threshold: 150 },
+      // Lycans: 200
+      { tier: 'lycans', subLevel: 1, threshold: 200 },
+    ],
+  },
+  {
+    id: 'br-participations',
+    name: 'Combattant du BR',
+    description: 'Vous êtes un habitué de l\'arène',
+    explanation: 'Participer à X parties en Battle Royale',
+    emoji: '⚔️',
+    category: 'br',
+    evaluator: 'brParticipations',
+    evaluatorParams: {},
+    requiresBRData: true,
+    levels: [
+      // Bronze: 1 - 10 - 25
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 10 },
+      { tier: 'bronze', subLevel: 3, threshold: 25 },
+      // Argent: 50 - 100 - 150
+      { tier: 'argent', subLevel: 1, threshold: 50 },
+      { tier: 'argent', subLevel: 2, threshold: 100 },
+      { tier: 'argent', subLevel: 3, threshold: 150 },
+      // Or: 200 - 300 - 400
+      { tier: 'or', subLevel: 1, threshold: 200 },
+      { tier: 'or', subLevel: 2, threshold: 300 },
+      { tier: 'or', subLevel: 3, threshold: 400 },
+      // Lycans: 500
+      { tier: 'lycans', subLevel: 1, threshold: 500 },
+    ],
+  },
+  {
+    id: 'br-total-kills',
+    name: 'BR Tueur en série',
+    description: 'Le sang coule à flots dans l\'arène',
+    explanation: 'Faire X kills au total en Battle Royale',
+    emoji: '💀',
+    category: 'br',
+    evaluator: 'brTotalKills',
+    evaluatorParams: {},
+    requiresBRData: true,
+    levels: [
+      // Bronze: 10 - 25 - 50
+      { tier: 'bronze', subLevel: 1, threshold: 10 },
+      { tier: 'bronze', subLevel: 2, threshold: 25 },
+      { tier: 'bronze', subLevel: 3, threshold: 50 },
+      // Argent: 100 - 200 - 300
+      { tier: 'argent', subLevel: 1, threshold: 100 },
+      { tier: 'argent', subLevel: 2, threshold: 200 },
+      { tier: 'argent', subLevel: 3, threshold: 300 },
+      // Or: 500 - 750 - 1000
+      { tier: 'or', subLevel: 1, threshold: 500 },
+      { tier: 'or', subLevel: 2, threshold: 750 },
+      { tier: 'or', subLevel: 3, threshold: 1000 },
+      // Lycans: 1500
+      { tier: 'lycans', subLevel: 1, threshold: 1500 },
+    ],
+  },
+  {
+    id: 'br-pacifist',
+    name: 'Pacifique',
+    description: 'Tuer c\'est mal... Même quand c\'est le principe...',
+    explanation: 'Faire une partie BR avec 0 kill',
+    emoji: '🕊️',
+    category: 'br',
+    evaluator: 'brZeroKillGames',
+    evaluatorParams: {},
+    requiresBRData: true,
+    levels: [
+      // Bronze: 1 - 3 - 5
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 10 - 15 - 20
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      { tier: 'argent', subLevel: 2, threshold: 15 },
+      { tier: 'argent', subLevel: 3, threshold: 20 },
+      // Or: 30 - 40 - 50
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 40 },
+      { tier: 'or', subLevel: 3, threshold: 50 },
+      // Lycans: 75
+      { tier: 'lycans', subLevel: 1, threshold: 75 },
+    ],
+  },
+  {
+    id: 'br-high-kills-single-game',
+    name: 'Carnage',
+    description: 'Un vrai massacre dans l\'arène !',
+    explanation: 'Faire X kills dans une seule partie BR',
+    emoji: '🔥',
+    category: 'br',
+    evaluator: 'brHighKillGame',
+    evaluatorParams: {},
+    requiresBRData: true,
+    levels: [
+      // Bronze: 3 - 4 - 5 kills in one game
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      { tier: 'bronze', subLevel: 2, threshold: 4 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 6 - 7 - 8 kills
+      { tier: 'argent', subLevel: 1, threshold: 6 },
+      { tier: 'argent', subLevel: 2, threshold: 7 },
+      { tier: 'argent', subLevel: 3, threshold: 8 },
+      // Or: 9 - 10 - 11 kills
+      { tier: 'or', subLevel: 1, threshold: 9 },
+      { tier: 'or', subLevel: 2, threshold: 10 },
+      { tier: 'or', subLevel: 3, threshold: 11 },
+      // Lycans: 12+ kills
+      { tier: 'lycans', subLevel: 1, threshold: 12 },
+    ],
+  },
+  {
+    id: 'br-top-kills-but-loss',
+    name: 'Tuer n\'est pas gagner',
+    description: 'Tuer, c\'est bien (dans le jeu), gagner c\'est mieux...',
+    explanation: 'Avoir le plus de kills dans un BR mais perdre quand même',
+    emoji: '😭',
+    category: 'br',
+    evaluator: 'brTopKillsButLoss',
+    evaluatorParams: {},
+    requiresBRData: true,
+    levels: [
+      // Bronze: 1 - 3 - 5
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 10 - 15 - 20
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      { tier: 'argent', subLevel: 2, threshold: 15 },
+      { tier: 'argent', subLevel: 3, threshold: 20 },
+      // Or: 30 - 40 - 50
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 40 },
+      { tier: 'or', subLevel: 3, threshold: 50 },
+      // Lycans: 75
+      { tier: 'lycans', subLevel: 1, threshold: 75 },
+    ],
+  },
+  {
+    id: 'br-one-shot-victory',
+    name: 'Un tir, une victoire',
+    description: 'Économe mais efficace',
+    explanation: 'Gagner un BR avec exactement 1 kill',
+    emoji: '🎯',
+    category: 'br',
+    evaluator: 'brOneShotVictory',
+    evaluatorParams: {},
+    requiresBRData: true,
+    levels: [
+      // Bronze: 1 - 2 - 3
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 2 },
+      { tier: 'bronze', subLevel: 3, threshold: 3 },
+      // Argent: 5 - 7 - 10
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      { tier: 'argent', subLevel: 2, threshold: 7 },
+      { tier: 'argent', subLevel: 3, threshold: 10 },
+      // Or: 15 - 20 - 25
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      { tier: 'or', subLevel: 2, threshold: 20 },
+      { tier: 'or', subLevel: 3, threshold: 25 },
+      // Lycans: 40
+      { tier: 'lycans', subLevel: 1, threshold: 40 },
     ],
   },
 ];

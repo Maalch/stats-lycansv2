@@ -76,9 +76,25 @@ async function main(sourceKey) {
     console.log(`  ⚠️  joueurs.json not found, using game data names`);
   }
 
+  // Load BR data (only for 'main' team - discord has no BR data)
+  let brData = null;
+  if (sourceKey === 'main') {
+    const brDataPath = path.join(dataDir, 'rawBRData.json');
+    try {
+      const brDataRaw = await fs.readFile(brDataPath, 'utf-8');
+      const brDataJson = JSON.parse(brDataRaw);
+      brData = brDataJson.BRParties?.data || [];
+      console.log(`  ⚔️  BR data loaded: ${brData.length} BR entries`);
+    } catch (err) {
+      console.log(`  ⚠️  rawBRData.json not found, skipping BR achievements`);
+    }
+  } else {
+    console.log(`  ℹ️  BR data not available for ${dataSource.name}, skipping BR achievements`);
+  }
+
   // Compute achievements
   console.log(`\n⚙️  Computing ${ACHIEVEMENT_DEFINITIONS.length} achievements...`);
-  const playerResults = computeAllAchievements(allGames, ACHIEVEMENT_DEFINITIONS, joueursData);
+  const playerResults = computeAllAchievements(allGames, ACHIEVEMENT_DEFINITIONS, joueursData, brData);
 
   // Build the definitions array for client-side display (strip evaluator internals)
   const clientDefinitions = ACHIEVEMENT_DEFINITIONS.map(def => ({
@@ -89,6 +105,7 @@ async function main(sourceKey) {
     emoji: def.emoji,
     category: def.category,
     levels: def.levels,
+    requiresBRData: def.requiresBRData || false,
   }));
 
   // Build output JSON

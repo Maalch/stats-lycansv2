@@ -1118,6 +1118,145 @@ const EVALUATORS = {
 };
 
 // ============================================================================
+// BR (BATTLE ROYALE) EVALUATORS
+// These use rawBRData format: { Game, Participants, Score, Gagnant }
+// Only available for 'main' team - discord has no BR data
+// ============================================================================
+
+const BR_EVALUATORS = {
+
+  /**
+   * Count BR victories
+   */
+  brWins(playerBRGames, brData) {
+    const gameIds = [];
+    let value = 0;
+    for (const entry of playerBRGames) {
+      if (entry.Gagnant) {
+        value++;
+        gameIds.push(`BR-${entry.Game}`);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count BR participations
+   */
+  brParticipations(playerBRGames, brData) {
+    const gameIds = [];
+    let value = 0;
+    for (const entry of playerBRGames) {
+      value++;
+      gameIds.push(`BR-${entry.Game}`);
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count total BR kills
+   */
+  brTotalKills(playerBRGames, brData) {
+    const gameIds = [];
+    let value = 0;
+    for (const entry of playerBRGames) {
+      if (entry.Score > 0) {
+        value += entry.Score;
+        gameIds.push(`BR-${entry.Game}`);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count BR games with 0 kills
+   */
+  brZeroKillGames(playerBRGames, brData) {
+    const gameIds = [];
+    let value = 0;
+    for (const entry of playerBRGames) {
+      if (entry.Score === 0) {
+        value++;
+        gameIds.push(`BR-${entry.Game}`);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Max kills in a single BR game (returns max score, gameIds ordered by when each threshold was first reached)
+   */
+  brHighKillGame(playerBRGames, brData) {
+    // For this achievement, we need to track when each kill threshold was first reached
+    // Sort games by game number to maintain chronological order
+    const sortedGames = [...playerBRGames].sort((a, b) => a.Game - b.Game);
+    
+    const gameIds = [];
+    let maxSoFar = 0;
+    
+    for (const entry of sortedGames) {
+      if (entry.Score > maxSoFar) {
+        // New record - add this game ID
+        gameIds.push(`BR-${entry.Game}`);
+        maxSoFar = entry.Score;
+      }
+    }
+    
+    return { value: maxSoFar, gameIds };
+  },
+
+  /**
+   * Count BR games where player had top kills but still lost
+   */
+  brTopKillsButLoss(playerBRGames, brData) {
+    const gameIds = [];
+    let value = 0;
+    
+    // Group all BR entries by game number
+    const gameParticipants = new Map();
+    for (const entry of brData) {
+      if (!gameParticipants.has(entry.Game)) {
+        gameParticipants.set(entry.Game, []);
+      }
+      gameParticipants.get(entry.Game).push(entry);
+    }
+    
+    for (const entry of playerBRGames) {
+      // Must be a loss
+      if (entry.Gagnant) continue;
+      
+      // Get all participants in this game
+      const participants = gameParticipants.get(entry.Game) || [];
+      
+      // Find max score in this game
+      const maxScore = Math.max(...participants.map(p => p.Score));
+      
+      // Player must have top score (or tied for top)
+      if (entry.Score === maxScore && maxScore > 0) {
+        value++;
+        gameIds.push(`BR-${entry.Game}`);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count BR victories with exactly 1 kill
+   */
+  brOneShotVictory(playerBRGames, brData) {
+    const gameIds = [];
+    let value = 0;
+    for (const entry of playerBRGames) {
+      if (entry.Gagnant && entry.Score === 1) {
+        value++;
+        gameIds.push(`BR-${entry.Game}`);
+      }
+    }
+    return { value, gameIds };
+  },
+};
+
+// ============================================================================
 // MAIN COMPUTATION
 // ============================================================================
 
@@ -1126,10 +1265,14 @@ const EVALUATORS = {
  * @param {Array} gameData - Full game log array
  * @param {Array} achievementDefs - Achievement definitions array
  * @param {Object|null} joueursData - Optional joueurs.json data
+ * @param {Array|null} brData - Optional BR participation data array (main team only)
  * @returns {Object} - Map of playerId → computed achievements
  */
-export function computeAllAchievements(gameData, achievementDefs, joueursData = null) {
+export function computeAllAchievements(gameData, achievementDefs, joueursData = null, brData = null) {
   console.log(`  Computing achievements across ${gameData.length} games...`);
+  if (brData) {
+    console.log(`  BR data available: ${brData.length} BR entries`);
+  }
   
   // Build per-player game lists
   const playerGamesMap = new Map(); // playerId → [{ game, playerStat }]
@@ -1158,14 +1301,82 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
     }
   }
   
+  // Build per-player BR game lists (by player name since BR data uses names, not IDs)
+  const playerBRGamesMap = new Map(); // playerName → [BR entries]
+  if (brData) {
+    for (const entry of brData) {
+      const playerName = entry.Participants;
+      if (!playerBRGamesMap.has(playerName)) {
+        playerBRGamesMap.set(playerName, []);
+      }
+      playerBRGamesMap.get(playerName).push(entry);
+    }
+    console.log(`  BR players: ${playerBRGamesMap.size}`);
+  }
+  
   console.log(`  Processing ${playerGamesMap.size} players...`);
   
   const results = {};
   
   for (const [playerId, playerGames] of playerGamesMap) {
+    const playerName = playerNames.get(playerId) || playerId;
     const playerAchievements = [];
     
+    // Get BR games for this player (matched by canonical name)
+    const playerBRGames = playerBRGamesMap.get(playerName) || [];
+    
     for (const def of achievementDefs) {
+      // Skip BR achievements if no BR data available
+      if (def.requiresBRData && !brData) {
+        continue;
+      }
+      
+      // Use BR evaluator for BR achievements
+      if (def.requiresBRData) {
+        const brEvaluator = BR_EVALUATORS[def.evaluator];
+        if (!brEvaluator) {
+          console.warn(`  ⚠️  Unknown BR evaluator: ${def.evaluator} for achievement ${def.id}`);
+          continue;
+        }
+        
+        const { value, gameIds } = brEvaluator(playerBRGames, brData, def.evaluatorParams || {});
+        
+        if (value === 0) continue;
+        
+        // Determine which levels are unlocked
+        const unlockedLevels = [];
+        let nextLevel = null;
+        
+        for (const level of def.levels) {
+          if (value >= level.threshold) {
+            const thresholdGameId = gameIds.length >= level.threshold ? gameIds[level.threshold - 1] : gameIds[gameIds.length - 1];
+            unlockedLevels.push({
+              tier: level.tier,
+              subLevel: level.subLevel,
+              threshold: level.threshold,
+              unlockedAtGame: thresholdGameId || null,
+            });
+          } else if (!nextLevel) {
+            nextLevel = { tier: level.tier, subLevel: level.subLevel, threshold: level.threshold };
+          }
+        }
+        
+        const progress = nextLevel
+          ? Math.min(value / nextLevel.threshold, 0.99)
+          : 1.0;
+        
+        playerAchievements.push({
+          id: def.id,
+          currentValue: value,
+          unlockedLevels,
+          nextLevel,
+          progress,
+        });
+        
+        continue;
+      }
+      
+      // Standard achievement evaluation
       const evaluator = EVALUATORS[def.evaluator];
       if (!evaluator) {
         console.warn(`  ⚠️  Unknown evaluator: ${def.evaluator} for achievement ${def.id}`);
