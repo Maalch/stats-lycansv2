@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lycans Tracker Overlay</title>
+  <link rel="stylesheet" href="overlay/overlay.css">
+</head>
+<body>
+
+  <!-- Full-page transparent container; clicks pass through except on #overlay-badge -->
+  <div id="overlay-root">
+
+    <!-- Badge: hidden by default, shown once player is identified -->
+    <div id="overlay-badge" class="hidden">
+
+      <!-- Collapsed state: small pill -->
+      <div class="badge-pill">
+        <span class="pill-emoji">🐺</span>
+        <span class="pill-winrate">—</span>
+        <span class="pill-title-text"></span>
+        <span class="pill-chevron">▲</span>
+      </div>
+
+      <!-- Expanded state: mini card -->
+      <div class="badge-card">
+        <div class="card-name"></div>
+        <div class="card-title"></div>
+        <div class="card-stats"></div>
+        <a class="card-link" href="https://www.lycanstracker.fr" target="_blank" rel="noopener">
+          Voir les stats complètes →
+        </a>
+      </div>
+
+    </div><!-- /#overlay-badge -->
+
+  </div><!-- /#overlay-root -->
+
+  <!-- Twitch Extension SDK (production) -->
+  <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+  <!-- Developer Rig helper (only used when running locally in the rig) -->
+  <script src="https://localhost.rig.twitch.tv:3000/twitch-ext.js"></script>
+
+  <!-- Shared modules -->
+  <script src="shared/constants.js"></script>
+  <script src="shared/data-fetcher.js"></script>
+  <script src="shared/player-matcher.js"></script>
+
+  <!-- Overlay logic -->
+  <script src="overlay/overlay.js"></script>
+</body>
+</html>

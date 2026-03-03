@@ -1,0 +1,344 @@
+/* ============================================================
+   Lycans Tracker Twitch Extension — Panel Styles
+   Panel width: 318px (Twitch constraint, content fills to edge)
+   ============================================================ */
+
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  background: #0e0e10;
+  color: #efeff1;
+  width: 318px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+
+/* ── Layout helpers ──────────────────────────────────────── */
+.hidden { display: none !important; }
+
+/* ── Loading / error states ──────────────────────────────── */
+#loading-state,
+#error-state,
+#not-found-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #adadb8;
+  min-height: 200px;
+}
+
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid #2d2d35;
+  border-top-color: #9147ff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#error-state .error-icon { font-size: 32px; }
+#not-found-state .nf-icon { font-size: 40px; }
+
+.btn-link {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 7px 16px;
+  background: #9147ff;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.btn-link:hover { background: #772ce8; }
+
+/* ── Manual player selector ──────────────────────────────── */
+#selector-state {
+  padding: 14px;
+}
+#selector-state h3 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #adadb8;
+  margin-bottom: 8px;
+}
+#player-select {
+  width: 100%;
+  padding: 7px 10px;
+  background: #18181b;
+  border: 1px solid #3a3a3f;
+  border-radius: 6px;
+  color: #efeff1;
+  font-size: 13px;
+  outline: none;
+}
+#player-select:focus { border-color: #9147ff; }
+
+/* ── Player card ─────────────────────────────────────────── */
+#player-card {
+  padding-bottom: 12px;
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 12px;
+  background: linear-gradient(135deg, #18181b 0%, #1f1f23 100%);
+  border-bottom: 1px solid #2d2d35;
+}
+
+.player-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #9147ff;
+  flex-shrink: 0;
+  background: #2d2d35;
+}
+
+.player-avatar-placeholder {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: #2d2d35;
+  border: 2px solid #9147ff;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.header-info { min-width: 0; }
+
+.player-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #efeff1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.primary-title {
+  font-size: 12px;
+  color: #bf94ff;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title-description {
+  font-size: 11px;
+  color: #adadb8;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Section wrapper ─────────────────────────────────────── */
+.section {
+  padding: 10px 14px;
+  border-bottom: 1px solid #2d2d35;
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #adadb8;
+  margin-bottom: 8px;
+}
+
+/* ── Quick stats row ─────────────────────────────────────── */
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #18181b;
+  border-radius: 6px;
+  padding: 7px 4px;
+}
+
+.stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #efeff1;
+  line-height: 1;
+}
+
+.stat-value.win-rate { color: #00c853; }
+.stat-value.streak-pos { color: #f5a523; }
+.stat-value.streak-neg { color: #e85d5d; }
+
+.stat-label {
+  font-size: 10px;
+  color: #adadb8;
+  margin-top: 3px;
+  text-align: center;
+}
+
+/* ── Camp performance bars ───────────────────────────────── */
+.camp-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.camp-row:last-child { margin-bottom: 0; }
+
+.camp-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+
+.camp-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: #2d2d35;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.camp-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.camp-pct {
+  font-size: 11px;
+  color: #efeff1;
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.camp-games {
+  font-size: 10px;
+  color: #adadb8;
+  width: 26px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Achievements ────────────────────────────────────────── */
+.ach-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.ach-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #efeff1;
+}
+
+.ach-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ach-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #18181b;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.ach-emoji { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+
+.ach-details { min-width: 0; flex: 1; }
+
+.ach-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #efeff1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ach-tier {
+  font-size: 10px;
+  margin-top: 1px;
+}
+
+/* ── Recent games ────────────────────────────────────────── */
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.game-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: #18181b;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+}
+
+.game-item.win  { border-left-color: #00c853; }
+.game-item.loss { border-left-color: #e85d5d; }
+
+.game-outcome { font-size: 12px; width: 16px; flex-shrink: 0; }
+.game-map     { font-size: 11px; color: #adadb8; flex: 1; min-width: 0;
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.game-role    { font-size: 11px; color: #bf94ff; text-align: right;
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+                max-width: 110px; }
+
+/* ── Footer link ─────────────────────────────────────────── */
+.card-footer {
+  padding: 10px 14px 2px;
+  text-align: center;
+}
+
+.dashboard-link {
+  display: block;
+  padding: 8px 14px;
+  background: #18181b;
+  border: 1px solid #3a3a3f;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #9147ff;
+  transition: background 0.15s, border-color 0.15s;
+}
+.dashboard-link:hover { background: #2d2d35; border-color: #9147ff; }
+
+/* ── Favorite info line ──────────────────────────────────── */
+.fav-line {
+  font-size: 11px;
+  color: #adadb8;
+  text-align: center;
+  padding: 6px 14px 0;
+}
+.fav-line span { color: #efeff1; font-weight: 600; }

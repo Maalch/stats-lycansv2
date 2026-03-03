@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lycans Tracker</title>
+  <link rel="stylesheet" href="panel/panel.css">
+</head>
+<body>
+  <!-- Loading -->
+  <div id="loading-state">
+    <div class="spinner"></div>
+    <p>Chargement des stats…</p>
+  </div>
+
+  <!-- Error -->
+  <div id="error-state" class="hidden">
+    <span class="error-icon">⚠️</span>
+    <p id="error-msg">Une erreur est survenue.</p>
+    <a href="https://www.lycanstracker.fr" target="_blank" rel="noopener" class="btn-link">
+      Ouvrir le tableau de bord
+    </a>
+  </div>
+
+  <!-- Not found (player in DB but no stats) -->
+  <div id="not-found-state" class="hidden">
+    <span class="nf-icon">🐺</span>
+    <p>Joueur introuvable dans les données.</p>
+    <a href="https://www.lycanstracker.fr" target="_blank" rel="noopener" class="btn-link">
+      Voir les stats
+    </a>
+  </div>
+
+  <!-- Manual player selector (broadcaster not in joueurs.json) -->
+  <div id="selector-state" class="hidden">
+    <h3>Sélectionner un joueur</h3>
+    <select id="player-select"></select>
+  </div>
+
+  <!-- Player card -->
+  <div id="player-card" class="hidden">
+
+    <!-- Header: avatar + name + title -->
+    <div class="card-header">
+      <!-- filled by panel.js -->
+    </div>
+
+    <!-- Quick stats: win rate / games / streak -->
+    <div class="section">
+      <div class="section-label">Statistiques</div>
+      <div id="quick-stats" class="quick-stats"></div>
+    </div>
+
+    <!-- Camp performance bars -->
+    <div class="section">
+      <div class="section-label">Performance par camp</div>
+      <div id="camp-stats"></div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="section">
+      <div class="section-label">
+        Succès &nbsp;
+        <span id="ach-count-value" style="color:#efeff1;font-weight:700">0</span>
+        <span style="font-weight:400;text-transform:none;letter-spacing:0"> niveaux débloqués</span>
+      </div>
+      <div id="achievements" class="ach-list"></div>
+    </div>
+
+    <!-- Recent games -->
+    <div class="section">
+      <div class="section-label">Parties récentes</div>
+      <div id="recent-games" class="game-list"></div>
+    </div>
+
+    <!-- Favourite role / map -->
+    <div id="fav-line" class="fav-line"></div>
+
+    <!-- Footer link -->
+    <div class="card-footer">
+      <a id="dashboard-link" href="https://www.lycanstracker.fr" target="_blank" rel="noopener" class="dashboard-link">
+        Voir les stats complètes →
+      </a>
+    </div>
+
+  </div><!-- /#player-card -->
+
+  <!-- Twitch Extension SDK (production) -->
+  <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+  <!-- Developer Rig helper (only used when running locally in the rig) -->
+  <script src="https://localhost.rig.twitch.tv:3000/twitch-ext.js"></script>
+
+  <!-- Shared modules -->
+  <script src="shared/constants.js"></script>
+  <script src="shared/data-fetcher.js"></script>
+  <script src="shared/player-matcher.js"></script>
+
+  <!-- Panel logic -->
+  <script src="panel/panel.js"></script>
+</body>
+</html>

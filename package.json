@@ -13,6 +13,8 @@
     "sync-data-discord": "cd scripts/data-sync && npm install && node fetch-data-unified.js discord",
     "generate-rankings": "cd scripts/data-sync && node generate-rankings.js && cd ../.. && npm run copy-data-dev",
     "generate-achievements": "cd scripts/data-sync && node generate-achievements.js && cd ../.. && npm run copy-data-dev",
+    "generate-summary": "cd scripts/data-sync && node generate-player-summary.js main && cd ../.. && npm run copy-data-dev",
+    "build-extension": "node -e \"const fs=require('fs'),path=require('path'),{execSync}=require('child_process');const src=path.resolve('Twitch Extension'),dist=path.resolve('twitch-extension-dist');if(fs.existsSync(dist))fs.rmSync(dist,{recursive:true});fs.cpSync(src,dist,{recursive:true});['README.html'].forEach(f=>{const fp=path.join(dist,f);if(fs.existsSync(fp))fs.rmSync(fp);});try{execSync('powershell Compress-Archive -Force -Path twitch-extension-dist\\* -DestinationPath twitch-extension.zip');console.log('✅ twitch-extension.zip created');}catch{console.log('⚠️  ZIP not created (PowerShell unavailable). Files ready in twitch-extension-dist/');};\"",
     "verify-actions": "node scripts/verify-actions.js",
     "lint": "eslint .",
     "preview": "vite preview"

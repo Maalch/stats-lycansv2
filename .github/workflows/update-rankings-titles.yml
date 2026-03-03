@@ -78,6 +78,13 @@ jobs:
           node scripts/data-sync/generate-achievements.js main
           echo "✅ Main Team achievements generated"
 
+      - name: Generate player summary (Main Team)
+        if: ${{ inputs.team == 'all' || inputs.team == 'main' || inputs.team == '' }}
+        run: |
+          echo "📊 Generating player summary for Main Team (Twitch Extension)..."
+          node scripts/data-sync/generate-player-summary.js main
+          echo "✅ Main Team player summary generated"
+
       # ========================================
       # DISCORD TEAM - Rankings, Titles & Achievements
       # ========================================
@@ -119,6 +126,17 @@ jobs:
           if [ -f "data/discord/gameLog.json" ]; then
             node scripts/data-sync/generate-achievements.js discord
             echo "✅ Discord Team achievements generated"
+          else
+            echo "⚠️  Discord Team data not found, skipping..."
+          fi
+
+      - name: Generate player summary (Discord Team)
+        if: ${{ inputs.team == 'all' || inputs.team == 'discord' || inputs.team == '' }}
+        run: |
+          echo "📊 Generating player summary for Discord Team (Twitch Extension)..."
+          if [ -f "data/discord/gameLog.json" ]; then
+            node scripts/data-sync/generate-player-summary.js discord
+            echo "✅ Discord Team player summary generated"
           else
             echo "⚠️  Discord Team data not found, skipping..."
           fi
@@ -232,6 +250,7 @@ jobs:
           cp data/playerTitles.json docs/data/playerTitles.json 2>/dev/null || true
           cp data/playerStatsCache.json docs/data/playerStatsCache.json 2>/dev/null || true
           cp data/playerAchievements.json docs/data/playerAchievements.json 2>/dev/null || true
+          cp data/playerSummary.json docs/data/playerSummary.json 2>/dev/null || true
           echo "✅ Copied Main Team files to docs/data/"
           
           # Copy Discord Team files if exists
@@ -241,6 +260,7 @@ jobs:
             cp data/discord/playerTitles.json docs/data/discord/playerTitles.json 2>/dev/null || true
             cp data/discord/playerStatsCache.json docs/data/discord/playerStatsCache.json 2>/dev/null || true
             cp data/discord/playerAchievements.json docs/data/discord/playerAchievements.json 2>/dev/null || true
+            cp data/discord/playerSummary.json docs/data/discord/playerSummary.json 2>/dev/null || true
             echo "✅ Copied Discord Team files to docs/data/discord/"
           fi
 
@@ -254,10 +274,12 @@ jobs:
           git add data/playerTitles.json docs/data/playerTitles.json 2>/dev/null || true
           git add data/playerAchievements.json docs/data/playerAchievements.json 2>/dev/null || true
           git add data/playerStatsCache.json docs/data/playerStatsCache.json 2>/dev/null || true
+          git add data/playerSummary.json docs/data/playerSummary.json 2>/dev/null || true
           git add data/discord/playerRankings.json docs/data/discord/playerRankings.json 2>/dev/null || true
           git add data/discord/playerTitles.json docs/data/discord/playerTitles.json 2>/dev/null || true
           git add data/discord/playerAchievements.json docs/data/discord/playerAchievements.json 2>/dev/null || true
           git add data/discord/playerStatsCache.json docs/data/discord/playerStatsCache.json 2>/dev/null || true
+          git add data/discord/playerSummary.json docs/data/discord/playerSummary.json 2>/dev/null || true
           
           if ! git diff --cached --quiet; then
             git commit -m "chore: update rankings, titles and achievements $(date '+%Y-%m-%d %H:%M:%S')"
