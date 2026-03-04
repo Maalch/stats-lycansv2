@@ -1265,6 +1265,33 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
 
+  {
+    id: 'calife-a-la-place-du-calife',
+    name: 'Calife à la place du Calife',
+    description: 'Quoi de mieux que de battre le développeur du jeu',
+    explanation: 'Gagner X parties lors desquelles Onutrem a perdu',
+    emoji: '👑',
+    category: 'special',
+    evaluator: 'winsAgainstOnutrem',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 15 - 20 - 25
+      { tier: 'argent', subLevel: 1, threshold: 15 },
+      { tier: 'argent', subLevel: 2, threshold: 20 },
+      { tier: 'argent', subLevel: 3, threshold: 25 },
+      // Or: 30 - 35 - 40
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 35 },
+      { tier: 'or', subLevel: 3, threshold: 40 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+
   // ============================================================================
   // BATTLE ROYALE (main team only - no BR data for Discord)
   // ============================================================================

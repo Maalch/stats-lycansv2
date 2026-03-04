@@ -24,7 +24,7 @@
 | Sur le site | | Vaudou | Zombie Nation | | Faire X parties en ressuscitant au moins 3 joueurs en étant Vaudou | 1 | 3 | 5 | 10 |
 | Sur le site | | Tous | Et le temps passe... | Vous n'aviez pas vu que tout le monde vous attendait ? | Ne pas voter ou passer X fois quand tous les autres ont passé | 5 | 10 | 15 | 30 |
 | NEW | | Loup | Loup Aventurier | Et puis vous avez pris une flèche dans le genou... | Perdre X parties en Loup tout en survivant au Chasseur | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
-| NEW | | Tous | Calife à la place du Calife | Quoi de mieux que de battre le développeur du jeu | Gagner X parties contre le joueur Onutrem | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
+| Sur le site | | Tous | Calife à la place du Calife | Quoi de mieux que de battre le développeur du jeu | Gagner X parties contre le joueur Onutrem | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
 | NEW | | Tous | Gagnant du mois | Vous êtes beau, vous êtes grand, vous êtes gagnant... Au moins sur un mois. | Avoir X fois plus de 50 % de victoires sur un mois | 1 | 3 | 5 | 10 |
 | NEW | | Villageois | Réflexe et vision ou juste pif | Vous avez mis un point final à la game, le reste... | Gagner X parties en tuant le dernier Loup en étant Chasseur | 3 | 5 | 10 | 20 |
 | NEW | | Scientifique | Einstein | Votre recherche du savoir a enfin été récompensé | Gagner X victoires en Scientifique | 3 | 5 | 10 | 20 |

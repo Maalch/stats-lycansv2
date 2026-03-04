@@ -22,6 +22,7 @@ import {
   campWins, campLosses, soloWins, soloLosses,
   deathByType, deathOnTiming,
   winOnAllMaps, winInColors, winsOnAllMaps,
+  winsAgainstOnutrem,
 } from './evaluators-general.js';
 
 // Wolf evaluators
@@ -138,6 +139,7 @@ export const EVALUATORS = {
   // Social/Special
   talkingPercentage,
   deathsInAllZones,
+  winsAgainstOnutrem,
 };
 
 export const BR_EVALUATORS = {

@@ -148,6 +148,36 @@ export function winInColors(playerGames, allGames, playerId, params) {
   return { value: achieved ? 1 : 0, gameIds: achieved ? gameIds : [] };
 }
 
+const ONUTREM_STEAM_ID = '76561198065697406';
+
+/**
+ * Count wins in games where Onutrem participated and lost.
+ * Onutrem himself is excluded from earning this achievement.
+ */
+export function winsAgainstOnutrem(playerGames, allGames, playerId, params) {
+  // Onutrem cannot earn this achievement
+  if (playerId === ONUTREM_STEAM_ID) {
+    return { value: 0, gameIds: [] };
+  }
+
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    // Player must have won
+    if (!playerStat.Victorious) continue;
+
+    // Onutrem must be in the game and must have lost
+    const onutrem = game.PlayerStats.find(p => p.ID === ONUTREM_STEAM_ID);
+    if (!onutrem || onutrem.Victorious) continue;
+
+    value++;
+    gameIds.push(game.Id);
+  }
+
+  return { value, gameIds };
+}
+
 /**
  * Return minimum wins per map (for "win X times on each map")
  */
