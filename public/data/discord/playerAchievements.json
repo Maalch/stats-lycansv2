@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-03T10:05:01.172Z",
+  "generatedAt": "2026-03-03T16:08:08.085Z",
   "teamName": "Discord Team",
   "totalPlayers": 156,
   "totalGames": 368,
@@ -1065,6 +1065,37 @@
       "requiresBRData": false
     },
     {
+      "id": "villageois-double-ally-kill",
+      "name": "Oups",
+      "description": "Alors, vous vous êtes trompés d'alliés...",
+      "explanation": "Faire X parties en tuant deux alliés hors meeting en étant Villageois",
+      "emoji": "🤦",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 15
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "hunter-double-kill",
       "name": "Farmeur de loups",
       "description": "Un loup c'est bien, deux loups c'est mieux",
@@ -1231,6 +1262,98 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 50
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "amoureux-loup-kills-lover",
+      "name": "Un chouya fusionnel",
+      "description": "Vous l'aimez tellement que... Vous l'avez croqué",
+      "explanation": "Tuer X fois son amoureux en étant Amoureux Loup",
+      "emoji": "🐺❤️",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "amoureux-loup-total-kills",
+      "name": "C'est pour toi mon amour UwU",
+      "description": "Vous tuez uniquement par passion. Elle vous fait dépasser les limites.",
+      "explanation": "Faire X kills en Amoureux Loup",
+      "emoji": "🐺💕",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 5
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 20
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 30
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 40
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 60
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 80
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 100
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 200
         }
       ],
       "requiresBRData": false
@@ -1973,6 +2096,67 @@
       "requiresBRData": true
     },
     {
+      "id": "br-lucky-luke",
+      "name": "Lucky Luke",
+      "description": "Vous tirez plus vite que votre ombre, c'est prouvé",
+      "explanation": "Faire X parties à 5 kills ou plus en mode BR",
+      "emoji": "🤠",
+      "category": "br",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 5
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 20
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 25
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 35
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 40
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 50
+        }
+      ],
+      "requiresBRData": true
+    },
+    {
       "id": "br-one-shot-victory",
       "name": "Un tir, une victoire",
       "description": "Économe mais efficace",
@@ -2038,7 +2222,7 @@
     "76561198153298747": {
       "playerId": "76561198153298747",
       "playerName": "Timaki",
-      "totalUnlocked": 40,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -2519,6 +2703,24 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251012191348"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -2995,7 +3197,7 @@
     "76561198364697515": {
       "playerId": "76561198364697515",
       "playerName": "Ekaenerys",
-      "totalUnlocked": 37,
+      "totalUnlocked": 39,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3441,6 +3643,30 @@
           "progress": 0.5
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251107220009"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260130222258"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.7
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -3538,7 +3764,7 @@
     "76561199789359755": {
       "playerId": "76561199789359755",
       "playerName": "Gaëtan R",
-      "totalUnlocked": 43,
+      "totalUnlocked": 44,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4087,6 +4313,24 @@
           "progress": 0.7
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251214212522"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 6,
           "unlockedLevels": [
@@ -4593,7 +4837,7 @@
     "76561198976507974": {
       "playerId": "76561198976507974",
       "playerName": "Enamore",
-      "totalUnlocked": 50,
+      "totalUnlocked": 53,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5167,6 +5411,36 @@
           "progress": 0.9
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 15,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251019191549"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260222210304"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260222210304"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.75
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -5269,7 +5543,7 @@
     "76561198085469315": {
       "playerId": "76561198085469315",
       "playerName": "Kid",
-      "totalUnlocked": 37,
+      "totalUnlocked": 39,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5688,6 +5962,24 @@
           "progress": 0.6
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251004193926"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -5730,6 +6022,24 @@
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251109201745"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
           },
           "progress": 0.2
         },
@@ -7284,7 +7594,7 @@
     "76561198080405974": {
       "playerId": "76561198080405974",
       "playerName": "potedeo",
-      "totalUnlocked": 13,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7475,6 +7785,24 @@
           "progress": 0.4
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251004203337"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -7515,6 +7843,24 @@
           "progress": 0.3
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251102201758"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -7541,7 +7887,7 @@
     "76561198003053453": {
       "playerId": "76561198003053453",
       "playerName": "twitch.tv/hornicoo",
-      "totalUnlocked": 28,
+      "totalUnlocked": 29,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7899,6 +8245,24 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260130203606"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -7994,7 +8358,7 @@
     "76561198335168181": {
       "playerId": "76561198335168181",
       "playerName": "VVentus02",
-      "totalUnlocked": 37,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8453,6 +8817,42 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 20,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251008192745"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260225210958"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260225210958"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 20,
+              "unlockedAtGame": "Nales-20260225210958"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 30
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -8526,7 +8926,7 @@
     "76561197973106144": {
       "playerId": "76561197973106144",
       "playerName": "Nales",
-      "totalUnlocked": 62,
+      "totalUnlocked": 66,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9133,6 +9533,42 @@
           "progress": 0.8
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 22,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251008195227"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260206210459"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260206210459"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 20,
+              "unlockedAtGame": "Nales-20260206210459"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 30
+          },
+          "progress": 0.7333333333333333
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 10,
           "unlockedLevels": [
@@ -9406,7 +9842,7 @@
     "76561198095002711": {
       "playerId": "76561198095002711",
       "playerName": "Acuado",
-      "totalUnlocked": 26,
+      "totalUnlocked": 27,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9806,6 +10242,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251116204153"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "misunderstood",
@@ -10411,7 +10865,7 @@
     "76561198336905584": {
       "playerId": "76561198336905584",
       "playerName": "Moonkey",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10647,6 +11101,24 @@
             "threshold": 10
           },
           "progress": 0.2
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251004211533"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "same-color-kills",
@@ -11089,7 +11561,7 @@
     "76561199652206906": {
       "playerId": "76561199652206906",
       "playerName": "Sonnette",
-      "totalUnlocked": 31,
+      "totalUnlocked": 33,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11549,6 +12021,30 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251008210616"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260109210105"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 7,
           "unlockedLevels": [
@@ -11615,7 +12111,7 @@
     "76561199479620936": {
       "playerId": "76561199479620936",
       "playerName": "Grande Reine Edja",
-      "totalUnlocked": 18,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11898,6 +12394,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260201201523"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "same-color-kills",
@@ -12342,7 +12856,7 @@
     "76561198349608745": {
       "playerId": "76561198349608745",
       "playerName": "Nakilyu",
-      "totalUnlocked": 25,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12705,6 +13219,24 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260102210059"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "same-color-kills",
@@ -13149,7 +13681,7 @@
     "76561198362458369": {
       "playerId": "76561198362458369",
       "playerName": "TTanjun",
-      "totalUnlocked": 29,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13596,6 +14128,36 @@
           "progress": 0.4
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251031213055"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251228215530"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20251228215530"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.5
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -14011,7 +14573,7 @@
     "76561198010158937": {
       "playerId": "76561198010158937",
       "playerName": "Lhuun",
-      "totalUnlocked": 36,
+      "totalUnlocked": 37,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14511,6 +15073,24 @@
           "progress": 0.5
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251112203000"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -14922,7 +15502,7 @@
     "76561198056449397": {
       "playerId": "76561198056449397",
       "playerName": "Akunoto",
-      "totalUnlocked": 29,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15362,6 +15942,24 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251010191531"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -15467,7 +16065,7 @@
     "76561198069501851": {
       "playerId": "76561198069501851",
       "playerName": "Nocxy",
-      "totalUnlocked": 30,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15895,6 +16493,24 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260204202818"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -16212,7 +16828,7 @@
     "76561198124278834": {
       "playerId": "76561198124278834",
       "playerName": "Johnny",
-      "totalUnlocked": 40,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16735,6 +17351,36 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 15,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251012210624"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260123202007"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260123202007"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.75
         },
         {
           "id": "same-color-kills",
@@ -18346,7 +18992,7 @@
     "76561199219439908": {
       "playerId": "76561199219439908",
       "playerName": "Tomill",
-      "totalUnlocked": 28,
+      "totalUnlocked": 29,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18766,6 +19412,24 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260206215246"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -18810,7 +19474,7 @@
     "76561198187090759": {
       "playerId": "76561198187090759",
       "playerName": "QuicheLoLardon",
-      "totalUnlocked": 25,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19160,6 +19824,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260109220427"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "same-color-kills",
@@ -19994,7 +20676,7 @@
     "76561199470453303": {
       "playerId": "76561199470453303",
       "playerName": "Foiegrette",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20170,6 +20852,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251114204311"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "same-color-kills",
@@ -20704,7 +21404,7 @@
     "76561198025444898": {
       "playerId": "76561198025444898",
       "playerName": "bellinoob",
-      "totalUnlocked": 31,
+      "totalUnlocked": 34,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21069,6 +21769,24 @@
           "progress": 0.2
         },
         {
+          "id": "villageois-double-ally-kill",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251112203000"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 7,
           "unlockedLevels": [
@@ -21132,6 +21850,30 @@
             "threshold": 10
           },
           "progress": 0.2
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251221205933"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260125202944"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "same-color-kills",
@@ -22366,7 +23108,7 @@
     "76561198258019490": {
       "playerId": "76561198258019490",
       "playerName": "Niritto Wance",
-      "totalUnlocked": 20,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22671,6 +23413,30 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 8,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251029210837"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251031201556"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.8
         },
         {
           "id": "same-color-kills",
@@ -23350,7 +24116,7 @@
     "76561198035066476": {
       "playerId": "76561198035066476",
       "playerName": "KuB",
-      "totalUnlocked": 4,
+      "totalUnlocked": 5,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23456,6 +24222,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251105212142"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "same-color-kills",
@@ -26330,7 +27114,7 @@
     "76561199111724855": {
       "playerId": "76561199111724855",
       "playerName": "TiiCH07",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26483,6 +27267,24 @@
             "threshold": 10
           },
           "progress": 0.2
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251207211005"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "same-color-kills",
@@ -27091,7 +27893,7 @@
     "76561198202553532": {
       "playerId": "76561198202553532",
       "playerName": "Medea",
-      "totalUnlocked": 2,
+      "totalUnlocked": 3,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27139,6 +27941,24 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251217204509"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         }
       ]
     },
@@ -32964,7 +33784,7 @@
     "76561199067726825": {
       "playerId": "76561199067726825",
       "playerName": "Magniolya",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33130,6 +33950,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260208211148"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "only-passer",
@@ -34137,7 +34975,7 @@
     "76561199099528141": {
       "playerId": "76561199099528141",
       "playerName": "Beldeus",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34278,6 +35116,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "amoureux-loup-total-kills",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260220214834"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },

@@ -616,6 +616,16 @@ function MainApp() {
                   >
                     🔒 Confidentialité
                   </button>
+                  <span className="footer-separator"> • </span>
+                  <a
+                    href="https://github.com/Maalch/stats-lycansv2"
+                    className="contact-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Voir le code source sur GitHub"
+                  >
+                    💻 GitHub
+                  </a>
                 </p>
               </footer>
             </div>
