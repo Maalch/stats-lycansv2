@@ -554,6 +554,41 @@ const EVALUATORS = {
   },
 
   /**
+   * Count wins as Agent where:
+   * - Player personally killed the other Agent (victim.DeathType === OTHER_AGENT, KillerName === player)
+   * - Player won the game
+   * - Player never received any vote during any meeting in the game
+   */
+  agentPerfectKill(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+
+    for (const { game, playerStat } of playerGames) {
+      if (playerStat.MainRoleInitial !== 'Agent') continue;
+      if (!playerStat.Victorious) continue;
+
+      // Must have personally killed the other Agent
+      const killedOtherAgent = game.PlayerStats.some(victim =>
+        victim.DeathType === DeathTypeCode.OTHER_AGENT &&
+        victim.KillerName === playerStat.Username
+      );
+      if (!killedOtherAgent) continue;
+
+      // Must never have received any vote during any meeting
+      const wasEverVoted = game.PlayerStats.some(voter =>
+        getPlayerId(voter) !== playerId &&
+        voter.Votes &&
+        voter.Votes.some(v => v.Target === playerStat.Username)
+      );
+      if (wasEverVoted) continue;
+
+      value++;
+      gameIds.push(game.Id);
+    }
+    return { value, gameIds };
+  },
+
+  /**
    * Count times voted out as Agent
    */
   agentVoted(playerGames, allGames, playerId, params) {
@@ -1121,6 +1156,75 @@ const EVALUATORS = {
   },
 
   /**
+   * Count games where player (as Amoureux Loup) killed at least 2 wolf-camp players
+   * in a single game via BY_WOLF kills.
+   */
+  amoureuxLoupKillsTwoWolves(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+
+    for (const { game, playerStat } of playerGames) {
+      const isAmoureuxLoup = playerStat.MainRoleInitial === 'Amoureux Loup' ||
+                             (isWolfCamp(playerStat) && playerStat.SecondaryRole === 'Amoureux');
+      if (!isAmoureuxLoup) continue;
+
+      // Count wolf-camp victims killed by this player in this game
+      let wolfKillsInGame = 0;
+      for (const victim of game.PlayerStats) {
+        if (victim.DeathType !== DeathTypeCode.BY_WOLF) continue;
+        if (victim.KillerName !== playerStat.Username) continue;
+        if (isWolfCamp(victim)) wolfKillsInGame++;
+      }
+      if (wolfKillsInGame >= 2) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count out-of-meeting kills made while being Amoureux Villageois (villageois-camp lover).
+   * "Hors meeting" = any kill that is NOT a VOTED death.
+   * "Ennemi" = the victim is not an Amoureux partner (not in the Amoureux camp).
+   */
+  amoureuxVillageoisKillsEnemy(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+    const countedGames = new Set();
+
+    for (const { game, playerStat } of playerGames) {
+      // Must be Amoureux Villageois (not wolf camp)
+      const isAmoureuxVillageois = playerStat.MainRoleInitial === 'Amoureux' ||
+                                    (!isWolfCamp(playerStat) && playerStat.SecondaryRole === 'Amoureux');
+      if (!isAmoureuxVillageois) continue;
+
+      let killsInGame = 0;
+      for (const victim of game.PlayerStats) {
+        // Must be killed by this player
+        if (victim.KillerName !== playerStat.Username) continue;
+        // Must be a hors-meeting kill (not a vote)
+        if (victim.DeathType === DeathTypeCode.VOTED) continue;
+        // Victim must not be an Amoureux (i.e. not the partner)
+        const victimIsAmoureux = victim.MainRoleInitial === 'Amoureux' ||
+                                  victim.MainRoleInitial === 'Amoureux Loup' ||
+                                  victim.SecondaryRole === 'Amoureux';
+        if (victimIsAmoureux) continue;
+
+        killsInGame++;
+      }
+      if (killsInGame > 0) {
+        value += killsInGame;
+        if (!countedGames.has(game.Id)) {
+          gameIds.push(game.Id);
+          countedGames.add(game.Id);
+        }
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
    * Return minimum wins per map (for "win X times on each map")
    */
   winsOnAllMaps(playerGames, allGames, playerId, params) {
@@ -1178,6 +1282,49 @@ const EVALUATORS = {
                            playerStat.DeathType === DeathTypeCode.BULLET_HUMAN ||
                            playerStat.DeathType === DeathTypeCode.BULLET_WOLF;
       if (isHunterKill) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
+   * Count games where player (as Loup Nécromancien) resurrected a non-wolf player
+   * who then made at least 2 BY_WOLF kills in that game.
+   * - Nécromancien = isWolfCamp + Power === 'Nécromancien'
+   * - Resurrected player = had MainRoleChanges with NewMainRole === 'Loup'
+   *   AND was NOT originally wolf-camp (excludes Louveteau transformations)
+   */
+  wolfNecromancerResurrect(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+
+    for (const { game, playerStat } of playerGames) {
+      if (!isWolfCamp(playerStat)) continue;
+      if (playerStat.Power !== 'Nécromancien') continue;
+
+      // Find players resurrected by the Nécromancien:
+      // - had a role change to 'Loup'
+      // - were NOT originally wolf-camp (distinguishes from Louveteau transformation)
+      const resurrectedPlayers = game.PlayerStats.filter(p =>
+        getPlayerId(p) !== playerId &&
+        p.MainRoleChanges &&
+        p.MainRoleChanges.some(rc => rc.NewMainRole === 'Loup') &&
+        getPlayerCampFromRole(p.MainRoleInitial) !== 'Loup'
+      );
+      if (resurrectedPlayers.length === 0) continue;
+
+      // Check if any resurrected player made at least 2 BY_WOLF kills in this game
+      const anyResurrectedKilledTwo = resurrectedPlayers.some(resurrected => {
+        const kills = game.PlayerStats.filter(victim =>
+          victim.DeathType === DeathTypeCode.BY_WOLF &&
+          victim.KillerName === resurrected.Username
+        );
+        return kills.length >= 2;
+      });
+
+      if (anyResurrectedKilledTwo) {
         value++;
         gameIds.push(game.Id);
       }

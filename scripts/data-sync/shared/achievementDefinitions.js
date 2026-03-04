@@ -847,6 +847,46 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'amoureux-loup-kills-two-wolves',
+    name: 'Pas de concurrence',
+    description: 'La meilleure défense, c\'est l\'attaque',
+    explanation: 'Avoir X fois tué deux Loups en étant Amoureux Loup',
+    emoji: '🐺🐺💕',
+    category: 'kills',
+    evaluator: 'amoureuxLoupKillsTwoWolves',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
+    id: 'amoureux-villageois-kills-enemy',
+    name: 'Moi aussi je participe !',
+    description: 'Vous aussi vous apportez votre part à l\'édifice',
+    explanation: 'Avoir X fois tué un ennemi hors meeting en étant Amoureux Villageois',
+    emoji: '❤️🗡️',
+    category: 'kills',
+    evaluator: 'amoureuxVillageoisKillsEnemy',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
     id: 'same-color-kills',
     name: 'C\'est MA couleur !',
     description: 'Vous voulez être le·a seul·e à la mode, ça se comprend...',
@@ -870,6 +910,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
   // ============================================================================
   // ROLES
   // ============================================================================
+  {
+    id: 'agent-007',
+    name: '007',
+    description: 'Bravo, vous \u00eates un v\u00e9ritable agent',
+    explanation: 'Gagner X fois en tuant personnellement l\'autre Agent et sans jamais avoir \u00e9t\u00e9 vot\u00e9 en \u00e9tant Agent',
+    emoji: '\ud83d\udd2b',
+    category: 'roles',
+    evaluator: 'agentPerfectKill',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
   {
     id: 'agent-117',
     name: '117',
@@ -908,6 +968,46 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 3 },
       // Lycans: 5
       { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
+    id: 'louveteau-orphan',
+    name: 'Le Louveteau Orphelin',
+    description: 'Vous \u00e9tiez trop jeune pour mourir',
+    explanation: 'Gagner X fois en Louveteau apr\u00e8s la mort des autres Loups',
+    emoji: '\ud83d\udc36',
+    category: 'roles',
+    evaluator: 'louveteauOrphanWin',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
+    id: 'loup-necromancien-resurrect',
+    name: 'Le Retour des Morts',
+    description: 'Vous avez su qu\'il ou elle allait faire de grande chose',
+    explanation: 'Faire X parties en ressuscitant un joueur qui en tue deux autres en \u00e9tant Loup N\u00e9cromancien',
+    emoji: '\ud83e\udddf\u2694\ufe0f',
+    category: 'roles',
+    evaluator: 'wolfNecromancerResurrect',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
