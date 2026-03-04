@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-03T16:08:08.085Z",
+  "generatedAt": "2026-03-04T16:24:05.367Z",
   "teamName": "Discord Team",
   "totalPlayers": 156,
   "totalGames": 368,
@@ -942,6 +942,37 @@
       "requiresBRData": false
     },
     {
+      "id": "zombie-kills",
+      "name": "Revenu de Loin",
+      "description": "La vengeance est un plat qui se mange froid...",
+      "explanation": "Faire X kills en Zombie",
+      "emoji": "🧟",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "ponce-fesses",
       "name": "Ponce fesses",
       "description": "Comme un certain streameur, tu ponces des culs",
@@ -1359,6 +1390,68 @@
       "requiresBRData": false
     },
     {
+      "id": "amoureux-loup-kills-two-wolves",
+      "name": "Pas de concurrence",
+      "description": "La meilleure défense, c'est l'attaque",
+      "explanation": "Avoir X fois tué deux Loups en étant Amoureux Loup",
+      "emoji": "🐺🐺💕",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "amoureux-villageois-kills-enemy",
+      "name": "Moi aussi je participe !",
+      "description": "Vous aussi vous apportez votre part à l'édifice",
+      "explanation": "Avoir X fois tué un ennemi hors meeting en étant Amoureux Villageois",
+      "emoji": "❤️🗡️",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "same-color-kills",
       "name": "C'est MA couleur !",
       "description": "Vous voulez être le·a seul·e à la mode, ça se comprend...",
@@ -1385,6 +1478,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "agent-007",
+      "name": "007",
+      "description": "Bravo, vous êtes un véritable agent",
+      "explanation": "Gagner X fois en tuant personnellement l'autre Agent et sans jamais avoir été voté en étant Agent",
+      "emoji": "🔫",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
         }
       ],
       "requiresBRData": false
@@ -1421,6 +1545,37 @@
       "requiresBRData": false
     },
     {
+      "id": "chasseur-de-primes-wins",
+      "name": "Une Dernière Volonté ?",
+      "description": "Vous avez accompli votre mission jusqu'au bout",
+      "explanation": "Gagner X parties en tant que Chasseur de Primes",
+      "emoji": "🎯",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 20
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "louveteau-orphan",
       "name": "Le Louveteau Orphelin",
       "description": "Vous étiez trop jeune pour mourir",
@@ -1447,6 +1602,130 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "louveteau-orphan",
+      "name": "Le Louveteau Orphelin",
+      "description": "Vous étiez trop jeune pour mourir",
+      "explanation": "Gagner X fois en Louveteau après la mort des autres Loups",
+      "emoji": "🐶",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "vaudou-triple-resurrect",
+      "name": "Zombie Nation",
+      "description": "Votre armée de morts s'est bien agrandie",
+      "explanation": "Faire X parties en ressuscitant au moins 3 joueurs en étant Vaudou",
+      "emoji": "🧟",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "loup-necromancien-resurrect",
+      "name": "Le Retour des Morts",
+      "description": "Vous avez su qu'il ou elle allait faire de grande chose",
+      "explanation": "Faire X parties en ressuscitant un joueur qui en tue deux autres en étant Loup Nécromancien",
+      "emoji": "🧟⚔️",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "loup-devin-double-seer",
+      "name": "Tu es un Sorcier, Harry",
+      "description": "Ce petit tour fait toujours son petit effet",
+      "explanation": "Faire X parties en devinant le rôle de deux joueurs en étant Loup Devin",
+      "emoji": "🔮",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
         }
       ],
       "requiresBRData": false
@@ -1607,6 +1886,37 @@
       "requiresBRData": false
     },
     {
+      "id": "lone-non-voter",
+      "name": "Et le temps passe...",
+      "description": "Vous n'aviez pas vu que tout le monde vous attendait ?",
+      "explanation": "Être X fois le seul joueur à ne pas voter quand tous les autres ont passé",
+      "emoji": "⏳",
+      "category": "social",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "kill-surprise",
       "name": "Kill surprise",
       "description": "Allez, au dernier moment, ça passe !",
@@ -1725,6 +2035,67 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 12
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "calife-a-la-place-du-calife",
+      "name": "Calife à la place du Calife",
+      "description": "Quoi de mieux que de battre le développeur du jeu",
+      "explanation": "Gagner X parties lors desquelles Onutrem a perdu",
+      "emoji": "👑",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 5
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 20
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 25
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 35
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 40
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 50
         }
       ],
       "requiresBRData": false
@@ -2222,7 +2593,7 @@
     "76561198153298747": {
       "playerId": "76561198153298747",
       "playerName": "Timaki",
-      "totalUnlocked": 41,
+      "totalUnlocked": 42,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -2568,6 +2939,17 @@
           "progress": 0.6
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 58,
           "unlockedLevels": [
@@ -2743,6 +3125,24 @@
           "progress": 0.8
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251226221600"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 5,
           "unlockedLevels": [
@@ -2789,7 +3189,7 @@
     "76561199091851684": {
       "playerId": "76561199091851684",
       "playerName": "YUKARI",
-      "totalUnlocked": 30,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3108,6 +3508,17 @@
           "progress": 0.8
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 26,
           "unlockedLevels": [
@@ -3191,13 +3602,31 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260220214834"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         }
       ]
     },
     "76561198364697515": {
       "playerId": "76561198364697515",
       "playerName": "Ekaenerys",
-      "totalUnlocked": 39,
+      "totalUnlocked": 40,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3550,6 +3979,17 @@
           "progress": 0.8
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 34,
           "unlockedLevels": [
@@ -3720,6 +4160,24 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260218211558"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -3764,7 +4222,7 @@
     "76561199789359755": {
       "playerId": "76561199789359755",
       "playerName": "Gaëtan R",
-      "totalUnlocked": 44,
+      "totalUnlocked": 48,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4159,6 +4617,17 @@
           "progress": 0.6
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 46,
           "unlockedLevels": [
@@ -4349,6 +4818,24 @@
           "progress": 0.6
         },
         {
+          "id": "loup-devin-double-seer",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251102214250"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -4369,6 +4856,36 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 17,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251116215512"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20251207211005"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Nales-20260222213745"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.5666666666666667
         },
         {
           "id": "kill-surprise",
@@ -4397,7 +4914,7 @@
     "76561198091833617": {
       "playerId": "76561198091833617",
       "playerName": "Stalbadass",
-      "totalUnlocked": 28,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4800,6 +5317,24 @@
           "progress": 0.6
         },
         {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260227201703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -4807,6 +5342,30 @@
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 12,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251109203337"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260130203606"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
           },
           "progress": 0.8
         },
@@ -4837,7 +5396,7 @@
     "76561198976507974": {
       "playerId": "76561198976507974",
       "playerName": "Enamore",
-      "totalUnlocked": 53,
+      "totalUnlocked": 59,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5293,6 +5852,30 @@
           "progress": 0.5
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260118203727"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260208213752"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 49,
           "unlockedLevels": [
@@ -5470,6 +6053,42 @@
           "progress": 0.5
         },
         {
+          "id": "louveteau-orphan",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260102203355"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260213204454"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -5497,6 +6116,30 @@
             "threshold": 10
           },
           "progress": 0.9
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 14,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251107214318"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260116220514"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.9333333333333333
         },
         {
           "id": "kill-surprise",
@@ -5543,7 +6186,7 @@
     "76561198085469315": {
       "playerId": "76561198085469315",
       "playerName": "Kid",
-      "totalUnlocked": 39,
+      "totalUnlocked": 40,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5915,6 +6558,17 @@
           "progress": 0.5
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 37,
           "unlockedLevels": [
@@ -6055,6 +6709,17 @@
           "progress": 0.2
         },
         {
+          "id": "chasseur-de-primes-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -6075,6 +6740,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260118203727"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "kill-surprise",
@@ -6128,7 +6811,7 @@
     "76561199476556241": {
       "playerId": "76561199476556241",
       "playerName": "Laulah",
-      "totalUnlocked": 25,
+      "totalUnlocked": 27,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6403,6 +7086,17 @@
           "progress": 0.1
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 18,
           "unlockedLevels": [
@@ -6495,6 +7189,24 @@
           "progress": 0.2
         },
         {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251029202633"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -6504,6 +7216,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 8,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260121222039"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.8
         },
         {
           "id": "democrat",
@@ -6539,7 +7269,7 @@
     "76561199819136805": {
       "playerId": "76561199819136805",
       "playerName": "RessaPanda",
-      "totalUnlocked": 36,
+      "totalUnlocked": 37,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7018,6 +7748,24 @@
           "progress": 0.5
         },
         {
+          "id": "loup-devin-double-seer",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251126220349"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -7030,6 +7778,17 @@
         },
         {
           "id": "only-passer",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
@@ -7219,7 +7978,7 @@
     "76561198179951231": {
       "playerId": "76561198179951231",
       "playerName": "Staro",
-      "totalUnlocked": 21,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7557,6 +8316,24 @@
           "progress": 0.2
         },
         {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260211220224"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -7566,6 +8343,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "kill-surprise",
@@ -7733,6 +8521,17 @@
           "progress": 0.5
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 14,
           "unlockedLevels": [
@@ -7872,6 +8671,17 @@
           "progress": 0.2
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "democrat",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -7887,7 +8697,7 @@
     "76561198003053453": {
       "playerId": "76561198003053453",
       "playerName": "twitch.tv/hornicoo",
-      "totalUnlocked": 29,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8158,6 +8968,17 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 46,
           "unlockedLevels": [
@@ -8299,6 +9120,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260130220859"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -8332,6 +9171,24 @@
           "progress": 0.6
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260227201703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -8358,7 +9215,7 @@
     "76561198335168181": {
       "playerId": "76561198335168181",
       "playerName": "VVentus02",
-      "totalUnlocked": 41,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8694,6 +9551,17 @@
           "progress": 0.8
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 61,
           "unlockedLevels": [
@@ -8864,6 +9732,24 @@
           "progress": 0.8
         },
         {
+          "id": "agent-007",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251112215454"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "agent-117",
           "currentValue": 1,
           "unlockedLevels": [
@@ -8876,6 +9762,17 @@
           ],
           "nextLevel": {
             "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "chasseur-de-primes-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
             "subLevel": 1,
             "threshold": 3
           },
@@ -8898,6 +9795,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260118212814"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "kill-surprise",
@@ -8926,7 +9841,7 @@
     "76561197973106144": {
       "playerId": "76561197973106144",
       "playerName": "Nales",
-      "totalUnlocked": 66,
+      "totalUnlocked": 72,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9390,6 +10305,17 @@
           "progress": 0.7
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 188,
           "unlockedLevels": [
@@ -9611,6 +10537,36 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "vaudou-triple-resurrect",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251102211333"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Nales-20260114210944"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260222202938"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "misunderstood",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -9668,6 +10624,36 @@
             "threshold": 30
           },
           "progress": 0.5333333333333333
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 15,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251214201925"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260109210105"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Nales-20260227201703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.5
         },
         {
           "id": "democrat",
@@ -9842,7 +10828,7 @@
     "76561198095002711": {
       "playerId": "76561198095002711",
       "playerName": "Acuado",
-      "totalUnlocked": 27,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10170,6 +11156,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 23,
           "unlockedLevels": [
@@ -10293,6 +11290,36 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 15,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251107203309"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20251123213327"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Nales-20260227201703"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.5
         },
         {
           "id": "kill-surprise",
@@ -10548,6 +11575,17 @@
         },
         {
           "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -11141,6 +12179,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         }
       ]
     },
@@ -11263,6 +12312,17 @@
         },
         {
           "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -11922,6 +12982,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 29,
           "unlockedLevels": [
@@ -12083,6 +13154,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "kill-surprise",
@@ -12434,6 +13516,17 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -12830,6 +13923,17 @@
           "progress": 0.6
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -12856,7 +13960,7 @@
     "76561198349608745": {
       "playerId": "76561198349608745",
       "playerName": "Nakilyu",
-      "totalUnlocked": 26,
+      "totalUnlocked": 27,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13250,6 +14354,24 @@
           "progress": 0.4
         },
         {
+          "id": "vaudou-triple-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260125202944"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -13259,6 +14381,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "kill-surprise",
@@ -13287,7 +14420,7 @@
     "76561198035634628": {
       "playerId": "76561198035634628",
       "playerName": "Kitsulia",
-      "totalUnlocked": 22,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13655,6 +14788,42 @@
           "progress": 0.4
         },
         {
+          "id": "vaudou-triple-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260109202122"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260215204005"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -13664,6 +14833,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260125205803"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "democrat",
@@ -14052,6 +15239,17 @@
           "progress": 0.6
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 18,
           "unlockedLevels": [
@@ -14189,6 +15387,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "kill-surprise",
@@ -14365,6 +15574,17 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -14573,7 +15793,7 @@
     "76561198010158937": {
       "playerId": "76561198010158937",
       "playerName": "Lhuun",
-      "totalUnlocked": 37,
+      "totalUnlocked": 40,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15102,6 +16322,35 @@
           "progress": 0.8
         },
         {
+          "id": "chasseur-de-primes-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260227205401"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -15135,6 +16384,30 @@
           "progress": 0.2
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251123201251"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Nales-20260227205401"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -15161,7 +16434,7 @@
     "76561199099637465": {
       "playerId": "76561199099637465",
       "playerName": "Carococo",
-      "totalUnlocked": 21,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15487,6 +16760,42 @@
           "progress": 0.4
         },
         {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260114214126"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260123211354"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "democrat",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -15502,7 +16811,7 @@
     "76561198056449397": {
       "playerId": "76561198056449397",
       "playerName": "Akunoto",
-      "totalUnlocked": 30,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15854,6 +17163,17 @@
           "progress": 0.8
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 23,
           "unlockedLevels": [
@@ -15987,6 +17307,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 9,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20251228215530"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.9
         }
       ]
     },
@@ -16065,7 +17403,7 @@
     "76561198069501851": {
       "playerId": "76561198069501851",
       "playerName": "Nocxy",
-      "totalUnlocked": 31,
+      "totalUnlocked": 33,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16365,6 +17703,17 @@
           "progress": 0.6
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 30,
           "unlockedLevels": [
@@ -16522,6 +17871,24 @@
           "progress": 0.4
         },
         {
+          "id": "vaudou-triple-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251212212440"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -16531,6 +17898,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260206222837"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "kill-surprise",
@@ -16828,7 +18213,7 @@
     "76561198124278834": {
       "playerId": "76561198124278834",
       "playerName": "Johnny",
-      "totalUnlocked": 43,
+      "totalUnlocked": 45,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17223,6 +18608,17 @@
           "progress": 0.6
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 48,
           "unlockedLevels": [
@@ -17401,6 +18797,35 @@
           "progress": 0.5
         },
         {
+          "id": "chasseur-de-primes-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "loup-devin-double-seer",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251205220048"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -17410,6 +18835,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260206201644"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "democrat",
@@ -17687,6 +19130,28 @@
         },
         {
           "id": "same-color-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "chasseur-de-primes-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
@@ -18164,6 +19629,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 6,
           "unlockedLevels": [
@@ -18281,6 +19757,17 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -18650,6 +20137,17 @@
           "progress": 0.4
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "democrat",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -18986,6 +20484,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -19459,6 +20968,17 @@
           "progress": 0.8
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "democrat",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -19769,6 +21289,17 @@
           "progress": 0.5
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 8,
           "unlockedLevels": [
@@ -19864,6 +21395,17 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "kill-surprise",
@@ -20339,6 +21881,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -20443,6 +21996,17 @@
         },
         {
           "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -20621,6 +22185,17 @@
           "progress": 0.5
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 4,
           "unlockedLevels": [
@@ -20659,6 +22234,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "democrat",
@@ -21101,6 +22687,17 @@
           "progress": 0.1
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "democrat",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -21379,6 +22976,17 @@
         },
         {
           "id": "false-guilty",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -21728,6 +23336,17 @@
           "progress": 0.6
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 29,
           "unlockedLevels": [
@@ -21903,6 +23522,17 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         }
       ]
     },
@@ -22011,6 +23641,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -22545,6 +24186,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -22692,7 +24344,7 @@
     "76561198773480058": {
       "playerId": "76561198773480058",
       "playerName": "Nymeria.Moon",
-      "totalUnlocked": 24,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22983,6 +24635,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 14,
           "unlockedLevels": [
@@ -23073,6 +24736,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260102203355"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "kill-surprise",
@@ -23472,6 +25153,17 @@
           "progress": 0.6
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -23762,6 +25454,17 @@
         },
         {
           "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -24101,6 +25804,17 @@
           "progress": 0.2
         },
         {
+          "id": "chasseur-de-primes-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -24251,6 +25965,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -24381,6 +26106,17 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -24621,6 +26357,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -24844,6 +26591,17 @@
           "progress": 0.2
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -25037,6 +26795,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -25109,6 +26878,17 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -25530,6 +27310,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "kill-surprise",
@@ -26027,6 +27818,17 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -26114,6 +27916,17 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
             "threshold": 5
           },
           "progress": 0.2
@@ -26282,6 +28095,17 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         }
       ]
     },
@@ -26485,7 +28309,7 @@
     "76561199241447761": {
       "playerId": "76561199241447761",
       "playerName": "Xynnoh",
-      "totalUnlocked": 13,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26728,7 +28552,36 @@
           "progress": 0.2
         },
         {
+          "id": "loup-devin-double-seer",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260204202818"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -26912,6 +28765,17 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -27108,6 +28972,17 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -27299,6 +29174,17 @@
         },
         {
           "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -27553,7 +29439,7 @@
     "76561198076659680": {
       "playerId": "76561198076659680",
       "playerName": "Kanna Amano",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27697,6 +29583,24 @@
           "progress": 0.2
         },
         {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251217214134"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -27706,6 +29610,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -27879,6 +29794,17 @@
         },
         {
           "id": "only-passer",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -28187,6 +30113,17 @@
           "progress": 0.4
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "democrat",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -28383,6 +30320,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -28519,7 +30467,7 @@
     "76561198928924512": {
       "playerId": "76561198928924512",
       "playerName": "GuiMsuR",
-      "totalUnlocked": 4,
+      "totalUnlocked": 5,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28625,6 +30573,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20251219204222"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         }
       ]
     },
@@ -28929,6 +30895,17 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -29265,6 +31242,17 @@
         },
         {
           "id": "same-color-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -29715,6 +31703,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "democrat",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -29974,6 +31973,17 @@
           "progress": 0.4
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -30188,6 +32198,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -30307,6 +32328,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -30763,7 +32795,7 @@
     "76561198308812449": {
       "playerId": "76561198308812449",
       "playerName": "REviloCO33",
-      "totalUnlocked": 19,
+      "totalUnlocked": 20,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31049,6 +33081,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 4,
           "unlockedLevels": [
@@ -31100,6 +33143,24 @@
           "progress": 0.6
         },
         {
+          "id": "loup-necromancien-resurrect",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260301201123"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -31112,6 +33173,17 @@
         },
         {
           "id": "only-passer",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
@@ -31322,6 +33394,17 @@
           "progress": 0.4
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -31488,6 +33571,17 @@
         },
         {
           "id": "same-color-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -31739,6 +33833,17 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -31811,6 +33916,17 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -31889,7 +34005,7 @@
     "76561198978877303": {
       "playerId": "76561198978877303",
       "playerName": "raijîn",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32126,6 +34242,35 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "loup-devin-double-seer",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Nales-20260206204402"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -32256,6 +34401,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -32375,6 +34531,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -32435,6 +34602,17 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -32585,6 +34763,17 @@
           "progress": 0.1
         },
         {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "kill-surprise",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -32600,7 +34789,7 @@
     "76561199888448838": {
       "playerId": "76561199888448838",
       "playerName": "Dede Twitch: the_king_aurelion",
-      "totalUnlocked": 3,
+      "totalUnlocked": 4,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32655,6 +34844,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260123211354"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         }
       ]
     },
@@ -32899,6 +35106,17 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -33290,6 +35508,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -35078,6 +37307,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "zombie-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "ponce-fesses",
           "currentValue": 2,
           "unlockedLevels": [
@@ -35134,6 +37374,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -35317,6 +37568,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -35454,6 +37716,17 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },

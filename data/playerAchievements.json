@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-04T16:10:48.716Z",
+  "generatedAt": "2026-03-04T16:23:46.655Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 776,
@@ -2040,6 +2040,67 @@
       "requiresBRData": false
     },
     {
+      "id": "calife-a-la-place-du-calife",
+      "name": "Calife à la place du Calife",
+      "description": "Quoi de mieux que de battre le développeur du jeu",
+      "explanation": "Gagner X parties lors desquelles Onutrem a perdu",
+      "emoji": "👑",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 5
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 20
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 25
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 35
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 40
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 50
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "br-victories",
       "name": "Roi du BR",
       "description": "Seul contre tous, vous avez triomphé",
@@ -2878,7 +2939,7 @@
     "3": {
       "playerId": "3",
       "playerName": "Antoine",
-      "totalUnlocked": 11,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3051,6 +3112,24 @@
           "progress": 0.2
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-257"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -3113,7 +3192,7 @@
     "5": {
       "playerId": "5",
       "playerName": "AvaMind",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3272,6 +3351,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-251"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-participations",
@@ -4219,7 +4316,7 @@
     "10": {
       "playerId": "10",
       "playerName": "Covfefe",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4407,13 +4504,31 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-30"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
     "11": {
       "playerId": "11",
       "playerName": "Crocodyle",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4545,6 +4660,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-5"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
@@ -5529,7 +5662,7 @@
     "16": {
       "playerId": "16",
       "playerName": "Etoiles",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5696,6 +5829,24 @@
           "progress": 0.8
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-257"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -5736,7 +5887,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 73,
+      "totalUnlocked": 75,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6407,6 +6558,30 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240618000000-160"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240726000000-192"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-victories",
           "currentValue": 2,
           "unlockedLevels": [
@@ -6603,7 +6778,7 @@
     "18": {
       "playerId": "18",
       "playerName": "GoB",
-      "totalUnlocked": 15,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6845,13 +7020,37 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-12"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241206000000-257"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.5
         }
       ]
     },
     "19": {
       "playerId": "19",
       "playerName": "Heimdalle",
-      "totalUnlocked": 31,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7126,6 +7325,24 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240329000000-110"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -8667,7 +8884,7 @@
     "29": {
       "playerId": "29",
       "playerName": "LittleBigWhale",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8810,13 +9027,31 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-1"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         }
       ]
     },
     "30": {
       "playerId": "30",
       "playerName": "Lydiaam",
-      "totalUnlocked": 18,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9060,6 +9295,24 @@
           "progress": 0.2
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240726000000-190"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "br-participations",
           "currentValue": 4,
           "unlockedLevels": [
@@ -9128,7 +9381,7 @@
     "31": {
       "playerId": "31",
       "playerName": "LyeGaia",
-      "totalUnlocked": 30,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9467,6 +9720,30 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 8,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-32"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240206000000-70"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.8
         },
         {
           "id": "br-victories",
@@ -9876,7 +10153,7 @@
     "34": {
       "playerId": "34",
       "playerName": "Nahomay",
-      "totalUnlocked": 32,
+      "totalUnlocked": 35,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10220,6 +10497,36 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 11,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-12"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-48"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240329000000-103"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.7333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 10,
           "unlockedLevels": [
@@ -10284,7 +10591,7 @@
     "35": {
       "playerId": "35",
       "playerName": "Naka",
-      "totalUnlocked": 22,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10584,6 +10891,36 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 11,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-13"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-37"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240206000000-70"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.7333333333333333
         },
         {
           "id": "br-participations",
@@ -11519,7 +11856,7 @@
     "40": {
       "playerId": "40",
       "playerName": "Pressea",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11620,6 +11957,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-257"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-participations",
@@ -11734,7 +12089,7 @@
     "43": {
       "playerId": "43",
       "playerName": "Sakor",
-      "totalUnlocked": 24,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11959,6 +12314,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-5"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -12300,7 +12673,7 @@
     "45": {
       "playerId": "45",
       "playerName": "Skyyart",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12386,6 +12759,24 @@
           "progress": 0.2
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-257"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "unlockedLevels": [
@@ -12455,7 +12846,7 @@
     "48": {
       "playerId": "48",
       "playerName": "Ultia",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12638,13 +13029,31 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-7"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
     "49": {
       "playerId": "49",
       "playerName": "Wingo",
-      "totalUnlocked": 41,
+      "totalUnlocked": 46,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13076,6 +13485,48 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 20,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-16"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-36"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240130000000-55"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240321000000-102"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240726000000-192"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 25
+          },
+          "progress": 0.8
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "unlockedLevels": [
@@ -13200,7 +13651,7 @@
     "50": {
       "playerId": "50",
       "playerName": "Xari",
-      "totalUnlocked": 7,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13325,6 +13776,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-1"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -14203,7 +14672,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 148,
+      "totalUnlocked": 154,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15296,6 +15765,54 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 25,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-6"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-37"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240130000000-55"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240321000000-98"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240726000000-192"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 25,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.8333333333333334
+        },
+        {
           "id": "br-victories",
           "currentValue": 42,
           "unlockedLevels": [
@@ -15648,7 +16165,7 @@
     "76561198054824482": {
       "playerId": "76561198054824482",
       "playerName": "Gom4rt",
-      "totalUnlocked": 21,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15955,6 +16472,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-252"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-participations",
@@ -16534,7 +17069,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 134,
+      "totalUnlocked": 139,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17669,6 +18204,48 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 21,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-13"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20231228000000-38"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240206000000-70"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240618000000-160"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20260210133335"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 25
+          },
+          "progress": 0.84
+        },
+        {
           "id": "br-victories",
           "currentValue": 9,
           "unlockedLevels": [
@@ -17937,7 +18514,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 134,
+      "totalUnlocked": 138,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18987,6 +19564,42 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 19,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-16"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-41"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240130000000-62"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240329000000-115"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 20
+          },
+          "progress": 0.95
+        },
+        {
           "id": "br-victories",
           "currentValue": 11,
           "unlockedLevels": [
@@ -19279,7 +19892,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 121,
+      "totalUnlocked": 126,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20245,6 +20858,48 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 20,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-14"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-46"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240206000000-69"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240726000000-190"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 25
+          },
+          "progress": 0.8
+        },
+        {
           "id": "br-victories",
           "currentValue": 22,
           "unlockedLevels": [
@@ -20531,7 +21186,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 119,
+      "totalUnlocked": 125,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21511,6 +22166,54 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 26,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-32"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240116000000-46"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240130000000-62"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20240206000000-71"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20240329000000-114"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 25,
+              "unlockedAtGame": "Ponce-20260210133335"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.8666666666666667
+        },
+        {
           "id": "br-victories",
           "currentValue": 17,
           "unlockedLevels": [
@@ -21761,7 +22464,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 104,
+      "totalUnlocked": 107,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22700,6 +23403,36 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 14,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240116000000-41"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240130000000-57"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20240206000000-71"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.9333333333333333
+        },
+        {
           "id": "br-victories",
           "currentValue": 19,
           "unlockedLevels": [
@@ -22944,7 +23677,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 96,
+      "totalUnlocked": 97,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23818,6 +24551,24 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210111925"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "br-victories",
@@ -25063,7 +25814,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 89,
+      "totalUnlocked": 90,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25928,6 +26679,24 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240726000000-189"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "br-victories",
           "currentValue": 4,
           "unlockedLevels": [
@@ -26094,7 +26863,7 @@
     "76561198018650146": {
       "playerId": "76561198018650146",
       "playerName": "TPK",
-      "totalUnlocked": 31,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26459,6 +27228,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240405000000-118"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -29081,7 +29868,7 @@
     "76561197972377069": {
       "playerId": "76561197972377069",
       "playerName": "BERLU",
-      "totalUnlocked": 12,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29257,6 +30044,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-257"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-participations",
@@ -31520,7 +32325,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 95,
+      "totalUnlocked": 96,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32356,6 +33161,24 @@
           "progress": 0.5
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210131441"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "br-victories",
           "currentValue": 5,
           "unlockedLevels": [
@@ -32600,7 +33423,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 79,
+      "totalUnlocked": 80,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33329,6 +34152,24 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-victories",
           "currentValue": 4,
           "unlockedLevels": [
@@ -33537,7 +34378,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 70,
+      "totalUnlocked": 71,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34273,6 +35114,24 @@
           "progress": 0.6
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-participations",
           "currentValue": 42,
           "unlockedLevels": [
@@ -34602,7 +35461,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 63,
+      "totalUnlocked": 64,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35341,6 +36200,24 @@
           "progress": 0.6
         },
         {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210111925"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "br-participations",
           "currentValue": 20,
           "unlockedLevels": [
@@ -35427,7 +36304,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 56,
+      "totalUnlocked": 57,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36063,6 +36940,24 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210133335"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -39210,7 +40105,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 40,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39710,6 +40605,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210111925"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -41405,7 +42318,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 29,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41880,6 +42793,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "calife-a-la-place-du-calife",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210133335"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-participations",
