@@ -951,6 +951,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'chasseur-de-primes-wins',
+    name: 'Une Dernière Volonté ?',
+    description: "Vous avez accompli votre mission jusqu'au bout",
+    explanation: 'Gagner X parties en tant que Chasseur de Primes',
+    emoji: '🎯',
+    category: 'roles',
+    evaluator: 'bountyHunterWins',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
+    ],
+  },
+  {
     id: 'louveteau-orphan',
     name: 'Le Louveteau Orphelin',
     description: 'Vous étiez trop jeune pour mourir',
@@ -991,6 +1011,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'vaudou-triple-resurrect',
+    name: 'Zombie Nation',
+    description: 'Votre armée de morts s\'est bien agrandie',
+    explanation: 'Faire X parties en ressuscitant au moins 3 joueurs en étant Vaudou',
+    emoji: '🧟',
+    category: 'roles',
+    evaluator: 'vaudouTripleResurrect',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
     id: 'loup-necromancien-resurrect',
     name: 'Le Retour des Morts',
     description: 'Vous avez su qu\'il ou elle allait faire de grande chose',
@@ -998,6 +1038,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     emoji: '\ud83e\udddf\u2694\ufe0f',
     category: 'roles',
     evaluator: 'wolfNecromancerResurrect',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
+    id: 'loup-devin-double-seer',
+    name: 'Tu es un Sorcier, Harry',
+    description: 'Ce petit tour fait toujours son petit effet',
+    explanation: 'Faire X parties en devinant le rôle de deux joueurs en étant Loup Devin',
+    emoji: '🔮',
+    category: 'roles',
+    evaluator: 'wolfSeerDoubleKill',
     evaluatorParams: {},
     levels: [
       // Bronze: 1
@@ -1102,6 +1162,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     emoji: '🙈',
     category: 'social',
     evaluator: 'onlyPasserInMeeting',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+  {
+    id: 'lone-non-voter',
+    name: 'Et le temps passe...',
+    description: "Vous n'aviez pas vu que tout le monde vous attendait ?",
+    explanation: 'Être X fois le seul joueur à ne pas voter quand tous les autres ont passé',
+    emoji: '⏳',
+    category: 'social',
+    evaluator: 'loneNonVoterAllOthersPassed',
     evaluatorParams: {},
     levels: [
       // Bronze: 5

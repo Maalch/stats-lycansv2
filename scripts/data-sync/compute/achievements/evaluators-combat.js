@@ -1,0 +1,258 @@
+/**
+ * Combat Achievement Evaluators
+ * 
+ * Evaluators for hunter kills, potion kills, same-color kills,
+ * and other combat-related achievements.
+ */
+
+import { isHunterRole, getPlayerCampForAchievement, getDeathDay } from './helpers.js';
+import { DeathTypeCode } from './helpers.js';
+
+/**
+ * Count deaths as a specific camp role by a specific death type
+ * (e.g., wolf killed by Beast)
+ */
+export function roleDeathByType(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  for (const { game, playerStat } of playerGames) {
+    if (playerStat.DeathType !== params.deathType) continue;
+    const mainCamp = getPlayerCampForAchievement(playerStat);
+    const campMatch = (params.roleCamp === 'Loup' && mainCamp === 'Loup') ||
+                      (params.roleCamp === 'Villageois' && mainCamp === 'Villageois');
+    if (campMatch) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count hunter kills against enemy camp
+ */
+export function hunterKillsEnemy(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  for (const { game, playerStat } of playerGames) {
+    if (!isHunterRole(playerStat)) continue;
+    
+    for (const victim of game.PlayerStats) {
+      const isHunterKill = victim.DeathType === DeathTypeCode.BULLET ||
+                           victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
+                           victim.DeathType === DeathTypeCode.BULLET_WOLF;
+      if (!isHunterKill) continue;
+      if (victim.KillerName !== playerStat.Username) continue;
+      
+      // Check if victim is from an enemy camp
+      const hunterCamp = getPlayerCampForAchievement(playerStat);
+      const victimCamp = getPlayerCampForAchievement(victim);
+      
+      if (hunterCamp !== victimCamp) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count games where player (as Villageois camp) killed 2+ Villageois camp allies outside of meetings
+ */
+export function villageoisDoubleAllyKill(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const minKills = params.minKills || 2;
+
+  for (const { game, playerStat } of playerGames) {
+    // Player must be Villageois camp
+    if (getPlayerCampForAchievement(playerStat) !== 'Villageois') continue;
+
+    // Count Villageois-camp allies killed by this player outside meetings
+    let allyKills = 0;
+    for (const victim of game.PlayerStats) {
+      if (victim.KillerName !== playerStat.Username) continue;
+      if (victim.DeathType === DeathTypeCode.VOTED) continue;
+      if (getPlayerCampForAchievement(victim) !== 'Villageois') continue;
+      allyKills++;
+    }
+
+    if (allyKills >= minKills) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count hunter kills against ally camp (Villageois killing Villageois)
+ */
+export function hunterKillsAlly(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  for (const { game, playerStat } of playerGames) {
+    if (!isHunterRole(playerStat)) continue;
+    
+    for (const victim of game.PlayerStats) {
+      const isHunterKill = victim.DeathType === DeathTypeCode.BULLET ||
+                           victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
+                           victim.DeathType === DeathTypeCode.BULLET_WOLF;
+      if (!isHunterKill) continue;
+      if (victim.KillerName !== playerStat.Username) continue;
+      
+      const hunterCamp = getPlayerCampForAchievement(playerStat);
+      const victimCamp = getPlayerCampForAchievement(victim);
+      
+      if (hunterCamp === victimCamp) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count games where hunter killed 2+ enemies in a single game
+ */
+export function hunterMultiKillsInGame(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const minKills = params.minKills || 2;
+  
+  for (const { game, playerStat } of playerGames) {
+    if (!isHunterRole(playerStat)) continue;
+    
+    let enemyKillsInGame = 0;
+    const hunterCamp = getPlayerCampForAchievement(playerStat);
+    
+    for (const victim of game.PlayerStats) {
+      const isHunterKill = victim.DeathType === DeathTypeCode.BULLET ||
+                           victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
+                           victim.DeathType === DeathTypeCode.BULLET_WOLF;
+      if (!isHunterKill) continue;
+      if (victim.KillerName !== playerStat.Username) continue;
+      
+      const victimCamp = getPlayerCampForAchievement(victim);
+      if (hunterCamp !== victimCamp) {
+        enemyKillsInGame++;
+      }
+    }
+    
+    if (enemyKillsInGame >= minKills) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count times a hunter was killed by a wolf
+ */
+export function hunterKilledByWolf(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  for (const { game, playerStat } of playerGames) {
+    if (!isHunterRole(playerStat)) continue;
+    if (playerStat.DeathType !== DeathTypeCode.BY_WOLF) continue;
+    value++;
+    gameIds.push(game.Id);
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count assassin potion kills (villager killing enemy or ally with potion)
+ */
+export function assassinPotionKills(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  
+  for (const { game, playerStat } of playerGames) {
+    // Look for victims killed by ASSASSIN potion where KillerName matches
+    for (const victim of game.PlayerStats) {
+      if (victim.DeathType !== DeathTypeCode.ASSASSIN) continue;
+      if (victim.KillerName !== playerStat.Username) continue;
+      
+      const killerCamp = getPlayerCampForAchievement(playerStat);
+      const victimCamp = getPlayerCampForAchievement(victim);
+      
+      if (params.targetCamp === 'enemy' && killerCamp !== victimCamp) {
+        value++;
+        gameIds.push(game.Id);
+      } else if (params.targetCamp === 'ally' && killerCamp === victimCamp) {
+        value++;
+        gameIds.push(game.Id);
+      }
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count games where player's killer also died the same day
+ */
+export function killerDiedSameDay(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  
+  for (const { game, playerStat } of playerGames) {
+    if (!playerStat.DeathTiming || !playerStat.KillerName) continue;
+    
+    // Find the killer
+    const killer = game.PlayerStats.find(p => p.Username === playerStat.KillerName);
+    if (!killer || !killer.DeathTiming) continue;
+    
+    // Compare death days (extract day number from timing like "N1", "J2")
+    const playerDay = getDeathDay(playerStat.DeathTiming);
+    const killerDay = getDeathDay(killer.DeathTiming);
+    
+    if (playerDay !== null && killerDay !== null && playerDay === killerDay) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count kills where the killer and victim had the same color
+ * Any kill type counts (wolf kills, hunter kills, potion kills, etc.)
+ */
+export function sameColorKills(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const countedKillsPerGame = new Map(); // game.Id -> count of same-color kills
+  
+  for (const { game, playerStat } of playerGames) {
+    // Player's color in this game
+    const playerColor = playerStat.Color;
+    if (!playerColor) continue;
+    
+    // Find all victims killed by this player
+    let killsInGame = 0;
+    for (const victim of game.PlayerStats) {
+      if (!victim.KillerName) continue;
+      if (victim.KillerName !== playerStat.Username) continue;
+      
+      // Check if victim had the same color
+      if (victim.Color === playerColor) {
+        killsInGame++;
+      }
+    }
+    
+    if (killsInGame > 0) {
+      value += killsInGame;
+      if (!countedKillsPerGame.has(game.Id)) {
+        gameIds.push(game.Id);
+        countedKillsPerGame.set(game.Id, killsInGame);
+      } else {
+        countedKillsPerGame.set(game.Id, countedKillsPerGame.get(game.Id) + killsInGame);
+      }
+    }
+  }
+  return { value, gameIds };
+}

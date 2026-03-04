@@ -19,10 +19,10 @@
 | Sur le site | | Agent | 007 | Bravo, vous êtes un véritable agent | Avoir gagné X fois en tuant personnellement l'autre Agent et ne jamais avoir été voté en étant Agent | 1 | 2 | 3 | 5 |
 | En attente | | Chasseur de primes | C'est Hitman ? | Neutraliser quelqu'un, ça vous connaît. | Avoir X victimes en tant que Chasseur de Primes | 5 | 10 | 15 | 30 |
 | Sur le site | | Loup | Le Retour des Morts | Vous avez su qu'il ou elle allait faire de grande chose | Faire X parties en ressuscitant un joueur qui en tue deux autres en étant Loup Nécromancien | 1 | 3 | 5 | 10 |
-| NEW | | Loup | Tu es un Sorcier, Harry | Ce petit tour fait toujours son petit effet | Faire X parties en devinant le rôle de deux joueurs en étant Loup Devin | 1 | 3 | 5 | 10 |
-| NEW | | Chasseur de primes | Une Dernière Volonté ? | | Gagner X parties en tant que Chasseur de Primes | 3 | 5 | 10 | 20 |
-| NEW | | Vaudou | Zombie Nation | | Faire X parties en ressuscitant au moins 3 joueurs en étant Vaudou | 1 | 3 | 5 | 10 |
-| NEW | | Tous | Et le temps passe... | Vous n'aviez pas vu que tout le monde vous attendez ? | Être X fois le seul joueur à ne pas passer | 5 | 10 | 15 | 30 |
+| Sur le site | | Loup | Tu es un Sorcier, Harry | Ce petit tour fait toujours son petit effet | Faire X parties en devinant le rôle de deux joueurs en étant Loup Devin | 1 | 3 | 5 | 10 |
+| Sur le site | | Chasseur de primes | Une Dernière Volonté ? | | Gagner X parties en tant que Chasseur de Primes | 3 | 5 | 10 | 20 |
+| Sur le site | | Vaudou | Zombie Nation | | Faire X parties en ressuscitant au moins 3 joueurs en étant Vaudou | 1 | 3 | 5 | 10 |
+| Sur le site | | Tous | Et le temps passe... | Vous n'aviez pas vu que tout le monde vous attendait ? | Ne pas voter ou passer X fois quand tous les autres ont passé | 5 | 10 | 15 | 30 |
 | NEW | | Loup | Loup Aventurier | Et puis vous avez pris une flèche dans le genou... | Perdre X parties en Loup tout en survivant au Chasseur | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
 | NEW | | Tous | Calife à la place du Calife | Quoi de mieux que de battre le développeur du jeu | Gagner X parties contre le joueur Onutrem | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
 | NEW | | Tous | Gagnant du mois | Vous êtes beau, vous êtes grand, vous êtes gagnant... Au moins sur un mois. | Avoir X fois plus de 50 % de victoires sur un mois | 1 | 3 | 5 | 10 |
