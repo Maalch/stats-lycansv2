@@ -13,7 +13,7 @@
 | Sur le site | | Amoureux | Un chouya fusionnel | Vous l'aimez tellement que... Vous l'avez croqué | Tuer X fois son amoureux en étant Amoureux Loup | 1 | 3 | 5 | 10 |
 | Sur le site | | Villageois | Oups | Alors, vous vous êtes trompés d'alliés... | Faire X parties en tuant deux alliés hors meeting en étant Villageois | 1 | 5 | 10 | 15 |
 | Sur le site | | Amoureux | C'est pour toi mon amour UwU | Vous tuez uniquement par passion. Elle vous fait dépasser les limites. | Faire X kills en Amoureux Loup | 1 - 5 - 10 | 20 - 30 - 40 | 60 - 80 - 100 | 200 |
-| NEW | | Tous | Revenu de Loin | La vengeance est un plat qui se mange froid... | Faire X kills en Zombie | 5 | 10 | 15 | 30 |
+| Sur le site | | Tous | Revenu de Loin | La vengeance est un plat qui se mange froid... | Faire X kills en Zombie | 5 | 10 | 15 | 30 |
 | NEW | | Amoureux | Moi aussi je participe ! | Vous aussi vous apportez votre part à l'édifice | Avoir X fois tué un ennemi hors meeting en étant Amoureux Villageois | 1 | 3 | 5 | 10 |
 | NEW | | Amoureux | Pas de concurrence | La meilleure défense, c'est l'attaque | Avoir X fois tué deux Loups en étant Amoureux Loup | 1 | 3 | 5 | 10 |
 | NEW | | Agent | 007 | Bravo, vous êtes un véritable agent | Avoir X fois tué personnellement l'autre Agent et ne jamais avoir été voté en étant Agent | 1 | 2 | 3 | 5 |

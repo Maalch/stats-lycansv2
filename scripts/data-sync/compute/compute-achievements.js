@@ -242,6 +242,38 @@ const EVALUATORS = {
   },
 
   /**
+   * Count kills made while playing as Zombie (recruited by Vaudou after death).
+   * Zombie is a final role (not a starting role), so getPlayerFinalRole must be used.
+   */
+  zombieKills(playerGames, allGames, playerId, params) {
+    const gameIds = [];
+    let value = 0;
+    const countedGames = new Set();
+
+    for (const { game, playerStat } of playerGames) {
+      // Zombie is a final role: check via getPlayerFinalRole, not MainRoleInitial
+      const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+      if (finalRole !== 'Zombie') continue;
+
+      // Count players killed by this Zombie in this game
+      let killsInGame = 0;
+      for (const victim of game.PlayerStats) {
+        if (victim.DeathType === DeathTypeCode.BY_ZOMBIE && victim.KillerName === playerStat.Username) {
+          killsInGame++;
+        }
+      }
+      if (killsInGame > 0) {
+        value += killsInGame;
+        if (!countedGames.has(game.Id)) {
+          gameIds.push(game.Id);
+          countedGames.add(game.Id);
+        }
+      }
+    }
+    return { value, gameIds };
+  },
+
+  /**
    * Count games won as wolf without making any kills
    */
   wolfWinNoKills(playerGames, allGames, playerId, params) {

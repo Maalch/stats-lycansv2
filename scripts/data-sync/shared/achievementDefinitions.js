@@ -581,6 +581,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
   // KILLS
   // ============================================================================
   {
+    id: 'zombie-kills',
+    name: 'Revenu de Loin',
+    description: 'La vengeance est un plat qui se mange froid...',
+    explanation: 'Faire X kills en Zombie',
+    emoji: '🧟',
+    category: 'kills',
+    evaluator: 'zombieKills',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+  {
     id: 'ponce-fesses',
     name: 'Ponce fesses',
     description: 'Comme un certain streameur, tu ponces des culs',
