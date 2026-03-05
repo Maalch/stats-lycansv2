@@ -273,6 +273,46 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'wolf-menage-a-trois',
+    name: 'Ménage à Trois',
+    description: 'Deux contre un, le calcul était simple... mais fallait encore le faire',
+    explanation: 'Gagner X parties en faisant voter le dernier Villageois lors d\'un meeting à 3 en étant Loup',
+    emoji: '3️⃣',
+    category: 'victories',
+    evaluator: 'wolfVotesLastVillagerInThree',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
+    id: 'wolf-win-early-death',
+    name: 'Une game exemplaire',
+    description: 'Tout s\'est déroulé comme prévu',
+    explanation: 'Gagner X parties en Loup en mourant avant le premier meeting (N1 ou J1)',
+    emoji: '💤',
+    category: 'victories',
+    evaluator: 'wolfWinEarlyDeath',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+  {
     id: 'last-wolf',
     name: 'Le dernier loup',
     description: 'Vous n\'avez besoin de personne pour gagner… Vous seul survivez.',
@@ -747,6 +787,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'hunter-kills-last-wolf',
+    name: 'Réflexe et vision ou juste pif',
+    description: 'Vous avez mis un point final à la game, le reste...',
+    explanation: 'Gagner X parties en tuant le dernier Loup en étant Chasseur',
+    emoji: '🎯',
+    category: 'kills',
+    evaluator: 'hunterKillsLastWolf',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
+    ],
+  },
+  {
     id: 'hunter-killed-by-wolf',
     name: 'Le Loup, c\'est Khalen',
     description: 'Un loup vous a tué alors que vous êtes chasseur... Il évite les balles ?',
@@ -985,6 +1045,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'roles',
     evaluator: 'bountyHunterWins',
     evaluatorParams: {},
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
+    ],
+  },
+  {
+    id: 'scientifique-wins',
+    name: 'Einstein',
+    description: 'Votre recherche du savoir a enfin été récompensé',
+    explanation: 'Gagner X victoires en Scientifique',
+    emoji: '🧪',
+    category: 'roles',
+    evaluator: 'roleWins',
+    evaluatorParams: { role: 'Scientifique' },
     levels: [
       // Bronze: 3
       { tier: 'bronze', subLevel: 1, threshold: 3 },
@@ -1309,6 +1389,27 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 5 },
       // Lycans: 10
       { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+
+  {
+    id: 'perfect-sessions',
+    name: "C'est qui le patron ?",
+    description: "C'est vous...",
+    explanation: 'Avoir X sessions (même jour, min. 5 parties) à 100 % de victoire',
+    emoji: '💼',
+    category: 'special',
+    evaluator: 'perfectSessions',
+    evaluatorParams: { minGames: 5 },
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
 

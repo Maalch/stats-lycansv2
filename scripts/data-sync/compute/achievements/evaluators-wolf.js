@@ -5,7 +5,7 @@
  * zombie/vaudou mechanics, necromancer, seer, sabotage.
  */
 
-import { isWolfCamp, getPlayerCampForAchievement, isHunterRole } from './helpers.js';
+import { isWolfCamp, getPlayerCampForAchievement, isHunterRole, isAliveAtMeeting } from './helpers.js';
 import { getPlayerId, getPlayerFinalRole, getPlayerCampFromRole, DeathTypeCode } from './helpers.js';
 
 /**
@@ -282,6 +282,67 @@ export function wolfSurvivedHunterShot(playerGames, allGames, playerId, params) 
     gameIds.push(game.Id);
   }
 
+  return { value, gameIds };
+}
+
+/**
+ * Count wins as wolf by voting out the last Villageois in a 3-player final meeting.
+ * Conditions:
+ * - Player is Loup camp and won
+ * - Game ended via meeting (EndTiming = MX)
+ * - Exactly 3 players were alive at that final meeting
+ * - A Villageois was voted out at that meeting
+ */
+export function wolfVotesLastVillagerInThree(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    if (getPlayerCampForAchievement(playerStat) !== 'Loup') continue;
+    if (!playerStat.Victorious) continue;
+
+    // Game must end via meeting (MX)
+    const endTiming = game.EndTiming;
+    if (!endTiming || !/^M\d+$/.test(endTiming)) continue;
+    const lastMeetingDay = parseInt(endTiming.slice(1));
+
+    // Exactly 3 players alive at that meeting
+    const aliveCount = game.PlayerStats.filter(p => isAliveAtMeeting(p, lastMeetingDay)).length;
+    if (aliveCount !== 3) continue;
+
+    // A Villageois was voted out at that meeting
+    const eliminatedVillager = game.PlayerStats.some(p =>
+      p.DeathType === DeathTypeCode.VOTED &&
+      p.DeathTiming === endTiming &&
+      getPlayerCampForAchievement(p) === 'Villageois'
+    );
+    if (!eliminatedVillager) continue;
+
+    value++;
+    gameIds.push(game.Id);
+  }
+  return { value, gameIds };
+}
+
+/**
+ * Count games won as wolf while having died before the first meeting (DeathTiming N1 or J1).
+ * "Une game exemplaire" — the team won even though you died very early.
+ */
+export function wolfWinEarlyDeath(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    if (!isWolfCamp(playerStat)) continue;
+    if (!playerStat.Victorious) continue;
+
+    // Must have died before the first meeting: N1 or J1
+    const timing = playerStat.DeathTiming;
+    if (timing !== 'N1' && timing !== 'J1') continue;
+
+    value++;
+    gameIds.push(game.Id);
+  }
   return { value, gameIds };
 }
 

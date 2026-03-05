@@ -23,6 +23,7 @@ import {
   deathByType, deathOnTiming,
   winOnAllMaps, winInColors, winsOnAllMaps,
   winsAgainstOnutrem, winningMonths,
+  perfectSessions,
 } from './evaluators-general.js';
 
 // Wolf evaluators
@@ -31,6 +32,7 @@ import {
   wolfWinNoKills, lastWolfStanding,
   wolfNecromancerResurrect, wolfSeerDoubleKill,
   wolfSabotages, wolfLossHarvestNoKills, wolfSurvivedHunterShot,
+  wolfVotesLastVillagerInThree, wolfWinEarlyDeath,
 } from './evaluators-wolf.js';
 
 // Combat evaluators
@@ -39,6 +41,7 @@ import {
   hunterKillsEnemy, villageoisDoubleAllyKill, hunterKillsAlly,
   hunterMultiKillsInGame, hunterKilledByWolf,
   assassinPotionKills, killerDiedSameDay, sameColorKills,
+  hunterKillsLastWolf,
 } from './evaluators-combat.js';
 
 // Role-specific evaluators
@@ -46,6 +49,7 @@ import {
   agentPerfectKill, agentVoted,
   bountyHunterWins, louveteauOrphanWin,
   winWithAllSoloRoles, idiotKilledByHunter,
+  roleWins,
 } from './evaluators-roles.js';
 
 // Amoureux evaluators
@@ -100,6 +104,8 @@ export const EVALUATORS = {
   wolfSabotages,
   wolfLossHarvestNoKills,
   wolfSurvivedHunterShot,
+  wolfVotesLastVillagerInThree,
+  wolfWinEarlyDeath,
 
   // Combat
   roleDeathByType,
@@ -111,6 +117,7 @@ export const EVALUATORS = {
   assassinPotionKills,
   killerDiedSameDay,
   sameColorKills,
+  hunterKillsLastWolf,
 
   // Roles
   agentPerfectKill,
@@ -119,6 +126,7 @@ export const EVALUATORS = {
   louveteauOrphanWin,
   winWithAllSoloRoles,
   idiotKilledByHunter,
+  roleWins,
 
   // Amoureux
   killedByLoverWolf,
@@ -142,6 +150,7 @@ export const EVALUATORS = {
   deathsInAllZones,
   winsAgainstOnutrem,
   winningMonths,
+  perfectSessions,
 };
 
 export const BR_EVALUATORS = {

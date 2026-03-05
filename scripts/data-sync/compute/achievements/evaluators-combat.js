@@ -5,7 +5,7 @@
  * and other combat-related achievements.
  */
 
-import { isHunterRole, getPlayerCampForAchievement, getDeathDay } from './helpers.js';
+import { isHunterRole, isWolfCamp, getPlayerCampForAchievement, getDeathDay } from './helpers.js';
 import { DeathTypeCode } from './helpers.js';
 
 /**
@@ -252,6 +252,47 @@ export function sameColorKills(playerGames, allGames, playerId, params) {
       } else {
         countedKillsPerGame.set(game.Id, countedKillsPerGame.get(game.Id) + killsInGame);
       }
+    }
+  }
+  return { value, gameIds };
+}
+/**
+ * Count games won as Chasseur by killing the last wolf with a bullet.
+ * Detection: game ends immediately (EndTiming = JX or NX, not MX) and
+ * at least one wolf killed by this player's bullet has a DeathTiming
+ * matching the game's EndTiming, meaning the bullet ended the game.
+ */
+export function hunterKillsLastWolf(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    if (!isHunterRole(playerStat)) continue;
+    if (!playerStat.Victorious) continue;
+
+    // Game must have ended outside a meeting (JX or NX)
+    const endTiming = game.EndTiming;
+    if (!endTiming || !/^[JN]\d+$/.test(endTiming)) continue;
+
+    // Find wolves killed by this player's bullet at the exact game-end timing
+    let bulletEndedGame = false;
+    for (const victim of game.PlayerStats) {
+      const isBulletKill = victim.DeathType === DeathTypeCode.BULLET ||
+                           victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
+                           victim.DeathType === DeathTypeCode.BULLET_WOLF;
+      if (!isBulletKill) continue;
+      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isWolfCamp(victim)) continue;
+      // Victim's death timing must match the game's EndTiming
+      if (victim.DeathTiming === endTiming) {
+        bulletEndedGame = true;
+        break;
+      }
+    }
+
+    if (bulletEndedGame) {
+      value++;
+      gameIds.push(game.Id);
     }
   }
   return { value, gameIds };

@@ -132,6 +132,22 @@ export function winWithAllSoloRoles(playerGames, allGames, playerId, params) {
 }
 
 /**
+ * Count wins with a specific MainRoleInitial
+ * Params: { role: string } - the MainRoleInitial to match
+ */
+export function roleWins(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  for (const { game, playerStat } of playerGames) {
+    if (playerStat.MainRoleInitial !== params.role) continue;
+    if (!playerStat.Victorious) continue;
+    value++;
+    gameIds.push(game.Id);
+  }
+  return { value, gameIds };
+}
+
+/**
  * Count deaths as Idiot du Village by a hunter bullet
  */
 export function idiotKilledByHunter(playerGames, allGames, playerId, params) {

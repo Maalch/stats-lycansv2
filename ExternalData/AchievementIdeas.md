@@ -26,11 +26,11 @@
 | Sur le site | | Loup | Loup Aventurier | Et puis vous avez pris une flèche dans le genou... | Perdre X parties en Loup tout en survivant au Chasseur | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
 | Sur le site | | Tous | Calife à la place du Calife | Quoi de mieux que de battre le développeur du jeu | Gagner X parties contre le joueur Onutrem | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
 | Sur le site | | Tous | Gagnant du mois | Vous êtes beau, vous êtes grand, vous êtes gagnant... Au moins sur un mois. | Avoir X fois plus de 50 % de victoires sur un mois | 1 | 3 | 5 | 10 |
-| NEW | | Villageois | Réflexe et vision ou juste pif | Vous avez mis un point final à la game, le reste... | Gagner X parties en tuant le dernier Loup en étant Chasseur | 3 | 5 | 10 | 20 |
-| NEW | | Scientifique | Einstein | Votre recherche du savoir a enfin été récompensé | Gagner X victoires en Scientifique | 3 | 5 | 10 | 20 |
-| NEW | | Loup | Ménage à Trois | | Gagner X parties en faisant voter le dernier Villageois en Loup lors d'un meeting à 3 | 1 | 3 | 5 | 10 |
-| NEW | | Tous | C'est qui le patron? | C'est vous... | Faire X sessions (min. 5 parties) à 100 % de victoire | 5 | 10 | 15 | 30 |
-| NEW | | Loup | Une game exemplaire | Tout s'est déroulé comme prévu | Gagner X parties en Loup sans faire le premier meeting | 5 | 10 | 15 | 30 |
+| Sur le site | | Villageois | Réflexe et vision ou juste pif | Vous avez mis un point final à la game, le reste... | Gagner X parties en tuant le dernier Loup en étant Chasseur | 3 | 5 | 10 | 20 |
+| Sur le site | | Scientifique | Einstein | Votre recherche du savoir a enfin été récompensé | Gagner X victoires en Scientifique | 3 | 5 | 10 | 20 |
+| Sur le site | | Loup | Ménage à Trois | | Gagner X parties en faisant voter le dernier Villageois en Loup lors d'un meeting à 3 | 1 | 3 | 5 | 10 |
+| Sur le site | | Tous | C'est qui le patron? | C'est vous... | Faire X sessions (min. 5 parties) à 100 % de victoire | 5 | 10 | 15 | 30 |
+| Sur le site | | Loup | Une game exemplaire | Tout s'est déroulé comme prévu | Gagner X parties en Loup sans faire le premier meeting | 5 | 10 | 15 | 30 |
 | NEW | | Loup | Besoin de personne | Vous faites votre route solo et vous la faites plutôt bien | Gagner X parties en ayant réalisé tous les kills hors meeting en étant Loup | 1 | 3 | 5 | 10 |
 | NEW | | Villageois | Encore du travail | Du travail, encore et toujours du travail... | Faire X parties en étant premier à la récolte en tant que Villageois | 5 | 10 | 15 | 30 |
 | NEW | | Tous | Pas de Pause AFK ! | Vous pensiez avoir le temps de partir ? | Être X fois ressuscité | 5 | 10 | 15 | 30 |

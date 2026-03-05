@@ -264,3 +264,43 @@ export function winsOnAllMaps(playerGames, allGames, playerId, params) {
   
   return { value: minWins, gameIds };
 }
+
+/**
+ * Count calendar days (sessions) where the player had a 100% win rate
+ * with at least `minGames` games played that day.
+ * Groups player games by YYYY-MM-DD from game.StartDate.
+ * Params: { minGames } — default 5
+ */
+export function perfectSessions(playerGames, allGames, playerId, params) {
+  const minGames = params.minGames ?? 5;
+  const dayMap = new Map(); // 'YYYY-MM-DD' → { wins, total, lastGameId }
+
+  for (const { game, playerStat } of playerGames) {
+    if (!game.StartDate) continue;
+    const d = new Date(game.StartDate);
+    if (isNaN(d.getTime())) continue;
+
+    const key = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+
+    if (!dayMap.has(key)) {
+      dayMap.set(key, { wins: 0, total: 0, lastGameId: null });
+    }
+
+    const entry = dayMap.get(key);
+    entry.total++;
+    if (playerStat.Victorious) entry.wins++;
+    entry.lastGameId = game.Id;
+  }
+
+  const gameIds = [];
+  let value = 0;
+
+  for (const [, { wins, total, lastGameId }] of dayMap) {
+    if (total >= minGames && wins === total) {
+      value++;
+      gameIds.push(lastGameId);
+    }
+  }
+
+  return { value, gameIds };
+}
