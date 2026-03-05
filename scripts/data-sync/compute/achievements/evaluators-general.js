@@ -14,7 +14,7 @@ export function campWins(playerGames, allGames, playerId, params) {
   let value = 0;
   for (const { game, playerStat } of playerGames) {
     if (!playerStat.Victorious) continue;
-    const mainCamp = getPlayerCampForAchievement(playerStat);
+    const mainCamp = getPlayerCampForAchievement(playerStat, true, { regroupWolfSubRoles: true });
     const campMatch = (params.camp === 'Villageois' && mainCamp === 'Villageois') ||
                       (params.camp === 'Loup' && mainCamp === 'Loup');
     if (campMatch) {
@@ -33,7 +33,7 @@ export function campLosses(playerGames, allGames, playerId, params) {
   let value = 0;
   for (const { game, playerStat } of playerGames) {
     if (playerStat.Victorious) continue;
-    const mainCamp = getPlayerCampForAchievement(playerStat);
+    const mainCamp = getPlayerCampForAchievement(playerStat, true, { regroupWolfSubRoles: true });
     const campMatch = (params.camp === 'Villageois' && mainCamp === 'Villageois') ||
                       (params.camp === 'Loup' && mainCamp === 'Loup');
     if (campMatch) {
