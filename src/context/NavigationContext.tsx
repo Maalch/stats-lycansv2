@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { mergeUrlState, parseUrlState } from '../utils/urlManager';
 
@@ -166,6 +166,8 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const [navigationFilters, setNavigationFilters] = useState<NavigationFilters>({});
   const [navigationState, setNavigationState] = useState<NavigationState>({});
   const [requestedTab, setRequestedTab] = useState<{ mainTab: string; subTab?: string } | undefined>();
+  // Prevent syncFromUrl from overwriting filters set directly by navigateToGameDetails
+  const skipNextUrlChangeSyncRef = useRef(false);
 
   // Initialize view from URL on mount
   useEffect(() => {
@@ -184,6 +186,10 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
 
   // Sync state from URL to context
   const syncFromUrl = useCallback(() => {
+    if (skipNextUrlChangeSyncRef.current) {
+      skipNextUrlChangeSyncRef.current = false;
+      return;
+    }
     const urlState = parseUrlState();
     if (urlState.view === 'gameDetails') {
       setCurrentView('gameDetails');
@@ -228,6 +234,10 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
     setNavigationFilters(filters);
     setCurrentView('gameDetails');
     
+    // Skip the urlchange event triggered by the mergeUrlState below,
+    // so syncFromUrl doesn't overwrite the full filters (e.g. campFilter) with the URL-only subset
+    skipNextUrlChangeSyncRef.current = true;
+
     // Persist navigation to URL with pushState (creates history entry)
     mergeUrlState({
       view: 'gameDetails',
