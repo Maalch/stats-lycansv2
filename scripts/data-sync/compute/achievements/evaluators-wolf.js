@@ -120,6 +120,45 @@ export function wolfWinNoKills(playerGames, allGames, playerId, params) {
 }
 
 /**
+ * Count total UseGadget or DrinkPotion actions performed while the player is a Zombie.
+ * Zombie status is determined by a MainRoleChanges entry with NewMainRole === 'Zombie'.
+ * Only actions with a Date strictly after the RoleChangeDateIrl of the Zombie change count.
+ * Each individual action counts toward the total (not each game).
+ * gameIds records all games that had ≥1 qualifying action.
+ */
+export function zombieItemUses(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    const changes = playerStat.MainRoleChanges;
+    if (!changes || changes.length === 0) continue;
+
+    // Find the Zombie role change (use the first occurrence)
+    const zombieChange = changes.find(rc => rc.NewMainRole === 'Zombie');
+    if (!zombieChange || !zombieChange.RoleChangeDateIrl) continue;
+
+    const zombieDate = new Date(zombieChange.RoleChangeDateIrl);
+
+    // Count UseGadget or DrinkPotion actions done after becoming a Zombie
+    const actions = playerStat.Actions;
+    if (!actions || actions.length === 0) continue;
+
+    const actionsAsZombie = actions.filter(a =>
+      (a.ActionType === 'UseGadget' || a.ActionType === 'DrinkPotion') &&
+      a.Date != null &&
+      new Date(a.Date) > zombieDate
+    );
+
+    if (actionsAsZombie.length > 0) {
+      value += actionsAsZombie.length;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}
+/**
  * Count games won as the last surviving wolf
  */
 export function lastWolfStanding(playerGames, allGames, playerId, params) {
@@ -377,6 +416,58 @@ export function wolfWinEarlyDeath(playerGames, allGames, playerId, params) {
     value++;
     gameIds.push(game.Id);
   }
+  return { value, gameIds };
+}
+
+/**
+ * Count nights where the player (Loup camp) transformed, killed at least one player,
+ * and untransformed — all within the same night timing (e.g. N1, N2, ...).
+ * Each qualifying night counts as 1 toward the total.
+ * Untransform includes both 'Untransform' and 'UntransformInfecté'.
+ * gameIds records the unique games in which at least one qualifying night occurred.
+ */
+export function wolfTransformKillNights(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  const countedGames = new Set();
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    if (!isWolfCamp(playerStat)) continue;
+
+    const actions = playerStat.Actions;
+    if (!actions || actions.length === 0) continue;
+
+    // Collect unique night timings where the player transformed
+    const transformNights = new Set(
+      actions
+        .filter(a => a.ActionType === 'Transform' && a.Timing && a.Timing.startsWith('N'))
+        .map(a => a.Timing)
+    );
+
+    for (const timing of transformNights) {
+      // Must have untransformed the same night
+      const hasUntransform = actions.some(a =>
+        (a.ActionType === 'Untransform' || a.ActionType === 'UntransformInfecté') &&
+        a.Timing === timing
+      );
+      if (!hasUntransform) continue;
+
+      // Must have killed at least one player that same night
+      const hasKill = game.PlayerStats.some(v =>
+        v.KillerName === playerStat.Username &&
+        v.DeathType === DeathTypeCode.BY_WOLF &&
+        v.DeathTiming === timing
+      );
+      if (!hasKill) continue;
+
+      value++;
+      if (!countedGames.has(game.Id)) {
+        gameIds.push(game.Id);
+        countedGames.add(game.Id);
+      }
+    }
+  }
+
   return { value, gameIds };
 }
 

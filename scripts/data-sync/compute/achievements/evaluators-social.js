@@ -121,3 +121,60 @@ export function deathsInAllZones(playerGames, allGames, playerId, params) {
   
   return { value: minDeaths, gameIds };
 }
+
+/**
+ * Count games where player drank at least X potions (DrinkPotion actions)
+ * "Juste un dernier verre" - Vous arrêtez quand vous voulez...
+ */
+export function justeUnDernierVerre(playerGames, allGames, playerId, params) {
+  const minPotions = params.minPotions || 10;
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    const actions = playerStat.Actions;
+    if (!actions || actions.length === 0) continue;
+
+    const potionCount = actions.filter(a => a.ActionType === 'DrinkPotion').length;
+
+    if (potionCount >= minPotions) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}
+
+/**
+ * Count games where player used at least 5 different items (UseGadget or DrinkPotion)
+ * "Collectionneur" - Vous êtes prêt en toute circonstance
+ */
+export function collectionneur(playerGames, allGames, playerId, params) {
+  const minDistinctItems = params.minDistinctItems || 5;
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    const actions = playerStat.Actions;
+    if (!actions || actions.length === 0) continue;
+
+    // Collect distinct item names from UseGadget and DrinkPotion actions
+    const distinctItems = new Set();
+    for (const action of actions) {
+      if (
+        (action.ActionType === 'UseGadget' || action.ActionType === 'DrinkPotion') &&
+        action.ActionName
+      ) {
+        distinctItems.add(action.ActionName);
+      }
+    }
+
+    if (distinctItems.size >= minDistinctItems) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}

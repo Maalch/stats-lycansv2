@@ -35,11 +35,11 @@
 | Sur le site | | Villageois | Encore du travail | Du travail, encore et toujours du travail... | Faire X parties en étant premier à la récolte en tant que Villageois | 5 | 10 | 15 | 30 |
 | Sur le site | | Tous | Pas de Pause AFK ! | Vous pensiez avoir le temps de partir ? | Être X fois ressuscité | 5 | 10 | 15 | 30 |
 | En attente | | Tous | Expert des milieux hostiles | Vous ne reculez devant rien pour sauver un ami | Avoir X fois sauvé un Villageois Survivaliste | 3 | 5 | 10 | 20 |
-| NEW | | Tous | Immortel | Votre bonne étoile vous sourit, une deuxième chance surgit | Être X fois sauvé en étant Villageois Survivaliste | 3 | 5 | 10 | 20 |
-| NEW | | Tous | Joueur comme les autres | Même en zombie, vous voulez faire comme tout le monde | Avoir X fois bu une potion ou utilisé un objet en étant Zombie | 1 | 3 | 5 | 10 |
-| NEW | | Loup | Ni vu ni connu | Une ombre passe, un joueur trépasse | Passer X nuits à se transformer, tuer au moins un joueur et se détransformer | 10 | 20 | 30 | 50 |
-| NEW | | Tous | Collectionneur | Vous êtes prêt en toute circonstance | Utiliser X fois 5 items différents dans une partie | 5 | 10 | 15 | 30 |
-| NEW | | Tous | Juste un dernier verre | Vous arrêtez quand vous voulez... | Faire X parties en ayant bu 10 potions | 3 | 5 | 10 | 20 |
+| En attente | | Tous | Immortel | Votre bonne étoile vous sourit, une deuxième chance surgit | Être X fois sauvé en étant Villageois Survivaliste | 3 | 5 | 10 | 20 |
+| Sur le site | | Tous | Joueur comme les autres | Même en zombie, vous voulez faire comme tout le monde | Avoir X fois bu une potion ou utilisé un objet en étant Zombie | 1 | 3 | 5 | 10 |
+| Sur le site | | Loup | Ni vu ni connu | Une ombre passe, un joueur trépasse | Passer X nuits à se transformer, tuer au moins un joueur et se détransformer | 10 | 20 | 30 | 50 |
+| Sur le site | | Tous | Collectionneur | Vous êtes prêt en toute circonstance | Utiliser X fois 5 items différents dans une partie | 5 | 10 | 15 | 30 |
+| Sur le site | | Tous | Juste un dernier verre | Vous arrêtez quand vous voulez... | Faire X parties en ayant bu 10 potions | 3 | 5 | 10 | 20 |
 | Sur le site | | Victoires | Héros du Village | La justice finit toujours par triompher | Gagner X victoires en camp Villageois | 1 - 5 - 10 | 30 - 50 - 70 | 100 - 150 - 200 | 300 |
 | Sur le site | | Victoires | L'important, c'est de participer (Villageois) | Vous avez perdu mais au moins, vous avez tenté | Perdre X parties en camp Villageois | 1 - 5 - 10 | 30 - 50 - 70 | 100 - 150 - 200 | 300 |
 | Sur le site | | Victoires | Terreur Nocturne | La nuit vous appartient | Gagner X victoires en camp Loup | 1 - 5 - 10 | 30 - 50 - 70 | 100 - 150 - 200 | 300 |

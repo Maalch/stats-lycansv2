@@ -33,6 +33,7 @@ import {
   wolfNecromancerResurrect, wolfSeerDoubleKill,
   wolfSabotages, wolfLossHarvestNoKills, wolfSurvivedHunterShot,
   wolfVotesLastVillagerInThree, wolfWinEarlyDeath, wolfAllKillsSolo,
+  zombieItemUses, wolfTransformKillNights,
 } from './evaluators-wolf.js';
 
 // Combat evaluators
@@ -68,7 +69,7 @@ import {
 
 // Social/special evaluators
 import {
-  talkingPercentage, deathsInAllZones,
+  talkingPercentage, deathsInAllZones, collectionneur, justeUnDernierVerre,
 } from './evaluators-social.js';
 
 // BR evaluators
@@ -107,6 +108,8 @@ export const EVALUATORS = {
   wolfVotesLastVillagerInThree,
   wolfWinEarlyDeath,
   wolfAllKillsSolo,
+  zombieItemUses,
+  wolfTransformKillNights,
 
   // Combat
   roleDeathByType,
@@ -149,6 +152,8 @@ export const EVALUATORS = {
   // Social/Special
   talkingPercentage,
   deathsInAllZones,
+  collectionneur,
+  justeUnDernierVerre,
   winsAgainstOnutrem,
   winningMonths,
   perfectSessions,

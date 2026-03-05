@@ -1238,6 +1238,47 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
 
+  {
+    id: 'zombie-item-uses',
+    name: 'Joueur comme les autres',
+    description: "Même en zombie, vous voulez faire comme tout le monde",
+    explanation: 'Avoir X fois bu une potion ou utilisé un objet en étant Zombie',
+    emoji: '🧟',
+    category: 'roles',
+    evaluator: 'zombieItemUses',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
+    id: 'wolf-transform-kill-nights',
+    name: 'Ni vu ni connu',
+    description: 'Une ombre passe, un joueur trépasse',
+    explanation: 'Passer X nuits à se transformer, tuer au moins un joueur et se détransformer',
+    emoji: '🌑',
+    category: 'roles',
+    evaluator: 'wolfTransformKillNights',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 10
+      { tier: 'bronze', subLevel: 1, threshold: 10 },
+      // Argent: 20
+      { tier: 'argent', subLevel: 1, threshold: 20 },
+      // Or: 30
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+
   // ============================================================================
   // SOCIAL (voting/meetings)
   // ============================================================================
@@ -1490,6 +1531,48 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'special',
     evaluator: 'resurrectedCount',
     evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+
+  {
+    id: 'juste-un-dernier-verre',
+    name: 'Juste un dernier verre',
+    description: 'Vous arrêtez quand vous voulez...',
+    explanation: 'Faire X parties en ayant bu au moins 10 potions',
+    emoji: '🍶',
+    category: 'special',
+    evaluator: 'justeUnDernierVerre',
+    evaluatorParams: { minPotions: 10 },
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
+    ],
+  },
+
+  {
+    id: 'collectionneur',
+    name: 'Collectionneur',
+    description: 'Vous êtes prêt en toute circonstance',
+    explanation: 'Faire X parties en utilisant au moins 5 items différents (gadgets ou potions)',
+    emoji: '🎒',
+    category: 'special',
+    evaluator: 'collectionneur',
+    evaluatorParams: { minDistinctItems: 5 },
     levels: [
       // Bronze: 5
       { tier: 'bronze', subLevel: 1, threshold: 5 },
