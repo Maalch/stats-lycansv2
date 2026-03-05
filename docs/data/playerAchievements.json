@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-05T10:35:39.047Z",
+  "generatedAt": "2026-03-05T11:38:08.284Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 776,
@@ -451,6 +451,99 @@
       "description": "Vous ne vouliez vraiment blesser personne...",
       "explanation": "Perdre X parties à la récolte en Loup sans avoir tué personne",
       "emoji": "🌾",
+      "category": "victories",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "wolf-menage-a-trois",
+      "name": "Ménage à Trois",
+      "description": "Deux contre un, le calcul était simple... mais fallait encore le faire",
+      "explanation": "Gagner X parties en faisant voter le dernier Villageois lors d'un meeting à 3 en étant Loup",
+      "emoji": "3️⃣",
+      "category": "victories",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "wolf-all-kills-solo",
+      "name": "Besoin de personne",
+      "description": "Vous faites votre route solo et vous la faites plutôt bien",
+      "explanation": "Gagner X parties en Loup en étant le seul à avoir fait des kills hors meeting",
+      "emoji": "🐺",
+      "category": "victories",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "wolf-win-early-death",
+      "name": "Une game exemplaire",
+      "description": "Tout s'est déroulé comme prévu",
+      "explanation": "Gagner X parties en Loup en mourant avant le premier meeting (N1 ou J1)",
+      "emoji": "💤",
       "category": "victories",
       "levels": [
         {
@@ -1235,6 +1328,37 @@
       "requiresBRData": false
     },
     {
+      "id": "hunter-kills-last-wolf",
+      "name": "Réflexe et vision ou juste pif",
+      "description": "Vous avez mis un point final à la game, le reste...",
+      "explanation": "Gagner X parties en tuant le dernier Loup en étant Chasseur",
+      "emoji": "🎯",
+      "category": "kills",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 20
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "hunter-killed-by-wolf",
       "name": "Le Loup, c'est Khalen",
       "description": "Un loup vous a tué alors que vous êtes chasseur... Il évite les balles ?",
@@ -1637,6 +1761,37 @@
       "requiresBRData": false
     },
     {
+      "id": "scientifique-wins",
+      "name": "Einstein",
+      "description": "Votre recherche du savoir a enfin été récompensé",
+      "explanation": "Gagner X victoires en Scientifique",
+      "emoji": "🧪",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 20
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "louveteau-orphan",
       "name": "Le Louveteau Orphelin",
       "description": "Vous étiez trop jeune pour mourir",
@@ -1818,6 +1973,99 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "villageois-top-loot",
+      "name": "Encore du travail",
+      "description": "Du travail, encore et toujours du travail...",
+      "explanation": "Être X fois le premier à la récolte parmi les Villageois",
+      "emoji": "🌾",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "zombie-item-uses",
+      "name": "Joueur comme les autres",
+      "description": "Même en zombie, vous voulez faire comme tout le monde",
+      "explanation": "Avoir X fois bu une potion ou utilisé un objet en étant Zombie",
+      "emoji": "🧟",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "wolf-transform-kill-nights",
+      "name": "Ni vu ni connu",
+      "description": "Une ombre passe, un joueur trépasse",
+      "explanation": "Passer X nuits à se transformer, tuer au moins un joueur et se détransformer",
+      "emoji": "🌑",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 20
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 50
         }
       ],
       "requiresBRData": false
@@ -2132,6 +2380,37 @@
       "requiresBRData": false
     },
     {
+      "id": "perfect-sessions",
+      "name": "C'est qui le patron ?",
+      "description": "C'est vous...",
+      "explanation": "Avoir X sessions (même jour, min. 5 parties) à 100 % de victoire",
+      "emoji": "💼",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "calife-a-la-place-du-calife",
       "name": "Calife à la place du Calife",
       "description": "Quoi de mieux que de battre le développeur du jeu",
@@ -2188,6 +2467,99 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 50
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "resurrected",
+      "name": "Pas de Pause AFK !",
+      "description": "Vous pensiez avoir le temps de partir ?",
+      "explanation": "Être X fois ressuscité (Loup Nécromancien ou Vaudou)",
+      "emoji": "🧟",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "juste-un-dernier-verre",
+      "name": "Juste un dernier verre",
+      "description": "Vous arrêtez quand vous voulez...",
+      "explanation": "Faire X parties en ayant bu au moins 10 potions",
+      "emoji": "🍶",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 20
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "collectionneur",
+      "name": "Collectionneur",
+      "description": "Vous êtes prêt en toute circonstance",
+      "explanation": "Faire X parties en utilisant au moins 5 items différents (gadgets ou potions)",
+      "emoji": "🎒",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 30
         }
       ],
       "requiresBRData": false
@@ -6010,6 +6382,17 @@
           "progress": 0.2
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -6381,7 +6764,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 86,
+      "totalUnlocked": 87,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6603,6 +6986,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-305"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "last-wolf",
@@ -6863,6 +7264,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -7130,6 +7542,17 @@
           "progress": 0.7
         },
         {
+          "id": "perfect-sessions",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 5,
           "unlockedLevels": [
@@ -7152,6 +7575,17 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -7559,6 +7993,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "hunter-killed-by-wolf",
@@ -11018,6 +11463,17 @@
           "progress": 0.2
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -11972,6 +12428,17 @@
           "progress": 0.2
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 6,
           "unlockedLevels": [
@@ -12461,6 +12928,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -12869,6 +13347,17 @@
             "threshold": 4
           },
           "progress": 0.75
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         }
       ]
     },
@@ -14860,6 +15349,17 @@
           "progress": 0.2
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 12,
           "unlockedLevels": [
@@ -16366,7 +16866,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 167,
+      "totalUnlocked": 172,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16695,6 +17195,53 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "wolf-menage-a-trois",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251230131314"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240726000000-197"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "wolf-win-early-death",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "last-wolf",
@@ -17143,6 +17690,30 @@
           "progress": 0.4
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241206000000-253"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250716000000-484"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 30,
           "unlockedLevels": [
@@ -17301,6 +17872,17 @@
           "progress": 0.8
         },
         {
+          "id": "scientifique-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "loup-necromancien-resurrect",
           "currentValue": 2,
           "unlockedLevels": [
@@ -17335,6 +17917,35 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 9,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260106132431"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.9
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 5,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "misunderstood",
@@ -17603,6 +18214,28 @@
             "threshold": 30
           },
           "progress": 0.8333333333333334
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -18981,7 +19614,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 152,
+      "totalUnlocked": 156,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19271,6 +19904,17 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "wolf-win-early-death",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "last-wolf",
@@ -19759,6 +20403,24 @@
           "progress": 0.6
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240717000000-186"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 31,
           "unlockedLevels": [
@@ -19987,6 +20649,42 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260210123652"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 15,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260120132722"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.75
         },
         {
           "id": "misunderstood",
@@ -20238,6 +20936,24 @@
             "threshold": 25
           },
           "progress": 0.84
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260217135951"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "br-victories",
@@ -20508,7 +21224,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 150,
+      "totalUnlocked": 157,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20798,6 +21514,54 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "wolf-menage-a-trois",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240507000000-135"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240507000000-135"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240821000000-218"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250624000000-453"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "last-wolf",
@@ -21229,6 +21993,30 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240924000000-229"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20251209130133"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 19,
           "unlockedLevels": [
@@ -21394,6 +22182,35 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 9,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260127123742"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.9
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.4
         },
         {
           "id": "misunderstood",
@@ -21672,6 +22489,17 @@
             "threshold": 20
           },
           "progress": 0.95
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -21966,7 +22794,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 139,
+      "totalUnlocked": 145,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22282,6 +23110,48 @@
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-menage-a-trois",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240507000000-135"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-14"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251009123351"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
             "subLevel": 1,
             "threshold": 5
           },
@@ -22682,6 +23552,17 @@
           "progress": 0.6
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 27,
           "unlockedLevels": [
@@ -22795,6 +23676,17 @@
           "progress": 0.8
         },
         {
+          "id": "scientifique-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "loup-devin-double-seer",
           "currentValue": 1,
           "unlockedLevels": [
@@ -22811,6 +23703,47 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 16,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251230113308"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260120134259"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260224131059"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.5333333333333333
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
         },
         {
           "id": "misunderstood",
@@ -23070,6 +24003,17 @@
             "threshold": 25
           },
           "progress": 0.8
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -23358,7 +24302,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 137,
+      "totalUnlocked": 147,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23658,6 +24602,59 @@
         },
         {
           "id": "wolf-loss-harvest-no-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "wolf-menage-a-trois",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240206000000-63"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241205000000-248"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250805000000-514"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "wolf-win-early-death",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -24046,6 +25043,30 @@
           "progress": 0.6
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241205000000-242"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260113134511"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 12,
           "unlockedLevels": [
@@ -24212,6 +25233,67 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "scientifique-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 32,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20251216121842"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251230131314"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260120124541"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "khalen-20260303123611"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260217144943"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.5
         },
         {
           "id": "misunderstood",
@@ -24482,6 +25564,28 @@
           "progress": 0.8666666666666667
         },
         {
+          "id": "resurrected",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "br-victories",
           "currentValue": 17,
           "unlockedLevels": [
@@ -24732,7 +25836,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 119,
+      "totalUnlocked": 121,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25016,6 +26120,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "wolf-menage-a-trois",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240206000000-63"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "last-wolf",
@@ -25397,6 +26519,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 22,
           "unlockedLevels": [
@@ -25541,6 +26674,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "scientifique-wins",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "loup-necromancien-resurrect",
           "currentValue": 3,
           "unlockedLevels": [
@@ -25563,6 +26707,35 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260303142940"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
         },
         {
           "id": "misunderstood",
@@ -25795,6 +26968,17 @@
             "threshold": 15
           },
           "progress": 0.9333333333333333
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "br-victories",
@@ -26041,7 +27225,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 110,
+      "totalUnlocked": 113,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26318,6 +27502,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-420"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "last-wolf",
@@ -26698,6 +27900,17 @@
           "progress": 0.2
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 19,
           "unlockedLevels": [
@@ -26808,6 +28021,42 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260106130206"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 13,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20260127135421"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.65
         },
         {
           "id": "misunderstood",
@@ -27037,6 +28286,17 @@
           "progress": 0.6
         },
         {
+          "id": "collectionneur",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-victories",
           "currentValue": 7,
           "unlockedLevels": [
@@ -27263,7 +28523,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 96,
+      "totalUnlocked": 98,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27818,6 +29078,30 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241217000000-279"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250311000000-376"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 15,
           "unlockedLevels": [
@@ -27954,6 +29238,17 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
         },
         {
           "id": "misunderstood",
@@ -28136,6 +29431,17 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -28352,7 +29658,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 102,
+      "totalUnlocked": 104,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28615,6 +29921,17 @@
         },
         {
           "id": "wolf-loss-harvest-no-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "wolf-win-early-death",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -28968,6 +30285,17 @@
           "progress": 0.2
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 18,
           "unlockedLevels": [
@@ -29104,6 +30432,41 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 11,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260120122045"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260303130810"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.7333333333333333
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
         },
         {
           "id": "misunderstood",
@@ -29329,6 +30692,17 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "br-victories",
@@ -29949,6 +31323,17 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
             "threshold": 5
           },
           "progress": 0.2
@@ -30702,7 +32087,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 122,
+      "totalUnlocked": 123,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -30998,6 +32383,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "wolf-win-early-death",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "last-wolf",
@@ -31374,6 +32770,17 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 21,
           "unlockedLevels": [
@@ -31535,6 +32942,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "scientifique-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "loup-devin-double-seer",
           "currentValue": 1,
           "unlockedLevels": [
@@ -31551,6 +32969,24 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260127142054"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "only-passer",
@@ -31732,6 +33168,17 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "br-victories",
@@ -32642,6 +34089,17 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -33718,6 +35176,17 @@
           "progress": 0.6
         },
         {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-participations",
           "currentValue": 17,
           "unlockedLevels": [
@@ -33823,7 +35292,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 73,
+      "totalUnlocked": 74,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34071,6 +35540,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "wolf-menage-a-trois",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251230131314"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-sabotages",
@@ -34476,6 +35963,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "villageois-top-loot",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "only-passer",
           "currentValue": 6,
           "unlockedLevels": [
@@ -34592,6 +36090,28 @@
             "threshold": 7
           },
           "progress": 0.8571428571428571
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -34734,7 +36254,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 55,
+      "totalUnlocked": 56,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35198,6 +36718,24 @@
           "progress": 0.8
         },
         {
+          "id": "zombie-item-uses",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251202134748"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -35433,7 +36971,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 104,
+      "totalUnlocked": 105,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35698,6 +37236,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "wolf-win-early-death",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "wolf-sabotages",
@@ -36188,6 +37737,28 @@
           "progress": 0.6
         },
         {
+          "id": "villageois-top-loot",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -36357,6 +37928,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260217133845"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "br-victories",
@@ -36603,7 +38192,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 86,
+      "totalUnlocked": 88,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37124,6 +38713,17 @@
           "progress": 0.2
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 8,
           "unlockedLevels": [
@@ -37253,6 +38853,42 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 8,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260217125923"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 19,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260217120920"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 20
+          },
+          "progress": 0.95
         },
         {
           "id": "misunderstood",
@@ -37420,6 +39056,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -37630,7 +39277,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 75,
+      "totalUnlocked": 76,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38166,6 +39813,17 @@
           "progress": 1
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 6,
           "unlockedLevels": [
@@ -38295,6 +39953,35 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260203115806"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
         },
         {
           "id": "misunderstood",
@@ -38427,6 +40114,17 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "collectionneur",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
             "threshold": 5
           },
           "progress": 0.2
@@ -38744,6 +40442,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "scientifique-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "lone-non-voter",
@@ -39479,6 +41188,28 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "villageois-top-loot",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 3,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.3
+        },
+        {
           "id": "misunderstood",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -39590,6 +41321,17 @@
           "progress": 0.4
         },
         {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-participations",
           "currentValue": 20,
           "unlockedLevels": [
@@ -39676,7 +41418,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 63,
+      "totalUnlocked": 64,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39898,6 +41640,35 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "wolf-menage-a-trois",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251230131314"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-win-early-death",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "wolf-sabotages",
@@ -40167,6 +41938,17 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "hunter-kills-last-wolf",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "hunter-killed-by-wolf",
           "currentValue": 9,
           "unlockedLevels": [
@@ -40272,6 +42054,28 @@
             "threshold": 15
           },
           "progress": 0.9333333333333333
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 6,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "only-passer",
@@ -40404,6 +42208,17 @@
           "progress": 0.4
         },
         {
+          "id": "resurrected",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "br-victories",
           "currentValue": 2,
           "unlockedLevels": [
@@ -40522,7 +42337,7 @@
     "76561197996828190": {
       "playerId": "76561197996828190",
       "playerName": "Mickalow",
-      "totalUnlocked": 30,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40648,6 +42463,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251028000000-600"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "last-wolf",
@@ -42128,6 +43961,17 @@
           "progress": 0.36666666666666664
         },
         {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -42899,6 +44743,17 @@
           "progress": 0.2
         },
         {
+          "id": "wolf-win-early-death",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "romeo-juliette",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -43163,6 +45018,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "villageois-top-loot",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "only-passer",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -43238,6 +45104,17 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -43364,7 +45241,7 @@
     "76561199013115670": {
       "playerId": "76561199013115670",
       "playerName": "SpicY",
-      "totalUnlocked": 22,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -43479,6 +45356,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251028000000-609"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "last-wolf",
@@ -43605,6 +45500,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "only-passer",
@@ -44227,6 +46133,17 @@
           "progress": 0.5
         },
         {
+          "id": "villageois-top-loot",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -44337,6 +46254,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -45159,6 +47087,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "perfect-sessions",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "unlockedLevels": [
@@ -45610,7 +47549,7 @@
     "76561198271274269": {
       "playerId": "76561198271274269",
       "playerName": "MartinPonK",
-      "totalUnlocked": 30,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -45780,6 +47719,35 @@
           "progress": 0.4
         },
         {
+          "id": "wolf-all-kills-solo",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20251111140206"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "wolf-win-early-death",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "death-turn1",
           "currentValue": 5,
           "unlockedLevels": [
@@ -45869,6 +47837,17 @@
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
           },
           "progress": 0.2
         },
@@ -46646,6 +48625,28 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "villageois-top-loot",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
+        },
+        {
           "id": "misunderstood",
           "currentValue": 5,
           "unlockedLevels": [
@@ -46774,6 +48775,17 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
             "threshold": 5
           },
           "progress": 0.2
@@ -46960,6 +48972,28 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "villageois-top-loot",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.1
         },
         {
           "id": "colors-of-lycans",
@@ -47506,6 +49540,17 @@
           "progress": 0.4
         },
         {
+          "id": "wolf-transform-kill-nights",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.2
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -47533,6 +49578,17 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -47773,6 +49829,17 @@
         },
         {
           "id": "same-color-kills",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "villageois-top-loot",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
