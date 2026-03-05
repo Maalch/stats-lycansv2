@@ -80,7 +80,9 @@ export function computePlayerGameHistory(
         ? playerStat.MainRoleInitial 
         : getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
       
-      const playerCamp = getPlayerCampFromRole(roleForCamp);
+      // Use power field for Villageois Élite, regroup wolf sub-roles (Traître/Louveteau) under Loup
+      const power = playerStat.Power || null;
+      const playerCamp = getPlayerCampFromRole(roleForCamp, { regroupWolfSubRoles: true }, power);
 
       // Apply camp filter if specified
       if (campFilter && campFilter !== 'Tous les camps' && playerCamp !== campFilter) {

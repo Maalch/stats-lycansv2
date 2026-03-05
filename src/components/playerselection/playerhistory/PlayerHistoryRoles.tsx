@@ -175,6 +175,25 @@ function computePlayerRoleStats(
         }
       }
 
+      // Additionally track Traître and Louveteau as separate entries in the Loup chart
+      if (isWolfFamily && (playerStat.MainRoleInitial === 'Traître' || playerStat.MainRoleInitial === 'Louveteau')) {
+        const roleName = playerStat.MainRoleInitial;
+        const currentStats = loupPowersMap.get(roleName) || { 
+          appearances: 0, 
+          wins: 0, 
+          winsWithoutRoleChange: 0, 
+          gamesWithoutRoleChange: 0,
+          roleBreakdown: new Map<string, number>() 
+        };
+        loupPowersMap.set(roleName, {
+          appearances: currentStats.appearances + 1,
+          wins: currentStats.wins + (playerWon ? 1 : 0),
+          winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+          gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0),
+          roleBreakdown: currentStats.roleBreakdown
+        });
+      }
+
       // Process Secondary Role (for all camps)
       if (playerStat.SecondaryRole && playerStat.SecondaryRole.trim() !== '' && playerStat.SecondaryRole !== 'Inconnu') {
         // Skip "Inconnu" secondary role
@@ -612,8 +631,14 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
             fromComponent: `Historique des Rôles - Pouvoir: ${powerName}`
           });
         },
-        () => {
-          // Use lycans "Loup" color for all bars in this chart
+        (roleName) => {
+          // Use specific colors for Traître and Louveteau, default Loup color for others
+          if (roleName === 'Traître' && lycansColorScheme['Traître']) {
+            return lycansColorScheme['Traître'];
+          }
+          if (roleName === 'Louveteau' && lycansColorScheme['Louveteau']) {
+            return lycansColorScheme['Louveteau'];
+          }
           return lycansColorScheme['Loup'] || 'var(--chart-color-2)';
         }
       )}

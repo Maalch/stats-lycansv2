@@ -55,10 +55,17 @@ export function PlayerHistoryEvolution({ selectedPlayerName, groupingMethod, cam
 
     data.games.forEach(game => {
       // Apply camp filter
+      // Note: Traître and Louveteau are wolf sub-roles, grouped under 'Loup' here
       if (campFilter !== 'all') {
+        const isWolfCamp = game.camp === 'Loup' || game.camp === 'Traître' || game.camp === 'Louveteau';
         if (campFilter === 'solo') {
-          // Solo camps include all camps except Villageois and Loup
-          if (game.camp === 'Villageois' || game.camp === 'Loup') {
+          // Solo camps include all camps except Villageois and Loup (including Traître/Louveteau)
+          if (game.camp === 'Villageois' || isWolfCamp) {
+            return; // Skip this game
+          }
+        } else if (campFilter === 'Loup') {
+          // Loup camp includes Loup, Traître, and Louveteau
+          if (!isWolfCamp) {
             return; // Skip this game
           }
         } else if (game.camp !== campFilter) {
