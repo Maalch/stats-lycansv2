@@ -7,7 +7,7 @@
 import { DeathTypeCode } from './helpers.js';
 
 /**
- * Count games where player talked >= X% of the total game time
+ * Count games where player talked >= X% of the game duration
  */
 export function talkingPercentage(playerGames, allGames, playerId, params) {
   const gameIds = [];
@@ -17,14 +17,11 @@ export function talkingPercentage(playerGames, allGames, playerId, params) {
   for (const { game, playerStat } of playerGames) {
     const totalTalked = (playerStat.SecondsTalkedOutsideMeeting || 0) + (playerStat.SecondsTalkedDuringMeeting || 0);
     
-    // Calculate total game talking time
-    let totalGameTalking = 0;
-    for (const p of game.PlayerStats) {
-      totalGameTalking += (p.SecondsTalkedOutsideMeeting || 0) + (p.SecondsTalkedDuringMeeting || 0);
-    }
+    // Use game duration as the reference (not total talking time across all players)
+    const gameDurationSec = (new Date(game.EndDate) - new Date(game.StartDate)) / 1000;
     
-    if (totalGameTalking > 0) {
-      const pct = (totalTalked / totalGameTalking) * 100;
+    if (gameDurationSec > 0) {
+      const pct = (totalTalked / gameDurationSec) * 100;
       if (pct >= minPct) {
         value++;
         gameIds.push(game.Id);
