@@ -5,7 +5,6 @@
  */
 
 import { getPlayerCampForAchievement, isSoloCamp } from './helpers.js';
-import { DeathTypeCode } from './helpers.js';
 
 /**
  * Count wins in a specific camp (Villageois or Loup)

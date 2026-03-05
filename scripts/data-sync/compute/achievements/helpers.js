@@ -12,15 +12,16 @@ import { getPlayerCampFromRole, getPlayerFinalRole, getPlayerMainCampFromRole } 
 
 /**
  * Get player's camp accounting for role transformations.
- * For Louveteau, always use MainRoleInitial even if they transformed to Loup.
- * For other roles, use the final role after transformations.
+ * useFinalRole : Use the final role after transformations.
+ * groupOptions : Optional group options that may affect camp calculation (regroup Villageois, regroup Loup)
  * This ensures consistency with PlayerHistoryCamp calculations.
  */
-export function getPlayerCampForAchievement(playerStat) {
-  const roleForCamp = playerStat.MainRoleInitial === 'Louveteau'
-    ? playerStat.MainRoleInitial
-    : getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
-  return getPlayerCampFromRole(roleForCamp);
+export function getPlayerCampForAchievement(playerStat, useFinalRole = true, groupOptions = undefined) {
+  const roleForCamp = useFinalRole
+      ? getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || [])
+      : playerStat.MainRoleInitial;
+  const power = playerStat.Power ?? null;
+  return getPlayerCampFromRole(roleForCamp, groupOptions, power);
 }
 
 /**
