@@ -22,7 +22,7 @@ import {
   campWins, campLosses, soloWins, soloLosses,
   deathByType, deathOnTiming,
   winOnAllMaps, winInColors, winsOnAllMaps,
-  winsAgainstOnutrem,
+  winsAgainstOnutrem, winningMonths,
 } from './evaluators-general.js';
 
 // Wolf evaluators
@@ -30,7 +30,7 @@ import {
   wolfKills, zombieKills, vaudouTripleResurrect,
   wolfWinNoKills, lastWolfStanding,
   wolfNecromancerResurrect, wolfSeerDoubleKill,
-  wolfSabotages, wolfLossHarvestNoKills,
+  wolfSabotages, wolfLossHarvestNoKills, wolfSurvivedHunterShot,
 } from './evaluators-wolf.js';
 
 // Combat evaluators
@@ -99,6 +99,7 @@ export const EVALUATORS = {
   wolfSeerDoubleKill,
   wolfSabotages,
   wolfLossHarvestNoKills,
+  wolfSurvivedHunterShot,
 
   // Combat
   roleDeathByType,
@@ -140,6 +141,7 @@ export const EVALUATORS = {
   talkingPercentage,
   deathsInAllZones,
   winsAgainstOnutrem,
+  winningMonths,
 };
 
 export const BR_EVALUATORS = {

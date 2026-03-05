@@ -5,7 +5,7 @@
  * zombie/vaudou mechanics, necromancer, seer, sabotage.
  */
 
-import { isWolfCamp, getPlayerCampForAchievement } from './helpers.js';
+import { isWolfCamp, getPlayerCampForAchievement, isHunterRole } from './helpers.js';
 import { getPlayerId, getPlayerFinalRole, getPlayerCampFromRole, DeathTypeCode } from './helpers.js';
 
 /**
@@ -234,6 +234,54 @@ export function wolfSabotages(playerGames, allGames, playerId, params) {
       }
     }
   }
+  return { value, gameIds };
+}
+
+/**
+ * Count games where:
+ * - Player was in Loup camp
+ * - Player lost (Victorious: false)
+ * - A Chasseur was present in the game
+ * - That Chasseur had a HunterShoot action targeting this player
+ * - The player did NOT die from BULLET_WOLF (i.e. survived the shot)
+ */
+export function wolfSurvivedHunterShot(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    // Must be Loup camp
+    if (!isWolfCamp(playerStat)) continue;
+
+    // Must have lost
+    if (playerStat.Victorious) continue;
+
+    // Must NOT have died from a hunter bullet
+    if (playerStat.DeathType === DeathTypeCode.BULLET_WOLF) continue;
+
+    // There must be at least one Chasseur in the game
+    const hunters = game.PlayerStats.filter(p => isHunterRole(p));
+    if (hunters.length === 0) continue;
+
+    // A Chasseur must have a HunterShoot action targeting this player (by username)
+    let wasShot = false;
+    for (const hunter of hunters) {
+      if (!hunter.Actions) continue;
+      for (const action of hunter.Actions) {
+        if (action.ActionType === 'HunterShoot' && action.ActionTarget === playerStat.Username) {
+          wasShot = true;
+          break;
+        }
+      }
+      if (wasShot) break;
+    }
+
+    if (!wasShot) continue;
+
+    value++;
+    gameIds.push(game.Id);
+  }
+
   return { value, gameIds };
 }
 

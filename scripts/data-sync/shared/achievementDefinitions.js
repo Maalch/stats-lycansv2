@@ -227,6 +227,32 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'wolf-survived-hunter-shot',
+    name: 'Loup Aventurier',
+    description: 'Et puis vous avez pris une flèche dans le genou...',
+    explanation: 'Perdre X parties en Loup tout en survivant au Chasseur (la balle ne vous tue pas)',
+    emoji: '🏹',
+    category: 'victories',
+    evaluator: 'wolfSurvivedHunterShot',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 15 - 20 - 25
+      { tier: 'argent', subLevel: 1, threshold: 15 },
+      { tier: 'argent', subLevel: 2, threshold: 20 },
+      { tier: 'argent', subLevel: 3, threshold: 25 },
+      // Or: 30 - 35 - 40
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 35 },
+      { tier: 'or', subLevel: 3, threshold: 40 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+  {
     id: 'wolf-loss-harvest-no-kills',
     name: 'Le loup trop gentil',
     description: 'Vous ne vouliez vraiment blesser personne...',
@@ -1262,6 +1288,27 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 3, threshold: 9 },
       // Lycans: 12 couleurs (toutes!)
       { tier: 'lycans', subLevel: 1, threshold: 12 },
+    ],
+  },
+
+  {
+    id: 'winning-months',
+    name: 'Gagnant du mois',
+    description: 'Vous êtes beau, vous êtes grand, vous êtes gagnant... Au moins sur un mois.',
+    explanation: 'Avoir X fois plus de 50 % de victoires sur un mois civil',
+    emoji: '📅',
+    category: 'special',
+    evaluator: 'winningMonths',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
 

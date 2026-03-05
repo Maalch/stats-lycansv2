@@ -133,7 +133,8 @@ export function winOnAllMaps(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Win in a minimum number of distinct colors
+ * Count the number of distinct colors a player has won in.
+ * Each gameId corresponds to the game where a new distinct color was first used in a win.
  */
 export function winInColors(playerGames, allGames, playerId, params) {
   const wonColors = new Set();
@@ -144,8 +145,50 @@ export function winInColors(playerGames, allGames, playerId, params) {
       gameIds.push(game.Id);
     }
   }
-  const achieved = wonColors.size >= (params.minColors || 5);
-  return { value: achieved ? 1 : 0, gameIds: achieved ? gameIds : [] };
+  return { value: wonColors.size, gameIds };
+}
+
+/**
+ * Count calendar months where the player had a win rate strictly above 50%.
+ * Groups the player's games by YYYY-MM from game.StartDate.
+ * No minimum games threshold — any month with wins/total > 0.5 qualifies.
+ * Returns a representative game ID per qualifying month (last game of that month).
+ */
+export function winningMonths(playerGames, allGames, playerId, params) {
+  // Group player games by year-month key
+  const monthMap = new Map(); // 'YYYY-MM' → { wins, total, lastGameId }
+
+  for (const { game, playerStat } of playerGames) {
+    if (!game.StartDate) continue;
+    const d = new Date(game.StartDate);
+    if (isNaN(d.getTime())) continue;
+
+    const key = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`;
+
+    if (!monthMap.has(key)) {
+      monthMap.set(key, { wins: 0, total: 0, lastGameId: null });
+    }
+
+    const m = monthMap.get(key);
+    m.total++;
+    if (playerStat.Victorious) m.wins++;
+    m.lastGameId = game.Id; // games are iterated in order, so this ends up as the last game
+  }
+
+  // Sort months chronologically and collect qualifying ones
+  const sortedMonths = [...monthMap.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+
+  const gameIds = [];
+  let value = 0;
+
+  for (const [, { wins, total, lastGameId }] of sortedMonths) {
+    if (total > 0 && wins / total > 0.5) {
+      value++;
+      gameIds.push(lastGameId);
+    }
+  }
+
+  return { value, gameIds };
 }
 
 const ONUTREM_STEAM_ID = '76561198065697406';

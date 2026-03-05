@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-04T16:23:46.655Z",
+  "generatedAt": "2026-03-05T10:28:54.020Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 776,
@@ -380,6 +380,67 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 15
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "wolf-survived-hunter-shot",
+      "name": "Loup Aventurier",
+      "description": "Et puis vous avez pris une flèche dans le genou...",
+      "explanation": "Perdre X parties en Loup tout en survivant au Chasseur (la balle ne vous tue pas)",
+      "emoji": "🏹",
+      "category": "victories",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 5
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 20
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 25
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 35
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 40
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 50
         }
       ],
       "requiresBRData": false
@@ -2040,6 +2101,37 @@
       "requiresBRData": false
     },
     {
+      "id": "winning-months",
+      "name": "Gagnant du mois",
+      "description": "Vous êtes beau, vous êtes grand, vous êtes gagnant... Au moins sur un mois.",
+      "explanation": "Avoir X fois plus de 50 % de victoires sur un mois civil",
+      "emoji": "📅",
+      "category": "special",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 10
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "calife-a-la-place-du-calife",
       "name": "Calife à la place du Calife",
       "description": "Quoi de mieux que de battre le développeur du jeu",
@@ -2593,7 +2685,7 @@
     "1": {
       "playerId": "1",
       "playerName": "Aayley",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -2769,6 +2861,24 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-417"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-participations",
           "currentValue": 1,
           "unlockedLevels": [
@@ -2809,7 +2919,7 @@
     "2": {
       "playerId": "2",
       "playerName": "AfterNoune",
-      "totalUnlocked": 5,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -2877,6 +2987,48 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-178"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240717000000-180"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-180"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -2939,7 +3091,7 @@
     "3": {
       "playerId": "3",
       "playerName": "Antoine",
-      "totalUnlocked": 12,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3112,6 +3264,30 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-250"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250923000000-552"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -3192,7 +3368,7 @@
     "5": {
       "playerId": "5",
       "playerName": "AvaMind",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3353,6 +3529,24 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-250"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -3433,7 +3627,7 @@
     "7": {
       "playerId": "7",
       "playerName": "Bidji",
-      "totalUnlocked": 4,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3481,6 +3675,48 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-178"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240717000000-180"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-182"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "br-participations",
@@ -3545,7 +3781,7 @@
     "8": {
       "playerId": "8",
       "playerName": "BoccA",
-      "totalUnlocked": 36,
+      "totalUnlocked": 42,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3984,21 +4220,69 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 5,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231219000000-11"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250114000000-307"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250225000000-352"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20250304000000-358"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250318000000-380"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 6
           },
-          "progress": 0.5
+          "progress": 0.8333333333333334
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-315"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250411000000-405"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "br-victories",
@@ -4118,7 +4402,7 @@
     "9": {
       "playerId": "9",
       "playerName": "Clem_mlrt",
-      "totalUnlocked": 7,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4254,6 +4538,30 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-178"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240717000000-181"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "br-participations",
           "currentValue": 4,
           "unlockedLevels": [
@@ -4316,7 +4624,7 @@
     "10": {
       "playerId": "10",
       "playerName": "Covfefe",
-      "totalUnlocked": 11,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4506,6 +4814,24 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-25"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -4528,7 +4854,7 @@
     "11": {
       "playerId": "11",
       "playerName": "Crocodyle",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4662,6 +4988,24 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-5"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -4684,7 +5028,7 @@
     "12": {
       "playerId": "12",
       "playerName": "Cyldhur",
-      "totalUnlocked": 11,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4805,6 +5149,42 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-368"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-377"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "unlockedLevels": [
@@ -4898,7 +5278,7 @@
     "13": {
       "playerId": "13",
       "playerName": "DevGirl_",
-      "totalUnlocked": 17,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5211,6 +5591,42 @@
           "progress": 0.8
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-416"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250527000000-443"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -5251,7 +5667,7 @@
     "14": {
       "playerId": "14",
       "playerName": "DFG",
-      "totalUnlocked": 7,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5386,13 +5802,31 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-2"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
     "15": {
       "playerId": "15",
       "playerName": "Drakony",
-      "totalUnlocked": 13,
+      "totalUnlocked": 16,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5616,6 +6050,48 @@
           "progress": 0.4
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250207000000-328"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250218000000-339"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-347"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 3,
           "unlockedLevels": [
@@ -5662,7 +6138,7 @@
     "16": {
       "playerId": "16",
       "playerName": "Etoiles",
-      "totalUnlocked": 11,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5829,6 +6305,24 @@
           "progress": 0.8
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-250"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -5887,7 +6381,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 75,
+      "totalUnlocked": 86,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6541,21 +7035,99 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20240507000000-130"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240507000000-133"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240522000000-142"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240618000000-157"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240703000000-167"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240813000000-201"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20240821000000-211"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20241210000000-262"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20250128000000-320"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.8333333333333334
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240522000000-155"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240726000000-198"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240924000000-240"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -6778,7 +7350,7 @@
     "18": {
       "playerId": "18",
       "playerName": "GoB",
-      "totalUnlocked": 17,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7022,6 +7594,66 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-12"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240813000000-201"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240813000000-206"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20241206000000-250"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-23"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241206000000-257"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 5,
           "unlockedLevels": [
@@ -7050,7 +7682,7 @@
     "19": {
       "playerId": "19",
       "playerName": "Heimdalle",
-      "totalUnlocked": 32,
+      "totalUnlocked": 39,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7310,21 +7942,75 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 6,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20240329000000-107"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240717000000-185"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250207000000-328"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20250225000000-349"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250411000000-398"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20250916000000-546"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 7
           },
-          "progress": 0.5
+          "progress": 0.8571428571428571
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240329000000-116"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250411000000-405"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -7499,7 +8185,7 @@
     "20": {
       "playerId": "20",
       "playerName": "HortyUnderscore",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7607,13 +8293,31 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-2"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
     "21": {
       "playerId": "21",
       "playerName": "Jey",
-      "totalUnlocked": 5,
+      "totalUnlocked": 6,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7692,13 +8396,31 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-313"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
     "22": {
       "playerId": "22",
       "playerName": "JimmyBoyyy",
-      "totalUnlocked": 9,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7814,6 +8536,42 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-180"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-187"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -7876,7 +8634,7 @@
     "24": {
       "playerId": "24",
       "playerName": "Ketchopi",
-      "totalUnlocked": 7,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8057,13 +8815,37 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250114000000-313"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         }
       ]
     },
     "26": {
       "playerId": "26",
       "playerName": "Koka",
-      "totalUnlocked": 31,
+      "totalUnlocked": 39,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8407,21 +9189,81 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 7,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20240507000000-130"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240618000000-156"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240703000000-165"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20241210000000-262"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250128000000-318"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20250225000000-349"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20250225000000-354"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "or",
             "subLevel": 2,
-            "threshold": 2
+            "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.875
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240522000000-155"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241217000000-283"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "br-participations",
@@ -8522,7 +9364,7 @@
     "27": {
       "playerId": "27",
       "playerName": "Leaprima",
-      "totalUnlocked": 18,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8750,6 +9592,36 @@
           "progress": 0.4
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240924000000-223"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240924000000-231"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241231000000-286"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
           "id": "br-participations",
           "currentValue": 4,
           "unlockedLevels": [
@@ -8812,7 +9684,7 @@
     "28": {
       "playerId": "28",
       "playerName": "Lexa",
-      "totalUnlocked": 3,
+      "totalUnlocked": 4,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8878,13 +9750,31 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-313"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
     "29": {
       "playerId": "29",
       "playerName": "LittleBigWhale",
-      "totalUnlocked": 9,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9029,6 +9919,42 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-1"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-10"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -9051,7 +9977,7 @@
     "30": {
       "playerId": "30",
       "playerName": "Lydiaam",
-      "totalUnlocked": 19,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9295,6 +10221,54 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240703000000-165"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240726000000-188"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250207000000-328"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240726000000-198"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 3,
           "unlockedLevels": [
@@ -9381,7 +10355,7 @@
     "31": {
       "playerId": "31",
       "playerName": "LyeGaia",
-      "totalUnlocked": 32,
+      "totalUnlocked": 37,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9705,21 +10679,63 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 5,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231228000000-25"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240116000000-39"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240206000000-70"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240405000000-117"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241206000000-250"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 6
           },
-          "progress": 0.5
+          "progress": 0.8333333333333334
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-38"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -9838,7 +10854,7 @@
     "32": {
       "playerId": "32",
       "playerName": "Maechi",
-      "totalUnlocked": 11,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10022,13 +11038,49 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240229000000-74"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240229000000-89"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         }
       ]
     },
     "33": {
       "playerId": "33",
       "playerName": "Mimosa_etoilee",
-      "totalUnlocked": 6,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10113,6 +11165,42 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-182"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-187"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -10153,7 +11241,7 @@
     "34": {
       "playerId": "34",
       "playerName": "Nahomay",
-      "totalUnlocked": 35,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10480,21 +11568,81 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 7,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231219000000-11"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240116000000-39"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240130000000-55"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240130000000-61"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240507000000-130"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240507000000-133"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20241210000000-262"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "or",
             "subLevel": 2,
-            "threshold": 2
+            "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.875
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231219000000-23"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -10591,7 +11739,7 @@
     "35": {
       "playerId": "35",
       "playerName": "Naka",
-      "totalUnlocked": 25,
+      "totalUnlocked": 32,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10876,21 +12024,75 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 6,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231219000000-11"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20231228000000-26"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240130000000-54"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240130000000-59"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240229000000-74"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240507000000-130"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 7
           },
-          "progress": 0.5
+          "progress": 0.8571428571428571
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-38"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240229000000-89"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -10967,7 +12169,7 @@
     "36": {
       "playerId": "36",
       "playerName": "Noamouille",
-      "totalUnlocked": 23,
+      "totalUnlocked": 28,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11344,6 +12546,60 @@
           "progress": 0.4
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250114000000-313"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250411000000-399"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20250422000000-412"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-315"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "br-participations",
           "currentValue": 3,
           "unlockedLevels": [
@@ -11388,7 +12644,7 @@
     "38": {
       "playerId": "38",
       "playerName": "Pelerine",
-      "totalUnlocked": 11,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11583,13 +12839,43 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250716000000-471"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250716000000-474"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250716000000-478"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
         }
       ]
     },
     "39": {
       "playerId": "39",
       "playerName": "Poachimpa",
-      "totalUnlocked": 16,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11816,6 +13102,30 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250304000000-358"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250318000000-381"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -11856,7 +13166,7 @@
     "40": {
       "playerId": "40",
       "playerName": "Pressea",
-      "totalUnlocked": 10,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11959,6 +13269,42 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-250"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-261"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -12017,7 +13363,7 @@
     "42": {
       "playerId": "42",
       "playerName": "Riri et son ptit Ricard",
-      "totalUnlocked": 3,
+      "totalUnlocked": 5,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12083,13 +13429,37 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241205000000-242"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20241205000000-249"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         }
       ]
     },
     "43": {
       "playerId": "43",
       "playerName": "Sakor",
-      "totalUnlocked": 25,
+      "totalUnlocked": 29,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12316,6 +13686,54 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-2"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240405000000-117"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241206000000-250"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -12446,7 +13864,7 @@
     "44": {
       "playerId": "44",
       "playerName": "Shaunz",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12629,6 +14047,24 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250422000000-406"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-participations",
           "currentValue": 1,
           "unlockedLevels": [
@@ -12673,7 +14109,7 @@
     "45": {
       "playerId": "45",
       "playerName": "Skyyart",
-      "totalUnlocked": 10,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12757,6 +14193,42 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-250"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-261"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -12846,7 +14318,7 @@
     "48": {
       "playerId": "48",
       "playerName": "Ultia",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13031,6 +14503,24 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-3"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -13053,7 +14543,7 @@
     "49": {
       "playerId": "49",
       "playerName": "Wingo",
-      "totalUnlocked": 46,
+      "totalUnlocked": 56,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13468,19 +14958,91 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 8,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231219000000-11"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240116000000-39"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240130000000-54"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240130000000-59"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240321000000-90"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240321000000-93"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20240522000000-142"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20240726000000-188"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "or",
+            "subLevel": 3,
+            "threshold": 9
+          },
+          "progress": 0.8888888888888888
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-38"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240522000000-155"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241217000000-282"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
           },
           "progress": 0.5
         },
@@ -13651,7 +15213,7 @@
     "50": {
       "playerId": "50",
       "playerName": "Xari",
-      "totalUnlocked": 8,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13778,6 +15340,24 @@
           "progress": 0.4
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-1"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -13800,7 +15380,7 @@
     "51": {
       "playerId": "51",
       "playerName": "Yoona",
-      "totalUnlocked": 15,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14060,6 +15640,48 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250513000000-427"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250619000000-445"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250619000000-451"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 3,
           "unlockedLevels": [
@@ -14106,7 +15728,7 @@
     "52": {
       "playerId": "52",
       "playerName": "Zarcross",
-      "totalUnlocked": 35,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14254,6 +15876,24 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-631"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
             "threshold": 5
           },
           "progress": 0.2
@@ -14566,6 +16206,60 @@
           "progress": 0.4
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240813000000-206"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250114000000-314"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250318000000-378"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250422000000-415"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250930000000-568"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "br-participations",
           "currentValue": 10,
           "unlockedLevels": [
@@ -14672,7 +16366,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 154,
+      "totalUnlocked": 167,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14962,6 +16656,24 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125115536"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
             "threshold": 5
           },
           "progress": 0.6
@@ -15748,21 +17460,101 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 11,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231013000000-2"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20231219000000-11"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20231228000000-25"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240116000000-39"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240130000000-54"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240229000000-74"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20240405000000-117"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20240924000000-238"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20241210000000-262"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.9166666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 13,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-38"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240229000000-89"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250422000000-415"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -16165,7 +17957,7 @@
     "76561198054824482": {
       "playerId": "76561198054824482",
       "playerName": "Gom4rt",
-      "totalUnlocked": 22,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16474,6 +18266,54 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-2"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20241206000000-250"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251014123648"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-261"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -16538,7 +18378,7 @@
     "76561198065697406": {
       "playerId": "76561198065697406",
       "playerName": "Onutrem",
-      "totalUnlocked": 37,
+      "totalUnlocked": 45,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16688,6 +18528,24 @@
             "threshold": 30
           },
           "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -16934,21 +18792,75 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 5,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231013000000-2"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240405000000-117"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240618000000-156"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240726000000-188"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260210113643"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 6
           },
-          "progress": 0.5
+          "progress": 0.8333333333333334
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-10"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240130000000-62"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "br-victories",
@@ -17069,7 +18981,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 139,
+      "totalUnlocked": 152,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18187,21 +20099,103 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 12,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231219000000-11"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20231228000000-27"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240116000000-39"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240130000000-60"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240405000000-117"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240703000000-165"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20240726000000-188"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20240924000000-229"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20250110000000-296"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 12,
+              "unlockedAtGame": "Ponce-20250619000000-446"
             }
           ],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
-          },
-          "progress": 0.5
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 12,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-38"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240229000000-89"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20241231000000-291"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -18514,7 +20508,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 138,
+      "totalUnlocked": 150,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19547,21 +21541,101 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 11,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231219000000-11"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20231228000000-25"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240116000000-39"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240130000000-54"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240130000000-59"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240329000000-104"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20240507000000-128"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20240924000000-229"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20241217000000-275"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.9166666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 14,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-38"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240229000000-89"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20241217000000-283"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -19892,7 +21966,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 126,
+      "totalUnlocked": 139,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20183,6 +22257,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-633"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -20841,21 +22933,101 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231219000000-14"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20231228000000-25"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240130000000-54"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240130000000-59"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240206000000-65"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240405000000-117"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20240507000000-133"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20250114000000-314"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20250218000000-340"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.8333333333333334
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240130000000-62"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240618000000-164"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250624000000-461"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -21186,7 +23358,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 125,
+      "totalUnlocked": 137,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21465,6 +23637,24 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-637"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -22149,21 +24339,99 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20231228000000-25"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240116000000-41"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240130000000-59"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240813000000-199"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241231000000-286"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20250128000000-318"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20250207000000-328"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20250401000000-386"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20250619000000-445"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.8333333333333334
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 8,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231228000000-38"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240229000000-89"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240726000000-198"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.8
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -22464,7 +24732,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 107,
+      "totalUnlocked": 119,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22716,6 +24984,24 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-637"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
             "threshold": 5
           },
           "progress": 0.6
@@ -23386,21 +25672,99 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 11,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20240116000000-40"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240206000000-63"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240206000000-66"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240229000000-75"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240321000000-90"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240405000000-118"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20240813000000-206"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20250128000000-318"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20250218000000-341"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.9166666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240130000000-62"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240329000000-116"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240813000000-209"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -23677,7 +26041,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 97,
+      "totalUnlocked": 110,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23919,6 +26283,30 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-631"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260120134259"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -24536,21 +26924,99 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 9,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20240229000000-74"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240507000000-130"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240507000000-133"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240703000000-165"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240813000000-206"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20240924000000-223"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20241210000000-271"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20241217000000-274"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20241231000000-284"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240717000000-187"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241231000000-291"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250318000000-384"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -24797,7 +27263,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 86,
+      "totalUnlocked": 96,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25583,21 +28049,93 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 8,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20240229000000-84"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240522000000-142"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240703000000-165"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240717000000-178"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240717000000-181"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20241205000000-243"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20241210000000-262"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20241217000000-275"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "or",
+            "subLevel": 3,
+            "threshold": 9
           },
-          "progress": 0.5
+          "progress": 0.8888888888888888
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240229000000-89"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240717000000-187"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250318000000-384"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "br-victories",
@@ -25814,7 +28352,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 90,
+      "totalUnlocked": 102,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26056,6 +28594,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251230142555"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -26662,21 +29218,99 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 9,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20240321000000-92"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240618000000-156"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240726000000-189"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20240821000000-210"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240924000000-221"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20241210000000-262"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20241231000000-287"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20250304000000-358"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "khalen-20251209123037"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240321000000-102"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240618000000-164"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20240821000000-220"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -26863,7 +29497,7 @@
     "76561198018650146": {
       "playerId": "76561198018650146",
       "playerName": "TPK",
-      "totalUnlocked": 32,
+      "totalUnlocked": 38,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26984,6 +29618,24 @@
             "threshold": 10
           },
           "progress": 0.9
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-634"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "death-turn1",
@@ -27230,6 +29882,60 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240405000000-117"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240507000000-133"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251118000000-631"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240405000000-127"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240618000000-164"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -27389,7 +30095,7 @@
     "76561197997304949": {
       "playerId": "76561197997304949",
       "playerName": "Brybry",
-      "totalUnlocked": 34,
+      "totalUnlocked": 44,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27778,21 +30484,93 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 9,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20240813000000-199"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20240813000000-207"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20240821000000-211"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20241205000000-241"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250110000000-292"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20250422000000-409"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20250513000000-427"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20250619000000-444"
+            },
+            {
+              "tier": "or",
+              "subLevel": 3,
+              "threshold": 9,
+              "unlockedAtGame": "Ponce-20250619000000-446"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 12
           },
-          "progress": 0.5
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240821000000-220"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250110000000-305"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "br-victories",
@@ -27924,7 +30702,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 111,
+      "totalUnlocked": 122,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28191,6 +30969,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125124356"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -28849,19 +31645,91 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 8,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20241205000000-241"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20241210000000-265"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241210000000-271"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20241217000000-274"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20241231000000-286"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20250225000000-349"
+            },
+            {
+              "tier": "or",
+              "subLevel": 2,
+              "threshold": 8,
+              "unlockedAtGame": "Ponce-20250619000000-445"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "or",
+            "subLevel": 3,
+            "threshold": 9
+          },
+          "progress": 0.8888888888888888
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241231000000-291"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250422000000-415"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260303142940"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 10
           },
           "progress": 0.5
         },
@@ -29122,7 +31990,7 @@
     "76561198140298176": {
       "playerId": "76561198140298176",
       "playerName": "Kyria",
-      "totalUnlocked": 57,
+      "totalUnlocked": 64,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29705,21 +32573,75 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 7,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20241205000000-241"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20241210000000-262"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20241210000000-272"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20241231000000-286"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20250311000000-369"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20250619000000-444"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "or",
             "subLevel": 2,
-            "threshold": 2
+            "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.875
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241231000000-291"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "br-victories",
@@ -29868,7 +32790,7 @@
     "76561197972377069": {
       "playerId": "76561197972377069",
       "playerName": "BERLU",
-      "totalUnlocked": 13,
+      "totalUnlocked": 16,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29941,6 +32863,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125122037"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "death-turn1",
@@ -30046,6 +32986,30 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20241206000000-257"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251125112953"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -30126,7 +33090,7 @@
     "76561198256660482": {
       "playerId": "76561198256660482",
       "playerName": "Baout",
-      "totalUnlocked": 48,
+      "totalUnlocked": 55,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -30683,21 +33647,75 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 6,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250114000000-314"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250207000000-328"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20250218000000-341"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250225000000-348"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20250304000000-361"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 7
           },
-          "progress": 0.5
+          "progress": 0.8571428571428571
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-357"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250422000000-415"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "br-participations",
@@ -30805,7 +33823,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 67,
+      "totalUnlocked": 73,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31014,6 +34032,24 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216123530"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
             "threshold": 5
           },
           "progress": 0.6
@@ -31511,21 +34547,51 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 6,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250128000000-318"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250218000000-340"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20250311000000-368"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251028000000-605"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20251223113359"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 7
           },
-          "progress": 0.5
+          "progress": 0.8571428571428571
         },
         {
           "id": "br-victories",
@@ -31668,7 +34734,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 50,
+      "totalUnlocked": 55,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31861,6 +34927,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251223144301"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "last-wolf",
@@ -32179,21 +35263,45 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 5,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250225000000-349"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250225000000-352"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20250304000000-358"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250722000000-486"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 2,
-            "threshold": 2
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 6
           },
-          "progress": 0.5
+          "progress": 0.8333333333333334
         },
         {
           "id": "br-victories",
@@ -32325,7 +35433,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 96,
+      "totalUnlocked": 104,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32561,6 +35669,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-630"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -33144,21 +36270,75 @@
         },
         {
           "id": "colors-of-lycans",
-          "currentValue": 1,
+          "currentValue": 7,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
               "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250128000000-318"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250207000000-331"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20250218000000-340"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250225000000-349"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20250225000000-352"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 7,
+              "unlockedAtGame": "Ponce-20250304000000-360"
             }
           ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "or",
             "subLevel": 2,
-            "threshold": 2
+            "threshold": 8
           },
-          "progress": 0.5
+          "progress": 0.875
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127153752"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "calife-a-la-place-du-calife",
@@ -33423,7 +36603,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 80,
+      "totalUnlocked": 86,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33646,6 +36826,30 @@
             "tier": "argent",
             "subLevel": 1,
             "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20251111113550"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260210133335"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 10
           },
           "progress": 0.6
         },
@@ -34152,6 +37356,54 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-340"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250624000000-455"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251223113359"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125141435"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -34378,7 +37630,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 71,
+      "totalUnlocked": 75,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34608,6 +37860,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260224132758"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -35114,6 +38384,36 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-352"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250304000000-361"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251223113359"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -35249,7 +38549,7 @@
     "76561198019060909": {
       "playerId": "76561198019060909",
       "playerName": "Reivil",
-      "totalUnlocked": 11,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35455,13 +38755,49 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-368"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-377"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         }
       ]
     },
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 64,
+      "totalUnlocked": 66,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35679,6 +39015,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20251111115225"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -36200,6 +39554,24 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-417"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -36304,7 +39676,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 57,
+      "totalUnlocked": 63,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36497,6 +39869,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-627"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -36942,6 +40332,60 @@
           "progress": 0.7
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-418"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250619000000-445"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250624000000-454"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20250624000000-457"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127135421"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -37078,7 +40522,7 @@
     "76561197996828190": {
       "playerId": "76561197996828190",
       "playerName": "Mickalow",
-      "totalUnlocked": 28,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37454,6 +40898,30 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250624000000-456"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250923000000-555"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "br-participations",
           "currentValue": 5,
           "unlockedLevels": [
@@ -37577,7 +41045,7 @@
     "76561197987657681": {
       "playerId": "76561197987657681",
       "playerName": "PeoBran",
-      "totalUnlocked": 22,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37895,6 +41363,24 @@
           "progress": 0.4
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250710000000-469"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-victories",
           "currentValue": 2,
           "unlockedLevels": [
@@ -37995,7 +41481,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 25,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38296,6 +41782,24 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250710000000-469"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "unlockedLevels": [
@@ -38407,7 +41911,7 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "totalUnlocked": 21,
+      "totalUnlocked": 23,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38679,6 +42183,42 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216135331"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260203144119"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 10,
           "unlockedLevels": [
@@ -38759,7 +42299,7 @@
     "76561198155130320": {
       "playerId": "76561198155130320",
       "playerName": "MaMaPaprika",
-      "totalUnlocked": 24,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39091,6 +42631,24 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250722000000-486"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-participations",
           "currentValue": 4,
           "unlockedLevels": [
@@ -39153,7 +42711,7 @@
     "76561198076478013": {
       "playerId": "76561198076478013",
       "playerName": "Areliann",
-      "totalUnlocked": 44,
+      "totalUnlocked": 49,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39321,6 +42879,24 @@
             "threshold": 30
           },
           "progress": 0.43333333333333335
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260113122111"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "romeo-juliette",
@@ -39616,6 +43192,54 @@
           "progress": 0.5
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-518"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250826000000-526"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250916000000-548"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 4
+          },
+          "progress": 0.75
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-527"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "unlockedLevels": [
@@ -39740,7 +43364,7 @@
     "76561199013115670": {
       "playerId": "76561199013115670",
       "playerName": "SpicY",
-      "totalUnlocked": 21,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40012,6 +43636,24 @@
           "progress": 0.5
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250911000000-538"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "unlockedLevels": [
@@ -40105,7 +43747,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 41,
+      "totalUnlocked": 47,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40267,6 +43909,24 @@
             "threshold": 30
           },
           "progress": 0.5333333333333333
+        },
+        {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251209123037"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "wolf-loss-harvest-no-kills",
@@ -40607,6 +44267,60 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009120237"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251014132408"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260113141709"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 4,
+              "unlockedAtGame": "Ponce-20260203141837"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125141435"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 2,
           "unlockedLevels": [
@@ -40741,7 +44455,7 @@
     "76561198912373275": {
       "playerId": "76561198912373275",
       "playerName": "Neagari",
-      "totalUnlocked": 12,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40966,6 +44680,30 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009130021"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251014123648"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -41006,7 +44744,7 @@
     "76561198167428396": {
       "playerId": "76561198167428396",
       "playerName": "Chloé",
-      "totalUnlocked": 6,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41146,6 +44884,42 @@
           "progress": 0.6
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023111118"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023142100"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 1,
           "unlockedLevels": [
@@ -41186,7 +44960,7 @@
     "76561198364985196": {
       "playerId": "76561198364985196",
       "playerName": "Samo",
-      "totalUnlocked": 3,
+      "totalUnlocked": 4,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41252,13 +45026,31 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023111118"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
     "76561197961659274": {
       "playerId": "76561197961659274",
       "playerName": "MoMaN",
-      "totalUnlocked": 7,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41323,6 +45115,48 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023125648"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251023131631"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023142100"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "br-victories",
@@ -41412,7 +45246,7 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 17,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41660,6 +45494,42 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023140613"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023142100"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 13,
           "unlockedLevels": [
@@ -41740,7 +45610,7 @@
     "76561198271274269": {
       "playerId": "76561198271274269",
       "playerName": "MartinPonK",
-      "totalUnlocked": 28,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41892,6 +45762,24 @@
           "progress": 0.2
         },
         {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-632"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
           "id": "death-turn1",
           "currentValue": 5,
           "unlockedLevels": [
@@ -42016,6 +45904,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251028000000-600"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "br-victories",
@@ -42160,7 +46066,7 @@
     "76561198353315250": {
       "playerId": "76561198353315250",
       "playerName": "AxRuby",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42312,13 +46218,31 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125124356"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     },
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 30,
+      "totalUnlocked": 33,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42795,6 +46719,48 @@
           "progress": 0.4
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251209130133"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251223113359"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260120140528"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "calife-a-la-place-du-calife",
           "currentValue": 1,
           "unlockedLevels": [
@@ -42853,7 +46819,7 @@
     "76561199098154286": {
       "playerId": "76561199098154286",
       "playerName": "Grim_the_turtle",
-      "totalUnlocked": 18,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42994,6 +46960,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127142946"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         },
         {
           "id": "br-victories",
@@ -43143,7 +47127,7 @@
     "76561198190629659": {
       "playerId": "76561198190629659",
       "playerName": "Quentadou",
-      "totalUnlocked": 7,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -43302,6 +47286,42 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127142946"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "winning-months",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127144349"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "br-participations",
           "currentValue": 2,
           "unlockedLevels": [
@@ -43342,7 +47362,7 @@
     "76561198158936831": {
       "playerId": "76561198158936831",
       "playerName": "Vicky_spleen",
-      "totalUnlocked": 10,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -43497,6 +47517,24 @@
           "progress": 0.2
         },
         {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260203113055"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "br-victories",
           "currentValue": 1,
           "unlockedLevels": [
@@ -43595,7 +47633,7 @@
     "76561198868526385": {
       "playerId": "76561198868526385",
       "playerName": "Enileme",
-      "totalUnlocked": 6,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -43670,6 +47708,24 @@
           "progress": 0.2
         },
         {
+          "id": "wolf-survived-hunter-shot",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260224132758"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "wolf-loss-harvest-no-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -43725,6 +47781,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "colors-of-lycans",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260224112129"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 2
+          },
+          "progress": 0.5
         }
       ]
     }
