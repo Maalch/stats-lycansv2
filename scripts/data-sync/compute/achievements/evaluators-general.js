@@ -266,6 +266,76 @@ export function winsOnAllMaps(playerGames, allGames, playerId, params) {
 }
 
 /**
+ * Count games where the player was resurrected (brought back to life).
+ * Resurrection is detected via MainRoleChanges:
+ *   - NewMainRole === 'Vaudou' → always a resurrection
+ *   - NewMainRole === 'Loup'   → resurrection ONLY if MainRoleInitial !== 'Louveteau'
+ *     (Louveteau naturally transforms into a Loup, that is not a resurrection)
+ * Each qualifying game counts once, regardless of how many resurrections occurred.
+ */
+export function resurrectedCount(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    const changes = playerStat.MainRoleChanges;
+    if (!changes || changes.length === 0) continue;
+
+    const isLouveteau = playerStat.MainRoleInitial === 'Louveteau';
+
+    const wasResurrected = changes.some(rc => {
+      if (rc.NewMainRole === 'Vaudou') return true;
+      if (rc.NewMainRole === 'Loup' && !isLouveteau) return true;
+      return false;
+    });
+
+    if (wasResurrected) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}
+
+/**
+ * Count games where the player was the top loot collector among all Villageois players.
+ * - Player must be in Villageois camp
+ * - TotalCollectedLoot must be available (not null/undefined) for the player
+ * - No other Villageois in the game must have a strictly higher TotalCollectedLoot
+ * Ties (same value) are allowed: both players qualify.
+ */
+export function topLootVillageoisGames(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    // Player must be in Villageois camp
+    const camp = getPlayerCampForAchievement(playerStat);
+    if (camp !== 'Villageois') continue;
+
+    // TotalCollectedLoot must be available for this player
+    if (playerStat.TotalCollectedLoot == null) continue;
+    const playerLoot = playerStat.TotalCollectedLoot;
+
+    // No other Villageois in the game may have a strictly higher loot value
+    const hasHigher = game.PlayerStats.some(p => {
+      if (p === playerStat) return false;
+      if (p.TotalCollectedLoot == null) return false;
+      const pCamp = getPlayerCampForAchievement(p);
+      return pCamp === 'Villageois' && p.TotalCollectedLoot > playerLoot;
+    });
+
+    if (!hasHigher) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}
+
+/**
  * Count calendar days (sessions) where the player had a 100% win rate
  * with at least `minGames` games played that day.
  * Groups player games by YYYY-MM-DD from game.StartDate.

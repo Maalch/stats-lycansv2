@@ -31,10 +31,10 @@
 | Sur le site | | Loup | Ménage à Trois | | Gagner X parties en faisant voter le dernier Villageois en Loup lors d'un meeting à 3 | 1 | 3 | 5 | 10 |
 | Sur le site | | Tous | C'est qui le patron? | C'est vous... | Faire X sessions (min. 5 parties) à 100 % de victoire | 5 | 10 | 15 | 30 |
 | Sur le site | | Loup | Une game exemplaire | Tout s'est déroulé comme prévu | Gagner X parties en Loup sans faire le premier meeting | 5 | 10 | 15 | 30 |
-| NEW | | Loup | Besoin de personne | Vous faites votre route solo et vous la faites plutôt bien | Gagner X parties en ayant réalisé tous les kills hors meeting en étant Loup | 1 | 3 | 5 | 10 |
-| NEW | | Villageois | Encore du travail | Du travail, encore et toujours du travail... | Faire X parties en étant premier à la récolte en tant que Villageois | 5 | 10 | 15 | 30 |
-| NEW | | Tous | Pas de Pause AFK ! | Vous pensiez avoir le temps de partir ? | Être X fois ressuscité | 5 | 10 | 15 | 30 |
-| NEW | | Tous | Expert des milieux hostiles | Vous ne reculez devant rien pour sauver un ami | Avoir X fois sauvé un Villageois Survivaliste | 3 | 5 | 10 | 20 |
+| Sur le site | | Loup | Besoin de personne | Vous faites votre route solo et vous la faites plutôt bien | Gagner X parties en ayant réalisé tous les kills hors meeting en étant Loup | 1 | 3 | 5 | 10 |
+| Sur le site | | Villageois | Encore du travail | Du travail, encore et toujours du travail... | Faire X parties en étant premier à la récolte en tant que Villageois | 5 | 10 | 15 | 30 |
+| Sur le site | | Tous | Pas de Pause AFK ! | Vous pensiez avoir le temps de partir ? | Être X fois ressuscité | 5 | 10 | 15 | 30 |
+| En attente | | Tous | Expert des milieux hostiles | Vous ne reculez devant rien pour sauver un ami | Avoir X fois sauvé un Villageois Survivaliste | 3 | 5 | 10 | 20 |
 | NEW | | Tous | Immortel | Votre bonne étoile vous sourit, une deuxième chance surgit | Être X fois sauvé en étant Villageois Survivaliste | 3 | 5 | 10 | 20 |
 | NEW | | Tous | Joueur comme les autres | Même en zombie, vous voulez faire comme tout le monde | Avoir X fois bu une potion ou utilisé un objet en étant Zombie | 1 | 3 | 5 | 10 |
 | NEW | | Loup | Ni vu ni connu | Une ombre passe, un joueur trépasse | Passer X nuits à se transformer, tuer au moins un joueur et se détransformer | 10 | 20 | 30 | 50 |

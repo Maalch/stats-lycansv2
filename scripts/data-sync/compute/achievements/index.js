@@ -23,7 +23,7 @@ import {
   deathByType, deathOnTiming,
   winOnAllMaps, winInColors, winsOnAllMaps,
   winsAgainstOnutrem, winningMonths,
-  perfectSessions,
+  perfectSessions, topLootVillageoisGames, resurrectedCount,
 } from './evaluators-general.js';
 
 // Wolf evaluators
@@ -32,7 +32,7 @@ import {
   wolfWinNoKills, lastWolfStanding,
   wolfNecromancerResurrect, wolfSeerDoubleKill,
   wolfSabotages, wolfLossHarvestNoKills, wolfSurvivedHunterShot,
-  wolfVotesLastVillagerInThree, wolfWinEarlyDeath,
+  wolfVotesLastVillagerInThree, wolfWinEarlyDeath, wolfAllKillsSolo,
 } from './evaluators-wolf.js';
 
 // Combat evaluators
@@ -106,6 +106,7 @@ export const EVALUATORS = {
   wolfSurvivedHunterShot,
   wolfVotesLastVillagerInThree,
   wolfWinEarlyDeath,
+  wolfAllKillsSolo,
 
   // Combat
   roleDeathByType,
@@ -151,6 +152,8 @@ export const EVALUATORS = {
   winsAgainstOnutrem,
   winningMonths,
   perfectSessions,
+  topLootVillageoisGames,
+  resurrectedCount,
 };
 
 export const BR_EVALUATORS = {

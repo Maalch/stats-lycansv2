@@ -325,6 +325,40 @@ export function wolfVotesLastVillagerInThree(playerGames, allGames, playerId, pa
 }
 
 /**
+ * Count games won as wolf where ALL BY_WOLF kills in the game were made by this player alone.
+ * At least 1 kill must exist (zero-kill wins are already covered by wolfWinNoKills).
+ * "Besoin de personne" — you carried all the kills yourself.
+ */
+export function wolfAllKillsSolo(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    if (!isWolfCamp(playerStat)) continue;
+    if (!playerStat.Victorious) continue;
+
+    // Collect all BY_WOLF kills in the game
+    const wolfKillsInGame = game.PlayerStats.filter(
+      victim => victim.DeathType === DeathTypeCode.BY_WOLF
+    );
+
+    // Must have made at least 1 kill
+    if (wolfKillsInGame.length === 0) continue;
+
+    // Every BY_WOLF kill must have been made by this player
+    const allByThisPlayer = wolfKillsInGame.every(
+      victim => victim.KillerName === playerStat.Username
+    );
+
+    if (allByThisPlayer) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
  * Count games won as wolf while having died before the first meeting (DeathTiming N1 or J1).
  * "Une game exemplaire" — the team won even though you died very early.
  */

@@ -293,6 +293,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'wolf-all-kills-solo',
+    name: 'Besoin de personne',
+    description: 'Vous faites votre route solo et vous la faites plutôt bien',
+    explanation: 'Gagner X parties en Loup en étant le seul à avoir fait des kills hors meeting',
+    emoji: '🐺',
+    category: 'victories',
+    evaluator: 'wolfAllKillsSolo',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
     id: 'wolf-win-early-death',
     name: 'Une game exemplaire',
     description: 'Tout s\'est déroulé comme prévu',
@@ -1197,6 +1217,27 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
 
+  {
+    id: 'villageois-top-loot',
+    name: 'Encore du travail',
+    description: 'Du travail, encore et toujours du travail...',
+    explanation: 'Être X fois le premier à la récolte parmi les Villageois',
+    emoji: '🌾',
+    category: 'roles',
+    evaluator: 'topLootVillageoisGames',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+
   // ============================================================================
   // SOCIAL (voting/meetings)
   // ============================================================================
@@ -1437,6 +1478,27 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 3, threshold: 40 },
       // Lycans: 50
       { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+
+  {
+    id: 'resurrected',
+    name: 'Pas de Pause AFK !',
+    description: 'Vous pensiez avoir le temps de partir ?',
+    explanation: 'Être X fois ressuscité (Loup Nécromancien ou Vaudou)',
+    emoji: '🧟',
+    category: 'special',
+    evaluator: 'resurrectedCount',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 5
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      // Argent: 10
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
 
