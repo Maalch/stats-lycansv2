@@ -26,23 +26,12 @@ export function PlayerHistoryCamp({ selectedPlayerName }: PlayerHistoryCampProps
         },
         fromComponent: 'Distribution par Camps'
       });
-    } else if (entry.name === 'Traître' || entry.name === 'Louveteau') {
-      navigateToGameDetails({
-        selectedPlayer: selectedPlayerName,
-        campFilter: {
-          selectedCamp: entry.name,
-          campFilterMode: 'all-assignments',
-          excludeWolfSubRoles: true
-        },
-        fromComponent: 'Distribution par Camps'
-      });
     } else if (entry.name === 'Loup') {
       navigateToGameDetails({
         selectedPlayer: selectedPlayerName,
         campFilter: {
           selectedCamp: 'Loup',
-          campFilterMode: 'all-assignments',
-          excludeWolfSubRoles: true
+          campFilterMode: 'all-assignments'
         },
         fromComponent: 'Distribution par Camps'
       });
@@ -301,23 +290,12 @@ export function PlayerHistoryCamp({ selectedPlayerName }: PlayerHistoryCampProps
                         height={height}
                         fill={fillColor}
                         onClick={() => {
-                          if (entry.name === 'Traître' || entry.name === 'Louveteau') {
+                          if (entry.name === 'Loup') {
                             navigateToGameDetails({
                               selectedPlayer: selectedPlayerName,
                               campFilter: {
                                 selectedCamp: entry.name,
-                                campFilterMode: 'all-assignments',
-                                excludeWolfSubRoles: true
-                              },
-                              fromComponent: 'Performance par Camp'
-                            });
-                          } else if (entry.name === 'Loup') {
-                            navigateToGameDetails({
-                              selectedPlayer: selectedPlayerName,
-                              campFilter: {
-                                selectedCamp: entry.name,
-                                campFilterMode: 'all-assignments',
-                                excludeWolfSubRoles: true
+                                campFilterMode: 'all-assignments'
                               },
                               fromComponent: 'Performance par Camp'
                             });
