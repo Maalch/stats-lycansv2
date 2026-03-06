@@ -1671,7 +1671,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'br-pacifist',
-    name: 'Pacifique',
+    name: 'Le pacifisme incarné',
     description: 'Tuer c\'est mal... Même quand c\'est le principe...',
     explanation: 'Faire une partie BR avec 0 kill',
     emoji: '🕊️',
@@ -1725,7 +1725,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'br-top-kills-but-loss',
-    name: 'Tuer n\'est pas gagner',
+    name: 'Aux portes de la Victoire',
     description: 'Tuer, c\'est bien (dans le jeu), gagner c\'est mieux...',
     explanation: 'Avoir le plus de kills dans un BR mais perdre quand même',
     emoji: '😭',
