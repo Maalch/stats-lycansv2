@@ -275,9 +275,7 @@ export function PlayerAchievementsDisplay({
                   <div className="achievement-content">
                     <h5 className="achievement-name">{achievement.name}</h5>
                     <p className="achievement-description">{achievement.description}</p>
-                    {!isLocked && (
-                      <p className="achievement-explanation">{achievement.explanation}</p>
-                    )}
+                    <p className="achievement-explanation">{achievement.explanation}</p>
 
                     {/* Tiers */}
                     <div className="achievement-stars">
