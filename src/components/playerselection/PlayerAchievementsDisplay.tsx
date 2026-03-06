@@ -257,7 +257,6 @@ export function PlayerAchievementsDisplay({
               const unlockedCount = progress ? progress.unlockedLevels.length : 0;
               const fullyUnlocked = unlockedCount === achievement.levels.length;
               const hasProgress = progress !== null && progress.currentValue > 0;
-              const isLocked = !hasProgress;
 
               return (
                 <div
