@@ -18,7 +18,7 @@ export function wolfKills(playerGames, allGames, playerId, params) {
   const countedGames = new Set();
   
   for (const { game, playerStat } of playerGames) {
-    if (!isWolfCamp(playerStat)) continue;
+    if (!isWolfCamp(playerStat, true)) continue;
     
     // Count players killed by this wolf in this game
     let killsInGame = 0;
@@ -336,7 +336,7 @@ export function wolfVotesLastVillagerInThree(playerGames, allGames, playerId, pa
   let value = 0;
 
   for (const { game, playerStat } of playerGames) {
-    if (getPlayerCampForAchievement(playerStat) !== 'Loup') continue;
+    if (getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true }) !== 'Loup') continue;
     if (!playerStat.Victorious) continue;
 
     // Game must end via meeting (MX)
@@ -352,7 +352,7 @@ export function wolfVotesLastVillagerInThree(playerGames, allGames, playerId, pa
     const eliminatedVillager = game.PlayerStats.some(p =>
       p.DeathType === DeathTypeCode.VOTED &&
       p.DeathTiming === endTiming &&
-      getPlayerCampForAchievement(p) === 'Villageois'
+      getPlayerCampForAchievement(p, false, { regroupWolfSubRoles: true }) === 'Villageois'
     );
     if (!eliminatedVillager) continue;
 

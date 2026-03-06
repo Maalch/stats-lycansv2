@@ -17,7 +17,7 @@ export function roleDeathByType(playerGames, allGames, playerId, params) {
   let value = 0;
   for (const { game, playerStat } of playerGames) {
     if (playerStat.DeathType !== params.deathType) continue;
-    const mainCamp = getPlayerCampForAchievement(playerStat);
+    const mainCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     const campMatch = (params.roleCamp === 'Loup' && mainCamp === 'Loup') ||
                       (params.roleCamp === 'Villageois' && mainCamp === 'Villageois');
     if (campMatch) {
@@ -45,8 +45,8 @@ export function hunterKillsEnemy(playerGames, allGames, playerId, params) {
       if (victim.KillerName !== playerStat.Username) continue;
       
       // Check if victim is from an enemy camp
-      const hunterCamp = getPlayerCampForAchievement(playerStat);
-      const victimCamp = getPlayerCampForAchievement(victim);
+      const hunterCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
+      const victimCamp = getPlayerCampForAchievement(victim, false, { regroupWolfSubRoles: true });
       
       if (hunterCamp !== victimCamp) {
         value++;
@@ -67,14 +67,14 @@ export function villageoisDoubleAllyKill(playerGames, allGames, playerId, params
 
   for (const { game, playerStat } of playerGames) {
     // Player must be Villageois camp
-    if (getPlayerCampForAchievement(playerStat) !== 'Villageois') continue;
+    if (getPlayerCampForAchievement(playerStat, false) !== 'Villageois') continue;
 
     // Count Villageois-camp allies killed by this player outside meetings
     let allyKills = 0;
     for (const victim of game.PlayerStats) {
       if (victim.KillerName !== playerStat.Username) continue;
       if (victim.DeathType === DeathTypeCode.VOTED) continue;
-      if (getPlayerCampForAchievement(victim) !== 'Villageois') continue;
+      if (getPlayerCampForAchievement(victim, false) !== 'Villageois') continue;
       allyKills++;
     }
 
@@ -102,8 +102,8 @@ export function hunterKillsAlly(playerGames, allGames, playerId, params) {
       if (!isHunterKill) continue;
       if (victim.KillerName !== playerStat.Username) continue;
       
-      const hunterCamp = getPlayerCampForAchievement(playerStat);
-      const victimCamp = getPlayerCampForAchievement(victim);
+      const hunterCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true }); //use initial camp (to avoid counting Chasseur being rezed as Loup or Zombie)
+      const victimCamp = getPlayerCampForAchievement(victim, false, { regroupWolfSubRoles: true }); 
       
       if (hunterCamp === victimCamp) {
         value++;
@@ -126,7 +126,7 @@ export function hunterMultiKillsInGame(playerGames, allGames, playerId, params) 
     if (!isHunterRole(playerStat)) continue;
     
     let enemyKillsInGame = 0;
-    const hunterCamp = getPlayerCampForAchievement(playerStat);
+    const hunterCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     
     for (const victim of game.PlayerStats) {
       const isHunterKill = victim.DeathType === DeathTypeCode.BULLET ||
@@ -135,7 +135,7 @@ export function hunterMultiKillsInGame(playerGames, allGames, playerId, params) 
       if (!isHunterKill) continue;
       if (victim.KillerName !== playerStat.Username) continue;
       
-      const victimCamp = getPlayerCampForAchievement(victim);
+      const victimCamp = getPlayerCampForAchievement(victim, false, { regroupWolfSubRoles: true });
       if (hunterCamp !== victimCamp) {
         enemyKillsInGame++;
       }
@@ -177,8 +177,8 @@ export function assassinPotionKills(playerGames, allGames, playerId, params) {
       if (victim.DeathType !== DeathTypeCode.ASSASSIN) continue;
       if (victim.KillerName !== playerStat.Username) continue;
       
-      const killerCamp = getPlayerCampForAchievement(playerStat);
-      const victimCamp = getPlayerCampForAchievement(victim);
+      const killerCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
+      const victimCamp = getPlayerCampForAchievement(victim, false, { regroupWolfSubRoles: true });
       
       if (params.targetCamp === 'enemy' && killerCamp !== victimCamp) {
         value++;

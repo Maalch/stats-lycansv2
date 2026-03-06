@@ -310,7 +310,7 @@ export function topLootVillageoisGames(playerGames, allGames, playerId, params) 
 
   for (const { game, playerStat } of playerGames) {
     // Player must be in Villageois camp
-    const camp = getPlayerCampForAchievement(playerStat);
+    const camp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     if (camp !== 'Villageois') continue;
 
     // TotalCollectedLoot must be available for this player
@@ -321,7 +321,7 @@ export function topLootVillageoisGames(playerGames, allGames, playerId, params) 
     const hasHigher = game.PlayerStats.some(p => {
       if (p === playerStat) return false;
       if (p.TotalCollectedLoot == null) return false;
-      const pCamp = getPlayerCampForAchievement(p);
+      const pCamp = getPlayerCampForAchievement(p, false, { regroupWolfSubRoles: true });
       return pCamp === 'Villageois' && p.TotalCollectedLoot > playerLoot;
     });
 

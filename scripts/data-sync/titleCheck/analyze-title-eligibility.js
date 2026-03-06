@@ -34,7 +34,7 @@ import { computePotionStatistics } from '../compute/compute-potion-stats.js';
 import { DATA_SOURCES } from '../shared/data-sources.js';
 
 // Import title definitions
-import { TITLE_DEFINITIONS, COMBINATION_TITLES } from '../titleDefinitions.js';
+import { TITLE_DEFINITIONS, COMBINATION_TITLES } from '../shared/titleDefinitions.js';
 
 // Minimum games required for title eligibility
 const MIN_GAMES_FOR_TITLES = 25;

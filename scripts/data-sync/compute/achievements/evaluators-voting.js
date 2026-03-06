@@ -16,7 +16,7 @@ export function votedAsCamp(playerGames, allGames, playerId, params) {
   let value = 0;
   for (const { game, playerStat } of playerGames) {
     if (playerStat.DeathType !== DeathTypeCode.VOTED) continue;
-    const mainCamp = getPlayerCampForAchievement(playerStat);
+    const mainCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     const campMatch = (params.camp === 'Villageois' && mainCamp === 'Villageois') ||
                       (params.camp === 'Loup' && mainCamp === 'Loup');
     if (campMatch) {
@@ -38,7 +38,7 @@ export function correctVoteButVoted(playerGames, allGames, playerId, params) {
     // Player must have been voted out
     if (playerStat.DeathType !== DeathTypeCode.VOTED) continue;
     
-    const playerCamp = getPlayerCampForAchievement(playerStat);
+    const playerCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     if (playerCamp !== 'Villageois') continue;
     
     // Check if any of the player's votes targeted an enemy
@@ -52,7 +52,7 @@ export function correctVoteButVoted(playerGames, allGames, playerId, params) {
       const targetPlayer = game.PlayerStats.find(p => p.Username === vote.Target);
       if (!targetPlayer) continue;
       
-      const targetCamp = getPlayerCampForAchievement(targetPlayer);
+      const targetCamp = getPlayerCampForAchievement(targetPlayer, false, { regroupWolfSubRoles: true });
       if (targetCamp !== 'Villageois') {
         votedCorrectly = true;
         break;
@@ -77,7 +77,7 @@ export function unanimousVoteAsVillager(playerGames, allGames, playerId, params)
   for (const { game, playerStat } of playerGames) {
     if (playerStat.DeathType !== DeathTypeCode.VOTED) continue;
     
-    const playerCamp = getPlayerCampForAchievement(playerStat);
+    const playerCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     if (playerCamp !== 'Villageois') continue;
     
     // Find the meeting day when the player was voted out
@@ -253,7 +253,7 @@ export function consecutiveCorrectVotes(playerGames, allGames, playerId, params)
   const minConsecutive = params.minConsecutive || 5;
   
   for (const { game, playerStat } of playerGames) {
-    const playerCamp = getPlayerCampForAchievement(playerStat);
+    const playerCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     if (playerCamp !== 'Villageois') continue;
     
     const votes = (playerStat.Votes || []).sort((a, b) => a.Day - b.Day);
@@ -272,7 +272,7 @@ export function consecutiveCorrectVotes(playerGames, allGames, playerId, params)
         continue;
       }
       
-      const targetCamp = getPlayerCampForAchievement(targetPlayer);
+      const targetCamp = getPlayerCampForAchievement(targetPlayer, false, { regroupWolfSubRoles: true });
       if (targetCamp !== 'Villageois') {
         // Correct vote (voted for enemy)
         consecutive++;

@@ -23,10 +23,8 @@ export function killedByLoverWolf(playerGames, allGames, playerId, params) {
     const killer = game.PlayerStats.find(p => p.Username === playerStat.KillerName);
     if (!killer) continue;
     
-    // Check if killer was Amoureux (as MainRoleInitial or SecondaryRole)
-    const isLover = killer.MainRoleInitial === 'Amoureux' || 
-                    killer.MainRoleInitial === 'Amoureux Loup' ||
-                    killer.SecondaryRole === 'Amoureux';
+    // Check if killer was Amoureux Loup (as MainRoleInitial)
+    const isLover = killer.MainRoleInitial === 'Amoureux Loup';
     if (isLover) {
       value++;
       gameIds.push(game.Id);
@@ -36,7 +34,7 @@ export function killedByLoverWolf(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Count deaths as a wolf killed by an Amoureux Loup (another wolf)
+ * Count deaths as a wolf killed by an Amoureux Loup 
  */
 export function wolfKilledByAmoureuxLoup(playerGames, allGames, playerId, params) {
   const gameIds = [];
@@ -52,9 +50,8 @@ export function wolfKilledByAmoureuxLoup(playerGames, allGames, playerId, params
     const killer = game.PlayerStats.find(p => p.Username === playerStat.KillerName);
     if (!killer) continue;
     
-    // Check if killer was Amoureux Loup (wolf who is also a lover)
-    const isAmoureuxLoup = killer.MainRoleInitial === 'Amoureux Loup' ||
-                           (isWolfCamp(killer) && killer.SecondaryRole === 'Amoureux');
+    // Check if killer was Amoureux Loup 
+    const isAmoureuxLoup = killer.MainRoleInitial === 'Amoureux Loup';
     if (isAmoureuxLoup) {
       value++;
       gameIds.push(game.Id);
@@ -71,17 +68,14 @@ export function amoureuxLoupKillsLover(playerGames, allGames, playerId, params) 
   let value = 0;
 
   for (const { game, playerStat } of playerGames) {
-    // Player must be an Amoureux Loup (wolf camp + Amoureux)
-    const isAmoureuxLoup = playerStat.MainRoleInitial === 'Amoureux Loup' ||
-                           (isWolfCamp(playerStat) && playerStat.SecondaryRole === 'Amoureux');
+    // Player must be an Amoureux Loup
+    const isAmoureuxLoup = playerStat.MainRoleInitial === 'Amoureux Loup';
     if (!isAmoureuxLoup) continue;
 
     // Find the other Amoureux player in this game (the partner)
     const partner = game.PlayerStats.find(p =>
       getPlayerId(p) !== playerId &&
-      (p.MainRoleInitial === 'Amoureux' ||
-       p.MainRoleInitial === 'Amoureux Loup' ||
-       p.SecondaryRole === 'Amoureux')
+      (p.MainRoleInitial === 'Amoureux Villageois')
     );
     if (!partner) continue;
 
@@ -96,7 +90,7 @@ export function amoureuxLoupKillsLover(playerGames, allGames, playerId, params) 
 }
 
 /**
- * Count total kills made while being Amoureux Loup (wolf + lover)
+ * Count total kills made while being Amoureux Loup 
  */
 export function amoureuxLoupTotalKills(playerGames, allGames, playerId, params) {
   const gameIds = [];
@@ -104,8 +98,7 @@ export function amoureuxLoupTotalKills(playerGames, allGames, playerId, params) 
   const countedGames = new Set();
 
   for (const { game, playerStat } of playerGames) {
-    const isAmoureuxLoup = playerStat.MainRoleInitial === 'Amoureux Loup' ||
-                           (isWolfCamp(playerStat) && playerStat.SecondaryRole === 'Amoureux');
+    const isAmoureuxLoup = playerStat.MainRoleInitial === 'Amoureux Loup';
     if (!isAmoureuxLoup) continue;
 
     let killsInGame = 0;
@@ -134,8 +127,7 @@ export function amoureuxLoupKillsTwoWolves(playerGames, allGames, playerId, para
   let value = 0;
 
   for (const { game, playerStat } of playerGames) {
-    const isAmoureuxLoup = playerStat.MainRoleInitial === 'Amoureux Loup' ||
-                           (isWolfCamp(playerStat) && playerStat.SecondaryRole === 'Amoureux');
+    const isAmoureuxLoup = playerStat.MainRoleInitial === 'Amoureux Loup';
     if (!isAmoureuxLoup) continue;
 
     // Count wolf-camp victims killed by this player in this game
@@ -165,8 +157,7 @@ export function amoureuxVillageoisKillsEnemy(playerGames, allGames, playerId, pa
 
   for (const { game, playerStat } of playerGames) {
     // Must be Amoureux Villageois (not wolf camp)
-    const isAmoureuxVillageois = playerStat.MainRoleInitial === 'Amoureux' ||
-                                  (!isWolfCamp(playerStat) && playerStat.SecondaryRole === 'Amoureux');
+    const isAmoureuxVillageois = playerStat.MainRoleInitial === 'Amoureux Villageois';
     if (!isAmoureuxVillageois) continue;
 
     let killsInGame = 0;
@@ -176,9 +167,8 @@ export function amoureuxVillageoisKillsEnemy(playerGames, allGames, playerId, pa
       // Must be a hors-meeting kill (not a vote)
       if (victim.DeathType === DeathTypeCode.VOTED) continue;
       // Victim must not be an Amoureux (i.e. not the partner)
-      const victimIsAmoureux = victim.MainRoleInitial === 'Amoureux' ||
-                                victim.MainRoleInitial === 'Amoureux Loup' ||
-                                victim.SecondaryRole === 'Amoureux';
+      const victimIsAmoureux = victim.MainRoleInitial === 'Amoureux Loup'; 
+                                
       if (victimIsAmoureux) continue;
 
       killsInGame++;

@@ -1,6 +1,6 @@
 // Script to export all available titles (simple + combination) with details, sorted by priority
 
-import { TITLE_DEFINITIONS, COMBINATION_TITLES } from '../titleDefinitions.js';
+import { TITLE_DEFINITIONS, COMBINATION_TITLES } from '../shared/titleDefinitions.js';
 import fs from 'fs';
 
 // Helper to translate stat names to French

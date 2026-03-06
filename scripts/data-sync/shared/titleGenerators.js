@@ -5,7 +5,7 @@
  * Consumed by generate-titles.js.
  */
 
-import { TITLE_DEFINITIONS, COMBINATION_TITLES } from '../titleDefinitions.js';
+import { TITLE_DEFINITIONS, COMBINATION_TITLES } from '../shared/titleDefinitions.js';
 import { MIN_GAMES_FOR_ROLE_TITLES } from '../compute/compute-titles-stats.js';
 
 /** Minimum modded games required for title eligibility */

@@ -46,8 +46,8 @@ export function isHunterRole(player) {
 /**
  * Check if player was a wolf (Loup camp)
  */
-export function isWolfCamp(player) {
-  const camp = getPlayerCampForAchievement(player);
+export function isWolfCamp(player, useFinalRole = false) {
+  const camp = getPlayerCampForAchievement(player, useFinalRole, { regroupWolfSubRoles: true });
   return camp === 'Loup';
 }
 
