@@ -66,8 +66,8 @@ export function villageoisDoubleAllyKill(playerGames, allGames, playerId, params
   const minKills = params.minKills || 2;
 
   for (const { game, playerStat } of playerGames) {
-    // Player must be Villageois camp
-    if (getPlayerCampForAchievement(playerStat, false) !== 'Villageois') continue;
+    // Player must be Villageois camp. For simplicity, we'll remove the game where the player has changed camp, because he's much more likely to kill in Loup or Zombie camp
+    if (getPlayerCampForAchievement(playerStat, true) !== 'Villageois') continue;
 
     // Count Villageois-camp allies killed by this player outside meetings
     let allyKills = 0;
