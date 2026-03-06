@@ -159,7 +159,7 @@ export function zombieItemUses(playerGames, allGames, playerId, params) {
   return { value, gameIds };
 }
 /**
- * Count games won as the last surviving wolf
+ * Count games won as the last surviving wolf (only survivor in entire game)
  */
 export function lastWolfStanding(playerGames, allGames, playerId, params) {
   const gameIds = [];
@@ -168,13 +168,12 @@ export function lastWolfStanding(playerGames, allGames, playerId, params) {
     if (!playerStat.Victorious) continue;
     if (!isWolfCamp(playerStat)) continue;
 
-    // Check if player is the only surviving wolf
-    const survivingWolves = game.PlayerStats.filter(p =>
-      isWolfCamp(p) && 
+    // Check if player is the only survivor in the entire game (not just last wolf)
+    const allSurvivors = game.PlayerStats.filter(p =>
       (!p.DeathType || p.DeathType === DeathTypeCode.SURVIVOR || p.DeathType === '')
     );
     
-    if (survivingWolves.length === 1 && getPlayerId(survivingWolves[0]) === playerId) {
+    if (allSurvivors.length === 1 && getPlayerId(allSurvivors[0]) === playerId) {
       value++;
       gameIds.push(game.Id);
     }
