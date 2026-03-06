@@ -203,7 +203,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'wolf-menage-a-trois',
     name: 'Ménage à Trois',
-    description: 'Deux contre un, le calcul était simple... mais fallait encore le faire',
+    description: 'Il suffit de convaincre un villageois de voter pour votre victime et le tour est joué',
     explanation: 'Gagner X parties en faisant voter le dernier Villageois lors d\'un meeting à 3 en étant Loup',
     emoji: '3️⃣',
     category: 'victories',
