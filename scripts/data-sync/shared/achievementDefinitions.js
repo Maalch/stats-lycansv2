@@ -135,78 +135,6 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
-    id: 'defeats-solo',
-    name: 'Solo Looser',
-    description: 'En vrai, les alliés, c\'est sympa quand même...',
-    explanation: 'Perdre X parties en camp solo (Amoureux, Idiot du Village, Agent, etc.)',
-    emoji: '🎭',
-    category: 'victories',
-    evaluator: 'soloLosses',
-    evaluatorParams: {},
-    levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
-    ],
-  },
-  {
-    id: 'defeats-villageois',
-    name: 'L\'important, c\'est de participer (Villageois)',
-    description: 'Vous avez perdu mais au moins, vous avez tenté',
-    explanation: 'Perdre X parties en camp Villageois',
-    emoji: '😅',
-    category: 'victories',
-    evaluator: 'campLosses',
-    evaluatorParams: { camp: 'Villageois' },
-    levels: [
-      // Bronze: 1 - 5 - 10
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 30 - 50 - 70
-      { tier: 'argent', subLevel: 1, threshold: 30 },
-      { tier: 'argent', subLevel: 2, threshold: 50 },
-      { tier: 'argent', subLevel: 3, threshold: 70 },
-      // Or: 100 - 150 - 200
-      { tier: 'or', subLevel: 1, threshold: 100 },
-      { tier: 'or', subLevel: 2, threshold: 150 },
-      { tier: 'or', subLevel: 3, threshold: 200 },
-      // Lycans: 300
-      { tier: 'lycans', subLevel: 1, threshold: 300 },
-    ],
-  },
-  {
-    id: 'defeats-loup',
-    name: 'L\'important, c\'est de participer (Loup)',
-    description: 'Même les loups ont des mauvais jours',
-    explanation: 'Perdre X parties en camp Loup',
-    emoji: '🐾',
-    category: 'victories',
-    evaluator: 'campLosses',
-    evaluatorParams: { camp: 'Loup' },
-    levels: [
-      // Bronze: 1 - 5 - 10
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 30 - 50 - 70
-      { tier: 'argent', subLevel: 1, threshold: 30 },
-      { tier: 'argent', subLevel: 2, threshold: 50 },
-      { tier: 'argent', subLevel: 3, threshold: 70 },
-      // Or: 100 - 150 - 200
-      { tier: 'or', subLevel: 1, threshold: 100 },
-      { tier: 'or', subLevel: 2, threshold: 150 },
-      { tier: 'or', subLevel: 3, threshold: 200 },
-      // Lycans: 300
-      { tier: 'lycans', subLevel: 1, threshold: 300 },
-    ],
-  },
-  {
     id: 'vegan-wolf',
     name: 'Je suis Vegan',
     description: 'Vous avez eu la victoire sans rien faire, bravo',
@@ -1590,7 +1518,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   // ============================================================================
   {
     id: 'br-victories',
-    name: 'Roi du BR',
+    name: 'Roi de la Colline',
     description: 'Seul contre tous, vous avez triomphé',
     explanation: 'Gagner X parties en Battle Royale',
     emoji: '👑',
@@ -1599,26 +1527,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluatorParams: {},
     requiresBRData: true,
     levels: [
-      // Bronze: 1 - 5 - 10
+      // Bronze: 1 - 10 - 20
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 20 - 35 - 50
-      { tier: 'argent', subLevel: 1, threshold: 20 },
-      { tier: 'argent', subLevel: 2, threshold: 35 },
-      { tier: 'argent', subLevel: 3, threshold: 50 },
-      // Or: 75 - 100 - 150
-      { tier: 'or', subLevel: 1, threshold: 75 },
-      { tier: 'or', subLevel: 2, threshold: 100 },
-      { tier: 'or', subLevel: 3, threshold: 150 },
-      // Lycans: 200
-      { tier: 'lycans', subLevel: 1, threshold: 200 },
+      { tier: 'bronze', subLevel: 2, threshold: 10 },
+      { tier: 'bronze', subLevel: 3, threshold: 20 },
+      // Argent: 35 - 50 - 75
+      { tier: 'argent', subLevel: 1, threshold: 35 },
+      { tier: 'argent', subLevel: 2, threshold: 50 },
+      { tier: 'argent', subLevel: 3, threshold: 75 },
+      // Or: 100 - 150 - 200
+      { tier: 'or', subLevel: 1, threshold: 100 },
+      { tier: 'or', subLevel: 2, threshold: 150 },
+      { tier: 'or', subLevel: 3, threshold: 200 },
+      // Lycans: 300
+      { tier: 'lycans', subLevel: 1, threshold: 300 },
     ],
   },
   {
     id: 'br-participations',
-    name: 'Combattant du BR',
-    description: 'Vous êtes un habitué de l\'arène',
+    name: 'Vétéran de l\'Arène',
+    description: 'Vous en avez connu, des batailles ...',
     explanation: 'Participer à X parties en Battle Royale',
     emoji: '⚔️',
     category: 'br',
@@ -1644,8 +1572,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'br-total-kills',
-    name: 'BR Tueur en série',
-    description: 'Le sang coule à flots dans l\'arène',
+    name: 'Tueur en série',
+    description: 'Le Roi du 3 6',
     explanation: 'Faire X kills au total en Battle Royale',
     emoji: '💀',
     category: 'br',
@@ -1707,21 +1635,16 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluatorParams: {},
     requiresBRData: true,
     levels: [
-      // Bronze: 3 - 4 - 5 kills in one game
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      { tier: 'bronze', subLevel: 2, threshold: 4 },
-      { tier: 'bronze', subLevel: 3, threshold: 5 },
-      // Argent: 6 - 7 - 8 kills
-      { tier: 'argent', subLevel: 1, threshold: 6 },
-      { tier: 'argent', subLevel: 2, threshold: 7 },
-      { tier: 'argent', subLevel: 3, threshold: 8 },
-      // Or: 9 - 10 - 11 kills
-      { tier: 'or', subLevel: 1, threshold: 9 },
-      { tier: 'or', subLevel: 2, threshold: 10 },
-      { tier: 'or', subLevel: 3, threshold: 11 },
-      // Lycans: 12+ kills
-      { tier: 'lycans', subLevel: 1, threshold: 12 },
+        // Bronze: 2
+        { tier: 'bronze', subLevel: 1, threshold: 2 },
+        // Argent: 4
+        { tier: 'argent', subLevel: 1, threshold: 4 },
+        // Or: 6
+        { tier: 'or', subLevel: 1, threshold: 6 },
+        // Lycans: 8
+        { tier: 'lycans', subLevel: 1, threshold: 8 },
     ],
+          
   },
   {
     id: 'br-top-kills-but-loss',

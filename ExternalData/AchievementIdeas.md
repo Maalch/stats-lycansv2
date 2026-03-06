@@ -6,10 +6,10 @@
 | Sur le site | | Battle Royale | Lucky Luke | Vous tirez plus vite que votre ombre, c'est prouvé | Faire X parties à 5 kills ou plus en mode BR | 1 - 5 - 10 | 15 - 20 - 25 | 30 - 35 - 40 | 50 |
 | Sur le site | | Battle Royale | Tuer n'est pas gagner | Tuer, c'est bien (dans le jeu), gagner c'est mieux... | Avoir le plus de kills dans un BR mais perdre quand même | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
 | Sur le site | | Battle Royale | Un tir, une victoire | Économe mais efficace | Gagner un BR avec exactement 1 kill | 1 - 2 - 3 | 5 - 7 - 10 | 15 - 20 - 25 | 40 |
-| Sur le site | | Battle Royale | Roi du BR | Seul contre tous, vous avez triomphé | Gagner X parties en Battle Royale | 1 - 5 - 10 | 20 - 35 - 50 | 75 - 100 - 150 | 200 |
-| Sur le site | | Battle Royale | Combattant du BR | Vous êtes un habitué de l'arène | Participer à X parties en Battle Royale | 1 - 10 - 25 | 50 - 100 - 150 | 200 - 300 - 400 | 500 |
-| Sur le site | | Battle Royale | BR Tueur en série | Le sang coule à flots dans l'arène | Faire X kills au total en Battle Royale | 10 - 25 - 50 | 100 - 200 - 300 | 500 - 750 - 1000 | 1500 |
-| Sur le site | | Battle Royale | Carnage | Un vrai massacre dans l'arène ! | Faire X kills dans une seule partie BR | 3 - 4 - 5 | 6 - 7 - 8 | 9 - 10 - 11 | 12 |
+| Sur le site | | Battle Royale | Roi de la Colline | Seul contre tous, vous avez triomphé | Gagner X parties en Battle Royale | 1 - 10 - 20 | 35 - 50 - 75 | 100 - 150 - 200 | 300 |
+| Sur le site | | Battle Royale | Vétéran de l'Arène | Vous en avez connu, des batailles ... | Participer à X parties en Battle Royale | 1 - 10 - 25 | 50 - 100 - 150 | 200 - 300 - 400 | 500 |
+| Sur le site | | Battle Royale | Tueur en série | Le roi du 3 6 | Faire X kills au total en Battle Royale | 10 - 25 - 50 | 100 - 200 - 300 | 500 - 750 - 1000 | 1500 |
+| Sur le site | | Battle Royale | Carnage | Un vrai massacre dans l'arène ! | Faire X kills dans une seule partie BR | 2 | 4 | 6 | 8 |
 | Sur le site | | Amoureux | Un chouya fusionnel | Vous l'aimez tellement que... Vous l'avez croqué | Tuer X fois son amoureux en étant Amoureux Loup | 1 | 3 | 5 | 10 |
 | Sur le site | | Villageois | Oups | Alors, vous vous êtes trompés d'alliés... | Faire X parties en tuant deux alliés hors meeting en étant Villageois | 1 | 5 | 10 | 15 |
 | Sur le site | | Amoureux | C'est pour toi mon amour UwU | Vous tuez uniquement par passion. Elle vous fait dépasser les limites. | Faire X kills en Amoureux Loup | 1 - 5 - 10 | 20 - 30 - 40 | 60 - 80 - 100 | 200 |
@@ -41,9 +41,7 @@
 | Sur le site | | Tous | Collectionneur | Vous êtes prêt en toute circonstance | Utiliser X fois 5 items différents dans une partie | 5 | 10 | 15 | 30 |
 | Sur le site | | Tous | Juste un dernier verre | Vous arrêtez quand vous voulez... | Faire X parties en ayant bu 10 potions | 3 | 5 | 10 | 20 |
 | Sur le site | | Victoires | Héros du Village | La justice finit toujours par triompher | Gagner X victoires en camp Villageois | 1 - 5 - 10 | 30 - 50 - 70 | 100 - 150 - 200 | 300 |
-| Sur le site | | Victoires | L'important, c'est de participer (Villageois) | Vous avez perdu mais au moins, vous avez tenté | Perdre X parties en camp Villageois | 1 - 5 - 10 | 30 - 50 - 70 | 100 - 150 - 200 | 300 |
 | Sur le site | | Victoires | Terreur Nocturne | La nuit vous appartient | Gagner X victoires en camp Loup | 1 - 5 - 10 | 30 - 50 - 70 | 100 - 150 - 200 | 300 |
-| Sur le site | | Victoires | L'important, c'est de participer (Loup) | Même les loups ont des mauvais jours | Perdre X parties en camp Loup | 1 - 5 - 10 | 30 - 50 - 70 | 100 - 150 - 200 | 300 |
 | Sur le site | | Victoires | Le dernier loup | Vous n'avez besoin de personne pour gagner… Vous seul survivez. | Gagner X parties en étant l'unique survivant et donc le dernier Loup | 5 | 10 | 15 | 30 |
 | Sur le site | | Victoires | Solo Winner | Vous n'avez pas besoin d'alliés pour gagner... | Gagner X victoires en camp solo (Amoureux, Idiot du Village, Agent, etc.) | 5 | 10 | 15 | 30 |
 | Sur le site | | Victoires | Je suis Vegan | Vous avez eu la victoire sans rien faire, bravo | Gagner X parties en Loup sans tuer | 1 | 5 | 10 | 15 |
@@ -75,7 +73,6 @@
 | Sur le site | | Social | Troisième oeil | Vous connaissiez tous les rôles à l'avance | Faire X parties en votant que des Loups ou des solos (minimum 3 votes) | 5 | 10 | 15 | 30 |
 | Sur le site | | Cartes | Map Master | Vous connaissez chaque recoin de chaque carte | Avoir au moins une victoire sur chaque map disponible | 1 | 3 | 5 | 10 |
 | Sur le site | | Spécial | United Colors of Lycans | L'arc-en-ciel des victoires | Avoir gagné une partie avec au moins X couleurs différentes | 1 - 2 - 3 | 4 - 5 - 6 | 7 - 8 - 9 | 12 |
-| Sur le site | | Victoires | Solo Looser | En vrai, les alliés, c'est sympa quand même... | Perdre X parties en camp solo (Amoureux, Idiot du Village, Agent, etc.) | 5 | 10 | 15 | 30 |
 | Sur le site | | Morts | C'est l'Amour | Un loup tué par un autre loup... C'est le ponpon | Mourir X fois en Loup par un Amoureux Loup | 1 | 5 | 10 | 15 |
 | Sur le site | | Kills | Maître des loups | Un, deux, trois... Aucun loup ne vous arrête | Tuer X fois trois Loups dans une même game en étant Chasseur | 1 | - | - | - |
 | Sur le site | | Kills | C'est MA couleur ! | Vous voulez être le·a seul·e à la mode, ça se comprend... | Tuer X fois une personne qui porte la même couleur que vous | 5 | 10 | 15 | 30 |
