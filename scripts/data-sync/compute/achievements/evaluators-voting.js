@@ -41,11 +41,18 @@ export function correctVoteButVoted(playerGames, allGames, playerId, params) {
     const playerCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
     if (playerCamp !== 'Villageois') continue;
     
-    // Check if any of the player's votes targeted an enemy
+    // Extract day number from death timing (e.g., "M2" -> 2)
+    if (!playerStat.DeathTiming || !playerStat.DeathTiming.startsWith('M')) continue;
+    const deathDay = parseInt(playerStat.DeathTiming.substring(1), 10);
+    if (isNaN(deathDay)) continue;
+    
+    // Check if any of the player's votes on the death day targeted an enemy
     const votes = playerStat.Votes || [];
     let votedCorrectly = false;
     
     for (const vote of votes) {
+      // Only check votes on the day they were voted out
+      if (vote.Day !== deathDay) continue;
       if (vote.Target === 'Passé' || !vote.Target) continue;
       
       // Find the target player in the game
