@@ -5,12 +5,12 @@
  * Idiot du Village, and solo role variety.
  */
 
-import { isWolfCamp, isSoloCamp } from './helpers.js';
+import { isWolfCamp, isSoloCamp, isKilledByPlayer, isVoteTargetPlayer } from './helpers.js';
 import { getPlayerId, DeathTypeCode } from './helpers.js';
 
 /**
  * Count wins as Agent where:
- * - Player personally killed the other Agent (victim.DeathType === OTHER_AGENT, KillerName === player)
+ * - Player personally killed the other Agent (victim.DeathType === OTHER_AGENT, killer is this player)
  * - Player won the game
  * - Player never received any vote during any meeting in the game
  */
@@ -25,7 +25,7 @@ export function agentPerfectKill(playerGames, allGames, playerId, params) {
     // Must have personally killed the other Agent
     const killedOtherAgent = game.PlayerStats.some(victim =>
       victim.DeathType === DeathTypeCode.OTHER_AGENT &&
-      victim.KillerName === playerStat.Username
+      isKilledByPlayer(game, victim, playerId)
     );
     if (!killedOtherAgent) continue;
 
@@ -33,7 +33,7 @@ export function agentPerfectKill(playerGames, allGames, playerId, params) {
     const wasEverVoted = game.PlayerStats.some(voter =>
       getPlayerId(voter) !== playerId &&
       voter.Votes &&
-      voter.Votes.some(v => v.Target === playerStat.Username)
+      voter.Votes.some(v => isVoteTargetPlayer(game, v.Target, playerId))
     );
     if (wasEverVoted) continue;
 

@@ -5,7 +5,7 @@
  * including Amoureux Loup and Amoureux Villageois mechanics.
  */
 
-import { isWolfCamp } from './helpers.js';
+import { isWolfCamp, isKilledByPlayer, getKillerPlayerId } from './helpers.js';
 import { getPlayerId, DeathTypeCode } from './helpers.js';
 
 /**
@@ -19,8 +19,10 @@ export function killedByLoverWolf(playerGames, allGames, playerId, params) {
     if (playerStat.DeathType !== DeathTypeCode.BY_WOLF) continue;
     if (!playerStat.KillerName) continue;
     
-    // Find the killer in this game
-    const killer = game.PlayerStats.find(p => p.Username === playerStat.KillerName);
+    // Find the killer in this game by KillerName and check their role
+    const killerPlayerId = getKillerPlayerId(game, playerStat);
+    if (!killerPlayerId) continue;
+    const killer = game.PlayerStats.find(p => getPlayerId(p) === killerPlayerId);
     if (!killer) continue;
     
     // Check if killer was Amoureux Loup (as MainRoleInitial)
@@ -46,8 +48,10 @@ export function wolfKilledByAmoureuxLoup(playerGames, allGames, playerId, params
     if (playerStat.DeathType !== DeathTypeCode.BY_WOLF) continue;
     if (!playerStat.KillerName) continue;
     
-    // Find the killer in this game
-    const killer = game.PlayerStats.find(p => p.Username === playerStat.KillerName);
+    // Find the killer in this game by KillerName and check their role
+    const killerPlayerId = getKillerPlayerId(game, playerStat);
+    if (!killerPlayerId) continue;
+    const killer = game.PlayerStats.find(p => getPlayerId(p) === killerPlayerId);
     if (!killer) continue;
     
     // Check if killer was Amoureux Loup 
@@ -79,9 +83,9 @@ export function amoureuxLoupKillsLover(playerGames, allGames, playerId, params) 
     );
     if (!partner) continue;
 
-    // Check if the partner was killed by this player (BY_WOLF, killer = this player's Username)
+    // Check if the partner was killed by this player (BY_WOLF, killer is this player)
     if (partner.DeathType === DeathTypeCode.BY_WOLF &&
-        partner.KillerName === playerStat.Username) {
+        isKilledByPlayer(game, partner, playerId)) {
       value++;
       gameIds.push(game.Id);
     }
@@ -103,8 +107,8 @@ export function amoureuxLoupTotalKills(playerGames, allGames, playerId, params) 
 
     let killsInGame = 0;
     for (const victim of game.PlayerStats) {
-      if (victim.DeathType === DeathTypeCode.BY_WOLF && victim.KillerName === playerStat.Username) {
-        killsInGame++;
+      if (victim.DeathType === DeathTypeCode.BY_WOLF && isKilledByPlayer(game, victim, playerId)) {
+        killsInGame++;;
       }
     }
     if (killsInGame > 0) {
@@ -134,7 +138,7 @@ export function amoureuxLoupKillsTwoWolves(playerGames, allGames, playerId, para
     let wolfKillsInGame = 0;
     for (const victim of game.PlayerStats) {
       if (victim.DeathType !== DeathTypeCode.BY_WOLF) continue;
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       if (isWolfCamp(victim)) wolfKillsInGame++;
     }
     if (wolfKillsInGame >= 2) {
@@ -163,7 +167,7 @@ export function amoureuxVillageoisKillsEnemy(playerGames, allGames, playerId, pa
     let killsInGame = 0;
     for (const victim of game.PlayerStats) {
       // Must be killed by this player
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       // Must be a hors-meeting kill (not a vote)
       if (victim.DeathType === DeathTypeCode.VOTED) continue;
       // Victim must not be an Amoureux (i.e. not the partner)

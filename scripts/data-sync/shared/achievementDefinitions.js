@@ -904,7 +904,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'amoureux-villageois-kills-enemy',
     name: 'Moi aussi je participe !',
     description: 'Vous aussi vous apportez votre part à l\'édifice',
-    explanation: 'Avoir X fois tué un ennemi hors meeting en étant Amoureux Villageois',
+    explanation: 'Avoir X fois tué un ennemi en étant Amoureux Villageois',
     emoji: '❤️🗡️',
     category: 'kills',
     evaluator: 'amoureuxVillageoisKillsEnemy',

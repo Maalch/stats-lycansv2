@@ -5,7 +5,7 @@
  * zombie/vaudou mechanics, necromancer, seer, sabotage.
  */
 
-import { isWolfCamp, getPlayerCampForAchievement, isHunterRole, isAliveAtMeeting } from './helpers.js';
+import { isWolfCamp, getPlayerCampForAchievement, isHunterRole, isAliveAtMeeting, isKilledByPlayer, isActionTargetPlayer } from './helpers.js';
 import { getPlayerId, getPlayerFinalRole, getPlayerCampFromRole, DeathTypeCode } from './helpers.js';
 
 /**
@@ -23,8 +23,8 @@ export function wolfKills(playerGames, allGames, playerId, params) {
     // Count players killed by this wolf in this game
     let killsInGame = 0;
     for (const victim of game.PlayerStats) {
-      if (victim.DeathType === DeathTypeCode.BY_WOLF && victim.KillerName === playerStat.Username) {
-        killsInGame++;
+      if (victim.DeathType === DeathTypeCode.BY_WOLF && isKilledByPlayer(game, victim, playerId)) {
+        killsInGame++;;
       }
     }
     if (killsInGame > 0) {
@@ -55,8 +55,8 @@ export function zombieKills(playerGames, allGames, playerId, params) {
     // Count players killed by this Zombie in this game
     let killsInGame = 0;
     for (const victim of game.PlayerStats) {
-      if (victim.DeathType === DeathTypeCode.BY_ZOMBIE && victim.KillerName === playerStat.Username) {
-        killsInGame++;
+      if (victim.DeathType === DeathTypeCode.BY_ZOMBIE && isKilledByPlayer(game, victim, playerId)) {
+        killsInGame++;;
       }
     }
     if (killsInGame > 0) {
@@ -107,7 +107,7 @@ export function wolfWinNoKills(playerGames, allGames, playerId, params) {
     
     // Check if this wolf made any kills
     const madeKills = game.PlayerStats.some(victim =>
-      victim.KillerName === playerStat.Username &&
+      isKilledByPlayer(game, victim, playerId) &&
       victim.DeathType === DeathTypeCode.BY_WOLF
     );
     
@@ -209,9 +209,10 @@ export function wolfNecromancerResurrect(playerGames, allGames, playerId, params
 
     // Check if any resurrected player made at least 2 BY_WOLF kills in this game
     const anyResurrectedKilledTwo = resurrectedPlayers.some(resurrected => {
+      const resurrectedId = getPlayerId(resurrected);
       const kills = game.PlayerStats.filter(victim =>
         victim.DeathType === DeathTypeCode.BY_WOLF &&
-        victim.KillerName === resurrected.Username
+        isKilledByPlayer(game, victim, resurrectedId)
       );
       return kills.length >= 2;
     });
@@ -227,7 +228,7 @@ export function wolfNecromancerResurrect(playerGames, allGames, playerId, params
 /**
  * Count games where player (as Loup Devin) made at least 2 SEER kills in that game.
  * - Loup Devin = isWolfCamp + Power === 'Devin'
- * - A SEER kill = victim.DeathType === DeathTypeCode.SEER && victim.KillerName === playerStat.Username
+ * - A SEER kill = victim.DeathType === DeathTypeCode.SEER && killer is this player
  */
 export function wolfSeerDoubleKill(playerGames, allGames, playerId, params) {
   const gameIds = [];
@@ -239,7 +240,7 @@ export function wolfSeerDoubleKill(playerGames, allGames, playerId, params) {
 
     const seerKills = game.PlayerStats.filter(victim =>
       victim.DeathType === DeathTypeCode.SEER &&
-      victim.KillerName === playerStat.Username
+      isKilledByPlayer(game, victim, playerId)
     );
 
     if (seerKills.length >= 2) {
@@ -301,12 +302,12 @@ export function wolfSurvivedHunterShot(playerGames, allGames, playerId, params) 
     const hunters = game.PlayerStats.filter(p => isHunterRole(p));
     if (hunters.length === 0) continue;
 
-    // A Chasseur must have a HunterShoot action targeting this player (by username)
+    // A Chasseur must have a HunterShoot action targeting this player
     let wasShot = false;
     for (const hunter of hunters) {
       if (!hunter.Actions) continue;
       for (const action of hunter.Actions) {
-        if (action.ActionType === 'HunterShoot' && action.ActionTarget === playerStat.Username) {
+        if (action.ActionType === 'HunterShoot' && isActionTargetPlayer(game, action.ActionTarget, playerId)) {
           wasShot = true;
           break;
         }
@@ -385,7 +386,7 @@ export function wolfAllKillsSolo(playerGames, allGames, playerId, params) {
 
     // Every BY_WOLF kill must have been made by this player
     const allByThisPlayer = wolfKillsInGame.every(
-      victim => victim.KillerName === playerStat.Username
+      victim => isKilledByPlayer(game, victim, playerId)
     );
 
     if (allByThisPlayer) {
@@ -453,7 +454,7 @@ export function wolfTransformKillNights(playerGames, allGames, playerId, params)
 
       // Must have killed at least one player that same night
       const hasKill = game.PlayerStats.some(v =>
-        v.KillerName === playerStat.Username &&
+        isKilledByPlayer(game, v, playerId) &&
         v.DeathType === DeathTypeCode.BY_WOLF &&
         v.DeathTiming === timing
       );
@@ -487,7 +488,7 @@ export function wolfLossHarvestNoKills(playerGames, allGames, playerId, params) 
     
     // Check if this wolf made any kills
     const madeKills = game.PlayerStats.some(victim =>
-      victim.KillerName === playerStat.Username &&
+      isKilledByPlayer(game, victim, playerId) &&
       victim.DeathType === DeathTypeCode.BY_WOLF
     );
     

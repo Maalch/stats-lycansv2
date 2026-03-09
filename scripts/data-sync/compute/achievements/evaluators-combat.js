@@ -5,7 +5,7 @@
  * and other combat-related achievements.
  */
 
-import { isHunterRole, isWolfCamp, getPlayerCampForAchievement, getDeathDay } from './helpers.js';
+import { isHunterRole, isWolfCamp, getPlayerCampForAchievement, getDeathDay, isKilledByPlayer } from './helpers.js';
 import { DeathTypeCode } from './helpers.js';
 
 /**
@@ -42,7 +42,7 @@ export function hunterKillsEnemy(playerGames, allGames, playerId, params) {
                            victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
                            victim.DeathType === DeathTypeCode.BULLET_WOLF;
       if (!isHunterKill) continue;
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       
       // Check if victim is from an enemy camp
       const hunterCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
@@ -72,7 +72,7 @@ export function villageoisDoubleAllyKill(playerGames, allGames, playerId, params
     // Count Villageois-camp allies killed by this player outside meetings
     let allyKills = 0;
     for (const victim of game.PlayerStats) {
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       if (victim.DeathType === DeathTypeCode.VOTED) continue;
       if (getPlayerCampForAchievement(victim, false) !== 'Villageois') continue;
       allyKills++;
@@ -100,7 +100,7 @@ export function hunterKillsAlly(playerGames, allGames, playerId, params) {
                            victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
                            victim.DeathType === DeathTypeCode.BULLET_WOLF;
       if (!isHunterKill) continue;
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       
       const hunterCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true }); //use initial camp (to avoid counting Chasseur being rezed as Loup or Zombie)
       const victimCamp = getPlayerCampForAchievement(victim, false, { regroupWolfSubRoles: true }); 
@@ -133,7 +133,7 @@ export function hunterMultiKillsInGame(playerGames, allGames, playerId, params) 
                            victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
                            victim.DeathType === DeathTypeCode.BULLET_WOLF;
       if (!isHunterKill) continue;
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       
       const victimCamp = getPlayerCampForAchievement(victim, false, { regroupWolfSubRoles: true });
       if (hunterCamp !== victimCamp) {
@@ -175,7 +175,7 @@ export function assassinPotionKills(playerGames, allGames, playerId, params) {
     // Look for victims killed by ASSASSIN potion where KillerName matches
     for (const victim of game.PlayerStats) {
       if (victim.DeathType !== DeathTypeCode.ASSASSIN) continue;
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       
       const killerCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
       const victimCamp = getPlayerCampForAchievement(victim, false, { regroupWolfSubRoles: true });
@@ -236,7 +236,7 @@ export function sameColorKills(playerGames, allGames, playerId, params) {
     let killsInGame = 0;
     for (const victim of game.PlayerStats) {
       if (!victim.KillerName) continue;
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       
       // Check if victim had the same color
       if (victim.Color === playerColor) {
@@ -281,7 +281,7 @@ export function hunterKillsLastWolf(playerGames, allGames, playerId, params) {
                            victim.DeathType === DeathTypeCode.BULLET_HUMAN ||
                            victim.DeathType === DeathTypeCode.BULLET_WOLF;
       if (!isBulletKill) continue;
-      if (victim.KillerName !== playerStat.Username) continue;
+      if (!isKilledByPlayer(game, victim, playerId)) continue;
       if (!isWolfCamp(victim)) continue;
       // Victim's death timing must match the game's EndTiming
       if (victim.DeathTiming === endTiming) {
