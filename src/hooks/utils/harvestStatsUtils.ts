@@ -29,7 +29,7 @@ function initializeHarvestStats(): {
 
 /**
  * Categorize harvest percentage into distribution buckets
- * Note: Values over 100% (harvestPercent > 1.0) are treated as 100+%
+ * Note: Values at or over 100% (harvestPercent >= 1.0) are treated as 100+%
  */
 function categorizeHarvestPercentage(
   harvestPercent: number,
@@ -41,10 +41,11 @@ function categorizeHarvestPercentage(
     harvestDistribution["26-50%"]++;
   } else if (harvestPercent <= 0.75) {
     harvestDistribution["51-75%"]++;
-  } else if (harvestPercent <= 0.99) {
+  } else if (harvestPercent < 1.0) {
+    // Includes 76% up to (but not including) 100%
     harvestDistribution["76-99%"]++;
   } else {
-    // Catches both exactly 100% and over 100% (displayed as "100+%")
+    // Catches exactly 100% and over 100% (harvestPercent >= 1.0)
     harvestDistribution["100+%"]++;
   }
 }

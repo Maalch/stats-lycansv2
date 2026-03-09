@@ -442,7 +442,7 @@ export function filterByHarvestRangeFromGameLog(games: GameLogEntry[], harvestRa
         return percentageValue > 50 && percentageValue <= 75;
       case "76-99%":
         return percentageValue > 75 && percentageValue <= 99;
-      case "100%":
+      case "100+%":
         return percentageValue >= 100;
       default:
         return true;
