@@ -233,11 +233,19 @@ export function soleVoterElimination(playerGames, allGames, playerId, params) {
       const targetPlayer = game.PlayerStats.find(p => p.Username === vote.Target);
       if (!targetPlayer || targetPlayer.DeathType !== DeathTypeCode.VOTED) continue;
       
-      // Check if this player was the only one who voted for this target in this meeting
+      // Extract death day from target's DeathTiming (e.g., "M3" -> 3)
+      if (!targetPlayer.DeathTiming || !targetPlayer.DeathTiming.startsWith('M')) continue;
+      const targetDeathDay = parseInt(targetPlayer.DeathTiming.substring(1), 10);
+      if (isNaN(targetDeathDay)) continue;
+      
+      // Only check votes on the day the target was eliminated
+      if (vote.Day !== targetDeathDay) continue;
+      
+      // Check if this player was the only one who voted for this target on the death day
       let otherVotersForTarget = 0;
       for (const p of game.PlayerStats) {
         if (getPlayerId(p) === playerId) continue;
-        const pVotes = (p.Votes || []).filter(v => v.Day === vote.Day && v.Target === vote.Target);
+        const pVotes = (p.Votes || []).filter(v => v.Day === targetDeathDay && v.Target === vote.Target);
         if (pVotes.length > 0) otherVotersForTarget++;
       }
       
