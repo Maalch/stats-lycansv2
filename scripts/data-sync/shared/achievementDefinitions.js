@@ -301,26 +301,6 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
-    id: 'map-farmer',
-    name: 'Map Farmer',
-    description: 'C\'est bon, vous connaissez les maps',
-    explanation: 'Faire X victoires sur chaque map',
-    emoji: '🌽',
-    category: 'maps',
-    evaluator: 'winsOnAllMaps',
-    evaluatorParams: {},
-    levels: [
-      // Bronze: 1
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 2
-      { tier: 'argent', subLevel: 1, threshold: 2 },
-      // Or: 3
-      { tier: 'or', subLevel: 1, threshold: 3 },
-      // Lycans: 5
-      { tier: 'lycans', subLevel: 1, threshold: 5 },
-    ],
-  },
-  {
     id: 'wolf-sabotages',
     name: 'Sabotez-les tous !',
     description: 'Puits, chaudron, portails, bûches... Vous les connaissez tous',

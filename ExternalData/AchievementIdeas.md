@@ -71,7 +71,7 @@
 | Données à valider | Villageois | Social | Faux Coupable | Dommage, vous n'étiez pas l'idiot du village... | Être X fois voté à l'unanimité en tant que Villageois | 5 | 10 | 15 | 30 |
 | Paliers à valider | Tous | Social | M. / Mme Bavard | Vous avez beaucoup de choses à dire visiblement | Avoir X fois parlé au moins 50 % du temps sur une partie | 5 | 10 | 15 | 30 |
 | Données à valider | Villageois | Social | Troisième oeil | Vous connaissiez tous les rôles à l'avance | Faire X parties en votant que des Loups ou des solos (minimum 3 votes) | 5 | 10 | 15 | 30 |
-| Données à valider | Tous | Cartes | Map Master | Vous connaissez chaque recoin de chaque carte | Faire X parties en explorant toutes les zones de la map | 1 | 3 | 5 | 10 |
+| En attente | Tous | Cartes | Map Master | Vous connaissez chaque recoin de chaque carte | Faire X parties en explorant toutes les zones de la map | 1 | 3 | 5 | 10 |
 | Données à valider | Tous | Spécial | United Colors of Lycans | L'arc-en-ciel des victoires | Avoir gagné une partie avec au moins X couleurs différentes | 1 - 2 - 3 | 4 - 5 - 6 | 7 - 8 - 9 | 10 - 11 - 12 |
 | Données à valider | Loup | Morts | C'est l'Amour | Un loup tué par un autre loup... C'est le ponpon | Mourir X fois en Loup par un Amoureux Loup | 1 | 5 | 10 | 15 |
 | Données à valider | Villageois | Kills | Maître des loups | Un, deux, trois... Aucun loup ne vous arrête | Tuer X fois trois loups dans une même game en étant Chasseur | 1 | 2 | 3 | 5 |
