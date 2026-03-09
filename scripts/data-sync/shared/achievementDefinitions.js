@@ -281,26 +281,6 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
-    id: 'map-master',
-    name: 'Map Master',
-    description: 'Vous connaissez chaque recoin de chaque carte',
-    explanation: 'Avoir au moins une victoire sur chaque map disponible',
-    emoji: '🗺️',
-    category: 'maps',
-    evaluator: 'winOnAllMaps',
-    evaluatorParams: {},
-    levels: [
-      // Bronze: 1
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 3
-      { tier: 'argent', subLevel: 1, threshold: 3 },
-      // Or: 5
-      { tier: 'or', subLevel: 1, threshold: 5 },
-      // Lycans: 10
-      { tier: 'lycans', subLevel: 1, threshold: 10 },
-    ],
-  },
-  {
     id: 'wolf-sabotages',
     name: 'Sabotez-les tous !',
     description: 'Puits, chaudron, portails, bûches... Vous les connaissez tous',
