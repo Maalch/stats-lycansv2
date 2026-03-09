@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-09T13:20:15.305Z",
+  "generatedAt": "2026-03-09T16:04:02.338Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 776,
@@ -443,68 +443,6 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "map-master",
-      "name": "Map Master",
-      "description": "Vous connaissez chaque recoin de chaque carte",
-      "explanation": "Avoir au moins une victoire sur chaque map disponible",
-      "emoji": "🗺️",
-      "category": "maps",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 5
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 10
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "map-farmer",
-      "name": "Map Farmer",
-      "description": "C'est bon, vous connaissez les maps",
-      "explanation": "Faire X victoires sur chaque map",
-      "emoji": "🌽",
-      "category": "maps",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 2
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 5
         }
       ],
       "requiresBRData": false
@@ -2107,7 +2045,7 @@
       "id": "democrat",
       "name": "Troisième oeil",
       "description": "Vous connaissiez tous les rôles à l'avance",
-      "explanation": "Faire X parties en votant que des Loups ou des solos (minimum 3 votes)",
+      "explanation": "Faire X parties en Villageois en ne votant que des Loups ou des solos (minimum 3 votes)",
       "emoji": "🏛️",
       "category": "social",
       "levels": [
@@ -15603,13 +15541,13 @@
         },
         {
           "id": "democrat",
-          "currentValue": 6,
+          "currentValue": 9,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "khalen-20260120114742"
+              "unlockedAtGame": "Ponce-20251104130931"
             }
           ],
           "nextLevel": {
@@ -15617,7 +15555,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.9
         },
         {
           "id": "colors-of-lycans",
@@ -16821,14 +16759,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -19435,7 +19373,7 @@
         },
         {
           "id": "democrat",
-          "currentValue": 17,
+          "currentValue": 21,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -19447,7 +19385,7 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20251118000000-632"
+              "unlockedAtGame": "Ponce-20251104133550"
             },
             {
               "tier": "or",
@@ -19461,7 +19399,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5666666666666667
+          "progress": 0.7
         },
         {
           "id": "colors-of-lycans",
@@ -19889,7 +19827,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 124,
+      "totalUnlocked": 123,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20105,42 +20043,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "map-master",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20231219000000-14"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 3
-          },
-          "progress": 0.3333333333333333
-        },
-        {
-          "id": "map-farmer",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20231219000000-14"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 2
-          },
-          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -20784,27 +20686,33 @@
         },
         {
           "id": "democrat",
-          "currentValue": 13,
+          "currentValue": 16,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20251009120237"
+              "unlockedAtGame": "Ponce-20250923000000-559"
             },
             {
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20260203113055"
+              "unlockedAtGame": "khalen-20251209123037"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260217114703"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 30
           },
-          "progress": 0.8666666666666667
+          "progress": 0.5333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -21238,7 +21146,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 131,
+      "totalUnlocked": 130,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22217,7 +22125,7 @@
         },
         {
           "id": "democrat",
-          "currentValue": 15,
+          "currentValue": 14,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -22230,20 +22138,14 @@
               "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20251118000000-632"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "khalen-20260217133845"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 15
           },
-          "progress": 0.5
+          "progress": 0.9333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -22668,7 +22570,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 102,
+      "totalUnlocked": 103,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23518,21 +23420,27 @@
         },
         {
           "id": "democrat",
-          "currentValue": 8,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
               "unlockedAtGame": "Tsuna-20251111113550"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260303130810"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 15
           },
-          "progress": 0.8
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -25063,7 +24971,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 84,
+      "totalUnlocked": 85,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25765,14 +25673,21 @@
         },
         {
           "id": "democrat",
-          "currentValue": 4,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Tsuna-20251111113550"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -26840,14 +26755,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 3,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -28207,7 +28122,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 106,
+      "totalUnlocked": 107,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29056,27 +28971,33 @@
         },
         {
           "id": "democrat",
-          "currentValue": 12,
+          "currentValue": 15,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20251104133550"
+              "unlockedAtGame": "Ponce-20251104130931"
             },
             {
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20260106113016"
+              "unlockedAtGame": "Ponce-20251118000000-637"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260303130810"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 30
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -29920,6 +29841,17 @@
             "threshold": 30
           },
           "progress": 0.6333333333333333
+        },
+        {
+          "id": "democrat",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -31047,7 +30979,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 61,
+      "totalUnlocked": 62,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31673,14 +31605,21 @@
         },
         {
           "id": "democrat",
-          "currentValue": 3,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260106113016"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -33253,14 +33192,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -34602,7 +34541,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 63,
+      "totalUnlocked": 64,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35282,14 +35221,21 @@
         },
         {
           "id": "democrat",
-          "currentValue": 3,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260217120920"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -36331,13 +36277,13 @@
         },
         {
           "id": "democrat",
-          "currentValue": 6,
+          "currentValue": 5,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20260210133335"
+              "unlockedAtGame": "khalen-20260217114703"
             }
           ],
           "nextLevel": {
@@ -36345,7 +36291,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -37080,13 +37026,13 @@
         },
         {
           "id": "democrat",
-          "currentValue": 7,
+          "currentValue": 8,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20260210113643"
+              "unlockedAtGame": "Ponce-20251118000000-635"
             }
           ],
           "nextLevel": {
@@ -37094,7 +37040,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.7
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",

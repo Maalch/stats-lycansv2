@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-09T13:20:35.726Z",
+  "generatedAt": "2026-03-09T16:04:22.915Z",
   "teamName": "Discord Team",
   "totalPlayers": 161,
   "totalGames": 384,
@@ -443,68 +443,6 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "map-master",
-      "name": "Map Master",
-      "description": "Vous connaissez chaque recoin de chaque carte",
-      "explanation": "Avoir au moins une victoire sur chaque map disponible",
-      "emoji": "🗺️",
-      "category": "maps",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 5
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 10
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "map-farmer",
-      "name": "Map Farmer",
-      "description": "C'est bon, vous connaissez les maps",
-      "explanation": "Faire X victoires sur chaque map",
-      "emoji": "🌽",
-      "category": "maps",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 2
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 5
         }
       ],
       "requiresBRData": false
@@ -2107,7 +2045,7 @@
       "id": "democrat",
       "name": "Troisième oeil",
       "description": "Vous connaissiez tous les rôles à l'avance",
-      "explanation": "Faire X parties en votant que des Loups ou des solos (minimum 3 votes)",
+      "explanation": "Faire X parties en Villageois en ne votant que des Loups ou des solos (minimum 3 votes)",
       "emoji": "🏛️",
       "category": "social",
       "levels": [
@@ -2874,7 +2812,7 @@
     "76561198153298747": {
       "playerId": "76561198153298747",
       "playerName": "Timaki",
-      "totalUnlocked": 38,
+      "totalUnlocked": 37,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3408,27 +3346,21 @@
         },
         {
           "id": "democrat",
-          "currentValue": 11,
+          "currentValue": 9,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Nales-20251121211937"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Nales-20260301212811"
+              "unlockedAtGame": "Nales-20251126202846"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 10
           },
-          "progress": 0.7333333333333333
+          "progress": 0.9
         },
         {
           "id": "colors-of-lycans",
@@ -4464,14 +4396,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 2,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -4531,7 +4463,7 @@
     "76561199789359755": {
       "playerId": "76561199789359755",
       "playerName": "Gaëtan R",
-      "totalUnlocked": 44,
+      "totalUnlocked": 45,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5182,14 +5114,21 @@
         },
         {
           "id": "democrat",
-          "currentValue": 4,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Nales-20260206204402"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -6442,14 +6381,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 2,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -7141,14 +7080,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 4,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.8
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -8800,14 +8739,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 3,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
@@ -11419,13 +11358,13 @@
         },
         {
           "id": "democrat",
-          "currentValue": 7,
+          "currentValue": 8,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Nales-20260206212426"
+              "unlockedAtGame": "Nales-20260123221046"
             }
           ],
           "nextLevel": {
@@ -11433,7 +11372,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.7
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -13961,14 +13900,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -14874,14 +14813,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 3,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
@@ -15426,14 +15365,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -15885,14 +15824,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 3,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -17924,14 +17863,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
@@ -18444,6 +18383,17 @@
             "threshold": 10
           },
           "progress": 0.9
+        },
+        {
+          "id": "democrat",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -19507,7 +19457,7 @@
     "76561198124278834": {
       "playerId": "76561198124278834",
       "playerName": "Johnny",
-      "totalUnlocked": 43,
+      "totalUnlocked": 42,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20132,21 +20082,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Nales-20260206204402"
-            }
-          ],
+          "currentValue": 4,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.5
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -20457,6 +20400,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "democrat",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -23381,14 +23335,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
@@ -26425,14 +26379,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 3,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -28594,14 +28548,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
@@ -33208,6 +33162,17 @@
           "progress": 0.2
         },
         {
+          "id": "democrat",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -36709,14 +36674,14 @@
         },
         {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
