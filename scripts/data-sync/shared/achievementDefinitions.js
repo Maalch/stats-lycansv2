@@ -1294,11 +1294,11 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'democrat',
     name: 'Troisième oeil',
     description: 'Vous connaissiez tous les rôles à l\'avance',
-    explanation: 'Faire X parties en votant que des Loups ou des solos (minimum 3 votes)',
+    explanation: 'Faire X parties en Villageois en ne votant que des Loups ou des solos (minimum 3 votes)',
     emoji: '🏛️',
     category: 'social',
-    evaluator: 'consecutiveCorrectVotes',
-    evaluatorParams: { minConsecutive: 3 },
+    evaluator: 'onlyEnemyVotes',
+    evaluatorParams: { minVotes: 3 },
     levels: [
       // Bronze: 5
       { tier: 'bronze', subLevel: 1, threshold: 5 },

@@ -291,3 +291,49 @@ export function consecutiveCorrectVotes(playerGames, allGames, playerId, params)
   }
   return { value, gameIds };
 }
+
+/**
+ * Count games where player (as Villageois) only voted for enemies with minimum vote count
+ * - Must be Villageois camp
+ * - Must have voted at least minVotes times (excluding "Passé")
+ * - ALL votes must be for enemy camps (Loup or solo roles)
+ */
+export function onlyEnemyVotes(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const minVotes = params.minVotes || 3;
+  
+  for (const { game, playerStat } of playerGames) {
+    const playerCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
+    if (playerCamp !== 'Villageois') continue;
+    
+    const votes = playerStat.Votes || [];
+    const realVotes = votes.filter(v => v.Target && v.Target !== 'Passé');
+    
+    // Must have voted at least minVotes times
+    if (realVotes.length < minVotes) continue;
+    
+    // Check if ALL votes are for enemies
+    let allVotesCorrect = true;
+    for (const vote of realVotes) {
+      const targetPlayer = game.PlayerStats.find(p => p.Username === vote.Target);
+      if (!targetPlayer) {
+        allVotesCorrect = false;
+        break;
+      }
+      
+      const targetCamp = getPlayerCampForAchievement(targetPlayer, false, { regroupWolfSubRoles: true });
+      // Vote is correct only if target is NOT in Villageois camp (must be Loup or solo)
+      if (targetCamp === 'Villageois') {
+        allVotesCorrect = false;
+        break;
+      }
+    }
+    
+    if (allVotesCorrect) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}
