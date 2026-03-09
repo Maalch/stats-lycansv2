@@ -21,7 +21,7 @@ function initializeHarvestStats(): {
       "26-50%": 0,
       "51-75%": 0,
       "76-99%": 0,
-      "100%": 0
+      "100+%": 0
     },
     harvestByWinner: {}
   };
@@ -29,6 +29,7 @@ function initializeHarvestStats(): {
 
 /**
  * Categorize harvest percentage into distribution buckets
+ * Note: Values over 100% (harvestPercent > 1.0) are treated as 100+%
  */
 function categorizeHarvestPercentage(
   harvestPercent: number,
@@ -43,12 +44,14 @@ function categorizeHarvestPercentage(
   } else if (harvestPercent <= 0.99) {
     harvestDistribution["76-99%"]++;
   } else {
-    harvestDistribution["100%"]++;
+    // Catches both exactly 100% and over 100% (displayed as "100+%")
+    harvestDistribution["100+%"]++;
   }
 }
 
 /**
  * Track harvest statistics by winner camp
+ * For display purposes, cap harvest percentage at 100% for averaging
  */
 function trackHarvestByWinner(
   winnerCamp: string,
@@ -64,7 +67,9 @@ function trackHarvestByWinner(
       };
     }
 
-    harvestByWinner[winnerCamp].totalPercent += harvestPercent;
+    // Cap at 100% for averaging purposes (display shows 100+% in distribution)
+    const cappedPercent = Math.min(harvestPercent, 1.0);
+    harvestByWinner[winnerCamp].totalPercent += cappedPercent;
     harvestByWinner[winnerCamp].count++;
   }
 }
