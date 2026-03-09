@@ -573,8 +573,50 @@ const EVALUATORS = { campWins, soloWins, deathByType, ... };
 const BR_EVALUATORS = { brWins, brParticipations, brTotalKills, brHighKillGame, ... };
 ```
 
+### Achievement Evaluator Helper Functions
+
+**ALWAYS use these helpers from `helpers.js`** when comparing players in evaluators. Never compare by `Username` or `KillerName` directly - use Player ID (Steam ID) for proper identification.
+
+```javascript
+// scripts/data-sync/compute/achievements/helpers.js
+import { isKilledByPlayer, getKillerPlayerId, isVoteTargetPlayer, isActionTargetPlayer } from './helpers.js';
+
+// ✅ CORRECT: Check if a victim was killed by a specific player using Player ID
+if (isKilledByPlayer(game, victim, playerId)) {
+  // This player killed the victim
+}
+
+// ✅ CORRECT: Get the killer's Player ID from a victim's KillerName
+const killerPlayerId = getKillerPlayerId(game, victim);
+const killer = game.PlayerStats.find(p => getPlayerId(p) === killerPlayerId);
+
+// ✅ CORRECT: Check if a vote targeted a specific player using Player ID
+if (isVoteTargetPlayer(game, vote.Target, playerId)) {
+  // This vote targeted the player
+}
+
+// ✅ CORRECT: Check if an action targeted a specific player using Player ID
+if (isActionTargetPlayer(game, action.ActionTarget, playerId)) {
+  // This action targeted the player
+}
+
+// ❌ WRONG: Never compare by Username directly - creates bugs with name variations
+if (victim.KillerName === playerStat.Username) { // WRONG!
+  // This fails when the same player has different usernames in different games
+}
+```
+
+**Available Helper Functions:**
+- `isKilledByPlayer(game, victim, playerId)` - Checks if victim was killed by player
+- `getKillerPlayerId(game, victim)` - Returns killer's Player ID from victim's KillerName
+- `isVoteTargetPlayer(game, voteTarget, playerId)` - Checks if vote targeted player
+- `isActionTargetPlayer(game, actionTarget, playerId)` - Checks if action targeted player
+- `getPlayerId(player)` - Gets unique Player ID (Steam ID or Username fallback)
+
 **Key Files:**
 - `scripts/data-sync/shared/achievementDefinitions.js` — all definitions + `ACHIEVEMENT_TIERS` + `ACHIEVEMENT_CATEGORIES`
+- `scripts/data-sync/compute/achievements/helpers.js` — player identification helpers (ALWAYS USE THESE)
+- `scripts/data-sync/compute/achievements/evaluators-*.js` — evaluator implementations by category
 - `scripts/data-sync/compute/compute-achievements.js` — `EVALUATORS`, `BR_EVALUATORS`, `computeAllAchievements()`
 - `scripts/data-sync/generate-achievements.js` — reads `gameLog.json` + optionally `rawBRData.json` (if `sourceKey === 'main'`)
 
@@ -795,6 +837,8 @@ export const DATA_SOURCES = {
 
 **Compute Modules (`scripts/data-sync/compute/`):** Pure JS functions shared across generation scripts. Add new computation logic here (not inline in generate-*.js). Key modules:
 - `compute-achievements.js` — achievement evaluators + `computeAllAchievements()`
+- `achievements/helpers.js` — player identification helpers for evaluators (isKilledByPlayer, getKillerPlayerId, isVoteTargetPlayer, isActionTargetPlayer)
+- `achievements/evaluators-*.js` — achievement evaluators organized by category (general, combat, roles, wolf, voting, amoureux, social, br)
 - `compute-player-stats.js` — base player statistics
 - `compute-voting-stats.js`, `compute-talking-stats.js`, `compute-series-data.js` — specialized stats
 - `incremental-compute-wrapper.js` — handles cache-based incremental updates for Rankings
