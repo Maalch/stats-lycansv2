@@ -83,8 +83,8 @@ export function amoureuxLoupKillsLover(playerGames, allGames, playerId, params) 
     );
     if (!partner) continue;
 
-    // Check if the partner was killed by this player (BY_WOLF, killer is this player)
-    if (partner.DeathType === DeathTypeCode.BY_WOLF &&
+    // Check if the partner was killed by this player (BY_WOLF or LOVER_DEATH, killer is this player)
+    if ((partner.DeathType === DeathTypeCode.BY_WOLF || partner.DeathType === DeathTypeCode.LOVER_DEATH) &&
         isKilledByPlayer(game, partner, playerId)) {
       value++;
       gameIds.push(game.Id);

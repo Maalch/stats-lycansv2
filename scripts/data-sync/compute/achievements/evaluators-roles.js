@@ -59,21 +59,6 @@ export function agentVoted(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Count wins as Chasseur de Primes
- */
-export function bountyHunterWins(playerGames, allGames, playerId, params) {
-  const gameIds = [];
-  let value = 0;
-  for (const { game, playerStat } of playerGames) {
-    if (playerStat.MainRoleInitial !== 'Chasseur de primes') continue;
-    if (!playerStat.Victorious) continue;
-    value++;
-    gameIds.push(game.Id);
-  }
-  return { value, gameIds };
-}
-
-/**
  * Count wins as Louveteau when all other wolves are dead
  */
 export function louveteauOrphanWin(playerGames, allGames, playerId, params) {

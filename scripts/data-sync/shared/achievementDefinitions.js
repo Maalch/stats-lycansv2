@@ -951,8 +951,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
     explanation: 'Gagner X parties en tant que Chasseur de Primes',
     emoji: '🎯',
     category: 'roles',
-    evaluator: 'bountyHunterWins',
-    evaluatorParams: {},
+    evaluator: 'roleWins',
+    evaluatorParams: { role: 'Chasseur de primes' },
     levels: [
       // Bronze: 3
       { tier: 'bronze', subLevel: 1, threshold: 3 },
