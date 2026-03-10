@@ -101,14 +101,14 @@ export function louveteauOrphanWin(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Win with all available solo roles (check: 1 if complete, 0 otherwise)
+ * Win with all available solo roles, excluding "Cannibale" (check: 1 if complete, 0 otherwise)
  */
 export function winWithAllSoloRoles(playerGames, allGames, playerId, params) {
-  // Gather all solo roles seen in all games
+  // Gather all solo roles seen in all games, excluding "Cannibale"
   const allSoloRoles = new Set();
   for (const game of allGames) {
     for (const p of game.PlayerStats) {
-      if (isSoloCamp(p.MainRoleInitial, p.Power)) {
+      if (isSoloCamp(p.MainRoleInitial, p.Power) && p.MainRoleInitial !== 'Cannibale') {
         allSoloRoles.add(p.MainRoleInitial);
       }
     }
@@ -119,7 +119,7 @@ export function winWithAllSoloRoles(playerGames, allGames, playerId, params) {
   const gameIds = [];
   for (const { game, playerStat } of playerGames) {
     if (!playerStat.Victorious) continue;
-    if (isSoloCamp(playerStat.MainRoleInitial, playerStat.Power)) {
+    if (isSoloCamp(playerStat.MainRoleInitial, playerStat.Power) && playerStat.MainRoleInitial !== 'Cannibale') {
       if (!wonSoloRoles.has(playerStat.MainRoleInitial)) {
         wonSoloRoles.add(playerStat.MainRoleInitial);
         gameIds.push(game.Id);
