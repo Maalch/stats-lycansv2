@@ -1005,26 +1005,6 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
-    id: 'louveteau-orphan',
-    name: 'Le Louveteau Orphelin',
-    description: 'Vous étiez trop jeune pour mourir',
-    explanation: 'Gagner X fois en Louveteau après la mort des autres Loups',
-    emoji: '🐶',
-    category: 'roles',
-    evaluator: 'louveteauOrphanWin',
-    evaluatorParams: {},
-    levels: [
-      // Bronze: 1
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 2
-      { tier: 'argent', subLevel: 1, threshold: 2 },
-      // Or: 3
-      { tier: 'or', subLevel: 1, threshold: 3 },
-      // Lycans: 5
-      { tier: 'lycans', subLevel: 1, threshold: 5 },
-    ],
-  },
-  {
     id: 'vaudou-triple-resurrect',
     name: 'Zombie Nation',
     description: 'Votre armée de morts s\'est bien agrandie',
