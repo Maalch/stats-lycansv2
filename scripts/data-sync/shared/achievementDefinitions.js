@@ -1088,10 +1088,10 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'solo-master',
     name: 'Je maîtrise le solo',
     description: 'Vous savez comment gagner avec chaque rôle',
-    explanation: 'Avoir X victoires avec chaque rôle solo',
+    explanation: 'Avoir X victoires avec 9 rôles solo différents',
     emoji: '👑',
     category: 'roles',
-    evaluator: 'winWithAllSoloRoles',
+    evaluator: 'winWith9SoloRoles',
     evaluatorParams: {},
     levels: [
       // Bronze: 1 win with each solo role

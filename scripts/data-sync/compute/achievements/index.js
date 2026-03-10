@@ -49,7 +49,7 @@ import {
 import {
   agentPerfectKill, agentVoted,
   bountyHunterWins, louveteauOrphanWin,
-  winWithAllSoloRoles, idiotKilledByHunter,
+  winWith9SoloRoles, idiotKilledByHunter,
   roleWins,
 } from './evaluators-roles.js';
 
@@ -128,7 +128,7 @@ export const EVALUATORS = {
   agentVoted,
   bountyHunterWins,
   louveteauOrphanWin,
-  winWithAllSoloRoles,
+  winWith9SoloRoles,
   idiotKilledByHunter,
   roleWins,
 
