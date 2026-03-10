@@ -174,6 +174,25 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
         }
       }
 
+      // Additionally track Traître and Louveteau as separate entries in the Loup chart
+      if (isWolfFamily && (playerStat.MainRoleInitial === 'Traître' || playerStat.MainRoleInitial === 'Louveteau')) {
+        const roleName = playerStat.MainRoleInitial;
+        const currentStats = loupPowersMap.get(roleName) || { 
+          appearances: 0, 
+          wins: 0, 
+          winsWithoutRoleChange: 0, 
+          gamesWithoutRoleChange: 0,
+          roleBreakdown: new Map<string, number>() 
+        };
+        loupPowersMap.set(roleName, {
+          appearances: currentStats.appearances + 1,
+          wins: currentStats.wins + (playerWon ? 1 : 0),
+          winsWithoutRoleChange: currentStats.winsWithoutRoleChange + (!roleChanged && playerWon ? 1 : 0),
+          gamesWithoutRoleChange: currentStats.gamesWithoutRoleChange + (!roleChanged ? 1 : 0),
+          roleBreakdown: currentStats.roleBreakdown
+        });
+      }
+
       // Process Secondary Role (for all camps)
       if (playerStat.SecondaryRole && playerStat.SecondaryRole.trim() !== '' && playerStat.SecondaryRole !== 'Inconnu') {
         // Skip "Inconnu" secondary role
@@ -594,7 +613,13 @@ export function RolesStatsChart() {
               fromComponent: `Statistiques des Rôles - Pouvoir: ${powerName}`
             });
           },
-          () => {
+          (roleName) => {
+            if (roleName === 'Traître' && lycansColorScheme['Traître']) {
+              return lycansColorScheme['Traître'];
+            }
+            if (roleName === 'Louveteau' && lycansColorScheme['Louveteau']) {
+              return lycansColorScheme['Louveteau'];
+            }
             return lycansColorScheme['Loup'] || 'var(--chart-color-2)';
           }
         )}

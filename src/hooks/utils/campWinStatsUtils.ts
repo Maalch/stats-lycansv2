@@ -27,7 +27,7 @@ function buildGamePlayerCampMapFromGameLog(gameData: GameLogEntry[]): Record<str
       const roleForCamp = playerStat.MainRoleInitial === 'Louveteau' 
         ? playerStat.MainRoleInitial 
         : getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
-      let playerRole = getPlayerCampFromRole(roleForCamp);
+      let playerRole = getPlayerCampFromRole(roleForCamp, { regroupWolfSubRoles: true });
 
       if (playerName && playerRole) {
         gamePlayerCampMap[gameId][playerName] = playerRole;
@@ -61,7 +61,7 @@ function extractSoloRoles(game: GameLogEntry): string[] {
     const roleForCamp = playerStat.MainRoleInitial === 'Louveteau' 
       ? playerStat.MainRoleInitial 
       : getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
-    let role = getPlayerCampFromRole(roleForCamp);
+    let role = getPlayerCampFromRole(roleForCamp, { regroupWolfSubRoles: true });
 
     if (role && !standardRoles.includes(role)) {
       soloRoles.push(role);

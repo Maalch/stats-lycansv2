@@ -196,10 +196,6 @@ function computePlayerRoleStats(
 
       // Process Secondary Role (for all camps)
       if (playerStat.SecondaryRole && playerStat.SecondaryRole.trim() !== '' && playerStat.SecondaryRole !== 'Inconnu') {
-        // Skip "Inconnu" secondary role
-        if (false) {
-          return;
-        }
         const currentStats = secondaryRolesMap.get(playerStat.SecondaryRole) || { 
           appearances: 0, 
           wins: 0, 

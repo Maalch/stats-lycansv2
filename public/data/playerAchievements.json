@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-09T13:20:15.305Z",
+  "generatedAt": "2026-03-10T08:24:59.546Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 776,
@@ -443,68 +443,6 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "map-master",
-      "name": "Map Master",
-      "description": "Vous connaissez chaque recoin de chaque carte",
-      "explanation": "Avoir au moins une victoire sur chaque map disponible",
-      "emoji": "🗺️",
-      "category": "maps",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 5
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 10
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "map-farmer",
-      "name": "Map Farmer",
-      "description": "C'est bon, vous connaissez les maps",
-      "explanation": "Faire X victoires sur chaque map",
-      "emoji": "🌽",
-      "category": "maps",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 2
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 5
         }
       ],
       "requiresBRData": false
@@ -1797,7 +1735,7 @@
       "id": "solo-master",
       "name": "Je maîtrise le solo",
       "description": "Vous savez comment gagner avec chaque rôle",
-      "explanation": "Avoir X victoires avec chaque rôle solo",
+      "explanation": "Avoir X victoires avec 9 rôles solo différents",
       "emoji": "👑",
       "category": "roles",
       "levels": [
@@ -2014,7 +1952,7 @@
       "id": "only-passer",
       "name": "Au cas où, je passe",
       "description": "Vous vous méfiez de la fourberie des loups",
-      "explanation": "Être X fois le seul joueur à passer dans un meeting",
+      "explanation": "Être X fois le seul joueur Villageois à passer dans un meeting",
       "emoji": "🙈",
       "category": "social",
       "levels": [
@@ -2107,7 +2045,7 @@
       "id": "democrat",
       "name": "Troisième oeil",
       "description": "Vous connaissiez tous les rôles à l'avance",
-      "explanation": "Faire X parties en votant que des Loups ou des solos (minimum 3 votes)",
+      "explanation": "Faire X parties en Villageois en ne votant que des Loups ou des solos (minimum 3 votes)",
       "emoji": "🏛️",
       "category": "social",
       "levels": [
@@ -3010,17 +2948,6 @@
           "progress": 0.6
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -3342,17 +3269,6 @@
           "progress": 0.4
         },
         {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "democrat",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -3569,17 +3485,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -4154,17 +4059,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 7,
           "unlockedLevels": [
@@ -4444,17 +4338,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -4668,17 +4551,6 @@
         },
         {
           "id": "hunter-killed-by-wolf",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
-          "id": "only-passer",
           "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
@@ -5306,17 +5178,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -5485,17 +5346,6 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "kill-surprise",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -5999,7 +5849,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 74,
+      "totalUnlocked": 72,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6487,33 +6337,21 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 20,
+          "currentValue": 5,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20240703000000-171"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20241210000000-268"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250110000000-293"
+              "unlockedAtGame": "Ponce-20250619000000-444"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 10
           },
-          "progress": 0.6666666666666666
+          "progress": 0.5
         },
         {
           "id": "lone-non-voter",
@@ -6538,17 +6376,6 @@
             "threshold": 15
           },
           "progress": 0.8
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
         },
         {
           "id": "democrat",
@@ -7083,17 +6910,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "only-passer",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
         },
         {
           "id": "lone-non-voter",
@@ -8368,17 +8184,6 @@
           "progress": 0.5
         },
         {
-          "id": "only-passer",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.8
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -8723,17 +8528,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -9197,17 +8991,6 @@
           "progress": 0.6
         },
         {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 5,
           "unlockedLevels": [
@@ -9224,17 +9007,6 @@
             "threshold": 10
           },
           "progress": 0.5
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -9371,7 +9143,7 @@
     "31": {
       "playerId": "31",
       "playerName": "LyeGaia",
-      "totalUnlocked": 32,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9576,17 +9348,6 @@
           "progress": 0.5
         },
         {
-          "id": "misunderstood",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "false-guilty",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -9599,21 +9360,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240405000000-123"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.5
+          "progress": 0.4
         },
         {
           "id": "lone-non-voter",
@@ -9968,14 +9722,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 3,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -10074,17 +9828,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -10161,7 +9904,7 @@
     "34": {
       "playerId": "34",
       "playerName": "Nahomay",
-      "totalUnlocked": 36,
+      "totalUnlocked": 34,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10365,41 +10108,17 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 14,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240206000000-71"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20240321000000-100"
-            }
-          ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 1,
-            "threshold": 15
-          },
-          "progress": 0.9333333333333333
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 3,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
-          "id": "kill-surprise",
+          "id": "lone-non-voter",
           "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
@@ -10788,17 +10507,6 @@
             "threshold": 10
           },
           "progress": 0.6
-        },
-        {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -11264,14 +10972,14 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -12020,17 +11728,6 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -12907,14 +12604,14 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "false-guilty",
@@ -12929,14 +12626,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -13287,17 +12984,6 @@
           "progress": 0.4
         },
         {
-          "id": "only-passer",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 8,
           "unlockedLevels": [
@@ -13312,17 +12998,6 @@
             "tier": "argent",
             "subLevel": 1,
             "threshold": 10
-          },
-          "progress": 0.8
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
           },
           "progress": 0.8
         },
@@ -13649,17 +13324,6 @@
             "threshold": 10
           },
           "progress": 0.7
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -14364,14 +14028,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 3,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -14390,17 +14054,6 @@
             "threshold": 10
           },
           "progress": 0.8
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -14574,7 +14227,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 150,
+      "totalUnlocked": 148,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15499,14 +15152,14 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 3,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.4
         },
         {
           "id": "false-guilty",
@@ -15521,35 +15174,33 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 35,
+          "currentValue": 18,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20231219000000-20"
+              "unlockedAtGame": "Ponce-20231219000000-21"
             },
             {
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20240321000000-90"
+              "unlockedAtGame": "Ponce-20240821000000-215"
             },
             {
               "tier": "or",
               "subLevel": 1,
               "threshold": 15,
-              "unlockedAtGame": "Ponce-20240717000000-184"
-            },
-            {
-              "tier": "lycans",
-              "subLevel": 1,
-              "threshold": 30,
-              "unlockedAtGame": "Tsuna-20251111131040"
+              "unlockedAtGame": "Ponce-20250218000000-343"
             }
           ],
-          "nextLevel": null,
-          "progress": 1
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.6
         },
         {
           "id": "lone-non-voter",
@@ -15585,31 +15236,24 @@
         },
         {
           "id": "kill-surprise",
-          "currentValue": 7,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250716000000-475"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.7
+          "progress": 0.2
         },
         {
           "id": "democrat",
-          "currentValue": 6,
+          "currentValue": 9,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "khalen-20260120114742"
+              "unlockedAtGame": "Ponce-20251104130931"
             }
           ],
           "nextLevel": {
@@ -15617,7 +15261,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.9
         },
         {
           "id": "colors-of-lycans",
@@ -16351,14 +15995,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -16370,17 +16014,6 @@
             "threshold": 5
           },
           "progress": 0.8
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -16495,7 +16128,7 @@
     "76561198065697406": {
       "playerId": "76561198065697406",
       "playerName": "Onutrem",
-      "totalUnlocked": 38,
+      "totalUnlocked": 37,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16758,17 +16391,6 @@
           "progress": 0.5
         },
         {
-          "id": "misunderstood",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "false-guilty",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -16781,21 +16403,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 9,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240618000000-159"
-            }
-          ],
+          "currentValue": 3,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.9
+          "progress": 0.6
         },
         {
           "id": "lone-non-voter",
@@ -16809,26 +16424,15 @@
           "progress": 0.6
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "democrat",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -17021,7 +16625,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 134,
+      "totalUnlocked": 129,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17931,51 +17535,25 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 7,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250916000000-549"
-            }
-          ],
+          "currentValue": 3,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.7
+          "progress": 0.6
         },
         {
           "id": "only-passer",
-          "currentValue": 20,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240206000000-63"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20240507000000-132"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250805000000-508"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.6666666666666666
+          "progress": 0.4
         },
         {
           "id": "lone-non-voter",
@@ -18008,24 +17586,6 @@
           ],
           "nextLevel": null,
           "progress": 1
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 8,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251230160612"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.8
         },
         {
           "id": "democrat",
@@ -18466,7 +18026,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 138,
+      "totalUnlocked": 132,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19343,33 +18903,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 18,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240321000000-90"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20240507000000-141"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250401000000-388"
-            }
-          ],
+          "currentValue": 4,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "lone-non-voter",
@@ -19405,37 +18946,18 @@
         },
         {
           "id": "kill-surprise",
-          "currentValue": 15,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240703000000-170"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250401000000-387"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20260127132611"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.5
+          "progress": 0.4
         },
         {
           "id": "democrat",
-          "currentValue": 17,
+          "currentValue": 21,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -19447,7 +18969,7 @@
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20251118000000-632"
+              "unlockedAtGame": "Ponce-20251104133550"
             },
             {
               "tier": "or",
@@ -19461,7 +18983,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.5666666666666667
+          "progress": 0.7
         },
         {
           "id": "colors-of-lycans",
@@ -19889,7 +19411,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 124,
+      "totalUnlocked": 120,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20105,42 +19627,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "map-master",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20231219000000-14"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 3
-          },
-          "progress": 0.3333333333333333
-        },
-        {
-          "id": "map-farmer",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20231219000000-14"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 2
-          },
-          "progress": 0.5
         },
         {
           "id": "wolf-sabotages",
@@ -20689,14 +20175,14 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "false-guilty",
@@ -20711,33 +20197,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 19,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240924000000-225"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20251023134242"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20251202123802"
-            }
-          ],
+          "currentValue": 3,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.6333333333333333
+          "progress": 0.6
         },
         {
           "id": "lone-non-voter",
@@ -20772,39 +20239,34 @@
           "progress": 1
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
           "id": "democrat",
-          "currentValue": 13,
+          "currentValue": 16,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20251009120237"
+              "unlockedAtGame": "Ponce-20250923000000-559"
             },
             {
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20260203113055"
+              "unlockedAtGame": "khalen-20251209123037"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260217114703"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 30
           },
-          "progress": 0.8666666666666667
+          "progress": 0.5333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -21238,7 +20700,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 131,
+      "totalUnlocked": 127,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22145,27 +21607,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 14,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250716000000-482"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Tsuna-20251111124338"
-            }
-          ],
+          "currentValue": 3,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.9333333333333333
+          "progress": 0.6
         },
         {
           "id": "lone-non-voter",
@@ -22198,26 +21647,8 @@
           "progress": 0.9
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 9,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250128000000-321"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.9
-        },
-        {
           "id": "democrat",
-          "currentValue": 15,
+          "currentValue": 14,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -22230,20 +21661,14 @@
               "subLevel": 1,
               "threshold": 10,
               "unlockedAtGame": "Ponce-20251118000000-632"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "khalen-20260217133845"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 15
           },
-          "progress": 0.5
+          "progress": 0.9333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -22668,7 +22093,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 102,
+      "totalUnlocked": 101,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23459,27 +22884,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 13,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240813000000-201"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250916000000-548"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.8666666666666667
+          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -23506,33 +22918,28 @@
           "progress": 0.8666666666666667
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "democrat",
-          "currentValue": 8,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
               "unlockedAtGame": "Tsuna-20251111113550"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260303130810"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 15
           },
-          "progress": 0.8
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -23910,7 +23317,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 96,
+      "totalUnlocked": 92,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24606,21 +24013,14 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "khalen-20260113141709"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.5
+          "progress": 0.4
         },
         {
           "id": "false-guilty",
@@ -24635,31 +24035,12 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 18,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240717000000-182"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250110000000-299"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20251118000000-634"
-            }
-          ],
+          "currentValue": 3,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
           "progress": 0.6
         },
@@ -24694,17 +24075,6 @@
           ],
           "nextLevel": null,
           "progress": 1
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -25063,7 +24433,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 84,
+      "totalUnlocked": 83,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25683,17 +25053,6 @@
           "progress": 0.2
         },
         {
-          "id": "misunderstood",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "false-guilty",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -25706,27 +25065,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 14,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20241231000000-291"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250624000000-458"
-            }
-          ],
+          "currentValue": 4,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.9333333333333333
+          "progress": 0.8
         },
         {
           "id": "lone-non-voter",
@@ -25753,26 +25099,22 @@
           "progress": 0.9333333333333333
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "democrat",
-          "currentValue": 4,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Tsuna-20251111113550"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -26078,7 +25420,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 88,
+      "totalUnlocked": 84,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26740,21 +26082,14 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20260203115806"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.5
+          "progress": 0.4
         },
         {
           "id": "false-guilty",
@@ -26769,33 +26104,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 19,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20241205000000-245"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250902000000-531"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20260127111930"
-            }
-          ],
+          "currentValue": 4,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.6333333333333333
+          "progress": 0.8
         },
         {
           "id": "lone-non-voter",
@@ -26829,25 +26145,25 @@
         },
         {
           "id": "kill-surprise",
-          "currentValue": 3,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.2
         },
         {
           "id": "democrat",
-          "currentValue": 3,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -27141,7 +26457,7 @@
     "76561198018650146": {
       "playerId": "76561198018650146",
       "playerName": "TPK",
-      "totalUnlocked": 32,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27412,24 +26728,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "only-passer",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "khalen-20251209133527"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.5
         },
         {
           "id": "lone-non-voter",
@@ -27944,17 +27242,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.8
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -28207,7 +27494,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 106,
+      "totalUnlocked": 105,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28988,30 +28275,6 @@
           "progress": 0.6
         },
         {
-          "id": "only-passer",
-          "currentValue": 13,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250916000000-549"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "khalen-20260113114218"
-            }
-          ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 1,
-            "threshold": 15
-          },
-          "progress": 0.8666666666666667
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 57,
           "unlockedLevels": [
@@ -29044,39 +28307,34 @@
           "progress": 1
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "democrat",
-          "currentValue": 12,
+          "currentValue": 15,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20251104133550"
+              "unlockedAtGame": "Ponce-20251104130931"
             },
             {
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20260106113016"
+              "unlockedAtGame": "Ponce-20251118000000-637"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260303130810"
             }
           ],
           "nextLevel": {
-            "tier": "or",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 30
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -29424,7 +28682,7 @@
     "76561198140298176": {
       "playerId": "76561198140298176",
       "playerName": "Kyria",
-      "totalUnlocked": 54,
+      "totalUnlocked": 53,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29875,21 +29133,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 9,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250114000000-306"
-            }
-          ],
+          "currentValue": 4,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.9
+          "progress": 0.8
         },
         {
           "id": "lone-non-voter",
@@ -29920,6 +29171,17 @@
             "threshold": 30
           },
           "progress": 0.6333333333333333
+        },
+        {
+          "id": "democrat",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -30267,17 +29529,6 @@
         },
         {
           "id": "same-color-kills",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -30787,17 +30038,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "misunderstood",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "only-passer",
@@ -31613,24 +30853,6 @@
           "progress": 0.6
         },
         {
-          "id": "only-passer",
-          "currentValue": 6,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20260203113055"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.6
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 18,
           "unlockedLevels": [
@@ -31661,26 +30883,22 @@
           "progress": 0.6
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
           "id": "democrat",
-          "currentValue": 3,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260106113016"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -31911,7 +31129,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 46,
+      "totalUnlocked": 45,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32303,21 +31521,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 6,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251223144301"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -32342,17 +31553,6 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -32533,7 +31733,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 88,
+      "totalUnlocked": 87,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33193,24 +32393,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 6,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251028112426"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.6
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 15,
           "unlockedLevels": [
@@ -33241,26 +32423,15 @@
           "progress": 0.5
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "democrat",
-          "currentValue": 1,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -33609,7 +32780,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 76,
+      "totalUnlocked": 73,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34199,38 +33370,25 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 3,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.4
         },
         {
           "id": "only-passer",
-          "currentValue": 11,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250805000000-516"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "khalen-20260217120920"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.7333333333333333
+          "progress": 0.4
         },
         {
           "id": "lone-non-voter",
@@ -34255,24 +33413,6 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 8,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20260106122810"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.8
         },
         {
           "id": "democrat",
@@ -34602,7 +33742,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 63,
+      "totalUnlocked": 62,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35217,31 +34357,19 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 21,
+          "currentValue": 7,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20250624000000-461"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250826000000-527"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20251230115440"
+              "unlockedAtGame": "Ponce-20251230151539"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 10
           },
           "progress": 0.7
         },
@@ -35270,26 +34398,22 @@
           "progress": 0.9333333333333333
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.8
-        },
-        {
           "id": "democrat",
-          "currentValue": 3,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260217120920"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -36274,17 +35398,6 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
-          "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -36319,25 +35432,14 @@
           "progress": 0.9333333333333333
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
           "id": "democrat",
-          "currentValue": 6,
+          "currentValue": 5,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20260210133335"
+              "unlockedAtGame": "khalen-20260217114703"
             }
           ],
           "nextLevel": {
@@ -36345,7 +35447,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -36492,7 +35594,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 53,
+      "totalUnlocked": 52,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37039,24 +36141,6 @@
           "progress": 0.6
         },
         {
-          "id": "only-passer",
-          "currentValue": 7,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251118000000-627"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.7
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -37068,25 +36152,14 @@
           "progress": 0.2
         },
         {
-          "id": "kill-surprise",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "democrat",
-          "currentValue": 7,
+          "currentValue": 8,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20260210113643"
+              "unlockedAtGame": "Ponce-20251118000000-635"
             }
           ],
           "nextLevel": {
@@ -37094,7 +36167,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.7
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -37577,25 +36650,25 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "only-passer",
-          "currentValue": 3,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -38676,7 +37749,7 @@
           "progress": 0.2
         },
         {
-          "id": "misunderstood",
+          "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -38685,31 +37758,9 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "only-passer",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "kill-surprise",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -39094,17 +38145,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -39554,17 +38594,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 5,
           "unlockedLevels": [
@@ -39970,17 +38999,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -40507,17 +39525,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 5,
           "unlockedLevels": [
@@ -40534,17 +39541,6 @@
             "threshold": 10
           },
           "progress": 0.5
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -41069,17 +40065,6 @@
             "threshold": 10
           },
           "progress": 0.1
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -41990,17 +40975,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -42306,7 +41280,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 25,
+      "totalUnlocked": 24,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42649,21 +41623,14 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "khalen-20260303123611"
-            }
-          ],
+          "currentValue": 3,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.5
+          "progress": 0.6
         },
         {
           "id": "false-guilty",
@@ -42678,14 +41645,14 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 4,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.8
+          "progress": 0.2
         },
         {
           "id": "lone-non-voter",
@@ -42697,17 +41664,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "kill-surprise",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
         },
         {
           "id": "democrat",
@@ -43234,17 +42190,6 @@
           "progress": 0.2
         },
         {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -43436,17 +42381,6 @@
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 10
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
           },
           "progress": 0.2
         },
