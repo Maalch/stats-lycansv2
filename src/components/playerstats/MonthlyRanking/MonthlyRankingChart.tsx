@@ -202,7 +202,7 @@ export function MonthlyRankingChart() {
 
     // Sort by win rate descending, then by games played for ties
     eligiblePlayers.sort((a, b) => b.winPercent - a.winPercent || b.gamesPlayed - a.gamesPlayed);
-    const chartLimit = CHART_LIMITS.TOP_15;
+    const chartLimit = CHART_LIMITS.TOP_20;
     const topPlayers = eligiblePlayers.slice(0, chartLimit);
 
     // Average win rate across eligible players
