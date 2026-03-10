@@ -120,14 +120,17 @@ export function unanimousVoteAsVillager(playerGames, allGames, playerId, params)
 }
 
 /**
- * Count games where player was the only one to pass ("Passé") in a meeting
+ * Count games where player was the only Villageois to pass ("Passé") in a meeting, with at least 3  voters total
  */
-export function onlyPasserInMeeting(playerGames, allGames, playerId, params) {
+export function onlyVillagerPasserInMeeting(playerGames, allGames, playerId, params) {
   const gameIds = [];
   let value = 0;
   const countedGames = new Set();
   
   for (const { game, playerStat } of playerGames) {
+    const playerCamp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
+    if (playerCamp !== 'Villageois') continue;
+
     const votes = playerStat.Votes || [];
     
     for (const vote of votes) {

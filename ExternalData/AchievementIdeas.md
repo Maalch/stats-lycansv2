@@ -65,7 +65,7 @@
 | Données à valider | Agent | Rôles | 117 | Bravo, vous avez tout de suite été capté | Mourir X fois aux votes en étant Agent | 1 | 3 | 5 | 10 |
 | Données à valider | Loup | Rôles | Le Louveteau Orphelin | Vous étiez trop jeune pour mourir | Gagner X fois en Louveteau après la mort des autres Loups | 1 | 2 | 3 | 5 |
 | Données à valider | Solos | Rôles | Je maîtrise le solo | Vous savez comment gagner avec chaque rôle | Avoir X victoires avec chaque rôle solo | 1 | 2 | 3 | 5 |
-| Données à valider | Tous | Social | Au cas où, je passe | Vous vous méfiez de la fourberie des loups | Être X fois le seul joueur à passer dans un meeting | 5 | 10 | 15 | 30 |
+| Données à valider | Tous | Social | Au cas où, je passe | Vous vous méfiez de la fourberie des loups | Être X fois le seul joueur à passer dans un meeting en Villageois | 5 | 10 | 15 | 30 |
 | Données à valider | Tous | Social | Kill surprise | Allez, au dernier moment, ça passe ! | Être X fois le seul joueur à voter dans un meeting | 5 | 10 | 15 | 30 |
 | Données à valider | Villageois | Social | L'Incompris | Vous l'aviez dit pourtant que vous étiez innocent... | Voter X fois pour un Loup/rôle solo mais se faire voter à la place en étant Villageois | 5 | 10 | 15 | 30 |
 | Données à valider | Villageois | Social | Faux Coupable | Dommage, vous n'étiez pas l'idiot du village... | Être X fois voté à l'unanimité en tant que Villageois | 5 | 10 | 15 | 30 |

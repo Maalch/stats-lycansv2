@@ -63,7 +63,7 @@ import {
 // Voting evaluators
 import {
   votedAsCamp, correctVoteButVoted, unanimousVoteAsVillager,
-  onlyPasserInMeeting, loneNonVoterAllOthersPassed,
+  onlyVillagerPasserInMeeting, loneNonVoterAllOthersPassed,
   soleVoterElimination, consecutiveCorrectVotes, onlyEnemyVotes,
 } from './evaluators-voting.js';
 
@@ -144,7 +144,7 @@ export const EVALUATORS = {
   votedAsCamp,
   correctVoteButVoted,
   unanimousVoteAsVillager,
-  onlyPasserInMeeting,
+  onlyVillagerPasserInMeeting,
   loneNonVoterAllOthersPassed,
   soleVoterElimination,
   consecutiveCorrectVotes,

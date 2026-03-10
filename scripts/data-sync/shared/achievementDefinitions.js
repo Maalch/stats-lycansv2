@@ -1234,10 +1234,10 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'only-passer',
     name: 'Au cas où, je passe',
     description: 'Vous vous méfiez de la fourberie des loups',
-    explanation: 'Être X fois le seul joueur à passer dans un meeting',
+    explanation: 'Être X fois le seul joueur Villageois à passer dans un meeting',
     emoji: '🙈',
     category: 'social',
-    evaluator: 'onlyPasserInMeeting',
+    evaluator: 'onlyVillagerPasserInMeeting',
     evaluatorParams: {},
     levels: [
       // Bronze: 5
