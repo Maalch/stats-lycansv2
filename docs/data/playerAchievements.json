@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-10T16:28:07.911Z",
+  "generatedAt": "2026-03-12T16:41:33.563Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 787,
@@ -49,9 +49,9 @@
   "achievementDefinitions": [
     {
       "id": "victories-villageois",
-      "name": "Héros du Village",
+      "name": "Héros·ïne du Village",
       "description": "La justice finit toujours par triompher",
-      "explanation": "Gagner X victoires en camp Villageois",
+      "explanation": "Gagner X parties en Villageois",
       "emoji": "🏘️",
       "category": "victories",
       "levels": [
@@ -112,7 +112,7 @@
       "id": "victories-loup",
       "name": "Terreur Nocturne",
       "description": "La nuit vous appartient",
-      "explanation": "Gagner X victoires en camp Loup",
+      "explanation": "Gagner X victoires en Loup",
       "emoji": "🐺",
       "category": "victories",
       "levels": [
@@ -171,7 +171,7 @@
     },
     {
       "id": "victories-solo",
-      "name": "Solo Winner",
+      "name": "Solo Winner·use",
       "description": "Vous n'avez pas besoin d'alliés pour gagner...",
       "explanation": "Gagner X victoires en camp solo (Amoureux, Idiot du Village, Agent, etc.)",
       "emoji": "🎯",
@@ -233,7 +233,7 @@
     },
     {
       "id": "wolf-survived-hunter-shot",
-      "name": "Loup Aventurier",
+      "name": "Loup Aventurier·ère",
       "description": "Et puis vous avez pris une flèche dans le genou...",
       "explanation": "Perdre X parties en Loup tout en survivant au Chasseur (la balle ne vous tue pas)",
       "emoji": "🏹",
@@ -294,7 +294,7 @@
     },
     {
       "id": "wolf-loss-harvest-no-kills",
-      "name": "Le loup trop gentil",
+      "name": "Le·a loup·ve trop gentil·le",
       "description": "Vous ne vouliez vraiment blesser personne...",
       "explanation": "Perdre X parties à la récolte en Loup sans avoir tué personne",
       "emoji": "🌾",
@@ -326,7 +326,7 @@
     {
       "id": "wolf-menage-a-trois",
       "name": "Ménage à Trois",
-      "description": "Il suffit de convaincre un villageois de voter pour votre victime et le tour est joué",
+      "description": "Il suffit de convaincre un·e villageois·e de voter pour votre victime et le tour est joué",
       "explanation": "Gagner X parties en faisant voter le dernier Villageois lors d'un meeting à 3 en étant Loup",
       "emoji": "3️⃣",
       "category": "victories",
@@ -358,7 +358,7 @@
       "id": "wolf-all-kills-solo",
       "name": "Besoin de personne",
       "description": "Vous faites votre route solo et vous la faites plutôt bien",
-      "explanation": "Gagner X parties en Loup en étant le seul à avoir fait des kills hors meeting",
+      "explanation": "Gagner X parties en étant le seul Loup à avoir fait des kills",
       "emoji": "🐺",
       "category": "victories",
       "levels": [
@@ -389,7 +389,7 @@
       "id": "wolf-win-early-death",
       "name": "Une game exemplaire",
       "description": "Tout s'est déroulé comme prévu",
-      "explanation": "Gagner X parties en Loup en mourant avant le premier meeting (N1 ou J1)",
+      "explanation": "Gagner X parties en Loup sans aller jusqu'au premier meeting",
       "emoji": "💤",
       "category": "victories",
       "levels": [
@@ -418,8 +418,8 @@
     },
     {
       "id": "last-wolf",
-      "name": "Le dernier loup",
-      "description": "Vous n'avez besoin de personne pour gagner… Vous seul survivez.",
+      "name": "Le·a dernier·ère loup·ve",
+      "description": "Vous n'avez besoin de personne pour gagner… Vous seul·e survivez.",
       "explanation": "Gagner X parties en étant l'unique survivant et donc le dernier Loup",
       "emoji": "🏘️",
       "category": "victories",
@@ -635,71 +635,9 @@
     {
       "id": "voted-as-villager",
       "name": "Coupable par défaut",
-      "description": "Vous avez beau crier que vous êtes gentil, personne ne vous croit...",
+      "description": "Vous avez beau crier que vous êtes gentil·le, personne ne vous croit...",
       "explanation": "Être X fois éjecté d'un meeting en étant Villageois",
       "emoji": "🗳️",
-      "category": "deaths",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 5
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 10
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 15
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "wolf-killed-by-beast",
-      "name": "C'est Bête",
-      "description": "Un loup tué par La Bête... L'ironie du sort",
-      "explanation": "Mourir X fois en Loup par La Bête",
-      "emoji": "🦁",
-      "category": "deaths",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 5
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 10
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 15
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "wolf-killed-by-amoureux-loup",
-      "name": "C'est l'Amour",
-      "description": "Un loup tué par un autre loup... C'est le ponpon",
-      "explanation": "Mourir X fois en Loup par un Amoureux Loup",
-      "emoji": "💔",
       "category": "deaths",
       "levels": [
         {
@@ -790,7 +728,7 @@
     {
       "id": "avenger-death",
       "name": "Porte-Malheur",
-      "description": "Votre tueur a été victime de votre malédiction",
+      "description": "Votre tueur·se a été victime de votre malédiction",
       "explanation": "Avoir X fois son tueur qui meurt le même jour",
       "emoji": "⚖️",
       "category": "deaths",
@@ -912,9 +850,9 @@
       "requiresBRData": false
     },
     {
-      "id": "ponce-fesses",
-      "name": "Ponce fesses",
-      "description": "Comme un certain streameur, tu ponces des culs",
+      "id": "wolf-kills",
+      "name": "Loup·ve Affamé·e",
+      "description": "Vous avez faim de chair fraîche...",
       "explanation": "Faire X kills en Loup",
       "emoji": "🍑",
       "category": "kills",
@@ -974,7 +912,7 @@
     },
     {
       "id": "hunter-kill-enemy",
-      "name": "Justice du Chasseur",
+      "name": "Justice du Chasseur·se",
       "description": "Votre balle a trouvé sa cible... La bonne cette fois",
       "explanation": "Tuer X fois un joueur ennemi en étant Chasseur",
       "emoji": "🎯",
@@ -1037,7 +975,7 @@
     {
       "id": "villageois-double-ally-kill",
       "name": "Oups",
-      "description": "Alors, vous vous êtes trompés d'alliés...",
+      "description": "Alors... Vous vous êtes trompés d'alliés...",
       "explanation": "Faire X parties en tuant deux alliés hors meeting en étant Villageois",
       "emoji": "🤦",
       "category": "kills",
@@ -1067,8 +1005,8 @@
     },
     {
       "id": "hunter-double-kill",
-      "name": "Farmeur de loups",
-      "description": "Un loup, c'est bien, deux loups, c'est mieux",
+      "name": "Farmeur de loups·ves",
+      "description": "Un·e loup·ve, c'est bien, deux loups·ves, c'est mieux",
       "explanation": "Tuer X fois deux Loups dans une même game en étant Chasseur",
       "emoji": "🏹",
       "category": "kills",
@@ -1098,8 +1036,8 @@
     },
     {
       "id": "hunter-triple-kill",
-      "name": "Maître des loups",
-      "description": "Un, deux, trois... Aucun loup ne vous arrête",
+      "name": "Maître·sse des loup·ves",
+      "description": "Un, deux, trois... Aucun·e loup·ve ne vous arrêtera",
       "explanation": "Tuer X fois trois Loups dans une même game en étant Chasseur",
       "emoji": "👑",
       "category": "kills",
@@ -1145,8 +1083,8 @@
     },
     {
       "id": "hunter-killed-by-wolf",
-      "name": "Le Loup, c'est Khalen",
-      "description": "Un loup vous a tué alors que vous êtes chasseur... Il évite les balles ?",
+      "name": "Chasseur·se Chassé·e",
+      "description": "J'ai jamais demandé à avoir un fusil, moi !",
       "explanation": "Mourir X fois en Chasseur par un Loup",
       "emoji": "🐺",
       "category": "kills",
@@ -1232,37 +1170,6 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 10
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
-      "id": "victim-of-love",
-      "name": "Victime de l'Amour",
-      "description": "Pour que l'Amour existe, vous avez dû périr",
-      "explanation": "Mourir X fois par un Amoureux Loup",
-      "emoji": "💘",
-      "category": "kills",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 10
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 20
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 30
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 50
         }
       ],
       "requiresBRData": false
@@ -1363,7 +1270,7 @@
       "id": "amoureux-loup-kills-two-wolves",
       "name": "Pas de concurrence",
       "description": "La meilleure défense, c'est l'attaque",
-      "explanation": "Avoir X fois tué deux Loups en étant Amoureux Loup",
+      "explanation": "Tuer X fois un Loup en étant Amoureux Loup",
       "emoji": "🐺🐺💕",
       "category": "kills",
       "levels": [
@@ -1455,8 +1362,8 @@
     {
       "id": "agent-007",
       "name": "007",
-      "description": "Bravo, vous êtes un véritable agent",
-      "explanation": "Avoir X fois tué personnellement l'autre Agent et ne jamais avoir été voté en étant Agent",
+      "description": "Bravo, vous êtes un·e véritable agent",
+      "explanation": "Avoir X fois gagné en tuant personnellement l'autre Agent",
       "emoji": "🔫",
       "category": "roles",
       "levels": [
@@ -1577,37 +1484,6 @@
       "requiresBRData": false
     },
     {
-      "id": "louveteau-orphan",
-      "name": "Le Louveteau Orphelin",
-      "description": "Vous étiez trop jeune pour mourir",
-      "explanation": "Gagner X fois en Louveteau après la mort des autres Loups",
-      "emoji": "🐶",
-      "category": "roles",
-      "levels": [
-        {
-          "tier": "bronze",
-          "subLevel": 1,
-          "threshold": 1
-        },
-        {
-          "tier": "argent",
-          "subLevel": 1,
-          "threshold": 2
-        },
-        {
-          "tier": "or",
-          "subLevel": 1,
-          "threshold": 3
-        },
-        {
-          "tier": "lycans",
-          "subLevel": 1,
-          "threshold": 5
-        }
-      ],
-      "requiresBRData": false
-    },
-    {
       "id": "vaudou-triple-resurrect",
       "name": "Zombie Nation",
       "description": "Votre armée de morts s'est bien agrandie",
@@ -1704,7 +1580,7 @@
       "id": "solo-master",
       "name": "Je maîtrise le solo",
       "description": "Vous savez comment gagner avec chaque rôle",
-      "explanation": "Avoir X victoires avec 9 rôles solo différents",
+      "explanation": "Avoir X victoires avec X rôles solo différents",
       "emoji": "👑",
       "category": "roles",
       "levels": [
@@ -1716,17 +1592,17 @@
         {
           "tier": "argent",
           "subLevel": 1,
-          "threshold": 2
+          "threshold": 3
         },
         {
           "tier": "or",
           "subLevel": 1,
-          "threshold": 3
+          "threshold": 5
         },
         {
           "tier": "lycans",
           "subLevel": 1,
-          "threshold": 5
+          "threshold": 9
         }
       ],
       "requiresBRData": false
@@ -1764,7 +1640,7 @@
     },
     {
       "id": "zombie-item-uses",
-      "name": "Joueur comme les autres",
+      "name": "Joueur·se comme les autres",
       "description": "Même en zombie, vous voulez faire comme tout le monde",
       "explanation": "Avoir X fois bu une potion ou utilisé un objet en étant Zombie",
       "emoji": "🧟",
@@ -1857,9 +1733,9 @@
     },
     {
       "id": "misunderstood",
-      "name": "L'Incompris",
-      "description": "Vous l'aviez dit pourtant que vous étiez innocent...",
-      "explanation": "Voter X fois pour un Loup/rôle solo mais se faire voter à la place en étant Villageois",
+      "name": "L'Incompris·e",
+      "description": "Vous l'aviez dit pourtant que vous étiez innocent·e...",
+      "explanation": "Voter X fois pour un ennemi mais se faire voter à la place en étant Villageois",
       "emoji": "🤷",
       "category": "social",
       "levels": [
@@ -1920,7 +1796,7 @@
     {
       "id": "only-passer",
       "name": "Au cas où, je passe",
-      "description": "Vous vous méfiez de la fourberie des loups",
+      "description": "Vous vous méfiez de la fourberie des ennemis",
       "explanation": "Être X fois le seul joueur Villageois à passer dans un meeting",
       "emoji": "🙈",
       "category": "social",
@@ -1952,7 +1828,7 @@
       "id": "lone-non-voter",
       "name": "Et le temps passe...",
       "description": "Vous n'aviez pas vu que tout le monde vous attendait ?",
-      "explanation": "Être X fois le seul joueur à ne pas voter quand tous les autres ont passé",
+      "explanation": "Être X fois le seul joueur inactif quand tout le monde a passé",
       "emoji": "⏳",
       "category": "social",
       "levels": [
@@ -2014,7 +1890,7 @@
       "id": "democrat",
       "name": "Troisième oeil",
       "description": "Vous connaissiez tous les rôles à l'avance",
-      "explanation": "Faire X parties en Villageois en ne votant que des Loups ou des solos (minimum 3 votes)",
+      "explanation": "Faire X parties en Villageois en ne votant que des ennemis (minimum 3 votes)",
       "emoji": "🏛️",
       "category": "social",
       "levels": [
@@ -2104,8 +1980,8 @@
     },
     {
       "id": "winning-months",
-      "name": "Gagnant du mois",
-      "description": "Vous êtes beau, vous êtes grand, vous êtes gagnant... Au moins sur un mois.",
+      "name": "Gagnant·e du mois",
+      "description": "Vous êtes beau·elle, vous êtes grand·e, vous êtes gagnant·e... Au moins sur un mois.",
       "explanation": "Avoir X fois plus de 50 % de victoires sur un mois civil",
       "emoji": "📅",
       "category": "victories",
@@ -2135,9 +2011,9 @@
     },
     {
       "id": "perfect-sessions",
-      "name": "C'est qui le patron ?",
+      "name": "C'est qui le·a patron·ne ?",
       "description": "C'est vous...",
-      "explanation": "Avoir X sessions (même jour, min. 5 parties) à 100 % de victoire",
+      "explanation": "Avoir X sessions (min. 5 parties) à 100 % de victoire",
       "emoji": "💼",
       "category": "victories",
       "levels": [
@@ -2290,7 +2166,7 @@
     {
       "id": "collectionneur",
       "name": "Collectionneur",
-      "description": "Vous êtes prêt en toute circonstance",
+      "description": "Vous êtes prêt·e en toute circonstance",
       "explanation": "Faire X parties en utilisant au moins 5 items différents (gadgets ou potions)",
       "emoji": "🎒",
       "category": "special",
@@ -2320,8 +2196,8 @@
     },
     {
       "id": "br-victories",
-      "name": "Roi de la Colline",
-      "description": "Seul contre tous, vous avez triomphé",
+      "name": "Roi·Reine de la Colline",
+      "description": "Seul·e contre tous, vous avez triomphé",
       "explanation": "Gagner X parties en Battle Royale",
       "emoji": "👑",
       "category": "br",
@@ -2442,8 +2318,8 @@
     },
     {
       "id": "br-total-kills",
-      "name": "Tueur en série",
-      "description": "Le Roi du 3 6",
+      "name": "Tueur·se en série",
+      "description": "Le·a roi·reine du 3 6",
       "explanation": "Faire X kills au total en Battle Royale",
       "emoji": "💀",
       "category": "br",
@@ -2505,7 +2381,7 @@
       "id": "br-pacifist",
       "name": "Le pacifisme incarné",
       "description": "Tuer c'est mal... Même quand c'est le principe...",
-      "explanation": "Faire une partie BR avec 0 kill",
+      "explanation": "Faire X parties BR avec 0 kill",
       "emoji": "🕊️",
       "category": "br",
       "levels": [
@@ -2842,7 +2718,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 8,
           "unlockedLevels": [
             {
@@ -2864,17 +2740,6 @@
             "threshold": 10
           },
           "progress": 0.8
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.2
         },
         {
           "id": "amoureux-loup-total-kills",
@@ -2904,17 +2769,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -3012,17 +2866,6 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -3129,7 +2972,7 @@
     "3": {
       "playerId": "3",
       "playerName": "Antoine",
-      "totalUnlocked": 11,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3220,7 +3063,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 2,
           "unlockedLevels": [
             {
@@ -3236,6 +3079,42 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "agent-007",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250923000000-552"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250923000000-552"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "democrat",
@@ -3416,7 +3295,7 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 2,
           "unlockedLevels": [
             {
@@ -3446,17 +3325,6 @@
         },
         {
           "id": "hunter-killed-by-wolf",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
-          "id": "lone-non-voter",
           "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
@@ -3593,17 +3461,6 @@
           "progress": 0.8
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "colors-of-lycans",
           "currentValue": 2,
           "unlockedLevels": [
@@ -3708,7 +3565,7 @@
     "8": {
       "playerId": "8",
       "playerName": "BoccA",
-      "totalUnlocked": 36,
+      "totalUnlocked": 35,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3893,7 +3750,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 24,
           "unlockedLevels": [
             {
@@ -3981,24 +3838,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 11,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250513000000-428"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.55
-        },
-        {
           "id": "amoureux-loup-kills-lover",
           "currentValue": 2,
           "unlockedLevels": [
@@ -4046,22 +3885,33 @@
           "progress": 0.6
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 7,
+          "id": "solo-master",
+          "currentValue": 1,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250513000000-429"
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-308"
             }
           ],
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 3
           },
-          "progress": 0.7
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
@@ -4296,7 +4146,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 1,
           "unlockedLevels": [
             {
@@ -4323,17 +4173,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -4502,7 +4341,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 7,
           "unlockedLevels": [
             {
@@ -4546,17 +4385,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -4662,7 +4490,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 6,
           "unlockedLevels": [
             {
@@ -4684,17 +4512,6 @@
             "threshold": 10
           },
           "progress": 0.6
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -4782,7 +4599,7 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 3,
           "unlockedLevels": [
             {
@@ -5096,7 +4913,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 4,
           "unlockedLevels": [
             {
@@ -5123,17 +4940,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.2
         },
         {
           "id": "amoureux-loup-total-kills",
@@ -5163,17 +4969,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -5332,17 +5127,6 @@
           "progress": 0.2
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "democrat",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -5376,7 +5160,7 @@
     "15": {
       "playerId": "15",
       "playerName": "Drakony",
-      "totalUnlocked": 13,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5461,7 +5245,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 6,
           "unlockedLevels": [
             {
@@ -5536,15 +5320,22 @@
           "progress": 0.2
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 2,
-          "unlockedLevels": [],
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-339"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -5709,7 +5500,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 3,
           "unlockedLevels": [
             {
@@ -5750,14 +5541,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 4,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.8
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -5836,7 +5627,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 74,
+      "totalUnlocked": 71,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6089,24 +5880,6 @@
           "progress": 0.6
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250710000000-470"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 1,
           "unlockedLevels": [
@@ -6136,7 +5909,7 @@
           "progress": 0.8
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 121,
           "unlockedLevels": [
             {
@@ -6260,17 +6033,6 @@
           "progress": 0.5333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 5,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.5
-        },
-        {
           "id": "amoureux-loup-kills-lover",
           "currentValue": 1,
           "unlockedLevels": [
@@ -6367,27 +6129,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 12,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250401000000-390"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250513000000-433"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.8
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -6850,7 +6599,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 10,
           "unlockedLevels": [
             {
@@ -6922,17 +6671,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -7133,7 +6871,7 @@
           "progress": 0.9
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 15,
           "unlockedLevels": [
             {
@@ -7493,7 +7231,7 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 2,
           "unlockedLevels": [
             {
@@ -7509,17 +7247,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -7565,7 +7292,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 5,
           "unlockedLevels": [
             {
@@ -7656,7 +7383,7 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 9,
           "unlockedLevels": [
             {
@@ -7678,17 +7405,6 @@
             "threshold": 10
           },
           "progress": 0.9
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -7874,7 +7590,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 2,
           "unlockedLevels": [
             {
@@ -7901,17 +7617,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
         },
         {
           "id": "lone-non-voter",
@@ -8109,7 +7814,7 @@
           "progress": 0.3
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 23,
           "unlockedLevels": [
             {
@@ -8161,17 +7866,6 @@
           "progress": 0.4
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.4
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -8194,17 +7888,6 @@
             "threshold": 10
           },
           "progress": 0.5
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -8507,7 +8190,7 @@
           "progress": 0.8
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 6,
           "unlockedLevels": [
             {
@@ -8532,17 +8215,6 @@
         },
         {
           "id": "hunter-killed-by-wolf",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
-          "id": "lone-non-voter",
           "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
@@ -8770,7 +8442,7 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 11,
           "unlockedLevels": [
             {
@@ -8798,17 +8470,6 @@
             "threshold": 30
           },
           "progress": 0.36666666666666664
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -8869,7 +8530,7 @@
     "30": {
       "playerId": "30",
       "playerName": "Lydiaam",
-      "totalUnlocked": 19,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8968,7 +8629,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 6,
           "unlockedLevels": [
             {
@@ -9001,24 +8662,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250207000000-335"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -9155,7 +8798,7 @@
     "31": {
       "playerId": "31",
       "playerName": "LyeGaia",
-      "totalUnlocked": 31,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9301,7 +8944,7 @@
           "progress": 0.4
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 29,
           "unlockedLevels": [
             {
@@ -9380,24 +9023,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 6,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20241206000000-251"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -9676,7 +9301,7 @@
           "progress": 0.7
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 6,
           "unlockedLevels": [
             {
@@ -10043,7 +9668,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 37,
           "unlockedLevels": [
             {
@@ -10128,17 +9753,6 @@
             "threshold": 5
           },
           "progress": 0.8
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -10440,7 +10054,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 23,
           "unlockedLevels": [
             {
@@ -10517,17 +10131,6 @@
             "tier": "argent",
             "subLevel": 1,
             "threshold": 10
-          },
-          "progress": 0.6
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
           },
           "progress": 0.6
         },
@@ -10689,7 +10292,7 @@
     "36": {
       "playerId": "36",
       "playerName": "Noamouille",
-      "totalUnlocked": 23,
+      "totalUnlocked": 24,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -10839,7 +10442,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 11,
           "unlockedLevels": [
             {
@@ -10931,17 +10534,6 @@
           "progress": 0.2
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.2
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 13,
           "unlockedLevels": [
@@ -10981,6 +10573,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-310"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "misunderstood",
@@ -11110,7 +10720,7 @@
     "38": {
       "playerId": "38",
       "playerName": "Pelerine",
-      "totalUnlocked": 11,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11203,24 +10813,6 @@
           "progress": 0.5
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250805000000-508"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "avenger-death",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -11241,17 +10833,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
         },
         {
           "id": "colors-of-lycans",
@@ -11391,7 +10972,7 @@
           "progress": 0.7
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 6,
           "unlockedLevels": [
             {
@@ -11415,17 +10996,6 @@
           "progress": 0.6
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.3
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 1,
           "unlockedLevels": [
@@ -11445,17 +11015,6 @@
         },
         {
           "id": "same-color-kills",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -11596,17 +11155,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -11886,7 +11434,7 @@
           "progress": 0.3
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 18,
           "unlockedLevels": [
             {
@@ -11928,17 +11476,6 @@
         },
         {
           "id": "misunderstood",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -12183,7 +11720,7 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 1,
           "unlockedLevels": [
             {
@@ -12210,17 +11747,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
         },
         {
           "id": "amoureux-loup-total-kills",
@@ -12374,17 +11900,6 @@
             "threshold": 5
           },
           "progress": 0.8
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -12585,7 +12100,7 @@
           "progress": 0.4
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 11,
           "unlockedLevels": [
             {
@@ -12648,17 +12163,6 @@
           "progress": 0.2
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -12699,7 +12203,7 @@
     "49": {
       "playerId": "49",
       "playerName": "Wingo",
-      "totalUnlocked": 48,
+      "totalUnlocked": 47,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12868,7 +12372,7 @@
           "progress": 0.4
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 62,
           "unlockedLevels": [
             {
@@ -12974,17 +12478,6 @@
           "progress": 0.8
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
-        },
-        {
           "id": "misunderstood",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -12994,24 +12487,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 8,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240321000000-93"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.8
         },
         {
           "id": "democrat",
@@ -13314,7 +12789,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 7,
           "unlockedLevels": [
             {
@@ -13527,7 +13002,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 6,
           "unlockedLevels": [
             {
@@ -13562,17 +13037,6 @@
           "progress": 0.2
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
-        },
-        {
           "id": "same-color-kills",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -13584,22 +13048,33 @@
           "progress": 0.8
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 6,
+          "id": "solo-master",
+          "currentValue": 1,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250513000000-429"
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250619000000-449"
             }
           ],
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 3
           },
-          "progress": 0.6
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "lone-non-voter",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -13918,7 +13393,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 24,
           "unlockedLevels": [
             {
@@ -13988,17 +13463,6 @@
           "progress": 0.8
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 6,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.6
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 1,
           "unlockedLevels": [
@@ -14028,6 +13492,24 @@
           "progress": 0.6
         },
         {
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250911000000-542"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -14051,21 +13533,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 8,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250513000000-429"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.8
+          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -14131,6 +13606,17 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-participations",
@@ -14239,7 +13725,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 150,
+      "totalUnlocked": 147,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14353,7 +13839,7 @@
         },
         {
           "id": "victories-solo",
-          "currentValue": 11,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -14373,7 +13859,7 @@
             "subLevel": 1,
             "threshold": 15
           },
-          "progress": 0.7333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "vegan-wolf",
@@ -14635,42 +14121,6 @@
           "progress": 0.5
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 3,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251230153702"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251223124715"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 2,
           "unlockedLevels": [
@@ -14784,7 +14234,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 276,
           "unlockedLevels": [
             {
@@ -15014,30 +14464,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 25,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250501000000-423"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 20,
-              "unlockedAtGame": "Ponce-20251223124715"
-            }
-          ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 1,
-            "threshold": 30
-          },
-          "progress": 0.8333333333333334
-        },
-        {
           "id": "amoureux-loup-kills-lover",
           "currentValue": 1,
           "unlockedLevels": [
@@ -15090,6 +14516,24 @@
             "threshold": 30
           },
           "progress": 0.8666666666666667
+        },
+        {
+          "id": "amoureux-loup-kills-two-wolves",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250911000000-538"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "same-color-kills",
@@ -15161,6 +14605,36 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-316"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250911000000-542"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251009141024"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 9
+          },
+          "progress": 0.7777777777777778
         },
         {
           "id": "villageois-top-loot",
@@ -15245,35 +14719,21 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 50,
+          "currentValue": 7,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20240130000000-61"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20240618000000-159"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20241205000000-246"
-            },
-            {
-              "tier": "lycans",
-              "subLevel": 1,
-              "threshold": 30,
-              "unlockedAtGame": "Ponce-20250513000000-433"
+              "unlockedAtGame": "Ponce-20250422000000-410"
             }
           ],
-          "nextLevel": null,
-          "progress": 1
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "kill-surprise",
@@ -15458,14 +14918,14 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 3,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "juste-un-dernier-verre",
@@ -15824,7 +15284,7 @@
     "76561198054824482": {
       "playerId": "76561198054824482",
       "playerName": "Gom4rt",
-      "totalUnlocked": 22,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15935,24 +15395,6 @@
           "progress": 0.4
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251014110121"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 1,
           "unlockedLevels": [
@@ -15971,7 +15413,7 @@
           "progress": 0.5
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 15,
           "unlockedLevels": [
             {
@@ -16050,17 +15492,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -16356,7 +15787,7 @@
           "progress": 0.4
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 63,
           "unlockedLevels": [
             {
@@ -16450,17 +15881,6 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
-          "id": "lone-non-voter",
           "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
@@ -17006,7 +16426,7 @@
         },
         {
           "id": "voted-as-villager",
-          "currentValue": 9,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -17019,32 +16439,20 @@
               "subLevel": 1,
               "threshold": 5,
               "unlockedAtGame": "Ponce-20250916000000-549"
-            }
-          ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.9
-        },
-        {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 3,
-          "unlockedLevels": [
+            },
             {
-              "tier": "bronze",
+              "tier": "or",
               "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250923000000-561"
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260310125513"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "lycans",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 15
           },
-          "progress": 0.6
+          "progress": 0.6666666666666666
         },
         {
           "id": "exploded",
@@ -17147,7 +16555,7 @@
           "progress": 0.4
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 233,
           "unlockedLevels": [
             {
@@ -17395,24 +16803,6 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 15,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250923000000-559"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.75
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 37,
           "unlockedLevels": [
@@ -17456,13 +16846,13 @@
         },
         {
           "id": "amoureux-loup-kills-two-wolves",
-          "currentValue": 1,
+          "currentValue": 2,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 1,
-              "unlockedAtGame": "Ponce-20251223124715"
+              "unlockedAtGame": "khalen-20251216135331"
             }
           ],
           "nextLevel": {
@@ -17470,7 +16860,7 @@
             "subLevel": 1,
             "threshold": 3
           },
-          "progress": 0.3333333333333333
+          "progress": 0.6666666666666666
         },
         {
           "id": "amoureux-villageois-kills-enemy",
@@ -17563,6 +16953,36 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-355"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250805000000-509"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251009132152"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 9
+          },
+          "progress": 0.5555555555555556
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 6,
           "unlockedLevels": [
@@ -17622,35 +17042,27 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 74,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20240130000000-59"
+              "unlockedAtGame": "Ponce-20250916000000-545"
             },
             {
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20240507000000-141"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20240717000000-182"
-            },
-            {
-              "tier": "lycans",
-              "subLevel": 1,
-              "threshold": 30,
-              "unlockedAtGame": "Ponce-20250401000000-390"
+              "unlockedAtGame": "khalen-20260120114742"
             }
           ],
-          "nextLevel": null,
-          "progress": 1
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "democrat",
@@ -17814,13 +17226,13 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 6,
+          "currentValue": 9,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "khalen-20260217135951"
+              "unlockedAtGame": "Ponce-20251230145605"
             }
           ],
           "nextLevel": {
@@ -17828,7 +17240,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.9
         },
         {
           "id": "juste-un-dernier-verre",
@@ -18098,7 +17510,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 132,
+      "totalUnlocked": 129,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18467,24 +17879,6 @@
           "progress": 0.5
         },
         {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20251216135331"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 2,
           "unlockedLevels": [
@@ -18569,7 +17963,7 @@
           "progress": 0.7
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 325,
           "unlockedLevels": [
             {
@@ -18817,24 +18211,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 15,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250619000000-448"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.75
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 32,
           "unlockedLevels": [
@@ -18912,6 +18288,36 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250411000000-401"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250722000000-485"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251009114146"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 9
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 9,
           "unlockedLevels": [
@@ -18986,35 +18392,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 35,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240618000000-159"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250225000000-348"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250401000000-392"
-            },
-            {
-              "tier": "lycans",
-              "subLevel": 1,
-              "threshold": 30,
-              "unlockedAtGame": "Ponce-20251202122425"
-            }
-          ],
-          "nextLevel": null,
-          "progress": 1
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "kill-surprise",
@@ -19029,7 +18414,7 @@
         },
         {
           "id": "democrat",
-          "currentValue": 22,
+          "currentValue": 23,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -19055,7 +18440,7 @@
             "subLevel": 1,
             "threshold": 30
           },
-          "progress": 0.7333333333333333
+          "progress": 0.7666666666666667
         },
         {
           "id": "colors-of-lycans",
@@ -19193,14 +18578,14 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 1,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.4
         },
         {
           "id": "br-victories",
@@ -19483,7 +18868,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 124,
+      "totalUnlocked": 121,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19846,42 +19231,6 @@
           "progress": 0.6
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250729000000-505"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20260217141704"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 2,
           "unlockedLevels": [
@@ -19952,7 +19301,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 251,
           "unlockedLevels": [
             {
@@ -20106,30 +19455,6 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 23,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250411000000-401"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 20,
-              "unlockedAtGame": "Ponce-20260106124853"
-            }
-          ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 1,
-            "threshold": 30
-          },
-          "progress": 0.7666666666666667
-        },
-        {
           "id": "amoureux-loup-kills-lover",
           "currentValue": 3,
           "unlockedLevels": [
@@ -20231,6 +19556,36 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-310"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250722000000-487"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250729000000-500"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 9
+          },
+          "progress": 0.7777777777777778
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 16,
           "unlockedLevels": [
@@ -20317,35 +19672,21 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 45,
+          "currentValue": 5,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20240130000000-59"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20240618000000-159"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250225000000-355"
-            },
-            {
-              "tier": "lycans",
-              "subLevel": 1,
-              "threshold": 30,
-              "unlockedAtGame": "Ponce-20250902000000-528"
+              "unlockedAtGame": "Ponce-20260203121805"
             }
           ],
-          "nextLevel": null,
-          "progress": 1
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "democrat",
@@ -20519,14 +19860,21 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 2,
-          "unlockedLevels": [],
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260120124541"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.4
+          "progress": 0.6
         },
         {
           "id": "br-victories",
@@ -20809,7 +20157,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 129,
+      "totalUnlocked": 130,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21205,24 +20553,6 @@
           "progress": 0.5
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250722000000-493"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "crushed",
           "currentValue": 2,
           "unlockedLevels": [
@@ -21294,7 +20624,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 334,
           "unlockedLevels": [
             {
@@ -21520,17 +20850,6 @@
           "progress": 0.6
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 9,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.9
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 17,
           "unlockedLevels": [
@@ -21559,6 +20878,24 @@
             "threshold": 20
           },
           "progress": 0.85
+        },
+        {
+          "id": "amoureux-loup-kills-two-wolves",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251230134614"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "amoureux-villageois-kills-enemy",
@@ -21649,8 +20986,38 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250729000000-502"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20251111132522"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251223120127"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 9
+          },
+          "progress": 0.7777777777777778
+        },
+        {
           "id": "villageois-top-loot",
-          "currentValue": 36,
+          "currentValue": 37,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -21730,36 +21097,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 27,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240321000000-92"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20240821000000-216"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250128000000-319"
-            }
-          ],
-          "nextLevel": {
-            "tier": "lycans",
-            "subLevel": 1,
-            "threshold": 30
-          },
-          "progress": 0.9
         },
         {
           "id": "democrat",
@@ -21937,14 +21274,21 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 4,
-          "unlockedLevels": [],
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260127122310"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.6
         },
         {
           "id": "juste-un-dernier-verre",
@@ -22214,7 +21558,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 101,
+      "totalUnlocked": 99,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22531,42 +21875,6 @@
           "progress": 0.9
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 2,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Tsuna-20251111132522"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20251216112826"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 1,
           "unlockedLevels": [
@@ -22649,7 +21957,7 @@
           "progress": 0.4
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 170,
           "unlockedLevels": [
             {
@@ -22833,24 +22141,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 13,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "khalen-20251209121014"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.65
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 8,
           "unlockedLevels": [
@@ -22946,6 +22236,30 @@
           "progress": 0.6
         },
         {
+          "id": "solo-master",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250916000000-545"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251223124715"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 5,
           "unlockedLevels": [
@@ -23016,27 +22330,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 13,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250826000000-520"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20251230122057"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.8666666666666667
+          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -23190,14 +22491,21 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 4,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251230144232"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.8
+          "progress": 0.5
         },
         {
           "id": "br-victories",
@@ -23438,11 +22746,11 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 92,
+      "totalUnlocked": 89,
       "achievements": [
         {
           "id": "victories-villageois",
-          "currentValue": 144,
+          "currentValue": 145,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -23492,7 +22800,7 @@
             "subLevel": 2,
             "threshold": 150
           },
-          "progress": 0.96
+          "progress": 0.9666666666666667
         },
         {
           "id": "victories-loup",
@@ -23526,14 +22834,14 @@
         },
         {
           "id": "victories-solo",
-          "currentValue": 4,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.8
+          "progress": 0.6
         },
         {
           "id": "vegan-wolf",
@@ -23762,24 +23070,6 @@
           "progress": 0.8666666666666667
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20260303114954"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 1,
           "unlockedLevels": [
@@ -23867,7 +23157,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 185,
           "unlockedLevels": [
             {
@@ -24057,17 +23347,6 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 5,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.5
-        },
-        {
           "id": "same-color-kills",
           "currentValue": 6,
           "unlockedLevels": [
@@ -24095,6 +23374,30 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-370"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251230144232"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "villageois-top-loot",
@@ -24164,38 +23467,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 35,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240717000000-182"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20241231000000-291"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250318000000-381"
-            },
-            {
-              "tier": "lycans",
-              "subLevel": 1,
-              "threshold": 30,
-              "unlockedAtGame": "Ponce-20251230124218"
-            }
-          ],
-          "nextLevel": null,
-          "progress": 1
         },
         {
           "id": "democrat",
@@ -24321,6 +23592,17 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.4
         },
         {
           "id": "collectionneur",
@@ -24554,7 +23836,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 83,
+      "totalUnlocked": 82,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24863,7 +24145,7 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 129,
           "unlockedLevels": [
             {
@@ -25097,24 +24379,6 @@
           "progress": 0.6
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 12,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250826000000-520"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.6
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 14,
           "unlockedLevels": [
@@ -25163,6 +24427,30 @@
           "progress": 0.5
         },
         {
+          "id": "solo-master",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-339"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250710000000-470"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -25197,27 +24485,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 14,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240717000000-182"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250318000000-379"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.9333333333333333
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -25541,7 +24816,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 86,
+      "totalUnlocked": 83,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25807,42 +25082,6 @@
           "progress": 0.7
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 2,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250805000000-509"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250911000000-538"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 4,
           "unlockedLevels": [
@@ -25937,7 +25176,7 @@
           "progress": 0.4
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 119,
           "unlockedLevels": [
             {
@@ -26079,24 +25318,6 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 18,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250619000000-449"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.9
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 22,
           "unlockedLevels": [
@@ -26180,6 +25401,30 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-527"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260310130724"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 11,
           "unlockedLevels": [
@@ -26249,33 +25494,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 21,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20240726000000-188"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20241231000000-291"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250513000000-433"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.7
+          "progress": 0.2
         },
         {
           "id": "kill-surprise",
@@ -26422,14 +25648,21 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 3,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260113141709"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "br-victories",
@@ -26768,7 +26001,7 @@
           "progress": 0.3
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 14,
           "unlockedLevels": [
             {
@@ -26820,17 +26053,6 @@
           "progress": 0.2
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 2,
           "unlockedLevels": [
@@ -26869,17 +26091,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
         },
         {
           "id": "democrat",
@@ -27291,7 +26502,7 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 22,
           "unlockedLevels": [
             {
@@ -27361,17 +26572,6 @@
           "progress": 0.6
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.3
-        },
-        {
           "id": "same-color-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -27384,14 +26584,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 4,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.8
+          "progress": 0.4
         },
         {
           "id": "kill-surprise",
@@ -27635,7 +26835,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 104,
+      "totalUnlocked": 106,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28054,7 +27254,7 @@
           "progress": 0.7
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 256,
           "unlockedLevels": [
             {
@@ -28244,24 +27444,6 @@
           "progress": 0.6
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 19,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250826000000-519"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.95
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 16,
           "unlockedLevels": [
@@ -28290,6 +27472,24 @@
             "threshold": 20
           },
           "progress": 0.8
+        },
+        {
+          "id": "amoureux-loup-kills-two-wolves",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251202123802"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "amoureux-villageois-kills-enemy",
@@ -28398,6 +27598,36 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250304000000-366"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250923000000-553"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260303141937"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 9
+          },
+          "progress": 0.5555555555555556
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 8,
           "unlockedLevels": [
@@ -28417,35 +27647,27 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 58,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
-              "unlockedAtGame": "Ponce-20241231000000-288"
+              "unlockedAtGame": "Ponce-20250722000000-493"
             },
             {
               "tier": "argent",
               "subLevel": 1,
               "threshold": 10,
-              "unlockedAtGame": "Ponce-20250207000000-335"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250318000000-378"
-            },
-            {
-              "tier": "lycans",
-              "subLevel": 1,
-              "threshold": 30,
-              "unlockedAtGame": "Ponce-20250722000000-485"
+              "unlockedAtGame": "Ponce-20260106132431"
             }
           ],
-          "nextLevel": null,
-          "progress": 1
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "democrat",
@@ -28563,14 +27785,21 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 3,
-          "unlockedLevels": [],
+          "currentValue": 8,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20251216130350"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.8
         },
         {
           "id": "br-victories",
@@ -28817,7 +28046,7 @@
     "76561198140298176": {
       "playerId": "76561198140298176",
       "playerName": "Kyria",
-      "totalUnlocked": 53,
+      "totalUnlocked": 50,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29027,24 +28256,6 @@
           "progress": 0.4
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251009141024"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 1,
           "unlockedLevels": [
@@ -29103,7 +28314,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 60,
           "unlockedLevels": [
             {
@@ -29198,17 +28409,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 7,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.7
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 1,
           "unlockedLevels": [
@@ -29256,6 +28456,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250911000000-539"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -29279,33 +28497,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 19,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250128000000-319"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250710000000-466"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250911000000-540"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.6333333333333333
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -29392,14 +28591,14 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 1,
+          "currentValue": 3,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.2
+          "progress": 0.6
         },
         {
           "id": "br-victories",
@@ -29617,7 +28816,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 9,
           "unlockedLevels": [
             {
@@ -29675,14 +28874,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 3,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -29789,7 +28988,7 @@
     "76561198256660482": {
       "playerId": "76561198256660482",
       "playerName": "Baout",
-      "totalUnlocked": 46,
+      "totalUnlocked": 42,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29999,24 +29198,6 @@
           "progress": 0.2
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250805000000-509"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "avenger-death",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -30039,7 +29220,7 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 53,
           "unlockedLevels": [
             {
@@ -30146,24 +29327,6 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 10,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250527000000-443"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.5
-        },
-        {
           "id": "same-color-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -30173,6 +29336,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-353"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "only-passer",
@@ -30187,33 +29368,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 18,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250311000000-369"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250527000000-442"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20250805000000-512"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -30422,7 +29584,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 61,
+      "totalUnlocked": 59,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -30698,24 +29860,6 @@
           "progress": 0.4
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20260210115316"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 1,
           "unlockedLevels": [
@@ -30787,7 +29931,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 27,
           "unlockedLevels": [
             {
@@ -30893,24 +30037,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 16,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "khalen-20251216112826"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.8
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 10,
           "unlockedLevels": [
@@ -30939,6 +30065,24 @@
             "threshold": 20
           },
           "progress": 0.5
+        },
+        {
+          "id": "amoureux-loup-kills-two-wolves",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260120134259"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "amoureux-villageois-kills-enemy",
@@ -30977,6 +30121,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023123056"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -30989,33 +30151,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 18,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250225000000-357"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20251028112426"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "Ponce-20251230124218"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.6
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -31085,14 +30228,21 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 3,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260113131329"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "juste-un-dernier-verre",
@@ -31264,7 +30414,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 45,
+      "totalUnlocked": 44,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31452,24 +30602,6 @@
           "progress": 0.4
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20260303141937"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "avenger-death",
           "currentValue": 5,
           "unlockedLevels": [],
@@ -31528,7 +30660,7 @@
           "progress": 0.7
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 41,
           "unlockedLevels": [
             {
@@ -31575,17 +30707,6 @@
           "progress": 0.2
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 7,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.7
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 2,
           "unlockedLevels": [
@@ -31613,6 +30734,24 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251202134748"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "zombie-item-uses",
@@ -31667,27 +30806,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 10,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250805000000-506"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "khalen-20260217131554"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.6666666666666666
+          "progress": 0.2
         },
         {
           "id": "colors-of-lycans",
@@ -31730,6 +30856,24 @@
             "threshold": 6
           },
           "progress": 0.8333333333333334
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251125122037"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "br-victories",
@@ -31868,7 +31012,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 88,
+      "totalUnlocked": 83,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32144,42 +31288,6 @@
           "progress": 0.6
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20250930000000-562"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20260203141837"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 2,
           "unlockedLevels": [
@@ -32282,7 +31390,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 66,
           "unlockedLevels": [
             {
@@ -32430,30 +31538,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 24,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250411000000-395"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 20,
-              "unlockedAtGame": "khalen-20251216132647"
-            }
-          ],
-          "nextLevel": {
-            "tier": "or",
-            "subLevel": 1,
-            "threshold": 30
-          },
-          "progress": 0.8
-        },
-        {
           "id": "amoureux-loup-kills-lover",
           "currentValue": 1,
           "unlockedLevels": [
@@ -32513,6 +31597,24 @@
           "progress": 0.8
         },
         {
+          "id": "solo-master",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-520"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -32547,33 +31649,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 15,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250527000000-442"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250930000000-566"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 15,
-              "unlockedAtGame": "khalen-20260217141704"
-            }
-          ],
+          "currentValue": 1,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 30
+            "threshold": 5
           },
-          "progress": 0.5
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -32678,21 +31761,27 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 5,
+          "currentValue": 10,
           "unlockedLevels": [
             {
               "tier": "bronze",
               "subLevel": 1,
               "threshold": 5,
+              "unlockedAtGame": "Ponce-20251028000000-604"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
               "unlockedAtGame": "khalen-20260217133845"
             }
           ],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 15
           },
-          "progress": 0.5
+          "progress": 0.6666666666666666
         },
         {
           "id": "br-victories",
@@ -32933,7 +32022,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 75,
+      "totalUnlocked": 76,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33274,7 +32363,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 110,
           "unlockedLevels": [
             {
@@ -33403,17 +32492,6 @@
           "progress": 0.8
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.3
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 13,
           "unlockedLevels": [
@@ -33492,8 +32570,38 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "solo-master",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250624000000-459"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250722000000-493"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251118000000-630"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 9
+          },
+          "progress": 0.5555555555555556
+        },
+        {
           "id": "villageois-top-loot",
-          "currentValue": 9,
+          "currentValue": 8,
           "unlockedLevels": [
             {
               "tier": "bronze",
@@ -33507,7 +32615,7 @@
             "subLevel": 1,
             "threshold": 10
           },
-          "progress": 0.9
+          "progress": 0.8
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -33557,27 +32665,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 10,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251125124356"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "khalen-20260303140346"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.6666666666666666
+          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -33665,6 +32760,17 @@
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 2,
+            "threshold": 5
+          },
+          "progress": 0.2
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
             "threshold": 5
           },
           "progress": 0.2
@@ -33907,7 +33013,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 62,
+      "totalUnlocked": 61,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34224,7 +33330,7 @@
           "progress": 0.4
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 48,
           "unlockedLevels": [
             {
@@ -34386,24 +33492,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 15,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250624000000-459"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.75
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 17,
           "unlockedLevels": [
@@ -34481,6 +33569,30 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "solo-master",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-355"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20251209135919"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 7,
           "unlockedLevels": [
@@ -34540,27 +33652,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 14,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250401000000-388"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20251202113455"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.9333333333333333
+          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -34627,6 +33726,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 4,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "juste-un-dernier-verre",
@@ -34775,7 +33885,7 @@
     "76561198019060909": {
       "playerId": "76561198019060909",
       "playerName": "Reivil",
-      "totalUnlocked": 9,
+      "totalUnlocked": 11,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34854,7 +33964,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 1,
           "unlockedLevels": [
             {
@@ -34870,17 +33980,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.3
         },
         {
           "id": "amoureux-loup-total-kills",
@@ -34899,6 +33998,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "amoureux-loup-kills-two-wolves",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216121842"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "same-color-kills",
@@ -34923,15 +34040,22 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 3,
-          "unlockedLevels": [],
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216130350"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.6
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -34974,7 +34098,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 52,
+      "totalUnlocked": 49,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35050,14 +34174,14 @@
         },
         {
           "id": "victories-solo",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "vegan-wolf",
@@ -35220,42 +34344,6 @@
           "progress": 0.4
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20251209135919"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 3,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251230122057"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.6
-        },
-        {
           "id": "exploded",
           "currentValue": 1,
           "unlockedLevels": [
@@ -35344,7 +34432,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 62,
           "unlockedLevels": [
             {
@@ -35486,24 +34574,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 18,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20250902000000-529"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 20
-          },
-          "progress": 0.9
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 1,
           "unlockedLevels": [
@@ -35540,6 +34610,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-523"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -35574,27 +34662,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 14,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251028112426"
-            },
-            {
-              "tier": "argent",
-              "subLevel": 1,
-              "threshold": 10,
-              "unlockedAtGame": "Ponce-20251202123802"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "or",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 15
+            "threshold": 5
           },
-          "progress": 0.9333333333333333
+          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -35652,14 +34727,21 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 2,
-          "unlockedLevels": [],
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251230113308"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.4
+          "progress": 0.6
         },
         {
           "id": "juste-un-dernier-verre",
@@ -36005,24 +35087,6 @@
           "progress": 0.8
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251230144232"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 2,
           "unlockedLevels": [
@@ -36087,7 +35151,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 54,
           "unlockedLevels": [
             {
@@ -36265,17 +35329,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.4
-        },
-        {
           "id": "amoureux-loup-kills-lover",
           "currentValue": 1,
           "unlockedLevels": [
@@ -36342,6 +35395,24 @@
           "progress": 0.6
         },
         {
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310115628"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -36362,17 +35433,6 @@
             "threshold": 10
           },
           "progress": 0.7
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -36466,14 +35526,14 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 2,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.8
         },
         {
           "id": "juste-un-dernier-verre",
@@ -36738,24 +35798,6 @@
           "progress": 0.8
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251014110121"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "crushed",
           "currentValue": 1,
           "unlockedLevels": [
@@ -36774,7 +35816,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 12,
           "unlockedLevels": [
             {
@@ -36837,17 +35879,6 @@
           "progress": 0.2
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.2
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -36872,6 +35903,24 @@
           "progress": 0.5
         },
         {
+          "id": "solo-master",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250624000000-456"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -36892,17 +35941,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -36938,6 +35976,17 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-participations",
@@ -37057,7 +36106,7 @@
     "76561197987657681": {
       "playerId": "76561197987657681",
       "playerName": "PeoBran",
-      "totalUnlocked": 19,
+      "totalUnlocked": 20,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37194,7 +36243,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 1,
           "unlockedLevels": [
             {
@@ -37258,17 +36307,6 @@
           "progress": 0.6
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 3,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.3
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 4,
           "unlockedLevels": [
@@ -37316,15 +36354,22 @@
           "progress": 0.2
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 2,
-          "unlockedLevels": [],
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023123056"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -37607,17 +36652,6 @@
           "progress": 0.6
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 1,
           "unlockedLevels": [
@@ -37658,17 +36692,6 @@
           "progress": 0.2
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "democrat",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -37696,6 +36719,17 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -37816,7 +36850,7 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "totalUnlocked": 17,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37931,7 +36965,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 11,
           "unlockedLevels": [
             {
@@ -37961,6 +36995,24 @@
           "progress": 0.36666666666666664
         },
         {
+          "id": "solo-master",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216135331"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -37973,17 +37025,6 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -38121,7 +37162,7 @@
     "76561198155130320": {
       "playerId": "76561198155130320",
       "playerName": "MaMaPaprika",
-      "totalUnlocked": 19,
+      "totalUnlocked": 20,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38271,7 +37312,7 @@
           "progress": 0.3
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 22,
           "unlockedLevels": [
             {
@@ -38359,15 +37400,22 @@
           "progress": 0.2
         },
         {
-          "id": "lone-non-voter",
-          "currentValue": 2,
-          "unlockedLevels": [],
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-520"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.4
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -38386,6 +37434,17 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-participations",
@@ -38601,24 +37660,6 @@
           "progress": 0.7333333333333333
         },
         {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 1,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "Ponce-20251202123802"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
           "id": "exploded",
           "currentValue": 2,
           "unlockedLevels": [
@@ -38672,7 +37713,7 @@
           "progress": 0.8
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 40,
           "unlockedLevels": [
             {
@@ -38748,17 +37789,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 7,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.7
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 2,
           "unlockedLevels": [
@@ -38806,6 +37836,30 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "solo-master",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250902000000-532"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20251111131040"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -38815,24 +37869,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251230124218"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -38884,14 +37920,14 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 2,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.8
         },
         {
           "id": "br-victories",
@@ -39018,7 +38054,7 @@
     "76561199013115670": {
       "playerId": "76561199013115670",
       "playerName": "SpicY",
-      "totalUnlocked": 18,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39139,7 +38175,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 10,
           "unlockedLevels": [
             {
@@ -39191,17 +38227,6 @@
           "progress": 0.4
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
-        },
-        {
           "id": "same-color-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -39225,21 +38250,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "khalen-20251216141204"
-            }
-          ],
+          "currentValue": 2,
+          "unlockedLevels": [],
           "nextLevel": {
-            "tier": "argent",
+            "tier": "bronze",
             "subLevel": 1,
-            "threshold": 10
+            "threshold": 5
           },
-          "progress": 0.5
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
@@ -39364,7 +38382,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 37,
+      "totalUnlocked": 38,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39614,7 +38632,7 @@
           "progress": 0.6
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 35,
           "unlockedLevels": [
             {
@@ -39690,17 +38708,6 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 5,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.5
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 1,
           "unlockedLevels": [
@@ -39737,6 +38744,24 @@
           "progress": 0.5
         },
         {
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009134908"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "villageois-top-loot",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -39746,24 +38771,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 5,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20260210135746"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.5
         },
         {
           "id": "colors-of-lycans",
@@ -39839,14 +38846,21 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 2,
-          "unlockedLevels": [],
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260310112619"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 10
           },
-          "progress": 0.4
+          "progress": 0.5
         },
         {
           "id": "br-victories",
@@ -40075,7 +39089,7 @@
           "progress": 0.1
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 3,
           "unlockedLevels": [
             {
@@ -40116,17 +39130,6 @@
         },
         {
           "id": "only-passer",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -40277,17 +39280,6 @@
             "threshold": 5
           },
           "progress": 0.4
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
         },
         {
           "id": "democrat",
@@ -40645,7 +39637,7 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 16,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40771,7 +39763,7 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 3,
           "unlockedLevels": [
             {
@@ -40787,17 +39779,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
         },
         {
           "id": "amoureux-loup-total-kills",
@@ -40818,18 +39799,43 @@
           "progress": 0.6
         },
         {
-          "id": "only-passer",
+          "id": "amoureux-loup-kills-two-wolves",
           "currentValue": 1,
-          "unlockedLevels": [],
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260217141704"
+            }
+          ],
           "nextLevel": {
-            "tier": "bronze",
+            "tier": "argent",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 3
           },
-          "progress": 0.2
+          "progress": 0.3333333333333333
         },
         {
-          "id": "lone-non-voter",
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260217141704"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -40956,7 +39962,7 @@
     "76561198271274269": {
       "playerId": "76561198271274269",
       "playerName": "MartinPonK",
-      "totalUnlocked": 24,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41113,7 +40119,7 @@
           "progress": 0.5
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 23,
           "unlockedLevels": [
             {
@@ -41154,17 +40160,6 @@
           "progress": 0.2
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
-        },
-        {
           "id": "same-color-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -41174,6 +40169,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125115536"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -41196,17 +40209,6 @@
             "threshold": 5
           },
           "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
-          "currentValue": 2,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
         },
         {
           "id": "democrat",
@@ -41236,6 +40238,17 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -41471,14 +40484,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 4,
+          "currentValue": 2,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.8
+          "progress": 0.4
         },
         {
           "id": "colors-of-lycans",
@@ -41503,7 +40516,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 27,
+      "totalUnlocked": 28,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41649,42 +40662,6 @@
           "progress": 0.7
         },
         {
-          "id": "wolf-killed-by-beast",
-          "currentValue": 2,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20260303114954"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
-          "id": "wolf-killed-by-amoureux-loup",
-          "currentValue": 2,
-          "unlockedLevels": [
-            {
-              "tier": "bronze",
-              "subLevel": 1,
-              "threshold": 1,
-              "unlockedAtGame": "khalen-20251216121842"
-            }
-          ],
-          "nextLevel": {
-            "tier": "argent",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.4
-        },
-        {
           "id": "exploded",
           "currentValue": 1,
           "unlockedLevels": [
@@ -41725,7 +40702,7 @@
           "progress": 0.6666666666666666
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 22,
           "unlockedLevels": [
             {
@@ -41777,17 +40754,6 @@
           "progress": 0.2
         },
         {
-          "id": "victim-of-love",
-          "currentValue": 4,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.4
-        },
-        {
           "id": "amoureux-loup-total-kills",
           "currentValue": 4,
           "unlockedLevels": [
@@ -41804,6 +40770,24 @@
             "threshold": 5
           },
           "progress": 0.8
+        },
+        {
+          "id": "amoureux-loup-kills-two-wolves",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216112826"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "same-color-kills",
@@ -41851,6 +40835,30 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "solo-master",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216112826"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260310115628"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "villageois-top-loot",
@@ -41909,14 +40917,14 @@
         },
         {
           "id": "lone-non-voter",
-          "currentValue": 2,
+          "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.2
         },
         {
           "id": "democrat",
@@ -41991,14 +40999,14 @@
         },
         {
           "id": "resurrected",
-          "currentValue": 2,
+          "currentValue": 4,
           "unlockedLevels": [],
           "nextLevel": {
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
           },
-          "progress": 0.4
+          "progress": 0.8
         },
         {
           "id": "br-participations",
@@ -42097,7 +41105,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 3,
           "unlockedLevels": [
             {
@@ -42113,17 +41121,6 @@
             "threshold": 5
           },
           "progress": 0.6
-        },
-        {
-          "id": "victim-of-love",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 10
-          },
-          "progress": 0.1
         },
         {
           "id": "same-color-kills",
@@ -42186,6 +41183,17 @@
             "threshold": 2
           },
           "progress": 0.5
+        },
+        {
+          "id": "resurrected",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.2
         },
         {
           "id": "br-victories",
@@ -42374,7 +41382,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 4,
           "unlockedLevels": [
             {
@@ -42433,17 +41441,6 @@
         },
         {
           "id": "hunter-killed-by-wolf",
-          "currentValue": 1,
-          "unlockedLevels": [],
-          "nextLevel": {
-            "tier": "bronze",
-            "subLevel": 1,
-            "threshold": 5
-          },
-          "progress": 0.2
-        },
-        {
-          "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
           "nextLevel": {
@@ -42587,7 +41584,7 @@
           "progress": 0.3333333333333333
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 2,
           "unlockedLevels": [
             {
@@ -42844,7 +41841,7 @@
           "progress": 0.2
         },
         {
-          "id": "ponce-fesses",
+          "id": "wolf-kills",
           "currentValue": 5,
           "unlockedLevels": [
             {
