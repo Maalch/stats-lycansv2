@@ -162,7 +162,7 @@ export function onlyVillagerPasserInMeeting(playerGames, allGames, playerId, par
 
 /**
  * Count meetings (across all games) where the player was alive but did not vote,
- * and all other players who voted that meeting chose "Passé".
+ * and all other players that meeting chose "Passé".
  * Thresholds are cumulative across all meetings in all games.
  */
 export function loneNonVoterAllOthersPassed(playerGames, allGames, playerId, params) {
@@ -188,25 +188,34 @@ export function loneNonVoterAllOthersPassed(playerGames, allGames, playerId, par
       // Player must not have voted this meeting
       if (playerVoteDays.has(day)) continue;
 
-      // All other players who voted this meeting must have voted "Passé"
-      let otherVoteCount = 0;
-      let hasNonPasse = false;
-      for (const p of game.PlayerStats) {
-        if (getPlayerId(p) === playerId) continue;
-        for (const v of (p.Votes || [])) {
-          if (v.Day === day) {
-            otherVoteCount++;
-            if (v.Target !== 'Passé') {
-              hasNonPasse = true;
-              break;
-            }
-          }
+      // Find all other players alive at this meeting
+      const otherAlivePlayers = game.PlayerStats.filter(p => {
+        if (getPlayerId(p) === playerId) return false; // Exclude target player
+        return isAliveAtMeeting(p, day); // Must be alive
+      });
+
+      // If no other alive players (edge case), skip
+      if (otherAlivePlayers.length === 0) continue;
+
+      // Check if ALL other alive players voted "Passé" this meeting
+      let allVotedPasse = true;
+      for (const p of otherAlivePlayers) {
+        const pVotes = (p.Votes || []).filter(v => v.Day === day);
+        
+        // If this player didn't vote at all, fail
+        if (pVotes.length === 0) {
+          allVotedPasse = false;
+          break;
         }
-        if (hasNonPasse) break;
+        
+        // If this player voted for something other than "Passé", fail
+        if (pVotes.some(v => v.Target !== 'Passé')) {
+          allVotedPasse = false;
+          break;
+        }
       }
 
-      // At least one other player voted "Passé" (non-empty meeting)
-      if (!hasNonPasse && otherVoteCount > 0) {
+      if (allVotedPasse) {
         value++;
         if (!countedGames.has(game.Id)) {
           gameIds.push(game.Id);

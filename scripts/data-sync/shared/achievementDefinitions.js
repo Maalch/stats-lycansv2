@@ -1234,7 +1234,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'lone-non-voter',
     name: 'Et le temps passe...',
     description: "Vous n'aviez pas vu que tout le monde vous attendait ?",
-    explanation: 'Être X fois le seul joueur à ne pas voter quand tous les autres ont passé',
+    explanation: 'Être X fois le seul joueur inactif quand tout le monde a passé',
     emoji: '⏳',
     category: 'social',
     evaluator: 'loneNonVoterAllOthersPassed',
