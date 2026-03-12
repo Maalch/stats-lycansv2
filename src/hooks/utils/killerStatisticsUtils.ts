@@ -4,7 +4,7 @@ import { DEATH_TYPES, type DeathType } from '../../types/deathTypes';
 import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 
 // Villageois Élite powers (handles both new format and legacy format)
-const ELITE_POWERS_LIST = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Inquisiteur'];
+const ELITE_POWERS_LIST = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Guetteur', 'Purificateur'];
 const LEGACY_ELITE_ROLES_LIST = ['Chasseur', 'Alchimiste'];
 
 /**

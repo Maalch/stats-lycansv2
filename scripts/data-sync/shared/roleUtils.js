@@ -15,7 +15,7 @@
 /**
  * Powers that are exclusive to Villageois Élite role
  */
-export const VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple'];
+export const VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Guetteur', 'Purificateur'];
 
 /**
  * Legacy roles that became powers

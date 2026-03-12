@@ -134,7 +134,8 @@ The game has evolved its role format. "Chasseur" and "Alchimiste" were previousl
 { MainRoleInitial: "Villageois Élite", Power: "Alchimiste" }
 { MainRoleInitial: "Villageois Élite", Power: "Protecteur" }
 { MainRoleInitial: "Villageois Élite", Power: "Disciple" }
-{ MainRoleInitial: "Villageois Élite", Power: "Inquisiteur" }
+{ MainRoleInitial: "Villageois Élite", Power: "Guetteur" }
+{ MainRoleInitial: "Villageois Élite", Power: "Purificateur" }
 
 
 ### Key Role Constants

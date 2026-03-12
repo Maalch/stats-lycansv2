@@ -16,7 +16,7 @@ function getCampColor(camp: string, colorScheme: Record<string, string>): string
 // Classify a winning camp as Villageois, Loup, or Solo
 function classifyWinnerCamp(winnerCamp: string): 'Villageois' | 'Loup' | 'Solo' {
   if (winnerCamp === 'Villageois' || winnerCamp === 'Chasseur' || winnerCamp === 'Alchimiste' || 
-      winnerCamp === 'Villageois Élite' || winnerCamp === 'Protecteur' || winnerCamp === 'Disciple' || winnerCamp === 'Inquisiteur') {
+      winnerCamp === 'Villageois Élite' || winnerCamp === 'Protecteur' || winnerCamp === 'Disciple' || winnerCamp === 'Guetteur' || winnerCamp === 'Purificateur') {
     return 'Villageois';
   }
   if (winnerCamp === 'Loup' || winnerCamp === 'Louveteau' || winnerCamp === 'Traître') {

@@ -78,7 +78,7 @@ function computePlayerRoleStats(
       const playerCamp = getPlayerCampFromRole(playerStat.MainRoleInitial);
       const isWolfFamily = playerCamp === 'Loup' || playerCamp === 'Traître' || playerCamp === 'Louveteau';
 
-      // Special handling for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
+      // Special handling for Villageois Élite powers 
       // This handles both legacy format (MainRoleInitial === 'Chasseur') and new format (Villageois Élite + Power)
       if (playerCamp === 'Villageois' && isVillageoisElite(playerStat)) {
         const effectivePower = getEffectivePower(playerStat);
@@ -213,7 +213,7 @@ function computePlayerRoleStats(
   });
 
 
-  // Count total games (including non-modded) for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
+  // Count total games (including non-modded) for Villageois Élite powers 
   const elitePowersTotal = new Map<string, number>();
   gameData.forEach((game) => {
 
@@ -242,7 +242,7 @@ function computePlayerRoleStats(
         // Win rate is calculated only from games where the role didn't change
         winRate: stats.gamesWithoutRoleChange > 0 ? ((stats.winsWithoutRoleChange / stats.gamesWithoutRoleChange) * 100).toFixed(1) : '0.0',
         camp: 'Villageois' as const,
-        // Add total games for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
+        // Add total games for Villageois Élite powers
         ...(elitePowersTotal.has(name) && { totalGamesAllModes: elitePowersTotal.get(name) })
       }))
       .sort((a, b) => b.appearances - a.appearances);
@@ -603,9 +603,12 @@ export function PlayerHistoryRoles({ selectedPlayerName }: PlayerHistoryRolesPro
           if (roleName === 'Disciple' && lycansColorScheme['Disciple']) {
             return lycansColorScheme['Disciple'];
           }
-          if (roleName === 'Inquisiteur' && lycansColorScheme['Inquisiteur']) {
-            return lycansColorScheme['Inquisiteur'];
-          }           
+          if (roleName === 'Guetteur' && lycansColorScheme['Guetteur']) {
+            return lycansColorScheme['Guetteur'];
+          }
+          if (roleName === 'Purificateur' && lycansColorScheme['Purificateur']) {
+            return lycansColorScheme['Purificateur'];
+          }     
           // Default color for other powers
           return 'var(--chart-color-1)';
         }

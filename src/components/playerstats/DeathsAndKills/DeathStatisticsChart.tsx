@@ -300,7 +300,8 @@ export function DeathStatisticsChart() {
                   <option value="Alchimiste">↳ Alchimiste</option>
                   <option value="Protecteur">↳ Protecteur</option>
                   <option value="Disciple">↳ Disciple</option>
-                  <option value="Inquisiteur">↳ Inquisiteur</option>
+                  <option value="Guetteur">↳ Guetteur</option>
+                  <option value="Purificateur">↳ Purificateur </option>
                 </optgroup>
               )}
               {/* Loup group */}

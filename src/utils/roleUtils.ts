@@ -19,9 +19,9 @@ import type { PlayerStat } from '../hooks/useCombinedRawData';
 /**
  * Powers that are exclusive to Villageois Élite role
  * These were previously standalone MainRoleInitial values (Chasseur, Alchimiste)
- * and now include new powers (Protecteur, Disciple, Inquisiteur)
+ * and now include new powers (Protecteur, Disciple, Guetteur, Purificateur)
  */
-export const VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Inquisiteur'] as const;
+export const VILLAGEOIS_ELITE_POWERS = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Guetteur', 'Purificateur'] as const;
 
 /**
  * Legacy roles that are now represented as Villageois Élite + Power

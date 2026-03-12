@@ -71,7 +71,7 @@ function computeAllPlayersRoleStats(gameData: GameLogEntry[]): RoleData | null {
         villageoisWon = true;
       }
 
-      // Special handling for Villageois Élite powers (Chasseur, Alchimiste, Protecteur, Disciple, Inquisiteur)
+      // Special handling for Villageois Élite powers 
       // This handles both legacy format (MainRoleInitial === 'Chasseur') and new format (Villageois Élite + Power)
       if (playerCamp === 'Villageois' && isVillageoisElite(playerStat)) {
         const effectivePower = getEffectivePower(playerStat);
@@ -576,8 +576,11 @@ export function RolesStatsChart() {
             if (roleName === 'Disciple' && lycansColorScheme['Disciple']) {
               return lycansColorScheme['Disciple'];
             }
-            if (roleName === 'Inquisiteur' && lycansColorScheme['Inquisiteur']) {
-              return lycansColorScheme['Inquisiteur'];
+            if (roleName === 'Guetteur' && lycansColorScheme['Guetteur']) {
+              return lycansColorScheme['Guetteur'];
+            }
+            if (roleName === 'Purificateur' && lycansColorScheme['Purificateur']) {
+              return lycansColorScheme['Purificateur'];
             }
             return 'var(--chart-color-1)';
           }

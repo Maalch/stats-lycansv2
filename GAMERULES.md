@@ -230,8 +230,12 @@ Résiste à des attaques de loup, peut les berner pour créer une distraction
   - If attacked by a wolf while having at least one charge: player is stunned and teleported to their beacon
   - Transformed wolves see them as another player (disguise effect)
 
-**Inquisiteur (Inquisitor):**
-En meeting, peut tenter d'identifier les meurtriers récents
+**Purificateur:**
+
+
+**Guetteur:**
+
+
 
 **Avatar:**
 A plusieurs avantages, mais renforce les loups s'il meurt

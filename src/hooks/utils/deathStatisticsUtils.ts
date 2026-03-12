@@ -6,7 +6,7 @@ import { getPlayerId } from '../../utils/playerIdentification';
 import { compareVersion } from './dataUtils';
 
 // Villageois Élite powers (handles both new format and legacy format)
-const ELITE_POWERS_LIST = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Inquisiteur'];
+const ELITE_POWERS_LIST = ['Chasseur', 'Alchimiste', 'Protecteur', 'Disciple', 'Guetteur', 'Purificateur'];
 const LEGACY_ELITE_ROLES_LIST = ['Chasseur', 'Alchimiste'];
 
 /**
