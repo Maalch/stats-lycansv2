@@ -123,10 +123,10 @@ export function amoureuxLoupTotalKills(playerGames, allGames, playerId, params) 
 }
 
 /**
- * Count games where player (as Amoureux Loup) killed at least 2 wolf-camp players
+ * Count games where player (as Amoureux Loup) killed at least 1 wolf-camp player
  * in a single game via BY_WOLF kills.
  */
-export function amoureuxLoupKillsTwoWolves(playerGames, allGames, playerId, params) {
+export function amoureuxLoupKillsWolf(playerGames, allGames, playerId, params) {
   const gameIds = [];
   let value = 0;
 
@@ -141,7 +141,7 @@ export function amoureuxLoupKillsTwoWolves(playerGames, allGames, playerId, para
       if (!isKilledByPlayer(game, victim, playerId)) continue;
       if (isWolfCamp(victim)) wolfKillsInGame++;
     }
-    if (wolfKillsInGame >= 2) {
+    if (wolfKillsInGame >= 1) {
       value++;
       gameIds.push(game.Id);
     }
@@ -151,7 +151,6 @@ export function amoureuxLoupKillsTwoWolves(playerGames, allGames, playerId, para
 
 /**
  * Count out-of-meeting kills made while being Amoureux Villageois (villageois-camp lover).
- * "Hors meeting" = any kill that is NOT a VOTED death.
  * "Ennemi" = the victim is not an Amoureux partner (not in the Amoureux camp).
  */
 export function amoureuxVillageoisKillsEnemy(playerGames, allGames, playerId, params) {
@@ -168,8 +167,6 @@ export function amoureuxVillageoisKillsEnemy(playerGames, allGames, playerId, pa
     for (const victim of game.PlayerStats) {
       // Must be killed by this player
       if (!isKilledByPlayer(game, victim, playerId)) continue;
-      // Must be a hors-meeting kill (not a vote)
-      if (victim.DeathType === DeathTypeCode.VOTED) continue;
       // Victim must not be an Amoureux (i.e. not the partner)
       const victimIsAmoureux = victim.MainRoleInitial === 'Amoureux Loup'; 
                                 

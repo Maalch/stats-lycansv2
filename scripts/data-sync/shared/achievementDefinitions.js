@@ -643,7 +643,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'villageois-double-ally-kill',
     name: 'Oups',
-    description: 'Alors, vous vous êtes trompés d\'alliés...',
+    description: 'Alors... Vous vous êtes trompés d\'alliés...',
     explanation: 'Faire X parties en tuant deux alliés hors meeting en étant Villageois',
     emoji: '🤦',
     category: 'kills',
@@ -844,10 +844,10 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'amoureux-loup-kills-two-wolves',
     name: 'Pas de concurrence',
     description: 'La meilleure défense, c\'est l\'attaque',
-    explanation: 'Avoir X fois tué deux Loups en étant Amoureux Loup',
+    explanation: 'Tuer X fois un Loup en étant Amoureux Loup',
     emoji: '🐺🐺💕',
     category: 'kills',
-    evaluator: 'amoureuxLoupKillsTwoWolves',
+    evaluator: 'amoureuxLoupKillsWolf',
     evaluatorParams: {},
     levels: [
       // Bronze: 1

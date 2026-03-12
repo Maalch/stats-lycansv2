@@ -267,7 +267,7 @@ export function winsOnAllMaps(playerGames, allGames, playerId, params) {
 /**
  * Count games where the player was resurrected (brought back to life).
  * Resurrection is detected via MainRoleChanges:
- *   - NewMainRole === 'Vaudou' → always a resurrection
+ *   - NewMainRole === 'Zombie' → always a resurrection (from Vaudou)
  *   - NewMainRole === 'Loup'   → resurrection ONLY if MainRoleInitial !== 'Louveteau'
  *     (Louveteau naturally transforms into a Loup, that is not a resurrection)
  * Each qualifying game counts once, regardless of how many resurrections occurred.
@@ -283,7 +283,7 @@ export function resurrectedCount(playerGames, allGames, playerId, params) {
     const isLouveteau = playerStat.MainRoleInitial === 'Louveteau';
 
     const wasResurrected = changes.some(rc => {
-      if (rc.NewMainRole === 'Vaudou') return true;
+      if (rc.NewMainRole === 'Zombie') return true;
       if (rc.NewMainRole === 'Loup' && !isLouveteau) return true;
       return false;
     });
