@@ -1459,7 +1459,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'br-pacifist',
-    name: 'Le pacifisme incarné',
+    name: 'Pacifisme Incarné',
     description: 'Tuer c\'est mal... Même quand c\'est le principe...',
     explanation: 'Faire X parties BR avec 0 kill',
     emoji: '🕊️',
@@ -1588,4 +1588,5 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
 ];
+
 
