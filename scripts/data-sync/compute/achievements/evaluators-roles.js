@@ -6,7 +6,7 @@
  */
 
 import { isWolfCamp, isSoloCamp, isKilledByPlayer, isVoteTargetPlayer } from './helpers.js';
-import { getPlayerId, DeathTypeCode } from './helpers.js';
+import { getPlayerId, getPlayerCampForAchievement, DeathTypeCode } from './helpers.js';
 
 /**
  * Count wins as Agent where:
