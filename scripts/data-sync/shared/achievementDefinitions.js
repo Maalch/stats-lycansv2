@@ -1092,7 +1092,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'misunderstood',
-    name: 'L\'Incompris·e',
+    name: 'Incompris·e',
     description: 'Vous l\'aviez dit pourtant que vous étiez innocent·e...',
     explanation: 'Voter X fois pour un ennemi mais se faire voter à la place en étant Villageois',
     emoji: '🤷',
@@ -1588,5 +1588,6 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
 ];
+
 
 
