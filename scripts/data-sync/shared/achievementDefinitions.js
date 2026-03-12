@@ -182,7 +182,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'wolf-loss-harvest-no-kills',
-    name: 'Le·a loup·ve trop gentil·le',
+    name: 'Loup·ve trop Gentil·le',
     description: 'Vous ne vouliez vraiment blesser personne...',
     explanation: 'Perdre X parties à la récolte en Loup sans avoir tué personne',
     emoji: '🌾',
@@ -1588,3 +1588,4 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
 ];
+
