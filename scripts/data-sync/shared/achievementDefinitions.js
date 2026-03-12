@@ -156,7 +156,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'wolf-survived-hunter-shot',
-    name: 'Loup Aventurier',
+    name: 'Loup Aventurier·ère',
     description: 'Et puis vous avez pris une flèche dans le genou...',
     explanation: 'Perdre X parties en Loup tout en survivant au Chasseur (la balle ne vous tue pas)',
     emoji: '🏹',
@@ -203,7 +203,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'wolf-menage-a-trois',
     name: 'Ménage à Trois',
-    description: 'Il suffit de convaincre un villageois de voter pour votre victime et le tour est joué',
+    description: 'Il suffit de convaincre un·e villageois·e de voter pour votre victime et le tour est joué',
     explanation: 'Gagner X parties en faisant voter le dernier Villageois lors d\'un meeting à 3 en étant Loup',
     emoji: '3️⃣',
     category: 'victories',
