@@ -49,33 +49,6 @@ export function agentVoted(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Count wins as Louveteau when all other wolves are dead
- */
-export function louveteauOrphanWin(playerGames, allGames, playerId, params) {
-  const gameIds = [];
-  let value = 0;
-  
-  for (const { game, playerStat } of playerGames) {
-    if (playerStat.MainRoleInitial !== 'Louveteau') continue;
-    if (!playerStat.Victorious) continue;
-    
-    // Check if all other wolves died
-    const otherWolves = game.PlayerStats.filter(p =>
-      getPlayerId(p) !== playerId && isWolfCamp(p)
-    );
-    const allOtherWolvesDead = otherWolves.length > 0 && otherWolves.every(p =>
-      p.DeathType && p.DeathType !== DeathTypeCode.SURVIVOR && p.DeathType !== ''
-    );
-    
-    if (allOtherWolvesDead) {
-      value++;
-      gameIds.push(game.Id);
-    }
-  }
-  return { value, gameIds };
-}
-
-/**
  * Count how many different solo roles the player has won with
  * (Loup and Villageois are excluded because they are not solo roles)
  * Each solo role only counts once, regardless of how many times won with it.

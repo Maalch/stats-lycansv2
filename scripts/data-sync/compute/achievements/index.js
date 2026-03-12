@@ -48,7 +48,6 @@ import {
 // Role-specific evaluators
 import {
   agentWinPerfectKill, agentVoted,
-  louveteauOrphanWin,
   winWith9SoloRoles, idiotKilledByHunter,
   roleWins,
 } from './evaluators-roles.js';
@@ -125,7 +124,6 @@ export const EVALUATORS = {
   // Roles
   agentWinPerfectKill,
   agentVoted,
-  louveteauOrphanWin,
   winWith9SoloRoles,
   idiotKilledByHunter,
   roleWins,
