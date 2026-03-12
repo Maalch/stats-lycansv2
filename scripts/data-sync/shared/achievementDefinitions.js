@@ -64,9 +64,9 @@ export const ACHIEVEMENT_DEFINITIONS = [
   // ============================================================================
   {
     id: 'victories-villageois',
-    name: 'Héros du Village',
+    name: 'Héros·ïne du Village',
     description: 'La justice finit toujours par triompher',
-    explanation: 'Gagner X victoires en camp Villageois',
+    explanation: 'Gagner X parties en Villageois',
     emoji: '🏘️',
     category: 'victories',
     evaluator: 'campWins',
@@ -244,7 +244,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'wolf-win-early-death',
     name: 'Une game exemplaire',
     description: 'Tout s\'est déroulé comme prévu',
-    explanation: 'Gagner X parties en Loup en mourant avant le premier meeting (N1 ou J1)',
+    explanation: 'Gagner X parties en Loup sans aller jusqu\'au premier meeting',
     emoji: '💤',
     category: 'victories',
     evaluator: 'wolfWinEarlyDeath',
@@ -393,52 +393,12 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'voted-as-villager',
     name: 'Coupable par défaut',
-    description: 'Vous avez beau crier que vous êtes gentil, personne ne vous croit...',
+    description: 'Vous avez beau crier que vous êtes gentil·le, personne ne vous croit...',
     explanation: 'Être X fois éjecté d\'un meeting en étant Villageois',
     emoji: '🗳️',
     category: 'deaths',
     evaluator: 'votedAsCamp',
     evaluatorParams: { camp: 'Villageois' },
-    levels: [
-      // Bronze: 1
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 15
-      { tier: 'lycans', subLevel: 1, threshold: 15 },
-    ],
-  },
-  {
-    id: 'wolf-killed-by-beast',
-    name: 'C\'est Bête',
-    description: 'Un loup tué par La Bête... L\'ironie du sort',
-    explanation: 'Mourir X fois en Loup par La Bête',
-    emoji: '🦁',
-    category: 'deaths',
-    evaluator: 'roleDeathByType',
-    evaluatorParams: { roleCamp: 'Loup', deathType: 'BY_BEAST' },
-    levels: [
-      // Bronze: 1
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 15
-      { tier: 'lycans', subLevel: 1, threshold: 15 },
-    ],
-  },
-  {
-    id: 'wolf-killed-by-amoureux-loup',
-    name: 'C\'est l\'Amour',
-    description: 'Un loup tué par un autre loup... C\'est le ponpon',
-    explanation: 'Mourir X fois en Loup par un Amoureux Loup',
-    emoji: '💔',
-    category: 'deaths',
-    evaluator: 'wolfKilledByAmoureuxLoup',
-    evaluatorParams: {},
     levels: [
       // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
@@ -662,8 +622,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'hunter-double-kill',
-    name: 'Farmeur de loups',
-    description: 'Un loup, c\'est bien, deux loups, c\'est mieux',
+    name: 'Farmeur de loups·ves',
+    description: 'Un·e loup·ve, c\'est bien, deux loups·ves, c\'est mieux',
     explanation: 'Tuer X fois deux Loups dans une même game en étant Chasseur',
     emoji: '🏹',
     category: 'kills',
@@ -772,26 +732,6 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 5 },
       // Lycans: 10
       { tier: 'lycans', subLevel: 1, threshold: 10 },
-    ],
-  },
-  {
-    id: 'victim-of-love',
-    name: 'Victime de l\'Amour',
-    description: 'Pour que l\'Amour existe, vous avez dû périr',
-    explanation: 'Mourir X fois par un Amoureux Loup',
-    emoji: '💘',
-    category: 'kills',
-    evaluator: 'killedByLoverWolf',
-    evaluatorParams: {},
-    levels: [
-      // Bronze: 10
-      { tier: 'bronze', subLevel: 1, threshold: 10 },
-      // Argent: 20
-      { tier: 'argent', subLevel: 1, threshold: 20 },
-      // Or: 30
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      // Lycans: 50
-      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
   {
@@ -1077,11 +1017,11 @@ export const ACHIEVEMENT_DEFINITIONS = [
       // Bronze: 1 win with each solo role
       { tier: 'bronze', subLevel: 1, threshold: 1 },
       // Argent: 2 wins with each
-      { tier: 'argent', subLevel: 1, threshold: 2 },
+      { tier: 'argent', subLevel: 1, threshold: 3 },
       // Or: 3 wins with each
-      { tier: 'or', subLevel: 1, threshold: 3 },
+      { tier: 'or', subLevel: 1, threshold: 5 },
       // Lycans: 5 wins with each
-      { tier: 'lycans', subLevel: 1, threshold: 5 },
+      { tier: 'lycans', subLevel: 1, threshold: 9 },
     ],
   },
 
@@ -1213,7 +1153,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'only-passer',
     name: 'Au cas où, je passe',
-    description: 'Vous vous méfiez de la fourberie des loups',
+    description: 'Vous vous méfiez de la fourberie des ennemis',
     explanation: 'Être X fois le seul joueur Villageois à passer dans un meeting',
     emoji: '🙈',
     category: 'social',
@@ -1323,8 +1263,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
 
   {
     id: 'winning-months',
-    name: 'Gagnant du mois',
-    description: 'Vous êtes beau, vous êtes grand, vous êtes gagnant... Au moins sur un mois.',
+    name: 'Gagnant·e du mois',
+    description: 'Vous êtes beau·elle, vous êtes grand·e, vous êtes gagnant·e... Au moins sur un mois.',
     explanation: 'Avoir X fois plus de 50 % de victoires sur un mois civil',
     emoji: '📅',
     category: 'victories',
@@ -1435,7 +1375,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'collectionneur',
     name: 'Collectionneur',
-    description: 'Vous êtes prêt en toute circonstance',
+    description: 'Vous êtes prêt·e en toute circonstance',
     explanation: 'Faire X parties en utilisant au moins 5 items différents (gadgets ou potions)',
     emoji: '🎒',
     category: 'special',

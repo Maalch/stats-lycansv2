@@ -55,7 +55,6 @@ import {
 
 // Amoureux evaluators
 import {
-  killedByLoverWolf, wolfKilledByAmoureuxLoup,
   amoureuxLoupKillsLover, amoureuxLoupTotalKills,
   amoureuxLoupKillsWolf, amoureuxVillageoisKillsEnemy,
 } from './evaluators-amoureux.js';
@@ -132,8 +131,6 @@ export const EVALUATORS = {
   roleWins,
 
   // Amoureux
-  killedByLoverWolf,
-  wolfKilledByAmoureuxLoup,
   amoureuxLoupKillsLover,
   amoureuxLoupTotalKills,
   amoureuxLoupKillsWolf,

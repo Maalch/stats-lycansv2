@@ -76,7 +76,9 @@ export function louveteauOrphanWin(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Win with at least 9 different solo roles (Loup and Villageois are excluded because they are not solo roles)
+ * Count how many different solo roles the player has won with
+ * (Loup and Villageois are excluded because they are not solo roles)
+ * Each solo role only counts once, regardless of how many times won with it.
  */
 export function winWith9SoloRoles(playerGames, allGames, playerId, params) {
 
@@ -85,16 +87,16 @@ export function winWith9SoloRoles(playerGames, allGames, playerId, params) {
   const gameIds = [];
   for (const { game, playerStat } of playerGames) {
     if (!playerStat.Victorious) continue;
-    if (isSoloCamp(playerStat.MainRoleInitial, playerStat.Power) && playerStat.MainRoleInitial !== 'Cannibale') {
-      if (!wonSoloRoles.has(playerStat.MainRoleInitial)) {
-        wonSoloRoles.add(playerStat.MainRoleInitial);
+    const mainCamp = getPlayerCampForAchievement(playerStat, true, { regroupWolfSubRoles: true });
+    if (isSoloCamp(mainCamp, playerStat.Power) && mainCamp !== 'Cannibale') {
+      if (!wonSoloRoles.has(mainCamp)) {
+        wonSoloRoles.add(mainCamp);
         gameIds.push(game.Id);
       }
     }
   }
   
-  const hasWonNineSoloRoles = wonSoloRoles.size >= 9;
-  return { value: hasWonNineSoloRoles ? 1 : 0, gameIds: hasWonNineSoloRoles ? gameIds : [] };
+  return { value: wonSoloRoles.size, gameIds };
 }
 
 /**

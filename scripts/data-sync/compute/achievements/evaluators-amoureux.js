@@ -9,62 +9,6 @@ import { isWolfCamp, isKilledByPlayer, getKillerPlayerId } from './helpers.js';
 import { getPlayerId, DeathTypeCode } from './helpers.js';
 
 /**
- * Count times killed by a wolf who was also an Amoureux
- */
-export function killedByLoverWolf(playerGames, allGames, playerId, params) {
-  const gameIds = [];
-  let value = 0;
-  
-  for (const { game, playerStat } of playerGames) {
-    if (playerStat.DeathType !== DeathTypeCode.BY_WOLF) continue;
-    if (!playerStat.KillerName) continue;
-    
-    // Find the killer in this game by KillerName and check their role
-    const killerPlayerId = getKillerPlayerId(game, playerStat);
-    if (!killerPlayerId) continue;
-    const killer = game.PlayerStats.find(p => getPlayerId(p) === killerPlayerId);
-    if (!killer) continue;
-    
-    // Check if killer was Amoureux Loup (as MainRoleInitial)
-    const isLover = killer.MainRoleInitial === 'Amoureux Loup';
-    if (isLover) {
-      value++;
-      gameIds.push(game.Id);
-    }
-  }
-  return { value, gameIds };
-}
-
-/**
- * Count deaths as a wolf killed by an Amoureux Loup 
- */
-export function wolfKilledByAmoureuxLoup(playerGames, allGames, playerId, params) {
-  const gameIds = [];
-  let value = 0;
-  
-  for (const { game, playerStat } of playerGames) {
-    // Player must be a wolf who died by wolf
-    if (!isWolfCamp(playerStat)) continue;
-    if (playerStat.DeathType !== DeathTypeCode.BY_WOLF) continue;
-    if (!playerStat.KillerName) continue;
-    
-    // Find the killer in this game by KillerName and check their role
-    const killerPlayerId = getKillerPlayerId(game, playerStat);
-    if (!killerPlayerId) continue;
-    const killer = game.PlayerStats.find(p => getPlayerId(p) === killerPlayerId);
-    if (!killer) continue;
-    
-    // Check if killer was Amoureux Loup 
-    const isAmoureuxLoup = killer.MainRoleInitial === 'Amoureux Loup';
-    if (isAmoureuxLoup) {
-      value++;
-      gameIds.push(game.Id);
-    }
-  }
-  return { value, gameIds };
-}
-
-/**
  * Count times player (as Amoureux Loup) killed their own partner (the other Amoureux in the game)
  */
 export function amoureuxLoupKillsLover(playerGames, allGames, playerId, params) {
