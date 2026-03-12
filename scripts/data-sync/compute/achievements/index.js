@@ -47,7 +47,7 @@ import {
 
 // Role-specific evaluators
 import {
-  agentPerfectKill, agentVoted,
+  agentWinPerfectKill, agentVoted,
   louveteauOrphanWin,
   winWith9SoloRoles, idiotKilledByHunter,
   roleWins,
@@ -124,7 +124,7 @@ export const EVALUATORS = {
   hunterKillsLastWolf,
 
   // Roles
-  agentPerfectKill,
+  agentWinPerfectKill,
   agentVoted,
   louveteauOrphanWin,
   winWith9SoloRoles,

@@ -14,7 +14,7 @@ import { getPlayerId, DeathTypeCode } from './helpers.js';
  * - Player won the game
  * - Player never received any vote during any meeting in the game
  */
-export function agentPerfectKill(playerGames, allGames, playerId, params) {
+export function agentWinPerfectKill(playerGames, allGames, playerId, params) {
   const gameIds = [];
   let value = 0;
 
@@ -24,7 +24,6 @@ export function agentPerfectKill(playerGames, allGames, playerId, params) {
 
     // Must have personally killed the other Agent
     const killedOtherAgent = game.PlayerStats.some(victim =>
-      victim.DeathType === DeathTypeCode.OTHER_AGENT &&
       isKilledByPlayer(game, victim, playerId)
     );
     if (!killedOtherAgent) continue;
