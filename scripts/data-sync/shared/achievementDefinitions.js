@@ -1108,7 +1108,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
 
   {
     id: 'zombie-item-uses',
-    name: 'Joueur comme les autres',
+    name: 'Joueur·se comme les autres',
     description: "Même en zombie, vous voulez faire comme tout le monde",
     explanation: 'Avoir X fois bu une potion ou utilisé un objet en étant Zombie',
     emoji: '🧟',
