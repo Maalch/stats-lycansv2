@@ -285,6 +285,15 @@ export function hunterKillsLastWolf(playerGames, allGames, playerId, params) {
       if (!isWolfCamp(victim)) continue;
       // Victim's death timing must match the game's EndTiming
       if (victim.DeathTiming === endTiming) {
+        // Additional check: if DeathDateIrl exists, verify it's within 5 seconds of EndDate
+        if (victim.DeathDateIrl && game.EndDate) {
+          const deathTime = new Date(victim.DeathDateIrl);
+          const endTime = new Date(game.EndDate);
+          const diffSeconds = Math.abs(endTime - deathTime) / 1000;
+          if (diffSeconds > 5) {
+            continue; // Death was too far from game end, likely not the killing blow
+          }
+        }
         bulletEndedGame = true;
         break;
       }
