@@ -12,7 +12,6 @@ import { getPlayerId, DeathTypeCode } from './helpers.js';
  * Count wins as Agent where:
  * - Player personally killed the other Agent (victim.DeathType === OTHER_AGENT, killer is this player)
  * - Player won the game
- * - Player never received any vote during any meeting in the game
  */
 export function agentWinPerfectKill(playerGames, allGames, playerId, params) {
   const gameIds = [];
@@ -27,14 +26,6 @@ export function agentWinPerfectKill(playerGames, allGames, playerId, params) {
       isKilledByPlayer(game, victim, playerId)
     );
     if (!killedOtherAgent) continue;
-
-    // Must never have received any vote during any meeting
-    const wasEverVoted = game.PlayerStats.some(voter =>
-      getPlayerId(voter) !== playerId &&
-      voter.Votes &&
-      voter.Votes.some(v => isVoteTargetPlayer(game, v.Target, playerId))
-    );
-    if (wasEverVoted) continue;
 
     value++;
     gameIds.push(game.Id);

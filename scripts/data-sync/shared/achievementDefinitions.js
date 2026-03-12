@@ -908,7 +908,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'agent-007',
     name: '007',
     description: 'Bravo, vous êtes un·e véritable agent',
-    explanation: 'Avoir X fois gagné en tuant personnellement l\'autre Agent et ne jamais avoir été voté en étant Agent',
+    explanation: 'Avoir X fois gagné en tuant personnellement l\'autre Agent',
     emoji: '🔫',
     category: 'roles',
     evaluator: 'agentWinPerfectKill',
