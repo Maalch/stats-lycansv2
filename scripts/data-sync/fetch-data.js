@@ -909,14 +909,24 @@ async function main() {
     const allGameLogUrls = await fetchStatsListUrls();
     
     // Filter URLs based on file age (unless full sync)
-    const { filteredUrls: gameLogUrls, skippedCount, totalCount } = filterRecentSessionFiles(
+    const { filteredUrls: ageFilteredUrls, skippedCount, totalCount } = filterRecentSessionFiles(
       allGameLogUrls,
       fileCutoffDate,
       forceFullSync
     );
     
     if (skippedCount > 0) {
-      console.log(`🔍 File-level filtering: skipping ${skippedCount} old session files (${gameLogUrls.length}/${totalCount} will be fetched)`);
+      console.log(`🔍 File-level filtering: skipping ${skippedCount} old session files (${ageFilteredUrls.length}/${totalCount} will be fetched)`);
+    }
+    
+    // Filter URLs to only include Main Team files (Ponce-, Tsuna-, khalen-)
+    const gameLogUrls = ageFilteredUrls.filter(url => {
+      const filename = url.split('/').pop();
+      return filename.startsWith('Ponce-') || filename.startsWith('Tsuna-') || filename.startsWith('khalen-');
+    });
+    const teamFilteredCount = ageFilteredUrls.length - gameLogUrls.length;
+    if (teamFilteredCount > 0) {
+      console.log(`🔍 Team filtering: skipping ${teamFilteredCount} non-main-team files (${gameLogUrls.length} Main Team files to fetch)`);
     }
     
     const awsGameLogs = [];
