@@ -224,7 +224,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'wolf-all-kills-solo',
     name: 'Besoin de personne',
     description: 'Vous faites votre route solo et vous la faites plutôt bien',
-    explanation: 'Gagner X parties en Loup en étant le seul à avoir fait des kills hors meeting',
+    explanation: 'Gagner X parties en étant le seul Loup à avoir fait des kills',
     emoji: '🐺',
     category: 'victories',
     evaluator: 'wolfAllKillsSolo',
@@ -1344,9 +1344,9 @@ export const ACHIEVEMENT_DEFINITIONS = [
 
   {
     id: 'perfect-sessions',
-    name: "C'est qui le patron ?",
+    name: "C'est qui le·a patron·ne ?",
     description: "C'est vous...",
-    explanation: 'Avoir X sessions (même jour, min. 5 parties) à 100 % de victoire',
+    explanation: 'Avoir X sessions (min. 5 parties) à 100 % de victoire',
     emoji: '💼',
     category: 'victories',
     evaluator: 'perfectSessions',
