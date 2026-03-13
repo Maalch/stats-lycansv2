@@ -156,7 +156,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'wolf-survived-hunter-shot',
-    name: 'Loup Aventurier·ère',
+    name: 'Loup·ve Aventurier·ère',
     description: 'Et puis vous avez pris une flèche dans le genou...',
     explanation: 'Perdre X parties en Loup tout en survivant au Chasseur (la balle ne vous tue pas)',
     emoji: '🏹',
@@ -262,9 +262,9 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'last-wolf',
-    name: 'Le·a dernier·ère loup·ve',
-    description: 'Vous n\'avez besoin de personne pour gagner… Vous seul·e survivez.',
-    explanation: 'Gagner X parties en étant l\'unique survivant et donc le dernier Loup',
+    name: 'Dernier·ère Loup·ve',
+    description: "Vous n'avez besoin de personne pour gagner… Vous seul·e survivez.",
+    explanation: "Gagner X parties en étant l'unique survivant et donc le dernier Loup",
     emoji: '🏘️',
     category: 'victories',
     evaluator: 'lastWolfStanding',
@@ -433,7 +433,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'crushed',
     name: 'Au ras des pâquerettes',
-    description: 'Difficile quand on est petit d\'éviter les pas des géants',
+    description: "Difficile quand on est petit·e d'éviter les pas des géant·es",
     explanation: 'Mourir X fois écrasé',
     emoji: '🪨',
     category: 'deaths',
@@ -622,8 +622,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'hunter-double-kill',
-    name: 'Farmeur de loups·ves',
-    description: 'Un·e loup·ve, c\'est bien, deux loups·ves, c\'est mieux',
+    name: 'Farmeur·se de Loups·ves',
+    description: "Un·e loup·ve, c'est bien, deux loups·ves, c'est mieux",
     explanation: 'Tuer X fois deux Loups dans une même game en étant Chasseur',
     emoji: '🏹',
     category: 'kills',
@@ -1093,7 +1093,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'misunderstood',
     name: 'Incompris·e',
-    description: 'Vous l\'aviez dit pourtant que vous étiez innocent·e...',
+    description: "Vous l'aviez dit pourtant que vous étiez innocent·e...",
     explanation: 'Voter X fois pour un ennemi mais se faire voter à la place en étant Villageois',
     emoji: '🤷',
     category: 'social',
