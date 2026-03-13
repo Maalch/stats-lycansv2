@@ -4,6 +4,8 @@ on:
   schedule:
     # Run only on Monday (before usual game day), Tuesday (game day), and Thursday (alternate game day) at 8 PM UTC (after game time)
     - cron: '0 20 * * 1,2,4'
+  repository_dispatch:
+    types: [new-game-data] # Triggered by S3 event notification via Lambda webhook
   workflow_dispatch: # Allow manual triggering
     inputs:
       full_sync:
