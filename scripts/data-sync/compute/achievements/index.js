@@ -23,7 +23,7 @@ import {
   deathByType, deathOnTiming,
   winOnAllMaps, winInColors, winsOnAllMaps,
   winsAgainstOnutrem, winningMonths,
-  perfectSessions, topLootVillageoisGames, resurrectedCount,
+  perfectSessions, topLootVillageoisGames, maxLootInSingleGame, resurrectedCount,
 } from './evaluators-general.js';
 
 // Wolf evaluators
@@ -158,6 +158,7 @@ export const EVALUATORS = {
   winningMonths,
   perfectSessions,
   topLootVillageoisGames,
+  maxLootInSingleGame,
   resurrectedCount,
 };
 

@@ -335,6 +335,41 @@ export function topLootVillageoisGames(playerGames, allGames, playerId, params) 
 }
 
 /**
+ * Return the maximum TotalCollectedLoot value achieved in a single game as Villageois.
+ * - Player must be in Villageois camp
+ * - TotalCollectedLoot must be available (not null/undefined)
+ * Returns the maximum loot value across all qualifying games.
+ */
+export function maxLootInSingleGame(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let maxLoot = 0;
+  let maxGameId = null;
+
+  for (const { game, playerStat } of playerGames) {
+    // Player must be in Villageois camp
+    const camp = getPlayerCampForAchievement(playerStat, false, { regroupWolfSubRoles: true });
+    if (camp !== 'Villageois') continue;
+
+    // TotalCollectedLoot must be available for this player
+    if (playerStat.TotalCollectedLoot == null) continue;
+    const playerLoot = playerStat.TotalCollectedLoot;
+
+    // Track maximum
+    if (playerLoot > maxLoot) {
+      maxLoot = playerLoot;
+      maxGameId = game.Id;
+    }
+  }
+
+  // Return the single highest value and the game where it was achieved
+  if (maxGameId) {
+    gameIds.push(maxGameId);
+  }
+
+  return { value: maxLoot, gameIds };
+}
+
+/**
  * Count calendar days (sessions) where the player had a 100% win rate
  * with at least `minGames` games played that day.
  * Groups player games by YYYY-MM-DD from game.StartDate.

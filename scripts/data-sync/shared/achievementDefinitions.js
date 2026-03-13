@@ -1087,6 +1087,27 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
 
   {
+    id: 'max-loot-single-game',
+    name: 'Record de Récolte',
+    description: 'Vous êtes une machine à farmer',
+    explanation: 'Récolter plus de X de loots dans une seule partie',
+    emoji: '🏆',
+    category: 'roles',
+    evaluator: 'maxLootInSingleGame',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 400
+      { tier: 'bronze', subLevel: 1, threshold: 400 },
+      // Argent: 600
+      { tier: 'argent', subLevel: 1, threshold: 600 },
+      // Or: 850
+      { tier: 'or', subLevel: 1, threshold: 850 },
+      // Lycans: 1200
+      { tier: 'lycans', subLevel: 1, threshold: 1200 },
+    ],
+  },
+
+  {
     id: 'zombie-item-uses',
     name: 'Joueur·se comme les autres',
     description: "Même en zombie, vous voulez faire comme tout le monde",
