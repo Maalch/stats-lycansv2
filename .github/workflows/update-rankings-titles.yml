@@ -31,7 +31,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.LYCANSTRACKER_SECRET_ACTIONS }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
