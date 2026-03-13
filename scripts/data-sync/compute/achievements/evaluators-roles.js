@@ -108,3 +108,41 @@ export function idiotKilledByHunter(playerGames, allGames, playerId, params) {
   }
   return { value, gameIds };
 }
+
+/**
+ * Count games where player survived as Idiot du Village while receiving at least 1 vote
+ * Achievement: "Presque Idiot·e" (Almost an Idiot)
+ */
+export function idiotSurvivedWithVotes(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  
+  for (const { game, playerStat } of playerGames) {
+    // Must be Idiot du Village
+    if (playerStat.MainRoleInitial !== 'Idiot du Village') continue;
+    
+    // Must have survived (not died)
+    if (playerStat.DeathType || playerStat.DeathTiming) continue;
+    
+    // Count how many votes were cast against this player in all meetings
+    const playerName = playerStat.Username;
+    let votesAgainstPlayer = 0;
+    
+    for (const p of game.PlayerStats) {
+      const votes = p.Votes || [];
+      for (const vote of votes) {
+        // Check if this vote targeted the player (using helper for proper player ID matching)
+        if (isVoteTargetPlayer(game, vote.Target, playerId)) {
+          votesAgainstPlayer++;
+        }
+      }
+    }
+    
+    // If at least 1 vote was cast against them, count this game
+    if (votesAgainstPlayer >= 1) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}

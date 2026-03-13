@@ -510,6 +510,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'lycans', subLevel: 1, threshold: 20 },
     ],
   },
+  {
+    id: 'idiot-survived-with-votes',
+    name: 'Presque Idiot·e',
+    description: 'Trop malin·gne pour être Idiot·e',
+    explanation: 'Survivre X fois en Idiot du Village en ayant au moins 1 vote contre soi',
+    emoji: '🧠',
+    category: 'roles',
+    evaluator: 'idiotSurvivedWithVotes',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
+    ],
+  },
 
   // ============================================================================
   // KILLS
