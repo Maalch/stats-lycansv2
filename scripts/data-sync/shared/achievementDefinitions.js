@@ -821,6 +821,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'celibataire',
+    name: 'Célibataire',
+    description: 'Jusqu\'à ce que la mort vous sépare... Ou la réanimation d\'un autre',
+    explanation: 'Se retrouver X fois l\'unique Amoureux à la fin d\'une game',
+    emoji: '💔',
+    category: 'roles',
+    evaluator: 'loverSingleAtEnd',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
     id: 'same-color-kills',
     name: 'C\'est MA couleur !',
     description: 'Vous voulez être le·a seul·e à la mode, ça se comprend...',

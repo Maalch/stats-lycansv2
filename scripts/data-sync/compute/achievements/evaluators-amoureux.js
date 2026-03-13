@@ -128,3 +128,51 @@ export function amoureuxVillageoisKillsEnemy(playerGames, allGames, playerId, pa
   }
   return { value, gameIds };
 }
+
+/**
+ * Count games where player ended as the sole Amoureux.
+ * Conditions:
+ * - Player started as Amoureux (Loup or Villageois)
+ * - Player died this game
+ * - Player lost this game
+ * - The other Amoureux player had their role changed (became Zombie or Loup via resurrection)
+ */
+export function loverSingleAtEnd(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    // Player must be Amoureux (either Loup or Villageois)
+    const isAmoureux = playerStat.MainRoleInitial === 'Amoureux Loup' || 
+                       playerStat.MainRoleInitial === 'Amoureux Villageois';
+    if (!isAmoureux) continue;
+
+    // Player must have died (DeathTiming is not null)
+    if (!playerStat.DeathTiming) continue;
+
+    // Player must have lost the game
+    if (playerStat.Victorious) continue;
+
+    // Find the other Amoureux player in this game
+    const partner = game.PlayerStats.find(p => {
+      if (getPlayerId(p) === playerId) return false;
+      return p.MainRoleInitial === 'Amoureux Loup' || p.MainRoleInitial === 'Amoureux Villageois';
+    });
+    
+    if (!partner) continue;
+
+    // Check if partner had a role change (became something other than Amoureux)
+    const hadRoleChange = partner.MainRoleChanges && partner.MainRoleChanges.length > 0 &&
+      partner.MainRoleChanges.some(rc => {
+        const newRole = rc.NewMainRole;
+        return newRole !== 'Amoureux Loup' && newRole !== 'Amoureux Villageois';
+      });
+
+    if (hadRoleChange) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}

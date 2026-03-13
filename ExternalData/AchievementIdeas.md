@@ -70,3 +70,22 @@
 | Classique | Chasseur de Primes | Victoire | Une Dernière Volonté ? | Vous avez accompli votre mission jusqu'au bout | Gagner X parties en tant que Chasseur de Primes | 3 | 5 | 10 | 20 |
 | Spécifique | Tous | Style, Victoire | United Colors of Lycans | L'arc-en-ciel des victoires | Avoir gagné une partie avec au moins X couleurs différentes | 1 - 2 - 3 | 4 - 5 - 6 | 7 - 8 - 9 | 12 |
 | Classique | Battle Royale | Participation | Vétéran de l'Arène | Vous en avez connu, des batailles ... | Participer à X parties en Battle Royale | 1 - 10 - 25 | 50 - 100 - 150 | 200 - 300 - 400 | 500 |
+| Original | Amoureux | | Célibataire | Jusqu'à ce que la mort vous sépare... Ou la réanimation d'un autre | Se retrouver X fois l'unique Amoureux à la fin d'une game | 1 | 2 | 3 | 5 |
+| Spécifique | Loup | Rôle, Kill | Loup·ve Devin Ultime | Vous avez révélé tous leurs secrets | Deviner correctement X rôles en Loup Devin | | | | |
+| Spécifique | Tous | Meeting | Meneur·se | Votre voix porte, et les autres suivent | Être X fois le premier à voter entraînant l'élimination du joueur | | | | |
+| Original | Idiot du Village | Survie, Meeting | Presque Idiot·e | Trop malin·gne pour être Idiot·e | Survivre X fois en Idiot du Village en ayant au moins 1 vote contre soi | | | | |
+| Spécifique | Villageois | Récolte | Record de Récolte | Vous êtes une machine à farmer | Récolter plus de X de loots dans une seule partie | | | | |
+| Spécifique | Tous | Kill | Retour à l'Envoyeur | La vengeance est douce | Tuer X fois la personne qui vous a tué dans la partie précédente | | | | |
+| Spécifique | Tous | Victoire, Meeting | Speed Run | La game parfaite, sans traîner | Gagner X parties qui se terminent au 2éme Meeting ou avant | | | | |
+| Original | Tous | Meeting | Têtu·e | Quand vous avez une idée, vous la gardez | Voter X fois la même personne sur 3 meetings consécutifs | | | | |
+| Original | Loup | Victoire, Mort | | | Gagner X parties en Loup en mourant avant le premier meeting | | | | |
+| Original | Tous | Rôle | Spider-Man Pointing at Spider-Man | | Faire X parties avec quelqu'un ayant le même métier Villageois | | | | |
+| Original | Tous | Spécial | The Lycan Voice | Vous avez tenté la chansonnette... Chacun saura s'il se retourne ou pas... | Avoir X fois chanté dans une partie (liés aux Clips) | 1 | 2 | 3 | 5 |
+| Classique | Agent | Victoire | | | Gagner X victoires en Agent | 1 | 2 | 3 | 5 |
+| Classique | Amoureux | Victoire | | | Gagner X victoires en Amoureux | 3 | 5 | 10 | 20 |
+| Classique | Idiot du Village | Victoire | | | Gagner X victoires en Idiot du Village | 1 | 2 | 3 | 5 |
+| Classique | La Bête | Victoire | | | Gagner X victoires en La Bête | 1 | 2 | 3 | 5 |
+| Classique | Contrebandier | Victoire | | | Gagner X victoires en Contrebandier | 1 | 2 | 3 | 5 |
+| Classique | Espion | Victoire | | | Gagner X victoires en Espion | 1 | 2 | 3 | 5 |
+| Original | La Bête | Kill | Ami·e des Villageois | Malgré vous, vous êtes gentil·le jusqu'au bout des griffes | Tuer X fois les derniers ennemis du village | 1 | 2 | 3 | 5 |
+| Classique | La Bête | Kill | | | Faire X kills en La Bête | 5 | 10 | 15 | 30 |

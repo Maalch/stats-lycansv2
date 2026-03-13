@@ -56,6 +56,7 @@ import {
 import {
   amoureuxLoupKillsLover, amoureuxLoupTotalKills,
   amoureuxLoupKillsWolf, amoureuxVillageoisKillsEnemy,
+  loverSingleAtEnd,
 } from './evaluators-amoureux.js';
 
 // Voting evaluators
@@ -133,6 +134,7 @@ export const EVALUATORS = {
   amoureuxLoupTotalKills,
   amoureuxLoupKillsWolf,
   amoureuxVillageoisKillsEnemy,
+  loverSingleAtEnd,
 
   // Voting
   votedAsCamp,
