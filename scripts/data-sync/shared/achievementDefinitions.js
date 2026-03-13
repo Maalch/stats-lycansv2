@@ -118,7 +118,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'victories-solo',
     name: 'Solo Winner·use',
     description: 'Vous n\'avez pas besoin d\'alliés pour gagner...',
-    explanation: 'Gagner X victoires en camp solo (Amoureux, Idiot du Village, Agent, etc.)',
+    explanation: 'Gagner X parties en camp solo (Amoureux, Idiot du Village, Agent, etc.)',
     emoji: '🎯',
     category: 'victories',
     evaluator: 'soloWins',
@@ -988,19 +988,19 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'solo-master',
     name: 'Je maîtrise le solo',
     description: 'Vous savez comment gagner avec chaque rôle',
-    explanation: 'Avoir X victoires avec X rôles solo différents',
+    explanation: 'Gagner avec X rôles solo différents',
     emoji: '👑',
     category: 'roles',
     evaluator: 'winWith9SoloRoles',
     evaluatorParams: {},
     levels: [
-      // Bronze: 1 win with each solo role
+      // Bronze: 1 win with any solo role
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 2 wins with each
+      // Argent: 3 wins 
       { tier: 'argent', subLevel: 1, threshold: 3 },
-      // Or: 3 wins with each
-      { tier: 'or', subLevel: 1, threshold: 5 },
-      // Lycans: 5 wins with each
+      // Or: 6 wins
+      { tier: 'or', subLevel: 1, threshold: 6 },
+      // Lycans: 9 wins
       { tier: 'lycans', subLevel: 1, threshold: 9 },
     ],
   },
@@ -1009,7 +1009,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'villageois-top-loot',
     name: 'Encore du travail',
     description: 'Du travail, encore et toujours du travail...',
-    explanation: 'Être X fois le premier à la récolte parmi les Villageois',
+    explanation: 'Faire X parties en étant le premier à la récolte parmi les Villageois',
     emoji: '🌾',
     category: 'roles',
     evaluator: 'topLootVillageoisGames',
@@ -1245,7 +1245,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'winning-months',
     name: 'Gagnant·e du mois',
     description: 'Vous êtes beau·elle, vous êtes grand·e, vous êtes gagnant·e... Au moins sur un mois.',
-    explanation: 'Avoir X fois plus de 50 % de victoires sur un mois civil',
+    explanation: 'Avoir X fois plus de 50 % de victoires sur un mois',
     emoji: '📅',
     category: 'victories',
     evaluator: 'winningMonths',
