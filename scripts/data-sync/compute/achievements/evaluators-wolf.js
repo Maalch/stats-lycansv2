@@ -252,6 +252,37 @@ export function wolfSeerDoubleKill(playerGames, allGames, playerId, params) {
 }
 
 /**
+ * Count total correct role guesses (SEER kills) as Loup Devin across all games.
+ * - Loup Devin = isWolfCamp + Power === 'Devin'
+ * - A SEER kill = victim.DeathType === DeathTypeCode.SEER && killer is this player
+ * Returns cumulative count, not number of games.
+ */
+export function wolfSeerTotalCorrectGuesses(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const countedGames = new Set();
+
+  for (const { game, playerStat } of playerGames) {
+    if (!isWolfCamp(playerStat)) continue;
+    if (playerStat.Power !== 'Devin') continue;
+
+    const seerKills = game.PlayerStats.filter(victim =>
+      victim.DeathType === DeathTypeCode.SEER &&
+      isKilledByPlayer(game, victim, playerId)
+    );
+
+    if (seerKills.length > 0) {
+      value += seerKills.length;
+      if (!countedGames.has(game.Id)) {
+        gameIds.push(game.Id);
+        countedGames.add(game.Id);
+      }
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
  * Count sabotages performed as wolf
  */
 export function wolfSabotages(playerGames, allGames, playerId, params) {

@@ -71,8 +71,8 @@
 | Spécifique | Tous | Style, Victoire | United Colors of Lycans | L'arc-en-ciel des victoires | Avoir gagné une partie avec au moins X couleurs différentes | 1 - 2 - 3 | 4 - 5 - 6 | 7 - 8 - 9 | 12 |
 | Classique | Battle Royale | Participation | Vétéran de l'Arène | Vous en avez connu, des batailles ... | Participer à X parties en Battle Royale | 1 - 10 - 25 | 50 - 100 - 150 | 200 - 300 - 400 | 500 |
 | Original | Amoureux | | Célibataire | Jusqu'à ce que la mort vous sépare... Ou la réanimation d'un autre | Se retrouver X fois l'unique Amoureux à la fin d'une game | 1 | 2 | 3 | 5 |
-| Spécifique | Loup | Rôle, Kill | Loup·ve Devin Ultime | Vous avez révélé tous leurs secrets | Deviner correctement X rôles en Loup Devin | | | | |
-| Spécifique | Tous | Meeting | Meneur·se | Votre voix porte, et les autres suivent | Être X fois le premier à voter entraînant l'élimination du joueur | | | | |
+| Spécifique | Loup | Rôle, Kill | Loup·ve Devin Ultime | Vous avez révélé tous leurs secrets | Deviner correctement X rôles en Loup Devin | 3 | 5 | 10 | 20 |
+| Spécifique | Tous | Meeting | Meneur·se | Votre voix porte, et les autres suivent | Être X fois le premier à voter entraînant l'élimination du joueur | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
 | Original | Idiot du Village | Survie, Meeting | Presque Idiot·e | Trop malin·gne pour être Idiot·e | Survivre X fois en Idiot du Village en ayant au moins 1 vote contre soi | | | | |
 | Spécifique | Villageois | Récolte | Record de Récolte | Vous êtes une machine à farmer | Récolter plus de X de loots dans une seule partie | | | | |
 | Spécifique | Tous | Kill | Retour à l'Envoyeur | La vengeance est douce | Tuer X fois la personne qui vous a tué dans la partie précédente | | | | |

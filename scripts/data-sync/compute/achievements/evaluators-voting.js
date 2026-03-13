@@ -272,6 +272,66 @@ export function soleVoterElimination(playerGames, allGames, playerId, params) {
 }
 
 /**
+ * Count times the player was the first to vote for someone who then got eliminated.
+ * For each meeting, check if player voted first (earliest timestamp) for the eliminated target.
+ */
+export function firstVoterElimination(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const countedGames = new Set();
+  
+  for (const { game, playerStat } of playerGames) {
+    const playerVotes = playerStat.Votes || [];
+    
+    // Group votes by meeting day
+    const meetingDays = [...new Set(playerVotes.map(v => v.Day))];
+    
+    for (const day of meetingDays) {
+      // Find who was eliminated on this day
+      const eliminatedPlayer = game.PlayerStats.find(p => 
+        p.DeathType === DeathTypeCode.VOTED &&
+        p.DeathTiming === `M${day}`
+      );
+      
+      if (!eliminatedPlayer) continue;
+      
+      // Gather all votes for the eliminated player on this day from all players
+      const votesForTarget = [];
+      for (const p of game.PlayerStats) {
+        const pVotes = (p.Votes || []).filter(v => 
+          v.Day === day && 
+          v.Target === eliminatedPlayer.Username &&
+          v.Date  // Must have a timestamp
+        );
+        
+        for (const vote of pVotes) {
+          votesForTarget.push({
+            voterId: getPlayerId(p),
+            vote: vote,
+            timestamp: new Date(vote.Date)
+          });
+        }
+      }
+      
+      if (votesForTarget.length === 0) continue;
+      
+      // Sort by timestamp to find the first voter
+      votesForTarget.sort((a, b) => a.timestamp - b.timestamp);
+      
+      // Check if this player was the first voter
+      if (votesForTarget[0].voterId === playerId) {
+        value++;
+        if (!countedGames.has(game.Id)) {
+          gameIds.push(game.Id);
+          countedGames.add(game.Id);
+        }
+      }
+    }
+  }
+  return { value, gameIds };
+}
+
+/**
  * Count games where player (as Villageois) voted correctly for wolves/solo X times in a row within a game
  */
 export function consecutiveCorrectVotes(playerGames, allGames, playerId, params) {

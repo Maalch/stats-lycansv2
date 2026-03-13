@@ -1005,6 +1005,26 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'loup-devin-ultimate',
+    name: 'Loup·ve Devin Ultime',
+    description: 'Vous avez révélé tous leurs secrets',
+    explanation: 'Deviner correctement X rôles en Loup Devin',
+    emoji: '🔮✨',
+    category: 'roles',
+    evaluator: 'wolfSeerTotalCorrectGuesses',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
+    ],
+  },
+  {
     id: 'solo-master',
     name: 'Je maîtrise le solo',
     description: 'Vous savez comment gagner avec chaque rôle',
@@ -1208,6 +1228,32 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 1, threshold: 15 },
       // Lycans: 30
       { tier: 'lycans', subLevel: 1, threshold: 30 },
+    ],
+  },
+  {
+    id: 'meneur',
+    name: 'Meneur·se',
+    description: 'Votre voix porte, et les autres suivent',
+    explanation: 'Être X fois le premier à voter entraînant l\'élimination d\'un joueur',
+    emoji: '🎯',
+    category: 'social',
+    evaluator: 'firstVoterElimination',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1 - 3 - 5
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 10 - 15 - 20
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      { tier: 'argent', subLevel: 2, threshold: 15 },
+      { tier: 'argent', subLevel: 3, threshold: 20 },
+      // Or: 30 - 40 - 50
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 40 },
+      { tier: 'or', subLevel: 3, threshold: 50 },
+      // Lycans: 75
+      { tier: 'lycans', subLevel: 1, threshold: 75 },
     ],
   },
   {

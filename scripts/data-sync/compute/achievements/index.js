@@ -30,7 +30,7 @@ import {
 import {
   wolfKills, zombieKills, vaudouTripleResurrect,
   wolfWinNoKills, lastWolfStanding,
-  wolfNecromancerResurrect, wolfSeerDoubleKill,
+  wolfNecromancerResurrect, wolfSeerDoubleKill, wolfSeerTotalCorrectGuesses,
   wolfSabotages, wolfLossHarvestNoKills, wolfSurvivedHunterShot,
   wolfVotesLastVillagerInThree, wolfWinEarlyDeath, wolfAllKillsSolo,
   zombieItemUses, wolfTransformKillNights,
@@ -63,7 +63,7 @@ import {
 import {
   votedAsCamp, correctVoteButVoted, unanimousVoteAsVillager,
   onlyVillagerPasserInMeeting, loneNonVoterAllOthersPassed,
-  soleVoterElimination, consecutiveCorrectVotes, onlyEnemyVotes,
+  soleVoterElimination, firstVoterElimination, consecutiveCorrectVotes, onlyEnemyVotes,
 } from './evaluators-voting.js';
 
 // Social/special evaluators
@@ -101,6 +101,7 @@ export const EVALUATORS = {
   lastWolfStanding,
   wolfNecromancerResurrect,
   wolfSeerDoubleKill,
+  wolfSeerTotalCorrectGuesses,
   wolfSabotages,
   wolfLossHarvestNoKills,
   wolfSurvivedHunterShot,
@@ -143,6 +144,7 @@ export const EVALUATORS = {
   onlyVillagerPasserInMeeting,
   loneNonVoterAllOthersPassed,
   soleVoterElimination,
+  firstVoterElimination,
   consecutiveCorrectVotes,
   onlyEnemyVotes,
 
