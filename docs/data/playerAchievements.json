@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-13T10:06:38.524Z",
+  "generatedAt": "2026-03-15T06:16:51.277Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 787,
@@ -173,7 +173,7 @@
       "id": "victories-solo",
       "name": "Solo Winner·use",
       "description": "Vous n'avez pas besoin d'alliés pour gagner...",
-      "explanation": "Gagner X victoires en camp solo (Amoureux, Idiot du Village, Agent, etc.)",
+      "explanation": "Gagner X parties en camp solo (Amoureux, Idiot du Village, Agent, etc.)",
       "emoji": "🎯",
       "category": "victories",
       "levels": [
@@ -233,7 +233,7 @@
     },
     {
       "id": "wolf-survived-hunter-shot",
-      "name": "Loup Aventurier·ère",
+      "name": "Loup·ve Aventurier·ère",
       "description": "Et puis vous avez pris une flèche dans le genou...",
       "explanation": "Perdre X parties en Loup tout en survivant au Chasseur (la balle ne vous tue pas)",
       "emoji": "🏹",
@@ -418,7 +418,7 @@
     },
     {
       "id": "last-wolf",
-      "name": "Le·a dernier·ère loup·ve",
+      "name": "Dernier·ère Loup·ve",
       "description": "Vous n'avez besoin de personne pour gagner… Vous seul·e survivez.",
       "explanation": "Gagner X parties en étant l'unique survivant et donc le dernier Loup",
       "emoji": "🏘️",
@@ -697,7 +697,7 @@
     {
       "id": "crushed",
       "name": "Au ras des pâquerettes",
-      "description": "Difficile quand on est petit d'éviter les pas des géants",
+      "description": "Difficile quand on est petit·e d'éviter les pas des géant·es",
       "explanation": "Mourir X fois écrasé",
       "emoji": "🪨",
       "category": "deaths",
@@ -794,6 +794,37 @@
       "explanation": "Mourir X fois par un tir du Chasseur en étant Idiot du Village",
       "emoji": "🤡",
       "category": "deaths",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 20
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "idiot-survived-with-votes",
+      "name": "Presque Idiot·e",
+      "description": "Trop malin·gne pour être Idiot·e",
+      "explanation": "Survivre X fois en Idiot du Village en ayant au moins 1 vote contre soi",
+      "emoji": "🧠",
+      "category": "roles",
       "levels": [
         {
           "tier": "bronze",
@@ -1005,7 +1036,7 @@
     },
     {
       "id": "hunter-double-kill",
-      "name": "Farmeur de loups·ves",
+      "name": "Farmeur·se de Loups·ves",
       "description": "Un·e loup·ve, c'est bien, deux loups·ves, c'est mieux",
       "explanation": "Tuer X fois deux Loups dans une même game en étant Chasseur",
       "emoji": "🏹",
@@ -1329,6 +1360,37 @@
       "requiresBRData": false
     },
     {
+      "id": "celibataire",
+      "name": "Célibataire",
+      "description": "Jusqu'à ce que la mort vous sépare... Ou la réanimation d'un autre",
+      "explanation": "Se retrouver X fois l'unique Amoureux à la fin d'une game",
+      "emoji": "💔",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "same-color-kills",
       "name": "C'est MA couleur !",
       "description": "Vous voulez être le·a seul·e à la mode, ça se comprend...",
@@ -1577,10 +1639,41 @@
       "requiresBRData": false
     },
     {
+      "id": "loup-devin-ultimate",
+      "name": "Loup·ve Devin Ultime",
+      "description": "Vous avez révélé tous leurs secrets",
+      "explanation": "Deviner correctement X rôles en Loup Devin",
+      "emoji": "🔮✨",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 20
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "solo-master",
       "name": "Je maîtrise le solo",
       "description": "Vous savez comment gagner avec chaque rôle",
-      "explanation": "Avoir X victoires avec X rôles solo différents",
+      "explanation": "Gagner avec X rôles solo différents",
       "emoji": "👑",
       "category": "roles",
       "levels": [
@@ -1597,7 +1690,7 @@
         {
           "tier": "or",
           "subLevel": 1,
-          "threshold": 5
+          "threshold": 6
         },
         {
           "tier": "lycans",
@@ -1611,7 +1704,7 @@
       "id": "villageois-top-loot",
       "name": "Encore du travail",
       "description": "Du travail, encore et toujours du travail...",
-      "explanation": "Être X fois le premier à la récolte parmi les Villageois",
+      "explanation": "Faire X parties en étant le premier à la récolte parmi les Villageois",
       "emoji": "🌾",
       "category": "roles",
       "levels": [
@@ -1634,6 +1727,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "max-loot-single-game",
+      "name": "Record de Récolte",
+      "description": "Vous êtes une machine à farmer",
+      "explanation": "Récolter plus de X de loots dans une seule partie",
+      "emoji": "🏆",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 400
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 600
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 850
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 1200
         }
       ],
       "requiresBRData": false
@@ -1887,6 +2011,67 @@
       "requiresBRData": false
     },
     {
+      "id": "meneur",
+      "name": "Meneur·se",
+      "description": "Votre voix porte, et les autres suivent",
+      "explanation": "Être X fois le premier à voter entraînant l'élimination d'un joueur",
+      "emoji": "🎯",
+      "category": "social",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 3
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 20
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 40
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 50
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 75
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "democrat",
       "name": "Troisième oeil",
       "description": "Vous connaissiez tous les rôles à l'avance",
@@ -1982,7 +2167,7 @@
       "id": "winning-months",
       "name": "Gagnant·e du mois",
       "description": "Vous êtes beau·elle, vous êtes grand·e, vous êtes gagnant·e... Au moins sur un mois.",
-      "explanation": "Avoir X fois plus de 50 % de victoires sur un mois civil",
+      "explanation": "Avoir X fois plus de 50 % de victoires sur un mois",
       "emoji": "📅",
       "category": "victories",
       "levels": [
@@ -3748,6 +3933,17 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "wolf-kills",
@@ -10442,6 +10638,17 @@
           "progress": 0.1
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "wolf-kills",
           "currentValue": 11,
           "unlockedLevels": [
@@ -13165,7 +13372,7 @@
     "52": {
       "playerId": "52",
       "playerName": "Zarcross",
-      "totalUnlocked": 34,
+      "totalUnlocked": 35,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13380,6 +13587,24 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250411000000-405"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "zombie-kills",
@@ -13725,7 +13950,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 147,
+      "totalUnlocked": 156,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14223,6 +14448,24 @@
           "progress": 0.6
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250311000000-373"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -14607,6 +14850,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251230153702"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "solo-master",
           "currentValue": 7,
           "unlockedLevels": [
@@ -14625,8 +14886,8 @@
             {
               "tier": "or",
               "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251009141024"
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20251125130713"
             }
           ],
           "nextLevel": {
@@ -14653,6 +14914,24 @@
             "threshold": 10
           },
           "progress": 0.9
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 560,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230124218"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.9333333333333333
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -14745,6 +15024,54 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 25,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009134908"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251014123648"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251104130931"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251202125720"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20251230151539"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20260210115316"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.8333333333333334
         },
         {
           "id": "democrat",
@@ -15284,7 +15611,7 @@
     "76561198054824482": {
       "playerId": "76561198054824482",
       "playerName": "Gom4rt",
-      "totalUnlocked": 21,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15492,6 +15819,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251014104326"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -15869,6 +16214,17 @@
           "progress": 0.5
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 205,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.5125
+        },
+        {
           "id": "false-guilty",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -16092,7 +16448,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 131,
+      "totalUnlocked": 137,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16544,6 +16900,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -16881,6 +17248,24 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "celibataire",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260113120242"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 8,
           "unlockedLevels": [
@@ -16953,6 +17338,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "solo-master",
           "currentValue": 5,
           "unlockedLevels": [
@@ -16967,20 +17363,14 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Ponce-20250805000000-509"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251009132152"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 9
+            "threshold": 6
           },
-          "progress": 0.5555555555555556
+          "progress": 0.8333333333333334
         },
         {
           "id": "villageois-top-loot",
@@ -16999,6 +17389,24 @@
             "threshold": 10
           },
           "progress": 0.6
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 475,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20260203121805"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.7916666666666666
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -17063,6 +17471,48 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "meneur",
+          "currentValue": 16,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251104121949"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20251111121747"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251202132040"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251230151539"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260203141837"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 20
+          },
+          "progress": 0.8
         },
         {
           "id": "democrat",
@@ -17510,7 +17960,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 129,
+      "totalUnlocked": 136,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17963,6 +18413,17 @@
           "progress": 0.7
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "wolf-kills",
           "currentValue": 325,
           "unlockedLevels": [
@@ -18253,6 +18714,24 @@
           "progress": 0.8
         },
         {
+          "id": "celibataire",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310132742"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 11,
           "unlockedLevels": [
@@ -18306,8 +18785,8 @@
             {
               "tier": "or",
               "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251009114146"
+              "threshold": 6,
+              "unlockedAtGame": "khalen-20251216141204"
             }
           ],
           "nextLevel": {
@@ -18334,6 +18813,24 @@
             "threshold": 10
           },
           "progress": 0.9
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 515,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230122057"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.8583333333333333
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -18411,6 +18908,48 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "meneur",
+          "currentValue": 19,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251014112328"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251125130713"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251230145605"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260113131329"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260310134225"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 20
+          },
+          "progress": 0.95
         },
         {
           "id": "democrat",
@@ -18868,7 +19407,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 121,
+      "totalUnlocked": 130,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -19509,6 +20048,24 @@
           "progress": 0.95
         },
         {
+          "id": "celibataire",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250401000000-391"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 7,
           "unlockedLevels": [
@@ -19556,6 +20113,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260303133917"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "solo-master",
           "currentValue": 7,
           "unlockedLevels": [
@@ -19574,8 +20149,8 @@
             {
               "tier": "or",
               "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20250729000000-500"
+              "threshold": 6,
+              "unlockedAtGame": "Ponce-20251014115429"
             }
           ],
           "nextLevel": {
@@ -19614,6 +20189,24 @@
             "threshold": 30
           },
           "progress": 0.5333333333333333
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 590,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251223134006"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.9833333333333333
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -19687,6 +20280,54 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "meneur",
+          "currentValue": 25,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251014121305"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251014140204"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20251216141204"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251230135937"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260203113055"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20260210133335"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.8333333333333334
         },
         {
           "id": "democrat",
@@ -20157,7 +20798,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 130,
+      "totalUnlocked": 141,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21004,8 +21645,8 @@
             {
               "tier": "or",
               "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251223120127"
+              "threshold": 6,
+              "unlockedAtGame": "khalen-20260113120242"
             }
           ],
           "nextLevel": {
@@ -21042,6 +21683,38 @@
               "subLevel": 1,
               "threshold": 30,
               "unlockedAtGame": "khalen-20260303123611"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 1230,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "khalen-20260120124541"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "khalen-20260120124541"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 850,
+              "unlockedAtGame": "khalen-20260120124541"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 1200,
+              "unlockedAtGame": "khalen-20260120124541"
             }
           ],
           "nextLevel": null,
@@ -21097,6 +21770,60 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "meneur",
+          "currentValue": 35,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009120237"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20251111131040"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20251209123037"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251223113359"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260106124853"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20260127135421"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "khalen-20260310141656"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 2,
+            "threshold": 40
+          },
+          "progress": 0.875
         },
         {
           "id": "democrat",
@@ -21558,7 +22285,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 99,
+      "totalUnlocked": 105,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21946,6 +22673,17 @@
           "progress": 0.7
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -22165,6 +22903,30 @@
           "progress": 0.8
         },
         {
+          "id": "celibataire",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-337"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251125124356"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -22236,6 +22998,17 @@
           "progress": 0.6
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 4,
           "unlockedLevels": [
@@ -22255,9 +23028,9 @@
           "nextLevel": {
             "tier": "or",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 6
           },
-          "progress": 0.8
+          "progress": 0.6666666666666666
         },
         {
           "id": "villageois-top-loot",
@@ -22276,6 +23049,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 590,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230131314"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.9833333333333333
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -22338,6 +23129,36 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "meneur",
+          "currentValue": 9,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023111118"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251125133535"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251223140835"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.9
         },
         {
           "id": "democrat",
@@ -22746,7 +23567,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 89,
+      "totalUnlocked": 95,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23146,6 +23967,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -23395,9 +24227,9 @@
           "nextLevel": {
             "tier": "or",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 6
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "villageois-top-loot",
@@ -23416,6 +24248,36 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 880,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251223122025"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20251223122025"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 850,
+              "unlockedAtGame": "Ponce-20251223122025"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 1200
+          },
+          "progress": 0.7333333333333333
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -23467,6 +24329,36 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "meneur",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251209121014"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260210121153"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260303121506"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "democrat",
@@ -23836,7 +24728,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 82,
+      "totalUnlocked": 84,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24409,6 +25301,24 @@
           "progress": 0.7
         },
         {
+          "id": "celibataire",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250710000000-462"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 5,
           "unlockedLevels": [
@@ -24446,9 +25356,9 @@
           "nextLevel": {
             "tier": "or",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 6
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -24493,6 +25403,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20251111113550"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "democrat",
@@ -24816,7 +25744,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 83,
+      "totalUnlocked": 89,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25420,9 +26348,9 @@
           "nextLevel": {
             "tier": "or",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 6
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "villageois-top-loot",
@@ -25447,6 +26375,30 @@
             "threshold": 15
           },
           "progress": 0.7333333333333333
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 800,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20260203121805"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20260203121805"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 850
+          },
+          "progress": 0.9411764705882353
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -25513,6 +26465,42 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 11,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009120237"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251023121211"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251023131631"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260310130724"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 15
+          },
+          "progress": 0.7333333333333333
         },
         {
           "id": "democrat",
@@ -26082,6 +27070,17 @@
           "progress": 0.2
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 120,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.3
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -26502,6 +27501,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "wolf-kills",
           "currentValue": 22,
           "unlockedLevels": [
@@ -26835,7 +27845,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 106,
+      "totalUnlocked": 112,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27236,6 +28246,17 @@
           "progress": 0.8
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 7,
           "unlockedLevels": [
@@ -27598,6 +28619,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20251209135919"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "solo-master",
           "currentValue": 5,
           "unlockedLevels": [
@@ -27612,20 +28651,14 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Ponce-20250923000000-553"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "khalen-20260303141937"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 9
+            "threshold": 6
           },
-          "progress": 0.5555555555555556
+          "progress": 0.8333333333333334
         },
         {
           "id": "villageois-top-loot",
@@ -27644,6 +28677,30 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 805,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230153702"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20251230153702"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 850
+          },
+          "progress": 0.9470588235294117
         },
         {
           "id": "lone-non-voter",
@@ -27668,6 +28725,42 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "meneur",
+          "currentValue": 13,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251104133550"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20251209123037"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20251216132647"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260217120920"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 15
+          },
+          "progress": 0.8666666666666667
         },
         {
           "id": "democrat",
@@ -28988,7 +30081,7 @@
     "76561198256660482": {
       "playerId": "76561198256660482",
       "playerName": "Baout",
-      "totalUnlocked": 42,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29356,6 +30449,17 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 190,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.475
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -29376,6 +30480,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "meneur",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009132152"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "democrat",
@@ -29584,7 +30706,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 59,
+      "totalUnlocked": 64,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -30150,6 +31272,24 @@
           "progress": 0.8
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 555,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230153702"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.925
+        },
+        {
           "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -30159,6 +31299,42 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 11,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023142100"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251202123802"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20251216141204"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20260127125055"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 15
+          },
+          "progress": 0.7333333333333333
         },
         {
           "id": "democrat",
@@ -30414,7 +31590,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 44,
+      "totalUnlocked": 46,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -30642,6 +31818,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 7,
           "unlockedLevels": [
@@ -30736,6 +31923,17 @@
           "progress": 0.8
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -30752,6 +31950,24 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 525,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "khalen-20260224115846"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.875
         },
         {
           "id": "zombie-item-uses",
@@ -30814,6 +32030,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251223122025"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -31012,7 +32246,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 83,
+      "totalUnlocked": 88,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31626,6 +32860,30 @@
           "progress": 0.6
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 620,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251223134006"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20251223134006"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 850
+          },
+          "progress": 0.7294117647058823
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -31657,6 +32915,36 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023111118"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251023123056"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260127144349"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "democrat",
@@ -32022,7 +33310,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 76,
+      "totalUnlocked": 83,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32584,20 +33872,14 @@
               "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Ponce-20250722000000-493"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Ponce-20251118000000-630"
             }
           ],
           "nextLevel": {
-            "tier": "lycans",
+            "tier": "or",
             "subLevel": 1,
-            "threshold": 9
+            "threshold": 6
           },
-          "progress": 0.5555555555555556
+          "progress": 0.8333333333333334
         },
         {
           "id": "villageois-top-loot",
@@ -32616,6 +33898,30 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 660,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20260210135746"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 850
+          },
+          "progress": 0.7764705882352941
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -32673,6 +33979,54 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "meneur",
+          "currentValue": 26,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251104130931"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251125112953"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251125130713"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251230113308"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260113134511"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260217133845"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.8666666666666667
         },
         {
           "id": "democrat",
@@ -33013,7 +34367,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 61,
+      "totalUnlocked": 65,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33319,6 +34673,17 @@
           "progress": 0.8
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -33569,6 +34934,17 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 4,
           "unlockedLevels": [
@@ -33588,9 +34964,9 @@
           "nextLevel": {
             "tier": "or",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 6
           },
-          "progress": 0.8
+          "progress": 0.6666666666666666
         },
         {
           "id": "villageois-top-loot",
@@ -33609,6 +34985,24 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 450,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "khalen-20260224115846"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.75
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -33660,6 +35054,36 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "meneur",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251223131322"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260127130725"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260224114354"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "democrat",
@@ -33885,7 +35309,7 @@
     "76561198019060909": {
       "playerId": "76561198019060909",
       "playerName": "Reivil",
-      "totalUnlocked": 11,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34058,6 +35482,35 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 135,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.3375
+        },
+        {
+          "id": "meneur",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216141204"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -34098,7 +35551,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 49,
+      "totalUnlocked": 56,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34610,6 +36063,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 2,
           "unlockedLevels": [
@@ -34637,6 +36101,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 445,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230131314"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.7416666666666667
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -34670,6 +36152,54 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "meneur",
+          "currentValue": 26,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023131631"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Tsuna-20251111140206"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251202125720"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251230135937"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260210121153"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260310123105"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.8666666666666667
         },
         {
           "id": "democrat",
@@ -34841,7 +36371,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 56,
+      "totalUnlocked": 63,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35140,6 +36670,17 @@
           "progress": 0.6
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -35365,6 +36906,24 @@
           "progress": 0.8
         },
         {
+          "id": "celibataire",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-524"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "same-color-kills",
           "currentValue": 18,
           "unlockedLevels": [
@@ -35424,6 +36983,24 @@
           "progress": 0.4
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 555,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.925
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 7,
           "unlockedLevels": [],
@@ -35433,6 +37010,48 @@
             "threshold": 10
           },
           "progress": 0.7
+        },
+        {
+          "id": "meneur",
+          "currentValue": 16,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251028112426"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251104133550"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251230122057"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20260203134728"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260217133845"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 20
+          },
+          "progress": 0.8
         },
         {
           "id": "democrat",
@@ -36106,7 +37725,7 @@
     "76561197987657681": {
       "playerId": "76561197987657681",
       "playerName": "PeoBran",
-      "totalUnlocked": 20,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36372,6 +37991,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "meneur",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023121211"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -36490,7 +38127,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 22,
+      "totalUnlocked": 24,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36681,6 +38318,28 @@
           "progress": 0.2
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 250,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.625
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -36690,6 +38349,30 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251014121305"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251023134242"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "democrat",
@@ -36850,7 +38533,7 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "totalUnlocked": 18,
+      "totalUnlocked": 20,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37013,6 +38696,17 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 215,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.5375
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -37033,6 +38727,30 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260113141709"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260203144119"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "democrat",
@@ -37418,6 +39136,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 280,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.7
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -37509,7 +39238,7 @@
     "76561198076478013": {
       "playerId": "76561198076478013",
       "playerName": "Areliann",
-      "totalUnlocked": 39,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -37855,9 +39584,9 @@
           "nextLevel": {
             "tier": "or",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 6
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "villageois-top-loot",
@@ -37869,6 +39598,54 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 435,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251202113455"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.725
+        },
+        {
+          "id": "meneur",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009120237"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251104125404"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20251209135919"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -38054,7 +39831,7 @@
     "76561199013115670": {
       "playerId": "76561199013115670",
       "playerName": "SpicY",
-      "totalUnlocked": 17,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38175,6 +39952,17 @@
           "progress": 0.2
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "wolf-kills",
           "currentValue": 10,
           "unlockedLevels": [
@@ -38247,6 +40035,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 460,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "khalen-20251216130350"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.7666666666666667
         },
         {
           "id": "lone-non-voter",
@@ -38382,7 +40188,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 38,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38621,6 +40427,17 @@
           "progress": 0.8
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "zombie-kills",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -38744,6 +40561,17 @@
           "progress": 0.5
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -38771,6 +40599,48 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 400,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251202113455"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "meneur",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251202113455"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20251209142007"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -39408,6 +41278,17 @@
           "progress": 0.2
         },
         {
+          "id": "idiot-survived-with-votes",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -39430,7 +41311,7 @@
     "76561197961659274": {
       "playerId": "76561197961659274",
       "playerName": "MoMaN",
-      "totalUnlocked": 10,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39484,6 +41365,30 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023134242"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251023142100"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "democrat",
@@ -39637,7 +41542,7 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 18,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39835,6 +41740,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 165,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.4125
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -39844,6 +41760,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260203141837"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -39962,7 +41896,7 @@
     "76561198271274269": {
       "playerId": "76561198271274269",
       "playerName": "MartinPonK",
-      "totalUnlocked": 25,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40211,6 +42145,24 @@
           "progress": 0.2
         },
         {
+          "id": "meneur",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251104125404"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "democrat",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -40387,7 +42339,7 @@
     "76561198353315250": {
       "playerId": "76561198353315250",
       "playerName": "AxRuby",
-      "totalUnlocked": 5,
+      "totalUnlocked": 6,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40494,6 +42446,24 @@
           "progress": 0.4
         },
         {
+          "id": "meneur",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125124356"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -40516,7 +42486,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 28,
+      "totalUnlocked": 33,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40837,6 +42807,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "loup-devin-ultimate",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "solo-master",
           "currentValue": 3,
           "unlockedLevels": [
@@ -40856,9 +42837,9 @@
           "nextLevel": {
             "tier": "or",
             "subLevel": 1,
-            "threshold": 5
+            "threshold": 6
           },
-          "progress": 0.6
+          "progress": 0.5
         },
         {
           "id": "villageois-top-loot",
@@ -40870,6 +42851,17 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 390,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.975
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -40925,6 +42917,48 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 15,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216115402"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251223124715"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260106120608"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20260210121153"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "khalen-20260303142940"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 20
+          },
+          "progress": 0.75
         },
         {
           "id": "democrat",
@@ -41049,7 +43083,7 @@
     "76561199098154286": {
       "playerId": "76561199098154286",
       "playerName": "Grim_the_turtle",
-      "totalUnlocked": 18,
+      "totalUnlocked": 19,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41145,6 +43179,17 @@
           "progress": 0.2
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 355,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.8875
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -41165,6 +43210,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "meneur",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127151713"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -41350,7 +43413,7 @@
     "76561198190629659": {
       "playerId": "76561198190629659",
       "playerName": "Quentadou",
-      "totalUnlocked": 7,
+      "totalUnlocked": 8,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41449,6 +43512,35 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 360,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.9
+        },
+        {
+          "id": "meneur",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127142946"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -41620,6 +43712,17 @@
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 160,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
           },
           "progress": 0.4
         },
@@ -41885,6 +43988,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 315,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.7875
         },
         {
           "id": "colors-of-lycans",

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-13T15:16:34.024Z",
+  "generatedAt": "2026-03-15T06:16:51.277Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 787,
@@ -1727,6 +1727,37 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "max-loot-single-game",
+      "name": "Record de Récolte",
+      "description": "Vous êtes une machine à farmer",
+      "explanation": "Récolter plus de X de loots dans une seule partie",
+      "emoji": "🏆",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 400
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 600
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 850
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 1200
         }
       ],
       "requiresBRData": false
@@ -13919,7 +13950,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 155,
+      "totalUnlocked": 156,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14883,6 +14914,24 @@
             "threshold": 10
           },
           "progress": 0.9
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 560,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230124218"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.9333333333333333
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -16165,6 +16214,17 @@
           "progress": 0.5
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 205,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.5125
+        },
+        {
           "id": "false-guilty",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -16388,7 +16448,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 136,
+      "totalUnlocked": 137,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17331,6 +17391,24 @@
           "progress": 0.6
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 475,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20260203121805"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.7916666666666666
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 16,
           "unlockedLevels": [
@@ -17882,7 +17960,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 135,
+      "totalUnlocked": 136,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18737,6 +18815,24 @@
           "progress": 0.9
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 515,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230122057"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.8583333333333333
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 4,
           "unlockedLevels": [],
@@ -19311,7 +19407,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 129,
+      "totalUnlocked": 130,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20095,6 +20191,24 @@
           "progress": 0.5333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 590,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251223134006"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.9833333333333333
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -20684,7 +20798,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 137,
+      "totalUnlocked": 141,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21575,6 +21689,38 @@
           "progress": 1
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 1230,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "khalen-20260120124541"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "khalen-20260120124541"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 850,
+              "unlockedAtGame": "khalen-20260120124541"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 1200,
+              "unlockedAtGame": "khalen-20260120124541"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 10,
           "unlockedLevels": [
@@ -22139,7 +22285,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 104,
+      "totalUnlocked": 105,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -22905,6 +23051,24 @@
           "progress": 0.5
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 590,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230131314"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.9833333333333333
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -23403,7 +23567,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 92,
+      "totalUnlocked": 95,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -24084,6 +24248,36 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 880,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251223122025"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20251223122025"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 850,
+              "unlockedAtGame": "Ponce-20251223122025"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 1200
+          },
+          "progress": 0.7333333333333333
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -25550,7 +25744,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 87,
+      "totalUnlocked": 89,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26181,6 +26375,30 @@
             "threshold": 15
           },
           "progress": 0.7333333333333333
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 800,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20260203121805"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20260203121805"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 850
+          },
+          "progress": 0.9411764705882353
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -26850,6 +27068,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 120,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.3
         },
         {
           "id": "misunderstood",
@@ -27616,7 +27845,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 110,
+      "totalUnlocked": 112,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28448,6 +28677,30 @@
             "threshold": 10
           },
           "progress": 0.8
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 805,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230153702"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20251230153702"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 850
+          },
+          "progress": 0.9470588235294117
         },
         {
           "id": "lone-non-voter",
@@ -30196,6 +30449,17 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 190,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.475
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -30442,7 +30706,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 63,
+      "totalUnlocked": 64,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31008,6 +31272,24 @@
           "progress": 0.8
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 555,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230153702"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.925
+        },
+        {
           "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -31308,7 +31590,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 45,
+      "totalUnlocked": 46,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31670,6 +31952,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 525,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "khalen-20260224115846"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.875
+        },
+        {
           "id": "zombie-item-uses",
           "currentValue": 1,
           "unlockedLevels": [
@@ -31946,7 +32246,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 86,
+      "totalUnlocked": 88,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32560,6 +32860,30 @@
           "progress": 0.6
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 620,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251223134006"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20251223134006"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 850
+          },
+          "progress": 0.7294117647058823
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -32986,7 +33310,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 81,
+      "totalUnlocked": 83,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33576,6 +33900,30 @@
           "progress": 0.8
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 660,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20260210135746"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 600,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 850
+          },
+          "progress": 0.7764705882352941
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 21,
           "unlockedLevels": [
@@ -34019,7 +34367,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 64,
+      "totalUnlocked": 65,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34639,6 +34987,24 @@
           "progress": 0.7
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 450,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "khalen-20260224115846"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.75
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -35116,6 +35482,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 135,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.3375
+        },
+        {
           "id": "meneur",
           "currentValue": 1,
           "unlockedLevels": [
@@ -35174,7 +35551,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 55,
+      "totalUnlocked": 56,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35726,6 +36103,24 @@
           "progress": 0.4
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 445,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251230131314"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.7416666666666667
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -35976,7 +36371,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 62,
+      "totalUnlocked": 63,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36586,6 +36981,24 @@
             "threshold": 5
           },
           "progress": 0.4
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 555,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20260210135746"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.925
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -37916,6 +38329,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 250,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.625
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -38270,6 +38694,17 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 215,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.5375
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -38701,6 +39136,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 280,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.7
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -38792,7 +39238,7 @@
     "76561198076478013": {
       "playerId": "76561198076478013",
       "playerName": "Areliann",
-      "totalUnlocked": 42,
+      "totalUnlocked": 43,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39154,6 +39600,24 @@
           "progress": 0.2
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 435,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251202113455"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.725
+        },
+        {
           "id": "meneur",
           "currentValue": 6,
           "unlockedLevels": [
@@ -39367,7 +39831,7 @@
     "76561199013115670": {
       "playerId": "76561199013115670",
       "playerName": "SpicY",
-      "totalUnlocked": 17,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39573,6 +40037,24 @@
           "progress": 0.4
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 460,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "khalen-20251216130350"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.7666666666666667
+        },
+        {
           "id": "lone-non-voter",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -39706,7 +40188,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 40,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40117,6 +40599,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 400,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 400,
+              "unlockedAtGame": "Ponce-20251202113455"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 600
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "meneur",
@@ -41240,6 +41740,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 165,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.4125
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -42342,6 +42853,17 @@
           "progress": 0.4
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 390,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.975
+        },
+        {
           "id": "wolf-transform-kill-nights",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -42655,6 +43177,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 355,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.8875
         },
         {
           "id": "wolf-transform-kill-nights",
@@ -42981,6 +43514,17 @@
           "progress": 0.2
         },
         {
+          "id": "max-loot-single-game",
+          "currentValue": 360,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.9
+        },
+        {
           "id": "meneur",
           "currentValue": 1,
           "unlockedLevels": [
@@ -43168,6 +43712,17 @@
             "tier": "bronze",
             "subLevel": 1,
             "threshold": 5
+          },
+          "progress": 0.4
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 160,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
           },
           "progress": 0.4
         },
@@ -43433,6 +43988,17 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "max-loot-single-game",
+          "currentValue": 315,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 400
+          },
+          "progress": 0.7875
         },
         {
           "id": "colors-of-lycans",
