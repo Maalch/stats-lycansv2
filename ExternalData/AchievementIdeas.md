@@ -75,7 +75,7 @@
 | Spécifique | Tous | Meeting | Meneur·se | Votre voix porte, et les autres suivent | Être X fois le premier à voter entraînant l'élimination du joueur | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
 | Original | Idiot du Village | Survie, Meeting | Presque Idiot·e | Trop malin·gne pour être Idiot·e | Survivre X fois en Idiot du Village en ayant au moins 1 vote contre soi | 3 | 5 | 10 | 20 |
 | Spécifique | Villageois | Récolte | Record de Récolte | Vous êtes une machine à farmer | Récolter plus de X de loots dans une seule partie | 400 | 600 | 850 | 1200 |
-| Spécifique | Tous | Kill | Retour à l'Envoyeur | La vengeance est douce | Tuer X fois la personne qui vous a tué dans la partie précédente | | | | |
+| Spécifique | Tous | Kill | Retour à l'Envoyeur | La vengeance est douce | Tuer X fois la personne qui vous a tué dans la partie précédente | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
 | Spécifique | Tous | Victoire, Meeting | Speed Run | La game parfaite, sans traîner | Gagner X parties qui se terminent au 2éme Meeting ou avant | | | | |
 | Original | Tous | Meeting | Têtu·e | Quand vous avez une idée, vous la gardez | Voter X fois la même personne sur 3 meetings consécutifs | | | | |
 | Original | Loup | Victoire, Mort | | | Gagner X parties en Loup en mourant avant le premier meeting | | | | |
@@ -87,5 +87,3 @@
 | Classique | La Bête | Victoire | | | Gagner X victoires en La Bête | 1 | 2 | 3 | 5 |
 | Classique | Contrebandier | Victoire | | | Gagner X victoires en Contrebandier | 1 | 2 | 3 | 5 |
 | Classique | Espion | Victoire | | | Gagner X victoires en Espion | 1 | 2 | 3 | 5 |
-| Original | La Bête | Kill | Ami·e des Villageois | Malgré vous, vous êtes gentil·le jusqu'au bout des griffes | Tuer X fois les derniers ennemis du village | 1 | 2 | 3 | 5 |
-| Classique | La Bête | Kill | | | Faire X kills en La Bête | 5 | 10 | 15 | 30 |

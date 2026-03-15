@@ -24,6 +24,7 @@ import {
   winOnAllMaps, winInColors, winsOnAllMaps,
   winsAgainstOnutrem, winningMonths,
   perfectSessions, topLootVillageoisGames, maxLootInSingleGame, resurrectedCount,
+  speedRunWins,
 } from './evaluators-general.js';
 
 // Wolf evaluators
@@ -42,7 +43,7 @@ import {
   hunterKillsEnemy, villageoisDoubleAllyKill, hunterKillsAlly,
   hunterMultiKillsInGame, hunterKilledByWolf,
   assassinPotionKills, killerDiedSameDay, sameColorKills,
-  hunterKillsLastWolf,
+  hunterKillsLastWolf, revengeKill,
 } from './evaluators-combat.js';
 
 // Role-specific evaluators
@@ -122,6 +123,7 @@ export const EVALUATORS = {
   killerDiedSameDay,
   sameColorKills,
   hunterKillsLastWolf,
+  revengeKill,
 
   // Roles
   agentWinPerfectKill,
@@ -160,6 +162,7 @@ export const EVALUATORS = {
   topLootVillageoisGames,
   maxLootInSingleGame,
   resurrectedCount,
+  speedRunWins,
 };
 
 export const BR_EVALUATORS = {

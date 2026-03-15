@@ -408,3 +408,29 @@ export function perfectSessions(playerGames, allGames, playerId, params) {
 
   return { value, gameIds };
 }
+
+/**
+ * Count wins in games that ended at or before the 2nd meeting.
+ * The game timing cycle is J(k) → N(k) → M(k), so EndTiming with number <= 2 qualifies:
+ * J1, N1, M1, J2, N2, M2.
+ */
+export function speedRunWins(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    if (!playerStat.Victorious) continue;
+    if (!game.EndTiming) continue;
+
+    const match = game.EndTiming.match(/^[MJN](\d+)$/);
+    if (!match) continue;
+
+    const cycleNumber = parseInt(match[1]);
+    if (cycleNumber <= 2) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+
+  return { value, gameIds };
+}

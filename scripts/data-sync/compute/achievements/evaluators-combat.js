@@ -5,7 +5,7 @@
  * and other combat-related achievements.
  */
 
-import { isHunterRole, isWolfCamp, getPlayerCampForAchievement, getDeathDay, isKilledByPlayer } from './helpers.js';
+import { isHunterRole, isWolfCamp, getPlayerCampForAchievement, getDeathDay, isKilledByPlayer, getPlayerId, getKillerPlayerId } from './helpers.js';
 import { DeathTypeCode } from './helpers.js';
 
 /**
@@ -256,6 +256,54 @@ export function sameColorKills(playerGames, allGames, playerId, params) {
   }
   return { value, gameIds };
 }
+/**
+ * Count times the player killed the person who killed them in the previous game of the same session.
+ * A session = games played on the same calendar day (UTC).
+ * Only the immediately preceding game in the same session is considered.
+ */
+export function revengeKill(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  // Sort games chronologically
+  const sortedGames = [...playerGames].sort((a, b) => {
+    const da = new Date(a.game.StartDate || 0).getTime();
+    const db = new Date(b.game.StartDate || 0).getTime();
+    return da - db;
+  });
+
+  for (let i = 1; i < sortedGames.length; i++) {
+    const { game: prevGame, playerStat: prevStat } = sortedGames[i - 1];
+    const { game: currGame } = sortedGames[i];
+
+    // Both games must have dates
+    if (!prevGame.StartDate || !currGame.StartDate) continue;
+
+    // Both must be on the same calendar day (UTC)
+    const prevDate = new Date(prevGame.StartDate);
+    const currDate = new Date(currGame.StartDate);
+    const prevDay = `${prevDate.getUTCFullYear()}-${prevDate.getUTCMonth()}-${prevDate.getUTCDate()}`;
+    const currDay = `${currDate.getUTCFullYear()}-${currDate.getUTCMonth()}-${currDate.getUTCDate()}`;
+    if (prevDay !== currDay) continue;
+
+    // Player must have been killed in the previous game
+    const killerIdInPrevGame = getKillerPlayerId(prevGame, prevStat);
+    if (!killerIdInPrevGame) continue;
+
+    // In the current game, check if this player killed that same person
+    for (const victim of currGame.PlayerStats) {
+      if (!isKilledByPlayer(currGame, victim, playerId)) continue;
+      if (getPlayerId(victim) === killerIdInPrevGame) {
+        value++;
+        gameIds.push(currGame.Id);
+        break; // At most one revenge kill per game
+      }
+    }
+  }
+
+  return { value, gameIds };
+}
+
 /**
  * Count games won as Chasseur by killing the last wolf with a bullet.
  * Detection: game ends immediately (EndTiming = JX or NX, not MX) and
