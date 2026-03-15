@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-15T13:27:19.734Z",
+  "generatedAt": "2026-03-15T14:19:18.714Z",
   "teamName": "Main Team",
   "totalPlayers": 89,
   "totalGames": 787,
@@ -387,8 +387,8 @@
     },
     {
       "id": "wolf-win-early-death",
-      "name": "Une game exemplaire",
-      "description": "Tout s'est déroulé comme prévu",
+      "name": "Loup·ve Sacrifié·e",
+      "description": "Tout s'est déroulé selon le plan",
       "explanation": "Gagner X parties en Loup sans aller jusqu'au premier meeting",
       "emoji": "💤",
       "category": "victories",
@@ -1668,6 +1668,192 @@
       "requiresBRData": false
     },
     {
+      "id": "agent-wins",
+      "name": "Mission Accomplie",
+      "description": "Votre couverture était parfaite, personne ne vous a vu venir",
+      "explanation": "Gagner X victoires en Agent",
+      "emoji": "🕵️",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "amoureux-wins",
+      "name": "L'Amour Triomphe",
+      "description": "L'amour est plus fort que tout, même que les loups",
+      "explanation": "Gagner X victoires en Amoureux",
+      "emoji": "💕",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 5
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 20
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "idiot-du-village-wins",
+      "name": "Pas si Idiot·e",
+      "description": "Qui est l'idiot·e maintenant ?",
+      "explanation": "Gagner X victoires en Idiot du Village",
+      "emoji": "🤪",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "la-bete-wins",
+      "name": "Instinct Animal",
+      "description": "La bête sommeille en vous, et elle est redoutable",
+      "explanation": "Gagner X victoires en La Bête",
+      "emoji": "🐾",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "contrebandier-wins",
+      "name": "Affaires Lucratives",
+      "description": "Vos petites magouilles ont fini par payer",
+      "explanation": "Gagner X victoires en Contrebandier",
+      "emoji": "💰",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "espion-wins",
+      "name": "Infiltration Réussie",
+      "description": "Vous avez su tirer profit de vos informations",
+      "explanation": "Gagner X victoires en Espion",
+      "emoji": "🔍",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 2
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 3
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 5
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
       "id": "vaudou-triple-resurrect",
       "name": "Zombie Nation",
       "description": "Votre armée de morts s'est bien agrandie",
@@ -1931,6 +2117,57 @@
         {
           "tier": "argent",
           "subLevel": 1,
+          "threshold": 20
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 50
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "spider-man-pointing",
+      "name": "Spider-Man Pointing at Spider-Man",
+      "description": "Hé, mais t'es... moi !",
+      "explanation": "Faire X parties en Villageois Élite avec un autre Villageois ayant le même métier",
+      "emoji": "🕷️",
+      "category": "roles",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 3
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
           "threshold": 20
         },
         {
@@ -2220,6 +2457,67 @@
           "tier": "lycans",
           "subLevel": 1,
           "threshold": 30
+        }
+      ],
+      "requiresBRData": false
+    },
+    {
+      "id": "stubborn",
+      "name": "Têtu·e",
+      "description": "Quand vous avez une idée, vous la gardez",
+      "explanation": "Voter X fois pour la même personne sur 3 meetings strictement consécutifs dans une partie",
+      "emoji": "🐂",
+      "category": "social",
+      "levels": [
+        {
+          "tier": "bronze",
+          "subLevel": 1,
+          "threshold": 1
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 2,
+          "threshold": 3
+        },
+        {
+          "tier": "bronze",
+          "subLevel": 3,
+          "threshold": 5
+        },
+        {
+          "tier": "argent",
+          "subLevel": 1,
+          "threshold": 10
+        },
+        {
+          "tier": "argent",
+          "subLevel": 2,
+          "threshold": 15
+        },
+        {
+          "tier": "argent",
+          "subLevel": 3,
+          "threshold": 20
+        },
+        {
+          "tier": "or",
+          "subLevel": 1,
+          "threshold": 30
+        },
+        {
+          "tier": "or",
+          "subLevel": 2,
+          "threshold": 40
+        },
+        {
+          "tier": "or",
+          "subLevel": 3,
+          "threshold": 50
+        },
+        {
+          "tier": "lycans",
+          "subLevel": 1,
+          "threshold": 75
         }
       ],
       "requiresBRData": false
@@ -2964,7 +3262,7 @@
     "1": {
       "playerId": "1",
       "playerName": "Aayley",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3094,6 +3392,24 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-417"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -3315,7 +3631,7 @@
     "3": {
       "playerId": "3",
       "playerName": "Antoine",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -3443,6 +3759,24 @@
         },
         {
           "id": "agent-007",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250923000000-552"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "agent-wins",
           "currentValue": 1,
           "unlockedLevels": [
             {
@@ -3968,7 +4302,7 @@
     "8": {
       "playerId": "8",
       "playerName": "BoccA",
-      "totalUnlocked": 39,
+      "totalUnlocked": 48,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -4347,6 +4681,30 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "idiot-du-village-wins",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-308"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250527000000-441"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -4363,6 +4721,60 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 34,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-307"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-314"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250225000000-352"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250304000000-362"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250318000000-379"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250401000000-387"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250513000000-429"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 50
+          },
+          "progress": 0.68
         },
         {
           "id": "lone-non-voter",
@@ -5076,7 +5488,7 @@
     "12": {
       "playerId": "12",
       "playerName": "Cyldhur",
-      "totalUnlocked": 12,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5166,6 +5578,30 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-368"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250311000000-373"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -5297,7 +5733,7 @@
     "13": {
       "playerId": "13",
       "playerName": "DevGirl_",
-      "totalUnlocked": 15,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5518,6 +5954,36 @@
           "progress": 0.4
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-417"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250501000000-424"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250716000000-473"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
+        },
+        {
           "id": "false-guilty",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -5605,7 +6071,7 @@
     "14": {
       "playerId": "14",
       "playerName": "DFG",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5696,6 +6162,24 @@
           "progress": 0.2
         },
         {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-9"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -5718,7 +6202,7 @@
     "15": {
       "playerId": "15",
       "playerName": "Drakony",
-      "totalUnlocked": 16,
+      "totalUnlocked": 20,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -5902,6 +6386,17 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -5918,6 +6413,42 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250207000000-328"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250207000000-334"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250218000000-337"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250218000000-346"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -6245,7 +6776,7 @@
     "17": {
       "playerId": "17",
       "playerName": "Fukano",
-      "totalUnlocked": 81,
+      "totalUnlocked": 87,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -6799,6 +7330,54 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 23,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-294"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250110000000-299"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250401000000-390"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250501000000-422"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250619000000-445"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250716000000-478"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.7666666666666667
         },
         {
           "id": "misunderstood",
@@ -7511,7 +8090,7 @@
     "19": {
       "playerId": "19",
       "playerName": "Heimdalle",
-      "totalUnlocked": 37,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -7750,6 +8329,42 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 13,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250207000000-330"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250207000000-334"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250225000000-348"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250411000000-400"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 15
+          },
+          "progress": 0.8666666666666667
         },
         {
           "id": "colors-of-lycans",
@@ -8069,7 +8684,7 @@
     "21": {
       "playerId": "21",
       "playerName": "Jey",
-      "totalUnlocked": 5,
+      "totalUnlocked": 6,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8130,6 +8745,24 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-313"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -8339,7 +8972,7 @@
     "24": {
       "playerId": "24",
       "playerName": "Ketchopi",
-      "totalUnlocked": 8,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8471,6 +9104,30 @@
           "progress": 0.2
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-307"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-310"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -8510,7 +9167,7 @@
     "26": {
       "playerId": "26",
       "playerName": "Koka",
-      "totalUnlocked": 39,
+      "totalUnlocked": 42,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -8800,6 +9457,36 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-317"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250128000000-321"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250128000000-324"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
         },
         {
           "id": "colors-of-lycans",
@@ -9266,7 +9953,7 @@
     "28": {
       "playerId": "28",
       "playerName": "Lexa",
-      "totalUnlocked": 3,
+      "totalUnlocked": 4,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9303,6 +9990,24 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-313"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -9490,7 +10195,7 @@
     "30": {
       "playerId": "30",
       "playerName": "Lydiaam",
-      "totalUnlocked": 21,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -9652,6 +10357,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250207000000-333"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -11492,7 +12215,7 @@
     "36": {
       "playerId": "36",
       "playerName": "Noamouille",
-      "totalUnlocked": 27,
+      "totalUnlocked": 30,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -11828,6 +12551,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -11844,6 +12578,36 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 9,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-313"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250114000000-315"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.9
         },
         {
           "id": "misunderstood",
@@ -11973,7 +12737,7 @@
     "38": {
       "playerId": "38",
       "playerName": "Pelerine",
-      "totalUnlocked": 11,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12106,6 +12870,36 @@
           "progress": 0.2
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250716000000-471"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250716000000-474"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250716000000-478"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 3,
           "unlockedLevels": [
@@ -12151,7 +12945,7 @@
     "39": {
       "playerId": "39",
       "playerName": "Poachimpa",
-      "totalUnlocked": 15,
+      "totalUnlocked": 18,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -12312,6 +13106,36 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 9,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250304000000-358"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250304000000-364"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250304000000-367"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.9
         },
         {
           "id": "colors-of-lycans",
@@ -13025,7 +13849,7 @@
     "44": {
       "playerId": "44",
       "playerName": "Shaunz",
-      "totalUnlocked": 7,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13137,6 +13961,30 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250422000000-406"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250501000000-417"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.8
         },
         {
           "id": "lone-non-voter",
@@ -13588,7 +14436,7 @@
     "49": {
       "playerId": "49",
       "playerName": "Wingo",
-      "totalUnlocked": 57,
+      "totalUnlocked": 60,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -13947,6 +14795,36 @@
           "progress": 0.6
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 6,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250729000000-496"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250902000000-529"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250902000000-532"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.6
+        },
+        {
           "id": "misunderstood",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -14219,7 +15097,7 @@
     "50": {
       "playerId": "50",
       "playerName": "Xari",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14293,6 +15171,24 @@
           "progress": 0.4
         },
         {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20231013000000-9"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -14333,7 +15229,7 @@
     "51": {
       "playerId": "51",
       "playerName": "Yoona",
-      "totalUnlocked": 18,
+      "totalUnlocked": 20,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14541,6 +15437,17 @@
           "progress": 0.8
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -14557,6 +15464,30 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250513000000-426"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250619000000-446"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.6
         },
         {
           "id": "lone-non-voter",
@@ -14658,7 +15589,7 @@
     "52": {
       "playerId": "52",
       "playerName": "Zarcross",
-      "totalUnlocked": 39,
+      "totalUnlocked": 45,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -15069,6 +16000,54 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 29,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-314"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250318000000-378"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250318000000-382"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250513000000-427"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250527000000-441"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250805000000-511"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.9666666666666667
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -15284,7 +16263,7 @@
     "76561198034021995": {
       "playerId": "76561198034021995",
       "playerName": "Ponce",
-      "totalUnlocked": 171,
+      "totalUnlocked": 185,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -16258,6 +17237,95 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "agent-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125130713"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "amoureux-wins",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-316"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Tsuna-20251111135924"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009141024"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "espion-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216115402"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-necromancien-resurrect",
           "currentValue": 2,
           "unlockedLevels": [
@@ -16387,6 +17455,62 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 101,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-295"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250110000000-302"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250110000000-305"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250128000000-317"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250207000000-332"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250225000000-348"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250501000000-419"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250722000000-493"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "misunderstood",
@@ -16540,6 +17664,24 @@
             "threshold": 15
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260120114742"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -17055,7 +18197,7 @@
     "76561198054824482": {
       "playerId": "76561198054824482",
       "playerName": "Gom4rt",
-      "totalUnlocked": 26,
+      "totalUnlocked": 27,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17302,6 +18444,24 @@
           "progress": 0.6
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251014115429"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -17443,7 +18603,7 @@
     "76561198065697406": {
       "playerId": "76561198065697406",
       "playerName": "Onutrem",
-      "totalUnlocked": 46,
+      "totalUnlocked": 47,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -17795,6 +18955,24 @@
           "progress": 0.5125
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260210113643"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "false-guilty",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -18018,7 +19196,7 @@
     "76561198045789440": {
       "playerId": "76561198045789440",
       "playerName": "Bytell",
-      "totalUnlocked": 152,
+      "totalUnlocked": 165,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -18982,6 +20160,96 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "agent-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009132152"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "amoureux-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251223124715"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250513000000-426"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250805000000-509"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "espion-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250930000000-563"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "vaudou-triple-resurrect",
           "currentValue": 1,
           "unlockedLevels": [
@@ -19105,6 +20373,62 @@
             "threshold": 20
           },
           "progress": 0.8
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 88,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-296"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-310"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250128000000-321"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250207000000-335"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250225000000-350"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250513000000-427"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250716000000-474"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20251014140204"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "misunderstood",
@@ -19640,7 +20964,7 @@
     "76561198372242900": {
       "playerId": "76561198372242900",
       "playerName": "Lutti",
-      "totalUnlocked": 152,
+      "totalUnlocked": 165,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -20563,6 +21887,95 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "agent-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251216141204"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "amoureux-wins",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250513000000-434"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250624000000-452"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250923000000-561"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "espion-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009114146"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "solo-master",
           "currentValue": 6,
           "unlockedLevels": [
@@ -20638,6 +22051,62 @@
             "threshold": 10
           },
           "progress": 0.4
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 92,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-307"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-311"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250128000000-319"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250218000000-344"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250225000000-351"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250304000000-360"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250401000000-392"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250722000000-488"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "bavard",
@@ -21203,7 +22672,7 @@
     "76561199060053791": {
       "playerId": "76561199060053791",
       "playerName": "Tsuna",
-      "totalUnlocked": 144,
+      "totalUnlocked": 165,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -21995,6 +23464,149 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "agent-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250729000000-495"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250923000000-556"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250930000000-562"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-325"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250225000000-350"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260210115316"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251014115429"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "khalen-20260310132742"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "contrebandier-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260303121506"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "espion-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250729000000-500"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20251023121211"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260310140155"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "loup-devin-double-seer",
           "currentValue": 1,
           "unlockedLevels": [
@@ -22118,6 +23730,62 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 103,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-308"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-311"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250114000000-315"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250128000000-327"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250218000000-343"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250225000000-353"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250318000000-384"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250624000000-461"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "bavard",
@@ -22258,6 +23926,24 @@
             "threshold": 30
           },
           "progress": 0.5333333333333333
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250729000000-495"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -22698,7 +24384,7 @@
     "76561198012951437": {
       "playerId": "76561198012951437",
       "playerName": "Khalen",
-      "totalUnlocked": 155,
+      "totalUnlocked": 171,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -23613,6 +25299,108 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "agent-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250805000000-506"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "amoureux-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260217141704"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260113120242"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Tsuna-20251111132522"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "khalen-20260303114954"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260310113848"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "espion-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251223120127"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-necromancien-resurrect",
           "currentValue": 1,
           "unlockedLevels": [
@@ -23743,6 +25531,62 @@
           "progress": 0.5
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 97,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-292"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250110000000-297"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250110000000-302"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250114000000-315"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250207000000-330"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250218000000-341"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250318000000-380"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250722000000-486"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "misunderstood",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -23858,6 +25702,24 @@
             "threshold": 30
           },
           "progress": 0.5333333333333333
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240726000000-189"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
@@ -24289,7 +26151,7 @@
     "76561198361954746": {
       "playerId": "76561198361954746",
       "playerName": "Anaee",
-      "totalUnlocked": 118,
+      "totalUnlocked": 129,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -25080,6 +26942,59 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "agent-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260224125732"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250916000000-545"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250930000000-564"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "loup-necromancien-resurrect",
           "currentValue": 3,
           "unlockedLevels": [
@@ -25184,6 +27099,62 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 73,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-317"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250128000000-325"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250218000000-343"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250311000000-376"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250401000000-391"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250422000000-412"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250716000000-482"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20251125133535"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "misunderstood",
@@ -25673,7 +27644,7 @@
     "76561198390111869": {
       "playerId": "76561198390111869",
       "playerName": "Kao",
-      "totalUnlocked": 108,
+      "totalUnlocked": 118,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -26416,6 +28387,42 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-370"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251230144232"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "solo-master",
           "currentValue": 3,
           "unlockedLevels": [
@@ -26504,6 +28511,62 @@
             "threshold": 20
           },
           "progress": 0.7
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 58,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-292"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250128000000-316"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250128000000-324"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250218000000-346"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250318000000-380"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250401000000-393"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250722000000-489"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20260127120133"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "misunderstood",
@@ -26936,7 +28999,7 @@
     "76561198043736664": {
       "playerId": "76561198043736664",
       "playerName": "Arkantors",
-      "totalUnlocked": 96,
+      "totalUnlocked": 107,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -27641,6 +29704,60 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250805000000-511"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250624000000-458"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250710000000-470"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "solo-master",
           "currentValue": 3,
           "unlockedLevels": [
@@ -27674,6 +29791,62 @@
             "threshold": 10
           },
           "progress": 0.2
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 56,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-292"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250110000000-295"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250110000000-299"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250114000000-308"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250128000000-322"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250207000000-336"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250318000000-382"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250805000000-513"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "false-guilty",
@@ -28048,7 +30221,7 @@
     "76561198109331759": {
       "playerId": "76561198109331759",
       "playerName": "Flonflon",
-      "totalUnlocked": 99,
+      "totalUnlocked": 110,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -28699,6 +30872,42 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "agent-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260310130724"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-527"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "vaudou-triple-resurrect",
           "currentValue": 1,
           "unlockedLevels": [
@@ -28798,6 +31007,62 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 67,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250128000000-319"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250128000000-323"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250225000000-349"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250304000000-359"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250318000000-384"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250513000000-426"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250716000000-482"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20251014132408"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "misunderstood",
@@ -28907,6 +31172,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240618000000-161"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -29207,7 +31490,7 @@
     "76561198018650146": {
       "playerId": "76561198018650146",
       "playerName": "TPK",
-      "totalUnlocked": 35,
+      "totalUnlocked": 37,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -29517,6 +31800,24 @@
           "progress": 0.3
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-637"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -29537,6 +31838,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20240618000000-161"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -29763,7 +32082,7 @@
     "76561197997304949": {
       "playerId": "76561197997304949",
       "playerName": "Brybry",
-      "totalUnlocked": 45,
+      "totalUnlocked": 50,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -30101,6 +32420,48 @@
           "progress": 0.6
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 17,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-292"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250110000000-301"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250422000000-409"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250513000000-433"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250710000000-469"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 20
+          },
+          "progress": 0.85
+        },
+        {
           "id": "lone-non-voter",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -30353,7 +32714,7 @@
     "76561198125108195": {
       "playerId": "76561198125108195",
       "playerName": "Monodie",
-      "totalUnlocked": 124,
+      "totalUnlocked": 137,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -31205,6 +33566,72 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251202123802"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250304000000-366"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250318000000-379"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260310141656"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260303141937"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-devin-double-seer",
           "currentValue": 1,
           "unlockedLevels": [
@@ -31305,6 +33732,62 @@
             "threshold": 850
           },
           "progress": 0.9470588235294117
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 112,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-297"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250110000000-301"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250128000000-323"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250218000000-347"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250304000000-363"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250422000000-406"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250716000000-484"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "lone-non-voter",
@@ -31743,7 +34226,7 @@
     "76561198140298176": {
       "playerId": "76561198140298176",
       "playerName": "Kyria",
-      "totalUnlocked": 58,
+      "totalUnlocked": 66,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32207,6 +34690,24 @@
           "progress": 0.8
         },
         {
+          "id": "espion-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250911000000-539"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-necromancien-resurrect",
           "currentValue": 1,
           "unlockedLevels": [
@@ -32241,6 +34742,60 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 35,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250110000000-296"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250110000000-301"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250114000000-308"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250128000000-327"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250722000000-486"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250902000000-529"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20251014121305"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 50
+          },
+          "progress": 0.7
         },
         {
           "id": "misunderstood",
@@ -32516,7 +35071,7 @@
     "76561197972377069": {
       "playerId": "76561197972377069",
       "playerName": "BERLU",
-      "totalUnlocked": 14,
+      "totalUnlocked": 15,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -32678,6 +35233,24 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125112953"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "lone-non-voter",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -32793,7 +35366,7 @@
     "76561198256660482": {
       "playerId": "76561198256660482",
       "playerName": "Baout",
-      "totalUnlocked": 50,
+      "totalUnlocked": 61,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -33209,6 +35782,54 @@
           "progress": 0.8
         },
         {
+          "id": "idiot-du-village-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-353"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20250318000000-384"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250805000000-507"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250729000000-505"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "solo-master",
           "currentValue": 2,
           "unlockedLevels": [
@@ -33236,6 +35857,60 @@
             "threshold": 400
           },
           "progress": 0.475
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 41,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-311"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250114000000-315"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250218000000-339"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250304000000-362"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250311000000-373"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250411000000-404"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 50
+          },
+          "progress": 0.82
         },
         {
           "id": "only-passer",
@@ -33484,7 +36159,7 @@
     "76561199291323199": {
       "playerId": "76561199291323199",
       "playerName": "Miraaaaaah",
-      "totalUnlocked": 70,
+      "totalUnlocked": 80,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34063,6 +36738,42 @@
           "progress": 0.6
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20251216132647"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260106135926"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-necromancien-resurrect",
           "currentValue": 1,
           "unlockedLevels": [
@@ -34126,6 +36837,62 @@
             "threshold": 600
           },
           "progress": 0.925
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 66,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-310"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250128000000-319"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250218000000-339"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250225000000-353"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250304000000-365"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250411000000-397"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20251230134614"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "lone-non-voter",
@@ -34428,7 +37195,7 @@
     "76561198095017745": {
       "playerId": "76561198095017745",
       "playerName": "Craco",
-      "totalUnlocked": 49,
+      "totalUnlocked": 57,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -34868,6 +37635,60 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 34,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-309"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-313"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250225000000-349"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250225000000-357"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250710000000-469"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250805000000-516"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20251202132040"
+            }
+          ],
+          "nextLevel": {
+            "tier": "lycans",
+            "subLevel": 1,
+            "threshold": 50
+          },
+          "progress": 0.68
+        },
+        {
           "id": "bavard",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -34928,6 +37749,24 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250805000000-513"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -35126,7 +37965,7 @@
     "76561198875528482": {
       "playerId": "76561198875528482",
       "playerName": "ClydeCreator",
-      "totalUnlocked": 97,
+      "totalUnlocked": 105,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -35789,6 +38628,17 @@
           "progress": 0.8
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 2,
           "unlockedLevels": [
@@ -35851,6 +38701,62 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 80,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250114000000-306"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250114000000-312"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250128000000-318"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250207000000-334"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250218000000-342"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250225000000-348"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250318000000-378"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20250826000000-522"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "misunderstood",
@@ -36268,7 +39174,7 @@
     "76561198250955250": {
       "playerId": "76561198250955250",
       "playerName": "Tone",
-      "totalUnlocked": 91,
+      "totalUnlocked": 104,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -36870,6 +39776,77 @@
           "progress": 0.5
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250716000000-476"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250722000000-493"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 2,
+              "unlockedAtGame": "Ponce-20260217112455"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "espion-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251118000000-630"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "vaudou-triple-resurrect",
           "currentValue": 2,
           "unlockedLevels": [
@@ -36978,6 +39955,62 @@
           "progress": 0.7
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 58,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250218000000-340"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250218000000-343"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250218000000-347"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250729000000-496"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250826000000-520"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250911000000-539"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20251125112953"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20260210131441"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "misunderstood",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -37081,6 +40114,24 @@
             "threshold": 15
           },
           "progress": 0.7333333333333333
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250716000000-483"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -37397,7 +40448,7 @@
     "76561198849250630": {
       "playerId": "76561198849250630",
       "playerName": "MathyMoon",
-      "totalUnlocked": 71,
+      "totalUnlocked": 83,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38024,6 +41075,71 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250710000000-465"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251209135919"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "espion-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260106122810"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-devin-ultimate",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -38104,6 +41220,62 @@
             "threshold": 10
           },
           "progress": 0.2
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 74,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250225000000-348"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250225000000-353"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250304000000-367"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250401000000-385"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250422000000-409"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250527000000-439"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20250805000000-506"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20251223140835"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "misunderstood",
@@ -38192,6 +41364,24 @@
             "threshold": 10
           },
           "progress": 0.5
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250422000000-413"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -38399,7 +41589,7 @@
     "76561198019060909": {
       "playerId": "76561198019060909",
       "playerName": "Reivil",
-      "totalUnlocked": 13,
+      "totalUnlocked": 17,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -38601,6 +41791,42 @@
           "progress": 0.3375
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250311000000-368"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250311000000-371"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250311000000-374"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20251216115402"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "meneur",
           "currentValue": 1,
           "unlockedLevels": [
@@ -38659,7 +41885,7 @@
     "76561198076015877": {
       "playerId": "76561198076015877",
       "playerName": "CHLOE",
-      "totalUnlocked": 61,
+      "totalUnlocked": 70,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -39225,6 +42451,24 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-523"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-devin-ultimate",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -39292,6 +42536,62 @@
             "threshold": 10
           },
           "progress": 0.3
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 60,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-417"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250501000000-419"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250513000000-425"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250716000000-474"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250826000000-522"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250916000000-548"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Ponce-20251118000000-632"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "Ponce-20260203115806"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
         },
         {
           "id": "misunderstood",
@@ -39533,7 +42833,7 @@
     "76561198056292624": {
       "playerId": "76561198056292624",
       "playerName": "RomainJacques",
-      "totalUnlocked": 69,
+      "totalUnlocked": 77,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40234,6 +43534,62 @@
           "progress": 0.7
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 50,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250501000000-418"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250619000000-449"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250624000000-457"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250710000000-464"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20250729000000-500"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "Ponce-20250916000000-545"
+            },
+            {
+              "tier": "or",
+              "subLevel": 1,
+              "threshold": 30,
+              "unlockedAtGame": "Tsuna-20251111115225"
+            },
+            {
+              "tier": "lycans",
+              "subLevel": 1,
+              "threshold": 50,
+              "unlockedAtGame": "khalen-20260310132742"
+            }
+          ],
+          "nextLevel": null,
+          "progress": 1
+        },
+        {
           "id": "meneur",
           "currentValue": 16,
           "unlockedLevels": [
@@ -40506,7 +43862,7 @@
     "76561197996828190": {
       "playerId": "76561197996828190",
       "playerName": "Mickalow",
-      "totalUnlocked": 27,
+      "totalUnlocked": 31,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -40786,6 +44142,35 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251028000000-604"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "solo-master",
           "currentValue": 2,
           "unlockedLevels": [
@@ -40802,6 +44187,36 @@
             "threshold": 3
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250624000000-457"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250923000000-554"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251028000000-606"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "misunderstood",
@@ -40989,7 +44404,7 @@
     "76561197987657681": {
       "playerId": "76561197987657681",
       "playerName": "PeoBran",
-      "totalUnlocked": 22,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41255,6 +44670,17 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -41271,6 +44697,36 @@
             "threshold": 3
           },
           "progress": 0.3333333333333333
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250722000000-486"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250722000000-491"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250930000000-567"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "meneur",
@@ -41409,7 +44865,7 @@
     "76561198052560531": {
       "playerId": "76561198052560531",
       "playerName": "Tovi",
-      "totalUnlocked": 25,
+      "totalUnlocked": 29,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41640,6 +45096,42 @@
           "progress": 0.625
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 12,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250710000000-470"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250722000000-486"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250722000000-491"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20251023125648"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 15
+          },
+          "progress": 0.8
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -41833,7 +45325,7 @@
     "76561198317172114": {
       "playerId": "76561198317172114",
       "playerName": "Kissiffrote",
-      "totalUnlocked": 21,
+      "totalUnlocked": 25,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -41996,6 +45488,35 @@
           "progress": 0.36666666666666664
         },
         {
+          "id": "agent-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260203144119"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 2,
           "unlockedLevels": [
@@ -42034,6 +45555,36 @@
             "threshold": 10
           },
           "progress": 0.2
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 7,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250710000000-470"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251223142339"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260127142054"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.7
         },
         {
           "id": "only-passer",
@@ -42198,7 +45749,7 @@
     "76561198155130320": {
       "playerId": "76561198155130320",
       "playerName": "MaMaPaprika",
-      "totalUnlocked": 24,
+      "totalUnlocked": 29,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42484,6 +46035,17 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -42511,6 +46073,48 @@
             "threshold": 400
           },
           "progress": 0.7
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 16,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250722000000-490"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250722000000-493"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250729000000-500"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250902000000-529"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260106113016"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 3,
+            "threshold": 20
+          },
+          "progress": 0.8
         },
         {
           "id": "colors-of-lycans",
@@ -42604,7 +46208,7 @@
     "76561198076478013": {
       "playerId": "76561198076478013",
       "playerName": "Areliann",
-      "totalUnlocked": 49,
+      "totalUnlocked": 57,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -42973,6 +46577,42 @@
           "progress": 0.5
         },
         {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250902000000-532"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
+          "id": "la-bete-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251014110121"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "vaudou-triple-resurrect",
           "currentValue": 1,
           "unlockedLevels": [
@@ -43042,6 +46682,54 @@
             "threshold": 600
           },
           "progress": 0.725
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 21,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250826000000-518"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250826000000-521"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250902000000-531"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "Ponce-20250930000000-562"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Tsuna-20251111115225"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260113140658"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.7
         },
         {
           "id": "meneur",
@@ -43257,7 +46945,7 @@
     "76561199013115670": {
       "playerId": "76561199013115670",
       "playerName": "SpicY",
-      "totalUnlocked": 22,
+      "totalUnlocked": 26,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -43529,6 +47217,42 @@
           "progress": 0.7666666666666667
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 10,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20250911000000-538"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20250911000000-542"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20250911000000-544"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260120132722"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 2,
+            "threshold": 15
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "lone-non-voter",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -43662,7 +47386,7 @@
     "76561198160286790": {
       "playerId": "76561198160286790",
       "playerName": "Raumane",
-      "totalUnlocked": 46,
+      "totalUnlocked": 53,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -44089,6 +47813,24 @@
           "progress": 0.8
         },
         {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009134908"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-devin-ultimate",
           "currentValue": 2,
           "unlockedLevels": [],
@@ -44145,6 +47887,54 @@
             "threshold": 600
           },
           "progress": 0.6666666666666666
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 25,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009141024"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251014112328"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20251104135141"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260113131329"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260203132327"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260217131554"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.8333333333333334
         },
         {
           "id": "meneur",
@@ -44377,7 +48167,7 @@
     "76561198912373275": {
       "playerId": "76561198912373275",
       "playerName": "Neagari",
-      "totalUnlocked": 12,
+      "totalUnlocked": 14,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -44545,6 +48335,30 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 4,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251009123351"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251014115429"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.8
+        },
+        {
           "id": "only-passer",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -44620,7 +48434,7 @@
     "76561198167428396": {
       "playerId": "76561198167428396",
       "playerName": "Chloé",
-      "totalUnlocked": 7,
+      "totalUnlocked": 9,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -44698,6 +48512,24 @@
           "progress": 0.4
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023125648"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "democrat",
           "currentValue": 3,
           "unlockedLevels": [],
@@ -44707,6 +48539,24 @@
             "threshold": 5
           },
           "progress": 0.6
+        },
+        {
+          "id": "stubborn",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023125648"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "colors-of-lycans",
@@ -44857,7 +48707,7 @@
     "76561197961659274": {
       "playerId": "76561197961659274",
       "playerName": "MoMaN",
-      "totalUnlocked": 12,
+      "totalUnlocked": 13,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -44900,6 +48750,24 @@
             "threshold": 5
           },
           "progress": 0.2
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251023125648"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "misunderstood",
@@ -45088,7 +48956,7 @@
     "76561199229494526": {
       "playerId": "76561199229494526",
       "playerName": "Meetozila",
-      "totalUnlocked": 19,
+      "totalUnlocked": 22,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -45268,6 +49136,17 @@
           "progress": 0.3333333333333333
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 1,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -45295,6 +49174,36 @@
             "threshold": 400
           },
           "progress": 0.4125
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 5,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260203141837"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20260224125732"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "khalen-20260303142940"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.5
         },
         {
           "id": "only-passer",
@@ -45442,7 +49351,7 @@
     "76561198271274269": {
       "playerId": "76561198271274269",
       "playerName": "MartinPonK",
-      "totalUnlocked": 29,
+      "totalUnlocked": 33,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -45693,6 +49602,24 @@
           "progress": 0.6666666666666666
         },
         {
+          "id": "espion-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125115536"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "solo-master",
           "currentValue": 1,
           "unlockedLevels": [
@@ -45720,6 +49647,36 @@
             "threshold": 10
           },
           "progress": 0.2
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 8,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251028000000-602"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20251104133550"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Tsuna-20251111131040"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 10
+          },
+          "progress": 0.8
         },
         {
           "id": "bavard",
@@ -45927,7 +49884,7 @@
     "76561198353315250": {
       "playerId": "76561198353315250",
       "playerName": "AxRuby",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -46012,6 +49969,24 @@
           "progress": 0.1
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20251125115536"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "misunderstood",
           "currentValue": 1,
           "unlockedLevels": [],
@@ -46074,7 +50049,7 @@
     "76561198245459930": {
       "playerId": "76561198245459930",
       "playerName": "Deujna",
-      "totalUnlocked": 34,
+      "totalUnlocked": 41,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -46377,6 +50352,35 @@
           "progress": 0.2
         },
         {
+          "id": "amoureux-wins",
+          "currentValue": 2,
+          "unlockedLevels": [],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 1,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
+          "id": "idiot-du-village-wins",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260217123659"
+            }
+          ],
+          "nextLevel": {
+            "tier": "argent",
+            "subLevel": 1,
+            "threshold": 2
+          },
+          "progress": 0.5
+        },
+        {
           "id": "loup-necromancien-resurrect",
           "currentValue": 1,
           "unlockedLevels": [
@@ -46479,6 +50483,54 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 28,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20251209130133"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "khalen-20251209142007"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 3,
+              "threshold": 5,
+              "unlockedAtGame": "Ponce-20260106120608"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 1,
+              "threshold": 10,
+              "unlockedAtGame": "khalen-20260120134259"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 2,
+              "threshold": 15,
+              "unlockedAtGame": "Ponce-20260203134728"
+            },
+            {
+              "tier": "argent",
+              "subLevel": 3,
+              "threshold": 20,
+              "unlockedAtGame": "khalen-20260217131554"
+            }
+          ],
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 30
+          },
+          "progress": 0.9333333333333333
         },
         {
           "id": "misunderstood",
@@ -46689,7 +50741,7 @@
     "76561199098154286": {
       "playerId": "76561199098154286",
       "playerName": "Grim_the_turtle",
-      "totalUnlocked": 20,
+      "totalUnlocked": 21,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -46823,6 +50875,24 @@
             "threshold": 10
           },
           "progress": 0.1
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 1,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127153752"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.3333333333333333
         },
         {
           "id": "bavard",
@@ -47037,7 +51107,7 @@
     "76561198190629659": {
       "playerId": "76561198190629659",
       "playerName": "Quentadou",
-      "totalUnlocked": 9,
+      "totalUnlocked": 10,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -47167,6 +51237,24 @@
           "progress": 0.9
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260127142054"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
+        },
+        {
           "id": "meneur",
           "currentValue": 1,
           "unlockedLevels": [
@@ -47261,7 +51349,7 @@
     "76561198158936831": {
       "playerId": "76561198158936831",
       "playerName": "Vicky_spleen",
-      "totalUnlocked": 10,
+      "totalUnlocked": 12,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -47398,6 +51486,30 @@
           "progress": 0.2
         },
         {
+          "id": "spider-man-pointing",
+          "currentValue": 3,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "Ponce-20260203115806"
+            },
+            {
+              "tier": "bronze",
+              "subLevel": 2,
+              "threshold": 3,
+              "unlockedAtGame": "Ponce-20260203134728"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 3,
+            "threshold": 5
+          },
+          "progress": 0.6
+        },
+        {
           "id": "colors-of-lycans",
           "currentValue": 1,
           "unlockedLevels": [
@@ -47525,7 +51637,7 @@
     "76561198868526385": {
       "playerId": "76561198868526385",
       "playerName": "Enileme",
-      "totalUnlocked": 6,
+      "totalUnlocked": 7,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -47659,6 +51771,24 @@
             "threshold": 400
           },
           "progress": 0.7875
+        },
+        {
+          "id": "spider-man-pointing",
+          "currentValue": 2,
+          "unlockedLevels": [
+            {
+              "tier": "bronze",
+              "subLevel": 1,
+              "threshold": 1,
+              "unlockedAtGame": "khalen-20260224122446"
+            }
+          ],
+          "nextLevel": {
+            "tier": "bronze",
+            "subLevel": 2,
+            "threshold": 3
+          },
+          "progress": 0.6666666666666666
         },
         {
           "id": "colors-of-lycans",
