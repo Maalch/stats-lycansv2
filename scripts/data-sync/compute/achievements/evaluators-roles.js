@@ -147,3 +147,37 @@ export function idiotSurvivedWithVotes(playerGames, allGames, playerId, params) 
   }
   return { value, gameIds };
 }
+
+/**
+ * Count games where the player is in the Villageois camp, has a non-empty Power,
+ * and at least one other player in the Villageois camp has the exact same Power.
+ * Achievement: "Spider-Man Pointing at Spider-Man"
+ */
+export function sameElitePowerAsAlly(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+
+  for (const { game, playerStat } of playerGames) {
+    // Player must be in Villageois camp
+    const camp = getPlayerCampForAchievement(playerStat, true, { regroupWolfSubRoles: true });
+    if (camp !== 'Villageois') continue;
+
+    // Player must have a non-empty Power
+    const power = playerStat.Power;
+    if (!power) continue;
+
+    // Another player in the Villageois camp must have the same Power
+    const hasMatchingAlly = game.PlayerStats.some(other => {
+      if (getPlayerId(other) === playerId) return false; // Skip self
+      if (!other.Power || other.Power !== power) return false;
+      const otherCamp = getPlayerCampForAchievement(other, true, { regroupWolfSubRoles: true });
+      return otherCamp === 'Villageois';
+    });
+
+    if (hasMatchingAlly) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}

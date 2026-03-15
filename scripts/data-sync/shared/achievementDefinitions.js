@@ -1320,6 +1320,31 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
 
+  {
+    id: 'spider-man-pointing',
+    name: 'Spider-Man Pointing at Spider-Man',
+    description: "Hé, mais t'es... moi !",
+    explanation: 'Faire X parties en Villageois Élite avec un autre Villageois ayant le même métier',
+    emoji: '🕷️',
+    category: 'roles',
+    evaluator: 'sameElitePowerAsAlly',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1, 3, 5
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 10, 15, 20
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      { tier: 'argent', subLevel: 2, threshold: 15 },
+      { tier: 'argent', subLevel: 3, threshold: 20 },
+      // Or: 30
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
+    ],
+  },
+
   // ============================================================================
   // SOCIAL (voting/meetings)
   // ============================================================================
