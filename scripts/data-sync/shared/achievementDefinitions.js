@@ -242,8 +242,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'wolf-win-early-death',
-    name: 'Une game exemplaire',
-    description: 'Tout s\'est déroulé comme prévu',
+    name: 'Loup·ve Sacrifié·e',
+    description: 'Tout s\'est déroulé selon le plan',
     explanation: 'Gagner X parties en Loup sans aller jusqu\'au premier meeting',
     emoji: '💤',
     category: 'victories',

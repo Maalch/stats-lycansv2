@@ -78,7 +78,7 @@
 | Spécifique | Tous | Kill | Retour à l'Envoyeur | La vengeance est douce | Tuer X fois la personne qui vous a tué dans la partie précédente | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
 | Spécifique | Tous | Victoire, Meeting | Speed Run | La game parfaite, sans traîner | Gagner X parties qui se terminent au 2éme Meeting ou avant | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
 | Original | Tous | Meeting | Têtu·e | Quand vous avez une idée, vous la gardez | Voter X fois la même personne sur 3 meetings consécutifs | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
-| Original | Loup | Victoire, Mort | | | Gagner X parties en Loup en mourant avant le premier meeting | | | | |
+| Original | Loup | Victoire, Mort | | | Gagner X parties en Loup en mourant avant le premier meeting | 3 | 5 | 10 | 20 |
 | Original | Tous | Rôle | Spider-Man Pointing at Spider-Man | | Faire X parties avec quelqu'un ayant le même métier Villageois | | | | |
 | Original | Tous | Spécial | The Lycan Voice | Vous avez tenté la chansonnette... Chacun saura s'il se retourne ou pas... | Avoir X fois chanté dans une partie (liés aux Clips) | 1 | 2 | 3 | 5 |
 | Classique | Agent | Victoire | | | Gagner X victoires en Agent | 1 | 2 | 3 | 5 |
