@@ -424,3 +424,57 @@ export function onlyEnemyVotes(playerGames, allGames, playerId, params) {
   }
   return { value, gameIds };
 }
+
+/**
+ * Count games where the player voted for the same target in at least 3 (or params.minConsecutive)
+ * strictly consecutive meetings within a single game.
+ * Example: voting for "Alice" on meetings M2, M3, M4 counts; M1, M3, M4 does not.
+ */
+export function stubbornConsecutiveVotes(playerGames, allGames, playerId, params) {
+  const gameIds = [];
+  let value = 0;
+  const minConsecutive = params.minConsecutive || 3;
+
+  for (const { game, playerStat } of playerGames) {
+    const votes = playerStat.Votes || [];
+
+    // Build a map: day -> last non-pass target voted that meeting
+    const voteByDay = new Map();
+    for (const vote of votes) {
+      if (!vote.Target || vote.Target === 'Passé') continue;
+      voteByDay.set(vote.Day, vote.Target);
+    }
+
+    if (voteByDay.size < minConsecutive) continue;
+
+    const sortedDays = [...voteByDay.keys()].sort((a, b) => a - b);
+
+    let achieved = false;
+    for (let i = 0; i <= sortedDays.length - minConsecutive; i++) {
+      const startDay = sortedDays[i];
+      const startTarget = voteByDay.get(startDay);
+      let streak = 1;
+
+      for (let j = i + 1; j < sortedDays.length; j++) {
+        const expectedDay = startDay + (j - i);
+        if (sortedDays[j] === expectedDay && voteByDay.get(sortedDays[j]) === startTarget) {
+          streak++;
+          if (streak >= minConsecutive) {
+            achieved = true;
+            break;
+          }
+        } else {
+          break;
+        }
+      }
+
+      if (achieved) break;
+    }
+
+    if (achieved) {
+      value++;
+      gameIds.push(game.Id);
+    }
+  }
+  return { value, gameIds };
+}

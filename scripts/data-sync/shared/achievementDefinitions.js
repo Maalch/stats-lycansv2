@@ -1369,6 +1369,32 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
+  {
+    id: 'stubborn',
+    name: 'Têtu·e',
+    description: 'Quand vous avez une idée, vous la gardez',
+    explanation: 'Voter X fois pour la même personne sur 3 meetings strictement consécutifs dans une partie',
+    emoji: '🐂',
+    category: 'social',
+    evaluator: 'stubbornConsecutiveVotes',
+    evaluatorParams: { minConsecutive: 3 },
+    levels: [
+      // Bronze: 1 - 3 - 5
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 10 - 15 - 20
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      { tier: 'argent', subLevel: 2, threshold: 15 },
+      { tier: 'argent', subLevel: 3, threshold: 20 },
+      // Or: 30 - 40 - 50
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 40 },
+      { tier: 'or', subLevel: 3, threshold: 50 },
+      // Lycans: 75
+      { tier: 'lycans', subLevel: 1, threshold: 75 },
+    ],
+  },
 
   // ============================================================================
   // SPECIAL

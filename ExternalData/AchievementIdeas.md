@@ -76,8 +76,8 @@
 | Original | Idiot du Village | Survie, Meeting | Presque Idiot·e | Trop malin·gne pour être Idiot·e | Survivre X fois en Idiot du Village en ayant au moins 1 vote contre soi | 3 | 5 | 10 | 20 |
 | Spécifique | Villageois | Récolte | Record de Récolte | Vous êtes une machine à farmer | Récolter plus de X de loots dans une seule partie | 400 | 600 | 850 | 1200 |
 | Spécifique | Tous | Kill | Retour à l'Envoyeur | La vengeance est douce | Tuer X fois la personne qui vous a tué dans la partie précédente | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
-| Spécifique | Tous | Victoire, Meeting | Speed Run | La game parfaite, sans traîner | Gagner X parties qui se terminent au 2éme Meeting ou avant | | | | |
-| Original | Tous | Meeting | Têtu·e | Quand vous avez une idée, vous la gardez | Voter X fois la même personne sur 3 meetings consécutifs | | | | |
+| Spécifique | Tous | Victoire, Meeting | Speed Run | La game parfaite, sans traîner | Gagner X parties qui se terminent au 2éme Meeting ou avant | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
+| Original | Tous | Meeting | Têtu·e | Quand vous avez une idée, vous la gardez | Voter X fois la même personne sur 3 meetings consécutifs | 1 - 3 - 5 | 10 - 15 - 20 | 30 - 40 - 50 | 75 |
 | Original | Loup | Victoire, Mort | | | Gagner X parties en Loup en mourant avant le premier meeting | | | | |
 | Original | Tous | Rôle | Spider-Man Pointing at Spider-Man | | Faire X parties avec quelqu'un ayant le même métier Villageois | | | | |
 | Original | Tous | Spécial | The Lycan Voice | Vous avez tenté la chansonnette... Chacun saura s'il se retourne ou pas... | Avoir X fois chanté dans une partie (liés aux Clips) | 1 | 2 | 3 | 5 |

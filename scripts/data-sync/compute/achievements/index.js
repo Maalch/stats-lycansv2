@@ -65,6 +65,7 @@ import {
   votedAsCamp, correctVoteButVoted, unanimousVoteAsVillager,
   onlyVillagerPasserInMeeting, loneNonVoterAllOthersPassed,
   soleVoterElimination, firstVoterElimination, consecutiveCorrectVotes, onlyEnemyVotes,
+  stubbornConsecutiveVotes,
 } from './evaluators-voting.js';
 
 // Social/special evaluators
@@ -150,6 +151,7 @@ export const EVALUATORS = {
   firstVoterElimination,
   consecutiveCorrectVotes,
   onlyEnemyVotes,
+  stubbornConsecutiveVotes,
 
   // Social/Special
   talkingPercentage,
