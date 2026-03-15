@@ -1017,6 +1017,126 @@ export const ACHIEVEMENT_DEFINITIONS = [
     ],
   },
   {
+    id: 'agent-wins',
+    name: 'Mission Accomplie',
+    description: 'Votre couverture était parfaite, personne ne vous a vu venir',
+    explanation: 'Gagner X victoires en Agent',
+    emoji: '🕵️',
+    category: 'roles',
+    evaluator: 'roleWins',
+    evaluatorParams: { role: 'Agent' },
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
+    id: 'amoureux-wins',
+    name: "L'Amour Triomphe",
+    description: "L'amour est plus fort que tout, même que les loups",
+    explanation: 'Gagner X victoires en Amoureux',
+    emoji: '💕',
+    category: 'roles',
+    evaluator: 'roleWins',
+    evaluatorParams: { role: 'Amoureux' },
+    levels: [
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 10
+      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Lycans: 20
+      { tier: 'lycans', subLevel: 1, threshold: 20 },
+    ],
+  },
+  {
+    id: 'idiot-du-village-wins',
+    name: 'Pas si Idiot·e',
+    description: "Qui est l'idiot·e maintenant ?",
+    explanation: 'Gagner X victoires en Idiot du Village',
+    emoji: '🤪',
+    category: 'roles',
+    evaluator: 'roleWins',
+    evaluatorParams: { role: 'Idiot du Village' },
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
+    id: 'la-bete-wins',
+    name: 'Instinct Animal',
+    description: 'La bête sommeille en vous, et elle est redoutable',
+    explanation: 'Gagner X victoires en La Bête',
+    emoji: '🐾',
+    category: 'roles',
+    evaluator: 'roleWins',
+    evaluatorParams: { role: 'La Bête' },
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
+    id: 'contrebandier-wins',
+    name: 'Affaires Lucratives',
+    description: 'Vos petites magouilles ont fini par payer',
+    explanation: 'Gagner X victoires en Contrebandier',
+    emoji: '💰',
+    category: 'roles',
+    evaluator: 'roleWins',
+    evaluatorParams: { role: 'Contrebandier' },
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
+    id: 'espion-wins',
+    name: 'Infiltration Réussie',
+    description: 'Vous avez su tirer profit de vos informations',
+    explanation: 'Gagner X victoires en Espion',
+    emoji: '🔍',
+    category: 'roles',
+    evaluator: 'roleWins',
+    evaluatorParams: { role: 'Espion' },
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
+    ],
+  },
+  {
     id: 'vaudou-triple-resurrect',
     name: 'Zombie Nation',
     description: 'Votre armée de morts s\'est bien agrandie',

@@ -73,14 +73,15 @@ export function winWith9SoloRoles(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Count wins with a specific MainRoleInitial
- * Params: { role: string } - the MainRoleInitial to match
+ * Count wins with a specific role/camp
+ * Params: { role: string } - the camp/role to match (uses getPlayerCampForAchievement for proper final role resolution)
  */
 export function roleWins(playerGames, allGames, playerId, params) {
   const gameIds = [];
   let value = 0;
   for (const { game, playerStat } of playerGames) {
-    if (playerStat.MainRoleInitial !== params.role) continue;
+    const roleCamp = getPlayerCampForAchievement(playerStat, true, { regroupWolfSubRoles: true });
+    if (roleCamp !== params.role) continue;
     if (!playerStat.Victorious) continue;
     value++;
     gameIds.push(game.Id);
