@@ -54,7 +54,7 @@ export function PlayerSelectionPage() {
   const { joueursData, isLoading: joueursLoading } = useJoueursData();
   const { data: playerRankings, isLoading: rankingsLoading, error: rankingsError } = usePreCalculatedPlayerRankings(settings.highlightedPlayer);
   const { playerData: playerTitles, isLoading: titlesLoading } = usePlayerTitles(settings.highlightedPlayer);
-  const { playerData: playerAchievements, achievementsWithProgress, categories: achievementCategories, isLoading: achievementsLoading } = usePlayerAchievements(settings.highlightedPlayer);
+  const { data: achievementsData, playerData: playerAchievements, achievementsWithProgress, categories: achievementCategories, isLoading: achievementsLoading } = usePlayerAchievements(settings.highlightedPlayer);
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClip, setSelectedClip] = useState<Clip | null>(null);
@@ -610,6 +610,8 @@ export function PlayerSelectionPage() {
                       playerAchievements={playerAchievements}
                       categories={achievementCategories}
                       isLoading={achievementsLoading}
+                      allData={achievementsData}
+                      currentPlayerName={settings.highlightedPlayer}
                     />
                   )}
 

@@ -337,3 +337,241 @@
     height: 40px;
   }
 }
+
+/* ===========================
+   COMPARISON MODE
+   =========================== */
+
+/* Toggle button to enter comparison */
+.achievements-compare-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.achievements-compare-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.achievements-compare-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* Selector bar shown when comparison is active */
+.achievements-compare-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--accent-primary);
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.achievements-compare-selector label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.achievements-compare-select {
+  padding: 0.35rem 0.75rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  min-width: 160px;
+}
+
+.achievements-compare-close {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  line-height: 1;
+  transition: all 0.15s ease;
+}
+
+.achievements-compare-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+/* Comparison summary: 3-column grid (P1 | VS | P2) + battle bar */
+.achievements-summary.compare-mode {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 1rem;
+  row-gap: 0.6rem;
+  align-items: center;
+  padding: 1rem 1.2rem;
+}
+
+.achievements-summary-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.achievements-summary-player.main-player .achievements-summary-player-name {
+  color: var(--accent-primary);
+}
+
+.achievements-summary-player.other-player .achievements-summary-player-name {
+  color: #fb923c;
+}
+
+.achievements-summary-player-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.achievements-summary-vs {
+  font-size: 1.4rem;
+  line-height: 1;
+  align-self: center;
+}
+
+.achievements-summary-tiers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.achievements-summary-tier-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Battle bar spans all 3 columns */
+.achievements-battle-bar {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 8px;
+  background: var(--bg-primary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.achievements-battle-bar-p1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--accent-primary);
+  border-radius: 4px;
+  opacity: 0.75;
+  transition: width 0.5s ease;
+}
+
+.achievements-battle-bar-p2 {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #fb923c;
+  border-radius: 4px;
+  opacity: 0.75;
+  transition: width 0.5s ease;
+}
+
+/* Card states in comparison mode */
+.achievement-card.compare-main-ahead {
+  border-color: rgba(99, 102, 241, 0.5);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(99, 102, 241, 0.05) 100%);
+}
+
+.achievement-card.compare-other-ahead {
+  border-color: rgba(251, 146, 60, 0.5);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(251, 146, 60, 0.05) 100%);
+}
+
+.achievement-card.compare-tied {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+/* Two-row stars layout in comparison mode */
+.achievement-compare-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.achievement-compare-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.achievement-compare-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 52px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 72px;
+  flex-shrink: 0;
+}
+
+.achievement-compare-row.main .achievement-compare-label {
+  color: var(--accent-primary);
+}
+
+.achievement-compare-row.other .achievement-compare-label {
+  color: #fb923c;
+}
+
+.achievement-compare-value {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .achievements-summary.compare-mode {
+    grid-template-columns: 1fr auto 1fr;
+    padding: 0.8rem;
+  }
+
+  .achievements-summary-player-name {
+    font-size: 0.85rem;
+    max-width: 90px;
+  }
+}
