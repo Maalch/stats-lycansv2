@@ -102,16 +102,17 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'bronze', subLevel: 1, threshold: 1 },
       { tier: 'bronze', subLevel: 2, threshold: 5 },
       { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 30 - 50 - 70
-      { tier: 'argent', subLevel: 1, threshold: 30 },
-      { tier: 'argent', subLevel: 2, threshold: 50 },
-      { tier: 'argent', subLevel: 3, threshold: 70 },
-      // Or: 100 - 150 - 200
-      { tier: 'or', subLevel: 1, threshold: 100 },
-      { tier: 'or', subLevel: 2, threshold: 150 },
-      { tier: 'or', subLevel: 3, threshold: 200 },
-      // Lycans: 300
-      { tier: 'lycans', subLevel: 1, threshold: 300 },
+      // Argent: 15 - 20 - 25
+      { tier: 'argent', subLevel: 1, threshold: 15 },
+      { tier: 'argent', subLevel: 2, threshold: 20 },
+      { tier: 'argent', subLevel: 3, threshold: 25 },
+      // Or: 30 - 40 - 55
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 40 },
+      { tier: 'or', subLevel: 3, threshold: 55 },
+      
+      // Lycans: 70
+      { tier: 'lycans', subLevel: 1, threshold: 70 },
     ],
   },
   {
@@ -124,14 +125,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'soloWins',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1 - 2 - 3
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 2 },
+      { tier: 'bronze', subLevel: 3, threshold: 3 },
+      // Argent: 5 - 7 - 10
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      { tier: 'argent', subLevel: 2, threshold: 7 },
+      { tier: 'argent', subLevel: 3, threshold: 10 },
+      // Or: 12 - 15 - 18
+      { tier: 'or', subLevel: 1, threshold: 12 },
+      { tier: 'or', subLevel: 2, threshold: 15 },
+      { tier: 'or', subLevel: 3, threshold: 18 },
+      // Lycans: 25
+      { tier: 'lycans', subLevel: 1, threshold: 25 },
     ],
   },
   {
@@ -146,12 +153,12 @@ export const ACHIEVEMENT_DEFINITIONS = [
     levels: [
       // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 15
-      { tier: 'lycans', subLevel: 1, threshold: 15 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -164,20 +171,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'wolfSurvivedHunterShot',
     evaluatorParams: {},
     levels: [
-      // Bronze: 1 - 5 - 10
+      // Bronze: 1 
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 15 - 20 - 25
-      { tier: 'argent', subLevel: 1, threshold: 15 },
-      { tier: 'argent', subLevel: 2, threshold: 20 },
-      { tier: 'argent', subLevel: 3, threshold: 25 },
-      // Or: 30 - 35 - 40
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      { tier: 'or', subLevel: 2, threshold: 35 },
-      { tier: 'or', subLevel: 3, threshold: 40 },
-      // Lycans: 50
-      { tier: 'lycans', subLevel: 1, threshold: 50 },
+      // Argent: 4
+      { tier: 'argent', subLevel: 1, threshold: 4 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 12
+      { tier: 'lycans', subLevel: 1, threshold: 12 },
     ],
   },
   {
@@ -190,14 +191,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'wolfLossHarvestNoKills',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1 
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 4
+      { tier: 'argent', subLevel: 1, threshold: 4 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 12
+      { tier: 'lycans', subLevel: 1, threshold: 12 },
     ],
   },
   {
@@ -250,14 +251,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'wolfWinEarlyDeath',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
   {
@@ -268,6 +269,52 @@ export const ACHIEVEMENT_DEFINITIONS = [
     emoji: '⚡',
     category: 'victories',
     evaluator: 'speedRunWins',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 3 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 15 - 20 - 30
+      { tier: 'argent', subLevel: 1, threshold: 15 },
+      { tier: 'argent', subLevel: 2, threshold: 20 },
+      { tier: 'argent', subLevel: 3, threshold: 35 },
+      // Or: 50 - 75 - 100
+      { tier: 'or', subLevel: 1, threshold: 50 },
+      { tier: 'or', subLevel: 2, threshold: 75 },
+      { tier: 'or', subLevel: 3, threshold: 100 },
+      // Lycans: 125
+      { tier: 'lycans', subLevel: 1, threshold: 125 },
+    ],
+  },
+  {
+    id: 'last-wolf',
+    name: 'Dernier·ère Loup·ve',
+    description: "Vous n'avez besoin de personne pour gagner… Vous seul·e survivez.",
+    explanation: "Gagner X parties en étant l'unique survivant et donc le dernier Loup",
+    emoji: '🏘️',
+    category: 'victories',
+    evaluator: 'lastWolfStanding',
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
+    ],
+  },
+  {
+    id: 'wolf-sabotages',
+    name: 'Sabotez-les tous !',
+    description: 'Puits, chaudron, portails, bûches... Vous les connaissez tous',
+    explanation: 'Faire X Sabotages en étant Loup',
+    emoji: '🛠️',
+    category: 'maps',
+    evaluator: 'wolfSabotages',
     evaluatorParams: {},
     levels: [
       // Bronze: 1 - 3 - 5
@@ -284,46 +331,6 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'or', subLevel: 3, threshold: 50 },
       // Lycans: 75
       { tier: 'lycans', subLevel: 1, threshold: 75 },
-    ],
-  },
-  {
-    id: 'last-wolf',
-    name: 'Dernier·ère Loup·ve',
-    description: "Vous n'avez besoin de personne pour gagner… Vous seul·e survivez.",
-    explanation: "Gagner X parties en étant l'unique survivant et donc le dernier Loup",
-    emoji: '🏘️',
-    category: 'victories',
-    evaluator: 'lastWolfStanding',
-    evaluatorParams: {},
-    levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
-    ],
-  },
-  {
-    id: 'wolf-sabotages',
-    name: 'Sabotez-les tous !',
-    description: 'Puits, chaudron, portails, bûches... Vous les connaissez tous',
-    explanation: 'Faire X Sabotages en étant Loup',
-    emoji: '🛠️',
-    category: 'maps',
-    evaluator: 'wolfSabotages',
-    evaluatorParams: {},
-    levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 15
-      { tier: 'argent', subLevel: 1, threshold: 15 },
-      // Or: 30
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      // Lycans: 50
-      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
 
@@ -353,7 +360,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'starvation',
     name: 'Famine Fatale',
-    description: 'Manger, c\'est surfait',
+    description: "Manger, c'est surfait",
     explanation: 'Mourir X fois de faim',
     emoji: '🍽️',
     category: 'deaths',
@@ -380,14 +387,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'deathByType',
     evaluatorParams: { deathType: 'LOVER_DEATH' },
     levels: [
-      // Bronze: 10
-      { tier: 'bronze', subLevel: 1, threshold: 10 },
-      // Argent: 20
-      { tier: 'argent', subLevel: 1, threshold: 20 },
-      // Or: 30
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      // Lycans: 50
-      { tier: 'lycans', subLevel: 1, threshold: 50 },
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 8
+      { tier: 'argent', subLevel: 1, threshold: 8 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 25
+      { tier: 'lycans', subLevel: 1, threshold: 25 },
     ],
   },
   {
@@ -400,20 +407,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'deathOnTiming',
     evaluatorParams: { timing: 'N1' },
     levels: [
-      // Bronze: 1 - 3 - 5
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 3 },
-      { tier: 'bronze', subLevel: 3, threshold: 5 },
-      // Argent: 10 - 15 - 20
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      { tier: 'argent', subLevel: 2, threshold: 15 },
-      { tier: 'argent', subLevel: 3, threshold: 20 },
-      // Or: 30 - 40 - 50
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      { tier: 'or', subLevel: 2, threshold: 40 },
-      { tier: 'or', subLevel: 3, threshold: 50 },
-      // Lycans: 75
-      { tier: 'lycans', subLevel: 1, threshold: 75 },
+      // Bronze: 3 - 5 - 10
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 15 - 20 - 30
+      { tier: 'argent', subLevel: 1, threshold: 15 },
+      { tier: 'argent', subLevel: 2, threshold: 20 },
+      { tier: 'argent', subLevel: 3, threshold: 35 },
+      // Or: 50 - 75 - 100
+      { tier: 'or', subLevel: 1, threshold: 50 },
+      { tier: 'or', subLevel: 2, threshold: 75 },
+      { tier: 'or', subLevel: 3, threshold: 100 },
+      // Lycans: 125
+      { tier: 'lycans', subLevel: 1, threshold: 125 },
     ],
   },
   {
@@ -426,12 +433,12 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'votedAsCamp',
     evaluatorParams: { camp: 'Villageois' },
     levels: [
-      // Bronze: 1
+      // Bronze: 1 
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
       // Lycans: 15
       { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
@@ -468,12 +475,12 @@ export const ACHIEVEMENT_DEFINITIONS = [
     levels: [
       // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 15
-      { tier: 'lycans', subLevel: 1, threshold: 15 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -486,12 +493,18 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'killerDiedSameDay',
     evaluatorParams: {},
     levels: [
-      // Bronze: 10
-      { tier: 'bronze', subLevel: 1, threshold: 10 },
-      // Argent: 20
-      { tier: 'argent', subLevel: 1, threshold: 20 },
-      // Or: 30
-      { tier: 'or', subLevel: 1, threshold: 30 },
+      // Bronze: 1 - 3 - 5
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 8 - 12 - 20
+      { tier: 'argent', subLevel: 1, threshold: 8 },
+      { tier: 'argent', subLevel: 2, threshold: 12 },
+      { tier: 'argent', subLevel: 3, threshold: 20 },
+      // Or: 25 - 30 - 35
+      { tier: 'or', subLevel: 1, threshold: 25 },
+      { tier: 'or', subLevel: 2, threshold: 30 },
+      { tier: 'or', subLevel: 3, threshold: 35 },
       // Lycans: 50
       { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
@@ -526,14 +539,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'idiotKilledByHunter',
     evaluatorParams: {},
     levels: [
-      // Bronze: 3
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 20
-      { tier: 'lycans', subLevel: 1, threshold: 20 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
   {
@@ -546,14 +559,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'idiotSurvivedWithVotes',
     evaluatorParams: {},
     levels: [
-      // Bronze: 3
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 20
-      { tier: 'lycans', subLevel: 1, threshold: 20 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
 
@@ -570,14 +583,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'zombieKills',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1 
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
@@ -590,10 +603,10 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'wolfKills',
     evaluatorParams: {},
     levels: [
-      // Bronze: 1 - 5 - 10
+      // Bronze: 1 - 5 - 15
       { tier: 'bronze', subLevel: 1, threshold: 1 },
       { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      { tier: 'bronze', subLevel: 3, threshold: 15 },
       // Argent: 30 - 50 - 70
       { tier: 'argent', subLevel: 1, threshold: 30 },
       { tier: 'argent', subLevel: 2, threshold: 50 },
@@ -636,20 +649,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'hunterKillsAlly',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
     id: 'villageois-double-ally-kill',
     name: 'Oups',
-    description: 'Alors... Vous vous êtes trompés d\'alliés...',
+    description: "Alors... Vous vous êtes trompés d'alliés...",
     explanation: 'Faire X parties en tuant deux alliés hors meeting en étant Villageois',
     emoji: '🤦',
     category: 'kills',
@@ -658,12 +671,12 @@ export const ACHIEVEMENT_DEFINITIONS = [
     levels: [
       // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 15
-      { tier: 'lycans', subLevel: 1, threshold: 15 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -710,14 +723,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'hunterKillsLastWolf',
     evaluatorParams: {},
     levels: [
-      // Bronze: 3
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 20
-      { tier: 'lycans', subLevel: 1, threshold: 20 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -754,16 +767,16 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'bronze', subLevel: 1, threshold: 1 },
       // Argent: 3
       { tier: 'argent', subLevel: 1, threshold: 3 },
-      // Or: 5
-      { tier: 'or', subLevel: 1, threshold: 5 },
-      // Lycans: 10
-      { tier: 'lycans', subLevel: 1, threshold: 10 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
     id: 'assassin-potion-kill-ally',
     name: 'Oups, mauvaise pioche',
-    description: 'C\'est pas votre faute, c\'est la potion qui vous a tenté',
+    description: "C'est pas votre faute, c'est la potion qui vous a tenté",
     explanation: 'Tuer X fois un joueur allié avec une potion assassin',
     emoji: '☠️',
     category: 'kills',
@@ -783,7 +796,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'amoureux-loup-kills-lover',
     name: 'Un chouya fusionnel',
-    description: 'Vous l\'aimez tellement que... Vous l\'avez croqué',
+    description: "Vous l'aimez tellement que... Vous l'avez croqué",
     explanation: 'Tuer X fois son amoureux en étant Amoureux Loup',
     emoji: '🐺❤️',
     category: 'kills',
@@ -802,34 +815,34 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'amoureux-loup-total-kills',
-    name: 'C\'est pour toi mon amour UwU',
-    description: 'Vous tuez uniquement par passion. Elle vous fait dépasser les limites.',
+    name: "C'est pour toi mon amour UwU",
+    description: "Vous tuez uniquement par passion. Elle vous fait dépasser les limites.",
     explanation: 'Faire X kills en Amoureux Loup',
     emoji: '🐺💕',
     category: 'kills',
     evaluator: 'amoureuxLoupTotalKills',
     evaluatorParams: {},
     levels: [
-      // Bronze: 1 - 5 - 10
+      // Bronze: 1 - 3 - 5
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 20 - 30 - 40
-      { tier: 'argent', subLevel: 1, threshold: 20 },
-      { tier: 'argent', subLevel: 2, threshold: 30 },
-      { tier: 'argent', subLevel: 3, threshold: 40 },
-      // Or: 60 - 80 - 100
-      { tier: 'or', subLevel: 1, threshold: 60 },
-      { tier: 'or', subLevel: 2, threshold: 80 },
-      { tier: 'or', subLevel: 3, threshold: 100 },
-      // Lycans: 200
-      { tier: 'lycans', subLevel: 1, threshold: 200 },
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      { tier: 'bronze', subLevel: 3, threshold: 5 },
+      // Argent: 10 - 15 - 20
+      { tier: 'argent', subLevel: 1, threshold: 10 },
+      { tier: 'argent', subLevel: 2, threshold: 15 },
+      { tier: 'argent', subLevel: 3, threshold: 20 },
+      // Or: 25 - 30 - 40
+      { tier: 'or', subLevel: 1, threshold: 25 },
+      { tier: 'or', subLevel: 2, threshold: 30 },
+      { tier: 'or', subLevel: 3, threshold: 40 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
   {
     id: 'amoureux-loup-kills-two-wolves',
     name: 'Pas de concurrence',
-    description: 'La meilleure défense, c\'est l\'attaque',
+    description: "La meilleure défense, c'est l'attaque",
     explanation: 'Tuer X fois un Loup en étant Amoureux Loup',
     emoji: '🐺🐺💕',
     category: 'kills',
@@ -849,7 +862,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'amoureux-villageois-kills-enemy',
     name: 'Moi aussi je participe !',
-    description: 'Vous aussi vous apportez votre part à l\'édifice',
+    description: "Vous aussi vous apportez votre part à l'édifice",
     explanation: 'Avoir X fois tué un ennemi en étant Amoureux Villageois',
     emoji: '❤️🗡️',
     category: 'kills',
@@ -869,8 +882,8 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'celibataire',
     name: 'Célibataire',
-    description: 'Jusqu\'à ce que la mort vous sépare... Ou la réanimation d\'un autre',
-    explanation: 'Se retrouver X fois l\'unique Amoureux à la fin d\'une game',
+    description: "Jusqu'à ce que la mort vous sépare... Ou la réanimation d'un autre",
+    explanation: "Se retrouver X fois l'unique Amoureux à la fin d'une game",
     emoji: '💔',
     category: 'roles',
     evaluator: 'loverSingleAtEnd',
@@ -888,7 +901,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   },
   {
     id: 'same-color-kills',
-    name: 'C\'est MA couleur !',
+    name: "C'est MA couleur !",
     description: 'Vous voulez être le·a seul·e à la mode, ça se comprend...',
     explanation: 'Tuer X fois une personne qui porte la même couleur que vous',
     emoji: '🎨',
@@ -896,19 +909,19 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'sameColorKills',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Bronze: 3 
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 8
+      { tier: 'argent', subLevel: 1, threshold: 8 },
       // Or: 15
       { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Lycans: 25
+      { tier: 'lycans', subLevel: 1, threshold: 25 },
     ],
   },
   {
     id: 'revenge-kill',
-    name: 'Retour à l\'Envoyeur',
+    name: "Retour à l'Envoyeur",
     description: 'La vengeance est douce',
     explanation: 'Tuer X fois la personne qui vous a tué dans la partie précédente (même session)',
     emoji: '⚔️',
@@ -916,20 +929,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'revengeKill',
     evaluatorParams: {},
     levels: [
-      // Bronze: 1 - 3 - 5
-      { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 3 },
-      { tier: 'bronze', subLevel: 3, threshold: 5 },
-      // Argent: 10 - 15 - 20
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 10
       { tier: 'argent', subLevel: 1, threshold: 10 },
-      { tier: 'argent', subLevel: 2, threshold: 15 },
-      { tier: 'argent', subLevel: 3, threshold: 20 },
-      // Or: 30 - 40 - 50
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      { tier: 'or', subLevel: 2, threshold: 40 },
-      { tier: 'or', subLevel: 3, threshold: 50 },
-      // Lycans: 75
-      { tier: 'lycans', subLevel: 1, threshold: 75 },
+      // Or: 20
+      { tier: 'or', subLevel: 1, threshold: 20 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
 
@@ -986,14 +993,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'roleWins',
     evaluatorParams: { role: 'Chasseur de primes' },
     levels: [
-      // Bronze: 3
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 20
-      { tier: 'lycans', subLevel: 1, threshold: 20 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
   {
@@ -1006,14 +1013,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'roleWins',
     evaluatorParams: { role: 'Scientifique' },
     levels: [
-      // Bronze: 3
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 20
-      { tier: 'lycans', subLevel: 1, threshold: 20 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
   {
@@ -1046,14 +1053,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'roleWins',
     evaluatorParams: { role: 'Amoureux' },
     levels: [
-      // Bronze: 3
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 20
-      { tier: 'lycans', subLevel: 1, threshold: 20 },
+      // Bronze: 1 
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
@@ -1139,7 +1146,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'vaudou-triple-resurrect',
     name: 'Zombie Nation',
-    description: 'Votre armée de morts s\'est bien agrandie',
+    description: "Votre armée de morts s'est bien agrandie",
     explanation: 'Faire X parties en ressuscitant au moins 3 joueurs en étant Vaudou',
     emoji: '🧟',
     category: 'roles',
@@ -1148,18 +1155,18 @@ export const ACHIEVEMENT_DEFINITIONS = [
     levels: [
       // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 3
-      { tier: 'argent', subLevel: 1, threshold: 3 },
-      // Or: 5
-      { tier: 'or', subLevel: 1, threshold: 5 },
-      // Lycans: 10
-      { tier: 'lycans', subLevel: 1, threshold: 10 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
   {
     id: 'loup-necromancien-resurrect',
     name: 'Le Retour des Morts',
-    description: 'Vous avez su qu\'il ou elle allait faire de grande chose',
+    description: "Vous avez su qu'il ou elle allait faire de grande chose",
     explanation: 'Faire X parties en ressuscitant un joueur qui en tue deux autres en étant Loup Nécromancien',
     emoji: '🧟⚔️',
     category: 'roles',
@@ -1206,14 +1213,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'wolfSeerTotalCorrectGuesses',
     evaluatorParams: {},
     levels: [
-      // Bronze: 3
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 20
-      { tier: 'lycans', subLevel: 1, threshold: 20 },
+      // Bronze: 1 
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
@@ -1309,14 +1316,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'wolfTransformKillNights',
     evaluatorParams: {},
     levels: [
-      // Bronze: 10
-      { tier: 'bronze', subLevel: 1, threshold: 10 },
-      // Argent: 20
-      { tier: 'argent', subLevel: 1, threshold: 20 },
-      // Or: 30
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      // Lycans: 50
-      { tier: 'lycans', subLevel: 1, threshold: 50 },
+      // Bronze: 3 
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 8
+      { tier: 'argent', subLevel: 1, threshold: 8 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 25
+      { tier: 'lycans', subLevel: 1, threshold: 25 },
     ],
   },
 
@@ -1330,18 +1337,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'sameElitePowerAsAlly',
     evaluatorParams: {},
     levels: [
-      // Bronze: 1, 3, 5
+      // Bronze: 1, 5, 10
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 3 },
-      { tier: 'bronze', subLevel: 3, threshold: 5 },
-      // Argent: 10, 15, 20
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      { tier: 'argent', subLevel: 2, threshold: 15 },
-      { tier: 'argent', subLevel: 3, threshold: 20 },
-      // Or: 30
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      // Lycans: 50
-      { tier: 'lycans', subLevel: 1, threshold: 50 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 20, 30, 40
+      { tier: 'argent', subLevel: 1, threshold: 20 },
+      { tier: 'argent', subLevel: 2, threshold: 30 },
+      { tier: 'argent', subLevel: 3, threshold: 40 },
+      // Or: 50, 60, 70
+      { tier: 'or', subLevel: 1, threshold: 50 },
+      { tier: 'or', subLevel: 2, threshold: 60 },
+      { tier: 'or', subLevel: 3, threshold: 70 },
+      // Lycans: 100
+      { tier: 'lycans', subLevel: 1, threshold: 100 },
     ],
   },
 
@@ -1358,14 +1367,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'talkingPercentage',
     evaluatorParams: { minPercentage: 50 },
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -1378,14 +1387,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'correctVoteButVoted',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1 
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
@@ -1398,14 +1407,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'unanimousVoteAsVillager',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -1418,14 +1427,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'onlyVillagerPasserInMeeting',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Bronze: 3
+      { tier: 'bronze', subLevel: 2, threshold: 3 },
+      // Argent: 8
+      { tier: 'argent', subLevel: 1, threshold: 8 },
       // Or: 15
       { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Lycans: 25
+      { tier: 'lycans', subLevel: 1, threshold: 25 },
     ],
   },
   {
@@ -1438,14 +1447,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'loneNonVoterAllOthersPassed',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1 
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
@@ -1458,14 +1467,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'soleVoterElimination',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
   {
@@ -1486,32 +1495,32 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'argent', subLevel: 1, threshold: 10 },
       { tier: 'argent', subLevel: 2, threshold: 15 },
       { tier: 'argent', subLevel: 3, threshold: 20 },
-      // Or: 30 - 40 - 50
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      { tier: 'or', subLevel: 2, threshold: 40 },
-      { tier: 'or', subLevel: 3, threshold: 50 },
-      // Lycans: 75
-      { tier: 'lycans', subLevel: 1, threshold: 75 },
+      // Or: 25 - 30 - 35
+      { tier: 'or', subLevel: 1, threshold: 25 },
+      { tier: 'or', subLevel: 2, threshold: 30 },
+      { tier: 'or', subLevel: 3, threshold: 35 },
+      // Lycans: 40
+      { tier: 'lycans', subLevel: 1, threshold: 40 },
     ],
   },
   {
     id: 'democrat',
     name: 'Troisième oeil',
-    description: 'Vous connaissiez tous les rôles à l\'avance',
+    description: "Vous connaissiez tous les rôles à l'avance",
     explanation: 'Faire X parties en Villageois en ne votant que des ennemis (minimum 3 votes)',
     emoji: '🏛️',
     category: 'social',
     evaluator: 'onlyEnemyVotes',
     evaluatorParams: { minVotes: 3 },
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
+      // Bronze: 3 
+      { tier: 'bronze', subLevel: 1, threshold: 3 },
+      // Argent: 8
+      { tier: 'argent', subLevel: 1, threshold: 8 },
       // Or: 15
       { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Lycans: 25
+      { tier: 'lycans', subLevel: 1, threshold: 25 },
     ],
   },
   {
@@ -1524,20 +1533,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'stubbornConsecutiveVotes',
     evaluatorParams: { minConsecutive: 3 },
     levels: [
-      // Bronze: 1 - 3 - 5
+      // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 3 },
-      { tier: 'bronze', subLevel: 3, threshold: 5 },
-      // Argent: 10 - 15 - 20
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      { tier: 'argent', subLevel: 2, threshold: 15 },
-      { tier: 'argent', subLevel: 3, threshold: 20 },
-      // Or: 30 - 40 - 50
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      { tier: 'or', subLevel: 2, threshold: 40 },
-      { tier: 'or', subLevel: 3, threshold: 50 },
-      // Lycans: 75
-      { tier: 'lycans', subLevel: 1, threshold: 75 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
 
@@ -1547,7 +1550,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'colors-of-lycans',
     name: 'United Colors of Lycans',
-    description: 'L\'arc-en-ciel des victoires',
+    description: "L'arc-en-ciel des victoires",
     explanation: 'Avoir gagné une partie avec au moins X couleurs différentes',
     emoji: '🌈',
     category: 'special',
@@ -1585,10 +1588,10 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'bronze', subLevel: 1, threshold: 1 },
       // Argent: 3
       { tier: 'argent', subLevel: 1, threshold: 3 },
-      // Or: 5
-      { tier: 'or', subLevel: 1, threshold: 5 },
-      // Lycans: 10
-      { tier: 'lycans', subLevel: 1, threshold: 10 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
 
@@ -1602,14 +1605,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'perfectSessions',
     evaluatorParams: { minGames: 5 },
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 2
+      { tier: 'argent', subLevel: 1, threshold: 2 },
+      // Or: 3
+      { tier: 'or', subLevel: 1, threshold: 3 },
+      // Lycans: 5
+      { tier: 'lycans', subLevel: 1, threshold: 5 },
     ],
   },
 
@@ -1623,20 +1626,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'winsAgainstOnutrem',
     evaluatorParams: {},
     levels: [
-      // Bronze: 1 - 5 - 10
+      // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 15 - 20 - 25
-      { tier: 'argent', subLevel: 1, threshold: 15 },
-      { tier: 'argent', subLevel: 2, threshold: 20 },
-      { tier: 'argent', subLevel: 3, threshold: 25 },
-      // Or: 30 - 35 - 40
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      { tier: 'or', subLevel: 2, threshold: 35 },
-      { tier: 'or', subLevel: 3, threshold: 40 },
-      // Lycans: 50
-      { tier: 'lycans', subLevel: 1, threshold: 50 },
+      // Argent: 5
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      // Or: 15
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      // Lycans: 25
+      { tier: 'lycans', subLevel: 1, threshold: 25 },
     ],
   },
 
@@ -1650,14 +1647,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'resurrectedCount',
     evaluatorParams: {},
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
 
@@ -1671,14 +1668,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'justeUnDernierVerre',
     evaluatorParams: { minPotions: 5 },
     levels: [
-      // Bronze: 3
-      { tier: 'bronze', subLevel: 1, threshold: 3 },
-      // Argent: 5
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      // Or: 10
-      { tier: 'or', subLevel: 1, threshold: 10 },
-      // Lycans: 20
-      { tier: 'lycans', subLevel: 1, threshold: 20 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
 
@@ -1692,14 +1689,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'collectionneur',
     evaluatorParams: { minDistinctItems: 5 },
     levels: [
-      // Bronze: 5
-      { tier: 'bronze', subLevel: 1, threshold: 5 },
-      // Argent: 10
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      // Or: 15
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      // Lycans: 30
-      { tier: 'lycans', subLevel: 1, threshold: 30 },
+      // Bronze: 1
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
 
@@ -1717,20 +1714,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluatorParams: {},
     requiresBRData: true,
     levels: [
-      // Bronze: 1 - 10 - 20
+      // Bronze: 1 - 5 - 10
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 10 },
-      { tier: 'bronze', subLevel: 3, threshold: 20 },
-      // Argent: 35 - 50 - 75
-      { tier: 'argent', subLevel: 1, threshold: 35 },
-      { tier: 'argent', subLevel: 2, threshold: 50 },
-      { tier: 'argent', subLevel: 3, threshold: 75 },
-      // Or: 100 - 150 - 200
-      { tier: 'or', subLevel: 1, threshold: 100 },
-      { tier: 'or', subLevel: 2, threshold: 150 },
-      { tier: 'or', subLevel: 3, threshold: 200 },
-      // Lycans: 300
-      { tier: 'lycans', subLevel: 1, threshold: 300 },
+      { tier: 'bronze', subLevel: 2, threshold: 5 },
+      { tier: 'bronze', subLevel: 3, threshold: 10 },
+      // Argent: 15 - 20 - 25
+      { tier: 'argent', subLevel: 1, threshold: 15 },
+      { tier: 'argent', subLevel: 2, threshold: 20 },
+      { tier: 'argent', subLevel: 3, threshold: 25 },
+      // Or: 30 - 35 - 40
+      { tier: 'or', subLevel: 1, threshold: 30 },
+      { tier: 'or', subLevel: 2, threshold: 35 },
+      { tier: 'or', subLevel: 3, threshold: 40 },
+      // Lycans: 50
+      { tier: 'lycans', subLevel: 1, threshold: 50 },
     ],
   },
   {
@@ -1748,16 +1745,16 @@ export const ACHIEVEMENT_DEFINITIONS = [
       { tier: 'bronze', subLevel: 1, threshold: 1 },
       { tier: 'bronze', subLevel: 2, threshold: 10 },
       { tier: 'bronze', subLevel: 3, threshold: 25 },
-      // Argent: 50 - 100 - 150
+      // Argent: 50 - 75 - 100
       { tier: 'argent', subLevel: 1, threshold: 50 },
-      { tier: 'argent', subLevel: 2, threshold: 100 },
-      { tier: 'argent', subLevel: 3, threshold: 150 },
-      // Or: 200 - 300 - 400
-      { tier: 'or', subLevel: 1, threshold: 200 },
-      { tier: 'or', subLevel: 2, threshold: 300 },
-      { tier: 'or', subLevel: 3, threshold: 400 },
-      // Lycans: 500
-      { tier: 'lycans', subLevel: 1, threshold: 500 },
+      { tier: 'argent', subLevel: 2, threshold: 75 },
+      { tier: 'argent', subLevel: 3, threshold: 100 },
+      // Or: 125 - 150 - 175
+      { tier: 'or', subLevel: 1, threshold: 125 },
+      { tier: 'or', subLevel: 2, threshold: 150 },
+      { tier: 'or', subLevel: 3, threshold: 175 },
+      // Lycans: 200
+      { tier: 'lycans', subLevel: 1, threshold: 200 },
     ],
   },
   {
@@ -1771,20 +1768,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluatorParams: {},
     requiresBRData: true,
     levels: [
-      // Bronze: 10 - 25 - 50
-      { tier: 'bronze', subLevel: 1, threshold: 10 },
-      { tier: 'bronze', subLevel: 2, threshold: 25 },
-      { tier: 'bronze', subLevel: 3, threshold: 50 },
-      // Argent: 100 - 200 - 300
-      { tier: 'argent', subLevel: 1, threshold: 100 },
-      { tier: 'argent', subLevel: 2, threshold: 200 },
-      { tier: 'argent', subLevel: 3, threshold: 300 },
-      // Or: 500 - 750 - 1000
-      { tier: 'or', subLevel: 1, threshold: 500 },
-      { tier: 'or', subLevel: 2, threshold: 750 },
-      { tier: 'or', subLevel: 3, threshold: 1000 },
-      // Lycans: 1500
-      { tier: 'lycans', subLevel: 1, threshold: 1500 },
+      // Bronze: 5 - 10 - 25
+      { tier: 'bronze', subLevel: 1, threshold: 5 },
+      { tier: 'bronze', subLevel: 2, threshold: 10 },
+      { tier: 'bronze', subLevel: 3, threshold: 25 },
+      // Argent: 50 - 75 - 100
+      { tier: 'argent', subLevel: 1, threshold: 50 },
+      { tier: 'argent', subLevel: 2, threshold: 75 },
+      { tier: 'argent', subLevel: 3, threshold: 100 },
+      // Or: 150 - 200 - 250
+      { tier: 'or', subLevel: 1, threshold: 150 },
+      { tier: 'or', subLevel: 2, threshold: 200 },
+      { tier: 'or', subLevel: 3, threshold: 250 },
+      // Lycans: 300
+      { tier: 'lycans', subLevel: 1, threshold: 300 },
     ],
   },
   {
@@ -1847,20 +1844,20 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluatorParams: {},
     requiresBRData: true,
     levels: [
-      // Bronze: 1 - 3 - 5
+      // Bronze: 1 - 2 - 3
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 3 },
-      { tier: 'bronze', subLevel: 3, threshold: 5 },
-      // Argent: 10 - 15 - 20
-      { tier: 'argent', subLevel: 1, threshold: 10 },
-      { tier: 'argent', subLevel: 2, threshold: 15 },
-      { tier: 'argent', subLevel: 3, threshold: 20 },
-      // Or: 30 - 40 - 50
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      { tier: 'or', subLevel: 2, threshold: 40 },
-      { tier: 'or', subLevel: 3, threshold: 50 },
-      // Lycans: 75
-      { tier: 'lycans', subLevel: 1, threshold: 75 },
+      { tier: 'bronze', subLevel: 2, threshold: 2 },
+      { tier: 'bronze', subLevel: 3, threshold: 3 },
+      // Argent: 5 - 7 - 10
+      { tier: 'argent', subLevel: 1, threshold: 5 },
+      { tier: 'argent', subLevel: 2, threshold: 7 },
+      { tier: 'argent', subLevel: 3, threshold: 10 },
+      // Or: 15 - 20 - 25
+      { tier: 'or', subLevel: 1, threshold: 15 },
+      { tier: 'or', subLevel: 2, threshold: 20 },
+      { tier: 'or', subLevel: 3, threshold: 25 },
+      // Lycans: 30
+      { tier: 'lycans', subLevel: 1, threshold: 30 },
     ],
   },
   {
@@ -1874,20 +1871,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluatorParams: {},
     requiresBRData: true,
     levels: [
-      // Bronze: 1 - 5 - 10
+      // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 5 },
-      { tier: 'bronze', subLevel: 3, threshold: 10 },
-      // Argent: 15 - 20 - 25
-      { tier: 'argent', subLevel: 1, threshold: 15 },
-      { tier: 'argent', subLevel: 2, threshold: 20 },
-      { tier: 'argent', subLevel: 3, threshold: 25 },
-      // Or: 30 - 35 - 40
-      { tier: 'or', subLevel: 1, threshold: 30 },
-      { tier: 'or', subLevel: 2, threshold: 35 },
-      { tier: 'or', subLevel: 3, threshold: 40 },
-      // Lycans: 50
-      { tier: 'lycans', subLevel: 1, threshold: 50 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 5
+      { tier: 'or', subLevel: 1, threshold: 5 },
+      // Lycans: 10
+      { tier: 'lycans', subLevel: 1, threshold: 10 },
     ],
   },
   {
@@ -1901,20 +1892,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluatorParams: {},
     requiresBRData: true,
     levels: [
-      // Bronze: 1 - 2 - 3
+      // Bronze: 1 
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      { tier: 'bronze', subLevel: 2, threshold: 2 },
-      { tier: 'bronze', subLevel: 3, threshold: 3 },
-      // Argent: 5 - 7 - 10
-      { tier: 'argent', subLevel: 1, threshold: 5 },
-      { tier: 'argent', subLevel: 2, threshold: 7 },
-      { tier: 'argent', subLevel: 3, threshold: 10 },
-      // Or: 15 - 20 - 25
-      { tier: 'or', subLevel: 1, threshold: 15 },
-      { tier: 'or', subLevel: 2, threshold: 20 },
-      { tier: 'or', subLevel: 3, threshold: 25 },
-      // Lycans: 40
-      { tier: 'lycans', subLevel: 1, threshold: 40 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
 ];
