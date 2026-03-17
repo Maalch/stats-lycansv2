@@ -15,10 +15,10 @@ export interface AggregatedCampStats {
   delta: number;
 }
 
-// Gadget/Potion win rate statistics
+// Gadget/Potion/Accessory win rate statistics
 export interface ActionItemStats {
   itemName: string;
-  actionType: 'UseGadget' | 'DrinkPotion';
+  actionType: 'UseGadget' | 'DrinkPotion' | 'TakeAccessory';
   totalUses: number;
   winRate: number;
   wins: number;
@@ -62,6 +62,7 @@ export interface PowerUsageStats {
 export interface ActionMetaStatsData {
   gadgetStats: ActionItemStats[];
   potionStats: ActionItemStats[];
+  accessoryStats: ActionItemStats[];
   wolfTransformTiming: WolfTransformTimingStats[];
   powerUsageStats: PowerUsageStats[];
   overallStats: {
@@ -76,9 +77,10 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
   // Filter for modded games only (actions are only in modded games)
   const moddedGames = gameData.filter(g => g.Modded);
 
-  // Track all gadgets and potions
+  // Track all gadgets, potions, and accessories
   const gadgetUsageMap = new Map<string, { uses: number; wins: number; camp: Map<string, { uses: number; wins: number }> }>();
   const potionUsageMap = new Map<string, { uses: number; wins: number; camp: Map<string, { uses: number; wins: number }> }>();
+  const accessoryUsageMap = new Map<string, { uses: number; wins: number; camp: Map<string, { uses: number; wins: number }> }>();
 
   // Track wolf transformation timing
   const transformTimingMap = new Map<string, { games: number; wins: number }>();
@@ -137,6 +139,25 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
           potionUsageMap.set(name, { uses: 0, wins: 0, camp: new Map() });
         }
         const stats = potionUsageMap.get(name)!;
+        stats.uses++;
+        if (playerWon) stats.wins++;
+
+        // Track by camp
+        if (!stats.camp.has(playerCamp)) {
+          stats.camp.set(playerCamp, { uses: 0, wins: 0 });
+        }
+        const campStats = stats.camp.get(playerCamp)!;
+        campStats.uses++;
+        if (playerWon) campStats.wins++;
+      });
+
+      // Track accessories
+      actions.filter((a: Action) => a.ActionType === 'TakeAccessory' && a.ActionName).forEach((action: Action) => {
+        const name = action.ActionName!;
+        if (!accessoryUsageMap.has(name)) {
+          accessoryUsageMap.set(name, { uses: 0, wins: 0, camp: new Map() });
+        }
+        const stats = accessoryUsageMap.get(name)!;
         stats.uses++;
         if (playerWon) stats.wins++;
 
@@ -391,6 +412,38 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
     })
     .sort((a, b) => b.totalUses - a.totalUses);
 
+  // Convert accessory map to array
+  const accessoryStats: ActionItemStats[] = Array.from(accessoryUsageMap.entries())
+    .map(([itemName, data]) => {
+      const winRate = data.uses > 0 ? (data.wins / data.uses) * 100 : 0;
+      
+      const campBreakdown = Array.from(data.camp.entries()).map(([camp, campData]) => {
+        const campWinRate = campData.uses > 0 ? (campData.wins / campData.uses) * 100 : 0;
+        const campBaseline = campBaselineWinRates.get(camp) || 50;
+        return {
+          camp,
+          winRate: campWinRate,
+          uses: campData.uses,
+          wins: campData.wins,
+          delta: campWinRate - campBaseline,
+        };
+      });
+
+      return {
+        itemName,
+        actionType: 'TakeAccessory' as const,
+        totalUses: data.uses,
+        winRate,
+        wins: data.wins,
+        losses: data.uses - data.wins,
+        baselineWinRate: overallBaselineWinRate,
+        delta: winRate - overallBaselineWinRate,
+        campBreakdown,
+        aggregatedCampStats: calculateAggregatedCampStats(data.camp),
+      };
+    })
+    .sort((a, b) => b.totalUses - a.totalUses);
+
   // Convert transform timing map to array
   const wolfTransformTiming: WolfTransformTimingStats[] = ['N1', 'N2', 'N3+']
     .map(timing => {
@@ -427,6 +480,7 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
   return {
     gadgetStats,
     potionStats,
+    accessoryStats,
     wolfTransformTiming,
     powerUsageStats,
     overallStats: {

@@ -4,7 +4,7 @@ import { useActionMetaStatsFromRaw } from '../../hooks/useActionMetaStatsFromRaw
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
 
-type ViewType = 'gadgets' | 'potions' | 'wolfTiming';
+type ViewType = 'gadgets' | 'potions' | 'accessories' | 'wolfTiming';
 type CampFilterAction = 'all' | 'villageois' | 'loups' | 'autres';
 
 export function ActionMetaStatsChart() {
@@ -66,6 +66,30 @@ export function ActionMetaStatsChart() {
       .sort((a, b) => b.uses - a.uses);
   }, [actionMetaStats, minUsages, campFilter]);
 
+  const filteredAccessoryStats = useMemo(() => {
+    if (!actionMetaStats) return [];
+    return actionMetaStats.accessoryStats
+      .map(a => {
+        if (campFilter === 'all') {
+          return a.totalUses >= minUsages ? {
+            name: a.itemName,
+            delta: a.delta,
+            winRate: a.winRate,
+            uses: a.totalUses,
+          } : null;
+        }
+        const campStats = a.aggregatedCampStats[campFilter];
+        return campStats.uses >= minUsages ? {
+          name: a.itemName,
+          delta: campStats.delta,
+          winRate: campStats.winRate,
+          uses: campStats.uses,
+        } : null;
+      })
+      .filter((item): item is NonNullable<typeof item> => item !== null)
+      .sort((a, b) => b.uses - a.uses);
+  }, [actionMetaStats, minUsages, campFilter]);
+
   if (isLoading) {
     return <div className="lycans-chargement">Chargement des statistiques d'actions...</div>;
   }
@@ -98,6 +122,11 @@ export function ActionMetaStatsChart() {
       <div className="lycans-stat-carte">
         <h3>🧪 Potions uniques</h3>
         <div className="lycans-valeur-principale">{actionMetaStats.potionStats.length}</div>
+        <p>types différents</p>
+      </div>
+      <div className="lycans-stat-carte">
+        <h3>💍 Accessoires uniques</h3>
+        <div className="lycans-valeur-principale">{actionMetaStats.accessoryStats.length}</div>
         <p>types différents</p>
       </div>
     </div>
@@ -279,6 +308,94 @@ export function ActionMetaStatsChart() {
     );
   };
 
+  const renderAccessoriesView = () => {
+    if (filteredAccessoryStats.length === 0) {
+      return (
+        <div className="donnees-manquantes">
+          <p>Aucun accessoire avec au moins {minUsages} récupérations.</p>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            Réduisez le filtre d'utilisations minimales pour voir plus de données.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <FullscreenChart title="Impact des Accessoires sur le Taux de Victoire">
+        <div style={{ height: Math.max(400, filteredAccessoryStats.length * 30) }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={filteredAccessoryStats}
+              layout="vertical"
+              margin={{ top: 20, right: 100, left: 150, bottom: 20 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+              <XAxis 
+                type="number"
+                label={{ value: 'Différence du taux de victoire (%)', position: 'bottom', style: { textAnchor: 'middle' } }}
+                domain={[-20, 20]}
+                tickFormatter={(value) => Math.round(value).toString()}
+              />
+              <YAxis 
+                type="category"
+                dataKey="name"
+                width={140}
+                tick={{ fontSize: 12 }}
+              />
+              <ReferenceLine x={0} stroke="var(--text-secondary)" strokeWidth={2} />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length > 0) {
+                    const data = payload[0].payload;
+                    return (
+                      <div style={{
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-primary)',
+                        padding: 12,
+                        borderRadius: 8,
+                        border: '1px solid var(--border-color)',
+                      }}>
+                        <div><strong>{data.name}</strong></div>
+                        <div>Taux de victoire: {data.winRate.toFixed(1)}%</div>
+                        <div>Impact: {data.delta > 0 ? '+' : ''}{data.delta.toFixed(1)}%</div>
+                        <div>Récupérations: {data.uses}</div>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Bar
+                dataKey="delta"
+                shape={(props) => {
+                  const { x, y, width, height, payload } = props;
+                  const entry = payload as { delta: number };
+                  const fillColor = entry.delta > 0
+                    ? 'var(--success-color, #82ca9d)'
+                    : 'var(--danger-color, #ff6b6b)';
+
+                  return (
+                    <Rectangle
+                      x={x}
+                      y={y}
+                      width={width}
+                      height={height}
+                      fill={fillColor}
+                    />
+                  );
+                }}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+          <p>💡 Les valeurs positives indiquent que la récupération de l'accessoire est corrélée à un taux de victoire supérieur à la moyenne.</p>
+          <p>Les valeurs négatives suggèrent une corrélation avec un taux de victoire inférieur.</p>
+        </div>
+      </FullscreenChart>
+    );
+  };
+
   const renderWolfTimingView = () => {
     if (actionMetaStats.wolfTransformTiming.length === 0) {
       return (
@@ -362,6 +479,13 @@ export function ActionMetaStatsChart() {
         </button>
         <button
           type="button"
+          className={`lycans-submenu-btn ${selectedView === 'accessories' ? 'active' : ''}`}
+          onClick={() => setSelectedView('accessories')}
+        >
+          💍 Accessoires
+        </button>
+        <button
+          type="button"
           className={`lycans-submenu-btn ${selectedView === 'wolfTiming' ? 'active' : ''}`}
           onClick={() => setSelectedView('wolfTiming')}
         >
@@ -370,7 +494,7 @@ export function ActionMetaStatsChart() {
       </div>
 
       {/* Camp Filter - Below view selector */}
-      {(selectedView === 'gadgets' || selectedView === 'potions') && (
+      {(selectedView === 'gadgets' || selectedView === 'potions' || selectedView === 'accessories') && (
         <div className="lycans-controles-groupe" style={{ marginBottom: '1rem' }}>
           <div className="lycans-filtre-groupe" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <label htmlFor="camp-filter-action" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
@@ -403,6 +527,7 @@ export function ActionMetaStatsChart() {
         <div className="lycans-graphique-section">
           {selectedView === 'gadgets' && renderGadgetsView()}
           {selectedView === 'potions' && renderPotionsView()}
+          {selectedView === 'accessories' && renderAccessoriesView()}
           {selectedView === 'wolfTiming' && renderWolfTimingView()}
         </div>
       </div>

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.14';
+export const APP_VERSION = '1.7.15';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,18 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.7.15',
+    date: '17/03/2026',
+    description: 'Ajout des statistiques sur les Accessoires (objets permanents donnant des bonus) dans l\'historique individuel et dans l\'impact des actions sur le taux de victoire dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueur / Actions',
+      navigationState: {
+        selectedPlayerSelectionView: 'actions'
+      }
+    }
+  },
   {
     version: 'v1.7.14',
     date: '27/02/2026',

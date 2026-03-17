@@ -8,20 +8,22 @@ interface PlayerHistoryActionsProps {
   selectedPlayerName: string;
 }
 
-// Action types we want to display (Gadgets and Potions only)
-const TRACKED_ACTION_TYPES = ['UseGadget', 'DrinkPotion'] as const;
+// Action types we want to display (Gadgets, Potions and Accessories)
+const TRACKED_ACTION_TYPES = ['UseGadget', 'DrinkPotion', 'TakeAccessory'] as const;
 type TrackedActionType = typeof TRACKED_ACTION_TYPES[number];
 
 // French labels for action types
 const ACTION_TYPE_LABELS: Record<TrackedActionType, string> = {
   UseGadget: 'Utilisation Gadget',
   DrinkPotion: 'Potion bue',
+  TakeAccessory: 'Accessoire récupéré',
 };
 
 // Colors for action types
 const ACTION_TYPE_COLORS: Record<TrackedActionType, string> = {
   UseGadget: 'var(--chart-color-1, #8884d8)',
   DrinkPotion: 'var(--chart-color-3, #ffc658)',
+  TakeAccessory: 'var(--chart-color-2, #82ca9d)',
 };
 
 interface ActionStat {
@@ -44,10 +46,17 @@ interface PotionStat {
   [key: string]: string | number;
 }
 
+interface AccessoryStat {
+  accessoryName: string;
+  count: number;
+  [key: string]: string | number;
+}
+
 interface ActionStatistics {
   actionTypeCounts: ActionStat[];
   gadgetDetails: GadgetStat[];
   potionDetails: PotionStat[];
+  accessoryDetails: AccessoryStat[];
   totalGamesWithActions: number;
   totalGamesPlayed: number;
 }
@@ -62,6 +71,7 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
         actionTypeCounts: [],
         gadgetDetails: [],
         potionDetails: [],
+        accessoryDetails: [],
         totalGamesWithActions: 0,
         totalGamesPlayed: 0,
       };
@@ -71,9 +81,11 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
     const actionTypeCountsMap: Record<TrackedActionType, number> = {
       UseGadget: 0,
       DrinkPotion: 0,
+      TakeAccessory: 0,
     };
     const gadgetCountsMap: Record<string, number> = {};
     const potionCountsMap: Record<string, number> = {};
+    const accessoryCountsMap: Record<string, number> = {};
     
     let totalGamesWithActions = 0;
     let totalGamesPlayed = 0;
@@ -110,6 +122,11 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
           if (actionType === 'DrinkPotion' && action.ActionName) {
             potionCountsMap[action.ActionName] = (potionCountsMap[action.ActionName] || 0) + 1;
           }
+
+          // Track accessory details
+          if (actionType === 'TakeAccessory' && action.ActionName) {
+            accessoryCountsMap[action.ActionName] = (accessoryCountsMap[action.ActionName] || 0) + 1;
+          }
         }
       });
 
@@ -139,10 +156,16 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       .sort((a, b) => b.count - a.count)
       .slice(0, CHART_LIMITS.TOP_10);
 
+    const accessoryDetails = Object.entries(accessoryCountsMap)
+      .map(([accessoryName, count]) => ({ accessoryName, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, CHART_LIMITS.TOP_10);
+
     return {
       actionTypeCounts,
       gadgetDetails,
       potionDetails,
+      accessoryDetails,
       totalGamesWithActions,
       totalGamesPlayed,
     };
@@ -191,6 +214,16 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
               {actionStatistics.potionDetails.reduce((sum, p) => sum + p.count, 0)}
             </div>
             <p>{actionStatistics.potionDetails.length} types différents</p>
+          </div>
+        )}
+
+        {actionStatistics.accessoryDetails.length > 0 && (
+          <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+            <h3>💍 Accessoires récupérés</h3>
+            <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
+              {actionStatistics.accessoryDetails.reduce((sum, a) => sum + a.count, 0)}
+            </div>
+            <p>{actionStatistics.accessoryDetails.length} types différents</p>
           </div>
         )}
       </div>
@@ -259,6 +292,89 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                     shape={(props) => {
                       const { x, y, width, height, index } = props;
                       const fillColor = `hsl(${200 + (index ?? 0) * 20}, 70%, 50%)`;
+
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={fillColor}
+                        />
+                      );
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
+        </div>
+      )}
+
+      {/* Accessory Details Bar Chart */}
+      {actionStatistics.accessoryDetails.length > 0 && (
+        <div className="lycans-graphique-section">
+          <h3>Accessoires Récupérés</h3>
+          <FullscreenChart title="Accessoires Récupérés">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={actionStatistics.accessoryDetails}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="accessoryName"
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                    interval={0}
+                    fontSize={12}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={12}
+                        fontStyle="italic"
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
+                  />
+                  <YAxis 
+                    label={{ value: 'Récupérations', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                    allowDecimals={false}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const dataPoint = payload[0].payload;
+                        return (
+                          <div style={{ 
+                            background: 'var(--bg-secondary)', 
+                            color: 'var(--text-primary)', 
+                            padding: 12, 
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)'
+                          }}>
+                            <div><strong>{dataPoint.accessoryName}</strong></div>
+                            <div>Récupéré {dataPoint.count} fois</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar
+                    dataKey="count"
+                    fill="var(--chart-color-2)"
+                    shape={(props) => {
+                      const { x, y, width, height, index } = props;
+                      const fillColor = `hsl(${120 + (index ?? 0) * 20}, 60%, 50%)`;
 
                       return (
                         <Rectangle
