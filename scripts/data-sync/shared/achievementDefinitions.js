@@ -47,11 +47,12 @@ export const ACHIEVEMENT_CATEGORIES = {
   victories: { label: 'Victoires', emoji: '🏆', order: 1 },
   deaths: { label: 'Morts', emoji: '💀', order: 2 },
   kills: { label: 'Kills', emoji: '🔪', order: 3 },
-  roles: { label: 'Rôles', emoji: '🎭', order: 4 },
-  social: { label: 'Social', emoji: '💬', order: 5 },
-  maps: { label: 'Cartes', emoji: '🗺️', order: 6 },
-  br: { label: 'Battle Royale', emoji: '⚔️', order: 7 },
+  loups: { label: 'Loups', emoji: '🐺', order: 4 },
+  roles: { label: 'Rôles', emoji: '🎭', order: 5 },
+  items: { label: 'Objets', emoji: '🎒', order: 6 },
+  social: { label: 'Social', emoji: '💬', order: 7 },
   special: { label: 'Spécial', emoji: '✨', order: 8 },
+  br: { label: 'Battle Royale', emoji: '⚔️', order: 9 },
 };
 
 /**
@@ -147,7 +148,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Vous avez eu la victoire sans rien faire, bravo',
     explanation: 'Gagner X parties en Loup sans tuer',
     emoji: '🥬',
-    category: 'victories',
+    category: 'loups',
     evaluator: 'wolfWinNoKills',
     evaluatorParams: {},
     levels: [
@@ -167,7 +168,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Et puis vous avez pris une flèche dans le genou...',
     explanation: 'Perdre X parties en Loup tout en survivant au Chasseur (la balle ne vous tue pas)',
     emoji: '🏹',
-    category: 'victories',
+    category: 'loups',
     evaluator: 'wolfSurvivedHunterShot',
     evaluatorParams: {},
     levels: [
@@ -187,7 +188,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Vous ne vouliez vraiment blesser personne...',
     explanation: 'Perdre X parties à la récolte en Loup sans avoir tué personne',
     emoji: '🌾',
-    category: 'victories',
+    category: 'loups',
     evaluator: 'wolfLossHarvestNoKills',
     evaluatorParams: {},
     levels: [
@@ -207,7 +208,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Il suffit de convaincre un·e villageois·e de voter pour votre victime et le tour est joué',
     explanation: 'Gagner X parties en faisant voter le dernier Villageois lors d\'un meeting à 3 en étant Loup',
     emoji: '3️⃣',
-    category: 'victories',
+    category: 'loups',
     evaluator: 'wolfVotesLastVillagerInThree',
     evaluatorParams: {},
     levels: [
@@ -227,7 +228,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Vous faites votre route solo et vous la faites plutôt bien',
     explanation: 'Gagner X parties en étant le seul Loup à avoir fait des kills',
     emoji: '🐺',
-    category: 'victories',
+    category: 'loups',
     evaluator: 'wolfAllKillsSolo',
     evaluatorParams: {},
     levels: [
@@ -247,7 +248,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Tout s\'est déroulé selon le plan',
     explanation: 'Gagner X parties en Loup sans aller jusqu\'au premier meeting',
     emoji: '💤',
-    category: 'victories',
+    category: 'loups',
     evaluator: 'wolfWinEarlyDeath',
     evaluatorParams: {},
     levels: [
@@ -293,7 +294,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: "Vous n'avez besoin de personne pour gagner… Vous seul·e survivez.",
     explanation: "Gagner X parties en étant l'unique survivant et donc le dernier Loup",
     emoji: '🏘️',
-    category: 'victories',
+    category: 'loups',
     evaluator: 'lastWolfStanding',
     evaluatorParams: {},
     levels: [
@@ -313,7 +314,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Puits, chaudron, portails, bûches... Vous les connaissez tous',
     explanation: 'Faire X Sabotages en étant Loup',
     emoji: '🛠️',
-    category: 'maps',
+    category: 'loups',
     evaluator: 'wolfSabotages',
     evaluatorParams: {},
     levels: [
@@ -739,7 +740,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'J\'ai jamais demandé à avoir un fusil, moi !',
     explanation: 'Mourir X fois en Chasseur par un Loup',
     emoji: '🐺',
-    category: 'kills',
+    category: 'deaths',
     evaluator: 'hunterKilledByWolf',
     evaluatorParams: {},
     levels: [
@@ -759,7 +760,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'La chimie au service de la justice...',
     explanation: 'Tuer X fois un joueur ennemi avec une potion assassin',
     emoji: '🧪',
-    category: 'kills',
+    category: 'items',
     evaluator: 'assassinPotionKills',
     evaluatorParams: { targetCamp: 'enemy' },
     levels: [
@@ -779,7 +780,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: "C'est pas votre faute, c'est la potion qui vous a tenté",
     explanation: 'Tuer X fois un joueur allié avec une potion assassin',
     emoji: '☠️',
-    category: 'kills',
+    category: 'items',
     evaluator: 'assassinPotionKills',
     evaluatorParams: { targetCamp: 'ally' },
     levels: [
@@ -1169,7 +1170,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: "Vous avez su qu'il ou elle allait faire de grande chose",
     explanation: 'Faire X parties en ressuscitant un joueur qui en tue deux autres en étant Loup Nécromancien',
     emoji: '🧟⚔️',
-    category: 'roles',
+    category: 'loups',
     evaluator: 'wolfNecromancerResurrect',
     evaluatorParams: {},
     levels: [
@@ -1189,7 +1190,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Ce petit tour fait toujours son petit effet',
     explanation: 'Faire X parties en devinant le rôle de deux joueurs en étant Loup Devin',
     emoji: '🔮',
-    category: 'roles',
+    category: 'loups',
     evaluator: 'wolfSeerDoubleKill',
     evaluatorParams: {},
     levels: [
@@ -1209,7 +1210,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Vous avez révélé tous leurs secrets',
     explanation: 'Deviner correctement X rôles en Loup Devin',
     emoji: '🔮✨',
-    category: 'roles',
+    category: 'loups',
     evaluator: 'wolfSeerTotalCorrectGuesses',
     evaluatorParams: {},
     levels: [
@@ -1250,7 +1251,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Du travail, encore et toujours du travail...',
     explanation: 'Faire X parties en étant le premier à la récolte parmi les Villageois',
     emoji: '🌾',
-    category: 'roles',
+    category: 'items',
     evaluator: 'topLootVillageoisGames',
     evaluatorParams: {},
     levels: [
@@ -1271,7 +1272,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Vous êtes une machine à farmer',
     explanation: 'Récolter plus de X de loots dans une seule partie',
     emoji: '🏆',
-    category: 'roles',
+    category: 'items',
     evaluator: 'maxLootInSingleGame',
     evaluatorParams: {},
     levels: [
@@ -1292,7 +1293,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: "Même en zombie, vous voulez faire comme tout le monde",
     explanation: 'Avoir X fois bu une potion ou utilisé un objet en étant Zombie',
     emoji: '🧟',
-    category: 'roles',
+    category: 'items',
     evaluator: 'zombieItemUses',
     evaluatorParams: {},
     levels: [
@@ -1312,7 +1313,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Une ombre passe, un joueur trépasse',
     explanation: 'Passer X nuits à se transformer, tuer au moins un joueur et se détransformer',
     emoji: '🌑',
-    category: 'roles',
+    category: 'loups',
     evaluator: 'wolfTransformKillNights',
     evaluatorParams: {},
     levels: [
@@ -1664,7 +1665,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Vous arrêtez quand vous voulez...',
     explanation: 'Faire X parties en ayant bu au moins 5 potions',
     emoji: '🍶',
-    category: 'special',
+    category: 'items',
     evaluator: 'justeUnDernierVerre',
     evaluatorParams: { minPotions: 5 },
     levels: [
@@ -1685,7 +1686,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     description: 'Vous êtes prêt·e en toute circonstance',
     explanation: 'Faire X parties en utilisant au moins 5 items différents (gadgets ou potions)',
     emoji: '🎒',
-    category: 'special',
+    category: 'items',
     evaluator: 'collectionneur',
     evaluatorParams: { minDistinctItems: 5 },
     levels: [
