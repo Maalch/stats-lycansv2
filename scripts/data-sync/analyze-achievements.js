@@ -14,7 +14,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { DATA_SOURCES } from './shared/data-sources.js';
-import { ACHIEVEMENT_TIERS } from './shared/achievementDefinitions.js';
+import { ACHIEVEMENT_TIERS, ACHIEVEMENT_CATEGORIES } from './shared/achievementDefinitions.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -167,7 +167,8 @@ async function main(sourceKey) {
       const { definition: def, levelMap, playerValues } = stats;
 
       lines.push('');
-      lines.push(`${def.emoji} ${def.name} [${def.id}]`);
+      const catInfo = ACHIEVEMENT_CATEGORIES[def.category] || { emoji: '❓', label: def.category };
+      lines.push(`${def.emoji} ${def.name} [${def.id}] — ${catInfo.emoji} ${catInfo.label}`);
       lines.push(`   ${def.explanation}`);
       if (def.requiresBRData) lines.push(`   ⚠️  BR-only (main team)`);
 
