@@ -60,58 +60,67 @@ function truncateName(name: string | null | undefined, maxLen = 12): string {
 }
 
 /**
- * Group levels by tier for visual separation.
- * Returns [[bronze levels], [argent levels], [or levels], [lycans levels]]
+ * Global maximum sublevels per tier.
+ * All rows always render this many slots per tier so every tier column is identical width.
  */
-function groupLevelsByTier(levels: AchievementLevel[]): { tier: AchievementTier; levels: AchievementLevel[] }[] {
-  const groups: { tier: AchievementTier; levels: AchievementLevel[] }[] = [];
-  let currentTier: AchievementTier | null = null;
-  let currentGroup: AchievementLevel[] = [];
+const MAX_SUBLEVELS: Record<AchievementTier, number> = {
+  bronze: 3,
+  argent: 3,
+  or: 3,
+  lycans: 1,
+};
 
-  for (const level of levels) {
-    if (level.tier !== currentTier) {
-      if (currentGroup.length > 0 && currentTier) {
-        groups.push({ tier: currentTier, levels: currentGroup });
-      }
-      currentTier = level.tier;
-      currentGroup = [level];
-    } else {
-      currentGroup.push(level);
-    }
-  }
-  if (currentGroup.length > 0 && currentTier) {
-    groups.push({ tier: currentTier, levels: currentGroup });
-  }
-  return groups;
-}
-
-/** Render tier indicators for an achievement — colored stars grouped by tier with separators */
+/**
+ * Render tier indicators for an achievement.
+ * ALWAYS renders all 4 tiers with exactly MAX_SUBLEVELS slots each (invisible spacers for
+ * missing slots) so every row has an identical fixed layout: [3b | 3a | 3o | 1l].
+ */
 function renderTiers(
   levels: AchievementLevel[],
-  unlockedCount: number
+  unlockedCount: number,
+  size: number = 18
 ) {
-  const tierGroups = groupLevelsByTier(levels);
+  // Build a map of tier → levels (in sublevel order) for O(1) lookup
+  const tierLevelsMap = new Map<AchievementTier, AchievementLevel[]>();
+  for (const level of levels) {
+    if (!tierLevelsMap.has(level.tier)) tierLevelsMap.set(level.tier, []);
+    tierLevelsMap.get(level.tier)!.push(level);
+  }
+
   let levelIndex = 0;
 
-  return tierGroups.map((group, groupIdx) => (
-    <span key={group.tier} className="achievement-tier-group">
-      {groupIdx > 0 && <span className="achievement-tier-separator" />}
-      {group.levels.map((level) => {
+  return TIERS_ORDERED.map((tier, groupIdx) => {
+    const tierLevels = tierLevelsMap.get(tier) || [];
+    const maxSlots = MAX_SUBLEVELS[tier];
+
+    const stars = [];
+    for (let slot = 0; slot < maxSlots; slot++) {
+      const level = tierLevels[slot];
+      if (level) {
         const isUnlocked = levelIndex < unlockedCount;
         const title = `${TIER_LABELS[level.tier]} ${level.subLevel} — ${level.threshold}`;
         levelIndex++;
-        return (
-          <AchievementStar
-            key={`${level.tier}-${level.subLevel}`}
-            tier={level.tier}
-            filled={isUnlocked}
-            size={18}
-            title={title}
+        stars.push(
+          <AchievementStar key={`${tier}-${slot}`} tier={tier} filled={isUnlocked} size={size} title={title} />
+        );
+      } else {
+        // Ghost slot — keeps column width identical across all rows
+        stars.push(
+          <span
+            key={`ghost-${tier}-${slot}`}
+            style={{ display: 'inline-flex', width: size, height: size, flexShrink: 0, visibility: 'hidden' }}
           />
         );
-      })}
-    </span>
-  ));
+      }
+    }
+
+    return (
+      <span key={tier} className="achievement-tier-group">
+        {groupIdx > 0 && <span className="achievement-tier-separator" />}
+        {stars}
+      </span>
+    );
+  });
 }
 
 export function PlayerAchievementsDisplay({
@@ -244,6 +253,30 @@ export function PlayerAchievementsDisplay({
     }
     return groups;
   }, [filteredAchievements, sortedCategories]);
+
+  // Pre-compute value lists per achievement for Top X% percentile calculation
+  const percentileData = useMemo(() => {
+    if (!allData) return null;
+    const achValues = new Map<string, number[]>();
+    for (const def of achievementsWithProgress) {
+      const values: number[] = [];
+      for (const player of Object.values(allData.players)) {
+        const ach = player.achievements.find(a => a.id === def.id);
+        values.push(ach?.currentValue || 0);
+      }
+      achValues.set(def.id, values);
+    }
+    return achValues;
+  }, [allData, achievementsWithProgress]);
+
+  /** Get Top X% for a given achievement value. Returns undefined if not computable. */
+  const getTopPercent = (achId: string, value: number): number | undefined => {
+    if (!percentileData || value <= 0) return undefined;
+    const values = percentileData.get(achId);
+    if (!values || values.length === 0) return undefined;
+    const betterCount = values.filter(v => v > value).length;
+    return Math.max(1, Math.ceil(((betterCount + 1) / values.length) * 100));
+  };
 
   return (
     <div className="achievements-section">
@@ -392,7 +425,7 @@ export function PlayerAchievementsDisplay({
         })}
       </div>
 
-      {/* Achievement Cards by Category */}
+      {/* Achievement List by Category */}
       {groupedAchievements.map(group => (
         <div key={group.key}>
           {/* Only show category header when viewing all */}
@@ -406,112 +439,109 @@ export function PlayerAchievementsDisplay({
             </div>
           )}
 
-          <div className="achievements-grid">
+          <div className="achievements-list">
+            {/* Column headers in comparison mode */}
+            {compareIsActive && (
+              <div className="achievement-row-header">
+                <span />
+                <span />
+                <span className="achievement-col-label main">{truncateName(currentPlayerName)}</span>
+                <span className="achievement-col-divider" />
+                <span className="achievement-col-label other">{truncateName(comparePlayerName)}</span>
+              </div>
+            )}
             {group.items.map(achievement => {
               const progress = achievement.playerProgress;
               const unlockedCount = progress ? progress.unlockedLevels.length : 0;
               const fullyUnlocked = unlockedCount === achievement.levels.length;
               const hasProgress = progress !== null && progress.currentValue > 0;
+              const currentValue = progress?.currentValue || 0;
+              const topPercent = getTopPercent(achievement.id, currentValue);
 
-              // Comparison state for this achievement
+              // Comparison data
               const compareProgress = compareIsActive ? (compareProgressMap.get(achievement.id) ?? null) : null;
               const compareUnlockedCount = compareProgress ? compareProgress.unlockedLevels.length : 0;
+              const compareValue = compareProgress?.currentValue || 0;
+              const compareTopPercent = compareIsActive ? getTopPercent(achievement.id, compareValue) : undefined;
 
-              // Card class: comparison mode overrides normal state
-              let cardClass: string;
+              // Row state class
+              let rowClass: string;
               if (compareIsActive) {
-                if (unlockedCount > compareUnlockedCount) cardClass = 'compare-main-ahead';
-                else if (compareUnlockedCount > unlockedCount) cardClass = 'compare-other-ahead';
-                else if (unlockedCount > 0) cardClass = 'compare-tied';
-                else cardClass = 'locked';
+                if (unlockedCount > compareUnlockedCount) rowClass = 'compare-main-ahead';
+                else if (compareUnlockedCount > unlockedCount) rowClass = 'compare-other-ahead';
+                else if (unlockedCount > 0) rowClass = 'compare-tied';
+                else rowClass = 'locked';
               } else {
-                cardClass = fullyUnlocked ? 'fully-unlocked' : hasProgress ? 'has-progress' : 'locked';
+                rowClass = fullyUnlocked ? 'fully-unlocked' : hasProgress ? 'has-progress' : 'locked';
               }
 
               return (
                 <div
                   key={achievement.id}
-                  className={`achievement-card ${cardClass}`}
-                  title={achievement.explanation}
+                  className={`achievement-row ${rowClass}${compareIsActive ? ' compare-mode' : ''}`}
+                  title={achievement.description}
                 >
-                  <div className="achievement-emoji">
-                    {achievement.emoji}
+                  <span className="achievement-row-emoji">{achievement.emoji}</span>
+                  <div className="achievement-row-info">
+                    <span className="achievement-row-name">{achievement.name}</span>
+                    <span className="achievement-row-description">{achievement.description}</span>
+                    <span className="achievement-row-explanation">{achievement.explanation}</span>
                   </div>
-                  <div className="achievement-content">
-                    <h5 className="achievement-name">{achievement.name}</h5>
-                    <p className="achievement-description">{achievement.description}</p>
-                    <p className="achievement-explanation">{achievement.explanation}</p>
 
-                    {/* Stars — single row in normal mode, two rows in comparison mode */}
-                    {!compareIsActive ? (
+                  {!compareIsActive ? (
+                    <div className="achievement-row-stats">
                       <div className="achievement-stars">
-                        {renderTiers(achievement.levels, unlockedCount)}
+                        {renderTiers(achievement.levels, unlockedCount, 16)}
                       </div>
-                    ) : (
-                      <div className="achievement-compare-rows">
-                        <div className="achievement-compare-row main">
-                          <span className="achievement-compare-label" title={currentPlayerName || ''}>
-                            {truncateName(currentPlayerName, 10)}
-                          </span>
-                          <div className="achievement-stars">
-                            {renderTiers(achievement.levels, unlockedCount)}
-                          </div>
-                          {progress !== null && progress.currentValue > 0 && (
-                            <span className="achievement-compare-value">{progress.currentValue}</span>
-                          )}
-                        </div>
-                        <div className="achievement-compare-row other">
-                          <span className="achievement-compare-label" title={comparePlayerName}>
-                            {truncateName(comparePlayerName, 10)}
-                          </span>
-                          <div className="achievement-stars">
-                            {renderTiers(achievement.levels, compareUnlockedCount)}
-                          </div>
-                          {compareProgress !== null && compareProgress.currentValue > 0 && (
-                            <span className="achievement-compare-value">{compareProgress.currentValue}</span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Progress bar — single mode only */}
-                    {!compareIsActive && hasProgress && !fullyUnlocked && progress && (
-                      <div className="achievement-progress-container">
-                        <div className="achievement-progress-bar">
+                      {hasProgress && (
+                        <span className="achievement-row-value">{currentValue}</span>
+                      )}
+                      {topPercent !== undefined && (
+                        <span className={`achievement-row-percent${topPercent <= 10 ? ' top-tier' : topPercent <= 25 ? ' high-tier' : ''}`}>
+                          Top {topPercent}%
+                        </span>
+                      )}
+                      {/* Inline progress bar toward next level */}
+                      {hasProgress && !fullyUnlocked && progress && progress.nextLevel && (
+                        <div className="achievement-row-progress" title={`${currentValue} / ${progress.nextLevel.threshold}`}>
                           <div
-                            className="achievement-progress-fill"
+                            className="achievement-row-progress-fill"
                             style={{ width: `${Math.max(progress.progress * 100, 2)}%` }}
                           />
                         </div>
-                        <div className="achievement-progress-text">
-                          <span className="achievement-progress-value">
-                            {progress.currentValue}
-                          </span>
-                          {progress.nextLevel && (
-                            <span>prochain : {progress.nextLevel.threshold}</span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Fully completed indicator — single mode only */}
-                    {!compareIsActive && fullyUnlocked && progress && (
-                      <div className="achievement-progress-container">
-                        <div className="achievement-progress-bar">
+                      )}
+                      {fullyUnlocked && (
+                        <div className="achievement-row-progress complete" title="Complété">
                           <div
-                            className="achievement-progress-fill complete"
+                            className="achievement-row-progress-fill complete"
                             style={{ width: '100%' }}
                           />
                         </div>
-                        <div className="achievement-progress-text">
-                          <span className="achievement-progress-value">
-                            {progress.currentValue}
-                          </span>
-                          <span>✅ Complété</span>
+                      )}
+                    </div>
+                  ) : (
+                    <>
+                      <div className="achievement-row-player main">
+                        <div className="achievement-stars">
+                          {renderTiers(achievement.levels, unlockedCount, 14)}
                         </div>
+                        <span className="achievement-row-value">{currentValue || '–'}</span>
+                        <span className="achievement-row-percent">
+                          {topPercent !== undefined ? `${topPercent}%` : ''}
+                        </span>
                       </div>
-                    )}
-                  </div>
+                      <div className="achievement-compare-divider" />
+                      <div className="achievement-row-player other">
+                        <div className="achievement-stars">
+                          {renderTiers(achievement.levels, compareUnlockedCount, 14)}
+                        </div>
+                        <span className="achievement-row-value">{compareValue || '–'}</span>
+                        <span className="achievement-row-percent">
+                          {compareTopPercent !== undefined ? `${compareTopPercent}%` : ''}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
               );
             })}
