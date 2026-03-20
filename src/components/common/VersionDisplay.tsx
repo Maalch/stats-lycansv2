@@ -2,12 +2,17 @@ import { APP_VERSION } from '../../config/version';
 
 interface VersionDisplayProps {
   onVersionClick: () => void;
+  onAchievementClick: () => void;
 }
 
-export function VersionDisplay({ onVersionClick }: VersionDisplayProps) {
+export function VersionDisplay({ onVersionClick, onAchievementClick }: VersionDisplayProps) {
   return (
     <div className="lycans-version-container">
-      <div className="lycans-version-badge" title="Nouveau système de Succès !">
+      <div 
+        className="lycans-version-badge" 
+        onClick={onAchievementClick}
+        title="Cliquez pour découvrir les Succès !"
+      >
         🐺 NOUVEAUTÉ : SUCCÈS !
       </div>
       <div 

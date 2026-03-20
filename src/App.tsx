@@ -289,8 +289,8 @@ export default function App() {
 }
 
 function MainApp() {
-  const { settings } = useSettings();
-  const { currentView, requestedTab, clearTabNavigation } = useNavigation();
+  const { settings, updateSettings } = useSettings();
+  const { currentView, requestedTab, clearTabNavigation, updateNavigationState } = useNavigation();
   const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('evolution');
@@ -310,6 +310,27 @@ function MainApp() {
       deathStatsView: undefined, // Clear death stats view when changing tabs/subtabs
       seriesView: undefined, // Clear series view when changing tabs/subtabs
     }, 'push'); // Use pushState to create history entry
+  };
+
+  // Handler for achievement badge click
+  const handleAchievementClick = () => {
+    // Determine default player based on data source
+    const defaultPlayer = settings.dataSource === 'discord' ? 'Nales' : 'Ponce';
+    
+    // Set player if none is currently highlighted
+    const playerToHighlight = settings.highlightedPlayer || defaultPlayer;
+    
+    // Update settings with highlighted player
+    if (!settings.highlightedPlayer) {
+      updateSettings({ highlightedPlayer: playerToHighlight });
+    }
+    
+    // Navigate to player selection achievements view
+    setSelectedMainTab('playerSelection');
+    updateNavigationState({
+      selectedPlayerSelectionView: 'achievements'
+    });
+    updateTabUrl('playerSelection', null);
   };
 
   // Sync URL tab params to component state on mount and browser navigation
@@ -542,7 +563,10 @@ function MainApp() {
                   <div className="lycans-header-main">
                 <h1>Statistiques Lycans</h1>
                   </div>
-                  <VersionDisplay onVersionClick={() => setShowChangelog(true)} />
+                  <VersionDisplay 
+                    onVersionClick={() => setShowChangelog(true)} 
+                    onAchievementClick={handleAchievementClick}
+                  />
                 </div>
               </header>
 
