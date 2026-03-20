@@ -1154,14 +1154,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     evaluator: 'vaudouTripleResurrect',
     evaluatorParams: {},
     levels: [
-      // Bronze: 1
+      // Bronze: 1 
       { tier: 'bronze', subLevel: 1, threshold: 1 },
-      // Argent: 2
-      { tier: 'argent', subLevel: 1, threshold: 2 },
-      // Or: 3
-      { tier: 'or', subLevel: 1, threshold: 3 },
-      // Lycans: 5
-      { tier: 'lycans', subLevel: 1, threshold: 5 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
     ],
   },
   {
