@@ -212,6 +212,48 @@ export function PlayerAchievementsDisplay({
   const compareTierCounts = useMemo(() => computeTierCounts(comparePlayerData), [comparePlayerData]);
   const compareTotalUnlocked = comparePlayerData?.totalUnlocked || 0;
 
+  // Compute overlap breakdown for comparison mode
+  const comparisonBreakdown = useMemo(() => {
+    if (!compareIsActive || !playerAchievements || !comparePlayerData) {
+      return { shared: 0, mainOnly: 0, otherOnly: 0, neither: 0 };
+    }
+
+    // Build sets of unlocked level keys: "achievementId-tier-subLevel"
+    const buildUnlockedSet = (player: PlayerAchievements): Set<string> => {
+      const set = new Set<string>();
+      for (const ach of player.achievements) {
+        for (const level of ach.unlockedLevels) {
+          set.add(`${ach.id}-${level.tier}-${level.subLevel}`);
+        }
+      }
+      return set;
+    };
+
+    const mainSet = buildUnlockedSet(playerAchievements);
+    const otherSet = buildUnlockedSet(comparePlayerData);
+
+    // Count all levels from definitions
+    let shared = 0;
+    let mainOnly = 0;
+    let otherOnly = 0;
+    let neither = 0;
+
+    for (const ach of achievementsWithProgress) {
+      for (const level of ach.levels) {
+        const key = `${ach.id}-${level.tier}-${level.subLevel}`;
+        const mainHas = mainSet.has(key);
+        const otherHas = otherSet.has(key);
+
+        if (mainHas && otherHas) shared++;
+        else if (mainHas) mainOnly++;
+        else if (otherHas) otherOnly++;
+        else neither++;
+      }
+    }
+
+    return { shared, mainOnly, otherOnly, neither };
+  }, [compareIsActive, playerAchievements, comparePlayerData, achievementsWithProgress]);
+
   // Count per-category unlocked achievements (at least 1 level)
   const categoryCounts = useMemo(() => {
     const counts: Record<string, { total: number; unlocked: number }> = {};
@@ -352,9 +394,16 @@ export function PlayerAchievementsDisplay({
             <span className="achievements-summary-player-name" title={currentPlayerName || ''}>
               {truncateName(currentPlayerName)}
             </span>
-            <div className="achievements-summary-item">
-              <span className="achievements-summary-value">{totalUnlocked}</span>
-              <span className="achievements-summary-label">/ {totalLevels}</span>
+            <div className="achievements-summary-breakdown">
+              <span className="breakdown-exclusive" title="Niveaux exclusifs">
+                {comparisonBreakdown.mainOnly}
+              </span>
+              <span className="breakdown-shared" title="Niveaux en commun">
+                +{comparisonBreakdown.shared}
+              </span>
+              <span className="breakdown-total">
+                = {totalUnlocked}
+              </span>
             </div>
             <div className="achievements-summary-tiers">
               {TIERS_ORDERED.filter(t => tierCounts[t] > 0).map(tier => (
@@ -368,16 +417,33 @@ export function PlayerAchievementsDisplay({
             </div>
           </div>
 
-          <div className="achievements-summary-vs">⚔️</div>
+          <div className="achievements-summary-center">
+            <div className="achievements-summary-vs">⚔️</div>
+            <div className="achievements-summary-shared-info">
+              <span className="shared-count">{comparisonBreakdown.shared}</span>
+              <span className="shared-label">en commun</span>
+            </div>
+            <div className="achievements-summary-neither-info">
+              <span className="neither-count">{comparisonBreakdown.neither}</span>
+              <span className="neither-label">non débloqués</span>
+            </div>
+          </div>
 
           {/* Compare player column */}
           <div className="achievements-summary-player other-player">
             <span className="achievements-summary-player-name" title={comparePlayerName}>
               {truncateName(comparePlayerName)}
             </span>
-            <div className="achievements-summary-item">
-              <span className="achievements-summary-value">{compareTotalUnlocked}</span>
-              <span className="achievements-summary-label">/ {totalLevels}</span>
+            <div className="achievements-summary-breakdown">
+              <span className="breakdown-exclusive" title="Niveaux exclusifs">
+                {comparisonBreakdown.otherOnly}
+              </span>
+              <span className="breakdown-shared" title="Niveaux en commun">
+                +{comparisonBreakdown.shared}
+              </span>
+              <span className="breakdown-total">
+                = {compareTotalUnlocked}
+              </span>
             </div>
             <div className="achievements-summary-tiers">
               {TIERS_ORDERED.filter(t => compareTierCounts[t] > 0).map(tier => (
@@ -391,16 +457,48 @@ export function PlayerAchievementsDisplay({
             </div>
           </div>
 
-          {/* Battle bar — each player fills from their side */}
-          <div className="achievements-battle-bar">
+          {/* Segmented battle bar showing breakdown */}
+          <div className="achievements-battle-bar segmented">
             <div
-              className="achievements-battle-bar-p1"
-              style={{ width: `${(totalUnlocked / totalLevels) * 100}%` }}
+              className="achievements-battle-bar-segment main-only"
+              style={{ width: `${(comparisonBreakdown.mainOnly / totalLevels) * 100}%` }}
+              title={`${truncateName(currentPlayerName)} uniquement: ${comparisonBreakdown.mainOnly}`}
             />
             <div
-              className="achievements-battle-bar-p2"
-              style={{ width: `${(compareTotalUnlocked / totalLevels) * 100}%` }}
+              className="achievements-battle-bar-segment shared"
+              style={{ width: `${(comparisonBreakdown.shared / totalLevels) * 100}%` }}
+              title={`En commun: ${comparisonBreakdown.shared}`}
             />
+            <div
+              className="achievements-battle-bar-segment other-only"
+              style={{ width: `${(comparisonBreakdown.otherOnly / totalLevels) * 100}%` }}
+              title={`${truncateName(comparePlayerName)} uniquement: ${comparisonBreakdown.otherOnly}`}
+            />
+            <div
+              className="achievements-battle-bar-segment neither"
+              style={{ width: `${(comparisonBreakdown.neither / totalLevels) * 100}%` }}
+              title={`Non débloqués: ${comparisonBreakdown.neither}`}
+            />
+          </div>
+          
+          {/* Legend */}
+          <div className="achievements-battle-legend">
+            <span className="legend-item main-only">
+              <span className="legend-dot" />
+              {truncateName(currentPlayerName, 8)} seul
+            </span>
+            <span className="legend-item shared">
+              <span className="legend-dot" />
+              Commun
+            </span>
+            <span className="legend-item other-only">
+              <span className="legend-dot" />
+              {truncateName(comparePlayerName, 8)} seul
+            </span>
+            <span className="legend-item neither">
+              <span className="legend-dot" />
+              Aucun
+            </span>
           </div>
         </div>
       )}
@@ -502,20 +600,27 @@ export function PlayerAchievementsDisplay({
                       <div className="achievement-stars">
                         {renderTiers(achievement.levels, unlockedCount, 16)}
                       </div>
-                      {hasProgress && (
-                        <span className="achievement-row-value">{currentValue}</span>
-                      )}
-                      {topPercent !== undefined && (
-                        <span className={`achievement-row-percent${topPercent <= 10 ? ' top-tier' : topPercent <= 25 ? ' high-tier' : ''}`}>
-                          Top {topPercent}%
-                        </span>
-                      )}
-                      {/* Inline progress bar toward next level */}
-                      {hasProgress && !fullyUnlocked && progress && progress.nextLevel && (
-                        <div className="achievement-row-progress" title={`${currentValue} / ${progress.nextLevel.threshold}`}>
+                      {/* Always render value slot — ghost for not started */}
+                      <span className="achievement-row-value" style={{ visibility: hasProgress ? 'visible' : 'hidden' }}>
+                        {hasProgress ? currentValue : '0'}
+                      </span>
+                      {/* Always render Top X% slot — ghost for not started */}
+                      <span 
+                        className={`achievement-row-percent${topPercent && topPercent <= 10 ? ' top-tier' : topPercent && topPercent <= 25 ? ' high-tier' : ''}`}
+                        style={{ visibility: topPercent !== undefined ? 'visible' : 'hidden' }}
+                      >
+                        {topPercent !== undefined ? `Top ${topPercent}%` : 'Top 0%'}
+                      </span>
+                      {/* Always render progress bar slot — ghost for not started */}
+                      {!fullyUnlocked && (
+                        <div 
+                          className="achievement-row-progress" 
+                          title={hasProgress && progress && progress.nextLevel ? `${currentValue} / ${progress.nextLevel.threshold}` : ''}
+                          style={{ visibility: hasProgress ? 'visible' : 'hidden' }}
+                        >
                           <div
                             className="achievement-row-progress-fill"
-                            style={{ width: `${Math.max(progress.progress * 100, 2)}%` }}
+                            style={{ width: `${hasProgress && progress ? Math.max(progress.progress * 100, 2) : 0}%` }}
                           />
                         </div>
                       )}
