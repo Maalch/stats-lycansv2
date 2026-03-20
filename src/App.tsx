@@ -377,9 +377,6 @@ function MainApp() {
         />
         <div className="main-container">
           <div className="lycans-dashboard-container">
-            <header className="lycans-dashboard-header">
-              <h1>Statistiques Lycans</h1>
-            </header>
             <div className="lycans-dashboard-section">
               <SettingsIndicator />
               <div className="lycans-dashboard-content">
@@ -560,9 +557,6 @@ function MainApp() {
             <div className="lycans-dashboard-container">
               <header className="lycans-dashboard-header">
                 <div className="lycans-header-content">
-                  <div className="lycans-header-main">
-                <h1>Statistiques Lycans</h1>
-                  </div>
                   <VersionDisplay 
                     onVersionClick={() => setShowChangelog(true)} 
                     onAchievementClick={handleAchievementClick}

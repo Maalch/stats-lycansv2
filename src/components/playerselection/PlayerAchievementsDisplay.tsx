@@ -392,7 +392,7 @@ export function PlayerAchievementsDisplay({
           {/* Main player column */}
           <div className="achievements-summary-player main-player">
             <span className="achievements-summary-player-name" title={currentPlayerName || ''}>
-              {truncateName(currentPlayerName)}
+              {currentPlayerName || '?'}
             </span>
             <div className="achievements-summary-breakdown">
               <span className="breakdown-exclusive" title="Niveaux exclusifs">
@@ -432,7 +432,7 @@ export function PlayerAchievementsDisplay({
           {/* Compare player column */}
           <div className="achievements-summary-player other-player">
             <span className="achievements-summary-player-name" title={comparePlayerName}>
-              {truncateName(comparePlayerName)}
+              {comparePlayerName || '?'}
             </span>
             <div className="achievements-summary-breakdown">
               <span className="breakdown-exclusive" title="Niveaux exclusifs">
@@ -485,7 +485,7 @@ export function PlayerAchievementsDisplay({
           <div className="achievements-battle-legend">
             <span className="legend-item main-only">
               <span className="legend-dot" />
-              {truncateName(currentPlayerName, 8)} seul
+              {currentPlayerName || '?'} seul
             </span>
             <span className="legend-item shared">
               <span className="legend-dot" />
@@ -493,7 +493,7 @@ export function PlayerAchievementsDisplay({
             </span>
             <span className="legend-item other-only">
               <span className="legend-dot" />
-              {truncateName(comparePlayerName, 8)} seul
+              {comparePlayerName || '?'} seul
             </span>
             <span className="legend-item neither">
               <span className="legend-dot" />
@@ -552,9 +552,9 @@ export function PlayerAchievementsDisplay({
               <div className="achievement-row-header">
                 <span />
                 <span />
-                <span className="achievement-col-label main">{truncateName(currentPlayerName)}</span>
+                <span className="achievement-col-label main">{currentPlayerName || '?'}</span>
                 <span className="achievement-col-divider" />
-                <span className="achievement-col-label other">{truncateName(comparePlayerName)}</span>
+                <span className="achievement-col-label other">{comparePlayerName || '?'}</span>
               </div>
             )}
             {group.items.map(achievement => {

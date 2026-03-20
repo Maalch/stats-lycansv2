@@ -139,6 +139,9 @@
 .achievement-col-label {
   text-align: center;
   padding: 0 0.4rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  line-height: 1.3;
 }
 
 /* Vertical divider in header */
@@ -632,10 +635,10 @@
   font-weight: 700;
   font-size: 1rem;
   color: var(--text-primary);
-  max-width: 130px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  max-width: 160px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-align: center;
 }
 
 .achievements-summary-vs {
