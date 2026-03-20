@@ -88,14 +88,23 @@ function renderTiers(
   }
 
   let levelIndex = 0;
+  const hasMultipleLevels = levels.length > 1;
 
   return TIERS_ORDERED.map((tier, groupIdx) => {
     const tierLevels = tierLevelsMap.get(tier) || [];
     const maxSlots = MAX_SUBLEVELS[tier];
+    
+    // Calculate offset to center stars when there are fewer than maxSlots
+    const offset = Math.floor((maxSlots - tierLevels.length) / 2);
 
     const stars = [];
     for (let slot = 0; slot < maxSlots; slot++) {
-      const level = tierLevels[slot];
+      // Check if this slot should have a real star (within the centered range)
+      const levelIndex_inTier = slot - offset;
+      const level = (levelIndex_inTier >= 0 && levelIndex_inTier < tierLevels.length) 
+        ? tierLevels[levelIndex_inTier] 
+        : null;
+      
       if (level) {
         const isUnlocked = levelIndex < unlockedCount;
         const title = `${TIER_LABELS[level.tier]} ${level.subLevel} — ${level.threshold}`;
@@ -116,7 +125,7 @@ function renderTiers(
 
     return (
       <span key={tier} className="achievement-tier-group">
-        {groupIdx > 0 && <span className="achievement-tier-separator" />}
+        {groupIdx > 0 && hasMultipleLevels && <span className="achievement-tier-separator" />}
         {stars}
       </span>
     );

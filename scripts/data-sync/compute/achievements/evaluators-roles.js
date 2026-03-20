@@ -153,7 +153,7 @@ export function idiotSurvivedWithVotes(playerGames, allGames, playerId, params) 
  * and at least one other player in the Villageois camp has the exact same Power.
  * Achievement: "Spider-Man Pointing at Spider-Man"
  */
-export function sameElitePowerAsAlly(playerGames, allGames, playerId, params) {
+export function samePowerAsAlly(playerGames, allGames, playerId, params) {
   const gameIds = [];
   let value = 0;
 

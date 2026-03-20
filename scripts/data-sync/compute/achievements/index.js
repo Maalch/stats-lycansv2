@@ -50,7 +50,7 @@ import {
 import {
   agentWinPerfectKill, agentVoted,
   winWith9SoloRoles, idiotKilledByHunter, idiotSurvivedWithVotes,
-  roleWins, sameElitePowerAsAlly,
+  roleWins, samePowerAsAlly,
 } from './evaluators-roles.js';
 
 // Amoureux evaluators
@@ -133,7 +133,7 @@ export const EVALUATORS = {
   idiotKilledByHunter,
   idiotSurvivedWithVotes,
   roleWins,
-  sameElitePowerAsAlly,
+  samePowerAsAlly,
 
   // Amoureux
   amoureuxLoupKillsLover,

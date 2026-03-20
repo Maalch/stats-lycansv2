@@ -1332,10 +1332,10 @@ export const ACHIEVEMENT_DEFINITIONS = [
     id: 'spider-man-pointing',
     name: 'Spider-Man Pointing at Spider-Man',
     description: "Hé, mais t'es... moi !",
-    explanation: 'Faire X parties en Villageois Élite avec un autre Villageois ayant le même métier',
+    explanation: 'Faire X parties en Villageois avec un autre Villageois ayant le même métier',
     emoji: '🕷️',
     category: 'roles',
-    evaluator: 'sameElitePowerAsAlly',
+    evaluator: 'samePowerAsAlly',
     evaluatorParams: {},
     levels: [
       // Bronze: 1, 5, 10
