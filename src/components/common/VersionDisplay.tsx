@@ -6,13 +6,18 @@ interface VersionDisplayProps {
 
 export function VersionDisplay({ onVersionClick }: VersionDisplayProps) {
   return (
-    <div 
-      className="lycans-version-display"
-      onClick={onVersionClick}
-      title="Cliquez pour voir l'historique des changements"
-    >
-      <span className="lycans-version-label">v</span>
-      <span className="lycans-version-number">{APP_VERSION}</span>
+    <div className="lycans-version-container">
+      <div className="lycans-version-badge" title="Nouveau système de Succès !">
+        🐺 NOUVEAUTÉ : SUCCÈS !
+      </div>
+      <div 
+        className="lycans-version-display"
+        onClick={onVersionClick}
+        title="Cliquez pour voir l'historique des changements"
+      >
+        <span className="lycans-version-label">v</span>
+        <span className="lycans-version-number">{APP_VERSION}</span>
+      </div>
     </div>
   );
 }

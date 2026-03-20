@@ -4,7 +4,6 @@ import { SettingsProvider, useSettings } from './context/SettingsContext';
 import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import { SettingsIndicator } from './components/common/SettingsIndicator';
 import { SettingsBadge } from './components/common/SettingsBadge';
-import { useLastRecordedGameDate } from './hooks/useLastRecordedGameDate';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { LoadingSkeleton } from './components/common/LoadingSkeleton';
 import { mergeUrlState } from './utils/urlManager';
@@ -292,7 +291,6 @@ export default function App() {
 function MainApp() {
   const { settings } = useSettings();
   const { currentView, requestedTab, clearTabNavigation } = useNavigation();
-  const { lastRecordedGameDate, isLoading: dateLoading } = useLastRecordedGameDate();
   const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('evolution');
@@ -312,17 +310,6 @@ function MainApp() {
       deathStatsView: undefined, // Clear death stats view when changing tabs/subtabs
       seriesView: undefined, // Clear series view when changing tabs/subtabs
     }, 'push'); // Use pushState to create history entry
-  };
-
-  // Helper function to format the subtitle text
-  const getSubtitleText = () => {
-    if (dateLoading) {
-      return "Chargement des données...";
-    }
-    if (lastRecordedGameDate) {
-      return `Données à jour jusqu'au ${lastRecordedGameDate}`;
-    }
-    return "";
   };
 
   // Sync URL tab params to component state on mount and browser navigation
@@ -371,7 +358,6 @@ function MainApp() {
           <div className="lycans-dashboard-container">
             <header className="lycans-dashboard-header">
               <h1>Statistiques Lycans</h1>
-              <p>{getSubtitleText()}</p>
             </header>
             <div className="lycans-dashboard-section">
               <SettingsIndicator />
@@ -555,7 +541,6 @@ function MainApp() {
                 <div className="lycans-header-content">
                   <div className="lycans-header-main">
                 <h1>Statistiques Lycans</h1>
-                <p>{getSubtitleText()}</p>
                   </div>
                   <VersionDisplay onVersionClick={() => setShowChangelog(true)} />
                 </div>

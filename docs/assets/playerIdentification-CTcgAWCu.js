@@ -1,0 +1,1 @@
+let t=null;function u(e){t=e}function o(e){return e.ID||e.Username}function s(e,i){const n=i||t;if(e.ID&&n?.Players){const a=n.Players.find(r=>r.SteamID===e.ID);if(a)return a.Joueur}return e.Username}export{s as a,o as g,u as i};

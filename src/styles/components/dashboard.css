@@ -51,6 +51,37 @@
 /* ===========================
    VERSION DISPLAY
    =========================== */
+.lycans-version-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lycans-version-badge {
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 6px rgba(255, 215, 0, 0.4);
+  animation: pulse-glow 2s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 2px 6px rgba(255, 215, 0, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 2px 12px rgba(255, 215, 0, 0.6);
+    transform: scale(1.02);
+  }
+}
+
 .lycans-version-display {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
