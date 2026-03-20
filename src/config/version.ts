@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.7.15';
+export const APP_VERSION = '1.8.0';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,17 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    
+    version: 'v1.8.0',
+    date: '20/03/2026',
+    description: 'Nouveau système de Succès ! 85 accomplissements permanents / 439 niveaux à débloquer avec 4 paliers (⭐/⭐⭐/⭐⭐⭐/🐺) dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueurs / Succès',
+      navigationState: { selectedPlayerSelectionView: 'achievements' }
+    }
+  },
   {
     version: 'v1.7.15',
     date: '17/03/2026',
@@ -57,18 +68,6 @@ export const CHANGELOG: ChangelogEntry[] = [
       navigationState: { selectedPairingTab: 'agents' }
     }
   },
-  /*{
-    
-    version: 'v1.8.0',
-    date: '14/02/2026',
-    description: 'Nouveau système de Succès ! 30 accomplissements permanents à débloquer avec 4 niveaux (⭐/⭐⭐/⭐⭐⭐/🐺) dans',
-    link: {
-      mainTab: 'playerSelection',
-      text: 'Joueurs / Succès',
-      navigationState: { selectedPlayerSelectionView: 'achievements' }
-    }
-  },
-  */
   {
     version: 'v1.7.11',
     date: '20/02/2026',

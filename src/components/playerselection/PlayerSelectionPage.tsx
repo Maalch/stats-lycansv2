@@ -84,7 +84,7 @@ export function PlayerSelectionPage() {
   }, [settings.useIndependentFilters, settings.independentFilters?.gameTypeEnabled, settings.independentFilters?.gameFilter, settings.gameFilter]);
   
   // Use URL/settings to restore view selection, fallback to navigationState, then 'rankings'
-  const [selectedView, setSelectedView] = useState<'rankings' | 'titles' | 'achievements' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions'>(
+  const [selectedView, setSelectedView] = useState<'rankings' | 'achievements' | 'titles' | 'evolution' | 'camps' | 'kills' | 'roles' | 'deathmap' | 'talkingtime' | 'actions' | 'roleactions'>(
     settings.selectedPlayerSelectionView || navigationState.selectedPlayerSelectionView || 'rankings'
   );
   const [groupingMethod, setGroupingMethod] = useState<GroupByMethod>('session');
@@ -464,6 +464,13 @@ export function PlayerSelectionPage() {
                     >
                       Classement
                     </button>
+                     <button
+                      type="button"
+                      className={`lycans-categorie-btn ${selectedView === 'achievements' ? 'active' : ''}`}
+                      onClick={() => handleViewChange('achievements')}
+                    >
+                      Succès
+                    </button>
                     <button
                       type="button"
                       className={`lycans-categorie-btn ${selectedView === 'titles' ? 'active' : ''}`}
@@ -471,14 +478,6 @@ export function PlayerSelectionPage() {
                     >
                       Titres
                     </button>
-                    {/* Hidden until fully ready - accessible via URL: ?selectedPlayerSelectionView=achievements */}
-                    {/* <button
-                      type="button"
-                      className={`lycans-categorie-btn ${selectedView === 'achievements' ? 'active' : ''}`}
-                      onClick={() => handleViewChange('achievements')}
-                    >
-                      Succès
-                    </button> */}
                     <button
                       type="button"
                       className={`lycans-categorie-btn ${selectedView === 'evolution' ? 'active' : ''}`}
