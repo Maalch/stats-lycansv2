@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-20T13:44:29.543Z",
+  "generatedAt": "2026-03-20T13:50:48.619Z",
   "teamName": "Discord Team",
   "totalPlayers": 168,
   "totalGames": 403,
@@ -1899,17 +1899,17 @@
         {
           "tier": "argent",
           "subLevel": 1,
-          "threshold": 2
+          "threshold": 3
         },
         {
           "tier": "or",
           "subLevel": 1,
-          "threshold": 3
+          "threshold": 8
         },
         {
           "tier": "lycans",
           "subLevel": 1,
-          "threshold": 5
+          "threshold": 15
         }
       ],
       "requiresBRData": false
@@ -13786,7 +13786,7 @@
     "76561197973106144": {
       "playerId": "76561197973106144",
       "playerName": "Nales",
-      "totalUnlocked": 154,
+      "totalUnlocked": 152,
       "achievements": [
         {
           "id": "victories-villageois",
@@ -14887,24 +14887,16 @@
             {
               "tier": "argent",
               "subLevel": 1,
-              "threshold": 2,
-              "unlockedAtGame": "Nales-20251207213015"
-            },
-            {
-              "tier": "or",
-              "subLevel": 1,
               "threshold": 3,
               "unlockedAtGame": "Nales-20260114210944"
-            },
-            {
-              "tier": "lycans",
-              "subLevel": 1,
-              "threshold": 5,
-              "unlockedAtGame": "Nales-20260222202938"
             }
           ],
-          "nextLevel": null,
-          "progress": 1
+          "nextLevel": {
+            "tier": "or",
+            "subLevel": 1,
+            "threshold": 8
+          },
+          "progress": 0.625
         },
         {
           "id": "loup-devin-ultimate",
@@ -20584,9 +20576,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "loup-devin-ultimate",
@@ -21243,9 +21235,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "loup-necromancien-resurrect",
@@ -25926,9 +25918,9 @@
           "nextLevel": {
             "tier": "argent",
             "subLevel": 1,
-            "threshold": 2
+            "threshold": 3
           },
-          "progress": 0.5
+          "progress": 0.3333333333333333
         },
         {
           "id": "solo-master",
