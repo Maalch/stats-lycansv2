@@ -97,7 +97,15 @@ async function main(sourceKey) {
   const playerResults = computeAllAchievements(allGames, ACHIEVEMENT_DEFINITIONS, joueursData, brData);
 
   // Build the definitions array for client-side display (strip evaluator internals)
-  const clientDefinitions = ACHIEVEMENT_DEFINITIONS.map(def => ({
+  // Filter out BR achievements if no BR data available
+  const filteredDefinitions = ACHIEVEMENT_DEFINITIONS.filter(def => {
+    if (def.requiresBRData && !brData) {
+      return false; // Skip BR achievements when no BR data
+    }
+    return true;
+  });
+  
+  const clientDefinitions = filteredDefinitions.map(def => ({
     id: def.id,
     name: def.name,
     description: def.description,
@@ -108,6 +116,12 @@ async function main(sourceKey) {
     requiresBRData: def.requiresBRData || false,
   }));
 
+  // Filter out BR category if no BR data available
+  const filteredCategories = { ...ACHIEVEMENT_CATEGORIES };
+  if (!brData) {
+    delete filteredCategories.br;
+  }
+
   // Build output JSON
   const output = {
     version: '1.0.0',
@@ -115,7 +129,7 @@ async function main(sourceKey) {
     teamName: dataSource.name,
     totalPlayers: Object.keys(playerResults).length,
     totalGames: allGames.length,
-    categories: ACHIEVEMENT_CATEGORIES,
+    categories: filteredCategories,
     achievementDefinitions: clientDefinitions,
     players: playerResults,
   };
