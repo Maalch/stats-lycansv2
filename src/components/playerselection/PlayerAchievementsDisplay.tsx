@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import './PlayerAchievementsDisplay.css';
 import { AchievementStar } from './AchievementStar';
 import type {
@@ -10,6 +10,104 @@ import type {
   AchievementsData,
   PlayerAchievementProgress,
 } from '../../types/achievements';
+
+/** A single entry in the achievement ranking */
+interface AchievementRankingEntry {
+  rank: number;
+  playerName: string;
+  value: number;
+  isCurrentPlayer: boolean;
+  isSeparator?: false;
+}
+
+interface AchievementRankingSeparator {
+  isSeparator: true;
+}
+
+type AchievementRankingRow = AchievementRankingEntry | AchievementRankingSeparator;
+
+/**
+ * Build the ranking rows for an achievement.
+ * - Only players with value > 0 are ranked (except the current player who is always included).
+ * - If the current player is in the top 10, show top 10.
+ * - Otherwise show top 3 + "..." + 3 above + current + 3 below.
+ */
+function buildAchievementRanking(
+  allData: AchievementsData,
+  achievementId: string,
+  currentPlayerName: string | null
+): AchievementRankingRow[] {
+  // Collect all players' values for this achievement
+  const entries: { playerName: string; value: number }[] = [];
+  for (const player of Object.values(allData.players)) {
+    const ach = player.achievements.find(a => a.id === achievementId);
+    const value = ach?.currentValue || 0;
+    entries.push({ playerName: player.playerName, value });
+  }
+
+  // Filter: only players with value > 0 (always include current player)
+  const ranked = entries.filter(e => e.value > 0 || e.playerName === currentPlayerName);
+
+  // Sort descending by value, then alphabetically for ties
+  ranked.sort((a, b) => {
+    if (b.value !== a.value) return b.value - a.value;
+    return a.playerName.localeCompare(b.playerName);
+  });
+
+  if (ranked.length === 0) return [];
+
+  // Assign ranks (same value = same rank)
+  const withRanks: AchievementRankingEntry[] = [];
+  let currentRank = 1;
+  for (let i = 0; i < ranked.length; i++) {
+    if (i > 0 && ranked[i].value < ranked[i - 1].value) {
+      currentRank = i + 1;
+    }
+    withRanks.push({
+      rank: currentRank,
+      playerName: ranked[i].playerName,
+      value: ranked[i].value,
+      isCurrentPlayer: ranked[i].playerName === currentPlayerName,
+    });
+  }
+
+  // Find current player's index
+  const playerIndex = withRanks.findIndex(e => e.isCurrentPlayer);
+
+  // If player is in top 10 (index 0-9), show top 10 + 3 below if player is near the bottom
+  if (playerIndex >= 0 && playerIndex < 10) {
+    const endIndex = Math.max(10, playerIndex + 4); // +4 to include 3 players after
+    return withRanks.slice(0, Math.min(endIndex, withRanks.length));
+  }
+
+  // Otherwise: top 3 + separator + 3 above + player + 3 below
+  const rows: AchievementRankingRow[] = [];
+
+  // Top 3
+  const top3 = withRanks.slice(0, 3);
+  rows.push(...top3);
+
+  if (playerIndex < 0) {
+    // Player not in ranked list (shouldn't happen since we force-include them)
+    return rows;
+  }
+
+  // Determine the window around the player
+  const windowStart = Math.max(3, playerIndex - 3);
+  const windowEnd = Math.min(withRanks.length - 1, playerIndex + 3);
+
+  // Add separator if there's a gap between top 3 and the window
+  if (windowStart > 3) {
+    rows.push({ isSeparator: true });
+  }
+
+  // Add the window
+  for (let i = windowStart; i <= windowEnd; i++) {
+    rows.push(withRanks[i]);
+  }
+
+  return rows;
+}
 
 interface PlayerAchievementsDisplayProps {
   achievementsWithProgress: AchievementWithProgress[];
@@ -143,11 +241,25 @@ export function PlayerAchievementsDisplay({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   // Must be declared before early returns (Rules of Hooks)
   const [comparePlayerName, setComparePlayerName] = useState<string>('');
+  // Track which achievement's ranking is expanded (null = none)
+  const [expandedAchievementId, setExpandedAchievementId] = useState<string | null>(null);
 
-  // Reset comparison when the viewed player changes
+  // Reset comparison and expanded ranking when the viewed player changes
   useEffect(() => {
     setComparePlayerName('');
+    setExpandedAchievementId(null);
   }, [currentPlayerName]);
+
+  // Toggle achievement ranking panel
+  const handleAchievementClick = useCallback((achievementId: string) => {
+    setExpandedAchievementId(prev => prev === achievementId ? null : achievementId);
+  }, []);
+
+  // Pre-compute ranking for the expanded achievement
+  const expandedRanking = useMemo((): AchievementRankingRow[] => {
+    if (!expandedAchievementId || !allData) return [];
+    return buildAchievementRanking(allData, expandedAchievementId, currentPlayerName ?? null);
+  }, [expandedAchievementId, allData, currentPlayerName]);
 
   // Loading state
   if (isLoading) {
@@ -582,11 +694,14 @@ export function PlayerAchievementsDisplay({
                 rowClass = fullyUnlocked ? 'fully-unlocked' : hasProgress ? 'has-progress' : 'locked';
               }
 
+              const isExpanded = expandedAchievementId === achievement.id;
+
               return (
+                <div key={achievement.id}>
                 <div
-                  key={achievement.id}
-                  className={`achievement-row ${rowClass}${compareIsActive ? ' compare-mode' : ''}`}
+                  className={`achievement-row ${rowClass}${compareIsActive ? ' compare-mode' : ''}${!compareIsActive && allData ? ' clickable' : ''}${isExpanded ? ' expanded' : ''}`}
                   title={achievement.description}
+                  onClick={!compareIsActive && allData ? () => handleAchievementClick(achievement.id) : undefined}
                 >
                   <span className="achievement-row-emoji">{achievement.emoji}</span>
                   <div className="achievement-row-info">
@@ -594,6 +709,10 @@ export function PlayerAchievementsDisplay({
                     <span className="achievement-row-description">{achievement.description}</span>
                     <span className="achievement-row-explanation">{achievement.explanation}</span>
                   </div>
+
+                  {!compareIsActive && allData && (
+                    <span className={`achievement-row-expand-icon${isExpanded ? ' open' : ''}`}>▸</span>
+                  )}
 
                   {!compareIsActive ? (
                     <div className="achievement-row-stats">
@@ -656,6 +775,34 @@ export function PlayerAchievementsDisplay({
                       </div>
                     </>
                   )}
+                </div>
+
+                {/* Ranking panel — shown when expanded (only in non-compare mode) */}
+                {isExpanded && !compareIsActive && expandedRanking.length > 0 && (
+                  <div className="achievement-ranking-panel">
+                    <div className="achievement-ranking-header">
+                      <span className="achievement-ranking-title">🏅 Classement — {achievement.name}</span>
+                    </div>
+                    <div className="achievement-ranking-list">
+                      {expandedRanking.map((row, idx) =>
+                        row.isSeparator ? (
+                          <div key={`sep-${idx}`} className="achievement-ranking-separator">
+                            <span>⋯</span>
+                          </div>
+                        ) : (
+                          <div
+                            key={`${row.playerName}-${idx}`}
+                            className={`achievement-ranking-entry${row.isCurrentPlayer ? ' current-player' : ''}`}
+                          >
+                            <span className="achievement-ranking-rank">{row.rank}<sup>{row.rank === 1 ? 'er' : 'e'}</sup></span>
+                            <span className="achievement-ranking-name">{row.playerName}</span>
+                            <span className="achievement-ranking-value">{row.value}</span>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+                )}
                 </div>
               );
             })}
