@@ -22,17 +22,17 @@ export const MIN_GAMES_DEFAULTS = {
   /** Very low threshold - for new player inclusion */
   VERY_LOW: 1,
   /** Low threshold - for basic stats */
-  LOW: 3,
+  LOW: 10,
   /** Standard threshold - for most statistics */
-  STANDARD: 5,
+  STANDARD: 25,
   /** Medium threshold - for reliable averages */
-  MEDIUM: 10,
+  MEDIUM: 50,
   /** High threshold - for win rates and performance metrics */
-  HIGH: 15,
+  HIGH: 100,
   /** Very high threshold - for competitive rankings */
-  VERY_HIGH: 25,
+  VERY_HIGH: 200,
   /** Extreme threshold - for veterans only */
-  EXTREME: 50,
+  EXTREME: 300,
 } as const;
 
 // Predefined minimum games options for dropdowns
@@ -46,9 +46,9 @@ export const MIN_GAMES_OPTIONS = {
   /** Standard options for most charts */
   STANDARD: [3, 5, 15, 25, 50, 100] as const,
   /** Extended options for large datasets */
-  EXTENDED: [3, 5, 10, 20, 25, 50, 75, 100, 150, 200] as const,
+  EXTENDED: [3, 10, 25, 50, 100, 200, 400] as const,
   /** Meetings options, big  datasets */
-  MEETINGS: [3, 10, 25, 50, 100, 250, 400, 800] as const,
+  MEETINGS: [3, 25, 50, 100, 250, 500, 1000] as const,
 } as const;
 
 // Pagination defaults
@@ -62,7 +62,7 @@ export const PAGINATION_DEFAULTS = {
 // Other chart-specific defaults
 export const CHART_DEFAULTS = {
   /** Minimum meetings for voting statistics */
-  MIN_MEETINGS: 25,
+  MIN_MEETINGS: 50,
   /** Minimum wolf appearances for pairing stats */
   MIN_WOLF_APPEARANCES: 2,
   /** Minimum lover appearances for pairing stats */

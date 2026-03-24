@@ -25,7 +25,7 @@ export function PlayersGeneralStatisticsChart() {
   
   // Use navigationState to restore state from ranking navigation, with fallbacks to defaults
   const [minGamesForWinRate, setMinGamesForWinRate] = useState<number>(
-    navigationState.playersGeneralState?.minGamesForWinRate || MIN_GAMES_DEFAULTS.MEDIUM
+    navigationState.playersGeneralState?.minGamesForWinRate || MIN_GAMES_DEFAULTS.HIGH
   );
   const [winRateOrder, setWinRateOrder] = useState<'best' | 'worst'>(
     navigationState.playersGeneralState?.winRateOrder || 'best'
