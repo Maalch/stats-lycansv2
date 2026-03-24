@@ -370,39 +370,43 @@ export function maxLootInSingleGame(playerGames, allGames, playerId, params) {
 }
 
 /**
- * Count calendar days (sessions) where the player had a 100% win rate
- * with at least `minGames` games played that day.
- * Groups player games by YYYY-MM-DD from game.StartDate.
+ * Count sessions where the player had a 100% win rate
+ * with at least `minGames` games played in that session.
+ * A session groups consecutive games with < 6 hours gap between them.
  * Params: { minGames } — default 5
  */
 export function perfectSessions(playerGames, allGames, playerId, params) {
   const minGames = params.minGames ?? 5;
-  const dayMap = new Map(); // 'YYYY-MM-DD' → { wins, total, lastGameId }
+  const SESSION_GAP_MS = 6 * 60 * 60 * 1000;
 
-  for (const { game, playerStat } of playerGames) {
-    if (!game.StartDate) continue;
-    const d = new Date(game.StartDate);
-    if (isNaN(d.getTime())) continue;
+  // Sort games chronologically
+  const sorted = [...playerGames]
+    .filter(({ game }) => game.StartDate && game.EndDate)
+    .sort((a, b) => a.game.StartDate.localeCompare(b.game.StartDate));
 
-    const key = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+  if (sorted.length === 0) return { value: 0, gameIds: [] };
 
-    if (!dayMap.has(key)) {
-      dayMap.set(key, { wins: 0, total: 0, lastGameId: null });
+  // Group into sessions by proximity (< 6h gap)
+  const sessions = [[sorted[0]]];
+  for (let i = 1; i < sorted.length; i++) {
+    const prevEnd = new Date(sorted[i - 1].game.EndDate).getTime();
+    const curStart = new Date(sorted[i].game.StartDate).getTime();
+    if (curStart - prevEnd < SESSION_GAP_MS) {
+      sessions[sessions.length - 1].push(sorted[i]);
+    } else {
+      sessions.push([sorted[i]]);
     }
-
-    const entry = dayMap.get(key);
-    entry.total++;
-    if (playerStat.Victorious) entry.wins++;
-    entry.lastGameId = game.Id;
   }
 
   const gameIds = [];
   let value = 0;
 
-  for (const [, { wins, total, lastGameId }] of dayMap) {
-    if (total >= minGames && wins === total) {
+  for (const session of sessions) {
+    if (session.length < minGames) continue;
+    const allWins = session.every(({ playerStat }) => playerStat.Victorious);
+    if (allWins) {
       value++;
-      gameIds.push(lastGameId);
+      gameIds.push(session[session.length - 1].game.Id);
     }
   }
 

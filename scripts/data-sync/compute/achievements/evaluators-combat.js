@@ -258,10 +258,11 @@ export function sameColorKills(playerGames, allGames, playerId, params) {
 }
 /**
  * Count times the player killed the person who killed them in the previous game of the same session.
- * A session = games played on the same calendar day (UTC).
+ * A session groups consecutive games with < 6 hours gap between them.
  * Only the immediately preceding game in the same session is considered.
  */
 export function revengeKill(playerGames, allGames, playerId, params) {
+  const SESSION_GAP_MS = 6 * 60 * 60 * 1000;
   const gameIds = [];
   let value = 0;
 
@@ -277,14 +278,12 @@ export function revengeKill(playerGames, allGames, playerId, params) {
     const { game: currGame } = sortedGames[i];
 
     // Both games must have dates
-    if (!prevGame.StartDate || !currGame.StartDate) continue;
+    if (!prevGame.StartDate || !prevGame.EndDate || !currGame.StartDate) continue;
 
-    // Both must be on the same calendar day (UTC)
-    const prevDate = new Date(prevGame.StartDate);
-    const currDate = new Date(currGame.StartDate);
-    const prevDay = `${prevDate.getUTCFullYear()}-${prevDate.getUTCMonth()}-${prevDate.getUTCDate()}`;
-    const currDay = `${currDate.getUTCFullYear()}-${currDate.getUTCMonth()}-${currDate.getUTCDate()}`;
-    if (prevDay !== currDay) continue;
+    // Both must be in the same session (< 6h gap)
+    const prevEnd = new Date(prevGame.EndDate).getTime();
+    const curStart = new Date(currGame.StartDate).getTime();
+    if (curStart - prevEnd >= SESSION_GAP_MS) continue;
 
     // Player must have been killed in the previous game
     const killerIdInPrevGame = getKillerPlayerId(prevGame, prevStat);

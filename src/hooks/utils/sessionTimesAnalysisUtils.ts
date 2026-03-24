@@ -63,6 +63,7 @@ export function minutesToHHMM(minutes: number): string {
 }
 
 const BUCKET_SIZE_MINUTES = 30;
+const SESSION_GAP_MS = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
 
 export function computeSessionTimesAnalysis(gameData: GameLogEntry[]): SessionTimesAnalysis | null {
   // Only keep games with actual timestamps
@@ -72,24 +73,36 @@ export function computeSessionTimesAnalysis(gameData: GameLogEntry[]): SessionTi
 
   if (gamesWithTime.length === 0) return null;
 
-  // Group by UTC date
-  const byDay: Record<string, GameLogEntry[]> = {};
-  for (const game of gamesWithTime) {
-    const dateKey = game.StartDate.slice(0, 10); // "2025-10-09"
-    if (!byDay[dateKey]) byDay[dateKey] = [];
-    byDay[dateKey].push(game);
-  }
+  // Sort all games chronologically
+  const sorted = [...gamesWithTime].sort((a, b) => a.StartDate.localeCompare(b.StartDate));
 
-  // Build sessions sorted by date
-  const sessions: SessionTimeEntry[] = Object.entries(byDay)
-    .map(([date, games]) => {
-      games.sort((a, b) => a.StartDate.localeCompare(b.StartDate));
+  // Group into sessions: games belong to the same session if < 6 hours gap between them
+  const sessionGroups: GameLogEntry[][] = [];
+  let currentGroup: GameLogEntry[] = [sorted[0]];
+
+  for (let i = 1; i < sorted.length; i++) {
+    const prevEnd = new Date(sorted[i - 1].EndDate).getTime();
+    const curStart = new Date(sorted[i].StartDate).getTime();
+
+    if (curStart - prevEnd < SESSION_GAP_MS) {
+      currentGroup.push(sorted[i]);
+    } else {
+      sessionGroups.push(currentGroup);
+      currentGroup = [sorted[i]];
+    }
+  }
+  sessionGroups.push(currentGroup);
+
+  // Build sessions
+  const sessions: SessionTimeEntry[] = sessionGroups
+    .map((games) => {
       const first = games[0];
       const last = games[games.length - 1];
 
       const startDate = new Date(first.StartDate);
       const endDate = new Date(last.EndDate);
 
+      const date = first.StartDate.slice(0, 10);
       const [, month, day] = date.split('-');
       return {
         date,
