@@ -975,6 +975,14 @@
   background: var(--bg-secondary);
 }
 
+.achievement-ranking-entry:nth-child(even) {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.achievement-ranking-entry:nth-child(even):hover {
+  background: var(--bg-secondary);
+}
+
 .achievement-ranking-entry.current-player {
   background: rgba(var(--accent-primary-rgb, 99, 102, 241), 0.12);
   border: 1px solid rgba(var(--accent-primary-rgb, 99, 102, 241), 0.3);
