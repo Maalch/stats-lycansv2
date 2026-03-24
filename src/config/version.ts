@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.0';
+export const APP_VERSION = '1.8.1';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -15,7 +15,17 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
-    
+    version: 'v1.8.1',
+    date: '24/03/2026',
+    description: 'Ajout de statistiques sur les horaires de session (heure de début et de fin de session, en heure de Paris) dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'duration',
+      text: 'Stats Parties / Durée des Parties',
+      navigationState: { selectedDurationType: 'session' }
+    }
+  },
+  {
     version: 'v1.8.0',
     date: '20/03/2026',
     description: 'Nouveau système de Succès ! 85 accomplissements permanents / 439 niveaux à débloquer avec 4 paliers (⭐/⭐⭐/⭐⭐⭐/🐺) dans',

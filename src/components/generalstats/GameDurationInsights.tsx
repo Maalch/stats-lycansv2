@@ -4,6 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { useGameDurationAnalysisFromRaw } from '../../hooks/useGameDurationAnalysisFromRaw';
 import { useGameTimeAnalysisFromRaw } from '../../hooks/useGameTimeAnalysisFromRaw';
 import { useCampWinRateByGameTime } from '../../hooks/useCampWinRateByGameTime';
+import { useSessionTimesAnalysis } from '../../hooks/useSessionTimesAnalysis';
+import { minutesToHHMM } from '../../hooks/utils/sessionTimesAnalysisUtils';
 import { useNavigation } from '../../context/NavigationContext';
 import { useThemeAdjustedLycansColorScheme, lycansOtherCategoryColor, getRandomColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
@@ -13,10 +15,11 @@ export function GameDurationInsights() {
   const { durationAnalysis: jeuDonnees, fetchingData: telechargementActif, apiError: erreurApi } = useGameDurationAnalysisFromRaw();
   const { gameTimeAnalysis: tempsJeuDonnees, fetchingData: tempsJeuChargement, apiError: tempsJeuErreur } = useGameTimeAnalysisFromRaw();
   const { data: campWinRateData, isLoading: campWinRateLoading, error: campWinRateError } = useCampWinRateByGameTime();
+  const { sessionTimesData, isLoading: sessionTimesLoading, error: sessionTimesError } = useSessionTimesAnalysis();
   const { navigateToGameDetails } = useNavigation();
   
   // State for duration type selection
-  const [selectedDurationType, setSelectedDurationType] = useState<'real' | 'gametime'>('real');
+  const [selectedDurationType, setSelectedDurationType] = useState<'real' | 'gametime' | 'session'>('real');
 
   // Get theme-adjusted colors
   const lycansColorScheme = useThemeAdjustedLycansColorScheme();
@@ -98,6 +101,13 @@ export function GameDurationInsights() {
           onClick={() => setSelectedDurationType('gametime')}
         >
           Temps de jeu
+        </button>
+        <button
+          type="button"
+          className={`lycans-categorie-btn ${selectedDurationType === 'session' ? 'active' : ''}`}
+          onClick={() => setSelectedDurationType('session')}
+        >
+          Horaires de session
         </button>
       </div>
       
@@ -882,6 +892,197 @@ export function GameDurationInsights() {
               </div>
             </div>
           </div>
+        </>
+      )}
+
+      {selectedDurationType === 'session' && (
+        <>
+          {sessionTimesLoading && <div className="statistiques-attente">Analyse des horaires en cours...</div>}
+          {sessionTimesError && <div className="statistiques-echec">Erreur : {sessionTimesError}</div>}
+          {!sessionTimesLoading && !sessionTimesError && !sessionTimesData && (
+            <div className="statistiques-indisponibles">Aucune session avec horodatage précis trouvée</div>
+          )}
+          {sessionTimesData && (
+            <>
+              <div className="lycans-section-description">
+                <p>
+                  <strong>Horaires de session :</strong> Analyse basée sur {sessionTimesData.totalSessions} sessions
+                  (jours avec au moins une partie horodatée précisément).
+                  Les heures sont en heure de Paris (CET/CEST, avec heure d'été).
+                </p>
+              </div>
+
+              <div className="lycans-resume-conteneur">
+                <div className="lycans-stat-carte">
+                  <h3>Sessions analysées</h3>
+                  <p className="lycans-valeur-principale">{sessionTimesData.totalSessions}</p>
+                </div>
+                <div className="lycans-stat-carte">
+                  <h3>Début moyen</h3>
+                  <p className="lycans-valeur-principale">{minutesToHHMM(sessionTimesData.avgStartMinutes)}</p>
+                </div>
+                <div className="lycans-stat-carte">
+                  <h3>Fin moyenne</h3>
+                  <p className="lycans-valeur-principale">{minutesToHHMM(sessionTimesData.avgEndMinutes)}</p>
+                </div>
+              </div>
+
+              <div className="lycans-resume-conteneur">
+                <div className="lycans-stat-carte">
+                  <h3>Début le plus tôt</h3>
+                  <p className="lycans-valeur-principale">{minutesToHHMM(sessionTimesData.minStartMinutes)}</p>
+                </div>
+                <div className="lycans-stat-carte">
+                  <h3>Début le plus tard</h3>
+                  <p className="lycans-valeur-principale">{minutesToHHMM(sessionTimesData.maxStartMinutes)}</p>
+                </div>
+                <div className="lycans-stat-carte">
+                  <h3>Fin la plus tôt</h3>
+                  <p className="lycans-valeur-principale">{minutesToHHMM(sessionTimesData.minEndMinutes)}</p>
+                </div>
+                <div className="lycans-stat-carte">
+                  <h3>Fin la plus tard</h3>
+                  <p className="lycans-valeur-principale">{minutesToHHMM(sessionTimesData.maxEndMinutes)}</p>
+                </div>
+              </div>
+
+              <div className="lycans-graphiques-section">
+                {/* Chart 1: Timeline per session */}
+                <div className="lycans-graphique-element">
+                  <h3>Horaires par session</h3>
+                  <FullscreenChart title="Horaires par session">
+                    <div style={{ height: 350 }}>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <ComposedChart
+                          data={sessionTimesData.sessions}
+                          margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis
+                            dataKey="label"
+                            angle={-45}
+                            textAnchor="end"
+                            height={70}
+                            interval={0}
+                            tick={({ x, y, payload }) => (
+                              <text
+                                x={x}
+                                y={y}
+                                dy={16}
+                                textAnchor="end"
+                                fill="var(--text-secondary)"
+                                fontSize={11}
+                                transform={`rotate(-45 ${x} ${y})`}
+                              >
+                                {payload.value}
+                              </text>
+                            )}
+                          />
+                          <YAxis
+                            domain={['auto', 'auto']}
+                            tickFormatter={minutesToHHMM}
+                            label={{ value: 'Heure (Paris)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' } }}
+                          />
+                          <Tooltip
+                            content={({ active, payload }) => {
+                              if (active && payload && payload.length > 0) {
+                                const entry = payload[0].payload;
+                                return (
+                                  <div style={{
+                                    background: 'var(--bg-secondary)',
+                                    border: '1px solid var(--border-color)',
+                                    borderRadius: '8px',
+                                    padding: '10px 14px',
+                                    fontSize: '0.85rem',
+                                  }}>
+                                    <p style={{ fontWeight: 'bold', marginBottom: 4 }}>{entry.date}</p>
+                                    <p style={{ color: 'var(--chart-color-3)' }}>Début : {minutesToHHMM(entry.sessionStart)}</p>
+                                    <p style={{ color: 'var(--chart-color-5)' }}>Fin : {minutesToHHMM(entry.sessionEnd)}</p>
+                                    <p style={{ color: 'var(--text-secondary)' }}>{entry.gamesCount} partie{entry.gamesCount > 1 ? 's' : ''}</p>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            }}
+                          />
+                          <Legend />
+                          <Line
+                            type="monotone"
+                            dataKey="sessionStart"
+                            name="Début de session"
+                            stroke="var(--chart-color-3)"
+                            strokeWidth={2}
+                            dot={{ r: 5, fill: 'var(--chart-color-3)' }}
+                            activeDot={{ r: 7 }}
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="sessionEnd"
+                            name="Fin de session"
+                            stroke="var(--chart-color-5)"
+                            strokeWidth={2}
+                            dot={{ r: 5, fill: 'var(--chart-color-5)' }}
+                            activeDot={{ r: 7 }}
+                          />
+                        </ComposedChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </FullscreenChart>
+                </div>
+
+                {/* Chart 2: Distribution of start & end times in 30-min buckets */}
+                <div className="lycans-graphique-element">
+                  <h3>Distribution des horaires de début et fin</h3>
+                  <FullscreenChart title="Distribution des horaires de début et fin">
+                    <div style={{ height: 320 }}>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                          data={sessionTimesData.distribution}
+                          margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis
+                            dataKey="label"
+                            label={{ value: 'Heure (Paris)', position: 'insideBottom', offset: -5 }}
+                          />
+                          <YAxis
+                            allowDecimals={false}
+                            label={{ value: 'Nombre de sessions', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' } }}
+                          />
+                          <Tooltip
+                            content={({ active, payload, label: bucketLabel }) => {
+                              if (active && payload && payload.length > 0) {
+                                return (
+                                  <div style={{
+                                    background: 'var(--bg-secondary)',
+                                    border: '1px solid var(--border-color)',
+                                    borderRadius: '8px',
+                                    padding: '10px 14px',
+                                    fontSize: '0.85rem',
+                                  }}>
+                                    <p style={{ fontWeight: 'bold', marginBottom: 4 }}>{bucketLabel}</p>
+                                    {payload.map((p) => (
+                                      <p key={p.dataKey as string} style={{ color: p.color }}>
+                                        {p.name} : {p.value} session{Number(p.value) > 1 ? 's' : ''}
+                                      </p>
+                                    ))}
+                                  </div>
+                                );
+                              }
+                              return null;
+                            }}
+                          />
+                          <Legend />
+                          <Bar dataKey="startCount" name="Début de session" fill="var(--chart-color-3)" />
+                          <Bar dataKey="endCount" name="Fin de session" fill="var(--chart-color-5)" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </FullscreenChart>
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
