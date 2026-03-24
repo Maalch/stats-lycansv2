@@ -909,6 +909,7 @@ export function GameDurationInsights() {
                   <strong>Horaires de session :</strong> Analyse basée sur {sessionTimesData.totalSessions} sessions
                   (jours avec au moins une partie horodatée précisément).
                   Les heures sont en heure de Paris (CET/CEST, avec heure d'été).
+                  Horaires de début et de fin hors mode Battle Royale
                 </p>
               </div>
 
