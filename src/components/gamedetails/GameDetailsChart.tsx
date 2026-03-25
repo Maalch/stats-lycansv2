@@ -3,6 +3,7 @@ import { useGameDetailsFromRaw } from '../../hooks/useGameDetailsFromRaw';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
+import { getPlayerCampFromRole, getPlayerFinalRole } from '../../utils/datasyncExport';
 import { GameDetailView } from './GameDetailView';
 import { formatDuration } from '../../utils/durationFormatters';
 import { PAGINATION_DEFAULTS } from '../../config/chartConstants';
@@ -77,9 +78,40 @@ export function GameDetailsChart() {
   // Get dynamic column name based on target players
   const getWinnerColumnName = (): string => {
     if (targetPlayers.length === 0) return 'Vainqueur';
-    if (targetPlayers.length === 1) return targetPlayers[0] + ' (victoire)';
-    if (targetPlayers.length === 2) return targetPlayers.join(' & ') + ' (victoires)';
-    return `${targetPlayers.slice(0, 2).join(' & ')} (+${targetPlayers.length - 2}) (victoires)`;
+    if (targetPlayers.length === 1) return targetPlayers[0];
+    if (targetPlayers.length === 2) return targetPlayers.join(' & ');
+    return `${targetPlayers.slice(0, 2).join(' & ')} (+${targetPlayers.length - 2})`;
+  };
+
+  // Render camp + victory icon for a single target player, or victory-only for multiple players
+  const renderPlayerCampColumn = (game: any): React.ReactNode => {
+    if (!showWinnerColumn) return null;
+
+    if (targetPlayers.length === 1) {
+      const targetPlayer = targetPlayers[0];
+      const playerStat = game.playerData?.find((p: any) =>
+        p.Username.toLowerCase() === targetPlayer.toLowerCase()
+      );
+
+      if (!playerStat) {
+        return <span style={{ color: 'var(--text-secondary)', fontStyle: 'italic' }}>Pas dans la partie</span>;
+      }
+
+      const finalRole = getPlayerFinalRole(playerStat.MainRoleInitial, playerStat.MainRoleChanges || []);
+      const camp = getPlayerCampFromRole(finalRole);
+      const campColor = lycansColorScheme[camp] || 'var(--text-primary)';
+      const victoryIcon = playerStat.Victorious ? '✅' : '❌';
+
+      return (
+        <>
+          {victoryIcon}   
+          {' '}<span style={{ color: campColor, fontWeight: 600 }}>{camp}</span>
+        </>
+      );
+    }
+
+    // Multiple players: keep victory-only display
+    return <>{getGameWinners(game)}</>;
   };
 
   // Helper function to get winners from target players for a specific game
@@ -495,10 +527,10 @@ export function GameDetailsChart() {
                   {showWinnerColumn && (
                     <td style={{ 
                       textAlign: 'left', 
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                       verticalAlign: 'middle'
                     }}>
-                      {getGameWinners(game)}
+                      {renderPlayerCampColumn(game)}
                     </td>
                   )}
                   <td>

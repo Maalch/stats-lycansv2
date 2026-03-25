@@ -390,14 +390,18 @@ export function MonthlyRankingChart() {
     setIsPlaying(false);
   }, []);
 
-  // Player click handler — navigate to game details
+  // Player click handler — navigate to game details filtered by the current month
   const handlePlayerClick = useCallback((playerName: string) => {
+    // Convert "YYYY-MM" to "MM/YYYY" for selectedDate period filter
+    const selectedDate = effectiveMonth
+      ? effectiveMonth.split('-').reverse().join('/')
+      : undefined;
     navigateToGameDetails({
       selectedPlayer: playerName,
-      selectedPlayerWinMode: 'wins-only',
+      selectedDate,
       fromComponent: `Classement Mensuel — ${currentMonthData?.label || ''}`
     });
-  }, [navigateToGameDetails, currentMonthData]);
+  }, [navigateToGameDetails, currentMonthData, effectiveMonth]);
 
   // Game context click handler
   const handleGameClick = useCallback((gameId: string) => {

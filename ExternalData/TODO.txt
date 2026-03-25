@@ -1,0 +1,2 @@
+- Improvements to the “Match Details” page when navigating there from another chart. Currently, the details page often confuses users because the menu buttons are not visible and the back button (“Back to XXX”) is not very clear.
+- When a player is highlighted, the bar charts do not always behave the same way for that player. Some charts display a blue border around the player, while others simply change the bar’s color to blue. This should be standardized, and the same approach used in PlayersGeneralStatisticsChart.tsx should be adopted.
