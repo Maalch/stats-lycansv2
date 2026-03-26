@@ -3,8 +3,8 @@ import type { GameLogEntry } from '../useCombinedRawData';
 export interface SessionTimeEntry {
   date: string;         // "2025-10-09"
   label: string;        // "09/10" for display
-  sessionStart: number; // minutes from midnight UTC (first game start)
-  sessionEnd: number;   // minutes from midnight UTC (last game end)
+  sessionStart: number; // minutes since midnight Paris time (first game start); may exceed 1440 if after midnight but before 8 AM
+  sessionEnd: number;   // minutes since midnight Paris time (last game end); may exceed 1440 if session goes past midnight (e.g. 02:00 → 1560)
   gamesCount: number;
   firstGameId: string;
   lastGameId: string;
@@ -64,6 +64,8 @@ export function minutesToHHMM(minutes: number): string {
 
 const BUCKET_SIZE_MINUTES = 30;
 const SESSION_GAP_MS = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+// Times before this hour (Paris) are treated as "past midnight" and get +24h added
+const DAY_CHANGE_MINUTES = 8 * 60; // 8:00 AM = 480 minutes
 
 export function computeSessionTimesAnalysis(gameData: GameLogEntry[]): SessionTimesAnalysis | null {
   // Only keep games with actual timestamps
@@ -104,11 +106,19 @@ export function computeSessionTimesAnalysis(gameData: GameLogEntry[]): SessionTi
 
       const date = first.StartDate.slice(0, 10);
       const [, month, day] = date.split('-');
+
+      let sessionStart = toParisMinutes(startDate);
+      let sessionEnd = toParisMinutes(endDate);
+
+      // Treat times before 8 AM as "past midnight" (next-day continuation)
+      if (sessionStart < DAY_CHANGE_MINUTES) sessionStart += 24 * 60;
+      if (sessionEnd < DAY_CHANGE_MINUTES) sessionEnd += 24 * 60;
+
       return {
         date,
         label: `${day}/${month}`,
-        sessionStart: toParisMinutes(startDate),
-        sessionEnd: toParisMinutes(endDate),
+        sessionStart,
+        sessionEnd,
         gamesCount: games.length,
         firstGameId: first.DisplayedId,
         lastGameId: last.DisplayedId,

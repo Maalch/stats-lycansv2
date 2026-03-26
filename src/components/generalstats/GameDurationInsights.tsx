@@ -964,7 +964,15 @@ export function GameDurationInsights() {
                             angle={-45}
                             textAnchor="end"
                             height={70}
-                            interval={0}
+                            interval={
+                              sessionTimesData.sessions.length > 50
+                                ? Math.floor(sessionTimesData.sessions.length / 12)
+                                : sessionTimesData.sessions.length > 30
+                                ? 2
+                                : sessionTimesData.sessions.length > 15
+                                ? 1
+                                : 0
+                            }
                             tick={({ x, y, payload }) => (
                               <text
                                 x={x}
