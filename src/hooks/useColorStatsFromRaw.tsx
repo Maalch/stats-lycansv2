@@ -1,8 +1,8 @@
 import { useGameStatsBase } from './utils/baseStatsHook';
-import { computeColorStats } from './utils/colorStatsUtils';
+import { computeColorStats, computePlayerColorMatrix } from './utils/colorStatsUtils';
 
-// Re-export interface for convenience
-export type { ColorStats } from './utils/colorStatsUtils';
+// Re-export interfaces for convenience
+export type { ColorStats, PlayerColorMatrix, PlayerColorCell } from './utils/colorStatsUtils';
 
 /**
  * Hook to calculate color statistics from raw filtered game data.
@@ -15,6 +15,22 @@ export function useColorStatsFromRaw() {
 
   return {
     data: colorStats,
+    isLoading,
+    error
+  };
+}
+
+/**
+ * Hook to calculate player-color matrix from raw filtered game data.
+ * Returns a matrix of players × colors with game counts for bubble chart visualization.
+ */
+export function usePlayerColorMatrixFromRaw() {
+  const { data: matrixData, isLoading, error } = useGameStatsBase(
+    (gameData) => computePlayerColorMatrix(gameData)
+  );
+
+  return {
+    data: matrixData,
     isLoading,
     error
   };
