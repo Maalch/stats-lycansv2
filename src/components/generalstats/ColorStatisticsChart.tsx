@@ -315,9 +315,10 @@ export function ColorStatisticsChart() {
               <FullscreenChart title="Répartition des Couleurs par Joueur">
                 <div
                   ref={matrixContainerRef}
-                  style={{ position: 'relative', width: '100%', overflowX: 'auto', display: 'flex', justifyContent: 'center' }}
+                  style={{ position: 'relative', width: '100%', overflowX: 'auto' }}
                 >
-                  <svg width={svgWidth} height={svgHeight} style={{ display: 'block', flexShrink: 0 }}>
+                  <div style={{ display: 'flex', justifyContent: 'center', minWidth: svgWidth }}>
+                  <svg width={svgWidth} height={svgHeight} style={{ display: 'block' }}>
                     {/* Color column headers */}
                     {matrixData.colors.map((color, ci) => {
                       const cx = LABEL_WIDTH + ci * COL_WIDTH + COL_WIDTH / 2;
@@ -424,6 +425,7 @@ export function ColorStatisticsChart() {
                       );
                     })}
                   </svg>
+                  </div>
 
                   {/* Tooltip */}
                   {hoveredCell && tooltipPos && (
