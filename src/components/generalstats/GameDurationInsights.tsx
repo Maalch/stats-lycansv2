@@ -907,10 +907,12 @@ export function GameDurationInsights() {
               <div className="lycans-section-description">
                 <p>
                   <strong>Horaires de session :</strong> Analyse basée sur {sessionTimesData.totalSessions} sessions
-                  (jours avec au moins une partie horodatée précisément).
-                  Les heures sont en heure de Paris (CET/CEST, avec heure d'été).
-                  Horaires de début et de fin hors mode Battle Royale
+                  (jours avec toutes les parties horodatées précisément).
                 </p>
+                <p>
+                  Les heures sont en heure de Paris (CET/CEST, avec heure d'été).                 
+                </p>
+                <p>Horaires de début et de fin hors parties jouées en mode Battle Royale.</p>
               </div>
 
               <div className="lycans-resume-conteneur">
