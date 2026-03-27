@@ -290,7 +290,7 @@ export default function App() {
 
 function MainApp() {
   const { settings, updateSettings } = useSettings();
-  const { currentView, requestedTab, clearTabNavigation, updateNavigationState } = useNavigation();
+  const { currentView, requestedTab, clearTabNavigation, clearNavigation, updateNavigationState } = useNavigation();
   const [selectedMainTab, setSelectedMainTab] = useState('playerSelection');
   const [selectedPlayerStat, setSelectedPlayerStat] = useState('playersGeneral');
   const [selectedGeneralStat, setSelectedGeneralStat] = useState('evolution');
@@ -366,34 +366,23 @@ function MainApp() {
     }
   }, [requestedTab, clearTabNavigation]);
 
-  // If we're in game details view, show that instead of the normal tabs
-  if (currentView === 'gameDetails') {
-    return (
-      <div className="app-container">
-        <img
-          className="lycans-banner"
-          src={`${import.meta.env.BASE_URL}lycansBannerSVG.svg`}
-          alt="Lycans Banner"
-        />
-        <div className="main-container">
-          <div className="lycans-dashboard-container">
-            <div className="lycans-dashboard-section">
-              <SettingsIndicator />
-              <div className="lycans-dashboard-content">
-                <ErrorBoundary>
-                  <Suspense fallback={<LoadingSkeleton type="chart" height="600px" />}>
-                    <GameDetailsChart />
-                  </Suspense>
-                </ErrorBoundary>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // When navigating to game details from a chart, highlight the gameDetails tab
+  const effectiveMainTab = currentView === 'gameDetails' ? 'gameDetails' : selectedMainTab;
 
   const renderContent = () => {
+    // Chart-driven navigation to game details takes precedence over selectedMainTab
+    if (currentView === 'gameDetails') {
+      return (
+        <div className="lycans-dashboard-content">
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingSkeleton type="chart" height="600px" />}>
+              <GameDetailsChart />
+            </Suspense>
+          </ErrorBoundary>
+        </div>
+      );
+    }
+
     switch (selectedMainTab) {
       
       case 'playerSelection': {
@@ -576,8 +565,12 @@ function MainApp() {
                   .map(tab => (
                     <button
                       key={tab.key}
-                      className={`lycans-main-menu-btn${selectedMainTab === tab.key ? ' active' : ''}`}
+                      className={`lycans-main-menu-btn${effectiveMainTab === tab.key ? ' active' : ''}`}
                       onClick={() => {
+                        // Clear navigation state when switching tabs during chart-driven navigation
+                        if (currentView === 'gameDetails') {
+                          clearNavigation();
+                        }
                         setSelectedMainTab(tab.key);
                         // Determine default subtab for tabs that have subtabs
                         let defaultSubtab: string | null = null;

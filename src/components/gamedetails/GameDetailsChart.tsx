@@ -386,7 +386,7 @@ export function GameDetailsChart() {
         {navigationFilters.fromComponent && (
           <button 
             onClick={navigateBack}
-            className="lycans-submenu-btn"
+            className="lycans-back-btn"
             style={{ marginTop: '1rem' }}
           >
             ← Retour à {decodeURIComponent(navigationFilters.fromComponent)}
@@ -400,23 +400,40 @@ export function GameDetailsChart() {
     <div className="lycans-game-details">
       {/* Header with navigation and filters */}
       <div className="lycans-game-details-header">
-        <div className="lycans-game-details-navigation">
-          {navigationFilters.fromComponent && (
-            <button 
-              onClick={navigateBack}
-              className="lycans-submenu-btn"
-              style={{ marginRight: '1rem' }}
-            >
-              ← Retour à {decodeURIComponent(navigationFilters.fromComponent)}
-            </button>
-          )}
-          <h2>Détails des Parties ({data.length} partie{data.length > 1 ? 's' : ''})</h2>
-        </div>
-        
-        {getFilterSummary().length > 0 && (
-          <div className="lycans-active-filters">
-            <strong>Filtres actifs:</strong> {getFilterSummary().join(', ')}
-          </div>
+        {navigationFilters.fromComponent ? (
+          <>
+            <div className="lycans-navigation-banner">
+              <button 
+                onClick={navigateBack}
+                className="lycans-back-btn"
+              >
+                ← Retour
+              </button>
+              <div className="lycans-nav-origin">
+                <span className="lycans-nav-origin-label">Depuis :</span>
+                <span className="lycans-nav-origin-name">{decodeURIComponent(navigationFilters.fromComponent)}</span>
+              </div>
+              <div className="lycans-nav-count">
+                {data.length} partie{data.length > 1 ? 's' : ''}
+              </div>
+            </div>
+            {getFilterSummary().length > 0 && (
+              <div className="lycans-active-filters">
+                <strong>Filtres actifs:</strong> {getFilterSummary().join(', ')}
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="lycans-game-details-navigation">
+              <h2>Détails des Parties ({data.length} partie{data.length > 1 ? 's' : ''})</h2>
+            </div>
+            {getFilterSummary().length > 0 && (
+              <div className="lycans-active-filters">
+                <strong>Filtres actifs:</strong> {getFilterSummary().join(', ')}
+              </div>
+            )}
+          </>
         )}
       </div>
 
