@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.1';
+export const APP_VERSION = '1.8.2';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,18 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.8.2',
+    date: '27/03/2026',
+    description: 'Ajout de statistiques individuelles sur les couleurs jouées (fréquence et taux de victoire par couleur) dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueur / Couleurs',
+      navigationState: {
+        selectedPlayerSelectionView: 'colors'
+      }
+    }
+  },
   {
     version: 'v1.8.1',
     date: '24/03/2026',

@@ -1,6 +1,7 @@
 import { CHANGELOG } from '../../config/version';
 import type { ChangelogEntry } from '../../config/version';
 import { useNavigation } from '../../context/NavigationContext';
+import { useSettings } from '../../context/SettingsContext';
 import { AchievementStar } from '../playerselection/AchievementStar';
 
 interface ChangelogPageProps {
@@ -9,12 +10,31 @@ interface ChangelogPageProps {
 
 export function ChangelogPage({ onClose }: ChangelogPageProps) {
   const { navigateToTab, updateNavigationState } = useNavigation();
+  const { settings, updateSettings } = useSettings();
 
   const handleLinkClick = (mainTab: string, subTab?: string, navigationState?: Record<string, any>) => {
     // Set navigation state first if provided
     if (navigationState) {
       updateNavigationState(navigationState);
     }
+
+    // For playerSelection links, sync view to settings and auto-select a default player
+    if (mainTab === 'playerSelection') {
+      const settingsUpdate: Record<string, any> = {};
+
+      if (navigationState?.selectedPlayerSelectionView) {
+        settingsUpdate.selectedPlayerSelectionView = navigationState.selectedPlayerSelectionView;
+      }
+
+      if (!settings.highlightedPlayer) {
+        settingsUpdate.highlightedPlayer = settings.dataSource === 'discord' ? 'Nales' : 'Ponce';
+      }
+
+      if (Object.keys(settingsUpdate).length > 0) {
+        updateSettings(settingsUpdate);
+      }
+    }
+
     // Then navigate to the tab
     navigateToTab(mainTab, subTab);
     onClose(); // Close the changelog after navigation
