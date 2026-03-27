@@ -69,8 +69,22 @@ const DAY_CHANGE_MINUTES = 8 * 60; // 8:00 AM = 480 minutes
 
 export function computeSessionTimesAnalysis(gameData: GameLogEntry[]): SessionTimesAnalysis | null {
   // Only keep games with actual timestamps
+  // Also exclude entire days where at least one game lacks a real timestamp,
+  // because mixed data (some from game log, some from Google Sheets) produces
+  // incorrect session boundaries.
+  const datesWithPlaceholder = new Set<string>();
+  for (const game of gameData) {
+    if (game.StartDate && !hasRealTimestamp(game.StartDate)) {
+      datesWithPlaceholder.add(game.StartDate.slice(0, 10));
+    }
+  }
+
   const gamesWithTime = gameData.filter(
-    (game) => game.StartDate && game.EndDate && hasRealTimestamp(game.StartDate)
+    (game) =>
+      game.StartDate &&
+      game.EndDate &&
+      hasRealTimestamp(game.StartDate) &&
+      !datesWithPlaceholder.has(game.StartDate.slice(0, 10))
   );
 
   if (gamesWithTime.length === 0) return null;
