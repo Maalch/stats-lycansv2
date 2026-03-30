@@ -18,6 +18,7 @@ const PlayerSeriesChart = lazy(() => import('./components/playerstats/PlayerSeri
 const TalkingTimeChart = lazy(() => import('./components/playerstats/TalkingTimeChart').then(m => ({ default: m.TalkingTimeChart })));
 const LootStatisticsChart = lazy(() => import('./components/playerstats/LootStatisticsChart').then(m => ({ default: m.LootStatisticsChart })));
 const RoleActionsRankingChart = lazy(() => import('./components/playerstats/RoleActionsRankingChart').then(m => ({ default: m.RoleActionsRankingChart })));
+const PotionScrollStatsChart = lazy(() => import('./components/playerstats/PotionScrollStatsChart').then(m => ({ default: m.PotionScrollStatsChart })));
 const MonthlyRankingChart = lazy(() => import('./components/playerstats/MonthlyRanking/MonthlyRankingChart').then(m => ({ default: m.MonthlyRankingChart })));
 
 // Death statistics components
@@ -163,6 +164,12 @@ const PLAYER_STATS_MENU = [
     label: 'Récolte', 
     component: LootStatisticsChart,
     description: 'Classement du loot collecté par joueur'
+  },
+  { 
+    key: 'potionScrollStats', 
+    label: 'Potions & Parchemins', 
+    component: PotionScrollStatsChart,
+    description: 'Classement par utilisation de potions et parchemins'
   },
   { 
     key: 'roleActions', 

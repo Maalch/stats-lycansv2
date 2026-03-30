@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.2';
+export const APP_VERSION = '1.8.3';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.8.3',
+    date: '30/03/2026',
+    description: 'Nouveau classement Potions & Parchemins : classement des joueurs par potions bues, parchemins utilisés et joueurs les plus ciblés par les parchemins dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'potionScrollStats',
+      text: 'Classements / Potions & Parchemins'
+    }
+  },
   {
     version: 'v1.8.2',
     date: '27/03/2026',

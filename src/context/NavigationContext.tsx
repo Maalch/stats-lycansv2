@@ -113,6 +113,12 @@ export interface MonthlyRankingState {
   playSpeed?: number; // Animation speed in milliseconds (500, 1000, 2000)
 }
 
+export interface PotionScrollStatsState {
+  minGames: number;
+  campFilter?: string;
+  selectedView?: string;
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
@@ -143,6 +149,7 @@ export interface NavigationState {
   deathLocationState?: DeathLocationState;
   roleActionsRankingState?: RoleActionsRankingState;
   monthlyRankingState?: MonthlyRankingState;
+  potionScrollStatsState?: PotionScrollStatsState;
 }
 
 interface NavigationContextType {
