@@ -337,11 +337,7 @@ export function TalkingTimeChart() {
                           y={y}
                           width={width}
                           height={height}
-                          fill={
-                            isHighlightedFromSettings ? 'var(--accent-primary)' :
-                            isHighlightedAddition ? 'var(--accent-secondary)' :
-                            playerColor
-                          }
+                          fill={playerColor}
                           stroke={
                             isHighlightedFromSettings ? 'var(--accent-primary)' :
                             isHoveredPlayer ? '#000000' :

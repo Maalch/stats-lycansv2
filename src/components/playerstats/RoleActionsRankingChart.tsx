@@ -447,11 +447,7 @@ export function RoleActionsRankingChart() {
                             y={y}
                             width={width}
                             height={height}
-                            fill={
-                              isHighlightedFromSettings ? 'var(--accent-primary)' :
-                              isHighlightedAddition ? 'var(--accent-secondary)' :
-                              playerColor
-                            }
+                            fill={playerColor}
                             stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : isHoveredPlayer ? '#000000' : 'none'}
                             strokeWidth={isHighlightedFromSettings ? 3 : isHoveredPlayer ? 2 : 0}
                             strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
@@ -573,11 +569,7 @@ export function RoleActionsRankingChart() {
                             y={y}
                             width={width}
                             height={height}
-                            fill={
-                              isHighlightedFromSettings ? 'var(--accent-primary)' :
-                              isHighlightedAddition ? 'var(--accent-secondary)' :
-                              playerColor
-                            }
+                            fill={playerColor}
                             stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : isHoveredPlayer ? '#000000' : 'none'}
                             strokeWidth={isHighlightedFromSettings ? 3 : isHoveredPlayer ? 2 : 0}
                             strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
@@ -727,11 +719,7 @@ export function RoleActionsRankingChart() {
                             y={y}
                             width={width}
                             height={height}
-                            fill={
-                              isHighlightedFromSettings ? 'var(--accent-primary)' :
-                              isHighlightedAddition ? 'var(--accent-secondary)' :
-                              playerColor
-                            }
+                            fill={playerColor}
                             stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : isHoveredPlayer ? '#000000' : 'none'}
                             strokeWidth={isHighlightedFromSettings ? 3 : isHoveredPlayer ? 2 : 0}
                             strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}

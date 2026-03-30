@@ -320,23 +320,27 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     const isHovered = highlightedPlayer === entry.playerName;
 
-                    const fillColor = isHighlightedFromSettings
-                      ? 'var(--accent-primary)'
-                      : isHighlightedAddition
-                        ? 'var(--accent-secondary)'
-                        : isHovered
-                          ? 'var(--accent-hover)'
-                          : (playersColor[entry.playerName] || 'var(--chart-primary)');
-
                     return (
                       <Rectangle
                         x={x}
                         y={y}
                         width={width}
                         height={height}
-                        fill={fillColor}
-                        stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
-                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        fill={playersColor[entry.playerName] || 'var(--chart-primary)'}
+                        stroke={
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHovered
+                              ? 'var(--text-primary)'
+                              : 'none'
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHovered
+                              ? 2
+                              : 0
+                        }
                         strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => handlePlayerClick(entry)}
@@ -484,23 +488,27 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     const isHovered = highlightedPlayer === entry.playerName;
 
-                    const fillColor = isHighlightedFromSettings
-                      ? 'var(--accent-primary)'
-                      : isHighlightedAddition
-                        ? 'var(--accent-secondary)'
-                        : isHovered
-                          ? 'var(--accent-hover)'
-                          : (playersColor[entry.playerName] || 'var(--chart-primary)');
-
                     return (
                       <Rectangle
                         x={x}
                         y={y}
                         width={width}
                         height={height}
-                        fill={fillColor}
-                        stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
-                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        fill={playersColor[entry.playerName] || 'var(--chart-primary)'}
+                        stroke={
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHovered
+                              ? 'var(--text-primary)'
+                              : 'none'
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHovered
+                              ? 2
+                              : 0
+                        }
                         strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => handlePlayerClick(entry)}
@@ -650,23 +658,27 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     const isHovered = highlightedPlayer === entry.playerName;
 
-                    const fillColor = isHighlightedFromSettings
-                      ? 'var(--accent-primary)'
-                      : isHighlightedAddition
-                        ? 'var(--accent-secondary)'
-                        : isHovered
-                          ? 'var(--accent-hover)'
-                          : (playersColor[entry.playerName] || 'var(--chart-primary)');
-
                     return (
                       <Rectangle
                         x={x}
                         y={y}
                         width={width}
                         height={height}
-                        fill={fillColor}
-                        stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
-                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        fill={playersColor[entry.playerName] || 'var(--chart-primary)'}
+                        stroke={
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHovered
+                              ? 'var(--text-primary)'
+                              : 'none'
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHovered
+                              ? 2
+                              : 0
+                        }
                         strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => handlePlayerClick(entry)}
@@ -819,23 +831,27 @@ export function VotingTimingCharts({ minMeetings }: VotingTimingChartsProps) {
                     const isHighlightedAddition = entry.isHighlightedAddition;
                     const isHovered = highlightedPlayer === entry.playerName;
 
-                    const fillColor = isHighlightedFromSettings
-                      ? 'var(--accent-primary)'
-                      : isHighlightedAddition
-                        ? 'var(--accent-secondary)'
-                        : isHovered
-                          ? 'var(--accent-hover)'
-                          : (playersColor[entry.playerName] || 'var(--chart-primary)');
-
                     return (
                       <Rectangle
                         x={x}
                         y={y}
                         width={width}
                         height={height}
-                        fill={fillColor}
-                        stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
-                        strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                        fill={playersColor[entry.playerName] || 'var(--chart-primary)'}
+                        stroke={
+                          isHighlightedFromSettings
+                            ? 'var(--accent-primary)'
+                            : isHovered
+                              ? 'var(--text-primary)'
+                              : 'none'
+                        }
+                        strokeWidth={
+                          isHighlightedFromSettings
+                            ? 3
+                            : isHovered
+                              ? 2
+                              : 0
+                        }
                         strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                         opacity={isHighlightedAddition ? 0.8 : 1}
                         onClick={() => handlePlayerClick(entry)}

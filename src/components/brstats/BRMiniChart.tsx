@@ -378,11 +378,7 @@ export function BRMiniChart() {
                         y={y}
                         width={width}
                         height={height}
-                        fill={
-                          isHighlightedFromSettings ? 'var(--accent-primary)' :
-                          isHighlightedAddition ? 'var(--accent-secondary)' :
-                          getPlayerColor(entry.name)
-                        }
+                        fill={getPlayerColor(entry.name)}
                         stroke={
                           isHighlightedFromSettings
                             ? 'var(--accent-primary)'
@@ -649,11 +645,7 @@ export function BRMiniChart() {
                     const isHoveredPlayer = hoveredPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
 
-                    const fillColor = isHighlightedFromSettings
-                      ? 'var(--accent-primary)'
-                      : isHighlightedAddition
-                        ? 'var(--accent-secondary)'
-                        : winRateView === 'wins'
+                    const fillColor = winRateView === 'wins'
                           ? getPlayerColor(entry.name)
                           : chartColors[(index ?? 0) % chartColors.length];
 
@@ -871,11 +863,7 @@ export function BRMiniChart() {
                         y={y}
                         width={width}
                         height={height}
-                        fill={
-                          isHighlightedFromSettings ? 'var(--accent-primary)' :
-                          isHighlightedAddition ? 'var(--accent-secondary)' :
-                          getPlayerColor(entry.name)
-                        }
+                        fill={getPlayerColor(entry.name)}
                         stroke={
                           isHighlightedFromSettings
                             ? 'var(--accent-primary)'

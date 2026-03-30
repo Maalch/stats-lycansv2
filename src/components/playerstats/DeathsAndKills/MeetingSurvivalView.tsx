@@ -484,14 +484,21 @@ export function MeetingSurvivalView({
                     y={y}
                     width={width}
                     height={height}
-                    fill={
-                      isHighlightedFromSettings ? 'var(--accent-primary)' :
-                      isHighlightedAddition ? 'var(--accent-secondary)' :
-                      isHovered ? 'var(--accent-primary-text)' :
-                      playersColor[entry.name] || 'var(--chart-primary)'
+                    fill={playersColor[entry.name] || 'var(--chart-primary)'}
+                    stroke={
+                      isHighlightedFromSettings
+                        ? 'var(--accent-primary)'
+                        : isHovered
+                          ? 'var(--text-primary)'
+                          : 'none'
                     }
-                    stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
-                    strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                    strokeWidth={
+                      isHighlightedFromSettings
+                        ? 3
+                        : isHovered
+                          ? 2
+                          : 0
+                    }
                     strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                     opacity={isHighlightedAddition ? 0.8 : 1}
                     onClick={() => handleBarClick(entry)}
@@ -580,14 +587,21 @@ export function MeetingSurvivalView({
                       y={y}
                       width={width}
                       height={height}
-                      fill={
-                        isHighlightedFromSettings ? 'var(--accent-primary)' :
-                        isHighlightedAddition ? 'var(--accent-secondary)' :
-                        isHovered ? 'var(--accent-primary-text)' :
-                        playersColor[entry.name] || 'var(--danger, #e05252)'
+                      fill={playersColor[entry.name] || 'var(--danger, #e05252)'}
+                      stroke={
+                        isHighlightedFromSettings
+                          ? 'var(--accent-primary)'
+                          : isHovered
+                            ? 'var(--text-primary)'
+                            : 'none'
                       }
-                      stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : 'none'}
-                      strokeWidth={isHighlightedFromSettings ? 3 : 0}
+                      strokeWidth={
+                        isHighlightedFromSettings
+                          ? 3
+                          : isHovered
+                            ? 2
+                            : 0
+                      }
                       strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
                       opacity={isHighlightedAddition ? 0.8 : 1}
                       onClick={() => handleBarClick(entry)}

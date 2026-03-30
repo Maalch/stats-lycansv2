@@ -872,11 +872,7 @@ export function KillersView({
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
 
-                    const fillColor = playersColor[entry.name] || (
-                      isHighlightedFromSettings ? 'var(--accent-primary)' :
-                      isHighlightedAddition ? 'var(--accent-secondary)' :
-                      'var(--chart-primary)'
-                    );
+                    const fillColor = playersColor[entry.name] || 'var(--chart-primary)';
 
                     return (
                       <Rectangle
@@ -987,11 +983,7 @@ export function KillersView({
                     const isHighlightedFromSettings = settings.highlightedPlayer === entry.name;
                     const isHighlightedAddition = entry.isHighlightedAddition;
 
-                    const fillColor = playersColor[entry.name] || (
-                      isHighlightedFromSettings ? 'var(--accent-primary)' :
-                      isHighlightedAddition ? 'var(--accent-secondary)' :
-                      'var(--chart-secondary)'
-                    );
+                    const fillColor = playersColor[entry.name] || 'var(--chart-secondary)';
 
                     return (
                       <Rectangle

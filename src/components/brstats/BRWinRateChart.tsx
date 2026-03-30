@@ -254,11 +254,7 @@ export function BRWinRateChart() {
                         y={y}
                         width={width}
                         height={height}
-                        fill={
-                          isHighlightedFromSettings ? 'var(--accent-primary)' :
-                          isHighlightedAddition ? 'var(--accent-secondary)' :
-                          getPlayerColor(entry.name)
-                        }
+                        fill={getPlayerColor(entry.name)}
                         stroke={
                           isHighlightedFromSettings
                             ? 'var(--accent-primary)'
@@ -426,11 +422,7 @@ export function BRWinRateChart() {
                       y={y}
                       width={width}
                       height={height}
-                      fill={
-                        isHighlightedFromSettings ? 'var(--accent-primary)' :
-                        isHighlightedAddition ? 'var(--accent-secondary)' :
-                        getPlayerColor(entry.name)
-                      }
+                      fill={getPlayerColor(entry.name)}
                       stroke={
                         isHighlightedFromSettings
                           ? 'var(--accent-primary)'
