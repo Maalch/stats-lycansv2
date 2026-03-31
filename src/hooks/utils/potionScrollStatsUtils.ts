@@ -3,6 +3,44 @@ import { getPlayerId, getCanonicalPlayerName } from '../../utils/playerIdentific
 import { getPlayerMainCampFromRole } from '../../utils/datasyncExport';
 
 export type CampFilter = 'all' | 'villageois' | 'loup' | 'autres';
+export type EffectFilter = 'all' | 'positive' | 'neutral' | 'negative';
+
+const PARCHEMIN_REGEX = /^Parchemin \((.+)\)$/;
+
+const POSITIVE_EFFECTS = new Set([
+  'Audition+', 'Invisible', 'Vision vraie', 'Rassasié', 'Célérité',
+  'Midas', 'Assassin', 'Clairvoyance', 'Énergie',
+]);
+
+const NEUTRAL_EFFECTS = new Set([
+  'Géant', 'Téléportation', 'Vampire', 'Minuscule', 'Hanté', 'Puant', 'Chaos',
+]);
+
+const NEGATIVE_EFFECTS = new Set([
+  'Flatulences', 'Lumineux', 'Paranoia', 'Paranoïa', 'Sourd', 'Myope', 'Muet',
+]);
+
+function getEffectCategory(actionName: string | null): 'positive' | 'neutral' | 'negative' | null {
+  if (!actionName) return null;
+  // Extract effect name from parchemin format "Parchemin (XXX)"
+  const match = actionName.match(PARCHEMIN_REGEX);
+  let effectName = match ? match[1] : actionName;
+  // Handle "Blanche - XXX" potions (white potion that reveals its effect)
+  if (effectName.startsWith('Blanche - ')) {
+    effectName = effectName.substring('Blanche - '.length);
+  } else if (effectName === 'Blanche') {
+    return 'neutral'; // Unknown white potion with no revealed effect
+  }
+  if (POSITIVE_EFFECTS.has(effectName)) return 'positive';
+  if (NEUTRAL_EFFECTS.has(effectName)) return 'neutral';
+  if (NEGATIVE_EFFECTS.has(effectName)) return 'negative';
+  return null;
+}
+
+function matchesEffectFilter(actionName: string | null, effectFilter: EffectFilter): boolean {
+  if (effectFilter === 'all') return true;
+  return getEffectCategory(actionName) === effectFilter;
+}
 
 export interface PlayerPotionStats {
   player: string;
@@ -32,8 +70,6 @@ export interface PotionScrollStatsData {
   gamesWithActionData: number;
   totalGames: number;
 }
-
-const PARCHEMIN_REGEX = /^Parchemin \((.+)\)$/;
 
 function isParchemin(actionName: string | null): boolean {
   if (!actionName) return false;
@@ -72,7 +108,8 @@ function resolveTargetName(game: GameLogEntry, targetName: string): { canonicalN
  */
 export function computePotionScrollStats(
   gameData: GameLogEntry[],
-  campFilter: CampFilter = 'all'
+  campFilter: CampFilter = 'all',
+  effectFilter: EffectFilter = 'all'
 ): PotionScrollStatsData | null {
   if (!gameData || gameData.length === 0) {
     return null;
@@ -130,10 +167,10 @@ export function computePotionScrollStats(
       let scrollCount = 0;
 
       actions.forEach(action => {
-        if (action.ActionType === 'DrinkPotion' && action.ActionName) {
+        if (action.ActionType === 'DrinkPotion' && action.ActionName && matchesEffectFilter(action.ActionName, effectFilter)) {
           potionCount++;
         }
-        if (action.ActionType === 'UseGadget' && isParchemin(action.ActionName)) {
+        if (action.ActionType === 'UseGadget' && isParchemin(action.ActionName) && matchesEffectFilter(action.ActionName, effectFilter)) {
           scrollCount++;
 
           // Track who was targeted

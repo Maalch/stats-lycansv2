@@ -7,7 +7,7 @@ import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { MIN_GAMES_OPTIONS, MIN_GAMES_DEFAULTS, CHART_LIMITS } from '../../config/chartConstants';
-import type { CampFilter, PlayerPotionStats, PlayerScrollUsageStats, PlayerScrollTargetStats } from '../../hooks/utils/potionScrollStatsUtils';
+import type { CampFilter, EffectFilter, PlayerPotionStats, PlayerScrollUsageStats, PlayerScrollTargetStats } from '../../hooks/utils/potionScrollStatsUtils';
 
 type ViewTab = 'potions' | 'scrollsUsed' | 'scrollsReceived';
 
@@ -30,9 +30,12 @@ export function PotionScrollStatsChart() {
   const [campFilter, setCampFilter] = useState<CampFilter>(
     (navigationState.potionScrollStatsState?.campFilter as CampFilter) || 'all'
   );
+  const [effectFilter, setEffectFilter] = useState<EffectFilter>(
+    (navigationState.potionScrollStatsState?.effectFilter as EffectFilter) || 'all'
+  );
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
 
-  const { data, isLoading, error } = usePotionScrollStats(campFilter);
+  const { data, isLoading, error } = usePotionScrollStats(campFilter, effectFilter);
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
@@ -42,12 +45,13 @@ export function PotionScrollStatsChart() {
     if (!current ||
         current.minGames !== minGames ||
         current.campFilter !== campFilter ||
+        current.effectFilter !== effectFilter ||
         current.selectedView !== selectedView) {
       updateNavigationState({
-        potionScrollStatsState: { minGames, campFilter, selectedView }
+        potionScrollStatsState: { minGames, campFilter, effectFilter, selectedView }
       });
     }
-  }, [minGames, campFilter, selectedView, updateNavigationState]);
+  }, [minGames, campFilter, effectFilter, selectedView, updateNavigationState]);
 
   // ── Potion chart data ──────────────────────────────────────────────
   const { totalPotionData, highlightedAddedTotalPotion } = useMemo(() => {
@@ -210,6 +214,19 @@ export function PotionScrollStatsChart() {
     );
   }
 
+  const effectFilterSelect = (
+    <>
+      <label htmlFor="effect-filter" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginLeft: '1rem' }}>Effet:</label>
+      <select id="effect-filter" value={effectFilter} onChange={(e) => setEffectFilter(e.target.value as EffectFilter)}
+        style={{ background: 'var(--bg-tertiary)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.25rem 0.5rem', fontSize: '0.9rem' }}>
+        <option value="all">Tous</option>
+        <option value="positive">🟢 Positif</option>
+        <option value="neutral">⚪ Neutre</option>
+        <option value="negative">🔴 Négatif</option>
+      </select>
+    </>
+  );
+
   const campFilterSelect = (id: string) => (
     <div className="lycans-winrate-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
       <label htmlFor={id} style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Camp:</label>
@@ -220,6 +237,7 @@ export function PotionScrollStatsChart() {
         <option value="loup">Camp Loup</option>
         <option value="autres">Autres (Solo)</option>
       </select>
+      {effectFilterSelect}
     </div>
   );
 
@@ -233,6 +251,7 @@ export function PotionScrollStatsChart() {
         <option value="loup">Camp Loup</option>
         <option value="autres">Autres (Solo)</option>
       </select>
+      {effectFilterSelect}
       <label htmlFor={minId} style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginLeft: '1rem' }}>Min. parties:</label>
       <select id={minId} value={minGames} onChange={(e) => setMinGames(Number(e.target.value))}
         style={{ background: 'var(--bg-tertiary)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '0.25rem 0.5rem', fontSize: '0.9rem' }}>

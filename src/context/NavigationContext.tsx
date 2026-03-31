@@ -116,6 +116,7 @@ export interface MonthlyRankingState {
 export interface PotionScrollStatsState {
   minGames: number;
   campFilter?: string;
+  effectFilter?: string;
   selectedView?: string;
 }
 
