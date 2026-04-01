@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
@@ -6,6 +6,8 @@ import { useThemeAdjustedDynamicPlayersColor, useThemeAdjustedLycansColorScheme 
 import { FullscreenChart } from '../../common/FullscreenChart';
 import { getDeathTypeLabel, type DeathType } from '../../../types/deathTypes';
 import { CHART_LIMITS } from '../../../config/chartConstants';
+
+type KillViewMode = 'total' | 'differential' | 'perGame';
 
 interface PlayerHistoryKillsProps {
   selectedPlayerName: string;
@@ -16,16 +18,19 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
   const lycansColors = useThemeAdjustedLycansColorScheme();
+  const [killViewMode, setKillViewMode] = useState<KillViewMode>('total');
+  const [deathViewMode, setDeathViewMode] = useState<KillViewMode>('total');
 
   // Calculate kill statistics for the selected player from raw game data
   const killStatistics = useMemo(() => {
     if (!filteredGameData || !selectedPlayerName) {
-      return { playersKilled: [], killedBy: [], deathTypes: [], availableDeathTypes: [] };
+      return { playersKilledMap: {}, killedByMap: {}, gamesWithPlayerMap: {}, deathTypes: [], availableDeathTypes: [] };
     }
 
-    // Maps to track kills
+    // Maps to track kills and games played together
     const playersKilledMap: Record<string, number> = {};
     const killedByMap: Record<string, number> = {};
+    const gamesWithPlayerMap: Record<string, number> = {};
     const deathTypesMap: Record<string, { count: number; byDeathType: Partial<Record<DeathType, number>> }> = {};
     const deathTypesSet = new Set<DeathType>();
 
@@ -36,6 +41,13 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
       );
 
       if (!selectedPlayerStat) return; // Player not in this game
+
+      // Track games played together with each other player
+      game.PlayerStats.forEach(p => {
+        if (p.Username.toLowerCase() !== selectedPlayerName.toLowerCase()) {
+          gamesWithPlayerMap[p.Username] = (gamesWithPlayerMap[p.Username] || 0) + 1;
+        }
+      });
 
       // Track players killed BY the selected player
       game.PlayerStats.forEach(victim => {
@@ -66,17 +78,6 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
       }
     });
 
-    // Convert to arrays and sort by count
-    const playersKilled = Object.entries(playersKilledMap)
-      .map(([player, count]) => ({ player, kills: count }))
-      .sort((a, b) => b.kills - a.kills)
-      .slice(0, CHART_LIMITS.TOP_10); // Top 10
-
-    const killedBy = Object.entries(killedByMap)
-      .map(([player, count]) => ({ player, kills: count }))
-      .sort((a, b) => b.kills - a.kills)
-      .slice(0, CHART_LIMITS.TOP_10); // Top 10
-
     const deathTypes = Object.entries(deathTypesMap)
       .map(([deathTypeLabel, data]) => {
         const chartData: any = { 
@@ -96,8 +97,70 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
     // Use labels as available types for the chart (one bar segment per label)
     const availableDeathTypes = Object.keys(deathTypesMap);
 
-    return { playersKilled, killedBy, deathTypes, availableDeathTypes };
+    return { playersKilledMap, killedByMap, gamesWithPlayerMap, deathTypes, availableDeathTypes };
   }, [filteredGameData, selectedPlayerName]);
+
+  // Derive chart data for "Les Victimes" based on view mode
+  const victimesChartData = useMemo(() => {
+    const { playersKilledMap, killedByMap, gamesWithPlayerMap } = killStatistics;
+
+    if (killViewMode === 'total') {
+      return Object.entries(playersKilledMap)
+        .map(([player, count]) => ({ player, value: count }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, CHART_LIMITS.TOP_10);
+    } else if (killViewMode === 'differential') {
+      // All players the selected player has interacted with (killed or been killed by)
+      const allPlayers = new Set([...Object.keys(playersKilledMap), ...Object.keys(killedByMap)]);
+      return Array.from(allPlayers)
+        .map(player => ({
+          player,
+          value: (playersKilledMap[player] || 0) - (killedByMap[player] || 0)
+        }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, CHART_LIMITS.TOP_10);
+    } else {
+      // perGame
+      return Object.entries(playersKilledMap)
+        .map(([player, kills]) => ({
+          player,
+          value: Math.round((kills / (gamesWithPlayerMap[player] || 1)) * 100) / 100
+        }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, CHART_LIMITS.TOP_10);
+    }
+  }, [killStatistics, killViewMode]);
+
+  // Derive chart data for "Les Tueurs" based on view mode
+  const tueursChartData = useMemo(() => {
+    const { playersKilledMap, killedByMap, gamesWithPlayerMap } = killStatistics;
+
+    if (deathViewMode === 'total') {
+      return Object.entries(killedByMap)
+        .map(([player, count]) => ({ player, value: count }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, CHART_LIMITS.TOP_10);
+    } else if (deathViewMode === 'differential') {
+      // All players the selected player has interacted with (killed or been killed by)
+      const allPlayers = new Set([...Object.keys(playersKilledMap), ...Object.keys(killedByMap)]);
+      return Array.from(allPlayers)
+        .map(player => ({
+          player,
+          value: (killedByMap[player] || 0) - (playersKilledMap[player] || 0)
+        }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, CHART_LIMITS.TOP_10);
+    } else {
+      // perGame
+      return Object.entries(killedByMap)
+        .map(([player, deaths]) => ({
+          player,
+          value: Math.round((deaths / (gamesWithPlayerMap[player] || 1)) * 100) / 100
+        }))
+        .sort((a, b) => b.value - a.value)
+        .slice(0, CHART_LIMITS.TOP_10);
+    }
+  }, [killStatistics, deathViewMode]);
 
   // Define colors for different death types (mapped by label instead of code)
   const deathTypeColors = useMemo(() => {
@@ -145,17 +208,77 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
     return colorMap;
   }, [killStatistics.availableDeathTypes, lycansColors]);
 
+  const viewModeToggle = (currentMode: KillViewMode, setMode: (mode: KillViewMode) => void, labels: { total: string; differential: string; perGame: string }) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', justifyContent: 'center' }}>
+      <label style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+        Afficher :
+      </label>
+      <div style={{ 
+        display: 'flex', 
+        backgroundColor: 'var(--bg-tertiary)', 
+        borderRadius: '4px',
+        border: '1px solid var(--border-color)',
+        overflow: 'hidden'
+      }}>
+        {(['total', 'differential', 'perGame'] as KillViewMode[]).map(mode => (
+          <button
+            key={mode}
+            type="button"
+            onClick={() => setMode(mode)}
+            style={{
+              background: currentMode === mode ? 'var(--accent-primary)' : 'transparent',
+              color: currentMode === mode ? 'white' : 'var(--text-primary)',
+              border: 'none',
+              padding: '0.5rem 1rem',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              fontWeight: currentMode === mode ? 'bold' : 'normal',
+              transition: 'all 0.2s'
+            }}
+          >
+            {labels[mode]}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const getKillYAxisLabel = () => {
+    if (killViewMode === 'total') return 'Nombre de kills';
+    if (killViewMode === 'differential') return 'Différentiel (kills - morts)';
+    return 'Kills par partie';
+  };
+
+  const getDeathYAxisLabel = () => {
+    if (deathViewMode === 'total') return 'Nombre de morts';
+    if (deathViewMode === 'differential') return 'Différentiel (morts - kills)';
+    return 'Morts par partie';
+  };
+
+  const getKillTooltipText = (dataPoint: { player: string; value: number }) => {
+    if (killViewMode === 'total') return `Tué ${dataPoint.value} fois par ${selectedPlayerName}`;
+    if (killViewMode === 'differential') return `Différentiel : ${dataPoint.value > 0 ? '+' : ''}${dataPoint.value} (kills - morts)`;
+    return `${dataPoint.value} kills par partie ensemble`;
+  };
+
+  const getDeathTooltipText = (dataPoint: { player: string; value: number }) => {
+    if (deathViewMode === 'total') return `A tué ${selectedPlayerName} ${dataPoint.value} fois`;
+    if (deathViewMode === 'differential') return `Différentiel : ${dataPoint.value > 0 ? '+' : ''}${dataPoint.value} (morts - kills)`;
+    return `${dataPoint.value} morts par partie ensemble`;
+  };
+
   return (
     <div className="lycans-graphiques-groupe">
       {/* Players Most Killed */}
-      {killStatistics.playersKilled.length > 0 ? (
+      {victimesChartData.length > 0 ? (
         <div className="lycans-graphique-section">
           <h3>Les Victimes</h3>
+          {viewModeToggle(killViewMode, setKillViewMode, { total: 'Total', differential: 'Différentiel', perGame: 'Par partie' })}
           <FullscreenChart title="Les Victimes">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={killStatistics.playersKilled}
+                  data={victimesChartData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
@@ -182,8 +305,8 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                     )}
                   />
                   <YAxis 
-                    label={{ value: 'Nombre de kills', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
-                    allowDecimals={false}
+                    label={{ value: getKillYAxisLabel(), angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                    allowDecimals={killViewMode === 'perGame'}
                   />
                   <Tooltip
                     content={({ active, payload }) => {
@@ -198,7 +321,7 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                             border: '1px solid var(--border-color)'
                           }}>
                             <div><strong>{dataPoint.player}</strong></div>
-                            <div>Tué {dataPoint.kills} fois par {selectedPlayerName}</div>
+                            <div>{getKillTooltipText(dataPoint)}</div>
                           </div>
                         );
                       }
@@ -206,7 +329,7 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                     }}
                   />
                   <Bar
-                    dataKey="kills"
+                    dataKey="value"
                     shape={(props) => {
                       const { x, y, width, height, payload } = props;
                       const entry = payload as { player: string };
@@ -236,14 +359,15 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
       )}
 
       {/* Players Killed By Most */}
-      {killStatistics.killedBy.length > 0 ? (
+      {tueursChartData.length > 0 ? (
         <div className="lycans-graphique-section">
           <h3>Les Tueurs</h3>
+          {viewModeToggle(deathViewMode, setDeathViewMode, { total: 'Total', differential: 'Différentiel', perGame: 'Par partie' })}
           <FullscreenChart title="Les Tueurs">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={killStatistics.killedBy}
+                  data={tueursChartData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
@@ -270,8 +394,8 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                     )}
                   />
                   <YAxis 
-                    label={{ value: 'Nombre de kills', angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
-                    allowDecimals={false}
+                    label={{ value: getDeathYAxisLabel(), angle: 270, position: 'left', style: { textAnchor: 'middle' } }} 
+                    allowDecimals={deathViewMode === 'perGame'}
                   />
                   <Tooltip
                     content={({ active, payload }) => {
@@ -286,7 +410,7 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                             border: '1px solid var(--border-color)'
                           }}>
                             <div><strong>{dataPoint.player}</strong></div>
-                            <div>A tué {selectedPlayerName} {dataPoint.kills} fois</div>
+                            <div>{getDeathTooltipText(dataPoint)}</div>
                           </div>
                         );
                       }
@@ -294,7 +418,7 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
                     }}
                   />
                   <Bar
-                    dataKey="kills"
+                    dataKey="value"
                     shape={(props) => {
                       const { x, y, width, height, payload } = props;
                       const entry = payload as { player: string };
