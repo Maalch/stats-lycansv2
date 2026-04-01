@@ -49,15 +49,19 @@ export function PlayerHistoryKills({ selectedPlayerName }: PlayerHistoryKillsPro
         }
       });
 
-      // Track players killed BY the selected player
+      // Track players killed BY the selected player (exclude self-kills and Inconnu)
       game.PlayerStats.forEach(victim => {
-        if (victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase()) {
+        if (victim.KillerName?.toLowerCase() === selectedPlayerName.toLowerCase() &&
+            victim.Username.toLowerCase() !== selectedPlayerName.toLowerCase() &&
+            victim.Username.toLowerCase() !== 'inconnu') {
           playersKilledMap[victim.Username] = (playersKilledMap[victim.Username] || 0) + 1;
         }
       });
 
-      // Track players who killed the selected player
-      if (selectedPlayerStat.KillerName) {
+      // Track players who killed the selected player (exclude self-kills and Inconnu)
+      if (selectedPlayerStat.KillerName &&
+          selectedPlayerStat.KillerName.toLowerCase() !== selectedPlayerName.toLowerCase() &&
+          selectedPlayerStat.KillerName.toLowerCase() !== 'inconnu') {
         killedByMap[selectedPlayerStat.KillerName] = (killedByMap[selectedPlayerStat.KillerName] || 0) + 1;
       }
 
