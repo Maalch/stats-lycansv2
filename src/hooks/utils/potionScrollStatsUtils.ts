@@ -20,7 +20,7 @@ const NEGATIVE_EFFECTS = new Set([
   'Flatulences', 'Lumineux', 'Paranoia', 'Paranoïa', 'Sourd', 'Myope', 'Muet',
 ]);
 
-function getEffectCategory(actionName: string | null): 'positive' | 'neutral' | 'negative' | null {
+export function getEffectCategory(actionName: string | null): 'positive' | 'neutral' | 'negative' | null {
   if (!actionName) return null;
   // Extract effect name from parchemin format "Parchemin (XXX)"
   const match = actionName.match(PARCHEMIN_REGEX);
