@@ -7,6 +7,8 @@ import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { MIN_GAMES_OPTIONS, MIN_GAMES_DEFAULTS, CHART_LIMITS } from '../../config/chartConstants';
+import type { ContentType } from 'recharts/types/component/Tooltip';
+import type { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import type { CampFilter, EffectFilter, PlayerPotionStats, PlayerScrollUsageStats, PlayerScrollTargetStats } from '../../hooks/utils/potionScrollStatsUtils';
 
 type ViewTab = 'potions' | 'scrollsUsed' | 'scrollsReceived';
@@ -161,8 +163,7 @@ export function PotionScrollStatsChart() {
     transition: 'all 0.2s ease'
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const xAxisTick = ({ x, y, payload }: any) => (
+  const xAxisTick = ({ x, y, payload }: { x: number | string; y: number | string; payload: { value: string } }) => (
     <text
       x={x} y={y} dy={16} textAnchor="end"
       fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
@@ -261,7 +262,7 @@ export function PotionScrollStatsChart() {
   );
 
   // ── Tooltip helpers ────────────────────────────────────────────────
-  function potionTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: ChartPotionStat }> }) {
+  function potionTooltip({ active, payload }: { active?: boolean; payload?: ReadonlyArray<{ payload: ChartPotionStat }> }) {
     if (!active || !payload?.length) return null;
     const d = payload[0].payload;
     return (
@@ -283,7 +284,7 @@ export function PotionScrollStatsChart() {
     );
   }
 
-  function scrollUsageTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: ChartScrollUsageStat }> }) {
+  function scrollUsageTooltip({ active, payload }: { active?: boolean; payload?: ReadonlyArray<{ payload: ChartScrollUsageStat }> }) {
     if (!active || !payload?.length) return null;
     const d = payload[0].payload;
     return (
@@ -305,7 +306,7 @@ export function PotionScrollStatsChart() {
     );
   }
 
-  function scrollTargetTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: ChartScrollTargetStat }> }) {
+  function scrollTargetTooltip({ active, payload }: { active?: boolean; payload?: ReadonlyArray<{ payload: ChartScrollTargetStat }> }) {
     if (!active || !payload?.length) return null;
     const d = payload[0].payload;
     return (
@@ -328,21 +329,18 @@ export function PotionScrollStatsChart() {
   }
 
   // ── Chart section renderer ─────────────────────────────────────────
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function renderChartPair(
     title1: string,
     data1: Array<{ player: string; isHighlightedAddition?: boolean }>,
     dataKey1: string,
     yLabel1: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    tooltip1: (props: any) => React.ReactNode,
+    tooltip1: ContentType<ValueType, NameType>,
     highlighted1: boolean,
     title2: string,
     data2: Array<{ player: string; isHighlightedAddition?: boolean }>,
     dataKey2: string,
     yLabel2: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    tooltip2: (props: any) => React.ReactNode,
+    tooltip2: ContentType<ValueType, NameType>,
     highlighted2: boolean,
     campId1: string,
     campId2: string,
