@@ -159,8 +159,10 @@ export function ActionMetaStatsChart() {
     }
 
     return (
-      <FullscreenChart title="Impact des Objets sur le Taux de Victoire">
-        <div style={{ height: Math.max(400, filteredGadgetStats.length * 30) }}>
+      <div>
+        <h3>🔧 Impact des Objets sur le Taux de Victoire</h3>
+        <FullscreenChart title="Impact des Objets sur le Taux de Victoire">
+          <div style={{ height: Math.max(400, filteredGadgetStats.length * 30) }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={filteredGadgetStats}
@@ -226,11 +228,12 @@ export function ActionMetaStatsChart() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          <p>💡 Les valeurs positives (en vert) indiquent que l'utilisation de l'objet est corrélée à un taux de victoire supérieur à la moyenne.</p>
-          <p>💡 Les valeurs négatives (en rouge) indiquent que l'utilisation de l'objet est corrélée à un taux de victoire inférieur à la moyenne.</p>
-        </div>
-      </FullscreenChart>
+          <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <p>💡 Les valeurs positives (en vert) indiquent que l'utilisation de l'objet est corrélée à un taux de victoire supérieur à la moyenne.</p>
+            <p>💡 Les valeurs négatives (en rouge) indiquent que l'utilisation de l'objet est corrélée à un taux de victoire inférieur à la moyenne.</p>
+          </div>
+        </FullscreenChart>
+      </div>
     );
   };
 
@@ -247,8 +250,10 @@ export function ActionMetaStatsChart() {
     }
 
     return (
-      <FullscreenChart title="Impact des Potions sur le Taux de Victoire">
-        <div style={{ height: Math.max(400, filteredPotionStats.length * 30) }}>
+      <div>
+        <h3>🧪 Impact des Potions sur le Taux de Victoire</h3>
+        <FullscreenChart title="Impact des Potions sur le Taux de Victoire">
+          <div style={{ height: Math.max(400, filteredPotionStats.length * 30) }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={filteredPotionStats}
@@ -314,15 +319,16 @@ export function ActionMetaStatsChart() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          <p>🧪 Les barres sont colorées selon le type d'effet de la potion :
-            <span style={{ color: '#4caf50', fontWeight: 'bold' }}> vert = positif</span>,
-            <span style={{ color: '#9e9e9e', fontWeight: 'bold' }}> gris = neutre</span>,
-            <span style={{ color: '#f44336', fontWeight: 'bold' }}> rouge = négatif</span>.
-          </p>
-          <p>💡 La position de la barre (gauche/droite de 0) indique l'impact sur le taux de victoire, indépendamment du type d'effet.</p>
-        </div>
-      </FullscreenChart>
+          <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <p>🧪 Les barres sont colorées selon le type d'effet de la potion :
+              <span style={{ color: '#4caf50', fontWeight: 'bold' }}> vert = positif</span>,
+              <span style={{ color: '#9e9e9e', fontWeight: 'bold' }}> gris = neutre</span>,
+              <span style={{ color: '#f44336', fontWeight: 'bold' }}> rouge = négatif</span>.
+            </p>
+            <p>💡 La position de la barre (gauche/droite de 0) indique l'impact sur le taux de victoire, indépendamment du type d'effet.</p>
+          </div>
+        </FullscreenChart>
+      </div>
     );
   };
 
@@ -339,8 +345,10 @@ export function ActionMetaStatsChart() {
     }
 
     return (
-      <FullscreenChart title="Impact des Accessoires sur le Taux de Victoire">
-        <div style={{ height: Math.max(400, filteredAccessoryStats.length * 30) }}>
+      <div>
+        <h3>💍 Impact des Accessoires sur le Taux de Victoire</h3>
+        <FullscreenChart title="Impact des Accessoires sur le Taux de Victoire">
+          <div style={{ height: Math.max(400, filteredAccessoryStats.length * 30) }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={filteredAccessoryStats}
@@ -406,11 +414,12 @@ export function ActionMetaStatsChart() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          <p>💡 Les valeurs positives indiquent que la récupération de l'accessoire est corrélée à un taux de victoire supérieur à la moyenne.</p>
-          <p>Les valeurs négatives suggèrent une corrélation avec un taux de victoire inférieur.</p>
-        </div>
-      </FullscreenChart>
+          <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <p>💡 Les valeurs positives indiquent que la récupération de l'accessoire est corrélée à un taux de victoire supérieur à la moyenne.</p>
+            <p>Les valeurs négatives suggèrent une corrélation avec un taux de victoire inférieur.</p>
+          </div>
+        </FullscreenChart>
+      </div>
     );
   };
 
@@ -445,8 +454,10 @@ export function ActionMetaStatsChart() {
     }
 
     return (
-      <FullscreenChart title="Impact des Parchemins sur le Taux de Victoire">
-        <div style={{ height: Math.max(400, filteredParcheminStats.length * 30) }}>
+      <div>
+        <h3>📜 Impact des Parchemins sur le Taux de Victoire</h3>
+        <FullscreenChart title="Impact des Parchemins sur le Taux de Victoire">
+          <div style={{ height: Math.max(400, filteredParcheminStats.length * 30) }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={filteredParcheminStats}
@@ -512,15 +523,16 @@ export function ActionMetaStatsChart() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          <p>📜 Les barres sont colorées selon le type d'effet du parchemin :
-            <span style={{ color: '#4caf50', fontWeight: 'bold' }}> vert = positif</span>,
-            <span style={{ color: '#9e9e9e', fontWeight: 'bold' }}> gris = neutre</span>,
-            <span style={{ color: '#f44336', fontWeight: 'bold' }}> rouge = négatif</span>.
-          </p>
-          <p>💡 La position de la barre (gauche/droite de 0) indique l'impact sur le taux de victoire, indépendamment du type d'effet.</p>
-        </div>
-      </FullscreenChart>
+          <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <p>📜 Les barres sont colorées selon le type d'effet du parchemin :
+              <span style={{ color: '#4caf50', fontWeight: 'bold' }}> vert = positif</span>,
+              <span style={{ color: '#9e9e9e', fontWeight: 'bold' }}> gris = neutre</span>,
+              <span style={{ color: '#f44336', fontWeight: 'bold' }}> rouge = négatif</span>.
+            </p>
+            <p>💡 La position de la barre (gauche/droite de 0) indique l'impact sur le taux de victoire, indépendamment du type d'effet.</p>
+          </div>
+        </FullscreenChart>
+      </div>
     );
   };
 
@@ -558,6 +570,7 @@ export function ActionMetaStatsChart() {
         </div>
 
         {/* Hit vs Miss Win Rate Chart */}
+        <h3>🏹 Impact du Tir du Chasseur sur le Taux de Victoire</h3>
         <FullscreenChart title="Impact du Tir du Chasseur sur le Taux de Victoire">
           <div style={{ height: 400 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -637,7 +650,9 @@ export function ActionMetaStatsChart() {
 
         {/* Target Camp Breakdown */}
         {stats.targetCampStats.length > 0 && (
-          <FullscreenChart title="Taux de Victoire selon le Camp de la Cible">
+          <>
+            <h3>🎯 Taux de Victoire selon le Camp de la Cible</h3>
+            <FullscreenChart title="Taux de Victoire selon le Camp de la Cible">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -697,7 +712,8 @@ export function ActionMetaStatsChart() {
               <p>🎯 Taux de victoire du chasseur en fonction du camp de la cible touchée.</p>
               <p>💡 Tirer sur un loup devrait logiquement améliorer les chances de victoire du camp Villageois.</p>
             </div>
-          </FullscreenChart>
+            </FullscreenChart>
+          </>
         )}
 
       </div>
@@ -716,7 +732,9 @@ export function ActionMetaStatsChart() {
     return (
       <div>
         {actionMetaStats.wolfTransformTiming.length > 0 && (
-          <FullscreenChart title="Impact du Timing de Première Transformation (Loups)">
+          <>
+            <h3>🐺 Impact du Timing de Première Transformation</h3>
+            <FullscreenChart title="Impact du Timing de Première Transformation (Loups)">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -762,11 +780,14 @@ export function ActionMetaStatsChart() {
               <p>🐺 Analyse du moment de la première transformation en loup et son impact sur les chances de victoire.</p>
               <p>N1 = Nuit 1, N2 = Nuit 2, N3+ = Nuit 3 ou plus tard</p>
             </div>
-          </FullscreenChart>
+            </FullscreenChart>
+          </>
         )}
 
         {actionMetaStats.wolfUntransformStats.length > 0 && (
-          <FullscreenChart title="Impact du Nombre de Détransformations sur le Taux de Victoire (Loups)">
+          <>
+            <h3>🔄 Impact du Nombre de Détransformations sur le Taux de Victoire</h3>
+            <FullscreenChart title="Impact du Nombre de Détransformations sur le Taux de Victoire (Loups)">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -838,14 +859,17 @@ export function ActionMetaStatsChart() {
               <p>🔄 Analyse du nombre de fois qu'un loup se détransforme en humain au cours d'une partie et son impact sur le taux de victoire.</p>
               <p>💡 La ligne tiretée indique le taux de victoire moyen des loups (baseline).</p>
             </div>
-          </FullscreenChart>
+            </FullscreenChart>
+          </>
         )}
       </div>
     );
   };
 
   return (
-    <div>
+    <div className="lycans-camps-container">
+      <h2>Statistiques des Actions et Objets</h2>
+
       {/* Overview Cards */}
       {renderOverviewCards()}
 

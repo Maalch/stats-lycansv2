@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.7';
+export const APP_VERSION = '1.8.8';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -15,6 +15,16 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
 
+  {
+    version: 'v1.8.8',
+    date: '02/04/2026',
+    description: 'Ajout d\'un nouvel onglet "Chasseur" dans les statistiques d\'actions (taux de victoire selon le résultat du tir et le camp de la cible) dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'actionMeta',
+      text: 'Stats Parties / Actions (Objets & Potions)'
+    }
+  },
   {
     version: 'v1.8.7',
     date: '02/04/2026',
