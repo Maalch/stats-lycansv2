@@ -18,7 +18,7 @@ type TrackedActionType = typeof TRACKED_ACTION_TYPES[number];
 
 // French labels for action types
 const ACTION_TYPE_LABELS: Record<TrackedActionType, string> = {
-  UseGadget: 'Utilisation Gadget',
+  UseGadget: 'Utilisation Objet',
   DrinkPotion: 'Potion bue',
   TakeAccessory: 'Accessoire récupéré',
 };
@@ -70,6 +70,17 @@ interface ParcheminTargetStat {
 
 // Regex to detect and parse "Parchemin (Effect)" action names
 const PARCHEMIN_REGEX = /^Parchemin\s*\((.+)\)$/;
+
+const EFFECT_CATEGORY_COLORS: Record<string, string> = {
+  positive: '#4caf50',
+  neutral: '#9e9e9e',
+  negative: '#e53935',
+};
+
+function getEffectBarColor(effectName: string | null): string {
+  const category = getEffectCategory(effectName);
+  return EFFECT_CATEGORY_COLORS[category ?? ''] || 'var(--chart-color-default, #8884d8)';
+}
 
 interface ActionStatistics {
   actionTypeCounts: ActionStat[];
@@ -257,7 +268,7 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
 
         {actionStatistics.gadgetDetails.length > 0 && (
           <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
-            <h3>🔧 Gadgets utilisés</h3>
+            <h3>🔧 Objets utilisés</h3>
             <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: 'var(--accent-primary-text)' }}>
               {actionStatistics.gadgetDetails.reduce((sum, g) => sum + g.count, 0)}
             </div>
@@ -331,8 +342,8 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       {/* Gadget Details Bar Chart */}
       {activeView === 'objets' && actionStatistics.gadgetDetails.length > 0 && (
         <div className="lycans-graphique-section">
-          <h3>Gadgets Utilisés</h3>
-          <FullscreenChart title="Gadgets Utilisés">
+          <h3>Objets Utilisés</h3>
+          <FullscreenChart title="Objets Utilisés">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -573,8 +584,9 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                     dataKey="count"
                     fill="var(--chart-color-3)"
                     shape={(props) => {
-                      const { x, y, width, height, index } = props;
-                      const fillColor = `hsl(${40 + (index ?? 0) * 15}, 80%, 55%)`;
+                      const { x, y, width, height } = props;
+                      const dataPoint = actionStatistics.potionDetails[props.index ?? 0];
+                      const fillColor = getEffectBarColor(dataPoint?.potionName ?? null);
 
                       return (
                         <Rectangle
@@ -673,8 +685,9 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
                     dataKey="count"
                     fill="var(--chart-color-4)"
                     shape={(props) => {
-                      const { x, y, width, height, index } = props;
-                      const fillColor = `hsl(${280 + (index ?? 0) * 20}, 60%, 55%)`;
+                      const { x, y, width, height } = props;
+                      const dataPoint = actionStatistics.parcheminDetails[props.index ?? 0];
+                      const fillColor = getEffectBarColor(dataPoint?.parcheminName ?? null);
 
                       return (
                         <Rectangle

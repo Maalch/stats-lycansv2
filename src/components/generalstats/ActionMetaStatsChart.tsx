@@ -468,7 +468,7 @@ export function ActionMetaStatsChart() {
           className={`lycans-submenu-btn ${selectedView === 'gadgets' ? 'active' : ''}`}
           onClick={() => setSelectedView('gadgets')}
         >
-          🔧 Gadgets
+          🔧 Objets
         </button>
         <button
           type="button"

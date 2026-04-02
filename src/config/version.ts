@@ -233,7 +233,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     link: {
       mainTab: 'general',
       subTab: 'actionMeta',
-      text: 'Stats Parties / Actions (Gadgets & Potions)'
+      text: 'Stats Parties / Actions (Objets & Potions)'
     }
   },
   {

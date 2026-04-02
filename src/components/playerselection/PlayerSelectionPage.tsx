@@ -505,7 +505,7 @@ export function PlayerSelectionPage() {
                       className={`lycans-categorie-btn ${selectedView === 'actions' ? 'active' : ''}`}
                       onClick={() => handleViewChange('actions')}
                     >
-                      Actions
+                      Objets
                     </button>
                     <button
                       type="button"
