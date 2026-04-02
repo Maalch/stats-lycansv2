@@ -120,13 +120,17 @@ export interface PotionScrollStatsState {
   selectedView?: string;
 }
 
+export interface PlayerSynergyState {
+  minSameCampGames: number;
+}
+
 export interface NavigationState {
   // PlayerGameHistoryChart state
   selectedPlayerName?: string;
   groupingMethod?: 'session' | 'month';
   selectedViewType?: 'performance' | 'camp' | 'map' | 'kills';
   // PlayerPairingStatsChart state
-  selectedPairingTab?: 'wolves' | 'lovers' | 'agents';
+  selectedPairingTab?: 'wolves' | 'lovers' | 'agents' | 'synergies';
   selectedPairingPlayers?: string[]; // Array of 1 or 2 player names for pairing filter
   // DeathStatisticsChart state
   deathStatsSelectedCamp?: string;
@@ -151,6 +155,7 @@ export interface NavigationState {
   roleActionsRankingState?: RoleActionsRankingState;
   monthlyRankingState?: MonthlyRankingState;
   potionScrollStatsState?: PotionScrollStatsState;
+  playerSynergyState?: PlayerSynergyState;
 }
 
 interface NavigationContextType {

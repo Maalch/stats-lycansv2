@@ -37,16 +37,14 @@ export const MIN_GAMES_DEFAULTS = {
 
 // Predefined minimum games options for dropdowns
 export const MIN_GAMES_OPTIONS = {
-  /** Battle Royale minimal options */
-  BR_MINIMAL: [1, 2, 3, 5, 10] as const,
-  /** Battle Royale standard options */
-  BR_STANDARD: [3, 10, 25, 50, 100] as const,
+  /** Minimal options */
+  MINIMAL: [1, 2, 3, 5, 15, 30] as const,
   /** Compact options for small datasets */
-  COMPACT: [3, 5, 10, 15, 25, 50] as const,
+  COMPACT: [1, 10, 25, 50, 100] as const,
   /** Standard options for most charts */
-  STANDARD: [3, 5, 15, 25, 50, 100] as const,
+  STANDARD: [5, 10, 25, 50, 100, 200] as const,
   /** Extended options for large datasets */
-  EXTENDED: [3, 10, 25, 50, 100, 200, 400] as const,
+  EXTENDED: [5, 10, 25, 50, 100, 200, 400] as const,
   /** Meetings options, big  datasets */
   MEETINGS: [3, 25, 50, 100, 250, 500, 1000] as const,
 } as const;

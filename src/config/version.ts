@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.3';
+export const APP_VERSION = '1.8.4';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,17 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.8.4',
+    date: '02/04/2026',
+    description: 'Ajout d\'un onglet "Synergies" dans les paires de joueurs : score de synergie mesurant à quel point deux joueurs performent mieux (ou moins bien) ensemble que séparément dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'pairing',
+      text: 'Classements / Paires de Joueurs / Synergies',
+      navigationState: { selectedPairingTab: 'synergies' }
+    }
+  },
   {
     version: 'v1.8.3',
     date: '30/03/2026',

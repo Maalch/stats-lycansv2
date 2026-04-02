@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Rectangle, ReferenceLine } from 'recharts';
 import { usePlayerPairingStatsFromRaw } from '../../hooks/usePlayerPairingStatsFromRaw';
 import { useJoueursData } from '../../hooks/useJoueursData';
 import { useThemeAdjustedDynamicPlayersColor } from '../../types/api';
@@ -7,7 +7,10 @@ import { FullscreenChart } from '../common/FullscreenChart';
 import { useNavigation } from '../../context/NavigationContext';
 import { useSettings } from '../../context/SettingsContext';
 import { findPlayerMostCommonPairings, findPlayerBestPerformingPairings, type ChartPlayerPairStat, type ChartAgentPairStat } from '../../hooks/utils/playerPairingUtils';
-import { CHART_DEFAULTS } from '../../config/chartConstants';
+import { usePlayerSynergyFromRaw } from '../../hooks/usePlayerSynergyFromRaw';
+import { findPlayerBestSynergies, findPlayerWorstSynergies } from '../../hooks/utils/playerSynergyUtils';
+import type { PlayerSynergyPair, ChartSynergyPair } from '../../hooks/utils/playerSynergyUtils';
+import { CHART_DEFAULTS, CHART_LIMITS, MIN_GAMES_OPTIONS, MIN_GAMES_DEFAULTS } from '../../config/chartConstants';
 
 export function PlayerPairingStatsChart() {
   const { navigateToGameDetails, navigationState, updateNavigationState } = useNavigation();
@@ -18,9 +21,12 @@ export function PlayerPairingStatsChart() {
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
 
   // Use navigationState to restore tab selection, fallback to 'wolves'
-  const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers' | 'agents'>(
+  const [selectedTab, setSelectedTab] = useState<'wolves' | 'lovers' | 'agents' | 'synergies'>(
     navigationState.selectedPairingTab || 'wolves'
   );
+
+  const { data: synergyData, isLoading: synergyLoading } = usePlayerSynergyFromRaw();
+  const [minSameCampGames, setMinSameCampGames] = useState<number>(MIN_GAMES_DEFAULTS.STANDARD);
   const [minWolfAppearances, setMinWolfAppearances] = useState<number>(CHART_DEFAULTS.MIN_WOLF_APPEARANCES);
   const [minLoverAppearances, setMinLoverAppearances] = useState<number>(CHART_DEFAULTS.MIN_LOVER_APPEARANCES);
   const [minAgentAppearances, setMinAgentAppearances] = useState<number>(CHART_DEFAULTS.MIN_AGENT_APPEARANCES);
@@ -43,10 +49,6 @@ export function PlayerPairingStatsChart() {
     }
   }, [pairingPlayer1, pairingPlayer2, updateNavigationState]);
 
-  // Options pour le nombre minimum d'apparitions
-  const minLoverAppearancesOptions = [1, 2, 3, 5, 10];
-  const minWolfAppearancesOptions = [1, 3, 5, 7, 10, 15];
-  const minAgentAppearancesOptions = [1, 2, 3, 5, 10];
 
   // Get unique player names from data for the selector
   const allPlayerNames = useMemo(() => {
@@ -62,6 +64,81 @@ export function PlayerPairingStatsChart() {
   const isPairingMode = pairingPlayer1 !== null && pairingPlayer2 !== null;
   const isSinglePlayerMode = pairingPlayer1 !== null && pairingPlayer2 === null;
   const effectiveHighlightedPlayer = isSinglePlayerMode ? pairingPlayer1 : null;
+
+  // Synergy useMemo hooks — must be before early returns (Rules of Hooks)
+  const synergyEligiblePairs = useMemo(() => {
+    if (!synergyData) return [];
+    return synergyData.pairs.filter(p => p.sameCampGames >= minSameCampGames);
+  }, [synergyData, minSameCampGames]);
+
+  // Find the specific synergy pair when two players are selected
+  const specificSynergyPair = useMemo(() => {
+    if (!isPairingMode || !synergyData) return [];
+    return synergyData.pairs.filter(pair =>
+      pair.players.includes(pairingPlayer1!) && pair.players.includes(pairingPlayer2!)
+    );
+  }, [isPairingMode, synergyData, pairingPlayer1, pairingPlayer2]);
+
+  const bestSynergies = useMemo(() => {
+    const createId = (pair: string, prefix: string) => `${prefix}-syn-${pair.replace(/[^a-zA-Z0-9]/g, '')}`;
+    const combine = (topPairs: PlayerSynergyPair[], highlightedPairs: PlayerSynergyPair[], specific: PlayerSynergyPair[], prefix: string): ChartSynergyPair[] => {
+      const result = new Map<string, ChartSynergyPair>();
+      topPairs.forEach(pair => result.set(pair.pair, { ...pair, isHighlightedAddition: false, gradientId: createId(pair.pair, prefix) }));
+      // In pairing mode, add the specific pair if not already present
+      if (isPairingMode && specific.length > 0) {
+        specific.forEach(pair => {
+          if (!result.has(pair.pair)) {
+            result.set(pair.pair, { ...pair, isHighlightedAddition: true, gradientId: createId(pair.pair, prefix) });
+          }
+        });
+      }
+      // In single player mode, add highlighted pairs
+      else if (effectiveHighlightedPlayer) {
+        highlightedPairs.forEach(pair => {
+          const existing = result.get(pair.pair);
+          if (existing) result.set(pair.pair, { ...existing, gradientId: createId(existing.pair, prefix) });
+          else result.set(pair.pair, { ...pair, isHighlightedAddition: true, gradientId: createId(pair.pair, prefix) });
+        });
+      }
+      return Array.from(result.values());
+    };
+    const top = synergyEligiblePairs.filter(p => p.synergyScore > 0).slice(0, CHART_LIMITS.TOP_10);
+    const highlighted = effectiveHighlightedPlayer
+      ? findPlayerBestSynergies(synergyData?.pairs || [], effectiveHighlightedPlayer, minSameCampGames, 5).filter(p => p.synergyScore > 0)
+      : [];
+    return combine(top, highlighted, specificSynergyPair.filter(p => p.synergyScore > 0), 'best');
+  }, [synergyEligiblePairs, effectiveHighlightedPlayer, isPairingMode, specificSynergyPair, synergyData, minSameCampGames]);
+
+  const worstSynergies = useMemo(() => {
+    const createId = (pair: string, prefix: string) => `${prefix}-syn-${pair.replace(/[^a-zA-Z0-9]/g, '')}`;
+    const combine = (topPairs: PlayerSynergyPair[], highlightedPairs: PlayerSynergyPair[], specific: PlayerSynergyPair[], prefix: string): ChartSynergyPair[] => {
+      const result = new Map<string, ChartSynergyPair>();
+      topPairs.forEach(pair => result.set(pair.pair, { ...pair, isHighlightedAddition: false, gradientId: createId(pair.pair, prefix) }));
+      if (isPairingMode && specific.length > 0) {
+        specific.forEach(pair => {
+          if (!result.has(pair.pair)) {
+            result.set(pair.pair, { ...pair, isHighlightedAddition: true, gradientId: createId(pair.pair, prefix) });
+          }
+        });
+      }
+      else if (effectiveHighlightedPlayer) {
+        highlightedPairs.forEach(pair => {
+          const existing = result.get(pair.pair);
+          if (existing) result.set(pair.pair, { ...existing, gradientId: createId(existing.pair, prefix) });
+          else result.set(pair.pair, { ...pair, isHighlightedAddition: true, gradientId: createId(pair.pair, prefix) });
+        });
+      }
+      return Array.from(result.values());
+    };
+    const bottom = [...synergyEligiblePairs]
+      .filter(p => p.synergyScore < 0)
+      .sort((a, b) => a.synergyScore - b.synergyScore)
+      .slice(0, CHART_LIMITS.TOP_10);
+    const highlighted = effectiveHighlightedPlayer
+      ? findPlayerWorstSynergies(synergyData?.pairs || [], effectiveHighlightedPlayer, minSameCampGames, 5).filter(p => p.synergyScore < 0)
+      : [];
+    return combine(bottom, highlighted, specificSynergyPair.filter(p => p.synergyScore < 0), 'worst');
+  }, [synergyEligiblePairs, effectiveHighlightedPlayer, isPairingMode, specificSynergyPair, synergyData, minSameCampGames]);
 
   if (isLoading) {
     return <div className="donnees-attente">Chargement des statistiques de paires...</div>;
@@ -510,7 +587,7 @@ export function PlayerPairingStatsChart() {
                   fontSize: '0.9rem'
                 }}
               >
-                {minWolfAppearancesOptions.map(option => (
+                {MIN_GAMES_OPTIONS.MINIMAL.map(option => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -819,7 +896,7 @@ export function PlayerPairingStatsChart() {
                   fontSize: '0.9rem'
                 }}
               >
-                {minLoverAppearancesOptions.map(option => (
+                {MIN_GAMES_OPTIONS.MINIMAL.map(option => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -1140,7 +1217,7 @@ export function PlayerPairingStatsChart() {
                   fontSize: '0.9rem'
                 }}
               >
-                {minAgentAppearancesOptions.map(option => (
+                {MIN_GAMES_OPTIONS.MINIMAL.map(option => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -1357,6 +1434,146 @@ export function PlayerPairingStatsChart() {
     </div>
   );
 
+  // --- Synergy section helpers ---
+  const createSynergyGradientId = (pair: string, prefix: string): string =>
+    `${prefix}-syn-${pair.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+  const generateSynergyGradientDefs = (pairsData: ChartSynergyPair[], prefix: string) =>
+    pairsData.map(pairData => {
+      const [p1, p2] = pairData.players;
+      const gradientId = createSynergyGradientId(pairData.pair, prefix);
+      return (
+        <linearGradient key={gradientId} id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={playersColor[p1] || '#8884d8'} />
+          <stop offset="50%" stopColor={playersColor[p1] || '#8884d8'} />
+          <stop offset="50%" stopColor={playersColor[p2] || '#8884d8'} />
+          <stop offset="100%" stopColor={playersColor[p2] || '#8884d8'} />
+        </linearGradient>
+      );
+    });
+
+  const renderSynergyTooltip = (active: boolean | undefined, payload: any[] | undefined) => {
+    if (!active || !payload || payload.length === 0) return null;
+    const entry = payload[0].payload as ChartSynergyPair;
+    const [p1, p2] = entry.players;
+    const scoreColor = entry.synergyScore >= 0 ? '#4caf50' : '#f44336';
+    return (
+      <div style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: 12, borderRadius: 8, border: '1px solid var(--border-color)', maxWidth: 320 }}>
+        <div style={{ marginBottom: 8 }}><strong>{entry.pair}</strong></div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 8 }}>
+          <span style={{ width: 12, height: 12, backgroundColor: playersColor[p1] || '#8884d8', borderRadius: 2, display: 'inline-block' }}></span>
+          <span>{p1}</span><span>+</span>
+          <span style={{ width: 12, height: 12, backgroundColor: playersColor[p2] || '#8884d8', borderRadius: 2, display: 'inline-block' }}></span>
+          <span>{p2}</span>
+        </div>
+        <div>Parties ensemble : {entry.gamesTogether}</div>
+        <div>Même camp : {entry.sameCampGames} parties</div>
+        <div>Victoires même camp : {entry.sameCampWins} ({entry.sameCampWinRate}%)</div>
+        <hr style={{ border: 'none', borderTop: '1px solid var(--border-color)', margin: '8px 0' }} />
+        <div>Taux individuel {p1} : {entry.player1WinRate}%</div>
+        <div>Taux individuel {p2} : {entry.player2WinRate}%</div>
+        <div>Taux attendu : {entry.expectedWinRate}%</div>
+        <div style={{ marginTop: 6, fontWeight: 'bold', color: scoreColor, fontSize: '1.05rem' }}>
+          Synergie : {entry.synergyScore > 0 ? '+' : ''}{entry.synergyScore}%
+        </div>
+      </div>
+    );
+  };
+
+  const renderSynergyHalf = (chartData: ChartSynergyPair[], title: string, prefix: string, emptyMessage: string) => (
+    <div className="lycans-graphique-moitie">
+      <h3>{title}</h3>
+      <FullscreenChart title={title}>
+        {chartData.length > 0 ? (
+          <div style={{ height: 350 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                <defs>{generateSynergyGradientDefs(chartData, prefix)}</defs>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="pair" angle={-45} textAnchor="end" height={90} interval={0} fontSize={11}
+                  tick={({ x, y, payload }) => {
+                    const isHighlighted = (effectiveHighlightedPlayer && payload.value.includes(effectiveHighlightedPlayer)) ||
+                      (isPairingMode && payload.value.includes(pairingPlayer1!) && payload.value.includes(pairingPlayer2!));
+                    return (
+                      <text x={x} y={y} dy={16} textAnchor="end"
+                        fill={isHighlighted ? 'var(--accent-primary)' : 'var(--text-primary)'}
+                        fontSize={isHighlighted ? 12 : 11}
+                        fontWeight={isHighlighted ? 'bold' : 'normal'}
+                        transform={`rotate(-45 ${x} ${y})`}>
+                        {payload.value}
+                      </text>
+                    );
+                  }}
+                />
+                <YAxis
+                  label={{ value: 'Score de Synergie (%)', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                  tickFormatter={(v) => `${v > 0 ? '+' : ''}${v}`}
+                />
+                <ReferenceLine y={0} stroke="var(--text-secondary)" strokeDasharray="3 3" />
+                <Tooltip content={({ active, payload }) => renderSynergyTooltip(active, payload ? [...payload] : undefined)} />
+                <Bar dataKey="synergyScore" name="Synergie"
+                  shape={(props: any) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as ChartSynergyPair;
+                    const isHighlightedPair = (effectiveHighlightedPlayer && entry.players.includes(effectiveHighlightedPlayer)) ||
+                      (isPairingMode && entry.players.includes(pairingPlayer1!) && entry.players.includes(pairingPlayer2!));
+                    return (
+                      <Rectangle x={x} y={y} width={width} height={height}
+                        fill={`url(#${entry.gradientId})`}
+                        stroke={isHighlightedPair ? 'var(--accent-primary)' : entry.isHighlightedAddition ? 'var(--accent-secondary)' : 'transparent'}
+                        strokeWidth={isHighlightedPair ? 3 : entry.isHighlightedAddition ? 2 : 0}
+                        strokeDasharray={entry.isHighlightedAddition ? '5,5' : 'none'}
+                        opacity={entry.isHighlightedAddition ? 0.8 : 1}
+                      />
+                    );
+                  }}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        ) : (
+          <div className="lycans-empty-section"><p>{emptyMessage}</p></div>
+        )}
+      </FullscreenChart>
+    </div>
+  );
+
+  const renderSynergiesSection = () => (
+    <div>
+      <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: 0 }}>
+          Le score de synergie mesure la différence entre le taux de victoire quand deux joueurs sont dans le même camp
+          et la moyenne de leurs taux de victoire individuels. Un score positif signifie qu'ils performent mieux ensemble.
+        </p>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: '0.25rem 0 0 0' }}>
+          {synergyEligiblePairs.length} paires avec au moins {minSameCampGames} parties dans le même camp
+        </p>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+        <label htmlFor="min-synergy-games-select" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+          Min. parties même camp :
+        </label>
+        <select
+          id="min-synergy-games-select"
+          value={minSameCampGames}
+          onChange={(e) => setMinSameCampGames(Number(e.target.value))}
+          style={{ padding: '0.3rem 0.6rem', borderRadius: '4px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '0.9rem' }}
+        >
+          {MIN_GAMES_OPTIONS.STANDARD.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+        </select>
+      </div>
+      {synergyLoading ? (
+        <div className="donnees-attente">Chargement des synergies...</div>
+      ) : (
+        <div className="lycans-graphiques-groupe">
+          {renderSynergyHalf(bestSynergies, 'Meilleures Synergies', 'best', 'Aucune paire avec une synergie positive trouvée')}
+          {renderSynergyHalf(worstSynergies, 'Pires Anti-Synergies', 'worst', 'Aucune paire avec une anti-synergie trouvée')}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div className="lycans-players-pairing">
       <h2>Analyse des Paires de Joueurs</h2>
@@ -1499,12 +1716,23 @@ export function PlayerPairingStatsChart() {
         >
           Paires d'Agents ({data.agentPairs.pairs.length})
         </button>
+        <button
+          className={`lycans-submenu-btn${selectedTab === 'synergies' ? ' active' : ''}`}
+          onClick={() => {
+            setSelectedTab('synergies');
+            updateNavigationState({ selectedPairingTab: 'synergies' });
+          }}
+          type="button"
+        >
+          Synergies
+        </button>
       </nav>
 
       <div className="lycans-dashboard-content">
         {selectedTab === 'wolves' && renderWolfPairsSection()}
         {selectedTab === 'lovers' && renderLoverPairsSection()}
         {selectedTab === 'agents' && renderAgentPairsSection()}
+        {selectedTab === 'synergies' && renderSynergiesSection()}
       </div>
     </div>
   );

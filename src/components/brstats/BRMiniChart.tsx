@@ -19,7 +19,7 @@ interface ChartPlayerStat {
 }
 
 // Min games options for Mini BR
-const minGamesOptions = MIN_GAMES_OPTIONS.BR_MINIMAL;
+const minGamesOptions = MIN_GAMES_OPTIONS.MINIMAL;
 
 export function BRMiniChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredMiniBRData();

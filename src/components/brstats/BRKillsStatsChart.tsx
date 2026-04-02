@@ -19,7 +19,7 @@ interface ChartPlayerStat {
 }
 
 // Min games options for BR
-const minGamesOptions = MIN_GAMES_OPTIONS.BR_STANDARD;
+const minGamesOptions = MIN_GAMES_OPTIONS.STANDARD;
 
 export function BRKillsStatsChart() {
   const { data: brData, isLoading: brLoading, error: brError } = useFilteredRawBRData();
