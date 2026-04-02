@@ -29,6 +29,8 @@ const VotingStatisticsChart = lazy(() => import('./components/playerstats/Voting
 
 // Color statistics components
 const ColorStatisticsChart = lazy(() => import('./components/generalstats/ColorStatisticsChart').then(m => ({ default: m.ColorStatisticsChart })));
+// Player color ranking component
+const PlayerColorRankingChart = lazy(() => import('./components/playerstats/PlayerColorRankingChart').then(m => ({ default: m.PlayerColorRankingChart })));
 
 const CampsChart = lazy(() => import('./components/generalstats/CampsChart').then(m => ({ default: m.CampsChart })));
 const HarvestProgressChart = lazy(() => import('./components/generalstats/HarvestProgressChart').then(m => ({ default: m.HarvestProgressChart })));
@@ -178,6 +180,12 @@ const PLAYER_STATS_MENU = [
     description: 'Transformations (Loup) et précision (Chasseur)'
   },
   { 
+    key: 'colorRanking', 
+    label: 'Couleurs', 
+    component: PlayerColorRankingChart,
+    description: 'Classement des joueurs par couleur'
+  },
+  { 
     key: 'comparison', 
     label: 'Face à Face', 
     component: PlayerComparisonChart,
@@ -246,14 +254,12 @@ const GENERAL_STATS_MENU = [
     component: DeathLocationHeatmap,
     description: 'Carte de chaleur des localisations de mort'
   },
-
   { 
     key: 'colorStats', 
     label: 'Couleurs', 
     component: ColorStatisticsChart,
-    description: 'Statistiques sur les couleurs des joueurs'
+    description: 'Taux de victoire et popularité des couleurs'
   },
-
 ];
 
 const BR_STATS_MENU = [
