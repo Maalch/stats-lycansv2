@@ -5,6 +5,9 @@ import {
   getPlayerCamp,
   getFirstActionOfType,
 } from '../utils/actionMetaUtils';
+import { getEffectCategory } from './utils/potionScrollStatsUtils';
+
+const PARCHEMIN_REGEX = /^Parchemin \((.+)\)$/;
 
 // Pre-calculated stats for a camp filter group
 export interface AggregatedCampStats {
@@ -49,6 +52,17 @@ export interface WolfTransformTimingStats {
   winRate: number;
 }
 
+// Wolf untransform count statistics
+export interface WolfUntransformStats {
+  untransformCount: string; // "0", "1", "2", "3+"
+  wolfCount: number;
+  wins: number;
+  losses: number;
+  winRate: number;
+  baselineWinRate: number;
+  delta: number;
+}
+
 // Power usage timing statistics
 export interface PowerUsageStats {
   powerName: string;
@@ -59,11 +73,18 @@ export interface PowerUsageStats {
   lateUseWinRate: number; // Used in N3+
 }
 
+export interface ParcheminItemStats extends ActionItemStats {
+  effectCategory: 'positive' | 'neutral' | 'negative' | null;
+  effectName: string;
+}
+
 export interface ActionMetaStatsData {
   gadgetStats: ActionItemStats[];
   potionStats: ActionItemStats[];
   accessoryStats: ActionItemStats[];
+  parcheminStats: ParcheminItemStats[];
   wolfTransformTiming: WolfTransformTimingStats[];
+  wolfUntransformStats: WolfUntransformStats[];
   powerUsageStats: PowerUsageStats[];
   overallStats: {
     totalGamesAnalyzed: number;
@@ -77,13 +98,17 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
   // Filter for modded games only (actions are only in modded games)
   const moddedGames = gameData.filter(g => g.Modded);
 
-  // Track all gadgets, potions, and accessories
+  // Track all gadgets, potions, accessories, and parchemins
   const gadgetUsageMap = new Map<string, { uses: number; wins: number; camp: Map<string, { uses: number; wins: number }> }>();
   const potionUsageMap = new Map<string, { uses: number; wins: number; camp: Map<string, { uses: number; wins: number }> }>();
   const accessoryUsageMap = new Map<string, { uses: number; wins: number; camp: Map<string, { uses: number; wins: number }> }>();
+  const parcheminUsageMap = new Map<string, { uses: number; wins: number; camp: Map<string, { uses: number; wins: number }> }>();
 
   // Track wolf transformation timing
   const transformTimingMap = new Map<string, { games: number; wins: number }>();
+
+  // Track wolf untransform counts per wolf player per game (bucket: 0, 1, 2, 3+)
+  const untransformBucketMap = new Map<string, { count: number; wins: number }>();
 
   // Track power usage
   const powerUsageMap = new Map<string, { 
@@ -113,9 +138,28 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
         totalActions += actions.length;
       }
 
-      // Track gadgets
+      // Track gadgets (excluding parchemins, which are tracked separately)
       actions.filter((a: Action) => a.ActionType === 'UseGadget' && a.ActionName && a.ActionName !== 'Balle').forEach((action: Action) => {
         const name = action.ActionName!;
+
+        // Separate parchemins from regular gadgets
+        if (PARCHEMIN_REGEX.test(name)) {
+          if (!parcheminUsageMap.has(name)) {
+            parcheminUsageMap.set(name, { uses: 0, wins: 0, camp: new Map() });
+          }
+          const stats = parcheminUsageMap.get(name)!;
+          stats.uses++;
+          if (playerWon) stats.wins++;
+
+          if (!stats.camp.has(playerCamp)) {
+            stats.camp.set(playerCamp, { uses: 0, wins: 0 });
+          }
+          const campStatsP = stats.camp.get(playerCamp)!;
+          campStatsP.uses++;
+          if (playerWon) campStatsP.wins++;
+          return;
+        }
+
         if (!gadgetUsageMap.has(name)) {
           gadgetUsageMap.set(name, { uses: 0, wins: 0, camp: new Map() });
         }
@@ -191,6 +235,16 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
           stats.games++;
           if (playerWon) stats.wins++;
         }
+
+        // Count untransforms for this wolf player in this game
+        const untransformCount = actions.filter((a: Action) => a.ActionType === 'Untransform').length;
+        const bucketKey = untransformCount >= 3 ? '3+' : String(untransformCount);
+        if (!untransformBucketMap.has(bucketKey)) {
+          untransformBucketMap.set(bucketKey, { count: 0, wins: 0 });
+        }
+        const uStats = untransformBucketMap.get(bucketKey)!;
+        uStats.count++;
+        if (playerWon) uStats.wins++;
       }
 
       // Track power usage (UsePower action type)
@@ -458,6 +512,24 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
     })
     .filter(s => s.gamesCount > 0);
 
+  // Convert wolf untransform bucket map to array
+  const wolfBaselineWinRate = loupsBaseline;
+  const wolfUntransformStats: WolfUntransformStats[] = ['0', '1', '2', '3+']
+    .map(bucket => {
+      const data = untransformBucketMap.get(bucket) || { count: 0, wins: 0 };
+      const winRate = data.count > 0 ? (data.wins / data.count) * 100 : 0;
+      return {
+        untransformCount: bucket,
+        wolfCount: data.count,
+        wins: data.wins,
+        losses: data.count - data.wins,
+        winRate,
+        baselineWinRate: wolfBaselineWinRate,
+        delta: winRate - wolfBaselineWinRate,
+      };
+    })
+    .filter(s => s.wolfCount > 0);
+
   // Convert power usage map to array
   const powerUsageStats: PowerUsageStats[] = Array.from(powerUsageMap.entries())
     .map(([powerName, data]) => {
@@ -477,11 +549,49 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
     .filter(s => s.totalUses >= 5) // Minimum 5 uses for significance
     .sort((a, b) => b.totalUses - a.totalUses);
 
+  // Convert parchemin map to array with effect categories
+  const parcheminStats: ParcheminItemStats[] = Array.from(parcheminUsageMap.entries())
+    .map(([itemName, data]) => {
+      const winRate = data.uses > 0 ? (data.wins / data.uses) * 100 : 0;
+      const match = itemName.match(PARCHEMIN_REGEX);
+      const effectName = match ? match[1] : itemName;
+
+      const campBreakdown = Array.from(data.camp.entries()).map(([camp, campData]) => {
+        const campWinRate = campData.uses > 0 ? (campData.wins / campData.uses) * 100 : 0;
+        const campBaseline = campBaselineWinRates.get(camp) || 50;
+        return {
+          camp,
+          winRate: campWinRate,
+          uses: campData.uses,
+          wins: campData.wins,
+          delta: campWinRate - campBaseline,
+        };
+      });
+
+      return {
+        itemName,
+        effectName,
+        effectCategory: getEffectCategory(itemName),
+        actionType: 'UseGadget' as const,
+        totalUses: data.uses,
+        winRate,
+        wins: data.wins,
+        losses: data.uses - data.wins,
+        baselineWinRate: overallBaselineWinRate,
+        delta: winRate - overallBaselineWinRate,
+        campBreakdown,
+        aggregatedCampStats: calculateAggregatedCampStats(data.camp),
+      };
+    })
+    .sort((a, b) => b.totalUses - a.totalUses);
+
   return {
     gadgetStats,
     potionStats,
     accessoryStats,
+    parcheminStats,
     wolfTransformTiming,
+    wolfUntransformStats,
     powerUsageStats,
     overallStats: {
       totalGamesAnalyzed: moddedGames.length,

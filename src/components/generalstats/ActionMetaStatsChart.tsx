@@ -3,8 +3,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { useActionMetaStatsFromRaw } from '../../hooks/useActionMetaStatsFromRaw';
 import { FullscreenChart } from '../common/FullscreenChart';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
+import { getEffectCategory } from '../../hooks/utils/potionScrollStatsUtils';
 
-type ViewType = 'gadgets' | 'potions' | 'accessories' | 'wolfTiming';
+type ViewType = 'gadgets' | 'potions' | 'parchemins' | 'accessories' | 'wolfTiming';
 type CampFilterAction = 'all' | 'villageois' | 'loups' | 'autres';
 
 export function ActionMetaStatsChart() {
@@ -51,6 +52,7 @@ export function ActionMetaStatsChart() {
             delta: p.delta,
             winRate: p.winRate,
             uses: p.totalUses,
+            effectCategory: getEffectCategory(p.itemName),
           } : null;
         }
         // Use pre-calculated aggregated stats for camp filters
@@ -60,6 +62,7 @@ export function ActionMetaStatsChart() {
           delta: campStats.delta,
           winRate: campStats.winRate,
           uses: campStats.uses,
+          effectCategory: getEffectCategory(p.itemName),
         } : null;
       })
       .filter((item): item is NonNullable<typeof item> => item !== null)
@@ -90,6 +93,32 @@ export function ActionMetaStatsChart() {
       .sort((a, b) => b.uses - a.uses);
   }, [actionMetaStats, minUsages, campFilter]);
 
+  const filteredParcheminStats = useMemo(() => {
+    if (!actionMetaStats) return [];
+    return actionMetaStats.parcheminStats
+      .map(p => {
+        if (campFilter === 'all') {
+          return p.totalUses >= minUsages ? {
+            name: p.effectName,
+            delta: p.delta,
+            winRate: p.winRate,
+            uses: p.totalUses,
+            effectCategory: p.effectCategory,
+          } : null;
+        }
+        const campStats = p.aggregatedCampStats[campFilter];
+        return campStats.uses >= minUsages ? {
+          name: p.effectName,
+          delta: campStats.delta,
+          winRate: campStats.winRate,
+          uses: campStats.uses,
+          effectCategory: p.effectCategory,
+        } : null;
+      })
+      .filter((item): item is NonNullable<typeof item> => item !== null)
+      .sort((a, b) => b.uses - a.uses);
+  }, [actionMetaStats, minUsages, campFilter]);
+
   if (isLoading) {
     return <div className="lycans-chargement">Chargement des statistiques d'actions...</div>;
   }
@@ -113,21 +142,6 @@ export function ActionMetaStatsChart() {
         <h3>⚡ Actions totales</h3>
         <div className="lycans-valeur-principale">{actionMetaStats.overallStats.totalActionsRecorded}</div>
         <p>{actionMetaStats.overallStats.averageActionsPerGame.toFixed(1)} par partie</p>
-      </div>
-      <div className="lycans-stat-carte">
-        <h3>�🔧 Objets uniques</h3>
-        <div className="lycans-valeur-principale">{actionMetaStats.gadgetStats.length}</div>
-        <p>types différents</p>
-      </div>
-      <div className="lycans-stat-carte">
-        <h3>🧪 Potions uniques</h3>
-        <div className="lycans-valeur-principale">{actionMetaStats.potionStats.length}</div>
-        <p>types différents</p>
-      </div>
-      <div className="lycans-stat-carte">
-        <h3>💍 Accessoires uniques</h3>
-        <div className="lycans-valeur-principale">{actionMetaStats.accessoryStats.length}</div>
-        <p>types différents</p>
       </div>
     </div>
   );
@@ -268,6 +282,7 @@ export function ActionMetaStatsChart() {
                         border: '1px solid var(--border-color)',
                       }}>
                         <div><strong>{data.name}</strong></div>
+                        <div>Type d'effet: {getEffectCategoryLabel(data.effectCategory)}</div>
                         <div>Taux de victoire: {data.winRate.toFixed(1)}%</div>
                         <div>Impact: {data.delta > 0 ? '+' : ''}{data.delta.toFixed(1)}%</div>
                         <div>Utilisations: {data.uses}</div>
@@ -281,10 +296,8 @@ export function ActionMetaStatsChart() {
                 dataKey="delta"
                 shape={(props) => {
                   const { x, y, width, height, payload } = props;
-                  const entry = payload as { delta: number };
-                  const fillColor = entry.delta > 0
-                    ? 'var(--success-color, #82ca9d)'
-                    : 'var(--danger-color, #ff6b6b)';
+                  const entry = payload as { effectCategory: string | null };
+                  const fillColor = getEffectCategoryColor(entry.effectCategory);
 
                   return (
                     <Rectangle
@@ -293,6 +306,7 @@ export function ActionMetaStatsChart() {
                       width={width}
                       height={height}
                       fill={fillColor}
+                      fillOpacity={0.85}
                     />
                   );
                 }}
@@ -301,8 +315,12 @@ export function ActionMetaStatsChart() {
           </ResponsiveContainer>
         </div>
         <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          <p>💡 Les valeurs positives indiquent que l'utilisation de la potion est corrélée à un taux de victoire supérieur à la moyenne.</p>
-          <p>Les valeurs négatives suggèrent une corrélation avec un taux de victoire inférieur.</p>
+          <p>🧪 Les barres sont colorées selon le type d'effet de la potion :
+            <span style={{ color: '#4caf50', fontWeight: 'bold' }}> vert = positif</span>,
+            <span style={{ color: '#9e9e9e', fontWeight: 'bold' }}> gris = neutre</span>,
+            <span style={{ color: '#f44336', fontWeight: 'bold' }}> rouge = négatif</span>.
+          </p>
+          <p>💡 La position de la barre (gauche/droite de 0) indique l'impact sur le taux de victoire, indépendamment du type d'effet.</p>
         </div>
       </FullscreenChart>
     );
@@ -396,32 +414,59 @@ export function ActionMetaStatsChart() {
     );
   };
 
-  const renderWolfTimingView = () => {
-    if (actionMetaStats.wolfTransformTiming.length === 0) {
+  const getEffectCategoryColor = (category: string | null): string => {
+    switch (category) {
+      case 'positive': return '#4caf50';
+      case 'neutral': return '#9e9e9e';
+      case 'negative': return '#f44336';
+      default: return '#607d8b';
+    }
+  };
+
+  const getEffectCategoryLabel = (category: string | null): string => {
+    switch (category) {
+      case 'positive': return '✅ Positif';
+      case 'neutral': return '⚪ Neutre';
+      case 'negative': return '❌ Négatif';
+      default: return '❓ Inconnu';
+    }
+  };
+
+  const renderParcheminsView = () => {
+    if (filteredParcheminStats.length === 0) {
       return (
         <div className="donnees-manquantes">
-          <p>Aucune donnée de transformation de loup disponible.</p>
+          <p>Aucun parchemin avec au moins {minUsages} utilisations.</p>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            Réduisez le filtre d'utilisations minimales pour voir plus de données.
+          </p>
         </div>
       );
     }
 
     return (
-      <FullscreenChart title="Impact du Timing de Première Transformation (Loups)">
-        <div style={{ height: 400 }}>
+      <FullscreenChart title="Impact des Parchemins sur le Taux de Victoire">
+        <div style={{ height: Math.max(400, filteredParcheminStats.length * 30) }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={actionMetaStats.wolfTransformTiming}
-              margin={{ top: 20, right: 30, left: 60, bottom: 60 }}
+              data={filteredParcheminStats}
+              layout="vertical"
+              margin={{ top: 20, right: 100, left: 150, bottom: 20 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
               <XAxis 
-                dataKey="timing"
-                label={{ value: 'Timing de première transformation', position: 'bottom', offset: 0 }}
+                type="number"
+                label={{ value: 'Différence du taux de victoire (%)', position: 'bottom', style: { textAnchor: 'middle' } }}
+                domain={[-20, 20]}
+                tickFormatter={(value) => Math.round(value).toString()}
               />
               <YAxis 
-                label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
-                domain={[0, 100]}
+                type="category"
+                dataKey="name"
+                width={140}
+                tick={{ fontSize: 12 }}
               />
+              <ReferenceLine x={0} stroke="var(--text-secondary)" strokeWidth={2} />
               <Tooltip
                 content={({ active, payload }) => {
                   if (active && payload && payload.length > 0) {
@@ -434,25 +479,188 @@ export function ActionMetaStatsChart() {
                         borderRadius: 8,
                         border: '1px solid var(--border-color)',
                       }}>
-                        <div><strong>Transformation en {data.timing}</strong></div>
+                        <div><strong>{data.name}</strong></div>
+                        <div>Type d'effet: {getEffectCategoryLabel(data.effectCategory)}</div>
                         <div>Taux de victoire: {data.winRate.toFixed(1)}%</div>
-                        <div>Parties: {data.gamesCount}</div>
-                        <div>Victoires: {data.wins} / Défaites: {data.losses}</div>
+                        <div>Impact: {data.delta > 0 ? '+' : ''}{data.delta.toFixed(1)}%</div>
+                        <div>Utilisations: {data.uses}</div>
                       </div>
                     );
                   }
                   return null;
                 }}
               />
-              <Bar dataKey="winRate" fill={lycansColors['Loup'] || 'var(--wolf-color)'} />
+              <Bar
+                dataKey="delta"
+                shape={(props) => {
+                  const { x, y, width, height, payload } = props;
+                  const entry = payload as { effectCategory: string | null };
+                  const fillColor = getEffectCategoryColor(entry.effectCategory);
+
+                  return (
+                    <Rectangle
+                      x={x}
+                      y={y}
+                      width={width}
+                      height={height}
+                      fill={fillColor}
+                      fillOpacity={0.85}
+                    />
+                  );
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
         <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          <p>🐺 Analyse du moment de la première transformation en loup et son impact sur les chances de victoire.</p>
-          <p>N1 = Nuit 1, N2 = Nuit 2, N3+ = Nuit 3 ou plus tard</p>
+          <p>📜 Les barres sont colorées selon le type d'effet du parchemin :
+            <span style={{ color: '#4caf50', fontWeight: 'bold' }}> vert = positif</span>,
+            <span style={{ color: '#9e9e9e', fontWeight: 'bold' }}> gris = neutre</span>,
+            <span style={{ color: '#f44336', fontWeight: 'bold' }}> rouge = négatif</span>.
+          </p>
+          <p>💡 La position de la barre (gauche/droite de 0) indique l'impact sur le taux de victoire, indépendamment du type d'effet.</p>
         </div>
       </FullscreenChart>
+    );
+  };
+
+  const renderWolfTimingView = () => {
+    if (actionMetaStats.wolfTransformTiming.length === 0 && actionMetaStats.wolfUntransformStats.length === 0) {
+      return (
+        <div className="donnees-manquantes">
+          <p>Aucune donnée de transformation de loup disponible.</p>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        {actionMetaStats.wolfTransformTiming.length > 0 && (
+          <FullscreenChart title="Impact du Timing de Première Transformation (Loups)">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={actionMetaStats.wolfTransformTiming}
+                  margin={{ top: 20, right: 30, left: 60, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis 
+                    dataKey="timing"
+                    label={{ value: 'Timing de première transformation', position: 'bottom', offset: 0 }}
+                  />
+                  <YAxis 
+                    label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                    domain={[0, 100]}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const data = payload[0].payload;
+                        return (
+                          <div style={{
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-primary)',
+                            padding: 12,
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)',
+                          }}>
+                            <div><strong>Transformation en {data.timing}</strong></div>
+                            <div>Taux de victoire: {data.winRate.toFixed(1)}%</div>
+                            <div>Parties: {data.gamesCount}</div>
+                            <div>Victoires: {data.wins} / Défaites: {data.losses}</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar dataKey="winRate" fill={lycansColors['Loup'] || 'var(--wolf-color)'} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              <p>🐺 Analyse du moment de la première transformation en loup et son impact sur les chances de victoire.</p>
+              <p>N1 = Nuit 1, N2 = Nuit 2, N3+ = Nuit 3 ou plus tard</p>
+            </div>
+          </FullscreenChart>
+        )}
+
+        {actionMetaStats.wolfUntransformStats.length > 0 && (
+          <FullscreenChart title="Impact du Nombre de Détransformations sur le Taux de Victoire (Loups)">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={actionMetaStats.wolfUntransformStats}
+                  margin={{ top: 20, right: 30, left: 60, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis
+                    dataKey="untransformCount"
+                    label={{ value: 'Nombre de détransformations', position: 'bottom', offset: 0 }}
+                  />
+                  <YAxis
+                    label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                    domain={[0, 100]}
+                  />
+                  <ReferenceLine
+                    y={actionMetaStats.wolfUntransformStats[0]?.baselineWinRate}
+                    stroke="var(--text-secondary)"
+                    strokeDasharray="4 4"
+                    strokeWidth={2}
+                    label={{ value: 'Baseline', position: 'right', fill: 'var(--text-secondary)', fontSize: 11 }}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const data = payload[0].payload;
+                        return (
+                          <div style={{
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-primary)',
+                            padding: 12,
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)',
+                          }}>
+                            <div><strong>{data.untransformCount} détransformation{data.untransformCount !== '1' ? 's' : ''}</strong></div>
+                            <div>Taux de victoire: {data.winRate.toFixed(1)}%</div>
+                            <div>Impact: {data.delta > 0 ? '+' : ''}{data.delta.toFixed(1)}%</div>
+                            <div>Parties: {data.wolfCount}</div>
+                            <div>Victoires: {data.wins} / Défaites: {data.losses}</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar
+                    dataKey="winRate"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as { delta: number };
+                      const fillColor = entry.delta > 0
+                        ? 'var(--success-color, #82ca9d)'
+                        : 'var(--danger-color, #ff6b6b)';
+                      return (
+                        <Rectangle
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          fill={fillColor}
+                        />
+                      );
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              <p>🔄 Analyse du nombre de fois qu'un loup se détransforme en humain au cours d'une partie et son impact sur le taux de victoire.</p>
+              <p>💡 La ligne tiretée indique le taux de victoire moyen des loups (baseline).</p>
+            </div>
+          </FullscreenChart>
+        )}
+      </div>
     );
   };
 
@@ -479,6 +687,13 @@ export function ActionMetaStatsChart() {
         </button>
         <button
           type="button"
+          className={`lycans-submenu-btn ${selectedView === 'parchemins' ? 'active' : ''}`}
+          onClick={() => setSelectedView('parchemins')}
+        >
+          📜 Parchemins
+        </button>
+        <button
+          type="button"
           className={`lycans-submenu-btn ${selectedView === 'accessories' ? 'active' : ''}`}
           onClick={() => setSelectedView('accessories')}
         >
@@ -489,12 +704,12 @@ export function ActionMetaStatsChart() {
           className={`lycans-submenu-btn ${selectedView === 'wolfTiming' ? 'active' : ''}`}
           onClick={() => setSelectedView('wolfTiming')}
         >
-          🐺 Timing Loups
+          🐺 Loups
         </button>
       </div>
 
       {/* Camp Filter - Below view selector */}
-      {(selectedView === 'gadgets' || selectedView === 'potions' || selectedView === 'accessories') && (
+      {(selectedView === 'gadgets' || selectedView === 'potions' || selectedView === 'parchemins' || selectedView === 'accessories') && (
         <div className="lycans-controles-groupe" style={{ marginBottom: '1rem' }}>
           <div className="lycans-filtre-groupe" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <label htmlFor="camp-filter-action" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
@@ -527,6 +742,7 @@ export function ActionMetaStatsChart() {
         <div className="lycans-graphique-section">
           {selectedView === 'gadgets' && renderGadgetsView()}
           {selectedView === 'potions' && renderPotionsView()}
+          {selectedView === 'parchemins' && renderParcheminsView()}
           {selectedView === 'accessories' && renderAccessoriesView()}
           {selectedView === 'wolfTiming' && renderWolfTimingView()}
         </div>
