@@ -262,7 +262,7 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
                               border: '1px solid var(--border-color)'
                             }}>
                               <div><strong>{dataPoint.target}</strong></div>
-                              <div>Tué par le chasseur {dataPoint.count} fois</div>
+                              <div>Touché par le chasseur {dataPoint.count} fois</div>
                             </div>
                           );
                         }

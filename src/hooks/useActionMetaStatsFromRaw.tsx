@@ -78,6 +78,28 @@ export interface ParcheminItemStats extends ActionItemStats {
   effectName: string;
 }
 
+// Hunter shoot meta statistics
+export interface HunterShootMetaStats {
+  totalShots: number;
+  successfulShots: number;
+  missedShots: number;
+  accuracy: number;
+  totalHunterGames: number;
+  hunterWins: number;
+  hunterWinRate: number;
+  winRateWhenHit: number;
+  winRateWhenMiss: number;
+  hitsCount: number;
+  missesCount: number;
+  targetCampStats: {
+    camp: string;
+    count: number;
+    wins: number;
+    winRate: number;
+    delta: number;
+  }[];
+}
+
 export interface ActionMetaStatsData {
   gadgetStats: ActionItemStats[];
   potionStats: ActionItemStats[];
@@ -86,6 +108,7 @@ export interface ActionMetaStatsData {
   wolfTransformTiming: WolfTransformTimingStats[];
   wolfUntransformStats: WolfUntransformStats[];
   powerUsageStats: PowerUsageStats[];
+  hunterShootStats: HunterShootMetaStats;
   overallStats: {
     totalGamesAnalyzed: number;
     totalActionsRecorded: number;
@@ -120,6 +143,17 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
     lateUses: number; 
     lateWins: number;
   }>();
+
+  // Track hunter shoot stats
+  let hunterTotalShots = 0;
+  let hunterSuccessfulShots = 0;
+  let hunterTotalGames = 0;
+  let hunterWins = 0;
+  let hunterHitWins = 0;
+  let hunterHitCount = 0;
+  let hunterMissWins = 0;
+  let hunterMissCount = 0;
+  const hunterTargetCampMap = new Map<string, { count: number; wins: number }>();
 
   let totalActions = 0;
   let gamesWithActions = 0;
@@ -277,6 +311,39 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
           if (playerWon) stats.lateWins++;
         }
       });
+
+      // Track hunter shoot actions
+      const hunterShootActions = actions.filter((a: Action) => a.ActionType === 'HunterShoot');
+      if (hunterShootActions.length > 0) {
+        hunterTotalGames++;
+        if (playerWon) hunterWins++;
+
+        hunterShootActions.forEach((action: Action) => {
+          hunterTotalShots++;
+          if (action.ActionTarget) {
+            hunterSuccessfulShots++;
+            hunterHitCount++;
+            if (playerWon) hunterHitWins++;
+
+            // Track target camp
+            const targetPlayer = game.PlayerStats.find(
+              (p: PlayerStat) => p.Username === action.ActionTarget
+            );
+            if (targetPlayer) {
+              const targetCamp = getPlayerCamp(targetPlayer);
+              if (!hunterTargetCampMap.has(targetCamp)) {
+                hunterTargetCampMap.set(targetCamp, { count: 0, wins: 0 });
+              }
+              const campData = hunterTargetCampMap.get(targetCamp)!;
+              campData.count++;
+              if (playerWon) campData.wins++;
+            }
+          } else {
+            hunterMissCount++;
+            if (playerWon) hunterMissWins++;
+          }
+        });
+      }
     });
 
     if (gameHasActions) gamesWithActions++;
@@ -585,6 +652,36 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
     })
     .sort((a, b) => b.totalUses - a.totalUses);
 
+  // Build hunter shoot meta stats
+  const hunterBaselineWinRate = hunterTotalGames > 0 ? (hunterWins / hunterTotalGames) * 100 : 0;
+  const targetCampStats = Array.from(hunterTargetCampMap.entries())
+    .map(([camp, data]) => {
+      const winRate = data.count > 0 ? (data.wins / data.count) * 100 : 0;
+      return {
+        camp,
+        count: data.count,
+        wins: data.wins,
+        winRate,
+        delta: winRate - hunterBaselineWinRate,
+      };
+    })
+    .sort((a, b) => b.count - a.count);
+
+  const hunterShootStats: HunterShootMetaStats = {
+    totalShots: hunterTotalShots,
+    successfulShots: hunterSuccessfulShots,
+    missedShots: hunterTotalShots - hunterSuccessfulShots,
+    accuracy: hunterTotalShots > 0 ? (hunterSuccessfulShots / hunterTotalShots) * 100 : 0,
+    totalHunterGames: hunterTotalGames,
+    hunterWins,
+    hunterWinRate: hunterBaselineWinRate,
+    winRateWhenHit: hunterHitCount > 0 ? (hunterHitWins / hunterHitCount) * 100 : 0,
+    winRateWhenMiss: hunterMissCount > 0 ? (hunterMissWins / hunterMissCount) * 100 : 0,
+    hitsCount: hunterHitCount,
+    missesCount: hunterMissCount,
+    targetCampStats,
+  };
+
   return {
     gadgetStats,
     potionStats,
@@ -593,6 +690,7 @@ function computeActionMetaStats(gameData: GameLogEntry[]): ActionMetaStatsData {
     wolfTransformTiming,
     wolfUntransformStats,
     powerUsageStats,
+    hunterShootStats,
     overallStats: {
       totalGamesAnalyzed: moddedGames.length,
       totalActionsRecorded: totalActions,

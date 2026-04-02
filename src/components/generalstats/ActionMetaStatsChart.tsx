@@ -5,7 +5,7 @@ import { FullscreenChart } from '../common/FullscreenChart';
 import { useThemeAdjustedLycansColorScheme } from '../../types/api';
 import { getEffectCategory } from '../../hooks/utils/potionScrollStatsUtils';
 
-type ViewType = 'gadgets' | 'potions' | 'parchemins' | 'accessories' | 'wolfTiming';
+type ViewType = 'gadgets' | 'potions' | 'parchemins' | 'accessories' | 'wolfTiming' | 'hunter';
 type CampFilterAction = 'all' | 'villageois' | 'loups' | 'autres';
 
 export function ActionMetaStatsChart() {
@@ -524,6 +524,186 @@ export function ActionMetaStatsChart() {
     );
   };
 
+  const renderHunterView = () => {
+    const stats = actionMetaStats.hunterShootStats;
+    if (stats.totalShots === 0) {
+      return (
+        <div className="donnees-manquantes">
+          <p>Aucune donnée de tir du chasseur disponible.</p>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        {/* Summary Cards */}
+        <div className="lycans-resume-conteneur" style={{ marginBottom: '20px' }}>
+          <div className="lycans-stat-carte">
+            <h3>🎯 Tirs totaux</h3>
+            <div className="lycans-valeur-principale">{stats.totalShots}</div>
+            <p>en {stats.totalHunterGames} parties</p>
+          </div>
+          <div className="lycans-stat-carte">
+            <h3>✅ Précision</h3>
+            <div className="lycans-valeur-principale" style={{ color: 'var(--success-color, #82ca9d)' }}>
+              {stats.accuracy.toFixed(1)}%
+            </div>
+            <p>{stats.successfulShots} touchés / {stats.missedShots} manqués</p>
+          </div>
+          <div className="lycans-stat-carte">
+            <h3>🏆 Victoire chasseur</h3>
+            <div className="lycans-valeur-principale">{stats.hunterWinRate.toFixed(1)}%</div>
+            <p>{stats.hunterWins} victoires / {stats.totalHunterGames} parties</p>
+          </div>
+        </div>
+
+        {/* Hit vs Miss Win Rate Chart */}
+        <FullscreenChart title="Impact du Tir du Chasseur sur le Taux de Victoire">
+          <div style={{ height: 400 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={[
+                  ...(stats.hitsCount > 0 ? [{
+                    name: 'Tir réussi',
+                    winRate: stats.winRateWhenHit,
+                    delta: stats.winRateWhenHit - stats.hunterWinRate,
+                    count: stats.hitsCount,
+                  }] : []),
+                  ...(stats.missesCount > 0 ? [{
+                    name: 'Tir manqué',
+                    winRate: stats.winRateWhenMiss,
+                    delta: stats.winRateWhenMiss - stats.hunterWinRate,
+                    count: stats.missesCount,
+                  }] : []),
+                ]}
+                margin={{ top: 20, right: 30, left: 60, bottom: 60 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                <XAxis dataKey="name" fontSize={14} />
+                <YAxis
+                  label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                  domain={[0, 100]}
+                />
+                <ReferenceLine
+                  y={stats.hunterWinRate}
+                  stroke="var(--text-secondary)"
+                  strokeDasharray="4 4"
+                  strokeWidth={2}
+                  label={{ value: 'Baseline', position: 'right', fill: 'var(--text-secondary)', fontSize: 11 }}
+                />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0) {
+                      const data = payload[0].payload;
+                      return (
+                        <div style={{
+                          background: 'var(--bg-secondary)',
+                          color: 'var(--text-primary)',
+                          padding: 12,
+                          borderRadius: 8,
+                          border: '1px solid var(--border-color)',
+                        }}>
+                          <div><strong>{data.name}</strong></div>
+                          <div>Taux de victoire: {data.winRate.toFixed(1)}%</div>
+                          <div>Impact: {data.delta > 0 ? '+' : ''}{data.delta.toFixed(1)}%</div>
+                          <div>Occurrences: {data.count}</div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Bar
+                  dataKey="winRate"
+                  shape={(props) => {
+                    const { x, y, width, height, payload } = props;
+                    const entry = payload as { delta: number };
+                    const fillColor = entry.delta > 0
+                      ? 'var(--success-color, #82ca9d)'
+                      : 'var(--danger-color, #ff6b6b)';
+                    return (
+                      <Rectangle x={x} y={y} width={width} height={height} fill={fillColor} />
+                    );
+                  }}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <p>🎯 Compare le taux de victoire du chasseur selon qu'il touche ou manque sa cible.</p>
+            <p>💡 La ligne tiretée indique le taux de victoire moyen du chasseur.</p>
+          </div>
+        </FullscreenChart>
+
+        {/* Target Camp Breakdown */}
+        {stats.targetCampStats.length > 0 && (
+          <FullscreenChart title="Taux de Victoire selon le Camp de la Cible">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={stats.targetCampStats}
+                  margin={{ top: 20, right: 30, left: 60, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis dataKey="camp" fontSize={14} />
+                  <YAxis
+                    label={{ value: 'Taux de victoire (%)', angle: -90, position: 'insideLeft' }}
+                    domain={[0, 100]}
+                  />
+                  <ReferenceLine
+                    y={stats.hunterWinRate}
+                    stroke="var(--text-secondary)"
+                    strokeDasharray="4 4"
+                    strokeWidth={2}
+                    label={{ value: 'Baseline', position: 'right', fill: 'var(--text-secondary)', fontSize: 11 }}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const data = payload[0].payload;
+                        return (
+                          <div style={{
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-primary)',
+                            padding: 12,
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)',
+                          }}>
+                            <div><strong>Cible: {data.camp}</strong></div>
+                            <div>Taux de victoire: {data.winRate.toFixed(1)}%</div>
+                            <div>Impact: {data.delta > 0 ? '+' : ''}{data.delta.toFixed(1)}%</div>
+                            <div>Tirs: {data.count}</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar
+                    dataKey="winRate"
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const entry = payload as { camp: string };
+                      const fillColor = lycansColors[entry.camp] || 'var(--chart-primary)';
+                      return (
+                        <Rectangle x={x} y={y} width={width} height={height} fill={fillColor} />
+                      );
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              <p>🎯 Taux de victoire du chasseur en fonction du camp de la cible touchée.</p>
+              <p>💡 Tirer sur un loup devrait logiquement améliorer les chances de victoire du camp Villageois.</p>
+            </div>
+          </FullscreenChart>
+        )}
+
+      </div>
+    );
+  };
+
   const renderWolfTimingView = () => {
     if (actionMetaStats.wolfTransformTiming.length === 0 && actionMetaStats.wolfUntransformStats.length === 0) {
       return (
@@ -701,6 +881,13 @@ export function ActionMetaStatsChart() {
         </button>
         <button
           type="button"
+          className={`lycans-submenu-btn ${selectedView === 'hunter' ? 'active' : ''}`}
+          onClick={() => setSelectedView('hunter')}
+        >
+          🏹 Chasseur
+        </button>
+        <button
+          type="button"
           className={`lycans-submenu-btn ${selectedView === 'wolfTiming' ? 'active' : ''}`}
           onClick={() => setSelectedView('wolfTiming')}
         >
@@ -744,6 +931,7 @@ export function ActionMetaStatsChart() {
           {selectedView === 'potions' && renderPotionsView()}
           {selectedView === 'parchemins' && renderParcheminsView()}
           {selectedView === 'accessories' && renderAccessoriesView()}
+          {selectedView === 'hunter' && renderHunterView()}
           {selectedView === 'wolfTiming' && renderWolfTimingView()}
         </div>
       </div>
