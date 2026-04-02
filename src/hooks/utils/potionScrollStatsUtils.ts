@@ -9,7 +9,7 @@ const PARCHEMIN_REGEX = /^Parchemin \((.+)\)$/;
 
 const POSITIVE_EFFECTS = new Set([
   'Audition+', 'Invisible', 'Vision vraie', 'Rassasié', 'Célérité',
-  'Midas', 'Assassin', 'Clairvoyance', 'Énergie',
+  'Midas', 'Assassin', 'Clairvoyance', 'Énergie', 'Blanche'
 ]);
 
 const NEUTRAL_EFFECTS = new Set([
@@ -29,7 +29,7 @@ export function getEffectCategory(actionName: string | null): 'positive' | 'neut
   if (effectName.startsWith('Blanche - ')) {
     effectName = effectName.substring('Blanche - '.length);
   } else if (effectName === 'Blanche') {
-    return 'neutral'; // Unknown white potion with no revealed effect
+    return 'positive'; // white potion always has a positive effect, even if the specific effect is unknown (it can't be negative or neutral)
   }
   if (POSITIVE_EFFECTS.has(effectName)) return 'positive';
   if (NEUTRAL_EFFECTS.has(effectName)) return 'neutral';

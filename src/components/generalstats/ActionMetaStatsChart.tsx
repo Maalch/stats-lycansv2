@@ -44,7 +44,7 @@ export function ActionMetaStatsChart() {
 
   const filteredPotionStats = useMemo(() => {
     if (!actionMetaStats) return [];
-    return actionMetaStats.potionStats
+    const items = actionMetaStats.potionStats
       .map(p => {
         if (campFilter === 'all') {
           return p.totalUses >= minUsages ? {
@@ -65,8 +65,28 @@ export function ActionMetaStatsChart() {
           effectCategory: getEffectCategory(p.itemName),
         } : null;
       })
-      .filter((item): item is NonNullable<typeof item> => item !== null)
-      .sort((a, b) => b.uses - a.uses);
+      .filter((item): item is NonNullable<typeof item> => item !== null);
+
+    // Group "Blanche - XXX" variants into a single "Blanche" entry (weighted average)
+    const grouped = new Map<string, { name: string; delta: number; winRate: number; uses: number; effectCategory: string | null }>();
+    for (const item of items) {
+      const key = item.name.startsWith('Blanche - ') ? 'Blanche' : item.name;
+      const existing = grouped.get(key);
+      if (existing) {
+        const totalUses = existing.uses + item.uses;
+        grouped.set(key, {
+          name: key,
+          delta: (existing.delta * existing.uses + item.delta * item.uses) / totalUses,
+          winRate: (existing.winRate * existing.uses + item.winRate * item.uses) / totalUses,
+          uses: totalUses,
+          effectCategory: key === 'Blanche' ? null : existing.effectCategory,
+        });
+      } else {
+        grouped.set(key, { ...item, name: key });
+      }
+    }
+
+    return Array.from(grouped.values()).sort((a, b) => b.uses - a.uses);
   }, [actionMetaStats, minUsages, campFilter]);
 
   const filteredAccessoryStats = useMemo(() => {
