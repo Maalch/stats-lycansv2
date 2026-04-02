@@ -153,7 +153,7 @@ export function PotionScrollStatsChart() {
   // ── Shared render helpers ──────────────────────────────────────────
   const viewTabStyle = (active: boolean): React.CSSProperties => ({
     background: active ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
-    color: active ? 'var(--bg-primary)' : 'var(--text-primary)',
+    color: active ? 'white' : 'var(--text-primary)',
     border: '1px solid var(--border-color)',
     borderRadius: '8px',
     padding: '0.75rem 1.5rem',

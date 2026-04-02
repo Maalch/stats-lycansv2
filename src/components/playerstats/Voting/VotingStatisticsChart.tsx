@@ -57,7 +57,7 @@ export function VotingStatisticsChart() {
             }}
             style={{
               background: selectedCategory === 'overview' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
-              color: selectedCategory === 'overview' ? 'var(--bg-primary)' : 'var(--text-primary)',
+              color: selectedCategory === 'overview' ? 'white' : 'var(--text-primary)',
               border: '1px solid var(--border-color)',
               borderRadius: '8px',
               padding: '0.75rem 1.5rem',
@@ -76,7 +76,7 @@ export function VotingStatisticsChart() {
             }}
             style={{
               background: selectedCategory === 'behavior' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
-              color: selectedCategory === 'behavior' ? 'var(--bg-primary)' : 'var(--text-primary)',
+              color: selectedCategory === 'behavior' ? 'white' : 'var(--text-primary)',
               border: '1px solid var(--border-color)',
               borderRadius: '8px',
               padding: '0.75rem 1.5rem',
@@ -95,7 +95,7 @@ export function VotingStatisticsChart() {
             }}
             style={{
               background: selectedCategory === 'timing' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
-              color: selectedCategory === 'timing' ? 'var(--bg-primary)' : 'var(--text-primary)',
+              color: selectedCategory === 'timing' ? 'white' : 'var(--text-primary)',
               border: '1px solid var(--border-color)',
               borderRadius: '8px',
               padding: '0.75rem 1.5rem',
