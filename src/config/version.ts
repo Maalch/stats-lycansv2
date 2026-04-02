@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.4';
+export const APP_VERSION = '1.8.7';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,8 +14,9 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+
   {
-    version: 'v1.8.4',
+    version: 'v1.8.7',
     date: '02/04/2026',
     description: 'Ajout d\'un onglet "Synergies" dans les paires de joueurs : score de synergie mesurant à quel point deux joueurs performent mieux (ou moins bien) ensemble que séparément dans',
     link: {
@@ -23,6 +24,40 @@ export const CHANGELOG: ChangelogEntry[] = [
       subTab: 'pairing',
       text: 'Classements / Paires de Joueurs / Synergies',
       navigationState: { selectedPairingTab: 'synergies' }
+    }
+  },
+  {
+    version: 'v1.8.6',
+    date: '01/04/2026',
+    description: 'Ajout du détail des meilleurs et moins bons différentiel de kills (kills - morts) et des meilleurs et moins bons ratio de kills et morts par joueur dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueur / Kills',
+      navigationState: {
+        selectedPlayerSelectionView: 'kills'
+      }
+    }
+  },
+  {
+    version: 'v1.8.5',
+    date: '30/03/2026',
+    description: 'Ajout des statistiques de Parchemins par joueur : détails des effets utilisés et joueurs ciblés, avec filtre par type d\'effet (Positif/Neutre/Négatif) dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueur / Actions',
+      navigationState: {
+        selectedPlayerSelectionView: 'actions'
+      }
+    }
+  },
+  {
+    version: 'v1.8.4',
+    date: '30/03/2026',
+    description: 'Ajout de statistiques sur les Potions et les Parchemins : détails des effets utilisés et joueurs ciblés, avec filtre par type d\'effet (Positif/Neutre/Négatif) dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'potionScrollStats',
+      text: 'Classements / Potions & Parchemins'
     }
   },
   {
