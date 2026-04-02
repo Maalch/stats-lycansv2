@@ -17,25 +17,8 @@ export const CHART_LIMITS = {
   TOP_30: 30,
 } as const;
 
-// Minimum games thresholds
-export const MIN_GAMES_DEFAULTS = {
-  /** Very low threshold - for new player inclusion */
-  VERY_LOW: 1,
-  /** Low threshold - for basic stats */
-  LOW: 10,
-  /** Standard threshold - for most statistics */
-  STANDARD: 25,
-  /** Medium threshold - for reliable averages */
-  MEDIUM: 50,
-  /** High threshold - for win rates and performance metrics */
-  HIGH: 100,
-  /** Very high threshold - for competitive rankings */
-  VERY_HIGH: 200,
-  /** Extreme threshold - for veterans only */
-  EXTREME: 300,
-} as const;
-
 // Predefined minimum games options for dropdowns
+// Defined before MIN_GAMES_DEFAULTS so the type constraint can reference these values
 export const MIN_GAMES_OPTIONS = {
   /** Minimal options */
   MINIMAL: [1, 2, 3, 5, 15, 30] as const,
@@ -45,9 +28,34 @@ export const MIN_GAMES_OPTIONS = {
   STANDARD: [5, 10, 25, 50, 100, 200] as const,
   /** Extended options for large datasets */
   EXTENDED: [5, 10, 25, 50, 100, 200, 400] as const,
-  /** Meetings options, big  datasets */
+  /** Meetings options, big datasets */
   MEETINGS: [3, 25, 50, 100, 250, 500, 1000] as const,
 } as const;
+
+// Union of all valid option values — ensures defaults always match a dropdown option
+export type MinGamesOptionValue =
+  | typeof MIN_GAMES_OPTIONS.MINIMAL[number]
+  | typeof MIN_GAMES_OPTIONS.COMPACT[number]
+  | typeof MIN_GAMES_OPTIONS.STANDARD[number]
+  | typeof MIN_GAMES_OPTIONS.EXTENDED[number]
+  | typeof MIN_GAMES_OPTIONS.MEETINGS[number];
+
+// Minimum games/meetings thresholds for filter defaults
+// Constrained via `satisfies` so every value must exist in at least one MIN_GAMES_OPTIONS array
+export const MIN_GAMES_DEFAULTS = {
+  /** Very low threshold - for new player inclusion */
+  VERY_LOW: 1,
+  /** Low threshold - for basic stats */
+  LOW: 10,
+  /** Standard threshold - for most statistics */
+  STANDARD: 25,
+  /** Medium threshold - for reliable averages (also used for min meetings) */
+  MEDIUM: 50,
+  /** High threshold - for win rates and performance metrics */
+  HIGH: 100,
+  /** Very high threshold - for competitive rankings */
+  VERY_HIGH: 200,
+} as const satisfies Record<string, MinGamesOptionValue>;
 
 // Pagination defaults
 export const PAGINATION_DEFAULTS = {
@@ -57,10 +65,8 @@ export const PAGINATION_DEFAULTS = {
   INITIAL_PAGE: 1,
 } as const;
 
-// Other chart-specific defaults
+// Chart-specific defaults (non-min-games values: appearance counts, radius, UI state)
 export const CHART_DEFAULTS = {
-  /** Minimum meetings for voting statistics */
-  MIN_MEETINGS: 50,
   /** Minimum wolf appearances for pairing stats */
   MIN_WOLF_APPEARANCES: 2,
   /** Minimum lover appearances for pairing stats */

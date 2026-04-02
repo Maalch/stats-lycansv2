@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useVotingStatisticsFromRaw } from '../../../hooks/useVotingStatisticsFromRaw';
 import { useNavigation } from '../../../context/NavigationContext';
-import { CHART_DEFAULTS } from '../../../config/chartConstants';
+import { MIN_GAMES_DEFAULTS } from '../../../config/chartConstants';
 import { VotingOverviewCharts } from './VotingOverviewCharts';
 import { VotingBehaviorCharts } from './VotingBehaviorCharts';
 import { VotingTimingCharts } from './VotingTimingCharts';
@@ -13,7 +13,7 @@ export function VotingStatisticsChart() {
   const [selectedCategory, setSelectedCategory] = useState<'overview' | 'behavior' | 'timing'>(
     navigationState.votingStatsState?.selectedCategory || 'overview'
   );
-  const [minMeetings, setMinMeetings] = useState<number>(CHART_DEFAULTS.MIN_MEETINGS);
+  const [minMeetings, setMinMeetings] = useState<number>(MIN_GAMES_DEFAULTS.MEDIUM);
   
   const { data: allVotingStats, isLoading, error } = useVotingStatisticsFromRaw();
 
