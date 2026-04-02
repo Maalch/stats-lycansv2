@@ -68,6 +68,18 @@ interface ParcheminTargetStat {
   [key: string]: string | number;
 }
 
+interface ReceivedParcheminStat {
+  parcheminName: string;
+  count: number;
+  [key: string]: string | number;
+}
+
+interface ReceivedParcheminSenderStat {
+  senderName: string;
+  count: number;
+  [key: string]: string | number;
+}
+
 // Regex to detect and parse "Parchemin (Effect)" action names
 const PARCHEMIN_REGEX = /^Parchemin\s*\((.+)\)$/;
 
@@ -89,6 +101,8 @@ interface ActionStatistics {
   accessoryDetails: AccessoryStat[];
   parcheminDetails: ParcheminStat[];
   parcheminTargets: ParcheminTargetStat[];
+  receivedParcheminDetails: ReceivedParcheminStat[];
+  receivedParcheminSenders: ReceivedParcheminSenderStat[];
   totalGamesWithActions: number;
   totalGamesPlayed: number;
 }
@@ -110,6 +124,8 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
         accessoryDetails: [],
         parcheminDetails: [],
         parcheminTargets: [],
+        receivedParcheminDetails: [],
+        receivedParcheminSenders: [],
         totalGamesWithActions: 0,
         totalGamesPlayed: 0,
       };
@@ -126,6 +142,8 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
     const accessoryCountsMap: Record<string, number> = {};
     const parcheminCountsMap: Record<string, number> = {};
     const parcheminTargetCountsMap: Record<string, number> = {};
+    const receivedParcheminCountsMap: Record<string, number> = {};
+    const receivedParcheminSenderCountsMap: Record<string, number> = {};
     
     let totalGamesWithActions = 0;
     let totalGamesPlayed = 0;
@@ -190,6 +208,30 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       if (gameHasTrackedActions) {
         totalGamesWithActions++;
       }
+
+      // Look for parchemins received by this player (from other players' actions)
+      game.PlayerStats.forEach(otherPlayer => {
+        if (otherPlayer.Username.toLowerCase() === selectedPlayerName.toLowerCase()) return;
+
+        const otherActions = otherPlayer.Actions || [];
+        otherActions.forEach(action => {
+          if (
+            action.ActionType === 'UseGadget' &&
+            action.ActionName &&
+            action.ActionTarget &&
+            action.ActionTarget.toLowerCase() === selectedPlayerName.toLowerCase()
+          ) {
+            const parcheminMatch = action.ActionName.match(PARCHEMIN_REGEX);
+            if (parcheminMatch) {
+              const effectName = parcheminMatch[1];
+              if (effectFilter === 'all' || getEffectCategory(action.ActionName) === effectFilter) {
+                receivedParcheminCountsMap[effectName] = (receivedParcheminCountsMap[effectName] || 0) + 1;
+                receivedParcheminSenderCountsMap[otherPlayer.Username] = (receivedParcheminSenderCountsMap[otherPlayer.Username] || 0) + 1;
+              }
+            }
+          }
+        });
+      });
     });
 
     // Convert to arrays and sort
@@ -228,6 +270,16 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       .sort((a, b) => b.count - a.count)
       .slice(0, CHART_LIMITS.TOP_10);
 
+    const receivedParcheminDetails = Object.entries(receivedParcheminCountsMap)
+      .map(([parcheminName, count]) => ({ parcheminName, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, CHART_LIMITS.TOP_10);
+
+    const receivedParcheminSenders = Object.entries(receivedParcheminSenderCountsMap)
+      .map(([senderName, count]) => ({ senderName, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, CHART_LIMITS.TOP_10);
+
     return {
       actionTypeCounts,
       gadgetDetails,
@@ -235,6 +287,8 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
       accessoryDetails,
       parcheminDetails,
       parcheminTargets,
+      receivedParcheminDetails,
+      receivedParcheminSenders,
       totalGamesWithActions,
       totalGamesPlayed,
     };
@@ -707,11 +761,11 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
         </div>
       )}
 
-      {/* Parchemin Targets Bar Chart */}
+ {/* Parchemin Targets Bar Chart */}
       {activeView === 'parchemins' && actionStatistics.parcheminTargets.length > 0 && (
         <div className="lycans-graphique-section">
-          <h3>Joueurs Ciblés par Parchemin</h3>
-          <FullscreenChart title="Joueurs Ciblés par Parchemin">
+          <h3>Parchemins Utilisés (Cibles)</h3>
+          <FullscreenChart title="Parchemins Utilisés (Cibles)">
             <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -790,6 +844,180 @@ export function PlayerHistoryActions({ selectedPlayerName }: PlayerHistoryAction
           </FullscreenChart>
         </div>
       )}
+
+
+      {/* Received Parchemin Effects Bar Chart */}
+      {activeView === 'parchemins' && actionStatistics.receivedParcheminDetails.length > 0 && (
+        <div className="lycans-graphique-section">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <h3 style={{ margin: 0 }}>Parchemins Reçus</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="effet-filter-reçus" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Effet :</label>
+              <select
+                id="effet-filter-reçus"
+                value={effectFilter}
+                onChange={e => setEffectFilter(e.target.value as EffectFilter)}
+                className="lycans-select"
+                style={{ fontSize: '0.85rem' }}
+              >
+                <option value="all">Tous</option>
+                <option value="positive">🟢 Positif</option>
+                <option value="neutral">⚪ Neutre</option>
+                <option value="negative">🔴 Négatif</option>
+              </select>
+            </div>
+          </div>
+          <FullscreenChart title="Parchemins Reçus (par effet)">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={actionStatistics.receivedParcheminDetails}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="parcheminName"
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                    interval={0}
+                    fontSize={12}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={12}
+                        fontStyle="italic"
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
+                  />
+                  <YAxis
+                    label={{ value: 'Reçus', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                    allowDecimals={false}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const dataPoint = payload[0].payload;
+                        return (
+                          <div style={{
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-primary)',
+                            padding: 12,
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)'
+                          }}>
+                            <div><strong>Parchemin ({dataPoint.parcheminName})</strong></div>
+                            <div>Reçu {dataPoint.count} fois</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar
+                    dataKey="count"
+                    fill="var(--chart-color-4)"
+                    shape={(props) => {
+                      const { x, y, width, height } = props;
+                      const dataPoint = actionStatistics.receivedParcheminDetails[props.index ?? 0];
+                      const fillColor = getEffectBarColor(dataPoint?.parcheminName ?? null);
+                      return (
+                        <Rectangle x={x} y={y} width={width} height={height} fill={fillColor} />
+                      );
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
+        </div>
+      )}
+
+      {/* Received Parchemin Senders Bar Chart */}
+      {activeView === 'parchemins' && actionStatistics.receivedParcheminSenders.length > 0 && (
+        <div className="lycans-graphique-section">
+          <h3>Parchemins Reçus (Lanceurs)</h3>
+          <FullscreenChart title="Parchemins Reçus (Lanceurs)">
+            <div style={{ height: 400 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={actionStatistics.receivedParcheminSenders}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="senderName"
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                    interval={0}
+                    fontSize={12}
+                    tick={({ x, y, payload }) => (
+                      <text
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                        fill="var(--text-secondary)"
+                        fontSize={12}
+                        fontStyle="italic"
+                        transform={`rotate(-45 ${x} ${y})`}
+                      >
+                        {payload.value}
+                      </text>
+                    )}
+                  />
+                  <YAxis
+                    label={{ value: 'Parchemins lancés', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                    allowDecimals={false}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length > 0) {
+                        const dataPoint = payload[0].payload;
+                        return (
+                          <div style={{
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-primary)',
+                            padding: 12,
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)'
+                          }}>
+                            <div><strong>{dataPoint.senderName}</strong></div>
+                            <div>A lancé {dataPoint.count} parchemin(s)</div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Bar
+                    dataKey="count"
+                    fill="var(--chart-color-5)"
+                    shape={(props) => {
+                      const { x, y, width, height } = props;
+                      const senderName = actionStatistics.receivedParcheminSenders[props.index ?? 0]?.senderName;
+                      const fillColor = (senderName && playersColor[senderName]) || `hsl(${0 + (props.index ?? 0) * 25}, 65%, 55%)`;
+                      return (
+                        <Rectangle x={x} y={y} width={width} height={height} fill={fillColor} />
+                      );
+                    }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </FullscreenChart>
+        </div>
+      )}
+
+     
     </div>
   );
 }
