@@ -115,7 +115,7 @@ export function ActionMetaStatsChart() {
         <p>{actionMetaStats.overallStats.averageActionsPerGame.toFixed(1)} par partie</p>
       </div>
       <div className="lycans-stat-carte">
-        <h3>�🔧 Gadgets uniques</h3>
+        <h3>�🔧 Objets uniques</h3>
         <div className="lycans-valeur-principale">{actionMetaStats.gadgetStats.length}</div>
         <p>types différents</p>
       </div>
@@ -136,7 +136,7 @@ export function ActionMetaStatsChart() {
     if (filteredGadgetStats.length === 0) {
       return (
         <div className="donnees-manquantes">
-          <p>Aucun gadget avec au moins {minUsages} utilisations.</p>
+          <p>Aucun objet avec au moins {minUsages} utilisations.</p>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
             Réduisez le filtre d'utilisations minimales pour voir plus de données.
           </p>
@@ -145,7 +145,7 @@ export function ActionMetaStatsChart() {
     }
 
     return (
-      <FullscreenChart title="Impact des Gadgets sur le Taux de Victoire">
+      <FullscreenChart title="Impact des Objets sur le Taux de Victoire">
         <div style={{ height: Math.max(400, filteredGadgetStats.length * 30) }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
@@ -213,8 +213,8 @@ export function ActionMetaStatsChart() {
           </ResponsiveContainer>
         </div>
         <div style={{ marginTop: 20, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          <p>💡 Les valeurs positives indiquent que l'utilisation du gadget est corrélée à un taux de victoire supérieur à la moyenne.</p>
-          <p>Les valeurs négatives suggèrent une corrélation avec un taux de victoire inférieur.</p>
+          <p>💡 Les valeurs positives (en vert) indiquent que l'utilisation de l'objet est corrélée à un taux de victoire supérieur à la moyenne.</p>
+          <p>💡 Les valeurs négatives (en rouge) indiquent que l'utilisation de l'objet est corrélée à un taux de victoire inférieur à la moyenne.</p>
         </div>
       </FullscreenChart>
     );
