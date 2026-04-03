@@ -170,7 +170,7 @@ async function main(sourceKey) {
       const catInfo = ACHIEVEMENT_CATEGORIES[def.category] || { emoji: '❓', label: def.category };
       lines.push(`${def.emoji} ${def.name} [${def.id}] — ${catInfo.emoji} ${catInfo.label}`);
       lines.push(`   ${def.explanation}`);
-      if (def.requiresBRData) lines.push(`   ⚠️  BR-only (main team)`);
+      if (def.mainTeamOnly) lines.push(`   ⚠️  Main team only`);
 
       // Player value distribution summary
       const values = playerValues.map(p => p.currentValue).sort((a, b) => b - a);

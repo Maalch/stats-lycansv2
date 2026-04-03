@@ -71,6 +71,7 @@ import {
 // Social/special evaluators
 import {
   talkingPercentage, deathsInAllZones, collectionneur, justeUnDernierVerre,
+  musicalClips,
 } from './evaluators-social.js';
 
 // BR evaluators
@@ -159,6 +160,7 @@ export const EVALUATORS = {
   deathsInAllZones,
   collectionneur,
   justeUnDernierVerre,
+  musicalClips,
   winsAgainstOnutrem,
   winningMonths,
   perfectSessions,
@@ -249,13 +251,13 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
     const playerBRGames = playerBRGamesMap.get(playerName) || [];
     
     for (const def of achievementDefs) {
-      // Skip BR achievements if no BR data available
-      if (def.requiresBRData && !brData) {
+      // Skip main-team-only achievements if no BR data available
+      if (def.mainTeamOnly && !brData) {
         continue;
       }
       
-      // Use BR evaluator for BR achievements
-      if (def.requiresBRData) {
+      // Use BR evaluator for main-team-only achievements
+      if (def.mainTeamOnly) {
         const brEvaluator = BR_EVALUATORS[def.evaluator];
         if (!brEvaluator) {
           console.warn(`  ⚠️  Unknown BR evaluator: ${def.evaluator} for achievement ${def.id}`);

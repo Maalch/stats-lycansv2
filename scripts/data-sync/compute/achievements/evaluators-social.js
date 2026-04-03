@@ -1,8 +1,10 @@
 /**
  * Social & Special Achievement Evaluators
  * 
- * Evaluators for talking-related and zone-based death achievements.
+ * Evaluators for talking-related, zone-based death, and clip-based achievements.
  */
+
+import { getPlayerId } from './helpers.js';
 
 
 /**
@@ -173,4 +175,47 @@ export function collectionneur(playerGames, allGames, playerId, params) {
   }
 
   return { value, gameIds };
+}
+
+/**
+ * Count clips with a specific tag (default: "Musical") where the player is involved.
+ * A player is considered involved if they are the POVPlayer or listed in OthersPlayers.
+ * Uses canonical player name matching (Username is already normalized at this point).
+ */
+export function musicalClips(playerGames, allGames, playerId, params) {
+  const tag = params.tag || 'Musical';
+  const gameIds = [];
+  const seenClipIds = new Set();
+
+  for (const { game, playerStat } of playerGames) {
+    const clips = game.Clips;
+    if (!clips || clips.length === 0) continue;
+
+    const playerName = playerStat.Username;
+
+    for (const clip of clips) {
+      // Skip if no tags or tag not present
+      if (!clip.Tags || !clip.Tags.includes(tag)) continue;
+
+      // Skip if we already counted this clip for this player
+      if (seenClipIds.has(clip.ClipId)) continue;
+
+      // Check if player is POVPlayer
+      const isPOV = clip.POVPlayer === playerName;
+
+      // Check if player is in OthersPlayers (comma-separated list)
+      let isOther = false;
+      if (clip.OthersPlayers) {
+        const others = clip.OthersPlayers.split(',').map(n => n.trim());
+        isOther = others.includes(playerName);
+      }
+
+      if (isPOV || isOther) {
+        seenClipIds.add(clip.ClipId);
+        gameIds.push(game.Id);
+      }
+    }
+  }
+
+  return { value: seenClipIds.size, gameIds };
 }

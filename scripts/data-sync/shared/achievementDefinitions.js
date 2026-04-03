@@ -1713,7 +1713,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'br',
     evaluator: 'brWins',
     evaluatorParams: {},
-    requiresBRData: true,
+    mainTeamOnly: true,
     levels: [
       // Bronze: 1 - 5 - 10
       { tier: 'bronze', subLevel: 1, threshold: 1 },
@@ -1740,7 +1740,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'br',
     evaluator: 'brParticipations',
     evaluatorParams: {},
-    requiresBRData: true,
+    mainTeamOnly: true,
     levels: [
       // Bronze: 1 - 10 - 25
       { tier: 'bronze', subLevel: 1, threshold: 1 },
@@ -1767,7 +1767,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'br',
     evaluator: 'brTotalKills',
     evaluatorParams: {},
-    requiresBRData: true,
+    mainTeamOnly: true,
     levels: [
       // Bronze: 5 - 10 - 25
       { tier: 'bronze', subLevel: 1, threshold: 5 },
@@ -1794,7 +1794,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'br',
     evaluator: 'brZeroKillGames',
     evaluatorParams: {},
-    requiresBRData: true,
+    mainTeamOnly: true,
     levels: [
       // Bronze: 1 - 3 - 5
       { tier: 'bronze', subLevel: 1, threshold: 1 },
@@ -1821,7 +1821,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'br',
     evaluator: 'brHighKillGame',
     evaluatorParams: {},
-    requiresBRData: true,
+    mainTeamOnly: true,
     levels: [
         // Bronze: 2
         { tier: 'bronze', subLevel: 1, threshold: 2 },
@@ -1843,7 +1843,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'br',
     evaluator: 'brTopKillsButLoss',
     evaluatorParams: {},
-    requiresBRData: true,
+    mainTeamOnly: true,
     levels: [
       // Bronze: 1 - 2 - 3
       { tier: 'bronze', subLevel: 1, threshold: 1 },
@@ -1870,7 +1870,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'br',
     evaluator: 'brLuckyLuke',
     evaluatorParams: {},
-    requiresBRData: true,
+    mainTeamOnly: true,
     levels: [
       // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
@@ -1891,9 +1891,32 @@ export const ACHIEVEMENT_DEFINITIONS = [
     category: 'br',
     evaluator: 'brOneShotVictory',
     evaluatorParams: {},
-    requiresBRData: true,
+    mainTeamOnly: true,
     levels: [
       // Bronze: 1 
+      { tier: 'bronze', subLevel: 1, threshold: 1 },
+      // Argent: 3
+      { tier: 'argent', subLevel: 1, threshold: 3 },
+      // Or: 8
+      { tier: 'or', subLevel: 1, threshold: 8 },
+      // Lycans: 15
+      { tier: 'lycans', subLevel: 1, threshold: 15 },
+    ],
+  },
+
+  // ── Special ──────────────────────────────────────────────────────────────
+  {
+    id: 'musical-clips',
+    name: 'The Lycan Voice',
+    description: 'Vous avez tenté la chansonnette... Chacun saura s\'il se retourne ou pas...',
+    explanation: 'Être lié à X clips avec le tag "Musical"',
+    emoji: '🎤',
+    category: 'special',
+    evaluator: 'musicalClips',
+    mainTeamOnly: true,
+    evaluatorParams: {},
+    levels: [
+      // Bronze: 1
       { tier: 'bronze', subLevel: 1, threshold: 1 },
       // Argent: 3
       { tier: 'argent', subLevel: 1, threshold: 3 },

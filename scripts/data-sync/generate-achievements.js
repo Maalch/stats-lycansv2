@@ -99,8 +99,8 @@ async function main(sourceKey) {
   // Build the definitions array for client-side display (strip evaluator internals)
   // Filter out BR achievements if no BR data available
   const filteredDefinitions = ACHIEVEMENT_DEFINITIONS.filter(def => {
-    if (def.requiresBRData && !brData) {
-      return false; // Skip BR achievements when no BR data
+    if (def.mainTeamOnly && !brData) {
+      return false; // Skip main-team-only achievements when no BR data
     }
     return true;
   });
@@ -113,7 +113,7 @@ async function main(sourceKey) {
     emoji: def.emoji,
     category: def.category,
     levels: def.levels,
-    requiresBRData: def.requiresBRData || false,
+    mainTeamOnly: def.mainTeamOnly || false,
   }));
 
   // Filter out BR category if no BR data available

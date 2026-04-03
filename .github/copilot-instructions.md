@@ -46,7 +46,7 @@ cd scripts/data-sync && node generate-rankings.js [main|discord] [-f]
 **Environment:** No env vars needed locally - all data from static files. `STATS_LIST_URL` (AWS) and `LYCANS_API_BASE` (Google Sheets) secrets on GitHub Actions only.  
 **Ranking Generation:** `scripts/data-sync/generate-rankings.js` processes all players, creates ranked lists, supports incremental updates via `playerStatsCache.json`  
 **Title Generation:** `scripts/data-sync/generate-titles.js` generates player titles based on statistics  
-**Achievement Generation:** `scripts/data-sync/generate-achievements.js` generates permanent unlocks; BR achievements (`requiresBRData: true`) are main-team only  
+**Achievement Generation:** `scripts/data-sync/generate-achievements.js` generates permanent unlocks; main-team-only achievements (`mainTeamOnly: true`) are skipped for Discord (no BR data, no Clips, etc.)  
 **Compute Modules:** `scripts/data-sync/compute/` — shared pure-JS computation modules (compute-achievements.js, compute-player-stats.js, compute-voting-stats.js, etc.) used by both generation scripts and incremental updates
 
 ## Data Architecture
@@ -301,7 +301,7 @@ if (!playerInfo) {
 4. **Settings:** Add to `SettingsState` interface → ensure localStorage persistence
 5. **Player Highlighting:** Extend chart data types with `isHighlightedAddition` for special inclusion logic
 6. **Rankings:** Add processor in `src/hooks/utils/RankingProcessors/` → integrate in `scripts/data-sync/generate-rankings.js` → client consumes pre-calculated JSON  
-7. **Achievements:** Add definition in `scripts/data-sync/shared/achievementDefinitions.js` (with `requiresBRData: true` for main-only BR achievements) → add evaluator in `scripts/data-sync/compute/compute-achievements.js` → run `npm run generate-achievements`
+7. **Achievements:** Add definition in `scripts/data-sync/shared/achievementDefinitions.js` (with `mainTeamOnly: true` for achievements requiring main-team data: BR, Clips, etc.) → add evaluator in `scripts/data-sync/compute/compute-achievements.js` → run `npm run generate-achievements`
 
 ### Base Hook Template
 ```typescript
@@ -556,7 +556,7 @@ ACHIEVEMENT_TIERS = { bronze, argent, or, lycans }
   category: 'victories',  // victories|deaths|kills|roles|social|maps|br|special
   evaluator: 'evaluatorKey',     // Key in EVALUATORS or BR_EVALUATORS map
   evaluatorParams: { camp: 'Villageois' },
-  requiresBRData: true,  // OPTIONAL: marks as main-team only (BR achievements)
+  mainTeamOnly: true,    // OPTIONAL: marks as main-team only (BR, Clips, or other main-team-exclusive data)
   levels: [
     { tier: 'bronze', subLevel: 1, threshold: 1 },
     { tier: 'lycans', subLevel: 1, threshold: 200 },
