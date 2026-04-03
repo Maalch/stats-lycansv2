@@ -259,10 +259,7 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
       // Use BR evaluator for main-team-only achievements
       if (def.mainTeamOnly) {
         const brEvaluator = BR_EVALUATORS[def.evaluator];
-        if (!brEvaluator) {
-          console.warn(`  ⚠️  Unknown BR evaluator: ${def.evaluator} for achievement ${def.id}`);
-          continue;
-        }
+        if (brEvaluator) {
         
         const { value, gameIds } = brEvaluator(playerBRGames, brData, def.evaluatorParams || {});
         
@@ -299,6 +296,8 @@ export function computeAllAchievements(gameData, achievementDefs, joueursData = 
         });
         
         continue;
+        }
+        // No BR evaluator found: mainTeamOnly but uses standard game data (e.g. musicalClips) — fall through
       }
       
       // Standard achievement evaluation
