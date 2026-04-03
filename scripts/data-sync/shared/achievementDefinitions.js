@@ -1908,7 +1908,7 @@ export const ACHIEVEMENT_DEFINITIONS = [
   {
     id: 'musical-clips',
     name: 'The Lycan Voice',
-    description: 'Vous avez tenté la chansonnette... Chacun saura s\'il se retourne ou pas...',
+    description: "Vous avez tenté ou avez été témoin d'une chansonnette. Chacun saura s'il se retourne ou pas...",
     explanation: 'Être lié à X clips avec le tag "Musical"',
     emoji: '🎤',
     category: 'special',
