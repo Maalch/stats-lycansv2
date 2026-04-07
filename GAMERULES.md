@@ -269,7 +269,10 @@ Gagne en éliminant les cibles désignées, possède un fusil
 Gagne en réanimant des joueurs en zombies
 
 **Contrebandier:**
-Gagne en récoltant beaucoup puis en survivant
+Gagne en récoltant beaucoup puis en survivant une journée
+
+**Kidnappeur**
+Gagne en kidnappant d'autres joueurs (qui peuvent continuer à parler en vocal à leur kidnappeur pour le déconcentrer)
 
 **Cannibale:**
 Rôle solo rare avec des objectifs spécifiques de victoire

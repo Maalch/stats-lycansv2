@@ -9,6 +9,7 @@ const lycansColorScheme: Record<string, string> = {
   'Agent': '#800080',
   'Espion': '#BF40BF',
   'Contrebandier': '#ff00d4',
+  'Kidnappeur': '#fd9ded',
   'Scientifique': '#8080FF',
   'La Bête': '#808080',
   'Chasseur de primes': '#800080',

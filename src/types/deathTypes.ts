@@ -31,11 +31,12 @@ export const DEATH_TYPES = {
   BULLET_WOLF: 'BULLET_WOLF',              // Tué par Chasseur en loup (official log specific)
   SHERIF_SUCCESS: 'SHERIF_SUCCESS',        // Tué par Shérif (correct target)
   SHERIF_MISTAKE: 'SHERIF_MISTAKE',        // Tué par Shérif (wrong target)
+  KILLED_VILLAGE_IDIOT: 'KILLED_VILLAGE_IDIOT', // Tué en tant que Villageois qui a tué l'Idiot du Village 
   
   // Role-Based Kills
   OTHER_AGENT: 'OTHER_AGENT',               // Tué par l'Agent
   AVENGER: 'AVENGER',                       // Tué par Vengeur
-  SEER: 'SEER',                             // Rôle deviné par loup
+  SEER: 'SEER',                             // Rôle deviné par loup (devin ou boule de crystal)
   SMUGGLER_HUNT_KILL: 'SMUGGLER_HUNT_KILL', // Mort en Contrebandier (chasse ouverte)
 
   // Potions
@@ -44,6 +45,9 @@ export const DEATH_TYPES = {
   
   // Lovers
   LOVER_DEATH: 'LOVER_DEATH',               // Amoureux mort
+
+  //SMUGGLER
+  SMUGGLER_LOOT_FAILURE: 'SMUGGLER_LOOT_FAILURE', // Mort en Contrebandier (échec de loot)
   
   // Environmental
   BOMB: 'BOMB',                             // A explosé
@@ -87,6 +91,7 @@ export const DEATH_TYPE_CATEGORIES = {
     DEATH_TYPES.OTHER_AGENT,
     DEATH_TYPES.AVENGER,
     DEATH_TYPES.SEER,
+    DEATH_TYPES.KILLED_VILLAGE_IDIOT,
   ],
   
   POTIONS: [
@@ -99,7 +104,8 @@ export const DEATH_TYPE_CATEGORIES = {
   ],
 
   SMUGGLER_DEATHS: [
-    DEATH_TYPES.SMUGGLER_HUNT_KILL
+    DEATH_TYPES.SMUGGLER_HUNT_KILL,
+    DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
   ],
   
   ENVIRONMENTAL: [
@@ -121,6 +127,8 @@ export const SYSTEM_DEATH_TYPES: readonly DeathType[] = [
   DEATH_TYPES.STARVATION_AS_BEAST,
   DEATH_TYPES.FALL,
   DEATH_TYPES.BY_AVATAR_CHAIN,
+  DEATH_TYPES.SMUGGLER_LOOT_FAILURE,
+  DEATH_TYPES.KILLED_VILLAGE_IDIOT,
   DEATH_TYPES.UNKNOWN,
 ] as const;
 
@@ -177,6 +185,8 @@ export const DEATH_TYPE_LABELS: Record<DeathType, string> = {
   [DEATH_TYPES.UNKNOWN]: 'Inconnu',
   [DEATH_TYPES.SURVIVOR]: 'Survivant',
   [DEATH_TYPES.SMUGGLER_HUNT_KILL]: 'Tué en tant que Contrebandier',
+  [DEATH_TYPES.SMUGGLER_LOOT_FAILURE]: 'Mort en Contrebandier (échec de loot)',
+  [DEATH_TYPES.KILLED_VILLAGE_IDIOT]: 'Tué pour avoir tué l\'Idiot du Village',
 };
 
 /**

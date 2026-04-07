@@ -190,6 +190,10 @@ export function getKillDescription(deathTypeCode: DeathType): string {
       return 'Kill inconnu';
     case DEATH_TYPES.SMUGGLER_HUNT_KILL:
       return 'Kill sur Contrebandier';
+    case DEATH_TYPES.SMUGGLER_LOOT_FAILURE:
+      return 'Ruine du Contrebandier';
+    case DEATH_TYPES.KILLED_VILLAGE_IDIOT:
+      return 'Punition de l\'Idiot du Village';
     default:
       return '';
   }
@@ -335,7 +339,9 @@ export function extractKillsFromGame(game: GameLogEntry, campFilter?: string, vi
       if (player.DeathType === DEATH_TYPES.VOTED || 
           player.DeathType === DEATH_TYPES.STARVATION || 
           player.DeathType === DEATH_TYPES.FALL || 
-          player.DeathType === DEATH_TYPES.BY_AVATAR_CHAIN) {
+          player.DeathType === DEATH_TYPES.BY_AVATAR_CHAIN ||
+          player.DeathType === DEATH_TYPES.SMUGGLER_LOOT_FAILURE ||
+          player.DeathType === DEATH_TYPES.KILLED_VILLAGE_IDIOT) {
         return;
       }
       

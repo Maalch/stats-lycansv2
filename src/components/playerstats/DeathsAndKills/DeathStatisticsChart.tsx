@@ -127,6 +127,10 @@ export function DeathStatisticsChart() {
         colorMap[deathTypeCode] = 'var(--chart-color-4)';
       } else if (deathTypeCode === DeathTypeCode.SMUGGLER_HUNT_KILL) {
         colorMap[deathTypeCode] = lycansColors['Contrebandier'];
+      } else if (deathTypeCode === DeathTypeCode.SMUGGLER_LOOT_FAILURE) {
+        colorMap[deathTypeCode] = lycansColors['Contrebandier'];
+      } else if (deathTypeCode === DeathTypeCode.KILLED_VILLAGE_IDIOT) {
+        colorMap[deathTypeCode] = lycansColors['Idiot du Village'];
       }
     });
     

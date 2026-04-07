@@ -29,12 +29,14 @@ export const DeathTypeCode = {
   BULLET_WOLF: 'BULLET_WOLF',              // Tué par Chasseur en loup (official log specific)
   SHERIF_SUCCESS: 'SHERIF_SUCCESS',        // Tué par Shérif (correct target)
   SHERIF_MISTAKE: 'SHERIF_MISTAKE',        // Tué par Shérif (wrong target)
+  KILLED_VILLAGE_IDIOT: 'KILLED_VILLAGE_IDIOT', // Tué pour avoir tué l'Idiot du Village
   
   // Role-Based Kills
   OTHER_AGENT: 'OTHER_AGENT',               // Tué par l'Agent
   AVENGER: 'AVENGER',                       // Tué par Vengeur
   SEER: 'SEER',                             // Rôle deviné par loup
   SMUGGLER_HUNT_KILL: 'SMUGGLER_HUNT_KILL', // Mort en Contrebandier (chasse ouverte)
+  SMUGGLER_LOOT_FAILURE: 'SMUGGLER_LOOT_FAILURE', // Mort en Contrebandier (échec de loot)
 
   // Potions
   HANTED: 'HANTED',                         // Tué par potion hantée (GDOC specific)
