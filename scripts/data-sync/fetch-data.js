@@ -362,6 +362,10 @@ function mergeGameActionsAndCleanLegacyData(game) {
   if (!game.LegacyData?.PlayerStats || !game.PlayerStats) {
     return game;
   }
+
+  // When isAWSEnrichment is true, LegacyData.PlayerStats contains AWS players (with Date/Position).
+  // In that case we reverse the mergePlayerActions call so AWS is primary and GSheet is the supplement.
+  const isAWSEnrichment = !!game.LegacyData.isAWSEnrichment;
   
   // Build a map of legacy players by ID for quick lookup
   const legacyPlayersByID = new Map();
@@ -392,18 +396,24 @@ function mergeGameActionsAndCleanLegacyData(game) {
       return player;
     }
     
-    // Merge actions
-    const mergedActions = mergePlayerActions(player.Actions, legacyPlayer.Actions);
+    // Merge actions.
+    // Normal mode (isAWSEnrichment=false): game.PlayerStats is AWS (Date/Position primary),
+    //   LegacyData.PlayerStats is GSheet (richer action types as supplement).
+    // Enrichment mode (isAWSEnrichment=true): LegacyData.PlayerStats is AWS (Date/Position primary),
+    //   game.PlayerStats is GSheet (primary for all other fields, supplement for action types).
+    const mergedActions = isAWSEnrichment
+      ? mergePlayerActions(legacyPlayer.Actions, player.Actions)   // AWS primary, GSheet supplement
+      : mergePlayerActions(player.Actions, legacyPlayer.Actions);  // AWS primary, GSheet supplement
     
     return {
       ...player,
       Actions: mergedActions,
-      LegacyActionsIncomplete: legacyPlayer.ActionsIncomplete
+      ...(isAWSEnrichment ? {} : { LegacyActionsIncomplete: legacyPlayer.ActionsIncomplete })
     };
   });
   
-  // Remove PlayerStats from LegacyData but keep other fields
-  const { PlayerStats: _removedPlayerStats, ...cleanedLegacyData } = game.LegacyData;
+  // Remove PlayerStats and the enrichment flag from LegacyData but keep other fields
+  const { PlayerStats: _removedPlayerStats, isAWSEnrichment: _removedEnrichmentFlag, ...cleanedLegacyData } = game.LegacyData;
   
   return {
     ...game,
@@ -566,9 +576,23 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
         
         if (legacyMatch) {
           if (legacyMatch.fullDataExported === true) {
-            // GSheet has priority - skip this AWS game entirely (GSheet data already in map)
-            awsSkippedDueToGSheetPriority++;
-            console.log(`✓ Skipping AWS game ${gameId}: GSheet has priority (FullDataExported: true)`);
+            // GSheet has priority for all game/player data.
+            // But still enrich GSheet player actions with AWS Date/Position data if available.
+            const existingGsGame = gamesByIdMap.get(gameId);
+            if (existingGsGame && awsGame.PlayerStats?.length > 0) {
+              gamesByIdMap.set(gameId, {
+                ...existingGsGame,
+                LegacyData: {
+                  ...(existingGsGame.LegacyData || {}),
+                  PlayerStats: awsGame.PlayerStats,
+                  isAWSEnrichment: true
+                }
+              });
+              console.log(`✓ Enriching GSheet-priority game ${gameId} with AWS action Date/Position data`);
+            } else {
+              awsSkippedDueToGSheetPriority++;
+              console.log(`✓ Skipping AWS game ${gameId}: GSheet has priority (FullDataExported: true, no AWS player data)`);
+            }
             return;
           } else {
             // FullDataExported: false - Use AWS data but merge LegacyData and Clips from GSheet
