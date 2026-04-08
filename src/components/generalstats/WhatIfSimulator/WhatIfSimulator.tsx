@@ -11,11 +11,11 @@ import type { SimulatorSlot, SimulatorConfiguration, CampType } from '../../../t
 import './WhatIfSimulator.css';
 
 function createDefaultSlots(): SimulatorSlot[] {
-  // Default: 15 players — 10 Villageois, 3 Loups, 2 Solo
+  // Default: 15 players — 9 Villageois, 3 Loups, 3 Solo
   const slots: SimulatorSlot[] = [];
-  for (let i = 0; i < 10; i++) slots.push({ camp: 'Villageois' });
+  for (let i = 0; i < 9; i++) slots.push({ camp: 'Villageois' });
   for (let i = 0; i < 3; i++) slots.push({ camp: 'Loup' });
-  for (let i = 0; i < 2; i++) slots.push({ camp: 'Solo' });
+  for (let i = 0; i < 3; i++) slots.push({ camp: 'Solo' });
   return slots;
 }
 
