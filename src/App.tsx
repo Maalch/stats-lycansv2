@@ -48,6 +48,7 @@ const BRKillsStatsChart = lazy(() => import('./components/brstats/BRKillsStatsCh
 const BRMiniChart = lazy(() => import('./components/brstats/BRMiniChart').then(m => ({ default: m.BRMiniChart })));
 
 const DeathLocationHeatmap = lazy(() => import('./components/generalstats/deathStats/DeathLocationHeatmap').then(m => ({ default: m.DeathLocationHeatmap })));
+const WhatIfSimulator = lazy(() => import('./components/generalstats/WhatIfSimulator/WhatIfSimulator').then(m => ({ default: m.WhatIfSimulator })));
 
 const GameDetailsChart = lazy(() => import('./components/gamedetails/GameDetailsChart').then(m => ({ default: m.GameDetailsChart })));
 
@@ -225,6 +226,12 @@ const GENERAL_STATS_MENU = [
     description: 'Analyse des configurations d\'équipe par nombre de joueurs'
   },
   { 
+    key: 'whatIf', 
+    label: 'Simulateur', 
+    component: WhatIfSimulator,
+    description: 'Simuler la probabilité de victoire selon la composition d\'équipe'
+  },
+  { 
     key: 'victoryTypes',
     label: 'Types de Victoire',
     component: VictoryTypesChart,
@@ -259,7 +266,8 @@ const GENERAL_STATS_MENU = [
     label: 'Couleurs', 
     component: ColorStatisticsChart,
     description: 'Taux de victoire et popularité des couleurs'
-  },
+  }
+
 ];
 
 const BR_STATS_MENU = [

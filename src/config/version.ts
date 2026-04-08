@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.8';
+export const APP_VERSION = '1.8.9';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,7 +14,16 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
-
+  {
+    version: 'v1.8.9',
+    date: '08/04/2026',
+    description: 'Ajout d\'un simulateur : prédiction des probabilités de victoire selon la composition d\'équipe (camp, rôles, joueurs) dans',
+    link: {
+      mainTab: 'general',
+      subTab: 'whatIf',
+      text: 'Stats Parties / Simulateur'
+    }
+  },
   {
     version: 'v1.8.8',
     date: '02/04/2026',

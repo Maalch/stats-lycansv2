@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { mergeUrlState, parseUrlState } from '../utils/urlManager';
+import type { SimulatorSlot } from '../types/whatIfSimulator';
 
 export interface PlayerPairFilter {
   selectedPlayerPair: string[]; // Array of exactly 2 players (e.g., ["Player1", "Player2"])
@@ -156,6 +157,10 @@ export interface NavigationState {
   monthlyRankingState?: MonthlyRankingState;
   potionScrollStatsState?: PotionScrollStatsState;
   playerSynergyState?: PlayerSynergyState;
+  whatIfSimulatorState?: {
+    playerCount: number;
+    slots: SimulatorSlot[];
+  };
 }
 
 interface NavigationContextType {
