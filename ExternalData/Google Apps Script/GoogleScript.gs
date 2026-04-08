@@ -158,6 +158,9 @@ function debug_getGameById() {
     var actionsData = getLycanSheetData(LYCAN_SCHEMA.ACTIONS.SHEET);
     var actionsValues = actionsData.values;
     
+    var actionsInfoData = getLycanSheetData(LYCAN_SCHEMA.ACTIONSINFO.SHEET);
+    var actionsInfoValues = actionsInfoData.values;
+    
     var playersData = getLycanSheetData(LYCAN_SCHEMA.PLAYERS.SHEET);
     var playersValues = playersData.values;
     
@@ -197,6 +200,9 @@ function debug_getGameById() {
     
     var actionsHeaders = actionsValues ? actionsValues[0] : [];
     var actionsDataRows = actionsValues ? actionsValues.slice(1) : [];
+    
+    var actionsInfoHeaders = actionsInfoValues ? actionsInfoValues[0] : [];
+    var actionsInfoDataRows = actionsInfoValues ? actionsInfoValues.slice(1) : [];
     
     var clipsHeaders = clipsValues ? clipsValues[0] : [];
     var clipsDataRows = clipsValues ? clipsValues.slice(1) : [];
@@ -253,10 +259,22 @@ function debug_getGameById() {
       Logger.log("GSHEETPRIORITY is: " + gsheetPriority);
       Logger.log("Generating minimal structure with PlayerVODs...");
       
+      // Check if this game has actions in ACTIONSINFO sheet
+      var hasActionsInfo = false;
+      if (actionsInfoDataRows && actionsInfoDataRows.length > 0) {
+        hasActionsInfo = actionsInfoDataRows.some(function(row) {
+          var rowGameId = row[findColumnIndex(actionsInfoHeaders, LYCAN_SCHEMA.ACTIONSINFO.COLS.GAMEID)];
+          return rowGameId == gameId;
+        });
+      }
+      Logger.log("hasActionsInfo: " + hasActionsInfo);
+      
       // Minimal structure - same as in getRawGameDataInNewFormat
       var playerVODs = {};
       var playerListStr = gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.PLAYERLIST)];
       var players = playerListStr ? playerListStr.split(',').map(function(p) { return p.trim(); }) : [];
+      
+      var minimalPlayerStats = [];
       
       players.forEach(function(playerName) {
         var playerDetails = getPlayerDetailsForGame(playerName, gameId, detailsHeaders, detailsDataRows);
@@ -265,19 +283,37 @@ function debug_getGameById() {
         if (playerId && playerDetails && playerDetails.vod && playerDetails.vod !== '') {
           playerVODs[playerId] = playerDetails.vod;
         }
+        
+        if (hasActionsInfo) {
+          var actionsResult = getActionsForPlayer(playerName, gameId, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows);
+          minimalPlayerStats.push({
+            ID: playerId,
+            Username: playerName,
+            Actions: actionsResult.actions,
+            ActionsIncomplete: actionsResult.incomplete
+          });
+        }
       });
+      
+      var legacyData = {
+        VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
+        PlayerVODs: playerVODs,
+        GameModId: gameModId.trim(),
+        FullDataExported: false
+      };
+      
+      if (hasActionsInfo) {
+        legacyData.PlayerStats = minimalPlayerStats;
+        Logger.log("PlayerStats with actions added: " + minimalPlayerStats.length + " players, " +
+          minimalPlayerStats.reduce(function(sum, p) { return sum + (p.Actions ? p.Actions.length : 0); }, 0) + " total actions");
+      }
       
       gameRecord = {
         Id: gameModId,
         Modded: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.MODDED)],
         Version: game2Row[findColumnIndex(gameHeaders2, LYCAN_SCHEMA.GAMES2.COLS.VERSION)],
         Clips: getClipsForGame(gameId, clipsHeaders, clipsDataRows),
-        LegacyData: {
-          VictoryType: gameRow[findColumnIndex(gameHeaders, LYCAN_SCHEMA.GAMES.COLS.VICTORYTYPE)],
-          PlayerVODs: playerVODs,
-          GameModId: gameModId.trim(),
-          FullDataExported: false
-        }
+        LegacyData: legacyData
       };
     } else {
       var hasGameModIdWithPriority = gsheetPriority && gameModId && gameModId.trim() !== '';
@@ -326,7 +362,7 @@ function debug_getGameById() {
           gameRecord.LegacyData.PlayerVODs[playerId] = playerDetails.vod;
         }
         
-        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, playerIdMap);
+        return buildPlayerStatsFromDetails(playerName, gameId, gameRow, gameHeaders, playerDetails, roleChangesHeaders, roleChangesDataRows, votesHeaders, votesDataRows, actionsHeaders, actionsDataRows, actionsInfoHeaders, actionsInfoDataRows, playerIdMap, hasActionsInfo);
       });
       
       // Add clips for this game
