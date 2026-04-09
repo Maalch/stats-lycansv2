@@ -119,6 +119,7 @@ export interface PotionScrollStatsState {
   campFilter?: string;
   effectFilter?: string;
   selectedView?: string;
+  minAssassinUses?: number;
 }
 
 export interface PlayerSynergyState {
