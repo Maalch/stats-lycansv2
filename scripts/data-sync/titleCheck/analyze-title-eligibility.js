@@ -357,7 +357,9 @@ function getRoleNameFromStat(stat) {
     roleContrebandier: 'Contrebandier',
     roleBete: 'La Bête',
     roleVaudou: 'Vaudou',
-    roleScientifique: 'Scientifique'
+    roleScientifique: 'Scientifique', 
+    roleCultiste: 'Cultiste',
+    roleMercenaire: 'Mercenaire'
   };
   return roleMap[stat] || stat;
 }

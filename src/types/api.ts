@@ -13,6 +13,8 @@ const lycansColorScheme: Record<string, string> = {
   'Scientifique': '#8080FF',
   'La Bête': '#808080',
   'Chasseur de primes': '#800080',
+  'Cultiste': '#dacb48', // Yellowish - cultist role
+  'Mercenaire': '#ff8000', // Orange - mercenary role
   'Vaudou': '#A626FF',
   'Zombie': '#A626FF',
   'Traître': '#FF8000',
@@ -27,6 +29,7 @@ const lycansColorScheme: Record<string, string> = {
   'Disciple': '#43ff43d8',
   'Guetteur': '#97f857', // Bright green - vigilant role
   'Purificateur': '#97f857', // Bright green - purificator role
+
   'Camp Loup': '#FF0000',
   'Camp Villageois': '#0096FF',
   'Rôles Spéciaux': '#808080',

@@ -36,6 +36,8 @@ function getRoleAbbrev(role?: string): string {
     'Contrebandier': 'Cb',
     'Kidnappeur': 'Ki',
     'Scientifique': 'Sc',
+    'Cultiste': 'Cu',
+    'Mercenaire': 'Me',
     'La Bête': 'Bê',
     'Chasseur de primes': 'Cp',
     'Vaudou': 'Va',

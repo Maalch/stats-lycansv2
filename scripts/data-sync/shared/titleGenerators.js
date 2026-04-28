@@ -571,7 +571,8 @@ const ROLE_TO_TITLE_KEY = {
   'Chasseur': 'chasseur', 'Alchimiste': 'alchimiste', 'Amoureux': 'amoureux',
   'Agent': 'agent', 'Espion': 'espion', 'Idiot du Village': 'idiot',
   'Chasseur de Prime': 'chasseurDePrime', 'Contrebandier': 'contrebandier',
-  'La Bête': 'bete', 'Vaudou': 'vaudou', 'Scientifique': 'scientifique'
+  'La Bête': 'bete', 'Vaudou': 'vaudou', 'Scientifique': 'scientifique', 
+  'Cultiste': 'cultiste', 'Mercenaire': 'mercenaire'
 };
 
 /**

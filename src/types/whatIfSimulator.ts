@@ -98,6 +98,8 @@ export const SOLO_ROLES = [
   'Contrebandier',
   'Kidnappeur',
   'Scientifique',
+  'Mercenaire',
+  'Cultiste',
   'La Bête',
   'Chasseur de primes',
   'Vaudou',
