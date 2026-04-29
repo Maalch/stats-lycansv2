@@ -71,11 +71,20 @@ export interface PlayerAssassinStats {
   killRatio: number;
 }
 
+export interface PlayerMinusculeStats {
+  player: string;
+  gamesPlayed: number;
+  minusculePotionsUsed: number;
+  crushedDeaths: number;
+  killRatio: number;
+}
+
 export interface PotionScrollStatsData {
   potionStats: PlayerPotionStats[];
   scrollUsageStats: PlayerScrollUsageStats[];
   scrollTargetStats: PlayerScrollTargetStats[];
   assassinStats: PlayerAssassinStats[];
+  minusculeStats: PlayerMinusculeStats[];
   gamesWithActionData: number;
   totalGames: number;
 }
@@ -88,6 +97,11 @@ function isParchemin(actionName: string | null): boolean {
 function isAssassinPotion(actionName: string | null): boolean {
   if (!actionName) return false;
   return actionName === 'Assassin' || actionName === 'Blanche - Assassin';
+}
+
+function isMinusculePotion(actionName: string | null): boolean {
+  if (!actionName) return false;
+  return actionName === 'Minuscule' || actionName === 'Blanche - Minuscule';
 }
 
 /**
@@ -137,6 +151,7 @@ export function computePotionScrollStats(
       scrollUsageStats: [],
       scrollTargetStats: [],
       assassinStats: [],
+      minusculeStats: [],
       gamesWithActionData: 0,
       totalGames: gameData.length,
     };
@@ -147,6 +162,7 @@ export function computePotionScrollStats(
   const scrollUsageMap = new Map<string, { displayName: string; gamesPlayed: number; totalScrollsUsed: number }>();
   const scrollTargetMap = new Map<string, { displayName: string; gamesPlayed: number; timesTargeted: number }>();
   const assassinMap = new Map<string, { displayName: string; gamesPlayed: number; assassinPotionsUsed: number; assassinKills: number }>();
+  const minusculeMap = new Map<string, { displayName: string; gamesPlayed: number; minusculePotionsUsed: number; crushedDeaths: number }>();
 
   // Track games played per player (for camp-filtered game counts)
   const playerGamesMap = new Map<string, { displayName: string; gamesPlayed: number }>();
@@ -234,6 +250,23 @@ export function computePotionScrollStats(
       aStats.gamesPlayed++;
       aStats.assassinPotionsUsed += assassinPotionCount;
       aStats.assassinKills += assassinKillCount;
+
+      // Count Minuscule potions drunk (ignores effectFilter — always specific to Minuscule)
+      const minusculePotionCount = actions.filter(
+        a => a.ActionType === 'DrinkPotion' && isMinusculePotion(a.ActionName)
+      ).length;
+
+      // Count CRUSHED deaths for this player in this game
+      const crushedDeathCount = player.DeathType === 'CRUSHED' ? 1 : 0;
+
+      // Update minuscule stats
+      if (!minusculeMap.has(playerId)) {
+        minusculeMap.set(playerId, { displayName, gamesPlayed: 0, minusculePotionsUsed: 0, crushedDeaths: 0 });
+      }
+      const mStats = minusculeMap.get(playerId)!;
+      mStats.gamesPlayed++;
+      mStats.minusculePotionsUsed += minusculePotionCount;
+      mStats.crushedDeaths += crushedDeathCount;
     });
   });
 
@@ -288,11 +321,22 @@ export function computePotionScrollStats(
       killRatio: s.assassinPotionsUsed > 0 ? (s.assassinKills / s.assassinPotionsUsed) * 100 : 0,
     }));
 
+  const minusculeStats: PlayerMinusculeStats[] = Array.from(minusculeMap.values())
+    .filter(s => s.minusculePotionsUsed > 0)
+    .map(s => ({
+      player: s.displayName,
+      gamesPlayed: s.gamesPlayed,
+      minusculePotionsUsed: s.minusculePotionsUsed,
+      crushedDeaths: s.crushedDeaths,
+      killRatio: s.minusculePotionsUsed > 0 ? (s.crushedDeaths / s.minusculePotionsUsed) * 100 : 0,
+    }));
+
   return {
     potionStats,
     scrollUsageStats,
     scrollTargetStats,
     assassinStats,
+    minusculeStats,
     gamesWithActionData: gamesWithData.length,
     totalGames: gameData.length,
   };

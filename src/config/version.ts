@@ -15,6 +15,17 @@ export interface ChangelogEntry {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: 'v1.8.10',
+    date: '29/04/2026',
+    description: 'Ajout du graphique "Taux de Kill - Potion Minuscule" : ratio de morts écrasé par rapport aux potions Minuscule bues, dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'potionScrollStats',
+      text: 'Stats Joueurs / Potions & Parchemins / Potions - Détails',
+      navigationState: { potionScrollStatsState: { selectedView: 'potionsDetails', minGames: 5, minAssassinUses: 5, minMinusculeUses: 5 } }
+    }
+  },
+  {
     version: 'v1.8.9',
     date: '08/04/2026',
     description: 'Ajout d\'un simulateur : prédiction des probabilités de victoire selon la composition d\'équipe (camp, rôles, joueurs) dans',

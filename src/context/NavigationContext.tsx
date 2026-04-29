@@ -120,6 +120,7 @@ export interface PotionScrollStatsState {
   effectFilter?: string;
   selectedView?: string;
   minAssassinUses?: number;
+  minMinusculeUses?: number;
 }
 
 export interface PlayerSynergyState {
