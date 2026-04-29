@@ -104,3 +104,99 @@ export function getVillageZoneFromRaw(rawX, rawZ) {
   const zone = getVillageZone(adjustedX, adjustedZ);
   return { zone, adjustedX, adjustedZ };
 }
+
+// ============================================================================
+// SABOTAGE POSITION → NAME DEDUCTION
+// ============================================================================
+
+/**
+ * Known sabotage target clusters for the Village map.
+ * Each entry has a sabotage ActionName and a centroid (x, z) in raw game coordinates.
+ * Centroids were computed from all known (ActionName + Position) sabotage actions.
+ *
+ * Note: There are multiple Portail and Puit locations on the map.
+ *
+ * Château map does not yet have enough labeled data to build clusters.
+ */
+const VILLAGE_SABOTAGE_CLUSTERS = [
+  // 4 Portail locations
+  { name: 'Portail', centroid: { x: 178.05, z: 127.94 } },
+  { name: 'Portail', centroid: { x: 226.95, z: 186.87 } },
+  { name: 'Portail', centroid: { x: 165.88, z: 270.77 } },
+  { name: 'Portail', centroid: { x: 88.90, z: 191.80 } },
+  // Bûches (single location)
+  { name: 'Bûches', centroid: { x: 112.11, z: 173.48 } },
+  // 3 Puit locations
+  { name: 'Puit', centroid: { x: 163.65, z: 241.97 } },
+  { name: 'Puit', centroid: { x: 116.66, z: 193.58 } },
+  { name: 'Puit', centroid: { x: 150.50, z: 118.64 } },
+  // Pillier rituel (single location)
+  { name: 'Pillier rituel', centroid: { x: 198.10, z: 176.57 } },
+  // Chaudron (single location)
+  { name: 'Chaudron', centroid: { x: 155.56, z: 140.40 } },
+];
+
+/**
+ * Maximum distance (in raw game coordinate units) from a cluster centroid
+ * for a position to be classified. Observed cluster radii are ~3–5 units;
+ * 10 provides a safe margin without risking cross-cluster misclassification.
+ */
+const SABOTAGE_MATCH_THRESHOLD = 10;
+
+/**
+ * Deduce a sabotage ActionName from its raw game Position using
+ * nearest-centroid matching against known sabotage target locations.
+ *
+ * Currently only supports the Village map. Returns null for unknown maps
+ * or positions that don't match any cluster within the threshold.
+ *
+ * @param {string} mapName - Map name from the game (e.g. "Village", "Château")
+ * @param {{ x: number, y: number, z: number }} position - Raw game position
+ * @returns {string|null} - Deduced ActionName or null if no match
+ */
+export function deduceSabotageNameFromPosition(mapName, position) {
+  if (!position || !mapName) return null;
+
+  const clusters = mapName === 'Village' ? VILLAGE_SABOTAGE_CLUSTERS : null;
+  if (!clusters) return null;
+
+  let bestName = null;
+  let bestDist = Infinity;
+
+  for (const cluster of clusters) {
+    const dx = position.x - cluster.centroid.x;
+    const dz = position.z - cluster.centroid.z;
+    const dist = Math.sqrt(dx * dx + dz * dz);
+    if (dist < bestDist) {
+      bestDist = dist;
+      bestName = cluster.name;
+    }
+  }
+
+  return bestDist <= SABOTAGE_MATCH_THRESHOLD ? bestName : null;
+}
+
+/**
+ * Post-process an array of game stats to fill in missing sabotage ActionNames
+ * from their positions. Mutates actions in-place.
+ *
+ * @param {Array} gameStats - Array of game objects with PlayerStats
+ * @returns {number} - Number of sabotage names deduced
+ */
+export function deduceMissingSabotageNames(gameStats) {
+  let count = 0;
+  for (const game of gameStats) {
+    for (const player of (game.PlayerStats || [])) {
+      for (const action of (player.Actions || [])) {
+        if (action.ActionType === 'Sabotage' && action.Position && !action.ActionName) {
+          const deduced = deduceSabotageNameFromPosition(game.MapName, action.Position);
+          if (deduced) {
+            action.ActionName = deduced;
+            count++;
+          }
+        }
+      }
+    }
+  }
+  return count;
+}

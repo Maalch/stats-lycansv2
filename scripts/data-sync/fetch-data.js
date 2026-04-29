@@ -6,6 +6,7 @@ import {
   correctVictoriousStatusForDisconnectedPlayers,
   correctLoverSecondaryRole
 } from './shared/sync-utils.js';
+import { deduceMissingSabotageNames } from './shared/mapUtils.js';
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -690,6 +691,12 @@ async function mergeAllGameLogs(legacyGameLog, awsGameLogs, existingGameLog = nu
   
   if (actionsMergedCount > 0) {
     console.log(`✓ Merged legacy actions for ${actionsMergedCount} games`);
+  }
+  
+  // Deduce sabotage names from positions for remaining unnamed sabotages
+  const sabotageNamesDeduced = deduceMissingSabotageNames(allGameStats);
+  if (sabotageNamesDeduced > 0) {
+    console.log(`✓ Deduced ${sabotageNamesDeduced} sabotage names from positions`);
   }
   
   // Sort by StartDate to maintain chronological order

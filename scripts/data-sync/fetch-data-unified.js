@@ -23,6 +23,7 @@ import {
   correctVictoriousStatusForDisconnectedPlayers,
   correctLoverSecondaryRole
 } from './shared/sync-utils.js';
+import { deduceMissingSabotageNames } from './shared/mapUtils.js';
 
 // Time window for updating recent games (6 hours in milliseconds)
 const RECENT_GAMES_WINDOW_MS = 6 * 60 * 60 * 1000;
@@ -368,6 +369,12 @@ async function syncDataSource(sourceKey, forceFullSync = false) {
     console.log(`\n🔄 Creating unified dataset from AWS sources (${config.name})...`);
     
     const mergeResult = mergeWithIncremental(awsGameLogs, config, existingGamesMap, gameCutoffDate);
+    
+    // Deduce sabotage names from positions for unnamed sabotages
+    const sabotageNamesDeduced = deduceMissingSabotageNames(mergeResult.gameStats);
+    if (sabotageNamesDeduced > 0) {
+      console.log(`✓ Deduced ${sabotageNamesDeduced} sabotage names from positions`);
+    }
     
     // Build unified game log structure
     const unifiedGameLog = {
