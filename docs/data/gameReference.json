@@ -310,6 +310,14 @@
       "translationKey": "NALES_ROLE_DESCRIPTION_EXORCIST"
     },
     {
+      "id": "medecin-legiste",
+      "name": "Médecin légiste",
+      "emoji": "🔬",
+      "description": "Peut analyser un cadavre pour connaître le rôle principal (villageois, loup, traître, espion...) qu'il avait. De plus, le Devin ne peut pas le tuer en devinant son métier de Médecin légiste.",
+      "descriptionShort": "Peut connaître le rôle qu'avait un cadavre ciblé",
+      "translationKey": "NALES_ROLE_DESCRIPTION_FORENSICS"
+    },
+    {
       "id": "vengeur",
       "name": "Vengeur",
       "emoji": "⚔️",
@@ -1089,6 +1097,7 @@
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
       "Paysan": { "category": "villagerPowers", "id": "paysan" },
       "Exorciste": { "category": "villagerPowers", "id": "exorciste" },
+      "Médecin légiste": { "category": "villagerPowers", "id": "medecin-legiste" },
       "Vengeur": { "category": "villagerPowers", "id": "vengeur" },
       "Détective": { "category": "villagerPowers", "id": "detective" },
       "Survivaliste": { "category": "villagerPowers", "id": "survivaliste" },
