@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Rectangle } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Rectangle } from 'recharts';
 import { useCombinedFilteredRawData } from '../../../hooks/useCombinedRawData';
 import { useJoueursData } from '../../../hooks/useJoueursData';
 import { useThemeAdjustedLycansColorScheme, useThemeAdjustedDynamicPlayersColor } from '../../../types/api';
@@ -23,6 +23,10 @@ interface RoleActionStatistics {
   totalGamesPlayed: number;
   totalNightsAsWolf: number;
   transformsPerNight: number;
+  sabotageCount: number;
+  sabotageGamesAsWolf: number;
+  sabotagePerWolfGame: number;
+  sabotageByLocation: { name: string; count: number }[];
 }
 
 export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRoleActionsProps) {
@@ -45,6 +49,10 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
         totalGamesPlayed: 0,
         totalNightsAsWolf: 0,
         transformsPerNight: 0,
+        sabotageCount: 0,
+        sabotageGamesAsWolf: 0,
+        sabotagePerWolfGame: 0,
+        sabotageByLocation: [],
       };
     }
 
@@ -55,6 +63,9 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
     let totalGamesWithActions = 0;
     let totalGamesPlayed = 0;
     let totalNightsAsWolf = 0;
+    let sabotageCount = 0;
+    let sabotageGamesAsWolf = 0;
+    const sabotageByLocationMap: Record<string, number> = {};
 
     // Process each game
     filteredGameData.forEach(game => {
@@ -108,8 +119,19 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
         } else if (action.ActionType === 'Untransform') {
           untransformCount++;
           gameHasTrackedActions = true;
+        } else if (action.ActionType === 'Sabotage' && isWolfRole(playerStat.MainRoleInitial)) {
+          sabotageCount++;
+          gameHasTrackedActions = true;
+          if (action.ActionName) {
+            sabotageByLocationMap[action.ActionName] = (sabotageByLocationMap[action.ActionName] || 0) + 1;
+          }
         }
       });
+
+      // Count wolf games that have any actions (for sabotage average denominator)
+      if (isWolfRole(playerStat.MainRoleInitial) && actions.length > 0) {
+        sabotageGamesAsWolf++;
+      }
 
       if (gameHasTrackedActions) {
         totalGamesWithActions++;
@@ -147,6 +169,11 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
       ? transformCount / totalNightsAsWolf 
       : 0;
 
+    // Sabotage location distribution (only for Village map, sorted by count)
+    const sabotageByLocation = Object.entries(sabotageByLocationMap)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
+
     return {
       hunterTargets,
       hunterMissedShots,
@@ -158,11 +185,15 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
       totalGamesPlayed,
       totalNightsAsWolf,
       transformsPerNight,
+      sabotageCount,
+      sabotageGamesAsWolf,
+      sabotagePerWolfGame: sabotageGamesAsWolf > 0 ? sabotageCount / sabotageGamesAsWolf : 0,
+      sabotageByLocation,
     };
   }, [filteredGameData, selectedPlayerName]);
 
   // Check if we have any data to display
-  const hasData = roleActionStatistics.hunterTotalShots > 0 || roleActionStatistics.transformCount > 0 || roleActionStatistics.untransformCount > 0;
+  const hasData = roleActionStatistics.hunterTotalShots > 0 || roleActionStatistics.transformCount > 0 || roleActionStatistics.untransformCount > 0 || roleActionStatistics.sabotageCount > 0;
 
   if (!hasData) {
     return (
@@ -384,6 +415,84 @@ export function PlayerHistoryRoleActions({ selectedPlayerName }: PlayerHistoryRo
               </ResponsiveContainer>
             </div>
           </FullscreenChart>
+        </div>
+      )}
+
+      {/* Sabotage Statistics */}
+      {roleActionStatistics.sabotageCount > 0 && (
+        <div className="lycans-graphique-section">
+          <h3>Sabotages (Loup)</h3>
+
+          <div className="lycans-resume-conteneur" style={{ marginBottom: '20px' }}>
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>💥 Total sabotages</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Loup'] || 'var(--wolf-color)' }}>
+                {roleActionStatistics.sabotageCount}
+              </div>
+              <p>sabotages effectués</p>
+            </div>
+
+            <div className="lycans-stat-carte" style={{ fontSize: '0.9rem' }}>
+              <h3>📊 Par partie en Loup</h3>
+              <div className="lycans-valeur-principale" style={{ fontSize: '1.3rem', color: lycansColors['Loup'] || 'var(--wolf-color)' }}>
+                {roleActionStatistics.sabotagePerWolfGame.toFixed(2)}
+              </div>
+              <p>sabotages / partie jouée en Loup</p>
+            </div>
+          </div>
+
+          {roleActionStatistics.sabotageByLocation.length > 0 && (
+            <FullscreenChart title="Répartition des Sabotages par Emplacement">
+              <div style={{ height: 350 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={roleActionStatistics.sabotageByLocation}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="name"
+                      fontSize={13}
+                    />
+                    <YAxis
+                      label={{ value: 'Nombre', angle: 270, position: 'left', style: { textAnchor: 'middle' } }}
+                      allowDecimals={false}
+                    />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (!active || !payload || payload.length === 0) return null;
+                        const dataPoint = payload[0].payload as { name: string; count: number };
+                        const total = roleActionStatistics.sabotageByLocation.reduce((s, l) => s + l.count, 0);
+                        return (
+                          <div style={{
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-primary)',
+                            padding: 12,
+                            borderRadius: 8,
+                            border: '1px solid var(--border-color)'
+                          }}>
+                            <div><strong>{dataPoint.name}</strong></div>
+                            <div>{dataPoint.count} sabotage{dataPoint.count > 1 ? 's' : ''}</div>
+                            <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                              {total > 0 ? ((dataPoint.count / total) * 100).toFixed(1) : '0'}% du total
+                            </div>
+                          </div>
+                        );
+                      }}
+                    />
+                    <Bar dataKey="count">
+                      {roleActionStatistics.sabotageByLocation.map((_entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={`hsl(${(index * 57 + 20) % 360}, 60%, 48%)`}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </FullscreenChart>
+          )}
         </div>
       )}
     </div>

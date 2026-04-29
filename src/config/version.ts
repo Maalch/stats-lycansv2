@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.9';
+export const APP_VERSION = '1.8.12';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,28 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.8.12',
+    date: '29/04/2026',
+    description: 'Ajout d\'un classement des joueurs par nombre de sabotages effectués par partie jouée en Loup dans',
+    link: {
+      mainTab: 'rankings',
+      subTab: 'roleActions',
+      text: 'Classements / Actions des Rôles'
+    }
+  },
+  {
+    version: 'v1.8.11',
+    date: '29/04/2026',
+    description: 'Ajout des statistiques de sabotages dans l\'historique individuel du joueur (total, moyenne par partie en Loup, répartition par emplacement) dans',
+    link: {
+      mainTab: 'playerSelection',
+      text: 'Joueur / Actions des Rôles',
+      navigationState: {
+        selectedPlayerSelectionView: 'roleactions'
+      }
+    }
+  },
   {
     version: 'v1.8.10',
     date: '29/04/2026',

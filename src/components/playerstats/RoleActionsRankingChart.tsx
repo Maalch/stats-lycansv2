@@ -19,6 +19,9 @@ interface PlayerRoleActionStats {
   transformsPerNight: number;
   untransformPerTransform: number;
   wolfGamesPlayed: number;
+  // Sabotage stats
+  sabotageCount: number;
+  sabotagePerWolfGame: number;
   // Hunter stats
   hunterSuccessfulShots: number;
   hunterMissedShots: number;
@@ -79,6 +82,7 @@ export function RoleActionsRankingChart() {
       untransformCount: number;
       totalNightsAsWolf: number;
       wolfGamesPlayed: number;
+      sabotageCount: number;
       hunterSuccessfulShots: number;
       hunterMissedShots: number;
       hunterTotalShots: number;
@@ -98,6 +102,7 @@ export function RoleActionsRankingChart() {
             untransformCount: 0,
             totalNightsAsWolf: 0,
             wolfGamesPlayed: 0,
+            sabotageCount: 0,
             hunterSuccessfulShots: 0,
             hunterMissedShots: 0,
             hunterTotalShots: 0,
@@ -133,6 +138,15 @@ export function RoleActionsRankingChart() {
           });
         }
 
+        // Sabotage statistics - count for all wolf games with actions (doesn't require transform data)
+        if (isWolfRole(playerStat.MainRoleInitial)) {
+          actions.forEach(action => {
+            if (action.ActionType === 'Sabotage') {
+              stats.sabotageCount++;
+            }
+          });
+        }
+
         // Hunter statistics
         const hunterShots = actions.filter(a => a.ActionType === 'HunterShoot');
         if (hunterShots.length > 0) {
@@ -162,6 +176,10 @@ export function RoleActionsRankingChart() {
         ? stats.untransformCount / stats.transformCount 
         : 0,
       wolfGamesPlayed: stats.wolfGamesPlayed,
+      sabotageCount: stats.sabotageCount,
+      sabotagePerWolfGame: stats.wolfGamesPlayed > 0
+        ? stats.sabotageCount / stats.wolfGamesPlayed
+        : 0,
       hunterSuccessfulShots: stats.hunterSuccessfulShots,
       hunterMissedShots: stats.hunterMissedShots,
       hunterTotalShots: stats.hunterTotalShots,
@@ -226,6 +244,35 @@ export function RoleActionsRankingChart() {
     return { untransformsData: finalData, untransformsHighlightedAdded: playerAdded };
   }, [playerStats, minWolfGames, sortOrder, settings.highlightedPlayer]);
 
+  // Sabotage per wolf game chart data
+  const { sabotageData, sabotageHighlightedAdded } = useMemo(() => {
+    const eligiblePlayers = playerStats.filter(p => p.wolfGamesPlayed >= minWolfGames && p.sabotageCount > 0);
+    
+    const sortedPlayers = [...eligiblePlayers].sort((a, b) => {
+      const diff = sortOrder === 'highest' 
+        ? b.sabotagePerWolfGame - a.sabotagePerWolfGame 
+        : a.sabotagePerWolfGame - b.sabotagePerWolfGame;
+      if (diff === 0) return b.sabotageCount - a.sabotageCount;
+      return diff;
+    }).slice(0, CHART_LIMITS.TOP_20);
+
+    const highlightedInTop = settings.highlightedPlayer && 
+      sortedPlayers.some(p => p.player === settings.highlightedPlayer);
+
+    let finalData: PlayerRoleActionStats[] = [...sortedPlayers];
+    let playerAdded = false;
+
+    if (settings.highlightedPlayer && !highlightedInTop) {
+      const highlightedPlayerData = playerStats.find(p => p.player === settings.highlightedPlayer);
+      if (highlightedPlayerData && highlightedPlayerData.sabotageCount > 0) {
+        finalData.push({ ...highlightedPlayerData, isHighlightedAddition: true });
+        playerAdded = true;
+      }
+    }
+
+    return { sabotageData: finalData, sabotageHighlightedAdded: playerAdded };
+  }, [playerStats, minWolfGames, sortOrder, settings.highlightedPlayer]);
+
   // Hunter accuracy chart data
   const { hunterAccuracyData, hunterHighlightedAdded } = useMemo(() => {
     const eligiblePlayers = playerStats.filter(p => p.hunterGamesPlayed >= minHunterGames && p.hunterTotalShots > 0);
@@ -261,7 +308,7 @@ export function RoleActionsRankingChart() {
   }, [playerStats, minHunterGames, sortOrder, settings.highlightedPlayer]);
 
   // Check if we have any data
-  const hasWolfData = transformsPerNightData.length > 0 || untransformsData.length > 0;
+  const hasWolfData = transformsPerNightData.length > 0 || untransformsData.length > 0 || sabotageData.length > 0;
   const hasHunterData = hunterAccuracyData.length > 0;
 
   if (!hasWolfData && !hasHunterData) {
@@ -562,6 +609,127 @@ export function RoleActionsRankingChart() {
                         const isHoveredPlayer = highlightedPlayer === entry.player;
                         const isHighlightedAddition = entry.isHighlightedAddition;
                         const playerColor = playersColor[entry.player] || 'var(--accent-secondary)';
+
+                        return (
+                          <Rectangle
+                            x={x}
+                            y={y}
+                            width={width}
+                            height={height}
+                            fill={playerColor}
+                            stroke={isHighlightedFromSettings ? 'var(--accent-primary)' : isHoveredPlayer ? '#000000' : 'none'}
+                            strokeWidth={isHighlightedFromSettings ? 3 : isHoveredPlayer ? 2 : 0}
+                            strokeDasharray={isHighlightedAddition ? '5,5' : 'none'}
+                            opacity={isHighlightedAddition ? 0.8 : 1}
+                            onMouseEnter={() => setHighlightedPlayer(entry.player)}
+                            onMouseLeave={() => setHighlightedPlayer(null)}
+                          />
+                        );
+                      }}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </FullscreenChart>
+          </div>
+        )}
+
+        {/* Sabotage per Wolf Game Chart */}
+        {sabotageData.length > 0 && (
+          <div className="lycans-graphique-section">
+            <div>
+              <h3>💥 Sabotages par Partie (Loup)</h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                Nombre moyen de sabotages effectués par partie jouée en loup
+              </p>
+              {sabotageHighlightedAdded && settings.highlightedPlayer && (
+                <p style={{ 
+                  fontSize: '0.8rem', 
+                  color: 'var(--accent-primary-text)', 
+                  fontStyle: 'italic',
+                  marginTop: '0.25rem'
+                }}>
+                  🎯 "{settings.highlightedPlayer}" affiché en plus du top 20
+                </p>
+              )}
+            </div>
+
+            <FullscreenChart title="Sabotages par Partie (Loup)">
+              <div style={{ height: 400 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={sabotageData}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="player"
+                      angle={-45}
+                      textAnchor="end"
+                      height={80}
+                      interval={0}
+                      tick={({ x, y, payload }) => (
+                        <text
+                          x={x}
+                          y={y}
+                          dy={16}
+                          textAnchor="end"
+                          fill={settings.highlightedPlayer === payload.value ? 'var(--accent-primary-text)' : 'var(--text-secondary)'}
+                          fontSize={settings.highlightedPlayer === payload.value ? 14 : 13}
+                          fontWeight={settings.highlightedPlayer === payload.value ? 'bold' : 'italic'}
+                          transform={`rotate(-45 ${x} ${y})`}
+                        >
+                          {payload.value}
+                        </text>
+                      )}
+                    />
+                    <YAxis 
+                      label={{ 
+                        value: 'Sabotages / partie', 
+                        angle: 270, 
+                        position: 'left', 
+                        offset: 15,
+                        style: { textAnchor: 'middle' } 
+                      }}
+                    />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length > 0) {
+                          const d = payload[0].payload as PlayerRoleActionStats;
+                          return (
+                            <div style={{
+                              background: 'var(--bg-secondary)',
+                              border: '1px solid var(--border-color)',
+                              borderRadius: '4px',
+                              padding: '8px',
+                              fontSize: '0.85rem'
+                            }}>
+                              <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{d.player}</div>
+                              <div>Parties loup: {d.wolfGamesPlayed}</div>
+                              <div>Sabotages totaux: {d.sabotageCount}</div>
+                              <div style={{ marginTop: '4px', fontWeight: 'bold', color: lycansColors['Loup'] }}>
+                                Ratio: {d.sabotagePerWolfGame.toFixed(2)} / partie
+                              </div>
+                              {d.isHighlightedAddition && (
+                                <div style={{ marginTop: '4px', color: 'var(--accent-primary)', fontStyle: 'italic' }}>
+                                  🎯 Affiché via sélection personnelle
+                                </div>
+                              )}
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Bar
+                      dataKey="sabotagePerWolfGame"
+                      shape={(props) => {
+                        const { x, y, width, height, payload } = props;
+                        const entry = payload as PlayerRoleActionStats;
+                        const isHighlightedFromSettings = settings.highlightedPlayer === entry.player;
+                        const isHoveredPlayer = highlightedPlayer === entry.player;
+                        const isHighlightedAddition = entry.isHighlightedAddition;
+                        const playerColor = playersColor[entry.player] || lycansColors['Loup'] || 'var(--wolf-color)';
 
                         return (
                           <Rectangle
