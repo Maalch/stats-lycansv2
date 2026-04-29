@@ -9,13 +9,6 @@ export function VersionDisplay({ onVersionClick, onAchievementClick }: VersionDi
   return (
     <div className="lycans-version-container">
       <div 
-        className="lycans-version-badge" 
-        onClick={onAchievementClick}
-        title="Cliquez pour découvrir les Succès !"
-      >
-        🐺 NOUVEAUTÉ : SUCCÈS !
-      </div>
-      <div 
         className="lycans-version-display"
         onClick={onVersionClick}
         title="Cliquez pour voir l'historique des changements"

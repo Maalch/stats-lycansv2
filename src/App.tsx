@@ -61,6 +61,9 @@ const PlayerSelectionPage = lazy(() => import('./components/playerselection/Play
 // Clips page
 const ClipsPage = lazy(() => import('./components/clips/ClipsPage').then(m => ({ default: m.ClipsPage })));
 
+// Game reference page
+const GameReferencePage = lazy(() => import('./components/gamereference/GameReferencePage').then(m => ({ default: m.GameReferencePage })));
+
 // Import VersionDisplay component
 import { VersionDisplay } from './components/common/VersionDisplay';
 import { ChangelogPage } from './components/common/ChangelogPage';
@@ -104,6 +107,12 @@ const MAIN_TABS = [
     description: 'Statistiques Battle Royale'
   },
 
+  { 
+    key: 'gameReference', 
+    label: 'Règles du Jeu', 
+    icon: '📖',
+    description: 'Explication des camps, rôles, pouvoirs et mécaniques du jeu'
+  },
   { 
     key: 'settings', 
     label: 'Filtres', 
@@ -534,6 +543,17 @@ function MainApp() {
             <ErrorBoundary>
               <Suspense fallback={<LoadingSkeleton type="chart" height="500px" />}>
                 <ClipsPage />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+        );
+      }
+      case 'gameReference': {
+        return (
+          <div className="lycans-dashboard-content">
+            <ErrorBoundary>
+              <Suspense fallback={<LoadingSkeleton type="card" height="400px" />}>
+                <GameReferencePage />
               </Suspense>
             </ErrorBoundary>
           </div>

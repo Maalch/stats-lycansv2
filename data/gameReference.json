@@ -1,0 +1,1143 @@
+{
+  "_meta": {
+    "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and sabotages. Extracted from in-game translations and gameLog data.",
+    "version": "1.0.0",
+    "lastUpdated": "2026-04-29",
+    "sourceTranslationsFile": "ExternalData/translations.json",
+    "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions."
+  },
+
+  "camps": [
+    {
+      "id": "villageois",
+      "name": "Villageois",
+      "emoji": "🏘️",
+      "description": "Les Villageois doivent identifier et éliminer les Loups pour gagner. Ils récoltent des ressources, utilisent des objets et votent lors des meetings pour éliminer les suspects.",
+      "winCondition": "Éliminer tous les Loups (et Traîtres/Louveteaux).",
+      "roles": ["Villageois", "Villageois Élite"]
+    },
+    {
+      "id": "loup",
+      "name": "Loups",
+      "emoji": "🐺",
+      "description": "Les Loups se transforment la nuit pour tuer les Villageois. En forme humaine, ils se fondent dans le groupe. Ils doivent éliminer suffisamment de joueurs pour prendre le contrôle.",
+      "winCondition": "Être aussi nombreux (ou plus) que les Villageois lors d'un meeting.",
+      "roles": ["Loup", "Traître", "Louveteau"]
+    },
+    {
+      "id": "solo",
+      "name": "Rôles Solo",
+      "emoji": "🎭",
+      "description": "Les rôles solo ont chacun leur propre condition de victoire, indépendante des Villageois et des Loups. Ils jouent pour eux-mêmes.",
+      "winCondition": "Variable selon le rôle.",
+      "roles": ["Idiot du Village", "Agent", "Espion", "Scientifique", "Amoureux", "La Bête", "Mercenaire", "Vaudou", "Kidnappeur", "Cultiste"]
+    }
+  ],
+
+  "mainRoles": [
+    {
+      "id": "villageois",
+      "name": "Villageois",
+      "camp": "villageois",
+      "emoji": "👤",
+      "type": "base",
+      "description": "Rôle de base du camp des Villageois. Pas de pouvoir spécial, mais peut recevoir un métier (pouvoir de villageois) et un rôle secondaire.",
+      "descriptionShort": "Éliminez les Loups"
+    },
+    {
+      "id": "villageois-elite",
+      "name": "Villageois Élite",
+      "camp": "villageois",
+      "emoji": "⭐",
+      "type": "elite",
+      "description": "Villageois puissant qui reçoit un pouvoir d'élite (Chasseur, Alchimiste, Guetteur, Purificateur). Doit utiliser une balle pour charger son pouvoir.",
+      "descriptionShort": "Villageois puissant"
+    },
+    {
+      "id": "loup",
+      "name": "Loup",
+      "camp": "loup",
+      "emoji": "🐺",
+      "type": "base",
+      "description": "Peut se transformer en loup la nuit pour tuer les villageois. Peut recevoir un pouvoir de loup et un rôle secondaire.",
+      "descriptionShort": "Transformez-vous et massacrez les villageois"
+    },
+    {
+      "id": "traitre",
+      "name": "Traître",
+      "camp": "loup",
+      "emoji": "🗡️",
+      "type": "special",
+      "description": "Humain du côté des Loups. Ne compte pas dans la condition de victoire des Loups. Ne peut pas se transformer.",
+      "descriptionShort": "Aidez les Loups pour gagner avec eux"
+    },
+    {
+      "id": "louveteau",
+      "name": "Louveteau",
+      "camp": "loup",
+      "emoji": "🐾",
+      "type": "special",
+      "description": "Remplace un Loup tombé. Ne peut se transformer qu'après la mort d'un Loup.",
+      "descriptionShort": "Transformation uniquement après la mort d'un Loup"
+    },
+    {
+      "id": "idiot-du-village",
+      "name": "Idiot du Village",
+      "camp": "solo",
+      "emoji": "🤡",
+      "type": "solo",
+      "description": "Gagne en se faisant voter en meeting. La nuit, sa faim dépend de son ennui : il doit récolter et rester près d'autres joueurs pour le réduire. Peut infliger des pouvoirs de loup à sa cible et simuler des sabotages. Si un Villageois le tue, ce dernier meurt aussi.",
+      "descriptionShort": "Gagne en se faisant voter en meeting",
+      "translationKey": "NALES_ROLE_DESCRIPTION_VILLAGE_IDIOT"
+    },
+    {
+      "id": "agent",
+      "name": "Agent",
+      "camp": "solo",
+      "emoji": "🕵️",
+      "type": "solo",
+      "description": "Doit éliminer l'autre Agent puis être parmi les derniers survivants lors d'un meeting. Peut identifier les Loups et l'autre Agent. La nuit, peut éliminer l'autre Agent, ce qui le rend rapide et invisible pendant quelques secondes.",
+      "descriptionShort": "Gagne en éliminant l'autre Agent et en évitant que la partie ne se termine",
+      "translationKey": "NALES_ROLE_DESCRIPTION_AGENT"
+    },
+    {
+      "id": "espion",
+      "name": "Espion",
+      "camp": "solo",
+      "emoji": "🔍",
+      "type": "solo",
+      "description": "Gagne en atteignant 100% d'espionnage et en survivant jusqu'au meeting suivant. La cible est colorée en rouge et visible sur la minimap. L'espionnage progresse si la cible est visible et/ou si l'Espion est immobile. Pendant les meetings, la progression est affichée à tous.",
+      "descriptionShort": "Gagne en espionnant des cibles désignées",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SPY"
+    },
+    {
+      "id": "scientifique",
+      "name": "Scientifique",
+      "camp": "solo",
+      "emoji": "🔬",
+      "type": "solo",
+      "description": "Gagne en rejoignant un meeting avec 100% de Recherche. La recherche augmente en restant près d'un loup transformé, plus vite si le risque est élevé. Peut voir tous les loups transformés sur la minimap et créer des gadgets.",
+      "descriptionShort": "Gagne en observant des loups qui sont transformés",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SCIENTIST"
+    },
+    {
+      "id": "amoureux",
+      "name": "Amoureux",
+      "camp": "solo",
+      "emoji": "💕",
+      "type": "duo",
+      "description": "Rôle duo composé d'un Amoureux Villageois et d'un Amoureux Loup. Ils gagnent en survivant ensemble jusqu'à ce qu'il ne reste que 4 joueurs en meeting. Peuvent communiquer par télépathie (canal privé). Le Villageois perd de la vie la nuit si le Loup n'est pas transformé, et seuls les kills du Loup le nourrissent.",
+      "descriptionShort": "Villageois + Loup. Gagnent en survivant ensemble",
+      "subRoles": [
+        {
+          "id": "amoureux-villageois",
+          "name": "Amoureux Villageois",
+          "translationKey": "NALES_ROLE_DESCRIPTION_LOVER_VILLAGER"
+        },
+        {
+          "id": "amoureux-loup",
+          "name": "Amoureux Loup",
+          "translationKey": "NALES_ROLE_DESCRIPTION_LOVER_WOLF"
+        }
+      ]
+    },
+    {
+      "id": "la-bete",
+      "name": "La Bête",
+      "camp": "solo",
+      "emoji": "🦁",
+      "type": "solo",
+      "description": "Doit marquer tous les joueurs vivants (qui ne sont pas avertis). Ensuite, la nuit suivante, se transforme en Bête : un loup immense, rapide et résistant qui peut tuer même les loups normaux. Doit tuer suffisamment de victimes pour gagner.",
+      "descriptionShort": "Gagne en marquant tous les joueurs puis en les tuant après sa transformation",
+      "translationKey": "NALES_ROLE_DESCRIPTION_BEAST"
+    },
+    {
+      "id": "mercenaire",
+      "name": "Mercenaire",
+      "camp": "solo",
+      "emoji": "💰",
+      "type": "solo",
+      "description": "Progresse en récoltant ou en tirant sur sa cible désignée. Possède un fusil silencieux qui endort la victime. Peut pister sa cible qui est paralysée quand il sort son fusil. Quand il commence une journée avec l'objectif atteint, doit survivre jusqu'à la nuit, mais tout le monde peut le tuer !",
+      "descriptionShort": "Gagne en récoltant et en tirant sur les cibles désignées, puis en survivant à une traque",
+      "translationKey": "NALES_ROLE_DESCRIPTION_MERCENARY"
+    },
+    {
+      "id": "vaudou",
+      "name": "Vaudou",
+      "camp": "solo",
+      "emoji": "💀",
+      "type": "solo",
+      "description": "Gagne en étant au moins aussi nombreux (avec ses Zombies) que les autres lors d'un meeting. Peut réanimer des cadavres (sauf Loups) en Zombies, qui sont ressuscités la nuit et peuvent tuer des joueurs en forme humaine pour réduire le cooldown de réanimation.",
+      "descriptionShort": "Gagne en réanimant des joueurs en zombies",
+      "translationKey": "NALES_ROLE_DESCRIPTION_VOODOO"
+    },
+    {
+      "id": "kidnappeur",
+      "name": "Kidnappeur",
+      "camp": "solo",
+      "emoji": "🪢",
+      "type": "solo",
+      "description": "Gagne en kidnappant un certain nombre de joueurs. Peut interagir avec un joueur en forme humaine : après 3 secondes il est enlevé et disparaît. Les joueurs enlevés ont une icône spéciale en meeting et sont libérés si le Kidnappeur meurt.",
+      "descriptionShort": "Gagne en kidnappant des joueurs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_KIDNAPPER"
+    },
+    {
+      "id": "cultiste",
+      "name": "Cultiste",
+      "camp": "solo",
+      "emoji": "☠️",
+      "type": "solo",
+      "description": "Place des crânes (que les autres joueurs peuvent détruire) qui chargent lentement son objectif. À 100% après un meeting, une phase de chasse commence : des esprits sont relâchés qui peuvent capturer des joueurs. Le Cultiste peut aussi les capturer directement.",
+      "descriptionShort": "Gagne en cachant des crânes puis en capturant des joueurs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_CULTIST"
+    }
+  ],
+
+  "wolfPowers": [
+    {
+      "id": "necromancien",
+      "name": "Nécromancien",
+      "emoji": "⚰️",
+      "description": "Peut marquer un cadavre. Le joueur devient un Loup et prend sa forme de loup immédiatement. Peut ensuite le ressusciter comme un loup muet en consommant sa charge. La charge augmente en forme de loup.",
+      "descriptionShort": "Peut ressusciter un cadavre en loup",
+      "translationKey": "NALES_ROLE_DESCRIPTION_NECROMANCER"
+    },
+    {
+      "id": "dupeur",
+      "name": "Dupeur",
+      "emoji": "🎭",
+      "description": "La nuit, des illusions de transformation de loup (bruit et menace) sont automatiquement créées à des moments et endroits aléatoires. De plus, peut infliger secrètement un handicap aléatoire à sa cible lors du meeting suivant.",
+      "descriptionShort": "Créé des illusions de transformation et peut pourrir le meeting d'une cible",
+      "translationKey": "NALES_ROLE_DESCRIPTION_DECEIVER"
+    },
+    {
+      "id": "saboteur",
+      "name": "Saboteur",
+      "emoji": "💣",
+      "description": "Peut piéger les gadgets et potions au sol ou possédés par un autre joueur. Les objets sont aussi plus visibles pour lui.",
+      "descriptionShort": "Peut piéger les objets au sol ou directement possédés par d'autres joueurs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SABOTEUR"
+    },
+    {
+      "id": "traqueur",
+      "name": "Traqueur",
+      "emoji": "📡",
+      "description": "En forme de loup, peut placer un Traqueur (temps d'installation, aveugle et sourd pendant). Le Traqueur dure un temps limité, illumine les joueurs en forme humaine proches et permet de les voir à travers les murs.",
+      "descriptionShort": "Peut placer un Traqueur pour voir les joueurs à travers les murs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_TRACKER"
+    },
+    {
+      "id": "sorcier",
+      "name": "Sorcier",
+      "emoji": "🧙",
+      "description": "Peut choisir un joueur dont sa forme humaine prend l'apparence (noté en rouge dans la liste). Peut aussi maudire secrètement une cible, qui se transformera temporairement en loup inoffensif durant la nuit suivante, visible sur la minimap.",
+      "descriptionShort": "Peut changer sa forme humaine et forcer un autre joueur à se transformer en faux loup la nuit suivante",
+      "translationKey": "NALES_ROLE_DESCRIPTION_WARLOCK"
+    },
+    {
+      "id": "possesseur",
+      "name": "Possesseur",
+      "emoji": "👁️",
+      "description": "Peut marquer une cible en restant proche, puis la posséder pour voir à travers ses yeux. Si le Possesseur se transforme en la possédant, il prend sa place mais ne pourra pas se détransformer cette nuit et ne pourra plus la marquer ensuite.",
+      "descriptionShort": "Peut posséder un autre joueur et se transformer à sa position",
+      "translationKey": "NALES_ROLE_DESCRIPTION_POSSESSOR"
+    },
+    {
+      "id": "artificier",
+      "name": "Artificier",
+      "emoji": "💥",
+      "description": "Récolte pour construire des bombes à retardement. Peut en donner secrètement à des joueurs. Le compteur se déclenche vers le début de la demi-journée suivante, mais elles peuvent être refilées avant d'exploser. Elles blessent la victime et la rendent lumineuse.",
+      "descriptionShort": "Peut placer une bombe à retardement sur un joueur",
+      "translationKey": "NALES_ROLE_DESCRIPTION_BOMBER"
+    },
+    {
+      "id": "devin",
+      "name": "Devin",
+      "emoji": "🔮",
+      "description": "Connaît l'état de santé de tout le monde. Pendant les meetings, peut tenter de deviner le métier d'un villageois : si correct, il meurt et la forme de loup est renforcée le jour suivant. Sinon, le Devin est affaibli (faim augmentée).",
+      "descriptionShort": "Connait l'état de santé des joueurs, et peut tuer un villageois s'il devine son métier",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SEER"
+    },
+    {
+      "id": "braconnier",
+      "name": "Braconnier",
+      "emoji": "🔫",
+      "description": "Possède un fusil avec un zoom. Ses tirs font très peu de bruit et placent un traqueur sur la cible : les loups la voient sur la minimap et entendent un son quand ils sont proches. Le fusil se recharge automatiquement après chaque meeting.",
+      "descriptionShort": "Possède un fusil dont les tirs rendent la cible plus facile à trouver pour les loups",
+      "translationKey": "NALES_ROLE_DESCRIPTION_POACHER"
+    },
+    {
+      "id": "ritualiste",
+      "name": "Ritualiste",
+      "emoji": "🕯️",
+      "description": "Charge son pouvoir en étant proche d'autres joueurs. Plus il y a de joueurs et plus ils sont proches, plus la charge est rapide. Une fois chargé, peut invoquer un rituel qui permet de choisir un effet négatif à appliquer sur TOUS les joueurs en forme humaine.",
+      "descriptionShort": "Charge son pouvoir en étant proche d'autres joueurs, peut l'utiliser pour maudire tout le monde",
+      "translationKey": "NALES_ROLE_DESCRIPTION_RITUALIST"
+    },
+    {
+      "id": "predateur",
+      "name": "Prédateur",
+      "emoji": "🐆",
+      "description": "Transformé, provoque l'effet de peur de moins loin. En journée, peut choisir une proie : elle est avertie, mais le Prédateur connaît la distance, entend les battements de cœur, et reçoit un bonus s'il la tue. Si la proie est le Chasseur, ses balles font moins de dégâts.",
+      "descriptionShort": "Est entendu de moins loin et peut choisir une proie pour la nuit",
+      "translationKey": "NALES_ROLE_DESCRIPTION_PREDATOR"
+    },
+    {
+      "id": "sournois",
+      "name": "Sournois",
+      "emoji": "🦇",
+      "description": "Le jour, peut déplacer sa balise invisible. La détransformation le téléporte à la balise, le rend invisible, rapide et silencieux, et l'effet de peur continue là où il a disparu. La nuit, peut choisir de se transformer lentement mais silencieusement.",
+      "descriptionShort": "Sa détransformation le téléporte à sa balise. Peut choisir de se transformer lentement mais silencieusement",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SNEAK"
+    }
+  ],
+
+  "villagerPowers": [
+    {
+      "id": "paysan",
+      "name": "Paysan",
+      "emoji": "🌾",
+      "description": "Charge son pouvoir en étant proche d'autres joueurs. Avec au moins 25%, peut l'utiliser pour s'accroupir et devenir invisible pour les loups transformés. Se désactive quand la charge arrive à 0% ou quand le joueur se relève.",
+      "descriptionShort": "Charge son pouvoir en étant proche d'autres joueurs, peut l'utiliser pour se cacher des loups",
+      "translationKey": "NALES_ROLE_DESCRIPTION_PEASANT"
+    },
+    {
+      "id": "exorciste",
+      "name": "Exorciste",
+      "emoji": "✝️",
+      "description": "Récolte pour charger son pouvoir, puis peut placer un détecteur invisible. Il explose au contact d'un loup transformé et l'exorcise : sourd, vision troublée, et visible sur la minimap. Les détecteurs durent plus longtemps s'ils sont loin du point de meeting.",
+      "descriptionShort": "Peut placer des détecteurs qui handicapent les loups transformés",
+      "translationKey": "NALES_ROLE_DESCRIPTION_EXORCIST"
+    },
+    {
+      "id": "medecin-legiste",
+      "name": "Médecin légiste",
+      "emoji": "🔬",
+      "description": "Peut analyser un cadavre pour connaître le rôle principal (villageois, loup, traître, espion...) qu'il avait. De plus, le Devin ne peut pas le tuer en devinant son métier de Médecin légiste.",
+      "descriptionShort": "Peut connaître le rôle qu'avait un cadavre ciblé",
+      "translationKey": "NALES_ROLE_DESCRIPTION_FORENSICS"
+    },
+    {
+      "id": "vengeur",
+      "name": "Vengeur",
+      "emoji": "⚔️",
+      "description": "Quand son pouvoir est chargé, peut tuer un joueur en forme humaine ou assommer un loup transformé. Le pouvoir se charge quand un loup transformé est proche, avec un bonus s'il tue quelqu'un.",
+      "descriptionShort": "Peut tuer un joueur en forme humaine ou étourdir un loup, après avoir entendu un loup assez longtemps",
+      "translationKey": "NALES_ROLE_DESCRIPTION_AVENGER"
+    },
+    {
+      "id": "detective",
+      "name": "Détective",
+      "emoji": "🕵️",
+      "description": "Fait avancer son enquête en allant aux lieux indiqués sur la minimap et en trouvant les joueurs indiqués en jaune. Une fois à 100%, apprend une information utile sur des joueurs ou sur les événements récents.",
+      "descriptionShort": "Peut enquêter pour obtenir des informations sur les joueurs ou sur les événements récents",
+      "translationKey": "NALES_ROLE_DESCRIPTION_INVESTIGATOR"
+    },
+    {
+      "id": "survivaliste",
+      "name": "Survivaliste",
+      "emoji": "🛡️",
+      "description": "Charge son pouvoir en récupérant les indices parfois laissés par les joueurs, puis peut permettre à un joueur d'être sauvé par un autre joueur s'il est attaqué par un loup. Peut l'utiliser sur lui-même avec un temps de préparation.",
+      "descriptionShort": "Peut permettre à un joueur (ou lui-même) d'être sauvé s'il est attaqué par un loup",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SURVIVALIST"
+    },
+    {
+      "id": "pretre",
+      "name": "Prêtre",
+      "emoji": "🙏",
+      "description": "Récolte pour obtenir son pouvoir puis peut protéger secrètement sa cible en journée. Cette nuit, la première fois qu'un loup l'attaque, elle sera protégée (mais perdra son objet) et le loup sera repoussé.",
+      "descriptionShort": "Peut protéger un joueur d'une attaque de loup",
+      "translationKey": "NALES_ROLE_DESCRIPTION_PRIEST"
+    },
+    {
+      "id": "invocateur",
+      "name": "Invocateur",
+      "emoji": "👻",
+      "description": "Charge son pouvoir en étant bas en vie. Avec au moins 50%, la nuit, peut invoquer l'esprit du Villageois mort le plus récemment : il est contrôlé par son joueur et peut attaquer un loup pour le blesser et le ralentir.",
+      "descriptionShort": "Charge son pouvoir en étant bas en vie, puis peut invoquer un esprit vengeur",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SUMMONER"
+    },
+    {
+      "id": "eclaireur",
+      "name": "Éclaireur",
+      "emoji": "📡",
+      "description": "Récolte pour construire un radar puis le place à sa position. Il détecte les loups transformés dans une large zone : ils sont indiqués sur la minimap et par une flèche et un son. Actif la nuit uniquement, dure plus longtemps s'il est éloigné du point de meeting.",
+      "descriptionShort": "Peut placer des radars qui détectent les loups transformés",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SCOUT"
+    },
+    {
+      "id": "magicien",
+      "name": "Magicien",
+      "emoji": "🪄",
+      "description": "Récolte pour charger son pouvoir puis crée des cristaux (visibles seulement par lui). Peut ensuite créer des illusions mobiles de joueurs aléatoires à partir des cristaux. Visibles seulement pour les loups transformés, elles les aveuglent s'ils les attaquent.",
+      "descriptionShort": "Peut créer des illusions pour embrouiller les loups",
+      "translationKey": "NALES_ROLE_DESCRIPTION_MAGICIAN"
+    },
+    {
+      "id": "mystique",
+      "name": "Mystique",
+      "emoji": "🌀",
+      "description": "Son pouvoir se charge plus vite quand sa santé est basse. La nuit, peut placer un Répulseur invisible : les loups transformés proches ont leur vision troublée et sont immobilisés s'ils restent trop longtemps à proximité. Attention : les loups savent où sont les Répulseurs !",
+      "descriptionShort": "Peut créer des répulseurs qui gênent la vision des loups et peuvent les immobiliser",
+      "translationKey": "NALES_ROLE_DESCRIPTION_MYSTIC"
+    },
+    {
+      "id": "ombre",
+      "name": "Ombre",
+      "emoji": "🌑",
+      "description": "Peut activer une aura de camouflage qui rend le joueur et les joueurs proches moins visibles pour les loups. Plus le loup est loin, plus le camouflage est efficace. Se charge plus vite quand un loup transformé est proche.",
+      "descriptionShort": "Peut activer une aura qui rend les joueurs proches moins visibles pour les loups transformés",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SHADOW"
+    },
+    {
+      "id": "ermite",
+      "name": "Ermite",
+      "emoji": "🏚️",
+      "description": "Des cachettes apparaissent régulièrement. Quand le joueur est à l'intérieur, il est invisible et silencieux pour les loups transformés. Chaque cachette dure un temps limité mais disparaît plus rapidement quand le joueur est dedans. La nuit, peut utiliser sa charge pour ajouter du temps à toutes les cachettes.",
+      "descriptionShort": "Fait apparaître des cachettes où il peut se réfugier pour tenter d'échapper aux loups",
+      "translationKey": "NALES_ROLE_DESCRIPTION_HERMIT"
+    },
+    {
+      "id": "avatar",
+      "name": "Avatar",
+      "emoji": "✨",
+      "description": "Voit les loups transformés proches sur la minimap, a une protection de Prêtre qui dure jusqu'à une attaque, sa santé diminue plus lentement, et peut créer un objet aléatoire. Si l'Avatar meurt, la nuit actuelle est prolongée et son tueur devient plus puissant !",
+      "descriptionShort": "A plusieurs avantages, mais renforce les loups s'il meurt",
+      "translationKey": "NALES_ROLE_DESCRIPTION_AVATAR"
+    }
+  ],
+
+  "elitePowers": [
+    {
+      "id": "chasseur",
+      "name": "Chasseur",
+      "emoji": "🔫",
+      "description": "Villageois Élite avec un fusil. Peut viser puis tirer. Après le premier tir, doit trouver une balle et l'utiliser pour recharger. Ne peut pas bouger tant que le fusil est sorti.",
+      "descriptionShort": "A un fusil, mais a besoin de balles pour le recharger",
+      "translationKey": "NALES_ROLE_DESCRIPTION_HUNTER"
+    },
+    {
+      "id": "alchimiste",
+      "name": "Alchimiste",
+      "emoji": "⚗️",
+      "description": "Villageois Élite qui connaît les effets de chaque potion. Peut transformer un objet de récolte en potion blanche qui soigne et confère un effet positif aléatoire, plus court qu'une potion normale.",
+      "descriptionShort": "Connait les effets des potions, peut transformer le loot en potions blanches",
+      "translationKey": "NALES_ROLE_DESCRIPTION_ALCHEMIST"
+    },
+    {
+      "id": "guetteur",
+      "name": "Guetteur",
+      "emoji": "👁️",
+      "description": "Villageois Élite plus difficile à voir pour les loups transformés. Ceux-ci sont plus visibles pour lui et apparaissent sur la minimap quand ils sont proches. Peut augmenter la puissance/portée de ces effets, sa vitesse et la portée de sa voix pendant un temps limité.",
+      "descriptionShort": "Voit mieux les loups et peut aider les autres à leur échapper",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SPOTTER"
+    },
+    {
+      "id": "purificateur",
+      "name": "Purificateur",
+      "emoji": "🔥",
+      "description": "Villageois Élite qui peut lancer une bouteille incendiaire spéciale (flamme verte) qui brûle les loups transformés mais soigne et accélère les humains. Si un loup transformé le tue, il prend feu. Commence chaque jour avec une bouteille incendiaire.",
+      "descriptionShort": "Reçoit des bouteilles incendiaires et peut lancer des bouteilles incendiaires spéciales",
+      "translationKey": "NALES_ROLE_DESCRIPTION_PURIFIER"
+    }
+  ],
+
+  "secondaryRoles": [
+    {
+      "id": "hurleur",
+      "name": "Hurleur",
+      "emoji": "📢",
+      "description": "Pendant son pouvoir, sa voix a plus de portée et ralentit les joueurs proches (humain). En forme de loup, peut étourdir tous les joueurs en forme humaine.",
+      "descriptionShort": "Augmente la portée vocale et étourdit les joueurs proches",
+      "descriptionVillager": "Pendant son pouvoir, sa voix a plus de portée et étourdit les joueurs proches",
+      "descriptionWolf": "En forme de loup, son pouvoir étourdit tous les joueurs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_HOWLER"
+    },
+    {
+      "id": "brasseur",
+      "name": "Brasseur",
+      "emoji": "🍺",
+      "description": "Peut changer son objet en potion. Les potions ont un effet plus bénéfique (négatif→neutre, neutre→positif). Peut aussi boire des potions en forme de loup pour se soigner.",
+      "descriptionVillager": "Peut changer son objet en potion. Les potions ont un effet plus bénéfique sur lui",
+      "descriptionWolf": "Peut changer son objet en potion et les boire en forme de loup pour se soigner",
+      "translationKey": "NALES_ROLE_DESCRIPTION_ALCOHOLIC"
+    },
+    {
+      "id": "coureur",
+      "name": "Coureur",
+      "emoji": "🏃",
+      "description": "En forme humaine avec au moins 50% de vie, peut brièvement accélérer au prix de la faim. En forme de loup, peut sprinter brièvement.",
+      "descriptionVillager": "Peut sacrifier sa santé pour courir plus vite pendant quelques secondes",
+      "descriptionWolf": "En forme de loup, peut sprinter pour aller très vite",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SPRINTER"
+    },
+    {
+      "id": "infecte",
+      "name": "Infecté",
+      "emoji": "🦠",
+      "description": "Si un loup le tue, il se détransforme après un délai. En forme humaine, peut retirer les effets négatifs. En forme de loup, peut faire flatuler les joueurs proches.",
+      "descriptionVillager": "Peut retirer ses effets négatifs ; force le loup qui le tue à se détransformer après un délai",
+      "descriptionWolf": "En forme de loup, peut faire flatuler tous les joueurs proches",
+      "translationKey": "NALES_ROLE_DESCRIPTION_INFECTED"
+    },
+    {
+      "id": "teleporteur",
+      "name": "Téléporteur",
+      "emoji": "🌀",
+      "description": "Peut créer une balise invisible puis s'y téléporter après un court délai. La balise est détruite après utilisation.",
+      "descriptionVillager": "Peut placer une balise puis s'y téléporter après un court temps de préparation",
+      "descriptionWolf": "Peut placer une balise puis s'y téléporter après un court temps de préparation",
+      "translationKey": "NALES_ROLE_DESCRIPTION_TELEPORTER"
+    },
+    {
+      "id": "ingenieur",
+      "name": "Ingénieur",
+      "emoji": "🔧",
+      "description": "Peut créer un objet aléatoire (hors potions). Moins affecté par les gadgets négatifs (pièges, fumigènes, grenades, gaz) et casse les verrous plus vite.",
+      "descriptionVillager": "Peut créer des gadgets et est également plus efficace contre leurs effets",
+      "descriptionWolf": "Peut créer des gadgets et est également plus efficace contre leurs effets",
+      "translationKey": "NALES_ROLE_DESCRIPTION_ENGINEER"
+    },
+    {
+      "id": "furtif",
+      "name": "Furtif",
+      "emoji": "🥷",
+      "description": "En forme humaine, peut devenir invisible avec des pas silencieux (mais ne peut pas courir). En forme de loup, reste visible mais ne provoque pas l'effet de peur.",
+      "descriptionVillager": "Peut devenir invisible et camoufler ses bruits de pas",
+      "descriptionWolf": "En forme de loup, peut empêcher les joueurs d'entendre la musique de loup",
+      "translationKey": "NALES_ROLE_DESCRIPTION_STEALTHER"
+    },
+    {
+      "id": "politicien",
+      "name": "Politicien",
+      "emoji": "🎩",
+      "description": "Une fois par jour, peut marquer secrètement une cible en forme humaine : elle ne pourra ni parler ni voter au meeting suivant. Si le Politicien est villageois et se fait voter, quelqu'un d'autre meurt à sa place.",
+      "descriptionVillager": "Peut assommer sa cible au prochain meeting ; ne peut pas être voté (si villageois)",
+      "descriptionWolf": "Peut assommer sa cible au prochain meeting",
+      "translationKey": "NALES_ROLE_DESCRIPTION_POLITICIAN"
+    },
+    {
+      "id": "metabolique",
+      "name": "Métabolique",
+      "emoji": "💪",
+      "description": "La nourriture soigne davantage, les effets négatifs durent moins longtemps et les effets positifs plus longtemps. Si loup, peut secrètement maudire quelqu'un pour qu'il perde rapidement sa santé la nuit.",
+      "descriptionVillager": "La nourriture le soigne davantage, il a une meilleure affinité aux effets divers",
+      "descriptionWolf": "Peut maudire une cible pour qu'elle perde rapidement sa santé pendant la nuit",
+      "translationKey": "NALES_ROLE_DESCRIPTION_METABOLIC"
+    },
+    {
+      "id": "illusionniste",
+      "name": "Illusionniste",
+      "emoji": "🪞",
+      "description": "Si villageois, peut aveugler TOUS les loups transformés à distance. Si loup, peut mélanger l'apparence humaine de tous les joueurs.",
+      "descriptionVillager": "Peut brièvement aveugler tous les loups transformés à n'importe quelle distance",
+      "descriptionWolf": "Peut mélanger l'apparence humaine de tous les joueurs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_ILLUSIONIST"
+    },
+    {
+      "id": "sherif",
+      "name": "Shérif",
+      "emoji": "⭐",
+      "description": "Si villageois, peut tenter de tuer un joueur au contact — mais meurt à sa place si c'est un villageois. Si loup, peut devenir plus résistant aux balles du Chasseur.",
+      "descriptionVillager": "Peut tenter de tuer un joueur, mais meurt à sa place si ce joueur est villageois",
+      "descriptionWolf": "Peut devenir plus résistant aux balles du Chasseur",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SHERIF"
+    },
+    {
+      "id": "farceur",
+      "name": "Farceur",
+      "emoji": "🃏",
+      "description": "En forme humaine, peut inverser la position d'une cible avec un joueur aléatoire (et soigner la cible). En forme de loup, peut inverser sa propre position avec un joueur aléatoire.",
+      "descriptionVillager": "Peut inverser la position d'une cible avec celle d'un joueur aléatoire",
+      "descriptionWolf": "En forme de loup, peut inverser sa position avec celle d'un joueur aléatoire",
+      "translationKey": "NALES_ROLE_DESCRIPTION_GAMBLER"
+    },
+    {
+      "id": "voyant",
+      "name": "Voyant",
+      "emoji": "👁️",
+      "description": "Averti quand un joueur meurt. Peut consulter un cadavre (une seule fois) pour obtenir une liste de ses tueurs potentiels. Si loup, connaît le rôle secondaire de tous les joueurs.",
+      "descriptionVillager": "Est averti quand un joueur meurt. Peut obtenir une liste de tueurs potentiels d'un cadavre",
+      "descriptionWolf": "Est averti quand un joueur meurt et connaît le rôle secondaire des joueurs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_MEDIUM"
+    },
+    {
+      "id": "astral",
+      "name": "Astral",
+      "emoji": "💫",
+      "description": "Peut envoyer son esprit hors de son corps pour explorer. En forme humaine, la santé diminue selon la distance. En forme de loup, très rapide et sans perte de santé.",
+      "descriptionVillager": "Peut envoyer son esprit hors de son corps pour explorer les environs",
+      "descriptionWolf": "Peut envoyer son esprit hors de son corps pour explorer les environs",
+      "translationKey": "NALES_ROLE_DESCRIPTION_ASTRAL"
+    },
+    {
+      "id": "charognard",
+      "name": "Charognard",
+      "emoji": "🪶",
+      "description": "Commence avec un objet (Verrou, Diamant ou Grenade). En forme humaine, peut fouiller les cadavres pour se soigner et trouver un objet. En forme de loup, peut les dévorer pour se soigner.",
+      "descriptionVillager": "Commence avec un objet ; peut fouiller les cadavres pour se soigner et trouver un objet",
+      "descriptionWolf": "En forme de loup, peut dévorer les cadavres pour se soigner",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SCAVENGER"
+    },
+    {
+      "id": "mage-bleu",
+      "name": "Mage bleu",
+      "emoji": "🧙‍♂️",
+      "description": "Commence avec un livre de sorts. Peut infliger à sa cible le dernier effet de potion ou parchemin reçu ou donné. Le cooldown dépend de l'effet.",
+      "descriptionVillager": "Commence avec un livre de sorts ; peut infliger à sa cible le dernier effet donné ou reçu",
+      "descriptionWolf": "Commence avec un livre de sorts ; peut infliger à sa cible le dernier effet donné ou reçu",
+      "translationKey": "NALES_ROLE_DESCRIPTION_BLUE_MAGE"
+    },
+    {
+      "id": "acteur",
+      "name": "Acteur",
+      "emoji": "🎬",
+      "description": "Peut feindre la mort. En forme de loup, perd de la santé beaucoup plus lentement et ne génère pas d'effet de peur en faisant le mort.",
+      "descriptionVillager": "Peut feindre la mort pour berner les loups",
+      "descriptionWolf": "Peut feindre la mort pour cacher sa présence et attirer des victimes",
+      "translationKey": "NALES_ROLE_DESCRIPTION_ACTOR"
+    },
+    {
+      "id": "scribe",
+      "name": "Scribe",
+      "emoji": "📜",
+      "description": "Peut créer un parchemin aléatoire. S'il en possède déjà un, peut changer son effet aléatoirement.",
+      "descriptionVillager": "Peut créer des parchemins et modifier leur effet",
+      "descriptionWolf": "Peut créer des parchemins et modifier leur effet",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SCRIBE"
+    },
+    {
+      "id": "carabinier",
+      "name": "Carabinier",
+      "emoji": "🔫",
+      "description": "Possède un fusil qui repousse la cible. Les cibles en forme humaine sont étourdies, les loups transformés sont ralentis. Le fusil se recharge automatiquement.",
+      "descriptionVillager": "A un fusil qui repousse et ralentit sa cible",
+      "descriptionWolf": "A un fusil qui repousse et étourdit sa cible",
+      "translationKey": "NALES_ROLE_DESCRIPTION_CARABINEER"
+    },
+    {
+      "id": "faussaire",
+      "name": "Faussaire",
+      "emoji": "🎨",
+      "description": "Peut voir quel objet les joueurs en forme humaine possèdent. Peut copier l'objet de loin ou le voler de près.",
+      "descriptionVillager": "Voit les objets possédés par les joueurs, peut les copier ou les voler",
+      "descriptionWolf": "Voit les objets possédés par les joueurs, peut les copier ou les voler",
+      "translationKey": "NALES_ROLE_DESCRIPTION_FORGER"
+    },
+    {
+      "id": "imitateur",
+      "name": "Imitateur",
+      "emoji": "🎭",
+      "description": "Peut choisir un rôle secondaire à utiliser pour la journée. Quand le jour se termine, redevient Imitateur et peut choisir un autre rôle.",
+      "descriptionVillager": "Choisit un nouveau rôle secondaire chaque jour",
+      "descriptionWolf": "Choisit un nouveau rôle secondaire chaque jour",
+      "translationKey": "NALES_ROLE_DESCRIPTION_IMITATOR"
+    },
+    {
+      "id": "marchand",
+      "name": "Marchand",
+      "emoji": "🪙",
+      "description": "Peut voir et récolter des pièces spéciales affichées sur la minimap. Peut ouvrir la boutique pour dépenser ses pièces. La livraison a un délai.",
+      "descriptionVillager": "Peut acheter diverses choses en récupérant des pièces réparties sur la carte",
+      "descriptionWolf": "Peut acheter diverses choses en récupérant des pièces réparties sur la carte",
+      "translationKey": "NALES_ROLE_DESCRIPTION_MERCHANT"
+    },
+    {
+      "id": "bricoleur",
+      "name": "Bricoleur",
+      "emoji": "🔩",
+      "description": "Commence avec un accessoire aléatoire. En meeting, peut l'échanger contre un autre accessoire aléatoire. Hors meeting, peut l'activer pour un effet spécifique (décrit dans la description de l'accessoire).",
+      "descriptionVillager": "Commence avec un accessoire et peut l'activer pour un effet spécifique",
+      "descriptionWolf": "Commence avec un accessoire et peut l'activer pour un effet spécifique",
+      "translationKey": "NALES_ROLE_DESCRIPTION_TINKERER"
+    },
+    {
+      "id": "telepathe",
+      "name": "Télépathe",
+      "emoji": "🧠",
+      "description": "Peut basculer la télépathie avec l'autre Télépathe, qui est un allié. Tant qu'active, il peut l'entendre à toute distance, mais n'entend pas les autres joueurs.",
+      "descriptionVillager": "Peut communiquer avec l'autre Télépathe, qui est forcément un allié",
+      "descriptionWolf": "Peut communiquer avec l'autre Télépathe, qui est forcément un allié",
+      "translationKey": "NALES_ROLE_DESCRIPTION_TELEPATH"
+    }
+  ],
+
+  "deadRoles": [
+    {
+      "id": "ange-gardien",
+      "name": "Ange gardien",
+      "emoji": "😇",
+      "camp": "villageois",
+      "description": "Rôle donné à un villageois mort. Peut observer les joueurs pour déterminer s'ils sont en danger. Peut soigner et protéger les villageois.",
+      "translationKey": "NALES_ROLE_DESCRIPTION_ANGEL"
+    },
+    {
+      "id": "fantome",
+      "name": "Fantôme",
+      "emoji": "👻",
+      "camp": "villageois",
+      "description": "Rôle donné à un villageois mort. Peut attaquer les loups avec des frappes ou créer des murs de feu qui les blessent.",
+      "translationKey": "NALES_ROLE_DESCRIPTION_GHOST"
+    },
+    {
+      "id": "spectre",
+      "name": "Spectre",
+      "emoji": "💀",
+      "camp": "loup",
+      "description": "Rôle donné à un loup/traître mort. Peut gêner les villageois en leur infligeant des effets négatifs et simuler des transformations à sa position.",
+      "translationKey": "NALES_ROLE_DESCRIPTION_SPECTER"
+    },
+    {
+      "id": "zombie",
+      "name": "Zombie",
+      "emoji": "🧟",
+      "camp": "vaudou",
+      "description": "Joueur réanimé par le Vaudou. Mort en journée mais ressuscite chaque nuit. Peut tuer des joueurs en forme humaine pour réduire le cooldown de réanimation du Vaudou, et se sacrifier pour étourdir un loup.",
+      "translationKey": "NALES_ROLE_DESCRIPTION_ZOMBIE"
+    }
+  ],
+
+  "accessories": [
+    {
+      "id": "bottes",
+      "name": "Bottes de furtivité",
+      "emoji": "👢",
+      "description": "En forme humaine, vos pas ne font aucun bruit. En forme de loup, vous êtes détecté d'un peu moins loin.",
+      "tinkererEffect": "Devenir invisible (3 secondes en forme humaine, 6 secondes en forme de loup).",
+      "translationKey": "NALES_ACCESSORY_BOOTS"
+    },
+    {
+      "id": "corne",
+      "name": "Corne d'abondance",
+      "emoji": "🎺",
+      "description": "Régénère lentement votre santé. Fonctionne en forme de loup.",
+      "tinkererEffect": "Soigner 25% de votre santé maximale.",
+      "translationKey": "NALES_ACCESSORY_HORN"
+    },
+    {
+      "id": "anneau",
+      "name": "Anneau de vitesse",
+      "emoji": "💍",
+      "description": "Augmente légèrement votre vitesse de déplacement si vous êtes en forme de loup ou qu'un loup transformé est proche.",
+      "tinkererEffect": "Donner Célérité à la cible.",
+      "translationKey": "NALES_ACCESSORY_RING"
+    },
+    {
+      "id": "loupe",
+      "name": "Loupe",
+      "emoji": "🔍",
+      "description": "Permet de voir les traces de pas laissées par les joueurs. Bleues = humains, rouges = loups.",
+      "tinkererEffect": "Aveugler la cible (3 secondes sur un loup transformé, 6 secondes sur un humain).",
+      "translationKey": "NALES_ACCESSORY_MAGNIFIER"
+    },
+    {
+      "id": "boule-de-crystal",
+      "name": "Boule de crystal",
+      "emoji": "🔮",
+      "description": "Permet de voir les loups transformés proches à travers les murs et sur la minimap. Si Loup ou Traître : 1 fois par meeting, permet de deviner le pouvoir d'un villageois (non-élite). Si correct, il meurt.",
+      "tinkererEffect": "Recevoir Vision vraie.",
+      "translationKey": "NALES_ACCESSORY_CRYSTAL_BALL"
+    },
+    {
+      "id": "sac-a-dos",
+      "name": "Sac à dos",
+      "emoji": "🎒",
+      "description": "Emplacement d'objet supplémentaire. L'objet est automatiquement transféré quand l'emplacement habituel est vide. Possibilité d'échanger les deux objets.",
+      "tinkererEffect": "Créer un objet aléatoire.",
+      "translationKey": "NALES_ACCESSORY_BACKPACK"
+    },
+    {
+      "id": "livre-de-sorts",
+      "name": "Livre de sorts",
+      "emoji": "📕",
+      "description": "Les effets négatifs durent moins longtemps. De plus, permet d'affecter une cible avec un effet aléatoire.",
+      "tinkererEffect": "Recevoir un effet positif aléatoire.",
+      "translationKey": "NALES_ACCESSORY_SPELLBOOK"
+    }
+  ],
+
+  "gadgets": [
+    {
+      "id": "piege",
+      "name": "Piège",
+      "emoji": "🪤",
+      "translationKey": "NALES_GADGET_TRAP",
+      "description": "Piège posable au sol qui bloque et ralentit les joueurs qui marchent dessus."
+    },
+    {
+      "id": "fumigene",
+      "name": "Fumigène",
+      "emoji": "💨",
+      "translationKey": "NALES_GADGET_SMOKE",
+      "description": "Bombe fumigène qui crée un nuage de fumée obscurcissant la vision."
+    },
+    {
+      "id": "longue-vue",
+      "name": "Longue-vue",
+      "emoji": "🔭",
+      "translationKey": "NALES_GADGET_SPYGLASS",
+      "description": "Permet de voir plus loin que la normale."
+    },
+    {
+      "id": "verrou",
+      "name": "Verrou",
+      "emoji": "🔒",
+      "translationKey": "NALES_GADGET_LOCK",
+      "description": "Permet de verrouiller une porte pour bloquer l'accès."
+    },
+    {
+      "id": "cle",
+      "name": "Clé",
+      "emoji": "🔑",
+      "translationKey": "NALES_GADGET_KEY",
+      "description": "Permet d'ouvrir les portes verrouillées."
+    },
+    {
+      "id": "balle",
+      "name": "Balle",
+      "emoji": "🔫",
+      "translationKey": "NALES_BULLET",
+      "description": "Munition pour recharger le fusil du Chasseur ou du Villageois Élite."
+    },
+    {
+      "id": "parchemin",
+      "name": "Parchemin",
+      "emoji": "📜",
+      "translationKey": "NALES_GADGET_SCROLL",
+      "description": "Parchemin à utiliser sur un joueur (même un loup) pour lui infliger un effet."
+    },
+    {
+      "id": "diamant",
+      "name": "Diamant",
+      "emoji": "💎",
+      "translationKey": "NALES_GADGET_DIAMOND",
+      "description": "Rend rapide et invisible pendant 3 secondes."
+    },
+    {
+      "id": "grenade",
+      "name": "Grenade",
+      "emoji": "💣",
+      "translationKey": "NALES_GADGET_GRENADE",
+      "description": "Se lance et repousse tous les joueurs proches en explosant."
+    },
+    {
+      "id": "bouteille-incendiaire",
+      "name": "Bouteille incendiaire",
+      "emoji": "🔥",
+      "translationKey": "NALES_GADGET_MOLOTOV",
+      "description": "Se lance et crée un mur de flammes de plus en plus grand."
+    },
+    {
+      "id": "gaz",
+      "name": "Fiole de gaz",
+      "emoji": "🧪",
+      "translationKey": "NALES_GADGET_SLEEPING_GAS",
+      "description": "Gaz : placez-le (3 secondes) puis utilisez le Détonateur pour libérer le gaz.",
+      "gasTypes": [
+        { "id": "somnifere", "name": "Somnifère", "translationKey": "NALES_ITEM_GAS_SLEEPING" },
+        { "id": "camouflage", "name": "Camouflage", "translationKey": "NALES_ITEM_GAS_DEAFENER" },
+        { "id": "puanteur", "name": "Puanteur", "translationKey": "NALES_ITEM_GAS_POISON" }
+      ]
+    },
+    {
+      "id": "detonateur",
+      "name": "Détonateur",
+      "emoji": "🔴",
+      "translationKey": "NALES_GADGET_DETONATOR",
+      "description": "Utilisé pour déclencher la Fiole de gaz."
+    },
+    {
+      "id": "radar",
+      "name": "Radar",
+      "emoji": "📡",
+      "translationKey": "NALES_GADGET_RADAR",
+      "description": "Se lance et détecte les humains OU les loups (selon la forme actuelle du lanceur)."
+    }
+  ],
+
+  "potionEffects": [
+    { "id": "audition", "name": "Audition", "type": "positive", "translationKey": "EFFECT_AUDITION" },
+    { "id": "audition-plus", "name": "Audition+", "type": "positive", "translationKey": "EFFECT_AUDITION_PLUS", "tutorial": "Vous entendez mieux et voyez les victimes sur la minimap" },
+    { "id": "flatulence", "name": "Flatulences", "type": "negative", "translationKey": "EFFECT_FLATULENCE" },
+    { "id": "geant", "name": "Géant", "type": "neutral", "translationKey": "EFFECT_GIANT" },
+    { "id": "lumineux", "name": "Lumineux", "type": "negative", "translationKey": "EFFECT_GLOWING" },
+    { "id": "invisible", "name": "Invisible", "type": "positive", "translationKey": "EFFECT_INVISIBILITY" },
+    { "id": "vision-nocturne", "name": "Vision nocturne", "type": "positive", "translationKey": "EFFECT_NIGHT_VISION" },
+    { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
+    { "id": "paranoia", "name": "Paranoia", "type": "negative", "translationKey": "EFFECT_PARANOIA" },
+    { "id": "rassasie", "name": "Rassasié", "type": "positive", "translationKey": "EFFECT_SATIATED" },
+    { "id": "celerite", "name": "Célérité", "type": "positive", "translationKey": "EFFECT_SPEED" },
+    { "id": "teleportation", "name": "Téléportation", "type": "neutral", "translationKey": "EFFECT_TELEPORTATION" }
+  ],
+
+  "statusEffects": [
+    { "id": "etourdi", "name": "Étourdi", "translationKey": "NALES_EFFECT_STUN" },
+    { "id": "foncer", "name": "Foncer", "translationKey": "NALES_EFFECT_CHASE" },
+    { "id": "course", "name": "Course", "translationKey": "NALES_EFFECT_SPRINT" },
+    { "id": "detransfo", "name": "Détransfo!", "translationKey": "NALES_EFFECT_REVERTING" },
+    { "id": "desoriente", "name": "Désorienté", "translationKey": "NALES_EFFECT_DISORIENTED" },
+    { "id": "infecte", "name": "Infecté!", "translationKey": "NALES_EFFECT_INFECTED" },
+    { "id": "sourd", "name": "Sourd", "translationKey": "NALES_EFFECT_DEAFNESS" },
+    { "id": "camoufle", "name": "Camouflé", "translationKey": "NALES_EFFECT_CAMOUFLAGE" },
+    { "id": "discret", "name": "Discret", "translationKey": "NALES_EFFECT_UNDETECTED" },
+    { "id": "affame", "name": "Affamé !", "translationKey": "NALES_EFFECT_STARVATION" },
+    { "id": "hurler", "name": "Hurler", "translationKey": "NALES_EFFECT_SHOUTING" },
+    { "id": "aveugle", "name": "Aveuglé", "translationKey": "NALES_EFFECT_BLIND" },
+    { "id": "illusion", "name": "Illusion", "translationKey": "NALES_EFFECT_ILLUSION" },
+    { "id": "neutralise", "name": "Neutralisé", "translationKey": "NALES_EFFECT_ANTI_MAGIC" },
+    { "id": "deguise", "name": "Déguisé", "translationKey": "NALES_EFFECT_DISGUISED" },
+    { "id": "midas", "name": "Midas", "translationKey": "NALES_EFFECT_MIDAS", "tutorial": "Augmente vos récoltes et vous permet de pétrifier une cible" },
+    { "id": "vampire", "name": "Vampire", "translationKey": "NALES_EFFECT_VAMPIRE" },
+    { "id": "vampirise", "name": "Vampirisé !", "translationKey": "NALES_EFFECT_VAMPIRE_TARGET" },
+    { "id": "minuscule", "name": "Minuscule", "translationKey": "NALES_EFFECT_TINY" },
+    { "id": "hante", "name": "Hanté", "translationKey": "NALES_EFFECT_HAUNTED" },
+    { "id": "myope", "name": "Myope", "translationKey": "NALES_EFFECT_NEARSIGHTED" },
+    { "id": "assassin", "name": "Assassin", "translationKey": "NALES_EFFECT_ASSASSIN", "tutorial": "Vous permet de tuer un humain ou d'assommer un loup" },
+    { "id": "puant", "name": "Puant", "translationKey": "NALES_EFFECT_STINKING", "tutorial": "Ralentit les joueurs proches, portée plus grande sur les loups" },
+    { "id": "nausee", "name": "Nausée", "translationKey": "NALES_EFFECT_NAUSEATED" },
+    { "id": "muet", "name": "Muet", "translationKey": "NALES_EFFECT_MUTE" },
+    { "id": "clairvoyance", "name": "Clairvoyance", "translationKey": "NALES_EFFECT_CLAIRVOYANCE", "tutorial": "Indique les joueurs proches sur votre minimap" },
+    { "id": "chaos", "name": "Chaos", "translationKey": "NALES_EFFECT_CHAOS" },
+    { "id": "assomme", "name": "Assommé", "translationKey": "NALES_EFFECT_DOWNED" },
+    { "id": "malade", "name": "Malade", "translationKey": "NALES_EFFECT_DISEASED" },
+    { "id": "malediction", "name": "Malédiction", "translationKey": "NALES_EFFECT_CURSED" },
+    { "id": "possession", "name": "Possession", "translationKey": "NALES_EFFECT_POSSESSED" },
+    { "id": "blesse", "name": "Blessé", "translationKey": "NALES_EFFECT_WOUNDED" },
+    { "id": "poison", "name": "Poison", "translationKey": "NALES_EFFECT_POISONED" },
+    { "id": "puissance", "name": "Puissance", "translationKey": "NALES_EFFECT_EMPOWERED" },
+    { "id": "exorcise", "name": "Exorcisé", "translationKey": "NALES_EFFECT_EXORCISM" },
+    { "id": "telepathie", "name": "Télépathie", "translationKey": "NALES_EFFECT_TELEPATHY" },
+    { "id": "phase", "name": "Phase", "translationKey": "NALES_EFFECT_PHASING" },
+    { "id": "sauvable", "name": "Sauvable", "translationKey": "NALES_EFFECT_DYING" },
+    { "id": "bombe", "name": "BOMBE !", "translationKey": "NALES_EFFECT_BOMB" },
+    { "id": "panique", "name": "Panique", "translationKey": "NALES_EFFECT_PANIC" },
+    { "id": "fuite", "name": "Fuite", "translationKey": "NALES_EFFECT_FLEEING" },
+    { "id": "ange-gardien", "name": "Ange gardien", "translationKey": "NALES_EFFECT_ANGEL" },
+    { "id": "traque", "name": "Traque", "translationKey": "NALES_EFFECT_TRACKING" },
+    { "id": "paralyse", "name": "Paralysé", "translationKey": "NALES_EFFECT_PARALYZED" },
+    { "id": "confusion", "name": "Confusion", "translationKey": "NALES_EFFECT_DRUNK" },
+    { "id": "resistance", "name": "Résistance", "translationKey": "NALES_EFFECT_RESISTANCE" },
+    { "id": "ressuscite", "name": "Ressuscité", "translationKey": "NALES_EFFECT_RESURRECTED" },
+    { "id": "predateur", "name": "Prédateur", "translationKey": "NALES_EFFECT_PREDATOR" },
+    { "id": "petrifie", "name": "Pétrifié", "translationKey": "NALES_EFFECT_PETRIFIED" },
+    { "id": "portail", "name": "Portail", "translationKey": "NALES_EFFECT_PORTAL" },
+    { "id": "affaibli", "name": "Affaibli", "translationKey": "NALES_EFFECT_WEAKENED" },
+    { "id": "sommeil", "name": "Sommeil", "translationKey": "NALES_EFFECT_SLEEPY" },
+    { "id": "endormi", "name": "Endormi", "translationKey": "NALES_EFFECT_ASLEEP" },
+    { "id": "isolation", "name": "Isolation", "translationKey": "NALES_EFFECT_ISOLATION" },
+    { "id": "protege", "name": "Protégé", "translationKey": "NALES_EFFECT_PROTECTED" },
+    { "id": "furtif", "name": "Furtif", "translationKey": "NALES_EFFECT_SNEAKY" },
+    { "id": "energie", "name": "Énergie", "translationKey": "NALES_EFFECT_ENERGIZED", "tutorial": "Votre pouvoir se charge plus vite, ou vous régénérez votre santé" },
+    { "id": "resilience", "name": "Résilience", "translationKey": "NALES_EFFECT_RESILIENCE" },
+    { "id": "cavale", "name": "Cavale", "translationKey": "NALES_EFFECT_ESCAPING" },
+    { "id": "transformation", "name": "Transformation !", "translationKey": "NALES_EFFECT_TRANSFORMATION" },
+    { "id": "mystique", "name": "Mystique", "translationKey": "NALES_EFFECT_MYSTIC" },
+    { "id": "banni", "name": "Banni", "translationKey": "NALES_EFFECT_BANISHED" },
+    { "id": "regeneration", "name": "Régénération", "translationKey": "NALES_EFFECT_RECUPERATING" },
+    { "id": "repulsion", "name": "Répulsion", "translationKey": "NALES_EFFECT_REPULSION" },
+    { "id": "brulure", "name": "Brûlure", "translationKey": "NALES_EFFECT_BURNING" },
+    { "id": "tenacite", "name": "Ténacité", "translationKey": "NALES_EFFECT_TENACITY" },
+    { "id": "paresse", "name": "Paresse", "translationKey": "NALES_EFFECT_HUBRIS" },
+    { "id": "guetteur", "name": "Guetteur", "translationKey": "NALES_EFFECT_SPOTTER" },
+    { "id": "purification", "name": "Purification", "translationKey": "NALES_EFFECT_PURIFIER_BURN" },
+    { "id": "detecte", "name": "Détecté !", "translationKey": "NALES_EFFECT_TRACKED" },
+    { "id": "silence", "name": "Silence !", "translationKey": "NALES_EFFECT_KIDNAPPER_SILENCE" },
+    { "id": "capture", "name": "Capturé", "translationKey": "NALES_EFFECT_CAPTURED" },
+    { "id": "cache", "name": "Caché", "translationKey": "NALES_EFFECT_HIDDEN" }
+  ],
+
+  "events": [
+    {
+      "id": "abondance",
+      "name": "Abondance",
+      "emoji": "🌾",
+      "description": "Davantage de récoltes, d'objets et d'accessoires.",
+      "translationKey": "NALES_EVENT_HARVEST"
+    },
+    {
+      "id": "hate",
+      "name": "Hâte",
+      "emoji": "⚡",
+      "description": "Tous les joueurs se déplacent plus rapidement.",
+      "translationKey": "NALES_EVENT_HASTE"
+    },
+    {
+      "id": "duplicite",
+      "name": "Duplicité",
+      "emoji": "🔧",
+      "description": "Les sabotages se font instantanément.",
+      "translationKey": "NALES_EVENT_DUPLICITY"
+    },
+    {
+      "id": "brouillard",
+      "name": "Brouillard",
+      "emoji": "🌫️",
+      "description": "Tous les joueurs sont camouflés en permanence. Les loups sont détectés de moins loin.",
+      "translationKey": "NALES_EVENT_FOG"
+    },
+    {
+      "id": "tempete-de-sorts",
+      "name": "Tempête de sorts",
+      "emoji": "🌩️",
+      "description": "Les joueurs subissent régulièrement des effets aléatoires.",
+      "translationKey": "NALES_EVENT_SPELLSTORM"
+    },
+    {
+      "id": "eclipse",
+      "name": "Éclipse",
+      "emoji": "🌑",
+      "description": "Les loups peuvent se transformer en journée mais sont un peu plus lents. Les humains ne peuvent pas descendre en-dessous de 35% de santé.",
+      "translationKey": "NALES_EVENT_ECLIPSE"
+    },
+    {
+      "id": "peste",
+      "name": "Peste",
+      "emoji": "☣️",
+      "description": "Les humains régénèrent leur santé mais en perdent rapidement quand ils sont proches les uns des autres.",
+      "translationKey": "NALES_EVENT_PLAGUE"
+    },
+    {
+      "id": "protection",
+      "name": "Protection",
+      "emoji": "🛡️",
+      "description": "La première fois qu'un joueur doit mourir, il survit et est téléporté.",
+      "translationKey": "NALES_EVENT_PROTECTION"
+    }
+  ],
+
+  "sabotages": [
+    {
+      "id": "puits-empoisonnes",
+      "name": "Puits empoisonnés",
+      "emoji": "🪣",
+      "description": "Les loups empoisonnent les puits et fontaines. Les villageois qui y boivent sont empoisonnés.",
+      "translationKey": "NALES_UI_SABOTAGE_WELL_POISON_MESSAGE",
+      "objects": ["Puits", "Fontaine"]
+    },
+    {
+      "id": "rituel-des-loups",
+      "name": "Rituel des loups",
+      "emoji": "🕯️",
+      "description": "Les loups préparent un rituel en utilisant des éléments du décor (bûches, pilier rituel, chaudron, pièce d'échecs, statue de loup, échiquier).",
+      "translationKey": "NALES_UI_SABOTAGE_RITUAL_MESSAGE",
+      "objects": ["Bûches", "Pilier rituel", "Chaudron", "Pièce d'échecs", "Statue de loup", "Échiquier"]
+    },
+    {
+      "id": "portails",
+      "name": "Portails améliorés",
+      "emoji": "🌀",
+      "description": "Les portails sont améliorés et réservés aux Loups.",
+      "translationKey": "NALES_UI_SABOTAGE_PORTALS_PORTAL_MESSAGE"
+    },
+    {
+      "id": "nuit-maudite",
+      "name": "Nuit maudite",
+      "emoji": "🌙",
+      "description": "Les loups invoquent une nuit maudite en utilisant un bulletin d'informations ou un livre de sorts.",
+      "translationKey": "NALES_UI_SABOTAGE_CURSED_NIGHT_MESSAGE",
+      "objects": ["Bulletin d'informations", "Livre de sorts"]
+    },
+    {
+      "id": "portes-automatiques",
+      "name": "Portes automatiques (Laboratoire)",
+      "emoji": "🚪",
+      "description": "Sabotage spécifique au Laboratoire. Les portes automatiques deviennent réservées aux loups.",
+      "translationKey": "NALES_UI_SABOTAGE_LABORATORY_AUTODOORS_MESSAGE",
+      "mapSpecific": "Laboratoire"
+    },
+    {
+      "id": "blackout",
+      "name": "Blackout (Laboratoire)",
+      "emoji": "💡",
+      "description": "Sabotage spécifique au Laboratoire. Les lumières s'éteignent sauf pour les loups.",
+      "translationKey": "NALES_UI_SABOTAGE_LABORATORY_BLACKOUT_MESSAGE",
+      "mapSpecific": "Laboratoire"
+    }
+  ],
+
+  "gameLogValueMappings": {
+    "_description": "Maps gameLog.json field values to their reference entries in this file. Used for programmatic lookups.",
+    "mainRoleInitialToCategory": {
+      "Villageois": { "category": "mainRoles", "id": "villageois" },
+      "Villageois Élite": { "category": "mainRoles", "id": "villageois-elite" },
+      "Loup": { "category": "mainRoles", "id": "loup" },
+      "Traître": { "category": "mainRoles", "id": "traitre" },
+      "Louveteau": { "category": "mainRoles", "id": "louveteau" },
+      "Idiot du Village": { "category": "mainRoles", "id": "idiot-du-village" },
+      "Agent": { "category": "mainRoles", "id": "agent" },
+      "Espion": { "category": "mainRoles", "id": "espion" },
+      "Scientifique": { "category": "mainRoles", "id": "scientifique" },
+      "Amoureux": { "category": "mainRoles", "id": "amoureux" },
+      "Amoureux Loup": { "category": "mainRoles", "id": "amoureux", "subRole": "amoureux-loup" },
+      "Amoureux Villageois": { "category": "mainRoles", "id": "amoureux", "subRole": "amoureux-villageois" },
+      "La Bête": { "category": "mainRoles", "id": "la-bete" },
+      "Mercenaire": { "category": "mainRoles", "id": "mercenaire" },
+      "Vaudou": { "category": "mainRoles", "id": "vaudou" },
+      "Kidnappeur": { "category": "mainRoles", "id": "kidnappeur" },
+      "Cultiste": { "category": "mainRoles", "id": "cultiste" },
+      "Chasseur": { "category": "elitePowers", "id": "chasseur", "_note": "Legacy MainRoleInitial, now a Villageois Élite power" },
+      "Alchimiste": { "category": "elitePowers", "id": "alchimiste", "_note": "Legacy MainRoleInitial, now a Villageois Élite power" }
+    },
+    "powerToCategory": {
+      "Chasseur": { "category": "elitePowers", "id": "chasseur" },
+      "Alchimiste": { "category": "elitePowers", "id": "alchimiste" },
+      "Guetteur": { "category": "elitePowers", "id": "guetteur" },
+      "Purificateur": { "category": "elitePowers", "id": "purificateur" },
+      "Nécromancien": { "category": "wolfPowers", "id": "necromancien" },
+      "Dupeur": { "category": "wolfPowers", "id": "dupeur" },
+      "Saboteur": { "category": "wolfPowers", "id": "saboteur" },
+      "Traqueur": { "category": "wolfPowers", "id": "traqueur" },
+      "Sorcier": { "category": "wolfPowers", "id": "sorcier" },
+      "Possesseur": { "category": "wolfPowers", "id": "possesseur" },
+      "Artificier": { "category": "wolfPowers", "id": "artificier" },
+      "Devin": { "category": "wolfPowers", "id": "devin" },
+      "Braconnier": { "category": "wolfPowers", "id": "braconnier" },
+      "Ritualiste": { "category": "wolfPowers", "id": "ritualiste" },
+      "Prédateur": { "category": "wolfPowers", "id": "predateur" },
+      "Sournois": { "category": "wolfPowers", "id": "sournois" },
+      "Paysan": { "category": "villagerPowers", "id": "paysan" },
+      "Exorciste": { "category": "villagerPowers", "id": "exorciste" },
+      "Médecin légiste": { "category": "villagerPowers", "id": "medecin-legiste" },
+      "Vengeur": { "category": "villagerPowers", "id": "vengeur" },
+      "Détective": { "category": "villagerPowers", "id": "detective" },
+      "Survivaliste": { "category": "villagerPowers", "id": "survivaliste" },
+      "Prêtre": { "category": "villagerPowers", "id": "pretre" },
+      "Invocateur": { "category": "villagerPowers", "id": "invocateur" },
+      "Éclaireur": { "category": "villagerPowers", "id": "eclaireur" },
+      "Magicien": { "category": "villagerPowers", "id": "magicien" },
+      "Mystique": { "category": "villagerPowers", "id": "mystique" },
+      "Ombre": { "category": "villagerPowers", "id": "ombre" },
+      "Ermite": { "category": "villagerPowers", "id": "ermite" },
+      "Avatar": { "category": "villagerPowers", "id": "avatar" },
+      "Ange gardien": { "category": "deadRoles", "id": "ange-gardien" },
+      "Inconnu": { "_note": "Unknown/unresolved power value in gameLog" }
+    },
+    "secondaryRoleToId": {
+      "Hurleur": "hurleur",
+      "Brasseur": "brasseur",
+      "Coureur": "coureur",
+      "Infecté": "infecte",
+      "Téléporteur": "teleporteur",
+      "Ingénieur": "ingenieur",
+      "Furtif": "furtif",
+      "Politicien": "politicien",
+      "Métabolique": "metabolique",
+      "Illusionniste": "illusionniste",
+      "Shérif": "sherif",
+      "Farceur": "farceur",
+      "Voyant": "voyant",
+      "Astral": "astral",
+      "Charognard": "charognard",
+      "Mage bleu": "mage-bleu",
+      "Acteur": "acteur",
+      "Scribe": "scribe",
+      "Carabinier": "carabinier",
+      "Faussaire": "faussaire",
+      "Imitateur": "imitateur",
+      "Marchand": "marchand",
+      "Bricoleur": "bricoleur",
+      "Télépathe": "telepathe",
+      "Inconnu": null
+    }
+  }
+}

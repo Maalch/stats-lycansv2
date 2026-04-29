@@ -1,0 +1,376 @@
+/* ============================================
+   Game Reference Page Styles
+   ============================================ */
+
+.game-reference-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+/* ============================================
+   Search bar
+   ============================================ */
+.ref-search-container {
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ref-search-input {
+  width: 100%;
+  padding: 0.6rem 2.5rem 0.6rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.ref-search-input:focus {
+  border-color: var(--accent-primary);
+}
+
+.ref-search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.ref-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem 0.4rem;
+  line-height: 1;
+}
+
+.ref-search-clear:hover {
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Category badge when searching (empty state)
+   ============================================ */
+.ref-cat-empty {
+  opacity: 0.4;
+}
+
+.ref-cat-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--accent-primary);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+/* ============================================
+   Content area
+   ============================================ */
+.ref-content {
+  padding: 0.5rem 0;
+}
+
+.ref-section {
+  margin-bottom: 1.5rem;
+}
+
+.ref-section__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.3rem 0;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ref-section__subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.8rem 0;
+  font-style: italic;
+}
+
+/* ============================================
+   Card grid
+   ============================================ */
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+.ref-grid--camps {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+.ref-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ref-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 2px 8px rgba(72, 83, 168, 0.15);
+}
+
+.ref-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.ref-card__emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.ref-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.ref-card__badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.ref-card__description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.4rem 0;
+  line-height: 1.4;
+}
+
+.ref-card__detail {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0.3rem 0;
+  line-height: 1.4;
+}
+
+.ref-card__detail--tinkerer {
+  background: var(--bg-tertiary);
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+.ref-card__label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 0.3rem;
+}
+
+/* Sub-role tags */
+.ref-card__subroles,
+.ref-card__subtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.ref-card__subrole-tag {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Variants (secondary roles with villager/wolf descriptions) */
+.ref-card__variants {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ref-card__variant {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+
+.ref-card__variant-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 0.3rem;
+}
+
+/* Camp color accents */
+.ref-card--loup {
+  border-left: 3px solid #e74c3c;
+}
+
+.ref-card--villageois,
+.ref-card--villager {
+  border-left: 3px solid #3498db;
+}
+
+.ref-card--solo {
+  border-left: 3px solid #9b59b6;
+}
+
+.ref-card--wolf {
+  border-left: 3px solid #e74c3c;
+}
+
+.ref-card--elite {
+  border-left: 3px solid #f39c12;
+}
+
+.ref-card--secondary {
+  border-left: 3px solid #1abc9c;
+}
+
+.ref-card--dead {
+  border-left: 3px solid #7f8c8d;
+}
+
+.ref-card--accessory {
+  border-left: 3px solid #e67e22;
+}
+
+.ref-card--gadget {
+  border-left: 3px solid #2ecc71;
+}
+
+.ref-card--event {
+  border-left: 3px solid #f1c40f;
+}
+
+.ref-card--sabotage {
+  border-left: 3px solid #e74c3c;
+}
+
+/* ============================================
+   Effects grid (compact tags instead of cards)
+   ============================================ */
+.ref-effects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.ref-effect-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: border-color 0.2s;
+  position: relative;
+  cursor: default;
+}
+
+.ref-effect-tag:hover {
+  border-color: var(--accent-primary);
+}
+
+.ref-effect-tag__name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.ref-effect-tag__type {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ref-effect--positive .ref-effect-tag__type {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+}
+
+.ref-effect--negative .ref-effect-tag__type {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+}
+
+.ref-effect--neutral .ref-effect-tag__type {
+  background: rgba(149, 165, 166, 0.15);
+  color: #95a5a6;
+}
+
+.ref-effect-tag__tutorial {
+  display: none;
+}
+
+.ref-effect-tag:hover .ref-effect-tag__tutorial {
+  display: block;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  max-width: 300px;
+  white-space: normal;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 600px) {
+  .ref-grid {
+    grid-template-columns: 1fr;
+  }
+  .ref-grid--camps {
+    grid-template-columns: 1fr;
+  }
+  .ref-search-container {
+    max-width: 100%;
+  }
+}

@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.8.12';
+export const APP_VERSION = '1.9.1';
 
 // Changelog data
 export interface ChangelogEntry {
@@ -14,6 +14,15 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: 'v1.9.1',
+    date: '29/04/2026',
+    description: 'Ajout d\'une page "Règles du Jeu" : référentiel complet des mécaniques de jeu (camps, rôles, pouvoirs, accessoires, gadgets, effets, événements et sabotages) avec recherche et navigation par catégorie dans',
+    link: {
+      mainTab: 'gameReference',
+      text: 'Règles du Jeu'
+    }
+  },
   {
     version: 'v1.8.12',
     date: '29/04/2026',
