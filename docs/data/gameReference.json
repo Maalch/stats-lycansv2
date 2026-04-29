@@ -30,7 +30,7 @@
       "emoji": "🎭",
       "description": "Les rôles solo ont chacun leur propre condition de victoire, indépendante des Villageois et des Loups. Ils jouent pour eux-mêmes.",
       "winCondition": "Variable selon le rôle.",
-      "roles": ["Idiot du Village", "Agent", "Espion", "Scientifique", "Amoureux", "La Bête", "Mercenaire", "Vaudou", "Kidnappeur", "Cultiste", "Contrebandier", "Chasseur de primes", "Cannibale"]
+      "roles": ["Idiot du Village", "Agent", "Espion", "Scientifique", "Amoureux", "La Bête", "Mercenaire", "Vaudou", "Kidnappeur", "Cultiste"]
     }
   ],
 
@@ -50,7 +50,7 @@
       "camp": "villageois",
       "emoji": "⭐",
       "type": "elite",
-      "description": "Villageois puissant qui reçoit un pouvoir d'élite (Chasseur, Alchimiste, Protecteur, Disciple, Guetteur, Purificateur). Doit utiliser une balle pour charger son pouvoir.",
+      "description": "Villageois puissant qui reçoit un pouvoir d'élite (Chasseur, Alchimiste, Guetteur, Purificateur). Doit utiliser une balle pour charger son pouvoir.",
       "descriptionShort": "Villageois puissant"
     },
     {
@@ -190,33 +190,6 @@
       "description": "Place des crânes (que les autres joueurs peuvent détruire) qui chargent lentement son objectif. À 100% après un meeting, une phase de chasse commence : des esprits sont relâchés qui peuvent capturer des joueurs. Le Cultiste peut aussi les capturer directement.",
       "descriptionShort": "Gagne en cachant des crânes puis en capturant des joueurs",
       "translationKey": "NALES_ROLE_DESCRIPTION_CULTIST"
-    },
-    {
-      "id": "contrebandier",
-      "name": "Contrebandier",
-      "camp": "solo",
-      "emoji": "📦",
-      "type": "solo",
-      "description": "Gagne en récoltant beaucoup puis en survivant une journée. Rôle plus ancien, moins documenté dans les traductions actuelles.",
-      "descriptionShort": "Gagne en récoltant beaucoup puis en survivant une journée"
-    },
-    {
-      "id": "chasseur-de-primes",
-      "name": "Chasseur de primes",
-      "camp": "solo",
-      "emoji": "🎯",
-      "type": "solo",
-      "description": "Gagne en éliminant les cibles désignées. Possède un fusil. Rôle antérieur au Mercenaire.",
-      "descriptionShort": "Gagne en éliminant les cibles désignées, possède un fusil"
-    },
-    {
-      "id": "cannibale",
-      "name": "Cannibale",
-      "camp": "solo",
-      "emoji": "🍖",
-      "type": "solo",
-      "description": "Rôle solo rare avec des objectifs spécifiques de victoire. Peu documenté.",
-      "descriptionShort": "Rôle solo rare avec des objectifs spécifiques de victoire"
     }
   ],
 
@@ -316,27 +289,6 @@
       "description": "Le jour, peut déplacer sa balise invisible. La détransformation le téléporte à la balise, le rend invisible, rapide et silencieux, et l'effet de peur continue là où il a disparu. La nuit, peut choisir de se transformer lentement mais silencieusement.",
       "descriptionShort": "Sa détransformation le téléporte à sa balise. Peut choisir de se transformer lentement mais silencieusement",
       "translationKey": "NALES_ROLE_DESCRIPTION_SNEAK"
-    },
-    {
-      "id": "metamorphe",
-      "name": "Métamorphe",
-      "emoji": "🔄",
-      "description": "Pouvoir de loup permettant de changer d'apparence. Peu documenté dans les traductions actuelles.",
-      "descriptionShort": "Peut changer d'apparence"
-    },
-    {
-      "id": "enrage",
-      "name": "Enragé",
-      "emoji": "😡",
-      "description": "Pouvoir de loup conférant une puissance accrue. Peu documenté dans les traductions actuelles.",
-      "descriptionShort": "Loup plus puissant"
-    },
-    {
-      "id": "isolateur",
-      "name": "Isolateur",
-      "emoji": "🔇",
-      "description": "Pouvoir de loup permettant d'isoler des joueurs. Peu documenté dans les traductions actuelles.",
-      "descriptionShort": "Peut isoler des joueurs"
     }
   ],
 
@@ -446,32 +398,12 @@
       "translationKey": "NALES_ROLE_DESCRIPTION_HERMIT"
     },
     {
-      "id": "garde",
-      "name": "Garde",
-      "emoji": "🛡️",
-      "description": "Pouvoir de villageois défensif. Peu documenté dans les traductions actuelles.",
-      "descriptionShort": "Pouvoir défensif de villageois"
-    },
-    {
-      "id": "reparateur",
-      "name": "Réparateur",
-      "emoji": "🔧",
-      "description": "Pouvoir de villageois utilitaire. Peu documenté dans les traductions actuelles.",
-      "descriptionShort": "Pouvoir utilitaire de villageois"
-    },
-    {
-      "id": "enqueteur",
-      "name": "Enquêteur",
-      "emoji": "🔎",
-      "description": "Pouvoir de villageois d'investigation. Probablement une variante ou un ancien nom du Détective.",
-      "descriptionShort": "Pouvoir d'investigation de villageois"
-    },
-    {
-      "id": "mentaliste",
-      "name": "Mentaliste",
-      "emoji": "🧠",
-      "description": "Pouvoir de villageois. Probablement une variante ou un ancien nom du Détective.",
-      "descriptionShort": "Pouvoir mental de villageois"
+      "id": "avatar",
+      "name": "Avatar",
+      "emoji": "✨",
+      "description": "Voit les loups transformés proches sur la minimap, a une protection de Prêtre qui dure jusqu'à une attaque, sa santé diminue plus lentement, et peut créer un objet aléatoire. Si l'Avatar meurt, la nuit actuelle est prolongée et son tueur devient plus puissant !",
+      "descriptionShort": "A plusieurs avantages, mais renforce les loups s'il meurt",
+      "translationKey": "NALES_ROLE_DESCRIPTION_AVATAR"
     }
   ],
 
@@ -493,22 +425,6 @@
       "translationKey": "NALES_ROLE_DESCRIPTION_ALCHEMIST"
     },
     {
-      "id": "protecteur",
-      "name": "Protecteur",
-      "emoji": "🛡️",
-      "description": "Villageois Élite qui peut protéger d'autres joueurs (ou lui-même) contre les attaques de loups. Les cibles protégées se déplacent aussi beaucoup plus vite. 2 secondes de cast, dure 20 secondes. Peut se protéger lui-même une fois dans la partie.",
-      "descriptionShort": "Peut se protéger et accélérer lui-même et d'autres joueurs",
-      "translationKey": "NALES_ROLE_DESCRIPTION_PROTECTOR"
-    },
-    {
-      "id": "disciple",
-      "name": "Disciple",
-      "emoji": "🌟",
-      "description": "Villageois Élite qui peut placer une balise. S'il est attaqué par un loup avec au moins 100% de charge, il est téléporté en sécurité à sa balise et le loup est étourdi. Tant qu'actif, les loups transformés le voient comme un joueur différent.",
-      "descriptionShort": "Résiste à des attaques de loup, peut les berner pour créer une distraction",
-      "translationKey": "NALES_ROLE_DESCRIPTION_DISCIPLE"
-    },
-    {
       "id": "guetteur",
       "name": "Guetteur",
       "emoji": "👁️",
@@ -523,14 +439,6 @@
       "description": "Villageois Élite qui peut lancer une bouteille incendiaire spéciale (flamme verte) qui brûle les loups transformés mais soigne et accélère les humains. Si un loup transformé le tue, il prend feu. Commence chaque jour avec une bouteille incendiaire.",
       "descriptionShort": "Reçoit des bouteilles incendiaires et peut lancer des bouteilles incendiaires spéciales",
       "translationKey": "NALES_ROLE_DESCRIPTION_PURIFIER"
-    },
-    {
-      "id": "avatar",
-      "name": "Avatar",
-      "emoji": "✨",
-      "description": "Villageois Élite qui voit les loups transformés proches sur la minimap, a une protection de Prêtre qui dure jusqu'à une attaque, sa santé diminue plus lentement, et peut créer un objet aléatoire. Si l'Avatar meurt, la nuit actuelle est prolongée et son tueur devient plus puissant !",
-      "descriptionShort": "A plusieurs avantages, mais renforce les loups s'il meurt",
-      "translationKey": "NALES_ROLE_DESCRIPTION_AVATAR"
     }
   ],
 
@@ -751,27 +659,6 @@
       "descriptionVillager": "Peut communiquer avec l'autre Télépathe, qui est forcément un allié",
       "descriptionWolf": "Peut communiquer avec l'autre Télépathe, qui est forcément un allié",
       "translationKey": "NALES_ROLE_DESCRIPTION_TELEPATH"
-    },
-    {
-      "id": "pisteur",
-      "name": "Pisteur",
-      "emoji": "🐾",
-      "description": "Rôle secondaire de pistage. Apparaît dans les données de jeu. Peu documenté dans les traductions actuelles.",
-      "descriptionShort": "Rôle secondaire de pistage"
-    },
-    {
-      "id": "detective-secondaire",
-      "name": "Détective",
-      "emoji": "🔍",
-      "description": "Rôle secondaire d'investigation. Apparaît dans les données de jeu. Peut correspondre à l'Enquêteur.",
-      "descriptionShort": "Rôle secondaire d'investigation"
-    },
-    {
-      "id": "magicien-secondaire",
-      "name": "Magicien",
-      "emoji": "🪄",
-      "description": "Apparaît comme rôle secondaire dans quelques parties. Peut correspondre à une version antérieure.",
-      "descriptionShort": "Rôle secondaire ancien ou variante"
     }
   ],
 
@@ -1188,20 +1075,14 @@
       "Vaudou": { "category": "mainRoles", "id": "vaudou" },
       "Kidnappeur": { "category": "mainRoles", "id": "kidnappeur" },
       "Cultiste": { "category": "mainRoles", "id": "cultiste" },
-      "Contrebandier": { "category": "mainRoles", "id": "contrebandier" },
-      "Chasseur de primes": { "category": "mainRoles", "id": "chasseur-de-primes" },
-      "Cannibale": { "category": "mainRoles", "id": "cannibale" },
       "Chasseur": { "category": "elitePowers", "id": "chasseur", "_note": "Legacy MainRoleInitial, now a Villageois Élite power" },
       "Alchimiste": { "category": "elitePowers", "id": "alchimiste", "_note": "Legacy MainRoleInitial, now a Villageois Élite power" }
     },
     "powerToCategory": {
       "Chasseur": { "category": "elitePowers", "id": "chasseur" },
       "Alchimiste": { "category": "elitePowers", "id": "alchimiste" },
-      "Protecteur": { "category": "elitePowers", "id": "protecteur" },
-      "Disciple": { "category": "elitePowers", "id": "disciple" },
       "Guetteur": { "category": "elitePowers", "id": "guetteur" },
       "Purificateur": { "category": "elitePowers", "id": "purificateur" },
-      "Avatar": { "category": "elitePowers", "id": "avatar" },
       "Nécromancien": { "category": "wolfPowers", "id": "necromancien" },
       "Dupeur": { "category": "wolfPowers", "id": "dupeur" },
       "Saboteur": { "category": "wolfPowers", "id": "saboteur" },
@@ -1214,9 +1095,6 @@
       "Ritualiste": { "category": "wolfPowers", "id": "ritualiste" },
       "Prédateur": { "category": "wolfPowers", "id": "predateur" },
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
-      "Métamorphe": { "category": "wolfPowers", "id": "metamorphe" },
-      "Enragé": { "category": "wolfPowers", "id": "enrage" },
-      "Isolateur": { "category": "wolfPowers", "id": "isolateur" },
       "Paysan": { "category": "villagerPowers", "id": "paysan" },
       "Exorciste": { "category": "villagerPowers", "id": "exorciste" },
       "Médecin légiste": { "category": "villagerPowers", "id": "medecin-legiste" },
@@ -1230,10 +1108,7 @@
       "Mystique": { "category": "villagerPowers", "id": "mystique" },
       "Ombre": { "category": "villagerPowers", "id": "ombre" },
       "Ermite": { "category": "villagerPowers", "id": "ermite" },
-      "Garde": { "category": "villagerPowers", "id": "garde" },
-      "Réparateur": { "category": "villagerPowers", "id": "reparateur" },
-      "Enquêteur": { "category": "villagerPowers", "id": "enqueteur" },
-      "Mentaliste": { "category": "villagerPowers", "id": "mentaliste" },
+      "Avatar": { "category": "villagerPowers", "id": "avatar" },
       "Ange gardien": { "category": "deadRoles", "id": "ange-gardien" },
       "Inconnu": { "_note": "Unknown/unresolved power value in gameLog" }
     },
@@ -1262,9 +1137,6 @@
       "Marchand": "marchand",
       "Bricoleur": "bricoleur",
       "Télépathe": "telepathe",
-      "Pisteur": "pisteur",
-      "Détective": "detective-secondaire",
-      "Magicien": "magicien-secondaire",
       "Inconnu": null
     }
   }
