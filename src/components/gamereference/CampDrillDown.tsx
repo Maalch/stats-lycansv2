@@ -9,15 +9,6 @@ import type {
 import { RelatedItemsChips } from './RelatedItemsChips';
 
 // ============================================
-// Solo role thematic groups
-// ============================================
-const SOLO_GROUPS = [
-  { key: 'combat', label: '⚔️ Combat', roleIds: ['agent', 'mercenaire', 'la-bete'] },
-  { key: 'information', label: '🔎 Information', roleIds: ['espion', 'scientifique'] },
-  { key: 'social', label: '🎭 Social', roleIds: ['amoureux', 'vaudou', 'kidnappeur', 'cultiste', 'idiot-du-village'] },
-] as const;
-
-// ============================================
 // Props
 // ============================================
 interface CampDrillDownProps {
@@ -36,7 +27,7 @@ interface CampDrillDownProps {
 // ============================================
 type VillageoisFilter = 'all' | 'roles' | 'metiers' | 'elite';
 type LoupFilter = 'all' | 'roles' | 'pouvoirs';
-type SoloFilter = 'all' | 'combat' | 'information' | 'social';
+
 
 // ============================================
 // Expandable role card
@@ -421,60 +412,21 @@ function LoupDrillDown({
 // Camp Drill-Down: Solo
 // ============================================
 function SoloDrillDown({ mainRoles }: { mainRoles: MainRoleEntry[] }) {
-  const [filter, setFilter] = useState<SoloFilter>('all');
-
   const soloRoles = mainRoles.filter(r => r.camp === 'solo');
-
-  const getGroupRoles = (groupKey: string) => {
-    const group = SOLO_GROUPS.find(g => g.key === groupKey);
-    if (!group) return [];
-    return group.roleIds
-      .map(id => soloRoles.find(r => r.id === id))
-      .filter((r): r is MainRoleEntry => !!r);
-  };
-
-  const filteredGroups = filter === 'all'
-    ? SOLO_GROUPS.map(g => ({ ...g, roles: getGroupRoles(g.key) }))
-    : SOLO_GROUPS
-      .filter(g => g.key === filter)
-      .map(g => ({ ...g, roles: getGroupRoles(g.key) }));
 
   return (
     <div className="ref-drilldown ref-drilldown--solo">
-      {/* Sub-filter pills */}
-      <div className="lycans-categories-selection ref-subfilter">
-        {([
-          ['all', `Tous (${soloRoles.length})`],
-          ['combat', `⚔️ Combat (${getGroupRoles('combat').length})`],
-          ['information', `🔎 Information (${getGroupRoles('information').length})`],
-          ['social', `🎭 Social (${getGroupRoles('social').length})`],
-        ] as [SoloFilter, string][]).map(([key, label]) => (
-          <button
-            key={key}
-            className={`lycans-categorie-btn${filter === key ? ' active' : ''}`}
-            onClick={() => setFilter(key)}
-            type="button"
-          >
-            {label}
-          </button>
-        ))}
+      <div className="ref-section">
+        <h3 className="ref-section__title">
+          <span>Rôles Solo</span>
+          <span className="ref-section__count">{soloRoles.length}</span>
+        </h3>
+        <div className="ref-grid ref-grid--solo">
+          {soloRoles.map(role => (
+            <SoloRoleCard key={role.id} role={role} />
+          ))}
+        </div>
       </div>
-
-      {filteredGroups.map(group => (
-        group.roles.length > 0 && (
-          <div key={group.key} className="ref-section">
-            <h3 className="ref-section__title">
-              <span>{group.label}</span>
-              <span className="ref-section__count">{group.roles.length}</span>
-            </h3>
-            <div className="ref-grid ref-grid--solo">
-              {group.roles.map(role => (
-                <SoloRoleCard key={role.id} role={role} />
-              ))}
-            </div>
-          </div>
-        )
-      ))}
     </div>
   );
 }
