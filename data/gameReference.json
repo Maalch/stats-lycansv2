@@ -1019,6 +1019,126 @@
     }
   ],
 
+  "gameRules": [
+    {
+      "id": "game-loop",
+      "name": "Déroulement d'une partie",
+      "emoji": "📅",
+      "description": "Lycans est un jeu de type « Mensonges et trahisons » en FPS jusqu'à 15 joueurs, avec son spatialisé. Chaque journée se découpe en 3 phases : jour, nuit, puis conseil (vote).",
+      "details": [
+        "Les joueurs sont répartis aléatoirement entre plusieurs camps au début de la partie (ou via un système de draft optionnel).",
+        "Pendant le jour, les joueurs explorent, récoltent et communiquent librement.",
+        "Pendant la nuit, les Loups peuvent se transformer et tuer des Villageois.",
+        "À la fin de chaque nuit, un conseil réunit tous les joueurs survivants pour voter l'élimination d'un suspect.",
+        "Quand un joueur est éliminé, il passe en mode spectateur jusqu'à la fin de la partie."
+      ]
+    },
+    {
+      "id": "victory-conditions",
+      "name": "Conditions de victoire",
+      "emoji": "🏆",
+      "description": "Plusieurs conditions peuvent mettre fin à la partie. Chaque camp a son propre objectif.",
+      "details": [
+        "Victoire Villageois : éliminer tous les Loups (y compris Traîtres et Louveteaux).",
+        "Victoire Villageois : atteindre 100 % de l'objectif de Récolte (la partie se termine au prochain conseil).",
+        "Victoire Loups : être au moins aussi nombreux que les Villageois lors d'un conseil.",
+        "Victoire Loups : éliminer tous les Villageois.",
+        "Les rôles Solo ont chacun leur propre condition de victoire indépendante."
+      ]
+    },
+    {
+      "id": "hunger-health",
+      "name": "Faim & Santé",
+      "emoji": "🍖",
+      "description": "Chaque joueur possède une barre de faim qui diminue avec le temps. Si elle atteint zéro, le joueur meurt.",
+      "details": [
+        "De la nourriture est répartie sur la carte et permet de remonter la barre.",
+        "Courir fait diminuer la barre de faim plus rapidement.",
+        "Les Loups en forme humaine ne perdent pas de faim, mais en perdent lentement sous forme de loup.",
+        "Certaines actions (balles de Chasseur, pièges) font baisser la faim des Loups transformés.",
+        "Tuer un Villageois en tant que Loup remplit la barre de faim à 100 %."
+      ]
+    },
+    {
+      "id": "maps-communication",
+      "name": "Cartes & Communication",
+      "emoji": "🗺️",
+      "description": "Le jeu se déroule sur différentes cartes avec un système de communication audio spatialisé.",
+      "details": [
+        "Cartes officielles : Village 🏘️ et Château 🏰.",
+        "Cartes supplémentaires introduites par le mod.",
+        "Audio spatial : on ne peut entendre et parler qu'aux joueurs proches de soi.",
+        "La communication est libre pendant le jour et la nuit (pas de silence imposé).",
+        "Pendant les conseils, tous les joueurs présents peuvent se parler sans restriction de distance."
+      ]
+    },
+    {
+      "id": "meetings-voting",
+      "name": "Meetings & Vote",
+      "emoji": "🗳️",
+      "description": "À la fin de chaque nuit, un conseil rassemble tous les survivants pour voter l'élimination d'un joueur.",
+      "details": [
+        "Trois options de vote : voter contre un joueur, passer (ne vouloir éliminer personne), ou s'abstenir.",
+        "Le joueur avec le plus de votes est éliminé immédiatement.",
+        "En cas d'égalité entre deux joueurs, ou entre un joueur et les votes « passer », personne n'est éliminé.",
+        "Un Maire est désigné aléatoirement à chaque conseil ; il peut faire taire un joueur ou donner la parole exclusivement à un joueur.",
+        "Chaque joueur peut voir les votes des autres joueurs en temps réel."
+      ]
+    },
+    {
+      "id": "draft-system",
+      "name": "Système de Draft",
+      "emoji": "🎯",
+      "description": "Option activable avant la partie permettant aux joueurs de choisir leurs préférences de rôle.",
+      "details": [
+        "Chaque joueur choisit parmi les rôles disponibles selon le camp qui lui est attribué.",
+        "Si assigné aux Villageois : choix parmi les rôles Villageois disponibles.",
+        "Si assigné aux Loups : choix parmi les rôles/pouvoirs de Loup disponibles.",
+        "Les rôles solo peuvent aussi être proposés si disponibles.",
+        "Le système permet une répartition plus stratégique mais reste optionnel."
+      ]
+    },
+    {
+      "id": "items-overview",
+      "name": "Objets & Inventaire",
+      "emoji": "🎒",
+      "description": "Les joueurs trouvent et utilisent divers objets pendant la partie. Chaque joueur ne peut porter qu'un seul objet à la fois.",
+      "details": [
+        "Potions : l'effet s'applique au joueur qui la boit. Les effets des différentes couleurs des potions sont aléatoires à chaque partie.",
+        "Parchemins : même effet que les potions, mais utilisable uniquement sur un autre joueur (pas sur soi).",
+        "Gadgets : objets actifs (pièges, fumigènes, grenades, diamants, etc.) utilisables stratégiquement.",
+        "Accessoires : équipements passifs qui confèrent un bonus permanent tant qu'ils sont portés.",
+        "Les potions ne peuvent pas être bues sous forme de Loup."
+      ]
+    },
+    {
+      "id": "wolf-transformation",
+      "name": "Transformation",
+      "emoji": "🌙",
+      "campSpecific": "loup",
+      "description": "Les Loups peuvent se transformer entre forme humaine et forme de loup pendant la nuit.",
+      "details": [
+        "La transformation n'est possible que la nuit.",
+        "Un Loup peut se transformer une fois par nuit (de humain à loup).",
+        "Il peut rester transformé toute la nuit ou revenir en forme humaine à tout moment.",
+        "La transformation prend 3 secondes et émet un son distinctif audible par les joueurs proches.",
+        "Une fois retransformé en humain, le Loup ne peut plus se retransformer jusqu'à la nuit suivante."
+      ]
+    },
+    {
+      "id": "sabotage-system",
+      "name": "Sabotage",
+      "emoji": "💀",
+      "campSpecific": "loup",
+      "description": "Les Loups peuvent saboter différents éléments de la carte pour gêner les Villageois.",
+      "details": [
+        "Sabotage de puits (Village) : affecte tous les joueurs la nuit suivante — santé diminue plus vite et léger ralentissement.",
+        "Sabotage de portails : empêche les Villageois d'utiliser les portails pour se déplacer rapidement.",
+        "Rituels : les Loups peuvent effectuer des rituels à certains emplacements pour obtenir un bonus de vitesse."
+      ]
+    }
+  ],
+
   "gameLogValueMappings": {
     "_description": "Maps gameLog.json field values to their reference entries in this file. Used for programmatic lookups.",
     "mainRoleInitialToCategory": {

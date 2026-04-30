@@ -11,6 +11,7 @@ import type {
   PotionEffectEntry,
   StatusEffectEntry,
   EventEntry,
+  GameRuleEntry,
 } from '../../hooks/useGameReference';
 import { CampHubTile } from './CampHubTile';
 import { CampDrillDown } from './CampDrillDown';
@@ -26,6 +27,7 @@ type ViewMode = 'hierarchical' | 'flat';
 // Category definitions for flat view sub-navigation
 // ============================================
 const CATEGORIES = [
+  { key: 'gameRules', label: 'Règles du Jeu', icon: '📜' },
   { key: 'camps', label: 'Camps & Rôles', icon: '🏘️' },
   { key: 'wolfPowers', label: 'Pouvoirs de Loup', icon: '🐺' },
   { key: 'villagerPowers', label: 'Pouvoirs de Villageois', icon: '👤' },
@@ -69,6 +71,7 @@ type FilteredReferenceData = {
   potionEffects: PotionEffectEntry[];
   statusEffects: StatusEffectEntry[];
   events: EventEntry[];
+  gameRules: GameRuleEntry[];
   counts: CategoryCounts;
   totalMatches: number;
 };
@@ -260,6 +263,25 @@ function EventCard({ event }: { event: EventEntry }) {
   );
 }
 
+function GameRuleCard({ rule }: { rule: GameRuleEntry }) {
+  return (
+    <div className="ref-card ref-card--rule">
+      <div className="ref-card__header">
+        <span className="ref-card__emoji">{rule.emoji}</span>
+        <h3 className="ref-card__title">{rule.name}</h3>
+      </div>
+      <p className="ref-card__description">{rule.description}</p>
+      {rule.details.length > 0 && (
+        <ul className="ref-card__details">
+          {rule.details.map((detail, i) => (
+            <li key={i} className="ref-card__detail-item">{detail}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function SectionTitle({ title, count }: { title: string; count: number }) {
   return (
     <h2 className="ref-section__title">
@@ -383,7 +405,12 @@ export function GameReferencePage() {
       matchesSearch(searchTerms, e.name, e.description)
     );
 
+    const gameRules = (data.gameRules || []).filter(r =>
+      matchesSearch(searchTerms, r.name, r.description, r.details.join(' '))
+    );
+
     const counts: CategoryCounts = {
+      gameRules: gameRules.length,
       camps: camps.length + mainRoles.length,
       wolfPowers: wolfPowers.length,
       villagerPowers: villagerPowers.length,
@@ -411,6 +438,7 @@ export function GameReferencePage() {
       potionEffects,
       statusEffects,
       events,
+      gameRules,
       counts,
       totalMatches,
     };
@@ -422,6 +450,8 @@ export function GameReferencePage() {
   if (!filteredData) return <div>Aucune donnée disponible</div>;
 
   const hasActiveSearch = searchTerms.length > 0;
+
+  const genericRules = filteredData.gameRules.filter(r => !r.campSpecific);
 
   const searchSummary = hasActiveSearch
     ? `${filteredData.totalMatches} résultat${filteredData.totalMatches > 1 ? 's' : ''} pour "${searchTerm.trim()}".`
@@ -450,6 +480,7 @@ export function GameReferencePage() {
             elitePowers={filteredData.elitePowers}
             secondaryRoles={filteredData.secondaryRoles}
             deadRoles={filteredData.deadRoles}
+            gameRules={filteredData.gameRules.filter(r => r.campSpecific === currentCampRaw.id)}
             searchTerms={searchTerms}
           />
         </div>
@@ -473,6 +504,20 @@ export function GameReferencePage() {
     // Overview: camp hub + item category buttons
     return (
       <div className="ref-overview">
+        {/* Game Rules intro section */}
+        {genericRules.length > 0 && (
+          <div className="ref-section">
+            <h2 className="ref-section__title">
+              <span>📜 Règles du Jeu</span>
+              <span className="ref-section__count">{genericRules.length}</span>
+            </h2>
+            <p className="ref-section__subtitle">Mécaniques générales et fonctionnement d'une partie de Lycans.</p>
+            <div className="ref-grid">
+              {genericRules.map(rule => <GameRuleCard key={rule.id} rule={rule} />)}
+            </div>
+          </div>
+        )}
+
         {/* Camp hub tiles */}
         <div className="ref-section">
           <h2 className="ref-section__title">
@@ -669,6 +714,19 @@ export function GameReferencePage() {
 
   const renderCategoryContent = () => {
     switch (selectedCategory) {
+      case 'gameRules': {
+        const filtered = filteredData.gameRules;
+        return (
+          <div className="ref-section">
+            <SectionTitle title="Règles du Jeu 📜" count={filtered.length} />
+            <p className="ref-section__subtitle">Mécaniques générales et fonctionnement d'une partie de Lycans.</p>
+            <div className="ref-grid">
+              {filtered.map(r => <GameRuleCard key={r.id} rule={r} />)}
+            </div>
+          </div>
+        );
+      }
+
       case 'camps': {
         const filteredCamps = filteredData.camps;
         const filteredRoles = filteredData.mainRoles;

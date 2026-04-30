@@ -115,6 +115,15 @@ export interface EventEntry {
   translationKey?: string;
 }
 
+export interface GameRuleEntry {
+  id: string;
+  name: string;
+  emoji: string;
+  description: string;
+  details: string[];
+  campSpecific?: string;
+}
+
 export interface GameReferenceData {
   _meta: GameReferenceMeta;
   camps: CampEntry[];
@@ -129,6 +138,7 @@ export interface GameReferenceData {
   potionEffects: PotionEffectEntry[];
   statusEffects: StatusEffectEntry[];
   events: EventEntry[];
+  gameRules: GameRuleEntry[];
 }
 
 /**

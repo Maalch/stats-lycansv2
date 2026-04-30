@@ -5,6 +5,7 @@ import type {
   PowerEntry,
   SecondaryRoleEntry,
   DeadRoleEntry,
+  GameRuleEntry,
 } from '../../hooks/useGameReference';
 import { RelatedItemsChips } from './RelatedItemsChips';
 
@@ -19,6 +20,7 @@ interface CampDrillDownProps {
   elitePowers: PowerEntry[];
   secondaryRoles: SecondaryRoleEntry[];
   deadRoles: DeadRoleEntry[];
+  gameRules: GameRuleEntry[];
   searchTerms: string[];
 }
 
@@ -268,12 +270,13 @@ function VillageoisDrillDown({
 // Camp Drill-Down: Loups
 // ============================================
 function LoupDrillDown({
-  mainRoles, wolfPowers, secondaryRoles, deadRoles
+  mainRoles, wolfPowers, secondaryRoles, deadRoles, gameRules
 }: {
   mainRoles: MainRoleEntry[];
   wolfPowers: PowerEntry[];
   secondaryRoles: SecondaryRoleEntry[];
   deadRoles: DeadRoleEntry[];
+  gameRules: GameRuleEntry[];
 }) {
   const [filter, setFilter] = useState<LoupFilter>('all');
 
@@ -285,6 +288,34 @@ function LoupDrillDown({
 
   return (
     <div className="ref-drilldown ref-drilldown--loup">
+      {/* Camp-specific mechanics */}
+      {gameRules.length > 0 && (
+        <div className="ref-section">
+          <h3 className="ref-section__title">
+            <span>Mécaniques de Loup</span>
+            <span className="ref-section__count">{gameRules.length}</span>
+          </h3>
+          <div className="ref-grid">
+            {gameRules.map(rule => (
+              <div key={rule.id} className="ref-card ref-card--rule ref-card--loup">
+                <div className="ref-card__header">
+                  <span className="ref-card__emoji">{rule.emoji}</span>
+                  <h3 className="ref-card__title">{rule.name}</h3>
+                </div>
+                <p className="ref-card__description">{rule.description}</p>
+                {rule.details.length > 0 && (
+                  <ul className="ref-card__details">
+                    {rule.details.map((detail, i) => (
+                      <li key={i} className="ref-card__detail-item">{detail}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Role hierarchy visual */}
       <div className="ref-hierarchy">
         <div className="ref-hierarchy__node ref-hierarchy__node--root">🐺 Camp Loups</div>
@@ -473,7 +504,7 @@ function SoloRoleCard({ role }: { role: MainRoleEntry }) {
 // ============================================
 // Main export
 // ============================================
-export function CampDrillDown({ camp, mainRoles, wolfPowers, villagerPowers, elitePowers, secondaryRoles, deadRoles }: CampDrillDownProps) {
+export function CampDrillDown({ camp, mainRoles, wolfPowers, villagerPowers, elitePowers, secondaryRoles, deadRoles, gameRules }: CampDrillDownProps) {
   // Suppress unused searchTerms for now — will be used for highlighting later
   switch (camp.id) {
     case 'villageois':
@@ -493,6 +524,7 @@ export function CampDrillDown({ camp, mainRoles, wolfPowers, villagerPowers, eli
           wolfPowers={wolfPowers}
           secondaryRoles={secondaryRoles}
           deadRoles={deadRoles}
+          gameRules={gameRules}
         />
       );
     case 'solo':

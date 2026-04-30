@@ -1,20 +1,20 @@
 Règles du jeu:
 
-Lycans est un jeu de type "Mensonges et trahisons" en ligne, pour 8 à 15 joueurs, en vue à la première personne, avec un système de son spatialisé (on ne peut parler et entendre que les joueurs proches de nous).
+Lycans est un jeu de type "Mensonges et trahisons" en ligne, jusqu'à 15 joueurs, en vue à la première personne, avec un système de son spatialisé (on ne peut parler et entendre que les joueurs proches de nous).
 
 Chaque journée de jeu se découpe en 3 phases: jour, nuit, puis conseil (vote).
 
 Les joueurs sont répartis en plusieurs camps de manière aléatoire au début de la partie (ou bien un système de draft si l'option draft est selectionnée). De base, il y a des "Villageois" qui doivent enquêter et démasquer les "Loups", qui eux, doivent tuer les villageois pendant la nuit. Les joueurs Loups peuvent se transformer en Loup une fois par nuit (chaque nuit), et revenir en forme Villageoise une fois par nuit également.
 Les joueurs ne savent pas en début de partie qui est Villageois et qui est Loup.
 
-Les Villageois ont également un objectif de Récolte pour les villageois. Récolter des ressources permet de de faire monter un score de Récolte, partagé entre tous les Villageois. Si le score atteint 100% de l'objectif, la partie se termine immédiatement par une victoire Villageois.
+Les Villageois ont également un objectif de Récolte pour les villageois. Récolter des ressources permet de de faire monter un score de Récolte, partagé entre tous les Villageois. Si le score atteint 100% de l'objectif, la partie se termine au prochain conseil par une victoire des Villageois.
 
 Chaque Villageois a également une barre de "faim". De la nourriture est présente sur la carte (sous forme de ressources) et permet de remonter cette barre. Si la barre se vide, le joueur meurt et est éliminé de la partie. Courir fait diminuer plus rapidement la barre de faim.
-Les Loups ont également une barre de faim, qui ne se vide pas du tout sous forme de Villageois, mais se vide lentement sous forme de Loup. Certaines actions, comme se prendre une balle de Chasseur, ou un Piège, fait descendre la barre de faim du Loup plus rapidement. Tuer un villageois remplit la barre à 100% à nouveau. Si elle atteint 0, le loup meurt et est éliminé de la partie.
+Les Loups ont également une barre de faim, qui ne se vide pas du tout sous forme de humaine, mais se vide lentement sous forme de Loup. Certaines actions, comme se prendre une balle de Chasseur, ou un Piège, fait descendre la barre de faim du Loup plus rapidement. Tuer un villageois remplit la barre à 100% à nouveau. Si elle atteint 0, le loup meurt et est éliminé de la partie.
 
-La partie se termine s'il n'y a plus de Loup (victoire Villageois), si l'objectif de Récolte est atteint (victoire Villageois) ou si les Loups sont majoritaires (en cas d'égalité de nombre, par exemple 2 villageois restant et 2 loups, les loups gagnent aussi). 
+La partie se termine s'il n'y a plus de Loup (victoire Villageois), plus de Villageois (victoire camp Loup) si l'objectif de Récolte est atteint (victoire Villageois) ou si les Loups sont majoritaires au conseil (en cas d'égalité de nombre, par exemple 2 villageois restant et 2 loups, les loups gagnent aussi). 
 
-Quand un joueur meurt, il passe automatiquement en mode "spectateur" où il peut voir tous les autres joueurs à sa guise.
+Quand un joueur est eliminé, il passe automatiquement en mode "spectateur" où il peut voir et entendre tous les autres joueurs à sa guise jusqu'à la fin de la partie.
 
 **************************************************** Wolf Transformation ****************************************************
 
