@@ -42,7 +42,11 @@
       "emoji": "👤",
       "type": "base",
       "description": "Rôle de base du camp des Villageois. Pas de pouvoir spécial, mais peut recevoir un métier (pouvoir de villageois) et un rôle secondaire.",
-      "descriptionShort": "Éliminez les Loups"
+      "descriptionShort": "Éliminez les Loups",
+      "relatedItems": [
+        { "type": "villagerPower", "id": "paysan", "label": "Métiers de Villageois" },
+        { "type": "secondaryRole", "id": "hurleur", "label": "Rôles Secondaires" }
+      ]
     },
     {
       "id": "villageois-elite",
@@ -51,7 +55,13 @@
       "emoji": "⭐",
       "type": "elite",
       "description": "Villageois puissant qui reçoit un pouvoir d'élite (Chasseur, Alchimiste, Guetteur, Purificateur). Doit utiliser une balle pour charger son pouvoir.",
-      "descriptionShort": "Villageois puissant"
+      "descriptionShort": "Villageois puissant",
+      "relatedItems": [
+        { "type": "elitePower", "id": "chasseur", "label": "Chasseur" },
+        { "type": "elitePower", "id": "alchimiste", "label": "Alchimiste" },
+        { "type": "elitePower", "id": "guetteur", "label": "Guetteur" },
+        { "type": "elitePower", "id": "purificateur", "label": "Purificateur" }
+      ]
     },
     {
       "id": "loup",
@@ -60,7 +70,11 @@
       "emoji": "🐺",
       "type": "base",
       "description": "Peut se transformer en loup la nuit pour tuer les villageois. Peut recevoir un pouvoir de loup et un rôle secondaire.",
-      "descriptionShort": "Transformez-vous et massacrez les villageois"
+      "descriptionShort": "Transformez-vous et massacrez les villageois",
+      "relatedItems": [
+        { "type": "wolfPower", "id": "necromancien", "label": "Pouvoirs de Loup" },
+        { "type": "sabotage", "id": "sabotage-generateur", "label": "Sabotages" }
+      ]
     },
     {
       "id": "traitre",
@@ -308,14 +322,6 @@
       "description": "Récolte pour charger son pouvoir, puis peut placer un détecteur invisible. Il explose au contact d'un loup transformé et l'exorcise : sourd, vision troublée, et visible sur la minimap. Les détecteurs durent plus longtemps s'ils sont loin du point de meeting.",
       "descriptionShort": "Peut placer des détecteurs qui handicapent les loups transformés",
       "translationKey": "NALES_ROLE_DESCRIPTION_EXORCIST"
-    },
-    {
-      "id": "medecin-legiste",
-      "name": "Médecin légiste",
-      "emoji": "🔬",
-      "description": "Peut analyser un cadavre pour connaître le rôle principal (villageois, loup, traître, espion...) qu'il avait. De plus, le Devin ne peut pas le tuer en devinant son métier de Médecin légiste.",
-      "descriptionShort": "Peut connaître le rôle qu'avait un cadavre ciblé",
-      "translationKey": "NALES_ROLE_DESCRIPTION_FORENSICS"
     },
     {
       "id": "vengeur",
@@ -1097,7 +1103,6 @@
       "Sournois": { "category": "wolfPowers", "id": "sournois" },
       "Paysan": { "category": "villagerPowers", "id": "paysan" },
       "Exorciste": { "category": "villagerPowers", "id": "exorciste" },
-      "Médecin légiste": { "category": "villagerPowers", "id": "medecin-legiste" },
       "Vengeur": { "category": "villagerPowers", "id": "vengeur" },
       "Détective": { "category": "villagerPowers", "id": "detective" },
       "Survivaliste": { "category": "villagerPowers", "id": "survivaliste" },

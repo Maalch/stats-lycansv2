@@ -42,7 +42,11 @@
       "emoji": "👤",
       "type": "base",
       "description": "Rôle de base du camp des Villageois. Pas de pouvoir spécial, mais peut recevoir un métier (pouvoir de villageois) et un rôle secondaire.",
-      "descriptionShort": "Éliminez les Loups"
+      "descriptionShort": "Éliminez les Loups",
+      "relatedItems": [
+        { "type": "villagerPower", "id": "paysan", "label": "Métiers de Villageois" },
+        { "type": "secondaryRole", "id": "hurleur", "label": "Rôles Secondaires" }
+      ]
     },
     {
       "id": "villageois-elite",
@@ -51,7 +55,13 @@
       "emoji": "⭐",
       "type": "elite",
       "description": "Villageois puissant qui reçoit un pouvoir d'élite (Chasseur, Alchimiste, Guetteur, Purificateur). Doit utiliser une balle pour charger son pouvoir.",
-      "descriptionShort": "Villageois puissant"
+      "descriptionShort": "Villageois puissant",
+      "relatedItems": [
+        { "type": "elitePower", "id": "chasseur", "label": "Chasseur" },
+        { "type": "elitePower", "id": "alchimiste", "label": "Alchimiste" },
+        { "type": "elitePower", "id": "guetteur", "label": "Guetteur" },
+        { "type": "elitePower", "id": "purificateur", "label": "Purificateur" }
+      ]
     },
     {
       "id": "loup",
@@ -60,7 +70,11 @@
       "emoji": "🐺",
       "type": "base",
       "description": "Peut se transformer en loup la nuit pour tuer les villageois. Peut recevoir un pouvoir de loup et un rôle secondaire.",
-      "descriptionShort": "Transformez-vous et massacrez les villageois"
+      "descriptionShort": "Transformez-vous et massacrez les villageois",
+      "relatedItems": [
+        { "type": "wolfPower", "id": "necromancien", "label": "Pouvoirs de Loup" },
+        { "type": "sabotage", "id": "sabotage-generateur", "label": "Sabotages" }
+      ]
     },
     {
       "id": "traitre",

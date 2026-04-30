@@ -497,3 +497,526 @@
     align-items: flex-start;
   }
 }
+
+/* ============================================
+   Toolbar row (search + view toggle)
+   ============================================ */
+.ref-toolbar__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ref-toolbar__row .ref-search-container {
+  flex: 1;
+}
+
+/* ============================================
+   View mode toggle
+   ============================================ */
+.ref-view-toggle {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ref-view-toggle__btn {
+  background: var(--bg-secondary);
+  border: none;
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  line-height: 1;
+  color: var(--text-secondary);
+}
+
+.ref-view-toggle__btn:not(:last-child) {
+  border-right: 1px solid var(--border-color);
+}
+
+.ref-view-toggle__btn:hover {
+  background: var(--bg-tertiary);
+}
+
+.ref-view-toggle__btn.active {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* ============================================
+   Breadcrumb
+   ============================================ */
+.ref-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+}
+
+.ref-breadcrumb__item {
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  font-size: inherit;
+  padding: 0;
+  cursor: default;
+}
+
+.ref-breadcrumb__item--link {
+  cursor: pointer;
+  color: var(--accent-primary);
+  transition: opacity 0.2s;
+}
+
+.ref-breadcrumb__item--link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.ref-breadcrumb__item--current {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ref-breadcrumb__separator {
+  color: var(--text-secondary);
+  opacity: 0.5;
+  font-size: 1.1em;
+}
+
+/* ============================================
+   Camp Hub Tiles
+   ============================================ */
+.ref-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.ref-hub-tile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.25s, transform 0.2s;
+  text-align: left;
+  width: 100%;
+}
+
+.ref-hub-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.ref-hub-tile--villageois {
+  border-left: 4px solid #3498db;
+}
+
+.ref-hub-tile--villageois:hover {
+  border-color: #3498db;
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.15);
+}
+
+.ref-hub-tile--loup {
+  border-left: 4px solid #e74c3c;
+}
+
+.ref-hub-tile--loup:hover {
+  border-color: #e74c3c;
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.15);
+}
+
+.ref-hub-tile--solo {
+  border-left: 4px solid #9b59b6;
+}
+
+.ref-hub-tile--solo:hover {
+  border-color: #9b59b6;
+  box-shadow: 0 6px 20px rgba(155, 89, 182, 0.15);
+}
+
+.ref-hub-tile__emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ref-hub-tile__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.ref-hub-tile__name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  color: var(--text-primary);
+}
+
+.ref-hub-tile__description {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ref-hub-tile__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.ref-hub-tile__role-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.ref-hub-tile__win-condition {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.ref-hub-tile__arrow {
+  font-size: 1.8rem;
+  color: var(--text-secondary);
+  opacity: 0.4;
+  transition: opacity 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+.ref-hub-tile:hover .ref-hub-tile__arrow {
+  opacity: 0.9;
+  transform: translateX(3px);
+}
+
+/* ============================================
+   Item category buttons (overview)
+   ============================================ */
+.ref-item-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ref-item-category-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: left;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.ref-item-category-btn:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-tertiary);
+}
+
+.ref-item-category-btn__icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.ref-item-category-btn__label {
+  flex: 1;
+  font-weight: 500;
+}
+
+.ref-item-category-btn__count {
+  font-size: 0.72rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.ref-item-category-btn__arrow {
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.ref-item-category-btn:hover .ref-item-category-btn__arrow {
+  opacity: 0.9;
+}
+
+/* ============================================
+   Role hierarchy diagram
+   ============================================ */
+.ref-hierarchy {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.ref-hierarchy__node {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  background: var(--bg-tertiary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.ref-hierarchy__node--root {
+  font-size: 1rem;
+  font-weight: 700;
+  background: none;
+  padding: 0 0 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.6rem;
+}
+
+.ref-hierarchy__branches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding-left: 0.8rem;
+}
+
+.ref-hierarchy__branch {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ref-hierarchy__branch::before {
+  content: '├';
+  color: var(--text-secondary);
+  opacity: 0.4;
+  font-family: monospace;
+}
+
+.ref-hierarchy__leaf {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ============================================
+   Drill-down container & animation
+   ============================================ */
+.ref-drilldown-container {
+  animation: ref-slide-in 0.25s ease-out;
+}
+
+@keyframes ref-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ref-overview {
+  animation: ref-fade-in 0.2s ease-out;
+}
+
+@keyframes ref-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ============================================
+   Sub-filter pills within drill-down
+   ============================================ */
+.ref-subfilter {
+  margin-bottom: 1rem;
+}
+
+/* ============================================
+   Expandable cards
+   ============================================ */
+.ref-card--expandable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.ref-card--expandable:active {
+  transform: scale(0.99);
+}
+
+.ref-card__expand-icon {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.ref-card__expand-icon--open {
+  transform: rotate(180deg);
+}
+
+.ref-card__expanded-content {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-color);
+  animation: ref-expand-in 0.2s ease-out;
+}
+
+@keyframes ref-expand-in {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+/* ============================================
+   Solo role cards (larger, win-condition focus)
+   ============================================ */
+.ref-grid--solo {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.ref-card--solo-role {
+  border-left: 3px solid #9b59b6;
+  background: var(--bg-secondary);
+}
+
+.ref-card--solo-role:hover {
+  border-color: #9b59b6;
+  box-shadow: 0 4px 12px rgba(155, 89, 182, 0.14);
+}
+
+.ref-card__win-condition {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+/* ============================================
+   Related sections (within drill-down)
+   ============================================ */
+.ref-section--related {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+  opacity: 0.9;
+}
+
+.ref-section--related .ref-section__title {
+  font-size: 1.05rem;
+}
+
+/* ============================================
+   Related items chips (cross-references)
+   ============================================ */
+.ref-related-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.ref-related-chips__label {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-right: 0.2rem;
+}
+
+.ref-related-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.ref-related-chip:hover {
+  border-color: var(--accent-primary);
+  background: rgba(72, 83, 168, 0.08);
+  color: var(--accent-primary);
+}
+
+.ref-related-chip__icon {
+  font-size: 0.8em;
+}
+
+.ref-related-chip__label {
+  font-weight: 500;
+}
+
+/* ============================================
+   Responsive (new elements)
+   ============================================ */
+@media (max-width: 600px) {
+  .ref-hub-grid {
+    grid-template-columns: 1fr;
+  }
+  .ref-hub-tile {
+    padding: 1rem;
+  }
+  .ref-hub-tile__emoji {
+    font-size: 2rem;
+  }
+  .ref-hub-tile__description {
+    -webkit-line-clamp: 1;
+  }
+  .ref-toolbar__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ref-view-toggle {
+    align-self: flex-end;
+  }
+  .ref-hierarchy__branches {
+    flex-direction: column;
+  }
+  .ref-grid--solo {
+    grid-template-columns: 1fr;
+  }
+}

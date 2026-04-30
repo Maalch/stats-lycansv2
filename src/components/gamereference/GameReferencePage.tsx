@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useGameReference } from '../../hooks/useGameReference';
 import type {
   CampEntry,
@@ -13,10 +13,18 @@ import type {
   EventEntry,
   SabotageEntry,
 } from '../../hooks/useGameReference';
+import { CampHubTile } from './CampHubTile';
+import { CampDrillDown } from './CampDrillDown';
+import { RoleBreadcrumb } from './RoleBreadcrumb';
 import './GameReferencePage.css';
 
 // ============================================
-// Category definitions for the sub-navigation
+// View mode
+// ============================================
+type ViewMode = 'hierarchical' | 'flat';
+
+// ============================================
+// Category definitions for flat view sub-navigation
 // ============================================
 const CATEGORIES = [
   { key: 'camps', label: 'Camps & Rôles', icon: '🏘️' },
@@ -31,6 +39,21 @@ const CATEGORIES = [
   { key: 'events', label: 'Événements', icon: '⚡' },
   { key: 'sabotages', label: 'Sabotages', icon: '💣' },
 ] as const;
+
+// ============================================
+// Non-camp categories for hierarchical overview
+// ============================================
+const ITEM_CATEGORIES = [
+  { key: 'secondaryRoles', label: 'Rôles Secondaires', icon: '🔄' },
+  { key: 'deadRoles', label: 'Rôles de Mort', icon: '👻' },
+  { key: 'accessories', label: 'Accessoires', icon: '💍' },
+  { key: 'gadgets', label: 'Gadgets & Objets', icon: '🧪' },
+  { key: 'effects', label: 'Effets & Potions', icon: '✨' },
+  { key: 'events', label: 'Événements', icon: '⚡' },
+  { key: 'sabotages', label: 'Sabotages', icon: '💣' },
+] as const;
+
+type ItemCategoryKey = typeof ITEM_CATEGORIES[number]['key'];
 
 type CategoryKey = typeof CATEGORIES[number]['key'];
 
@@ -288,9 +311,27 @@ function matchesSearch(searchTerms: string[], ...fields: (string | undefined | n
 // ============================================
 export function GameReferencePage() {
   const { data, isLoading, error } = useGameReference();
+  const [viewMode, setViewMode] = useState<ViewMode>('hierarchical');
+  const [selectedCamp, setSelectedCamp] = useState<string | null>(null);
+  const [selectedItemCategory, setSelectedItemCategory] = useState<ItemCategoryKey | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>('camps');
   const [searchTerm, setSearchTerm] = useState('');
   const searchTerms = useMemo(() => extractSearchTerms(searchTerm), [searchTerm]);
+
+  const handleCampClick = useCallback((campId: string) => {
+    setSelectedCamp(campId);
+    setSelectedItemCategory(null);
+  }, []);
+
+  const handleBackToOverview = useCallback(() => {
+    setSelectedCamp(null);
+    setSelectedItemCategory(null);
+  }, []);
+
+  const handleItemCategoryClick = useCallback((key: ItemCategoryKey) => {
+    setSelectedItemCategory(key);
+    setSelectedCamp(null);
+  }, []);
 
   const filteredData = useMemo<FilteredReferenceData | null>(() => {
     if (!data) return null;
@@ -396,13 +437,260 @@ export function GameReferencePage() {
   if (!filteredData) return <div>Aucune donnée disponible</div>;
 
   const hasActiveSearch = searchTerms.length > 0;
-  const selectedCategoryCount = filteredData.counts[selectedCategory] || 0;
-  const selectedCategoryMeta = CATEGORIES.find(cat => cat.key === selectedCategory);
-  const firstCategoryWithResults = CATEGORIES.find(cat => (filteredData.counts[cat.key] || 0) > 0);
 
   const searchSummary = hasActiveSearch
     ? `${filteredData.totalMatches} résultat${filteredData.totalMatches > 1 ? 's' : ''} pour "${searchTerm.trim()}".`
     : `${filteredData.totalMatches} éléments de référence disponibles.`;
+
+  // ============================================
+  // Hierarchical view: render camp hub or drill-down
+  // ============================================
+  const renderHierarchicalContent = () => {
+    const currentCampRaw = selectedCamp ? data.camps.find(c => c.id === selectedCamp) : null;
+
+    // Camp drill-down view
+    if (selectedCamp && currentCampRaw) {
+      return (
+        <div className="ref-drilldown-container">
+          <RoleBreadcrumb
+            campName={currentCampRaw.name}
+            campEmoji={currentCampRaw.emoji}
+            onBackToOverview={handleBackToOverview}
+          />
+          <CampDrillDown
+            camp={currentCampRaw}
+            mainRoles={filteredData.mainRoles}
+            wolfPowers={filteredData.wolfPowers}
+            villagerPowers={filteredData.villagerPowers}
+            elitePowers={filteredData.elitePowers}
+            secondaryRoles={filteredData.secondaryRoles}
+            deadRoles={filteredData.deadRoles}
+            searchTerms={searchTerms}
+          />
+        </div>
+      );
+    }
+
+    // Item category view
+    if (selectedItemCategory) {
+      return (
+        <div className="ref-drilldown-container">
+          <RoleBreadcrumb
+            campName={ITEM_CATEGORIES.find(c => c.key === selectedItemCategory)?.label}
+            campEmoji={ITEM_CATEGORIES.find(c => c.key === selectedItemCategory)?.icon}
+            onBackToOverview={handleBackToOverview}
+          />
+          {renderItemCategory(selectedItemCategory)}
+        </div>
+      );
+    }
+
+    // Overview: camp hub + item category buttons
+    return (
+      <div className="ref-overview">
+        {/* Camp hub tiles */}
+        <div className="ref-section">
+          <h2 className="ref-section__title">
+            <span>Explorer par Camp</span>
+          </h2>
+          <div className="ref-hub-grid">
+            {filteredData.camps.map(camp => (
+              <CampHubTile
+                key={camp.id}
+                camp={camp}
+                roles={filteredData.mainRoles.filter(r => r.camp === camp.id)}
+                onClick={() => handleCampClick(camp.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Item categories */}
+        <div className="ref-section">
+          <h2 className="ref-section__title">
+            <span>Mécaniques & Objets</span>
+          </h2>
+          <div className="ref-item-categories">
+            {ITEM_CATEGORIES.map(cat => {
+              const count = filteredData.counts[cat.key] || 0;
+              return (
+                <button
+                  key={cat.key}
+                  className="ref-item-category-btn"
+                  onClick={() => handleItemCategoryClick(cat.key)}
+                  type="button"
+                >
+                  <span className="ref-item-category-btn__icon">{cat.icon}</span>
+                  <span className="ref-item-category-btn__label">{cat.label}</span>
+                  <span className="ref-item-category-btn__count">{count}</span>
+                  <span className="ref-item-category-btn__arrow">›</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Render a specific item category content (for hierarchical drill-down)
+  const renderItemCategory = (categoryKey: ItemCategoryKey) => {
+    switch (categoryKey) {
+      case 'secondaryRoles':
+        return (
+          <div className="ref-section">
+            <SectionTitle title="Rôles Secondaires 🔄" count={filteredData.secondaryRoles.length} />
+            <p className="ref-section__subtitle">Assignés en plus du rôle principal. Peuvent avoir des effets différents selon que le joueur est Villageois ou Loup.</p>
+            <div className="ref-grid">
+              {filteredData.secondaryRoles.map(r => <SecondaryRoleCard key={r.id} role={r} />)}
+            </div>
+          </div>
+        );
+      case 'deadRoles':
+        return (
+          <div className="ref-section">
+            <SectionTitle title="Rôles de Mort 👻" count={filteredData.deadRoles.length} />
+            <p className="ref-section__subtitle">Rôles attribués aux joueurs après leur mort, leur permettant de continuer à influencer la partie.</p>
+            <div className="ref-grid">
+              {filteredData.deadRoles.map(r => <DeadRoleCard key={r.id} role={r} />)}
+            </div>
+          </div>
+        );
+      case 'accessories':
+        return (
+          <div className="ref-section">
+            <SectionTitle title="Accessoires 💍" count={filteredData.accessories.length} />
+            <p className="ref-section__subtitle">Équipements passifs trouvés dans le jeu. Le rôle secondaire Bricoleur peut les activer pour un effet spécial.</p>
+            <div className="ref-grid">
+              {filteredData.accessories.map(a => <AccessoryCard key={a.id} accessory={a} />)}
+            </div>
+          </div>
+        );
+      case 'gadgets':
+        return (
+          <div className="ref-section">
+            <SectionTitle title="Gadgets & Objets 🧪" count={filteredData.gadgets.length} />
+            <p className="ref-section__subtitle">Objets utilisables trouvés ou fabriqués pendant la partie.</p>
+            <div className="ref-grid">
+              {filteredData.gadgets.map(g => <GadgetCard key={g.id} gadget={g} />)}
+            </div>
+          </div>
+        );
+      case 'effects':
+        return (
+          <>
+            {filteredData.potionEffects.length > 0 && (
+              <div className="ref-section">
+                <SectionTitle title="Effets de Potions 🧪" count={filteredData.potionEffects.length} />
+                <p className="ref-section__subtitle">Effets applicables via les potions trouvées en jeu.</p>
+                <div className="ref-effects-grid">
+                  {filteredData.potionEffects.map(e => <EffectCard key={e.id} effect={e} type="potion" />)}
+                </div>
+              </div>
+            )}
+            {filteredData.statusEffects.length > 0 && (
+              <div className="ref-section">
+                <SectionTitle title="Effets de Statut ✨" count={filteredData.statusEffects.length} />
+                <p className="ref-section__subtitle">Tous les effets de statut pouvant affecter les joueurs pendant la partie.</p>
+                <div className="ref-effects-grid">
+                  {filteredData.statusEffects.map(e => <EffectCard key={e.id} effect={e} type="status" />)}
+                </div>
+              </div>
+            )}
+          </>
+        );
+      case 'events':
+        return (
+          <div className="ref-section">
+            <SectionTitle title="Événements ⚡" count={filteredData.events.length} />
+            <p className="ref-section__subtitle">Événements aléatoires pouvant survenir pendant une journée, affectant tous les joueurs.</p>
+            <div className="ref-grid">
+              {filteredData.events.map(e => <EventCard key={e.id} event={e} />)}
+            </div>
+          </div>
+        );
+      case 'sabotages':
+        return (
+          <div className="ref-section">
+            <SectionTitle title="Sabotages 💣" count={filteredData.sabotages.length} />
+            <p className="ref-section__subtitle">Actions de sabotage disponibles pour les Loups, utilisant des éléments du décor.</p>
+            <div className="ref-grid">
+              {filteredData.sabotages.map(s => <SabotageCard key={s.id} sabotage={s} />)}
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  // ============================================
+  // Flat view: original category-based navigation
+  // ============================================
+  const renderFlatContent = () => {
+    const selectedCategoryCount = filteredData.counts[selectedCategory] || 0;
+    const selectedCategoryMeta = CATEGORIES.find(cat => cat.key === selectedCategory);
+    const firstCategoryWithResults = CATEGORIES.find(cat => (filteredData.counts[cat.key] || 0) > 0);
+
+    return (
+      <>
+        {/* Category sub-navigation */}
+        <nav className="lycans-categories-selection">
+          {CATEGORIES.map(cat => {
+            const count = filteredData.counts[cat.key] || 0;
+            const hasResults = !hasActiveSearch || count > 0;
+            return (
+              <button
+                key={cat.key}
+                className={`lycans-categorie-btn${selectedCategory === cat.key ? ' active' : ''}${!hasResults ? ' ref-cat-empty' : ''}`}
+                onClick={() => setSelectedCategory(cat.key)}
+                type="button"
+                aria-pressed={selectedCategory === cat.key}
+              >
+                <span>{cat.icon}</span>
+                <span>{cat.label}</span>
+                {hasActiveSearch && (
+                  <span className="ref-cat-count">{count}</span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Category content */}
+        <div className="ref-content">
+          {selectedCategoryCount > 0 || !hasActiveSearch ? (
+            renderCategoryContent()
+          ) : (
+            <div className="ref-empty-state">
+              <h3 className="ref-empty-state__title">Aucun résultat dans cette catégorie</h3>
+              <p className="ref-empty-state__text">
+                La recherche &quot;{searchTerm.trim()}&quot; ne retourne aucun élément pour {selectedCategoryMeta?.label || 'la catégorie active'}.
+              </p>
+              <div className="ref-empty-state__actions">
+                <button
+                  type="button"
+                  className="ref-empty-state__button"
+                  onClick={() => setSearchTerm('')}
+                >
+                  Effacer la recherche
+                </button>
+                {firstCategoryWithResults && (
+                  <button
+                    type="button"
+                    className="ref-empty-state__button ref-empty-state__button--ghost"
+                    onClick={() => setSelectedCategory(firstCategoryWithResults.key)}
+                  >
+                    Ouvrir {firstCategoryWithResults.label} ({filteredData.counts[firstCategoryWithResults.key]})
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  };
 
   const renderCategoryContent = () => {
     switch (selectedCategory) {
@@ -587,92 +875,61 @@ export function GameReferencePage() {
   return (
     <div className="game-reference-page">
       <div className="ref-toolbar">
-        <div className="ref-search-container">
-          <input
-            type="text"
-            className="ref-search-input"
-            placeholder="🔍 Rechercher un rôle, pouvoir, objet, effet..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-          />
-          {searchTerm && (
+        <div className="ref-toolbar__row">
+          <div className="ref-search-container">
+            <input
+              type="text"
+              className="ref-search-input"
+              placeholder="🔍 Rechercher un rôle, pouvoir, objet, effet..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <button
+                className="ref-search-clear"
+                onClick={() => setSearchTerm('')}
+                type="button"
+                title="Effacer la recherche"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* View mode toggle */}
+          <div className="ref-view-toggle">
             <button
-              className="ref-search-clear"
-              onClick={() => setSearchTerm('')}
+              className={`ref-view-toggle__btn${viewMode === 'hierarchical' ? ' active' : ''}`}
+              onClick={() => { setViewMode('hierarchical'); handleBackToOverview(); }}
               type="button"
-              title="Effacer la recherche"
+              title="Vue hiérarchique"
             >
-              ✕
+              🏗️
             </button>
-          )}
+            <button
+              className={`ref-view-toggle__btn${viewMode === 'flat' ? ' active' : ''}`}
+              onClick={() => setViewMode('flat')}
+              type="button"
+              title="Vue liste"
+            >
+              📋
+            </button>
+          </div>
         </div>
 
         <div className="ref-search-meta">
           <p className="ref-search-meta__summary">{searchSummary}</p>
-          <div className="ref-search-meta__chips">
-            <span className="ref-search-chip">
-              {selectedCategoryCount} dans {selectedCategoryMeta?.label || 'la catégorie active'}
-            </span>
-            {hasActiveSearch && (
+          {hasActiveSearch && (
+            <div className="ref-search-meta__chips">
               <span className="ref-search-chip ref-search-chip--accent">Recherche active</span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Category sub-navigation */}
-      <nav className="lycans-categories-selection">
-        {CATEGORIES.map(cat => {
-          const count = filteredData.counts[cat.key] || 0;
-          const hasResults = !hasActiveSearch || count > 0;
-          return (
-            <button
-              key={cat.key}
-              className={`lycans-categorie-btn${selectedCategory === cat.key ? ' active' : ''}${!hasResults ? ' ref-cat-empty' : ''}`}
-              onClick={() => setSelectedCategory(cat.key)}
-              type="button"
-              aria-pressed={selectedCategory === cat.key}
-            >
-              <span>{cat.icon}</span>
-              <span>{cat.label}</span>
-              {hasActiveSearch && (
-                <span className="ref-cat-count">{count}</span>
-              )}
-            </button>
-          );
-        })}
-      </nav>
-
-      {/* Category content */}
+      {/* Content based on view mode */}
       <div className="ref-content">
-        {selectedCategoryCount > 0 || !hasActiveSearch ? (
-          renderCategoryContent()
-        ) : (
-          <div className="ref-empty-state">
-            <h3 className="ref-empty-state__title">Aucun résultat dans cette catégorie</h3>
-            <p className="ref-empty-state__text">
-              La recherche "{searchTerm.trim()}" ne retourne aucun élément pour {selectedCategoryMeta?.label || 'la catégorie active'}.
-            </p>
-            <div className="ref-empty-state__actions">
-              <button
-                type="button"
-                className="ref-empty-state__button"
-                onClick={() => setSearchTerm('')}
-              >
-                Effacer la recherche
-              </button>
-              {firstCategoryWithResults && (
-                <button
-                  type="button"
-                  className="ref-empty-state__button ref-empty-state__button--ghost"
-                  onClick={() => setSelectedCategory(firstCategoryWithResults.key)}
-                >
-                  Ouvrir {firstCategoryWithResults.label} ({filteredData.counts[firstCategoryWithResults.key]})
-                </button>
-              )}
-            </div>
-          </div>
-        )}
+        {viewMode === 'hierarchical' ? renderHierarchicalContent() : renderFlatContent()}
       </div>
     </div>
   );

@@ -12,6 +12,12 @@ export interface GameReferenceMeta {
   notes: string;
 }
 
+export interface RelatedItem {
+  type: string;
+  id: string;
+  label: string;
+}
+
 export interface CampEntry {
   id: string;
   name: string;
@@ -19,6 +25,7 @@ export interface CampEntry {
   description: string;
   winCondition: string;
   roles: string[];
+  relatedItems?: RelatedItem[];
 }
 
 export interface MainRoleEntry {
@@ -31,6 +38,7 @@ export interface MainRoleEntry {
   descriptionShort?: string;
   translationKey?: string;
   subRoles?: { id: string; name: string; translationKey?: string }[];
+  relatedItems?: RelatedItem[];
 }
 
 export interface PowerEntry {
@@ -40,6 +48,7 @@ export interface PowerEntry {
   description: string;
   descriptionShort?: string;
   translationKey?: string;
+  relatedItems?: RelatedItem[];
 }
 
 export interface SecondaryRoleEntry {
@@ -51,6 +60,7 @@ export interface SecondaryRoleEntry {
   descriptionVillager?: string;
   descriptionWolf?: string;
   translationKey?: string;
+  relatedItems?: RelatedItem[];
 }
 
 export interface DeadRoleEntry {
