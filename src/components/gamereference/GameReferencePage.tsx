@@ -264,19 +264,33 @@ function EventCard({ event }: { event: EventEntry }) {
 }
 
 function GameRuleCard({ rule }: { rule: GameRuleEntry }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const hasDetails = rule.details.length > 0;
   return (
-    <div className="ref-card ref-card--rule">
+    <div
+      className={`ref-card ref-card--rule${hasDetails ? ' ref-card--expandable' : ''}`}
+      onClick={hasDetails ? () => setIsExpanded(e => !e) : undefined}
+      role={hasDetails ? 'button' : undefined}
+      tabIndex={hasDetails ? 0 : undefined}
+      onKeyDown={hasDetails ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setIsExpanded(v => !v); } } : undefined}
+      aria-expanded={hasDetails ? isExpanded : undefined}
+    >
       <div className="ref-card__header">
         <span className="ref-card__emoji">{rule.emoji}</span>
         <h3 className="ref-card__title">{rule.name}</h3>
+        {hasDetails && (
+          <span className={`ref-card__expand-icon${isExpanded ? ' ref-card__expand-icon--open' : ''}`}>▼</span>
+        )}
       </div>
       <p className="ref-card__description">{rule.description}</p>
-      {rule.details.length > 0 && (
-        <ul className="ref-card__details">
-          {rule.details.map((detail, i) => (
-            <li key={i} className="ref-card__detail-item">{detail}</li>
-          ))}
-        </ul>
+      {isExpanded && hasDetails && (
+        <div className="ref-card__expanded-content">
+          <ul className="ref-card__details">
+            {rule.details.map((detail, i) => (
+              <li key={i} className="ref-card__detail-item">{detail}</li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
