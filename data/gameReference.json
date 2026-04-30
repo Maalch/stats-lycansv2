@@ -1011,56 +1011,6 @@
     }
   ],
 
-  "sabotages": [
-    {
-      "id": "puits-empoisonnes",
-      "name": "Puits empoisonnés",
-      "emoji": "🪣",
-      "description": "Les loups empoisonnent les puits et fontaines. Les villageois qui y boivent sont empoisonnés.",
-      "translationKey": "NALES_UI_SABOTAGE_WELL_POISON_MESSAGE",
-      "objects": ["Puits", "Fontaine"]
-    },
-    {
-      "id": "rituel-des-loups",
-      "name": "Rituel des loups",
-      "emoji": "🕯️",
-      "description": "Les loups préparent un rituel en utilisant des éléments du décor (bûches, pilier rituel, chaudron, pièce d'échecs, statue de loup, échiquier).",
-      "translationKey": "NALES_UI_SABOTAGE_RITUAL_MESSAGE",
-      "objects": ["Bûches", "Pilier rituel", "Chaudron", "Pièce d'échecs", "Statue de loup", "Échiquier"]
-    },
-    {
-      "id": "portails",
-      "name": "Portails améliorés",
-      "emoji": "🌀",
-      "description": "Les portails sont améliorés et réservés aux Loups.",
-      "translationKey": "NALES_UI_SABOTAGE_PORTALS_PORTAL_MESSAGE"
-    },
-    {
-      "id": "nuit-maudite",
-      "name": "Nuit maudite",
-      "emoji": "🌙",
-      "description": "Les loups invoquent une nuit maudite en utilisant un bulletin d'informations ou un livre de sorts.",
-      "translationKey": "NALES_UI_SABOTAGE_CURSED_NIGHT_MESSAGE",
-      "objects": ["Bulletin d'informations", "Livre de sorts"]
-    },
-    {
-      "id": "portes-automatiques",
-      "name": "Portes automatiques (Laboratoire)",
-      "emoji": "🚪",
-      "description": "Sabotage spécifique au Laboratoire. Les portes automatiques deviennent réservées aux loups.",
-      "translationKey": "NALES_UI_SABOTAGE_LABORATORY_AUTODOORS_MESSAGE",
-      "mapSpecific": "Laboratoire"
-    },
-    {
-      "id": "blackout",
-      "name": "Blackout (Laboratoire)",
-      "emoji": "💡",
-      "description": "Sabotage spécifique au Laboratoire. Les lumières s'éteignent sauf pour les loups.",
-      "translationKey": "NALES_UI_SABOTAGE_LABORATORY_BLACKOUT_MESSAGE",
-      "mapSpecific": "Laboratoire"
-    }
-  ],
-
   "gameLogValueMappings": {
     "_description": "Maps gameLog.json field values to their reference entries in this file. Used for programmatic lookups.",
     "mainRoleInitialToCategory": {

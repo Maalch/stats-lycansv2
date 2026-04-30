@@ -11,7 +11,6 @@ import type {
   PotionEffectEntry,
   StatusEffectEntry,
   EventEntry,
-  SabotageEntry,
 } from '../../hooks/useGameReference';
 import { CampHubTile } from './CampHubTile';
 import { CampDrillDown } from './CampDrillDown';
@@ -37,7 +36,6 @@ const CATEGORIES = [
   { key: 'gadgets', label: 'Gadgets & Objets', icon: '🧪' },
   { key: 'effects', label: 'Effets & Potions', icon: '✨' },
   { key: 'events', label: 'Événements', icon: '⚡' },
-  { key: 'sabotages', label: 'Sabotages', icon: '💣' },
 ] as const;
 
 // ============================================
@@ -50,7 +48,6 @@ const ITEM_CATEGORIES = [
   { key: 'gadgets', label: 'Gadgets & Objets', icon: '🧪' },
   { key: 'effects', label: 'Effets & Potions', icon: '✨' },
   { key: 'events', label: 'Événements', icon: '⚡' },
-  { key: 'sabotages', label: 'Sabotages', icon: '💣' },
 ] as const;
 
 type ItemCategoryKey = typeof ITEM_CATEGORIES[number]['key'];
@@ -72,7 +69,6 @@ type FilteredReferenceData = {
   potionEffects: PotionEffectEntry[];
   statusEffects: StatusEffectEntry[];
   events: EventEntry[];
-  sabotages: SabotageEntry[];
   counts: CategoryCounts;
   totalMatches: number;
 };
@@ -244,31 +240,6 @@ function EventCard({ event }: { event: EventEntry }) {
   );
 }
 
-function SabotageCard({ sabotage }: { sabotage: SabotageEntry }) {
-  return (
-    <div className="ref-card ref-card--sabotage">
-      <div className="ref-card__header">
-        <span className="ref-card__emoji">{sabotage.emoji}</span>
-        <h3 className="ref-card__title">{sabotage.name}</h3>
-      </div>
-      <p className="ref-card__description">{sabotage.description}</p>
-      {sabotage.mapSpecific && (
-        <div className="ref-card__detail">
-          <span className="ref-card__label">🗺️ Carte :</span>
-          <span>{sabotage.mapSpecific}</span>
-        </div>
-      )}
-      {sabotage.objects && (
-        <div className="ref-card__subtags">
-          {sabotage.objects.map(obj => (
-            <span key={obj} className="ref-card__subrole-tag">{obj}</span>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 function SectionTitle({ title, count }: { title: string; count: number }) {
   return (
     <h2 className="ref-section__title">
@@ -392,10 +363,6 @@ export function GameReferencePage() {
       matchesSearch(searchTerms, e.name, e.description)
     );
 
-    const sabotages = data.sabotages.filter(s =>
-      matchesSearch(searchTerms, s.name, s.description, s.mapSpecific, s.objects?.join(' '))
-    );
-
     const counts: CategoryCounts = {
       camps: camps.length + mainRoles.length,
       wolfPowers: wolfPowers.length,
@@ -407,7 +374,6 @@ export function GameReferencePage() {
       gadgets: gadgets.length,
       effects: potionEffects.length + statusEffects.length,
       events: events.length,
-      sabotages: sabotages.length,
     };
 
     const totalMatches = Object.values(counts).reduce((sum, count) => sum + count, 0);
@@ -425,7 +391,6 @@ export function GameReferencePage() {
       potionEffects,
       statusEffects,
       events,
-      sabotages,
       counts,
       totalMatches,
     };
@@ -606,16 +571,6 @@ export function GameReferencePage() {
             <p className="ref-section__subtitle">Événements aléatoires pouvant survenir pendant une journée, affectant tous les joueurs.</p>
             <div className="ref-grid">
               {filteredData.events.map(e => <EventCard key={e.id} event={e} />)}
-            </div>
-          </div>
-        );
-      case 'sabotages':
-        return (
-          <div className="ref-section">
-            <SectionTitle title="Sabotages 💣" count={filteredData.sabotages.length} />
-            <p className="ref-section__subtitle">Actions de sabotage disponibles pour les Loups, utilisant des éléments du décor.</p>
-            <div className="ref-grid">
-              {filteredData.sabotages.map(s => <SabotageCard key={s.id} sabotage={s} />)}
             </div>
           </div>
         );
@@ -849,19 +804,6 @@ export function GameReferencePage() {
             <p className="ref-section__subtitle">Événements aléatoires pouvant survenir pendant une journée, affectant tous les joueurs.</p>
             <div className="ref-grid">
               {filtered.map(e => <EventCard key={e.id} event={e} />)}
-            </div>
-          </div>
-        );
-      }
-
-      case 'sabotages': {
-        const filtered = filteredData.sabotages;
-        return (
-          <div className="ref-section">
-            <SectionTitle title="Sabotages 💣" count={filtered.length} />
-            <p className="ref-section__subtitle">Actions de sabotage disponibles pour les Loups, utilisant des éléments du décor.</p>
-            <div className="ref-grid">
-              {filtered.map(s => <SabotageCard key={s.id} sabotage={s} />)}
             </div>
           </div>
         );

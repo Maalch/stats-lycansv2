@@ -113,16 +113,6 @@ export interface EventEntry {
   translationKey?: string;
 }
 
-export interface SabotageEntry {
-  id: string;
-  name: string;
-  emoji: string;
-  description: string;
-  translationKey?: string;
-  objects?: string[];
-  mapSpecific?: string;
-}
-
 export interface GameReferenceData {
   _meta: GameReferenceMeta;
   camps: CampEntry[];
@@ -137,7 +127,6 @@ export interface GameReferenceData {
   potionEffects: PotionEffectEntry[];
   statusEffects: StatusEffectEntry[];
   events: EventEntry[];
-  sabotages: SabotageEntry[];
 }
 
 /**
