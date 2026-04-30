@@ -34,6 +34,26 @@ const CATEGORIES = [
 
 type CategoryKey = typeof CATEGORIES[number]['key'];
 
+type CategoryCounts = Record<CategoryKey, number>;
+
+type FilteredReferenceData = {
+  camps: CampEntry[];
+  mainRoles: MainRoleEntry[];
+  wolfPowers: PowerEntry[];
+  villagerPowers: PowerEntry[];
+  elitePowers: PowerEntry[];
+  secondaryRoles: SecondaryRoleEntry[];
+  deadRoles: DeadRoleEntry[];
+  accessories: AccessoryEntry[];
+  gadgets: GadgetEntry[];
+  potionEffects: PotionEffectEntry[];
+  statusEffects: StatusEffectEntry[];
+  events: EventEntry[];
+  sabotages: SabotageEntry[];
+  counts: CategoryCounts;
+  totalMatches: number;
+};
+
 // ============================================
 // Card rendering components
 // ============================================
@@ -177,7 +197,11 @@ function EffectCard({ effect, type }: { effect: PotionEffectEntry | StatusEffect
                     potionType === 'negative' ? 'ref-effect--negative' :
                     potionType === 'neutral' ? 'ref-effect--neutral' : '';
   return (
-    <div className={`ref-effect-tag ${typeClass}`}>
+    <div
+      className={`ref-effect-tag ${typeClass}`}
+      title={effect.tutorial || undefined}
+      aria-label={effect.tutorial ? `${effect.name}: ${effect.tutorial}` : effect.name}
+    >
       <span className="ref-effect-tag__name">{effect.name}</span>
       {potionType && <span className="ref-effect-tag__type">{potionType}</span>}
       {effect.tutorial && <span className="ref-effect-tag__tutorial">{effect.tutorial}</span>}
@@ -222,13 +246,41 @@ function SabotageCard({ sabotage }: { sabotage: SabotageEntry }) {
   );
 }
 
+function SectionTitle({ title, count }: { title: string; count: number }) {
+  return (
+    <h2 className="ref-section__title">
+      <span>{title}</span>
+      <span className="ref-section__count">{count}</span>
+    </h2>
+  );
+}
+
 // ============================================
 // Search helper
 // ============================================
-function matchesSearch(searchTerm: string, ...fields: (string | undefined | null)[]): boolean {
-  if (!searchTerm) return true;
-  const lower = searchTerm.toLowerCase();
-  return fields.some(f => f?.toLowerCase().includes(lower));
+function normalizeSearchValue(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+function extractSearchTerms(searchTerm: string): string[] {
+  const normalized = normalizeSearchValue(searchTerm);
+  return normalized ? normalized.split(/\s+/).filter(Boolean) : [];
+}
+
+function matchesSearch(searchTerms: string[], ...fields: (string | undefined | null)[]): boolean {
+  if (searchTerms.length === 0) return true;
+
+  const searchableText = normalizeSearchValue(
+    fields
+      .filter((field): field is string => Boolean(field))
+      .join(' ')
+  );
+
+  return searchTerms.every(term => searchableText.includes(term));
 }
 
 // ============================================
@@ -238,47 +290,130 @@ export function GameReferencePage() {
   const { data, isLoading, error } = useGameReference();
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>('camps');
   const [searchTerm, setSearchTerm] = useState('');
+  const searchTerms = useMemo(() => extractSearchTerms(searchTerm), [searchTerm]);
 
-  // Count matching items per category for badges
-  const categoryCounts = useMemo(() => {
-    if (!data || !searchTerm) return null;
-    const counts: Partial<Record<CategoryKey, number>> = {};
+  const filteredData = useMemo<FilteredReferenceData | null>(() => {
+    if (!data) return null;
 
-    counts.camps = data.camps.filter(c => matchesSearch(searchTerm, c.name, c.description, c.winCondition)).length
-      + data.mainRoles.filter(r => matchesSearch(searchTerm, r.name, r.description, r.descriptionShort)).length;
-    counts.wolfPowers = data.wolfPowers.filter(p => matchesSearch(searchTerm, p.name, p.description, p.descriptionShort)).length;
-    counts.villagerPowers = data.villagerPowers.filter(p => matchesSearch(searchTerm, p.name, p.description, p.descriptionShort)).length;
-    counts.elitePowers = data.elitePowers.filter(p => matchesSearch(searchTerm, p.name, p.description, p.descriptionShort)).length;
-    counts.secondaryRoles = data.secondaryRoles.filter(r => matchesSearch(searchTerm, r.name, r.description, r.descriptionVillager, r.descriptionWolf)).length;
-    counts.deadRoles = data.deadRoles.filter(r => matchesSearch(searchTerm, r.name, r.description)).length;
-    counts.accessories = data.accessories.filter(a => matchesSearch(searchTerm, a.name, a.description, a.tinkererEffect)).length;
-    counts.gadgets = data.gadgets.filter(g => matchesSearch(searchTerm, g.name, g.description)).length;
-    counts.effects = data.potionEffects.filter(e => matchesSearch(searchTerm, e.name, e.tutorial)).length
-      + data.statusEffects.filter(e => matchesSearch(searchTerm, e.name, e.tutorial)).length;
-    counts.events = data.events.filter(e => matchesSearch(searchTerm, e.name, e.description)).length;
-    counts.sabotages = data.sabotages.filter(s => matchesSearch(searchTerm, s.name, s.description)).length;
+    const camps = data.camps.filter(c =>
+      matchesSearch(searchTerms, c.name, c.description, c.winCondition, c.roles.join(' '))
+    );
 
-    return counts;
-  }, [data, searchTerm]);
+    const mainRoles = data.mainRoles.filter(r =>
+      matchesSearch(
+        searchTerms,
+        r.name,
+        r.description,
+        r.descriptionShort,
+        r.camp,
+        r.type,
+        r.subRoles?.map(sub => sub.name).join(' ')
+      )
+    );
+
+    const wolfPowers = data.wolfPowers.filter(p =>
+      matchesSearch(searchTerms, p.name, p.description, p.descriptionShort)
+    );
+
+    const villagerPowers = data.villagerPowers.filter(p =>
+      matchesSearch(searchTerms, p.name, p.description, p.descriptionShort)
+    );
+
+    const elitePowers = data.elitePowers.filter(p =>
+      matchesSearch(searchTerms, p.name, p.description, p.descriptionShort)
+    );
+
+    const secondaryRoles = data.secondaryRoles.filter(r =>
+      matchesSearch(searchTerms, r.name, r.description, r.descriptionShort, r.descriptionVillager, r.descriptionWolf)
+    );
+
+    const deadRoles = data.deadRoles.filter(r =>
+      matchesSearch(searchTerms, r.name, r.description, r.camp)
+    );
+
+    const accessories = data.accessories.filter(a =>
+      matchesSearch(searchTerms, a.name, a.description, a.tinkererEffect)
+    );
+
+    const gadgets = data.gadgets.filter(g =>
+      matchesSearch(searchTerms, g.name, g.description, g.gasTypes?.map(gas => gas.name).join(' '))
+    );
+
+    const potionEffects = data.potionEffects.filter(e =>
+      matchesSearch(searchTerms, e.name, e.type, e.tutorial)
+    );
+
+    const statusEffects = data.statusEffects.filter(e =>
+      matchesSearch(searchTerms, e.name, e.tutorial)
+    );
+
+    const events = data.events.filter(e =>
+      matchesSearch(searchTerms, e.name, e.description)
+    );
+
+    const sabotages = data.sabotages.filter(s =>
+      matchesSearch(searchTerms, s.name, s.description, s.mapSpecific, s.objects?.join(' '))
+    );
+
+    const counts: CategoryCounts = {
+      camps: camps.length + mainRoles.length,
+      wolfPowers: wolfPowers.length,
+      villagerPowers: villagerPowers.length,
+      elitePowers: elitePowers.length,
+      secondaryRoles: secondaryRoles.length,
+      deadRoles: deadRoles.length,
+      accessories: accessories.length,
+      gadgets: gadgets.length,
+      effects: potionEffects.length + statusEffects.length,
+      events: events.length,
+      sabotages: sabotages.length,
+    };
+
+    const totalMatches = Object.values(counts).reduce((sum, count) => sum + count, 0);
+
+    return {
+      camps,
+      mainRoles,
+      wolfPowers,
+      villagerPowers,
+      elitePowers,
+      secondaryRoles,
+      deadRoles,
+      accessories,
+      gadgets,
+      potionEffects,
+      statusEffects,
+      events,
+      sabotages,
+      counts,
+      totalMatches,
+    };
+  }, [data, searchTerms]);
 
   if (isLoading) return <div>Chargement...</div>;
   if (error) return <div>Erreur : {error}</div>;
   if (!data) return <div>Aucune donnée disponible</div>;
+  if (!filteredData) return <div>Aucune donnée disponible</div>;
+
+  const hasActiveSearch = searchTerms.length > 0;
+  const selectedCategoryCount = filteredData.counts[selectedCategory] || 0;
+  const selectedCategoryMeta = CATEGORIES.find(cat => cat.key === selectedCategory);
+  const firstCategoryWithResults = CATEGORIES.find(cat => (filteredData.counts[cat.key] || 0) > 0);
+
+  const searchSummary = hasActiveSearch
+    ? `${filteredData.totalMatches} résultat${filteredData.totalMatches > 1 ? 's' : ''} pour "${searchTerm.trim()}".`
+    : `${filteredData.totalMatches} éléments de référence disponibles.`;
 
   const renderCategoryContent = () => {
     switch (selectedCategory) {
       case 'camps': {
-        const filteredCamps = data.camps.filter(c =>
-          matchesSearch(searchTerm, c.name, c.description, c.winCondition)
-        );
-        const filteredRoles = data.mainRoles.filter(r =>
-          matchesSearch(searchTerm, r.name, r.description, r.descriptionShort)
-        );
+        const filteredCamps = filteredData.camps;
+        const filteredRoles = filteredData.mainRoles;
         return (
           <>
             {filteredCamps.length > 0 && (
               <div className="ref-section">
-                <h2 className="ref-section__title">Camps</h2>
+                <SectionTitle title="Camps" count={filteredCamps.length} />
                 <div className="ref-grid ref-grid--camps">
                   {filteredCamps.map(camp => (
                     <CampCard key={camp.id} camp={camp} />
@@ -288,7 +423,7 @@ export function GameReferencePage() {
             )}
             {filteredRoles.length > 0 && (
               <div className="ref-section">
-                <h2 className="ref-section__title">Rôles Principaux</h2>
+                <SectionTitle title="Rôles Principaux" count={filteredRoles.length} />
                 <div className="ref-grid">
                   {filteredRoles.map(role => (
                     <MainRoleCard key={role.id} role={role} />
@@ -301,12 +436,10 @@ export function GameReferencePage() {
       }
 
       case 'wolfPowers': {
-        const filtered = data.wolfPowers.filter(p =>
-          matchesSearch(searchTerm, p.name, p.description, p.descriptionShort)
-        );
+        const filtered = filteredData.wolfPowers;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Pouvoirs de Loup 🐺</h2>
+            <SectionTitle title="Pouvoirs de Loup 🐺" count={filtered.length} />
             <p className="ref-section__subtitle">Pouvoirs spéciaux assignés aux Loups en plus de leur rôle principal.</p>
             <div className="ref-grid">
               {filtered.map(p => <PowerCard key={p.id} power={p} variant="wolf" />)}
@@ -316,12 +449,10 @@ export function GameReferencePage() {
       }
 
       case 'villagerPowers': {
-        const filtered = data.villagerPowers.filter(p =>
-          matchesSearch(searchTerm, p.name, p.description, p.descriptionShort)
-        );
+        const filtered = filteredData.villagerPowers;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Métiers de Villageois 👤</h2>
+            <SectionTitle title="Métiers de Villageois 👤" count={filtered.length} />
             <p className="ref-section__subtitle">Pouvoirs spéciaux (métiers) assignés aux Villageois de base.</p>
             <div className="ref-grid">
               {filtered.map(p => <PowerCard key={p.id} power={p} variant="villager" />)}
@@ -331,12 +462,10 @@ export function GameReferencePage() {
       }
 
       case 'elitePowers': {
-        const filtered = data.elitePowers.filter(p =>
-          matchesSearch(searchTerm, p.name, p.description, p.descriptionShort)
-        );
+        const filtered = filteredData.elitePowers;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Pouvoirs d'Élite ⭐</h2>
+            <SectionTitle title="Pouvoirs d'Élite ⭐" count={filtered.length} />
             <p className="ref-section__subtitle">Pouvoirs spéciaux réservés aux Villageois Élite. Doivent utiliser une balle pour charger leur pouvoir.</p>
             <div className="ref-grid">
               {filtered.map(p => <PowerCard key={p.id} power={p} variant="elite" />)}
@@ -346,12 +475,10 @@ export function GameReferencePage() {
       }
 
       case 'secondaryRoles': {
-        const filtered = data.secondaryRoles.filter(r =>
-          matchesSearch(searchTerm, r.name, r.description, r.descriptionVillager, r.descriptionWolf)
-        );
+        const filtered = filteredData.secondaryRoles;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Rôles Secondaires 🔄</h2>
+            <SectionTitle title="Rôles Secondaires 🔄" count={filtered.length} />
             <p className="ref-section__subtitle">Assignés en plus du rôle principal. Peuvent avoir des effets différents selon que le joueur est Villageois ou Loup.</p>
             <div className="ref-grid">
               {filtered.map(r => <SecondaryRoleCard key={r.id} role={r} />)}
@@ -361,12 +488,10 @@ export function GameReferencePage() {
       }
 
       case 'deadRoles': {
-        const filtered = data.deadRoles.filter(r =>
-          matchesSearch(searchTerm, r.name, r.description)
-        );
+        const filtered = filteredData.deadRoles;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Rôles de Mort 👻</h2>
+            <SectionTitle title="Rôles de Mort 👻" count={filtered.length} />
             <p className="ref-section__subtitle">Rôles attribués aux joueurs après leur mort, leur permettant de continuer à influencer la partie.</p>
             <div className="ref-grid">
               {filtered.map(r => <DeadRoleCard key={r.id} role={r} />)}
@@ -376,12 +501,10 @@ export function GameReferencePage() {
       }
 
       case 'accessories': {
-        const filtered = data.accessories.filter(a =>
-          matchesSearch(searchTerm, a.name, a.description, a.tinkererEffect)
-        );
+        const filtered = filteredData.accessories;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Accessoires 💍</h2>
+            <SectionTitle title="Accessoires 💍" count={filtered.length} />
             <p className="ref-section__subtitle">Équipements passifs trouvés dans le jeu. Le rôle secondaire Bricoleur peut les activer pour un effet spécial.</p>
             <div className="ref-grid">
               {filtered.map(a => <AccessoryCard key={a.id} accessory={a} />)}
@@ -391,12 +514,10 @@ export function GameReferencePage() {
       }
 
       case 'gadgets': {
-        const filtered = data.gadgets.filter(g =>
-          matchesSearch(searchTerm, g.name, g.description)
-        );
+        const filtered = filteredData.gadgets;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Gadgets & Objets 🧪</h2>
+            <SectionTitle title="Gadgets & Objets 🧪" count={filtered.length} />
             <p className="ref-section__subtitle">Objets utilisables trouvés ou fabriqués pendant la partie.</p>
             <div className="ref-grid">
               {filtered.map(g => <GadgetCard key={g.id} gadget={g} />)}
@@ -406,17 +527,13 @@ export function GameReferencePage() {
       }
 
       case 'effects': {
-        const filteredPotions = data.potionEffects.filter(e =>
-          matchesSearch(searchTerm, e.name, e.tutorial)
-        );
-        const filteredStatus = data.statusEffects.filter(e =>
-          matchesSearch(searchTerm, e.name, e.tutorial)
-        );
+        const filteredPotions = filteredData.potionEffects;
+        const filteredStatus = filteredData.statusEffects;
         return (
           <>
             {filteredPotions.length > 0 && (
               <div className="ref-section">
-                <h2 className="ref-section__title">Effets de Potions 🧪</h2>
+                <SectionTitle title="Effets de Potions 🧪" count={filteredPotions.length} />
                 <p className="ref-section__subtitle">Effets applicables via les potions trouvées en jeu.</p>
                 <div className="ref-effects-grid">
                   {filteredPotions.map(e => <EffectCard key={e.id} effect={e} type="potion" />)}
@@ -425,7 +542,7 @@ export function GameReferencePage() {
             )}
             {filteredStatus.length > 0 && (
               <div className="ref-section">
-                <h2 className="ref-section__title">Effets de Statut ✨</h2>
+                <SectionTitle title="Effets de Statut ✨" count={filteredStatus.length} />
                 <p className="ref-section__subtitle">Tous les effets de statut pouvant affecter les joueurs pendant la partie.</p>
                 <div className="ref-effects-grid">
                   {filteredStatus.map(e => <EffectCard key={e.id} effect={e} type="status" />)}
@@ -437,12 +554,10 @@ export function GameReferencePage() {
       }
 
       case 'events': {
-        const filtered = data.events.filter(e =>
-          matchesSearch(searchTerm, e.name, e.description)
-        );
+        const filtered = filteredData.events;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Événements ⚡</h2>
+            <SectionTitle title="Événements ⚡" count={filtered.length} />
             <p className="ref-section__subtitle">Événements aléatoires pouvant survenir pendant une journée, affectant tous les joueurs.</p>
             <div className="ref-grid">
               {filtered.map(e => <EventCard key={e.id} event={e} />)}
@@ -452,12 +567,10 @@ export function GameReferencePage() {
       }
 
       case 'sabotages': {
-        const filtered = data.sabotages.filter(s =>
-          matchesSearch(searchTerm, s.name, s.description)
-        );
+        const filtered = filteredData.sabotages;
         return (
           <div className="ref-section">
-            <h2 className="ref-section__title">Sabotages 💣</h2>
+            <SectionTitle title="Sabotages 💣" count={filtered.length} />
             <p className="ref-section__subtitle">Actions de sabotage disponibles pour les Loups, utilisant des éléments du décor.</p>
             <div className="ref-grid">
               {filtered.map(s => <SabotageCard key={s.id} sabotage={s} />)}
@@ -473,42 +586,56 @@ export function GameReferencePage() {
 
   return (
     <div className="game-reference-page">
-      {/* Search bar */}
-      <div className="ref-search-container">
-        <input
-          type="text"
-          className="ref-search-input"
-          placeholder="🔍 Rechercher un rôle, pouvoir, objet, effet..."
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-        />
-        {searchTerm && (
-          <button
-            className="ref-search-clear"
-            onClick={() => setSearchTerm('')}
-            type="button"
-            title="Effacer la recherche"
-          >
-            ✕
-          </button>
-        )}
+      <div className="ref-toolbar">
+        <div className="ref-search-container">
+          <input
+            type="text"
+            className="ref-search-input"
+            placeholder="🔍 Rechercher un rôle, pouvoir, objet, effet..."
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+          {searchTerm && (
+            <button
+              className="ref-search-clear"
+              onClick={() => setSearchTerm('')}
+              type="button"
+              title="Effacer la recherche"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+
+        <div className="ref-search-meta">
+          <p className="ref-search-meta__summary">{searchSummary}</p>
+          <div className="ref-search-meta__chips">
+            <span className="ref-search-chip">
+              {selectedCategoryCount} dans {selectedCategoryMeta?.label || 'la catégorie active'}
+            </span>
+            {hasActiveSearch && (
+              <span className="ref-search-chip ref-search-chip--accent">Recherche active</span>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Category sub-navigation */}
       <nav className="lycans-categories-selection">
         {CATEGORIES.map(cat => {
-          const count = categoryCounts?.[cat.key];
-          const hasResults = !searchTerm || (count !== undefined && count > 0);
+          const count = filteredData.counts[cat.key] || 0;
+          const hasResults = !hasActiveSearch || count > 0;
           return (
             <button
               key={cat.key}
               className={`lycans-categorie-btn${selectedCategory === cat.key ? ' active' : ''}${!hasResults ? ' ref-cat-empty' : ''}`}
               onClick={() => setSelectedCategory(cat.key)}
               type="button"
+              aria-pressed={selectedCategory === cat.key}
             >
               <span>{cat.icon}</span>
               <span>{cat.label}</span>
-              {searchTerm && count !== undefined && (
+              {hasActiveSearch && (
                 <span className="ref-cat-count">{count}</span>
               )}
             </button>
@@ -518,7 +645,34 @@ export function GameReferencePage() {
 
       {/* Category content */}
       <div className="ref-content">
-        {renderCategoryContent()}
+        {selectedCategoryCount > 0 || !hasActiveSearch ? (
+          renderCategoryContent()
+        ) : (
+          <div className="ref-empty-state">
+            <h3 className="ref-empty-state__title">Aucun résultat dans cette catégorie</h3>
+            <p className="ref-empty-state__text">
+              La recherche "{searchTerm.trim()}" ne retourne aucun élément pour {selectedCategoryMeta?.label || 'la catégorie active'}.
+            </p>
+            <div className="ref-empty-state__actions">
+              <button
+                type="button"
+                className="ref-empty-state__button"
+                onClick={() => setSearchTerm('')}
+              >
+                Effacer la recherche
+              </button>
+              {firstCategoryWithResults && (
+                <button
+                  type="button"
+                  className="ref-empty-state__button ref-empty-state__button--ghost"
+                  onClick={() => setSelectedCategory(firstCategoryWithResults.key)}
+                >
+                  Ouvrir {firstCategoryWithResults.label} ({filteredData.counts[firstCategoryWithResults.key]})
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
