@@ -215,15 +215,35 @@ function EffectCard({ effect, type }: { effect: PotionEffectEntry | StatusEffect
   const typeClass = potionType === 'positive' ? 'ref-effect--positive' :
                     potionType === 'negative' ? 'ref-effect--negative' :
                     potionType === 'neutral' ? 'ref-effect--neutral' : '';
+
+  // Special rendering for Blanche potion with random effects
+  if (potionEffect?.randomEffects) {
+    return (
+      <div className={`ref-effect-card ref-effect-card--blanche ${typeClass}`}>
+        <div className="ref-effect-card__header">
+          <span className="ref-effect-card__name">{effect.name}</span>
+          {potionType && <span className="ref-effect-card__type">{potionType}</span>}
+          {potionEffect.source && <span className="ref-effect-card__source">🧪 {potionEffect.source}</span>}
+        </div>
+        {effect.tutorial && <p className="ref-effect-card__description">{effect.tutorial}</p>}
+        <div className="ref-effect-card__random-effects">
+          <span className="ref-effect-card__random-label">Effets possibles :</span>
+          {potionEffect.randomEffects.map(name => (
+            <span key={name} className="ref-effect-card__random-chip">{name}</span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={`ref-effect-tag ${typeClass}`}
-      title={effect.tutorial || undefined}
-      aria-label={effect.tutorial ? `${effect.name}: ${effect.tutorial}` : effect.name}
-    >
-      <span className="ref-effect-tag__name">{effect.name}</span>
-      {potionType && <span className="ref-effect-tag__type">{potionType}</span>}
-      {effect.tutorial && <span className="ref-effect-tag__tutorial">{effect.tutorial}</span>}
+    <div className={`ref-effect-card ${typeClass}`}>
+      <div className="ref-effect-card__header">
+        <span className="ref-effect-card__name">{effect.name}</span>
+        {potionType && <span className="ref-effect-card__type">{potionType}</span>}
+        {potionEffect?.source && <span className="ref-effect-card__source">🧪 {potionEffect.source}</span>}
+      </div>
+      {effect.tutorial && <p className="ref-effect-card__description">{effect.tutorial}</p>}
     </div>
   );
 }

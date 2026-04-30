@@ -1,8 +1,8 @@
 {
   "_meta": {
     "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and sabotages. Extracted from in-game translations and gameLog data.",
-    "version": "1.0.0",
-    "lastUpdated": "2026-04-29",
+    "version": "0.295",
+    "lastUpdated": "2026-04-30",
     "sourceTranslationsFile": "ExternalData/translations.json",
     "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions."
   },
@@ -862,18 +862,26 @@
   ],
 
   "potionEffects": [
-    { "id": "audition", "name": "Audition", "type": "positive", "translationKey": "EFFECT_AUDITION" },
+    { "id": "assassin", "name": "Assassin", "type": "positive", "translationKey": "NALES_EFFECT_ASSASSIN", "tutorial": "Vous permet de tuer un humain ou d'assommer un loup" },
     { "id": "audition-plus", "name": "Audition+", "type": "positive", "translationKey": "EFFECT_AUDITION_PLUS", "tutorial": "Vous entendez mieux et voyez les victimes sur la minimap" },
+    { "id": "celerite", "name": "Célérité", "type": "positive", "translationKey": "EFFECT_SPEED" },
+    { "id": "clairvoyance", "name": "Clairvoyance", "type": "positive", "translationKey": "NALES_EFFECT_CLAIRVOYANCE", "tutorial": "Indique les joueurs proches sur votre minimap" },
     { "id": "flatulence", "name": "Flatulences", "type": "negative", "translationKey": "EFFECT_FLATULENCE" },
     { "id": "geant", "name": "Géant", "type": "neutral", "translationKey": "EFFECT_GIANT" },
-    { "id": "lumineux", "name": "Lumineux", "type": "negative", "translationKey": "EFFECT_GLOWING" },
     { "id": "invisible", "name": "Invisible", "type": "positive", "translationKey": "EFFECT_INVISIBILITY" },
-    { "id": "vision-nocturne", "name": "Vision nocturne", "type": "positive", "translationKey": "EFFECT_NIGHT_VISION" },
-    { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
+    { "id": "lumineux", "name": "Lumineux", "type": "negative", "translationKey": "EFFECT_GLOWING" },
+    { "id": "midas", "name": "Midas", "type": "positive", "translationKey": "NALES_EFFECT_MIDAS", "tutorial": "Augmente vos récoltes et vous permet de pétrifier une cible" },
+    { "id": "minuscule", "name": "Minuscule", "type": "neutral", "translationKey": "NALES_EFFECT_TINY" },
+    { "id": "muet", "name": "Muet", "type": "negative", "translationKey": "NALES_EFFECT_MUTE" },
+    { "id": "myope", "name": "Myope", "type": "negative", "translationKey": "NALES_EFFECT_NEARSIGHTED" },
     { "id": "paranoia", "name": "Paranoia", "type": "negative", "translationKey": "EFFECT_PARANOIA" },
+    { "id": "puant", "name": "Puant", "type": "negative", "translationKey": "NALES_EFFECT_STINKING", "tutorial": "Ralentit les joueurs proches, portée plus grande sur les loups" },
     { "id": "rassasie", "name": "Rassasié", "type": "positive", "translationKey": "EFFECT_SATIATED" },
-    { "id": "celerite", "name": "Célérité", "type": "positive", "translationKey": "EFFECT_SPEED" },
-    { "id": "teleportation", "name": "Téléportation", "type": "neutral", "translationKey": "EFFECT_TELEPORTATION" }
+    { "id": "sourd", "name": "Sourd", "type": "negative", "translationKey": "NALES_EFFECT_DEAFNESS" },
+    { "id": "teleportation", "name": "Téléportation", "type": "neutral", "translationKey": "EFFECT_TELEPORTATION" },
+    { "id": "vampire", "name": "Vampire", "type": "neutral", "translationKey": "NALES_EFFECT_VAMPIRE" },
+    { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
+    { "id": "blanche", "name": "Blanche", "type": "positive", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] }
   ],
 
   "statusEffects": [

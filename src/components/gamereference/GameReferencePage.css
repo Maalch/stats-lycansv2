@@ -346,39 +346,44 @@
 }
 
 /* ============================================
-   Effects grid (compact tags instead of cards)
+   Effects grid (card layout with visible descriptions)
    ============================================ */
 .ref-effects-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.6rem;
 }
 
-.ref-effect-tag {
-  display: inline-flex;
-  align-items: center;
+.ref-effect-card {
+  display: flex;
+  flex-direction: column;
   gap: 0.3rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 16px;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  transition: border-color 0.2s;
-  position: relative;
-  cursor: default;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.ref-effect-tag:hover {
+.ref-effect-card:hover {
   border-color: var(--accent-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.ref-effect-tag__name {
-  font-weight: 500;
+.ref-effect-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.ref-effect-card__name {
+  font-weight: 600;
+  font-size: 0.88rem;
   color: var(--text-primary);
 }
 
-.ref-effect-tag__type {
+.ref-effect-card__type {
   font-size: 0.65rem;
   padding: 0.1rem 0.35rem;
   border-radius: 8px;
@@ -386,43 +391,73 @@
   text-transform: uppercase;
 }
 
-.ref-effect--positive .ref-effect-tag__type {
+.ref-effect--positive .ref-effect-card__type {
   background: rgba(46, 204, 113, 0.15);
   color: #2ecc71;
 }
 
-.ref-effect--negative .ref-effect-tag__type {
+.ref-effect--negative .ref-effect-card__type {
   background: rgba(231, 76, 60, 0.15);
   color: #e74c3c;
 }
 
-.ref-effect--neutral .ref-effect-tag__type {
+.ref-effect--neutral .ref-effect-card__type {
   background: rgba(149, 165, 166, 0.15);
   color: #95a5a6;
 }
 
-.ref-effect-tag__tutorial {
-  display: none;
+.ref-effect-card__source {
+  font-size: 0.68rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 8px;
+  background: rgba(243, 156, 18, 0.12);
+  color: #f39c12;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-left: auto;
 }
 
-.ref-effect-tag:hover .ref-effect-tag__tutorial {
-  display: block;
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  padding: 0.4rem 0.6rem;
-  font-size: 0.75rem;
+.ref-effect-card__description {
+  margin: 0;
+  font-size: 0.78rem;
   color: var(--text-secondary);
-  white-space: nowrap;
-  max-width: 300px;
-  white-space: normal;
-  z-index: 10;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  pointer-events: none;
+  line-height: 1.4;
+}
+
+/* Blanche potion — highlighted card */
+.ref-effect-card--blanche {
+  grid-column: 1 / -1;
+  border-left: 3px solid #f39c12;
+  background: var(--bg-secondary);
+}
+
+.ref-effect-card--blanche .ref-effect-card__name {
+  font-size: 0.95rem;
+}
+
+.ref-effect-card__random-effects {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.ref-effect-card__random-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 0.2rem;
+}
+
+.ref-effect-card__random-chip {
+  font-size: 0.72rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 12px;
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: #2ecc71;
+  font-weight: 500;
 }
 
 /* ============================================

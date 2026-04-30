@@ -96,6 +96,8 @@ export interface PotionEffectEntry {
   type: string;
   translationKey?: string;
   tutorial?: string;
+  source?: string;
+  randomEffects?: string[];
 }
 
 export interface StatusEffectEntry {
