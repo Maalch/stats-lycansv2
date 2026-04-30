@@ -215,7 +215,7 @@ function VillageoisDrillDown({
       {filter === 'all' && villageoisSecondary.length > 0 && (
         <div className="ref-section ref-section--related">
           <h3 className="ref-section__title">
-            <span>🔄 Rôles Secondaires (tout camp)</span>
+            <span>🔄 Rôles Secondaires (Villageois et Loups seulement)</span>
             <span className="ref-section__count">{villageoisSecondary.length}</span>
           </h3>
           <p className="ref-section__subtitle">
@@ -359,7 +359,7 @@ function LoupDrillDown({
       {filter === 'all' && secondaryRoles.length > 0 && (
         <div className="ref-section ref-section--related">
           <h3 className="ref-section__title">
-            <span>🔄 Rôles Secondaires (tout camp)</span>
+            <span>🔄 Rôles Secondaires (Villageois et Loups seulement)</span>
             <span className="ref-section__count">{secondaryRoles.length}</span>
           </h3>
           <p className="ref-section__subtitle">

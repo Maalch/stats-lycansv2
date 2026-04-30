@@ -768,7 +768,7 @@
       "name": "Piège",
       "emoji": "🪤",
       "translationKey": "NALES_GADGET_TRAP",
-      "description": "Piège posable au sol qui bloque et ralentit les joueurs qui marchent dessus."
+      "description": "Piège posable au sol qui immobilise et diminue la santé des joueurs qui marchent dessus. Le piège se casse automatiquement après quelques secondes."
     },
     {
       "id": "fumigene",
@@ -782,28 +782,28 @@
       "name": "Longue-vue",
       "emoji": "🔭",
       "translationKey": "NALES_GADGET_SPYGLASS",
-      "description": "Permet de voir plus loin que la normale."
+      "description": "Sur activation, permet de voir plus loin que la normale."
     },
     {
       "id": "verrou",
       "name": "Verrou",
       "emoji": "🔒",
       "translationKey": "NALES_GADGET_LOCK",
-      "description": "Permet de verrouiller une porte pour bloquer l'accès."
+      "description": "Permet de verrouiller une porte pour bloquer l'accès. Les joueurs peuvent casser le verrou en tappant dessus plusieurs fois (même action qu'ouvrir la porte), mais chaque coup diminue la santé du joueur ou du Loup transformé."
     },
     {
       "id": "cle",
       "name": "Clé",
       "emoji": "🔑",
       "translationKey": "NALES_GADGET_KEY",
-      "description": "Permet d'ouvrir les portes verrouillées."
+      "description": "Permet d'ouvrir les portes verrouillées. Automatiquement récupérée en posant un verrou. Ouvrir la porte récupère le verrou et le rend réutilisable."
     },
     {
       "id": "balle",
       "name": "Balle",
       "emoji": "🔫",
       "translationKey": "NALES_BULLET",
-      "description": "Munition pour recharger le fusil du Chasseur ou du Villageois Élite."
+      "description": "Munition pour recharger les pouvoirs des Villageois Élites."
     },
     {
       "id": "parchemin",
@@ -831,7 +831,7 @@
       "name": "Bouteille incendiaire",
       "emoji": "🔥",
       "translationKey": "NALES_GADGET_MOLOTOV",
-      "description": "Se lance et crée un mur de flammes de plus en plus grand."
+      "description": "Se lance et crée un mur de flammes qui blesse les joueurs qui le traversent."
     },
     {
       "id": "gaz",
