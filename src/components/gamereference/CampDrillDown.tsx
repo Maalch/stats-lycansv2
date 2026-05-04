@@ -217,7 +217,7 @@ function VillageoisDrillDown({
       {filter === 'all' && villageoisSecondary.length > 0 && (
         <div className="ref-section ref-section--related">
           <h3 className="ref-section__title">
-            <span>🔄 Rôles Secondaires (Villageois et Loups seulement)</span>
+            <span>🔄 Rôles Secondaires</span>
             <span className="ref-section__count">{villageoisSecondary.length}</span>
           </h3>
           <p className="ref-section__subtitle">
@@ -390,7 +390,7 @@ function LoupDrillDown({
       {filter === 'all' && secondaryRoles.length > 0 && (
         <div className="ref-section ref-section--related">
           <h3 className="ref-section__title">
-            <span>🔄 Rôles Secondaires (Villageois et Loups seulement)</span>
+            <span>🔄 Rôles Secondaires</span>
             <span className="ref-section__count">{secondaryRoles.length}</span>
           </h3>
           <p className="ref-section__subtitle">
@@ -442,7 +442,7 @@ function LoupDrillDown({
 // ============================================
 // Camp Drill-Down: Solo
 // ============================================
-function SoloDrillDown({ mainRoles }: { mainRoles: MainRoleEntry[] }) {
+function SoloDrillDown({ mainRoles, secondaryRoles }: { mainRoles: MainRoleEntry[]; secondaryRoles: SecondaryRoleEntry[] }) {
   const soloRoles = mainRoles.filter(r => r.camp === 'solo');
 
   return (
@@ -458,6 +458,29 @@ function SoloDrillDown({ mainRoles }: { mainRoles: MainRoleEntry[] }) {
           ))}
         </div>
       </div>
+
+      {secondaryRoles.length > 0 && (
+        <div className="ref-section ref-section--related">
+          <h3 className="ref-section__title">
+            <span>🔄 Rôles Secondaires</span>
+            <span className="ref-section__count">{secondaryRoles.length}</span>
+          </h3>
+          <p className="ref-section__subtitle">
+            Assignés en plus du rôle principal.
+          </p>
+          <div className="ref-grid">
+            {secondaryRoles.map(r => (
+              <div key={r.id} className="ref-card ref-card--secondary">
+                <div className="ref-card__header">
+                  <span className="ref-card__emoji">{r.emoji}</span>
+                  <h3 className="ref-card__title">{r.name}</h3>
+                </div>
+                <p className="ref-card__description">{r.descriptionShort || r.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -528,7 +551,7 @@ export function CampDrillDown({ camp, mainRoles, wolfPowers, villagerPowers, eli
         />
       );
     case 'solo':
-      return <SoloDrillDown mainRoles={mainRoles} />;
+      return <SoloDrillDown mainRoles={mainRoles} secondaryRoles={secondaryRoles} />;
     default:
       return null;
   }

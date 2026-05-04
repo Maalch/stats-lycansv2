@@ -544,6 +544,7 @@ export function GameReferencePage() {
                 camp={camp}
                 roles={filteredData.mainRoles.filter(r => r.camp === camp.id)}
                 onClick={() => handleCampClick(camp.id)}
+                powerCount={camp.id === 'villageois' ? filteredData.villagerPowers.length + filteredData.elitePowers.length : undefined}
               />
             ))}
           </div>
