@@ -413,6 +413,42 @@
 }
 
 /* ===========================
+   PERIOD TOGGLE (Monthly / Yearly)
+   =========================== */
+.monthly-period-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.monthly-period-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.45rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.monthly-period-btn:hover:not(.monthly-period-btn--active) {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+}
+
+.monthly-period-btn--active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+  cursor: default;
+}
+
+/* ===========================
    MONTH NAVIGATION
    =========================== */
 .monthly-nav {

@@ -11,14 +11,27 @@ import { MonthlyRankingBarRace, type BarRacePlayer } from './MonthlyRankingBarRa
 import { MonthlyRankingGameContext } from './MonthlyRankingGameContext';
 import { MonthlyRankingTimeline } from './MonthlyRankingTimeline';
 
-// Threshold: player must have played at least 40% of month's games to be ranked
+// Monthly threshold: player must have played at least 40% of month's games to be ranked
 const MIN_PARTICIPATION_RATIO = 0.40;
+// Yearly threshold: lower because more games overall in a year
+const MIN_PARTICIPATION_RATIO_YEARLY = 0.20;
 
 interface MonthData {
   key: string;        // "YYYY-MM" for sorting
   label: string;      // "Février 2026" for display
   totalGames: number;
   sortedGames: GameLogEntry[]; // Chronologically sorted games for animation
+}
+
+interface YearData {
+  key: string;         // "YYYY"
+  label: string;       // "2025"
+  totalGames: number;  // total games across all months in this year
+  sortedMonths: {      // months with games, sorted chronologically
+    key: string;       // "YYYY-MM"
+    label: string;     // "Janvier 2025"
+    games: GameLogEntry[];
+  }[];
 }
 
 const FRENCH_MONTHS = [
@@ -32,9 +45,118 @@ function formatMonthLabel(key: string): string {
   return `${FRENCH_MONTHS[monthIndex]} ${year}`;
 }
 
+/** Pure helper: build bar-race player list from a game set with eligibility filter. */
+function buildBarRacePlayers(
+  gamesToConsider: GameLogEntry[],
+  minGames: number,
+  highlightedPlayer: string | null | undefined,
+  prevRanks: Map<string, number>,
+  isAnimating: boolean,
+  currentFrameIndex: number,
+): { barRaceData: BarRacePlayer[]; playerAdded: boolean; avgWinRate: string; newRanks: Map<string, number> } {
+  const playerMap = new Map<string, { displayName: string; gamesPlayed: number; wins: number }>();
+  for (const game of gamesToConsider) {
+    for (const ps of game.PlayerStats) {
+      const id = getPlayerId(ps);
+      if (!playerMap.has(id)) {
+        playerMap.set(id, { displayName: ps.Username, gamesPlayed: 0, wins: 0 });
+      }
+      const entry = playerMap.get(id)!;
+      entry.gamesPlayed++;
+      if (ps.Victorious) entry.wins++;
+    }
+  }
+
+  interface EligiblePlayer {
+    name: string;
+    gamesPlayed: number;
+    wins: number;
+    winPercent: number;
+    isHighlightedAddition?: boolean;
+  }
+
+  const eligiblePlayers: EligiblePlayer[] = [];
+  for (const [, stats] of playerMap) {
+    if (stats.gamesPlayed >= minGames) {
+      eligiblePlayers.push({
+        name: stats.displayName,
+        gamesPlayed: stats.gamesPlayed,
+        wins: stats.wins,
+        winPercent: stats.gamesPlayed > 0 ? (stats.wins / stats.gamesPlayed) * 100 : 0,
+      });
+    }
+  }
+
+  eligiblePlayers.sort((a, b) => b.winPercent - a.winPercent || b.gamesPlayed - a.gamesPlayed);
+  const topPlayers = eligiblePlayers.slice(0, CHART_LIMITS.TOP_20);
+
+  let totalWinPercent = 0;
+  for (const p of eligiblePlayers) totalWinPercent += p.winPercent;
+  const avgWinRate = eligiblePlayers.length > 0
+    ? (totalWinPercent / eligiblePlayers.length).toFixed(1)
+    : '0';
+
+  let finalPlayers: EligiblePlayer[] = [...topPlayers];
+  let playerAdded = false;
+
+  if (highlightedPlayer) {
+    const inTop = topPlayers.some(p => p.name === highlightedPlayer);
+    if (!inTop) {
+      const fromEligible = eligiblePlayers.find(p => p.name === highlightedPlayer);
+      if (fromEligible) {
+        finalPlayers.push({ ...fromEligible, isHighlightedAddition: true });
+        playerAdded = true;
+      } else {
+        for (const [, stats] of playerMap) {
+          if (stats.displayName === highlightedPlayer && stats.gamesPlayed > 0) {
+            finalPlayers.push({
+              name: stats.displayName,
+              gamesPlayed: stats.gamesPlayed,
+              wins: stats.wins,
+              winPercent: (stats.wins / stats.gamesPlayed) * 100,
+              isHighlightedAddition: true,
+            });
+            playerAdded = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  finalPlayers.sort((a, b) => {
+    if (a.isHighlightedAddition && !b.isHighlightedAddition) return 1;
+    if (!a.isHighlightedAddition && b.isHighlightedAddition) return -1;
+    return b.winPercent - a.winPercent || b.gamesPlayed - a.gamesPlayed;
+  });
+
+  const newRanks = new Map<string, number>();
+  const barRaceData: BarRacePlayer[] = finalPlayers.map((p, index) => {
+    newRanks.set(p.name, index);
+    const prevRank = prevRanks.has(p.name) ? prevRanks.get(p.name)! : null;
+    const isNew = prevRank === null && isAnimating && currentFrameIndex > 1;
+    let rankDelta: number | null = null;
+    if (prevRank !== null && isAnimating) rankDelta = prevRank - index;
+    return {
+      name: p.name,
+      winPercent: p.winPercent,
+      gamesPlayed: p.gamesPlayed,
+      wins: p.wins,
+      rank: index,
+      prevRank,
+      rankDelta,
+      isNew,
+      isHighlightedAddition: p.isHighlightedAddition,
+    };
+  });
+
+  return { barRaceData, playerAdded, avgWinRate, newRanks };
+}
+
 /**
- * Standalone page for Monthly Ranking statistics.
- * Manages month selection state and persists it via NavigationContext.
+ * Standalone page for Monthly/Yearly Ranking statistics.
+ * Supports switching between monthly (game-by-game animation) and yearly (month-by-month animation).
+ * State persists via NavigationContext.
  */
 export function MonthlyRankingChart() {
   const { navigationState, updateNavigationState, navigateToGameDetails } = useNavigation();
@@ -42,13 +164,21 @@ export function MonthlyRankingChart() {
   const { gameData } = useCombinedFilteredRawData();
   const { joueursData } = useJoueursData();
   const playersColor = useThemeAdjustedDynamicPlayersColor(joueursData);
-  
-  // Initialize from navigationState with fallback to null (component will auto-select latest)
+
+  // Period mode: monthly (game-by-game animation) or yearly (month-by-month animation)
+  const [rankingPeriod, setRankingPeriod] = useState<'monthly' | 'yearly'>(
+    navigationState.monthlyRankingState?.rankingPeriod || 'monthly'
+  );
+
+  // Selected period units (auto-selects latest when null)
   const [selectedMonth, setSelectedMonth] = useState<string | null>(
     navigationState.monthlyRankingState?.selectedMonth || null
   );
+  const [selectedYear, setSelectedYear] = useState<string | null>(
+    navigationState.monthlyRankingState?.selectedYear || null
+  );
 
-  // Animation state
+  // Animation frame index: monthly = game index, yearly = month-frame index
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentGameIndex, setCurrentGameIndex] = useState<number>(
     navigationState.monthlyRankingState?.currentGameIndex || 0
@@ -61,22 +191,26 @@ export function MonthlyRankingChart() {
   // Track previous ranks for delta indicators
   const prevRanksRef = useRef<Map<string, number>>(new Map());
 
-  // Save state to navigation context when it changes (for back/forward navigation persistence)
+  // Persist state to NavigationContext
   useEffect(() => {
     const currentNavState = navigationState.monthlyRankingState;
-    if (!currentNavState || 
+    if (!currentNavState ||
         currentNavState.selectedMonth !== selectedMonth ||
         currentNavState.currentGameIndex !== currentGameIndex ||
-        currentNavState.playSpeed !== playSpeed) {
+        currentNavState.playSpeed !== playSpeed ||
+        currentNavState.rankingPeriod !== rankingPeriod ||
+        currentNavState.selectedYear !== selectedYear) {
       updateNavigationState({
         monthlyRankingState: {
           selectedMonth: selectedMonth || undefined,
           currentGameIndex,
-          playSpeed
+          playSpeed,
+          rankingPeriod,
+          selectedYear: selectedYear || undefined,
         }
       });
     }
-  }, [selectedMonth, currentGameIndex, playSpeed, updateNavigationState]);
+  }, [selectedMonth, currentGameIndex, playSpeed, rankingPeriod, selectedYear, updateNavigationState]);
 
   // Build monthly data from raw game log entries
   const { months, monthKeys } = useMemo(() => {
@@ -84,54 +218,88 @@ export function MonthlyRankingChart() {
       return { months: new Map<string, MonthData>(), monthKeys: [] };
     }
 
-    // Group games by month
     const monthGames = new Map<string, typeof gameData>();
     for (const game of gameData) {
       const date = new Date(game.StartDate);
       const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-      if (!monthGames.has(key)) {
-        monthGames.set(key, []);
-      }
+      if (!monthGames.has(key)) monthGames.set(key, []);
       monthGames.get(key)!.push(game);
     }
 
-    // Build monthly data
     const monthsMap = new Map<string, MonthData>();
     for (const [key, games] of monthGames) {
-      // Explicitly sort games chronologically by StartDate
       const sortedGames = [...games].sort(
         (a, b) => new Date(a.StartDate).getTime() - new Date(b.StartDate).getTime()
       );
-
-      monthsMap.set(key, {
-        key,
-        label: formatMonthLabel(key),
-        totalGames: games.length,
-        sortedGames,
-      });
+      monthsMap.set(key, { key, label: formatMonthLabel(key), totalGames: games.length, sortedGames });
     }
 
-    // Sort month keys chronologically
     const sortedKeys = [...monthsMap.keys()].sort();
-
     return { months: monthsMap, monthKeys: sortedKeys };
   }, [gameData]);
 
-  // Determine current month selection: use prop, fallback to latest month
-  const currentMonthKey = useMemo(() => {
-    if (selectedMonth && monthKeys.includes(selectedMonth)) {
-      return selectedMonth;
+  // Build yearly data from raw game log entries
+  const { years, yearKeys } = useMemo(() => {
+    if (!gameData || gameData.length === 0) {
+      return { years: new Map<string, YearData>(), yearKeys: [] };
     }
-    // Default to last month with games
+
+    // Group games by month key
+    const yearMonthGames = new Map<string, GameLogEntry[]>();
+    for (const game of gameData) {
+      const date = new Date(game.StartDate);
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+      if (!yearMonthGames.has(monthKey)) yearMonthGames.set(monthKey, []);
+      yearMonthGames.get(monthKey)!.push(game);
+    }
+
+    // Aggregate months into years
+    const yearsMap = new Map<string, YearData>();
+    for (const [monthKey, games] of yearMonthGames) {
+      const yearKey = monthKey.split('-')[0];
+      if (!yearsMap.has(yearKey)) {
+        yearsMap.set(yearKey, { key: yearKey, label: yearKey, totalGames: 0, sortedMonths: [] });
+      }
+      const yearEntry = yearsMap.get(yearKey)!;
+      const sortedGames = [...games].sort(
+        (a, b) => new Date(a.StartDate).getTime() - new Date(b.StartDate).getTime()
+      );
+      yearEntry.sortedMonths.push({ key: monthKey, label: formatMonthLabel(monthKey), games: sortedGames });
+      yearEntry.totalGames += games.length;
+    }
+
+    // Sort months within each year chronologically
+    for (const year of yearsMap.values()) {
+      year.sortedMonths.sort((a, b) => a.key.localeCompare(b.key));
+    }
+
+    const sortedKeys = [...yearsMap.keys()].sort();
+    return { years: yearsMap, yearKeys: sortedKeys };
+  }, [gameData]);
+
+  // Resolve effective period units (fallback to latest)
+  const currentMonthKey = useMemo(() => {
+    if (selectedMonth && monthKeys.includes(selectedMonth)) return selectedMonth;
     return monthKeys.length > 0 ? monthKeys[monthKeys.length - 1] : null;
   }, [selectedMonth, monthKeys]);
 
-  // Auto-set month to latest if not set yet
+  const currentYearKey = useMemo(() => {
+    if (selectedYear && yearKeys.includes(selectedYear)) return selectedYear;
+    return yearKeys.length > 0 ? yearKeys[yearKeys.length - 1] : null;
+  }, [selectedYear, yearKeys]);
+
   const effectiveMonth = currentMonthKey;
+  const effectiveYear = currentYearKey;
 
   const currentMonthData = effectiveMonth ? months.get(effectiveMonth) : null;
+  const currentYearData = effectiveYear ? years.get(effectiveYear) : null;
 
-  // Reset animation and previous ranks when month changes
+  // Total animation frames: monthly = total games, yearly = total months in year
+  const totalFrames = rankingPeriod === 'monthly'
+    ? (currentMonthData?.totalGames ?? 0)
+    : (currentYearData?.sortedMonths.length ?? 0);
+
+  // Reset animation and rank history when period-unit or mode changes
   useEffect(() => {
     setCurrentGameIndex(0);
     setIsPlaying(false);
@@ -140,164 +308,68 @@ export function MonthlyRankingChart() {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-  }, [effectiveMonth]);
+  }, [effectiveMonth, effectiveYear, rankingPeriod]);
 
   // Build bar-race data with highlighted player logic and rank deltas
-  const { barRacePlayers, highlightedPlayerAdded, averageWinRate, minGamesRequired, effectiveTotalGames, currentGame } = useMemo(() => {
-    if (!currentMonthData) {
-      return { barRacePlayers: [], highlightedPlayerAdded: false, averageWinRate: '0', minGamesRequired: 0, effectiveTotalGames: 0, currentGame: null as GameLogEntry | null };
-    }
-
-    // When animating (currentGameIndex > 0), use subset of games
+  const { barRacePlayers, highlightedPlayerAdded, averageWinRate, minGamesRequired, effectiveTotalGames, currentGame, currentMonthContext } = useMemo(() => {
     const isAnimating = currentGameIndex > 0;
-    const gamesToConsider = isAnimating 
-      ? currentMonthData.sortedGames.slice(0, currentGameIndex)
-      : currentMonthData.sortedGames;
-    const effectiveTotal = isAnimating ? currentGameIndex : currentMonthData.totalGames;
-    const minGames = Math.ceil(effectiveTotal * MIN_PARTICIPATION_RATIO);
+    const defaultReturn = {
+      barRacePlayers: [] as BarRacePlayer[],
+      highlightedPlayerAdded: false,
+      averageWinRate: '0',
+      minGamesRequired: 0,
+      effectiveTotalGames: 0,
+      currentGame: null as GameLogEntry | null,
+      currentMonthContext: null as { label: string; games: number } | null,
+    };
 
-    // Current game for context panel (the last game in the considered set)
-    const latestGame = isAnimating && gamesToConsider.length > 0
-      ? gamesToConsider[gamesToConsider.length - 1]
-      : null;
+    // ── Monthly mode ──
+    if (rankingPeriod === 'monthly') {
+      if (!currentMonthData) return defaultReturn;
 
-    // Recalculate player stats based on gamesToConsider
-    const playerMap = new Map<string, { displayName: string; gamesPlayed: number; wins: number }>();
-    for (const game of gamesToConsider) {
-      for (const ps of game.PlayerStats) {
-        const id = getPlayerId(ps);
-        if (!playerMap.has(id)) {
-          playerMap.set(id, { displayName: ps.Username, gamesPlayed: 0, wins: 0 });
-        }
-        const entry = playerMap.get(id)!;
-        entry.gamesPlayed++;
-        if (ps.Victorious) {
-          entry.wins++;
-        }
-      }
-    }
+      const gamesToConsider = isAnimating
+        ? currentMonthData.sortedGames.slice(0, currentGameIndex)
+        : currentMonthData.sortedGames;
+      const effectiveTotal = isAnimating ? currentGameIndex : currentMonthData.totalGames;
+      const minGames = Math.ceil(effectiveTotal * MIN_PARTICIPATION_RATIO);
+      const latestGame = isAnimating && gamesToConsider.length > 0
+        ? gamesToConsider[gamesToConsider.length - 1]
+        : null;
 
-    // Build eligible players
-    interface EligiblePlayer {
-      name: string;
-      gamesPlayed: number;
-      wins: number;
-      winPercent: number;
-      isHighlightedAddition?: boolean;
-    }
-
-    const eligiblePlayers: EligiblePlayer[] = [];
-    for (const [, stats] of playerMap) {
-      if (stats.gamesPlayed >= minGames) {
-        eligiblePlayers.push({
-          name: stats.displayName,
-          gamesPlayed: stats.gamesPlayed,
-          wins: stats.wins,
-          winPercent: stats.gamesPlayed > 0
-            ? (stats.wins / stats.gamesPlayed) * 100
-            : 0,
-        });
-      }
-    }
-
-    // Sort by win rate descending, then by games played for ties
-    eligiblePlayers.sort((a, b) => b.winPercent - a.winPercent || b.gamesPlayed - a.gamesPlayed);
-    const chartLimit = CHART_LIMITS.TOP_20;
-    const topPlayers = eligiblePlayers.slice(0, chartLimit);
-
-    // Average win rate across eligible players
-    let totalWinPercent = 0;
-    for (const p of eligiblePlayers) {
-      totalWinPercent += p.winPercent;
-    }
-    const avgWinRate = eligiblePlayers.length > 0
-      ? (totalWinPercent / eligiblePlayers.length).toFixed(1)
-      : '0';
-
-    // Check if highlighted player is in top N
-    let finalPlayers: EligiblePlayer[] = [...topPlayers];
-    let playerAdded = false;
-
-    if (settings.highlightedPlayer) {
-      const inTop = topPlayers.some(p => p.name === settings.highlightedPlayer);
-      if (!inTop) {
-        const fromEligible = eligiblePlayers.find(p => p.name === settings.highlightedPlayer);
-        if (fromEligible) {
-          finalPlayers.push({ ...fromEligible, isHighlightedAddition: true });
-          playerAdded = true;
-        } else {
-          // Player might not meet threshold
-          let found = false;
-          for (const [, stats] of playerMap) {
-            if (stats.displayName === settings.highlightedPlayer && stats.gamesPlayed > 0) {
-              finalPlayers.push({
-                name: settings.highlightedPlayer,
-                gamesPlayed: stats.gamesPlayed,
-                wins: stats.wins,
-                winPercent: (stats.wins / stats.gamesPlayed) * 100,
-                isHighlightedAddition: true,
-              });
-              playerAdded = true;
-              found = true;
-              break;
-            }
-          }
-          if (!found) {
-            // Also search by canonical name in playerMap
-            for (const [, stats] of playerMap) {
-              if (stats.displayName === settings.highlightedPlayer && stats.gamesPlayed > 0) {
-                finalPlayers.push({
-                  name: stats.displayName,
-                  gamesPlayed: stats.gamesPlayed,
-                  wins: stats.wins,
-                  winPercent: (stats.wins / stats.gamesPlayed) * 100,
-                  isHighlightedAddition: true,
-                });
-                playerAdded = true;
-                break;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // Sort final list by win rate (highlighted additions go at the end)
-    finalPlayers.sort((a, b) => {
-      // Highlighted additions always at the end
-      if (a.isHighlightedAddition && !b.isHighlightedAddition) return 1;
-      if (!a.isHighlightedAddition && b.isHighlightedAddition) return -1;
-      return b.winPercent - a.winPercent || b.gamesPlayed - a.gamesPlayed;
-    });
-
-    // Build BarRacePlayer[] with rank and delta info
-    const prevRanks = prevRanksRef.current;
-    const newRanks = new Map<string, number>();
-    
-    const barRaceData: BarRacePlayer[] = finalPlayers.map((p, index) => {
-      newRanks.set(p.name, index);
-      const prevRank = prevRanks.has(p.name) ? prevRanks.get(p.name)! : null;
-      const isNew = prevRank === null && isAnimating && currentGameIndex > 1;
-      
-      let rankDelta: number | null = null;
-      if (prevRank !== null && isAnimating) {
-        rankDelta = prevRank - index; // positive = moved up
-      }
+      const { barRaceData, playerAdded, avgWinRate, newRanks } = buildBarRacePlayers(
+        gamesToConsider, minGames, settings.highlightedPlayer, prevRanksRef.current, isAnimating, currentGameIndex
+      );
+      prevRanksRef.current = newRanks;
 
       return {
-        name: p.name,
-        winPercent: p.winPercent,
-        gamesPlayed: p.gamesPlayed,
-        wins: p.wins,
-        rank: index,
-        prevRank,
-        rankDelta,
-        isNew,
-        isHighlightedAddition: p.isHighlightedAddition,
+        barRacePlayers: barRaceData,
+        highlightedPlayerAdded: playerAdded,
+        averageWinRate: avgWinRate,
+        minGamesRequired: minGames,
+        effectiveTotalGames: effectiveTotal,
+        currentGame: latestGame,
+        currentMonthContext: null,
       };
-    });
+    }
 
-    // Update prevRanks for next frame
+    // ── Yearly mode ──
+    if (!currentYearData) return defaultReturn;
+
+    const monthsToConsider = isAnimating
+      ? currentYearData.sortedMonths.slice(0, currentGameIndex)
+      : currentYearData.sortedMonths;
+    const gamesFromMonths: GameLogEntry[] = [];
+    for (const m of monthsToConsider) gamesFromMonths.push(...m.games);
+    const effectiveTotal = gamesFromMonths.length;
+    const minGames = Math.max(1, Math.ceil(currentYearData.totalGames * MIN_PARTICIPATION_RATIO_YEARLY));
+
+    const latestMonth = isAnimating && monthsToConsider.length > 0
+      ? monthsToConsider[monthsToConsider.length - 1]
+      : null;
+
+    const { barRaceData, playerAdded, avgWinRate, newRanks } = buildBarRacePlayers(
+      gamesFromMonths, minGames, settings.highlightedPlayer, prevRanksRef.current, isAnimating, currentGameIndex
+    );
     prevRanksRef.current = newRanks;
 
     return {
@@ -306,37 +378,48 @@ export function MonthlyRankingChart() {
       averageWinRate: avgWinRate,
       minGamesRequired: minGames,
       effectiveTotalGames: effectiveTotal,
-      currentGame: latestGame,
+      currentGame: null,
+      currentMonthContext: latestMonth
+        ? { label: latestMonth.label, games: latestMonth.games.length }
+        : null,
     };
-  }, [currentMonthData, settings.highlightedPlayer, currentGameIndex]);
+  }, [rankingPeriod, currentMonthData, currentYearData, settings.highlightedPlayer, currentGameIndex]);
 
-  // Navigation handlers
-  const currentIndex = effectiveMonth ? monthKeys.indexOf(effectiveMonth) : -1;
-  const canGoPrev = currentIndex > 0;
-  const canGoNext = currentIndex < monthKeys.length - 1;
+  // ── Navigation handlers ──
+  const monthIndex = effectiveMonth ? monthKeys.indexOf(effectiveMonth) : -1;
+  const canGoPrevMonth = monthIndex > 0;
+  const canGoNextMonth = monthIndex < monthKeys.length - 1;
 
   const goToPrevMonth = useCallback(() => {
-    if (canGoPrev) {
-      setSelectedMonth(monthKeys[currentIndex - 1]);
-    }
-  }, [canGoPrev, currentIndex, monthKeys]);
+    if (canGoPrevMonth) setSelectedMonth(monthKeys[monthIndex - 1]);
+  }, [canGoPrevMonth, monthIndex, monthKeys]);
 
   const goToNextMonth = useCallback(() => {
-    if (canGoNext) {
-      setSelectedMonth(monthKeys[currentIndex + 1]);
-    }
-  }, [canGoNext, currentIndex, monthKeys]);
+    if (canGoNextMonth) setSelectedMonth(monthKeys[monthIndex + 1]);
+  }, [canGoNextMonth, monthIndex, monthKeys]);
 
-  // Animation loop
+  const yearIndex = effectiveYear ? yearKeys.indexOf(effectiveYear) : -1;
+  const canGoPrevYear = yearIndex > 0;
+  const canGoNextYear = yearIndex < yearKeys.length - 1;
+
+  const goToPrevYear = useCallback(() => {
+    if (canGoPrevYear) setSelectedYear(yearKeys[yearIndex - 1]);
+  }, [canGoPrevYear, yearIndex, yearKeys]);
+
+  const goToNextYear = useCallback(() => {
+    if (canGoNextYear) setSelectedYear(yearKeys[yearIndex + 1]);
+  }, [canGoNextYear, yearIndex, yearKeys]);
+
+  // ── Animation loop ──
   useEffect(() => {
-    if (!isPlaying || !currentMonthData) return;
+    if (!isPlaying || totalFrames === 0) return;
 
     intervalRef.current = setInterval(() => {
       setCurrentGameIndex(prev => {
         const nextIndex = prev + 1;
-        if (nextIndex > currentMonthData.totalGames) {
-          setIsPlaying(false); // Auto-stop at end
-          return 0; // Reset to show all games
+        if (nextIndex > totalFrames) {
+          setIsPlaying(false);
+          return 0;
         }
         return nextIndex;
       });
@@ -348,40 +431,31 @@ export function MonthlyRankingChart() {
         intervalRef.current = null;
       }
     };
-  }, [isPlaying, playSpeed, currentMonthData]);
+  }, [isPlaying, playSpeed, totalFrames]);
 
-  // Playback control handlers
+  // ── Playback control handlers ──
   const handlePlayPause = useCallback(() => {
-    if (currentGameIndex === 0 && !isPlaying) {
-      // Starting animation from the end - begin at game 1
-      setCurrentGameIndex(1);
-    }
-    setIsPlaying(!isPlaying);
+    if (currentGameIndex === 0 && !isPlaying) setCurrentGameIndex(1);
+    setIsPlaying(prev => !prev);
   }, [isPlaying, currentGameIndex]);
 
   const handleStepBackward = useCallback(() => {
     setIsPlaying(false);
-    if (!currentMonthData) return;
     setCurrentGameIndex(prev => {
-      if (prev === 0) {
-        // From all-games view, step to the last game
-        return currentMonthData.totalGames;
-      }
+      if (prev === 0) return totalFrames;
       return Math.max(1, prev - 1);
     });
-  }, [currentMonthData]);
+  }, [totalFrames]);
 
   const handleStepForward = useCallback(() => {
     setIsPlaying(false);
     setCurrentGameIndex(prev => {
-      if (!currentMonthData) return prev;
-      if (prev === 0) return 1; // From all-games view, start at game 1
-      if (prev >= currentMonthData.totalGames) return 0; // At last game, go to full view
+      if (prev === 0) return 1;
+      if (prev >= totalFrames) return 0;
       return prev + 1;
     });
-  }, [currentMonthData]);
+  }, [totalFrames]);
 
-  // Seek handler for the timeline slider
   const handleTimelineSeek = useCallback((index: number) => {
     setCurrentGameIndex(index);
   }, []);
@@ -390,105 +464,161 @@ export function MonthlyRankingChart() {
     setIsPlaying(false);
   }, []);
 
-  // Player click handler — navigate to game details filtered by the current month
+  // ── Player click handler ──
   const handlePlayerClick = useCallback((playerName: string) => {
-    // Convert "YYYY-MM" to "MM/YYYY" for selectedDate period filter
-    const selectedDate = effectiveMonth
-      ? effectiveMonth.split('-').reverse().join('/')
-      : undefined;
-    navigateToGameDetails({
-      selectedPlayer: playerName,
-      selectedDate,
-      fromComponent: `Classement Mensuel — ${currentMonthData?.label || ''}`
-    });
-  }, [navigateToGameDetails, currentMonthData, effectiveMonth]);
+    if (rankingPeriod === 'monthly') {
+      const selectedDate = effectiveMonth
+        ? effectiveMonth.split('-').reverse().join('/')
+        : undefined;
+      navigateToGameDetails({
+        selectedPlayer: playerName,
+        selectedDate,
+        fromComponent: `Classement Mensuel — ${currentMonthData?.label || ''}`,
+      });
+    } else {
+      navigateToGameDetails({
+        selectedPlayer: playerName,
+        fromComponent: `Classement Annuel — ${effectiveYear || ''}`,
+      });
+    }
+  }, [rankingPeriod, navigateToGameDetails, currentMonthData, effectiveMonth, effectiveYear]);
 
-  // Game context click handler
+  // ── Game context click handler ──
   const handleGameClick = useCallback((gameId: string) => {
     navigateToGameDetails({
       selectedGame: gameId,
-      fromComponent: `Classement Mensuel — ${currentMonthData?.label || ''}`
+      fromComponent: rankingPeriod === 'monthly'
+        ? `Classement Mensuel — ${currentMonthData?.label || ''}`
+        : `Classement Annuel — ${effectiveYear || ''}`,
     });
-  }, [navigateToGameDetails, currentMonthData]);
+  }, [navigateToGameDetails, rankingPeriod, currentMonthData, effectiveYear]);
 
-  // Transition duration = 80% of play speed for smooth overlap
-  const transitionDuration = Math.round(playSpeed * 0.8);
+  // ── Timeline labels ──
   const isAnimating = currentGameIndex > 0;
+  const transitionDuration = Math.round(playSpeed * 0.8);
 
+  const timelineAllLabel = rankingPeriod === 'yearly'
+    ? `Année complète (${currentYearData?.totalGames ?? 0} parties)`
+    : undefined;
+
+  const timelineCurrentLabel = useMemo(() => {
+    if (rankingPeriod !== 'yearly' || !currentYearData || currentGameIndex === 0) return undefined;
+    const month = currentYearData.sortedMonths[currentGameIndex - 1];
+    if (!month) return undefined;
+    const cumulative = currentYearData.sortedMonths
+      .slice(0, currentGameIndex)
+      .reduce((sum, m) => sum + m.games.length, 0);
+    return `${month.label} (${cumulative} parties cumulées)`;
+  }, [rankingPeriod, currentYearData, currentGameIndex]);
+
+  // ── Early returns ──
   if (!gameData || gameData.length === 0) {
-    return <div className="donnees-manquantes">Aucune donnée disponible pour le classement mensuel</div>;
+    return <div className="donnees-manquantes">Aucune donnée disponible pour le classement</div>;
   }
-
-  if (monthKeys.length === 0) {
+  if (rankingPeriod === 'monthly' && monthKeys.length === 0) {
     return <div className="donnees-manquantes">Aucun mois avec des parties trouvé</div>;
   }
+  if (rankingPeriod === 'yearly' && yearKeys.length === 0) {
+    return <div className="donnees-manquantes">Aucune année avec des parties trouvée</div>;
+  }
+
+  const activeLabel = rankingPeriod === 'monthly'
+    ? (currentMonthData?.label || '')
+    : (effectiveYear || '');
+  const eligibleCount = barRacePlayers.filter(p => !p.isHighlightedAddition).length;
+  const participationPct = Math.round(
+    (rankingPeriod === 'monthly' ? MIN_PARTICIPATION_RATIO : MIN_PARTICIPATION_RATIO_YEARLY) * 100
+  );
 
   return (
     <div className="lycans-players-stats">
-      <h2>Classement Mensuel</h2>
+      <h2>Classement par Période</h2>
       <p className="lycans-stats-info">
-        Classement des joueurs par taux de victoire pour chaque mois
+        Classement des joueurs par taux de victoire
         <br />
         <span style={{ fontSize: '0.85rem', fontStyle: 'italic' }}>
-          Seuls les joueurs ayant participé à au moins 40% des parties du mois sont classés
+          {rankingPeriod === 'monthly'
+            ? 'Seuls les joueurs ayant participé à au moins 40% des parties du mois sont classés'
+            : "Seuls les joueurs ayant participé à au moins 20% des parties de l'année sont classés"}
         </span>
       </p>
 
       <div className="lycans-graphiques-groupe">
         <div className="lycans-graphique-section">
+          {/* Period toggle */}
+          <div className="monthly-period-toggle">
+            <button
+              className={`monthly-period-btn${rankingPeriod === 'monthly' ? ' monthly-period-btn--active' : ''}`}
+              onClick={() => setRankingPeriod('monthly')}
+            >
+              📅 Mensuel
+            </button>
+            <button
+              className={`monthly-period-btn${rankingPeriod === 'yearly' ? ' monthly-period-btn--active' : ''}`}
+              onClick={() => setRankingPeriod('yearly')}
+            >
+              📆 Annuel
+            </button>
+          </div>
+
           <div>
-            <h3>Classement Mensuel — Taux de Victoire</h3>
+            <h3>
+              {rankingPeriod === 'monthly' ? 'Classement Mensuel' : 'Classement Annuel'} — Taux de Victoire
+            </h3>
             {highlightedPlayerAdded && settings.highlightedPlayer && (
               <p style={{
                 fontSize: '0.8rem',
                 color: 'var(--accent-primary)',
                 fontStyle: 'italic',
                 marginTop: '0.25rem',
-                marginBottom: '0.5rem'
+                marginBottom: '0.5rem',
               }}>
                 🎯 "{settings.highlightedPlayer}" affiché en plus du classement
               </p>
             )}
           </div>
 
-          {/* Month navigation controls */}
-          <div className="monthly-nav">
-            <button onClick={goToPrevMonth} disabled={!canGoPrev}>◀</button>
-            <select
-              value={effectiveMonth || ''}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-            >
-              {monthKeys.map(key => (
-                <option key={key} value={key}>
-                  {formatMonthLabel(key)}
-                </option>
-              ))}
-            </select>
-            <button onClick={goToNextMonth} disabled={!canGoNext}>▶</button>
-          </div>
+          {/* Period navigation controls */}
+          {rankingPeriod === 'monthly' ? (
+            <div className="monthly-nav">
+              <button onClick={goToPrevMonth} disabled={!canGoPrevMonth}>◀</button>
+              <select
+                value={effectiveMonth || ''}
+                onChange={(e) => setSelectedMonth(e.target.value)}
+              >
+                {monthKeys.map(key => (
+                  <option key={key} value={key}>{formatMonthLabel(key)}</option>
+                ))}
+              </select>
+              <button onClick={goToNextMonth} disabled={!canGoNextMonth}>▶</button>
+            </div>
+          ) : (
+            <div className="monthly-nav">
+              <button onClick={goToPrevYear} disabled={!canGoPrevYear}>◀</button>
+              <select
+                value={effectiveYear || ''}
+                onChange={(e) => setSelectedYear(e.target.value)}
+              >
+                {yearKeys.map(key => (
+                  <option key={key} value={key}>{key}</option>
+                ))}
+              </select>
+              <button onClick={goToNextYear} disabled={!canGoNextYear}>▶</button>
+            </div>
+          )}
 
           {/* Animation controls */}
-          {currentMonthData && currentMonthData.totalGames > 0 && (
+          {totalFrames > 0 && (
             <>
               <div className="monthly-controls">
-                <button onClick={handleStepBackward}>
-                  ◀ Précédente
-                </button>
-
+                <button onClick={handleStepBackward}>◀ Précédente</button>
                 <button
                   className={`monthly-play-btn ${isPlaying ? 'monthly-play-btn--active' : ''}`}
                   onClick={handlePlayPause}
-                  disabled={currentMonthData.totalGames === 0}
                 >
                   {isPlaying ? '⏸ Pause' : '▶ Play'}
                 </button>
-
-                <button
-                  onClick={handleStepForward}
-                >
-                  Suivante ▶
-                </button>
-
+                <button onClick={handleStepForward}>Suivante ▶</button>
                 <select
                   value={playSpeed}
                   onChange={(e) => setPlaySpeed(Number(e.target.value))}
@@ -502,25 +632,42 @@ export function MonthlyRankingChart() {
 
               {/* Timeline slider */}
               <MonthlyRankingTimeline
-                totalGames={currentMonthData.totalGames}
+                totalGames={totalFrames}
                 currentGameIndex={currentGameIndex}
                 isPlaying={isPlaying}
                 onSeek={handleTimelineSeek}
                 onPause={handleTimelinePause}
+                allFramesLabel={timelineAllLabel}
+                currentFrameLabel={timelineCurrentLabel}
               />
             </>
           )}
 
-          {/* Game context panel — shows info about the latest game during playback */}
-          {isAnimating && currentGame && (
+          {/* Context panel during animation */}
+          {isAnimating && rankingPeriod === 'monthly' && currentGame && (
             <MonthlyRankingGameContext
               game={currentGame}
               onGameClick={handleGameClick}
             />
           )}
+          {isAnimating && rankingPeriod === 'yearly' && currentMonthContext && (
+            <div className="game-context-panel">
+              <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>
+                📅 {currentMonthContext.label}
+              </span>
+              <span className="game-context-separator">|</span>
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                +{currentMonthContext.games} partie{currentMonthContext.games > 1 ? 's' : ''} ce mois
+              </span>
+              <span className="game-context-separator">|</span>
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                {effectiveTotalGames} parties cumulées
+              </span>
+            </div>
+          )}
 
           {/* Bar race chart */}
-          <FullscreenChart title={`Classement Mensuel — ${currentMonthData?.label || ''}`}>
+          <FullscreenChart title={`${rankingPeriod === 'monthly' ? 'Classement Mensuel' : 'Classement Annuel'} — ${activeLabel}`}>
             {(isFullscreen: boolean) => (
               <MonthlyRankingBarRace
                 players={barRacePlayers}
@@ -536,14 +683,13 @@ export function MonthlyRankingChart() {
 
           {/* Summary info */}
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textAlign: 'center', marginTop: '0.5rem' }}>
-            {currentMonthData && (
+            {eligibleCount > 0 && (
               <>
-                {barRacePlayers.filter(p => !p.isHighlightedAddition).length} joueur{barRacePlayers.filter(p => !p.isHighlightedAddition).length > 1 ? 's' : ''} classé{barRacePlayers.filter(p => !p.isHighlightedAddition).length > 1 ? 's' : ''} sur{' '}
-                {effectiveTotalGames} partie{effectiveTotalGames > 1 ? 's' : ''}{currentGameIndex > 0 ? ' (animation)' : ' ce mois'}
-                {' '}(min. {minGamesRequired} partie{minGamesRequired > 1 ? 's' : ''} — {Math.round(MIN_PARTICIPATION_RATIO * 100)}%)
-                {averageWinRate !== '0' && (
-                  <> · Moyenne: {averageWinRate}%</>
-                )}
+                {eligibleCount} joueur{eligibleCount > 1 ? 's' : ''} classé{eligibleCount > 1 ? 's' : ''} sur{' '}
+                {effectiveTotalGames} partie{effectiveTotalGames > 1 ? 's' : ''}
+                {currentGameIndex > 0 ? ' (animation)' : rankingPeriod === 'monthly' ? ' ce mois' : ' cette année'}
+                {' '}(min. {minGamesRequired} partie{minGamesRequired > 1 ? 's' : ''} — {participationPct}%)
+                {averageWinRate !== '0' && <> · Moyenne: {averageWinRate}%</>}
               </>
             )}
           </p>
@@ -552,3 +698,4 @@ export function MonthlyRankingChart() {
     </div>
   );
 }
+

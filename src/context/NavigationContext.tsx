@@ -110,8 +110,10 @@ export interface DeathLocationState {
 
 export interface MonthlyRankingState {
   selectedMonth?: string; // "YYYY-MM" for monthly ranking view
-  currentGameIndex?: number; // 0 = show all games, >0 = show first N games (for animation)
+  currentGameIndex?: number; // 0 = show all games/months, >0 = show first N frames (for animation)
   playSpeed?: number; // Animation speed in milliseconds (500, 1000, 2000)
+  rankingPeriod?: 'monthly' | 'yearly'; // Toggle between monthly and yearly ranking
+  selectedYear?: string; // "YYYY" for yearly ranking view
 }
 
 export interface PotionScrollStatsState {

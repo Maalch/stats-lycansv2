@@ -1,9 +1,12 @@
 interface MonthlyRankingTimelineProps {
   totalGames: number;
-  currentGameIndex: number;  // 0 = show all games
+  currentGameIndex: number;  // 0 = show all games/frames
   isPlaying: boolean;
   onSeek: (index: number) => void;
   onPause: () => void;
+  // Optional overrides for custom labels (e.g., yearly mode)
+  allFramesLabel?: string;   // replaces "Toutes les X parties"
+  currentFrameLabel?: string; // replaces "Partie X / Y"
 }
 
 export function MonthlyRankingTimeline({
@@ -12,6 +15,8 @@ export function MonthlyRankingTimeline({
   isPlaying,
   onSeek,
   onPause,
+  allFramesLabel,
+  currentFrameLabel,
 }: MonthlyRankingTimelineProps) {
   // When currentGameIndex is 0 (show all), slider should be at the end
   const sliderValue = currentGameIndex === 0 ? totalGames : currentGameIndex;
@@ -46,8 +51,8 @@ export function MonthlyRankingTimeline({
       <div className="monthly-timeline-labels">
         <span className="monthly-timeline-current">
           {currentGameIndex === 0
-            ? `Toutes les ${totalGames} parties`
-            : `Partie ${currentGameIndex} / ${totalGames}`}
+            ? (allFramesLabel ?? `Toutes les ${totalGames} parties`)
+            : (currentFrameLabel ?? `Partie ${currentGameIndex} / ${totalGames}`)}
         </span>
       </div>
     </div>

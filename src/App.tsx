@@ -130,9 +130,9 @@ const PLAYER_STATS_MENU = [
   },
   { 
     key: 'monthlyRanking', 
-    label: 'Classements Mensuels', 
+    label: 'Classements Périodiques', 
     component: MonthlyRankingChart,
-    description: 'Classement des joueurs par mois (min. 40% de participation)'
+    description: 'Classement des joueurs par période'
   },
 
   { 
