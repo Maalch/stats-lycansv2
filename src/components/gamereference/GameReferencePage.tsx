@@ -185,6 +185,14 @@ function AccessoryCard({ accessory }: { accessory: AccessoryEntry }) {
         <h3 className="ref-card__title">{accessory.name}</h3>
       </div>
       <p className="ref-card__description">{accessory.description}</p>
+      {accessory.randomEffects && (
+        <div className="ref-effect-card__random-effects">
+          <span className="ref-effect-card__random-label">Effets possibles :</span>
+          {accessory.randomEffects.map(name => (
+            <span key={name} className="ref-effect-card__random-chip">{name}</span>
+          ))}
+        </div>
+      )}
       <div className="ref-card__detail ref-card__detail--tinkerer">
         <span className="ref-card__label">🔩 Bricoleur :</span>
         <span>{accessory.tinkererEffect}</span>

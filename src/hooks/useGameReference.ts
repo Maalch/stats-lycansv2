@@ -79,6 +79,7 @@ export interface AccessoryEntry {
   description: string;
   tinkererEffect: string;
   translationKey?: string;
+  randomEffects?: string[];
 }
 
 export interface GadgetEntry {

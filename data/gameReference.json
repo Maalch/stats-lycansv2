@@ -758,7 +758,8 @@
       "emoji": "📕",
       "description": "Les effets négatifs durent moins longtemps. De plus, permet d'affecter une cible avec un effet aléatoire.",
       "tinkererEffect": "Recevoir un effet positif aléatoire.",
-      "translationKey": "NALES_ACCESSORY_SPELLBOOK"
+      "translationKey": "NALES_ACCESSORY_SPELLBOOK",
+      "randomEffects": ["Invisible", "Célérité", "Pétrifié", "Géant", "Flatulences", "Aveuglé", "Illusion", "Endormi", "Bombe !", "Brûlé", "Détecté", "Téléportation", "Résistance", "Confusion", "Clairvoyance", "Régénération", "Rassasié", "Camouflé"]
     }
   ],
 
@@ -1102,7 +1103,7 @@
       "id": "items-overview",
       "name": "Objets & Inventaire",
       "emoji": "🎒",
-      "description": "Les joueurs trouvent et utilisent divers objets pendant la partie. Chaque joueur ne peut porter qu'un seul objet à la fois.",
+      "description": "Les joueurs trouvent et utilisent divers objets pendant la partie. Chaque joueur ne peut porter qu'un seul objet et un seul accessoire à la fois.",
       "details": [
         "Potions : l'effet s'applique au joueur qui la boit. Les effets des différentes couleurs des potions sont aléatoires à chaque partie.",
         "Parchemins : même effet que les potions, mais utilisable uniquement sur un autre joueur (pas sur soi).",
