@@ -13,7 +13,7 @@
       "name": "Villageois",
       "emoji": "🏘️",
       "description": "Les Villageois doivent identifier et éliminer les Loups pour gagner. Ils récoltent des ressources, utilisent des objets et votent lors des meetings pour éliminer les suspects.",
-      "winCondition": "Éliminer tous les Loups (et Traîtres/Louveteaux).",
+      "winCondition": "Éliminer tous les Loups (et Traîtres/Louveteaux) ou récolter suffisamment de ressources pour gagner.",
       "roles": ["Villageois", "Villageois Élite"]
     },
     {
@@ -21,7 +21,7 @@
       "name": "Loups",
       "emoji": "🐺",
       "description": "Les Loups se transforment la nuit pour tuer les Villageois. En forme humaine, ils se fondent dans le groupe. Ils doivent éliminer suffisamment de joueurs pour prendre le contrôle.",
-      "winCondition": "Être aussi nombreux (ou plus) que les Villageois lors d'un meeting.",
+      "winCondition": "Être aussi nombreux (ou plus) que les autres joueurs lors d'un meeting ou tuer tous les autres joueurs.",
       "roles": ["Loup", "Traître", "Louveteau"]
     },
     {

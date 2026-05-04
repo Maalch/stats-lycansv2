@@ -106,6 +106,14 @@
   color: var(--accent-primary);
 }
 
+.ref-search-chip--version {
+  border-color: var(--border-color);
+  background: var(--bg-tertiary, var(--bg-secondary));
+  color: var(--text-tertiary, var(--text-secondary));
+  font-style: italic;
+  opacity: 0.75;
+}
+
 /* ============================================
    Category badge when searching (empty state)
    ============================================ */

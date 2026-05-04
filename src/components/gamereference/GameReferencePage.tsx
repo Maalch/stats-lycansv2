@@ -965,11 +965,12 @@ export function GameReferencePage() {
 
         <div className="ref-search-meta">
           <p className="ref-search-meta__summary">{searchSummary}</p>
-          {hasActiveSearch && (
-            <div className="ref-search-meta__chips">
+          <div className="ref-search-meta__chips">
+            <span className="ref-search-chip ref-search-chip--version" title="Version du mod sur laquelle cette référence est basée">Mod v{data._meta.version}</span>
+            {hasActiveSearch && (
               <span className="ref-search-chip ref-search-chip--accent">Recherche active</span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
