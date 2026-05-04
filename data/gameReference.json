@@ -869,6 +869,9 @@
     { "id": "clairvoyance", "name": "Clairvoyance", "type": "positive", "translationKey": "NALES_EFFECT_CLAIRVOYANCE", "tutorial": "Indique les joueurs proches sur votre minimap" },
     { "id": "flatulence", "name": "Flatulences", "type": "negative", "translationKey": "EFFECT_FLATULENCE" },
     { "id": "geant", "name": "Géant", "type": "neutral", "translationKey": "EFFECT_GIANT" },
+    { "id": "hante", "name": "Hanté", "type": "neutral", "translationKey": "NALES_EFFECT_HAUNTED", "tutorial": "Lance automatiquement un effet aléatoire sur le joueur lui-même toutes les quelques secondes.", "randomEffects": ["Soins", "Dégâts", "Ouvre les portes", "Ferme les portes", "Téléportation", "Obtenir un objet", "Étourdi", "Aveuglé", "Clairvoyance", "Flatulences", "Invisible", "Paranoia", "Célérité", "Son", "Lanternes clignotantes", "Rotation forcée"] },
+    { "id": "chaos", "name": "Chaos", "type": "neutral", "translationKey": "NALES_EFFECT_CHAOS", "tutorial": "Lance automatiquement une action aléatoire toutes les quelques secondes.", "randomEffects": ["Piège", "Grenade", "Parchemin", "Verrou", "Fumigène", "Diamant"] },
+ 
     { "id": "invisible", "name": "Invisible", "type": "positive", "translationKey": "EFFECT_INVISIBILITY" },
     { "id": "lumineux", "name": "Lumineux", "type": "negative", "translationKey": "EFFECT_GLOWING" },
     { "id": "midas", "name": "Midas", "type": "positive", "translationKey": "NALES_EFFECT_MIDAS", "tutorial": "Augmente vos récoltes et vous permet de pétrifier une cible" },
@@ -882,7 +885,7 @@
     { "id": "teleportation", "name": "Téléportation", "type": "neutral", "translationKey": "EFFECT_TELEPORTATION" },
     { "id": "vampire", "name": "Vampire", "type": "neutral", "translationKey": "NALES_EFFECT_VAMPIRE" },
     { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
-    { "id": "blanche", "name": "Blanche", "type": "positive", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] }
+    { "id": "blanche", "name": "Blanche", "type": "positive", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles, plus court qu'une potion classique.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] }
   ],
 
   "statusEffects": [
@@ -905,7 +908,8 @@
     { "id": "vampire", "name": "Vampire", "translationKey": "NALES_EFFECT_VAMPIRE" },
     { "id": "vampirise", "name": "Vampirisé !", "translationKey": "NALES_EFFECT_VAMPIRE_TARGET" },
     { "id": "minuscule", "name": "Minuscule", "translationKey": "NALES_EFFECT_TINY" },
-    { "id": "hante", "name": "Hanté", "translationKey": "NALES_EFFECT_HAUNTED" },
+    { "id": "hante", "name": "Hanté", "translationKey": "NALES_EFFECT_HAUNTED", "tutorial": "Lance automatiquement un effet aléatoire sur le joueur lui-même toutes les quelques secondes.", "randomEffects": ["Soins", "Dégâts", "Ouvre les portes", "Ferme les portes", "Téléportation", "Obtenir un objet", "Étourdi", "Aveuglé", "Clairvoyance", "Flatulences", "Invisible", "Paranoia", "Célérité", "Son", "Lanternes clignotantes", "Rotation forcée"] },
+    { "id": "chaos", "name": "Chaos", "translationKey": "NALES_EFFECT_CHAOS", "tutorial": "Lance automatiquement une action aléatoire toutes les quelques secondes.", "randomEffects": ["Piège", "Grenade", "Parchemin", "Verrou", "Fumigène", "Diamant"] },
     { "id": "myope", "name": "Myope", "translationKey": "NALES_EFFECT_NEARSIGHTED" },
     { "id": "assassin", "name": "Assassin", "translationKey": "NALES_EFFECT_ASSASSIN", "tutorial": "Vous permet de tuer un humain ou d'assommer un loup" },
     { "id": "puant", "name": "Puant", "translationKey": "NALES_EFFECT_STINKING", "tutorial": "Ralentit les joueurs proches, portée plus grande sur les loups" },

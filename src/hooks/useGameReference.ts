@@ -106,6 +106,7 @@ export interface StatusEffectEntry {
   name: string;
   translationKey?: string;
   tutorial?: string;
+  randomEffects?: string[];
 }
 
 export interface EventEntry {

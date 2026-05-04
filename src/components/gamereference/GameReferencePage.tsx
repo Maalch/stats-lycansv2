@@ -222,24 +222,27 @@ function GadgetCard({ gadget }: { gadget: GadgetEntry }) {
 
 function EffectCard({ effect, type }: { effect: PotionEffectEntry | StatusEffectEntry; type: 'potion' | 'status' }) {
   const potionEffect = type === 'potion' ? effect as PotionEffectEntry : null;
+  const statusEffect = type === 'status' ? effect as StatusEffectEntry : null;
   const potionType = potionEffect?.type;
   const typeClass = potionType === 'positive' ? 'ref-effect--positive' :
                     potionType === 'negative' ? 'ref-effect--negative' :
                     potionType === 'neutral' ? 'ref-effect--neutral' : '';
+  const randomEffects = potionEffect?.randomEffects ?? statusEffect?.randomEffects;
+  const randomLabel = potionEffect?.randomEffects ? 'Effets possibles :' : 'Actions possibles :';
 
-  // Special rendering for Blanche potion with random effects
-  if (potionEffect?.randomEffects) {
+  // Special rendering for effects with random outcomes
+  if (randomEffects) {
     return (
       <div className={`ref-effect-card ref-effect-card--blanche ${typeClass}`}>
         <div className="ref-effect-card__header">
           <span className="ref-effect-card__name">{effect.name}</span>
           {potionType && <span className="ref-effect-card__type">{potionType}</span>}
-          {potionEffect.source && <span className="ref-effect-card__source">🧪 {potionEffect.source}</span>}
+          {potionEffect?.source && <span className="ref-effect-card__source">🧪 {potionEffect.source}</span>}
         </div>
         {effect.tutorial && <p className="ref-effect-card__description">{effect.tutorial}</p>}
         <div className="ref-effect-card__random-effects">
-          <span className="ref-effect-card__random-label">Effets possibles :</span>
-          {potionEffect.randomEffects.map(name => (
+          <span className="ref-effect-card__random-label">{randomLabel}</span>
+          {randomEffects.map(name => (
             <span key={name} className="ref-effect-card__random-chip">{name}</span>
           ))}
         </div>
