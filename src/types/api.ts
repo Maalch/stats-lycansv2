@@ -8,13 +8,13 @@ const lycansColorScheme: Record<string, string> = {
   'Cannibale': '#00FF80',
   'Agent': '#800080',
   'Espion': '#BF40BF',
-  'Contrebandier': '#ff00d4',
-  'Kidnappeur': '#fd9ded',
+  'Contrebandier': '#bf00bf ',
+  'Kidnappeur': '#008080',
   'Scientifique': '#8080FF',
   'La Bête': '#808080',
   'Chasseur de primes': '#800080',
-  'Cultiste': '#dacb48', // Yellowish - cultist role
-  'Mercenaire': '#ff8000', // Orange - mercenary role
+  'Cultiste': '#BF8C40', 
+  'Mercenaire': '#800080', 
   'Vaudou': '#A626FF',
   'Zombie': '#A626FF',
   'Traître': '#FF8000',
