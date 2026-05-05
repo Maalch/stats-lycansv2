@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and sabotages. Extracted from in-game translations and gameLog data.",
+    "description": "Reference file for Lycans v2 game mechanics: camps, roles, powers, accessories, gadgets, effects, events, and game rules. Extracted from in-game translations and gameLog data.",
     "version": "0.295",
-    "lastUpdated": "2026-04-30",
+    "lastUpdated": "2026-05-05",
     "sourceTranslationsFile": "ExternalData/translations.json",
-    "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions."
+    "notes": "French names match gameLog.json values. Descriptions are cleaned from in-game markup (<color> tags, {0} placeholders). This file can be manually edited to adjust or enrich descriptions. potionEffects = drinkable effects from potions/scrolls. statusEffects = in-game states applied by role abilities, environmental events, or other mechanics (many overlap with potionEffects but represent the broader set of all possible player states)."
   },
 
   "camps": [
@@ -73,7 +73,7 @@
       "descriptionShort": "Transformez-vous et massacrez les villageois",
       "relatedItems": [
         { "type": "wolfPower", "id": "necromancien", "label": "Pouvoirs de Loup" },
-        { "type": "sabotage", "id": "sabotage-generateur", "label": "Sabotages" }
+        { "type": "gameRule", "id": "sabotage-system", "label": "Sabotages" }
       ]
     },
     {
@@ -675,6 +675,7 @@
       "emoji": "😇",
       "camp": "villageois",
       "description": "Rôle donné à un villageois mort. Peut observer les joueurs pour déterminer s'ils sont en danger. Peut soigner et protéger les villageois.",
+      "descriptionShort": "Soigne et protège les villageois après la mort",
       "translationKey": "NALES_ROLE_DESCRIPTION_ANGEL"
     },
     {
@@ -683,6 +684,7 @@
       "emoji": "👻",
       "camp": "villageois",
       "description": "Rôle donné à un villageois mort. Peut attaquer les loups avec des frappes ou créer des murs de feu qui les blessent.",
+      "descriptionShort": "Attaque les loups après la mort",
       "translationKey": "NALES_ROLE_DESCRIPTION_GHOST"
     },
     {
@@ -691,6 +693,7 @@
       "emoji": "💀",
       "camp": "loup",
       "description": "Rôle donné à un loup/traître mort. Peut gêner les villageois en leur infligeant des effets négatifs et simuler des transformations à sa position.",
+      "descriptionShort": "Gêne les villageois après la mort",
       "translationKey": "NALES_ROLE_DESCRIPTION_SPECTER"
     },
     {
@@ -699,6 +702,7 @@
       "emoji": "🧟",
       "camp": "vaudou",
       "description": "Joueur réanimé par le Vaudou. Mort en journée mais ressuscite chaque nuit. Peut tuer des joueurs en forme humaine pour réduire le cooldown de réanimation du Vaudou, et se sacrifier pour étourdir un loup.",
+      "descriptionShort": "Réanimé par le Vaudou, tue la nuit",
       "translationKey": "NALES_ROLE_DESCRIPTION_ZOMBIE"
     }
   ],
@@ -865,25 +869,25 @@
   "potionEffects": [
     { "id": "assassin", "name": "Assassin", "type": "positive", "translationKey": "NALES_EFFECT_ASSASSIN", "tutorial": "Vous permet de tuer un humain ou d'assommer un loup" },
     { "id": "audition-plus", "name": "Audition+", "type": "positive", "translationKey": "EFFECT_AUDITION_PLUS", "tutorial": "Vous entendez mieux et voyez les victimes sur la minimap" },
-    { "id": "celerite", "name": "Célérité", "type": "positive", "translationKey": "EFFECT_SPEED" },
+    { "id": "celerite", "name": "Célérité", "type": "positive", "translationKey": "EFFECT_SPEED", "tutorial": "Augmente votre vitesse de déplacement" },
     { "id": "clairvoyance", "name": "Clairvoyance", "type": "positive", "translationKey": "NALES_EFFECT_CLAIRVOYANCE", "tutorial": "Indique les joueurs proches sur votre minimap" },
-    { "id": "flatulence", "name": "Flatulences", "type": "negative", "translationKey": "EFFECT_FLATULENCE" },
-    { "id": "geant", "name": "Géant", "type": "neutral", "translationKey": "EFFECT_GIANT" },
+    { "id": "flatulence", "name": "Flatulences", "type": "negative", "translationKey": "EFFECT_FLATULENCE", "tutorial": "Émet des bruits réguliers qui révèlent votre position aux autres joueurs" },
+    { "id": "geant", "name": "Géant", "type": "neutral", "translationKey": "EFFECT_GIANT", "tutorial": "Augmente considérablement la taille de votre personnage, vous rendant plus visible mais aussi plus imposant" },
     { "id": "hante", "name": "Hanté", "type": "neutral", "translationKey": "NALES_EFFECT_HAUNTED", "tutorial": "Lance automatiquement un effet aléatoire sur le joueur lui-même toutes les quelques secondes.", "randomEffects": ["Soins", "Dégâts", "Ouvre les portes", "Ferme les portes", "Téléportation", "Obtenir un objet", "Étourdi", "Aveuglé", "Clairvoyance", "Flatulences", "Invisible", "Paranoia", "Célérité", "Son", "Lanternes clignotantes", "Rotation forcée"] },
     { "id": "chaos", "name": "Chaos", "type": "neutral", "translationKey": "NALES_EFFECT_CHAOS", "tutorial": "Lance automatiquement une action aléatoire toutes les quelques secondes.", "randomEffects": ["Piège", "Grenade", "Parchemin", "Verrou", "Fumigène", "Diamant"] },
  
-    { "id": "invisible", "name": "Invisible", "type": "positive", "translationKey": "EFFECT_INVISIBILITY" },
-    { "id": "lumineux", "name": "Lumineux", "type": "negative", "translationKey": "EFFECT_GLOWING" },
+    { "id": "invisible", "name": "Invisible", "type": "positive", "translationKey": "EFFECT_INVISIBILITY", "tutorial": "Vous rend invisible aux yeux des autres joueurs" },
+    { "id": "lumineux", "name": "Lumineux", "type": "negative", "translationKey": "EFFECT_GLOWING", "tutorial": "Vous éclairez autour de vous, révélant votre position dans le noir" },
     { "id": "midas", "name": "Midas", "type": "positive", "translationKey": "NALES_EFFECT_MIDAS", "tutorial": "Augmente vos récoltes et vous permet de pétrifier une cible" },
-    { "id": "minuscule", "name": "Minuscule", "type": "neutral", "translationKey": "NALES_EFFECT_TINY" },
-    { "id": "muet", "name": "Muet", "type": "negative", "translationKey": "NALES_EFFECT_MUTE" },
-    { "id": "myope", "name": "Myope", "type": "negative", "translationKey": "NALES_EFFECT_NEARSIGHTED" },
-    { "id": "paranoia", "name": "Paranoia", "type": "negative", "translationKey": "EFFECT_PARANOIA" },
+    { "id": "minuscule", "name": "Minuscule", "type": "neutral", "translationKey": "NALES_EFFECT_TINY", "tutorial": "Réduit considérablement la taille de votre personnage, vous rendant plus difficile à repérer" },
+    { "id": "muet", "name": "Muet", "type": "negative", "translationKey": "NALES_EFFECT_MUTE", "tutorial": "Empêche de parler aux autres joueurs (voix coupée)" },
+    { "id": "myope", "name": "Myope", "type": "negative", "translationKey": "NALES_EFFECT_NEARSIGHTED", "tutorial": "Réduit votre distance de vision, vous empêchant de voir au loin" },
+    { "id": "paranoia", "name": "Paranoia", "type": "negative", "translationKey": "EFFECT_PARANOIA", "tutorial": "Provoque des hallucinations sonores et visuelles (faux bruits de pas, fausses transformations)" },
     { "id": "puant", "name": "Puant", "type": "negative", "translationKey": "NALES_EFFECT_STINKING", "tutorial": "Ralentit les joueurs proches, portée plus grande sur les loups" },
-    { "id": "rassasie", "name": "Rassasié", "type": "positive", "translationKey": "EFFECT_SATIATED" },
-    { "id": "sourd", "name": "Sourd", "type": "negative", "translationKey": "NALES_EFFECT_DEAFNESS" },
-    { "id": "teleportation", "name": "Téléportation", "type": "neutral", "translationKey": "EFFECT_TELEPORTATION" },
-    { "id": "vampire", "name": "Vampire", "type": "neutral", "translationKey": "NALES_EFFECT_VAMPIRE" },
+    { "id": "rassasie", "name": "Rassasié", "type": "positive", "translationKey": "EFFECT_SATIATED", "tutorial": "Remplit votre jauge de faim, vous empêchant de mourir de faim" },
+    { "id": "sourd", "name": "Sourd", "type": "negative", "translationKey": "NALES_EFFECT_DEAFNESS", "tutorial": "Réduit ou coupe totalement les sons du jeu (voix des joueurs et bruits d'ambiance)" },
+    { "id": "teleportation", "name": "Téléportation", "type": "neutral", "translationKey": "EFFECT_TELEPORTATION", "tutorial": "Vous téléporte à une position aléatoire sur la carte" },
+    { "id": "vampire", "name": "Vampire", "type": "neutral", "translationKey": "NALES_EFFECT_VAMPIRE", "tutorial": "Vous permet de mordre un joueur pour lui voler de la vie et la récupérer" },
     { "id": "vision-vraie", "name": "Vision vraie", "type": "positive", "translationKey": "EFFECT_TRUESIGHT", "tutorial": "Vous voyez dans le noir et ignorez les illusions visuelles" },
     { "id": "blanche", "name": "Blanche", "type": "positive", "translationKey": "EFFECT_BLANCHE", "tutorial": "Potion créée par l'Alchimiste. Applique un effet positif aléatoire parmi les effets possibles, plus court qu'une potion classique.", "source": "alchimiste", "randomEffects": ["Assassin", "Audition+", "Célérité", "Rassasié", "Vision vraie"] }
   ],
@@ -916,7 +920,6 @@
     { "id": "nausee", "name": "Nausée", "translationKey": "NALES_EFFECT_NAUSEATED" },
     { "id": "muet", "name": "Muet", "translationKey": "NALES_EFFECT_MUTE" },
     { "id": "clairvoyance", "name": "Clairvoyance", "translationKey": "NALES_EFFECT_CLAIRVOYANCE", "tutorial": "Indique les joueurs proches sur votre minimap" },
-    { "id": "chaos", "name": "Chaos", "translationKey": "NALES_EFFECT_CHAOS" },
     { "id": "assomme", "name": "Assommé", "translationKey": "NALES_EFFECT_DOWNED" },
     { "id": "malade", "name": "Malade", "translationKey": "NALES_EFFECT_DISEASED" },
     { "id": "malediction", "name": "Malédiction", "translationKey": "NALES_EFFECT_CURSED" },
