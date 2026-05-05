@@ -561,6 +561,44 @@ export function GameReferencePage() {
           </div>
         </div>
 
+        {/* Search result sections for roles/powers (only when searching) */}
+        {hasActiveSearch && (
+          <>
+            {filteredData.mainRoles.length > 0 && (
+              <div className="ref-section">
+                <SectionTitle title="Rôles 👤" count={filteredData.mainRoles.length} />
+                <div className="ref-grid">
+                  {filteredData.mainRoles.map(r => <MainRoleCard key={r.id} role={r} />)}
+                </div>
+              </div>
+            )}
+            {filteredData.wolfPowers.length > 0 && (
+              <div className="ref-section">
+                <SectionTitle title="Pouvoirs de Loup 🐺" count={filteredData.wolfPowers.length} />
+                <div className="ref-grid">
+                  {filteredData.wolfPowers.map(p => <PowerCard key={p.id} power={p} variant="wolf" />)}
+                </div>
+              </div>
+            )}
+            {filteredData.villagerPowers.length > 0 && (
+              <div className="ref-section">
+                <SectionTitle title="Métiers de Villageois 👤" count={filteredData.villagerPowers.length} />
+                <div className="ref-grid">
+                  {filteredData.villagerPowers.map(p => <PowerCard key={p.id} power={p} variant="villager" />)}
+                </div>
+              </div>
+            )}
+            {filteredData.elitePowers.length > 0 && (
+              <div className="ref-section">
+                <SectionTitle title="Pouvoirs Élite ⭐" count={filteredData.elitePowers.length} />
+                <div className="ref-grid">
+                  {filteredData.elitePowers.map(p => <PowerCard key={p.id} power={p} variant="elite" />)}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
         {/* Item categories */}
         <div className="ref-section">
           <h2 className="ref-section__title">
